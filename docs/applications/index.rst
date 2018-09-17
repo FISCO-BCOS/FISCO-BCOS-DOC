@@ -4,7 +4,7 @@
 
 FISCO-BCOS应用实践_
 
-.. _FISCO-BCOS应用实践: FISCO-BCOS应用实践.pdf
+.. _FISCO-BCOS应用实践: https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/raw/master/docs/applications/FISCO-BCOS应用实践.pdf
 
 落地应用
 ==============================================================================
