@@ -35,6 +35,6 @@ RUN赋能计划 系列直播
    极简Java应用开发入门/README.md
    区块链应用系统开发TIPS/README.md
    FISCO-BCOS和以太坊差异综述/README.md
-
-*区块链平台调研与分析报告_
-.. _区块链平台调研与分析报告: 区块链平台调研与分析报告.pdf
+   * 区块链平台调研与分析报告_
+   
+.. _区块链平台调研与分析报告: https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/raw/master/docs/wiki/区块链平台调研与分析报告.pdf
