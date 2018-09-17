@@ -418,7 +418,13 @@ bash generate_node.sh -h
 生成节点
 
 ``` shell
-bash generate_node.sh -o /mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -d /mydata/test_agency -a test_agency -x 0x919868496524eedc26dbb81915fa1547a20f8998 -i xxxxxx
+bash generate_node.sh -o /mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -d /mydata/test_agency -a test_agency -x 0x919868496524eedc26dbb81915fa1547a20f8998 -s 0xb862b65912e0857a49458346fcf578d199dba024 -i xxxxxx
+```
+
+或
+
+``` shell
+bash generate_node.sh -o /mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -d /mydata/test_agency -a test_agency -f node0.info
 ```
 
 生成节点的全部文件
@@ -789,7 +795,7 @@ bash node_info.sh -h
 指定节点目录，查看节点信息
 
 ``` shell
-bash node_info.sh -d /mydata/node1/ -f node1.info
+bash node_info.sh -d /mydata/node1/ -o node1.info
 ```
 
 得到节点关键信息
