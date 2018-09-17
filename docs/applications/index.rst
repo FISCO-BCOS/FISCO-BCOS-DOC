@@ -2,8 +2,8 @@
 应用实践
 ################################################################################
 
-FISCO-BCOS应用实践_
-FISCO-BCOS案例精编_
+* FISCO-BCOS应用实践_
+* FISCO-BCOS案例精编_
 
 .. _FISCO-BCOS应用实践: https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/raw/master/docs/applications/FISCO-BCOS应用实践.pdf
 .. _FISCO-BCOS案例精编: https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/raw/master/docs/applications/FISCOBCOS_FeaturedCases.pdf
