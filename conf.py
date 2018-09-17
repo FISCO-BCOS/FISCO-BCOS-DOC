@@ -320,9 +320,9 @@ texinfo_documents = [
 
 # The suffix of source filenames.
 #source_suffix = ['.rst', '.md']
-source_parsers = {
-	'.md': CommonMarkParser,
-}
+#source_parsers = {
+#	'.md': CommonMarkParser,
+#}
 
 extensions = [
 	'sphinx_markdown_tables', 
