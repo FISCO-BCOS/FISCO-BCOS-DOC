@@ -1,6 +1,6 @@
-CommonMark
 docutils == 0.12
 sphinx ==  1.7.5
 sphinx-rtd-theme
-recommonmark == 0.4.0
 sphinx-markdown-tables
+-e git+git://github.com/rtfd/recommonmark.git#egg=recommonmark
+commonmark==0.7.5
