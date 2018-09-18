@@ -179,6 +179,6 @@ INFO|2018-08-12 20:33:38:718|+++++++++++++++++++++++++++ Generating seal onf082c
 .. admonition:: congratulations :)
 
    至此，您已经成功搭建一条可用的国密版FISCO-BCOS链 
-    - 更高级的使用方法请参考 `FISCO-BCOS系统合约 <https://fisco-bcos-test.readthedocs.io/zh/latest/docs/usage/system_contract.html#>`_
-    - 国密版web3sdk配置和使用方法请参考 `国密版web3sdk <https://fisco-bcos-test.readthedocs.io/zh/latest/docs/guomi/config_guomi.html#>`_
+    - 更高级的使用方法请参考 `FISCO-BCOS系统合约 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/system_contract.html>`_
+    - 国密版web3sdk配置和使用方法请参考 `国密版web3sdk <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/config_guomi.html>`_
 ```
