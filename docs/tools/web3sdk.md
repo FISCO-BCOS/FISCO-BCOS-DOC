@@ -13,11 +13,11 @@ $ cp sdk.* ca.crt client.keystore /mydata/web3sdk/dist/conf/
 
 ## 物料包应用开发指南
 
-物料包内置了配置好的web3sdk，用户可以直接进入配置好的服务器下的build目录，进入web3sdk目录进行应用开发，[应用开发指南](https://fisco-bcos-test.readthedocs.io/zh/latest/docs/web3sdk/web3sdk_dev.html)
+物料包内置了配置好的web3sdk，用户可以直接进入配置好的服务器下的build目录，进入web3sdk目录进行应用开发，[应用开发指南](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/web3sdk_dev.html)
 
 ## 物料包web3sdk配置
 
-如果用户想要在物料包下配置web3sdk，请参考[web3sdk配置部分](https://fisco-bcos-test.readthedocs.io/zh/latest/docs/web3sdk/index.html)
+如果用户想要在物料包下配置web3sdk，请参考[web3sdk配置部分](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/web3sdk.html)
 
 请注意，由于物料包已经生成好了链证书和机构证书，物料包中配置文件-配置java客户端过程和文档中略有不同。
 
@@ -34,7 +34,7 @@ $ vim applicationContext.xml
 ```
 
 
-具体操作参考web3sdk-[配置文件](https://fisco-bcos-test.readthedocs.io/zh/latest/docs/web3sdk/config_web3sdk.html)
+具体操作参考web3sdk-[配置文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html)
 
 ```
 如 </value>node0@0.0.0.0:8841</value>

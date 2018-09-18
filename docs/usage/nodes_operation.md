@@ -236,7 +236,7 @@ log.conf中配置节点日志生成的格式、路径和优先级。
 
 ## 证书文件
 
-参考[证书说明](https://fisco-bcos-test.readthedocs.io/zh/latest/docs/usage/cert_permission.html)
+参考[证书说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/cert_permission.html)
 
 ## 功能文件
 
