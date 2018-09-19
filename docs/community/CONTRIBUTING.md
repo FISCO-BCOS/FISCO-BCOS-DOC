@@ -128,20 +128,20 @@ git-flow将以develop分支为核心，将feature和release过程分开。支持
 * 也要求稳定，但稳定程度比master稍差，只确保feature的稳定
 * 无版本号
 
-**feature-*分支**
+**feature-\*分支**
 
 * feature-*分支从develop分支fork出来，是每个独立特性的开发分支
 * feature-*分支由特性开发者管理，多人开发时，通过pull request的方式，由特性核心开发者审查后合入
 * feature-*分支必须从develop分支拉取代码，同步到最新，再进行feature测试
 * feature测试后才能将相关feature分支合入develop分支
 
-**release-*分支**
+**release-\*分支**
 
 * release-*分支根据排期，从develop分支fork出来，形成大版本号
 * release-*分支在release测试时，回归的问题直接提交到release分支上
 * release-*分支在release测试后，需同时合入dev分支和master分支
 
-**hotfix-*分支**
+**hotfix-\*分支**
 
 * 要修bug时，从master拉出此分支
 * 为避免冲突，bug要尽快修复
