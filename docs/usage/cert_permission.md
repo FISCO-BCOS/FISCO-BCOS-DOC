@@ -83,12 +83,19 @@ ca-agency.crt 机构和链的证书
 
 
 ca.crt 链证书
+
 node.ca节点证书相关信息，应用于系统合约
+
 node.crt 节点证书
+
 node.csr节点证书请求文件
+
 node.key节点私钥
+
 node.private 节点私钥编码得到
+
 node.pubkey 节点公钥
+
 node.serial 节点序列号
 
 
