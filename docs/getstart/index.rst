@@ -4,9 +4,8 @@
 
 .. important:: **快速搭链工具** 
 
-   - `FISCO BCOS一键安装 <https://fisco-bcos-test.readthedocs.io/zh/latest/docs/tools/sample.html>`_ 
-   - `FISCO BCOS物料包 <https://fisco-bcos-test.readthedocs.io/zh/latest/docs/tools/fisco-package-build-tool.html>`_ 
-   - `FISCO BCOS docker <https://fisco-bcos-test.readthedocs.io/zh/latest/docs/tools/docker.html>`_
+   - `FISCO BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 
+   - `FISCO BCOS docker <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/quick_start.html#a-name-appendix-id-appendix-a>`_
 
 
 

@@ -323,10 +323,6 @@ texinfo_documents = [
 #source_parsers = {
 #	'.md': CommonMarkParser,
 #}
-
-extensions = [
-	'sphinx_markdown_tables', 
-]
 #extensions = [
 #    'sphinx.ext.todo',
 #    'sphinx.ext.mathjax',
