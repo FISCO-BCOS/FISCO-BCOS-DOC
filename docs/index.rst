@@ -1,23 +1,21 @@
-##############################################################
-FISCO BCOS Documentation
-##############################################################
+################################################################################
+快速入门
+################################################################################
 
-FISCO BCOS平台是金融区块链合作联盟（深圳）（以下简称：金链盟）开源工作组以金融业务实践为参考样本，在BCOS开源平台基础上进行模块升级与功能重塑，深度定制的安全可控、适用于金融行业且完全开源的区块链底层平台。  
-金链盟开源工作组获得金链盟成员机构的广泛认可，并由专注于区块链底层技术研发的成员机构及开发者牵头开展工作。其中首批成员包括以下单位（排名不分先后）：博彦科技、华为、深证通、神州数码、四方精创、腾讯、微众银行、越秀金科。   
-FISCO BCOS平台基于现有的BCOS开源项目进行开发，聚焦于金融行业的分布式商业需求，从业务适当性、性能、安全、政策、技术可行性、运维与治理、成本等多个维度进行综合考虑，打造金融版本的区块链解决方案。
-为了让大家更好的了解FISCO BCOS区块链开源平台的使用方法。本文档按照Step By Step的步骤详细介绍了FISCO BCOS区块链的构建、安装、启动，智能合约部署、调用等初阶用法，还包括多节点组网、系统合约等高阶内容的介绍。
-本文档不介绍FISCO BCOS区块链设计理念及思路，详情请参看白皮书。
+.. important:: **快速搭链工具** 
+ 
+   - `FISCO BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 
+   - `FISCO BCOS docker <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/quick_start.html#a-name-appendix-id-appendix-a>`_
+   - `手工搭链 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/getstart/index.html>`_
+
+
 
 .. toctree::
    :maxdepth: 1
-
-
-   getstart/index.rst
-   usage/index.rst
-   web3sdk/index.rst
-   tools/index.rst
-   guomi/index.rst
-   features/index.rst
-   applications/index.rst
-   wiki/index.rst
-   community/index.rst
+   
+   environment.rst
+   compile_and_install.md
+   cert_config.md
+   genesis_node_startup.md
+   node_startup.md
+   

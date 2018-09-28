@@ -1,13 +1,6 @@
 ################################################################################
-快速入门
+手工搭链
 ################################################################################
-
-.. important:: **快速搭链工具** 
-
-   - `FISCO BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 
-   - `FISCO BCOS docker <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/quick_start.html#a-name-appendix-id-appendix-a>`_
-
-
 
 .. toctree::
    :maxdepth: 1
