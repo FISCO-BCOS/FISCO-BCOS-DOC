@@ -14,9 +14,9 @@ clone 源码
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 ```
 
-## 一键安装
+## 编译安装FISCO-BCOS
 
-切换到FISCO-BCOS目录下，执行一键安装脚本
+切换到FISCO-BCOS目录下，执行FISCO-BCOS编译安装脚本
 
 ``` shell
 cd FISCO-BCOS 
