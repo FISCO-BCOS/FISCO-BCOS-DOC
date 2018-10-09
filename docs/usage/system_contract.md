@@ -154,16 +154,38 @@ var receipt = web3sync.sendRawTransaction(config.account, config.privKey, instan
 babel-node tool.js CAAction all
 ```
 
+编写证书配置
+
+编写文件：ca.json。将序列号填入hash字段。配置status，0表示不可用，1表示可用。其它字段默认即可。如下，让node2的证书可用。即status置1。详细介绍，请参考[机构证书准入说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/features/%E6%9C%BA%E6%9E%84%E8%AF%81%E4%B9%A6%E5%87%86%E5%85%A5/README.html)。
+
+``` json
+{
+    "hash":"8A4B2CDE94348D22",
+    "status":1,
+    "pubkey":"xxxx",
+    "orgname":"xx银行",
+    "notbefore":20170223,
+    "notafter":20180223,
+    "whitelist":"192.168.1.1;192.168.1.2;192.168.1.3",
+    "blacklist":"192.168.1.11;192.168.1.12;192.168.1.13"
+}
+```
+
+
 登记注销证书
 
+ca.json 中status置为1
+
 ```shell
-babel-node tool.js CAAction add
+babel-node tool.js CAAction update ca.json
 ```
 
 移除注销证书
 
+ca.json 中status置为0
+
 ```shell
-babel-node tool.js CAAction remove
+babel-node tool.js CAAction update ca.json
 ```
 
 ## 权限管理合约
