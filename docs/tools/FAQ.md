@@ -30,7 +30,7 @@ fisco-package-build-tool目录下已经存在build目录, 可以将build目录�
 不支持的linux系统.目前FISCO-BCOS支持CentOS 7.2+、Ubuntu 16.04。
 - ERROR - Oracle JDK 1.8 be requied  
   
-需要安装Oracle JDK 1.8。目前物料包的web3sdk仅支持Oracle JDK1.8版本，尚未支持其他的java版本，请参考[物料包java安装](https://fisco-bcos-test.readthedocs.io/zh/latest/docs/tools/oracle_java.html)
+需要安装Oracle JDK 1.8。目前物料包的web3sdk仅支持Oracle JDK1.8版本，尚未支持其他的java版本，请参考[物料包java安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/oracle_java.html)
 - ERROR - OpenSSL 1.0.2 be requied  
   
 物料包需要openssl 1.0.2版本，请升级openssl版本。
