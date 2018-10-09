@@ -9,7 +9,7 @@
   
 该目录包含构建区块链时分配的链根证书、机构证书、创世块文件、系统合约。
 
-将follow放入/fisco-bcos/目录。
+将follow放入/fisco-package-build-tool/目录。
 
 ## 配置
 
@@ -22,7 +22,7 @@ vim config.ini
 ```
 * 扩容使用的一些参数
 [expand]
-genesis_follow_dir=/fisco-bcos/follow/
+genesis_follow_dir=/fisco-package-build-tool/follow/
 ```
 
 修改节点列表为扩容的节点信息。
@@ -34,6 +34,7 @@ node1=172.20.245.46  0.0.0.0  2  agent_4
 
 ## 扩容 
 ```
+如果是在物料包生成服务器下运行扩容命令，需要删除已经存在的build目录
 ./generate_installation_packages.sh expand
 ```
 成功之后会输出`Expanding end!`并在build目录生成对应安装包
