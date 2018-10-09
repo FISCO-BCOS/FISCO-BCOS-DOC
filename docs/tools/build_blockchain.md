@@ -219,7 +219,7 @@ build
 
 说明:
 - nodeIDX
-- 
+
 节点IDX的目录, 示例中每台服务器启动两个节点, 所以有node0, node1两个目录
 
 nodeIDX的目录结构如下：
@@ -243,27 +243,29 @@ build/node0/
 - start.sh
 
 节点启动脚本, 使用方式：
+
 ```
-start.sh       启动所有的节点
+./start.sh       启动所有的节点
 或者
-start.sh IDX   启动指定的节点, IDX为节点的索引, 从0开始, 比如: start.sh 0表示启动第0个节点
+./start.sh IDX   启动指定的节点, IDX为节点的索引, 从0开始, 比如: start.sh 0表示启动第0个节点
 ```
 - stop.sh
 节点停止脚本, 使用方式：
+
 ```
-stop.sh       停止所有的节点
+./stop.sh       停止所有的节点
 或者
-stop.sh IDX   停止指定的节点, IDX为节点的索引, 从0开始, 比如: stop.sh 0表示停止第0个节点
+./stop.sh IDX   停止指定的节点, IDX为节点的索引, 从0开始, 比如: stop.sh 0表示停止第0个节点
 ```
 - register.sh
 注册指定节点信息到节点管理合约, 扩容时使用
 ```
-register.sh IDX
+./register.sh IDX
 ```
 - unregister.sh
 将指定节点从节点管理合约中删除
 ```
-unregister.sh IDX
+./unregister.sh IDX
 ```
 - node_manager.sh
 查看当前节点管理合约中的节点信息

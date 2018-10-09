@@ -19,6 +19,7 @@ Oracle JDK[1.8]
 * FISCO BCOS搭建过程中需要的其他依赖会自动安装, 用户不需要再手动安装。
 * CentOS/Ubuntu默认安装或者使用yum/apt安装的是openJDK, 并不符合使用要求, Oracle JDK 1.8 的安装链接[Oracle JDK 1.8 安装](https://github.com/FISCO-BCOS/fisco-package-build-tool/blob/master/doc/Oracle%20JAVA%201.8%20%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%2Emd)
 
+
 - 其他依赖  
   sudo权限, 当前执行的用户需要具有sudo权限。
 
