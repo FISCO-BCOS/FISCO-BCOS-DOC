@@ -88,7 +88,7 @@
 ```eval_rst
 .. admonition:: 测试web3sdk与节点连接是否正常
    
-   在web3sdk/dist目录下调用TestOk，输出 ``=====INIT ECDSA KEYPAIR From private key===`` 等提示，说明web3sdk与节点连接正常，否则请参考 `faq【dist/bin/web3sdk运行出错】 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/faq.html>`_ .
+   在web3sdk/dist目录下调用TestOk，非国密版web3sdk输出 ``=====INIT ECDSA KEYPAIR From private key===`` 等提示，说明web3sdk与节点连接正常，否则请参考 `faq【dist/bin/web3sdk运行出错】 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/faq.html>`_ .
    
    具体测试过程如下：
     .. code-block:: bash
