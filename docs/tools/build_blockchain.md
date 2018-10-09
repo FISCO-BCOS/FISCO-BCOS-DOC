@@ -245,7 +245,6 @@ build/node0/
 节点启动脚本, 使用方式：
 
 ```
-在脚本目录下，执行
 ./start.sh       启动所有的节点
 或者
 ./start.sh IDX   启动指定的节点, IDX为节点的索引, 从0开始, 比如: start.sh 0表示启动第0个节点
@@ -254,7 +253,6 @@ build/node0/
 节点停止脚本, 使用方式：
 
 ```
-在脚本目录下，执行
 ./stop.sh       停止所有的节点
 或者
 ./stop.sh IDX   停止指定的节点, IDX为节点的索引, 从0开始, 比如: stop.sh 0表示停止第0个节点
@@ -262,7 +260,6 @@ build/node0/
 - register.sh
 注册指定节点信息到节点管理合约, 扩容时使用
 ```
-在脚本目录下，执行
 ./register.sh IDX
 ```
 - unregister.sh
