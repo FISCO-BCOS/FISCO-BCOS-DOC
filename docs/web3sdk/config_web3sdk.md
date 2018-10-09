@@ -6,7 +6,7 @@
 
    - 配置web3sdk前，请确保参考 `web3sdk编译文档 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/compile.html>`_ 成功编译web3sdk
    - 配置web3sdk前，请先生成客户端证书，并将证书拷贝到web3sdk/dist/conf目录：
-    1. 手动搭链：客户端证书生成参考 `FISCO-BCOS快速入门 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/cert_permission.html>`_ **基础配置中的SDK证书配置** ;
+    1. 手动搭链：客户端证书生成参考 `FISCO-BCOS快速入门 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html#sdk>`_ **基础配置中的SDK证书配置** ;
      
     2. 由 `FISCO-BCOS物料包搭建的链 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 搭建的FISCO-BCOS链：客户端证书生成参考 `SDK证书生成 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/web3sdk.html#web3sdk>`_ 
 
@@ -25,7 +25,7 @@
    
 
    
-   找到 `web3sdk/dist/conf/applicationContext.xml文件的【区块链节点信息配置】 <https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/applicationContext.xml>`_ 一节，配置keystore密码
+   找到 `web3sdk/dist/conf/applicationContext.xml文件的【区块链节点信息配置】 <https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/applicationContext.xml#L41>`_ 一节，配置keystore密码
      .. code-block:: xml
 
          <property name="keystorePassWord" value="【生成client.keystore时对应的keystore密码】" />
