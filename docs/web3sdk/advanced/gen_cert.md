@@ -13,11 +13,14 @@
    .. code-block:: bash
       
       #将链证书拷贝到web3sdk根证书
-      $ cp ca.crt ca-agency.crt
-       #追加机构证书到web3sdk根证书
-       $ more agency.crt | cat >>ca-agency.crt
-       #重命名web3sdk根证书为ca.crt
-       $ mv ca-agency.crt ca.crt
+      #设链证书位于~/mydata/node0/data目录
+      #设web3sdk位于~/mydata/web3sdk目录
+      $ cd ~/mydata/web3sdk/dist/conf #进入web3sdk配置路径
+      $ cp ~/mydata/node0/data/ca.crt ca-agency.crt
+      #追加机构证书到web3sdk根证书
+      $ more ~/mydata/node0/data/agency.crt | cat >>ca-agency.crt
+      #重命名web3sdk根证书为ca.crt
+      $ mv ca-agency.crt ca.crt
 
 
 .. admonition:: client.keystore证书生成方法
@@ -28,6 +31,8 @@
 
       #(1) web3sdk所属机构颁发sdk证书sdk.crt
       # 使用ECDSA算法,生成公私钥对(sdk.pubkey, sdk.key)
+      # 设web3sdk位于~/mydata/web3sdk路径
+       $ cd ~/mydata/web3sdk/dist/conf  #进入web3sdk配置路径
        $ openssl ecparam -out sdk.param -name secp256k1
        $ openssl genpkey -paramfile sdk.param -out sdk.key
        $ openssl pkey -in sdk.key -pubout -out sdk.pubkey
