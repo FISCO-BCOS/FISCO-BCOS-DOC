@@ -219,7 +219,7 @@ build
 
 说明:
 - nodeIDX
-- 
+
 节点IDX的目录, 示例中每台服务器启动两个节点, 所以有node0, node1两个目录
 
 nodeIDX的目录结构如下：
