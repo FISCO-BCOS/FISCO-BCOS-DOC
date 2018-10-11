@@ -49,3 +49,6 @@ $ java -cp 'conf/:apps/*:lib/*' org.bcos.channel.test.TestOk
 测试是否配置成功
 
 
+
+
+

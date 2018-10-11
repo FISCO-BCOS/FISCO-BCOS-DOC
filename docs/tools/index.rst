@@ -15,6 +15,7 @@
 * **JAVA安装**：FISCO BCOS中需要使用Oracle JDK 1.8(java 1.8)环境，提供FISCO BCOS支持的JAVA组件
 * **物料包搭建FISCO BCOS环境CheckList**：检查系统是否满足搭建FISCO BCOS的条件
 
+
 术语简介  
 
 * 两种节点类型：**创世节点, 非创世节点**。
@@ -42,4 +43,6 @@
    oracle_java.md
    web3sdk.md
    check_list.md
+   rmlogs.md
+   monitor.md
    FAQ.md
