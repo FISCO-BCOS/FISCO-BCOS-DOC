@@ -49,7 +49,7 @@ module.exports={
 #--------------------------------------------------------
 # -d: 创世节点路径，这里设置为~/mydata/node0
 # -o: 生成的创世节点配置genesis.json所在目录，这里设置为~/mydata/node0
-# -r: 可选，god账户地址，默认为0x3b5b68db7502424007c6e6567fa690c5afd71721
+# -s: 可选，god账户地址，默认为0x3b5b68db7502424007c6e6567fa690c5afd71721
 #--------------------------------------------------------
 # 初始化创世节点配置genesis.json
 $ bash ./generate_genesis.sh -d ~/mydata/node0 -o ~/mydata/node0 -s 0xf02a10f685a90c3bfc2eccd906b75fe3feeec9ad -g
