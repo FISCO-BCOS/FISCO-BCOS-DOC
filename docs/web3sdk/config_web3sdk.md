@@ -31,7 +31,7 @@
          <property name="keystorePassWord" value="【生成client.keystore时对应的keystore密码】" />
          <property name="clientCertPassWord" value="【生成client.keystore时对应的证书密码】" />
     
-   **配置节点信息，请务必注意：节点id、ip、端口，和连接的FISCO-BCOS节点必须一致** 
+   **配置节点信息，请务必注意：ip、端口，和连接的FISCO-BCOS节点必须一致, 节点id可以是任意非空字符串** 
      .. code-block:: xml
 
         <property name="connectionsStr">
