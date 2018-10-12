@@ -87,7 +87,7 @@ $ OpenJDK 64-Bit Server VM (build 25.171-b10, mixed mode)
 ```
 
 ####  Oracle JDK安装
-当前系统如果没有安装JDK, 或者JDK的版本不符合预期, 可以参考[[Oracle JAVA 1.8 安装教程]](https://github.com/ywy2090/fisco-package-build-tool/blob/docker/doc/Oracle%20JAVA%201.8%20%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.md)。
+当前系统如果没有安装JDK, 或者JDK的版本不符合预期, 可以参考[[Oracle JAVA 1.8 安装教程]](https://fisco-bcos-documentation.readthedocs.io/zh_CN/dev/docs/tools/oracle_java.html)。
 
 ### **openssl版本**
 openssl需求版本为1.0.2, 可以使用 openssl version 查看。
