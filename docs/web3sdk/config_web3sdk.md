@@ -77,7 +77,7 @@
      
      ② **国密版FISCO-BCOS** ：设源码位于~/mydata/FISCO-BCOS目录，则god账号位于~/mydata/FISCO-BCOS/tools/scripts/guomi_godInfo.txt文件中; 若搭链过程中使用系统默认god账号，则god账号位于~/mydata/FISCO-BCOS/tools/scripts/god_info/guomiDefaultGod.txt
     
-    2. 使用 `FISCO-BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 搭链: 参考 `god账号说明 <https://github.com/FISCO-BCOS/fisco-package-build-tool#71-god%E8%B4%A6%E5%8F%B7>`_ 获取god账号信息;
+    2. 使用 `FISCO-BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 搭链: 参考用户在创世节点dependencies/cert/godInfo.txt路径下，获取god账号信息;
    
    - **这里的端口是对应config.json里的channelPort，而不是rpcport或p2pport** 
    - **list段里可以配置多个value，对应多个节点的信息，实现客户端多活通信** 
