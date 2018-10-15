@@ -93,6 +93,9 @@ god账户配置失败，请从新尝试安装。
 
 系统合约部署失败，请从新下载物料包。
 ## docker 安装报错提示
+- ERROR - docker is not installed
+
+docker未安装, 用户需要自己安装docker程序, apt/yum install docker.
 - ERROR - docker dictionary already exist, remove it first.
  
 docker目录已存在，请移除当前docker节点安装包目录之后重试。
@@ -103,9 +106,12 @@ docker服务器启动失败，请检查docker配置、运行是否正常。
 - ERROR - there is already fisco-bcos docker named fisco-node.
 
 当前docker内已经有名称已存在的文件夹，请更改名称。
+
 ## generate_installation_packages.sh build/expand 直接退出。
 查看build/stderr.log内容, 查看错误信息。
 
+## start.sh 提示 ulimit: core file size: cannot modify limit: Operation not permitted
+无法通过脚本修改core文件大小限制, 不影响节点的启动。
 
 ## start.sh 显示nodeIDX is not running.  
 这个提示是说nodeIDX启动失败, 可以ps -aux | egrep fisco 查看是否正常启动. 可以执行`cat node/nodedirIDX/log/log`查看节点启动失败的原因。
@@ -131,3 +137,13 @@ terminate called after throwing an instance of 'boost::exception_detail::clone_i
 ```
 
 操作文件失败抛出异常, 原因可能是当前登录的用户没有安装包目录的权限, 可以通过ls -lt查看当前文件夹对应的user/group/other以及对应的权限, 一般可以将安装包的user改为当前用户或者切换登录用户为安装包的user用户可以解决问题。
+
+当程序异常退出，程序提示dir exists时，需要进行以下操作
+```
+1、删除fisco-bcos文件
+$ sudo rm -rf /usr/local/bin/fisco-bcos
+2、删除build目录
+$ rm -rf build
+3、重新执行创建安装包的命令
+$ ./generate_installation_packages.sh build
+```
