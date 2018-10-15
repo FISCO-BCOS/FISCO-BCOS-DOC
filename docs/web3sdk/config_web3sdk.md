@@ -113,30 +113,27 @@
 
    applicationContext.xml主要包括如下配置选项：
 
-+----------------------+------------------------------------------------------------------------------------------------------+
-| **encryptType**      |  配置国密算法开启/关闭开关(默认为0)                                                                  |
-|                      |   - 0: 不使用国密算法发交易                                                                          |
-|                      |   - 1: 使用国密算法发交易                                                                            |
-+----------------------+------------------------------------------------------------------------------------------------------+
-|**systemProxyAddress**|  系统代理合约地址，对应节点config.json中的systemproxyaddress值                                       |
-+----------------------+------------------------------------------------------------------------------------------------------+
-| **privKey**          |  GOD账号私钥,对应                                                                                    |
-|                      |  `生成GOD账号 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html>`_ |
-|                      |  产生godInfo.txt的privKey                                                                            |
-+----------------------+------------------------------------------------------------------------------------------------------+
-| **account**          |  GOD账号, 对应                                                                                       | 
-|                      |  `生成GOD账号<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html>`_  |
-|                      |  产生的godInfo.txt的address                                                                          |
-+----------------------+------------------------------------------------------------------------------------------------------+
-|**ChannelConnections**|- caCertPath: ca.crt证书路径，默认为classpath:ca.crt                                                  |
-|                      |- clientKeystorePath: client.keystore证书路径，                                                       |
-|                      |  默认为classpath:client.keystore                                                                     |  
-|                      |- keystorePassWord: 生成client.keystore时对应的密码                                                   | 
-|                      |- clientCertPassWord: 生成client.keystore时对应的密码                                                 |
-|                      |- nodeid:SDK连接的FISCO BCOS节点ID，从节点data/node.nodeid文件获取                                    | 
-|                      |- ip: SDK连接的FISCO BCOS节点外网ip                                                                   |
-|                      |- channelPort: SDK连接的FISCO BCOS节点channelPort,                                                    |
-|                      |  对应config.json的channelPort                                                                        | 
-+----------------------+------------------------------------------------------------------------------------------------------+
++----------------------+----------------------------------------------------------------------------------------------+
+| **encryptType*       |  配置国密算法开启/关闭开关(默认为0)                                                          |
+|                      |  - 0: 不使用国密算法发交易                                                                   |
+|                      |  - 1: 使用国密算法发交易                                                                     |
++----------------------+----------------------------------------------------------------------------------------------+
+|**systemProxyAddress**|  系统代理合约地址，对应节点config.json中的systemproxyaddress值                               |
++----------------------+----------------------------------------------------------------------------------------------+
+| **privKey**          |  部署合约的私钥,可通过 ``fisco-bcos --newaccount  accountInfo.txt`` 产生普通账户，           |
+|                      |  并用普通账户私钥部署合约; 部署权限控制合约时，必须使用GOD账号私钥                           |
++----------------------+----------------------------------------------------------------------------------------------+
+| **account**          |  部署权限控制合约时,必须配置成GOD账号;                                                       |
++----------------------+----------------------------------------------------------------------------------------------+
+|**ChannelConnections**|- caCertPath: ca.crt证书路径，默认为classpath:ca.crt                                          |
+|                      |- clientKeystorePath: client.keystore证书路径，                                               |
+|                      |  默认为classpath:client.keystore                                                             |  
+|                      |- keystorePassWord: 生成client.keystore时对应的密码                                           | 
+|                      |- clientCertPassWord: 生成client.keystore时对应的密码                                         |
+|                      |- nodeid:SDK连接的FISCO BCOS节点ID，从节点data/node.nodeid文件获取                            |
+|                      |- ip: SDK连接的FISCO BCOS节点外网ip                                                           |
+|                      |- channelPort: SDK连接的FISCO BCOS节点channelPort,                                            |
+|                      |  对应config.json的channelPort                                                                | 
++----------------------+----------------------------------------------------------------------------------------------+
 ```
 
