@@ -1,4 +1,4 @@
-# 系统合约工具
+# 调用系统合约
 
 ```eval_rst
 
@@ -245,7 +245,7 @@
    获取联盟共识模板合约地址
      ./web3sdk ConsensusControl list
    关闭联盟共识特性
-     ./web3sdk ConsensusControl list turnoff
+     ./web3sdk ConsensusControl turnoff
 
 
 ```

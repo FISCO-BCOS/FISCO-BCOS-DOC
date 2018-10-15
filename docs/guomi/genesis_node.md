@@ -49,10 +49,10 @@ module.exports={
 #--------------------------------------------------------
 # -d: 创世节点路径，这里设置为~/mydata/node0
 # -o: 生成的创世节点配置genesis.json所在目录，这里设置为~/mydata/node0
-# -r: 可选，god账户地址，默认为0x3b5b68db7502424007c6e6567fa690c5afd71721
+# -s: 可选，god账户地址，默认为0x3b5b68db7502424007c6e6567fa690c5afd71721
 #--------------------------------------------------------
 # 初始化创世节点配置genesis.json
-$ bash ./generate_genesis.sh -d ~/mydata/node0 -o ~/mydata/node0 -r 0xf02a10f685a90c3bfc2eccd906b75fe3feeec9ad -g
+$ bash ./generate_genesis.sh -d ~/mydata/node0 -o ~/mydata/node0 -s 0xf02a10f685a90c3bfc2eccd906b75fe3feeec9ad -g
 God account address: 0xf02a10f685a90c3bfc2eccd906b75fe3feeec9ad
 ~/mydata/node0/genesis.json is generated
 
@@ -79,24 +79,26 @@ $ cat ~/mydata/node0/genesis.json
 # generate_genesis.sh 脚本功能
 $ bash ./generate_genesis.sh -h
 Usage:
- -o <output dir> Where genesis.json generate  #创世块配置文件genesis.json所在目录
+    -o    <output dir>            Where genesis.json generate #创世块配置文件genesis.json所在目录
+    -i/-d <genesis node id/dir>   Genesis node id or dir #创世节点node id
 Optional:
- -d <genesis node dir> Genesis node dir of the blockchain  #创世节点所在目录
- -i <genesis node id> Genesis node id   #创世节点node id，可选
- # god账号地址，非国密版默认是0xf78451eb46e20bc5336e279c52bda3a3e92c09b6
- -r <god account> Address of god account(default: 0xf78451eb46e20bc5336e279c52bda3a3e92c09b6)
--g Generate genesis node for guomi-FISCO-BCOS # # 为国密版FISCO BCOS产生genesis.json
- -h This help #显示帮助信息
-Example: # 生成非国密版FISCO BCOS genesis.json示例
+    -d    <genesis node dir>      Genesis node dir of the blockchain #创世节点所在目录
+    #god账号地址，非国密版默认是0xf78451eb46e20bc5336e279c52bda3a3e92c09b6
+    -s    <god address>           Address of god account(default: 0xf78451eb46e20bc5336e279c52bda3a3e92c09b6)
+    #为国密版FISCO BCOS产生genesis.json
+    -g                            Generate genesis node for guomi-FISCO-BCOS
+    -h                            This help # #显示帮助信息
+Example: #生成非国密版FISCO BCOS genesis.json示例
     bash ./generate_genesis.sh -d /mydata/node0 -o /mydata/node1
     bash ./generate_genesis.sh -i xxxxxxxxxxxxx -o /mydata/node1
-    bash ./generate_genesis.sh -d /mydata/node0 -o /mydata/node1 -r 0xf78451eb46e20bc5336e279c52bda3a3e92c09b6
-    bash ./generate_genesis.sh -i xxxxxxxxxxxxx -o /mydata/node1 -r 0xf78451eb46e20bc5336e279c52bda3a3e92c09b6
-GUOMI Example: # 生成国密版FISCO BCOS genesis.json示例
+    bash ./generate_genesis.sh -d /mydata/node0 -o /mydata/node1 -s 0xf78451eb46e20bc5336e279c52bda3a3e92c09b6
+    bash ./generate_genesis.sh -i xxxxxxxxxxxxx -o /mydata/node1 -s 0xf78451eb46e20bc5336e279c52bda3a3e92c09b6
+GUOMI Example: #生成国密版FISCO BCOS genesis.json示例
     bash ./generate_genesis.sh -d ~/mydata/node0 -o ~/mydata/node0 -g
     bash ./generate_genesis.sh -i xxxxxxxxxxxxx -o ~/mydata/node0 -g
-    bash ./generate_genesis.sh -d ~/mydata/node0 -o ~/mydata/node0 -r 0x3b5b68db7502424007c6e6567fa690c5afd71721 -g
-    bash ./generate_genesis.sh -i xxxxxxxxxxxxx -o ~/mydata/node0 -r 0x3b5b68db7502424007c6e6567fa690c5afd71721 -g
+    bash ./generate_genesis.sh -d ~/mydata/node0 -o ~/mydata/node0 -s 0x3b5b68db7502424007c6e6567fa690c5afd71721 -g
+    bash ./generate_genesis.sh -i xxxxxxxxxxxxx -o ~/mydata/node0 -s 0x3b5b68db7502424007c6e6567fa690c5afd71721 -g
+
 ```
 
 ## 创世节点环境初始化

@@ -26,7 +26,7 @@ $ cp ~/mydata/node0/data/sdk1/* ~/mydata/web3sdk/dist/conf
 ```eval_rst
 .. admonition:: web3sdk配置
 
-   web3sdk中开启国密算法，需要将 `encryptType` 选项设置为1，其他选项参考 `非国密版web3sdk配置 https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html>`_：
+   web3sdk中开启国密算法，需要将 `encryptType` 选项设置为1，其他选项参考 `非国密版web3sdk配置 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html>`_ ：
 
    .. image:: imgs/guomiconfig.PNG
       :align: center
