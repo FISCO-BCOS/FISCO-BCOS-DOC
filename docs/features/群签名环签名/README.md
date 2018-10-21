@@ -204,7 +204,7 @@ sig-service-client客户端提供了以下功能：
 - 访问[群签名&&环签名服务](https://github.com/FISCO-BCOS/sig-service)rpc接口；
 - 将群签名&&环签名信息写入链上（发交易）
 
-具体使用和部署方法请参考[群签名&&环签名客户端操作手册](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual).
+具体使用和部署方法请参考[群签名&&环签名客户端操作手册](https://github.com/FISCO-BCOS/sig-service-client).
 
 <br>
 

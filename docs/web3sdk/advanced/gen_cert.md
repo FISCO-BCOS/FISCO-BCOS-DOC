@@ -17,6 +17,8 @@
       #设web3sdk位于~/mydata/web3sdk目录
       $ cd ~/mydata/web3sdk/dist/conf #进入web3sdk配置路径
       $ cp ~/mydata/node0/data/ca.crt ca-agency.crt
+      #设FISCO-BCOS源码位于~/mydata/FISCO-BCOS/目录，拷贝证书配置:
+      $ cp ~/mydata/FISCO-BCOS/cert/cert.cnf .
       #追加机构证书到web3sdk根证书
       $ more ~/mydata/node0/data/agency.crt | cat >>ca-agency.crt
       #重命名web3sdk根证书为ca.crt
@@ -38,6 +40,8 @@
        $ openssl pkey -in sdk.key -pubout -out sdk.pubkey
        
        # 生成证书sdk.crt
+       # 设节点位于~/mydata/node0目录
+       $ cp ~/mydata/node0/data/agency.* .
        $ openssl req -new -key sdk.key -config cert.cnf  -out sdk.csr
        $ openssl x509 -req -days 3650 -in sdk.csr -CAkey agency.key -CA agency.crt -force_pubkey sdk.pubkey -out sdk.crt -CAcreateserial -extensions v3_req -extfile cert.cnf
 
