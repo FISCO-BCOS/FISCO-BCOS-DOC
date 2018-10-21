@@ -173,7 +173,6 @@ INFO|2018-08-12 20:33:36:696|+++++++++++++++++++++++++++ Generating seal on17d28
 INFO|2018-08-12 20:33:38:718|+++++++++++++++++++++++++++ Generating seal onf082c29bcadab361a1bd88853964f8daac643265e4b1a786d669d58a99ce3833#34tx:0,maxtx:0,tq.num=0time:1534077218718
 ```
 
-
 ```eval_rst
 
 .. admonition:: congratulations :)
@@ -181,4 +180,32 @@ INFO|2018-08-12 20:33:38:718|+++++++++++++++++++++++++++ Generating seal onf082c
    至此，您已经成功搭建一条可用的国密版FISCO-BCOS链 
     - 更高级的使用方法请参考 `FISCO-BCOS系统合约 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/system_contract.html>`_
     - 国密版web3sdk配置和使用方法请参考 `国密版web3sdk <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/config_guomi.html>`_
+```
+
+## 补充说明
+
+FISCO-BCOS提供了`remove_node.sh`命令将指定节点从记账节点列表中移除：
+
+```bash
+#进入执行脚本目录
+$ cd ~/mydata/FISCO-BCOS/tools/scripts
+#执行remove_node.sh命令将位于~/mydata/node0目录的node0节点退网
+$ bash remove_node.sh -d ~/mydata/node0 -g
+
+# remove_node.sh使用方法:
+$ bash remove_node.sh -h
+
+Usage:
+    -d  <node dir>            Node dir to be removed # 被从记账列表中移除的节点所在目录
+Optional:
+    -w  <web3lib dir>         Directory of web3lib # web3lib所在目录，使用默认配置，不填
+    -s  <systemcontract dir>  Directory of systemcontract # 系统合约所在目录，使用默认配置，不填
+    -g                        remove guomi node # 移除国密版FISCO-BCOS记账节点
+    -h                        This help
+Example: # 移除非国密版FISCO-BCOS记账节点示例
+    bash remove_node.sh -d /mydata/node0 
+    bash remove_node.sh -d /mydata/node0 -w ../web3lib/ -s ../systemcontract/ 
+Guomi Example: # 移除国密版FISCO-BCOS记账节点示例
+    bash remove_node.sh -d ~/mydata/node0 -g
+    bash remove_node.sh -d ~/mydata/node0 -w ../web3lib/ -s ../systemcontract/ -g
 ```

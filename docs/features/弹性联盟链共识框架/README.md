@@ -123,7 +123,7 @@ babel-node tool.js NodeAction registerNode xxx.json
 
 ##### 在新链上启用这个功能
 
-只需要按照文档正常部署系统合约即可，在`systemcontractv2`目录下运行：
+只需要按照文档正常部署系统合约即可，在`systemcontract`目录下运行：
 
 ```
 bable-node deploy.js
@@ -131,11 +131,11 @@ bable-node deploy.js
 
 #### 二、使用规则
 
-所有和该功能相关的合约与脚本工具都位于`systemcontractv2`目录下
+所有和该功能相关的合约与脚本工具都位于`systemcontract`目录下
 
 ##### 1.编写规则
 
-用户需要根据自己的需要，编写自己的规则。编写规则的文件为在`systemcontractv2`目录下的`ConsensusControl.sol`文件中的函数：
+用户需要根据自己的需要，编写自己的规则。编写规则的文件为在`systemcontract`目录下的`ConsensusControl.sol`文件中的函数：
 
 ConsensusControl.sol:
 
@@ -320,5 +320,5 @@ contract ConsensusControl is ConsensusControlAction {
 若希望在已有的链上启用这个新的功能，则要求**重新部署系统合约**，或至少重新部署 `NodeAction.sol` 及 `ConsensusControlMgr.sol`，并将这两个合约重新注册到已有的系统合约中，之后才能使用 `ConsensusControlTool.js` 工具
 
 也就是说在已有的链中替换了新版本的执行文件并希望启用该功能，需要：
-* 重新部署一次系统合约，并重新执行之前对系统合约管理过的组件相关操作，并把**除了**`NodeAction.sol`之外的**原来的系统合约所管理的合约组件**重新注册到新的系统合约中(首先先获取原系统合约管理组件的地址及对应关系，并参考 systemcontractv2/deploy.js 文件的写法重新注册到新系统合约中)，之后重新按照原来添加节点的方式重新添加节点恢复到原来的连接状态
-* 重新部署 `NodeAction.sol` 及 `ConsensusControlMgr.sol`(参考 systemcontractv2/deploy.js 文件)，并将这两个合约重新注册到已有的系统合约中，并重新按照原来添加节点的方式重新添加节点恢复到原来的连接状态
+* 重新部署一次系统合约，并重新执行之前对系统合约管理过的组件相关操作，并把**除了**`NodeAction.sol`之外的**原来的系统合约所管理的合约组件**重新注册到新的系统合约中(首先先获取原系统合约管理组件的地址及对应关系，并参考 systemcontract/deploy.js 文件的写法重新注册到新系统合约中)，之后重新按照原来添加节点的方式重新添加节点恢复到原来的连接状态
+* 重新部署 `NodeAction.sol` 及 `ConsensusControlMgr.sol`(参考 systemcontract/deploy.js 文件)，并将这两个合约重新注册到已有的系统合约中，并重新按照原来添加节点的方式重新添加节点恢复到原来的连接状态

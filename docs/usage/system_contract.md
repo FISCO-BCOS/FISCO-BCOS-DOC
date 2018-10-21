@@ -113,11 +113,11 @@ var receipt = web3sync.sendRawTransaction(config.account, config.privKey, instan
 
 **工具使用方法**
 
-请参看 注册记账节点、退出记账节点。
+请参考 [注册记账节点、退出记账节点](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html#id13)
 
-## 注销证书合约
+## 证书黑名单合约
 
-注销证书合约主要功能是维护注销证书信息列表。
+证书黑名单合约可将指定节点证书加入证书撤销列表，使其无法与其他节点建立连接，从而达到阻止作恶节点的目的。
 
 源码路径：systemcontract/CAAction.sol
 
@@ -148,7 +148,7 @@ var receipt = web3sync.sendRawTransaction(config.account, config.privKey, instan
 
 **工具使用方法**
 
-查看注销证书列表
+查看证书撤销列表信息
 
 ```shell
 babel-node tool.js CAAction all
@@ -172,20 +172,20 @@ babel-node tool.js CAAction all
 ```
 
 
-登记注销证书
+将指定节点证书添加到证书撤销列表
 
 ca.json 中status置为1
 
 ```shell
-babel-node tool.js CAAction update ca.json
+babel-node tool.js CAAction add ca.json
 ```
 
-移除注销证书
+从证书撤销列表删除指定节点证书
 
 ca.json 中status置为0
 
 ```shell
-babel-node tool.js CAAction update ca.json
+babel-node tool.js CAAction remove ca.json
 ```
 
 ## 权限管理合约

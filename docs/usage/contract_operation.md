@@ -60,6 +60,8 @@ contract HelloWorld{
 直接使用deploy.js，自动编译和部署合约。
 
 ``` shell
+# 进入合约所在目录
+cd /mydata/FISCO-BCOS/FISCO-BCOS/tools/contract
 babel-node deploy.js HelloWorld #注意后面HelloWorld后面没有".sol"
 ```
 
@@ -81,6 +83,8 @@ HelloWorld deploy success!
 用nodejs实现，具体实现方法请直接看demoHelloWorld.js源码。
 
 ``` shell
+# 进入合约所在目录
+cd /mydata/FISCO-BCOS/FISCO-BCOS/tools/contract
 vim demoHelloWorld.js
 ```
 
@@ -89,6 +93,8 @@ vim demoHelloWorld.js
 执行合约调用程序
 
 ``` shell
+# 进入合约所在目录
+cd /mydata/FISCO-BCOS/FISCO-BCOS/tools/contract
 babel-node demoHelloWorld.js
 ```
 
@@ -105,4 +111,3 @@ send transaction success: 0x6463e0ea9db6c4aff1e3fc14d9bdb86b29306def73e6d951913a
 HelloWorld contract set function call , (transaction hash ：0x6463e0ea9db6c4aff1e3fc14d9bdb86b29306def73e6d951913a522347526435)
 HelloWorld contract get function call again :HelloWorld!
 ```
-
