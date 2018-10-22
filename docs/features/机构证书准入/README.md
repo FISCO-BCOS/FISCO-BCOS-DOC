@@ -18,7 +18,7 @@
 >
 > （3）节点在配置了systemproxyaddress字段后，已经重启使得系统合约生效。
 >
-> （4）/mydata/FISCO-BCOS/systemcontractv2/下的config.js已经正确的配置了节点的RPC端口。
+> （4）/mydata/FISCO-BCOS/systemcontract/下的config.js已经正确的配置了节点的RPC端口。
 
 ### 2.1 配置节点证书
 
@@ -32,7 +32,7 @@
 
 FISCO BCOS通过授权某节点对应的公钥server.crt，控制此节点是否能够与其它节点正常通信。
 
-**注意：若要尝试使用[AMOP（链上链下）](amop使用说明文档.md)，请直接使用sample目录下的证书。AMOP暂不支持与新生成的证书进行连接。**
+**注意：若要尝试使用[AMOP(链上链下)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/features/AMOP/README.html)，请直接使用sample目录下的证书。AMOP暂不支持与新生成的证书进行连接。**
 
 **（1）生成根证书ca.crt**
 
@@ -140,10 +140,10 @@ serial=8A4B2CDE94348D22
 
 #### 2.3.2 编写证书准入状态文件
 
-> 在systemcontractv2目录下编写。
+> 在systemcontract目录下编写。
 
 ```shell
-/mydata/FISCO-BCOS/systemcontractv2
+/mydata/FISCO-BCOS/systemcontract
 vim ca.json
 ```
 
@@ -226,7 +226,7 @@ babel-node tool.js ConfigAction set CAVerify false
 > 修改相应证书对应的证书准入状态文件ca.json
 
 ```shell
-/mydata/FISCO-BCOS/systemcontractv2
+/mydata/FISCO-BCOS/systemcontract
 vim ca.json
 ```
 

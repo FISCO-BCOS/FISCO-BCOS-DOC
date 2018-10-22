@@ -75,10 +75,10 @@
 
 举例： 更改出块时间间隔（注意：参数值目前get/set都是以16进制计算表示的）
 
-    cd systemcontractv2;
+    cd systemcontract;
     babel-node tool.js ConfigAction set  intervalBlockTime  1000
 
 举例： 允许空块落盘
 
-    cd systemcontractv2;
+    cd systemcontract;
     babel-node tool.js ConfigAction set  omitEmptyBlock false
