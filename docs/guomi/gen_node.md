@@ -156,7 +156,7 @@ root     20995  0.2  0.1 2171448 13316 pts/3   Sl   09:15   0:05 ./fisco-bcos --
 root     21727  0.7  0.1 2023984 14092 pts/4   Sl   09:52   0:01 ./fisco-bcos --genesis /mydata/node1/genesis.json --config /mydata/node1/config.json
 
 # 通过最新日志check节点连接: 刷出"Recv topic"日志，表明节点连接正常
-$ tail -f ~/mydata/node1/log_2018081219.log | grep "Recv topic"
+$ tail -f ~/mydata/node1/log/log_2018081219.log | grep "Recv topic"
 DEBUG|2018-08-12 19:34:13:659| Recv topic type:0 topics:0
 DEBUG|2018-08-12 19:34:14:659| Recv topic type:0 topics:0
 DEBUG|2018-08-12 19:34:15:659| Recv topic type:0 topics:0

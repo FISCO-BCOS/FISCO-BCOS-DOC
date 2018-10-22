@@ -662,10 +662,10 @@ System contract is a majority design of FISCO-BCOS. A FISCO-BCOS block only need
 
 ### 4.1 Setup
 
-> Change directory to systemcontractv2 where we deploy our system contract
+> Change directory to systemcontract where we deploy our system contract
 
 ```shell
-cd /mydata/FISCO-BCOS/systemcontractv2
+cd /mydata/FISCO-BCOS/systemcontract
 ```
 
 > Install dependency
@@ -1085,7 +1085,7 @@ Node registration  means that the node is accepted as a member on block chain by
 >
 > (3) Nodes have been restarted after configuring *systemproxyaddress* in *config.json*.
 >
-> (4) *config.js* in the directory */mydata/FISCO-BCOS/systemcontractv2/* has been configured and point to a RPC port of an active node on chain.
+> (4) *config.js* in the directory */mydata/FISCO-BCOS/systemcontract/* has been configured and point to a RPC port of an active node on chain.
 
 ### 6.1 Node Registration
 
@@ -1096,7 +1096,7 @@ Registration procedures are all the same for every nodes. **Register genesis nod
 > An example for the genesis node:
 
 ```shell
-cd /mydata/FISCO-BCOS/systemcontractv2/
+cd /mydata/FISCO-BCOS/systemcontract/
 vim node1.json
 ```
 
@@ -1183,7 +1183,7 @@ cd /mydata/nodedata-2/
 >Check node registration again
 
 ```log
-cd /mydata/FISCO-BCOS/systemcontractv2/
+cd /mydata/FISCO-BCOS/systemcontract/
 babel-node tool.js NodeAction all
 ```
 
@@ -1220,7 +1220,7 @@ Idx=1
 >run
 
 ```shell
-cd /mydata/FISCO-BCOS/systemcontractv2/
+cd /mydata/FISCO-BCOS/systemcontract/
 babel-node monitor.js
 ```
 
@@ -1281,7 +1281,7 @@ FISCO-BCOS support institution certificate access control(ICAC). After nodes reg
 >
 > (3) Node has been restarted to enable system contract after (2);
 >
-> (4) config.js* in */mydata/FISCO-BCOS/systemcontractv2/* has point to an active node's RPC port.
+> (4) config.js* in */mydata/FISCO-BCOS/systemcontract/* has point to an active node's RPC port.
 
 ### 7.1 Configure Institution Certificate Files
 
@@ -1350,7 +1350,7 @@ serial=8A4B2CDE94348D22
 > Modify the example
 
 ```shell
-cd /mydata/FISCO-BCOS/systemcontractv2
+cd /mydata/FISCO-BCOS/systemcontract
 vim ca.json
 ```
 
@@ -1432,7 +1432,7 @@ You can update the institution certificate access status in system contract.
 > Modify the file *ca.json*
 
 ```shell
-/mydata/FISCO-BCOS/systemcontractv2
+/mydata/FISCO-BCOS/systemcontract
 vim ca.json
 ```
 
@@ -1855,7 +1855,7 @@ System proxy contract is the router for system contracts.
 
 It provides a map to get other system contracts' address according to system contract name.
 
-Path of the source code: systemcontractv2/SystemProxy.sol
+Path of the source code: systemcontract/SystemProxy.sol
 
 **(1) APIs**
 
@@ -1864,7 +1864,7 @@ Path of the source code: systemcontractv2/SystemProxy.sol
 | getRoute | contract name                            | contract address, cache flag, enable block number |                                          |
 | setRoute | contract name, contract address, cache flag | null                                     | If the contract name already exists, it will be replaced. |
 
-Samples for web3(refer to systemcontractv2/deploy.js):
+Samples for web3(refer to systemcontract/deploy.js):
 ```js
 console.log("register NodeAction.....");
 func = "setRoute(string,address,bool)";
@@ -1906,7 +1906,7 @@ Node  management contract maintains the node list on blockchain.
 
 It provides the node register/unregister operation.
 
-Path of the source code : systemcontractv2/NodeAction.sol
+Path of the source code : systemcontract/NodeAction.sol
 
 **(1)APIs**
 
@@ -1915,7 +1915,7 @@ Path of the source code : systemcontractv2/NodeAction.sol
 | registerNode | NodeID, IP, port, identitytype, nodedesc, node CA hash, node agency, node number | Boolean | If the NodeID already exists, the request will be ignored. |
 | cancelNode   | NodeID                                   | Boolean | If the route name does not exist, the request will be ignored. |
 
-Samples for web3(refer to systemcontractv2/tool.js):
+Samples for web3(refer to systemcontract/tool.js):
 ```js
 var instance=getAction("NodeAction");
 var func = "registerNode(string,string,uint256,uint8,string,string,string,uint256)";
@@ -1931,7 +1931,7 @@ Please refer to *6.1 Node Registration*
 
 Institution certificate contract maintains the institution certificate information.
 
-Path of the source code: systemcontractv2/CAAction.sol
+Path of the source code: systemcontract/CAAction.sol
 
 **(1)APIs**
 
@@ -1942,7 +1942,7 @@ Path of the source code: systemcontractv2/CAAction.sol
 | get          | certificate hash                         | certificate hash, public key, org name, certificate start time, certificate end time, certificate status, blockID |                                          |
 | getIp        | certificate hash                         | IP white list, IP black list             |                                          |
 
-Samples for web3(refer to systemcontractv2/tool.js):
+Samples for web3(refer to systemcontract/tool.js):
 ```js
 var instance=getAction("CAAction");
 var func = "update(string,string,string,uint256,uint256,uint8,string,string)";
@@ -1980,9 +1980,9 @@ An outer-account should only be owned by one role, and a role owns one authoriza
 
 An authorization is exclusively identified by a contract address and a contract interface. 
 
-Path of the source code :systemcontractv2/AuthorityFilter.sol	
+Path of the source code :systemcontract/AuthorityFilter.sol	
 
-Transaction authorization filter: systemcontractv2/Group.sol
+Transaction authorization filter: systemcontract/Group.sol
 
 **(1) APIs**
 
@@ -1993,7 +1993,7 @@ Transaction authorization filter: systemcontractv2/Group.sol
 | Transaction Authority Filter | setUserGroup  | outer-account, role contract             |                |       |
 |                              | process       | outer-account, transaction from account, contract address, contract interface, transaction input data |                |       |
 
-Samples for web3(refer to systemcontractv2/deploy.js):
+Samples for web3(refer to systemcontract/deploy.js):
 ```js
 func = "setUserGroup(address,address)";
 params = [config.account, Group.address];
@@ -2019,7 +2019,7 @@ Network configuration contract maintains some configuration of the running netwo
 
 All members reach consensus of network configuration contract, making that all configuration of members are the same.
 
-Path of the source code: systemcontractv2/ConfigAction.sol
+Path of the source code: systemcontract/ConfigAction.sol
 
 **(1) Network config illustration**
 
@@ -2040,7 +2040,7 @@ Path of the source code: systemcontractv2/ConfigAction.sol
 | set      | config, config value | null                   | If existed, it will be replaced |
 | get      | config               | config value, block ID |                                 |
 
-Samples for web3(refer to systemcontractv2/tool.js):
+Samples for web3(refer to systemcontract/tool.js):
 ```js
 var func = "set(string,string)";
 var params = [key,value];
