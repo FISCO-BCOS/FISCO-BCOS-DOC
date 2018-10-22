@@ -37,7 +37,7 @@
         <property name="connectionsStr">
             <list>
                 <!--节点配置：【节点id，可以是任意字符串】@【IP】:【channel port端口】-->
-                <value>node1@127.0.0.1:30303</value>
+                <value>node1@127.0.0.1:8891</value>
             </list>
         </property>
 
@@ -60,7 +60,7 @@
             <property name="account" value="0x776bd5cf9a88e9437dc783d6414bccc603015cf0" />
             <property name="outPutpath" value="./output/" />
         </bean>
-
+     日志级别配置：修改log4j.properties文件，将 log4j.rootLogger = INFO , C , D , E 中INFO改为 DEBUG 或者ERROR
 
 .. important::
    -  **节点id查询方法** ：
