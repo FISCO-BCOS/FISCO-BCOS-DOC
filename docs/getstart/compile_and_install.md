@@ -16,7 +16,7 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 ## 安装FISCO-BCOS
 
-切换到FISCO-BCOS目录下，执行FISCO-BCOS安装脚本。`build.sh`默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载官方`fisco-bcos`程序，使用`-b`选项从源码编译。
+切换到FISCO-BCOS目录下，执行FISCO-BCOS安装脚本。脚本自动下载并安装程序。
 
 ```bash
 cd FISCO-BCOS 
