@@ -21,10 +21,7 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 ```bash
 cd FISCO-BCOS 
 bash build.sh
-# build.sh Usage:
-#   -b If set, build fisco-bcos from source and install. Default download fisco-bcos from GitHub
-#   -g If set, build guomi-fisco-bcos build and install
-#   -h Help
+#若需要源码编译安装 使用 bash build.sh -b
 ```
 
 检查是否安装成功
