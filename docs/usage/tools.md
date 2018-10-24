@@ -894,6 +894,7 @@ caHash=BE4790D7B2BA3D1A
 Idx=0
 blocknumber=59
 ```
+### 节点退网
 
 **脚本**：remove_node.sh
 
