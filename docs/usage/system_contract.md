@@ -118,7 +118,7 @@ var receipt = web3sync.sendRawTransaction(config.account, config.privKey, instan
 #1. 进入脚本所在目录(设FISCO-BCOS源码位于/mydata/FISCO-BCOS目录, 注册的节点位于/mydata/node0目录)
 $ cd /mydata/FISCO-BCOS/tools/scripts
 #2. 调用register_node.sh注册记账节点
-$ bash register_node.sh -d /mydata/node0/node.json
+$ bash register_node.sh -d /mydata/node0
 
 # 退出记账节点(设退出的节点位于/mydata/node0目录)
 $bash remove_node.sh -d /mydata/node0 
