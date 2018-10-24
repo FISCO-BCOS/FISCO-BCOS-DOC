@@ -937,7 +937,7 @@ cd /mydata/FISCO-BCOS/tools/scripts
 bash remove_node.sh -h
 ```
 
-将指定节点目录，将节点注册入网
+将指定节点目录，将节点退网:
 
 ``` shell
 bash remove_node.sh -d /mydata/node0 
