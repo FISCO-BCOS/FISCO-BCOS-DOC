@@ -11,14 +11,14 @@ FISCO BCOS平台基于现有的BCOS开源项目进行开发，聚焦于金融行
 .. toctree::
    :maxdepth: 1
 
-   docs/AMOP/readme.rst
-   docs/Contract Name Service/readme.md
-   docs/FISCO BCOS Permission Model/readme.md
-   docs/Group signature and Ring signature/readme.md
-   docs/Guide to System Configuration/readme.md
-   docs/Parallel Practical Byzantine Fault Tolerance Consensus/readme.md
-   docs/Regulated Zero-knowledge proof/readme.md
-   docs/System Contract Introduction/readme.md
-   docs/FISCO BCOS Docker Installation Manual/readme.md
-   docs/FISCO BCOS manual/readme.md
-   docs/FISCO BCOS One-Click Installation Manual/readme.md
+   docs/AMOP/README.rst
+   docs/Contract Name Service/README.md
+   docs/FISCO BCOS Permission Model/README.md
+   docs/Group signature and Ring signature/README.md
+   docs/Guide to System Configuration/README.md
+   docs/Parallel Practical Byzantine Fault Tolerance Consensus/README.md
+   docs/Regulated Zero-knowledge proof/README.md
+   docs/System Contract Introduction/README.md
+   docs/FISCO BCOS Docker Installation Manual/README.md
+   docs/FISCO BCOS manual/README.md
+   docs/FISCO BCOS One-Click Installation Manual/README.md
