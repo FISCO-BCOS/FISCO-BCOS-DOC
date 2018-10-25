@@ -11,7 +11,6 @@ FISCO BCOS平台基于现有的BCOS开源项目进行开发，聚焦于金融行
 .. toctree::
    :maxdepth: 1
 
-   docs/index.rst
    docs/AMOP/readme.md
    docs/Contract Name Service/readme.md
    docs/FISCO BCOS Permission Model/readme.md
