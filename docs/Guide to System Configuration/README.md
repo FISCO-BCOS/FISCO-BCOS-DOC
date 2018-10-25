@@ -1,4 +1,4 @@
-# Guide to System Configuration
+# System Configuration
 **Author: fisco-dev**   
 ## Design Overview ##
 
@@ -50,7 +50,7 @@ Value: >= 1000
 Default: 1000
 
 ### CAVerify ###
-Description: enable CA verification 
+Description: enable CA verification
 
 Value: true/false
 
@@ -67,11 +67,11 @@ Default: true
 
 > Configuration can be updated by calling system contract on any node but using genesis node is recommended.
 
-Command to update configuration: 
+Command to update configuration:
 
     babel-node tool.js ConfigAction set [parameter] [value]
 
-Command to get configuration: 
+Command to get configuration:
 
     babel-node tool.js ConfigAction get [parameter]
 

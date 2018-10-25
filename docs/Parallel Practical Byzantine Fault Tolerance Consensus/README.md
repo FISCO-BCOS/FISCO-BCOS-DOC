@@ -1,23 +1,23 @@
-# Parallel Practical Byzantine Fault Tolerance Consensus Algorithm
+# Parallel PBFT
 **Author: fisco-dev**  
 
 ## 1. Glossary
 ### Blockchain:   
-Blockchain is a growing list of records, called blocks, which are linked using cryptography. Each block contains current block data and a cryptographic hash of the previous block. There are two key concepts in blockchain: cryptography and decentralization. These two key concepts are used to ensure that the block data cannot be tampered with. 
+Blockchain is a growing list of records, called blocks, which are linked using cryptography. Each block contains current block data and a cryptographic hash of the previous block. There are two key concepts in blockchain: cryptography and decentralization. These two key concepts are used to ensure that the block data cannot be tampered with.
 A block consists of block head and block body. The block head contains the block height(h), previous block hash(prevHash) etc., and the block body mainly contains transaction data.
 <br>
 ![](./assets/pbft_blockchain.jpg)  
-### P2P(peer-to-peer) network: 
+### P2P(peer-to-peer) network:
 Unlike traditional centralized networks, P2P networks is that participants make up a network through P2P protocols, and participants are peers. P2P network has the following advantages:
 1. **Decentralization**: No need of centralized server, resources and servers are separated on nodes and all the data transfers and services happen between nodes.
 2. **Robustness**: Nodes joining or quitting the blockchain does not impact network services.
 3. **Extensibility**: Supports extensibility of the system by increasing the number of nodes. For example, based on the P2P file download protocol, as more users join, speed for download becomes faster.
-4. **Cost-effectiveness**: In the P2P network, the nodes are generally ordinary machines. Industry level service provisioning is achieved through use of network system built upon ordinary machines with brings considerable cost advantage. 
-### Node: 
+4. **Cost-effectiveness**: In the P2P network, the nodes are generally ordinary machines. Industry level service provisioning is achieved through use of network system built upon ordinary machines with brings considerable cost advantage.
+### Node:
 In a P2P network, every participant is a node and the nodes constitute the blockchain. In a blockchain P2P network, a node is a uniquely-identified participant with a complete ledger copy, and participates in consensus and account maintenance.
-### Consensus algorithm: 
+### Consensus algorithm:
 Every node in the blockchain P2P network confirms a batch of transactions by an algorithm and ensures that all nodes have consistent confirmation results for the batch of transactions. This algorithm is called blockchain consensus algorithm.
-### Byzantine Fault Tolerance(BFT): 
+### Byzantine Fault Tolerance(BFT):
 Byzantine fault tolerance comes from the Byzantine general problem. In a P2P network system, where nodes may run in any form without restrictions and may unite to perform malicious actions. As long as the number of such malicious nodes is within a certain range, the system still continues functioning properly, and the system is called Byzantine fault tolerant system.
 
 ## 2. Brief to existing consensus algorithm
@@ -48,8 +48,8 @@ Consensus decision-making is the process of blockchain network confirming a batc
 4. Vote: If more than 2/3 of all nodes sign the transaction, then the transaction is broadcasted.
 5. Data to disk: If more than 2/3 of all nodes vote, then the data is stored to disk.
 ![](./assets/pbft_process.png)  
- 
- 
+
+
 ###  3.4 Exception handling
 In the several stages of the consensus decision-making process described in section 3.3, each stage may not be able to work smoothly due to reasons such as error, timeout or deliberate malicious activities and may fail the consensus decision-making process. FISCO BCOS uses a patented algorithm which solves this problem through introduction of an exception handling process.
 The whole process of a consensus is defined as a view, and all stages need to be completed in the same view.

@@ -1,11 +1,11 @@
-# FISCO BCOS Permission Model
+# Permission Model
 
-**Author: fisco-dev** 
-## Introduction to Permission Model - ARPI 
+**Author: fisco-dev**
+## Introduction to Permission Model - ARPI
 
 Unlike public chain which anyone can access, transact and search, the consortium chain has the specific entry requirements, such as access control, various transactions support, privacy & security,high stablity etc. There are two key aspects in the consortium chain: "permission" and "control"
 
-The permission model ARPI(Account—Role—Permission—Interface) is based on the thought of **system level permission** and **interface level permission**. 
+The permission model ARPI(Account—Role—Permission—Interface) is based on the thought of **system level permission** and **interface level permission**.
 
 System level permission controls whether an account can deploy or call a contract. When a request is received, the system will check the sender's permissions and will permit or reject accordingly. Interface level permission controls whether an account can call a specific interface of a contract. The admin can give an account the permissions to call all or part of the interfaces of a contract.
 
@@ -66,7 +66,7 @@ A regulator is a person who is responsible for setting up the permission specifi
 
    >Note: The access control will be enabled after executing ARPI_Model.js, you can be disabled by using the GOD account, to avoid impacting other accounts to deploy or call contracts accidently.
 
-2. AuthorityManager.js located under the same folder systemcontract, used to manage TransactionFilterChain and provides the query interfaces to FilterChain, Filter, and Group. 
+2. AuthorityManager.js located under the same folder systemcontract, used to manage TransactionFilterChain and provides the query interfaces to FilterChain, Filter, and Group.
 
    >Note: AuthorityManager.js and ARPI_Model.js execution requires God account.
 

@@ -2,16 +2,27 @@
 FISCO BCOS Documentation
 ##############################################################
 
-FISCO BCOS平台是金融区块链合作联盟（深圳）（以下简称：金链盟）开源工作组以金融业务实践为参考样本，在BCOS开源平台基础上进行模块升级与功能重塑，深度定制的安全可控、适用于金融行业且完全开源的区块链底层平台。
-金链盟开源工作组获得金链盟成员机构的广泛认可，并由专注于区块链底层技术研发的成员机构及开发者牵头开展工作。其中首批成员包括以下单位（排名不分先后）：博彦科技、华为、深证通、神州数码、四方精创、腾讯、微众银行、越秀金科。
-FISCO BCOS平台基于现有的BCOS开源项目进行开发，聚焦于金融行业的分布式商业需求，从业务适当性、性能、安全、政策、技术可行性、运维与治理、成本等多个维度进行综合考虑，打造金融版本的区块链解决方案。
-为了让大家更好的了解FISCO BCOS区块链开源平台的使用方法。本文档按照Step By Step的步骤详细介绍了FISCO BCOS区块链的构建、安装、启动，智能合约部署、调用等初阶用法，还包括多节点组网、系统合约等高阶内容的介绍。
-本文档不介绍FISCO BCOS区块链设计理念及思路，详情请参看白皮书。
+FISCO BCOS is an open-sourced, cross-industry, collaborative, and secure blockchain platform. Two major camps of blockchain technology - public and consortium chains, to better serve the general public, open consortium chain is the perfect choice for enterprises to unlock the potential of collaborative business model. FISCO BCOS is born to support open consortium chain applications, by supporting multiple chains’, and cross-chain communication.
+
+The community - Financial Blockchain Shenzhen Consortium (FISCO) is established on May 31, 2016. It has attracted more than 100 members including financial institutions and financial information service companies so far. The first members include the following organizations: Beyondsoft, Huawei, Shenzheng, Shenzhou Digital, Forms Syntron, Tencent, WeBank, Yuexiu Jinke.
+
+FISCO BCOS is developed based on the existing BCOS open-sourced platform, focusing on collaborative business model cross industry, considering from multiple dimensions such as business suitability, performance, security, normality, technical feasibility, operation & governance, and cost, to finally provide a blockchain solution.
+
+Based on FISCO BCOS's blockchain platform, a “blockchain + finance” scenario can be quickly built, with following benefits:
+-	For banking institutions, it can reduce the settlement cost, improve the efficiency of the operation of the middle and back offices, and improve the automation of the process.
+-	For non-banking financial institutions, it can enhance the authority of equity registration, information deposit, reduce the risk of counterparty, solve data tracking and information anti-counterfeiting problems, and reduce the operating costs of auditing.
+-	For financial regulators, it provides consistent and easy-to-audit data. Through data analysis of inter-agency blockchains, financial services can be regulated faster and more accurately than traditional audit process, and anti-money laundering can be strengthened.
+-	In cross-border financial scenarios, it helps to achieve ledger sharing among the institutions, reduce the cost of inter-bank reconciliation and settlement, and dispute friction costs, thereby improving the processing speed and efficiency of cross-border businesses.
+
+So, what is FISCO BCOS? It is a platform/community with software developers building blockchain frameworks and solutions.
+
+The open source license for FISCO BCOS is GPL3.0 .
+
 
 .. toctree::
    :maxdepth: 1
 
-   docs/AMOP/README.rst
+   docs/AMOP/README.md
    docs/Contract Name Service/README.md
    docs/FISCO BCOS Permission Model/README.md
    docs/Group signature and Ring signature/README.md

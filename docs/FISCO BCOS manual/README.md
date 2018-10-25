@@ -1,6 +1,6 @@
 # FISCO-BCOS Manual  
 
-[中文版本：FISCO BCOS使用说明书1.0](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual)
+[Chinese version](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual)
 
 ## Preface  
 
@@ -86,7 +86,7 @@ cd /mydata
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 #change to FISCO-BCOS root dir
-cd FISCO-BCOS 
+cd FISCO-BCOS
 ```
 
 For more, please refer to <u>Appendix:11.1 Source Code Structure</u>
@@ -106,9 +106,9 @@ chmod +x scripts/install_deps.sh
 mkdir -p build
 cd build/
 
-[Centos] 
+[Centos]
 cmake3 -DEVMJIT=OFF -DTESTS=OFF -DMINIUPNPC=OFF ..  #Note the .. in the end
-[Ubuntu] 
+[Ubuntu]
 cmake  -DEVMJIT=OFF -DTESTS=OFF -DMINIUPNPC=OFF ..  #Note the .. in the end
 
 make
@@ -135,23 +135,23 @@ The genesis node is the first node of a FISCO-BCOS blockchain. So let's get star
 ```shell
 #Create directory structure
 mkdir -p /mydata/nodedata-1/
-mkdir -p /mydata/nodedata-1/data/ 
-mkdir -p /mydata/nodedata-1/log/ 
-mkdir -p /mydata/nodedata-1/keystore/ 
+mkdir -p /mydata/nodedata-1/data/
+mkdir -p /mydata/nodedata-1/log/
+mkdir -p /mydata/nodedata-1/keystore/
 
 #copy files
-cd /mydata/FISCO-BCOS/ 
+cd /mydata/FISCO-BCOS/
 cp genesis.json config.json log.conf start.sh stop.sh /mydata/nodedata-1/
 ```
 
 ### 2.2 Generate God Account
 
-God account owns the highest priority of the blockchain. Create it before running our chain. 
+God account owns the highest priority of the blockchain. Create it before running our chain.
 
 #### 2.2.1 Generate a god account
 
 ```shell
-cd /mydata/FISCO-BCOS/tool 
+cd /mydata/FISCO-BCOS/tool
 cnpm install #install nodejs. Only required for the first time.
 node accountManager.js > godInfo.txt
 cat godInfo.txt |grep address
@@ -208,7 +208,7 @@ Introduction of other fields in *cryptomod.json* see: <u>Appendix:11.2 *cryptomo
 > Generate a node ID file according to *cryptomod.json* , and it will be generated into the path configured in cryptomod.json (in 2.3.1).
 
 ```shell
-cd /mydata/FISCO-BCOS/ 
+cd /mydata/FISCO-BCOS/
 fisco-bcos --gennetworkrlp  cryptomod.json #takes a while
 ls /mydata/nodedata-1/data/
 ```
@@ -276,7 +276,7 @@ vim /mydata/nodedata-1/config.json
 
 The communications between the nodes require certificate files. Configure it before starting up a node. The  certificate file include:
 
-- *ca.crt*: Root certificate public key of the blockchain. 
+- *ca.crt*: Root certificate public key of the blockchain.
 - *ca.key*: Root certificate private key of the blockchain.  Keep it secret and use it only when creating a node's certificate file.
 - *server.crt*: Public key for a node.
 - *server.key*: Private key for a node, keep it secret.
@@ -286,10 +286,10 @@ The communications between the nodes require certificate files. Configure it bef
 > Copy genkey.sh to data directory of the node and run it
 
 ```shell
-cp /mydata/FISCO-BCOS/genkey.sh /mydata/nodedata-1/data/ 
+cp /mydata/FISCO-BCOS/genkey.sh /mydata/nodedata-1/data/
 cd /mydata/nodedata-1/data/
 chmod +x genkey.sh
-./genkey.sh ca 365 #root certificate key named "ca" and is valid for 365 days. 
+./genkey.sh ca 365 #root certificate key named "ca" and is valid for 365 days.
 ls
 ```
 
@@ -304,7 +304,7 @@ ca.crt ca.key
 > Use *ca.key* and *ca.crt* to generate node node certificate files
 
 ```shell
-./genkey.sh server ./ca.key ./ca.crt 365 #node certificate named "server" and is valid for 365 days. 
+./genkey.sh server ./ca.key ./ca.crt 365 #node certificate named "server" and is valid for 365 days.
 ls /mydata/nodedata-1/data/
 ```
 
@@ -330,7 +330,7 @@ To start a node, we need 3 configuration files:
 
 #### 2.5.1 Configure *genesis.json*
 
-*genesis.json* describes genesis block information. 
+*genesis.json* describes genesis block information.
 
 ```shell
 vim /mydata/nodedata-1/genesis.json
@@ -356,9 +356,9 @@ vim /mydata/nodedata-1/genesis.json
 
 Introduction of the fields in *genesis.json* see: <u>Appendix:11.3 *genesis.json* Instructions</u>
 
-#### 2.5.2 Configure *config.json* 
+#### 2.5.2 Configure *config.json*
 
-*config.json* describes a node starting up information, includes  IP address, port, data directory, node ID etc. 
+*config.json* describes a node starting up information, includes  IP address, port, data directory, node ID etc.
 
 ```shell
 vim /mydata/nodedata-1/config.json
@@ -416,12 +416,12 @@ vim /mydata/nodedata-1/config.json
 
 Introduction of the fields in *config.json* see: <u> Appendix:  11.4 *config.json* Instructions</u></u>
 
-#### 2.5.3 Configure *log.conf* 
+#### 2.5.3 Configure *log.conf*
 
 Format and path of logs are configured in *log.conf*.
 
 ```shell
-vim /mydata/nodedata-1/log.conf 
+vim /mydata/nodedata-1/log.conf
 ```
 
 > Generally, we only need to configure the path. Like
@@ -471,7 +471,7 @@ Introduction of other fields in *log.conf* see: <u>Appendix:11.5 *log.conf* Inst
 
 ### 2.6 Start Up Genesis Node
 
-Check again that all these files below are correct: 
+Check again that all these files below are correct:
 
 - Certificate files(/mydata/nodedata-1/data): *ca.crt, server.crt, server.key*
 - Node ID files (/mydata/nodedata-1/data): *network.rlp, network.rlp.pub*
@@ -495,7 +495,7 @@ fisco-bcos --genesis ./genesis.json --config ./config.json & #start the node
 tail -f log/info* |grep ++++  #view the logs
 #To stop the node
 #ps -ef |grep fisco-bcos #view the process id
-#kill -9 13432 #kill the process by process id 13432 
+#kill -9 13432 #kill the process by process id 13432
 ```
 
 > Wait for a few seconds, get sealing information constantly.
@@ -631,7 +631,7 @@ HelloWorld部署成功！
 vim demoHelloWorld.js
 ```
 
-#### 3.3.2 Call smart contract function 
+#### 3.3.2 Call smart contract function
 
 > Run demoHelloWorld.js
 
@@ -639,7 +639,7 @@ vim demoHelloWorld.js
 babel-node demoHelloWorld.js
 ```
 
-> If success, get 
+> If success, get
 
 ```log
 RPC=http://127.0.0.1:8545
@@ -691,7 +691,7 @@ var proxy="http://127.0.0.1:8545";
 > Run *deploy.js* to deploy the system contract. (Note that *deploy.js*  is not the one in the *tool* directory)
 
 ```shell
-babel-node deploy.js 
+babel-node deploy.js
 ```
 
 > If sucess
@@ -780,7 +780,7 @@ mkdir -p /mydata/nodedata-2/log/ #store logs
 mkdir -p /mydata/nodedata-2/keystore/ #store keys
 
 #copy files from the genesis node
-cd /mydata/nodedata-1/ 
+cd /mydata/nodedata-1/
 cp genesis.json config.json log.conf start.sh stop.sh /mydata/nodedata-2/
 ```
 
@@ -793,7 +793,7 @@ cp genesis.json config.json log.conf start.sh stop.sh /mydata/nodedata-2/
 > Configure node ID generation path in *cryptomod.json*
 
 ```shell
-cd /mydata/FISCO-BCOS/ 
+cd /mydata/FISCO-BCOS/
 vim cryptomod.json
 ```
 
@@ -811,7 +811,7 @@ vim cryptomod.json
 
 Introduction of other fields in *cryptomod.json*: <u> Appendix:11.2 *cryptomod.json* Instructions</u>
 
-#### 5.2.2 **Generate a node ID file** 
+#### 5.2.2 **Generate a node ID file**
 
 > Generate a node ID file according to *cryptomod.json*, and it will be generated into the path configured in cryptomod.json (in 5.2.1).
 
@@ -843,7 +843,7 @@ b5adf6440bb0fe7c337eccfda9259985ee42c1c94e0d357e813f905b6c0fa2049d45170b78367649
 
 (2) Modify *config.json*
 
-> Append info of the new node to the field *NodeextraInfo*. 
+> Append info of the new node to the field *NodeextraInfo*.
 
 ```shell
 vim /mydata/nodedata-2/config.json
@@ -922,7 +922,7 @@ To start up a node, we need 3 configuration files:
 
 #### 5.4.1 Configure *config.json*
 
-*config.json* describes a node starting up information, includes  IP address, port, data directory, node ID etc. 
+*config.json* describes a node starting up information, includes  IP address, port, data directory, node ID etc.
 
 ```shell
 vim /mydata/nodedata-2/config.json
@@ -993,7 +993,7 @@ Introduction of other fields in *config.json* see: <u>Appendix:11.4 *config.json
 Format and path of logs are configured in *log.conf*.
 
 ```shell
-vim /mydata/nodedata-2/log.conf 
+vim /mydata/nodedata-2/log.conf
 ```
 
 > Generally, we only need to configure the path. Like
@@ -1043,7 +1043,7 @@ Introduction of other fields in *log.conf* see: <u>Appendix:11.5 *log.conf* Inst
 
 ### 5.5 Start Up the Node
 
-Check again that all these files below are correct: 
+Check again that all these files below are correct:
 
 - Certificate files(/mydata/nodedata-2/data): *ca.crt, server.crt, server.key*
 - Node ID files (/mydata/nodedata-2/data): *network.rlp, network.rlp.pub*
@@ -1068,7 +1068,7 @@ app  9656     1  4 16:10 ?        00:00:01 fisco-bcos --genesis /mydata/nodedata
 > Shut down the node, restart it after you finish the registration.
 
 ```shell
-./stop.sh 
+./stop.sh
 ```
 
 
@@ -1089,7 +1089,7 @@ Node registration  means that the node is accepted as a member on block chain by
 
 ### 6.1 Node Registration
 
-Registration procedures are all the same for every nodes. **Register genesis node first, then the other nodes.** 
+Registration procedures are all the same for every nodes. **Register genesis node first, then the other nodes.**
 
 #### 6.1.1 Configure the register configuration file
 
@@ -1100,7 +1100,7 @@ cd /mydata/FISCO-BCOS/systemcontract/
 vim node1.json
 ```
 
-> The contents should be the same with the *NodeextraInfo* field of the node in *config.json*. If nodes are deployed in multiple machine, the *ip* should be configured with the public network IP.  A correct register configuration file shows as the followings: 
+> The contents should be the same with the *NodeextraInfo* field of the node in *config.json*. If nodes are deployed in multiple machine, the *ip* should be configured with the public network IP.  A correct register configuration file shows as the followings:
 
 ```json
 {    "id":"24b98c6532ff05c2e9e637b3362ee4328c228fb4f6262c1c751f51952012cd68da2cbd8655de5072e49b950a503326942297cfaa9ca919b369be4359b4dccd56",
@@ -1287,7 +1287,7 @@ FISCO-BCOS support institution certificate access control(ICAC). After nodes reg
 
 Nodes of an institution shared the same institution certificate key. If we enable institution certificate access control, only the node who has an registered institution certificate key can connect to blockchain. Configuring institution certificate key of a node is to configure the certificate files in node's *data* directory, include :
 
-- *ca.crt*: Root certificate public key of the blockchain. 
+- *ca.crt*: Root certificate public key of the blockchain.
 - *ca.key*: Root certificate private key of the blockchain.  Keep it secret and use it only when creating a node's certificate file.
 - *server.crt*: Public key for an institution shared by every members in this institution.
 - *server.key*: Private key for an institution shared by every members in this institution. Keep it secret.
@@ -1354,7 +1354,7 @@ cd /mydata/FISCO-BCOS/systemcontract
 vim ca.json
 ```
 
-> Write the serial number into the field *hash*. Then configure the file *status*, 0 means unregistering and 1 means registering. And other fields, leave default. As the followings, set status to 1 to enable the certificate of node2. 
+> Write the serial number into the field *hash*. Then configure the file *status*, 0 means unregistering and 1 means registering. And other fields, leave default. As the followings, set status to 1 to enable the certificate of node2.
 
 ```json
 {
@@ -1500,7 +1500,7 @@ blacklist=
 **A:** First set the field *ssl* to 0 in the file *config.json* in all nodes' *data* directory and restart the nodes. The nodes will return connected and then set CAVerify to false. Second, set the field *ssl* to 1 in the file *config.json* in all nodes' *data* directory, write the certificate info into the CAAction contract and turn on the CAVerify switch.
 
 **Q: How can I set certificate validity period when generation certificate files?**
-*A:* In the certificate-generating script(*genkey.sh*), the root certificate validity period default to 10 years and user certificate validity period default to 1 year. You can change it in *genkey.sh*. 
+*A:* In the certificate-generating script(*genkey.sh*), the root certificate validity period default to 10 years and user certificate validity period default to 1 year. You can change it in *genkey.sh*.
 
 **Q: How to generate Java client certificate files?**  
 
@@ -1531,7 +1531,7 @@ Connecting to node at /mydata/nodedata-1/data/geth.ipc
 Connection successful.
 Current block number: 37
 Entering interactive mode.
-> 
+>
 ```
 
 ### 8.2 Use the Console
@@ -1579,7 +1579,7 @@ web3.eth.getBlock(2,console.log)
 web3.eth.getTransaction('0x63749a62851b52f9263e3c9a791369c7380acc5a9b6ee55dabd9c1013634e355',console.log)
 ```
 
-> If success 
+> If success
 
 ```log
 > null { blockHash: '0xa3c2b1eda74f26c688e78bffcc71c8561e49dc70fbfbd71b85c3b79a2c16bc81',
@@ -1667,7 +1667,7 @@ cd /mydata/nodedata-1
 
 #### 9.1.2 Export the genesis block
 
-> Use *--export-genesis* to assign exported genesis file name. 
+> Use *--export-genesis* to assign exported genesis file name.
 
 ```shell
 fisco-bcos --genesis ./genesis.json --config ./config.json 	--export-genesis ./new_genesis.json
@@ -1677,7 +1677,7 @@ fisco-bcos --genesis ./genesis.json --config ./config.json 	--export-genesis ./n
 
 ### 9.2 Peers and Block Height Monitoring
 
-*monitor.js* can monitor peers and block height of a node. Before you run the script, confirm: 
+*monitor.js* can monitor peers and block height of a node. Before you run the script, confirm:
 
 (1) The node you want to monitor has been started.
 
@@ -1724,7 +1724,7 @@ Please refer to these documentations:
 2. [Contract_Name_Service](../CNS_Contract_Name_Service_服务使用说明文档.md)
 3. EthCall [Design files](../EthCall设计文档.md) [Instructions](../EthCall说明文档.md)
 4. [web3sdk](../web3sdk使用说明文档.md)
-5. [Meshchain](../并行计算使用说明文档.md) 
+5. [Meshchain](../并行计算使用说明文档.md)
 6. [Distributed file system](../分布式文件系统使用说明.md)
 7. [Monitoring logs](../监控统计日志说明文档.md)
 8. [Homomorphic encryption;](../同态加密说明文档.md)
@@ -1851,7 +1851,7 @@ Here are some instructions for system contracts' source code path, API, samples 
 
 #### 11.7.1 System proxy contract
 
-System proxy contract is the router for system contracts. 
+System proxy contract is the router for system contracts.
 
 It provides a map to get other system contracts' address according to system contract name.
 
@@ -1902,7 +1902,7 @@ Now you can get all the route info in the system route list.
 
 #### 11.7.2 Node management Contract
 
-Node  management contract maintains the node list on blockchain. 
+Node  management contract maintains the node list on blockchain.
 
 It provides the node register/unregister operation.
 
@@ -1919,7 +1919,7 @@ Samples for web3(refer to systemcontract/tool.js):
 ```js
 var instance=getAction("NodeAction");
 var func = "registerNode(string,string,uint256,uint8,string,string,string,uint256)";
-var params = [node.id,node.ip,node.port,node.category,node.desc,node.CAhash,node.agencyinfo,node.idx]; 
+var params = [node.id,node.ip,node.port,node.category,node.desc,node.CAhash,node.agencyinfo,node.idx];
 var receipt = web3sync.sendRawTransaction(config.account, config.privKey, instance.address, func, params);
 ```
 
@@ -1946,9 +1946,9 @@ Samples for web3(refer to systemcontract/tool.js):
 ```js
 var instance=getAction("CAAction");
 var func = "update(string,string,string,uint256,uint256,uint8,string,string)";
-var params = 
-[ca.hash,ca.pubkey,ca.orgname,ca.notbefore,ca.notafter,ca.status,ca.whitelist,ca.blacklist]; 
-var receipt = 
+var params =
+[ca.hash,ca.pubkey,ca.orgname,ca.notbefore,ca.notafter,ca.status,ca.whitelist,ca.blacklist];
+var receipt =
 web3sync.sendRawTransaction(config.account, config.privKey, instance.address, func, params);
 ```
 
@@ -1978,9 +1978,9 @@ The authorization management contract fulfills FISCO-BCOS blockchain authority m
 
 An outer-account should only be owned by one role, and a role owns one authorization list.
 
-An authorization is exclusively identified by a contract address and a contract interface. 
+An authorization is exclusively identified by a contract address and a contract interface.
 
-Path of the source code :systemcontract/AuthorityFilter.sol	
+Path of the source code :systemcontract/AuthorityFilter.sol
 
 Transaction authorization filter: systemcontract/Group.sol
 

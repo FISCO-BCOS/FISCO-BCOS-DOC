@@ -1,4 +1,4 @@
-# FISCO BCOS System Contract Introduction
+# System Contract Introduction
 **Author: fisco-dev**  
 
 <!-- TOC -->
@@ -40,7 +40,7 @@ struct SystemContract {
     address _addr;		#contract address
     bool _cache;		#cache flag
     uint _blocknumber;		#block height when the contract is active
-}	
+}
 ```
 
 Key functions:
@@ -184,7 +184,7 @@ How to call the business contract:
 
 Permission checking can be extended by adding new Filter. Refer to the steps below:
 
-1. Create a Filter permission contract by inheriting TransactionFilterBase. The custom permissions verification logic should be implemented into the 'process' interface as per the business requirements. 
+1. Create a Filter permission contract by inheriting TransactionFilterBase. The custom permissions verification logic should be implemented into the 'process' interface as per the business requirements.
 2. Deploy custom permission contract and get contract address.
 3. Call the 'getRoute' method in SystemProxy to get contract address of TransactionFilterChain.
 4. Register custom filter contract by calling 'addFilter' method in TransactionFilterChain.

@@ -1,6 +1,6 @@
 # FISCO BCOS One-Click Installation Manual
 
-[中文版本：一键快速安装部署](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/sample)
+[Chinese version](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/sample)
 
 This manual helps FISCO BCOS beginners get started quickly.  FISCO BCOS provides automation scripts to help you install and deploy FISCO BCOS easily.
 
@@ -23,7 +23,7 @@ This manual helps FISCO BCOS beginners get started quickly.  FISCO BCOS provides
 
    ```shell
    $ cd fisco-bcos
-   $ chmod +x build.sh 
+   $ chmod +x build.sh
    $ ./build.sh
    ```
       The following message indicates FISCO BCOS has been installed sucessfully.
@@ -71,7 +71,7 @@ This part will help deploy a two-node blockchain network. The two nodes are in t
    cat /bcos-data/node0/log/* | grep peers
    ```
 
-   > The following message indicates the two nodes are connected with each other successfully. 
+   > The following message indicates the two nodes are connected with each other successfully.
 
    ```shell
    INFO|2017-11-22 17:22:06|Connected to 1 peers
@@ -102,7 +102,7 @@ Suppose 2 server are provided, the IP of one server with FISCO BCOS installed is
 
 1. **Deploy  software dependencies**
 
-   > Install the required software with the following command: 
+   > Install the required software with the following command:
 
    ```shell
    yum -y -q install epel-release

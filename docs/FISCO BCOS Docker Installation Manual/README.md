@@ -1,6 +1,6 @@
 # FISCO BCOS Docker Installation Manual
 
-[中文版本：使用Docker安装部署FISCO BCOS指南](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/docker)
+[Chinese version](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/docker)
 
 This manual helps a  FISCO BCOS beginner get started quickly. You just need to follow the steps in this documentation to start a blockchain network of two nodes on a linux server where Docker is installed already.
 
@@ -28,7 +28,7 @@ To check whether the nodes are started:
 	# ps -ef |grep fisco-bcos
 To check whether the nodes are connected each other:
 	# cat /log-fisco-bcos/node0/* | grep peers
-To check whether the nodes can seal: 
+To check whether the nodes can seal:
 	# tail -f /log-fisco-bcos/node0/* | grep ++++
 ```
 

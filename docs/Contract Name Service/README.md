@@ -1,4 +1,4 @@
-# CNS(Contract Name Service)
+# Contract Name Service
 
 ## Overview
 
@@ -68,7 +68,7 @@ After compiling the contract, a description of the contract interface - ABI - is
 ]
 ```
 Deploy the contract to the blockchain to generate an address, Such as: 0x269ab4bc23b07efeb3c3fd52eecfc4cbe6a50859.
-Finally, use the ABI and address to call the smart contract. The key input parameters are ABI and address even there are different SDK tools. 
+Finally, use the ABI and address to call the smart contract. The key input parameters are ABI and address even there are different SDK tools.
 
 ### 2. Brief to CNS
 
@@ -103,8 +103,8 @@ The client calls the contract service by RPC, first it will visit contract namin
 
 Contract manager contains mapping between the name and contract information. CNS Manager (cns_manager.js) is a tool that allows us to add, update, list and reset the mappings. Any changes made with the tool will be synchronized to the systems automatically.
 
-- Mapping in the contract manager: 
-  > Key: contract name, contract version number 
+- Mapping in the contract manager:
+  > Key: contract name, contract version number
   > Value: ABI, address.
 - Sample implementation code: systemcontractv2/ContractAbiMgr.sol  
 - Abstract Contract: tool/ContractBase.sol
@@ -121,8 +121,8 @@ Provide add, update, list and reset naming mapping information by calling contra
 - Tool: tool/cns_manager.js  
 
 ```
-babel-node cns_manager.js 
- cns_manager.js Usage: 
+babel-node cns_manager.js
+ cns_manager.js Usage:
          babel-node cns_manager.js get    contractName [contractVersion]
          babel-node cns_manager.js add    contractName
          babel-node cns_manager.js update contractName
@@ -161,14 +161,14 @@ cns_manager.js  ........................Begin........................
 ```javascript
 babel-node cns_manager.js get HelloWorld
 cns_manager.js  ........................Begin........................
- ====> contract => HelloWorld ,version => 
+ ====> contract => HelloWorld ,version =>
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x269ab4bc23b07efeb3c3fd52eecfc4cbe6a50859
          timestamp   = 1516866720115 => 2018/1/25 15:52:0:115
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
 ```
-- Command   : update 
+- Command   : update
 - Parameter : contractName
 - Description    : Update stored contract information  
 - Note      : 1, Failure in case the corresponding contract does not exist. To resolve, add the missing contract first; 2, The overwritten information can be queried by 'historylist' command and reset by 'reset' command.
@@ -186,7 +186,7 @@ cns update operation => cns_name = Test
          abi      =>[{"constant":false,"inputs":[{"name":"num","type":"uint256"}],"name":"trans","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"Ok","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
 Send transaction successfully: 0x1d3caff1fba49f5ad8af3d195999454d01c64d236d9ac3ba91350dd543b10c13
 ```
-- Command   : list 
+- Command   : list
 - Parameter : simple[optional]
 - Description    : List all the existing mappings in the contract manager. Display the contract name and version in case option 'simple' provided, else display all the details.
 
@@ -194,47 +194,47 @@ Send transaction successfully: 0x1d3caff1fba49f5ad8af3d195999454d01c64d236d9ac3b
 babel-node cns_manager.js list simple
 cns_manager.js  ........................Begin........................
  cns total count => 11
-        1. contract = ContractAbiMgr ,version = 
-        2. contract = SystemProxy ,version = 
-        3. contract = TransactionFilterChain ,version = 
-        4. contract = AuthorityFilter ,version = 
-        5. contract = Group ,version = 
-        6. contract = CAAction ,version = 
-        7. contract = ConfigAction ,version = 
-        8. contract = NodeAction ,version = 
-        9. contract = HelloWorld ,version = 
-        10. contract = Ok ,version = 
-        11. contract = Test ,version = 
+        1. contract = ContractAbiMgr ,version =
+        2. contract = SystemProxy ,version =
+        3. contract = TransactionFilterChain ,version =
+        4. contract = AuthorityFilter ,version =
+        5. contract = Group ,version =
+        6. contract = CAAction ,version =
+        7. contract = ConfigAction ,version =
+        8. contract = NodeAction ,version =
+        9. contract = HelloWorld ,version =
+        10. contract = Ok ,version =
+        11. contract = Test ,version =
 ```
 
-- Command   : historylist 
-- Parameter : 1. contract name | 2, contract version [optional] 
+- Command   : historylist
+- Parameter : 1. contract name | 2, contract version [optional]
 - Description    : Display all update history for provided contract
 ```javascript
 babel-node cns_manager.js historylist HelloWorld
 cns_manager.js  ........................Begin........................
  cns history total count => 3
- ====> cns history list index = 0 <==== 
+ ====> cns history list index = 0 <====
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x1d2047204130de907799adaea85c511c7ce85b6d
          timestamp   = 1516865606159 => 2018/1/25 15:33:26:159
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
- ====> cns history list index = 1 <==== 
+ ====> cns history list index = 1 <====
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x9c3fb4dd0a3fc5e1ea86ed3d3271b173a7084f24
          timestamp   = 1516866516542 => 2018/1/25 15:48:36:542
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
- ====> cns history list index = 2 <==== 
+ ====> cns history list index = 2 <====
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x1d2047204130de907799adaea85c511c7ce85b6d
          timestamp   = 1516866595160 => 2018/1/25 15:49:55:160
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
 
 ```
-- Command   : reset 
+- Command   : reset
 - Parameter : 1. contract name  2. contract version [optional] 3. index  
 - Description    : Resets the information in contract manager from its history at the specified index.
 
@@ -316,7 +316,7 @@ response:
         "version": "",
         "func": "",
         "params": [
-        
+
         ]
       }
 ```
@@ -380,7 +380,7 @@ contract HelloWorld{
     HelloWorld Contract address 0xc3869f3d9a5fc728de82cc9c807e85b77259aa3a
     HelloWorld Deployed successful ！
      [WARNING] cns add operation failed , ====> contract => HelloWorld version =>  is already exist. you can update it or change its version.
-     
+
 ```
 Multi-version Deployment
 In case multi-version Deployment using 'cns_manager add' fails due to duplicate version, modify the contract version by providing unique version number in the constructor of ContractBase.sol.
@@ -421,12 +421,12 @@ The latest contract version is v-1.0
 - RPC calls
 ```shell
 
-1. set - HelloWorld contract default version 
+1. set - HelloWorld contract default version
 curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{"data":{"contract":"HelloWorld","version":"","func":"set","params":["call defaut version"]},"randomid":"3"}],"id":1}'  "http://127.0.0.1:8746"  
 
 {"id":1,"jsonrpc":"2.0","result":"0x77218708a73aa8c17fb9370a29254baa8f504e71b12d01d90eae0b2ef9818172"}
 
-2. get - HelloWorld contract default version 
+2. get - HelloWorld contract default version
 curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_call","params":[{"data":{"contract":"HelloWorld","version":"","func":"get","params":[]}},"latest"],"id":1}'  "http://127.0.0.1:8746"  
 
 {"id":1,"jsonrpc":"2.0","result":"[\"call defaut version\"]\n"}
@@ -445,7 +445,7 @@ curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[
 - Upgrade contract
   Contract can be upgraded using 'update' command.
   If cns_manager has HelloWorld added already with old address, in order to be able to redeploy and upgrade HelloWorld, it requires to use ‘update’ command to avoid failure while adding.
-  
+
 ```shell
 babel-node cns_manager.js update HelloWorld
 cns_manager.js  ........................Begin........................
@@ -474,27 +474,27 @@ That means the current contract is the newly deployed contract.
 babel-node cns_manager.js historylist HelloWorld
 cns_manager.js  ........................Begin........................
  cns history total count => 4
- ====> cns history list index = 0 <==== 
+ ====> cns history list index = 0 <====
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x1d2047204130de907799adaea85c511c7ce85b6d
          timestamp   = 1516865606159 => 2018/1/25 15:33:26:159
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
- ====> cns history list index = 1 <==== 
+ ====> cns history list index = 1 <====
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x9c3fb4dd0a3fc5e1ea86ed3d3271b173a7084f24
          timestamp   = 1516866516542 => 2018/1/25 15:48:36:542
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
- ====> cns history list index = 2 <==== 
+ ====> cns history list index = 2 <====
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x1d2047204130de907799adaea85c511c7ce85b6d
          timestamp   = 1516866595160 => 2018/1/25 15:49:55:160
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
- ====> cns history list index = 3 <==== 
+ ====> cns history list index = 3 <====
          contract    = HelloWorld
-         version     = 
+         version     =
          address     = 0x269ab4bc23b07efeb3c3fd52eecfc4cbe6a50859
          timestamp   = 1516866720115 => 2018/1/25 15:52:0:115
          abi         = [{"constant":false,"inputs":[{"name":"n","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
@@ -532,7 +532,7 @@ var result = web3sync.callByNameService("HelloWorld","get","v-1.0",[]);
 var result = web3sync.sendRawTransactionByNameService(config.account,config.privKey,"HelloWorld","set","",["test message!"]);  
 
 //Call HelloWorld v-1.0 set sendRawTransaction
-var result = web3sync.sendRawTransactionByNameService(config.account,config.privKey,"HelloWorld","set","v-1.0",["test message!"]); 
+var result = web3sync.sendRawTransactionByNameService(config.account,config.privKey,"HelloWorld","set","v-1.0",["test message!"]);
 ```
 
 ## Appendix One: Function overload   
@@ -544,23 +544,23 @@ pragma solidity ^0.4.4;
 contract OverloadTest {
     string public msg;
     uint256 public u;
-    
+
     function OverloadTest() {
         msg = "OverloadTest Test";
         u = 0x01;
     }
-    
+
     function set(string _msg) public {
         msg = _msg;
     }
     function set(uint256 _u) public {
         u = _u;
     }
-    
+
     function get() public constant returns(string){
         return msg;
     }
-    
+
     function get(uint256 i) public constant returns(uint256){
         return u;
     }
@@ -611,7 +611,7 @@ curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_call","params":[{"data":{"c
 
 Call set(string _msg) by Javascript:
 var result = web3sync.sendRawTransactionByNameService(config.account,config.privKey,"OverloadTest","set(string)","",["test message!"]);
- 
+
 jsCall set(uint256 _i)):
 var result = web3sync.sendRawTransactionByNameService(config.account,config.privKey,"OverloadTest","set(uint256)","",["0x111"]);
 ```
@@ -680,8 +680,8 @@ public final class HelloWorld extends Contract {
     }
 
     public Future<Utf8String> get() {
-        Function function = new Function("get", 
-                Arrays.<Type>asList(), 
+        Function function = new Function("get",
+                Arrays.<Type>asList(),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {}));
         return executeCallSingleValueReturnAsync(function);
     }
@@ -736,43 +736,43 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		
+
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		//init service 
+		//init service
 		Service service = context.getBean(Service.class);
         ChannelEthereumService channelEthereumService = new ChannelEthereumService();
         channelEthereumService.setTimeout(10000);
         channelEthereumService.setChannelService(service);
-        
+
         //init web3
         Web3j web3j = Web3j.build(channelEthereumService);
         service.run();
-        
+
         //init private key
         ECKeyPair keyPair = Keys.createEcKeyPair();
         Credentials credentials = Credentials.create(keyPair);
-		
+
     	BigInteger gasPrice = new BigInteger("99999999");
     	BigInteger gasLimit = new BigInteger("99999999");
-    	
+
     	//Use CNS call the contract when the contract is created by loadByName.
     	HelloWorld instance = HelloWorld.loadByName("HelloWorld", web3j, credentials, gasPrice , gasLimit);
-    	
+
     	//Call HelloWorld set
     	Future<TransactionReceipt> receiptResult = instance.set(new Utf8String("HelloWorld Test."));
     	receiptResult.get();
-    	
+
     	//Call HelloWorld get
 		Future<Utf8String> result = instance.get();
 		System.out.println("HelloWorld get result = " + result.get().toString());
-		
-		
+
+
 		return;
 	}
 }
 
 ```
-**CNS can be used to call contract function if the contract instance created by loadByName.** 
+**CNS can be used to call contract function if the contract instance created by loadByName.**
 
 ```java
  HelloWorld instance = HelloWorld.loadByName("HelloWorld", web3j, credentials, gasPrice , gasLimit);  
@@ -794,8 +794,8 @@ public static XX loadByName(String contractName, Web3j web3j, TransactionManager
 The value format of contractName input parameter is: contractName@version, version is optional.
 
 5. Summary
-- Use JavaScript tool to deploy contracts. 
+- Use JavaScript tool to deploy contracts.
 - Use cns_manager.js tool to register a contract to contract manager.  
-- Use websdk tool to generate Java wrapper. 
+- Use websdk tool to generate Java wrapper.
 - Add the Java wrapper to project and create the contract by loadByName.
 - Call the contract function.
