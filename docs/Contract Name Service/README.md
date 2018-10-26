@@ -279,35 +279,6 @@ response:
 
 ```
 
-- eth_sendTransaction
-```json
-request:
-{
-  "jsonrpc": "2.0",
-  "method": "eth_sendTransaction",
-  "params": [
-    {
-      "data": {
-        "contract": "",   //contract name
-        "version": "",
-        "func": "",
-        "params": [
-        ]
-      },
-      "randomid": "2"
-    }
-  ],
-  "id": 1
-}
-
-response:
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": "" //transaction hash
-}
-```
-
 - eth_sendRawTransaction
   The RPC request and response format are the same except the 'data' field which is encoded as RLP HEX string.
 ```json
@@ -421,22 +392,12 @@ The latest contract version is v-1.0
 - RPC calls
 ```shell
 
-1. set - HelloWorld contract default version
-curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{"data":{"contract":"HelloWorld","version":"","func":"set","params":["call defaut version"]},"randomid":"3"}],"id":1}'  "http://127.0.0.1:8746"  
-
-{"id":1,"jsonrpc":"2.0","result":"0x77218708a73aa8c17fb9370a29254baa8f504e71b12d01d90eae0b2ef9818172"}
-
-2. get - HelloWorld contract default version
+1. get - HelloWorld contract default version
 curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_call","params":[{"data":{"contract":"HelloWorld","version":"","func":"get","params":[]}},"latest"],"id":1}'  "http://127.0.0.1:8746"  
 
 {"id":1,"jsonrpc":"2.0","result":"[\"call defaut version\"]\n"}
 
-3. set - HelloWorld contract version v-1.0
-curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{"data":{"contract":"HelloWorld","version":"v-1.0","func":"set","params":["call v-1.0 version"]},"randomid":"4"}],"id":1}'  "http://127.0.0.1:8746"  
-
-{"id":1,"jsonrpc":"2.0","result":"0xf43349d7be554fd332e8e4eb0c69e23292ffa8d127b0500c21109b60784aaa1d"}
-
-4. get - HelloWorld contract version v-1.0
+2. get - HelloWorld contract version v-1.0
  curl -X POST --data  '{"jsonrpc":"2.0","method":"eth_call","params":[{"data":{"contract":"HelloWorld","version":"v-1.0","func":"get","params":[]}},"latest"],"id":1}'  "http://127.0.0.1:8746"  
 
 {"id":1,"jsonrpc":"2.0","result":"[\"call v-1.0 version\"]\n"}
