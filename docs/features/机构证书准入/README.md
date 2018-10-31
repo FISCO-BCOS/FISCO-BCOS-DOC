@@ -18,7 +18,7 @@
 >
 > （3）节点在配置了systemproxyaddress字段后，已经重启使得系统合约生效。
 >
-> （4）/mydata/FISCO-BCOS/systemcontractv2/下的config.js已经正确的配置了节点的RPC端口。
+> （4）/mydata/FISCO-BCOS/tools/web3lib/下的config.js已经正确的配置了节点的RPC端口。
 
 ### 2.1 配置节点证书
 
@@ -142,10 +142,10 @@ serial=8A4B2CDE94348D22
 
 #### 2.3.2 编写证书准入状态文件
 
-> 在systemcontractv2目录下编写。
+> 在tools/systemcontract目录下编写。
 
 ```shell
-/mydata/FISCO-BCOS/systemcontractv2
+/mydata/FISCO-BCOS/tools/systemcontract
 vim ca.json
 ```
 
@@ -238,7 +238,7 @@ babel-node tool.js ConfigAction set CAVerify false
 > 修改相应证书对应的证书准入状态文件ca.json
 
 ```shell
-/mydata/FISCO-BCOS/systemcontractv2
+/mydata/FISCO-BCOS/tools/systemcontract
 vim ca.json
 ```
 
