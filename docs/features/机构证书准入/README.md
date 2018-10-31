@@ -95,7 +95,7 @@ openssl x509 -req -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out s
 
 ### 2.2 开启所有节点的SSL验证功能
 
-**注意：1.3+b版本已自动配置，若使用1.3+版本，可跳过本节。**
+**注意：1.3+版本已自动配置，若使用1.3+版本，可跳过本节。**
 
 在进行节点证书授权管理前，需开启区块链上每个节点的SSL验证功能。
 
