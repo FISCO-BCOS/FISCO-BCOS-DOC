@@ -1,4 +1,6 @@
-# FISCO-BCOS Manual
+################################################################################
+FISCO-BCOS Manual
+################################################################################
 
 [Chinese version](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual)
 
