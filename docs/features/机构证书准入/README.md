@@ -286,7 +286,7 @@ whitelist=
 blacklist=
 ```
 
-##三、证书注意事项:
+## 三、证书注意事项:
 
 妥善保管 server.key，切勿泄露，同时应把证书，server.crt 和 server.key 备份到安全位置
 
