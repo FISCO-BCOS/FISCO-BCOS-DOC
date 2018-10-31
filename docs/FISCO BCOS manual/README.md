@@ -5,7 +5,6 @@
 
 ## Hardware Requirements  
 
-
 +------------------+---------+---------------------------------------------+
 | Requirements     | Minimum | Recommended                                 |
 +==================+=========+=============================================+
@@ -22,11 +21,28 @@
 | JAVA             |         | Java(TM) 1.8 && JDK 1.8                     |
 +------------------+---------+---------------------------------------------+
 
++----------+---------+---------------------------------------------+
+| Requirements     | Minimum| Recommended                                    |
++==========+=========+=============================================+
+| CPU      | 1.5GHz  | 2.4GHz                                      |
++----------+---------+---------------------------------------------+
+| Memory     | 2GB     | 4GB                                         |
++----------+---------+---------------------------------------------+
+| Core Number     | 2     | 4                                         |
++----------+---------+---------------------------------------------+
+| Bandwidth     | 1Mb     | 5Mb                                         |
++----------+---------+---------------------------------------------+
+| Operation System |         | CentOS （7.2  64x）or Ubuntu（16.04  64x） |
++----------+---------+---------------------------------------------+
+| JAVA     |         | Java(TM) 1.8 && JDK 1.8                     |
++----------+---------+---------------------------------------------+
+
+
 ## Deploy FISCO BCOS
 
 ### Get the code
 
-> Clone the code to the directory, eg */mydata*:
+Clone the code to the directory, eg */mydata*:
 
 ```shell
 #create mydata dir
@@ -41,7 +57,7 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 ### Install and compile
 Change to FISCO-BCOS root dir
 
-> In *FISCO-BCOS* root directory:
+In *FISCO-BCOS* root directory:
 
 ```shell
 cd FISCO-BCOS
@@ -106,7 +122,6 @@ State:			Stop
 -----------------------------------------------------------------
 ```
 
-记录下创世节点的RPC address，之后会用到
 Record Genesis node's RPC address, which will be used later.
 ``` shell
 RPC address:  127.0.0.1:8545
@@ -117,7 +132,7 @@ RPC address:  127.0.0.1:8545
 ``` shell
 cd /mydata/node0
 bash start.sh
-#关闭用 sh stop.sh
+#stop command   sh stop.sh
 ```
 
 ### Register Genesis node to Consortium chain
