@@ -5,7 +5,7 @@
 .. important:: 
  
    **快速搭链工具**
-    - `FISCO BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 
+    - `FISCO BCOS 物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 
     - `FISCO BCOS docker <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/appendix.html>`_
 
    **手工搭链**
