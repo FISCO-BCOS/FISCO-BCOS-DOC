@@ -1,22 +1,3 @@
-# FISCO-BCOS Manual  
-
-[Chinese version](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual)
-
-
-## Hardware Requirements  
-
-
-| Requirements     | Minimum | Recommended                              |
-|------------------|---------|------------------------------------------|
-| CPU              | 1.5GHz  | 2.4GHz                                   |
-| Memory           | 2GB     | 4GB                                      |
-| Core Number      | 2       | 4                                        |
-| Bandwidth        | 1MB     | 5MB                                      |
-| Operation System |         | CentOS （7.2,64x）or Ubuntu（16.04,64x） |
-| JAVA             |         | Java(TM) 1.8 && JDK 1.8                  |
-
-
-
 ## Deploy FISCO BCOS
 
 ### Get the code

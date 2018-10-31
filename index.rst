@@ -23,7 +23,7 @@ The open source license for FISCO BCOS is GPL3.0 .
 .. toctree::
    :maxdepth: 1
 
-   docs/FISCO BCOS manual/README.md
+   docs/FISCO BCOS manual/index.rst
    docs/FISCO BCOS One-Click Installation Manual/README.md
    docs/FISCO BCOS Docker Installation Manual/README.md
    docs/AMOP/README.md
