@@ -2,11 +2,11 @@
 FISCO BCOS Overview
 ##############################################################
 
-FISCO BCOS is an open-sourced, cross-industry, collaborative, and secure blockchain platform. Two major camps of blockchain technology - public and consortium chains, to better serve the general public, open consortium chain is the perfect choice for enterprises to unlock the potential of collaborative business model. FISCO BCOS is born to support open consortium chain applications, by supporting multiple chains’, and cross-chain communication.
+FISCO BCOS is an open-sourced, cross-industry, collaborative, and secure blockchain platform. Two major camps of blockchain technology - public and consortium chains, to better serve the general public, open consortium chain is the perfect choice for enterprises to unlock the potential of collaborative businesses model. FISCO BCOS is born to support open consortium chain applications, by supporting multiple chains’, and cross-chain communication.
 
 The community - Financial Blockchain Shenzhen Consortium (FISCO) is established on May 31, 2016. It has attracted more than 100 members including financial institutions and financial information service companies so far. The first members include the following organizations: Beyondsoft, Huawei, Shenzheng, Shenzhou Digital, Forms Syntron, Tencent, WeBank, Yuexiu Jinke.
 
-FISCO BCOS is developed based on the existing BCOS open-sourced platform. Focusing on collaborative business model cross industry, considering from multiple dimensions such as business suitability, performance, security, normality, technical feasibility, operation & governance, and cost, to finally provide a blockchain solution.
+FISCO BCOS is developed based on the existing BCOS open-sourced platform. Focusing on collaborative businesses model cross industry, considering from multiple dimensions such as business suitability, performance, security, normality, technical feasibility, operation & governance, and cost, to finally provide a blockchain solution.
 
 Based on FISCO BCOS's blockchain platform, different blockchain scenarios can be quickly built, with following benefits:
 
