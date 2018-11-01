@@ -40,43 +40,15 @@ Group-Signature has the feature of tamper-resistant, repudiation-resistant, anon
 
 ### 1.2  Source Code Structure
 
-```eval_rst
 The table below descripts the source code structure of group-signature algorithm and the ring-signature algorithm:
-+--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
-| Module                                           | path                             | Description                                                                                            |
-+==================================================+==================================+========================================================================================================+
-|                                                  | - scripts/install_pbc.sh         |                                                                                                        |
-| Shell Scripts for dependencies install           | - deploy_pbc.sh                  | pbc and pbc-sig lib are used for group signature，install the pbc and pbc-sig by calling deploy_pbc.sh |
-+--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
-| source code for group signature & ring signature | deps/src/group_sig_lib.tgz       | source code for group signature & ring signature                                                       |
-+--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
-| Compile Module                                   | - cmake/FindPBC.cmake            |                                                                                                        |
-|                                                  | - cmake/ProjectGroupSig.cmake    | compile cmake file related to group signature & ring signature                                         |
-+--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
-|                                                  | libevm/ethcall/EthcallGroupSig.h |                                                                                                        |
-| Verification implement                           | libevm/ethcall/EthcallRingSig.h  | use ethcall to call the group/ring signature lib                                                       |
-+--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
-```
-```eval_rst
-
-web3sdk编译成功后，会生成dist目录，dist目录主要内容如下：
-
-+---------------+-------------------------------------------------------------------------------------+
-|目录           | 说明                                                                                |
-+===============+=====================================================================================+
-|dist/apps      | 存放web3sdk编译生成的jar包web3sdk.jar                                               |
-+---------------+-------------------------------------------------------------------------------------+
-|               |  - web3sdk: 调用web3sdk.jar执行web3sdk内方法(如部署系统合约、调用合约工具方法等)    |
-|dist/bin       |  - compile.sh: 将dist/contracts目录下的合约代码转换成java代码，供开发者使用         |
-+---------------+-------------------------------------------------------------------------------------+
-|dist/conf      | 配置目录, 用于配置节点信息、证书信息、日志目录等                                    |
-+---------------+-------------------------------------------------------------------------------------+
-|dist/contracts | 合约存放目录，compile.sh脚本可将存放于该目录下的合约代码转换成java代码                   |
-+---------------+-------------------------------------------------------------------------------------+
-|dist/lib       | 存放web3sdk依赖库的jar包                                                            |
-+---------------+-------------------------------------------------------------------------------------+
-```
-
+<!--table-->
+| <div align = left>Module</div>                   | <div align = left>path</div>                                 | <div align = left>Description</div>                          |
+| ------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Shell Scripts for dependencies install           | scripts/install_pbc.sh<br>deploy_pbc.sh                      | pbc and pbc-sig lib are used for group signature，install the pbc and pbc-sig by calling deploy_pbc.sh |
+| source code for group signature & ring signature | deps/src/group_sig_lib.tgz                                   | source code for group signature & ring signature             |
+| Compile Module                                   | cmake/FindPBC.cmake<br>cmake/ProjectGroupSig.cmake           | compile cmake file related to group signature & ring signature |
+| Verification implement                           | libevm/ethcall/EthcallGroupSig.h<br>libevm/ethcall/EthcallRingSig.h | use ethcall to call the group/ring signature lib             |
+<!--endtable-->
 FISCO BCOS supports configuring to enable or disable the ethcall for group signature & ring signature ( default is disabled).
 
 | <div align = left>Action</div>             | <div align = left>Compile</div>                                       | <div align = left>Compile time</div>                                       |<div align = left>Description</div>                                       |
