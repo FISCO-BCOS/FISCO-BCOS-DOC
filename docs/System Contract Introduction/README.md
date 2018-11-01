@@ -135,12 +135,29 @@ struct CaInfo{
 ```
 
 Key functions:
+```eval_rst
++------------+----------------------+-----------------------------------+------------------------------------------------+
+| function   | input parameters     | output parameters                 | description                                    |
++============+======================+===================================+================================================+
+| update     | string \_hash        | bool #result                      | update certificate                             |
+|            | string \_pubkey      |                                   | create certificate if certificate not exists   |
+|            | string \_orgname     |                                   |                                                |
+|            | uint \_notbefore     |                                   |                                                |
+|            | uint \_notafter      |                                   |                                                |
+|            | CaStatus \_status    |                                   |                                                |
+|            | string \_whitelist   |                                   |                                                |
+|            | string \_blacklist   |                                   |                                                |
++------------+----------------------+-----------------------------------+------------------------------------------------+
+| get        | string \_hash        | string#certificate hash           | get certificate information                    |
+|            |                      | string#certificate public key     |                                                |
+|            |                      | string#organization name          |                                                |
+|            |                      | uint#certificate effective date   |                                                |
+|            |                      | uint#certificate expire date      |                                                |
+|            |                      | CaStatus#certificate status       |                                                |
+|            |                      | uint##block height                |                                                |
++------------+----------------------+-----------------------------------+------------------------------------------------+
 
-| function     | input parameters                                     | output parameters                                     | description                        |
-| ------ | ---------------------------------------- | ---------------------------------------- | ------------------------- |
-| update | string _hash<br>string _pubkey<br>string _orgname<br>uint _notbefore<br>uint _notafter<br>CaStatus _status<br>string _whitelist<br>string _blacklist | bool #result                               | update certificate<br>create certificate if certificate not exists |
-| get    | string _hash                        | string#certificate hash<br>string#certificate public key<br>string#organization name<br>uint#certificate effective date<br>uint#certificate expire date<br>CaStatus#certificate status<br>uint##block height | get certificate information                    |
-
+```
 
 
 ### Permissions Management
