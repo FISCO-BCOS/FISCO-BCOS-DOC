@@ -23,7 +23,6 @@ The open source license for FISCO BCOS is GPL3.0 . Join us at `Github <https://g
 .. toctree::
    :maxdepth: 1
 
-   docs/FISCO BCOS manual/index.rst
    docs/AMOP/README.md
    docs/Contract Name Service/README.md
    docs/FISCO BCOS Permission Model/README.md
