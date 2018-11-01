@@ -173,11 +173,22 @@ All Filters must implement TransactionFilterBase's 'process' interface, Authorit
 Group.sol handles the concept of Role. It internally maintains the mapping flag for all permission entries for this role.
 
 Key functions:
+```eval_rst
++-------------------------+-----------------+-------------------------------------+---------------------+-----------------------+
+| contract                | function        | input parameters                    | output parameters   | description           |
++=========================+=================+=====================================+=====================+=======================+
+| TransactionFilterBase   | process         | address origin #external address    | bool#result         | permission checking   |
+|                         |                 | address from#from account address   |                     |                       |
+|                         |                 | address to#to account address       |                     |                       |
+|                         |                 | string func#contract address        |                     |                       |
+|                         |                 | string input#transaction input      |                     |                       |
++-------------------------+-----------------+-------------------------------------+---------------------+-----------------------+
+| Group                   | setPermission   | address to#to account address       | bool#result         | set permission        |
+|                         |                 | string func#contract address        |                     |                       |
+|                         |                 | bool permission#permission flag     |                     |                       |
++-------------------------+-----------------+-------------------------------------+---------------------+-----------------------+
 
-| contract                   | function            | input parameters                                     | output parameters      | description      |
-| --------------------- | ------------- | ---------------------------------------- | --------- | ------- |
-| TransactionFilterBase | process       | address origin #external address<br>address from#from account address<br>address to#to account address<br>string func#contract address<br>string input#transaction input| bool#result | permission checking    |
-| Group                 | setPermission | address to#to account address<br>string func#contract address<br>bool permission#permission flag | bool#result | set permission |
+```
 
 
 
@@ -187,22 +198,40 @@ ConfigAction.sol is the implementation of configuration management module for en
 
 Key functions:
 
-| function   | input parameters                              | output parameters                     | description    |
-| ---- | --------------------------------- | ------------------------ | ----- |
-| set  | string key #parameter<br>string value#config information value | N/A                        | set configuration |
-| get  | string key #parameter                   | string #config information<br> uint#block height | get configuration |
+```eval_rst
++------------+-----------------------------------------+------------------------------+---------------------+
+| function   | input parameters                        | output parameters            | description         |
++============+=========================================+==============================+=====================+
+| set        | string key #parameter                   | N/A                          | set configuration   |
+|            | string value#config information value   |                              |                     |
++------------+-----------------------------------------+------------------------------+---------------------+
+| get        | string key #parameter                   | string #config information   | get configuration   |
+|            |                                         | uint#block height            |                     |
++------------+-----------------------------------------+------------------------------+---------------------+
+
+```
 
 key parameters:
+```eval_rst
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
+| parameter              | description                                                             | default value   | recommend value   |
++========================+=========================================================================+=================+===================+
+| maxBlockHeadGas        | Gas spend limitation for each block (Hex)                               | 200000000       | 20000000000       |
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
+| intervalBlockTime      | an interval btw block generation(ms) (Hex)                              | 1000            | 1000              |
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
+| maxBlockTranscations   | configure the max transaction in a block(Hex)                           | 1000            | 1000              |
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
+| maxNonceCheckBlock     | Trace back max previous block number to avoid nonce duplication.(Hex)   | 1000            | 1000              |
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
+| maxBlockLimit          | max delay for transaction commit(Hex)                                   | 1000            | 1000              |
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
+| maxTranscationGas      | Gas spend limitation for each transaction(Hex)                          | 20000000        | 20000000          |
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
+| CAVerify               | CA verification flag                                                    | FALSE           | FALSE             |
++------------------------+-------------------------------------------------------------------------+-----------------+-------------------+
 
-| parameter                  | description                           | default value       | recommend value         |
-| -------------------- | ---------------------------- | --------- | ----------- |
-| maxBlockHeadGas      | Gas spend limitation for each block (Hex)                | 200000000 | 20000000000 |
-| intervalBlockTime    | an interval btw block generation(ms) (Hex)               | 1000      | 1000        |
-| maxBlockTranscations | configure the max transaction in a block(Hex)                 | 1000      | 1000        |
-| maxNonceCheckBlock   | Trace back max previous block number to avoid nonce duplication.(Hex)         | 1000      | 1000        |
-| maxBlockLimit        | max delay for transaction commit(Hex) | 1000      | 1000        |
-| maxTranscationGas    | Gas spend limitation for each transaction(Hex)               | 20000000  | 20000000    |
-| CAVerify             | CA verification flag                       | FALSE     | FALSE       |
+```
 
 ## Customizations
 
