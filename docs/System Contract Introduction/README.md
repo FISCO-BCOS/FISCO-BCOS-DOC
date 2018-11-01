@@ -44,11 +44,22 @@ struct SystemContract {
 ```
 
 Key functions:
-
-| function       | input parameters                                     | output parameters                                   | description                   |
-| -------- | :--------------------------------------- | -------------------------------------- | -------------------- |
-| getRoute | string key#route name                          | address#contract address<br>bool#catch flag<br>uint # block height | get route information               |
-| setRoute | string key#route name<br>address addr#contract address<br>bool cache#cache flag<br>unit blocknumber #block height | N/A                                      | set route<br>overwrite if route name exists |
+```eval_rst
++-------+----------------------------+---------------------------+---------------+
+| funct | input parameters           | output parameters         | description   |
+| ion   |                            |                           |               |
++=======+============================+===========================+===============+
+| getRo | string key#route name      | address#contract address, | get route     |
+| ute   |                            | bool#catch flag, uint #   | information   |
+|       |                            | block height              |               |
++-------+----------------------------+---------------------------+---------------+
+| setRo | string key#route name,     | N/A                       | set route,    |
+| ute   | address addr#contract      |                           | overwrite if  |
+|       | address, bool cache#cache  |                           | route name    |
+|       | flag, unit blocknumber     |                           | exists        |
+|       | #block height              |                           |               |
++-------+----------------------------+---------------------------+---------------+
+```
 
 
 

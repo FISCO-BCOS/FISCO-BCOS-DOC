@@ -21,13 +21,6 @@ Value: >= 1,000
 
 Default: 1,000
 
-### maxBlockHeadGas ###
-Description: Gas spend limitation for each block
-
-Value: >= 2,000,000,000
-
-Default: 2,000,000,000
-
 ### maxTranscationGas ###
 Description: Gas spend limitation for each transaction
 
@@ -75,12 +68,12 @@ Command to get configuration:
 
     babel-node tool.js ConfigAction get [parameter]
 
-An example to change block generation interval (Note: get/set needs HEX string as parameter)
+An example to change block generation interval
 
-    cd systemcontractv2;
+    cd tools/systemcontract;
     babel-node tool.js ConfigAction set  intervalBlockTime 1000
 
 allow to commit empty block
 
-    cd systemcontractv2;
+    cd tools/systemcontract;
     babel-node tool.js ConfigAction set  omitEmptyBlock false
