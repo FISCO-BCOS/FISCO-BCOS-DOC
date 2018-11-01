@@ -43,7 +43,7 @@ server.key
 
 ## 初始化普通节点环境
 
-类似于 [创世节点环境初始化](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/genesis_node.html#id3)`_ ,普通节点使用generate_node.sh脚本初始化普通节点环境。
+类似于 [创世节点环境初始化](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/genesis_node.html#id3), 使用generate_node.sh脚本初始化普通节点环境。
 
 ```bash
 # 进入脚本所在目录(设源码位于~/mydata目录)
@@ -86,7 +86,7 @@ State:                  Running (pid: 11524)
 $ bash ./generate_node.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -x 0xee80d7c98cb9a840b9c4df742f61336770951875 -i 3d4fe4c876cac411d4c7180b5794198fb3b4f3e0814156410ae4184e0a51097a01bf63e431293f30af0c01a57f24477ad1704d8f676bc7e345526ba1735db6a7 -s 0xf02a10f685a90c3bfc2eccd906b75fe3feeec9ad -g
 # 创建节点环境
 ---------- Generate node basic files ----------
-RUN: sh generate_node_basic.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -x 0xee80d7c98cb9a840b9c4df742f61336770951875 -g
+RUN: bash generate_node_basic.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -x 0xee80d7c98cb9a840b9c4df742f61336770951875 -g
 #...此处省略若干行....
 SUCCESS execution of command: sh generate_node_basic.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -x 0xee80d7c98cb9a840b9c4df742f61336770951875 -g
 # 创建普通节点genesis.json
