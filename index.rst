@@ -2,7 +2,7 @@
 FISCO BCOS Overview
 ##############################################################
 
-`FISCO BCOS <https://github.com/FISCO-BCOS>_ `is an open-sourced, cross-industry, collaborative, and secure blockchain platform. Two major camps of blockchain technology - public and consortium chains, to better serve the general public, open consortium chain is the perfect choice for enterprises to unlock the potential of collaborative businesses model. FISCO BCOS is born to support open consortium chain applications, by supporting multiple chains’, and cross-chain communication.
+`FISCO BCOS <https://github.com/FISCO-BCOS>`_ is an open-sourced, cross-industry, collaborative, and secure blockchain platform. Two major camps of blockchain technology - public and consortium chains, to better serve the general public, open consortium chain is the perfect choice for enterprises to unlock the potential of collaborative businesses model. FISCO BCOS is born to support open consortium chain applications, by supporting multiple chains’, and cross-chain communication.
 
 The community - Financial Blockchain Shenzhen Consortium (FISCO) is established on May 31, 2016. It has attracted more than 100 members including financial institutions and financial information service companies so far. The first members include the following organizations: Beyondsoft, Huawei, Shenzheng, Shenzhou Digital, Forms Syntron, Tencent, WeBank, Yuexiu Jinke.
 
@@ -17,7 +17,7 @@ Based on FISCO BCOS's blockchain platform, different blockchain scenarios can be
 
 So, what is FISCO BCOS? It is a platform/community with software developers building blockchain frameworks and solutions.
 
-The open source license for FISCO BCOS is GPL3.0 . Join us at `github <https://github.com/FISCO-BCOS>_`.
+The open source license for FISCO BCOS is GPL3.0 . Join us at `github <https://github.com/FISCO-BCOS>`_.
 
 
 .. toctree::
