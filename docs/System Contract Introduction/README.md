@@ -94,13 +94,25 @@ struct NodeInfo{
 ```
 
 Key functions:
+```eval_rst
 
-| function           | input parameters                                     | output parameters       | description                  |
-| ------------ | :--------------------------------------- | ---------- | ------------------- |
-| registerNode | string _id<br>string _ip<br>uint _port<br>NodeType _category<br>string _desc<br>string _CAhash<br>string _agencyinfo<br>uint _idx | bool #result | register node<br>Ignore if the node exists |
-| cancelNode   | string _id                   | bool #result | cancel node<br>Ignore if the node not exists  |
++----------------+-----------------------+---------------------+---------------------------------+
+| function       | input parameters      | output parameters   | description                     |
++================+=======================+=====================+=================================+
+| registerNode   | string \_id           | bool #result        | register node                   |
+|                | string \_ip           |                     | Ignore if the node exists       |
+|                | uint \_port           |                     |                                 |
+|                | NodeType \_category   |                     |                                 |
+|                | string \_desc         |                     |                                 |
+|                | string \_CAhash       |                     |                                 |
+|                | string \_agencyinfo   |                     |                                 |
+|                | uint \_idx            |                     |                                 |
++----------------+-----------------------+---------------------+---------------------------------+
+| cancelNode     | string \_id           | bool #result        | cancel node                     |
+|                |                       |                     | Ignore if the node not exists   |
++----------------+-----------------------+---------------------+---------------------------------+
 
-
+```
 
 ### CA Management
 
