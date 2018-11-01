@@ -43,12 +43,11 @@ Group-Signature has the feature of tamper-resistant, repudiation-resistant, anon
 The table below descripts the source code structure of group-signature algorithm and the ring-signature algorithm:
 
 ```eval_rst
-
 +----------------------+---------------------------+---------------------------+
 | Module               | path                      | Description               |
 +======================+===========================+===========================+
-| Shell Scripts for    | scripts/install\_pbc.shde | pbc and pbc-sig lib are   |
-| dependencies install | ploy\_pbc.sh              | used for group            |
+| Shell Scripts for    | scripts/install\_pbc.sh   | pbc and pbc-sig lib are   |
+| dependencies install | deploy\_pbc.sh            | used for group            |
 |                      |                           | signature，install the    |
 |                      |                           | pbc and pbc-sig by        |
 |                      |                           | calling deploy\_pbc.sh    |
@@ -57,14 +56,15 @@ The table below descripts the source code structure of group-signature algorithm
 | group signature &    | tgz                       | signature & ring          |
 | ring signature       |                           | signature                 |
 +----------------------+---------------------------+---------------------------+
-| Compile Module       | cmake/FindPBC.cmakecmake/ | compile cmake file        |
-|                      | ProjectGroupSig.cmake     | related to group          |
-|                      |                           | signature & ring          |
+| Compile Module       | cmake/FindPBC.cmake       | compile cmake file        |
+|                      | cmake/ProjectGroupSig.cma | related to group          |
+|                      | ke                        | signature & ring          |
 |                      |                           | signature                 |
 +----------------------+---------------------------+---------------------------+
 | Verification         | libevm/ethcall/EthcallGro | use ethcall to call the   |
-| implement            | upSig.hlibevm/ethcall/Eth | group/ring signature lib  |
-|                      | callRingSig.h             |                           |
+| implement            | upSig.h                   | group/ring signature lib  |
+|                      | libevm/ethcall/EthcallRin |                           |
+|                      | gSig.h                    |                           |
 +----------------------+---------------------------+---------------------------+
 ```
 
