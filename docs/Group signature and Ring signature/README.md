@@ -46,7 +46,7 @@ The table below descripts the source code structure of group-signature algorithm
 +----------------------+---------------------------+---------------------------+
 | Module               | path                      | Description               |
 +======================+===========================+===========================+
-| Shell Scripts for    | scripts/install\_pbc.sh   | pbc and pbc-sig lib are   |
+| Shell Scripts for    | scripts/install\_pbc.sh & | pbc and pbc-sig lib are   |
 | dependencies install | deploy\_pbc.sh            | used for group            |
 |                      |                           | signature，install the    |
 |                      |                           | pbc and pbc-sig by        |
@@ -56,26 +56,33 @@ The table below descripts the source code structure of group-signature algorithm
 | group signature &    | tgz                       | signature & ring          |
 | ring signature       |                           | signature                 |
 +----------------------+---------------------------+---------------------------+
-| Compile Module       | cmake/FindPBC.cmake       | compile cmake file        |
+| Compile Module       | cmake/FindPBC.cmake &     | compile cmake file        |
 |                      | cmake/ProjectGroupSig.cma | related to group          |
 |                      | ke                        | signature & ring          |
 |                      |                           | signature                 |
 +----------------------+---------------------------+---------------------------+
 | Verification         | libevm/ethcall/EthcallGro | use ethcall to call the   |
 | implement            | upSig.h                   | group/ring signature lib  |
+|                      | &                         |                           |
 |                      | libevm/ethcall/EthcallRin |                           |
 |                      | gSig.h                    |                           |
 +----------------------+---------------------------+---------------------------+
+
 ```
 
 FISCO BCOS supports configuring to enable or disable the ethcall for group signature & ring signature ( default is disabled).
 
-| <div align = left>Action</div>             | <div align = left>Compile</div>                                       | <div align = left>Compile time</div>                                       |<div align = left>Description</div>                                       |
-| -------------- | ---------------------------------------- | ---------------------------------------- |---------------------------------------- |
-| enable ethcall       | dependencies will compile  | long compile time |group/ring signature enabled |
-| disable ethcall       | dependencies will not compile  | short compile time |group/ring signature disabled |
-
-<br>
+```eval_rst
++---------+-----------------------+-----------------------+-----------------------+
+| Action  | Compile               | Compile time          | Description           |
++=========+=======================+=======================+=======================+
+| enable  | dependencies will     | long compile time     | group/ring signature  |
+| ethcall | compile               |                       | enabled               |
++---------+-----------------------+-----------------------+-----------------------+
+| disable | dependencies will not | short compile time    | group/ring signature  |
+| ethcall | compile               |                       | disabled              |
++---------+-----------------------+-----------------------+-----------------------+
+```
 
 
 ## 2 Deployment
