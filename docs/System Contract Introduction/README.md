@@ -45,20 +45,20 @@ struct SystemContract {
 
 Key functions:
 ```eval_rst
-+-------+----------------------------+---------------------------+---------------+
-| funct | input parameters           | output parameters         | description   |
-| ion   |                            |                           |               |
-+=======+============================+===========================+===============+
-| getRo | string key#route name      | address#contract address, | get route     |
-| ute   |                            | bool#catch flag, uint #   | information   |
-|       |                            | block height              |               |
-+-------+----------------------------+---------------------------+---------------+
-| setRo | string key#route name,     | N/A                       | set route,    |
-| ute   | address addr#contract      |                           | overwrite if  |
-|       | address, bool cache#cache  |                           | route name    |
-|       | flag, unit blocknumber     |                           | exists        |
-|       | #block height              |                           |               |
-+-------+----------------------------+---------------------------+---------------+
++-----------+---------------------------+--------------------------+---------------+
+| function  | input parameters          | output parameters        | description   |
++===========+===========================+==========================+===============+
+| getRoute  | string key#route name     | address#contract         | get route     |
+|           |                           | address, bool#catch      | information   |
+|           |                           | flag, uint # block       |               |
+|           |                           | height                   |               |
++-----------+---------------------------+--------------------------+---------------+
+| setRoute  | string key#route name,    | N/A                      | set route,    |
+|           | address addr#contract     |                          | overwrite if  |
+|           | address, bool cache#cache |                          | route name    |
+|           | flag, unit blocknumber    |                          | exists        |
+|           | #block height             |                          |               |
++-----------+---------------------------+--------------------------+---------------+
 ```
 
 
