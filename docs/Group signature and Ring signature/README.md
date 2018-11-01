@@ -39,7 +39,7 @@ Group-Signature has the feature of tamper-resistant, repudiation-resistant, anon
 
 
 ### 1.2  Source Code Structure
-
+```eval_rst
 The table below descripts the source code structure of group-signature algorithm and the ring-signature algorithm:
 +--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
 | Module                                           | path                             | Description                                                                                            |
@@ -55,6 +55,8 @@ The table below descripts the source code structure of group-signature algorithm
 | Verification implement                           | libevm/ethcall/EthcallGroupSig.h | use ethcall to call the group/ring signature lib                                                       |
 |                                                  | libevm/ethcall/EthcallRingSig.h  |                                                                                                        |
 +--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
+```
+
 FISCO BCOS supports configuring to enable or disable the ethcall for group signature & ring signature ( default is disabled).
 
 | <div align = left>Action</div>             | <div align = left>Compile</div>                                       | <div align = left>Compile time</div>                                       |<div align = left>Description</div>                                       |
