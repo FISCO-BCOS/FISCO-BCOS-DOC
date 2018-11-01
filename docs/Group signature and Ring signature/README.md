@@ -41,14 +41,20 @@ Group-Signature has the feature of tamper-resistant, repudiation-resistant, anon
 ### 1.2  Source Code Structure
 
 The table below descripts the source code structure of group-signature algorithm and the ring-signature algorithm:
-
-| <div align = left>Module</div>                   | <div align = left>path</div>                                 | <div align = left>Description</div>                          |
-| ------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Shell Scripts for dependencies install           | scripts/install_pbc.sh<br>deploy_pbc.sh                      | pbc and pbc-sig lib are used for group signature，install the pbc and pbc-sig by calling deploy_pbc.sh |
-| source code for group signature & ring signature | deps/src/group_sig_lib.tgz                                   | source code for group signature & ring signature             |
-| Compile Module                                   | cmake/FindPBC.cmake<br>cmake/ProjectGroupSig.cmake           | compile cmake file related to group signature & ring signature |
-| Verification implement                           | libevm/ethcall/EthcallGroupSig.h<br>libevm/ethcall/EthcallRingSig.h | use ethcall to call the group/ring signature lib             |
-
++--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
+| Module                                           | path                             | Description                                                                                            |
++==================================================+==================================+========================================================================================================+
+| Shell Scripts for dependencies install           | scripts/install_pbc.sh           | pbc and pbc-sig lib are used for group signature，install the pbc and pbc-sig by calling deploy_pbc.sh |
+|                                                  | deploy_pbc.sh                    |                                                                                                        |
++--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
+| source code for group signature & ring signature | deps/src/group_sig_lib.tgz       | source code for group signature & ring signature                                                       |
++--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
+| Compile Module                                   | cmake/FindPBC.cmake              | compile cmake file related to group signature & ring signature                                         |
+|                                                  | cmake/ProjectGroupSig.cmake      |                                                                                                        |
++--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
+| Verification implement                           | libevm/ethcall/EthcallGroupSig.h | use ethcall to call the group/ring signature lib                                                       |
+|                                                  | libevm/ethcall/EthcallRingSig.h  |                                                                                                        |
++--------------------------------------------------+----------------------------------+--------------------------------------------------------------------------------------------------------+
 FISCO BCOS supports configuring to enable or disable the ethcall for group signature & ring signature ( default is disabled).
 
 | <div align = left>Action</div>             | <div align = left>Compile</div>                                       | <div align = left>Compile time</div>                                       |<div align = left>Description</div>                                       |
