@@ -75,8 +75,6 @@ SystemProxy address 0x210a7d467c3c43307f11eda35f387be456334fed
 3 )CAAction=>0x8ab1175c6e7edb40dd0ed2a52ceaa94afb135a64,false,398
 4 )ContractAbiMgr=>0x707024221d2433067b768c4be3a005c5ece8df40,false,399
 5 )ConsensusControlMgr=>0x007f2c2751bbcd6c9a630945a87a3bc2af38788c,false,400
-6 )FileInfoManager=>0xe0caa8103ea05b5ce585c05d8112051a0b213acf,false,401
-7 )FileServerManager=>0xe585cc5b8ca7fb174a0560bf79eea7398efaf014,false,402
 ```
 
 输出中即是当前系统路由表的所有路由信息。

@@ -709,11 +709,8 @@ Group合约地址 0x61dba250334e0fd5804c71e7cbe79eabecef8abe
 CAAction合约地址 0x60d4ee5c461677840ab3552a6845fdf7db4a5317
 NodeAction合约地址 0xa40c864c28ee8b07dc2eeab4711e3161fc87e1e2
 ConfigAction合约地址 0xfcd14ed03e6d94ca127d557a1883dd042a81ea11
-FileInfoManager合约地址 0x73479ed8162e198b9627b962eb4aae7098bdc770
-FileServerManager合约地址 0x1406a0c559995562fc77bf2a214a2dcfab4f6b2b
 ContractAbiMgr合约地址 0x9216757a91607668cf8a7a38f8ae56206a6e9f6b
 #......省略若干行...........
-注册FileServerManager.....
 发送交易成功: 0xe6b7971a727248ed7f120edcc7314129ced70c9ab546038feff6c372c68a9cc3
 合约部署完成 系统代理合约:0x919868496524eedc26dbb81915fa1547a20f8998
 -----------------系统路由表----------------------
@@ -723,8 +720,6 @@ ContractAbiMgr合约地址 0x9216757a91607668cf8a7a38f8ae56206a6e9f6b
 2 )NodeAction=>0xa40c864c28ee8b07dc2eeab4711e3161fc87e1e2,false,20
 3 )CAAction=>0x60d4ee5c461677840ab3552a6845fdf7db4a5317,false,21
 4 )ContractAbiMgr=>0x9216757a91607668cf8a7a38f8ae56206a6e9f6b,false,22
-5 )FileInfoManager=>0x73479ed8162e198b9627b962eb4aae7098bdc770,false,23
-6 )FileServerManager=>0x1406a0c559995562fc77bf2a214a2dcfab4f6b2b,false,24
 ```
 
 > The most important output above is the system proxy contract address, like:
@@ -1805,9 +1800,6 @@ Instructions for node configurations fiile *config.json*:
 | statlog            | Switch for the Statlog (ON or OFF)       |
 | logconf            | path of the log configuration file(refer to the instructions for *log.conf* ) |
 | NodeextraInfo      | Configuration list for nodes[{NodeId,Ip,port,nodedesc,agencyinfo,identitytype}](NodeID,outernet IP,P2P port,node descriptions,node info,node type). Input the NodeId you get from <u>2.3 Set up NodeId</u>. Here must configure the owner of this configration file. And configure some other nodes to make the nodes connect as an connected graph. The more others nodes you configured, the more fault-tolerance you have. |
-| dfsNode            | Distributed file service node ID, keep it in accordance with node ID(optional) |
-| dfsGroup           | Distributed file service group ID (10 - 32 characters)(optional) |
-| dfsStorage         | Storage directory for the distributed file system(optional) |
 
 ### 11.5 log.conf Instructions
 
@@ -1894,8 +1886,6 @@ Func :undefined
 2 )NodeAction=>0xa40c864c28ee8b07dc2eeab4711e3161fc87e1e2,false,20
 3 )CAAction=>0x60d4ee5c461677840ab3552a6845fdf7db4a5317,false,21
 4 )ContractAbiMgr=>0x9216757a91607668cf8a7a38f8ae56206a6e9f6b,false,22
-5 )FileInfoManager=>0x73479ed8162e198b9627b962eb4aae7098bdc770,false,23
-6 )FileServerManager=>0x1406a0c559995562fc77bf2a214a2dcfab4f6b2b,false,24
 ```
 
 Now you can get all the route info in the system route list.
