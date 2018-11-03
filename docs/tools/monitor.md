@@ -2,7 +2,7 @@
 # 节点监控脚本monitor.sh
 
 ## 介绍
-使用物料包(**[fisco-package-build-tool](https://fisco-bcos-documentation.readthedocs.io/zh_CN/feature-multichain/docs/tools/index.html)**)搭建的fisco-bcos环境, 最终在生成的build目录会有个monitor.sh脚本.  
+使用物料包(**[fisco-package-build-tool](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html)**)搭建的fisco-bcos环境, 最终在生成的build目录会有个monitor.sh脚本.  
 该脚本可以用来监控节点是否正常启动或者节点所在的区块链是否正常工作, 在节点挂掉或者整个区块链无法正常工作情况下重启节点.  
 
 ## 使用
