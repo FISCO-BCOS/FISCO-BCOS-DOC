@@ -92,7 +92,7 @@ app  67232      1  2 14:51 ?        00:00:03 fisco-bcos --genesis /mydata/node0/
 查看日志，查看打包信息
 
 ``` shell
-tail -f /mydata/node0/log/log* |grep +++
+tail -f /mydata/node0/log/* |grep +++
 ```
 
 等待一段时间，可看到周期性的出现如下日志，表示节点间在周期性的进行共识，节点运行正确
