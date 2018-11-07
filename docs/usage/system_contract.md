@@ -118,6 +118,9 @@ $ cd /mydata/FISCO-BCOS/tools/scripts
 #2. 调用register_node.sh注册记账节点
 $ bash register_node.sh -d /mydata/node0
 
+# 退出记账节点(设退出的节点位于/mydata/node0目录)
+$bash remove_node.sh -d /mydata/node0 
+
 ```
 
 ## 证书黑名单合约
