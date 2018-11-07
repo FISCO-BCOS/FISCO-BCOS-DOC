@@ -60,7 +60,6 @@
             <property name="account" value="0x776bd5cf9a88e9437dc783d6414bccc603015cf0" />
             <property name="outPutpath" value="./output/" />
         </bean>
-     日志级别配置：修改log4j.properties文件，将 log4j.rootLogger = INFO , C , D , E 中INFO改为 DEBUG 或者ERROR
 
 .. important::
    -  **节点id查询方法** ：
@@ -77,7 +76,7 @@
      
      ② **国密版FISCO-BCOS** ：设源码位于~/mydata/FISCO-BCOS目录，则god账号位于~/mydata/FISCO-BCOS/tools/scripts/guomi_godInfo.txt文件中; 若搭链过程中使用系统默认god账号，则god账号位于~/mydata/FISCO-BCOS/tools/scripts/god_info/guomiDefaultGod.txt
     
-    2. 使用 `FISCO-BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 搭链: 参考 `god账号说明 <https://github.com/FISCO-BCOS/fisco-package-build-tool#71-god%E8%B4%A6%E5%8F%B7>`_ 获取god账号信息;
+    2. 使用 `FISCO-BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 搭链: 可在物料包创世节点dependencies/cert/godInfo.txt路径下获取god账号信息;
    
    - **这里的端口是对应config.json里的channelPort，而不是rpcport或p2pport** 
    - **list段里可以配置多个value，对应多个节点的信息，实现客户端多活通信** 
@@ -113,30 +112,27 @@
 
    applicationContext.xml主要包括如下配置选项：
 
-+----------------------+------------------------------------------------------------------------------------------------------+
-| **encryptType**      |  配置国密算法开启/关闭开关(默认为0)                                                                  |
-|                      |   - 0: 不使用国密算法发交易                                                                          |
-|                      |   - 1: 使用国密算法发交易                                                                            |
-+----------------------+------------------------------------------------------------------------------------------------------+
-|**systemProxyAddress**|  系统代理合约地址，对应节点config.json中的systemproxyaddress值                                       |
-+----------------------+------------------------------------------------------------------------------------------------------+
-| **privKey**          |  GOD账号私钥,对应                                                                                    |
-|                      |  `生成GOD账号 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html>`_ |
-|                      |  产生godInfo.txt的privKey                                                                            |
-+----------------------+------------------------------------------------------------------------------------------------------+
-| **account**          |  GOD账号, 对应                                                                                       | 
-|                      |  `生成GOD账号<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html>`_  |
-|                      |  产生的godInfo.txt的address                                                                          |
-+----------------------+------------------------------------------------------------------------------------------------------+
-|**ChannelConnections**|- caCertPath: ca.crt证书路径，默认为classpath:ca.crt                                                  |
-|                      |- clientKeystorePath: client.keystore证书路径，                                                       |
-|                      |  默认为classpath:client.keystore                                                                     |  
-|                      |- keystorePassWord: 生成client.keystore时对应的密码                                                   | 
-|                      |- clientCertPassWord: 生成client.keystore时对应的密码                                                 |
-|                      |- nodeid:SDK连接的FISCO BCOS节点ID，从节点data/node.nodeid文件获取                                    | 
-|                      |- ip: SDK连接的FISCO BCOS节点外网ip                                                                   |
-|                      |- channelPort: SDK连接的FISCO BCOS节点channelPort,                                                    |
-|                      |  对应config.json的channelPort                                                                        | 
-+----------------------+------------------------------------------------------------------------------------------------------+
++----------------------+----------------------------------------------------------------------------------------------+
+| **encryptType**      |  配置国密算法开启/关闭开关(默认为0)                                                          |
+|                      |  - 0: 不使用国密算法发交易                                                                   |
+|                      |  - 1: 使用国密算法发交易                                                                     |
++----------------------+----------------------------------------------------------------------------------------------+
+|**systemProxyAddress**|  系统代理合约地址，对应节点config.json中的systemproxyaddress值                               |
++----------------------+----------------------------------------------------------------------------------------------+
+| **privKey**          |  部署合约的私钥,可通过 ``fisco-bcos --newaccount  accountInfo.txt`` 产生普通账户，           |
+|                      |  并用普通账户私钥部署合约; 部署权限控制合约时，必须使用GOD账号私钥                           |
++----------------------+----------------------------------------------------------------------------------------------+
+| **account**          |  部署权限控制合约时,必须配置成GOD账号;                                                       |
++----------------------+----------------------------------------------------------------------------------------------+
+|**ChannelConnections**|- caCertPath: ca.crt证书路径，默认为classpath:ca.crt                                          |
+|                      |- clientKeystorePath: client.keystore证书路径，                                               |
+|                      |  默认为classpath:client.keystore                                                             |  
+|                      |- keystorePassWord: 生成client.keystore时对应的密码                                           | 
+|                      |- clientCertPassWord: 生成client.keystore时对应的密码                                         |
+|                      |- nodeid:SDK连接的FISCO BCOS节点ID，从节点data/node.nodeid文件获取                            |
+|                      |- ip: SDK连接的FISCO BCOS节点外网ip                                                           |
+|                      |- channelPort: SDK连接的FISCO BCOS节点channelPort,                                            |
+|                      |  对应config.json的channelPort                                                                | 
++----------------------+----------------------------------------------------------------------------------------------+
 ```
 

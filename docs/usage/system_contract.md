@@ -75,8 +75,6 @@ SystemProxy address 0x210a7d467c3c43307f11eda35f387be456334fed
 3 )CAAction=>0x8ab1175c6e7edb40dd0ed2a52ceaa94afb135a64,false,398
 4 )ContractAbiMgr=>0x707024221d2433067b768c4be3a005c5ece8df40,false,399
 5 )ConsensusControlMgr=>0x007f2c2751bbcd6c9a630945a87a3bc2af38788c,false,400
-6 )FileInfoManager=>0xe0caa8103ea05b5ce585c05d8112051a0b213acf,false,401
-7 )FileServerManager=>0xe585cc5b8ca7fb174a0560bf79eea7398efaf014,false,402
 ```
 
 输出中即是当前系统路由表的所有路由信息。
@@ -113,11 +111,18 @@ var receipt = web3sync.sendRawTransaction(config.account, config.privKey, instan
 
 **工具使用方法**
 
-请参看 注册记账节点、退出记账节点。
+```bash
+# 注册记账节点
+#1. 进入脚本所在目录(设FISCO-BCOS源码位于/mydata/FISCO-BCOS目录, 注册的节点位于/mydata/node0目录)
+$ cd /mydata/FISCO-BCOS/tools/scripts
+#2. 调用register_node.sh注册记账节点
+$ bash register_node.sh -d /mydata/node0
 
-## 注销证书合约
+```
 
-注销证书合约主要功能是维护注销证书信息列表。
+## 证书黑名单合约
+
+证书黑名单合约可将指定节点证书加入证书撤销列表，使其无法与其他节点建立连接，从而达到阻止作恶节点的目的。
 
 源码路径：systemcontract/CAAction.sol
 
@@ -148,7 +153,7 @@ var receipt = web3sync.sendRawTransaction(config.account, config.privKey, instan
 
 **工具使用方法**
 
-查看注销证书列表
+查看证书撤销列表信息
 
 ```shell
 babel-node tool.js CAAction all
@@ -172,20 +177,20 @@ babel-node tool.js CAAction all
 ```
 
 
-登记注销证书
+将指定节点证书添加到证书撤销列表
 
 ca.json 中status置为1
 
 ```shell
-babel-node tool.js CAAction update ca.json
+babel-node tool.js CAAction add ca.json
 ```
 
-移除注销证书
+从证书撤销列表删除指定节点证书
 
 ca.json 中status置为0
 
 ```shell
-babel-node tool.js CAAction update ca.json
+babel-node tool.js CAAction remove ca.json
 ```
 
 ## 权限管理合约
@@ -256,8 +261,6 @@ babel-node tool.js AuthorityFilter 用户外部账户、合约地址、合约接
 +----------------------+-----------------------------------+---------------+-----------------+
 | 配置项               | 说明                              | 默认值        | 推荐值          |
 +======================+===================================+===============+=================+
-| maxBlockHeadGas      | 块最大GAS                         | 2,000,000,000 | 2,000,000,000   |
-+----------------------+-----------------------------------+---------------+-----------------+
 | intervalBlockTime    | 块间隔(ms)                        | 1000          | 1000            |
 +----------------------+-----------------------------------+---------------+-----------------+
 | maxBlockTranscations | 块最大交易数                      | 1000          | 1000            |

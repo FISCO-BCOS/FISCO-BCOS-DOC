@@ -17,7 +17,7 @@ $ cd ~/mydata/FISCO-BCOS/tools/scripts
 
 # 注意：请妥善保存god账号信息
 # 生成god账号：
-$ fisco-bcos --newaccount > guomi_godInfo.txt
+$ fisco-bcos --newaccount guomi_godInfo.txt
 $ cat guomi_godInfo.txt
 address:0xf02a10f685a90c3bfc2eccd906b75fe3feeec9ad # god账号
 publicKey:9c39ff254a673ec069c5aec56d206531ec45a2165f97df0b7259ad393dbde90b3f6896925060006ff6a43191dfabf93941de4e42bd54dea88c2f373e1f8db252 #god账号公钥
@@ -139,8 +139,6 @@ SystemProxycomplie success！
 3 )CAAction=>0xa92014f1593bbaa1294be562f0dbfbc7aca0d579,false,25
 4 )ContractAbiMgr=>0xe441c93f05d2d200c9e51fdac87b9851483aa341,false,26
 5 )ConsensusControlMgr=>0xb53b1513c2edf88c0a27f3670385481821cc0818,false,27
-6 )FileInfoManager=>0xa9e38b700f6462b21e595402e870bc51ae852768,false,28
-7 )FileServerManager=>0x3eeff72da75f3a2a1a97d958142b08ca75b86b5a,false,29
 SUCCESS execution of command: babel-node deploy_systemcontract.js /data/chenyujie/guomi/FISCO-BCOS/tools/web3lib/tmp_config_deploy_system_contract.js
 /data/chenyujie/guomi/FISCO-BCOS/tools/scripts
 Stop genesis node
