@@ -173,7 +173,7 @@
 
 .. admonition:: gradle配置文件说明
    
-   应用SDK的【build.gradle】要通过【compile】和【runtime】添加web3sdk.jar依赖和应用外部依赖库：
+   应用SDK的【build.gradle】要通过【dependencies】添加web3sdk.jar依赖和应用外部依赖库：
     .. image:: imgs/build-gradle.png
        :align: center
     
@@ -211,7 +211,7 @@
 .. admonition:: 其他说明
 
    - 从零开发SDK应用时，可使用eclipse新建java工程，编译配置文件build.gradle可参考bcosliteclient.zip中的编译配置; 
-   - java应用根目录的lib目录下要存放FISCO BCOS的web3sdk.jar，web3sdk升级时，请从github下载最新[web3sdk.jar](https://github.com/FISCO-BCOS/web3sdk/releases)直接替换java应用的原lib文件夹下的web3sdk.jar即可。
+   - java应用根目录的lib目录下要存放FISCO BCOS的web3sdk.jar，web3sdk升级时，首先请从github下载最新[web3sdk.jar](https://github.com/FISCO-BCOS/web3sdk/releases)替换java应用的原lib文件夹下的web3sdk.jar，然后参考官方项目的build.gradle文件拷贝相应依赖。
 
 
 .. admonition:: 参考资料

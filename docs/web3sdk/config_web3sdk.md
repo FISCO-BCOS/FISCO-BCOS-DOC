@@ -66,7 +66,8 @@
 .. important::
    -  **节点信息查询方法** ：
 
-    1. channelPort、系统合约地址systemcontractaddress等信息查询: 若节点服务器上，节点数据目录所在路径为~/mydata/node0/，在~/mydata/node0/config.json里可查到;
+    1. 节点id，可以是任意字符串；
+    2. channelPort、系统合约地址systemcontractaddress等信息查询: 若节点服务器上，节点数据目录所在路径为~/mydata/node0/，在~/mydata/node0/config.json里可查到;
 
    - **god账号信息查询：**
     
