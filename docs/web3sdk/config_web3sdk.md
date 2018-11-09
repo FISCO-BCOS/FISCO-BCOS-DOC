@@ -64,11 +64,6 @@
      C、D、E是配置日志信息输出到哪个地方以及输出样式。
 
 .. important::
-   -  **节点id查询方法** ：
-    
-    1. 查询节点id：若节点服务器上，节点数据目录所在路径为~/mydata/node0/，则节点id可以在~/mydata/node0/data/node.nodeid文件里查到;
-    
-    2. channelPort、系统合约地址systemcontractaddress等信息查询: 若节点服务器上，节点数据目录所在路径为~/mydata/node0/，在~/mydata/node0/config.json里可查到;
     
    - **god账号信息查询：**
     
