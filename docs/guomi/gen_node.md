@@ -88,7 +88,7 @@ $ bash ./generate_node.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 
 ---------- Generate node basic files ----------
 RUN: bash generate_node_basic.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -x 0xee80d7c98cb9a840b9c4df742f61336770951875 -g
 #...此处省略若干行....
-SUCCESS execution of command: sh generate_node_basic.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -x 0xee80d7c98cb9a840b9c4df742f61336770951875 -g
+SUCCESS execution of command: bash generate_node_basic.sh -o ~/mydata -n node1 -l 127.0.0.1 -r 8546 -p 30304 -c 8892 -e 127.0.0.1:30303,127.0.0.1:30304 -x 0xee80d7c98cb9a840b9c4df742f61336770951875 -g
 # 创建普通节点genesis.json
 ---------- Generate node genesis file ----------
 # ... 此处省略若干行...
