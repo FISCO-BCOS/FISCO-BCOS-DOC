@@ -103,14 +103,13 @@ app  70450      1  0 14:58 ?        00:00:26 fisco-bcos --genesis /mydata/node1/
 查看日志
 
 ``` shell
-cat /mydata/node1/log/* | grep "topics Send to"
+cat /mydata/node1/log/* | grep "Connected"
 ```
 
-看到发送topic的日志，表示节点已经连接了相应的另一个节点
+看到如下日志，表示节点已经连接了其它的节点
 
 ``` log
-DEBUG|2018-08-10 15:42:05:621|topics Send to:1 nodes
-DEBUG|2018-08-10 15:42:06:621|topics Send tod23058c33577f850832e47994df495c674ba66273df2fcb1e6ee7d7e1dbd7be78be2f7b302c9d15842110b3db6239da2aa98ddf68e512b452df748d3d3e4c1cd@127.0.0.1:30303
+INFO|2018-11-07 15:21:11:314|Connected to 1 peers
 ```
 
 ### 验证可共识
