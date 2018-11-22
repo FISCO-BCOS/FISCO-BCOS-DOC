@@ -369,6 +369,7 @@ contract HelloWorld{
 对于add操作时,因为添加的合约对应的版本号已经存在时, 则会添加失败, 此时可以更新合约的版本号。继承ContractBase.sol指定版本号。
 ```solidity
 pragma solidity ^0.4.4;
+import "ContractBase.sol";
 contract HelloWorld is ContractBase("v-1.0"){
     string name;
     function HelloWorld(){
