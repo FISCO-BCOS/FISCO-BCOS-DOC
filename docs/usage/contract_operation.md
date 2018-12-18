@@ -61,7 +61,7 @@ contract HelloWorld{
 
 ``` shell
 # 进入合约所在目录
-cd /mydata/FISCO-BCOS/FISCO-BCOS/tools/contract
+cd /mydata/FISCO-BCOS/tools/contract
 babel-node deploy.js HelloWorld #注意后面HelloWorld后面没有".sol"
 ```
 
