@@ -17,7 +17,7 @@ $ cd ~/mydata/FISCO-BCOS/tools/scripts
 
 # 注意：请妥善保存god账号信息
 # 生成god账号：
-$ fisco-bcos --newaccount guomi_godInfo.txt
+$ fisco-bcos --newaccount ./guomi_godInfo.txt
 $ cat guomi_godInfo.txt
 address:0xf02a10f685a90c3bfc2eccd906b75fe3feeec9ad # god账号
 publicKey:9c39ff254a673ec069c5aec56d206531ec45a2165f97df0b7259ad393dbde90b3f6896925060006ff6a43191dfabf93941de4e42bd54dea88c2f373e1f8db252 #god账号公钥
