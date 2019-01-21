@@ -1,4 +1,4 @@
-# RPC
+## RPC
 ## 1 名词解释
 **JSON**(JavaScript Object Notation)：一种轻量级的数据交换格式。它可以表示数字、字符串、有序序列和键值对。    
 **JSON RPC**：一种无状态、轻量级的远程过程调用(Remote Procedure Call， RPC)协议。 该规范主要定义了几个数据结构及其处理规则。它允许运行在基于socket，http等诸多不同消息传输环境的同一进程中。它使用JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt))作为数据格式。FISCO BCOS采用JSON RPC2.0协议。
@@ -72,7 +72,7 @@ RPC响应包格式示例:
 |  6  | Call needs a 'from' field |call接口需要提供from字段 |
 |  7  | Only pbft consensus supports the view property |getPbftView接口，只有pbft共识机制有view属性 |
 |  8  | Invalid System Config |getSystemConfigByKey接口，查询无效的key |
-|  9  | Don't send requests to this group, the node doesn't belong to the group |群组内非共识节点发起无效的请求|
+|  9  | Don't send requests to this group, the node doesn't belong to the group |非群组内节点发起无效的请求|
 
 
 ## 4 RPC接口的设计
