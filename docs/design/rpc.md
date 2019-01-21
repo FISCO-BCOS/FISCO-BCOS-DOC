@@ -72,8 +72,8 @@ RPC响应包格式示例:
 |  6  | Call needs a 'from' field |call接口需要提供from字段 |
 |  7  | Only pbft consensus supports the view property |getPbftView接口，只有pbft共识机制有view属性 |
 |  8  | Invalid System Config |getSystemConfigByKey接口，查询无效的key |
-|  9  | An invalid request was made by a non-consensus node |非共识节点发起无效的请求|
+|  9  | Don't send requests to this group, the node doesn't belong to the group |群组内非共识节点发起无效的请求|
 
 
 ## 4 RPC接口的设计
-FISCO BCOS提供丰富的RPC接口供客户端调用。其中分为两大类，分别是以get开头命名的查询接口（例如getBlockNumber接口）和两个与合约执行相关的接口，分别是call接口和sendRawTransaction接口。其中call接口执行一个请求将不会创建一笔交易，等待区块链共识，而是获取响应立刻返回，例如合约中的查询方法发出的请求将调用call接口。sendRawTransaction接口执行一笔签名的交易，将等待区块链共识才返回响应。RPC具体的接口描述见API文档。
+FISCO BCOS提供丰富的RPC接口供客户端调用。其中分为两大类，分别是以get开头命名的查询接口（例如getBlockNumber接口）和两个与合约执行相关的接口，分别是call接口和sendRawTransaction接口。其中call接口执行一个请求将不会创建一笔交易，等待区块链共识，而是获取响应立刻返回，例如合约中的查询方法发出的请求将调用call接口。sendRawTransaction接口执行一笔签名的交易，将等待区块链共识才返回响应。RPC具体的接口描述见[API文档](../api.md)。
