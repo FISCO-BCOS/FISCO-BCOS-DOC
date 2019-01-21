@@ -22,6 +22,21 @@ import sphinx_rtd_theme
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
+DOC_SOURCES_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(DOC_SOURCES_DIR))
+sys.path.insert(0, DOC_SOURCES_DIR)
+print('PROJECT_ROOT_DIR', PROJECT_ROOT_DIR)
+
+# If runs on ReadTheDocs environment
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+# Hack for lacking git-lfs support ReadTheDocs
+if on_rtd:
+    print('Fetching files with git_lfs')
+    from git_lfs import fetch
+    fetch(DOC_SOURCES_DIR)
+
+
 # The suffix of source filenames.
 source_parsers = {
 	'.md': CommonMarkParser,
@@ -54,7 +69,7 @@ templates_path = ['_templates']
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'docs/index'
+master_doc = 'index'
 
 # General information about the project.
 project = u'FISCO BCOS'
