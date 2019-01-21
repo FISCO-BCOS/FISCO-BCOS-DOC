@@ -42,6 +42,7 @@
 |**\_sys_miners_**| -45 |nodeID is already in observer list |
 |**\_sys_cns_**| -50 |address and version exist|
 |**\_sys_config_**| -60 | invalid configuration values|
+
 无权限属于系统性错误，code定义-1，msg定义为“non-authorized”。
 
 ## 3 数据定义
@@ -99,11 +100,13 @@ contract Authority {
 ## 6 权限控制工具
 ### 控制台权限控制命令
 FISCO BCOS的分布式存储权限控制通过权限表来管理。通过提供控制台命令对权限表进行读写操作（针对开发者，可以调用sdk的AuthorityService接口操作权限表），其中有三个命令涉及权限表，如下所示。
-|AuthorityService API|命令全称（命令缩写）|命令参数|含义|
+
+|AuthorityService API|命令全称（缩写）|命令参数|含义|
 |:--- |:---|:------|:---------|
 |String add(String tableName, String addr) |addAuthority(aa)| table_name address | 增加控制的表名和外部账户地址
 |String remove(String tableName, String addr) |removeAuthority(ra)| table_name address | 移除控制的表名和外部账户地址
 |List<AuthorityInfo> query(String tableName) |queryAuthority(qa)| table_name |根据表名查询权限设置记录|
+	
 **注：**
  表名可以是用户表和系统表(\_sys_tables_, \_sys_table_access_, \_sys_miners_, \_sys_cns_和_sys_config_)的表名。
 
