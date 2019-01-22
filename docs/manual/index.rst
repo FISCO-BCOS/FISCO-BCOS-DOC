@@ -7,9 +7,10 @@
 .. toctree::
    :maxdepth: 1
 
-    buildchain.md
-    multi_group.md
-    console.md
-    disck_encryption.md
-    priority.md
-    blackname_ca.md
+   buildchain.md
+   multi_group.md
+   console.md
+   disck_encryption.md
+   priority.md
+   blackname_ca.md
+   guomi.md
