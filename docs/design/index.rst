@@ -8,17 +8,9 @@
    :maxdepth: 1
 
    architecture.md
-   data_structure.md
-   network.md
-   storage.md
-   txpool.md
-   executor.md
-   sync.md
-   consensus.rst
-   multi_ledgers.md
-   rpc.md
-   precompile.md
-   log.md
-   guomi.md
-   features.md
-
+   networkAndSync/index.rst
+   consensus/index.rst
+   evm/index.rst
+   storage/index.rst
+   secure/index.rst
+   features/index.rst
