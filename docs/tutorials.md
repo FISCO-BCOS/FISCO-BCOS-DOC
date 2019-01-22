@@ -162,11 +162,11 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 # 获取客户端版本
 > getClientVersion
 {
-        "Build Time":"20190121 06:21:05",
-        "Build Type":"Linux/clang/Debug",
-        "FISCO-BCOS Version":"2.0.0",
-        "Git Branch":"release-2.0.0",
-        "Git Commit Hash":"a322f0bff5cb395157fb5734219fcb2f2686ef08"
+    "Build Time":"20190121 06:21:05",
+    "Build Type":"Linux/clang/Debug",
+    "FISCO-BCOS Version":"2.0.0",
+    "Git Branch":"release-2.0.0",
+    "Git Commit Hash":"a322f0bff5cb395157fb5734219fcb2f2686ef08"
 }
 # 获取节点链接信息
 > getPeers

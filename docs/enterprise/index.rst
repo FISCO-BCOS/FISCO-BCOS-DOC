@@ -14,4 +14,5 @@
     monitor.md
     extend.md
     upgrade.md
+    performance.md
     faq.md
