@@ -123,23 +123,17 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 cd ~/fisco
 # 安装openjdk
 sudo apt install -y default-jdk
-# 准备web3sdk TODO: make web3sdk more simple
-git clone https://github.com/FISCO-BCOS/web3sdk.git
-cd web3sdk
-git checkout release-2.0.1
-gradle build -x test
-mv dist ~/fisco/console
+curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/binaries/console/console-2.0.0.tar.gz
+tar -zxf console-2.0.0.tar.gz && mv console-2.0.0 console && chmod u+x console/start
+# 配置控制台证书
+cp nodes/127.0.0.1/sdk/ca.crt nodes/127.0.0.1/sdk/keystore.p12 console/conf
 ```
 
 - 启动控制台
 ```bash
 # # 回到fisco目录
-cd ~/fisco
-cp nodes/127.0.0.1/sdk/* console/conf
-# TODO: modify execute path to console/
-cd console/bin
-# TODO: modify ./web3sdk.sh to console
-./web3sdk
+cd ~/fisco/console
+bash ./start
 # 输出下述信息表明启动成功
 =============================================================================================
 Welcome to FISCO BCOS console！
