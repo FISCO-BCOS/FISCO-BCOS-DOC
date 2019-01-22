@@ -51,25 +51,3 @@
 |                                      | 国密版落盘加密使用了国密SM4对称加密算法             |
 +--------------------------------------+-----------------------------------------------------+
 ```
-
-## 国密特性适配
-### CMakeList
-* cmake时将openssl替换为tassl
-* cmake时替换libdevcrypto下的所有文件和libinitializer/SecureInitializer.cpp, 为国密所需的文件。
-### libdevcrypto模块
-* libdevcrypto模块中新增SM2签名验证，SM3哈希算法，SM4分组加密方法，保持.h接口不变，cmake时直接替换文件。
-* 将sha3.h和hash.h的接口合并，目前统一在hash.h中。
-* 在common.h宏定义了国密和非国密版签名的参数，将signature的构造函数实现移到了common.cpp中
-* 删除了AES.h，cryptopp.h，hash.h，common.h中无用的接口。 删除了无用的rsa文件
-### libethcore模块
-* 调整了Transaction中从rlp构造签名的过程。
-* 调整了Precompiled.cpp中ecrecover的过程，放到了libdevcrypto模块的common.h中
-### libinitializer模块
-* 增加了国密版节点ssl建立时的文件SecureInitializerGm.cpp
-### libstorage模块
-* 在Common.h中定义了两个国密与标准版本的transaction abi。
-
-### 其他
-* 增加了国密交易的rlp
-
-* 增加了国密ut
