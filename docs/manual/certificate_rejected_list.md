@@ -1,5 +1,7 @@
 <center> <h1>CA黑名单操作手册</h1> </center>
 
+本文档描述CA黑名单的实践操作，建议阅读本操作文档前请先行了解[《CA黑名单介绍》](../design/security_control/certificate_rejected_list.md)。
+
 CA黑名单的操作包括**一节点将他节点列入/移除CA黑名单**，通过修改配置文件重启实现。
 
 ## 1 修改范围
