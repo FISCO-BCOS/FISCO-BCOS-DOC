@@ -82,8 +82,7 @@ $ ./web3sdk -c 1
 
 控制台提供了AddMiner(am)、AddObserver(ao)和rn(RemoveNode)三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getMinerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
 
-例：将node id为7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2
-922aa0ef50的节点分别转换成组1的共识节点、观察者节点、网络节点，具体操作和验证步骤如下：
+例：将node id为7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50的节点分别转换成组1的共识节点、观察者节点、网络节点，具体操作和验证步骤如下：
 
 ```eval_rst
 .. important::
