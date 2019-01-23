@@ -132,10 +132,19 @@ nstant\":true,\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"name\":\"\",\"type\
 
 ## 7 SDK接口
 
-SDK开发者可使用以下两接口实现CNS的注册及查询功能。
+SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实现CNS的注册及查询功能。
 
-- 注册函数： public TransactionReceipt registerCns(String name, String version, String addr, String abi)
-- 解析函数： public String resolve(String contractNameAndVersion)
+### 7.1 registerCns
+- 描述：public TransactionReceipt registerCns(String name, String version, String addr, String abi)
+- 功能：上链合约信息
+- 参数：name——合约名、version——合约版本、addr——合约地址、abi——合约abi
+- 返回：上链交易回执，回执中含上链结果信息及错误信息（如有）
+
+### 7.1 resolve
+- 描述：public String resolve(String contractNameAndVersion)
+- 功能：基于合约名和合约版本查询合约地址
+- 参数：contractNameAndVersion——合约名+合约版本，如合约版本为空，默认使用功能合约最新版本
+- 返回：合约地址，如无对应合约信息，抛出异常
 
 注意：
 1. 在调用接口前，需[sol合约转换Java类](http://wiki.weoa.com/books/fisco-bcos/page/sdk-%E4%BD%BF%E7%94%A8#bkmrk-1.4-sol%E5%90%88%E7%BA%A6%E8%BD%AC%E6%8D%A2j)并将生成的Java类以及abi、bin文件置于正确的目录；
