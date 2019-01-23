@@ -153,4 +153,4 @@ MemoryTableFactory增加setAuthorizedAddress接口，用于将查询的权限地
 
 ## 8 权限控制示例
 
-参考[权限控制使用文档](../../manual/authority.md)
+参考[权限控制使用文档](../../manual/priority_control.md)
