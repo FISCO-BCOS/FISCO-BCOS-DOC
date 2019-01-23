@@ -1,5 +1,5 @@
 ##############################################################
-用户手册
+多群组使用
 ##############################################################
 
 
@@ -7,9 +7,5 @@
 .. toctree::
    :maxdepth: 1
 
-   groups/index.rst
-   priority.md
-   console.md
-   disck_encryption.md
-   guomi.md
-   blackname_ca.md
+   group_config.md  
+   build_group.md
