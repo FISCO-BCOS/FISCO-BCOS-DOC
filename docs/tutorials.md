@@ -1,4 +1,4 @@
-# 教程
+# 教程
 
 本教程帮助你开始使用FISCO-BCOS，教程的第一部分面向对FISCO-BCOS感兴趣但缺乏了解的用户。通过在本机部署FISCO-BCOS以及运行FISCO-BCOS HellowWorld帮助初学者快速学习使用FISCO-BCOS。
 
@@ -6,7 +6,7 @@
 
 ### 1. 使用[`build_chain`][build_chain]脚本
 
-本节使用[`build_chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
+本节使用[`build_chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
 
 - 准备环境
 
@@ -21,7 +21,7 @@ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2
 ./bin/fisco-bcos -v
 ```
 
-执行完上述步骤后，fisco目录下结构如下
+执行完上述步骤后，fisco目录下结构如下
 ```bash
 fisco
 ├── bin
@@ -115,7 +115,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 
 ### 3. 使用控制台
 
-控制台通过Java SDK链接FISCO-BCOS节点，可以实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息，实乃FISCO-BCOS爱好者必备之良品。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可
+控制台通过Java SDK链接FISCO-BCOS节点，可以实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息，实乃FISCO-BCOS爱好者必备之良品。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可
 
 - 准备依赖
 ```bash
@@ -183,10 +183,10 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ]
 ```
 
-## FISCO-BCOS HelloWorld
+## FISCO-BCOS HelloWorld
 
 ### 1. ok合约
-ok合约对FISCO-BCOS相当于其他编程语言的Hello World。该合约内部有两个账户`from/to`，提供一个接口`trans(uint num)`，每次调用会从`from`减去`num`并给`to`增加`num`。提供接口`get()`可以获取`to`账户的余额。
+ok合约对FISCO-BCOS相当于其他编程语言的Hello World。该合约内部有两个账户`from/to`，提供一个接口`trans(uint num)`，每次调用会从`from`减去`num`并给`to`增加`num`。提供接口`get()`可以获取`to`账户的余额。
 
 ```solidity
 pragma solidity ^0.4.24;
