@@ -8,7 +8,7 @@
    :maxdepth: 1
 
    multi_group.md
-   priority.md
+   priority_control.md
    console.md
    disck_encryption.md
    guomi.md
