@@ -92,7 +92,7 @@
 
 ### 架构与模块
 
-![](../../images/sync/module.png)
+![](../../../images/sync/module.png)
 
 
 
