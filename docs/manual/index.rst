@@ -8,7 +8,7 @@
    :maxdepth: 2
 
    groups/index.rst
-   priority.md
+   priority_control.md
    console.md
    disck_encryption.md
    guomi.md
