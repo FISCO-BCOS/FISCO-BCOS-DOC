@@ -10,7 +10,7 @@
    architecture.md
    networkAndSync/index.rst
    consensus/index.rst
-   evm/index.rst
+   virtualMachine/index.rst
    storage/index.rst
    secure/index.rst
    features/index.rst

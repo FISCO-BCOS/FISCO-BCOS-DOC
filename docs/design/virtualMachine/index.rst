@@ -10,4 +10,4 @@
    
    frame.md
    evm.md
-   precompile.md
+   precompiled.md
