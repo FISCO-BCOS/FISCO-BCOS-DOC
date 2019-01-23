@@ -1,6 +1,6 @@
-## 多群组操作指南
+# 多群组操作指南
 
-### 创建多群组区块链
+## 创建多群组区块链
 
 FISCO BCOS提供了一键安装脚本[build_chain.sh](TODO)用于快速生成链配置文件。该脚本使用方法如下(详细可参考[快速建链指南](TODO))：
 
@@ -49,13 +49,13 @@ $ bash build_chain.sh -f ipList -e ../build/bin/fisco-bcos
 ```
 
 
-### 多群组操作入门
+## 多群组操作入门
 
 为了方便用户操作，FISCO BCOS在web3sdk的基础上封装了控制台，用户可方便地通过控制台执行增删共识节点以控制节点权限，修改区块可打包最大交易数、最大gas限制等系统参数，并可调用FISCO BCOS底层提供的所有RPC接口，详细说明请参考[控制台使用指南](TODO)。
 
 
 
-#### 配置并启动控制台
+### 配置并启动控制台
 
 控制台是对web3sdk的封装，配置控制台前，首先需要部署web3sdk，详细配置可参考[配置控制台](TODO)
 
@@ -71,7 +71,7 @@ $ ./web3sdk -c 1
 ```
 
 
-#### 节点入网操作
+### 节点入网操作
 
 
 为了保证区块链安全性，FISCO BCOS引入了网络节点、观察者节点和共识节点三类角色，并可通过控制台动态将节点转换成者三类角色，具体可参考[节点入网](TODO)
@@ -80,10 +80,10 @@ $ ./web3sdk -c 1
 - 观察者节点：可从同组节点同步最新区块，可转发交易、处理RPC请求，但不能参加共识流程
 - 共识节点：可以从同组节点同步最新区块、转发交易、处理客户端的RPC请求，参与共识出块
 
-控制台提供了**AddMiner(am)**、**AddObserver(ao)**和**RemoveNode(rn)**三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getMinerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
+控制台提供了 **AddMiner(am)**、**AddObserver(ao)**和 **RemoveNode(rn)**三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getMinerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
 
 例：
-将node id为7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50的节点分别转换成组1的共识节点、观察者节点、网络节点，具体操作和验证步骤如下：
+将指定节点分别转换成组1的共识节点、观察者节点、网络节点，具体操作和验证步骤如下：
 
 ```eval_rst
 .. important::
@@ -92,6 +92,10 @@ $ ./web3sdk -c 1
 ```
 
 ```bash
+# 获取节点node id（设节点目录为~/127.0.0.1/node0）
+$ cat ~/127.0.0.1/node0/conf/node.node_id
+7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+
 # 连接组1的控制台(设web3sdk位于~目录)
 $ cd ~/web3sdk/dist/bin
 
@@ -127,7 +131,7 @@ $ ./web3sdk -c 1
 
 ```
 
-#### 修改系统参数
+### 修改系统参数
 
 FISCO BCOS系统主要包括如下系统参数：
 
@@ -168,6 +172,6 @@ FISCO BCOS系统主要包括如下系统参数：
 [400000000]
 ```
 
-#### RPC接口调用
+### RPC接口调用
 
 通过控制台可调用所有RPC接口，详细可参考[控制台操作手册](TODO)
