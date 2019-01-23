@@ -145,7 +145,7 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 - 功能：基于合约名和合约版本查询合约地址
 - 参数：contractNameAndVersion——合约名+合约版本信息
 - 返回：合约地址，如无参数指定版本的合约信息，接口抛出异常
-- 说明：contractNameAndVersion通过`:`来分割合约名和合约版本，当缺少合约版本时，SDK默认调用指定合约的最新版本
+- 说明：contractNameAndVersion通过`:`来分割合约名和合约版本，当缺少合约版本时，SDK默认调用使用合约的最新版本进行查询
 
 注意：
 1. 在调用接口前，需[sol合约转换Java类](http://***REMOVED***/books/fisco-bcos/page/sdk-%E4%BD%BF%E7%94%A8#bkmrk-1.4-sol%E5%90%88%E7%BA%A6%E8%BD%AC%E6%8D%A2j)并将生成的Java类以及abi、bin文件置于正确的目录；
