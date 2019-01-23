@@ -4,9 +4,9 @@
 
 ## 第一次部署FISCO-BCOS联盟链
 
-### 1. 使用[`build-chain`][build_chain]脚本
+### 1. 使用[`build_chain`][build_chain]脚本
 
-本节使用[`build-chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
+本节使用[`build_chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
 
 - 准备环境
 
@@ -123,7 +123,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 cd ~/fisco
 # 安装openjdk
 sudo apt install -y default-jdk
-curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/binaries/console/console-2.0.0.tar.gz
+curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
 tar -zxf console-2.0.0.tar.gz && mv console-2.0.0 console && chmod u+x console/start
 # 配置控制台证书
 cp nodes/127.0.0.1/sdk/ca.crt nodes/127.0.0.1/sdk/keystore.p12 console/conf

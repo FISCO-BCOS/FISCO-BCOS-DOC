@@ -59,6 +59,8 @@ make
 
 #### 编译选项介绍
 
-1. 
+- BUILD_GM，默认off，国密编译开关
+- TESTS，默认off，单元测试编译开关
+- STATIC_BUILD，默认off，静态编译开关，只支持Ubuntu
 
 [FSICO-BCOS-GitHub]:https://github.com/FISCO-BCOS/FISCO-BCOS
