@@ -420,7 +420,7 @@ CASE(SSTORE)
 
 **合约调用指令举例**
 
-CALL指令能够根据地址调用另外一个合约。首先，EVM判断是CALL指令，调用```caseCall()``````，在caseCall()```中，用```caseCallSetup()```从堆栈中拿出数据，封装成msg，作为参数，调用evmc的callback函数call。Eth在被回调```call()```后，启动一个新的EVM，处理调用，之后将新的EVM的执行结果，通过```call()```的参数返回给当前的EVM，当前的EVM将结果写入结果堆栈SSP中，调用结束。合约创建的逻辑与此逻辑类似。
+CALL指令能够根据地址调用另外一个合约。首先，EVM判断是CALL指令，调用```caseCall()```，在caseCall()```中，用```caseCallSetup()```从堆栈中拿出数据，封装成msg，作为参数，调用evmc的callback函数call。Eth在被回调```call()```后，启动一个新的EVM，处理调用，之后将新的EVM的执行结果，通过```call()```的参数返回给当前的EVM，当前的EVM将结果写入结果堆栈SSP中，调用结束。合约创建的逻辑与此逻辑类似。
 
 ``` cpp
 CASE(CALL)
