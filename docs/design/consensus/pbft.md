@@ -112,12 +112,9 @@ PrepareReqPacket类型消息包包含了正在处理的区块信息:
 ```
 PBFT共识主要包括两个模块:
 
-- PBFT Sealer: 
+- PBFT Sealer: 负责从交易池取交易，并将打包好的区块封装成PBFT Prepare包，交给PBFT Engine处理。
 
-- PBFT Engine:
+- PBFT Engine: 从PBFT Sealer或者网络接收PBFT包，完成共识流程，将达成共识的区块上链，区块上链后，负责从交易池中删除已经上链的交易。
 
-
-Raft Sealer：负责从交易池取出交易并打包成区块，并发送至Raft Engine进行共识。区块上链后，Raft Sealer负责从交易池中删除已上链交易；
-Raft Engine：负责在共识节点进行共识，将达成共识的区块上链。
 
 ## 3. 核心流程
