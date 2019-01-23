@@ -5,7 +5,7 @@
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    group_config.md  
    build_group.md

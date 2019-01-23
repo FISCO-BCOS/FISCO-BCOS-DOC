@@ -5,7 +5,7 @@
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    groups/index.rst
    priority.md
