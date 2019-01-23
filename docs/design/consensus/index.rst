@@ -19,6 +19,8 @@
 
 .. toctree::
    :maxdepth: 1
+   
 
+   architecture.md
    pbft.md
    raft.md

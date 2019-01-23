@@ -1,4 +1,4 @@
-## 权限控制
+# 权限控制
 ## 1 权限控制介绍
 
 与可自由加入退出、自由交易、自由检索的公有链相比，联盟链有准入许可、交易多样化、基于商业上隐私及安全考虑、高稳定性等要求。因此，联盟链在实践过程中需强调“权限”及“控制”的理念。
@@ -13,7 +13,7 @@
 
 ## 3 权限控制分类
 
-分布式存储权限控制分为对用户表和系统表的权限控制。用户表指用户合约所创建的表，用户表均可以设置权限。系统表指FISCO BCOS区块链网络内置的表，系统表的设计详见[存储文档](./storage.md)。系统表的权限控制如下所示：   
+分布式存储权限控制分为对用户表和系统表的权限控制。用户表指用户合约所创建的表，用户表均可以设置权限。系统表指FISCO BCOS区块链网络内置的表，系统表的设计详见[存储文档](../storage/index.rst)。系统表的权限控制如下所示：   
 
 |表名|权限控制是否生效|表存储数据说明|权限控制意义|
 |:---|:------|:---------|:----|
@@ -89,11 +89,11 @@ contract Authority {
 
 #### 5.1 用户表权限控制流程
 外部账户查询表不进行权限控制。当需要更新，增加或移除记录时，将通过查询权限表进行权限控制。流程如下图所示。
-![ac1.png](../../images/authority/ac1.png)
+![ac1.png](../../../images/authority/ac1.png)
 
 #### 5.2 系统表权限控制流程
-对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk文档](../web3sdk/introduction.md)）和sdk的控制台（详见[控制台文档](../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果具有权限，执行交易；如果不具备，则返回无权限操作提示。
-![ac2.png](../../images/authority/ac2.png)
+对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk文档](../api/sdk.md)）和控制台（详见[控制台文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果具有权限，执行交易；如果不具备，则返回无权限操作提示。
+![ac2.png](../../../images/authority/ac2.png)
 
 **注：** _sys_miners_表（ConsensusPrecompiled），_sys_cns_表（CNSPrecompiled），_sys_config_表（SystemConfigPrecompiled）控制流程与对权限表的控制流程类似。
 
@@ -153,4 +153,4 @@ MemoryTableFactory增加setAuthorizedAddress接口，用于将查询的权限地
 
 ## 8 权限控制示例
 
-参见[权限控制使用文档](../manual/authority.md)
+参考[权限控制使用文档](../../manual/authority.md)
