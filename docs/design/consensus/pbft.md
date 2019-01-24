@@ -41,7 +41,7 @@ leader_idx = (view + block_number) % node_num
 下图简单展示了4(3\*1+1, f=1)节点FISCO BCOS系统中，node3为拜占庭节点情况下，视图切换过程：
 
 
-[PBFT视图切换过程](../../../images/consensus/pbftView.png)
+![PBFT视图切换过程](../../../images/consensus/pbftView.png)
 
 - 前三轮共识过程中, node0、node1、node2分别为Leader，正常出块共识;
 - 第四轮共识过程中, node3为Leader，但node3已经无法提供正常服务，node0-node2在给定时间内未收到node3打包的区块，会触发视图切换，将当前view+1，记为view\_new，并相互间广播viewchange包，其他节点收集满在视图view\_new上的(2\*f+1)个viewchange包后，将自己的view切换成view\_new，并计算出新leader
