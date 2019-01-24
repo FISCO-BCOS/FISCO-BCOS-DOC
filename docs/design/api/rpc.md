@@ -87,13 +87,13 @@ FISCO BCOS提供丰富的RPC接口供客户端调用。其中分为两大类，�
 #### 参数        
 无          
 #### 返回值          
-`object` - 版本信息
+`object` - 版本信息            
 字段如下：
-`Build Time`: `string` - 编译时间
-`Build Type`: `string` - 编译机器环境
-`FISCO-BCOS Version`: `string` - FISCO BCOS版本
-`Git Branch`: `string` - 版本分支
-`Git Commit Hash`: `string` - 版本最新commit哈希
+`Build Time`: `string` - 编译时间            
+`Build Type`: `string` - 编译机器环境            
+`FISCO-BCOS Version`: `string` - FISCO BCOS版本            
+`Git Branch`: `string` - 版本分支            
+`Git Commit Hash`: `string` - 版本最新commit哈希            
 
 示例：          
 ```
@@ -215,61 +215,61 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 #### 返回值          
 `object` - 共识状态信息
 
-当共识机制为pbft时（pbft详细设计参考[pbft设计文档](../consensus/pbft.md)），字段如下：
-`accountType`: `unsigned int` - 账户类型
-`allowFutureBlocks`: `bool` - 允许未来块标志
-`cfgErr`: `bool` - 配置错误标志
-`connectedNodes`: `unsigned int` - 连接的节点数
-`consensusedBlockNumber`: `unsigned int` - 下一个共识的最新块高
-`currentView`: `unsigned int` - 当前视图
-`groupId`: `unsigned int` - 群组ID
-`highestblockHash`: `string` - 最新块哈希
-`highestblockNumber`: `unsigned int` - 最新区块高度
-`leaderFailed`: `bool` - leader失败标志
-`max_faulty_leader`: `unsigned int` - 最大容错节点数
-`miner.index`: `string` - 节点序号为index的nodeID
-`node index`: `unsigned int` - 节点的序号
-`nodeID`: `string` - 节点的nodeID
-`nodeNum`: `unsigned int` - 节点的数
-`omitEmptyBlock`: `bool` - 忽略空块标志位
-`protocolId`: `unsigned int` - 协议ID号
-`toView`: `unsigned int` - 目前到达的view值
-`prepareCache_blockHash`: `string` - prepareCache哈希
-`prepareCache_height`: `int`- prepareCache高度
-`prepareCache_idx`: `unsigned int` - prepareCache序号
-`prepareCache_view`: `unsigned int` - prepareCache视图
-`rawPrepareCache_blockHash`: `string` - rawPrepareCache哈希
-`rawPrepareCache_height`: `int`- rawPrepareCache高度
-`rawPrepareCache_idx`: `unsigned int` - rawPrepareCache序号
-`rawPrepareCache_view`: `unsigned int` - rawPrepareCache视图
-`committedPrepareCache_blockHash`: `string` - committedPrepareCache哈希
-`committedPrepareCache_height`: `int`- committedPrepareCache高度
-`committedPrepareCache_idx`: `unsigned int` - committedPrepareCache序号
-`committedPrepareCache_view`: `unsigned int` - committedPrepareCache视图
-`futureCache_blockHash`: `string` -futureCache哈希
-`futureCache_height`: `int`- futureCache高度
-`futureCache_idx`: `unsigned int` - futureCache序号
-`signCache_cachedSize`: `unsigned int` - signCache_cached大小
-`commitCache_cachedSize`: `unsigned int` - commitCache_cached大小
-`viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached大小
+当共识机制为pbft时（pbft详细设计参考[pbft设计文档]            (../consensus/pbft.md)），字段如下：            
+`accountType`: `unsigned int` - 账户类型            
+`allowFutureBlocks`: `bool` - 允许未来块标志            
+`cfgErr`: `bool` - 配置错误标志            
+`connectedNodes`: `unsigned int` - 连接的节点数            
+`consensusedBlockNumber`: `unsigned int` - 下一个共识的最新块高            
+`currentView`: `unsigned int` - 当前视图            
+`groupId`: `unsigned int` - 群组ID            
+`highestblockHash`: `string` - 最新块哈希            
+`highestblockNumber`: `unsigned int` - 最新区块高度            
+`leaderFailed`: `bool` - leader失败标志            
+`max_faulty_leader`: `unsigned int` - 最大容错节点数            
+`miner.index`: `string` - 节点序号为index的nodeID            
+`node index`: `unsigned int` - 节点的序号            
+`nodeID`: `string` - 节点的nodeID            
+`nodeNum`: `unsigned int` - 节点的数            
+`omitEmptyBlock`: `bool` - 忽略空块标志位            
+`protocolId`: `unsigned int` - 协议ID号            
+`toView`: `unsigned int` - 目前到达的view值            
+`prepareCache_blockHash`: `string` - prepareCache哈希            
+`prepareCache_height`: `int`- prepareCache高度            
+`prepareCache_idx`: `unsigned int` - prepareCache序号            
+`prepareCache_view`: `unsigned int` - prepareCache视图            
+`rawPrepareCache_blockHash`: `string` - rawPrepareCache哈希            
+`rawPrepareCache_height`: `int`- rawPrepareCache高度            
+`rawPrepareCache_idx`: `unsigned int` - rawPrepareCache序号            
+`rawPrepareCache_view`: `unsigned int` - rawPrepareCache视图            
+`committedPrepareCache_blockHash`: `string` - committedPrepareCache哈希            
+`committedPrepareCache_height`: `int`- committedPrepareCache高度            
+`committedPrepareCache_idx`: `unsigned int` - committedPrepareCache序号            
+`committedPrepareCache_view`: `unsigned int` - committedPrepareCache视图            
+`futureCache_blockHash`: `string` -futureCache哈希            
+`futureCache_height`: `int`- futureCache高度            
+`futureCache_idx`: `unsigned int` - futureCache序号            
+`signCache_cachedSize`: `unsigned int` - signCache_cached大小            
+`commitCache_cachedSize`: `unsigned int` - commitCache_cached大小            
+`viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached大小            
 
-当共识机制为raft时（raft详细设计参考[raft设计文档](../consensus/raft.md)），字段如下：
-`accountType`: `unsigned int` - 账户类型
-`allowFutureBlocks`: `bool` - 允许未来块标志
-`cfgErr`: `bool` - 配置错误标志
-`consensusedBlockNumber`: `unsigned int` - 下一个共识的最新块高
-`groupId`: `unsigned int` - 群组ID
-`highestblockHash`: `string` - 最新块哈希
-`highestblockNumber`: `unsigned int` - 最新区块高度
-`leaderId`: `string` - leader的nodeID
-`leaderIdx`: `unsigned int` - leader的序号
-`max_faulty_leader`: `unsigned int` - 最大容错节点数
-`miner.index`: `string` - 节点序号为index的nodeID
-`node index`: `unsigned int` - 节点的index
-`nodeID`: `string` - 节点的nodeID
-`nodeNum`: `unsigned int` - 节点的数
-`omitEmptyBlock`: `bool` - 忽略空块标志位
-`protocolId`: `unsigned int` - 协议ID号
+当共识机制为raft时（raft详细设计参考[raft设计文档]            (../consensus/raft.md)），字段如下：            
+`accountType`: `unsigned int` - 账户类型            
+`allowFutureBlocks`: `bool` - 允许未来块标志            
+`cfgErr`: `bool` - 配置错误标志                        
+`consensusedBlockNumber`: `unsigned int` - 下一个共识的最新块高            
+`groupId`: `unsigned int` - 群组ID            
+`highestblockHash`: `string` - 最新块哈希            
+`highestblockNumber`: `unsigned int` - 最新区块高度            
+`leaderId`: `string` - leader的nodeID            
+`leaderIdx`: `unsigned int` - leader的序号            
+`max_faulty_leader`: `unsigned int` - 最大容错节点数            
+`miner.index`: `string` - 节点序号为index的nodeID            
+`node index`: `unsigned int` - 节点的index            
+`nodeID`: `string` - 节点的nodeID            
+`nodeNum`: `unsigned int` - 节点的数            
+`omitEmptyBlock`: `bool` - 忽略空块标志位            
+`protocolId`: `unsigned int` - 协议ID号            
 
 示例：
 ```
@@ -377,20 +377,20 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
 #### 参数        
 `groupID`: `unsigned int` - 群组ID          
 #### 返回值          
-`object` - 同步状态信息     
-字段如下：
-`blockNumber`: `unsigned int` - 最新区块高度
-`genesisHash`: `string` - 创世块哈希
-`isSyncing`: `bool` - 正在同步标志
-`latestHash`: `string` - 最新区块哈希
-`nodeId`: `string` - 节点的nodeID
-`protocolId`: `unsigned int` - 协议ID号
-`txPoolSize`: `string` - 交易池中交易的数量
-`peers`: `array` - 已连接的指定群组内p2p节点，节点信息字段如下
-- `blockNumber`: `unsigned int` - 最新区块高度
-- `genesisHash`: `string` - 创始区块哈希
-- `latestHash`: `string` - 最新块哈希
-- `nodeId`: `string` - 节点的nodeID
+`object` - 同步状态信息                 
+字段如下：            
+`blockNumber`: `unsigned int` - 最新区块高度            
+`genesisHash`: `string` - 创世块哈希            
+`isSyncing`: `bool` - 正在同步标志            
+`latestHash`: `string` - 最新区块哈希            
+`nodeId`: `string` - 节点的nodeID            
+`protocolId`: `unsigned int` - 协议ID号            
+`txPoolSize`: `string` - 交易池中交易的数量            
+`peers`: `array` - 已连接的指定群组内p2p节点，节点信息字段如下            
+- `blockNumber`: `unsigned int` - 最新区块高度            
+- `genesisHash`: `string` - 创始区块哈希            
+- `latestHash`: `string` - 最新块哈希            
+- `nodeId`: `string` - 节点的nodeID            
        
 示例：
 ```
@@ -439,9 +439,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 #### 返回值          
 `array` - 已连接的p2p节点信息     
 字段如下：
-- `IPAndPort`: `string` - 节点连接的ip和端口
-- `NodeID`: `string` - 节点的nodeID
-- `Topic`: `array` - 节点关注的topic信息
+- `IPAndPort`: `string` - 节点连接的ip和端口            
+- `NodeID`: `string` - 节点的nodeID            
+- `Topic`: `array` - 节点关注的topic信息            
       
 示例：          
 ```
