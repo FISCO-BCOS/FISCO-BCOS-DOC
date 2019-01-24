@@ -1,6 +1,6 @@
 ## 框架
 
-FISCO BCOS同时支持**PBFT(Practical Byzantine Fault Tolerance)** 和 **RAFT(Replication and Fault Tolerant)**共识算法，共识模块框架如下图：
+FISCO BCOS同时支持**PBFT(Practical Byzantine Fault Tolerance)** 和 **RAFT(Replication and Fault Tolerant)** 共识算法，共识模块框架如下图：
 
 ![共识模块框架](../../../images/consensus/architecture.png)
 
