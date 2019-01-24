@@ -124,7 +124,7 @@ cd ~/fisco
 # 安装openjdk
 sudo apt install -y default-jdk
 curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
-tar -zxf console-2.0.0.tar.gz && mv console-2.0.0 console && chmod u+x console/start
+tar -zxf console-2.0.0.tar.gz && chmod u+x console/start
 # 配置控制台证书
 cp nodes/127.0.0.1/sdk/ca.crt nodes/127.0.0.1/sdk/keystore.p12 console/conf
 ```
@@ -185,50 +185,24 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ## FISCO-BCOS HelloWorld
 
-### 1. ok合约
-ok合约对FISCO-BCOS相当于其他编程语言的Hello World。该合约内部有两个账户`from/to`，提供一个接口`trans(uint num)`，每次调用会从`from`减去`num`并给`to`增加`num`。提供接口`get()`可以获取`to`账户的余额。
+### 1. HelloWorld合约
 
 ```solidity
-pragma solidity ^0.4.24;
-contract Ok{
-    
-    struct Account{
-        address account;
-        uint balance;
-    }
-    
-    struct  Translog {
-        string time;
-        address from;
-        address to;
-        uint amount;
-    }
-    
-    Account from;
-    Account to;
-    event TransEvent(uint num);
-    Translog[] log;
+pragma solidity ^0.4.2;
 
-    function Ok(){
-        from.account=0x1;
-        from.balance=10000000000;
-        to.account=0x2;
-        to.balance=0;
+contract HelloWorld{
+    string name;
 
+    function HelloWorld(){
+       name = "Hello, World!";
     }
-    
-    function get()constant returns(uint){
-        return to.balance;
-    }
-    
-    function trans(uint num){
-        if (from.balance < num || to.balance + num < to.balance)
-            return; // Deny overflow
 
-    	from.balance=from.balance-num;
-    	to.balance+=num;
-        TransEvent(num);
-    	log.push(Translog("20170413",from.account,to.account,num));
+    function get()constant returns(string){
+        return name;
+    }
+
+    function set(string n){
+    	name = n;
     }
 }
 ```
@@ -237,8 +211,8 @@ contract Ok{
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
-> deploy Ok
-0xcb40116051581f37878f2138d0e16949e4eab791
+> deploy HelloWorld
+0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
 ### 3. 使用控制台调用ok合约
@@ -248,14 +222,16 @@ contract Ok{
 > getBlockNumber
 1
 # 调用trans接口
-> call Ok 0xcb40116051581f37878f2138d0e16949e4eab791 trans 10
-0xe34c1b6f5b29edbdac5267de729ea93f6bc5d670773a75b15dfbd4065814b51d
+> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+Hello, World!
 # 调用get接口查询to的余额
-> call Ok 0xcb40116051581f37878f2138d0e16949e4eab791 get
-10
+> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello,FISCO-BCOS"
+0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+Hello,FISCO-BCOS
 # 查看当前块高
 > getBlockNumber
-2
+4
 ```
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
