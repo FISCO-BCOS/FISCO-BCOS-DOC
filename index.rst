@@ -22,3 +22,4 @@ FISCO BCOS平台基于现有的BCOS开源项目进行开发，聚焦于金融行
    docs/enterprise/index.rst
    docs/faq.md
    docs/community.md
+   docs/appendix/index.rst
