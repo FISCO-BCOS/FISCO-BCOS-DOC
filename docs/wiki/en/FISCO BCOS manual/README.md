@@ -1715,7 +1715,7 @@ Host:127.0.0.1:30403
 
 Please refer to these documentations:
 
-1. [AMOP(Advance Messages Onchain Protocol)](../amop使用说明文档.md)
+1. [AMOP(Advanced Messages Onchain Protocol)](../amop使用说明文档.md)
 2. [Contract_Name_Service](../CNS_Contract_Name_Service_服务使用说明文档.md)
 3. EthCall [Design files](../EthCall设计文档.md) [Instructions](../EthCall说明文档.md)
 4. [web3sdk](../web3sdk使用说明文档.md)
@@ -1735,7 +1735,7 @@ Please refer to these documentations:
 | ----------------------- | ---------------------------------------- |
 | abi                     | Implementation of CNS(Contract Name Service) |
 | eth                     | Main entry of FISCO BCOS, *main.cpp* is included in this directory |
-| libchannelserver        | AMOP(Advance Messages Onchain Protocol)  implementation |
+| libchannelserver        | AMOP(Advanced Messages Onchain Protocol)  implementation |
 | libdevcore              | Implement core and general components of FISCO BCOS, such as I/O operations, read/write locks, TrieDB, SHA3, RLP, Worker Model, etc |
 | libdiskencryption       | Disk storage encryption implementation   |
 | libethcore              | Implement core data structures of blockchain, including ABI, block header, transaction, etc. Provide key management and pre-compile functions |
