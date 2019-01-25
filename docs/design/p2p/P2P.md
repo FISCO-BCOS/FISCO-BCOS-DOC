@@ -72,7 +72,7 @@ FISCO-BCOS P2P模块提供高效、通用和安全的网络通信基础功能，
 
 ### 广播流程
 
-![广播流程](../../../images/p2p/Broadcast.png)
+![广播流程](../../../images/p2p/broadcast.png)
 
 ## 状态同步
 
