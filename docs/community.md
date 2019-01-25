@@ -29,4 +29,3 @@
 
 
 - 或者可以在[微信群](https://github.com/FISCO-BCOS/LargeFiles/blob/master/images/FISCO-BCOS.jpeg) 和 [Gitter](https://gitter.im/fisco-bcos/Lobby)里讨论。
->>>>>>> 002b646e823cc1fbabad317ad4f99ea8f02c12a7
