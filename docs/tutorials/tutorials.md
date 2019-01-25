@@ -187,6 +187,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ### 1. HelloWorld合约
 
+HelloWorld合约提供两个接口，分别是`get()`和`set()`，用于获取/设置合约变量`name`。合约内容如下
 ```solidity
 pragma solidity ^0.4.2;
 
@@ -221,12 +222,13 @@ contract HelloWorld{
 # 查看当前块高
 > getBlockNumber
 1
-# 调用trans接口
+# 调用get接口获取name变量
 > call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
-# 调用get接口查询to的余额
+# 调用set设置name
 > call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello,FISCO-BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+# 调用get接口获取name变量，检查设置是否生效
 > call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello,FISCO-BCOS
 # 查看当前块高
