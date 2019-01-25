@@ -8,7 +8,14 @@
 - Table，存储表中的所有数据，KV结构，kV由AMDB主key和Entries对象构成。
 
 ## 一个例子
+
 ![](../../../images/storage/example.png)
+
+- 表格中每一行就是一个Entry，每个Entry里面存储列名到值的映射。例如Entry0中就会存储`{_id_:0,_hash_:"...",_status_:0,name:小明,address:南山,,age:18}`，其中"..."表示hash的缩写。
+- 以address作为AMDB的主key。
+- Entry0和Entry2的AMDB主key相同，所以会放在同一个Entries中。
+- 整个表构成一个AMDB的Table，Table中存储AMDB主key到对应Entries的映射。可以基于AMDB主key进行增删改查，支持条件筛选。
 
 # StorageState
 
+StorageState是基于AMDB实现的存储账户状态的方式，相比于MPTState去掉了MPT树，每个账户会有一个AMDB的Table来存储其相关数据。
