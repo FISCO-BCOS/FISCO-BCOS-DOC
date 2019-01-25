@@ -23,29 +23,30 @@
 
 ```eval_rst
 
-+-----------+---------+------+----------------------+
-|table      |commands | code |msg                   |
-+===========+=========+======+======================+
-|**\_sys_table_access_**|addAuthority(aa)| -30| table name and address exist|
-+-----------+---------+------+----------------------+
-|**\_sys_table_access_**|removeAuthority(ra)| -31| table name and address does not exist|
-+-----------+---------+------+----------------------+
-|**\_sys_miners_**| addMiner(am)/addObserver(ao)/removeNode(rn)|-40| invalid nodeID|
-+-----------+---------+------+----------------------+
-|**\_sys_miners_**| addObserver(ao)/removeNode(rn) |-41|last miner cannot be removed |
-+-----------+---------+------+----------------------+
-|**\_sys_miners_**| addMiner(am)/addObserver(ao) |-42|nodeID is not in network |
-+-----------+---------+------+----------------------+
-|**\_sys_miners_**| removeNode(rn) |-43|nodeID is not in group peers |
-+-----------+---------+------+----------------------+
-|**\_sys_miners_**| addMiner(am) |-44|nodeID is already in miner list |
-+-----------+---------+------+----------------------+
-|**\_sys_miners_**| addObserver(ao) |-45|nodeID is already in observer list |
-+-----------+---------+------+----------------------+
-|**\_sys_cns_**| deployByCNS(dbc) |-50|address and version exist|
-+-----------+---------+------+----------------------+
-|**\_sys_config_**| setSystemConfigByKey(ssc) |-60|set invalid configuration values|
-+-----------+---------+------+----------------------+
++------------------+----------------+------+---------------------------------------+
+|table             |commands        | code |msg                                    |
++==================+================+==============================================+
+|_sys_table_access_|addAuthority(aa)| -30  | table name and address exist          |
++------------------+----------------+------+---------------------------------------+
+|_sys_table_access_|removeAuthority(ra)| -31| table name and address does not exist|
++------------------+----------------+------+---------------------------------------+
+|_sys_miners_| addMiner(am)/addObserver(ao)/removeNode(rn)|-40| invalid nodeID     |
++------------------+----------------+------+---------------------------------------+
+|_sys_miners_| addObserver(ao)/removeNode(rn) |-41|last miner cannot be removed    |
++------------------+----------------+------+---------------------------------------+
+|_sys_miners_| addMiner(am)/addObserver(ao) |-42|nodeID is not in network          |
++------------------+----------------+------+---------------------------------------+
+|_sys_miners_| removeNode(rn) |-43|nodeID is not in group peers                    |
++------------------+----------------+------+---------------------------------------+
+|_sys_miners_| addMiner(am) |-44|nodeID is already in miner list                   |
++------------------+----------------+------+---------------------------------------+
+|_sys_miners_| addObserver(ao) |-45|nodeID is already in observer list             |
++------------------+----------------+------+---------------------------------------+
+|_sys_cns_| deployByCNS(dbc) |-50|address and version exist                        |
++------------------+----------------+------+---------------------------------------+
+|_sys_config_| setSystemConfigByKey(ssc) |-60|set invalid configuration values     |
++------------------+----------------+------+---------------------------------------+
+
 ```
 ## 3 配置与运行
 ### 3.1 配置
