@@ -52,7 +52,7 @@ FISCO-BCOS P2P模块提供高效、通用和安全的网络通信基础功能，
 
 ### 连接建立流程
 
-![连接建立流程](../../../images/p2p/连接建立流程.png)
+![连接建立流程](../../../images/p2p/sessionConnection.png)
 
 ## 消息收发
 
@@ -64,18 +64,18 @@ FISCO-BCOS P2P模块提供高效、通用和安全的网络通信基础功能，
 
 ### 单播流程
 
-![单播流程](../../../images/p2p/单播流程.png)
+![单播流程](../../../images/p2p/unicast.png)
 
 ### 组播流程
 
-![组播流程](../../../images/p2p/组播流程.png)
+![组播流程](../../../images/p2p/multiCast.png)
 
 ### 广播流程
 
-![广播流程](../../../images/p2p/广播流程.png)
+![广播流程](../../../images/p2p/Broadcast.png)
 
 ## 状态同步
 
 每个节点会维护自身的状态，并将状态的Seq在全网定时广播，与其它节点同步
 
-![状态同步](../../../images/p2p/状态同步.png)
+![状态同步](../../../images/p2p/statusSync.png)
