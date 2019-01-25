@@ -12,6 +12,14 @@
 ### 3.在build路径运行"make -j2" 卡死
 **解决方案**：编译的过程中需要从网络上下载依赖的包，网络条件太差可能卡死。建议在网络条件良好的环境搭建FISCO BCOS，或者从其他渠道下载依赖库包后拷贝到你的编译目标路径下。亦可参见[issue：make -j2 运行卡死](https://github.com/bcosorg/bcos/issues/20)
 
+### 4. 编译1.3.7之前版本无法下载boost-1.63库
+
+在1.3.7版本对FISCO-BCOS项目做了瘦身（项目大小从330M降低到了12M），导致1.3.7之前版本下载Boost-1.63链接失效。推荐使用1.3.7以上版本，如果一定要使用更早的版本，请按照下面操作修改下载链接后继续编译。
+```bash
+cd FISCO-BCOS
+sed -i "s#https://github.com/FISCO-BCOS/FISCO-BCOS/raw/master/deps/src/boost_1_63_0.tar.gz#https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/libs/boost_1_63_0.tar.gz#g" cmake/ProjectBoost.cmake
+```
+
 ### 4.AWS亚马逊云安装问题
 
 #### 4.1 AWS亚马逊云Centos-7.2安装FISCO-BCOS问题：
