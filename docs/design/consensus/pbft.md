@@ -41,13 +41,7 @@ leader_idx = (view + block_number) % node_num
 下图简单展示了4(3\*1+1, f=1)节点FISCO BCOS系统中，node3为拜占庭节点情况下，视图切换过程：
 
 
-
-```eval_rst
-
-.. image:: ../../images/consensus/pbftView.png
-
-```
-
+![PBFT视图切换过程](../../../images/consensus/pbftView.png)
 
 - 前三轮共识过程中, node0、node1、node2分别为Leader，正常出块共识;
 - 第四轮共识过程中, node3为Leader，但node3已经无法提供正常服务，node0-node2在给定时间内未收到node3打包的区块，会触发视图切换，将当前view+1，记为view\_new，并相互间广播viewchange包，其他节点收集满在视图view\_new上的(2\*f+1)个viewchange包后，将自己的view切换成view\_new，并计算出新leader
@@ -105,16 +99,98 @@ PrepareReqPacket类型消息包包含了正在处理的区块信息:
 系统框架如下图:
 
 
-```eval_rst
+![PBFT系统框架](../../../images/consensus/pbftArchitecture.png)
 
-.. image:: ../../images/consensus/pbftArchitecture.png
 
-```
 PBFT共识主要包括两个模块:
 
 - PBFT Sealer: 负责从交易池取交易，并将打包好的区块封装成PBFT Prepare包，交给PBFT Engine处理。
 
-- PBFT Engine: 从PBFT Sealer或者网络接收PBFT包，完成共识流程，将达成共识的区块上链，区块上链后，负责从交易池中删除已经上链的交易。
+- PBFT Engine: 从PBFT Sealer或者P2P网络接收PBFT包，完成共识流程，将达成共识的区块写入区块链，区块上链后，从交易池中删除已经上链的交易。区块验证器(Blockverifier)负责执行区块。
 
 
 ## 3. 核心流程
+
+如下图所示，PBFT共识主要包括Pre-parepare、Prepare和Commit三个阶段。Pre-prepare阶段主要负责执行区块，产生签名包，并将签名包广播给所有共识节点；Prepare阶段中，节点收集满2\*f+1的签名包后，开始广播Commit包，表明自身达到可以提交区块的状态；Commit阶段中，节点收集满2\*f+1的Commit包后，直接将本地缓存的Prepapre包中的区块提交到数据库。
+
+![PBFT核心流程](../../../images/consensus/pbftProcess.png)
+```eval_rst
+.. image:: 
+
+```
+下图详细介绍了PBFT各个阶段的具体流程：
+
+
+![PBFT各阶段处理流程](../../../images/consensus/pbftEngine.png)
+
+
+
+### 3.1 Leader打包区块
+
+PBFT共识算法中，共识节点轮流出块，每一轮共识仅有一个Leader打包区块，Leader索引通过公式`(block_number + current_view) % consensus_node_num`计算得出。节点计算当前Leader索引与自己索引相同后，就开始打包区块。区块打包主要由PBFT Sealer线程完成，Sealer线程的主要工作如下图所示：
+
+
+![Sealer线程工作流程](../../../images/consensus/Sealer.png)
+
+
+- **产生新的空块**: 通过区块链(BlockChain)模块获取当前最高块，并基于最高块产生新空块(将新区块父哈希置为最高块哈希，时间戳置为当前时间，交易清空)
+
+- **从交易池打包交易**: 产生新空块后，从交易池中获取交易，并将获取的交易插入到产生的新区块中
+
+- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为Leader的索引，并根据打包的交易计算出所有交易的[transactionRoot](TODO)
+
+- **产生Prepare包**: 将组装的新区块编码到Prepare包内，通过PBFTEngine线程广播给组内所有共识节点，其他共识节点收到Prepare包后，开始进行三阶段共识。
+
+
+### 3.2 pre-prepare阶段
+
+共识节点收到Prepare包后，进入pre-prepare阶段，此阶段的主要工作流程包括：
+
+- **Prepare包合法性判断**：主要判断是否是重复的Prepare包、Prepare请求中包含的区块父哈希是否是当前节点最高块哈希(防止分叉)、Prepare请求中包含区块的块高是否等于最高块高加一
+
+- **缓存合法的Prepare包**: 若Prepare请求合法，则将其缓存到本地，用于过滤重复的Prepare请求
+
+- **空块判断**：若Prepare请求包含的区块中交易数目是0，则触发视图切换，将当前视图加一，并向所有其他节点广播视图切换请求
+
+- **执行区块并缓存区块执行结果**: 若Prepare请求包含的区块中交易数目大于0，则调用BlockVerifier区块执行器执行区块，并缓存执行后的区块
+
+- **产生并广播签名包**：基于执行后的区块哈希，产生并广播签名包，表明本节点已经完成区块执行和验证
+
+
+### 3.3 Prepare阶段
+
+共识节点收到签名包后，进入Prepare阶段，此阶段的主要工作流程包括：
+
+- **签名包合法性判断**：主要判断签名包的哈希与pre-prepare阶段缓存的执行后的区块哈希相同，若不相同，则继续判断该请求是否属于未来块签名请求(产生未来块的原因是本节点处理性能低于其他节点，还在进行上一轮共识，判断未来块的条件是：签名包的height字段大于本地最高块高加一)，若请求也非未来块，则是非法的签名请求，节点直接拒绝该签名请求
+
+- **缓存合法的签名包**：节点会缓存合法的签名包
+
+- **判断pre-prepare阶段缓存的区块对应的签名包缓存是否达到2\*f+1，若收集满签名包，广播Commit包**：若pre-prepare阶段缓存的区块哈希对应的签名包数目超过2\*f+1，则说明大多数节点均执行了该区块，并且执行结果一致，说明本节点已经达到可以提交区块的状态，则开始广播Commit包
+
+- **若收集满签名包，备份pre-prepare阶段缓存的Prepare包落盘**：为了防止Commit阶段区块未提交到数据库之前超过2\*f+1个节点宕机，这些节点启动后重新出块，导致区块链分叉(剩余的节点最新区块与这些节点最高区块不同)，还需要将pre-prepare阶段缓存的Prepare包，节点重启后，优先处理备份的Prepare包。
+
+
+### 3.4 Commit阶段
+
+共识节点收到Commit包后，进入Commit阶段，此阶段工作流程包括：
+
+- **Commit包合法性判断**：主要判断Commit包的哈希与pre-prepare阶段缓存的执行后的区块哈希相同，若不相同，则继续判断该请求是否属于未来块Commit请求(产生未来块的原因是本节点处理性能低于其他节点，还在进行上一轮共识，判断未来块的条件是：Commit的height字段大于本地最高块高加一)，若请求也非未来块，则是非法的Commit请求，节点直接拒绝该请求
+
+- **缓存合法的Commit包**：节点缓存合法的Commit包
+
+- **判断pre-prepare阶段缓存的区块对应的Commit包缓存是否达到2\*f+1，若收集满Commit包，则将新区块落盘**：若pre-prepare阶段缓存的区块哈希对应的Commit请求数目超过2\*f+1，则说明大多数节点达到了可提交该区块状态，且执行结果一致，则调用BlockChain模块将pre-prepare阶段缓存的区块写入数据库
+则说明大多数节点均执行了该区块，并且执行结果一致，说明本节点已经达到可以提交区块的状态，则开始广播Commit包
+
+
+### 3.5 视图切换处理流程
+
+当PBFT三阶段共识超时或节点收到空块时，PBFTEngine会试图切换到更高的视图(将要切换到的视图toView加一)，并触发ViewChange处理流程；节点收到ViewChange包时，也会触发ViewChange处理流程：
+
+- **判断ViewChange包是否有效：** 有效的ViewChange请求中带有的块高必须不小于当前节点最高块高，视图必须大于当前节点视图
+- **将有效的ViewChange包加入PBFT缓存：** 用于防止同样的ViewChange请求被处理多次，也作为判断节点是否可以切换视图的统计依据
+- 若收到的ViewChange包中附带的view等于本节点的即将切换到的视图toView，若本节点收集满2\*f+1个view等于toView且来自不同节点的ViewChange包，则说明超过三分之二的节点要切换到toView视图，当前视图切换到toView；否则若至少有三分之一的节点达到其他视图，则将本节点视图切换到这些节点的视图。
+
+
+
+
+
