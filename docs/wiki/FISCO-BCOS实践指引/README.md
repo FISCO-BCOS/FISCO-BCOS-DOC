@@ -35,7 +35,7 @@
   [CNS(Contract Name Service)](https://github.com/FISCO-BCOS/Wiki/tree/master/Contract_Name%20Service%E6%9C%8D%E5%8A%A1)：提供一种命令服务, 将合约接口调用映射为名称, 并且内置了合约的版本管理, 基于CNS开发者可以以更简单的方式调用合约接口, 可以忽略更多的繁琐流程, 而且基于CNS内置的合约版本管理机制对于合约的灰度升级会非常友好。
 
 - AMOP(链上信使协议)
-  [AMOP(Advance Messages Onchain Protocol)](https://github.com/FISCO-BCOS/Wiki/tree/master/AMOP%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)：AMOP系统旨在为联盟链提供一个安全高效的消息信道，联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用AMOP进行通讯。  
+  [AMOP(Advanced Messages Onchain Protocol)](https://github.com/FISCO-BCOS/Wiki/tree/master/AMOP%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)：AMOP系统旨在为联盟链提供一个安全高效的消息信道，联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用AMOP进行通讯。  
 
 - 应用于区块链的多节点并行拜占庭容错共识算法  
   [共识机制](https://github.com/FISCO-BCOS/Wiki/tree/master/%E5%BA%94%E7%94%A8%E4%BA%8E%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E5%A4%9A%E8%8A%82%E7%82%B9%E5%B9%B6%E8%A1%8C%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95)：FISCO BCOS的共识机制是在PFBT基础上进行改进, 结合区块链的特性, 增加了异常处理, 添加了并行处理的机制。
