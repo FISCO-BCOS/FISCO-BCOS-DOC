@@ -1,4 +1,4 @@
-## 快速开始
+# 快速开始
 
 ```
 $ git clone https://github.com/HaoXuan40404/generator.git
