@@ -3,3 +3,5 @@ _build
 *.iml
 *.ipr
 *.iws
+.DS_Store
+.vscode/

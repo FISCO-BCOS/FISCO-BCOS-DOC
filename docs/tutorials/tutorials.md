@@ -1,12 +1,12 @@
-# 教程
+# 教程
 
 本教程帮助你开始使用FISCO-BCOS，教程的第一部分面向对FISCO-BCOS感兴趣但缺乏了解的用户。通过在本机部署FISCO-BCOS以及运行FISCO-BCOS HellowWorld帮助初学者快速学习使用FISCO-BCOS。
 
 ## 第一次部署FISCO-BCOS联盟链
 
-### 1. 使用[`build-chain`][build_chain]脚本
+### 1. 使用[`build_chain`][build_chain]脚本
 
-本节使用[`build-chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
+本节使用[`build_chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
 
 - 准备环境
 
@@ -21,7 +21,7 @@ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2
 ./bin/fisco-bcos -v
 ```
 
-执行完上述步骤后，fisco目录下结构如下
+执行完上述步骤后，fisco目录下结构如下
 ```bash
 fisco
 ├── bin
@@ -115,7 +115,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 
 ### 3. 使用控制台
 
-控制台通过Java SDK链接FISCO-BCOS节点，可以实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息，实乃FISCO-BCOS爱好者必备之良品。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可
+控制台通过Java SDK链接FISCO-BCOS节点，可以实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息，实乃FISCO-BCOS爱好者必备之良品。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可
 
 - 准备依赖
 ```bash
@@ -123,23 +123,17 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 cd ~/fisco
 # 安装openjdk
 sudo apt install -y default-jdk
-# 准备web3sdk TODO: make web3sdk more simple
-git clone https://github.com/FISCO-BCOS/web3sdk.git
-cd web3sdk
-git checkout release-2.0.1
-gradle build -x test
-mv dist ~/fisco/console
+curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
+tar -zxf console-2.0.0.tar.gz && chmod u+x console/start
+# 配置控制台证书
+cp nodes/127.0.0.1/sdk/ca.crt nodes/127.0.0.1/sdk/keystore.p12 console/conf
 ```
 
 - 启动控制台
 ```bash
 # # 回到fisco目录
-cd ~/fisco
-cp nodes/127.0.0.1/sdk/* console/conf
-# TODO: modify execute path to console/
-cd console/bin
-# TODO: modify ./web3sdk.sh to console
-./web3sdk
+cd ~/fisco/console
+bash ./start
 # 输出下述信息表明启动成功
 =============================================================================================
 Welcome to FISCO BCOS console！
@@ -189,52 +183,26 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ]
 ```
 
-## FISCO-BCOS HelloWorld
+## FISCO-BCOS HelloWorld
 
-### 1. ok合约
-ok合约对FISCO-BCOS相当于其他编程语言的Hello World。该合约内部有两个账户`from/to`，提供一个接口`trans(uint num)`，每次调用会从`from`减去`num`并给`to`增加`num`。提供接口`get()`可以获取`to`账户的余额。
+### 1. HelloWorld合约
 
 ```solidity
-pragma solidity ^0.4.24;
-contract Ok{
-    
-    struct Account{
-        address account;
-        uint balance;
-    }
-    
-    struct  Translog {
-        string time;
-        address from;
-        address to;
-        uint amount;
-    }
-    
-    Account from;
-    Account to;
-    event TransEvent(uint num);
-    Translog[] log;
+pragma solidity ^0.4.2;
 
-    function Ok(){
-        from.account=0x1;
-        from.balance=10000000000;
-        to.account=0x2;
-        to.balance=0;
+contract HelloWorld{
+    string name;
 
+    function HelloWorld(){
+       name = "Hello, World!";
     }
-    
-    function get()constant returns(uint){
-        return to.balance;
-    }
-    
-    function trans(uint num){
-        if (from.balance < num || to.balance + num < to.balance)
-            return; // Deny overflow
 
-    	from.balance=from.balance-num;
-    	to.balance+=num;
-        TransEvent(num);
-    	log.push(Translog("20170413",from.account,to.account,num));
+    function get()constant returns(string){
+        return name;
+    }
+
+    function set(string n){
+    	name = n;
     }
 }
 ```
@@ -243,8 +211,8 @@ contract Ok{
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
-> deploy Ok
-0xcb40116051581f37878f2138d0e16949e4eab791
+> deploy HelloWorld
+0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
 ### 3. 使用控制台调用ok合约
@@ -254,14 +222,16 @@ contract Ok{
 > getBlockNumber
 1
 # 调用trans接口
-> call Ok 0xcb40116051581f37878f2138d0e16949e4eab791 trans 10
-0xe34c1b6f5b29edbdac5267de729ea93f6bc5d670773a75b15dfbd4065814b51d
+> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+Hello, World!
 # 调用get接口查询to的余额
-> call Ok 0xcb40116051581f37878f2138d0e16949e4eab791 get
-10
+> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello,FISCO-BCOS"
+0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+Hello,FISCO-BCOS
 # 查看当前块高
 > getBlockNumber
-2
+4
 ```
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
