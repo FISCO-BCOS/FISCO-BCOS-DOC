@@ -108,8 +108,8 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 bash start [groupID] [privateKey]   
 ```
 启动命令可以指定两个可选参数：           
-`groupId`: - 群组ID, 不指定默认为群组1           
-`privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账户私钥 
+- `groupId`: - 群组ID, 不指定默认为群组1。           
+- `privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账户私钥。 
 
 **2.启用国密版控制台**   
 控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见sdk文档），即可使用国密版控制台，其命令使用方式与非国密版一致。
@@ -596,9 +596,9 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
     ```
     生成的合约Java类将在src/test/java/org/fisco/bcos/temp目录下。                
     - **重新编译:**  在sdk根目录下执行编译sdk，打包编译好的合约文件即可使用。编译命令如下：
-```
-gradle build
-```
+    ```
+    gradle build
+    ```
 **注：** 部署和调用国密版GMOk合约需要sdk配置文件中打开国密开关。自定义合约需要根据sdk文档转为国密版的Java合约文件。
 
 ```bash
