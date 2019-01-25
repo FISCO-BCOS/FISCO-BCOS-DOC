@@ -16,15 +16,14 @@
 
 **注**：
 - 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../design/api/rpc.md)，将以json格式显示错误响应的error字段信息。   
-- 命令操作系统表时，会返回操作系统表的json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：  
-1. 操作成功响应：  
-code大于等于0表示操作成功，其code值为成功操作的记录数， msg为“success”。    
-2. 系统性错误响应:  
-无权限操作，其code为-1， msg是“non-authorized”。
-3. 逻辑性错误响应： 定义如下
+- 命令操作系统表时，会返回操作系统表的json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类： 
+1. 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
+2. 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
+3. 逻辑性错误响应：定义如下
 
+```eval_rst
 +-----------+---------+------+----------------------+
-|table| commands|code|msg|
+|table      |commands | code |msg                   |
 +===========+=========+======+======================+
 |**\_sys_table_access_**|addAuthority(aa)| -30| table name and address exist|
 +-----------+---------+------+----------------------+
@@ -46,7 +45,7 @@ code大于等于0表示操作成功，其code值为成功操作的记录数， m
 +-----------+---------+------+----------------------+
 |**\_sys_config_**| setSystemConfigByKey(ssc) |-60|set invalid configuration values|
 +-----------+---------+------+----------------------+
-
+```
 ## 3 配置与运行
 ### 3.1 配置
 搭建FISCO BCOS区块链请参考[搭链脚本](./buildchain.md)。控制台利用sdk的节点配置，具体配置方法请参考[sdk文档](../design/api/sdk.md)。配置完成后，在sdk根目录下进行编译:        
