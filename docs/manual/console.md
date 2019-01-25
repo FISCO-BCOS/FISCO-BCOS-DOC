@@ -14,12 +14,15 @@
 - 正确结果: 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - 错误结果: 命令返回错误的执行结果，以字符串或是json的形式返回。 
 
-**注**：
-- 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../design/api/rpc.md)，将以json格式显示错误响应的error字段信息。   
-- 命令操作系统表时，会返回操作系统表的json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类： 
-1. 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
-2. 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
-3. 逻辑性错误响应：定义如下
+```eval_rst
+.. important::
+
+    - 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../design/api/rpc.md)，将以json格式显示错误响应的error字段信息。
+    - 命令操作系统表时，会返回操作系统表的json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：
+      - 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
+      - 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
+      - 逻辑性错误响应：定义如下。
+``` 
 
 ```eval_rst
 
@@ -73,11 +76,12 @@ gradle build
 
 ```
 
-**说明1：**   
-控制台的运行目录dist在sdk编译后生成，其使用的配置文件在dist/conf目录下，由sdk编译过程中从src/test/resources目录下拷贝过来。因此后续需要更改控制台连接的节点，建议直接修改dist/conf目录下的配置文件。
+```eval_rst
+.. important::
 
-**说明2：**   
-当sdk配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此sdk轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
+    - **说明1：** 控制台的运行目录dist在sdk编译后生成，其使用的配置文件在dist/conf目录下，由sdk编译过程中从src/test/resources目录下拷贝过来。因此后续需要更改控制台连接的节点，建议直接修改dist/conf目录下的配置文件。
+    - **说明2：** 当sdk配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此sdk轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
+``` 
 
 ### 3.2 控制台运行
 启动控制台之前，确保节点已正常启动，sdk配置完成。运行脚本启动控制台。
@@ -102,18 +106,20 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 > 
 ```
+```eval_rst
+.. important::
 
-**注：**  
-**1. 启动脚本说明**
-```
-bash start [groupID] [privateKey]   
-```
-启动命令可以指定两个可选参数：
-`groupId`: - 群组ID, 不指定默认为群组1           
-`privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账户私钥   
+    **1.启动脚本说明**
+    ```
+    bash start [groupID] [privateKey]   
+    ```
+    启动命令可以指定两个可选参数：
+    `groupId`: - 群组ID, 不指定默认为群组1           
+    `privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账户私钥 
 
-**2. 启用国密版控制台**   
-控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见sdk文档），即可使用国密版控制台，其命令使用方式与非国密版一致。
+    **2.启用国密版控制台**   
+    控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见sdk文档），即可使用国密版控制台，其命令使用方式与非国密版一致。
+``` 
 
 ## 4 控制台命令
 ### **help**
@@ -161,9 +167,9 @@ getSystemConfigByKey(gsc)                     Query a system config value by key
 quit(q)                                       Quit console.
 ---------------------------------------------------------------------------------------------
 ```
-**注：**    
-① help显示每条命令的含义是：命令全名(缩写名)  命令功能描述          
-② 查看具体命令的使用介绍说明，输入命令全名或缩写名 -h或--help查看。例如：
+**注：**               
+① help显示每条命令的含义是：命令全名(缩写名) 命令功能描述                       
+② 查看具体命令的使用介绍说明，输入命令全名或缩写名 -h或--help查看。例如：   
 ```bas
 > getBlockByNumber -h
 Query information about a block by block number.
@@ -218,7 +224,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ```
 
 ### **getPbftView**
-运行getPbftView或gpv，查看pbft view。
+运行getPbftView或gpv，查看pbft视图。
 
 ```bash
 > gpv  
@@ -323,7 +329,6 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 	"txPoolSize":0
 }
 ```
-getClientVersion(gcv)
 
 ### **getClientVersion**
 运行getClientVersion或gcv，查看节点的版本。
@@ -378,7 +383,7 @@ getClientVersion(gcv)
 [1]
 ```
 ### **getBlockByHash**
-运行getBlockByHash或gbbh，根据区块哈希查询区块信息。 
+运行getBlockByHash或gbbh，根据区块哈希查询区块信息。              
 参数：
 - 区块哈希：0x开头的区块哈希值。   
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
@@ -435,7 +440,7 @@ getClientVersion(gcv)
 }
 ```
 ### **getBlockByNumber**
-运行getBlockByNumber或gbbn，根据区块高度查询区块信息。
+运行getBlockByNumber或gbbn，根据区块高度查询区块信息。                            
 参数：     
 - 区块高度：十进制整数。    
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。      
@@ -461,7 +466,7 @@ getClientVersion(gcv)
 }
 ```
 ### **getBlockHashByNumber**
-运行getBlockHashByNumber或ghbn，通过区块高度获得区块哈希。
+运行getBlockHashByNumber或ghbn，通过区块高度获得区块哈希。              
 参数：           
 - 区块高度：十进制整数。
 ```bash
@@ -469,7 +474,7 @@ getClientVersion(gcv)
 0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02
 ```
 ### **getTransactionByHash**
-运行getTransactionByHash或gtbh，通过交易哈希查询交易信息。     
+运行getTransactionByHash或gtbh，通过交易哈希查询交易信息。                   
 参数：        
 - 交易哈希：0x开头的交易哈希值。
 ```bash
@@ -489,7 +494,7 @@ getClientVersion(gcv)
 }
 ```
 ### **getTransactionByBlockHashAndIndex**
-运行getTransactionByBlockHashAndIndex或gthi，通过区块哈希和交易索引查询交易信息。
+运行getTransactionByBlockHashAndIndex或gthi，通过区块哈希和交易索引查询交易信息。              
 参数：         
 - 区块哈希：0x开头的区块哈希值。       
 - 交易索引：十进制整数。     
@@ -511,7 +516,7 @@ getClientVersion(gcv)
 
 ```
 ### **getTransactionByBlockNumberAndIndex**
-运行getTransactionByBlockNumberAndIndex或gtni，通过区块高度和交易索引查询交易信息。
+运行getTransactionByBlockNumberAndIndex或gtni，通过区块高度和交易索引查询交易信息。              
 参数：      
 - 区块高度：十进制整数。
 - 交易索引：十进制整数。
@@ -532,7 +537,7 @@ getClientVersion(gcv)
 }
 ```
 ### **getTransactionReceipt**
-运行getTransactionReceipt或gtr，通过交易哈希查询交易回执。
+运行getTransactionReceipt或gtr，通过交易哈希查询交易回执。              
 参数：
 - 交易哈希：0x开头的交易哈希值。
 ```bash
@@ -554,28 +559,31 @@ getClientVersion(gcv)
 }
 ```
 ### **getPendingTransactions**
-运行getPendingTransactions或gpt，查询等待处理的交易。
+运行getPendingTransactions或gpt，查询等待处理的交易。              
 ```bash
 > gpt
 []
 ```
 
 ### **getPendingTxSize**
-运行getPendingTxSize或gpts，查询等待处理的交易数量。
+运行getPendingTxSize或gpts，查询等待处理的交易数量。              
 ```bash
 > gpts
 0
 ```
 
 ### **getCode**
-运行getCode或gc，根据合约地址查询合约代码。
+运行getCode或gc，根据合约地址查询合约代码。                                                   
+参数：
+- 合约地址：0x的合约地址(部署合约可以获得合约地址)。
+- 
 ```bash
 > gc 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
 ```
 
 ### **getTotalTransactionCount**
-运行getTotalTransactionCount或gtc，查询当前块高和总交易数。
+运行getTotalTransactionCount或gtc，查询当前块高和总交易数。                          
 ```bash
 > gtc
 {
@@ -584,29 +592,28 @@ getClientVersion(gcv)
 }
 ```
 ### **deploy**
-运行deploy或d，部署合约。(默认提供Ok合约,国密版GMOk合约进行测试)  
-用户自己编写的sol合约进行测试，需要做如下准备工作：  
-**1 拷贝合约文件:** 将编写的sol合约文件拷贝到src/test/resources/contracts下，确保合约名和文件名保持一致。  
-**2 转换合约文件:**  在web3sdk根目录下执行
+运行deploy或d，部署合约。(默认提供Ok合约,国密版GMOk合约进行测试)
+参数：
+- 合约名称：部署的合约名称(需与合约文件名一致)。                            
+用户自己编写的sol合约进行测试，需要做如下准备工作：                            
+**1 拷贝合约文件:** 将编写的sol合约文件拷贝到src/test/resources/contracts下，确保合约名和文件名保持一致。                            
+**2 转换合约文件:**  在web3sdk根目录下执行：                          
 ```
 gradle test --tests org.fisco.bcos.web3j.solidity.SolidityFunctionWrapperGeneratorTest.compileSolFilesToJavaTest 
 ```
-生成的合约Java类将在src/test/java/org/fisco/bcos/temp目录下。
-
+生成的合约Java类将在src/test/java/org/fisco/bcos/temp目录下。                          
 **3 重新编译:**  在web3sdk根目录下执行编译web3sdk，打包编译好的合约文件即可使用。编译命令如下：
 ```
-gradle build -x test
+gradle build
 ```
 **注：** 部署和调用国密版GMOk合约需要sdk配置文件中打开国密开关。自定义合约需要根据sdk文档转为国密版的Java合约文件。
 
-参数：
-- 合约名称：部署的合约名称(需与合约文件名一致)。
 ```bash
 > deploy Ok
 0x016e2cade549bb53cf526337d213318ac6e70944
 ```
 ### **call**
-运行call或c，调用合约。   
+运行call或c，调用合约。                                
 参数： 
 - 合约名称：部署的合约名称(需与合约文件名一致)。
 - 合约地址: 部署合约获取的地址。
@@ -621,8 +628,7 @@ gradle build -x test
 ```
 
 ### **deployByCNS**
-用户自己编写的sol合约进行测试，准备工作参考deploy命令，准备完成后运行deployByCNS或dbc，利用CNS部署合约。(默认提供Ok合约,国密版GMOk合约进行测试)  
-  
+用户自己编写的sol合约进行测试，准备工作参考deploy命令，准备完成后运行deployByCNS或dbc，利用CNS部署合约。(默认提供Ok合约,国密版GMOk合约进行测试)                                 
 参数：
 - 合约名称：部署的合约名称(需与合约文件名一致)。
 - 合约版本号：部署的合约版本号。
@@ -631,7 +637,7 @@ gradle build -x test
 0x7956881392a8e2893d6c3f514ef5c37f9d5e52ef
 ```
 ### **queryCNS**
-运行queryCNS或qcs，根据合约名称和合约版本号（可选参数）查询cns表记录信息。  
+运行queryCNS或qcs，根据合约名称和合约版本号（可选参数）查询cns表记录信息。                                 
 参数：
 - 合约名称：部署的合约名称(需与合约文件名一致)。
 - 合约版本号：(可选)部署的合约版本号。
@@ -650,7 +656,7 @@ gradle build -x test
 ---------------------------------------------------------------------------------------------
 ```
 ### **callByCNS**
-运行callByCNS或cbc，利用CNS调用合约。  
+运行callByCNS或cbc，利用CNS调用合约。                                 
 参数： 
 - 合约名称：部署的合约名称(需与合约文件名一致)。
 - 合约版本号：部署的合约版本号。
@@ -665,9 +671,9 @@ gradle build -x test
 ```
 
 ### **addMiner**
-运行addMinert或am，将节点添加为共识节点。  
+运行addMinert或am，将节点添加为共识节点。                                 
 参数： 
-- 节点ID
+- 节点nodeID
 ```bash
 > am ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
@@ -677,9 +683,9 @@ gradle build -x test
 ```
 
 ### **addObserver**
-运行addObserver或ao，将节点添加为观察节点。  
+运行addObserver或ao，将节点添加为观察节点。                                 
 参数： 
-- 节点ID
+- 节点nodeID
 ```bash
 > ao ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
@@ -689,9 +695,9 @@ gradle build -x test
 ```
 
 ### **removeNode**
-运行removeNode或rn，节点退出。通过am/ao命令可以将退出的节点添加为共识/观察节点。   
+运行removeNode或rn，节点退出。通过am/ao命令可以将退出的节点添加为共识/观察节点。                                  
 参数： 
-- 节点ID
+- 节点nodeID
 ```bash
 > rn ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
@@ -700,10 +706,10 @@ gradle build -x test
 }
 ```
 ### **addAuthority**
-运行addAuthority或aa，给指定表增加指定外部账号的权限。   
+运行addAuthority或aa，给指定表增加指定外部账号的权限。                                  
 参数： 
 - 表名
-- 外部账号地址
+- 外部账户地址
 ```bash
 > aa t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -713,10 +719,10 @@ gradle build -x test
 ```
 
 ### **removeAuthority**
-运行removeAuthority或ra，给指定表移除指定外部账号的权限。   
+运行removeAuthority或ra，给指定表移除指定外部账号的权限。                                                                 
 参数： 
 - 表名
-- 外部账号地址
+- 外部账户地址
 ```bash
 > ra t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -725,10 +731,10 @@ gradle build -x test
 }
 ```
 ### **queryAuthority**
-运行queryAuthority或qa，给指定表移除指定外部账号的权限。   
+运行queryAuthority或qa，给指定表移除指定外部账号的权限。                                  
 参数： 
 - 表名
-- 外部账号地址
+- 外部账户地址
 ```bash
 > qa t_test 
 ---------------------------------------------------------------------------------------------
@@ -737,7 +743,7 @@ gradle build -x test
 ---------------------------------------------------------------------------------------------
 ```
 ### **setSystemConfigByKey**
-运行setSystemConfigByKey或ssc，以键值对方式设置系统配置。   
+运行setSystemConfigByKey或ssc，以键值对方式设置系统配置。目前设置的系统配置支持tx_count_limit和tx_gas_limit，系统配置用法见[多群组操作指南](groups/build_group.md)                                  
 参数： 
 - 键
 - 值
@@ -749,7 +755,7 @@ gradle build -x test
 }
 ```
 ### **getSystemConfigByKey**
-运行getSystemConfigByKey或gsc，根据键查询系统配置的值。   
+运行getSystemConfigByKey或gsc，根据键查询系统配置的值。                                  
 参数： 
 - 键
 ```bash
