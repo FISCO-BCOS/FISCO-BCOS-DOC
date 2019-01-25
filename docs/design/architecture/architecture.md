@@ -1,6 +1,6 @@
 # FISCO-BCOS整体架构
 
-![整体架构图](../../../images/architecture/整体架构.png)
+![整体架构图](../../../images/architecture/architecture.png)
 
 ## 基础层
 
