@@ -589,13 +589,13 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 参数：
 - 合约名称：部署的合约名称(需与合约文件名一致)。                            
 用户自己编写的sol合约进行测试，需要做如下准备工作：                            
-**1 拷贝合约文件:** 将编写的sol合约文件拷贝到src/test/resources/contracts下，确保合约名和文件名保持一致。                            
-**2 转换合约文件:**  在web3sdk根目录下执行：                          
-```
-gradle test --tests org.fisco.bcos.web3j.solidity.SolidityFunctionWrapperGeneratorTest.compileSolFilesToJavaTest 
-```
-生成的合约Java类将在src/test/java/org/fisco/bcos/temp目录下。                          
-**3 重新编译:**  在web3sdk根目录下执行编译web3sdk，打包编译好的合约文件即可使用。编译命令如下：
+    - **拷贝合约文件:** 将编写的sol合约文件拷贝到src/test/resources/contracts下，确保合约名和文件名保持一致。                            
+    - **转换合约文件:**  在sdk根目录下执行：                          
+    ```
+    bash sol2java.sh
+    ```
+    生成的合约Java类将在src/test/java/org/fisco/bcos/temp目录下。                
+    - **重新编译:**  在sdk根目录下执行编译sdk，打包编译好的合约文件即可使用。编译命令如下：
 ```
 gradle build
 ```
@@ -621,7 +621,7 @@ gradle build
 ```
 
 ### **deployByCNS**
-用户自己编写的sol合约进行测试，准备工作参考deploy命令，准备完成后运行deployByCNS或dbc，利用CNS部署合约。(默认提供Ok合约,国密版GMOk合约进行测试)                                 
+用户自己编写的sol合约进行测试，准备工作参考deploy命令，准备完成后运行deployByCNS或dbc，利用CNS部署合约。(默认提供Ok合约，国密版GMOk合约进行测试)                                 
 参数：
 - 合约名称：部署的合约名称(需与合约文件名一致)。
 - 合约版本号：部署的合约版本号。
