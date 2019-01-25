@@ -1,4 +1,4 @@
-## 环形模式组网
+# 环形模式组网
 
 ![](../../../images/enterprise/ring.png)
 

@@ -1,8 +1,8 @@
-## 证书生成
+# 证书生成
 
 fisco generator提供自签证书操作。示例如下：
 
-### 生成根证书 --chainca命令
+## 生成根证书 --chainca命令
 用户可以指定目录，生成根证书
 ```
 $ ./genrator --chainca ./dir_chain_ca(SET)

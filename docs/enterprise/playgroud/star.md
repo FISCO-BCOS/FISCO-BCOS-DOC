@@ -1,4 +1,4 @@
-## 星型模式组网
+# 星型模式组网
 
 ![](../../../images/enterprise/star.png)
 
