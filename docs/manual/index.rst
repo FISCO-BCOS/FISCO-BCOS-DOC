@@ -5,10 +5,10 @@
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   multi_group.md
-   priority.md
+   groups/index.rst
+   priority_control.md
    console.md
    disck_encryption.md
    guomi.md
