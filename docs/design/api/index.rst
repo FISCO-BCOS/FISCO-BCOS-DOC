@@ -10,4 +10,3 @@ API
 
    rpc.md
    sdk.md
-   console.md
