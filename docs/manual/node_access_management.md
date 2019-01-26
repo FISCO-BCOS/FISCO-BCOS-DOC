@@ -160,7 +160,7 @@
 
 查询群组节点的RPC接口包括：
 
-- [getMinerList](../design/api/sdk.md#getminerlist)：查看群组中记账节点列表
-- [getObserverList](../design/api/sdk.md#getobserverlist)：查看群组中观察节点列表
+- [getMinerList](../design/api/rpc.md#getminerlist)：查看群组中记账节点列表
+- [getObserverList](../design/api/rpc.md#getobserverlist)：查看群组中观察节点列表
 
-RPC详细使用方法请参考[《RPC》](../design/api/sdk.md)。
+RPC详细使用方法请参考[《RPC》](../design/api/rpc.md)。
