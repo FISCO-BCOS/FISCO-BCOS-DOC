@@ -1,4 +1,4 @@
-<center> <h1>节点准入管理操作文档</h1> </center>
+# 节点准入管理操作文档
 
 本文档描述节点准入管理的实践操作，建议阅读本操作文档前请先行了解[《节点准入管理介绍》](../design/security_control/node_access_management.md)。
 
@@ -148,19 +148,19 @@
 
 控制台提供的命令包括：
 
-- [addMiner](http://***REMOVED***/books/fisco-bcos/page/sdk%E6%8E%A7%E5%88%B6%E5%8F%B0#bkmrk-addminer)：修改/增加一节点为记账节点
-- [addObserver](http://***REMOVED***/books/fisco-bcos/page/sdk%E6%8E%A7%E5%88%B6%E5%8F%B0#bkmrk-addobserver)：修改/增加一节点为观察节点
-- [removeNode](http://***REMOVED***/books/fisco-bcos/page/sdk%E6%8E%A7%E5%88%B6%E5%8F%B0#bkmrk-removenode)：移除节点（节点被移除后既不是记账节点，也不是观察节点）
-- [getMinerList](http://***REMOVED***/books/fisco-bcos/page/sdk%E6%8E%A7%E5%88%B6%E5%8F%B0#bkmrk-getminerlist)：查看群组中记账节点列表
-- [getObserverList](http://***REMOVED***/books/fisco-bcos/page/sdk%E6%8E%A7%E5%88%B6%E5%8F%B0#bkmrk-getobserverlist)：查看群组中观察节点列表
+- [addMiner](../manual/console.md#addminer)：修改/增加一节点为记账节点
+- [addObserver](../manual/console.md#addobserver)：修改/增加一节点为观察节点
+- [removeNode](../manual/console.md#removenode)：移除节点（节点被移除后既不是记账节点，也不是观察节点）
+- [getMinerList](../manual/console.md#getminerlist)：查看群组中记账节点列表
+- [getObserverList](../manual/console.md#getnodeidlist)：查看群组中观察节点列表
 
-控制台详细使用方法请参考[《SDK控制台》](http://***REMOVED***/books/fisco-bcos/page/sdk%E6%8E%A7%E5%88%B6%E5%8F%B0)。
+控制台详细使用方法请参考[《控制台》](../manual/console.md)。
 
 ### 4.2 RPC
 
 查询群组节点的RPC接口包括：
 
-- [getMinerList](http://***REMOVED***/books/fisco-bcos/page/fisco-bcos20-json-rpc-%E6%8E%A5%E5%8F%A3#bkmrk-getminerlist)：查看群组中记账节点列表
-- [getObserverList](http://***REMOVED***/books/fisco-bcos/page/fisco-bcos20-json-rpc-%E6%8E%A5%E5%8F%A3#bkmrk-getobserverlist)：查看群组中观察节点列表
+- [getMinerList](../design/api/sdk.md#getminerlist)：查看群组中记账节点列表
+- [getObserverList](../design/api/sdk.md#getobserverlist)：查看群组中观察节点列表
 
-RPC详细使用方法请参考[《FISCO BCOS2.0 JSON-RPC 接口》](http://***REMOVED***/books/fisco-bcos/page/fisco-bcos20-json-rpc-%E6%8E%A5%E5%8F%A3)。
+RPC详细使用方法请参考[《RPC》](../design/api/sdk.md)。
