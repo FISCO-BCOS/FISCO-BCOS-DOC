@@ -1,4 +1,4 @@
-<center> <h1>CA黑名单介绍</h1> </center>
+# CA黑名单介绍
 
 本文档对黑名单进行介绍性说明，实践方法参见[《CA黑名单操作手册》](../../manual/certificate_rejected_list.md)。
 
