@@ -19,7 +19,7 @@
 
 CA黑名单，别称**证书拒绝列表**（certificate rejected list，简称CRL）。CA黑名单基于`config.ini`文件中`[crl]`配置的NodeID进行判断，拒绝此NodeID节点发起的连接。
 
-CA黑名单[配置类型](../../design/security_control/node_access_management.md#21-%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B)：
+CA黑名单[配置类型](../../design/security_control/node_access_management.md#22-配置类型)：
 
 - 基于**作用范围**（网络配置/账本配置）维度可划分为**网络配置**，影响整个网络的节点连接建立过程；
 - 基于**是否可改**（可改配置/固定配置）维度可划分为**可改配置**，内容可改，重启后生效；
