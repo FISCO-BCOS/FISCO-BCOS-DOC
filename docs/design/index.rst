@@ -8,7 +8,8 @@
    :maxdepth: 1
 
    architecture/index.rst
-   networkAndSync/index.rst
+   p2p/P2P.md 
+   sync/sync.md
    consensus/index.rst
    virtualMachine/index.rst
    storage/index.rst
