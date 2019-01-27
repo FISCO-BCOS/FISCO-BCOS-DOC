@@ -7,7 +7,7 @@
 
 ## 系统框架
 系统整体框架如下图所示：
-![](../../images/guomi/guomishakehand.png)
+![](../../../images/guomi/guomishakehand.png)
 
 
   下表以签名、验签、哈希算法等为出发点，对比了**国密版FISCO-BCOS**和**非国密版FISCO-BCOS:**
@@ -28,7 +28,7 @@
 
 ### 国密SSL 1.1 握手建立流程。
 国密版FISCO-BCOS节点之间的认证选用国密SSL 1.1的ECDHE_SM4_SM3密码套件进行SSL链接的建立，整体流程如下图所示：
-![](../..//images/guomi/ssl1.png)
+![](../../../images/guomi/ssl1.png)
 ## 特性说明
 
 为了彻底支持国密，**国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法**，国密版FISCO-BCOS主要特性如下：
