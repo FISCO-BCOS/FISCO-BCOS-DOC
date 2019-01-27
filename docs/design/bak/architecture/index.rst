@@ -1,5 +1,5 @@
 ##############################################################
-系统设计
+群组架构
 ##############################################################
 
 
@@ -7,10 +7,12 @@
 .. toctree::
    :maxdepth: 1
 
-   architecture/index.rst
+   modules.md
+    
+   architecture.md
    networkAndSync/index.rst
    consensus/index.rst
-   virtualMachine/index.rst
+   evm/index.rst
    storage/index.rst
    secure/index.rst
    features/index.rst
