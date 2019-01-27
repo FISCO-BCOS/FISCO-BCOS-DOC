@@ -51,20 +51,21 @@ RPC响应包格式示例:
     
 标准错误列表如下：  
 
+
 ```eval_rst
 
 +--------+------------------------+-------------------------+      
 |code    |message                 |含义                     |
 +========+========================+=========================+ 
-|-32600  |INVALID_JSON_REQUEST    |发送的json是无效的请求对象 |
+|-32600  |INVALID_JSON_REQUEST    |发送无效的请求对象        |
 +--------+------------------------+-------------------------+ 
 |-32601  |METHOD_NOT_FOUND        |该方法不存在或无效        |
 +--------+------------------------+-------------------------+ 
 |-32602  |INVALID_PARAMS          |无效的方法参数            |
 +--------+------------------------+-------------------------+ 
-|-32603  |INTERNAL ERROR          |JSON RPC内部调用错误      |
+|-32603  |INTERNAL ERROR          |内部调用错误              |
 +--------+------------------------+-------------------------+ 
-|-32604  |PROCEDURE_IS_METHOD     |JSON RPC请求未提供id字段  |
+|-32604  |PROCEDURE_IS_METHOD     |请求未提供id字段          |
 +--------+------------------------+-------------------------+ 
 |-32700  |JSON_PARSE_ERROR        |服务端接收到的json无法解析 |
 +--------+------------------------+-------------------------+ 
@@ -73,6 +74,7 @@ RPC响应包格式示例:
 
 #### 3.3.2 FISCO BCOS自定义错误响应     
 自定义错误列表如下：
+
 
 ```eval_rst
 
@@ -105,7 +107,7 @@ RPC响应包格式示例:
 FISCO BCOS提供丰富的RPC接口供客户端调用。其中分为两大类，分别是以get开头命名的查询接口（例如getBlockNumber接口）和两个与合约执行相关的接口，分别是call接口和sendRawTransaction接口。其中call接口执行一个请求将不会创建一笔交易，等待区块链共识，而是获取响应立刻返回，例如合约中的查询方法发出的请求将调用call接口。sendRawTransaction接口执行一笔签名的交易，将等待区块链共识才返回响应。
 
 ## 5 RPC接口列表
-下列接口的示例中采用curl命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求,可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件[rpc]部分的listen_ip和jsonrpc listen port端口。为了格式化json，可以使用jq工具进行格式化显示。
+下列接口的示例中采用curl命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件[rpc]部分的listen_ip和jsonrpc listen port端口。为了格式化json，可以使用jq工具进行格式化显示。
 
 ### getClientVersion
 返回节点的版本信息
@@ -119,7 +121,7 @@ FISCO BCOS提供丰富的RPC接口供客户端调用。其中分为两大类，�
     - `Git Branch`: `string` - 版本分支            
     - `Git Commit Hash`: `string` - 版本最新commit哈希            
 
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"id":1}' http://127.0.0.1:30302 |jq
@@ -144,7 +146,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
 - `groupID`: `unsigned int` - 群组ID                 
 #### 返回值               
 - `string` - 最新区块高度                
-示例：
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -163,7 +165,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 - `groupID`: `unsigned int` - 群组ID         
 #### 返回值         
 - `string` - 最新的pbft视图   
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -194,7 +196,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 - `groupID`: `unsigned int` - 群组ID         
 #### 返回值          
 - `array` - 记账节点nodeID数组         
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getMinerList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -217,7 +219,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getMinerList","params":[1],"id":
 - `groupID`: `unsigned int` - 群组ID         
 #### 返回值          
 - `array` - 观察节点nodeID数组       
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -294,7 +296,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
     - `omitEmptyBlock`: `bool` - 忽略空块标志位            
     - `protocolId`: `unsigned int` - 协议ID号            
 
-示例：
+- 示例
 ```
 // Request pbft
 curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -414,7 +416,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
         - `latestHash`: `string` - 最新块哈希            
         - `nodeId`: `string` - 节点的nodeID            
        
-示例：
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -464,7 +466,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
     - `NodeID`: `string` - 节点的nodeID            
     - `Topic`: `array` - 节点关注的topic信息            
       
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -500,7 +502,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 #### 返回值          
 - `array` - 记账节点和观察节点的nodeID数组     
         
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -524,7 +526,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 #### 返回值          
 - `array` - 节点本身和已连接p2p节点的nodeID数组 
 
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -548,7 +550,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id"
 #### 返回值          
 - `array` - 节点所属群组的群组ID数组 
 
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -580,7 +582,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[1],"id":
     - `timestamp`: `string` - 时间戳      
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](#getTransactionByHash)）
               
-示例：
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",true],"id":1}' http://127.0.0.1:30302 |jq
@@ -653,7 +655,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 #### 返回值          
 见[getBlockByHash](#getBlockByHash)  
   
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[1,"0x0",true],"id":1}' http://127.0.0.1:30302 |jq
@@ -667,7 +669,7 @@ Result见[getBlockByHash](#getBlockByHash)
 - `blockNumber`: `string` - 区块高度                   
 #### 返回值          
 - `blockHash`: `string` - 区块哈希         
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[1,"0x1"],"id":1}' http://127.0.0.1:30302 |jq
@@ -697,7 +699,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null         
     - `transactionIndex`: `string` - 交易的序号
     - `value`: `string` - 转移的值           
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:30302 |jq
@@ -729,7 +731,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 - `transactionIndex`: `string` - 交易序号          
 #### 返回值          
 见[getTransactionByHash](#getTransactionByHash)       
-示例：
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:30302 |jq
@@ -744,7 +746,7 @@ Result见[getTransactionByHash](#getTransactionByHash)
 - `transactionIndex`: `string` - 交易序号          
 #### 返回值          
 见[getTransactionByHash](#getTransactionByHash)            
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:30302 |jq
@@ -771,7 +773,7 @@ Result见[getTransactionByHash](#getTransactionByHash)
     - `transactionHash`: `string` - 交易哈希          
     - `transactionIndex`: `string` - 交易序号
          
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:30302 |jq
@@ -812,7 +814,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
     - `nonce`: `string` - 交易的nonce值
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null        
     - `value`: `string` - 转移的值         
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -844,7 +846,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params"
 - `groupID`: `unsigned int` - 群组ID           
 #### 返回值          
 - `string`: - 待打包的交易数量         
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":""getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -863,7 +865,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":""getPendingTxSize","params":[1],
 - `address`: `string` - 合约地址
 #### 返回值          
 - `string`: - 合约数据         
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b"],"id":1}' http://127.0.0.1:30302 |jq
@@ -883,7 +885,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374
 - `object`: - 当前交易总数和区块高度信息，其字段如下：
     - `txSum`: `string` - 交易总数      
     - `blockNumber`: `string` - 区块高度          
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","params":[1],"id":1}' http://127.0.0.1:30302 |jq
@@ -905,7 +907,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 - `key`: `string` - 支持tx_count_limit和tx_gas_limit     
 #### 返回值          
 - `string` - value值     
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[1,"tx_count_limit"],"id":1}' http://127.0.0.1:30302 |jq
@@ -929,7 +931,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 
 #### 返回值          
 - `string` - 执行的结果           
-示例：          
+- 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102","to":"0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d","value":"0x1","data":"0x3"}],"id":1}' http://127.0.0.1:30302 |jq
@@ -951,7 +953,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc
 - `rlp`: `string` - 签名的交易数据
 #### 返回值          
 - `string` - 交易哈希          
-示例：
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:30302 |jq
