@@ -8,7 +8,7 @@
 .. toctree::
    :maxdepth: 1
 
-   cns.md
+   CNS_contract_name_service.md
    guomi.md
    disk_encryption.md
    event.md

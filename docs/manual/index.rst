@@ -12,4 +12,5 @@
    console.md
    disck_encryption.md
    guomi.md
-   blackname_ca.md
+   node_access_management.md
+   certificate_rejected_list.md
