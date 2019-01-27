@@ -15,7 +15,7 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 
 ## 启动Key Center
 
-直接启动keycenter
+直接启动keycenter。若未部署keycenter，可参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)
 
 ```shell
 ./keycenter 31443 123xyz #参数：端口，superkey
