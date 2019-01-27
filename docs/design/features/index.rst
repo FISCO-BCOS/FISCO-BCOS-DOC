@@ -12,4 +12,3 @@
    guomi.md
    disk_encryption.md
    event.md
-   log.md
