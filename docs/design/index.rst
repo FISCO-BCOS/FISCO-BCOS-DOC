@@ -12,5 +12,6 @@
    consensus/index.rst
    evm/index.rst
    storage/index.rst
-   secure/index.rst
+   security_control/index.rst
    features/index.rst
+   api/index.rst
