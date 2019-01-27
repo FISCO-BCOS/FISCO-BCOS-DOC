@@ -7,7 +7,7 @@
 .. toctree::
    :maxdepth: 1
 
-   architecture.md
+   architecture/index.rst
    networkAndSync/index.rst
    consensus/index.rst
    virtualMachine/index.rst
