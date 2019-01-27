@@ -1,11 +1,5 @@
 # 国密使用手册
 
-## 注意事项
-国密的操作方式与非国密版的[测试操作手册](http://***REMOVED***/books/fisco-bcos/page/%E6%B5%8B%E8%AF%95%E6%8C%87%E5%AF%BC%E6%89%8B%E5%86%8C)大致相同，但在进行**源码编译**，**一键搭链脚本**，和**配置SDK**略有不同。
-
-请注意，国密版的fisco bcos编译合约时请使用国密版的[solidity编译器](https://github.com/FISCO-BCOS/solidity)
-
-与非国密版的FISCO BCOS区别如下：
 ## 源码编译
 ```
 $ git clone https://github.com/FISCO-BCOS/FISCO-bcos
@@ -45,12 +39,12 @@ encryptType=1
 ```
 国密版的sdk需要的证书在节点的data文件夹下的sdk文件夹中
 
-详细操作见[sdk使用]()
+详细操作见[sdk使用](need add this)
 
 ## 国密落盘加密配置
 使用国密版落盘加密时，需要同时对conf/gmnode.key 和 conf/origin_cert/node.key
 
-详细操作见[落盘加密]()
+详细操作见[落盘加密](https://fisco-bcos-documentation.readthedocs.io/zh_CN/feature-2.0.0/docs/manual/disck_encryption.html)
 
 
 ## 国密配置信息
