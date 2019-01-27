@@ -585,12 +585,12 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 }
 ```
 ### **deploy**
-运行deploy或d，部署合约。(默认提供Ok合约,国密版GMOk合约进行测试)
+运行deploy或d，部署合约。(默认提供Ok合约，国密版GMOk合约进行测试)
 参数：
 - 合约名称：部署的合约名称(需与合约文件名一致)。                            
 用户自己编写的sol合约进行测试，需要做如下准备工作：                            
     - **拷贝合约文件:** 将编写的sol合约文件拷贝到src/test/resources/contracts下，确保合约名和文件名保持一致。                            
-    - **转换合约文件:**  在sdk根目录下执行：                          
+    - **转换合约文件:**  在sdk根目录下执行                          
     ```
     bash sol2java.sh
     ```
