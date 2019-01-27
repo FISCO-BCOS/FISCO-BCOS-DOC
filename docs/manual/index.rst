@@ -10,6 +10,6 @@
    groups/index.rst
    priority_control.md
    console.md
-   disck_encryption.md
+   disk_encryption.md
    guomi.md
    blackname_ca.md
