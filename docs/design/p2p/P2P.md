@@ -1,4 +1,4 @@
-# FISCO-BCOS P2P设计
+# P2P网络
 
 ## 设计目标
 
