@@ -30,10 +30,6 @@ input {
     letter-spacing: 0.3px
 }
 
-p {
-    font-size: 100%; /* Get rid of RTD rule that assumes nobody changes their browser font size */
-}
-
 
 /* Links */
 
@@ -58,7 +54,6 @@ a:visited {
 
 .wy-side-nav-search a.icon-home {
     color: transparent;
-/*    background-image: url('../images/fabric1.png'); */
     background-repeat: no-repeat;
     background-size: Auto 20px;
     background-position: center top;
@@ -79,16 +74,11 @@ a:visited {
 }
 
 .wy-menu-vertical a:hover {
-    background-color: #ADAFB3;
     color: #FFF
 }
 
 .wy-nav-content {
-    background-color: #fff max-width: 1000px;
-}
-
-.wy-nav-side {
-    background-color: #252627;
+    max-width: 1000px;
 }
 
 
@@ -97,7 +87,6 @@ a:visited {
 .rst-content tt.literal,
 .rst-content tt.literal,
 .rst-content code.literal {
-    color: ##d43232;
     text-transform: none;
 }
 

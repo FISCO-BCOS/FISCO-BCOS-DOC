@@ -73,7 +73,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'FISCO BCOS'
-copyright = u'© 2018. All rights reserved.'
+copyright = u'© 2019. All rights reserved.'
 author = u'fisco-bcos-dev'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -353,5 +353,5 @@ def setup(app):
 	}, True)
 
     app.add_transform(AutoStructify)
-    #app.add_stylesheet('css/custom.css')
+    app.add_stylesheet('css/custom.css')
 
