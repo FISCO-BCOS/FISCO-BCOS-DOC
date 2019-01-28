@@ -2,16 +2,20 @@
 
 在进行操作前，可先阅读：[落盘加密的介绍](../design/features/disk_encryption.md)
 
+## 部署Key Center
+
+每个机构一个Key Center，具体的部署步骤，可参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)
+
 ## 生成节点
 
-用```build_chain.sh```脚本，生成节点。
+用```build_chain.sh```脚本，用普通的操作方法，先生成节点。
 
 ``` shell
 cd FISCO-BCOS/tools
 bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 ```
 
-**注意：节点在第一次运行前，必须配置好是否采用落盘加密。一旦节点开始运行，无法切换状态。**
+**注意：节点生成后，不能启动，待dataKey配置后，再启动。节点在第一次运行前，必须配置好是否采用落盘加密。一旦节点开始运行，无法切换状态。**
 
 ## 启动Key Center
 
@@ -29,7 +33,7 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 
 ## 配置dataKey
 
-**注意：配置dataKey的节点，必须是新生成，未启动过的节点**
+**注意：配置dataKey的节点，必须是新生成，未启动过的节点。**
 
 执行脚本，定义dataKey，获取cipherDataKey
 
@@ -54,70 +58,21 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini
 ```
 
-放在最后即可，如下
+放在最后即可，如下。
 
 ```ini
 [rpc]
-    ;rpc listen ip
-    listen_ip=127.0.0.1
-    ;channelserver listen port
-    channel_listen_port=12301
-    ;jsonrpc listen port
-    jsonrpc_listen_port=12302
+	;略
 [p2p]
-    ;p2p listen ip
-    listen_ip=0.0.0.0
-    ;p2p listen port
-    listen_port=12300
-    ;nodes to connect
-    node.0=127.0.0.1:12300
-    node.1=127.0.0.1:12303
-    node.2=127.0.0.1:12306
-    node.3=127.0.0.1:12309
-    
-;certificate rejected list		
+	;略	
 [crl]		
-    ;crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e3787c338a4
-
-;group configurations
-;if need add a new group, eg. group2, can add the following configuration:
-;group_config.2=conf/group.2.genesis
-;group.2.genesis can be populated from group.1.genesis
-;WARNING: group 0 is forbided
+	;略
 [group]
-    group_data_path=data/
-    group_config.1=conf/group.1.genesis
-
-;certificate configuration
+	;略
 [secure]
-    ;directory the certificates located in
-    data_path=conf/
-    ;the node private key file
-    key=node.key
-    ;the node certificate file
-    cert=node.crt
-    ;the ca certificate file
-    ca_cert=ca.crt
-
-;log configurations
+	;略
 [log]
-    ;the directory of the log
-    LOG_PATH=./log
-    GLOBAL-ENABLED=true
-    GLOBAL-FORMAT=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    GLOBAL-MILLISECONDS_WIDTH=3
-    GLOBAL-PERFORMANCE_TRACKING=false
-    GLOBAL-MAX_LOG_FILE_SIZE=209715200
-    GLOBAL-LOG_FLUSH_THRESHOLD=100
-
-    ;log level configuration, enable(true)/disable(false) corresponding level log
-    FATAL-ENABLED=true
-    ERROR-ENABLED=true
-    WARNING-ENABLED=true
-    INFO-ENABLED=true
-    DEBUG-ENABLED=false
-    TRACE-ENABLED=false
-    VERBOSE-ENABLED=false
+	;略
 [data_secure]
 enable=true
 keycenter_ip=127.0.0.1
@@ -131,14 +86,14 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 
 ```shell
 cd keycenter/scripts
-bash encrypt_node_key.sh 127.0.0.1 31443 xxxx/nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea #参数：ip port 节点私钥文件 cipherDataKey
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea #参数：ip port 节点私钥文件 cipherDataKey
 ```
 
 执行后，节点私钥自动被加密，加密前的文件备份到了文件``` node.key.bak.xxxxxx ```中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**
 
 ```log
-[INFO] File backup to "xxxx/nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key.bak.1546502474"
-[INFO] "xxxx/nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key" encrypted!
+[INFO] File backup to "nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key.bak.1546502474"
+[INFO] "nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key" encrypted!
 ```
 
 若查看node.key，可看到，已经被加密为密文
@@ -158,7 +113,7 @@ bash encrypt_node_key.sh 127.0.0.1 31443 xxxx/nodes/127.0.0.1/node_127.0.0.1_0/c
 直接启动节点即可
 
 ```shell
-cd xxxxx/nodes/node_127.0.0.1_0/
+cd nodes/node_127.0.0.1_0/
 ./start.sh
 ```
 
@@ -166,7 +121,7 @@ cd xxxxx/nodes/node_127.0.0.1_0/
 
 （1）节点正常运行，正常出块
 
-（2）keycenter在节点每次启动时，都会打印一条日志：
+（2）keycenter在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Center正确返回的日志如下。
 
 ``` log
 [1546504272699][TRACE][Dec]Respond
