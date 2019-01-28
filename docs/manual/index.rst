@@ -10,6 +10,7 @@
    groups/index.rst
    priority_control.md
    console.md
-   disck_encryption.md
+   disk_encryption.md
    guomi.md
-   blackname_ca.md
+   node_access_management.md
+   certificate_rejected_list.md
