@@ -92,20 +92,20 @@ Raft算法将时间划分为不定长度的任期Terms，Terms为连续的数字
 * Raft Sealer：负责从交易池取出交易并打包成区块，并发送至Raft Engine进行共识。区块上链后，Raft Sealer负责从交易池中删除已上链交易；
 * Raft Engine：负责在共识节点进行共识，将达成共识的区块上链。
 
-# 3 核心流程
+## 3 核心流程
 
-## 3.1 节点状态转换
+### 3.1 节点状态转换
 节点类型之间转换关系如下图所示，每种状态转换形式将在接下来的各个小节进行阐述：
 
 ![](../../../images/consensus/raft_nodes_transfer.jpg)
 
-### 3.1.1 选举
+#### 3.1.1 选举
 Raft共识模块中使用心跳机制来触发Leader选举。当节点启动时，节点自动成为Follower且将Term置0。只要Follower从Leader或者Candidate收到有效的Heartbeat或RequestVote消息，其就会保持在Follower状态，如果Follower在一段时间内（这段时间称为 ***Election Timeout***）没收到上述消息，则它会假设系统当前的Leader已经失活，然后增加自己的Term并转换为Candidiate，开启新一轮的Leader选举流程，流程如下:
 1. Follower增加当前的Term，转换为Candidate；
 2. Candidate将票投给自己，并广播RequestVote到其他节点请求投票；
 3. Candidate节点保持在Candidate状态，直到下面三种情况中的一种发生：(1)该节点赢得选举；(2) 在等待选举期间，Candidate收到了其他节点的Heartbeat；(3) 经过*Election Timeout*后，没有Leader被选出。Raft算法采用随机定时器的方法来避免节点选票出现平均瓜分的情况以保证大多数时候只会有一个节点超时进入Candidate状态并获得大部分节点的投票成为Leader。
     
-### 3.1.2 投票
+#### 3.1.2 投票
 节点在收到VoteReq消息后，会根据消息的内容选择不同的响应策略：
 1. ***VoteReq的Term小于或等于自己的Term***
 
@@ -130,10 +130,10 @@ Raft共识模块中使用心跳机制来触发Leader选举。当节点启动时�
 
    同意该投票请求。
 
-### 3.1.3 心跳超时
+#### 3.1.3 心跳超时
 在Leader成为网络孤岛时，Leader可以发出心跳、Follower可以收到心跳但是Leader收不到心跳回应，这种情况下Leader此时已经出现网络异常，但是由于一直可以向外发送心跳包会导致Follower无法切换状态进行选取，系统陷入停滞。为了避免第二种情况发生，模块中设置了心跳超时机制，Leader每次收到心跳回应时会进行相应记录，一旦一段时间后记录没有更新则Leader放弃Leader身份并转换为Follower节点。
 
-## 3.2 区块复制
+### 3.2 区块复制
 Raft协议强依赖Leader节点的可用性来确保集群数据的一致性，因为数据只能从Leader节点向Follower节点转移。当Raft Sealer向集群Leader提交区块数据后，Leader将该数据置为未提交（uncommitted）状态，接着Leader 节点会通过在Heartbeat中附加数据的形式并发向所有Follower节点复制数据并等待接收响应，在确保网络中超过半数节点已接收到数据后，再将区块数据写入底层存储中，此时区块数据状态已经进入已提交（committed）状态。此后Leader节点再通过Sync模块向其他Follower节点广播该区块数据，区块复制及提交的流程图如下图所示：
 
 ![](../../../images/consensus/raft_replication.png)
