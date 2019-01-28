@@ -6,7 +6,6 @@
 ## [快速体验](tutorials/tutorials.md)
 ## [用户手册](manual/index.html)
 ## [设计文档](design/index.html)
-## [Java SDK]()
 ## [合约开发](developer/index.html)
 ## [企业工具](enterprise/index.html)
-## API
+## [API与SDK](api/index.html)
