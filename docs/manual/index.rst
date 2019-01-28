@@ -7,10 +7,11 @@
 .. toctree::
    :maxdepth: 2
 
-   groups/index.rst
-   priority_control.md
    console.md
-   disk_encryption.md
-   guomi.md
+   groups/index.rst
    node_access_management.md
    certificate_rejected_list.md
+   priority_control.md
+   disk_encryption.md
+   guomi.md
+
