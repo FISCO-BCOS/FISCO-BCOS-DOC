@@ -1,4 +1,4 @@
-## 示例分析 -- 网状模式组网
+# 示例分析 -- 网状模式组网
 
 假设如图所示，联盟链中共有7个节点，链中有三个群组，分别为group1、group2、group3。group1中节点最多，共有5个节点，节点序号为0、1、2、4、5。
 
@@ -11,7 +11,7 @@ group2中有3个节点，节点序号为0、4、6。
 
 组网步骤如下：
 
-### 构建gourp1
+## 构建gourp1
 
 ![](../../../images/enterprise/simple_simple2.png)
 
@@ -23,7 +23,7 @@ group2中有3个节点，节点序号为0、4、6。
 
 
 
-### 构建group2
+## 构建group2
 
 ![](../../../images/enterprise/simple_simple3.png)
 
@@ -33,7 +33,7 @@ group2中有3个节点，节点序号为0、4、6。
 4. 序号0、2的节点将生成的group.2.ini和group.2.genesis拷贝至**构建group1**时生成的节点conf文件夹下，并将新生成节点的config.ini与**构建group1**时生成的config.ini的section[p2p]中的node.X合并
 5. 序号6的节点拷贝节点私钥到对应节点安装包的conf文件夹下，并推送节点安装包至对应服务器
 
-### 构建group3
+## 构建group3
 
 ![](../../../images/enterprise/simple_simple4.png)
 

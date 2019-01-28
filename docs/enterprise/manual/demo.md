@@ -1,8 +1,6 @@
-# 快速开始
+--demo快速开始
 
 ```
-$ git clone https://github.com/HaoXuan40404/generator.git
-$ cd generator
 ./generator --demo
 ```
 此操作会在执行目前的所有操作

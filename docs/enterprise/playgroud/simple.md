@@ -1,4 +1,4 @@
-## 简单模式组网
+# 简单模式组网
 
 ![](../../../images/enterprise/simple.png)
 

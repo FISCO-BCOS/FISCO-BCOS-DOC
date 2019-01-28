@@ -1,4 +1,4 @@
-## 网状模式组网
+# 网状模式组网
 
 ![](../../../images/enterprise/net.png)
 
