@@ -26,12 +26,34 @@ h5,
 h6,
 legend,
 input {
-    color: #010101;
     letter-spacing: 0.3px
+}
+
+p {
+    font-size: 100%; /* Get rid of RTD rule that assumes nobody changes their browser font size */
+}
+
+
+/* Links */
+
+a {
+    color: #6ca158
+}
+
+a:hover {
+    color: #6ca158
+}
+
+a:visited {
+    color: #ADAFB3
 }
 
 
 /* Side navigation bar */
+
+.wy-side-nav-search {
+    background-color: #252627;
+}
 
 .wy-side-nav-search a.icon-home {
     color: transparent;
@@ -54,9 +76,17 @@ input {
     border-radius: 5px
 }
 
+.wy-menu-vertical a:hover {
+    background-color: #ADAFB3;
+    color: #FFF
+}
 
 .wy-nav-content {
-    max-width: 1000px;
+    background-color: #fff max-width: 1000px;
+}
+
+.wy-nav-side {
+    background-color: #252627;
 }
 
 
@@ -68,6 +98,10 @@ input {
     text-transform: none;
 }
 
+.wy-menu-vertical header,
+.wy-menu-vertical p.caption {
+    color: #6ca158;
+}
 
 
 /* Code snippets */
