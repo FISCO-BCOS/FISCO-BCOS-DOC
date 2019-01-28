@@ -2,7 +2,7 @@
 FISCO BCOS 技术文档
 ##############################################################
 
-![](../images/others/FISCO_logo.png)
+.. image:: _static/images/FISCO_BCOS_Logo.svg
 
 【 该版本（2.0.0）的技术文档只适用FISCO-BCOS V2.0及以上版本，FISCO-BCOS V1.3.x版本的技术文档请查看 [ 1.x版本技术文档 ](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v1.0.1/)】
 
