@@ -8,6 +8,6 @@
 .. toctree::
    :maxdepth: 1
    
-   network_control.md
+   node_access_management.md
    priority_control.md
-   black_node.md
+   certificate_rejected_list.md

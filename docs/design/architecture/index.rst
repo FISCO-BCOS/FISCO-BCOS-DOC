@@ -1,5 +1,5 @@
 ##############################################################
-网络与同步
+整体架构
 ##############################################################
 
 
@@ -8,7 +8,7 @@
 .. toctree::
    :maxdepth: 1
 
-   network.md
-   sync.md
-   rpc.md
-   channel.md
+
+   architecture.md
+   transaction_stream.md
+   group.md
