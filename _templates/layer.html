@@ -1,0 +1,11 @@
+{% extends "!layout.html" %}
+{% block sidebartitle %}
+{{ super() }}
+
+<br><img style="background-color: #fff; height: unset; width: unset;" alt="FISCO BCOS" src={{ pathto("images/logo/FISCO_BCOS_Logo.svg",1) }} />
+<br>
+<a href="https://github.com/FISCO-BCOS"><img style="padding: 0px; margin: auto auto auto auto;" alt="GitHub" src="{{ pathto("_static/images/github_button.png", 1) }}"/></a>
+&nbsp;<a href="https://twitter.com/FiscoBcos"><img style="padding: 0px; margin: auto auto auto auto;" alt="Twitter" src="{{ pathto("_static/images/twitter.svg", 1) }}"/></a>
+&nbsp;<a href="https://gitter.im/fisco-bcos/Lobby"><img style="padding: 0px; margin: auto auto auto auto;" alt="Gitter Chat" src="{{ pathto("_static/images/gitter.svg", 1) }}"/></a>
+&nbsp;<a href="https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1-stable/docs/images/WeChatQR.jpeg"><img style="padding: 0px; margin: auto auto auto auto;" alt="wechat" src="{{ pathto("_static/images/wechat.svg", 1) }}"/></a>
+{% endblock %}
