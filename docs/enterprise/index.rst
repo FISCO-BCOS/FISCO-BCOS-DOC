@@ -13,10 +13,7 @@
     installing.md
     quick_start.md
     config.md
-    deploy.md
-    expand.md
-    group.md
-    cert.md
+    manual/index.rst
     monitor.md
     upgrade.md
     faq.md
