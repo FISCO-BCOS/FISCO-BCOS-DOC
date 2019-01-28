@@ -1,15 +1,15 @@
+# SDK
 web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,并根据Fisco-bcos特性做了相应修改。
 
-  ### 1 使用指南：
-  ---------------------------
-
-   #### 1.1 依赖环境：
+## 依赖环境
 
    Java 8 和 gradle（4.10.1以上）
 
     如果本地gradle版本过低，又不便于升级，请使用./gradlew替代gradle命令即可
 
-  #### 1.2  使用方式：
+
+## 引入SDK
+
    可以通过gradle或maven引入到您的java应用中；
 
    gradle:
@@ -30,7 +30,8 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
   ![app3.png](http://wiki.weoa.com/uploads/images/gallery/2019-01-Jan/scaled-840-0/DsD8ESB91MfP3pEw-app3.png)![appalicaiont2.xml.png](http://wiki.weoa.com/uploads/images/gallery/2019-01-Jan/scaled-840-0/d4kzhIBF9IdzFyHC-appalicaiont2.xml.png)
 
 
-  #### 1.3 编译使用：
+### 编译使用
+
   本项目提供了丰富的测试案例和功能，您也可以直接下载代码，使用基本功能。流程如下：
 
        #==== 拉取git代码 ====
@@ -55,7 +56,7 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
       *多群组测试部署*  	gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.TestOkTransaction --args='组号 deploy'
      *多群组测试调用合约*   gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.TestOkTransaction --args='租号 transaction 合约地址'
 
-   #### 1.4 sol合约转换Java类：
+## sol合约转换Java类
    	为了方便使用，您无需安装solc工具，直接使用sdk帮您把智能合约sol文件转成相应java类以及abi和bin文件。目前我们默认支持的最新版本是0.4.25.如果想编译0.5以上版本合约请参考https://github.com/tbocek/solcJ这个项目，引入此jar包到sdk即可。
 
    	1 把编写的sol文件拷贝到src/test/resources/contract下,确保合约名和文件名保持一致。
@@ -63,7 +64,7 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
      gradle test --tests org.fisco.bcos.web3j.solidity.SolidityFunctionWrapperGeneratorTest.compileSolFilesToJavaTest ;
     3 生成的类在src/test/java/org/fisco/bcos/temp文件夹下,并且生成的abi和bin在目录  src/test/resources/solidity目录下。（如果要使用编译后的java，注意修改生成java类的包名。）
 
-#### 1.5 Precompile合约功能
+## Precompile合约功能
   precompile合约是FISCO BCOS底层通过C++实现的一种高效智能合约，用于FISCO BCOS底层的系统信息配置与管理。sdk已提供precompile合约对应的Java接口，并且sdk的控制台通过调用这些Java接口实现了相关操作命令，体验控制台，可查阅控制台文档。
    	 sdk的precompile合约相关文件位于precompile目录下，目前提供分布式控制权限合约Authority.sol，CNS合约CNS.sol，系统属性配置合约SystemConfig.sol和节点类型配置合约Consensus.sol。其中对应转换的Java合约文件与solidty合约同名，并且同级目录下提供操作对应precompile合约的Service类，该Service类中的公有方法是sdk提供给开发者调用的接口。下面分别对precompile对应的Service类的接口进行介绍。
 
@@ -99,7 +100,8 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
 | String removeNode(String nodeId) | removeNode(rn)|根据节点NodeID从记账节点列表或观察节点列表退出对应节点|
 
 
-#### 1.6 国密功能使用：
+## 国密功能使用：
+
   	使用国密功能，需要在在application.xml添加国密配置，如下；
   	<!-- 国密开关 -->
 	<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
