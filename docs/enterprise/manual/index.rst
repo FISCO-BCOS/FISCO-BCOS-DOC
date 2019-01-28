@@ -1,14 +1,16 @@
 ##############################################################
-网络与同步
+操作手册
 ##############################################################
-
 
 
 
 .. toctree::
    :maxdepth: 1
+   
+   demo.md
+   deploy.md
+   expand.md
+   group.md
+   cert.md
+   others.md
 
-   network.md
-   sync.md
-   rpc.md
-   channel.md
