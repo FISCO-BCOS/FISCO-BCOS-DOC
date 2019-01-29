@@ -19,12 +19,14 @@
         {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
       {%- else %}
         {% trans copyright=copyright|e %}&copy; Copyright FISCO BCOS 2019.{% endtrans %}
+
       {%- endif %}
     {%- endif %}
     <br>
-      <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
-      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-        <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+    <br />
+    {% trans %}该版本（2.0.0）的技术文档只适用FISCO-BCOS V2.0及以上版本, FISCO-BCOS V1.3.x版本的技术文档请查看 <a rel="1.x-documents" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/v1.0.1/">1.x版本技术文档</a>{% endtrans %}.
+    <br>
+    <br />
     {%- if build_id and build_url %}
       {% trans build_url=build_url, build_id=build_id %}
         <span class="build">
