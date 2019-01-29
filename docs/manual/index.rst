@@ -14,3 +14,4 @@
    guomi.md
    node_access_management.md
    certificate_rejected_list.md
+   log.md
