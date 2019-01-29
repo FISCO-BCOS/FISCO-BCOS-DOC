@@ -7,10 +7,12 @@
 .. toctree::
    :maxdepth: 1
 
-   architecture.md
-   networkAndSync/index.rst
+   architecture/index.rst
+   p2p/P2P.md 
+   sync/sync.md
    consensus/index.rst
-   evm/index.rst
+   virtual_machine/index.rst
    storage/index.rst
-   secure/index.rst
+   security_control/index.rst
    features/index.rst
+   api/index.rst
