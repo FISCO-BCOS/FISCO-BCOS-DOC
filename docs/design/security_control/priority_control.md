@@ -93,18 +93,17 @@
 +-----------+-------+--------+-----+---------------------------------------------+
 
 ```
-
-**注**：对权限表控制的信息也保存在权限表中。   
+其中，对权限表的插入或更新，当前区块不生效，在当前区块的下一区块生效。状态字段为“0”时，表示权限记录处于正常生效状态，为“1”时表示已删除，即表示权限记录处于失效状态。  
 
 ## 4 流程图
 
 #### 4.1 用户表权限控制流程
 外部账户查询表不进行权限控制。当需要更新，增加或移除记录时，将通过查询权限表进行权限控制。流程如下图所示。
-![ac1.png](../../../images/priority_control/ac1.png)
+![](../../../images/priority_control/ac1.png)
 
 #### 4.2 系统表权限控制流程
-对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk文档](../api/sdk.md)）和控制台（详见[控制台文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果具有权限，执行交易；如果不具备，则返回无权限操作提示。
-![ac2.png](../../../images/priority_control/ac2.png)
+对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk使用文档](../../api/sdk.md)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
+![](../../../images/priority_control/ac2.png)
 
 **注：** _sys_miners_表（ConsensusPrecompiled），_sys_cns_表（CNSPrecompiled），_sys_config_表（SystemConfigPrecompiled）控制流程与对权限表的控制流程类似。
 
