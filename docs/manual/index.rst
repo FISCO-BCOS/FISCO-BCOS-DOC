@@ -14,4 +14,6 @@
    priority_control.md
    disk_encryption.md
    guomi.md
-
+   node_access_management.md
+   certificate_rejected_list.md
+   log.md
