@@ -1,30 +1,28 @@
-## Precompile合约开发
+## Precompiled合约开发
 
 ### 一. 简介
-预编译合约(precompiled contract)是一项以太坊原生支持的功能, FISCO-BCOS在此基础上发展了一套功能强大且易拓展的precompiled框架。 
-precompiled合约的设计思路可以参考[precompiled设计](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/virtualMachine/precompiled.md)。   
-本文作为一篇入门指导, 旨在指引用户如何在FISCO-BCOS实现自己的precompiled合约, 并且能够与EVM或者客户端进行交互。
+预编译合约(precompiled contract)是一项以太坊原生支持的功能, FISCO-BCOS在此基础上发展了一套功能强大且易拓展的precompiled合约框架。  
+precompiled合约在底层使用c++实现,用户需要实现precomipled合约,需要有一定程度的c++技能,也需要用对底层运行原理有一定的了解。本文作为一篇入门指导, 旨在指引用户如何在FISCO-BCOS实现自己的precompiled合约, 并且能够与EVM或者客户端进行交互。
 
 ### 二. 实现precompiled合约
 #### 2.1 基本步骤
 - 定义合约接口  
-precompiled合约使用的接口, 与solidity的接口定义格式完全相同,  因此定义接口时可以先写个对应的solidity合约文件, 将接口的函数体都置空即可.
+precompiled合约的接口, 与solidity的接口定义格式完全相同,  因此定义接口时可以完成对应的solidity合约设计, 将接口的函数体置空即可.
 
-- 定义表的结构  
+- 定义表结构  
 不涉及存储操作可以省略该步骤.   
-FISCO-BCOS底层存储结构参见链接.
 
-- 选择入口地址  
-solidity或者precompiled调用根据地址来区分, 目前的地址分配如下：
+- 分配入口地址  
+调用合约类型(solidity或者precompiled)根据地址来区分, 目前的地址分配如下：
 
-保留地址 | 系统配置以及保留地址 | 用户使用地址 | 临时precompiled合约地址 | solidity合约地址
+预留地址 | 系统配置及预留 | 用户 | precompiled临时地址 | solidity合约地址
 ---------|----------|--------------|------|--------- 
 0x0000 - 0x0fff | 0x1000 - 0x5000 | 0x5001 - 0xffff | 0x10000+ | 其他
 
- 用户分配地址空间为0x5001 - 0xffff, 用户可以为此范围内为新增的precompiled合约选一个地址, 不同precompiled的地址不要冲突即可.
+ 用户地址空间为0x5001 - 0xffff, 用户可以在这个范围内为新增的precompiled合约分配一个地址, precompiled合约地址不冲突即可。
 
 - 实现调用逻辑  
-新增的precompiled合约需要继承Precompiled合约, 在重载的call函数中实现precompiled合约各个接口调用的行为.
+新增的precompiled合约需要继承Precompiled合约, 在重载的call函数中实现precompiled合约各个接口调用的行为。
 ```
 // FISCO-BCOS/libblockverifier/Precompiled.h
 class Precompiled
@@ -38,9 +36,9 @@ class Precompiled
 };
 ```
 
-- 注册合约到执行上下文
+- 注册合约
 
-目前已经注册的precompiled合约：
+将合约注册到执行上下文, 目前已经注册的precompiled合约：
 ```
 // FISCO-BCOS/libblockverifier/ExecutiveContextFactory.cpp
 // ExecutiveContextFactory::initExecutiveContext
@@ -157,7 +155,6 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 ### 三. 调用 
 #### 3.1 web3sdk调用
 #### 3.2 solidity调用
-#### 3.3 precompiled调用
 
 ### 附录： 参考链接
 [precompiled设计](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/6b15a14b346f5369a262c74bda5bc2b0fd2012f9/docs/design/virtualMachine/precompiled.md)  
