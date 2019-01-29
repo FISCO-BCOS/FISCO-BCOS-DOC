@@ -2,10 +2,6 @@
 存储模块
 ##############################################################
 
-
-.. image:: ../../../images/storage/architecture.png
-
-
 FISCO BCOS继承以太坊存储的同时，引入了高扩展性、高吞吐量、高可用、高性能的分布式存储。存储模块主要包括两部分：
 
 **世界状态**: 可进一步划分成 **MPTState** 和 **StorageState**
@@ -17,6 +13,7 @@ FISCO BCOS继承以太坊存储的同时，引入了高扩展性、高吞吐量�
 
 **分布式存储(Advanced Mass Database，AMDB)**: 通过抽象表结构，实现了SQL和NOSQL的统一，通过实现对应的存储驱动，可以支持各类数据库，目前已经实现支持LevelDB。
 
+.. image:: ../../../images/storage/architecture.png
 
 
 .. toctree::
