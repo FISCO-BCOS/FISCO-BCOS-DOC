@@ -211,7 +211,7 @@ FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](TODO
 
 [consensus]段主要涉及共识相关的配置，包括：
 
-- consensus_type：共识算法类型，目前支持[PBFT](../../design/consensus/pbft.html)和RAFT(../../design/consensus/raft.html)，默认是PBFT
+- consensus_type：共识算法类型，目前支持[PBFT](../../design/consensus/pbft.html)和[Raft](../../design/consensus/raft.html)，默认是PBFT
 - max_trans_num：一个区块中可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](../console.html)动态调整该参数
 - node.${idx}：共识节点列表，配置了参与共识节点的[Node ID](../../design/consensus/pbft.html#id1)，节点的Node ID可通过 ${data_path}/node.nodeid文件获取(其中${data_path}可通过主配置config.ini的[secure].data_path选项获取)
 
@@ -237,8 +237,8 @@ e01789233a
 
 存储主要包括两大块，即：[state存储](../../design/storage/mpt.html)和[storage存储](../../design/storage/storage.html)，state存储涉及到交易执行，storage存储涉及到系统表，分别在[storage]和[state]段中配置：
 
-- [storage].type：存储的DB类型，目前仅支持levelDB，后续会做[AMDB](../../design/storage/frame.html)支持
-- [state].type：state类型，目前支持[mpt state](c)和[storage state](../../design/storage/storage.html)，mpt state会将交易执行结果存储在[mpt树](../../design/storage/storage.md)中，效率较低，但包含完整的历史信息; storage state则将交易执行结果存储在系统表中，效率较高，但是不包含任何历史信息。
+- [storage].type：存储的DB类型，目前仅支持levelDB，后续会做[AMDB](../../design/storage/storage.html)支持
+- [state].type：state类型，目前支持[mpt state](../../design/storage/mpt.html)和[storage state](../../design/storage/storage.html)，mpt state会将交易执行结果存储在[mpt树](../../design/storage/mpt.md)中，效率较低，但包含完整的历史信息; storage state则将交易执行结果存储在系统表中，效率较高，但是不包含任何历史信息。
 
 ```ini
 [storage]
