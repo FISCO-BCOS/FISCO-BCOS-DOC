@@ -1,8 +1,11 @@
---demo快速开始
+# 快速开始
+
+用户可以使用fisco generator的--demo命令快速体验本工具，使用示例如下：
 
 ```
 ./generator --demo
 ```
+
 此操作会在执行目前的所有操作
 
 1. 按照./conf/mchain.ini中的配置在./meta下生成证书
