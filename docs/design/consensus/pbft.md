@@ -137,7 +137,7 @@ PBFT共识算法中，共识节点轮流出块，每一轮共识仅有一个Lead
 
 - **从交易池打包交易**: 产生新空块后，从交易池中获取交易，并将获取的交易插入到产生的新区块中
 
-- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为Leader的索引，并根据打包的交易计算出所有交易的[transactionRoot](TODO)
+- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为Leader的索引，并根据打包的交易计算出所有交易的[transactionRoot](../../key_concepts.html#id3)
 
 - **产生Prepare包**: 将组装的新区块编码到Prepare包内，通过PBFTEngine线程广播给组内所有共识节点，其他共识节点收到Prepare包后，开始进行三阶段共识。
 
