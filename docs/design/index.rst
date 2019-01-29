@@ -11,7 +11,7 @@
    p2p/P2P.md 
    sync/sync.md
    consensus/index.rst
-   virtualMachine/index.rst
-   storage/index.md
+   virtual_machine/index.rst
+   storage/index.rst
    security_control/index.rst
    features/index.rst 

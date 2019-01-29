@@ -38,7 +38,7 @@ ENS的功能类似我们较熟悉的DNS(Domain Name Service)域名系统，但�
 
 ## 4 模块架构
 
-![CNS架构](../../../images/contract_name_service/architecture.png)
+![CNS架构](../../../images/contract_name_service/cns_architecture.png)
 
 
 ## 5 核心流程
@@ -58,21 +58,20 @@ ENS的功能类似我们较熟悉的DNS(Domain Name Service)域名系统，但�
 
 CNS信息以系统表的方式进行存储，各账本独立。CNS表定义如下：
 
-```eval_rst
-+---------+---------+--------+-----+---------------------------------+
-| Field   | Type    | Null   | Key | Expain                          |
-+=========+=========+========+=====+=================================+
-| name    | string  | No     | PRI | 合约名称，name和version为联合主键  |
-+---------+---------+--------+-----+---------------------------------+
-| version | string  | No     |     | 合约版本，name和version为联合主键  |
-+---------+---------+--------+-----+---------------------------------+
-| address | string  | No     |     | 合约地址    					 |
-+---------+---------+--------+-----+---------------------------------+
-| abi     | string  | YES    |     | 合约abi                          |
-+---------+---------+--------+-----+---------------------------------+
-| _status_| string  | No     |     | 分布式存储通用字段，“0”可用“1”删除  |
-+---------+---------+--------+-----+---------------------------------+
-```
+<table border="3">
+<tr bgcolor="#CDCDCD">
+  <td><center>Field</center></td>
+  <td><center>Type</center></td>
+  <td><center>Null</center></td>
+  <td><center>Key</center></td>
+  <td><center>Expain</center></td>
+</tr>
+<tr><td>name</td><td>string</td><td>No</td><td>PRI</td><td>合约名称，name和version为联合主键</td></tr>
+<tr><td>version</td><td>string</td><td>No</td><td></td><td>合约名称，name和version为联合主键</td></tr>
+<tr><td>address</td><td>string</td><td>No</td><td></td><td>合约地址</td></tr>
+<tr><td>abi</td><td>string</td><td>YES</td><td></td><td>合约abi</td></tr>
+<tr><td>_status_</td><td>string</td><td>No</td><td></td><td>分布式存储通用字段，“0”可用“1”删除</td></tr>
+</table>
 
 ### 6.2 合约接口
 
@@ -139,7 +138,7 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 - 说明：contractNameAndVersion通过`:`来分割合约名和合约版本，当缺少合约版本时，SDK默认调用使用合约的最新版本进行查询
 
 注意：
-1. 在调用接口前，需[sol合约转换Java类](../../design/api/sdk.md#14-sol合约转换java类)并将生成的Java类以及abi、bin文件置于正确的目录；
+1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[《SDK》](../../api/sdk.md)；
 2. 两个接口的使用例子可参考[ConsoleImpl.java](https://github.com/FISCO-BCOS/web3sdk/blob/release-2.0.1/src/test/java/org/fisco/bcos/web3j/console/ConsoleImpl.java)中的deployByCNS和callByCNS接口实现。
 
 ## 8 操作工具
@@ -148,8 +147,6 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 
 控制台提供的命令包括：
 
-- [deployByCNS](../../manual/console.md#deploybycns)：通过CNS方式部署合约
-- [callByCNS](../../manual/console.md#callbycns)：通过CNS方式调用合约
-- [queryCNS](../../manual/console.md#querycns)：根据合约名称和合约版本号（可选参数）查询CNS表信息
-
-## 9 FAQ
+- deployByCNS：通过CNS方式部署合约
+- callByCNS：通过CNS方式调用合约
+- queryCNS：根据合约名称和合约版本号（可选参数）查询CNS表信息
