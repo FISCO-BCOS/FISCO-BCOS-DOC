@@ -2,8 +2,7 @@
 存储模块
 ##############################################################
 
-
-![](../../../images/storage/architecture.png)
+.. image:: ../../../images/storage/architecture.png
 
 
 FISCO BCOS继承以太坊存储的同时，引入了高扩展性、高吞吐量、高可用、高性能的分布式存储。
