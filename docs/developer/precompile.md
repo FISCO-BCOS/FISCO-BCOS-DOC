@@ -1,11 +1,12 @@
 ## Precompile合约开发
 
-## 一. 简介
-预编译合约(precompiled contract)是以太坊原生支持的一项功能, FISCO-BCOS在此基础上发展了一套自己的precompiled框架, 用来突破EVM的诸多限制, 并且大大的增强了自身的拓展性。  
+### 一. 简介
+预编译合约(precompiled contract)是一项以太坊原生支持的功能, FISCO-BCOS在此基础上发展了一套功能强大且易拓展的precompiled框架。 
+precompiled合约的设计思路可以参考[precompiled设计](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/virtualMachine/precompiled.md)。   
 本文作为一篇入门指导, 旨在指引用户如何在FISCO-BCOS实现自己的precompiled合约, 并且能够与EVM或者客户端进行交互。
 
-## 二. 实现precompiled合约
-### 2.1 基本步骤
+### 二. 实现precompiled合约
+#### 2.1 基本步骤
 - 定义合约接口  
 precompiled合约使用的接口, 与solidity的接口定义格式完全相同,  因此定义接口时可以先写个对应的solidity合约文件, 将接口的函数体都置空即可.
 
@@ -54,7 +55,7 @@ context->setAddress2Precompiled(Address(0x1004),  std::make_shared<dev::precompi
 context->setAddress2Precompiled(Address(0x1005), std::make_shared<dev::precompiled::AuthorityPrecompiled>()); //权限管理
 ```
 
-### 2.2 step by step sample  
+#### 2.2 step by step sample  
 本章节通过precompiled方式实现一个HelloWorld.sol(合约如下)的功能, 通过step by step带大家对precompiled合约编写有个直观的了解。  
 该示例的c++源码位于：FISCO-BCOS/examples/HelloWorldPrecompiled.h HelloWorldPrecompiled.cpp
 ```
@@ -76,7 +77,7 @@ contract HelloWorld {
 }
 ```
 
-#### 2.2.1 合约接口  
+##### 2.2.1 合约接口  
 需要实现HelloWorld.sol的功能, 接口与HelloWorld.sol接口相同
 ```
 contract HelloWorld {
@@ -85,7 +86,7 @@ contract HelloWorld {
 }
 ```
 
-#### 2.2.2 表结构  
+##### 2.2.2 表结构  
 HelloWorld中需要存储单个字符串, 因此需要设计表结构. 
 
 表名： \_\_test_hello_world\_\_  
@@ -96,12 +97,12 @@ hello_key | hello_value
 
 该表只存储一对键值对, key字段为hello_key, value字段为hello_value 存储对应的字符串值, 可以通过set(string)接口修改, 通过get()接口获取.
 
-#### 2.2.3 入口地址
+##### 2.2.3 入口地址
 ```
 0x5001
 ```
 
-#### 2.2.4 实现调用逻辑  
+##### 2.2.4 实现调用逻辑  
 实现HelloWorldPrecompiled类
 ```
 //file HelloWorldPrecompiled.h
@@ -142,7 +143,7 @@ bytes HelloWorldPrecompiled::call(
 
 ```
 
-#### 2.2.5 注册合约
+##### 2.2.5 注册合约
 ```
 // FISCO-BCOS/libblockverifier/ExecutiveContextFactory.cpp
 // ExecutiveContextFactory::initExecutiveContext
@@ -150,17 +151,15 @@ bytes HelloWorldPrecompiled::call(
 context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>()); //HelloWorld precompiled 注册
 ```
 
-#### 2.2.6 其他流程  
+##### 2.2.6 其他流程  
 编译, 搭链, 测试
 
-## 三. 调用 
+### 三. 调用 
+#### 3.1 web3sdk调用
+#### 3.2 solidity调用
+#### 3.3 precompiled调用
 
-### 3.1 web3sdk调用
-### 3.2 solidity调用
-### 3.3 precompiled调用
-### 3.4 创建临时precomlied表
-
-## 参考链接
-[precompiled设计介绍](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/6b15a14b346f5369a262c74bda5bc2b0fd2012f9/docs/design/virtualMachine/precompiled.md)  
-[FISCO-BCOS搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/buildchain.md)  
+### 附录： 参考链接
+[precompiled设计](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/6b15a14b346f5369a262c74bda5bc2b0fd2012f9/docs/design/virtualMachine/precompiled.md)  
+[环境搭建](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/buildchain.md)    
 [控制台](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/console.md)
