@@ -119,7 +119,7 @@ FISCO BCOS允许节点配置不信任的黑名单节点列表，并拒绝与这�
 
 - crl.${idx}: 黑名单节点的nodeID, 节点node id可通过`node.node_id`文件获取; ${idx}是黑名单节点的索引。
 
-黑名单的详细信息还可参考[CA黑名单](TODO)
+黑名单的详细信息还可参考[CA黑名单](certificate_rejected_list.md)
 
 ```bash
 # node1将node0列为黑名单节点(设node0和node1均位于~目录)
@@ -205,15 +205,15 @@ FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](TODO
 - **配置群组内一致**：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
 - **节点启动后不可更改**：由于genesis配置已经作为创世块写入了系统表，链初始化后，该配置不能更改
 - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
-- 由于genesis配置要求群组内所有节点一致，建议使用**[build_chain](TODO)**在搭建节点时生成该配置
+- 由于genesis配置要求群组内所有节点一致，建议使用**[build_chain](buildchain.md)**在搭建节点时生成该配置
 
 ### 共识配置
 
 [consensus]段主要涉及共识相关的配置，包括：
 
-- consensus_type：共识算法类型，目前支持[PBFT](TODO)和RAFT(TODO)，默认是PBFT
-- max_trans_num：一个区块中可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](TODO)动态调整该参数
-- node.${idx}：共识节点列表，配置了参与共识节点的[Node ID](TODO)，节点的Node ID可通过 ${data_path}/node.nodeid文件获取(其中${data_path}可通过主配置config.ini的[secure].data_path选项获取)
+- consensus_type：共识算法类型，目前支持[PBFT](../design/consensus/pbft.md)和RAFT(../design/consensus/raft.md)，默认是PBFT
+- max_trans_num：一个区块中可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](console.md)动态调整该参数
+- node.${idx}：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.md#id1)，节点的Node ID可通过 ${data_path}/node.nodeid文件获取(其中${data_path}可通过主配置config.ini的[secure].data_path选项获取)
 
 ```ini
 ;consensus configuration
@@ -235,10 +235,10 @@ e01789233a
 
 ### 存储模块配置
 
-存储主要包括两大块，即：[state存储](TODO)和[storage存储](TODO)，state存储涉及到交易执行，storage存储涉及到系统表，分别在[storage]和[state]段中配置：
+存储主要包括两大块，即：[state存储](../design/storage/mpt.md)和[storage存储](../design/storage/storage.md)，state存储涉及到交易执行，storage存储涉及到系统表，分别在[storage]和[state]段中配置：
 
-- [storage].type：存储的DB类型，目前仅支持levelDB，后续会做[AMDB](TODO)支持
-- [state].type：state类型，目前支持[mpt state](TODO)和[storage state](TODO)，mpt state会将交易执行结果存储在[mpt树](TODO)中，效率较低，但包含完整的历史信息; storage state则将交易执行结果存储在系统表中，效率较高，但是不包含任何历史信息。
+- [storage].type：存储的DB类型，目前仅支持levelDB，后续会做[AMDB](../design/storage/frame.md)支持
+- [state].type：state类型，目前支持[mpt state](c)和[storage state](../design/storage/storage.md)，mpt state会将交易执行结果存储在[mpt树](../design/storage/storage.md)中，效率较低，但包含完整的历史信息; storage state则将交易执行结果存储在系统表中，效率较高，但是不包含任何历史信息。
 
 ```ini
 [storage]
@@ -251,7 +251,7 @@ e01789233a
 
 ### gas配置
 
-FISCO BCOS兼容以太坊虚拟机([evm](TODO))，为了防止针对[evm](TODO)的DOS攻击，evm在执行交易时，引入了[gas](TODO)的概念，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](TODO)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](TODO)动态调整gas限制。
+FISCO BCOS兼容以太坊虚拟机([evm](../design/virtualMachine/evm.md))，为了防止针对[evm](../design/virtualMachine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](group_config.md#id8)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](console.md)动态调整gas限制。
 
 ```ini
 ;tx gas limit
