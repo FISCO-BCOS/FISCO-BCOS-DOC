@@ -1,4 +1,4 @@
---demo快速开始
+# --demo快速开始
 
 ```
 ./generator --demo
