@@ -140,11 +140,11 @@ $ cat ~/node1/config.ini | grep ctl
 
 ### 配置日志信息
 
-FISCO BCOS同时支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，详细可参考[日志系统](TODO)。
+FISCO BCOS同时支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，详细可参考[日志操作手册](../log.html)。
 
 #### 配置easylogging++
 
-为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的[log]段，一般建议不手动更改除了日志级别设置之外的其他配置，开启easylogging++的方法可参考[启用easylogging++](TODO)，日志级别主要由以下关键字设置：
+为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的[log]段，一般建议不手动更改除了日志级别设置之外的其他配置，开启easylogging++的方法可参考[启用easylogging++](../log.html)，日志级别主要由以下关键字设置：
 
 - INFO-ENABLED：true表明开启INFO级别日志；false表明关闭INFO级别日志
 - ERROR-ENABLED：true表明开启ERROR级别日志；false表明关闭ERROR级别日志
@@ -184,7 +184,7 @@ FISCO BCOS同时支持轻量级的[easylogging++](https://github.com/zuhd-org/ea
 
 #### 配置boostlog
 
-FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](TODO)。相较于easylogging++，boostlog配置项很简单，主要如下：
+FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](../log.html)。相较于easylogging++，boostlog配置项很简单，主要如下：
 
 - Level: 日志级别，当前主要包括TRACE/DEBUG/INFO/WARNING/ERROR五种日志级别，设置某种日志级别后，日志文件中会输≥该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`
 
