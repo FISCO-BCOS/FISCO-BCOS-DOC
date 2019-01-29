@@ -69,7 +69,8 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
     service.run(); // start netty
-    ChannelEthereumService channelEthereumService = new ChannelEthereumService();
+    ChannelEthereumService channelEthereumService = new ChannelEthereumService(); //类似于HttpService， fisco用netty发送请求
+
     channelEthereumService.setChannelService(service);
     channelEthereumService.setTimeout(10000);
     Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());//通过web3j调用提供的jsonrpc接口
@@ -84,8 +85,7 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
         YourSmartContract  contract  = YourSmartContract.deploy(web3, credentials, gasPrice, gasLimit).send();//部署合约；
         YourSmartContract contract = YourSmartContract.load(
         address, web3j, credentials, gasPrice, gasLimit); //根据合约地址加载合约
-        TransactionReceipt transactionReceipt = contract.someMethod(
-             <param1>, ...).send(); //调用合约方法。
+        TransactionReceipt transactionReceipt = contract.someMethod( <param1>, ...).send(); //调用合约方法。
         Type result = contract.someMethod(<param1>, ...).send(); //查询合约状态
 ```
    #### 1.5 sol合约转换Java类：
