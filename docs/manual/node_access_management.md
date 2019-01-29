@@ -145,4 +145,4 @@
 - getMinerList：查看群组中记账节点列表
 - getObserverList：查看群组中观察节点列表
 
-RPC详细使用方法请参考[《RPC》](../design/api/rpc.md)。
+RPC详细使用方法请参考[《RPC》](../api/rpc.md)。
