@@ -2,19 +2,6 @@
 
 本文档对黑名单进行介绍性说明，实践方法参见[《CA黑名单操作手册》](../../manual/certificate_rejected_list.md)。
 
-## 目录
-<!-- TOC -->
-
-- [1 名词解释](#1-名词解释)
-- [2 模块架构](#2-模块架构)
-- [3 核心流程](#3-核心流程)
-- [4 影响范围](#4-影响范围)
-- [5 配置格式](#5-配置格式)
-- [6 功能展望](#6-功能展望)
-- [7 FAQ](#7-FAQ)
-
-<!-- /TOC -->
-
 ## 1 名词解释
 
 CA黑名单，别称**证书拒绝列表**（certificate rejected list，简称CRL）。CA黑名单基于`config.ini`文件中`[crl]`配置的NodeID进行判断，拒绝此NodeID节点发起的连接。
@@ -29,7 +16,7 @@ CA黑名单[配置类型](../../design/security_control/node_access_management.m
 
 下图表示CA黑名单所涉及的模块及其关系。图例A->B表示B模块依赖A模块的数据，同时B模块晚于A模块初始化。
 
-![模块架构.png](../../../images/certificate_rejected_list/architecture.png)
+![模块架构.png](../../../images/certificate_rejected_list/ca_architecture.png)
 
 ## 3 核心流程
 
