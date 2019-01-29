@@ -12,7 +12,6 @@ fisco generator 目前支持的功能如下：
    
    demo.md
    deploy.md
-   group.md
    cert.md
    others.md
 
