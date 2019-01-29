@@ -544,14 +544,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id"
 ### getGroupList
 返回节点所属群组的群组ID列表
 #### 参数          
-- `groupID`: `unsigned int` - 群组ID          
+无       
 #### 返回值          
 - `array` - 节点所属群组的群组ID数组 
 
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1}' http://127.0.0.1:30302 |jq
 
 // Result
 {
