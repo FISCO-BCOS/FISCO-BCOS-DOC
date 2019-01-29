@@ -2,7 +2,6 @@
 整体架构
 ##############################################################
 
-
 整体架构上，FISCO BCOS划分成基础层、核心层、管理层和接口层：
 
 - 基础层:提供区块链的基础数据结构和算法库
@@ -23,7 +22,8 @@ FISCO BCOS基于多群组架构实现了强扩展性的群组多账本，基于�
 本章重点介绍FISCO BCOS的群组架构和系统运行时的交易流(包括交易提交、打包、执行和上链).
 
 
-..image:: ../../../images/architecture/architecture.png
+.. image:: ../../../images/architecture/architecture.png
+
 
 .. toctree::
    :maxdepth: 1

@@ -10,7 +10,7 @@
 
 EVMC (Ethereum Client-VM Connector API)，是以太坊抽象出来的执行器的接口，旨在能够对接各种类型的执行器。FISCO BCOS目前采用了以太坊的智能合约语言Solidity，因此也沿用了以太坊对执行器接口的抽象。
 
-..image:: ../../../images/evm/evmc_frame.png
+.. image:: ../../../images/evm/evmc_frame.png
 
 在节点上，共识模块会调用EVMC，将打包好的交易交由执行器执行。执行器执行时，对状态进行的读写，会通过EVMC的回调反过来操作节点上的状态数据。
 
