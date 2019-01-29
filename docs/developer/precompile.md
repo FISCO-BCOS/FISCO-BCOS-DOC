@@ -1,13 +1,14 @@
 ## Precompiled合约开发
 
 ### 一. 简介
-预编译合约(precompiled contract)是一项以太坊原生支持的功能, FISCO-BCOS在此基础上发展了一套功能强大且易拓展的precompiled合约框架。  
-precompiled合约在底层使用c++实现,用户需要实现precomipled合约,需要有一定程度的c++技能,也需要用对底层运行原理有一定的了解。本文作为一篇入门指导, 旨在指引用户如何在FISCO-BCOS实现自己的precompiled合约, 并且能够与EVM或者客户端进行交互。
+预编译合约(precompiled contract)是一项以太坊原生支持的功能, FISCO-BCOS在此基础上发展了一套功能强大并且容易拓展的precompiled合约框架。  
+precompiled合约在底层使用c++实现,用户需要实现precomipled合约,需要有一定的c++技能,也需要用对底层运行原理有一定的了解。本文作为一篇入门指导, 旨在指引用户如何在FISCO-BCOS实现自己的precompiled合约, 并且能够与EVM或者客户端进行交互。
 
-### 二. 实现precompiled合约
+### 二. 实现precompiled合约  
 #### 2.1 基本步骤
+实现一个新的precopiled合约的流程包括：
 - 定义合约接口  
-precompiled合约的接口, 与solidity的接口定义格式完全相同,  因此定义接口时可以完成对应的solidity合约设计, 将接口的函数体置空即可.
+precompiled合约的接口, 与solidity的接口定义格式完全相同, 因此定义接口时可以完成对应的solidity合约设计, 将接口的函数体置空即可.
 
 - 定义表结构  
 不涉及存储操作可以省略该步骤.   
@@ -54,7 +55,7 @@ context->setAddress2Precompiled(Address(0x1005), std::make_shared<dev::precompil
 ```
 
 #### 2.2 step by step sample  
-本章节通过precompiled方式实现一个HelloWorld.sol(合约如下)的功能, 通过step by step带大家对precompiled合约编写有个直观的了解。  
+本章节通过precompiled方式实现一个HelloWorld.sol的功能, 通过step by step带大家对precompiled合约编写有个直观的了解。  
 该示例的c++源码位于：FISCO-BCOS/examples/HelloWorldPrecompiled.h HelloWorldPrecompiled.cpp
 ```
 //HelloWorld.sol
@@ -101,7 +102,7 @@ hello_key | hello_value
 ```
 
 ##### 2.2.4 实现调用逻辑  
-实现HelloWorldPrecompiled类
+HelloWorldPrecompiled类, 重载call函数, 实现所有接口的调用行为.
 ```
 //file HelloWorldPrecompiled.h
 class HelloWorldPrecompiled : public dev::blockverifier::Precompiled
