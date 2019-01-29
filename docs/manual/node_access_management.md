@@ -1,4 +1,4 @@
-# 节点准入管理操作文档
+# 节点准入管理手册
 
 本文档描述节点准入管理的实践操作，建议阅读本操作文档前请先行了解[《节点准入管理介绍》](../design/security_control/node_access_management.md)。
 
