@@ -3,10 +3,11 @@
 ##############################################################
 
 
+
 .. toctree::
    :maxdepth: 1
 
-   architecture/architecture.md
+   architecture/index.rst
    p2p/P2P.md 
    sync/sync.md
    consensus/index.rst
