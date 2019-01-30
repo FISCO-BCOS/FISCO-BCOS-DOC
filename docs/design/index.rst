@@ -14,5 +14,4 @@
    virtual_machine/index.rst
    storage/index.rst
    security_control/index.rst
-   features/index.rst
-   api/index.rst
+   features/index.rst 
