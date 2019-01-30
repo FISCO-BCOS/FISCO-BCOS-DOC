@@ -572,7 +572,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ### **deploy**
 运行deploy或d，部署合约。(默认提供HelloWorld合约进行示例使用)
 参数：
-- 合约名称：部署的合约名称(需与合约文件名一致)。                            
+- 合约名称：部署的合约名称。                            
                            
 ```bash
 > deploy HelloWorld
@@ -584,7 +584,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ### **call**
 运行call或c，调用合约。                                
 参数： 
-- 合约名称：部署的合约名称(需与合约文件名一致)。
+- 合约名称：部署的合约名称。
 - 合约地址: 部署合约获取的地址。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定，参数空格分隔，字符串需要双引号标识。
@@ -601,16 +601,15 @@ Hello,FISCO-BCOS
 ```
 
 ### **deployByCNS**
-deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约，Ok合约，国密版GMOk合约进行示例使用)                                 
+deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约进行示例使用)                                 
 参数：
-- 合约名称：部署的合约名称(需与合约文件名一致)。
+- 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号。
 ```bash
 > dbc HelloWorld 1.0
 0x7956881392a8e2893d6c3f514ef5c37f9d5e52ef
 ```
 **注：** 
-- 部署和调用国密版GMOk合约需要sdk配置文件中打开国密开关。
 - 用户编写的合约利用CSN进行部署和调用，请使用sdk，具体使用参考[sdk文档](../api/sdk.md)。
 
 ### **queryCNS**
@@ -635,7 +634,7 @@ deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约，Ok�
 ### **callByCNS**
 运行callByCNS或cbc，利用CNS调用合约。                                 
 参数： 
-- 合约名称：部署的合约名称(需与合约文件名一致)。
+- 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定，参数空格分隔，字符串需要双引号标识。
