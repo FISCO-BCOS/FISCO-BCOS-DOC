@@ -2,7 +2,7 @@
 
 如下图，FISCO BCOS支持多群组架构，群组间共享网络，通过网络准入模块实现各账本间网络消息隔离。
 
-![群组架构](../../../images/architecture/ledger.png)
+![](../../../images/architecture/ledger.png)
 
 
 群组间数据隔离，每个群组独立运行各自的共识算法，不同群组可使用不同的共识算法。每个账本模块自底向上主要包括三层，即：核心层、接口层和调度层，通过这三层相互协作，FISCO BCOS可保证单个群组独立健壮地运行。
@@ -15,7 +15,7 @@
 storage向外暴露简单的查询(select)、提交(commit)和更新(update)接口，具有可插拔特性，后端可支持多种数据库类型，目前仅支持[LevelDB数据库](https://github.com/google/leveldb)，后期会把基于mysql的[AMDB](../storage/storage.html)集成到系统中。
 
 
-![核心层](../../../images/architecture/storage.png)
+![](../../../images/architecture/storage.png)
 
 
 ## 接口层
