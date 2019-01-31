@@ -6,7 +6,7 @@
 
 ### 1. 使用[`build_chain`][build_chain]脚本
 
-本节使用[`build_chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，操作系统为Ubuntu 16.04。
+本节使用[`build_chain`](../manual/build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，操作系统为Ubuntu 16.04。
 
 - 准备环境
 
@@ -38,7 +38,7 @@ fisco
 ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300
 ```
 
-关于`build-chain`脚本选项，请[参考这里](../manual/buildchain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查错误原因）。
+关于`build-chain`脚本选项，请[参考这里](../manual/build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查错误原因）。
 ```bash
 Generating CA key...
 ==============================================================
