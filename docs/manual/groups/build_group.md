@@ -2,7 +2,7 @@
 
 ## 创建多群组区块链
 
-FISCO BCOS提供了一键安装脚本[build_chain.sh](../buildchain.html)用于快速生成链配置文件。该脚本使用方法如下(详细可参考[快速建链指南](../buildchain.html))：
+FISCO BCOS提供了一键安装脚本[build_chain.sh](../build_chain.html)用于快速生成链配置文件。该脚本使用方法如下(详细可参考[快速建链指南](../build_chain.html))：
 
 ```bash
 $ bash build_chain.sh -h
