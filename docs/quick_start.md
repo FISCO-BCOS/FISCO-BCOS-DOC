@@ -6,10 +6,6 @@
 
 为了简化安装与配置，FISCO BCOS提供了[build_chain][build_chain]脚本来帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从GitHub下载最新版本的预编译二进制，也可通过选项指定用户编译的二进制来搭建FISCO BCOS链。
 
-## [关键概念](key_concepts.md)
-
-关键概念介绍区块链以及FISCO BCOS相关的概念，帮助初学者快速理解FISCO BCOS。
-
 ## [教程](tutorials/index.html)
 
 FISCO BCOS提供面向不同类型用户的可实际操作的教程，每个教程针对一类典型用户，通过详细的按步骤的操作帮助用户学习使用FISCO BCOS。
