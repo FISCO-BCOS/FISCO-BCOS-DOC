@@ -162,5 +162,5 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 
 ## 参考链接
 [precompiled设计介绍](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/6b15a14b346f5369a262c74bda5bc2b0fd2012f9/docs/design/virtual_machine/precompiled.md)  
-[FISCO-BCOS搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/buildchain.md)  
+[FISCO-BCOS搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_chain.md)  
 [控制台](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/console.md)
