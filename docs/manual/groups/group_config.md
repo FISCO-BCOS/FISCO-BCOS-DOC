@@ -205,7 +205,7 @@ FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](../l
 - **配置群组内一致**：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
 - **节点启动后不可更改**：由于genesis配置已经作为创世块写入了系统表，链初始化后，该配置不能更改
 - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
-- 由于genesis配置要求群组内所有节点一致，建议使用 [build_chain](../buildchain.html) 在搭建节点时生成该配置
+- 由于genesis配置要求群组内所有节点一致，建议使用 [build_chain](../build_chain.html) 在搭建节点时生成该配置
 
 ### 共识配置
 
