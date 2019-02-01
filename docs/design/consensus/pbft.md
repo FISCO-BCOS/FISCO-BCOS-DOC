@@ -41,7 +41,7 @@ leader_idx = (view + block_number) % node_num
 下图简单展示了4(3\*1+1, f=1)节点FISCO BCOS系统中，node3为拜占庭节点情况下，视图切换过程：
 
 
-![PBFT视图切换过程](../../../images/consensus/pbft_view.png)
+![](../../../images/consensus/pbft_view.png)
 
 - 前三轮共识过程中, node0、node1、node2分别为Leader，正常出块共识;
 - 第四轮共识过程中, node3为Leader，但node3已经无法提供正常服务，node0-node2在给定时间内未收到node3打包的区块，会触发视图切换，将当前view+1，记为view\_new，并相互间广播viewchange包，其他节点收集满在视图view\_new上的(2\*f+1)个viewchange包后，将自己的view切换成view\_new，并计算出新leader
@@ -99,7 +99,7 @@ PrepareReqPacket类型消息包包含了正在处理的区块信息:
 系统框架如下图:
 
 
-![PBFT系统框架](../../../images/consensus/pbft_architecture.png)
+![](../../../images/consensus/pbft_architecture.png)
 
 
 PBFT共识主要包括两个模块:
@@ -113,7 +113,7 @@ PBFT共识主要包括两个模块:
 
 如下图所示，PBFT共识主要包括Pre-parepare、Prepare和Commit三个阶段。Pre-prepare阶段主要负责执行区块，产生签名包，并将签名包广播给所有共识节点；Prepare阶段中，节点收集满2\*f+1的签名包后，开始广播Commit包，表明自身达到可以提交区块的状态；Commit阶段中，节点收集满2\*f+1的Commit包后，直接将本地缓存的Prepapre包中的区块提交到数据库。
 
-![PBFT核心流程](../../../images/consensus/pbft_process.png)
+![](../../../images/consensus/pbft_process.png)
 ```eval_rst
 .. image:: 
 
@@ -121,7 +121,7 @@ PBFT共识主要包括两个模块:
 下图详细介绍了PBFT各个阶段的具体流程：
 
 
-![PBFT各阶段处理流程](../../../images/consensus/pbft_engine.png)
+![](../../../images/consensus/pbft_engine.png)
 
 
 
@@ -130,14 +130,14 @@ PBFT共识主要包括两个模块:
 PBFT共识算法中，共识节点轮流出块，每一轮共识仅有一个Leader打包区块，Leader索引通过公式`(block_number + current_view) % consensus_node_num`计算得出。节点计算当前Leader索引与自己索引相同后，就开始打包区块。区块打包主要由PBFT Sealer线程完成，Sealer线程的主要工作如下图所示：
 
 
-![Sealer线程工作流程](../../../images/consensus/sealer.png)
+![](../../../images/consensus/sealer.png)
 
 
 - **产生新的空块**: 通过区块链(BlockChain)模块获取当前最高块，并基于最高块产生新空块(将新区块父哈希置为最高块哈希，时间戳置为当前时间，交易清空)
 
 - **从交易池打包交易**: 产生新空块后，从交易池中获取交易，并将获取的交易插入到产生的新区块中
 
-- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为Leader的索引，并根据打包的交易计算出所有交易的[transactionRoot](TODO)
+- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为Leader的索引，并根据打包的交易计算出所有交易的[transactionRoot](../../key_concepts.html#id3)
 
 - **产生Prepare包**: 将组装的新区块编码到Prepare包内，通过PBFTEngine线程广播给组内所有共识节点，其他共识节点收到Prepare包后，开始进行三阶段共识。
 

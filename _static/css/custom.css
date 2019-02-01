@@ -34,21 +34,6 @@ p {
 }
 
 
-/* Links */
-
-a {
-    color: #6ca158
-}
-
-a:hover {
-    color: #6ca158
-}
-
-a:visited {
-    color: #ADAFB3
-}
-
-
 /* Side navigation bar */
 
 .wy-side-nav-search {
