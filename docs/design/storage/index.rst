@@ -19,6 +19,5 @@ FISCO BCOS继承以太坊存储的同时，引入了高扩展性、高吞吐量�
 .. toctree::
    :maxdepth: 1
    
-
-   mpt.md
    storage.md
+   mpt.md
