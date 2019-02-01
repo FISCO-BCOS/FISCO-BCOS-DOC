@@ -10,14 +10,14 @@
 
 ```bash
 Usage:
-    -l <IP list>                        [Optional] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:2"
-    -f <IP list file>                   [Required] split by line, every line should be "ip:nodeNum agencyName groupList". eg "127.0.0.1:4 agency1 1,2"
+    -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
+    -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList". eg "127.0.0.1:4 agency1 1,2"
     -e <FISCO-BCOS binary path>         Default download from GitHub
     -o <Output Dir>                     Default ./nodes/
-    -p <Start Port>                     Default 30300
+    -p <Start Port>                     Default (30300 20200 8545), e.g: 30300,20200,8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
     -c <Consensus Algorithm>            Default PBFT. If set -c, use raft
-    -s <State type>                     Default mpt. if set -s, use storage
+    -s <State type>                     Default storage. if set -s, use mpt
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
@@ -25,7 +25,7 @@ Usage:
     -P <PKCS12 passwd>                  Default generate PKCS12 file without passwd, use -P to set custom passwd
     -h Help
 e.g
-    build_chain.sh -l "127.0.0.1:4"
+    ../tools/build_chain.sh -l "127.0.0.1:4"
 ```
 
 ### 3. 选项介绍
@@ -60,6 +60,7 @@ bash build_chain.sh -f ipconf -T -i
 
 - **`p`选项[**Optional**]**
 指定节点的起始端口，每个节点占用三个端口，分别是p2p,channel,jsonrpc。同一个IP下的不同节点所使用端口累加递增。
+例如`30300,20200,8545`，使用`,`分割端口，必须指定三个端口。
 
 - **`i`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
@@ -68,7 +69,7 @@ bash build_chain.sh -f ipconf -T -i
 无参数选项，设置该选项时，设置节点的共识算法为RAFT，默认设置为PBFT。
 
 - **`s`选项[**Optional**]**
-无参数选项，设置该选项时，节点使用`storagestate`存储形式，默认使用`mptstate`存储形式
+无参数选项，设置该选项时，节点使用`mptstate`存储合约局部变量，默认使用`storagestate`存储合约局部变量。
 
 - **`g`选项[**Optional**]**
 无参数选项，设置该选项时，编译国密版本。<font color=#FF0000>使用`g`选项时要求二进制fisoc-bcos为国密版本。</font>
@@ -109,7 +110,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] FISCO-BCOS Path   : ../build/bin/fisco-bcos
 [INFO] Start Port        : 30300
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] State Type        : mpt
+[INFO] State Type        : storage
 [INFO] RPC listen IP     : 0.0.0.0
 [INFO] Output Dir        : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 [INFO] CA Key Path       : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes/cert/ca.key

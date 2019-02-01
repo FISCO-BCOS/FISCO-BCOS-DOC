@@ -7,5 +7,6 @@
 .. toctree::
    :maxdepth: 1
 
+   precompiled.md
+   crud.md
    solidity.md
-   precompile.md
