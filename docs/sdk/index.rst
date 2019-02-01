@@ -1,9 +1,9 @@
 ##############################################################
-Java SDK for FISCO-BCOS 2.0
+Java SDK
 ##############################################################
 
 
-【 该版本（2.0）的技术文档只适用Java SDK V2.0及以上版本（与FISCO-BCOS V2.0及以上版本对齐），Java SDK V1.2.x版本的技术文档请查看: `Java SDK V1.2.x版本技术文档 <https://fisco-doc.readthedocs.io/en/latest/docs/web3sdk/index.html>`_ 】
+【 该版本（2.0）的技术文档只适用Java SDK V2.0及以上版本（与FISCO-BCOS V2.0及以上版本适配），Java SDK V1.2.x版本的技术文档请查看 `Java SDK V1.2.x版本技术文档 <https://fisco-doc.readthedocs.io/en/latest/docs/web3sdk/index.html>`_ 】
    
    Java SDK提供访问FISCO BCOS节点的Java API。
 
@@ -11,10 +11,10 @@ Java SDK for FISCO-BCOS 2.0
    - `Java SDK Issues <https://github.com/FISCO-BCOS/web3sdk/issues>`_
 
 .. admonition:: Welcome to Java SDK
-    
+
    +---------+-----------------------------------------------------------------+
    |         |  - 提供调用FISCO-BCOS JSON-RPC的Java API                        | 
-   |         |  - 链上链下( `AMOP <../features/AMOP/README.html>`_ ),                                  
+   |         |  - 链上链下( `AMOP <../features/AMOP/README.html>`_ ),          |                        
    |基本特性 |    为联盟链提供安全高效的消息信道                               | 
    +---------+-----------------------------------------------------------------+         
    |         |  - 支持使用国密算法发交易                                       |
