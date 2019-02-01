@@ -62,7 +62,7 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
 
 ----------------------
 ## 发送交易
-测试代码提供了丰富的测试样例，可以参考使用。
+测试代码提供了丰富的测试样例，可以参考使用,测试代码在src/test目录下（建议在IDEA里打开）。
 查询版本号代码如下：
 ```
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
