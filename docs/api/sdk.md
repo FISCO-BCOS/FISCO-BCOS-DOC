@@ -1,4 +1,4 @@
-# SDK
+# Java SDK
 web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,并根据Fisco-bcos特性做了相应修改。
 
 ## 依赖环境
