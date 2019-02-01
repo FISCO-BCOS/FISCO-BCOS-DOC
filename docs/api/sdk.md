@@ -22,17 +22,17 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
    		<artifactId>web3sdk</artifactId>
     	<version>2.0.1</version>
 	</dependency>
-  由于引入了以太坊的solidity编译器相关jar包，请在build.gradle远程仓库配置如下
-     ```
-        repositories {
-            mavenCentral()
-            jcenter()
-            maven { url "https://dl.bintray.com/ethereum/maven/" }
+  由于引入了以太坊的solidity编译器相关jar包，请在build.gradle远程仓库配置如下:
+
+         repositories {
+             mavenCentral()
+             jcenter()
+             maven { url "https://dl.bintray.com/ethereum/maven/" }
         }
-     ```
+
       因为是联盟链,需要身份认证，使用sdk需要拷贝节点证书文件ca.crt和keystore.p12到项目的资源目录下，然后配置web3sdk目录下的applicationContext.xml文件。
       2.0支持多群组功能，所以sdk需要配置每个群组的节点的信息，groupChannelConnectionsConfig类中需要配置group以及group对应的节点信息。需要sdk向哪些group发送消息就配置几个相应的ChannelConnections。不使用多群组功能只需配置图2中的Service类即可。
-  ![app3.png](http://wiki.weoa.com/uploads/images/gallery/2019-01-Jan/scaled-840-0/DsD8ESB91MfP3pEw-app3.png)![appalicaiont2.xml.png](http://wiki.weoa.com/uploads/images/gallery/2019-01-Jan/scaled-840-0/d4kzhIBF9IdzFyHC-appalicaiont2.xml.png)
+  ![图1](http://wiki.weoa.com/uploads/images/gallery/2019-01-Jan/scaled-840-0/DsD8ESB91MfP3pEw-app3.png)![图2](http://wiki.weoa.com/uploads/images/gallery/2019-01-Jan/scaled-840-0/d4kzhIBF9IdzFyHC-appalicaiont2.xml.png)
 
 ----------------------
 ### 编译使用
