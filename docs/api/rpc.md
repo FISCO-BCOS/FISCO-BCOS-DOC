@@ -5,7 +5,7 @@
 - **JSON RPC**：一种无状态、轻量级的远程过程调用(Remote Procedure Call， RPC)协议。 该规范主要定义了几个数据结构及其处理规则。它允许运行在基于socket，http等诸多不同消息传输环境的同一进程中。它使用JSON ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt))作为数据格式。FISCO BCOS采用JSON RPC2.0协议。
 
 ## 2 模块架构
- ![](../../../images/rpc/rpc.png)
+ ![](../../images/rpc/rpc.png)
  
  RPC模块负责提供FISCO BCOS的外部接口，客户端通过RPC发送请求，RPC通过调用账本管理模块和p2p模块获取相关响应，并将响应返回给客户端。其中账本管理模块通过多账本机制管理区块链底层的相关模块，具体包括共识模块，同步模块，区块管理模块，交易池模块以及区块验证模块。
 
@@ -544,14 +544,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id"
 ### getGroupList
 返回节点所属群组的群组ID列表
 #### 参数          
-- `groupID`: `unsigned int` - 群组ID          
+无       
 #### 返回值          
 - `array` - 节点所属群组的群组ID数组 
 
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1}' http://127.0.0.1:30302 |jq
 
 // Result
 {
