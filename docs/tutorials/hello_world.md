@@ -51,7 +51,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] State Type        : mpt
+[INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
 [INFO] Output Dir        : /mnt/d/fisco/nodes
 [INFO] CA Key Path       : /mnt/d/fisco/nodes/cert/ca.key

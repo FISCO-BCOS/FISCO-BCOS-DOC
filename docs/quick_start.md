@@ -10,7 +10,7 @@
 
 FISCO BCOS提供面向不同类型用户的可实际操作的教程，每个教程针对一类典型用户，通过详细的按步骤的操作帮助用户学习使用FISCO BCOS。
 
-### [Hello World](tutorials/hello_world.md)
+- [Hello World](tutorials/hello_world.md)
 
 [Hello World](tutorials/hello_world.md)教程，面向初次接触FISCO-BCOS的用户，通过在本机部署FISCO-BCOS以及部署和调用Hello World合约，帮助初学者快速学习使用FISCO-BCOS。
 
@@ -22,9 +22,9 @@ FISCO BCOS提供面向不同类型用户的可实际操作的教程，每个教�
 
 设计文档介绍FISCO BCOS的各个模块设计以及实现原理。
 
-## [Java SDK](sdk/index.html)
+## [Java SDK](api/sdk.md)
 
-Java SDK提供业务与FISCO BCOS交互的能力，支持将Solidity合约转为Java代码。
+Java SDK提供业务与FISCO BCOS交互的能力，支持将Solidity合约转为Java接口。
 
 ## [合约开发](developer/index.html)
 
@@ -38,6 +38,4 @@ Java SDK提供业务与FISCO BCOS交互的能力，支持将Solidity合约转为
 
 API介绍FISCO BCOS对外暴露的RPC接口。
 
-
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
-
