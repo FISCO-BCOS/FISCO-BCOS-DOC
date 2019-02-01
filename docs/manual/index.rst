@@ -7,7 +7,9 @@
 .. toctree::
    :maxdepth: 2
 
-   groups/index.rst   
+   build_group.md 
+   build_chain.md
+   group_config.md
    console.md
    node_access_management.md
    certificate_rejected_list.md
