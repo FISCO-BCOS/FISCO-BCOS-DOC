@@ -1,4 +1,4 @@
-## Precompile合约开发
+# Precompile合约开发
 
 ## 一. 简介
 预编译合约(precompiled contract)是以太坊原生支持的一项功能, FISCO-BCOS在此基础上发展了一套自己的precompiled框架, 用来突破EVM的诸多限制, 并且大大的增强了自身的拓展性。  
@@ -16,9 +16,9 @@ FISCO-BCOS底层存储结构参见链接.
 - 选择入口地址  
 solidity或者precompiled调用根据地址来区分, 目前的地址分配如下：
 
-保留地址 | 系统配置以及保留地址 | 用户使用地址 | 临时precompiled合约地址 | solidity合约地址
----------|----------|--------------|------|--------- 
-0x0000 - 0x0fff | 0x1000 - 0x5000 | 0x5001 - 0xffff | 0x10000+ | 其他
+| 保留地址        | 系统配置以及保留地址 | 用户使用地址    | 临时precompiled合约地址 | solidity合约地址 |
+| --------------- | -------------------- | --------------- | ----------------------- | ---------------- |
+| 0x0000 - 0x0fff | 0x1000 - 0x5000      | 0x5001 - 0xffff | 0x10000+                | 其他             |
 
  用户分配地址空间为0x5001 - 0xffff, 用户可以为此范围内为新增的precompiled合约选一个地址, 不同precompiled的地址不要冲突即可.
 
@@ -90,9 +90,9 @@ HelloWorld中需要存储单个字符串, 因此需要设计表结构.
 
 表名： \_\_test_hello_world\_\_  
 表结构：
-key | value
-----|-----
-hello_key | hello_value
+| key       | value       |
+| --------- | ----------- |
+| hello_key | hello_value |
 
 该表只存储一对键值对, key字段为hello_key, value字段为hello_value 存储对应的字符串值, 可以通过set(string)接口修改, 通过get()接口获取.
 
@@ -162,5 +162,5 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 
 ## 参考链接
 [precompiled设计介绍](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/6b15a14b346f5369a262c74bda5bc2b0fd2012f9/docs/design/virtual_machine/precompiled.md)  
-[FISCO-BCOS搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/buildchain.md)  
+[FISCO-BCOS搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_chain.md)  
 [控制台](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/console.md)
