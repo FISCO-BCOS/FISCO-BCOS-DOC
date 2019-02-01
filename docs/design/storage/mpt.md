@@ -26,7 +26,7 @@ state root是区块中的一个字段，每个区块对应着不同的“状态�
 
 (图片来自以太坊白皮书)
 
-![](D:/out-branch/FISCO-BCOS-DOC/images/storage/mpt_state.png)
+![](../../../images/storage/mpt_state.png)
 
 ## Trade Off
 
