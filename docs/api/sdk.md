@@ -30,7 +30,7 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
             maven { url "https://dl.bintray.com/ethereum/maven/" }
         }
      ```
-    因为是联盟链,需要身份认证，使用sdk需要拷贝节点证书文件ca.crt和keystore.p12到项目的资源目录下，然后配置web3sdk目录下的applicationContext.xml文件。
+      因为是联盟链,需要身份认证，使用sdk需要拷贝节点证书文件ca.crt和keystore.p12到项目的资源目录下，然后配置web3sdk目录下的applicationContext.xml文件。
       2.0支持多群组功能，所以sdk需要配置每个群组的节点的信息，groupChannelConnectionsConfig类中需要配置group以及group对应的节点信息。需要sdk向哪些group发送消息就配置几个相应的ChannelConnections。不使用多群组功能只需配置图2中的Service类即可。
   ![app3.png](http://***REMOVED***/uploads/images/gallery/2019-01-Jan/scaled-840-0/DsD8ESB91MfP3pEw-app3.png)![appalicaiont2.xml.png](http://***REMOVED***/uploads/images/gallery/2019-01-Jan/scaled-840-0/d4kzhIBF9IdzFyHC-appalicaiont2.xml.png)
 
@@ -57,9 +57,8 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
       *部署OK合约*  gradle clean test --tests  org.fisco.bcos.channel.test.contract.OkTest
       *基本测试*    gradle clean test --tests org.fisco.bcos.channel.test.BasicTest
       *cns测试* 	 gradle clean test --tests org.fisco.bcos.channel.test.precompile.CnsServiceTest
-      *tps测试*    gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.contract.PerfomanceOk --args='trans 100 100 1'
       *多群组测试部署*  	gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.TestOkTransaction --args='组号 deploy'
-     *多群组测试调用合约*   gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.TestOkTransaction --args='租号 transaction 合约地址'
+     *多群组测试调用合约*   gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.TestOkTransaction --args='组号 transaction 合约地址'
 
 ----------------------
 ## 发送交易
@@ -87,6 +86,8 @@ web3sdk提供访问fisco-bcos节点的java API,项目Fork自以太坊的web3j,�
         TransactionReceipt transactionReceipt = contract.someMethod(
              <param1>, ...).send(); //调用合约方法。
         Type result = contract.someMethod(<param1>, ...).send(); //查询合约状态
+```
+
 
 ----------------------
 ## sol合约转换Java类
