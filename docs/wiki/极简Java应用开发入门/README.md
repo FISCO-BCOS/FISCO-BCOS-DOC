@@ -131,7 +131,7 @@ cd $fiscobcos/cert
 
 打开eclispe建立一个简单的java app工程，假定命名bcosliteclient（也可以直接下载附件的工程,在eclipse里直接import-> exist gradle project）。建议在workspace里也import进web3sdk的工程代码，便于调试和阅读接口代码，查看类定义和区块链接口等。
 
-[bcosliteclient.zip](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/wiki/%E6%9E%81%E7%AE%80Java%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/images/bcosliteclient.zip)
+[bcosliteclient.zip](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/raw/master/docs/wiki/极简Java应用开发入门/images/bcosliteclient.zip)
 
 可使用附件工程里的build.gradle配置文件，包含了基本的java库依赖，在classpath下放置附件工程里applicationContext.xml文件（基于web3sdk1.2版本）,默认的log4j2.xml配置文件默认把所有信息打印到控制台，便于观察，可以根据自己的喜好和需要修改
 
