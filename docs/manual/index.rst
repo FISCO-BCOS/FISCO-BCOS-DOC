@@ -9,7 +9,7 @@
 
    build_group.md 
    build_chain.md
-   group_config.md
+   configs.md
    console.md
    node_access_management.md
    certificate_rejected_list.md
