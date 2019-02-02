@@ -34,7 +34,7 @@ P.S.也可以直接参考[存证业务样例](https://github.com/FISCO-BCOS/evid
 
 本样例提供一个最简智能合约，演示对字符串和整型数的基本操作，包括设置和读取计数器名字、增加计数、读取当前计数。并通过receipt log的方式，把修改记录log到block里，供客户端查询参考。这里提一下，receipt log用处很大，可以是区块链和业务端同步交易处理过程和结果信息的有效渠道。 合约代码如下，非常的简单。
 
-[Counter.sol](./images/Counter.sol)
+[Counter.sol](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/wiki/%E6%9E%81%E7%AE%80Java%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/images/Counter.sol)
 
 首先到下载编译了web3sdk的linux服务器上，进入web3sdk目录，如/mydata/web3sdk。
 
@@ -199,7 +199,7 @@ cd $fiscobcos/cert
 
 代码相当简单，可直接阅读和使用。
 
-[CounterClient.java](./images/CounterClient.java)
+[CounterClient.java](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/wiki/%E6%9E%81%E7%AE%80Java%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/images/CounterClient.java)
 
 注意，如果采用java客户端部署合约，则把main方法里的deployCounter()注释去掉。
 
