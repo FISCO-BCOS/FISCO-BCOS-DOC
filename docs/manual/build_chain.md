@@ -84,41 +84,13 @@ bash build_chain.sh -f ipconf -T -i
 无参数选项，设置该选项时，设置节点的log级别为DEBUG
 
 - **`P`选项[**Optional**]**
-设置SDK需要的PKCS12文件的密码。
+设置SDK需要的PKCS12文件的密码。默认设置密码为空。
 
-### 4. 使用举例
-- 生成
-```bash
-# 一键建链脚本
-#例: 建立本机四节点区块链，并开启外网RPC端口监听
-# -e: fisco-bcos可执行文件路径，不设置则从GitHub下载最新的二进制
-# -l: 物理机的ip:物理机的节点数目
-# -i: JsonRPC和channel server监听ip为外网IP
-bash build_chain.sh -e ../build/bin/fisco-bcos -l "127.0.0.1:4" -i
-```
+### 4. 节点组织结构
 
-- 生成成功后，输出如下
-```bash
-Generating CA key...
-==============================================================
-Generating keys ...
-Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-==============================================================
-Generating configurations...
-Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-==============================================================
-[INFO] FISCO-BCOS Path   : ../build/bin/fisco-bcos
-[INFO] Start Port        : 30300
-[INFO] Server IP         : 127.0.0.1:4
-[INFO] State Type        : storage
-[INFO] RPC listen IP     : 0.0.0.0
-[INFO] Output Dir        : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
-[INFO] CA Key Path       : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes/cert/ca.key
-==============================================================
-[INFO] All completed. Files in /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
-```
+- `127.0.0.1/nodex`文件夹下存储节点所需的配置文件。
+- cert文件夹下存放链的根证书和机构证书。
 
-- 目录结构
 ```bash
 nodes/
 ├── 127.0.0.1
@@ -131,7 +103,6 @@ nodes/
 │   │   │   ├── node.crt
 │   │   │   ├── node.key
 │   │   │   ├── node.nodeid
-│   │   │   └── node.serial
 │   │   ├── config.ini
 │   │   ├── sdk
 │   │   │   ├── ca.crt
@@ -157,6 +128,41 @@ nodes/
 │   ├── ca.srl
 │   └── cert.cnf
 └── replace_all.sh
+```
+
+### 5. 使用举例
+
+- 生成
+
+```bash
+# 一键建链脚本
+#例: 建立本机四节点区块链，并开启外网RPC端口监听
+# -e: fisco-bcos可执行文件路径，不设置则从GitHub下载最新的二进制
+# -l: 物理机的ip:物理机的节点数目
+# -i: JsonRPC和channel server监听ip为外网IP
+bash build_chain.sh -e ../build/bin/fisco-bcos -l "127.0.0.1:4" -i
+```
+
+- 生成成功后，输出`All completed`提示。
+
+```bash
+Generating CA key...
+==============================================================
+Generating keys ...
+Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
+==============================================================
+Generating configurations...
+Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
+==============================================================
+[INFO] FISCO-BCOS Path   : ../build/bin/fisco-bcos
+[INFO] Start Port        : 30300
+[INFO] Server IP         : 127.0.0.1:4
+[INFO] State Type        : storage
+[INFO] RPC listen IP     : 0.0.0.0
+[INFO] Output Dir        : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
+[INFO] CA Key Path       : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes/cert/ca.key
+==============================================================
+[INFO] All completed. Files in /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 ```
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
