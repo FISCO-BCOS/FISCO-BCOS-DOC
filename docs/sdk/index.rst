@@ -30,6 +30,5 @@ Java SDK
    :maxdepth: 1
    
    env.md
-   start.md 
    config.md
    api.md 
