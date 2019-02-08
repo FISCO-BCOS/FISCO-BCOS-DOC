@@ -31,28 +31,22 @@
 FISCO-BCOS作为联盟链，其sdk连接节点需要进行双向认证。因此，需要拷贝节点证书文件ca.crt和keystore.p12到项目的资源目录下供sdk使用。
 
 #### 2.1.2 配置文件设置
-Java应用的配置文件需要做相关配置。值得注意的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，sdk需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
+Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，sdk需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ##### 2.1.2.1 Spring项目配置
 提供Spring项目中关于applicationContext.xml的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
 
 ![](../../images/sdk/sdk_xml.png)
 
-```eval_rst
+applicationContext.xml配置项详细说明:
+- encryptType: 配置国密算法开启/关闭开关(默认为0)                                      
+  - 0: 不使用国密算法发交易                                                        
+  - 1: 使用国密算法发交易
+- groupChannelConnectionsConfig: 
+  - 配置待连接的群组，可以配置一个或多个群组，每个群组可以配置一个或多个节点。    
+  - 每个群组需要配置群组ID，群组节点的listen_ip和channel_listen_port。
+- channelService: 通过指定群组ID配置sdk实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。sdk会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
-.. admonition:: applicationContext.xml配置项详细说明
-
-+-----------------------------------+-----------------------------------------------------------------------------------+
-| **encryptType**                   |  配置国密算法开启/关闭开关(默认为0)                                               |
-|                                   |  - 0: 不使用国密算法发交易                                                        |
-|                                   |  - 1: 使用国密算法发交易                                                          |
-+-----------------------------------+-----------------------------------------------------------------------------------+
-| **groupChannelConnectionsConfig** |  - 配置待连接的群组，可以配置一个或多个群组，每个群组可以配置一个或多个节点       |     |                                   |  - 每个群组需要配置群组ID，群组节点的listen_ip和channel_listen_port               |     +-----------------------------------+-----------------------------------------------------------------------------------+
-| **channelService**                |  通过指定群组ID配置sdk实际连接的群组，指定的群组ID是groupChannelConnectionsConfig |
-|                                   |  配置中的群组ID。sdk会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求  |
-+-----------------------------------+-----------------------------------------------------------------------------------+
-
-```
 ##### 2.1.2.2 Spring Boot项目配置
 提供Spring Boot项目中关于application.yml的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
 
@@ -65,7 +59,7 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
 #### 2.2.1 Spring项目开发指引
 ##### 2.2.1.1 调用sdk的api(参考[sdk api列表](./api.md))设置或查询相关的区块链数据。
 1) 调用sdk web3j的api：需要加载配置文件，sdk与区块链节点建立连接。获取web3j对象，根据web3j对象调用相关api。示例代码如下：
-```java
+```bash
     //读取配置文件，sdk与区块链节点建立连接
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
@@ -81,7 +75,7 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
     System.out.println(Numeric.decodeQuantity(blockNumber));
 ```
 2) 调用sdk precompiled的api：需要加载配置文件，sdk与区块链节点建立连接。获取sdk precompiled service对象，调用相关的api。示例代码如下：
-```java
+```bash
     //读取配置文件，sdk与区块链节点建立连接，获取web3j对象
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
@@ -119,7 +113,7 @@ $ gradle build -x test
 
 ###### 部署并调用合约
 sdk的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用合约Java类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址，也可以调用该合约的其他方法。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
-```java
+```bash
     //读取配置文件，sdk与区块链节点建立连接，获取web3j对象
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
@@ -142,7 +136,7 @@ sdk的核心功能是部署/加载合约，然后调用合约相关接口，实�
     Type result = contract.someMethod(<param1>, ...).send(); 
 ```
 #### 2.2.2 Spring Boot项目开发指引
-提供[web3jsdk-spring-boot-starter](https://github.com/yanyanho/web3jsdk-spring-boot-starter)示例项目供参考。Spring Boot项目开发与Spring项目开发类似，其主要区别在于配置文件方式的差异，开发请参考[Spring项目开发指引](#221-spring项目开发指引)。
+提供[web3jsdk-spring-boot-starter](https://github.com/yanyanho/web3jsdk-spring-boot-starter)示例项目供参考。Spring Boot项目开发与Spring项目开发类似，其主要区别在于配置文件方式的差异，使用方式请参考Spring项目开发指引。
 
 ### 2.3 SDK国密功能使用
 - 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi.md)。
@@ -153,4 +147,4 @@ sdk的核心功能是部署/加载合约，然后调用合约相关接口，实�
 compile files('lib/solcJ-all-0.4.25-gm.jar')
 //compile 'org.ethereum:solcJ-all:0.4.25'
 ```
-Solidity合约文件转换为国密版Java合约文件参考[准备Java合约文件](#准备java合约文件solidity合约文件转换为java合约文件)，合约部署与调用同非国密版sdk，参考[部署并调用合约](#部署并调用合约)。
+Solidity合约文件转换为国密版Java合约文件的步骤、合约部署与调用均同非国密版sdk。
