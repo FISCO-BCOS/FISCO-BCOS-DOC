@@ -98,12 +98,12 @@ conf目录下的original_cert文件夹为节点与sdk进行通信所需要的证
 ```
 ### sol合约转换Java类
    	为了方便使用，您无需安装solc工具，直接使用sdk帮您把智能合约sol文件转成相应java类以及abi和bin文件。目前我们默认支持的最新版本是0.4.25.如果想编译0.5以上版本合约请参考https://github.com/tbocek/solcJ这个项目，引入此jar包到sdk即可。
-
+```
    	1 把编写的sol文件拷贝到src/test/resources/contract下,确保合约名和文件名保持一致。
 ​    2 在项目目录下执行
 ​     gradle test --tests org.fisco.bcos.web3j.solidity.SolidityFunctionWrapperGeneratorTest.compileSolFilesToJavaTest ;
 ​    3 生成的类在src/test/java/org/fisco/bcos/temp文件夹下,并且生成的abi和bin在目录  src/test/resources/solidity目录下。（如果要使用编译后的java，注意修改生成java类的包名。）
-
+```
 
 详细操作见[sdk使用](https://fisco-bcos-documentation.readthedocs.io/zh_CN/feature-2.0.0/docs/api/sdk.html
 
