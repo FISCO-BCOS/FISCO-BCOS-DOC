@@ -9,7 +9,7 @@
 
    build_chain.md
    build_group.md 
-   group_example.md 
+   group.md 
    configs.md
    console.md
    node_access_management.md
