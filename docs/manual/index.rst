@@ -7,6 +7,7 @@
 .. toctree::
    :maxdepth: 2
 
+   hello_world.md 
    build_chain.md
    build_group.md 
    group.md 
