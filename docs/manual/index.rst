@@ -8,6 +8,7 @@
    :maxdepth: 2
 
    build_group.md 
+   group_example.md
    build_chain.md
    configs.md
    console.md
