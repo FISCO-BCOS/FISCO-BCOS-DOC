@@ -7,9 +7,9 @@
 .. toctree::
    :maxdepth: 2
 
-   build_group.md 
-   group_example.md
    build_chain.md
+   build_group.md 
+   group_example.md 
    configs.md
    console.md
    node_access_management.md
