@@ -31,7 +31,7 @@ $ bash ./build_chain.sh -l '127.0.0.1:4' -e ./bin/fisco-bcos -g
 * -e 为编译的国密版fisco-bcos的路径，需要在脚本后指定
 * -g 国密编译选项，使用成功后会生成国密版的节点
 
-当国密联盟链部署完成之后，其余操作与[快速入门](../tutorials/tutorials.md)的操作相同
+当国密联盟链部署完成之后，其余操作与[快速入门](./hello_world.md)的操作相同
 
 ## 国密配置信息
 
