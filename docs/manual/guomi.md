@@ -78,7 +78,7 @@ Java 8 和 gradle（4.10.1以上）
 ​       <constructor-arg value="1"/>
 ​   </bean>
 
-​    国密编译：国密与非国密的差异只在于sol生成的bin不一样，而abi文件是一样的，你可以引入我们的solidity国密jar包，参考文档https://github.com/FISCO-BCOS/solidity， 我们已经把国密solidity的jar包放入了项目的lib目录下，使用国密你只需要修改build.gradle文件，注释掉非国密编译器jar包，引入国密编译器jar包
+​    国密编译：国密与普通的合约差异只在于sol生成的bin不一样，而abi文件是一样的，你可以引入我们的solidity国密jar包，参考文档https://github.com/FISCO-BCOS/solidity， 我们已经把国密solidity的jar包放入了项目的lib目录下，使用国密你只需要修改build.gradle文件，注释掉普通版编译器jar包，引入国密编译器jar包
 ​compile files('lib/solcJ-all-0.4.25-gm.jar')
 ​//compile 'org.ethereum:solcJ-all:0.4.25'
 ​    再执行1.4的步骤生成国密的java类即可使用国密功能。
