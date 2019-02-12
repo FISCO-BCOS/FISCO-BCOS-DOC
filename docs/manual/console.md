@@ -58,7 +58,7 @@
 curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
 tar -zxf console-2.0.0.tar.gz && chmod u+x console/start
 ```
-将控制台连接的节点证书文件ca.crt和keystore.p12文件拷贝到console/conf目录下。
+将控制台连接的节点证书文件ca.crt、node.crt、node.key文件拷贝到console/conf目录下。
 
 - 启动控制台
 ```bash
@@ -84,7 +84,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 .. important::
     控制台配置说明
 
-    - **说明1：** 控制台配置文件（console/conf/applicationContext.xml）默认配置的是一个在群组1内的节点，其ip为127.0.0.1，端口为30301。如果需要更改连接配置，参考sdk文档。
+    - **说明1：** 控制台配置文件（console/conf/applicationContext.xml）默认配置的是一个在群组1内的节点，其ip为127.0.0.1，端口为20200。如果需要更改连接配置，参考`sdk文档<../sdk/index.html>`。
     - **说明2：** 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此sdk轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
 ``` 
 
