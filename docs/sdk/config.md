@@ -43,8 +43,8 @@ applicationContext.xml配置项详细说明:
   - 0: 不使用国密算法发交易                                                        
   - 1: 使用国密算法发交易
 - groupChannelConnectionsConfig: 
-  - 配置待连接的群组，可以配置一个或多个群组，每个群组可以配置一个或多个节点。    
-  - 每个群组需要配置群组ID，群组节点的listen_ip和channel_listen_port。
+  - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID。    
+  - 每个群组可以配置一个或多个节点，设置群组节点的listen_ip和channel_listen_port。
 - channelService: 通过指定群组ID配置sdk实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。sdk会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
 ##### 2.1.2.2 Spring Boot项目配置
@@ -142,9 +142,9 @@ sdk的核心功能是部署/加载合约，然后调用合约相关接口，实�
 - 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi.md)。
 - 启用国密功能：application.xml/application.yml配置文件中将encryptType属性设置为1。
 
-国密版sdk调用api的方式与非国密版sdk调用api的方式相同，其差异在于国密版sdk需要生成国密版的Java合约文件。sdk源码的lib目录下已有国密版的Solidity jar包，用于将Solidity合约文件转为国密版的Java合约文件。因此，使用国密版sdk只需要修改sdk源码根目录下的build.gradle文件，注释掉非国密编译器jar包，引入国密编译器jar包。
+国密版sdk调用api的方式与普通版sdk调用api的方式相同，其差异在于国密版sdk需要生成国密版的Java合约文件。sdk源码的lib目录下已有国密版的Solidity jar包，用于将Solidity合约文件转为国密版的Java合约文件。因此，使用国密版sdk只需要修改sdk源码根目录下的build.gradle文件，注释掉普通版编译器jar包，引入国密编译器jar包。
 ```bash
 compile files('lib/solcJ-all-0.4.25-gm.jar')
 //compile 'org.ethereum:solcJ-all:0.4.25'
 ```
-Solidity合约文件转换为国密版Java合约文件的步骤、合约部署与调用均同非国密版sdk。
+Solidity合约文件转换为国密版Java合约文件的步骤、部署和调用国密版合约的方法均与普通版sdk相同。
