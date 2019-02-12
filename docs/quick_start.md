@@ -16,7 +16,7 @@
 
 设计文档介绍FISCO BCOS的各个模块设计以及实现原理。
 
-## [Java SDK](api/sdk.md)
+## [Java SDK](sdk/index.html)
 
 Java SDK提供业务与FISCO BCOS交互的能力，支持将Solidity合约转为Java接口。
 
