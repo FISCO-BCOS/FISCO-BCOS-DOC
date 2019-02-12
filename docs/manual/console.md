@@ -51,7 +51,7 @@
 ## 3 控制台配置与运行
 
 ### 3.1 配置运行
-搭建FISCO BCOS区块链请参考[搭链脚本](./buildchain.md)。
+搭建FISCO BCOS区块链请参考[搭链脚本](./build_chain.md)。
 - 准备控制台
 ```bash
 # 获取控制台
