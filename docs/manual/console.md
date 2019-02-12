@@ -97,7 +97,7 @@ bash start [groupID] [privateKey]
 - `privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账户私钥。 
 
 ### 3.3 启用国密版控制台   
-控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见[sdk文档](../api/sdk.md)），即可使用国密版控制台，其命令使用方式与非国密版一致。
+控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见[sdk文档](../sdk/index.html)），即可使用国密版控制台，其命令使用方式与非国密版一致。
 
 ## 4 控制台命令
 ### **help**
@@ -579,7 +579,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 **注：** 
-- 用户编写的合约进行部署和调用，请使用sdk，具体使用参考[sdk文档](../api/sdk.md)。
+- 用户编写的合约进行部署和调用，请使用sdk，具体使用参考[sdk文档](../sdk/index.html)。
 
 ### **call**
 运行call或c，调用合约。                                
@@ -610,7 +610,7 @@ deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约进行�
 0x7956881392a8e2893d6c3f514ef5c37f9d5e52ef
 ```
 **注：** 
-- 用户编写的合约利用CSN进行部署和调用，请使用sdk，具体使用参考[sdk文档](../api/sdk.md)。
+- 用户编写的合约利用CSN进行部署和调用，请使用sdk，具体使用参考[sdk文档](../sdk/index.html)。
 
 ### **queryCNS**
 运行queryCNS或qcs，根据合约名称和合约版本号（可选参数）查询cns表记录信息。                                 
