@@ -45,7 +45,6 @@ p {
     background-repeat: no-repeat;
     background-size: Auto 20px;
     background-position: center top;
-    background-origin: content box;
     height: 20px;
     width: 100%
 }
