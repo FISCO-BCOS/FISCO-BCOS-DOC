@@ -34,7 +34,7 @@ Java SDK提供业务与FISCO BCOS交互的能力，支持将Solidity合约转为
 
 企业工具提供FISCO BCOS从部署到运维的整套解决方案，帮助企业用户快速使用FISCO BCOS。
 
-## [API](api/index.html)
+## [API](api.md)
 
 API介绍FISCO BCOS对外暴露的RPC接口。
 
