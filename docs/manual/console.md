@@ -56,9 +56,9 @@
 ```bash
 # 获取控制台
 curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
-tar -zxf console-2.0.0.tar.gz && chmod u+x console/start
+tar -zxf console-2.0.0.tar.gz
 ```
-将控制台连接的节点证书文件ca.crt、node.crt、node.key文件拷贝到console/conf目录下。
+将控制台连接节点的ca.crt、node.crt和node.key文件拷贝到console/conf目录下。
 
 - 启动控制台
 ```bash
