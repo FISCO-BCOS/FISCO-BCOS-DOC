@@ -36,9 +36,9 @@ Usage : bash monitor.sh
    -r : setting alert receiver
    -h : help.
  example :
-   bash  monitor.sh -s yourmwechatcode -o nodes -r your_name
-   bash  monitor.sh -s yourmwechatcode -m statistics -o nodes -r your_name
-   bash  monitor.sh -s yourmwechatcode -m statistics -f node0/log/log_2019021314.log -g 1 2 -r your_name
+   bash  monitor.sh -s yourwechatcode -o nodes -r your_name
+   bash  monitor.sh -s yourwechatcode -m statistics -o nodes -r your_name
+   bash  monitor.sh -s yourwechatcode -m statistics -f node0/log/log_2019021314.log -g 1 2 -r your_name
 ```
 
 命令解释如下：
