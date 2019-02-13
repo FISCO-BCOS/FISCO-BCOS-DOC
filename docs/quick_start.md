@@ -8,28 +8,28 @@
 
 初次接触FISCO BCOS的用户建议从[Hello World](manual/hello_world.md)教程开始，通过在本机部署FISCO-BCOS以及部署和调用Hello World合约快速入门。
 
-## [用户手册](manual/index.html)
+## 用户手册
 
-用户手册提供FISCO BCOS各种功能的操作说明。
+[用户手册](manual/index.html)提供FISCO BCOS各种功能的操作说明。
 
-## [设计文档](design/index.html)
+## 设计文档
 
-设计文档介绍FISCO BCOS的各个模块设计以及实现原理。
+[设计文档](design/index.html)介绍FISCO BCOS的各个模块设计以及实现原理。
 
-## [Java SDK](sdk/index.html)
+## Java SDK
 
-Java SDK提供业务与FISCO BCOS交互的能力，支持将Solidity合约转为Java接口。
+[Java SDK](sdk/index.html)提供业务与FISCO BCOS交互的能力，支持将Solidity合约转为Java接口。
 
-## [合约开发](developer/index.html)
+## 合约开发
 
-合约开发提供Solidity和Precompiled合约的开发教程。
+[合约开发](developer/index.html)提供Solidity和Precompiled合约的开发教程。
 
-## [企业工具](enterprise/index.html)
+## 企业工具
 
-企业工具提供FISCO BCOS从部署到运维的整套解决方案，帮助企业用户快速使用FISCO BCOS。
+[企业工具](enterprise/index.html)提供FISCO BCOS从部署到运维的整套解决方案，帮助企业用户快速使用FISCO BCOS。
 
-## [API](api.md)
+## API
 
-API介绍FISCO BCOS对外暴露的RPC接口。
+[API](api.md)介绍FISCO BCOS对外暴露的RPC接口。
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
