@@ -120,4 +120,4 @@ Java SDK
 :问:
   Java SDK配置完成，发送交易失败的原因是什么？  
 :答:
-  applicationContext.xml中的ip、端口、群组号填错或者是缺少keystore.p12和ca.crt证书。
+  applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。

@@ -101,7 +101,7 @@ $ git checkout release-2.0.1
 #===证书和节点配置 ===
 1. 在src/test/resources目录下，配置web3sdk的applicationContext.xml，
 如上图所示设置sdk要连接节点channel_listen_ip和channel_listen_port。并设置节点所在群组groupId;
-2. 由于是联盟链,拷贝节点证书文件ca.crt和keystore.p12到web3sdk/src/test/resources目录下；
+2. 由于是联盟链,拷贝节点证书文件ca.crt、node.crt和node.key到web3sdk/src/test/resources目录下；
 3. 成功后执行gradle build -x test；编译相应web3sdk jar包。
 4. 你也可以直接执行特定测试：
     *查询块高*    gradle clean test --tests  org.fisco.bcos.channel.test.block.BlockTest

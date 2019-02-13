@@ -28,7 +28,7 @@
 
 ### 2.1 SDK配置
 #### 2.1.1 FISCO BCOS节点证书配置
-FISCO-BCOS作为联盟链，其sdk连接节点需要进行双向认证。因此，需要拷贝节点证书文件ca.crt和keystore.p12到项目的资源目录下供sdk使用。
+FISCO-BCOS作为联盟链，其sdk连接节点需要进行双向认证。因此，需要将节点的ca.crt、node.crt和node.key文件到项目的资源目录下供sdk使用。
 
 #### 2.1.2 配置文件设置
 Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，sdk需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
