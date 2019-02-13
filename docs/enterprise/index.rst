@@ -25,6 +25,5 @@ fisco-generator_ 是针对多机构组网的企业区块链部署工具。 在�
    config.md
    manual/index.rst
    monitor.md
-   upgrade.md
    faq.md
    playgroud/index.rst
