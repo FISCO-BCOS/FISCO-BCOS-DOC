@@ -15,7 +15,7 @@ $ cd ./data/monitor
 绑定自己的github账号，以及微信后，可以使用本脚本向微信发送告警信息，使用本脚本的-s命令 可以向指定微信发送告警信息
 
 如果用户希望使用其他服务，可以修改monitor.sh中的alarm() {
-    # do serverchan  
+    # change http server  
 }函数，个性化配置为自己需要的服务
 
 
@@ -36,9 +36,9 @@ Usage : bash monitor.sh
    -r : setting alert receiver
    -h : help.
  example :
-   bash  monitor.sh -s yourwechatcode -o nodes -r your_name
-   bash  monitor.sh -s yourwechatcode -m statistics -o nodes -r your_name
-   bash  monitor.sh -s yourwechatcode -m statistics -f node0/log/log_2019021314.log -g 1 2 -r your_name
+   bash  monitor.sh -s YourHttpAddr -o nodes -r your_name
+   bash  monitor.sh -s YourHttpAddr -m statistics -o nodes -r your_name
+   bash  monitor.sh -s YourHttpAddr -m statistics -f node0/log/log_2019021314.log -g 1 2 -r your_name
 ```
 
 命令解释如下：
