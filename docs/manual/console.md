@@ -7,7 +7,7 @@
 ### 2.1 控制台命令
 控制台命令由两部分组成，即指令和指令相关的参数：   
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等。其中大部分指令调用rpc接口，因此与rpc接口同名，但同时为了输入简洁，提供对应的缩写指令。     
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。其中字符串参数需要加上双引号，字符串不能带空格。与rpc接口同名命令的输入参数和获取信息字段的详细解释参考[rpc文档](../api/rpc.md)。
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。其中字符串参数需要加上双引号，字符串不能带空格。与rpc接口同名命令的输入参数和获取信息字段的详细解释参考[rpc文档](../api.md)。
 
 ### 2.2 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
@@ -15,7 +15,7 @@
 - 错误结果: 命令返回错误的执行结果，以字符串或是json的形式返回。 
 
 **注：**
-- 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../api/rpc.md))，将以json格式显示错误响应的error字段信息。
+- 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../api.md))，将以json格式显示错误响应的error字段信息。
 - 命令操作系统表时，会返回操作系统表的json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：
     - 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
     - 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
@@ -55,10 +55,10 @@
 - 准备控制台
 ```bash
 # 获取控制台
-curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
-tar -zxf console-2.0.0.tar.gz
+curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
+tar -zxf console.tar.gz
 ```
-将控制台连接节点的ca.crt、node.crt和node.key文件拷贝到console/conf目录下。
+将控制台连接节点所在链的sdk目录下ca.crt、node.crt和node.key文件拷贝到console/conf目录下。
 
 - 启动控制台
 ```bash
