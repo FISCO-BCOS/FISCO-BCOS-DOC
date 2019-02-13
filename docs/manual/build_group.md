@@ -59,10 +59,10 @@ $ bash build_chain.sh -f ipList -e ../build/bin/fisco-bcos
 
 ```bash
 # 进入web3sdk dist/bin目录(设web3sdk位于/data目录)
-$ cd /data/web3sdk/dist/bin
+$ cd /data/web3sdk/dist
 
 # 设启动组1的控制台
-$ ./web3sdk -c 1
+$ bash ./start 1
 
 ```
 
@@ -93,9 +93,9 @@ $ cat ~/127.0.0.1/node0/conf/node.node_id
 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 
 # 连接组1的控制台(设web3sdk位于~目录)
-$ cd ~/web3sdk/dist/bin
+$ cd ~/web3sdk/dist
 
-$ ./web3sdk -c 1
+$ bash ./start 1
 
 # 将指定节点转换为共识节点
 > addMiner 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
