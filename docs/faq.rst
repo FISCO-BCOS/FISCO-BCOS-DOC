@@ -12,8 +12,8 @@ FAQ
 :问:
   FISCO BCOS v2.0都有哪些API？开发者如何与FISCO BCOS平台交互？
 :答:
-  1. FISCO BCOS v2.0提供jsonrpc接口，具体请 :doc:`参考这里 <api/rpc>`。
-  2. FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 :doc:`参考这里 <api/sdk>`。
+  1. FISCO BCOS v2.0提供jsonrpc接口，具体请 :doc:`参考这里 <api>`。
+  2. FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 :doc:`参考这里 <sdk/index>`。
   3. FISCO BCOS v2.0提供控制台帮助用户快速了解使用FISCO BCOS，具体请 :doc:`参考这里 <manual/console>`。
 
 :问:
@@ -120,4 +120,4 @@ Java SDK
 :问:
   Java SDK配置完成，发送交易失败的原因是什么？  
 :答:
-  applicationContext.xml中的ip、端口、群组号填错或者是缺少keystore.p12和ca.crt证书。
+  applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
