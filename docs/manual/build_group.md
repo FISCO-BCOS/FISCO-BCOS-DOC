@@ -72,9 +72,9 @@ $ ./web3sdk -c 1
 
 为了保证区块链安全性，FISCO BCOS引入了网络节点、观察者节点和共识节点三类角色，并可通过控制台动态将节点转换成者三类角色，具体可参考[节点入网](../node_access_management.html)
 
-- 网络节点：仅可与其他节点进行网络通信，无法处理任何请求(包括交易上链、RPC查询请求等)
-- 观察者节点：可从同组节点同步最新区块，可转发交易、处理RPC请求，但不能参加共识流程
-- 共识节点：可以从同组节点同步最新区块、转发交易、处理客户端的RPC请求，参与共识出块
+- [游离节点](../design/security_control/node_access_management.md)：仅可与其他节点进行网络通信，无法处理任何请求(包括交易上链、RPC查询请求等)
+- [观察者节点](../design/security_control/node_access_management.md)：可从同组节点同步最新区块，可转发交易、处理RPC请求，但不能参加共识流程
+- [共识节点](../design/security_control/node_access_management.md)：可以从同组节点同步最新区块、转发交易、处理客户端的RPC请求，参与共识出块
 
 控制台提供了 **AddMiner(am)**、**AddObserver(ao)**和 **RemoveNode(rn)**三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getMinerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
 
@@ -98,38 +98,38 @@ $ cd ~/web3sdk/dist/bin
 $ ./web3sdk -c 1
 
 # 将指定节点转换为共识节点
-> am 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+> addMiner 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 # 查询共识节点列表
-> gml
+> getMinerList
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
 
 # 将指定节点转换为观察者节点
-> ao 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+> addObserver 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 # 查询观察者节点列表
-> gol
+> getObserverList
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
 
 # 将指定节点转换为网络节点
-> rn 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
-# 查询网络节点列表
-> gnl
+> removeNode 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+# 查询节点列表
+> getNodeIDList
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
-> gml
+> getMinerList
 []
-> gol
+> getObserverList
 []
 
 ```
 
 ## 修改系统参数
 
-FISCO BCOS系统目前主要包括如下系统参数(未来会继续扩展其他系统canshu)：
+FISCO BCOS系统目前主要包括如下系统参数(未来会继续扩展其他系统参数)：
 
 
 ```eval_rst
