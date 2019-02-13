@@ -8,17 +8,16 @@ fisco generator 生成的安装包提供了内置的监控脚本，用户可以�
 $ cd ./data/monitor
 ```
 
-## 配置告警信息地址
+## 配置告警服务
 
-用户使用前，首先需要配置告警信息发送地址，修改方式如下：
+用户使用前，首先需要配置告警信息服务，这里以server酱的微信推送为例，可以参考配置[server酱](http://sc.ftqq.com/3.version)
 
-用户可以使用-s命令指定告警信息地址，也可以修改脚本中的reciver_addr变量修改默认告警地址
+绑定自己的github账号，以及微信后，可以使用本脚本向微信发送告警信息，使用本脚本的-s命令 可以向指定微信发送告警信息
 
-```shell
-$ vim ./monitor.sh
-```
+如果用户希望使用其他服务，可以修改monitor.sh中的alarm() {
+    # do serverchan  
+}函数，个性化配置为自己需要的服务
 
-将reciver_addr="youraddr@mail.com"修改为自己配置的告警地址
 
 ## help命令
 
@@ -37,9 +36,9 @@ Usage : bash monitor.sh
    -r : setting alert receiver
    -h : help.
  example :
-   bash  monitor.sh -s yourmail@mail.com -o nodes -r your_name
-   bash  monitor.sh -s yourmail@mail.com -m statistics -o nodes -r your_name
-   bash  monitor.sh -s yourmail@mail.com -m statistics -f node0/log/log_2019021314.log -g 1 2 -r your_name
+   bash  monitor.sh -s yourmwechatcode -o nodes -r your_name
+   bash  monitor.sh -s yourmwechatcode -m statistics -o nodes -r your_name
+   bash  monitor.sh -s yourmwechatcode -m statistics -f node0/log/log_2019021314.log -g 1 2 -r your_name
 ```
 
 命令解释如下：
@@ -59,17 +58,17 @@ Usage : bash monitor.sh
 - 使用脚本监控指定路径下节点，发送给接收者Alice
 
 ```shell
-$ bash monitor.sh -s http://Alice.service.com -o alice/nodes -r Alice
+$ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -o alice/nodes -r Alice
 ```
 
 - 使用脚本统计指定路径下节点信息，发送给接收者Alice
 
 ```shell
-$ bash monitor.sh -s http://Alice.service.com -m statistics -o alice/nodes -r Alice
+$ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statistics -o alice/nodes -r Alice
 ```
 
 - 使用脚本统计指定路径下节点指定log指定群组1和群组2的信息，发送给接收者Alice
 
 ```shell
-$ bash monitor.sh -s http://Alice.service.com -m statistics -f node0/log/log_2019021314.log -g 1 2 -o alice/nodes -r Alice
+$ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statistics -f node0/log/log_2019021314.log -g 1 2 -o alice/nodes -r Alice
 ```
