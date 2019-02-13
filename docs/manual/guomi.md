@@ -119,7 +119,7 @@ $ git checkout release-2.0.1
 ​3 生成的类在src/test/java/org/fisco/bcos/temp文件夹下,并且生成的abi和bin在目录  src/test/resources/solidity目录下。（如果要使用编译后的java，注意修改生成java类的包名。）
 ```
 
-详细操作见[sdk使用](../api/sdk.html)
+详细操作见[sdk文档](../sdk/index.html)
 
 ## 国密控制台使用
 
