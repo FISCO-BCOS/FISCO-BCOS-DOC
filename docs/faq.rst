@@ -28,7 +28,7 @@ FAQ
   FISCO BCOS v2.0支持最新的Solidity合约，同时增加了precompare合约，具体请 :doc:`参考这里 <developer/index>`。
 
 :问:
-  国密和非国密版本的区别有哪些？
+  国密和普通版本的区别有哪些？
 :答:
   编译版本，证书，落盘加密，solidity编译java，web3sdk使用，具体请 :doc:`参考这里 <manual/guomi>`。
 
