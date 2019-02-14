@@ -121,3 +121,16 @@ Java SDK
   Java SDK配置完成，发送交易失败的原因是什么？  
 :答:
   applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
+
+:问
+  企业工具使用时出
+```
+Traceback (most recent call last):
+  File "./generator", line 19, in <module>
+    from pys.build import config
+  File "/data/asherli/generator/pys/build/config.py", line 25, in <module>
+    import configparse
+:答
+  系统缺少python configparser模块 
+  pip install configparser
+  安装一下
