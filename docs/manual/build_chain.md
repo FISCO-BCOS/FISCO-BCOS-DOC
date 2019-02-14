@@ -82,9 +82,6 @@ bash build_chain.sh -f ipconf -T -i
 - **`T`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的log级别为DEBUG
 
-- **`P`选项[**Optional**]**
-设置SDK需要的PKCS12文件的密码。默认设置密码为空。
-
 ### 4. 节点组织结构
 
 - `127.0.0.1/nodex`文件夹下存储节点所需的配置文件。
@@ -105,7 +102,8 @@ nodes/
 │   │   ├── config.ini
 │   │   ├── sdk
 │   │   │   ├── ca.crt
-│   │   │   └── keystore.p12
+│   │   │   ├── node.crt
+│   │   │   └── node.key
 │   │   ├── start.sh
 │   │   └── stop.sh
 │   ├── node1
