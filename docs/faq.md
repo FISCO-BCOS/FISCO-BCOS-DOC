@@ -6,7 +6,7 @@
   FISCO BCOS v2.0与之前版本有哪些变化？
 
 答:
-  请 [参考这里](./whats_new)。
+  请 [参考这里](./whats_new)。
 <br /><br />
 
 问:
