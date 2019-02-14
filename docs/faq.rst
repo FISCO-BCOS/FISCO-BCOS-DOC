@@ -122,9 +122,11 @@ Java SDK
 :答:
   applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
 
+企业工具
+""""""""""""""""
+
 :问
-  企业工具使用时出
-```
+  企业工具使用时出现
 Traceback (most recent call last):
   File "./generator", line 19, in <module>
     from pys.build import config
