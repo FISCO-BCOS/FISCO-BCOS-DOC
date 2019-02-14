@@ -2,7 +2,7 @@
 
 假设如图所示，联盟链中共有9个节点，其中序号为0的节点处于所有的group中，node8为后期扩容的节点
 
-![](../../../images/enterprise/simple_star1.png)
+![](../../../images/enterprise/simple_star3.png)
 
 组网步骤如下：
 
