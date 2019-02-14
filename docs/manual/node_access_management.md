@@ -1,24 +1,6 @@
-# 节点准入管理操作文档
+# 节点准入管理手册
 
 本文档描述节点准入管理的实践操作，建议阅读本操作文档前请先行了解[《节点准入管理介绍》](../design/security_control/node_access_management.md)。
-
-## 目录
-<!-- TOC -->
-
-- [1 操作项目](#1-操作项目)
-- [2 操作方式](#2-操作方式)
-- [3 操作示例](#3-操作示例)
-    - [3.1 A节点加入网络](#31-A节点加入网络)
-    - [3.2 A节点退出网络](#32-A节点退出网络)
-    - [3.3 A节点加入群组](#33-A节点加入群组)
-    - [3.4 A节点退出群组](#34-A节点退出群组)
-    - [3.5 A节点将B节点列入CA黑名单](#35-A节点将B节点列入CA黑名单)
-    - [3.6 A节点将B节点移除CA黑名单](#36-A节点将B节点移除CA黑名单)
-- [4 操作工具](#4-操作工具)
-    - [4.1 控制台](#41-控制台)
-    - [4.2 RPC](#42-RPC)
-        
-<!-- /TOC -->
 
 ## 1 操作项目
 
@@ -30,7 +12,7 @@
 
 ## 2 操作方式
 
-- 修改节点配置：节点修改自身配置后重启生效，涉及的操作项目包括**网络的加入/退出、CA黑名单的列入/移除**。配置项的修改例子参考[配置文件示例](../design/security_control/node_access_management.md#52-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A4%BA%E4%BE%8B)。
+- 修改节点配置：节点修改自身配置后重启生效，涉及的操作项目包括**网络的加入/退出、CA黑名单的列入/移除**。
 - 交易共识上链：节点发送上链交易修改需群组共识的配置项，涉及的操作项目包括**节点类型的修改**。目前提供的发送交易途径为控制台。
 - RPC查询：使用curl命令查询链上信息，涉及的操作项目包括**群组节点的查询**。
 
@@ -75,7 +57,7 @@
 
 - <font color=#FF0000>节点3需先退出群组再退出网络，退出顺序由用户保证，系统不再作校验</font>；
 - 网络连接由节点主动发起，如缺省第2步，节点3仍可感知节点1和节点2发起的P2P连接请求，并建立连接；
-- 如果节点3想拒绝节点1和节点2的连接请求，可参考[3.5 A节点将B节点列入CA黑名单](../node_access_management.md#35-A%E8%8A%82%E7%82%B9%E5%B0%86B%E8%8A%82%E7%82%B9%E5%88%97%E5%85%A5CA%E9%BB%91%E5%90%8D%E5%8D%95)进行操作。
+- 如果节点3想拒绝节点1和节点2的连接请求，可参考**3.5 A节点将B节点列入CA黑名单**进行操作。
 
 ### 3.3 A节点加入群组
 
@@ -148,11 +130,11 @@
 
 控制台提供的命令包括：
 
-- [addMiner](../manual/console.md#addminer)：修改/增加一节点为记账节点
-- [addObserver](../manual/console.md#addobserver)：修改/增加一节点为观察节点
-- [removeNode](../manual/console.md#removenode)：移除节点（节点被移除后既不是记账节点，也不是观察节点）
-- [getMinerList](../manual/console.md#getminerlist)：查看群组中记账节点列表
-- [getObserverList](../manual/console.md#getnodeidlist)：查看群组中观察节点列表
+- addMiner：修改/增加一节点为记账节点
+- addObserver：修改/增加一节点为观察节点
+- removeNode：移除节点（节点被移除后既不是记账节点，也不是观察节点）
+- getMinerList：查看群组中记账节点列表
+- getObserverList：查看群组中观察节点列表
 
 控制台详细使用方法请参考[《控制台》](../manual/console.md)。
 
@@ -160,7 +142,7 @@
 
 查询群组节点的RPC接口包括：
 
-- [getMinerList](../design/api/rpc.md#getminerlist)：查看群组中记账节点列表
-- [getObserverList](../design/api/rpc.md#getobserverlist)：查看群组中观察节点列表
+- getMinerList：查看群组中记账节点列表
+- getObserverList：查看群组中观察节点列表
 
-RPC详细使用方法请参考[《RPC》](../design/api/rpc.md)。
+RPC详细使用方法请参考[《RPC》](../api.md)。

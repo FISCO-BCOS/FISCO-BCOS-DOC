@@ -1,12 +1,12 @@
-# 教程
+# Hello World
 
-本教程帮助你开始使用FISCO-BCOS，教程的第一部分面向对FISCO-BCOS感兴趣但缺乏了解的用户。通过在本机部署FISCO-BCOS以及运行FISCO-BCOS HellowWorld帮助初学者快速学习使用FISCO-BCOS。
+本教程面向初次接触FISCO-BCOS的用户，通过在本机部署FISCO-BCOS以及部署和调用Hello World合约，帮助初学者快速学习使用FISCO-BCOS。
 
-## 第一次部署FISCO-BCOS联盟链
+## 首次部署FISCO-BCOS联盟链
 
 ### 1. 使用[`build_chain`][build_chain]脚本
 
-本节使用[`build_chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
+本节使用[`build_chain`](../manual/build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，操作系统为Ubuntu 16.04。
 
 - 准备环境
 
@@ -38,7 +38,7 @@ fisco
 ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300
 ```
 
-关于`build-chain`脚本选项，请[参考这里](../manual/buildchain.md)。命令正常执行输出如下，如果没有输出下面的提示，则表示执行过程中出现了错误，错误提示位于`nodes/build.log`。
+关于`build-chain`脚本选项，请[参考这里](../manual/build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查错误原因）。
 ```bash
 Generating CA key...
 ==============================================================
@@ -51,7 +51,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] State Type        : mpt
+[INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
 [INFO] Output Dir        : /mnt/d/fisco/nodes
 [INFO] CA Key Path       : /mnt/d/fisco/nodes/cert/ca.key
@@ -115,7 +115,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 
 ### 3. 使用控制台
 
-控制台通过Java SDK链接FISCO-BCOS节点，可以实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息，实乃FISCO-BCOS爱好者必备之良品。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可
+控制台通过Java SDK链接FISCO-BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息，实乃FISCO-BCOS必备之良品。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可。
 
 - 准备依赖
 ```bash
@@ -183,7 +183,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ]
 ```
 
-## FISCO-BCOS HelloWorld
+## 部署调用Hello World合约
 
 ### 1. HelloWorld合约
 
@@ -208,7 +208,9 @@ contract HelloWorld{
 }
 ```
 
-### 2. 使用控制台部署ok合约
+### 2. 使用控制台部署HelloWorld合约
+
+为了降低难度，HelloWorld合约已经通过Solidity编译并转为Java接口内置于控制台中，所以接下来参考下面命令部署即可。关于Solidity合约转Java接口，[参考这里](TODO: 链接到SDK)
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
@@ -216,7 +218,7 @@ contract HelloWorld{
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
-### 3. 使用控制台调用ok合约
+### 3. 使用控制台调用HelloWorld合约
 
 ```bash
 # 查看当前块高
