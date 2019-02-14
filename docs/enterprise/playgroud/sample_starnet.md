@@ -20,7 +20,7 @@
 
 ## 扩容节点加入group1
 
-![](../../../images/enterprise/simple_simple1.png)
+![](../../../images/enterprise/simple_star3.png)
 
 1. 序号为8的节点将自己的证书放置于meta文件夹下。
 2. 序号为8的节点与序号为0或1的节点交涉，收集fisco-bcos二进制文件，config.ini,group.1.genesis和group.1.ini放置于某路径下，如./data
