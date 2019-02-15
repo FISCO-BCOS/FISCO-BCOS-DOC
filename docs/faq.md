@@ -11,7 +11,7 @@
   FISCO BCOS v2.0都有哪些API？开发者如何与FISCO BCOS平台交互？<br>
 答:
   FISCO BCOS的API为
-  1. FISCO BCOS v2.0提供jsonrpc接口，具体请 [参考这里](./api)。
+  1. FISCO BCOS v2.0提供jsonrpc接口，具体请 [参考这里](./api.md)。
   2. FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/index.html)。
   3. FISCO BCOS v2.0提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
 
