@@ -25,12 +25,12 @@
 问:
   FISCO BCOS v2.0的智能合约与之前版本合约有什么不同，兼容性如何？<br>
 答:
-  FISCO BCOS v2.0支持最新的Solidity合约，同时增加了precompare合约，具体请 [参考这里](developer/index.html)。
+  FISCO BCOS v2.0支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](developer/index.html)。
 
 问:
   国密和普通版本的区别有哪些？<br>
 答:
-  编译版本，证书，落盘加密，solidity编译java，web3sdk使用，具体请 [参考这里](./manual/guomi.md)。
+  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，web3sdk使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi.md)。
 
 问:
   是否支持从1.3或1.5升级到2.0版本?<br>
@@ -92,7 +92,7 @@
 问:
   群组共识可改配置如何更改、查询？<br>
 答: 
-  共识可改配置可以通过控制台修改。共识可改配置项查询除了控制台外，还可以通过RPC接口查询，具体请 [参考这里]api/rpc。
+  共识可改配置可以通过控制台修改。共识可改配置项查询除了控制台外，还可以通过RPC接口查询，具体请 [参考这里](./design/rpc.md)。
 
   + [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey(ssc)更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见ssc -h 。
   + [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addMiner(am)，addObserver(ao)，removeNode(rn)，具体参考《节点管理》。
