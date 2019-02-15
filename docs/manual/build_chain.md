@@ -2,7 +2,7 @@
 
 ### 1. 脚本功能简介
 
-- [`build_chain`][build_chain]脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`。
+- [`build_chain`][build_chain]脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，提供了创建更加复杂的链的功能。**`-l`和`-f`选项必须指定一个且不可共存**。
 - 建议测试时使用`-T`和`-i`选项选项，`-T`开启log级别到DEBUG，`-i`设置RPC和channel监听`0.0.0.0`。p2p模块默认监听`0.0.0.0`。
 
@@ -82,9 +82,6 @@ bash build_chain.sh -f ipconf -T -i
 - **`T`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的log级别为DEBUG
 
-- **`P`选项[**Optional**]**
-设置SDK需要的PKCS12文件的密码。默认设置密码为空。
-
 ### 4. 节点组织结构
 
 - `127.0.0.1/nodex`文件夹下存储节点所需的配置文件。
@@ -105,7 +102,8 @@ nodes/
 │   │   ├── config.ini
 │   │   ├── sdk
 │   │   │   ├── ca.crt
-│   │   │   └── keystore.p12
+│   │   │   ├── node.crt
+│   │   │   └── node.key
 │   │   ├── start.sh
 │   │   └── stop.sh
 │   ├── node1

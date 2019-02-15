@@ -10,7 +10,11 @@
 
 - 准备环境
 
+[`build_chain`](build_chain.md)脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
+
 ```bash
+# 安装依赖
+$ sudo apt install -y openssl curl
 # 准备环境
 $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
@@ -115,7 +119,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 
 ### 3. 使用控制台
 
-控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可。控制台详细文档[参考这里](console.md)。
+控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台依赖于**Java8**以上版本(**CentOS**请安装**Oracle Java 8**以上版本)，对于Ubuntu 16.04系统安装**openjdk 8**即可。控制台详细文档[参考这里](console.md)。
 
 - 准备依赖
 ```bash
