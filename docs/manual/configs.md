@@ -102,7 +102,7 @@ FISCO BCOS允许节点配置不信任的黑名单节点列表，并拒绝与这�
 
 - crl.${idx}: 黑名单节点的nodeID, 节点node id可通过`node.node_id`文件获取; ${idx}是黑名单节点的索引。
 
-黑名单的详细信息还可参考[CA黑名单](./certificate_rejected_list.html)
+黑名单的详细信息还可参考[CA黑名单](./certificate_rejected_list.md)
 
 ```bash
 # node1将node0列为黑名单节点(设node0和node1均位于~目录)
