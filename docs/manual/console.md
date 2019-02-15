@@ -7,7 +7,7 @@
 ### 2.1 控制台命令
 控制台命令由两部分组成，即指令和指令相关的参数：   
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等。其中大部分指令调用rpc接口，因此与rpc接口同名，但同时为了输入简洁，提供对应的缩写指令。     
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。其中字符串参数需要加上双引号，字符串不能带空格。与rpc接口同名命令的输入参数和获取信息字段的详细解释参考[rpc文档](../api/rpc.md)。
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。其中字符串参数需要加上双引号，字符串不能带空格。与rpc接口同名命令的输入参数和获取信息字段的详细解释参考[rpc文档](../api.md)。
 
 ### 2.2 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
@@ -15,7 +15,7 @@
 - 错误结果: 命令返回错误的执行结果，以字符串或是json的形式返回。 
 
 **注：**
-- 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../api/rpc.md))，将以json格式显示错误响应的error字段信息。
+- 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../api.md))，将以json格式显示错误响应的error字段信息。
 - 命令操作系统表时，会返回操作系统表的json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：
     - 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
     - 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
@@ -55,10 +55,10 @@
 - 准备控制台
 ```bash
 # 获取控制台
-curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
-tar -zxf console-2.0.0.tar.gz && chmod u+x console/start
+curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
+tar -zxf console.tar.gz
 ```
-将控制台连接的节点证书文件ca.crt和keystore.p12文件拷贝到console/conf目录下。
+将控制台连接节点所在链的sdk目录下ca.crt、node.crt和node.key文件拷贝到console/conf目录下。
 
 - 启动控制台
 ```bash
@@ -84,7 +84,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 .. important::
     控制台配置说明
 
-    - **说明1：** 控制台配置文件（console/conf/applicationContext.xml）默认配置的是一个在群组1内的节点，其ip为127.0.0.1，端口为30301。如果需要更改连接配置，参考sdk文档。
+    - **说明1：** 控制台配置文件（console/conf/applicationContext.xml）默认配置的是一个在群组1内的节点，其ip为127.0.0.1，端口为20200。如果需要更改连接配置，参考sdk文档。
     - **说明2：** 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此sdk轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
 ``` 
 
@@ -97,7 +97,7 @@ bash start [groupID] [privateKey]
 - `privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账户私钥。 
 
 ### 3.3 启用国密版控制台   
-控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见[sdk文档](../api/sdk.md)），即可使用国密版控制台，其命令使用方式与非国密版一致。
+控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见[sdk文档](../sdk/index.html)），即可使用国密版控制台，其命令使用方式与普通版一致。
 
 ## 4 控制台命令
 ### **help**
@@ -579,7 +579,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 **注：** 
-- 用户编写的合约进行部署和调用，请使用sdk，具体使用参考[sdk文档](../api/sdk.md)。
+- 用户编写的合约进行部署和调用，请使用sdk，具体使用参考[sdk文档](../sdk/index.html)。
 
 ### **call**
 运行call或c，调用合约。                                
@@ -610,7 +610,7 @@ deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约进行�
 0x7956881392a8e2893d6c3f514ef5c37f9d5e52ef
 ```
 **注：** 
-- 用户编写的合约利用CSN进行部署和调用，请使用sdk，具体使用参考[sdk文档](../api/sdk.md)。
+- 用户编写的合约利用CSN进行部署和调用，请使用sdk，具体使用参考[sdk文档](../sdk/index.html)。
 
 ### **queryCNS**
 运行queryCNS或qcs，根据合约名称和合约版本号（可选参数）查询cns表记录信息。                                 

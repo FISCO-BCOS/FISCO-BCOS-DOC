@@ -78,7 +78,7 @@ Java 8 和 gradle（4.10.1以上）
 ​       <constructor-arg value="1"/>
 ​   </bean>
 
-​    国密编译：国密与非国密的差异只在于sol生成的bin不一样，而abi文件是一样的，你可以引入我们的solidity国密jar包，参考文档https://github.com/FISCO-BCOS/solidity， 我们已经把国密solidity的jar包放入了项目的lib目录下，使用国密你只需要修改build.gradle文件，注释掉非国密编译器jar包，引入国密编译器jar包
+​    国密编译：国密与普通的合约差异只在于sol生成的bin不一样，而abi文件是一样的，你可以引入我们的solidity国密jar包，参考文档https://github.com/FISCO-BCOS/solidity， 我们已经把国密solidity的jar包放入了项目的lib目录下，使用国密你只需要修改build.gradle文件，注释掉普通版编译器jar包，引入国密编译器jar包
 ​compile files('lib/solcJ-all-0.4.25-gm.jar')
 ​//compile 'org.ethereum:solcJ-all:0.4.25'
 ​    再执行1.4的步骤生成国密的java类即可使用国密功能。
@@ -101,7 +101,7 @@ $ git checkout release-2.0.1
 #===证书和节点配置 ===
 1. 在src/test/resources目录下，配置web3sdk的applicationContext.xml，
 如上图所示设置sdk要连接节点channel_listen_ip和channel_listen_port。并设置节点所在群组groupId;
-2. 由于是联盟链,拷贝节点证书文件ca.crt和keystore.p12到web3sdk/src/test/resources目录下；
+2. 由于是联盟链,拷贝节点证书文件ca.crt、node.crt和node.key到web3sdk/src/test/resources目录下；
 3. 成功后执行gradle build -x test；编译相应web3sdk jar包。
 4. 你也可以直接执行特定测试：
     *查询块高*    gradle clean test --tests  org.fisco.bcos.channel.test.block.BlockTest
@@ -119,7 +119,7 @@ $ git checkout release-2.0.1
 ​3 生成的类在src/test/java/org/fisco/bcos/temp文件夹下,并且生成的abi和bin在目录  src/test/resources/solidity目录下。（如果要使用编译后的java，注意修改生成java类的包名。）
 ```
 
-详细操作见[sdk使用](../api/sdk.html)
+详细操作见[sdk文档](../sdk/index.html)
 
 ## 国密控制台使用
 

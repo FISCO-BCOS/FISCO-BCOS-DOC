@@ -14,4 +14,5 @@
    virtual_machine/index.rst
    storage/index.rst
    security_control/index.rst
+   rpc.md
    features/index.rst 
