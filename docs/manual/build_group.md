@@ -2,7 +2,7 @@
 
 ## 创建多群组区块链
 
-FISCO BCOS提供了一键安装脚本[build_chain.sh](./build_chain.md)用于快速生成链配置文件。该脚本使用方法如下(详细可参考[快速建链指南](../build_chain.md))：
+FISCO BCOS提供了一键安装脚本[build_chain.sh](./build_chain.md)用于快速生成链配置文件。该脚本使用方法如下(详细可参考[快速建链指南](./build_chain.md))：
 
 ```bash
 $ bash build_chain.sh -h
@@ -76,7 +76,7 @@ $ ./web3sdk -c 1
 - [观察者节点](../design/security_control/node_access_management.md)：可从同组节点同步最新区块，可转发交易、处理RPC请求，但不能参加共识流程
 - [共识节点](../design/security_control/node_access_management.md)：可以从同组节点同步最新区块、转发交易、处理客户端的RPC请求，参与共识出块
 
-控制台提供了 **AddMiner(am)**、**AddObserver(ao)**和 **RemoveNode(rn)**三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getMinerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
+控制台提供了 **AddMiner(am)** 、**AddObserver(ao)** 和 **RemoveNode(rn)** 三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getMinerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
 
 例：
 将指定节点分别转换成组1的共识节点、观察者节点、网络节点，具体操作和验证步骤如下：

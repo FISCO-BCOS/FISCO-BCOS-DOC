@@ -234,7 +234,7 @@ e01789233a
 
 ### gas配置
 
-FISCO BCOS兼容以太坊虚拟机([evm](../design/virtualMachine/evm.md))，为了防止针对[evm](../design/virtualMachine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configs.html#id8)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.md)动态调整gas限制。
+FISCO BCOS兼容以太坊虚拟机([evm](../design/virtual_machine/evm.md))，为了防止针对[evm](../design/virtual_machine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configs.html#id8)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.md)动态调整gas限制。
 
 ```ini
 ;tx gas limit
