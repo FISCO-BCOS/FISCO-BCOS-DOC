@@ -197,13 +197,9 @@ $ tree
 |   |   `-- stop.sh
 |   |-- sdk  #SDK证书文件
 |   |   |-- ca.crt
-|   |   |-- data
-|   |   |   |-- agency.crt
-|   |   |   |-- ca.crt
-|   |   |   |-- node.crt
-|   |   |   |-- node.key
-|   |   |   `-- node.nodeid
-|   |   `-- keystore.p12
+|   |   |-- ca.crt
+|   |   |-- node.crt
+|   |   |-- node.key
 |   |-- start_all.sh  # 节点启动脚本
 |   |-- stop_all.sh   # 节点停止脚本
 |   `-- transTest.sh  # 发交易脚本
