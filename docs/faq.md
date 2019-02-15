@@ -45,9 +45,9 @@
   只支持小写。
 
 问:
-  加入记账列表或观察者列表报错，nodeID is not in network，为什么？<br>
+  加入共识列表或观察者列表报错，nodeID is not in network，为什么？<br>
 答:
-  节点加入记账列表和观察者列表的节点必须是连接peer的nodeID列表里面的成员。
+  节点加入共识列表和观察者列表的节点必须是连接peer的nodeID列表里面的成员。
 
 问:
   删除节点操作报错，nodeID is not in group peers，为什么？<br>

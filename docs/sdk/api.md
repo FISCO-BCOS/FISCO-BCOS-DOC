@@ -27,6 +27,6 @@ sdk提供对系统配置的支持。SystemConfigSerivce可以配置系统属性�
 
 ### 1.2.4 ConsensusService 
 sdk提供对[节点类型](../design/security_control/node_access_management.md)配置的支持。ConsensusService可以设置节点类型，其API如下：
-- String addMiner(String nodeId)：根据节点NodeID设置对应节点为记账节点。
+- String addMiner(String nodeId)：根据节点NodeID设置对应节点为共识节点。
 - String addObserver(String nodeId)：根据节点NodeID设置对应节点为观察节点。
 - String removeNode(String nodeId)：根据节点NodeID设置对应节点为游离节点。
