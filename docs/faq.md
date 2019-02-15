@@ -5,7 +5,7 @@
 问:
   FISCO BCOS v2.0与之前版本有哪些变化？<br>
 答:
-  请 [参考这里](./whats_new)。
+  请 [参考这里](./whats_new.md)。
 
 问:
   FISCO BCOS v2.0都有哪些API？开发者如何与FISCO BCOS平台交互？<br>
