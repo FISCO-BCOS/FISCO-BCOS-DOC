@@ -413,7 +413,7 @@ info|2019-02-11 16:17:17.297761| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=6
 
 ### 节点加入/退出新群组
 
-通过[控制台](console.md)，FISCO BCOS可将指定节点加入到群组中，也可将其从群组中删除，详细介绍请参考[节点准入管理手册](node_access_management.md)。控制台依赖SDK，使用控制台之前，请参考[SDK配置](../api/sdk.md)配置好SDK。
+通过[控制台](console.md)，FISCO BCOS可将指定节点加入到群组中，也可将其从群组中删除，详细介绍请参考[节点准入管理手册](node_access_management.md)。控制台依赖SDK，使用控制台之前，请参考[SDK配置](../sdk/config.md)配置好SDK。
 
 以将node2加入group2为共识节点为例，具体操作方法如下：
 
