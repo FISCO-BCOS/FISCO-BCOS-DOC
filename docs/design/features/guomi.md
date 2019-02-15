@@ -10,7 +10,7 @@
 
 ![](../../../images/guomi/guomishakehand.png)
 
-  下表以签名、验签、哈希算法等为出发点，对比了**国密版FISCO-BCOS**和**非国密版FISCO-BCOS:**
+  下表以签名、验签、哈希算法等为出发点，对比了**国密版FISCO-BCOS**和**普通版FISCO-BCOS:**
 
   (注：国密算法SM2, SM3, SM4均基于[国产密码学标准](http://www.gmbz.org.cn/main/bzlb.html)开发)
 

@@ -20,7 +20,7 @@
 
 本节将以下图为例对上述六种操作进行描述。虚线表示节点间能进行网络通信，实线表示节点间在可通信的基础上具备群组关系，不同颜色区分不同的群组关系。图中有一个网络，包含三个群组，其中群组Group3有三个节点。Group3是否与其他群组存在交集节点，不影响以下操作过程的通用性。
 
-![群组例子.png](../../images/node_access_management/multi_ledger_example.png)
+![群组例子](../../images/node_access_management/multi_ledger_example.png)
 
 ### 3.1 A节点加入网络
 
@@ -145,4 +145,4 @@
 - getMinerList：查看群组中记账节点列表
 - getObserverList：查看群组中观察节点列表
 
-RPC详细使用方法请参考[《RPC》](../api/rpc.md)。
+RPC详细使用方法请参考[《RPC》](../api.md)。
