@@ -16,7 +16,7 @@ CA黑名单所属的配置类型：
 
 下图表示CA黑名单所涉及的模块及其关系。图例A->B表示B模块依赖A模块的数据，同时B模块晚于A模块初始化。
 
-![模块架构.png](../../../images/node_access_management/architecture.png)
+![](../../../images/node_access_management/architecture.png)
 
 
 ## 3 核心流程
