@@ -721,7 +721,7 @@ Hello,FISCO-BCOS
 ---------------------------------------------------------------------------------------------
 ```
 ### **setSystemConfigByKey**
-运行setSystemConfigByKey或ssc，以键值对方式设置系统配置。目前设置的系统配置支持tx_count_limit和tx_gas_limit，系统配置用法见[多群组操作指南](groups/build_group.md)                                  
+运行setSystemConfigByKey或ssc，以键值对方式设置系统配置。目前设置的系统配置支持tx_count_limit和tx_gas_limit，系统配置用法见[多群组操作指南](build_group.md)                                  
 参数： 
 - 键
 - 值
