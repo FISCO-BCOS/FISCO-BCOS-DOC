@@ -6,7 +6,21 @@ FISCO BCOS支持多账本架构，每条链包括多个独立的账本，账本�
 - group.${group_id}.genesis：群组不可变配置(创世)文件，群组内所有节点该配置必须相同，节点启动后，不可更改该配置，主要配置群组共识算法、存储类型、最大gas限制等系统信息。
 - group.${group_id}.ini：群组可变配置文件，包括交易池大小等，可根据节点性能动态调整。
 
-**PS**：由于多群组共享网络带宽、CPU和内存资源，因此为了保证服务的稳定性，一台机器上不推荐配置过多群组。群组数和推荐硬件配置请参考这里[TODO: 添加硬件配置链接]
+
+ **PS** : 由于多群组共享网络带宽、CPU和内存资源，因此为了保证服务的稳定性，一台机器上不推荐配置过多群组。
+
+下表是单群组单节点推荐的配置，节点耗费资源与群组个数呈线性关系，您可根据实际的业务需求和机器资源，合理地配置群组数目:
+
+```eval_rst
+  +-----------------+--------+
+  | CPU             | 1核    |
+  +=================+========+
+  | 内存            | 1G     |
+  +-----------------+--------+
+  | 网络带宽        | 5M     |
+  +-----------------+--------+
+```
+
 
 ## 主配置config.ini
 
@@ -102,7 +116,7 @@ FISCO BCOS允许节点配置不信任的黑名单节点列表，并拒绝与这�
 
 - crl.${idx}: 黑名单节点的nodeID, 节点node id可通过`node.node_id`文件获取; ${idx}是黑名单节点的索引。
 
-黑名单的详细信息还可参考[CA黑名单](certificate_rejected_list.html)
+黑名单的详细信息还可参考[CA黑名单](./certificate_rejected_list.md)
 
 ```bash
 # node1将node0列为黑名单节点(设node0和node1均位于~目录)
@@ -142,7 +156,6 @@ FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](log.
     ;easylog config
     FORMAT=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
     LOG_FLUSH_THRESHOLD=100
-
 ```
 
 #### 配置easylogging++
@@ -166,8 +179,8 @@ FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](log.
 
 [consensus]段主要涉及共识相关的配置，包括：
 
-- consensus_type：共识算法类型，目前支持[PBFT](../design/consensus/pbft.html)和[Raft](../design/consensus/raft.html)，默认是PBFT
-- max_trans_num：一个区块中可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](console.html)动态调整该参数
+- consensus_type：共识算法类型，目前支持[PBFT](../design/consensus/pbft.md)和[Raft](../design/consensus/raft.md)，默认是PBFT
+- max_trans_num：一个区块中可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](./console.md)动态调整该参数
 - node.${idx}：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过 ${data_path}/node.nodeid文件获取(其中${data_path}可通过主配置config.ini的[secure].data_path选项获取)
 
 ```ini
@@ -206,7 +219,7 @@ e01789233a
 
 ### gas配置
 
-FISCO BCOS兼容以太坊虚拟机([evm](../design/virtualMachine/evm.html))，为了防止针对[evm](../design/virtualMachine/evm.html)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](group_config.html#id8)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](console.html)动态调整gas限制。
+FISCO BCOS兼容以太坊虚拟机([evm](../design/virtual_machine/evm.md))，为了防止针对[evm](../design/virtual_machine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configs.html#id8)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.md)动态调整gas限制。
 
 ```ini
 ;tx gas limit
