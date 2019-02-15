@@ -73,7 +73,7 @@
 2. 节点3拷贝节点1（或2）的<font color=#FF0000>群组节点初始列表</font>，不需改动；
 3. 重启节点3；
 4. 将节点3作为**观察节点**类型，调用<font color=#FF0000>addObserver</font>接口发送加入群组交易；
-5. 区块同步结束后，调用<font color=#FF0000>addMiner</font>接口发送交易修改节点3类型为**记账节点**；
+5. 区块同步结束后，调用<font color=#FF0000>addMiner</font>接口发送交易修改节点3类型为**共识节点**；
 6. 查询日志确认节点3参与出块，或通过<font color=#FF0000>getMinerList</font>命令查询返回的内容中是否包含节点3的nodeID，加入群组操作完成。
 
 补充说明：
@@ -95,7 +95,7 @@
 
 补充说明：
 
-- 节点3可以记账节点或观察节点的身份执行退出操作。
+- 节点3可以共识节点或观察节点的身份执行退出操作。
 
 ### 3.5 A节点将B节点列入CA黑名单
 
@@ -132,10 +132,10 @@
 
 控制台提供的命令包括：
 
-- addMiner：修改/增加一节点为记账节点
+- addMiner：修改/增加一节点为共识节点
 - addObserver：修改/增加一节点为观察节点
-- removeNode：移除节点（节点被移除后既不是记账节点，也不是观察节点）
-- getMinerList：查看群组中记账节点列表
+- removeNode：移除节点（节点被移除后既不是共识节点，也不是观察节点）
+- getMinerList：查看群组中共识节点列表
 - getObserverList：查看群组中观察节点列表
 
 控制台详细使用方法请参考[《控制台》](../manual/console.md)。
@@ -144,7 +144,7 @@
 
 查询群组节点的RPC接口包括：
 
-- getMinerList：查看群组中记账节点列表
+- getMinerList：查看群组中共识节点列表
 - getObserverList：查看群组中观察节点列表
 
 RPC详细使用方法请参考[《RPC》](../api.md)。
