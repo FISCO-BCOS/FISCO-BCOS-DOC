@@ -19,12 +19,10 @@ fisco-generator_ 是针对多机构组网的企业区块链部署工具。 在�
 .. toctree::
    :maxdepth: 1
 
-   hardware_requirment.rst
+   hardware_requirement.md
    installing.md
    quick_start.md
    config.md
    manual/index.rst
    monitor.md
-   upgrade.md
-   faq.md
    playgroud/index.rst

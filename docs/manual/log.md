@@ -37,7 +37,7 @@ $ cmake3 .. -DEASYLOG=OFF
 -- Generating done
 -- Build files have been written to: /home/FISCO-BCOS/build
 
-# 编译源码并产生二进制(可根据机器硬件配置选择编译并发度，这里设置并发度设置为2)
+# 编译源码并产生二进制(可根据机器硬件配置选择编译并发度，这里设置并发度为2)
 make -j2
 
 # 查看生成的二进制文件
@@ -91,7 +91,7 @@ fisco-bcos
 
 #### 配置easylogging++
 
-为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了节点配置文件config.ini的[log]段，一般建议不手动更改除了日志级别设置之外的其他配置，日志级别主要由以下关键字设置：
+为了尽量减少配置文件，FISCO BCOS将easylogging++的配置信息都集中到了节点配置文件config.ini的[log]段，一般建议不手动更改除了日志级别设置之外的其他配置，日志级别主要由以下关键字设置：
 
 - INFO-ENABLED：true表明开启INFO级别日志；false表明关闭INFO级别日志
 - ERROR-ENABLED：true表明开启ERROR级别日志；false表明关闭ERROR级别日志
