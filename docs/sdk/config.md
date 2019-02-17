@@ -31,7 +31,7 @@
 FISCO-BCOS作为联盟链，其SDK连接区块链节点需要进行双向认证。因此，需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
 
 #### 2.1.2 配置文件设置
-Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，sdk需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
+Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ##### 2.1.2.1 Spring项目配置
 提供Spring项目中关于applicationContext.xml的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
@@ -108,7 +108,7 @@ git checkout release-2.0.1
     ```
     bash sol2java
     ```
-  生成的Java类在src/test/java/org/fisco/bcos/temp目录，生成的abi和bin在src/test/resources/solidity目录。
+  生成的Java合约文件在src/test/java/org/fisco/bcos/temp目录，生成的abi和bin文件在src/test/resources/solidity目录。
 
 SDK默认支持的Solidity版本是0.4.25，如果编译0.5以上版本合约。需要做如下配置：
 - 修改build.gradle配置文件，注释0.4.25版编译器jar包，使用0.5.2版编译器jar包，修改后的配置如下：
@@ -126,7 +126,7 @@ SDK默认支持的Solidity版本是0.4.25，如果编译0.5以上版本合约。
 
 
 ###### ② 部署并调用合约
-sdk的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用合约Java类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址，也可以调用该合约的其他方法。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
+SDK的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用Java合约类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址以及调用该合约的其他方法实现业务功能。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
 ```bash
     //读取配置文件，sdk与区块链节点建立连接，获取web3j对象
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
@@ -156,7 +156,7 @@ sdk的核心功能是部署/加载合约，然后调用合约相关接口，实�
 - 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi.md)。
 - 启用国密功能：application.xml/application.yml配置文件中将encryptType属性设置为1。
 
-国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。SDK源码的lib目录下已有国密版的Solidity jar包，用于将Solidity合约文件转为国密版的Java合约文件。因此，使用国密版SDK只需要修改SDK源码根目录下的build.gradle文件，注释掉普通版编译器jar包，引入国密编译器jar包。
+国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。SDK源码的lib目录下已有国密版的编译器jar包，用于将Solidity合约文件转为国密版的Java合约文件。因此，使用国密版SDK只需要修改SDK源码根目录下的build.gradle文件，注释掉普通版编译器jar包，引入国密编译器jar包。
   ```
       compile files('lib/solcJ-all-0.4.25-gm.jar')
    // compile 'org.ethereum:solcJ-all:0.4.25'
