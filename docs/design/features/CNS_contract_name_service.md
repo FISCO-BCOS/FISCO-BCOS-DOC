@@ -38,14 +38,17 @@ ENS的功能类似我们较熟悉的DNS(Domain Name Service)域名系统，但�
 
 ## 4 模块架构
 
-![CNS架构](../../../images/contract_name_service/cns_architecture.png)
+![](../../../images/contract_name_service/cns_architecture.png)
 
+<center>CNS架构</center>
 
 ## 5 核心流程
 
 用户调用SDK部署合约及调用合约流程如下：
 
-![SDK部署合约及调用合约流程](../../../images/contract_name_service/deploy_and_call.png)
+![](../../../images/contract_name_service/deploy_and_call.png)
+
+<center>SDK部署合约及调用合约流程</center>
 
 - 部署合约时，SDK生成合约对应的Java类，调用类的deploy接口发布合约获得合约地址，然后调用CNS合约insert接口上链CNS信息。
 - 调用合约时，SDK引入合约的Java类，并加载实例化。load加载接口可传入合约地址（原有以太坊方式）或合约名称和合约版本的组合（CNS方式），SDK处理CNS方式时通过调用CNS模块查询链上信息来获取合约地址。

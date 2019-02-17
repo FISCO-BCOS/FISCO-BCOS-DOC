@@ -2,7 +2,7 @@
 
 ### 1. 脚本功能简介
 
-- [`build_chain`][build_chain]脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`。
+- [`build_chain`][build_chain]脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，提供了创建更加复杂的链的功能。**`-l`和`-f`选项必须指定一个且不可共存**。
 - 建议测试时使用`-T`和`-i`选项选项，`-T`开启log级别到DEBUG，`-i`设置RPC和channel监听`0.0.0.0`。p2p模块默认监听`0.0.0.0`。
 
@@ -14,15 +14,14 @@ Usage:
     -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList". eg "127.0.0.1:4 agency1 1,2"
     -e <FISCO-BCOS binary path>         Default download from GitHub
     -o <Output Dir>                     Default ./nodes/
-    -p <Start Port>                     Default (30300 20200 8545), e.g: 30300,20200,8545
+    -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
     -c <Consensus Algorithm>            Default PBFT. If set -c, use raft
-    -s <State type>                     Default storage. if set -s, use mpt
+    -s <State type>                     Default storage. if set -s, use mpt 
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
     -T <Enable debug log>               Default off. If set -T, enable debug log
-    -P <PKCS12 passwd>                  Default generate PKCS12 file without passwd, use -P to set custom passwd
     -h Help
 e.g
     ../tools/build_chain.sh -l "127.0.0.1:4"
@@ -83,9 +82,6 @@ bash build_chain.sh -f ipconf -T -i
 - **`T`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的log级别为DEBUG
 
-- **`P`选项[**Optional**]**
-设置SDK需要的PKCS12文件的密码。默认设置密码为空。
-
 ### 4. 节点组织结构
 
 - `127.0.0.1/nodex`文件夹下存储节点所需的配置文件。
@@ -106,7 +102,8 @@ nodes/
 │   │   ├── config.ini
 │   │   ├── sdk
 │   │   │   ├── ca.crt
-│   │   │   └── keystore.p12
+│   │   │   ├── node.crt
+│   │   │   └── node.key
 │   │   ├── start.sh
 │   │   └── stop.sh
 │   ├── node1
@@ -165,4 +162,4 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 ```
 
-[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/tools/build_chain.sh
