@@ -110,7 +110,7 @@ git checkout release-2.0.1
     ```
   生成的Java合约文件在src/test/java/org/fisco/bcos/temp目录，生成的abi和bin文件在src/test/resources/solidity目录。
 
-SDK默认支持的Solidity版本是0.4.25，如果编译0.5以上版本合约。需要做如下配置：
+**温馨提示：SDK默认支持的Solidity版本是0.4.25，如果编译0.5以上版本合约，需要做如下配置**
 - 修改build.gradle配置文件，注释0.4.25版编译器jar包，使用0.5.2版编译器jar包，修改后的配置如下：
   ```
    // compile files('lib/solcJ-all-0.4.25-gm.jar')
