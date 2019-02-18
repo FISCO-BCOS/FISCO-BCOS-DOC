@@ -10,23 +10,23 @@ Precompiled合约是FISCO BCOS底层通过C++实现的一种高效智能合约�
 
 ### 1.2.1 AuthorityService
 SDK提供对[分布式控制权限](../manual/priority_control.md)的支持，AuthorityService可以配置权限信息，其API如下：
-- String add(String tableName, String addr)：根据表名和外部账号地址设置权限信息。
-- String remove(String tableName, String addr)：根据表名和外部账号地址去除权限信息。
-- List<AuthorityInfo> query(String tableName)：根据表名查询设置的权限信息。
+- **String add(String tableName, String addr)：** 根据表名和外部账号地址设置权限信息。
+- **String remove(String tableName, String addr)：** 根据表名和外部账号地址去除权限信息。
+- **List<AuthorityInfo> query(String tableName)：** 根据表名查询设置的权限信息。
 
 ### 1.2.2 CnsService
 SDK提供对[CNS](../design/features/CNS_contract_name_service.md)的支持。CnsService可以配置CNS信息，其API如下：
-- String registerCns(String name, String version, String addr, String abi)：根据合约名、合约版本号、合约地址和合约abi注册CNS信息。
-- String getAddressByContractNameAndVersion(String contractNameAndVersion)：根据合约名和合约版本号(合约名和合约版本号用英文冒号连接)查询合约地址。
-- List<CnsInfo> queryCnsByName(String name)：根据合约名查询CNS信息。
-- List<CnsInfo> queryCnsByNameAndVersion(String name, String version)：根据合约名和合约版本号查询CNS信息。
+- **String registerCns(String name, String version, String address, String abi)：** 根据合约名、合约版本号、合约地址和合约abi注册CNS信息。
+- **String getAddressByContractNameAndVersion(String contractNameAndVersion)：** 根据合约名和合约版本号(合约名和合约版本号用英文冒号连接)查询合约地址。
+- **List<CnsInfo> queryCnsByName(String name)：** 根据合约名查询CNS信息。
+- **List<CnsInfo> queryCnsByNameAndVersion(String name, String version)：** 根据合约名和合约版本号查询CNS信息。
 
 ### 1.2.3 SystemConfigSerivce
 SDK提供对系统配置的支持。SystemConfigSerivce可以配置系统属性值（目前支持tx_count_limit和tx_gas_limit属性的设置），其API如下：
-- String setValueByKey(String key, String value)：根据键设置对应的值（查询键对应的值，参考Web3j API中的getSystemConfigByKey接口）。
+- **String setValueByKey(String key, String value)：** 根据键设置对应的值（查询键对应的值，参考Web3j API中的getSystemConfigByKey接口）。
 
 ### 1.2.4 ConsensusService 
 SDK提供对[节点类型](../design/security_control/node_access_management.md)配置的支持。ConsensusService可以设置节点类型，其API如下：
-- String addMiner(String nodeId)：根据节点NodeID设置对应节点为共识节点。
-- String addObserver(String nodeId)：根据节点NodeID设置对应节点为观察节点。
-- String removeNode(String nodeId)：根据节点NodeID设置对应节点为游离节点。
+- **String addMiner(String nodeId)：** 根据节点NodeID设置对应节点为共识节点。
+- **String addObserver(String nodeId)：** 根据节点NodeID设置对应节点为观察节点。
+- **String removeNode(String nodeId)：** 根据节点NodeID设置对应节点为游离节点。
