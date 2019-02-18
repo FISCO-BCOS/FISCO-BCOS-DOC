@@ -83,7 +83,7 @@ Java 8 和 gradle（4.10.1以上）
 ​//compile 'org.ethereum:solcJ-all:0.4.25'
 ​    再执行1.4的步骤生成国密的java类即可使用国密功能。
 ​     sdk提供了测试案例，在application.xml配置连接国密节点，然后执行下面命令即可：
-​     国密Erc合约测
+​     国密Erc合约测试:
 ​     gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.guomi.GMErc20Transaction
 ​     国密OK合约测试:
 ​     gradle run -Dexec.mainClass=org.fisco.bcos.channel.test.guomi.GMOkTransaction
@@ -129,7 +129,7 @@ $ git checkout release-2.0.1
 
 ### 国密版的Key Center
 
-国密版的Key Center需重新编译Key Center，不同点在于cmake时带上``` -DBUILD_GM=On ```选项。
+国密版的Key Center需重新编译Key Center，不同点在于cmake时带上``` -DBUILD_GM=ON ```选项。
 
 ``` shell
 cmake3 .. -DBUILD_GM=On
