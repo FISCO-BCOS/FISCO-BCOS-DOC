@@ -1,24 +1,28 @@
-# 教程
+# Hello World
 
-本教程帮助你开始使用FISCO-BCOS，教程的第一部分面向对FISCO-BCOS感兴趣但缺乏了解的用户。通过在本机部署FISCO-BCOS以及运行FISCO-BCOS HellowWorld帮助初学者快速学习使用FISCO-BCOS。
+本教程面向初次接触FISCO-BCOS的用户，通过在本机部署FISCO-BCOS以及部署和调用Hello World合约，帮助初学者快速入门FISCO BCOS。
 
-## 第一次部署FISCO-BCOS联盟链
+## 首次部署FISCO-BCOS联盟链
 
-### 1. 使用[`build_chain`][build_chain]脚本
+### 1. 使用`build_chain`脚本
 
-本节使用[`build_chain`](../manual/buildchain.md)脚本在本地搭建一条4节点的FISCO-BCOS链。我们以Ubuntu 16.04操作系统为例。
+本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，操作系统为`Ubuntu 16.04`。
 
 - 准备环境
 
+[`build_chain`](build_chain.md)脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
+
 ```bash
+# 安装依赖
+$ sudo apt install -y openssl curl
 # 准备环境
-cd ~ && mkdir fisco && cd fisco
+$ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
 # 准备fisco-bcos二进制
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
-./bin/fisco-bcos -v
+$ ./bin/fisco-bcos -v
 ```
 
 执行完上述步骤后，fisco目录下结构如下
@@ -34,11 +38,11 @@ fisco
 
 ```bash
 # 生成一条4节点的FISCO链 4个节点都属于group1 下面指令在fisco目录下执行
-# -e 指定fisco-bcos路径 -p指定起始端口
-./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300
+# -e 指定fisco-bcos路径 -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+$ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
-关于`build-chain`脚本选项，请[参考这里](../manual/buildchain.md)。命令正常执行输出如下，如果没有输出下面的提示，则表示执行过程中出现了错误，错误提示位于`nodes/build.log`。
+关于`build-chain`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
 ```bash
 Generating CA key...
 ==============================================================
@@ -49,9 +53,9 @@ Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
-[INFO] Start Port        : 30300
+[INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] State Type        : mpt
+[INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
 [INFO] Output Dir        : /mnt/d/fisco/nodes
 [INFO] CA Key Path       : /mnt/d/fisco/nodes/cert/ca.key
@@ -65,9 +69,9 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ```bash
 # 进入节点目录 当前目录fisco
-cd nodes/127.0.0.1
+$ cd nodes/127.0.0.1
 # 启动所有节点
-./start_all.sh
+$ ./start_all.sh
 ```
 
 - 检查进程及端口监听
@@ -85,17 +89,17 @@ $ netstat -ntlp | grep fisco
 (Not all processes could be identified, non-owned process info
  will not be shown, you would have to be root to see it all.)
 tcp        0      0 0.0.0.0:30300           0.0.0.0:*               LISTEN      5453/fisco-bcos
-tcp        0      0 127.0.0.1:30301         0.0.0.0:*               LISTEN      5453/fisco-bcos
-tcp        0      0 127.0.0.1:30302         0.0.0.0:*               LISTEN      5453/fisco-bcos
-tcp        0      0 0.0.0.0:30303           0.0.0.0:*               LISTEN      5459/fisco-bcos
-tcp        0      0 127.0.0.1:30304         0.0.0.0:*               LISTEN      5459/fisco-bcos
-tcp        0      0 127.0.0.1:30305         0.0.0.0:*               LISTEN      5459/fisco-bcos
-tcp        0      0 0.0.0.0:30306           0.0.0.0:*               LISTEN      5464/fisco-bcos
-tcp        0      0 127.0.0.1:30307         0.0.0.0:*               LISTEN      5464/fisco-bcos
-tcp        0      0 127.0.0.1:30308         0.0.0.0:*               LISTEN      5464/fisco-bcos
-tcp        0      0 0.0.0.0:30309           0.0.0.0:*               LISTEN      5476/fisco-bcos
-tcp        0      0 127.0.0.1:30310         0.0.0.0:*               LISTEN      5476/fisco-bcos
-tcp        0      0 127.0.0.1:30311         0.0.0.0:*               LISTEN      5476/fisco-bcos
+tcp        0      0 127.0.0.1:20200         0.0.0.0:*               LISTEN      5453/fisco-bcos
+tcp        0      0 127.0.0.1:8545         0.0.0.0:*               LISTEN      5453/fisco-bcos
+tcp        0      0 0.0.0.0:30301           0.0.0.0:*               LISTEN      5459/fisco-bcos
+tcp        0      0 127.0.0.1:20201         0.0.0.0:*               LISTEN      5459/fisco-bcos
+tcp        0      0 127.0.0.1:8546         0.0.0.0:*               LISTEN      5459/fisco-bcos
+tcp        0      0 0.0.0.0:30302           0.0.0.0:*               LISTEN      5464/fisco-bcos
+tcp        0      0 127.0.0.1:20202         0.0.0.0:*               LISTEN      5464/fisco-bcos
+tcp        0      0 127.0.0.1:8547         0.0.0.0:*               LISTEN      5464/fisco-bcos
+tcp        0      0 0.0.0.0:30303           0.0.0.0:*               LISTEN      5476/fisco-bcos
+tcp        0      0 127.0.0.1:20203         0.0.0.0:*               LISTEN      5476/fisco-bcos
+tcp        0      0 127.0.0.1:8548         0.0.0.0:*               LISTEN      5476/fisco-bcos
 ```
 
 - 检查日志输出
@@ -115,25 +119,25 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 
 ### 3. 使用控制台
 
-控制台通过Java SDK链接FISCO-BCOS节点，可以实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息，实乃FISCO-BCOS爱好者必备之良品。控制台依赖于Java，对于Ubuntu 16.04系统安装openjdk即可
+控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台依赖于**Java8**以上版本(**CentOS**请安装**Oracle Java 8**以上版本)，对于Ubuntu 16.04系统安装**openjdk 8**即可。控制台详细文档[参考这里](console.md)。
 
 - 准备依赖
 ```bash
 # 回到fisco目录
-cd ~/fisco
+$ cd ~/fisco
 # 安装openjdk
-sudo apt install -y default-jdk
-curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console-2.0.0.tar.gz
-tar -zxf console-2.0.0.tar.gz && chmod u+x console/start
+$ sudo apt install -y default-jdk
+$ curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console.tar.gz
+$ tar -zxf console.tar.gz && chmod u+x console/start
 # 配置控制台证书
-cp nodes/127.0.0.1/sdk/ca.crt nodes/127.0.0.1/sdk/keystore.p12 console/conf
+$ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 - 启动控制台
 ```bash
 # # 回到fisco目录
-cd ~/fisco/console
-bash ./start
+$ cd ~/fisco/console
+$ bash ./start
 # 输出下述信息表明启动成功
 =============================================================================================
 Welcome to FISCO BCOS console！
@@ -183,7 +187,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ]
 ```
 
-## FISCO-BCOS HelloWorld
+## 部署调用Hello World合约
 
 ### 1. HelloWorld合约
 
@@ -208,7 +212,9 @@ contract HelloWorld{
 }
 ```
 
-### 2. 使用控制台部署ok合约
+### 2. 使用控制台部署HelloWorld合约
+
+为了方便用户快速体验，HelloWorld合约已经通过Solidity编译并转为Java接口内置于控制台中，所以接下来参考下面命令部署即可。关于Solidity合约转Java接口，[参考这里](../sdk/index.html)。
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
@@ -216,7 +222,7 @@ contract HelloWorld{
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
-### 3. 使用控制台调用ok合约
+### 3. 使用控制台调用HelloWorld合约
 
 ```bash
 # 查看当前块高
@@ -235,5 +241,3 @@ Hello,FISCO-BCOS
 > getBlockNumber
 4
 ```
-
-[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

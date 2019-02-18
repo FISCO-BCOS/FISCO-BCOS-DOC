@@ -38,14 +38,17 @@ ENS的功能类似我们较熟悉的DNS(Domain Name Service)域名系统，但�
 
 ## 4 模块架构
 
-![CNS架构](../../../images/contract_name_service/cns_architecture.png)
+![](../../../images/contract_name_service/cns_architecture.png)
 
+<center>CNS架构</center>
 
 ## 5 核心流程
 
 用户调用SDK部署合约及调用合约流程如下：
 
-![SDK部署合约及调用合约流程](../../../images/contract_name_service/deploy_and_call.png)
+![](../../../images/contract_name_service/deploy_and_call.png)
+
+<center>SDK部署合约及调用合约流程</center>
 
 - 部署合约时，SDK生成合约对应的Java类，调用类的deploy接口发布合约获得合约地址，然后调用CNS合约insert接口上链CNS信息。
 - 调用合约时，SDK引入合约的Java类，并加载实例化。load加载接口可传入合约地址（原有以太坊方式）或合约名称和合约版本的组合（CNS方式），SDK处理CNS方式时通过调用CNS模块查询链上信息来获取合约地址。
@@ -138,7 +141,7 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 - 说明：contractNameAndVersion通过`:`来分割合约名和合约版本，当缺少合约版本时，SDK默认调用使用合约的最新版本进行查询
 
 注意：
-1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[《SDK》](../../api/sdk.md)；
+1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[《SDK》](../../sdk/index.html)；
 2. 两个接口的使用例子可参考[ConsoleImpl.java](https://github.com/FISCO-BCOS/web3sdk/blob/release-2.0.1/src/test/java/org/fisco/bcos/web3j/console/ConsoleImpl.java)中的deployByCNS和callByCNS接口实现。
 
 ## 8 操作工具
