@@ -84,11 +84,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 ```
 
 ## getMinerList
-返回指定群组内的记账节点列表
+返回指定群组内的共识节点列表
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 记账节点nodeID数组         
+- `array` - 共识节点nodeID数组         
 - 示例          
 ```
 // Request
@@ -389,11 +389,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 }
 ```
 ## getGroupPeers
-返回指定群组内的记账节点和观察节点列表         
+返回指定群组内的共识节点和观察节点列表         
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
-- `array` - 记账节点和观察节点的nodeID数组     
+- `array` - 共识节点和观察节点的nodeID数组     
         
 - 示例          
 ```
@@ -470,7 +470,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `logsBloom`: `string` - log的布隆过滤器值     
     - `number`: `string` - 区块高度               
     - `parentHash`: `string` - 父区块哈希      
-    - `sealer`: `string` - 记账节点序号     
+    - `sealer`: `string` - 共识节点序号     
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](#getTransactionByHash)）
