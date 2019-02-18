@@ -1,4 +1,4 @@
-# 多群组配置
+# 配置文件与配置项
 
 FISCO BCOS支持多账本架构，每条链包括多个独立的账本，账本间数据和交易相互隔离，每条链主要包括一个总体配置`config.ini`和各个账本的配置group.${group_id}.genesis、group.${group id}.ini。
 
@@ -7,21 +7,18 @@ FISCO BCOS支持多账本架构，每条链包括多个独立的账本，账本�
 - group.${group_id}.ini：群组可变配置文件，包括交易池大小等，可根据节点性能动态调整。
 
 
-## 注意事项
-
-由于多群组共享网络带宽、CPU和内存资源，因此为了保证服务的稳定性，一台机器上不推荐配置过多群组。
+ **PS** : 由于多群组共享网络带宽、CPU和内存资源，因此为了保证服务的稳定性，一台机器上不推荐配置过多群组。
 
 下表是单群组单节点推荐的配置，节点耗费资源与群组个数呈线性关系，您可根据实际的业务需求和机器资源，合理地配置群组数目:
 
 ```eval_rst
-+-----------------+--------+
-| CPU             | 1核    |
-+=================+========+
-| 内存            | 1G     |
-+-----------------+--------+
-| 网络带宽        | 5M     |
-+-----------------+--------+
-
+  +-----------------+--------+
+  | CPU             | 1核    |
+  +=================+========+
+  | 内存            | 1G     |
+  +-----------------+--------+
+  | 网络带宽        | 5M     |
+  +-----------------+--------+
 ```
 
 
@@ -86,8 +83,8 @@ FISCO BCOS从静态文件中加载P2P配置，节点需要连接的所有节点�
 [group]
     ;所有群组数据放置于节点的data子目录
     group_data_path=data/
-    ;该节点属于群组1，群组配置文件是conf/group.1.genesis
-    group_config.1=conf/group.1.genesis
+    ;程序自动加载该路径下的所有.genesis文件
+    group_config_path=conf/
 ```
 
 
@@ -119,7 +116,7 @@ FISCO BCOS允许节点配置不信任的黑名单节点列表，并拒绝与这�
 
 - crl.${idx}: 黑名单节点的nodeID, 节点node id可通过`node.node_id`文件获取; ${idx}是黑名单节点的索引。
 
-黑名单的详细信息还可参考[CA黑名单](../certificate_rejected_list.html)
+黑名单的详细信息还可参考[CA黑名单](./certificate_rejected_list.md)
 
 ```bash
 # node1将node0列为黑名单节点(设node0和node1均位于~目录)
@@ -140,62 +137,33 @@ $ cat ~/node1/config.ini | grep ctl
 
 ### 配置日志信息
 
-FISCO BCOS同时支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，详细可参考[日志操作手册](../log.html)。
+FISCO BCOS同时支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，详细可参考[日志操作手册](log.md)。
 
-#### 配置easylogging++
-
-为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的[log]段，一般建议不手动更改除了日志级别设置之外的其他配置，开启easylogging++的方法可参考[启用easylogging++](../log.html)，日志级别主要由以下关键字设置：
-
-- INFO-ENABLED：true表明开启INFO级别日志；false表明关闭INFO级别日志
-- ERROR-ENABLED：true表明开启ERROR级别日志；false表明关闭ERROR级别日志
-- DEBUG-ENABLED：true表明开启DEBUG级别日志；false表明关闭DEBUG级别日志
-- TRACE-ENABLED：true表明开启TRACE级别日志；false表明关闭TRACE级别日志
-- FATAL-ENABLED：true表明开启FATAL级别日志；false表明关闭FATAL级别日志。
-
-其他配置项包括：
-
-- LOG_PATH：日志文件路径
-- GLOBAL-ENABLED：是否采用全局日志配置
-- GLOBAL-FORMAT：全局日志格式
-- GLOBAL-MAX_LOG_FILE_SIZE：每个日志文件最大容量(默认是200MB)
-- GLOBAL-LOG_FLUSH_THRESHOLD：日志刷新频率设置，即每GLOBAL-LOG_FLUSH_THRESHOLD行刷新日志到文件一次
-
-
-```ini
-;log configurations
-[log]
-    ;the directory of the log
-    LOG_PATH=./log
-    GLOBAL-ENABLED=true
-    GLOBAL-FORMAT=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    GLOBAL-MILLISECONDS_WIDTH=3
-    GLOBAL-PERFORMANCE_TRACKING=false
-    GLOBAL-MAX_LOG_FILE_SIZE=209715200
-    GLOBAL-LOG_FLUSH_THRESHOLD=100
-
-    ;log level configuration, enable(true)/disable(false) corresponding level log
-    INFO-ENABLED=true
-    WARNING-ENABLED=true
-    ERROR-ENABLED=true
-    DEBUG-ENABLED=true
-    TRACE-ENABLED=false
-    FATAL-ENABLED=false
-```
-
-#### 配置boostlog
-
-FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](../log.html)。相较于easylogging++，boostlog配置项很简单，主要如下：
+FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](log.md)。相较于easylogging++，boostlog配置项很简单，主要如下：
 
 - Level: 日志级别，当前主要包括TRACE/DEBUG/INFO/WARNING/ERROR五种日志级别，设置某种日志级别后，日志文件中会输≥该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`
 
 - MaxLogFileSize：每个日志文件最大容量
 
 ```ini
-    ;log level for boost log 
-    Level=TRACE
-    MaxLogFileSize=1677721600
+;log configurations
+[log]
+    ;the directory of the log
+    LOG_PATH=./log
+    ;log level INFO DEBUG TRACE
+    Level=INFO
+    MaxLogFileSize=209715200
+    ;easylog config
+    FORMAT=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
+    LOG_FLUSH_THRESHOLD=100
 ```
 
+#### 配置easylogging++
+
+为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的[log]段，一般建议不手动更改除了日志级别设置之外的其他配置，开启easylogging++的方法可参考[启用easylogging++](log.md)。
+
+- FORMAT：全局日志格式
+- LOG_FLUSH_THRESHOLD：日志刷新频率设置，即每GLOBAL-LOG_FLUSH_THRESHOLD行刷新日志到文件一次
 
 ## 群组不可变配置说明
 
@@ -205,15 +173,15 @@ FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](../l
 - **配置群组内一致**：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
 - **节点启动后不可更改**：由于genesis配置已经作为创世块写入了系统表，链初始化后，该配置不能更改
 - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
-- 由于genesis配置要求群组内所有节点一致，建议使用 [build_chain](../buildchain.html) 在搭建节点时生成该配置
+- 由于genesis配置要求群组内所有节点一致，建议使用 [build_chain](build_chain.md) 在搭建节点时生成该配置
 
 ### 共识配置
 
 [consensus]段主要涉及共识相关的配置，包括：
 
-- consensus_type：共识算法类型，目前支持[PBFT](../../design/consensus/pbft.html)和[Raft](../../design/consensus/raft.html)，默认是PBFT
-- max_trans_num：一个区块中可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](../console.html)动态调整该参数
-- node.${idx}：共识节点列表，配置了参与共识节点的[Node ID](../../design/consensus/pbft.html#id1)，节点的Node ID可通过 ${data_path}/node.nodeid文件获取(其中${data_path}可通过主配置config.ini的[secure].data_path选项获取)
+- consensus_type：共识算法类型，目前支持[PBFT](../design/consensus/pbft.md)和[Raft](../design/consensus/raft.md)，默认是PBFT
+- max_trans_num：一个区块中可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](./console.md)动态调整该参数
+- node.${idx}：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过 ${data_path}/node.nodeid文件获取(其中${data_path}可通过主配置config.ini的[secure].data_path选项获取)
 
 ```ini
 ;consensus configuration
@@ -235,10 +203,10 @@ e01789233a
 
 ### 存储模块配置
 
-存储主要包括两大块，即：[state存储](../../design/storage/mpt.html)和[storage存储](../../design/storage/storage.html)，state存储涉及到交易执行，storage存储涉及到系统表，分别在[storage]和[state]段中配置：
+存储主要包括两大块，即：[state存储](../design/storage/mpt.html)和[storage存储](../design/storage/storage.html)，state存储涉及到交易执行，storage存储涉及到系统表，分别在[storage]和[state]段中配置：
 
-- [storage].type：存储的DB类型，目前仅支持levelDB，后续会做[AMDB](../../design/storage/storage.html)支持
-- [state].type：state类型，目前支持[mpt state](../../design/storage/mpt.html)和[storage state](../../design/storage/storage.html)，mpt state会将交易执行结果存储在[mpt树](../../design/storage/mpt.md)中，效率较低，但包含完整的历史信息; storage state则将交易执行结果存储在系统表中，效率较高，但是不包含任何历史信息。
+- [storage].type：存储的DB类型，目前仅支持levelDB，后续会做[AMDB](../design/storage/storage.html)支持
+- [state].type：state类型，目前支持[mpt state](../design/storage/mpt.html)和[storage state](../design/storage/storage.html)，mpt state会将交易执行结果存储在[mpt树](../design/storage/mpt.md)中，效率较低，但包含完整的历史信息; storage state则将交易执行结果存储在系统表中，效率较高，但是不包含任何历史信息。
 
 ```ini
 [storage]
@@ -251,7 +219,7 @@ e01789233a
 
 ### gas配置
 
-FISCO BCOS兼容以太坊虚拟机([evm](../../design/virtualMachine/evm.html))，为了防止针对[evm](../../design/virtualMachine/evm.html)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](group_config.html#id8)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](../console.html)动态调整gas限制。
+FISCO BCOS兼容以太坊虚拟机([evm](../design/virtual_machine/evm.md))，为了防止针对[evm](../design/virtual_machine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，仅保留了交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configs.html#id8)和交易最大gas限制一起约束。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.md)动态调整gas限制。
 
 ```ini
 ;tx gas limit
