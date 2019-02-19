@@ -69,7 +69,6 @@ $ bash ./start 1
 
 # 将指定节点转换为共识节点
 > addSealer 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
-
 # 查询共识节点列表
 > getSealerList
 [
@@ -93,7 +92,6 @@ $ bash ./start 1
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
-
 > getSealerList
 []
 > getObserverList
