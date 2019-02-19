@@ -6,14 +6,14 @@
 
 ### 1. 使用`build_chain`脚本
 
-本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，操作系统为`Ubuntu 16.04`。
+本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制，在CentOS 7和Ubuntu 16.04上经过测试。（理论上静态的二进制可在任意Linux操作系统上运行。）
 
 - 准备环境
 
 [`build_chain`](build_chain.md)脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
 
 ```bash
-# 安装依赖
+# Ubuntu16安装依赖
 $ sudo apt install -y openssl curl
 # 准备环境
 $ cd ~ && mkdir fisco && cd fisco
@@ -106,9 +106,9 @@ tcp        0      0 127.0.0.1:8548         0.0.0.0:*               LISTEN      5
 ```bash
 # 检查是否在共识，如果不停输出++++Generating seal 表示正常输出
 $ tail -f node0/log/log*  | grep +++
-info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
-info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
-info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
+info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
+info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
+info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
 
 # 查看节点node0链接的节点数，从下面的输出可以看出node0与另外3个节点有链接
 $ tail -f node0/log/log*  | grep connected
