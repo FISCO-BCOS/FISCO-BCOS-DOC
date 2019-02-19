@@ -156,10 +156,10 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
     ;p2p listen port
     listen_port=30300
     ;nodes to connect
-    node.0=10.107.105.138:30300
-    node.1=10.107.105.138:30301
-    node.2=10.107.105.138:30302
-    node.3=10.107.105.138:30303
+    node.0=127.0.0.1:30300
+    node.1=127.0.0.1:30301
+    node.2=127.0.0.1:30302
+    node.3=127.0.0.1:30303
     
 ;certificate rejected list
 [crl]
@@ -203,7 +203,7 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
   <td><center>Expain</center></td>
 </tr>
 <tr><td>name</td><td>string</td><td>No</td><td>PRI</td><td>各行同一值，分布式存储基于此key实现全表查询</td></tr>
-<tr><td>type</td><td>string</td><td>No</td><td></td><td>节点类型（miner/observer）</td></tr>
+<tr><td>type</td><td>string</td><td>No</td><td></td><td>节点类型（sealer/observer）</td></tr>
 <tr><td>node_id</td><td>string</td><td>No</td><td></td><td>节点NodeID</td></tr>
 <tr><td>enable_num</td><td>string</td><td>No</td><td></td><td>该节点类型生效的区块高度</td></tr>
 <tr><td>_status_</td><td>string</td><td>No</td><td></td><td>分布式存储通用字段，“0”可用“1”删除</td></tr>
@@ -217,7 +217,7 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
 contract ConsensusSystemTable
 {
     // 修改一节点为共识节点
-    function addMiner(string nodeID) public returns(int256);
+    function addSealer(string nodeID) public returns(int256);
     // 修改一节点为观察节点
     function addObserver(string nodeID) public returns(int256);
     // 把该节点从群组系统表中移除
