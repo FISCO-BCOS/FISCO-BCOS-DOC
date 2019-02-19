@@ -4,7 +4,7 @@ fisco generator依赖python,openssl以及curl,nc工具。使用前请检查是�
 
 ```
 $ git clone https://github.com/FISCO-BCOS/generator.git
-$ pip install configparser
 $ cd generator
+$ bash ./scripts/install.sh
 $ ./generator -h
 ```
