@@ -25,7 +25,7 @@
 表名                      keyField    valueField               存储数据说明                                AMDB主key                              
 ======================== =========== ======================== ========================================= ====================================== 
 `_sys_tables_`           table_name  key_field,value_field    存储所有表的结构，以表名为主键                 所有表的表名                             
-`_sys_miners_`           name        type,node_id,enable_num  存储共识节点和观察节点的列表                   node                                   
+`_sys_consensus_`        name        type,node_id,enable_num  存储共识节点和观察节点的列表                   node                                   
 `_sys_table_access_`     table_name  address,enable_num       存储每个表的具有写权限的外部账户地址            表的表名                                   
 `_sys_cns_`              name        version,address,abi      存储CNS映射关系                             合约名                                   
 `_sys_config_`           key         value,enable_num         存储需要共识的群组配置项                      配置项                                   
