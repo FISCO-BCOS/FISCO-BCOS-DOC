@@ -1,10 +1,11 @@
 # 快速开始
 
-```
-$ git clone https://github.com/HaoXuan40404/generator.git
+```shell
+$ git clone https://github.com/FISCO-BCOS/generator.git
 $ cd generator
-./generator --demo
+$ ./generator --demo
 ```
+
 此操作会在执行目前的所有操作
 
 1. 按照./conf/mchain.ini中的配置在./meta下生成证书
