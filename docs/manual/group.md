@@ -453,7 +453,7 @@ cd node2 && bash stop.sh && bash start.sh
     "msg":"success"
 }
 # 3. 查看共识节点列表
-> getMinerList
+> getSealerList
 [
     9217e87c6b76184cf70a5a77930ad5886ea68aefbcce1909bdb799e45b520baa53d5bb9a5edddeab94751df179d54d41e6e5b83c338af0a19c0611200b830442,
     227c600c2e52d8ec37aa9f8de8db016ddc1c8a30bb77ec7608b99ee2233480d4c06337d2461e24c26617b6fd53acfa6124ca23a8aa98cb090a675f9b40a9b106,
