@@ -247,11 +247,11 @@ import java.util.Set;
 
 启动amop服务端：  
 ```
-java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.Channel2Server [topic]
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
 ```  
 启动amop客户端：   
 ```
-java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.Channel2Client [topic] [消息内容] [消息条数]
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Client [topic] [消息内容] [消息条数]
 ```
 
 ## 错误码
