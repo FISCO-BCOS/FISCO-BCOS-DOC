@@ -16,40 +16,42 @@
 
 **注：**
 - 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../api.md))，将以json格式显示错误响应的error字段信息。
-- 命令操作系统表时，会返回操作系统表的json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：
+- 命令操作系统功能时，会返回json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：
     - 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
     - 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
     - 逻辑性错误响应：定义如下。
 
+
 ```eval_rst
 
-+------------------+--------------------------------------------+------+------------------------------------------+
-|table             |commands                                    | code |msg                                       |
-+==================+============================================+======+==========================================+
-|_sys_table_access_|addAuthority(aa)                            |-30   |table name and address exist              |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_table_access_|removeAuthority(ra)                         |-31   |table name and address does not exist     |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_miners_      |addMiner(am)/addObserver(ao)/removeNode(rn) |-40   |invalid nodeID                            |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_miners_      |addObserver(ao)/removeNode(rn)              |-41   |last miner cannot be removed              |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_miners_      |addMiner(am)/addObserver(ao)                |-42   |nodeID is not in network                  |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_miners_      |removeNode(rn)                              |-43   |nodeID is not in group peers              |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_miners_      |addMiner(am)                                |-44   |nodeID is already in miner list           |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_miners_      |addObserver(ao)                             |-45   |nodeID is already in observer list        |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_cns_         |deployByCNS(dbc)                            |-50   |address and version exist                 |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_cns_         |deployByCNS(dbc)                            |-51   |version exceeds maximum(40) length        |
-+------------------+--------------------------------------------+------+------------------------------------------+
-|_sys_config_      |setSystemConfigByKey(ssc)                   |-60   |set invalid configuration values          |
-+------------------+--------------------------------------------+------+------------------------------------------+
++------+------------------------------------------+
+|code  |msg                                       |
++======+==========================================+
+|-30   |table name and address exist              |
++------+------------------------------------------+
+|-31   |table name and address does not exist     |
++------+------------------------------------------+
+|-40   |invalid nodeID                            |
++------+------------------------------------------+
+|-41   |last sealer cannot be removed             |
++------+------------------------------------------+
+|-42   |nodeID is not in network                  |
++------+------------------------------------------+
+|-43   |nodeID is not in group peers              |
++------+------------------------------------------+
+|-44   |nodeID is already in sealer list          |
++------+------------------------------------------+
+|-45   |nodeID is already in observer list        |
++------+------------------------------------------+
+|-50   |address and version exist                 |
++------+------------------------------------------+
+|-51   |version exceeds maximum(40) length        |
++------+------------------------------------------+
+|-60   |set invalid configuration values          |
++------+------------------------------------------+
 
 ```
+
 ## 3 控制台配置与运行
 
 ### 3.1 配置运行
@@ -63,23 +65,23 @@ tar -zxf console.tar.gz
 将控制台连接节点所在链的sdk目录下ca.crt、node.crt和node.key文件拷贝到console/conf目录下。
 
 - 启动控制台
-```bash
-bash ./start
+```
+bash start
 # 输出下述信息表明启动成功
-=============================================================================================
-Welcome to FISCO BCOS console！
+=====================================================================================
+Welcome to FISCO BCOS console!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________  ______   ______    ______    ______         _______    ______    ______    ______
-|        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \
-| $$$$$$$$ \$$$$$$|  $$$$$$\|  $$$$$$\|  $$$$$$\      | $$$$$$$\|  $$$$$$\|  $$$$$$\|  $$$$$$\
-| $$__      | $$  | $$___\$$| $$   \$$| $$  | $$      | $$__/ $$| $$   \$$| $$  | $$| $$___\$$
-| $$  \     | $$   \$$    \ | $$      | $$  | $$      | $$    $$| $$      | $$  | $$ \$$    \
-| $$$$$     | $$   _\$$$$$$\| $$   __ | $$  | $$      | $$$$$$$\| $$   __ | $$  | $$ _\$$$$$$\
-| $$       _| $$_ |  \__| $$| $$__/  \| $$__/ $$      | $$__/ $$| $$__/  \| $$__/ $$|  \__| $$
-| $$      |   $$ \ \$$    $$ \$$    $$ \$$    $$      | $$    $$ \$$    $$ \$$    $$ \$$    $$
- \$$       \$$$$$$  \$$$$$$   \$$$$$$   \$$$$$$        \$$$$$$$   \$$$$$$   \$$$$$$   \$$$$$$
+ ________ ______  ______   ______   ______       _______   ______   ______   ______  
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+| $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
+| $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
+| $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
+| $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
+ \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
-=============================================================================================
+=====================================================================================
 ```
 
 ```eval_rst
@@ -96,7 +98,7 @@ bash start [groupID] [privateKey]
 ```
 启动命令可以指定两个可选参数：           
 - `groupId`: - 群组ID, 不指定默认为群组1。           
-- `privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账户私钥。 
+- `privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账号私钥。 
 
 ### 3.3 启用国密版控制台   
 控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见[sdk文档](../sdk/index.html)），即可使用国密版控制台，其命令使用方式与普通版一致。
@@ -105,16 +107,16 @@ bash start [groupID] [privateKey]
 ### **help**
 输入help或h，查看控制台所有的命令。
 
-```bash
+```
 > help
----------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 help(h)                                       Provide help information.
 getBlockNumber(gbn)                           Query the number of most recent block.
 getPbftView(gpv)                              Query the pbft view of node.
-getMinerList(gml)                             Query nodeID list for miner nodes.
+getSealerList(gsl)                            Query nodeID list for sealer nodes.
 getObserverList(gol)                          Query nodeID list for observer nodes.
 getNodeIDList(gnl)                            Query nodeID list for all connected nodes.
-getGroupPeers(ggp)                            Query nodeID list for miner and observer nodes.
+getGroupPeers(ggp)                            Query nodeID list for sealer and observer nodes.
 getPeers(gps)                                 Query peers currently connected to the client.
 getConsensusStatus(gcs)                       Query consensus status.
 getSyncStatus(gss)                            Query sync status.
@@ -136,16 +138,31 @@ call(c)                                       Call a contract by a function and 
 deployByCNS(dbc)                              Deploy a contract on blockchain by CNS.
 callByCNS(cbc)                                Call a contract by a function and paramters by CNS.
 queryCNS(qcs)                                 Query cns information by contract name and contract version.
-addMiner(am)                                  Add a miner node.
+addSealer(as)                                 Add a sealer node.
 addObserver(ao)                               Add an observer node.
 removeNode(rn)                                Remove a node.
-addAuthority(aa)                              Add authority for table by address.
-removeAuthority(ra)                           Remove authority for table by address.
-queryAuthority(qa)                            Query authority information.
 setSystemConfigByKey(ssc)                     Set a system config.
 getSystemConfigByKey(gsc)                     Query a system config value by key.
+addUserTableManager(aum)                      Add authority for user table by table name and address.
+removeUserTableManager(rum)                   Remove authority for user table by table name and address.
+queryUserTableManager(qum)                    Query authority for user table information.
+addDeployAndCreateManager(adm)                Add authority for deploy contract and create user table by address.
+removeDeployAndCreateManager(rdm)             Remove authority for deploy contract and create user table by address.
+queryDeployAndCreateManager(qdm)              Query authority information for deploy contract and create user table.
+addAuthorityManager(aam)                      Add authority for authority configuration by address.
+removeAuthorityManager(ram)                   Remove authority for authority configuration by address.
+queryAuthorityManager(qam)                    Query authority information for authority configuration.
+addNodeManager(anm)                           Add authority for node configuration by address.
+removeNodeManager(rnm)                        Remove authority for node configuration by address.
+queryNodeManager(qnm)                         Query authority information for node configuration.
+addCNSManager(acm)                            Add authority for CNS by address.
+removeCNSManager(rcm)                         Remove authority for CNS by address.
+queryCNSManager(qcm)                          Query authority information for CNS.
+addSysConfigManager(asm)                      Add authority for system configuration by address.
+removeSysConfigManager(rsm)                   Remove authority for system configuration by address.
+querySysConfigManager(qsm)                    Query authority information for system configuration.
 quit(q)                                       Quit console.
----------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 ```
 **注：**                                       
 - help显示每条命令的含义是：命令全名(缩写名) 命令功能描述                   
@@ -171,11 +188,11 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 > gbn
 90
 ```
-### **getMinerList**
-运行getMinerList或gml，查看共识节点列表。
+### **getSealerList**
+运行getSealerList或gsl，查看共识节点列表。
 
 ```bash
-> gml 
+> gsl 
 [
 	0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801,
 	10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34,
@@ -227,10 +244,10 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 		"highestblockHash":"77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
 		"highestblockNumber":90,
 		"leaderFailed":false,
-		"miner.0":"3106a6310b5edc07658d09cf6a96ba597a5cfc8fbec8587c6786112808286c11f2bc81db9133328983bc641f1c97ce38fe41d74a4a71027def6ee85cc0579215",
-		"miner.1":"697e81e512cffc55fc9c506104fb888a9ecf4e29eabfef6bb334b0ebb6fc4ef8fab60eb614a0f2be178d0b5993464c7387e2b284235402887cdf640f15cb2b4a",
-		"miner.2":"8718579e9a6fee647b3d7404d59d66749862aeddef22e6b5abaafe1af6fc128fc33ed5a9a105abddab51e12004c6bfe9083727a1c3a22b067ddbaac3fa349f7f",
-		"miner.3":"8fc9661baa057034f10efacfd8be3b7984e2f2e902f83c5c4e0e8a60804341426ace51492ffae087d96c0b968bd5e92fa53ea094ace8d1ba72de6e4515249011",
+		"sealer.0":"3106a6310b5edc07658d09cf6a96ba597a5cfc8fbec8587c6786112808286c11f2bc81db9133328983bc641f1c97ce38fe41d74a4a71027def6ee85cc0579215",
+		"sealer.1":"697e81e512cffc55fc9c506104fb888a9ecf4e29eabfef6bb334b0ebb6fc4ef8fab60eb614a0f2be178d0b5993464c7387e2b284235402887cdf640f15cb2b4a",
+		"sealer.2":"8718579e9a6fee647b3d7404d59d66749862aeddef22e6b5abaafe1af6fc128fc33ed5a9a105abddab51e12004c6bfe9083727a1c3a22b067ddbaac3fa349f7f",
+		"sealer.3":"8fc9661baa057034f10efacfd8be3b7984e2f2e902f83c5c4e0e8a60804341426ace51492ffae087d96c0b968bd5e92fa53ea094ace8d1ba72de6e4515249011",
 		"nodeNum":4,
 		"omitEmptyBlock":true,
 		"protocolId":264,
@@ -603,7 +620,7 @@ Hello,FISCO-BCOS
 ```
 
 ### **deployByCNS**
-deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约进行示例使用)                                 
+deployByCNS或dbc，利用[CNS](../design/features/CNS_contract_name_service.md)部署合约。(默认提供HelloWorld合约进行示例使用)                                 
 参数：
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
@@ -615,7 +632,7 @@ deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约进行�
 - 用户编写的合约利用CNS进行部署和调用，请使用sdk，具体使用参考[sdk文档](../sdk/index.html)。
 
 ### **queryCNS**
-运行queryCNS或qcs，根据合约名称和合约版本号（可选参数）查询cns表记录信息。                                 
+运行queryCNS或qcs，根据合约名称和合约版本号（可选参数）查询CNS表记录信息。                                 
 参数：
 - 合约名称：部署的合约名称。
 - 合约版本号：(可选)部署的合约版本号。
@@ -648,12 +665,12 @@ deployByCNS或dbc，利用CNS部署合约。(默认提供HelloWorld合约进行�
 Hello,FISCO-BCOS
 ```
 
-### **addMiner**
-运行addMinert或am，将节点添加为共识节点。                                 
+### **addSealer**
+运行addSealer或as，将节点添加为共识节点。                                 
 参数： 
 - 节点nodeID
 ```bash
-> am ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+> as ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":1,
 	"msg":"success"
@@ -683,43 +700,6 @@ Hello,FISCO-BCOS
 	"msg":"success"
 }
 ```
-### **addAuthority**
-运行addAuthority或aa，给指定表增加指定外部账号的权限。                                  
-参数： 
-- 表名
-- 外部账户地址
-```bash
-> aa t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-{
-	"code":1,
-	"msg":"success"
-}
-```
-
-### **removeAuthority**
-运行removeAuthority或ra，给指定表移除指定外部账号的权限。                                                                 
-参数： 
-- 表名
-- 外部账户地址
-```bash
-> ra t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-{
-	"code":1,
-	"msg":"success"
-}
-```
-### **queryAuthority**
-运行queryAuthority或qa，给指定表移除指定外部账号的权限。                                  
-参数： 
-- 表名
-- 外部账户地址
-```bash
-> qa t_test 
----------------------------------------------------------------------------------------------
-|                   address                   |                 enable_num                  |
-| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
----------------------------------------------------------------------------------------------
-```
 ### **setSystemConfigByKey**
 运行setSystemConfigByKey或ssc，以键值对方式设置系统配置。目前设置的系统配置支持tx_count_limit和tx_gas_limit，系统配置用法见[多群组操作指南](build_group.md)                                  
 参数： 
@@ -739,6 +719,177 @@ Hello,FISCO-BCOS
 ```bash
 > gsc tx_count_limit
 100
+```
+### **addUserTableManager**
+运行addUserTableManager或aum，根据用户表名和外部账号地址设置权限信息。                                  
+参数： 
+- 表名
+- 外部账号地址
+```bash
+> aum t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+
+### **removeUserTableManager**
+运行removeUserTableManager或rum，根据用户表名和外部账号地址移除权限信息。                                                                 
+参数： 
+- 表名
+- 外部账号地址
+```bash
+> rum t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+### **queryUserTableManager**
+运行queryUserTableManager或qum，根据用户表名查询设置的权限记录列表。                                  
+参数： 
+- 表名
+```bash
+> qum t_test 
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+### **addDeployAndCreateManager**
+运行addDeployAndCreateManager或adm，增加外部账号地址的部署合约和创建用户表权限。
+
+参数： 
+- 外部账号地址
+```bash
+> adm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+
+### **removeDeployAndCreateManager**
+运行removeDeployAndCreateManager或rdm，移除外部账号地址的部署合约和创建用户表权限。                                                                 
+参数： 
+- 外部账号地址
+```bash
+> rdm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+### **queryDeployAndCreateManager**
+运行queryDeployAndCreateManager或qdm，查询拥有部署合约和创建用户表权限的权限记录列表。                                  
+```bash
+> qdm 
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+### **addNodeManager**
+运行addNodeManager或anm，增加外部账号地址的节点管理权限。
+
+参数： 
+- 外部账号地址
+```bash
+> anm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+
+### **removeNodeManager**
+运行removeNodeManager或rnm，移除外部账号地址的节点管理权限。                                                                 
+参数： 
+- 外部账号地址
+```bash
+> rnm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+### **queryNodeManager**
+运行queryNodeManager或qnm，查询拥有节点管理的权限记录列表。
+
+```bash
+> qnm 
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+### **addCNSManager**
+运行addCNSManager或acm，增加外部账号地址的使用CNS权限。
+
+参数： 
+- 外部账号地址
+```bash
+> acm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+
+### **removeCNSManager**
+运行removeCNSManager或rcm，移除外部账号地址的使用CNS权限。                                                                 
+参数： 
+- 外部账号地址
+```bash
+> rcm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+### **queryCNSManager**
+运行queryCNSManager或qcm，查询拥有使用CNS的权限记录列表。
+                                  
+```bash
+> qcm 
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+### **addSysConfigManager**
+运行addSysConfigManager或asm，增加外部账号地址的系统参数管理权限。
+
+参数： 
+- 外部账号地址
+```bash
+> asm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+
+### **removeSysConfigManager**
+运行removeSysConfigManager或rsm，移除外部账号地址的系统参数管理权限。                                                                 
+参数： 
+- 外部账号地址
+```bash
+> rsm 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":1,
+	"msg":"success"
+}
+```
+### **querySysConfigManager**
+运行querySysConfigManager或qsm，查询拥有系统参数管理的权限记录列表。
+                                  
+```bash
+> qsm 
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
+---------------------------------------------------------------------------------------------
 ```
 ### **quit**
 运行quit或q，退出控制台。
