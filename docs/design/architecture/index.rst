@@ -19,7 +19,7 @@
 
 FISCO BCOS基于多群组架构实现了强扩展性的群组多账本，基于清晰的模块设计，构建了稳定、健壮的区块系统。
 
-本章重点介绍FISCO BCOS的<font color=#FF0000>群组架构和系统运行时的交易流(包括交易提交、打包、执行和上链)</font>.
+本章重点介绍FISCO BCOS的<群组架构和系统运行时的交易流(包括交易提交、打包、执行和上链)。
 
 
 .. image:: ../../../images/architecture/architecture.png
