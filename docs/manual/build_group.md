@@ -76,7 +76,7 @@ $ bash ./start 1
 - [观察者节点](../design/security_control/node_access_management.md)：可从同组节点同步最新区块，可转发交易、处理RPC请求，但不能参加共识流程
 - [共识节点](../design/security_control/node_access_management.md)：可以从同组节点同步最新区块、转发交易、处理客户端的RPC请求，参与共识出块
 
-控制台提供了 **AddMiner(am)** 、**AddObserver(ao)** 和 **RemoveNode(rn)** 三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getMinerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
+控制台提供了 **AddSealer(am)** 、**AddObserver(ao)** 和 **RemoveNode(rn)** 三类命令将指定节点转换为共识节点、观察者节点和网络节点，并可通过getSealerList(gml)、getObserverList(gol)和getNodeIDList(gnl)查看当前组的共识节点列表、观察者节点列表和网络节点列表。
 
 例：
 将指定节点分别转换成组1的共识节点、观察者节点、网络节点，具体操作和验证步骤如下：
@@ -98,9 +98,9 @@ $ cd ~/web3sdk/dist
 $ bash ./start 1
 
 # 将指定节点转换为共识节点
-> addMiner 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+> addSealer 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 # 查询共识节点列表
-> getMinerList
+> getSealerList
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
@@ -120,7 +120,7 @@ $ bash ./start 1
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
-> getMinerList
+> getSealerList
 []
 > getObserverList
 []
