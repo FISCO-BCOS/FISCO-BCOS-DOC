@@ -45,9 +45,9 @@
 
 为了彻底支持国密，**国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法**，国密版FISCO-BCOS与标准版主要特性对比如下：
 
- | | 标准版FISCO-BCOS | 国密版FISCO BCOS 
- :-: | :-: | :-:
-SSL链接 | Openssl TLSv1.2协议 | 国密TLSv1.1协议
-签名验证 | ECDSA签名算法 | SM2签名算法
-消息摘要算法 | SHA-256 SHA-3 | SM3消息摘要算法
-落盘加密算法 | AES-256加密算法 | SM4加密算法
+ | | 标准版FISCO-BCOS | 国密版FISCO BCOS |
+ | :-: | :-: | :-: |
+ | SSL链接 | Openssl TLSv1.2协议 | 国密TLSv1.1协议|
+ | 签名验证 | ECDSA签名算法 | SM2签名算法 |
+ | 消息摘要算法 | SHA-256 SHA-3 | SM3消息摘要算法 |
+ | 落盘加密算法 | AES-256加密算法 | SM4加密算法 |
