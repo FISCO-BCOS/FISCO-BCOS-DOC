@@ -26,7 +26,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 ```
 
 
-## 主配置`config.ini`
+## 主配置文件config.ini
 
 `config.ini`采用`ini`格式，主要包括 **rpc、p2p、group、secure和log** 配置项。
 
