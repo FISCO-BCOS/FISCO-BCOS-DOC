@@ -151,9 +151,13 @@ FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easylogg
 
 FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](log.html#boostlog)。
 
-- `Level`: 日志级别，当前主要包括`TRACE、DEBUG、INFO、WARNING、ERROR`五种日志级别，设置某种日志级别后，日志文件中会输`≥`该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`；
+- `level`: 日志级别，当前主要包括`TRACE、DEBUG、INFO、WARNING、ERROR`五种日志级别，设置某种日志级别后，日志文件中会输`≥`该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`；
 
-- `MaxLogFileSize`：每个日志文件最大容量。
+- `max_log_file_size`：每个日志文件最大容量；
+
+- `flush`：boostlog默认开启日志自动刷新，若需提升系统性能，建议将该值设置为false。
+
+
 
 boostlog示例配置如下：
 
@@ -161,21 +165,20 @@ boostlog示例配置如下：
 ;log configurations
 [log]
     ;the directory of the log
-    LOG_PATH=./log
+    log_path=./log
     ;log level INFO DEBUG TRACE
-    Level=INFO
-    MaxLogFileSize=209715200
-    ;easylog config
-    FORMAT=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    LOG_FLUSH_THRESHOLD=100
+    level=INFO
+    max_log_file_size=209715200
+    flush=true
 ```
 
 #### 配置easylogging++
 
 为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的`[log]`配置，一般建议不手动更改除了日志级别外的其他配置，开启easylogging++的方法可参考[启用easylogging++](log.html#easylogging)。
 
-- `FORMAT`：全局日志格式
-- `LOG_FLUSH_THRESHOLD`：日志刷新频率设置，即每GLOBAL-LOG_FLUSH_THRESHOLD行刷新日志到文件一次
+- `format`：全局日志格式；
+
+- `log_flush_threshold`：日志刷新频率设置，即每`log_flush_threshold`行刷新日志到文件一次。
 
 easylogging++示例配置如下：
 
@@ -183,13 +186,13 @@ easylogging++示例配置如下：
 ;log configurations
 [log]
     ;the directory of the log
-    LOG_PATH=./log
+    log_path=./log
     ;log level INFO DEBUG TRACE
-    Level=INFO
-    MaxLogFileSize=209715200
+    level=INFO
+    max_log_file_size=209715200
     ;easylog config
-    FORMAT=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    LOG_FLUSH_THRESHOLD=100
+    format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
+    log_flush_threshold=100
 ```
 
 ## 群组不可变配置说明
@@ -251,15 +254,17 @@ e01789233a
 
 - `[storage].type`：存储的DB类型，目前仅支持LevelDB，后续会支持[AMDB](../design/storage/storage.html)；
 
-- `[state].type`：state类型，目前支持[MPT state](../design/storage/mpt.html)和[Storage state](../design/storage/storage.html)，MPT state将交易执行结果存储在[MPT树](../design/storage/mpt.md)中，效率较低，但包含完整的历史信息；Storage state将交易执行结果存储在系统表中，效率较高，但是交易执行的历史信息。
+- `[state].type`：state类型，目前支持[Storage state](../design/storage/storage.html)和[MPT state](../design/storage/mpt.html)，<font color=#FF0000>默认为Storage state</font>，Storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在[MPT树](../design/storage/mpt.md)中，效率较低，但包含完整的历史信息。
+
+> **注**：<font color=#FF0000>推荐使用storage state，除有特殊需求，不建议使用MPT State</font>
 
 ```ini
 [storage]
     ;storage db type, now support leveldb 
     type=LevelDB
 [state]
-    ;support mpt/storage
-    type=mpt
+    ;support storag/mpt
+    type=storage
 ```
 
 ### gas配置

@@ -8,7 +8,7 @@
 
 
 **共识算法分类**
-`Java SDK Github <https://github.com/FISCO-BCOS/web3sdk>`_
+
 根据是否容忍 `拜占庭错误 <https://zh.wikipedia.org/wiki/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98>`_ ，共识算法可分为容错(Crash Fault Tolerance, CFT)类算法和拜占庭容错(Byzantine Fault Tolerance, BFT)类算法：
 
 -  **CFT类算法** ：普通容错类算法，当系统出现网络、磁盘故障，服务器宕机等普通故障时，仍能针对某个提议达成共识，经典的算法包括Paxos、Raft等，这类算法性能较好、处理速度较快、可以容忍不超过一半的故障节点；
