@@ -77,7 +77,7 @@ bash build_chain.sh -f ipconf -T -i
 无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
 
 - **`g`选项[**Optional**]**
-无参数选项，设置该选项时，编译[国密版本](group.md)。<font color=#FF0000>使用`g`选项时要求二进制fisoc-bcos为国密版本。</font>
+无参数选项，设置该选项时，编译[国密版本](guomi.md)。<font color=#FF0000>使用`g`选项时要求二进制fisoc-bcos为国密版本。</font>
 
 - **`z`选项[**Optional**]**
 无参数选项，设置该选项时，生成节点的tar包。

@@ -10,7 +10,7 @@
 
 ### Table
 
-存储表中的所有数据，KV结构，kV由AMDB主key和Entries对象构成。Table中存储AMDB主key到对应Entries的映射。可以基于AMDB主key进行增删改查，支持条件筛选。
+存储表中的所有数据，KV结构，kV由AMDB主key和Entries对象构成。Table中存储AMDB主key到对应Entries的映射，可以基于AMDB主key进行增删改查，支持条件筛选。
 
 ### Entries
 
