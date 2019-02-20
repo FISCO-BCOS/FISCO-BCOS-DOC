@@ -250,7 +250,7 @@ java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [t
 ```  
 启动amop客户端：   
 ```
-java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Client [topic] [消息内容] [消息条数]
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Client [topic] [消息条数]
 ```
 
 ## 错误码
