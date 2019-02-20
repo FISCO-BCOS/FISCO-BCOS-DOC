@@ -6,7 +6,7 @@
 
 ### 1. 使用`build_chain`脚本
 
-本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制，在CentOS 7和Ubuntu 16.04上经过测试。（理论上静态的二进制可在任意Linux操作系统上运行。）
+本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制，在CentOS 7和Ubuntu 16.04上经过测试。（理论上静态二进制可在任意Linux操作系统上运行）。
 
 - 准备环境
 
@@ -20,7 +20,7 @@ $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
 # 准备fisco-bcos二进制
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./bin/fisco-bcos -v
 ```
