@@ -26,7 +26,7 @@ Precompiled的架构如下图所示：
 
 ### 接口定义
 
-每个Precompiled合约都必须实现自己的`call`接口，接口接受三个参数，分别是`ExecutiveContext`执行上下文、`bytesConstRef`参数的abi编码和外部账户地址，其中外部账户地址用于判断是否具有写权限。
+每个Precompiled合约都必须实现自己的`call`接口，接口接受三个参数，分别是`ExecutiveContext`执行上下文、`bytesConstRef`参数的abi编码和外部账户地址，其中外部账户地址用于判断是否具有写权限。[`Precompiled`源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/04db9d5e9d7a9d321d90cef8dc5e2010a53ed8d3/libblockverifier/Precompiled.h#L37)。
 
 |接口名|参数说明|接口说明|
 |:----|:------|:------|
@@ -34,29 +34,3 @@ Precompiled的架构如下图所示：
 |`virtual uint32_t getParamFunc(bytesConstRef param)`|`param`为abi编码的参数|获取调用的函数的`Function Select`（函数名的sha3的前四个大端字节）|
 |`virtual uint32_t getFuncSelector(std::string const& _functionName)`|`_functionName`为函数名|根据函数名计算`Function Select`|
 |`virtual bytesConstRef getParamData(bytesConstRef param)`|`param`为abi编码的参数|获取调用函数的具体参数的abi编码|
-
-```cpp
-class ExecutiveContext;
-class Precompiled : public std::enable_shared_from_this<Precompiled>
-{
-public:
-    typedef std::shared_ptr<Precompiled> Ptr;
-
-    virtual ~Precompiled(){};
-
-    virtual std::string toString(std::shared_ptr<ExecutiveContext>) { return ""; }
-
-    virtual bytes call(std::shared_ptr<ExecutiveContext> context, bytesConstRef param,
-        Address const& origin = Address()) = 0;
-
-    virtual uint32_t getParamFunc(bytesConstRef param);
-
-    virtual uint32_t getFuncSelector(std::string const& _functionName);
-    virtual bytesConstRef getParamData(bytesConstRef param);
-protected:
-    std::map<std::string, uint32_t> name2Selector;
-    std::shared_ptr<dev::storage::Table> openTable(
-        std::shared_ptr<dev::blockverifier::ExecutiveContext> context,
-        const std::string& tableName);
-};
-```
