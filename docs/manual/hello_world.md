@@ -20,7 +20,7 @@ $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
 # 准备fisco-bcos二进制
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./bin/fisco-bcos -v
 ```
@@ -29,8 +29,7 @@ $ ./bin/fisco-bcos -v
 ```bash
 fisco
 ├── bin
-│   ├── fisco-bcos
-│   └── fisco-static.tar.gz
+│   └── fisco-bcos
 └── build_chain.sh
 ```
 
@@ -39,6 +38,7 @@ fisco
 ```bash
 # 生成一条4节点的FISCO链 4个节点都属于group1 下面指令在fisco目录下执行
 # -e 指定fisco-bcos路径 -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+# 根据下面的指令，需要保证机器的30300-30303 20200-20203 8545-8548端口没有被占用
 $ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
@@ -77,7 +77,7 @@ $ ./start_all.sh
 - 检查进程及端口监听
 
 ```bash
-# 检查进程是否启动
+# 检查进程是否启动 如果进程数不为4，那么进程没启动的原因一般是端口被占用
 $ ps -ef | grep -v grep | grep fisco
 fisco       5453     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
 fisco       5459     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
@@ -104,17 +104,17 @@ tcp        0      0 127.0.0.1:8548         0.0.0.0:*               LISTEN      5
 
 - 检查日志输出
 ```bash
-# 检查是否在共识，如果不停输出++++Generating seal 表示正常输出
-$ tail -f node0/log/log*  | grep +++
-info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
-info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
-info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
-
 # 查看节点node0链接的节点数，从下面的输出可以看出node0与另外3个节点有链接
 $ tail -f node0/log/log*  | grep connected
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
+
+# 检查是否在共识，如果不停输出++++Generating seal 表示正常输出
+$ tail -f node0/log/log*  | grep +++
+info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
+info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
+info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
 ```
 
 ### 3. 使用控制台
@@ -239,5 +239,5 @@ Hello, World!
 Hello,FISCO-BCOS
 # 查看当前块高
 > getBlockNumber
-4
+2
 ```
