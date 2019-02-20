@@ -17,7 +17,7 @@
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -38,11 +38,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
 ### 参数  
 - `groupID`: `unsigned int` - 群组ID                 
 ### 返回值               
-- `string` - 最新区块高度                
+- `string` - 最新区块高度(0x开头的十六进制字符串)             
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -61,7 +61,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -83,7 +83,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 }
 ```
 
-## getMinerList
+## getSealerList
 返回指定群组内的共识节点列表
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
@@ -92,7 +92,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getMinerList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -115,7 +115,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getMinerList","params":[1],"id":
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -145,7 +145,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
    -  `highestblockNumber`: `unsigned int` - 最新区块高度            
    -  `leaderFailed`: `bool` - leader失败标志            
    -  `max_faulty_leader`: `unsigned int` - 最大容错节点数            
-   -  `miner.index`: `string` - 节点序号为index的nodeID            
+   -  `sealer.index`: `string` - 节点序号为index的nodeID            
    -  `node index`: `unsigned int` - 节点的序号            
    -  `nodeID`: `string` - 节点的nodeID            
    -  `nodeNum`: `unsigned int` - 节点的数            
@@ -182,7 +182,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
     - `leaderId`: `string` - leader的nodeID            
     - `leaderIdx`: `unsigned int` - leader的序号            
     - `max_faulty_leader`: `unsigned int` - 最大容错节点数            
-    - `miner.index`: `string` - 节点序号为index的nodeID            
+    - `sealer.index`: `string` - 节点序号为index的nodeID            
     - `node index`: `unsigned int` - 节点的index            
     - `nodeID`: `string` - 节点的nodeID            
     - `nodeNum`: `unsigned int` - 节点的数            
@@ -192,7 +192,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 - 示例
 ```
 // Request pbft
-curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -211,10 +211,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
             "highestblockNumber":3,
             "leaderFailed":false,
             "max_faulty_leader":1,
-            "miner.0":"29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0",
-            "miner.1":"41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
-            "miner.2":"87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1",
-            "miner.3":"d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
+            "sealer.0":"29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0",
+            "sealer.1":"41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
+            "sealer.2":"87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1",
+            "sealer.3":"d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
             "node index":1,
             "nodeID":"41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
             "nodeNum":4,
@@ -259,7 +259,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
 }
 
 // Request raft
-curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -277,10 +277,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
       "leaderId": "d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
       "leaderIdx": 3,
       "max_faulty_leader": 1,
-      "miner.0": "29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0",
-      "miner.1": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
-      "miner.2": "87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1",
-      "miner.3": "d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
+      "sealer.0": "29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0",
+      "sealer.1": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
+      "sealer.2": "87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1",
+      "sealer.3": "d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
       "node index": 1,
       "nodeID": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
       "nodeNum": 4,
@@ -312,7 +312,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -362,7 +362,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 格式化JSON：
@@ -398,7 +398,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -422,7 +422,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -446,7 +446,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -478,7 +478,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",true],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",true],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -515,7 +515,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 }
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",false],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",false],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -543,7 +543,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 返回根据区块高度查询的区块信息     
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度       
+- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)       
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)         
 ### 返回值          
 见[getBlockByHash](#getBlockByHash)  
@@ -551,7 +551,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[1,"0x0",true],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[1,"0x0",true],"id":1}' http://127.0.0.1:8545 |jq
 ```
 Result见[getBlockByHash](#getBlockByHash)  
 
@@ -559,13 +559,13 @@ Result见[getBlockByHash](#getBlockByHash)
 返回根据区块高度查询的区块哈希          
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度                   
+- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)                  
 ### 返回值          
 - `blockHash`: `string` - 区块哈希         
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[1,"0x1"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[1,"0x1"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -595,7 +595,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -627,7 +627,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 ```
 Result见[getTransactionByHash](#getTransactionByHash) 
 
@@ -635,14 +635,14 @@ Result见[getTransactionByHash](#getTransactionByHash)
 返回根据区块高度和交易序号查询的交易信息
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度          
+- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
 见[getTransactionByHash](#getTransactionByHash)            
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 }
 ```
 Result见[getTransactionByHash](#getTransactionByHash)
@@ -669,7 +669,7 @@ Result见[getTransactionByHash](#getTransactionByHash)
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -710,7 +710,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -742,7 +742,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":""getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":""getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -761,7 +761,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":""getPendingTxSize","params":[1],
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -781,7 +781,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","params":[1],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -803,7 +803,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[1,"tx_count_limit"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[1,"tx_count_limit"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -827,7 +827,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102","to":"0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d","value":"0x1","data":"0x3"}],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102","to":"0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d","value":"0x1","data":"0x3"}],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -849,7 +849,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -860,5 +860,5 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 
 // FISCO BCOS支持国密算法，采用国密算法的区块链请求示例
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:30302 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:8545 |jq
 ```
