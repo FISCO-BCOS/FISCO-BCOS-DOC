@@ -3,6 +3,7 @@ sphinx ==  1.7.5
 sphinx-rtd-theme
 sphinx-markdown-tables
 -e git+git://github.com/rtfd/recommonmark.git#egg=recommonmark > 0.4.0
+sphinx-notfound-page == 0.1
 commonmarkextensions == 0.0.4
 commonmark == 0.8.0
 git-lfs
