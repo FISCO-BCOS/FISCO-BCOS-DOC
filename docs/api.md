@@ -1,6 +1,6 @@
 # API
 
-下列接口的示例中采用curl命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件[rpc]部分的listen_ip和jsonrpc listen port端口。为了格式化json，使用jq工具进行格式化显示。错误响应参考[RPC设计文档](design/rpc.md)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[listen_ip]`和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误返回码参考[RPC设计文档](design/rpc.md)。
 
 ## getClientVersion
 返回节点的版本信息
@@ -53,7 +53,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 ```
 
 ## getPbftView
-返回节点所在指定群组内的最新pbft视图
+返回节点所在指定群组内的最新[pbft视图](design/consensus/pbft.md#view)
 ### 参数         
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值         
@@ -70,7 +70,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
     "result": "0x1a0"
 }
 ```
-**注：** FISCO BCOS支持pbft共识和raft共识，当访问的区块链采用raft共识时，该接口返回FISCO BCOS自定义错误响应如下:
+**注：** FISCO BCOS支持[pbft共识](design/consensus/pbft.md)和[raft共识](design/consensus/raft.md)，当访问的区块链采用raft共识时，该接口返回FISCO BCOS自定义错误响应如下:
 ```
 {
   "error": {
@@ -88,7 +88,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 共识节点nodeID数组         
+- `array` - 共识节点nodeID列表         
 - 示例          
 ```
 // Request
@@ -111,7 +111,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id"
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 观察节点nodeID数组       
+- `array` - 观察节点nodeID列表       
 - 示例          
 ```
 // Request
@@ -393,7 +393,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
-- `array` - 共识节点和观察节点的nodeID数组     
+- `array` - 共识节点和观察节点的nodeID列表     
         
 - 示例          
 ```
@@ -417,7 +417,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 节点本身和已连接p2p节点的nodeID数组 
+- `array` - 节点本身和已连接p2p节点的nodeID列表 
 
 - 示例          
 ```
@@ -441,7 +441,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id"
 ### 参数          
 无       
 ### 返回值          
-- `array` - 节点所属群组的群组ID数组 
+- `array` - 节点所属群组的群组ID列表 
 
 - 示例          
 ```
