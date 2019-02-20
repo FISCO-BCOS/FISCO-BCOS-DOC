@@ -61,7 +61,7 @@ $ bash ./start 1
 
 ```bash
 # 获取节点Node ID（设节点目录为~/nodes/192.168.0.1/node0/）
-$ cat ~/nodes/192.168.0.1/node0/conf/node.node_id
+$ cat ~/nodes/192.168.0.1/node0/conf/node.nodeid
 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 
 # 连接组1的控制台(设控制台位于~/console目录)
