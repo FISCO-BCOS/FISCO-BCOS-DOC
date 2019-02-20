@@ -237,8 +237,26 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar
 # 进入控制台操作目录
 $ cd console
 
+# 拷贝group2节点(node4, node5)的证书到控制台配置目录(以node4为例)
+$ cp ~/nodes/127.0.0.1/node4/conf/node.* conf/
+
+# 获取node4的channel_listen_port
+$ cat ~/nodes/127.0.0.1/node4/config.ini | grep channel_listen_port
+channel_listen_port=8549
+
+# 参考控制台操作文档，
+# 修改~/console/conf/applicationContext.xml的group id为2, ip:channel_listen_port为127.0.0.1:8549
+# 确认Group ID:
+$ cat conf/applicationContext.xml | grep "groupId"
+                                        <property name="groupId" value="2" />
+
+# 确认ChannelPort
+$ cat conf/applicationContext.xml | grep "[0-9].*:[0-9].*" | grep value
+                                                        <value>127.0.0.1:8549</value>
+
+
 # 启动web3sdk，连接group2所有节点
-$ bash start -c 2
+$ bash start 2
 
 ```
 
