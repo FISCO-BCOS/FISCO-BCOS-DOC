@@ -44,15 +44,9 @@ AuthorityPrecompiled.cpp
 - 分配地址  
 调用合约类型(solidity或者precompiled)根据地址来区分, 地址划分如下：
 
-<<<<<<< HEAD:docs/developer/precompile.md
-以太坊precompiled及预留 | 系统配置及预留 | 用户 | precompiled临时地址 | solidity合约地址
----------|----------|--------------|------|---------
-0x0000 - 0x0fff | 0x1000 - 0x5000 | 0x5001 - 0xffff | 0x10000+ | 其他
-=======
 | 保留地址        | 系统配置以及保留地址 | 用户使用地址    | 临时precompiled合约地址 | solidity合约地址 |
 | --------------- | -------------------- | --------------- | ----------------------- | ---------------- |
 | 0x0000 - 0x0fff | 0x1000 - 0x5000      | 0x5001 - 0xffff | 0x10000+                | 其他             |
->>>>>>> 69051e97cb3e40dc823b191d12b44de808cc39f9:docs/developer/precompiled.md
 
  用户地址空间为0x5001 - 0xffff, 用户可以在这个范围内为新增的precompiled合约分配一个地址, precompiled合约地址必须唯一, 不可冲突。 
 - 实现调用逻辑  
