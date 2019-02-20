@@ -39,7 +39,7 @@ if on_rtd:
 
 # The suffix of source filenames.
 source_parsers = {
-	'.md': 'recommonmark.parsers.CommonMarkParser',
+	'.md': 'recommonmark.parser.CommonMarkParser',
 }
 source_suffix = ['.rst', '.md']
 
