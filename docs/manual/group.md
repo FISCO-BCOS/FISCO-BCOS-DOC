@@ -54,7 +54,9 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release
 
 **获取build_chain.sh脚本**
 
-`curl https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh -o build_chain.sh`
+```bash
+$ curl https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh -o build_chain.sh
+```
 
 **生成星形区块链系统配置文件**
 
