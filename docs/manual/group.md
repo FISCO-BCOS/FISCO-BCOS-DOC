@@ -35,32 +35,44 @@ $ sudo apt-get install openssl libssl-dev libleveldb-dev
 - `agencyC`：属于`group2`，包括两个节点，节点IP均为`127.0.0.1`；
 - `agencyD`：属于`group3`，包括一个节点，节点IP均为`127.0.0.1`。
 
-> 注：真实应用场景中，建议根据机器负载选择部署节点数目，星形网络拓扑中，核心节点(本例中agencyA节点)同属于所有群组，负载较大，建议单独部署在性能较好的机器
-
+```eval_rst
+.. important::
+   - 真实应用场景中，**不建议将多个节点部署在同一台机器**，建议根据**机器负载**选择部署节点数目
+   - **星形网络拓扑**中，核心节点(本例中agencyA节点)同属于所有群组，负载较大，**建议单独部署在性能较好的机器**
+```
 
 ### 构建星形区块链系统
 
 [build_chain](./build_chain.md)简单方便地支持任意拓扑多群组区块链系统构建，可使用该脚本构建星形拓扑区块链系统：
 
-**获取二进制代码**
+**获取预编译二进制可执行程序**
 
 ```bash
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
-
+$ cd ~
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
 ```
 
 **获取build_chain.sh脚本**
 
-```bash
-$ curl https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh -o build_chain.sh
-
-```
+`curl https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh -o build_chain.sh`
 
 **生成星形区块链系统配置文件**
 
 ```bash
- $ echo -e "127.0.0.1:2 agencyA 1,2,3\n127.0.0.1:2 agencyB 1\n127.0.0.1:2 agencyC 2\n127.0.0.1:2 agencyD 3" > ip_list   
+# 生成区块链系统配置文件ip_list
+$ cat > ip_list << EOF
+127.0.0.1:2 agencyA 1,2,3
+127.0.0.1:2 agencyB 1
+127.0.0.1:2 agencyC 2
+127.0.0.1:2 agencyD 3
+EOF
 
+# 查看配置文件ip_list内容
+$ cat ip_list
+127.0.0.1:2 agencyA 1,2,3
+127.0.0.1:2 agencyB 1
+127.0.0.1:2 agencyC 2
+127.0.0.1:2 agencyD 3
 ```
 
 **使用build_chain脚本构建星形区块链系统**
@@ -303,7 +315,12 @@ info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9
 - 群组1：包括四个节点，节点IP均为`127.0.0.1`；
 - 群组2: 包括四个节点，节点IP均为`127.0.0.1`。
 
-为演示并行多组扩容流程，这里仅先创建group1，<font color=#FF0000>并行多组场景中，节点加入和退出群组操作与星形组网拓扑类似</font>，这里不赘述。
+```eval_rst
+.. important::
+   - 真实应用场景中，**不建议将多个节点部署在同一台机器**，建议根据**机器负载**选择部署节点数目
+   - 为演示并行多组扩容流程，这里仅先创建group1
+   - 并行多组场景中，节点加入和退出群组操作与星形组网拓扑类似
+```
 
 ### 构建单群组四节点区块链系统
 
