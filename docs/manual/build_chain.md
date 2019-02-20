@@ -30,7 +30,7 @@ e.g
 ```eval_rst
 .. important::
     
-    build_chain目标是让用户最快使用FISCO BCOS，对于企业级应用请参考[企业工具](../enterprise/index.html)。
+    build_chain目标是让用户最快使用FISCO BCOS，对于企业级应用请参考 `企业工具 <../enterprise/index.html>`_ 。
 ```
 
 ## 3. 选项介绍
