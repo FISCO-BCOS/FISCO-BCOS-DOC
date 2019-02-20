@@ -1,9 +1,56 @@
-## 日志操作手册
+# 日志操作手册
 
 FISCO BCOS同时支持轻量级日志系统[easylogging++](https://github.com/zuhd-org/easyloggingpp)和功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，默认使用boostlog，可通过编译选项`EASYLOG`选择不同的日志系统。
 
+## 日志配置
 
-### 开启boostlog
+### 配置boostlog
+
+FISCO BCOS默认使用boostlog，相较于easylogging++，boostlog配置项很简单，主要如下：
+
+- `level`: 日志级别，当前主要包括`TRACE、DEBUG、INFO、WARNING、ERROR`五种日志级别，设置某种日志级别后，日志文件中会输`≥`该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`；
+
+- `max_log_file_size`：每个日志文件最大容量；
+
+- `flush`：boostlog默认开启日志自动刷新，若需提升系统性能，建议将该值设置为false。
+
+boostlog示例配置如下：
+
+```ini
+;log configurations
+[log]
+    ;the directory of the log
+    log_path=./log
+    ;log level INFO DEBUG TRACE
+    level=INFO
+    max_log_file_size=209715200
+    flush=true
+```
+
+### 配置easylogging++
+
+为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的`[log]`配置，一般建议不手动更改除了日志级别外的其他配置，开启easylogging++的方法可参考[启用easylogging++](log.html#easylogging)。
+
+- `format`：全局日志格式；
+
+- `log_flush_threshold`：日志刷新频率设置，即每`log_flush_threshold`行刷新日志到文件一次。
+
+easylogging++示例配置如下：
+
+```ini
+;log configurations
+[log]
+    ;the directory of the log
+    log_path=./log
+    ;log level INFO DEBUG TRACE
+    level=INFO
+    max_log_file_size=209715200
+    ;easylog config
+    format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
+    log_flush_threshold=100
+```
+
+## 开启boostlog
 
 开启boostlog，需将`EASYLOG`选项置为`OFF`，具体操作如下：
 
@@ -38,14 +85,14 @@ $ cmake3 .. -DEASYLOG=OFF
 -- Build files have been written to: /home/FISCO-BCOS/build
 
 # 编译源码并产生二进制(可根据机器硬件配置选择编译并发度，这里设置并发度为2)
-make -j2
+$ make -j2
 
 # 查看生成的二进制文件
 $ ls bin
 fisco-bcos
 ```
 
-### 开启easylogging++
+## 开启easylogging++
 
 开启easylogging++，需将`EASYLOG`选项置为`ON`，具体操作如下：
 
@@ -80,67 +127,9 @@ $ cmake3 .. -DEASYLOG=ON
 -- Build files have been written to: /home/FISCO-BCOS/build
 
 # 编译源码并产生二进制(可根据机器硬件配置选择编译并发度，这里设置并发度设置为2)
-make -j2
+$ make -j2
 
 # 查看生成的二进制文件
 $ ls bin
 fisco-bcos
-```
-
-### 日志配置
-
-#### 配置easylogging++
-
-为了尽量减少配置文件，FISCO BCOS将easylogging++的配置信息都集中到了节点配置文件config.ini的[log]段，一般建议不手动更改除了日志级别设置之外的其他配置，日志级别主要由以下关键字设置：
-
-- INFO-ENABLED：true表明开启INFO级别日志；false表明关闭INFO级别日志
-- ERROR-ENABLED：true表明开启ERROR级别日志；false表明关闭ERROR级别日志
-- DEBUG-ENABLED：true表明开启DEBUG级别日志；false表明关闭DEBUG级别日志
-- TRACE-ENABLED：true表明开启TRACE级别日志；false表明关闭TRACE级别日志
-- FATAL-ENABLED：true表明开启FATAL级别日志；false表明关闭FATAL级别日志。
-
-其他配置项包括：
-
-- LOG_PATH：日志文件路径
-- GLOBAL-ENABLED：是否采用全局日志配置
-- GLOBAL-FORMAT：全局日志格式
-- GLOBAL-MAX_LOG_FILE_SIZE：每个日志文件最大容量(默认是200MB)
-- GLOBAL-LOG_FLUSH_THRESHOLD：日志刷新频率设置，即每GLOBAL-LOG_FLUSH_THRESHOLD行刷新日志到文件一次
-
-easylogging++的配置示例如下：
-```ini
-;log configurations
-[log]
-    ;the directory of the log
-    LOG_PATH=./log
-    GLOBAL-ENABLED=true
-    GLOBAL-FORMAT=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    GLOBAL-MILLISECONDS_WIDTH=3
-    GLOBAL-PERFORMANCE_TRACKING=false
-    GLOBAL-MAX_LOG_FILE_SIZE=209715200
-    GLOBAL-LOG_FLUSH_THRESHOLD=100
-
-    ;log level configuration, enable(true)/disable(false) corresponding level log
-    INFO-ENABLED=true
-    WARNING-ENABLED=true
-    ERROR-ENABLED=true
-    DEBUG-ENABLED=true
-    TRACE-ENABLED=false
-    FATAL-ENABLED=false
-```
-
-#### 配置boostlog
-
-FISCO BCOS默认使用boostlog，相较于easylogging++，boostlog配置项很简单，主要如下：
-
-- Level: 日志级别，当前主要包括TRACE/DEBUG/INFO/WARNING/ERROR五种日志级别，设置某种日志级别后，日志文件中会输≥该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`
-
-- MaxLogFileSize：每个日志文件最大容量
-
-boostlog配置示例如下：
-
-```ini
-    ;log level for boost log 
-    Level=TRACE
-    MaxLogFileSize=1677721600
 ```

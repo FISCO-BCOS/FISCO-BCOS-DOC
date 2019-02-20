@@ -34,11 +34,17 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 - `listen_ip`: RPC监听ip，若为127.0.0.1，则仅监听本机RPC请求，为0.0.0.0和内网ip时，监听所有请求；
 
-> **注：云主机的公网ip均为虚拟ip，若listen_ip填写公网ip，会绑定失败，须填写0.0.0.0**
-
 - `channel_listen_port`: [链上链下服务(AMOP)](TODO)监听端口，必须位于1024-65535，且不能与机器上其他应用监听端口冲突，是[SDK](../sdk/config.html#id1)配置中的`channel_listen_port`；
 
-- `jsonrpc_listen_port`: RPC监听端口，端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突。
+- `jsonrpc_listen_port`: RPC监听端口。
+
+```eval_rst
+.. important::
+   - 云主机的公网ip均为虚拟ip，若listen_ip填写公网ip，会绑定失败，须填写0.0.0.0
+   - RPC监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
+```
+
+
 
 RPC配置示例如下：
 
@@ -58,11 +64,16 @@ RPC配置示例如下：
 
 - `listen_ip`：P2P监听端口，若为127.0.0.1，则仅监听本机RPC请求，为0.0.0.0和内网ip时，监听所有请求；
 
-> **注：云主机的公网ip均为虚拟ip，若listen_ip填写公网ip，会绑定失败，须填写0.0.0.0**
-
 - `listen_port`：节点P2P监听端口；
 
-- `node.*`: 节点需连接的所有节点`ip:port`，**端口必须在1024-65535范围内，且端口不能与其他应用监听端口重复**。
+- `node.*`: 节点需连接的所有节点`ip:port`。
+
+```eval_rst
+.. important::
+
+   - 云主机的公网ip均为虚拟ip，若listen_ip填写公网ip，会绑定失败，须填写0.0.0.0
+   - P2P监听端口必须在1024-65535范围内，且端口不能与其他应用监听端口重复
+```
 
 P2P配置示例如下：
 
@@ -195,19 +206,49 @@ easylogging++示例配置如下：
     log_flush_threshold=100
 ```
 
+### 可选配置：落盘加密
+
+为了保障节点数据机密性，FISCO BCOS引入[落盘加密](../design/features/disk_encryption.md)保障节点数据的机密性，**落盘加密**操作手册请[参考这里](./disk_encryption.md)。
+
+`config.ini`中的`data_secure`用于配置落盘加密，主要包括（落盘加密具体操作请参考[操作手册](./disk_encryption.md)）：
+
+- `enable`： 是否开启落盘加密，默认不开启；
+
+- `keycenter_ip`：[Key Center](https://github.com/FISCO-BCOS/keycenter)服务的部署IP；
+
+- `keycenter_port`：[Key Center](https://github.com/FISCO-BCOS/keycenter)服务的监听端口；
+
+- `cipher_data_key`: 节点数据加密密钥的密文，`cipher_data_key`的产生参考[落盘加密操作手册](./disk_encryption.md)。
+
+落盘加密节点配置示例如下：
+
+```ini
+[data_secure]
+enable=true
+keycenter_ip=127.0.0.1
+keycenter_port=31443
+cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
+```
+
+
+
 ## 群组不可变配置说明
 
 每个群组都有单独的配置文件，按照启动后是否可更改，可分为<font color=#FF0000>群组不可变配置</font>和<font color=#FF0000>群组可变配置</font>。
 群组不可变配置一般位于节点的`conf`目录下<font color=#FF0000>`.genesis后缀`配置文件</font>中。
 
-如：`group1`的不可变配置一般命名为`group.1.genesis`，群组不可变配置主要包括<font color=#FF0000>群组ID、共识、存储和gas</font>相关的配置，配置不可变配置时，需注意：
+如：`group1`的不可变配置一般命名为`group.1.genesis`，群组不可变配置主要包括<font color=#FF0000>群组ID、共识、存储和gas</font>相关的配置。
 
-- **配置群组内一致**：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致；
+```eval_rst
+.. important:: 
 
-- **节点启动后不可更改**：不可变配置已经作为创世块写入了系统表，链初始化后不可更改；
-- 链初始化后，<font color=#FF0000>即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置</font>;
+    配置不可变配置时，需注意：
 
-- 由于genesis配置要求群组内所有节点一致，建议使用[build_chain](build_chain.md)生成该配置。
+    - **配置群组内一致** ：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
+    - **节点启动后不可更改** ：不可变配置已经作为创世块写入了系统表，链初始化后不可更改
+    - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
+    - 由于genesis配置要求群组内所有节点一致，建议使用 `build_chain <build_chain.html>`_ 生成该配置
+```
 
 ### 群组配置
 
@@ -256,7 +297,12 @@ e01789233a
 
 - `[state].type`：state类型，目前支持[Storage state](../design/storage/storage.html)和[MPT state](../design/storage/mpt.html)，<font color=#FF0000>默认为Storage state</font>，Storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在[MPT树](../design/storage/mpt.md)中，效率较低，但包含完整的历史信息。
 
-> **注**：<font color=#FF0000>推荐使用storage state，除有特殊需求，不建议使用MPT State</font>
+
+```eval_rst
+.. important::
+   推荐使用 **Storage state** ，除有特殊需求，不建议使用MPT State
+
+```
 
 ```ini
 [storage]

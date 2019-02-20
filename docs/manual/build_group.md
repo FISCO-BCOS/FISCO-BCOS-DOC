@@ -11,13 +11,15 @@ FISCO BCOS提供了一键安装脚本[build_chain.sh](./build_chain.md)用于快
 ```bash
 
 # 创建配置文件ipList
-echo "192.168.0.1:2 agency1 1,2
+$ cat > ipList << EOF
+192.168.0.1:2 agency1 1,2
 192.168.0.2:2 agency2 1
-192.168.0.3:2 agency3 2" > ipList
+192.168.0.3:2 agency3 2
+EOF
 
-# 获取二进制文件，并调用build_chain.sh脚本建链
+# 获取二进制程序，并调用build_chain.sh脚本建链
 # 若有源码编译FISCO BCOS需求，请参考 FISCO BCOS源码安装
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
 $ bash build_chain.sh -f ipList -e ../build/bin/fisco-bcos
 ```
 
@@ -59,7 +61,7 @@ $ bash ./start 1
 
 ```bash
 # 获取节点Node ID（设节点目录为~/nodes/192.168.0.1/node0/）
-$ cat ~/nodes/192.168.0.1/node0/conf/node.node_id
+$ cat ~/nodes/192.168.0.1/node0/conf/node.nodeid
 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 
 # 连接组1的控制台(设控制台位于~/console目录)
