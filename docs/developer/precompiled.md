@@ -1,4 +1,4 @@
-[# Precompile合约开发
+# Precompile合约开发
 
 ## 一. 简介
 [预编译合约(precompiled contract)](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/6b15a14b346f5369a262c74bda5bc2b0fd2012f9/docs/design/virtualMachine/precompiled.md)是一项以太坊原生支持的功能, FISCO-BCOS在此基础上发展了一套功能强大并且容易拓展的precompiled合约框架。  
