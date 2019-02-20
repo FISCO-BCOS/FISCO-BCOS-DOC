@@ -14,5 +14,4 @@ Solidity与以太坊相同，支持最新版本。
    :maxdepth: 2
 
    precompiled.md
-   crud.md
-   solidity.md
+   crud_sol.mdmd
