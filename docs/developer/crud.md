@@ -1,13 +1,13 @@
 # CRUD合约开发
 
-访问 AMDB 需要使用 AMDB 专用的智能合约 DB.sol 接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
+访问 AMDB 需要使用 AMDB 专用的智能合约 AMDB.sol 接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
-DB.sol文件代码如下:
+AMDB.sol文件代码如下:
 ```js
 
-contract DBFactory {
-    function openTable(string) public constant returns (DB); //打开表
-    function createTable(string,string,string) public constant returns(DB); //创建表
+contract TableFactory {
+    function openTable(string) public constant returns (Table); //打开表
+    function createTable(string,string,string) public constant returns(Table); //创建表
 }
 
 //查询条件
@@ -45,8 +45,8 @@ contract Entries {
     function size() public constant returns(int);
 }
 
-//DB主类
-contract DB {
+//Table主类
+contract Table {
     //查询接口
     function select(string, Condition) public constant returns(Entries);
     //插入接口
@@ -60,11 +60,11 @@ contract DB {
     function newCondition() public constant returns(Condition);
 }
 ```
-提供一个合约案例 DBTest.sol，代码如下：
+提供一个合约案例 TableTest.sol，代码如下：
 ``` js
 import "DB.sol";
 
-contract DBTest {
+contract TableTest {
     event selectResult(bytes32 name, int item_id, bytes32 item_name);
     event insertResult(int count);
     event updateResult(int count);
@@ -72,14 +72,14 @@ contract DBTest {
     
     //创建表
     function create() public {
-        DBFactory df = DBFactory(0x1001); //DBFactory的地址固定为0x1001
+        TableFactory df = TableFactory(0x1001); //TableFactory的地址固定为0x1001
         df.createTable("t_test", "name", "item_id,item_name");
     }
 
     //查询数据
     function select(string name) public constant returns(bytes32[], int[], bytes32[]){
-        DBFactory df = DBFactory(0x1001);
-        DB db = df.openTable("t_test");
+        TableFactory df = TableFactory(0x1001);
+        Table db = df.openTable("t_test");
         
         Condition condition = db.newCondition();
         //condition.EQ("name", name);
@@ -102,8 +102,8 @@ contract DBTest {
     }
     //插入数据
     function insert(string name, int item_id, string item_name) public returns(int) {
-        DBFactory df = DBFactory(0x1001);
-        DB db = df.openTable("t_test");
+        TableFactory df = TableFactory(0x1001);
+        Table db = df.openTable("t_test");
         
         Entry entry = db.newEntry();
         entry.set("name", name);
@@ -117,8 +117,8 @@ contract DBTest {
     }
     //更新数据
     function update(string name, int item_id, string item_name) public returns(int) {
-        DBFactory df = DBFactory(0x1001);
-        DB db = df.openTable("t_test");
+        TableFactory df = TableFactory(0x1001);
+        Table db = df.openTable("t_test");
         
         Entry entry = db.newEntry();
         entry.set("item_name", item_name);
@@ -134,8 +134,8 @@ contract DBTest {
     }
     //删除数据
     function remove(string name, int item_id) public returns(int){
-        DBFactory df = DBFactory(0x1001);
-        DB db = df.openTable("t_test");
+        TableFactory df = TableFactory(0x1001);
+        Table db = df.openTable("t_test");
         
         Condition condition = db.newCondition();
         condition.EQ("name", name);
@@ -148,7 +148,7 @@ contract DBTest {
     }
 }
 ```
-DBTest.sol 调用了 AMDB 专用的智能合约 DB.sol，实现的是创建用户表 t_test，并对 t_test 表进行增删改查的功能。
+TableTest.sol 调用了 AMDB 专用的智能合约 AMDB.sol，实现的是创建用户表 t_test，并对 t_test 表进行增删改查的功能。
 
 > **注意：** 
-客户端需要调用转换为 Java 文件的合约代码，需要将 DBTest.sol 和 DB.sol 放入 web3sdk 的 contract 目录下，通过 web3sdk 的编译脚本生成 DBTest.java。
+客户端需要调用转换为 Java 文件的合约代码，需要将 TableTest.sol 和 AMDB.sol 放入 web3sdk 的 contract 目录下，通过 web3sdk 的编译脚本生成 TableTest.java。
