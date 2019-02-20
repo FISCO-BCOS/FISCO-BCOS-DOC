@@ -24,12 +24,9 @@ from recommonmark.transform import AutoStructify
 
 # The suffix of source filenames.
 source_parsers = {
-	'.md': CommonMarkParser,
+	'.md': 'recommonmark.parser.CommonMarkParser',
 }
 source_suffix = ['.rst', '.md']
-
-
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -43,7 +40,10 @@ source_suffix = ['.rst', '.md']
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [ 
+  'sphinx_markdown_tables',
+  'notfound.extension'
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -314,20 +314,6 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
-
-# Markdown support
-
-
-# The suffix of source filenames.
-#source_suffix = ['.rst', '.md']
-#source_parsers = {
-#	'.md': CommonMarkParser,
-#}
-#extensions = [
-#    'sphinx.ext.todo',
-#    'sphinx.ext.mathjax',
-#    'sphinx.ext.ifconfig',
-#]
 
 github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
 def setup(app):
