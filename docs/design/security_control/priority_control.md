@@ -25,7 +25,7 @@
 +-----------------------+--------+-------------------------------+----------------------------------------+
 |_sys_table_access_     |是      |存储权限控制信息               |控制权限功能设置                        |
 +-----------------------+--------+-------------------------------+----------------------------------------+
-|_sys_miners_           |是      |存储共识节点和观察节点的列表   |控制节点类型设置                        |
+|_sys_consensus_        |是      |存储共识节点和观察节点的列表   |控制节点类型设置                        |
 +-----------------------+--------+-------------------------------+----------------------------------------+
 |_sys_cns_              |是      |存储cns列表                    |控制使用CNS                             |
 +-----------------------+--------+-------------------------------+----------------------------------------+
@@ -41,39 +41,33 @@
 +-----------------------+--------+-------------------------------+----------------------------------------+
 
 ```
+针对用户表和每个系统表，SDK分别实现三个接口进行权限相关操作：
+- 用户表：
+  - **public String addUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
+  - **public String removeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
+  - **public List\<AuthorityInfo\> queryUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
+- _sys_tables_表：
+  - **public String addDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
+  - **public String removeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
+  - **public List\<AuthorityInfo\> queryDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
+- _sys_table_access_表：
+  - **public String addAuthorityManager(String address)：** 增加外部账号地址的管理权限的权限。
+  - **public String removeAuthorityManager(String address)：** 移除外部账号地址的管理权限的权限。
+  - **public List\<AuthorityInfo\> queryAuthorityManager()：** 查询拥有管理权限的权限记录列表。
+- _sys_consensus_表：
+  - **public String addNodeManager(String address)：** 增加外部账号地址的节点管理权限。
+  - **public String removeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
+  - **public List\<AuthorityInfo\> queryNodeManager()：** 查询拥有节点管理的权限记录列表。
+- _sys_cns_表：
+  - **public String addCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
+  - **public String removeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
+  - **public List\<AuthorityInfo\> queryCNSManager()：** 查询拥有使用CNS的权限记录列表。
+- _sys_config_表：
+  - **public String addSysConfig(String address)：** 增加外部账号地址的系统参数管理权限。
+  - **public String removeSysConfig(String address)：** 移除外部账号地址的系统参数管理权限。
+  - **public List\<AuthorityInfo\> querySysConfig()：** 查询拥有系统参数管理的权限记录列表。
 
-针对操作的系统表，其逻辑性错误定义如下：   
-其中code是返回码(code大于等于0表示操作成功，其code值为成功操作的记录数)，msg是返回码的描述信息。   
-
-```eval_rst
-
-+------------------+------+------------------------------------------+
-|table             |code  |msg                                       |
-+==================+======+==========================================+
-|_sys_table_access_|-30   |table name and address exist              |
-+------------------+------+------------------------------------------+
-|_sys_table_access_|-31   |table name and address does not exist     |
-+------------------+------+------------------------------------------+
-|_sys_miners_      |-40   |invalid nodeID                            |
-+------------------+------+------------------------------------------+
-|_sys_miners_      |-41   |last miner cannot be removed              |
-+------------------+------+------------------------------------------+
-|_sys_miners_      |-42   |nodeID is not in network                  |
-+------------------+------+------------------------------------------+
-|_sys_miners_      |-43   |nodeID is not in group peers              |
-+------------------+------+------------------------------------------+
-|_sys_miners_      |-44   |nodeID is already in miner list           |
-+------------------+------+------------------------------------------+
-|_sys_miners_      |-45   |nodeID is already in observer list        |
-+------------------+------+------------------------------------------+
-|_sys_cns_         |-50   |address and version exist                 |
-+------------------+------+------------------------------------------+
-|_sys_config_      |-60   |set invalid configuration values          |
-+------------------+------+------------------------------------------+
-
-```
-
-无权限属于系统性错误，code定义-1，msg定义为“non-authorized”。
+设置和移除权限接口返回json字符串，包含code和msg字段，当无权限操作时，其code定义-1，msg定义为“non-authorized”。当成功设置权限时，其code为1(增加了1条权限记录)，msg为“success”。
 
 ## 3 数据定义
 权限信息以系统表的方式进行存储，权限表表名为_sys_table_access_，其字段信息定义如下：
@@ -93,42 +87,22 @@
 +-----------+-------+--------+-----+---------------------------------------------+
 
 ```
-
-**注**：对权限表控制的信息也保存在权限表中。   
+其中，对权限表的插入或更新，当前区块不生效，在当前区块的下一区块生效。状态字段为“0”时，表示权限记录处于正常生效状态，为“1”时表示已删除，即表示权限记录处于失效状态。  
 
 ## 4 流程图
 
 #### 4.1 用户表权限控制流程
 外部账户查询表不进行权限控制。当需要更新，增加或移除记录时，将通过查询权限表进行权限控制。流程如下图所示。
-![ac1.png](../../../images/priority_control/ac1.png)
+![](../../../images/priority_control/ac1.png)
 
 #### 4.2 系统表权限控制流程
-对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk文档](../api/sdk.md)）和控制台（详见[控制台文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果具有权限，执行交易；如果不具备，则返回无权限操作提示。
-![ac2.png](../../../images/priority_control/ac2.png)
+对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk使用文档](../../sdk/index.html)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
+![](../../../images/priority_control/ac2.png)
 
-**注：** _sys_miners_表（ConsensusPrecompiled），_sys_cns_表（CNSPrecompiled），_sys_config_表（SystemConfigPrecompiled）控制流程与对权限表的控制流程类似。
+**注：** _sys_consensus_表（ConsensusPrecompiled），_sys_cns_表（CNSPrecompiled），_sys_config_表（SystemConfigPrecompiled）控制流程与对权限表的控制流程类似。
 
 ## 5 权限控制工具
-### 控制台权限控制命令
-FISCO BCOS的分布式存储权限控制通过权限表来管理。通过提供控制台命令对权限表进行读写操作（针对开发者，可以调用sdk的AuthorityService接口操作权限表），其中有三个命令涉及权限表，如下所示。
 
-```eval_rst
-
-+---------------------------------------------+-------------------+-------------------+------------------------------+
-|AuthorityService API                         |命令全称(缩写)     |命令参数           |含义                          |
-+=============================================+===================+===================+==============================+
-|String add(String tableName, String addr)    |addAuthority(aa)   |table_name address |增加控制的表名和外部账户地址  |
-+---------------------------------------------+-------------------+-------------------+------------------------------+
-|String remove(String tableName, String addr) |removeAuthority(ra)|table_name address |移除控制的表名和外部账户地址  |
-+---------------------------------------------+-------------------+-------------------+------------------------------+
-|List<AuthorityInfo> query(String tableName)  |queryAuthority(qa) |table_name         |根据表名查询权限设置记录      |
-+---------------------------------------------+-------------------+-------------------+------------------------------+
-
-```
-	
-**注：**
- 表名可以是用户表和系统表(\_sys_tables_, \_sys_table_access_, \_sys_miners_, \_sys_cns_和_sys_config_)的表名。
-
-## 6 权限控制示例
-
-参考[权限控制操作文档](../../manual/priority_control.md)
+FISCO BCOS的分布式存储权限控制有如下使用方式：
+- 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制操作文档](../../manual/priority_control.md)。
+- 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是增加，移除和查询权限接口。可以调用[SDK API](../../sdk/api.md)的AuthorityService接口使用权限功能。

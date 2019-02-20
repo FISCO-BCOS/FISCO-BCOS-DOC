@@ -34,21 +34,6 @@ p {
 }
 
 
-/* Links */
-
-a {
-    color: #6ca158
-}
-
-a:hover {
-    color: #6ca158
-}
-
-a:visited {
-    color: #ADAFB3
-}
-
-
 /* Side navigation bar */
 
 .wy-side-nav-search {
@@ -56,11 +41,9 @@ a:visited {
 }
 
 .wy-side-nav-search a.icon-home {
-    color: transparent;
     background-repeat: no-repeat;
     background-size: Auto 20px;
     background-position: center top;
-    background-origin: content box;
     height: 20px;
     width: 100%
 }
