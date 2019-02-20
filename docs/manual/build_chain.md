@@ -16,7 +16,7 @@ Usage:
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -c <Consensus Algorithm>            Default PBFT. If set -c, use raft
+    -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
     -s <State type>                     Default storage. if set -s, use mpt 
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -65,7 +65,7 @@ bash build_chain.sh -f ipconf -T -i
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
 
 - **`c`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的共识算法为RAFT，默认设置为PBFT。
+无参数选项，设置该选项时，设置节点的共识算法为Raft，默认设置为PBFT。
 
 - **`s`选项[**Optional**]**
 无参数选项，设置该选项时，节点使用`mptstate`存储合约局部变量，默认使用`storagestate`存储合约局部变量。
