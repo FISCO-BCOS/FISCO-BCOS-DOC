@@ -4,26 +4,20 @@
 
 见[国密版fisco bcos设计手册](../design/features/guomi.md)
 
-## 源码编译
+## 获取国密二进制
 
-```
-$ git clone https://github.com/FISCO-BCOS/FISCO-bcos
-$ git checkout release-2.0.1
-$ mkdir build && cd build
-$ cmake3 .. -DBUILD_GM=ON
-$ make
-```
-执行成功后会在./bin/目录下生成国密版fisco-bcos可执行文件
-```
-$ ./fisco-bcos --version
-会显示
+```bash
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1 -g
+# 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行文件
+$ ./bin/fisco-bcos -v
 $ FISCO-BCOS gm version 2.0
 ```
 
 ## 一键搭链脚本
 
 拉取build_chain脚本，并进行安装
-```
+
+```bash
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh
 $ bash ./build_chain.sh -l '127.0.0.1:4' -e ./bin/fisco-bcos -g
 ```
@@ -69,7 +63,7 @@ conf目录下的original_cert文件夹为节点与sdk进行通信所需要的证
 
 ## 国密落盘加密配置
 
-### 国密版的Key Center
+### 国密版Key Center
 
 国密版的Key Center需重新编译Key Center，不同点在于cmake时带上``` -DBUILD_GM=ON ```选项。
 
