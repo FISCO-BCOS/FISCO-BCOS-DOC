@@ -2,34 +2,6 @@
 
 本文档对节点准入管理进行介绍性说明，实践方法参见[《节点准入管理操作文档》](../../manual/node_access_management.md)。
 
-## 目录
-<!-- TOC -->
-
-- [1 概述](#1-概述)
-    - [1.1 单链多账本](#11-单链多账本)
-    - [1.2 节点准入机制](#12-节点准入机制)
-- [2 名词解释](#2-名词解释)
-    - [2.1 节点类型](#21-节点类型)
-    - [2.2 配置类型](#22-配置类型)
-    - [2.3 节点准入配置项](#23-节点准入配置项)
-- [3 模块架构](#3-模块架构)
-- [4 核心流程](#4-核心流程)
-    - [4.1 一般初始化流程](#41-一般初始化流程)
-    - [4.2 首次初始化流程](#42-首次初始化流程)
-    - [4.3 基于CA黑名单的节点建连流程](#43-基于CA黑名单的节点建连流程)
-    - [4.4 节点相关类型及其转换操作](#44-节点相关类型及其转换操作)
-- [5 接口及配置描述](#5-接口及配置描述)
-    - [5.1 节点配置文件层级](#51-节点配置文件层级)
-    - [5.2 配置文件示例](#52-配置文件示例)
-    - [5.3 群组节点系统表定义](#53-群组节点系统表定义)
-    - [5.4 群组系统表接口定义](#54-群组系统表接口定义)
-- [6 功能展望](#6-功能展望)
-- [7 FAQ](#7-FAQ)
-        
-<!-- /TOC -->
- 
-=============
-
 ## 1 概述
 
 ### 1.1 单链多账本
@@ -41,7 +13,8 @@
 
 作为联盟链的FISCO BCOS，对链上隐私这一问题，提出了**单链多账本**的解决方案。FISCO BCOS通过引入**群组**概念，使联盟链从原有一链一账本的存储/执行机制扩展为一链多账本的存储/执行机制，基于群组维度实现同一条链上的数据隔离和保密。
 
-![多账本.png](../../../images/node_access_management/multi_ledger.png)
+![](../../../images/node_access_management/multi_ledger.png)
+<center>多账本</center>
 
 如上图所示，节点ABC加入蓝色群组，并共同维护蓝色账本; 节点B和C加入橙色群组并维护橙色账本; 节点A和B加入绿色群组并维护绿色账本。三个群组间共享公共的网络服务，但各群组有各自私有的账本存储及交易执行环境。客户端将交易发到节点所属的某个群组上，该群组内部对交易及数据进行共识并存储，其他群组对该交易无感知不可见。
 
@@ -55,17 +28,18 @@
 
 本文档所讨论的节点为已完成网络准入可进行P2P通信的节点。<font color=#FF0000>网络准入过程涉及P2P节点连接列表添加和证书验证。</font>
 
-- **群组节点**：完成网络准入并加入群组的节点。群组节点只能是记账节点和观察节点两者之一。其中记账节点参与共识出块和交易/区块同步，观察节点只参与区块同步。<font color=#FF0000>群组节点准入过程涉及动态增删节点的交易发送。</font>
+- **群组节点**：完成网络准入并加入群组的节点。群组节点只能是共识节点和观察节点两者之一。其中共识节点参与共识出块和交易/区块同步，观察节点只参与区块同步。<font color=#FF0000>群组节点准入过程涉及动态增删节点的交易发送。</font>
 
 - **游离节点**：完成网络准入但没有加入群组的节点。<font color=#FF0000>游离节点尚未通过群组准入，不参与共识和同步。</font>
 
 节点关系如下：
 
-![节点关系.png](../../../images/node_access_management/node_relationship.png)
+![](../../../images/node_access_management/node_relationship.png)
+<center>节点关系</center>
 
 ### 2.2 配置类型
 
-<table>
+<table border="3">
 <tr bgcolor="#CDCDCD">
   <td>划分维度</td>
   <td>配置类型</td>
@@ -84,7 +58,7 @@
 <tr>
   <td>可改配置</td><td>配置后续可改动，节点重启生效，<br><B>文件后缀为.ini</B></td>
 <tr>
-  <td rowspan="2">存放位置</td><td>本地存储</td><td>配置存放在本地文件，用户可直接修改，<br><B>用户修改文件能重启生效的配置项</B></td>
+  <td rowspan="2">存放位置</td><td>本地存储</td><td>配置存放在本地文件，用户可直接修改，<br><B>用户修改自身文件能重启生效的配置项</B></td>
 </tr>
 <tr>
   <td>链上存储</td><td>配置存放在区块链上，对其修改需群组共识，目前没有需全网共识的内容，<br><B>需新链重置或通过交易修改生效的配置项</B></td>
@@ -95,17 +69,35 @@
 
 涉及节点转入管理相关的配置项有：**P2P节点连接列表**，**节点证书**，**CA黑名单**，**群组节点初始列表**和**群组节点系统表**。
 
-| 配置项         | 作用      						 | 影响范围 | 是否可改 | 存放位置 |
-| ------------- | --------------------------------- | ------ | ------- | ------- |
-| P2P节点连接列表 | 记录本节点期望与哪些节点建立网络通信    | 网络配置 | 可改配置 | 本地存储 |
-| 节点证书       | 证明自己是由可信第三方许可的节点        | 网络配置 | 可改配置 | 本地存储 |
-| CA黑名单       | 记录本节点禁止与哪些节点建立网络通信    | 网络配置 | 可改配置 | 本地存储 |
-| 群组节点初始列表 | 记录创世块阶段参与共识/同步的节点列表   | 群组配置 | 固定配置 | 本地存储 |
-| 群组节点系统表  | 记录当前参与一群组共识/同步的节点列表    | 群组配置 | 可改配置 | 链上存储 |
+<table border="3">
+<tr bgcolor="#CDCDCD">
+  <td><center>配置项</center></td>
+  <td><center>作用</center></td>
+  <td><center>影响范围</center></td>
+  <td><center>是否可改</center></td>
+  <td><center>存放位置</center></td>
+</tr>
+<tr>
+  <td>P2P节点连接列表</td><td>记录本节点期望与哪些节点建立网络通信</td><td>网络配置</td><td>可改配置</td><td>本地存储</td>
+</tr>
+<tr>
+  <td>节点证书</td><td>证明自己是由可信第三方许可的节点</td><td>网络配置</td><td>可改配置</td><td>本地存储</td>
+</tr>
+<tr>
+  <td>CA黑名单</td><td>记录本节点禁止与哪些节点建立网络通信</td><td>网络配置</td><td>可改配置</td><td>本地存储</td>
+</tr>
+<tr>
+  <td>群组节点初始列表</td><td>记录创世块阶段参与共识/同步的节点列表</td><td>群组配置</td><td>固定配置</td><td>本地存储</td>
+</tr>
+<tr>
+  <td>群组节点系统表</td><td>记录当前参与一群组共识/同步的节点列表</td><td>群组配置</td><td>可改配置</td><td>链上存储</td>
+</tr>
+</table>
 
 ## 3 模块架构
 
-![模块架构.png](../../../images/node_access_management/architecture.png)
+![](../../../images/node_access_management/architecture.png)
+<center>模块架构</center>
 
 <font color=#FF0000>配置项及系统模块关系图</font>如上，箭头方向A->B表示B模块依赖A模块的数据，同时B模块晚于A模块初始化。
 
@@ -113,13 +105,15 @@
 
 ### 4.1 一般初始化流程
 
-![一般初始化流程.png](../../../images/node_access_management/first_initialization.png)
+![](../../../images/node_access_management/initialization.png)
+<center>一般初始化流程</center>
 
 ### 4.2 首次初始化流程
 
 节点在首次启动时，对其所属的各个群组，以群组为单位将固定配置文件的内容写入第0块并直接提交上链。初始化的具体逻辑为：
 
-![首次初始化流程.png](../../../images/node_access_management/initialization.png)
+![](../../../images/node_access_management/first_initialization.png)
+<center>首次初始化流程</center>
 
 这一阶段需写入的与节点准入管理相关的配置内容有：**群组节点初始列表->群组节点系统表**。
 
@@ -138,15 +132,17 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
 
 ### 4.4 节点相关类型及其转换操作
 
-三种节点类型（记账节点+观察节点+游离节点）可通过相关接口进行如下转换：
+三种节点类型（共识节点+观察节点+游离节点）可通过相关接口进行如下转换：
 
-![共识节点相关类型及其转换操作.png](../../../images/node_access_management/type_and_conversion_of_nodes.png)
+![](../../../images/node_access_management/type_and_conversion_of_nodes.png)
+<center>共识节点相关类型及其转换操作</center>
 
 ## 5 接口及配置描述
 
 ### 5.1 节点配置文件层级
 
-![配置文件的层级关系.png](../../../images/node_access_management/config_file_organization.png)
+![](../../../images/node_access_management/config_file_organization.png)
+<center>配置文件的层级关系</center>
 
 配置文件的组织规则为：**各群组的配置独立**、**固定配置和可改配置相独立**。目前使用的文件有**网络可改配置文件**`config.ini`、**群组固定配置文件**`group.N.genesis`和**群组可改配置文件**`group.N.ini`，其中`N`为节点所在的群组号。对于**网络/群组可改配置文件**，如果文件中没有显式定义一配置项的值，程序将使用该配置项的默认值。
 
@@ -160,14 +156,15 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
     ;p2p listen port
     listen_port=30300
     ;nodes to connect
-    node.0=10.107.105.138:30300
-    node.1=10.107.105.138:30303
-    node.2=10.107.105.138:30306
-    node.3=10.107.105.138:30309
+    node.0=127.0.0.1:30300
+    node.1=127.0.0.1:30301
+    node.2=127.0.0.1:30302
+    node.3=127.0.0.1:30303
     
 ;certificate rejected list
 [crl]
-    ;crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e3787c338a4
+    ;crl.0 should be nodeid, nodeid's length is 128 
+    ;crl.0=
 
 ;certificate configuration
 [secure]
@@ -188,8 +185,6 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
     consensus_type=pbft
     ;the max number of transactions of a block
     max_trans_num=1000
-    ;the ttl of broadcasted pbft message
-    ;ttl=2
     ;the node id of leaders
     node.0=79d3d4d78a747b1b9e59a3eb248281ee286d49614e3ca5b2ce3697be2da72cfa82dcd314c0f04e1f590da8db0b97de466bd08e27eaa13f85df9b60e54d6a1ec8
     node.1=da527a4b2aeae1d354102c6c3ffdfb54922a092cc9acbdd555858ef89032d7be1be499b6cf9a703e546462529ed9ea26f5dd847110ff3887137541bc651f1c32
@@ -199,21 +194,20 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
 
 ### 5.3 群组节点系统表定义
 
-```eval_rst
-+------------+---------+--------+-----+---------------------------------------+
-| Field      | Type    | Null   | Key | Expain                                |
-+============+=========+========+=====+=======================================+
-| name       | string  | No     | PRI | 各行同一值，分布式存储基于此key实现全表查询|
-+------------+---------+--------+-----+---------------------------------------+
-| type       | string  | No     |     | 节点类型（miner/observer）             |
-+------------+---------+--------+-----+---------------------------------------+
-| node_id    | string  | No     |     | 节点NodeID                            |
-+------------+---------+--------+-----+---------------------------------------+
-| enable_num | string  | No     |     | 该节点类型生效的区块高度                 |
-+------------+---------+--------+-----+---------------------------------------+
-| _status_   | string  | No     |     | 分布式存储通用字段，“0”可用“1”删除       |
-+------------+---------+--------+-----+---------------------------------------+
-```
+<table border="3">
+<tr bgcolor="#CDCDCD">
+  <td><center>Field</center></td>
+  <td><center>Type</center></td>
+  <td><center>Null</center></td>
+  <td><center>Key</center></td>
+  <td><center>Expain</center></td>
+</tr>
+<tr><td>name</td><td>string</td><td>No</td><td>PRI</td><td>各行同一值，分布式存储基于此key实现全表查询</td></tr>
+<tr><td>type</td><td>string</td><td>No</td><td></td><td>节点类型（sealer/observer）</td></tr>
+<tr><td>node_id</td><td>string</td><td>No</td><td></td><td>节点NodeID</td></tr>
+<tr><td>enable_num</td><td>string</td><td>No</td><td></td><td>该节点类型生效的区块高度</td></tr>
+<tr><td>_status_</td><td>string</td><td>No</td><td></td><td>分布式存储通用字段，“0”可用“1”删除</td></tr>
+</table>
 
 ### 5.4 群组系统表接口定义
 
@@ -222,8 +216,8 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
 ```sol
 contract ConsensusSystemTable
 {
-    // 修改一节点为记账节点
-    function addMiner(string nodeID) public returns(int256);
+    // 修改一节点为共识节点
+    function addSealer(string nodeID) public returns(int256);
     // 修改一节点为观察节点
     function addObserver(string nodeID) public returns(int256);
     // 把该节点从群组系统表中移除

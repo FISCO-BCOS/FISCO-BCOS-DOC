@@ -2,17 +2,17 @@
 系统设计
 ##############################################################
 
-
+本章介绍FISCO BCOS平台的设计思路，包括每个模块的结构以及实现，面向FISCO BCOS平台开发者。
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    architecture/index.rst
    p2p/P2P.md 
    sync/sync.md
    consensus/index.rst
-   virtualMachine/index.rst
+   virtual_machine/index.rst
    storage/index.rst
    security_control/index.rst
-   features/index.rst
-   api/index.rst
+   rpc.md
+   features/index.rst 

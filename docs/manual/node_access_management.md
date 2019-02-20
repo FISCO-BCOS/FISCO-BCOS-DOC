@@ -1,24 +1,6 @@
-# 节点准入管理操作文档
+# 节点准入管理手册
 
 本文档描述节点准入管理的实践操作，建议阅读本操作文档前请先行了解[《节点准入管理介绍》](../design/security_control/node_access_management.md)。
-
-## 目录
-<!-- TOC -->
-
-- [1 操作项目](#1-操作项目)
-- [2 操作方式](#2-操作方式)
-- [3 操作示例](#3-操作示例)
-    - [3.1 A节点加入网络](#31-A节点加入网络)
-    - [3.2 A节点退出网络](#32-A节点退出网络)
-    - [3.3 A节点加入群组](#33-A节点加入群组)
-    - [3.4 A节点退出群组](#34-A节点退出群组)
-    - [3.5 A节点将B节点列入CA黑名单](#35-A节点将B节点列入CA黑名单)
-    - [3.6 A节点将B节点移除CA黑名单](#36-A节点将B节点移除CA黑名单)
-- [4 操作工具](#4-操作工具)
-    - [4.1 控制台](#41-控制台)
-    - [4.2 RPC](#42-RPC)
-        
-<!-- /TOC -->
 
 ## 1 操作项目
 
@@ -30,7 +12,7 @@
 
 ## 2 操作方式
 
-- 修改节点配置：节点修改自身配置后重启生效，涉及的操作项目包括**网络的加入/退出、CA黑名单的列入/移除**。配置项的修改例子参考[配置文件示例](../design/security_control/node_access_management.md#52-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A4%BA%E4%BE%8B)。
+- 修改节点配置：节点修改自身配置后重启生效，涉及的操作项目包括**网络的加入/退出、CA黑名单的列入/移除**。
 - 交易共识上链：节点发送上链交易修改需群组共识的配置项，涉及的操作项目包括**节点类型的修改**。目前提供的发送交易途径为控制台。
 - RPC查询：使用curl命令查询链上信息，涉及的操作项目包括**群组节点的查询**。
 
@@ -38,7 +20,9 @@
 
 本节将以下图为例对上述六种操作进行描述。虚线表示节点间能进行网络通信，实线表示节点间在可通信的基础上具备群组关系，不同颜色区分不同的群组关系。图中有一个网络，包含三个群组，其中群组Group3有三个节点。Group3是否与其他群组存在交集节点，不影响以下操作过程的通用性。
 
-![群组例子.png](../../images/node_access_management/multi_ledger_example.png)
+![](../../images/node_access_management/multi_ledger_example.png)
+
+<center>群组例子</center>
 
 ### 3.1 A节点加入网络
 
@@ -75,7 +59,7 @@
 
 - <font color=#FF0000>节点3需先退出群组再退出网络，退出顺序由用户保证，系统不再作校验</font>；
 - 网络连接由节点主动发起，如缺省第2步，节点3仍可感知节点1和节点2发起的P2P连接请求，并建立连接；
-- 如果节点3想拒绝节点1和节点2的连接请求，可参考[3.5 A节点将B节点列入CA黑名单](../node_access_management.md#35-A%E8%8A%82%E7%82%B9%E5%B0%86B%E8%8A%82%E7%82%B9%E5%88%97%E5%85%A5CA%E9%BB%91%E5%90%8D%E5%8D%95)进行操作。
+- 如果节点3想拒绝节点1和节点2的连接请求，可参考**3.5 A节点将B节点列入CA黑名单**进行操作。
 
 ### 3.3 A节点加入群组
 
@@ -89,8 +73,8 @@
 2. 节点3拷贝节点1（或2）的<font color=#FF0000>群组节点初始列表</font>，不需改动；
 3. 重启节点3；
 4. 将节点3作为**观察节点**类型，调用<font color=#FF0000>addObserver</font>接口发送加入群组交易；
-5. 区块同步结束后，调用<font color=#FF0000>addMiner</font>接口发送交易修改节点3类型为**记账节点**；
-6. 查询日志确认节点3参与出块，或通过<font color=#FF0000>getMinerList</font>命令查询返回的内容中是否包含节点3的nodeID，加入群组操作完成。
+5. 区块同步结束后，调用<font color=#FF0000>addSealer</font>接口发送交易修改节点3类型为**共识节点**；
+6. 查询日志确认节点3参与出块，或通过<font color=#FF0000>getSealerList</font>命令查询返回的内容中是否包含节点3的nodeID，加入群组操作完成。
 
 补充说明：
 
@@ -107,11 +91,11 @@
 操作顺序：
 
 1. 调用<font color=#FF0000>remove</font>接口发送退出群组交易；
-2. 查询日志确认节点3不参与出块，或通过<font color=#FF0000>getMinerList</font>和<font color=#FF0000>getObserverList</font>命令查询返回的内容中均不包含节点3的nodeID，退出群组操作完成。
+2. 查询日志确认节点3不参与出块，或通过<font color=#FF0000>getSealerList</font>和<font color=#FF0000>getObserverList</font>命令查询返回的内容中均不包含节点3的nodeID，退出群组操作完成。
 
 补充说明：
 
-- 节点3可以记账节点或观察节点的身份执行退出操作。
+- 节点3可以共识节点或观察节点的身份执行退出操作。
 
 ### 3.5 A节点将B节点列入CA黑名单
 
@@ -148,11 +132,11 @@
 
 控制台提供的命令包括：
 
-- [addMiner](../manual/console.md#addminer)：修改/增加一节点为记账节点
-- [addObserver](../manual/console.md#addobserver)：修改/增加一节点为观察节点
-- [removeNode](../manual/console.md#removenode)：移除节点（节点被移除后既不是记账节点，也不是观察节点）
-- [getMinerList](../manual/console.md#getminerlist)：查看群组中记账节点列表
-- [getObserverList](../manual/console.md#getnodeidlist)：查看群组中观察节点列表
+- addSealer：修改/增加一节点为共识节点
+- addObserver：修改/增加一节点为观察节点
+- removeNode：移除节点（节点被移除后既不是共识节点，也不是观察节点）
+- getSealerList：查看群组中共识节点列表
+- getObserverList：查看群组中观察节点列表
 
 控制台详细使用方法请参考[《控制台》](../manual/console.md)。
 
@@ -160,7 +144,7 @@
 
 查询群组节点的RPC接口包括：
 
-- [getMinerList](../design/api/rpc.md#getminerlist)：查看群组中记账节点列表
-- [getObserverList](../design/api/rpc.md#getobserverlist)：查看群组中观察节点列表
+- getSealerList：查看群组中共识节点列表
+- getObserverList：查看群组中观察节点列表
 
-RPC详细使用方法请参考[《RPC》](../design/api/rpc.md)。
+RPC详细使用方法请参考[《RPC》](../api.md)。
