@@ -47,7 +47,7 @@ $ ./gen_node.sh -c nodes/cert/agency -o node2
 ```
 2. 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（node0、node1）同级；
 3. 拷贝`node0/config.ini`到node2目录;
-4. 修改`config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
+4. 修改`node2/config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
 ```
 $ vim node2/config.ini
 [rpc]
@@ -100,7 +100,7 @@ $ ./start.sh
 nohup: appending output to ‘nohup.out’
 ```
 2. 对于节点1和2，将节点3从自身的<font color=#FF0000>P2P节点连接列表</font>中移除（如有），重启节点1和2；
-3. 确认节点1与节点1（和2）的原有连接已经断开，退出网络操作完成。
+3. 确认节点3与节点1（和2）的原有连接已经断开，退出网络操作完成。
 
 补充说明：
 
@@ -119,7 +119,7 @@ nohup: appending output to ‘nohup.out’
 1. 节点3加入网络；
 2. 节点3拷贝节点1（或2）的`group.3.genesis`（内含<font color=#FF0000>群组节点初始列表</font>）和`group.3.ini`到对应位置，不需改动；
 3. 重启节点3；
-4. 参考**操作工具**一节，根据节点nodeID设置节点3为**共识节点**；
+4. 参考**操作工具**一节，根据节点3的nodeID设置节点3为**共识节点**；
 5. 参考**操作工具**一节，查询group3的共识节点中是否包含节点3的nodeID，如存在，加入群组操作完成。
 
 补充说明：
@@ -136,7 +136,7 @@ nohup: appending output to ‘nohup.out’
 
 操作顺序：
 
-1. 参考**操作工具**一节，根据节点NodeID设置节点3为**游离节点**；
+1. 参考**操作工具**一节，根据节点3的NodeID设置节点3为**游离节点**；
 2. 参考**操作工具**一节，查询group3的共识节点中是否包含节点3的nodeID，如已消失，退出群组操作完成。
 
 补充说明：
@@ -159,8 +159,7 @@ $ vim node0/config.ini
 ;certificate rejected list
 [crl]
     ;crl.0 should be nodeid, nodeid's length is 128 
-    ;crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
-****
+    crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
 ```
 2. 重启节点1；
 3. 确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。

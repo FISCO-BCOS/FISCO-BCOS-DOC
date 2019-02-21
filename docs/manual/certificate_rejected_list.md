@@ -34,8 +34,7 @@ $ vim node0/config.ini
 ;certificate rejected list
 [crl]
     ;crl.0 should be nodeid, nodeid's length is 128 
-    ;crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
-****
+    crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
 ```
 2. 重启节点1；
 ```
