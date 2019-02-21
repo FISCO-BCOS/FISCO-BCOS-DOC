@@ -13,6 +13,7 @@
    group.md 
    configs.md
    console.md
+   amop.md
    node_access_management.md
    certificate_rejected_list.md
    priority_control.md

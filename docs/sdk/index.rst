@@ -15,7 +15,7 @@ Java SDK
    +---------+-----------------------------------------------------------------+
    |         |  - 提供调用FISCO BCOS JSON-RPC的Java API                        | 
    |         |  - 链上信使协议( `AMOP <https://fisco-bcos-documentation.read   |
-   |基本特性 |    thedocs.io/zh_CN/feature-2.0.0/docs/sdk/amop.html>`_ ),      |
+   |基本特性 |    thedocs.io/zh_CN/feature-2.0.0/docs//manual/amop.html>`_ ),  |
    |         |    为联盟链提供安全高效的消息信道                               | 
    +---------+-----------------------------------------------------------------+         
    |         |  - 支持使用国密算法发交易                                       |
