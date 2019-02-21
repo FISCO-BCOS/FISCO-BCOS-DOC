@@ -1,6 +1,6 @@
 # 国密使用手册
 
-为了充分支持国产密码学算法，金链盟基于国产密码学标准，在FISCO BCOS平台中集成了国密加解密、签名、验签、哈希算法、国密SSL通信协议，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)
+为了充分支持国产密码学算法，金链盟基于国产密码学标准，在FISCO BCOS平台中集成了国密加解密、签名、验签、哈希算法、国密SSL通信协议，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)。
 
 ## 初次部署国密版FISCO-BCOS
 
@@ -21,7 +21,7 @@ $ ./bin/fisco-bcos -v
 FISCO-BCOS gm version 2.0
 ```
 
-执行完上述步骤后，fisco目录下结构如下
+执行完上述步骤后，fisco目录下结构如下：
 
 ```bash
 fisco
@@ -68,11 +68,11 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/keycenter/build/nodes
 ```
 
-当国密联盟链部署完成之后，其余操作与[hello world](./hello_world.md)的操作相同
+当国密联盟链部署完成之后，其余操作与[hello world](./hello_world.md)的操作相同。
 
 ## 国密配置信息
 
-2.0国密版本FISCO BCOS节点之间采用SSL安全通道发送和接收消息，证书主要配置项集中在
+国密版本FISCO BCOS节点之间采用SSL安全通道发送和接收消息，证书主要配置项集中在如下配置项中：
 
 ```shell
 [secure] section：
@@ -94,7 +94,7 @@ ca_cert: gmca证书路径
     ca_cert=gmca.crt
 ```
 
-* ./conf目录下的original_cert文件夹中的证书为节点与sdk进行通信所需要的证书
+* ./conf目录下的original_cert文件夹中的证书为节点与sdk进行通信所需要的证书。
 
 ## 国密版SDK使用
 
@@ -117,7 +117,7 @@ cmake3 .. -DBUILD_GM=ON
 cmake .. -DBUILD_GM=ON
 ```
 
-其它步骤与标准版Key Center相同，请参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)
+其它步骤与标准版Key Center相同，请参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)。
 
 ### 国密版节点配置
 
