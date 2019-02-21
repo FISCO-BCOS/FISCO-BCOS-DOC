@@ -6,15 +6,19 @@ CA黑名单的操作包括**一节点将他节点列入/移除CA黑名单**，�
 
 ## 修改范围
 
-节点`config.ini`配置有`[crl]`路径（可选）。`[crl]`为节点NodeID列表，node.X为本节点拒绝连接的对方节点NodeID。配置示例如下：
+节点`config.ini`配置有`[crl]`路径（可选）。`[crl]`为节点NodeID列表，node.X为本节点拒绝连接的对方节点NodeID。
 
-```
-[crl]
-    crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e3787c338a4
-    crl.1=af57c506be9ae60df8a4a16823fa948a68550a9b6a5624df44afcd3f75ce3afc6bb1416bcb7018e1a22c5ecbd016a80ffa57b4a73adc1aeaff4508666c9b633a
-```
+## 修改示例
 
-## A节点将B节点列入CA黑名单
+网络中存在三个节点，均互联，节点相关信息为：
+
+节点1的目录名为node0，IP端口为127.0.0.1:30400，nodeID前四个字节为b231b309...
+
+节点2的目录名为node1，IP端口为127.0.0.1:30401，nodeID前四个字节为aab37e73...
+
+节点3的目录名为node2，IP端口为127.0.0.1:30402，nodeID前四个字节为d6b01a96...
+
+### A节点将B节点列入CA黑名单
 
 场景描述：
 
@@ -22,16 +26,40 @@ CA黑名单的操作包括**一节点将他节点列入/移除CA黑名单**，�
 
 操作顺序：
 
-1. 对于节点1，将节点2的公钥NodeID加入自身的**CA黑名单**；
+1. 对于节点1（node0），将节点2（node1）的公钥NodeID加入自身的**CA黑名单**；
+```
+$ cat node1/conf/node.nodeid 
+aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
+$ vim node0/config.ini
+;certificate rejected list
+[crl]
+    ;crl.0 should be nodeid, nodeid's length is 128 
+    ;crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
+****
+```
 2. 重启节点1；
-3. 使用netstat命令确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。
+```
+# 在node1目录下执行
+$ ./stop.sh
+$ ./start.sh
+nohup: appending output to ‘nohup.out’
+```
+3. 通过日志确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。
+```
+# 在打开DEBUG级别日志前提下，查看自身节点（node2）连接的节点数及所连接的节点信息（nodeID）
+# 以下日志表明节点node2与两个节点（节点的nodeID前4个字节为b231b309、aab37e73）建立了连接
+$ tail -f node2/log/log*  | grep P2P
+debug|2019-02-21 10:30:18.694258| [P2P][Service] heartBeat ignore connected,endpoint=127.0.0.1:30400,nodeID=b231b309...
+debug|2019-02-21 10:30:18.694277| [P2P][Service] heartBeat ignore connected,endpoint=127.0.0.1:30401,nodeID=aab37e73...
+info|2019-02-21 10:30:18.694294| [P2P][Service] heartBeat connected count,size=2
+```
 
 补充说明：
 
 - 节点1添加节点2到自身CA黑名单的操作，将断开与节点2的网络连接及AMOP通信；
 - 节点1添加节点2到自身CA黑名单的操作，将对节点1所在群组的**共识及同步消息/数据转发**。
 
-## A节点将B节点移除CA黑名单
+### A节点将B节点移除CA黑名单
 
 场景描述：
 
@@ -41,7 +69,7 @@ CA黑名单的操作包括**一节点将他节点列入/移除CA黑名单**，�
 
 1. 对于节点1，将节点2的公钥NodeID从自身的**CA黑名单**移除；
 2. 重启节点1；
-3. 使用netstat命令确认节点1与节点2重新建立连接，移除黑名单操作完成。
+3. 通过日志确认确认节点1与节点2重新建立连接，移除黑名单操作完成。
 
 ## FAQ
 
