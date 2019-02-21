@@ -2,9 +2,9 @@
 
 为了充分支持国产密码学算法，金链盟基于国产密码学标准，在FISCO BCOS平台中集成了国密加解密、签名、验签、哈希算法、国密SSL通信协议，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)。
 
-## 初次部署国密版FISCO-BCOS
+## 初次部署国密版FISCO BCOS
 
-本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
+本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 
 ```bash
 # Ubuntu16安装依赖
@@ -13,7 +13,7 @@ $ sudo apt install -y openssl curl
 $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
-# 准备fisco-bcos二进制
+# 准备fisco-bcos二进制文件
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -g
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 # 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行文件
@@ -31,12 +31,12 @@ fisco
 ```
 
 
-- 搭建4节点FISCO-BCOS链
+- 搭建4节点FISCO BCOS链
 
 ```bash
 # 生成一条4节点的FISCO链 4个节点都属于group1 下面指令在fisco目录下执行
 # -e 指定fisco-bcos路径 -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
-# 根据下面的指令，需要保证机器的30300-30303 20200-20203 8545-8548端口没有被占用
+# 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
 $ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545 -g
 ```
 
@@ -93,8 +93,6 @@ ca_cert: gmca证书路径
     ;the ca certificate file
     ca_cert=gmca.crt
 ```
-
-* ./conf目录下的original_cert文件夹中的证书为节点与sdk进行通信所需要的证书。
 
 ## 国密版SDK使用
 

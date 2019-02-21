@@ -6,7 +6,7 @@
 
 为了简化安装与配置，FISCO BCOS提供了[build_chain](manual/build_chain.md)脚本来帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从GitHub下载最新版本的预编译二进制，也可通过选项指定用户编译的二进制来搭建FISCO BCOS链。
 
-初次接触FISCO BCOS的用户建议从[Hello World](manual/hello_world.md)教程开始，通过在本机部署FISCO-BCOS以及部署和调用Hello World合约快速入门。
+初次接触FISCO BCOS的用户建议从[Hello World](manual/hello_world.md)教程开始，通过在本机部署FISCO BCOS以及部署和调用Hello World合约快速入门。
 
 ## 用户手册
 

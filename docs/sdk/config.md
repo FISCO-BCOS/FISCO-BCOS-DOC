@@ -28,10 +28,10 @@
 
 ### 2.1 SDK配置
 #### 2.1.1 FISCO BCOS节点证书配置
-FISCO-BCOS作为联盟链，其SDK连接区块链节点需要进行双向认证。因此，需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
+FISCO BCOS作为联盟链，其SDK连接区块链节点需要进行双向认证。因此，需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
 
 #### 2.1.2 配置文件设置
-Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
+Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ##### 2.1.2.1 Spring项目配置
 提供Spring项目中关于applicationContext.xml的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
