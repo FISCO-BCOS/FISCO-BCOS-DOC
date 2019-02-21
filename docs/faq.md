@@ -8,9 +8,9 @@
   请 [参考这里](./whats_new.md)。
 
 问:
-  FISCO BCOS v2.0都有哪些API？开发者如何与FISCO BCOS平台交互？<br>
+  开发者如何与FISCO BCOS平台交互？<br>
 答:
-  FISCO BCOS的API为
+  FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
   1. FISCO BCOS v2.0提供jsonrpc接口，具体请 [参考这里](./api.md)。
   2. FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/index.html)。
   3. FISCO BCOS v2.0提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
@@ -19,8 +19,8 @@
   FISCO BCOS v2.0如何搭建？<br>
 答:
   FISCO BCOS支持多种搭建方式，常用方式有：
-  - 建链脚本：使用简单，适合第一次接触FISCO BCOS的同学，具体请 [参考这里](./manual/build_chain.md)。
-  - FISCO-Generator：更灵活，适合熟悉FISCO BCOS的用户和企业用户，具体请 [参考这里](./enterprise/index.html)。
+  - build_chain.sh：适合开发者体验、测试FISCO BCOS联盟链，具体请 [参考这里](./manual/build_chain.md)。
+  - FISCO-Generator：使用企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise/index.html)。
 
 问:
   FISCO BCOS v2.0的智能合约与之前版本合约有什么不同，兼容性如何？<br>
