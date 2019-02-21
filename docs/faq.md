@@ -95,7 +95,7 @@
   共识可改配置可以通过控制台修改。共识可改配置项查询除了控制台外，还可以通过RPC接口查询，具体请 [参考这里](./design/rpc.md)。
 
   + [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey(ssc)更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见ssc -h 。
-  + [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addMiner(am)，addObserver(ao)，removeNode(rn)，具体参考《节点管理》。
+  + [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addSealer(as)，addObserver(ao)，removeNode(rn)，具体参考《节点管理》。
 
 
 问:
@@ -131,6 +131,14 @@
 
 
 ## 企业工具
+问：
+  企业工具使用时出现找不到pip
+
+答：
+  企业工具依赖python pip，使用以下命令安装
+```
+$ python -m pip install
+```
 
 问:
   企业工具使用时出现
