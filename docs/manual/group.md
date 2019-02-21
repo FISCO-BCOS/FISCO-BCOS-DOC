@@ -223,10 +223,18 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 ......此处省略其他输出......
 ```
 
-### 节点加入/退出新群组
+### 节点加入/退出群组
 
-通过[控制台](console.md)，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](node_access_management.md)。<font color=#FF0000>控制台配置参考[控制台操作手册](console.html#id7)</font>。
+通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](node_access_management.md)。<font color=#FF0000>控制台配置参考[控制台操作手册](console.html#id7)</font>。
 
+```eval_rst
+.. important::
+    
+    新节点加入群组前，请确保：
+    
+    - 新加入节点正常共识： 正常共识的节点会刷出+++日志
+    - 群组内节点正常共识
+````
 
 将星形区块链系统中的node2加入group2为共识节点，具体操作方法如下：
 
