@@ -1,8 +1,6 @@
 # 国密使用手册
 
-为了充分支持国产密码学算法，金链盟基于国产密码学标准，实现了国密加解密、签名、验签、哈希算法、国密SSL通信协议，并将其集成到FISCO BCOS平台中，实现了对国家密码局认定的商用密码的完全支持。
-
-见[国密版fisco bcos设计手册](../design/features/guomi.md)
+为了充分支持国产密码学算法，金链盟基于国产密码学标准，实现了国密加解密、签名、验签、哈希算法、国密SSL通信协议，并将其集成到FISCO BCOS平台中，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)
 
 ## 初次部署国密版FISCO-BCOS
 
@@ -99,7 +97,7 @@ conf目录下的original_cert文件夹为节点与sdk进行通信所需要的证
 
 ## 国密版SDK使用
 
-详细操作参考[sdk文档](../sdk/index.html)。
+详细操作参考[sdk文档](../../docs/sdk/config.html#id8)。
 
 ## 国密控制台使用
 

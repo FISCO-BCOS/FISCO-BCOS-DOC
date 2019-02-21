@@ -4,13 +4,13 @@
 
   为了充分支持国产密码学算法，金链盟基于[国产密码学标准](http://www.gmbz.org.cn/main/bzlb.html)，实现了国密加解密、签名、验签、哈希算法、国密SSL通信协议，并将其集成到FISCO BCOS平台中，实现了对**国家密码局认定的商用密码**的完全支持。
 
-国密版fisco bcos与标准版在数据结构上的差异如下：
+国密版FISCO BCOS与标准版在数据结构上的差异如下：
 
-* 交易长度：国密版fisco bcos的签名长度为1024bits(128字节，其中公钥512bits,签名长度512bits)，标准版长度为520bits(其中标识符8bits,签名长度512bits)
+* 交易长度：国密版FISCO BCOS的签名长度为1024bits(128字节，其中公钥512bits,签名长度512bits)，标准版长度为520bits(其中标识符8bits,签名长度512bits)。
 
-* 国密双证书模式：国密fisco bcos在进行p2p链接时拥有两条证书，分别为签名证书gmnode.crt和加密证书gmennode.crt。同时对应两套私钥gmnode.key和gmennode.key。
+* 国密双证书模式：国密版FISCO BCOS在进行p2p链接时拥有两套证书，分别为签名证书gmnode.crt和加密证书gmennode.crt。同时对应两套私钥gmnode.key和gmennode.key。
 
-* 国密solidity编译器：在编译智能合约时，solidity编译器使用国密SM4消息摘要算法
+* 国密solidity编译器：在编译智能合约时，solidity编译器使用国密SM4消息摘要算法。
 
 ## 系统框架
 
