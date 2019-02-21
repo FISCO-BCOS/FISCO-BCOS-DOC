@@ -4,9 +4,9 @@
 
   为了充分支持国产密码学算法，金链盟基于[国产密码学标准](http://www.gmbz.org.cn/main/bzlb.html)，实现了国密加解密、签名、验签、哈希算法、国密SSL通信协议，并将其集成到FISCO BCOS平台中，实现了对**国家密码局认定的商用密码**的完全支持。
 
-**国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法**，国密版FISCO-BCOS与标准版主要特性对比如下：
+**国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法**，国密版FISCO BCOS与标准版主要特性对比如下：
 
- | | 标准版FISCO-BCOS | 国密版FISCO BCOS |
+ | | 标准版FISCO BCOS | 国密版FISCO BCOS |
  | :-: | :-: | :-: |
  | SSL链接 | Openssl TLSv1.2协议 | 国密TLSv1.1协议|
  | 签名验证 | ECDSA签名算法 | SM2签名算法 |
@@ -25,7 +25,7 @@
 
 ## 国密SSL 1.1 握手建立流程
 
-国密版FISCO-BCOS节点之间的认证选用国密SSL 1.1的ECDHE_SM4_SM3密码套件进行SSL链接的建立，整体流程如下图所示：
+国密版FISCO BCOS节点之间的认证选用国密SSL 1.1的ECDHE_SM4_SM3密码套件进行SSL链接的建立，整体流程如下图所示：
 
 ![](../../../images/guomi/ssl1.png)
 
