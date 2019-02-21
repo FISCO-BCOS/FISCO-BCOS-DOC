@@ -1,6 +1,6 @@
 # 国密使用手册
 
-为了充分支持国产密码学算法，金链盟基于国产密码学标准，实现了国密加解密、签名、验签、哈希算法、国密SSL通信协议，并将其集成到FISCO BCOS平台中，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)
+为了充分支持国产密码学算法，金链盟基于国产密码学标准，在FISCO BCOS平台中集成了国密加解密、签名、验签、哈希算法、国密SSL通信协议，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)
 
 ## 初次部署国密版FISCO-BCOS
 
@@ -40,8 +40,9 @@ fisco
 $ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545 -g
 ```
 
-* -e 为编译的国密版fisco-bcos的路径，需要在脚本后指定
-* -g 国密编译选项，使用成功后会生成国密版的节点
+* -e 为编译的国密版fisco-bcos的路径，需要在脚本后指定。
+* -g 国密编译选项，使用成功后会生成国密版的节点。
+
 关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
 
 ```bash
@@ -67,7 +68,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/keycenter/build/nodes
 ```
 
-当国密联盟链部署完成之后，其余操作与[快速入门](./hello_world.md)的操作相同
+当国密联盟链部署完成之后，其余操作与[hello world](./hello_world.md)的操作相同
 
 ## 国密配置信息
 
