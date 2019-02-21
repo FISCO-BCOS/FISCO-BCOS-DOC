@@ -71,7 +71,7 @@ precompiled合约涉及存储操作时，需要确定存储的表信息(表名�
 ### 2.2 step by step sample  
 ```
 //HelloWorld.sol
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.25;
 
 contract HelloWorld{
     string name;
@@ -107,7 +107,7 @@ contract HelloWorld{
 
 需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的辅助合约：
 ```
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.25;
 
 contract HelloWorld {
     function get() public constant returns(string) {}
