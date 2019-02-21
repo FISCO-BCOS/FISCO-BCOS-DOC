@@ -4,7 +4,7 @@
 
 ## 首次部署FISCO-BCOS联盟链
 
-### 1. 使用`build_chain`脚本
+### 使用`build_chain`脚本
 
 本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制，在CentOS 7和Ubuntu 16.04上经过测试。（理论上静态二进制可在任意Linux操作系统上运行）。
 
@@ -63,7 +63,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /mnt/d/fisco/nodes
 ```
 
-### 2. 启动并检查状态
+### 启动并检查状态
 
 - 启动FISCO-BCOS链
 
@@ -117,7 +117,7 @@ info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
 ```
 
-### 3. 使用控制台
+### 使用控制台
 
 控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台依赖于**Java8**以上版本(**CentOS**请安装**Oracle Java 8**以上版本)，对于Ubuntu 16.04系统安装**openjdk 8**即可。控制台详细文档[参考这里](console.md)。
 
@@ -127,7 +127,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
-$ curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
 $ tar -zxf console.tar.gz && chmod u+x console/start
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
@@ -189,7 +189,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ## 部署调用Hello World合约
 
-### 1. HelloWorld合约
+### HelloWorld合约
 
 HelloWorld合约提供两个接口，分别是`get()`和`set()`，用于获取/设置合约变量`name`。合约内容如下
 ```solidity
@@ -212,7 +212,7 @@ contract HelloWorld{
 }
 ```
 
-### 2. 使用控制台部署HelloWorld合约
+### 使用控制台部署HelloWorld合约
 
 为了方便用户快速体验，HelloWorld合约已经通过Solidity编译并转为Java接口内置于控制台中，所以接下来参考下面命令部署即可。关于Solidity合约转Java接口，[参考这里](../sdk/index.html)。
 
@@ -222,7 +222,7 @@ contract HelloWorld{
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
-### 3. 使用控制台调用HelloWorld合约
+### 使用控制台调用HelloWorld合约
 
 ```bash
 # 查看当前块高
