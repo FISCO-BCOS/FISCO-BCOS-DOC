@@ -26,7 +26,7 @@ CA黑名单的操作包括**一节点将他节点列入/移除CA黑名单**，�
 
 操作顺序：
 
-1. 对于节点1（node0），将节点2（node1）的公钥NodeID加入自身的**CA黑名单**；
+1. 对于节点1（node0），将节点2（node1）的公钥nodeID加入自身的**CA黑名单**；
 ```
 $ cat node1/conf/node.nodeid 
 aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
