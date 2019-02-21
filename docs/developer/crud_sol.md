@@ -1,8 +1,8 @@
 # CRUD合约开发
 
-访问 AMDB 需要使用 AMDB 专用的智能合约 AMDB.sol 接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
+访问 AMDB 需要使用 AMDB 专用的智能合约 Table.sol 接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
-AMDB.sol文件代码如下:
+Table.sol文件代码如下:
 ```js
 
 contract TableFactory {
@@ -62,7 +62,7 @@ contract Table {
 ```
 提供一个合约案例 TableTest.sol，代码如下：
 ``` js
-import "AMDB.sol";
+import "./Table.sol";
 
 contract TableTest {
     event selectResult(bytes32 name, int item_id, bytes32 item_name);
@@ -148,10 +148,10 @@ contract TableTest {
     }
 }
 ```
-TableTest.sol 调用了 AMDB 专用的智能合约 AMDB.sol，实现的是创建用户表 t_test，并对 t_test 表进行增删改查的功能。
+TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创建用户表 t_test，并对 t_test 表进行增删改查的功能。
 
 > **注意：** 
-客户端需要调用转换为 Java 文件的合约代码，需要将 TableTest.sol 和 AMDB.sol 放入 web3sdk 的 contract 目录下，通过 web3sdk 的编译脚本生成 TableTest.java。
+客户端需要调用转换为 Java 文件的合约代码，需要将 TableTest.sol 和 Table.sol 放入 web3sdk 的 src/test/resources/contract 目录下，通过 web3sdk 的编译脚本生成 TableTest.java。
 
 # [Solidity合约开发](https://solidity.readthedocs.io/en/latest/)
 
