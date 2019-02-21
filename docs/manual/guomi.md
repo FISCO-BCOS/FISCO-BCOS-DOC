@@ -4,18 +4,20 @@
 
 见[国密版fisco bcos设计手册](../design/features/guomi.md)
 
-## 获取国密二进制
+## 国密FISCO-BCOS安装
 
 ```bash
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1 -g
 # 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行文件
 $ ./bin/fisco-bcos -v
-$ FISCO-BCOS gm version 2.0
+FISCO-BCOS gm version 2.0
 ```
 
 ## 一键搭链脚本
 
 拉取build_chain脚本，并进行安装
+
+* 以下安装默认在当前目录下执行
 
 ```bash
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh
