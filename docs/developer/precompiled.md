@@ -107,9 +107,9 @@ HelloWorldPrecompiled需要存储set的字符串值, 所以涉及到存储操作
 
 表名： ```__test_hello_world__```  
 表结构：
-| key       | value       |
-| --------- | ----------- |
-| hello_key | hello_value |
+key | value
+---|---
+hello_key | hello_value
 
 该表只存储一对键值对, key字段为hello_key, value字段为hello_value 存储对应的字符串值, 可以通过set(string)接口修改, 通过get()接口获取。
 
