@@ -13,25 +13,34 @@ precompiled合约(预编译合约)是一项以太坊原生支持的功能：在�
 - **分配合约地址**  
 调用solidity合约或者precompiled合约需要根据合约地址来区分, 地址空间划分：
 
-    | 以太坊precompiled | 保留 | FISCO-BCOS precompied |  FISCO-BCOS预留 | 用户分配区间    | CRUD临时合约 | solidity |
-    | --------------- | --------------- | --------------------| -------------------- | --------------- | ----------------------- | ---------------- |
-    | 0x0001-0x0004 | 0x0005-0x0fff | 0x1000-0x1006 | 0x1007-0x5000 | 0x5001 - 0xffff | 0x10000+ | 其他 |
+| 以太坊precompiled | 保留          | FISCO-BCOS precompied | FISCO-BCOS预留 | 用户分配区间    | CRUD临时合约 | solidity |
+|-------------------|---------------|-----------------------|----------------|-----------------|--------------|----------|
+| 0x0001-0x0004     | 0x0005-0x0fff | 0x1000-0x1006         | 0x1007-0x5000  | 0x5001 - 0xffff | 0x10000+     | 其他     |
 
  用户分配地址空间为```0x5001-0xffff```,用户需要为新添加的precompiled合约分配一个未使用的地址,**precompiled合约地址必须唯一, 不可冲突**。 
  
  FISCO-BCOS中实现的precompild合约列表以及地址分配：
     
-| 地址 | 功能 | 文档链接 | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled))
-|---|---|---|---
-| 0x1000 | 系统参数管理 | [系统参数](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md#修改系统参数) | SystemConfigPrecompiled.cpp
-| 0x1001 | CRUD合约操作存储接口 | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud.md) | TableFactoryPrecompiled.cpp
-| 0x1002 | CRUD合约 | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud.md) | CRUDPrecompiled.cpp
-| 0x1003 | 共识节点管理 | [共识节点管理](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md#节点入网操作) | ConsensusPrecompiled.h .cpp
-| 0x1004 | CNS功能 | [CNS文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/features/CNS_contract_name_service.md) | CNSPrecompiled.h .cpp
-| 0x1005 | 存储表权限管理 | [权限管理文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/security_control/node_access_management.md) | AuthorityPrecompiled.h .cpp
+| 地址   | 功能                 | 文档链接                                                                                                                               | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
+|--------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| 0x1000 | 系统参数管理         | [系统参数](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md#修改系统参数)                    | SystemConfigPrecompiled.cpp                                                                            |
+| 0x1001 | CRUD合约操作存储接口 | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud.md)                                         | TableFactoryPrecompiled.cpp                                                                            |
+| 0x1002 | CRUD合约             | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud.md)                                         | CRUDPrecompiled.cpp                                                                                    |
+| 0x1003 | 共识节点管理         | [共识节点管理](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md#节点入网操作)                | ConsensusPrecompiled.h .cpp                                                                            |
+| 0x1004 | CNS功能              | [CNS文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/features/CNS_contract_name_service.md)           | CNSPrecompiled.h .cpp                                                                                  |
+| 0x1005 | 存储表权限管理       | [权限管理文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/security_control/node_access_management.md) | AuthorityPrecompiled.h .cpp                                                                            |
 
 - **定义合约接口**  
-同solidity合约, 设计合约时需要首先确定合约的ABI接口, precomipiled合约的ABI接口规则与solidity完全相同, [solidity ABI 链接](https://solidity.readthedocs.io/en/develop/abi-spec.html)。
+同solidity合约, 设计合约时需要首先确定合约的ABI接口, precomipiled合约的ABI接口规则与solidity完全相同, [solidity ABI 链接](https://solidity.readthedocs.io/en/develop/abi-spec.html)。  
+**定义precompiled合约接口时, 通常需要定义一个有相同接口的solidity合约,并且将所有的接口的函数体置空,该合约在调用precompiled合约(包括客户端或者其他solidity合约)时需要使用。** 
+```
+    pragma solidity ^0.4.2;
+    contract Contract_Name {
+        function interface0(parameters ... ) {}
+        ....
+        function interfaceN(parameters ... ) {}
+    }
+```  
 
 - **设计存储结构**  
 precompiled合约涉及存储操作,需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构), [存储结构](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/storage/storage.md)。  
@@ -95,9 +104,11 @@ contract HelloWorld{
 
 需要实现HelloWorld合约的功能, 接口与HelloWorld接口相同
 ```
+pragma solidity ^0.4.2;
+
 contract HelloWorld {
-    function get() public constant returns(string);
-    function set(string _m);
+    function get() public constant returns(string) {}
+    function set(string _m) {}
 }
 ```
 
@@ -107,9 +118,11 @@ HelloWorldPrecompiled需要存储set的字符串值, 所以涉及到存储操作
 
 表名： ```__test_hello_world__```  
 表结构：
-key | value
----|---
+key       | value
+----------|------------
 hello_key | hello_value
+
+
 
 该表只存储一对键值对, key字段为hello_key, value字段为hello_value 存储对应的字符串值, 可以通过set(string)接口修改, 通过get()接口获取。
 
