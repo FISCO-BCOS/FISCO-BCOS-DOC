@@ -70,7 +70,7 @@ conf目录下的original_cert文件夹为节点与sdk进行通信所需要的证
 国密版的Key Center需重新编译Key Center，不同点在于cmake时带上``` -DBUILD_GM=ON ```选项。
 
 ``` shell
-cmake3 .. -DBUILD_GM=On
+cmake3 .. -DBUILD_GM=ON
 ```
 
 其它步骤与标准版Key Center相同，请参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)
