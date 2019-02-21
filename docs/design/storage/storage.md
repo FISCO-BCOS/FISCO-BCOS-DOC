@@ -1,6 +1,6 @@
 # AMDB
 
-分布式存储（Advanced Mass Database，AMDB）通过对表结构的设计，既可以对应到关系型数据库的表，又可以拆分使用KV数据库存储。通过实现对应于不通数据库的存储驱动，AMDB理论上可以支持所有关系型和KV的数据库。
+分布式存储（Advanced Mass Database，AMDB）通过对表结构的设计，既可以对应到关系型数据库的表，又可以拆分使用KV数据库存储。通过实现对应于不同数据库的存储驱动，AMDB理论上可以支持所有关系型和KV的数据库。
 
 - CRUD数据、区块数据和合约代码数据存储默认情况下都保存在AMDB，无需配置，合约局部变量存储可根据需要配置为MPTState或StorageState，无论配置哪种State，合约代码都不需要变动。
 - 当使用MPTState时，合约局部变量保存在MPT树中。当使用StorageState时，合约局部变量保存在AMDB表中。
@@ -10,7 +10,7 @@
 
 ### Table
 
-存储表中的所有数据，KV结构，kV由AMDB主key和Entries对象构成。Table中存储AMDB主key到对应Entries的映射，可以基于AMDB主key进行增删改查，支持条件筛选。
+存储表中的所有数据。Table中存储AMDB主key到对应Entries的映射，可以基于AMDB主key进行增删改查，支持条件筛选。
 
 ### Entries
 
@@ -20,6 +20,28 @@ Entries中存放主Key相同的Entry，数组。AMDB的主Key与Mysql中的主ke
 
 对应于表中的一行，每行以列名作为key，对应的值作为value，构成KV结构。每个Entry拥有自己的AMDB主key，不同Entry允许拥有相同的AMDB主key。
 
+### Condition
+
+Table中的删改查接口支持传入条件，这三种接口会返回根据条件筛选后的结果。如果条件为空，则不做任何筛选。
+
+### 举例
+
+下面以某个资产统计表为例，解释上述名词。
+
+|姓名*|资产名|价值/w|
+|:--|:---|:----|
+|老王|住房|500|
+|老王|车|30|
+|小李|住房|600|
+|小张|车|15|
+
+解释如下：
+- 上面可以作为一个Table，**姓名**是AMDB主key。
+- 表中的每一行为一个Entry。一共有4个Entry，每个Entry以Map存储数据，其中列名为key，对应值为value存。
+- Table中以**姓名**为主key，存有3个Entries对象。第1个Entries中存有老王的2条记录，第2个Entries中存有小李的1条记录，第3个Entries中存有小张的一条记录。
+- 调用Table类的查询接口时，可以设置`资产价值 > 40`，会查询出老王和小李的两条记录。
+
+
 ## AMDB表分类
 
 表中的所有`entry`，都会有`_status_`,`_num_`,`_hash_`内置字段。
@@ -28,31 +50,34 @@ Entries中存放主Key相同的Entry，数组。AMDB的主Key与Mysql中的主ke
 
 系统表默认存在，由存储驱动保证系统表的创建。
 
-```eval_rst
-======================== =========== ======================== ========================================= ====================================== 
-表名                      keyField    valueField               存储数据说明                                AMDB主key                              
-======================== =========== ======================== ========================================= ====================================== 
-`_sys_tables_`           table_name  key_field,value_field    存储所有表的结构，以表名为主键                 所有表的表名                             
-`_sys_consensus_`        name        type,node_id,enable_num  存储共识节点和观察节点的列表                   node                                   
-`_sys_table_access_`     table_name  address,enable_num       存储每个表的具有写权限的外部账户地址            表的表名                                   
-`_sys_cns_`              name        version,address,abi      存储CNS映射关系                             合约名                                   
-`_sys_config_`           key         value,enable_num         存储需要共识的群组配置项                      配置项                                   
-`_sys_current_state_`    key         value                    存储最新的状态                               current_number/total_transaction_count 
-`_sys_tx_hash_2_block_`  hash        value,index              存储交易hash到区块号的映射                    交易hash的16进制                        
-`_sys_number_2_hash_`    hash        value                    存储区块号到区块头hash的16进制表示的映射        区块高                                 
-`_sys_hash_2_block_`     key         value                    存储hash到序列化的区块数据                    区块头hash的16进制                      
-`_sys_block_2_nonces_`   number      value                    存储区块中交易的nonces                       区块高                      
-======================== =========== ======================== ========================================= ====================================== 
-```
+|表名                   |  keyField  | valueField            |  存储数据说明                            |  AMDB主key                              |
+|:--------|:--------|:--------|:--------|:--------|
+|`_sys_tables_`         | table_name |key_field,value_field  | 存储所有表的结构，以表名为主键           |    所有表的表名                         |    
+|`_sys_consensus_`      | name       |type,node_id,enable_num| 存储共识节点和观察节点的列表             |    node                                 |  
+|`_sys_table_access_`   | table_name |address,enable_num     | 存储每个表的具有写权限的外部账户地址     |     表的表名                            |       
+|`_sys_cns_`            | name       |version,address,abi    | 存储CNS映射关系                          | 合约名                                  | 
+|`_sys_config_`         | key        |value,enable_num       | 存储需要共识的群组配置项                 |   配置项                                |   
+|`_sys_current_state_`  | key        |value                  | 存储最新的状态                           |  current_number/total_transaction_count |
+|`_sys_tx_hash_2_block_`| hash       |value,index            | 存储交易hash到区块号的映射               |   交易hash的16进制                      |  
+|`_sys_number_2_hash_`  | hash       |value                  | 存储区块号到区块头hash的16进制表示的映射 |     区块高                              |   
+|`_sys_hash_2_block_`   | key        |value                  | 存储hash到序列化的区块数据               |   区块头hash的16进制                    |  
+|`_sys_block_2_nonces_` | number     |value                  | 存储区块中交易的nonces                   |  区块高                      |
 
 ### 用户表
 
 用户CRUD合约所创建的表，以`_user_<TableName>`为表名，底层自动添加`_user_`前缀。
 
-### StorageState合约表
+### StorageState账户表
 
 `_contract_data_`+`Address`+`_`作为表名。表中存储外部账户相关信息。
 
 # StorageState
 
-StorageState是基于AMDB实现的存储账户状态的方式，相比于MPTState去掉了MPT树，每个账户会有一个AMDB的Table来存储其相关数据。包括账户的`nonce`,`code`,`balance`等内容。
+StorageState是一种使用AMDB实现的存储账户状态的方式。相比于MPTState主要有以下区别：
+
+|      |StorageState|MPTState|
+|:-------|:------|:--------|
+|账户数据组织方式|AMDB表|MPT树|
+|历史状态|不支持，不维护历史状态|支持|
+
+MPTState每个账户使用MPT树存储其数据，当历史数据逐渐增多时，会因为存储方式和磁盘IO导致性能问题。StorageState每个账户对应一个Table存储其相关数据，包括账户的`nonce`,`code`,`balance`等内容，而AMDB可以通过实现对应的存储驱动支持不同的数据库以提高性能，我们使用LevelDB测试发现，StorageState性能大约是MPTState的两倍。
