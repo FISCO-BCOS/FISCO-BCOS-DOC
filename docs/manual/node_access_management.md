@@ -40,14 +40,19 @@ Group3的相关节点信息举例为：
 
 操作顺序：
 
-1. 执行`tools/gen_node.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
+1 . 执行`tools/gen_node.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
+
 ```
 # 在目录tools下执行
 $ ./gen_node.sh -c nodes/cert/agency -o node2
 ```
-2. 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（node0、node1）同级；
-3. 拷贝`node0/config.ini`到node2目录;
-4. 修改`node2/config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
+
+2 . 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（node0、node1）同级；
+
+3 . 拷贝`node0/config.ini`到node2目录;
+
+4 . 修改`node2/config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
+
 ```
 $ vim node2/config.ini
 [rpc]
@@ -67,8 +72,11 @@ $ vim node2/config.ini
     node.1=127.0.0.1:30401
     node.2=127.0.0.1:30402
 ```
-5. 执行`node2/start.sh`启动节点3；
-6. 确认节点3与节点1和节点2的连接已经建立，加入网络操作完成。
+
+5 . 执行`node2/start.sh`启动节点3；
+
+6 . 确认节点3与节点1和节点2的连接已经建立，加入网络操作完成。
+
 ```
 # 在打开DEBUG级别日志前提下，查看自身节点（node2）连接的节点数及所连接的节点信息（nodeID）
 # 以下日志表明节点node2与两个节点（节点的nodeID前4个字节为b231b309、aab37e73）建立了连接
@@ -92,15 +100,18 @@ info|2019-02-21 10:30:18.694294| [P2P][Service] heartBeat connected count,size=2
 
 操作顺序：
 
-1. 对于节点3，将自身的<font color=#FF0000>P2P节点连接列表</font>内容清空，重启节点3；
+1 . 对于节点3，将自身的<font color=#FF0000>P2P节点连接列表</font>内容清空，重启节点3；
+
 ```
 # 在node2目录下执行
 $ ./stop.sh
 $ ./start.sh
 nohup: appending output to ‘nohup.out’
 ```
-2. 对于节点1和2，将节点3从自身的<font color=#FF0000>P2P节点连接列表</font>中移除（如有），重启节点1和2；
-3. 确认节点3与节点1（和2）的原有连接已经断开，退出网络操作完成。
+
+2 . 对于节点1和2，将节点3从自身的<font color=#FF0000>P2P节点连接列表</font>中移除（如有），重启节点1和2；
+
+3 . 确认节点3与节点1（和2）的原有连接已经断开，退出网络操作完成。
 
 补充说明：
 
@@ -151,7 +162,8 @@ nohup: appending output to ‘nohup.out’
 
 操作顺序：
 
-1. 对于节点1（node0），将节点2（node1）的公钥nodeID加入自身的<font color=#FF0000>CA黑名单</font>；
+1 . 对于节点1（node0），将节点2（node1）的公钥nodeID加入自身的<font color=#FF0000>CA黑名单</font>；
+
 ```
 $ cat node1/conf/node.nodeid 
 aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
@@ -161,8 +173,10 @@ $ vim node0/config.ini
     ;crl.0 should be nodeid, nodeid's length is 128 
     crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
 ```
-2. 重启节点1；
-3. 确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。
+
+2 . 重启节点1；
+
+3 . 确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。
 
 补充说明：
 
