@@ -12,6 +12,7 @@ precompiled合约(预编译合约)是一项以太坊原生支持的功能：在�
 ![流程](../../images/precompiled/create_process.png)
 
 - **分配合约地址**  
+
 调用solidity合约或者precompiled合约需要根据合约地址来区分，地址空间划分：
 
 | 以太坊precompiled | 保留          | FISCO-BCOS precompied | FISCO-BCOS预留 | 用户分配区间    | CRUD临时合约 | solidity |
@@ -21,7 +22,7 @@ precompiled合约(预编译合约)是一项以太坊原生支持的功能：在�
  用户分配地址空间为```0x5001-0xffff```,用户需要为新添加的precompiled合约分配一个未使用的地址，**precompiled合约地址必须唯一， 不可冲突**。 
  
  FISCO-BCOS中实现的precompild合约列表以及地址分配：
-    
+ 
 | 地址   | 功能                 | 文档链接                                                                                                                               | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
 |--------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
 | 0x1000 | 系统参数管理         | [系统参数](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md)                    | SystemConfigPrecompiled.cpp                                                                            |
@@ -32,6 +33,7 @@ precompiled合约(预编译合约)是一项以太坊原生支持的功能：在�
 | 0x1005 | 存储表权限管理       | [权限管理文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/security_control/node_access_management.md) | AuthorityPrecompiled.h .cpp                                                                            |
 
 - **定义合约接口**  
+
 同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI 链接](https://solidity.readthedocs.io/en/develop/abi-spec.html)。  
  
 > 定义precompiled合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为precompiled合约的**辅助合约**，辅助合约在调用precompiled合约时需要使用。 
@@ -46,10 +48,12 @@ precompiled合约(预编译合约)是一项以太坊原生支持的功能：在�
 ```  
 
 - **设计存储结构**  
+
 precompiled合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构)， [存储结构](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/storage/storage.md)。  
 **注意：不涉及存储操作可以省略该流程**  
  
 - **实现调用逻辑**  
+
 实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承[Precompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/Precompiled.h#L37), 重载call函数， 在call函数中实现各个接口的调用行为。  
 ```
     //libblockverifier/Precompiled.h
@@ -61,6 +65,7 @@ precompiled合约涉及存储操作时，需要确定存储的表信息(表名�
 ```
 
 - **注册合约**  
+
 最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用precompiled合约时合约的执行逻辑才能被正确识别执行， 查看注册的[precompiled合约列表](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/ExecutiveContextFactory.cpp#L36)。   
 注册路径：
 ```
@@ -169,8 +174,9 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 ```
 
 #### 2.2.6 其他流程  
-[源码编译](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/install.md#编译)  
-[环境搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_chain.md)
+[源码编译](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/install.md#编译) 
+ 
+ [环境搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_chain.md)
 
 ## 三 调用 
 
