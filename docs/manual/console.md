@@ -60,6 +60,25 @@
 curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
 tar -zxf console.tar.gz
 ```
+目录结构如下：
+```
+|-- apps //依赖的sdk jar包目录
+|   -- web3sdk.jar 
+|-- lib // 相关依赖的jar包目录
+|-- conf
+|   |-- ca.crt   //ca证书文件
+|   |-- node.crt // 节点证书文件
+|   |-- node.key // 节点私钥文件
+|   |-- applicationContext.xml //配置文件
+|   |-- log4j.properties  // 日志配置文件
+|   |-- contract.properties // 合约地址存储文件
+|   |-- privateKey.properties // 发送交易的私钥存储文件
+|-- solidity
+|   -- contracts  // 合约存储目录
+|       -- HelloWorld.sol // 提供的HelloWorld合约
+-- start
+
+```
 **配置控制台：**
 - 区块链节点和证书的配置：
   - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到conf目录下。
