@@ -26,6 +26,7 @@ $ ./bin/fisco-bcos -v
 ```
 
 执行完上述步骤后，fisco目录下结构如下
+
 ```bash
 fisco
 ├── bin
@@ -42,7 +43,8 @@ fisco
 $ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
-关于`build-chain`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
+关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
+
 ```bash
 Generating CA key...
 ==============================================================
@@ -103,6 +105,7 @@ tcp        0      0 127.0.0.1:8548         0.0.0.0:*               LISTEN      5
 ```
 
 - 检查日志输出
+
 ```bash
 # 查看节点node0链接的节点数，从下面的输出可以看出node0与另外3个节点有链接
 $ tail -f node0/log/log*  | grep connected
@@ -122,6 +125,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台依赖于**Java8**以上版本(**CentOS**请安装**Oracle Java 8**以上版本)，对于Ubuntu 16.04系统安装**openjdk 8**即可。控制台详细文档[参考这里](console.md)。
 
 - 准备依赖
+
 ```bash
 # 回到fisco目录
 $ cd ~/fisco
@@ -134,6 +138,7 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 - 启动控制台
+
 ```bash
 # # 回到fisco目录
 $ cd ~/fisco/console
@@ -156,6 +161,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 - 使用控制台获取信息
+
 ```bash
 # 获取客户端版本
 > getClientVersion
@@ -192,6 +198,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ### 1. HelloWorld合约
 
 HelloWorld合约提供两个接口，分别是`get()`和`set()`，用于获取/设置合约变量`name`。合约内容如下
+
 ```solidity
 pragma solidity ^0.4.2;
 

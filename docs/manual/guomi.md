@@ -4,28 +4,70 @@
 
 见[国密版fisco bcos设计手册](../design/features/guomi.md)
 
-## 国密FISCO-BCOS安装
+## 初次部署国密版FISCO-BCOS
+
+本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO-BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制，在CentOS 7和Ubuntu 16.04上经过测试。（理论上静态二进制可在任意Linux操作系统上运行）。
 
 ```bash
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1 -g
+# Ubuntu16安装依赖
+$ sudo apt install -y openssl curl
+# 准备环境
+$ cd ~ && mkdir fisco && cd fisco
+# 下载build_chain.sh脚本
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
+# 准备fisco-bcos二进制
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -g
+# 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 # 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行文件
 $ ./bin/fisco-bcos -v
 FISCO-BCOS gm version 2.0
 ```
 
-## 一键搭链脚本
-
-拉取build_chain脚本，并进行安装
-
-* 以下安装默认在当前目录下执行
+执行完上述步骤后，fisco目录下结构如下
 
 ```bash
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh
-$ bash ./build_chain.sh -l '127.0.0.1:4' -e ./bin/fisco-bcos -g
+fisco
+├── bin
+│   └── fisco-bcos
+└── build_chain.sh
+```
+
+
+- 搭建4节点FISCO-BCOS链
+
+```bash
+# 生成一条4节点的FISCO链 4个节点都属于group1 下面指令在fisco目录下执行
+# -e 指定fisco-bcos路径 -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+# 根据下面的指令，需要保证机器的30300-30303 20200-20203 8545-8548端口没有被占用
+$ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545 -g
 ```
 
 * -e 为编译的国密版fisco-bcos的路径，需要在脚本后指定
 * -g 国密编译选项，使用成功后会生成国密版的节点
+关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
+
+```bash
+[INFO] Downloading tassl binary ...
+Generating CA key...
+Generating Guomi CA key...
+==============================================================
+Generating keys ...
+Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
+==============================================================
+Generating configurations...
+Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
+==============================================================
+[INFO] FISCO-BCOS Path   : bin/fisco-bcos
+[INFO] Start Port        : 30300 20200 8545
+[INFO] Server IP         : 127.0.0.1:4
+[INFO] State Type        : storage
+[INFO] RPC listen IP     : 127.0.0.1
+[INFO] Output Dir        : /mnt/c/Users/asherli/Desktop/keycenter/build/nodes
+[INFO] CA Key Path       : /mnt/c/Users/asherli/Desktop/keycenter/build/nodes/gmcert/ca.key
+[INFO] Guomi mode        : yes
+==============================================================
+[INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/keycenter/build/nodes
+```
 
 当国密联盟链部署完成之后，其余操作与[快速入门](./hello_world.md)的操作相同
 
@@ -70,7 +112,10 @@ conf目录下的original_cert文件夹为节点与sdk进行通信所需要的证
 国密版的Key Center需重新编译Key Center，不同点在于cmake时带上``` -DBUILD_GM=ON ```选项。
 
 ``` shell
+# centos下
 cmake3 .. -DBUILD_GM=ON
+# ubuntu下
+cmake .. -DBUILD_GM=ON
 ```
 
 其它步骤与标准版Key Center相同，请参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)
