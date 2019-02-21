@@ -94,7 +94,7 @@ ca_cert: gmca证书路径
     ca_cert=gmca.crt
 ```
 
-conf目录下的original_cert文件夹为节点与sdk进行通信所需要的证书
+* ./conf目录下的original_cert文件夹中的证书为节点与sdk进行通信所需要的证书
 
 ## 国密版SDK使用
 
@@ -121,7 +121,7 @@ cmake .. -DBUILD_GM=ON
 
 ### 国密版节点配置
 
-国密版的证书有所调整，落盘加密需要加密的证书，变为两个：conf/gmnode.key 和 conf/origin_cert/node.key。其它与[标准版落盘加密操作](./disk_encryption.md)相同。
+FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两套证书，分别为：conf/gmnode.key 和 conf/origin_cert/node.key。其它与[标准版落盘加密操作](./disk_encryption.md)相同。
 
 ``` shell
 cd keycenter/scripts
