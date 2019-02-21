@@ -40,13 +40,16 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
     - 云主机的公网ip均为虚拟ip，若listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
 
-    - RPC/P2P/AMOP监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
+    - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
 ```
 
 ### 配置RPC
 
-- `listen_ip`: RPC监听ip，若为127.0.0.1，则仅监听本机RPC请求，如果要外网访问RPC接口或外网使用SDK请监听`外网IP`或`0.0.0.0`；
-- `channel_listen_port`: [链上信使协议(AMOP)](../sdk/amop.md)监听端口，必须位于1024-65535，且不能与机器上其他应用监听端口冲突，是[SDK](../sdk/config.html#id1)配置中的`channel_listen_port`；
+若为127.0.0.1。。。 改为出于安全考虑，建链脚本默认监听127.0.0.1，如果需要外网访问RPC或外网使用SDK请监听。。。
+
+- `listen_ip`: 安全考虑，建链脚本默认监听127.0.0.1，如果需要外网访问RPC或外网使用SDK请监听`外网IP`或`0.0.0.0`；
+
+- `channel_listen_port`: Channel监听端口，对应到[SDK](../sdk/config.html#id1)配置中的`channel_listen_port`；
 
 - `jsonrpc_listen_port`: RPC监听端口。
 
