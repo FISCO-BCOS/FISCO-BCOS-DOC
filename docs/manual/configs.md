@@ -1,6 +1,6 @@
 # 配置文件与配置项
 
-FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据和交易相互隔离，每条链主要包括一个总体配置`config.ini`和各个账本配置`group.group_id.genesis`、`group.group_id.ini`。
+FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据相互隔离，群组间交易处理相互隔离，每条链主要包括一个总体配置`config.ini`和各个账本配置`group.group_id.genesis`、`group.group_id.ini`。
 
 - `config.ini`：主配置文件，主要配置RPC、P2P、SSL证书、账本配置文件路径等信息；
 
@@ -14,15 +14,17 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 下表是单群组单节点推荐的配置，节点耗费资源与群组个数呈线性关系，您可根据实际的业务需求和机器资源，合理地配置群组数目:
 
 ```eval_rst
-  +-----------------+--------+------------+
-  | 指标            |最低配置| 推荐配置   |
-  +=================+========+============+
-  | CPU             | 1核    | 4核        |
-  +-----------------+--------+------------+
-  | 内存            | 1GB    | 4GB        |
-  +-----------------+--------+------------+
-  | 网络带宽        | 5M     | 内网带宽   |
-  +-----------------+--------+------------+
++----------+---------+---------------------------------------------+
+| 配置     | 最低配置| 推荐配置                                    |
++==========+=========+=============================================+
+| CPU      | 1.5GHz  | 2.4GHz                                      |
++----------+---------+---------------------------------------------+
+| 内存     | 1GB     | 8GB                                         |
++----------+---------+---------------------------------------------+
+| 核心     | 1核     | 4核                                         |
++----------+---------+---------------------------------------------+
+| 带宽     | 1Mb     | 10Mb                                        |
++----------+---------+---------------------------------------------+
 ```
 
 
@@ -30,15 +32,27 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 `config.ini`采用`ini`格式，主要包括 **rpc、p2p、group、secure和log** 配置项。
 
+
+```eval_rst
+.. important::
+
+    网络配置须知：
+
+    - 云主机的公网ip均为虚拟ip，若listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
+
+    - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
+```
+
 ### 配置RPC
 
-- `listen_ip`: RPC监听ip，若为127.0.0.1，则仅监听本机RPC请求，为0.0.0.0和内网ip时，监听所有请求；
+若为127.0.0.1。。。 改为出于安全考虑，建链脚本默认监听127.0.0.1，如果需要外网访问RPC或外网使用SDK请监听。。。
 
-> **注：云主机的公网ip均为虚拟ip，若listen_ip填写公网ip，会绑定失败，须填写0.0.0.0**
+- `listen_ip`: 安全考虑，建链脚本默认监听127.0.0.1，如果需要外网访问RPC或外网使用SDK请监听`外网IP`或`0.0.0.0`；
 
-- `channel_listen_port`: [链上链下服务(AMOP)](TODO)监听端口，必须位于1024-65535，且不能与机器上其他应用监听端口冲突，是[SDK](../sdk/config.html#id1)配置中的`channel_listen_port`；
+- `channel_listen_port`: Channel监听端口，对应到[SDK](../sdk/config.html#id1)配置中的`channel_listen_port`；
 
-- `jsonrpc_listen_port`: RPC监听端口，端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突。
+- `jsonrpc_listen_port`: RPC监听端口。
+
 
 RPC配置示例如下：
 
@@ -58,11 +72,9 @@ RPC配置示例如下：
 
 - `listen_ip`：P2P监听端口，若为127.0.0.1，则仅监听本机RPC请求，为0.0.0.0和内网ip时，监听所有请求；
 
-> **注：云主机的公网ip均为虚拟ip，若listen_ip填写公网ip，会绑定失败，须填写0.0.0.0**
-
 - `listen_port`：节点P2P监听端口；
 
-- `node.*`: 节点需连接的所有节点`ip:port`，**端口必须在1024-65535范围内，且端口不能与其他应用监听端口重复**。
+- `node.*`: 节点需连接的所有节点`ip:port`。
 
 P2P配置示例如下：
 
@@ -129,16 +141,9 @@ P2P配置示例如下：
 
 黑名单的详细信息还可参考[CA黑名单](./certificate_rejected_list.md)
 
-```bash
-# node1将node0列为黑名单节点(设node0和node1均位于~目录)
-$ cat ~/node0/conf/node.nodeid
-4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e
+黑名单列表配置示例如下：
 
-# 将node0配置为node1黑名单
-$sed -i '/\[crl\]/a\crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e' ~/node1/config.ini
-
-# 查看node1配置
-$ cat ~/node1/config.ini | grep ctl
+```ini
 ;certificate rejected list    
 [crl]
     crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e
@@ -147,11 +152,9 @@ $ cat ~/node1/config.ini | grep ctl
 
 ### 配置日志信息
 
-FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过[编译开关配置使用这两种日志](log.md)，详细可参考[日志操作手册](log.md)。
+FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，FISCO BCOS默认使用boostlog，详细可参考[日志操作手册](log.md)。
 
-FISCO BCOS默认使用boostlog，开启和关闭boostlog请参考[boostlog](log.html#boostlog)。
-
-- `level`: 日志级别，当前主要包括`TRACE、DEBUG、INFO、WARNING、ERROR`五种日志级别，设置某种日志级别后，日志文件中会输`≥`该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`；
+- `level`: 日志级别，当前主要包括`trace、debug、info、warning、error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`；
 
 - `max_log_file_size`：每个日志文件最大容量；
 
@@ -167,7 +170,7 @@ boostlog示例配置如下：
     ;the directory of the log
     log_path=./log
     ;log level INFO DEBUG TRACE
-    level=INFO
+    level=info
     max_log_file_size=209715200
     flush=true
 ```
@@ -188,26 +191,56 @@ easylogging++示例配置如下：
     ;the directory of the log
     log_path=./log
     ;log level INFO DEBUG TRACE
-    level=INFO
+    level=info
     max_log_file_size=209715200
     ;easylog config
     format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
     log_flush_threshold=100
 ```
 
+### 可选配置：落盘加密
+
+为了保障节点数据机密性，FISCO BCOS引入[落盘加密](../design/features/disk_encryption.md)保障节点数据的机密性，**落盘加密**操作手册请[参考这里](./disk_encryption.md)。
+
+`config.ini`中的`data_secure`用于配置落盘加密，主要包括（落盘加密具体操作请参考[操作手册](./disk_encryption.md)）：
+
+- `enable`： 是否开启落盘加密，默认不开启；
+
+- `keycenter_ip`：[Key Center](https://github.com/FISCO-BCOS/keycenter)服务的部署IP；
+
+- `keycenter_port`：[Key Center](https://github.com/FISCO-BCOS/keycenter)服务的监听端口；
+
+- `cipher_data_key`: 节点数据加密密钥的密文，`cipher_data_key`的产生参考[落盘加密操作手册](./disk_encryption.md)。
+
+落盘加密节点配置示例如下：
+
+```ini
+[data_secure]
+enable=true
+keycenter_ip=127.0.0.1
+keycenter_port=31443
+cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
+```
+
+
+
 ## 群组不可变配置说明
 
 每个群组都有单独的配置文件，按照启动后是否可更改，可分为<font color=#FF0000>群组不可变配置</font>和<font color=#FF0000>群组可变配置</font>。
-群组不可变配置一般位于节点的`conf`目录下<font color=#FF0000>`.genesis后缀`配置文件</font>中。
+群组不可变配置一般位于节点的`conf`目录下<font color=#FF0000>`.genesis`后缀配置文件</font>中。
 
-如：`group1`的不可变配置一般命名为`group.1.genesis`，群组不可变配置主要包括<font color=#FF0000>群组ID、共识、存储和gas</font>相关的配置，配置不可变配置时，需注意：
+如：`group1`的不可变配置一般命名为`group.1.genesis`，群组不可变配置主要包括<font color=#FF0000>群组ID、共识、存储和gas</font>相关的配置。
 
-- **配置群组内一致**：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致；
+```eval_rst
+.. important:: 
 
-- **节点启动后不可更改**：不可变配置已经作为创世块写入了系统表，链初始化后不可更改；
-- 链初始化后，<font color=#FF0000>即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置</font>;
+    配置不可变配置时，需注意：
 
-- 由于genesis配置要求群组内所有节点一致，建议使用[build_chain](build_chain.md)生成该配置。
+    - **配置群组内一致** ：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
+    - **节点启动后不可更改** ：不可变配置已经作为创世块写入了系统表，链初始化后不可更改
+    - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
+    - 由于genesis配置要求群组内所有节点一致，建议使用 `build_chain <build_chain.html>`_ 生成该配置
+```
 
 ### 群组配置
 
@@ -252,11 +285,16 @@ e01789233a
 
 存储主要包括[state](../design/storage/mpt.html)和[AMDB](../design/storage/storage.html)，`state`涉及交易状态存储，`AMDB`存储涉及系统表，分别在`[storage]`和`[state]`中配置：
 
-- `[storage].type`：存储的DB类型，目前仅支持LevelDB，后续会支持[AMDB](../design/storage/storage.html)；
+- `[storage].type`：存储的DB类型，目前仅支持LevelDB，后续会支持Mysql；
 
 - `[state].type`：state类型，目前支持[Storage state](../design/storage/storage.html)和[MPT state](../design/storage/mpt.html)，<font color=#FF0000>默认为Storage state</font>，Storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在[MPT树](../design/storage/mpt.md)中，效率较低，但包含完整的历史信息。
 
-> **注**：<font color=#FF0000>推荐使用storage state，除有特殊需求，不建议使用MPT State</font>
+
+```eval_rst
+.. important::
+   推荐使用 **Storage state** ，除有特殊需求，不建议使用MPT State
+
+```
 
 ```ini
 [storage]
@@ -298,7 +336,7 @@ FISCO-BCOS将交易池容量配置开放给用户，用户可根据自己的业�
 
 ### 共识配置
 
-为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`TTL`来控制消息最大转发次数，消息最大转发次数为`TTL-1`。
+`PBFT`共识算法为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`TTL`来控制消息最大转发次数，消息最大转发次数为`TTL-1`，**该配置项仅对PBFT有效**。
 
 设置共识消息最多转发一次，配置示例如下：
 

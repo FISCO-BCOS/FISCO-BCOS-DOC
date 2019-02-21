@@ -1,12 +1,13 @@
 # 快速入门
 
-在开始之前首先需要安装FISCO BCOS运行所需的依赖。FSICO BCOS节点的运行需要一套公私钥以及证书，使用提供的build_chain脚本生成配置时依赖于`openssl`。
+FISCO BCOS二进制提供以下获取方式，用户可以自由选择安装方式。
+- 官方提供的预编译静态二进制文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行，参考[预编译二进制](manual/install.html#id2)获取。
+- 源码编译获取二进制，参考[源码编译](manual/install.html#id3)。
 
-一旦安装好提供预编译的二进制文件，该二进制文件可以在Ubuntu 16.04和CentOS 7.2以上版本运行，参考[这里](manual/install.html#id2)安装。同时FISCO BCOS也提供源码编译的[说明文档](manual/install.html#id3)，用户可以自由选择安装方式。
-
-为了简化安装与配置，FISCO BCOS提供了[build_chain](manual/build_chain.md)脚本来帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从GitHub下载最新版本的预编译二进制，也可通过选项指定用户编译的二进制来搭建FISCO BCOS链。
+为了简化安装与配置，FISCO BCOS提供了[build_chain](manual/build_chain.md)脚本来帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本二进制搭建。
 
 初次接触FISCO BCOS的用户建议从[Hello World](manual/hello_world.md)教程开始，通过在本机部署FISCO BCOS以及部署和调用Hello World合约快速入门。
+
 
 ## 用户手册
 

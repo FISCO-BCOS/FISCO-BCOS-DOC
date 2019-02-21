@@ -1,8 +1,8 @@
 # CRUD合约开发
 
-访问 AMDB 需要使用 AMDB 专用的智能合约 AMDB.sol 接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
+访问 AMDB 需要使用 AMDB 专用的智能合约 Table.sol 接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
-AMDB.sol文件代码如下:
+Table.sol文件代码如下:
 ```js
 
 contract TableFactory {
@@ -62,7 +62,7 @@ contract Table {
 ```
 提供一个合约案例 TableTest.sol，代码如下：
 ``` js
-import "DB.sol";
+import "./Table.sol";
 
 contract TableTest {
     event selectResult(bytes32 name, int item_id, bytes32 item_name);
@@ -72,19 +72,19 @@ contract TableTest {
     
     //创建表
     function create() public {
-        TableFactory df = TableFactory(0x1001); //TableFactory的地址固定为0x1001
-        df.createTable("t_test", "name", "item_id,item_name");
+        TableFactory tf = TableFactory(0x1001); //TableFactory的地址固定为0x1001
+        tf.createTable("t_test", "name", "item_id,item_name");
     }
 
     //查询数据
     function select(string name) public constant returns(bytes32[], int[], bytes32[]){
-        TableFactory df = TableFactory(0x1001);
-        Table db = df.openTable("t_test");
+        TableFactory tf = TableFactory(0x1001);
+        Table table = tf.openTable("t_test");
         
-        Condition condition = db.newCondition();
+        Condition condition = table.newCondition();
         //condition.EQ("name", name);
         
-        Entries entries = db.select(name, condition);
+        Entries entries = table.select(name, condition);
         bytes32[] memory user_name_bytes_list = new bytes32[](uint256(entries.size()));
         int[] memory item_id_list = new int[](uint256(entries.size()));
         bytes32[] memory item_name_bytes_list = new bytes32[](uint256(entries.size()));
@@ -102,53 +102,58 @@ contract TableTest {
     }
     //插入数据
     function insert(string name, int item_id, string item_name) public returns(int) {
-        TableFactory df = TableFactory(0x1001);
-        Table db = df.openTable("t_test");
+        TableFactory tf = TableFactory(0x1001);
+        Table table = tf.openTable("t_test");
         
-        Entry entry = db.newEntry();
+        Entry entry = table.newEntry();
         entry.set("name", name);
         entry.set("item_id", item_id);
         entry.set("item_name", item_name);
         
-        int count = db.insert(name, entry);
+        int count = table.insert(name, entry);
         insertResult(count);
         
         return count;
     }
     //更新数据
     function update(string name, int item_id, string item_name) public returns(int) {
-        TableFactory df = TableFactory(0x1001);
-        Table db = df.openTable("t_test");
+        TableFactory tf = TableFactory(0x1001);
+        Table table = tf.openTable("t_test");
         
-        Entry entry = db.newEntry();
+        Entry entry = table.newEntry();
         entry.set("item_name", item_name);
         
-        Condition condition = db.newCondition();
+        Condition condition = table.newCondition();
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
         
-        int count = db.update(name, entry, condition);
+        int count = table.update(name, entry, condition);
         updateResult(count);
         
         return count;
     }
     //删除数据
     function remove(string name, int item_id) public returns(int){
-        TableFactory df = TableFactory(0x1001);
-        Table db = df.openTable("t_test");
+        TableFactory tf = TableFactory(0x1001);
+        Table table = tf.openTable("t_test");
         
-        Condition condition = db.newCondition();
+        Condition condition = table.newCondition();
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
         
-        int count = db.remove(name, condition);
+        int count = table.remove(name, condition);
         removeResult(count);
         
         return count;
     }
 }
 ```
-TableTest.sol 调用了 AMDB 专用的智能合约 AMDB.sol，实现的是创建用户表 t_test，并对 t_test 表进行增删改查的功能。
+TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创建用户表 t_test，并对 t_test 表进行增删改查的功能。
 
 > **注意：** 
-客户端需要调用转换为 Java 文件的合约代码，需要将 TableTest.sol 和 AMDB.sol 放入 web3sdk 的 contract 目录下，通过 web3sdk 的编译脚本生成 TableTest.java。
+客户端需要调用转换为 Java 文件的合约代码，需要将 TableTest.sol 和 Table.sol 放入 web3sdk 的 src/test/resources/contract 目录下，通过 web3sdk 的编译脚本生成 TableTest.java。
+
+# [Solidity合约开发](https://solidity.readthedocs.io/en/latest/)
+
+- [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
+- [Remix](https://remix.ethereum.org/)

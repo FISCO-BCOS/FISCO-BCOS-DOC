@@ -1,6 +1,6 @@
 # Java SDK配置与使用
 
-## 1 Java应用引入SDK
+## Java应用引入SDK
 
    通过gradle或maven引入SDK到java应用
 
@@ -24,16 +24,18 @@
             maven { url "https://dl.bintray.com/ethereum/maven/" }
         }
 ```
-## 2 配置并使用SDK
+## 配置SDK
 
-### 2.1 SDK配置
-#### 2.1.1 FISCO BCOS节点证书配置
-FISCO BCOS作为联盟链，其SDK连接区块链节点需要进行双向认证。因此，需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
+### FISCO BCOS节点证书配置
+FISCO-BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、node.crt)和私钥(node.key)进行双向认证。
 
-#### 2.1.2 配置文件设置
-Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。下面分别以Spring项目和Spring Boot项目为例，提供配置指引。
+- **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
+- **通过[企业工具](../enterprise/index.html)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise/manual/cert.md))生成证书和私钥，将生成sdk目录下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
 
-##### 2.1.2.1 Spring项目配置
+### 配置文件设置
+Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
+
+### Spring项目配置
 提供Spring项目中关于applicationContext.xml的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
 
 ![](../../images/sdk/sdk_xml.png)
@@ -44,20 +46,20 @@ applicationContext.xml配置项详细说明:
   - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi.md))
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
-  - 每个群组可以配置一个或多个节点，设置群组节点的配置文件config.ini中[rpc]部分的listen_ip和channel_listen_port。
+  - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
-##### 2.1.2.2 Spring Boot项目配置
+### Spring Boot项目配置
 提供Spring Boot项目中关于application.yml的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
 
 ![](../../images/sdk/sdk_yml.png)
 
 application.yml配置项与applicationContext.xml配置项相对应，详细介绍参考applicationContext.xml配置说明。
 
-### 2.2 SDK使用 
+## 使用SDK 
 
-#### 2.2.1 Spring项目开发指引
-##### 2.2.1.1 调用SDK的API(参考[SDK API列表](./api.md))设置或查询相关的区块链数据。
+### Spring项目开发指引
+#### 调用SDK的API(参考[SDK API列表](./api.md))设置或查询相关的区块链数据。
 1) 调用SDK Web3j的API：需要加载配置文件，SDK与区块链节点建立连接。获取web3j对象，根据Web3j对象调用相关API。示例代码如下：
 ```bash
     //读取配置文件，SDK与区块链节点建立连接
@@ -92,8 +94,8 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
     System.out.println(value);
 ```
 
-##### 2.2.1.2 通过SDK部署并调用合约
-###### ① 准备Java合约文件：Solidity合约文件转换为Java合约文件
+#### 通过SDK部署并调用合约
+##### 准备Java合约文件：Solidity合约文件转换为Java合约文件
 使用SDK把Solidity合约文件转成相应Java合约文件。合约转换工作在SDK源码目录下进行，因此需要获取SDK源码，然后进行合约转换。
 
 ```bash 
@@ -125,7 +127,7 @@ git checkout release-2.0.1
   生成的Java合约文件在src/test/java/org/fisco/bcos/temp目录，生成的abi和bin文件在src/test/resources/solidity目录。
 
 
-###### ② 部署并调用合约
+##### 部署并调用合约
 SDK的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用Java合约类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址以及调用该合约的其他方法实现业务功能。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
 ```bash
     //读取配置文件，sdk与区块链节点建立连接，获取web3j对象
@@ -149,10 +151,10 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
     //查询合约方法查询该合约的数据状态
     Type result = contract.someMethod(<param1>, ...).send(); 
 ```
-#### 2.2.2 Spring Boot项目开发指引
+### Spring Boot项目开发指引
 提供[spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)示例项目供参考。Spring Boot项目开发与Spring项目开发类似，其主要区别在于配置文件方式的差异。该示例项目提供丰富的测试案例，具体描述参考示例项目的README文档。
 
-### 2.3 SDK国密功能使用
+### SDK国密功能使用
 - 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi.md)。
 - 启用国密功能：application.xml/application.yml配置文件中将encryptType属性设置为1。
 
