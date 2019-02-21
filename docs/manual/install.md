@@ -1,10 +1,10 @@
-## 安装
+# 安装
 
-### 二进制安装
+## 二进制安装
 
 请从[Release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)页面下载最新的二进制程序，我们提供静态的二进制程序，在Ubuntu16.04和CentOS7经过测试。
 
-### 源码编译
+## 源码编译
 
 ```eval_rst
 .. important::
@@ -17,7 +17,7 @@ FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台�
 1. 从[FISCO BCOS][FSICO-BCOS-GitHub]克隆代码
 1. 运行`cmake`生成构建文件并编译
 
-#### 依赖安装
+### 依赖安装
 
 - Ubuntu
 
@@ -44,13 +44,13 @@ $ sudo yum install -y openssl-devel leveldb-devel openssl cmake3 gcc-c++ git
 $ brew install -y leveldb openssl git
 ```
 
-#### 克隆代码
+### 克隆代码
 
 ```bash
 $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 ```
 
-#### 编译
+### 编译
 
 编译完成后二进制文件位于`FISCO-BCOS/build/bin/fisco-bcos`。
 
@@ -65,7 +65,7 @@ $ cmake ..
 $ make
 ```
 
-#### 编译选项介绍
+### 编译选项介绍
 
 - BUILD_GM，默认off，国密编译开关。通过`cmake -DBUILD_GM=on ..`打开国密开关。
 
