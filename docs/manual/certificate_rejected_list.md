@@ -26,7 +26,8 @@ CA黑名单的操作包括**一节点将他节点列入/移除CA黑名单**，�
 
 操作顺序：
 
-1. 对于节点1（node0），将节点2（node1）的公钥nodeID加入自身的**CA黑名单**；
+1 . 对于节点1（node0），将节点2（node1）的公钥nodeID加入自身的**CA黑名单**；
+
 ```
 $ cat node1/conf/node.nodeid 
 aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
@@ -36,14 +37,18 @@ $ vim node0/config.ini
     ;crl.0 should be nodeid, nodeid's length is 128 
     crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
 ```
-2. 重启节点1；
+
+2 . 重启节点1；
+
 ```
 # 在node1目录下执行
 $ ./stop.sh
 $ ./start.sh
 nohup: appending output to ‘nohup.out’
 ```
-3. 通过日志确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。
+
+3 . 通过日志确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。
+
 ```
 # 在打开DEBUG级别日志前提下，查看自身节点（node2）连接的节点数及所连接的节点信息（nodeID）
 # 以下日志表明节点node2与两个节点（节点的nodeID前4个字节为b231b309、aab37e73）建立了连接
