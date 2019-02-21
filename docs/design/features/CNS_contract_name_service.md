@@ -1,6 +1,6 @@
 # CNS方案
 
-## 1 概述
+## 概述
 
 调用以太坊智能合约的流程包括： 
 1. 编写合约；
@@ -16,17 +16,18 @@
 
 为解决以上问题，给调用者提供良好的智能合约调用体验，FISCO BCOS提出<font color=#FF0000>**CNS合约命名服务**</font>。
 
-## 2 名词解释
+## 名词解释
 
 - **CNS**（Contract Name Service）通过提供链上合约名称与合约地址映射关系的记录及相应的查询功能，方便调用者通过记忆简单的合约名来实现对链上合约的调用。
 - **CNS信息**为合约名称、合约版本、合约地址和合约abi
 - **CNS表**用于存储CNS信息
 
-### CNS对比以太坊原有调用方式的优势：
+## CNS对比以太坊原有调用方式的优势
+
 - 简化调用合约方式；
 - 合约升级对调用者透明，支持合约灰度升级。
 
-## 3 对标ENS
+## 对标ENS
 
 ENS (Ethereum Name Service) ，以太坊名称服务。
 
@@ -36,13 +37,13 @@ ENS的功能类似我们较熟悉的DNS(Domain Name Service)域名系统，但�
 - ENS有竞拍功能，CNS不需支持。
 - ENS支持多级域名，CNS不需支持。
 
-## 4 模块架构
+## 模块架构
 
 ![](../../../images/contract_name_service/cns_architecture.png)
 
 <center>CNS架构</center>
 
-## 5 核心流程
+## 核心流程
 
 用户调用SDK部署合约及调用合约流程如下：
 
@@ -55,9 +56,9 @@ ENS的功能类似我们较熟悉的DNS(Domain Name Service)域名系统，但�
 - 对于缺省版本号的合约调用，由SDK实现默认调用合约的最新版本。
 - 上链的合约abi信息属于可选字段。
 
-## 6 数据结构
+## 数据结构
 
-### 6.1 CNS表结构
+### CNS表结构
 
 CNS信息以系统表的方式进行存储，各账本独立。CNS表定义如下：
 
@@ -76,7 +77,7 @@ CNS信息以系统表的方式进行存储，各账本独立。CNS表定义如�
 <tr><td>_status_</td><td>string</td><td>No</td><td></td><td>分布式存储通用字段，“0”可用“1”删除</td></tr>
 </table>
 
-### 6.2 合约接口
+### 合约接口
 
 ```
 pragma solidity ^0.4.2;
@@ -93,13 +94,13 @@ contract CNS
 - selectByName接口参数为合约名称name，返回表中所有基于该合约的不同version记录。
 - selectByNameAndVersion接口参数为合约名称name和合约版本version，返回表中该合约该版本的唯一地址。
 
-#### 6.2.1 更新CNS表方式
+#### 更新CNS表方式
 
 **precompiled合约**是FISCO BCOS底层通过C++实现的一种高效智能合约，用于FISCO BCOS底层的系统信息配置与管理。引入precompiled逻辑后，FISCO BCOS节点执行交易的流程如下：
 
 CNS合约属于precompiled合约类型，节点将通过内置C++代码逻辑实现对CNS表的插入和查询操作，不经EVM执行，因此CNS合约只提供了函数接口描述而没有函数实现。**预置CNS合约的precompiled地址为0x1004。**
 
-#### 6.2.2 合约接口返回示例
+#### 合约接口返回示例
 
 selectByName和selectByNameAndVersion接口返回的string为Json格式，示例如下：
 ```json
@@ -123,17 +124,17 @@ nstant\":true,\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"name\":\"\",\"type\
 ]
 ```
 
-## 7 SDK_API
+## SDK_API
 
 SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实现CNS的注册及查询功能。
 
-### 7.1 registerCns
+### registerCns
 - 描述：public TransactionReceipt registerCns(String name, String version, String addr, String abi)
 - 功能：上链合约信息
 - 参数：name——合约名，version——合约版本，addr——合约地址，abi——合约abi
 - 返回：上链交易回执，回执中含上链结果信息及错误信息（如有）
 
-### 7.2 resolve
+### resolve
 - 描述：public String resolve(String contractNameAndVersion)
 - 功能：基于合约名和合约版本查询合约地址
 - 参数：contractNameAndVersion——合约名+合约版本信息
@@ -144,7 +145,7 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[《SDK》](../../sdk/index.html)；
 2. 两个接口的使用例子可参考[ConsoleImpl.java](https://github.com/FISCO-BCOS/web3sdk/blob/release-2.0.1/src/test/java/org/fisco/bcos/web3j/console/ConsoleImpl.java)中的deployByCNS和callByCNS接口实现。
 
-## 8 操作工具
+## 操作工具
 
 控制台可提供部署合约、调用合约、基于合约名查询链上已有合约的功能。控制台的详细使用方法请参考[《控制台》](../../manual/console.md)。
 
