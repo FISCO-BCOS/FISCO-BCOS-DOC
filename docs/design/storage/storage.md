@@ -8,9 +8,17 @@
 
 ## 名词解释
 
-- Entry，对应于表中的一行，每行以列名作为key，对应的值作为value，构成KV结构。每个Entry拥有自己的AMDB主key，不同Entry允许拥有相同的AMDB主key。
-- Entries，Entries中存放主Key相同的Entry，数组。AMDB的主Key与Mysql中的主key不同，AMDB主key用于标示Entry属于哪个key，相同key的Entry会存放在同一个Entries中。
-- Table，存储表中的所有数据，KV结构，kV由AMDB主key和Entries对象构成。Table中存储AMDB主key到对应Entries的映射。可以基于AMDB主key进行增删改查，支持条件筛选。
+### Table
+
+存储表中的所有数据，KV结构，kV由AMDB主key和Entries对象构成。Table中存储AMDB主key到对应Entries的映射，可以基于AMDB主key进行增删改查，支持条件筛选。
+
+### Entries
+
+Entries中存放主Key相同的Entry，数组。AMDB的主Key与Mysql中的主key不同，AMDB主key用于标示Entry属于哪个key，相同key的Entry会存放在同一个Entries中。
+
+### Entry
+
+对应于表中的一行，每行以列名作为key，对应的值作为value，构成KV结构。每个Entry拥有自己的AMDB主key，不同Entry允许拥有相同的AMDB主key。
 
 ## AMDB表分类
 
@@ -24,12 +32,16 @@
 ======================== =========== ======================== ========================================= ====================================== 
 表名                      keyField    valueField               存储数据说明                                AMDB主key                              
 ======================== =========== ======================== ========================================= ====================================== 
-`_sys_tables_`           table_name  key_field value_field    存储所有表的结构，以表名为主键                 所有表的表名                             
-`_sys_miners_`           name        type,node_id enable_num  存储共识节点和观察节点的列表                   node                                   
+`_sys_tables_`           table_name  key_field,value_field    存储所有表的结构，以表名为主键                 所有表的表名                             
+`_sys_consensus_`        name        type,node_id,enable_num  存储共识节点和观察节点的列表                   node                                   
+`_sys_table_access_`     table_name  address,enable_num       存储每个表的具有写权限的外部账户地址            表的表名                                   
+`_sys_cns_`              name        version,address,abi      存储CNS映射关系                             合约名                                   
+`_sys_config_`           key         value,enable_num         存储需要共识的群组配置项                      配置项                                   
 `_sys_current_state_`    key         value                    存储最新的状态                               current_number/total_transaction_count 
 `_sys_tx_hash_2_block_`  hash        value,index              存储交易hash到区块号的映射                    交易hash的16进制                        
 `_sys_number_2_hash_`    hash        value                    存储区块号到区块头hash的16进制表示的映射        区块高                                 
 `_sys_hash_2_block_`     key         value                    存储hash到序列化的区块数据                    区块头hash的16进制                      
+`_sys_block_2_nonces_`   number      value                    存储区块中交易的nonces                       区块高                      
 ======================== =========== ======================== ========================================= ====================================== 
 ```
 
