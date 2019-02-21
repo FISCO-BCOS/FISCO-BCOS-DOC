@@ -6,11 +6,11 @@ fisco generator的配置文件在./conf文件夹下，共有三个配置文件�
 
 meta文件夹下需要存放生成节点的证书，包括`fisco bcos`二进制文件(或者用户指定版本，待讨论)、链证书ca.crt、节点证书。
 
-证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。节点证书需要已经拼装好agency.crt
+证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。节点证书需要已经拼装好agency.crt。
 
 ## mchain.ini
 
-通过修改`mchain.ini`的配置，用户可以使用--build命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包
+通过修改`mchain.ini`的配置，用户可以使用--build命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包.
 
 ```bash
 [node0]
@@ -50,7 +50,7 @@ group_id=1
 ## mexpand.ini
 
 ```bash
-与`mchain.ini`配置相似，通过修改`mexpand.ini`的配置，用户可以使用--expand命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包
+与`mchain.ini`配置相似，通过修改`mexpand.ini`的配置，用户可以使用--expand命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包。
 
 
 [node0]
@@ -75,7 +75,7 @@ group_id=1
 
 ## mgroup.ini
 
-通过修改`mgourp.ini`的配置，用户可以在指定目录下生成新群组的相关配置，如group.2.ini和group.2.genesis
+通过修改`mgourp.ini`的配置，用户可以在指定目录下生成新群组的相关配置，如group.2.ini和group.2.genesis。
 
 ```bash
 [group]
