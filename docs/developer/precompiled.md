@@ -175,7 +175,7 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 ```
 
 #### 2.2.6 其他流程  
-[源码编译](..//manual/install.md#编译) 
+[源码编译](../manual/install.md#编译) 
  
  [环境搭链](../manual/build_chain.md)
 
