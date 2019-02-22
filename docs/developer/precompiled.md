@@ -96,10 +96,10 @@ contract HelloWorld{
 }
 ```
 上述源码为solidity编写的HelloWorld合约， 本章节会使用precompiled方式实现一个相同功能的合约，通过step by step使用户对precompiled合约编写有个直观的了解。   
-示例的c++[源码路径](https://github.com/ywy2090/FISCO-BCOS/blob/helloworld/libprecompiled/HelloWorldPrecompiled.cpp)：
+示例的c++[源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/extension/HelloWorldPrecompiled.cpp)：
 ```
-    libprecompiled/HelloWorldPrecompiled.h 
-    libprecompiled/HelloWorldPrecompiled.cpp
+    extension/HelloWorldPrecompiled.h 
+    extension/HelloWorldPrecompiled.cpp
 ```
 
 #### 2.2.1 分配合约地址  
@@ -138,7 +138,7 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 该表只存储一对键值对，key字段为hello_key，value字段为hello_value 存储对应的字符串值，可以通过set(string)接口修改，通过get()接口获取。
 
 #### 2.2.4 实现调用逻辑  
-添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/ywy2090/FISCO-BCOS/blob/helloworld/libprecompiled/HelloWorldPrecompiled.cpp#L85)。
+添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/extension/HelloWorldPrecompiled.cpp#L85)。
 ```
 //file HelloWorldPrecompiled.h
 //file HelloWorldPrecompiled.cpp
