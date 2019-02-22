@@ -25,7 +25,7 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配:
 
 
 | 地址   | 功能   | 文档链接      | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
-|--------|--------|----------|---------|-------|
+|--------|--------|----------|---------|
 | 0x1000 | 系统参数管理         | [系统参数](../manual/build_group.md) | SystemConfigPrecompiled.cpp |
 | 0x1001 | CRUD合约操作存储接口 | [CRUD](../developer/crud_sol.md) | TableFactoryPrecompiled.cpp |
 | 0x1002 | CRUD合约            | [CRUD](../developer/crud_sol.md) | CRUDPrecompiled.cpp |
