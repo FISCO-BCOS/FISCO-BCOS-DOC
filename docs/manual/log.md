@@ -2,13 +2,23 @@
 
 FISCO BCOS同时支持轻量级日志系统[easylogging++](https://github.com/zuhd-org/easyloggingpp)和功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，默认使用boostlog，可通过编译选项`EASYLOG`选择不同的日志系统。
 
+
 ## 日志配置
+
+```eval_rst
+.. important::
+
+    日志格式：
+
+    - boostlog：`log_${year}${month}${day}${hour}.log`，如log_2018022112.log
+    - easylog: `log_${year}${month}${day}${hour}.${min}.log`，如log_2018022112.00.log
+```
 
 ### 配置boostlog
 
 FISCO BCOS默认使用boostlog，相较于easylogging++，boostlog配置项很简单，主要如下：
 
-- `level`: 日志级别，当前主要包括`TRACE、DEBUG、INFO、WARNING、ERROR`五种日志级别，设置某种日志级别后，日志文件中会输`≥`该级别的日志，日志级别从大到小排序`ERROR > WARNING > INFO > DEBUG > TRACE`；
+- `level`: 日志级别，当前主要包括`trace、debug、info、warning、error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`；
 
 - `max_log_file_size`：每个日志文件最大容量；
 
@@ -22,7 +32,7 @@ boostlog示例配置如下：
     ;the directory of the log
     log_path=./log
     ;log level INFO DEBUG TRACE
-    level=INFO
+    level=info
     max_log_file_size=209715200
     flush=true
 ```
@@ -43,7 +53,7 @@ easylogging++示例配置如下：
     ;the directory of the log
     log_path=./log
     ;log level INFO DEBUG TRACE
-    level=INFO
+    level=info
     max_log_file_size=209715200
     ;easylog config
     format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg

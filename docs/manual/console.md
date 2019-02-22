@@ -1,21 +1,19 @@
 # 控制台手册
 
-## 1 控制台简介
-控制台是FISCO BCOS 2.0重要的交互式客户端工具，它通过SDK与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等功能。
+控制台是FISCO BCOS 2.0重要的交互式客户端工具，它通过[SDK](../sdk/index.html)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等功能。
 
-## 2 数据定义
-### 2.1 控制台命令
+### 控制台命令
 控制台命令由两部分组成，即指令和指令相关的参数：   
-- **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等。其中大部分指令调用rpc接口，因此与rpc接口同名，但同时为了输入简洁，提供对应的缩写指令。     
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。其中字符串参数需要加上双引号，字符串不能带空格。与rpc接口同名命令的输入参数和获取信息字段的详细解释参考[rpc文档](../api.md)。
+- **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等。其中部分指令调用RPC接口，因此与RPC接口同名；但同时为了输入简洁，提供对应的缩写指令。     
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔。其中字符串参数需要加上双引号，字符串不能带空格。与RPC接口同名命令的输入参数和获取信息字段的详细解释参考[RPC接口](../api.md)。
 
-### 2.2 控制台响应
+### 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
-- 正确结果: 命令返回正确的执行结果，以字符串或是json的形式返回。       
-- 错误结果: 命令返回错误的执行结果，以字符串或是json的形式返回。 
+- **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
+- **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
 
 **注：**
-- 控制台的命令调用rpc接口时，当rpc返回错误响应(具体错误响应见[rpc文档](../api.md))，将以json格式显示错误响应的error字段信息。
+- 控制台的命令调用RPC接口时，当RPC返回错误响应(具体错误码见[RPC设计文档](../design/rpc.md))，将以json格式显示错误响应的error字段信息。
 - 命令操作系统功能时，会返回json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：
     - 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
     - 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
@@ -52,21 +50,59 @@
 
 ```
 
-## 3 控制台配置与运行
+## 控制台配置与运行
 
-### 3.1 配置运行
+### 配置运行
 搭建FISCO BCOS区块链请参考[建链脚本](./build_chain.md)。
-- 准备控制台
+#### 控制台配置
+**获取控制台**
 ```bash
-# 获取控制台
 curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
 tar -zxf console.tar.gz
 ```
-将控制台连接节点所在链的sdk目录下ca.crt、node.crt和node.key文件拷贝到console/conf目录下。
-
-- 启动控制台
+目录结构如下：
 ```
-bash start
+|-- apps //依赖的sdk jar包目录
+|   -- web3sdk.jar 
+|-- lib // 相关依赖的jar包目录
+|-- conf
+|   |-- ca.crt   //ca证书文件
+|   |-- node.crt // 节点证书文件
+|   |-- node.key // 节点私钥文件
+|   |-- applicationContext.xml //配置文件
+|   |-- log4j.properties  // 日志配置文件
+|   |-- contract.properties // 合约地址存储文件
+|   |-- privateKey.properties // 发送交易的私钥存储文件
+|-- solidity
+|   -- contracts  // 合约存储目录
+|       -- HelloWorld.sol // 提供的HelloWorld合约
+-- start
+
+```
+**配置控制台：**
+- 区块链节点和证书的配置：
+  - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到conf目录下。
+  - **通过[企业工具](../enterprise/index.html)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise/manual/cert.md))生成证书和私钥，将生成sdk目录下的ca.crt、node.crt和node.key文件拷贝到conf目录下。
+- 配置conf目录下的applicationContext.xml文件，配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
+  ![](../../images/sdk/sdk_xml.png)
+  配置项详细说明如下:
+  - encryptType: 国密算法开关(默认为0)                              
+    - 0: 不使用国密算法发交易                              
+    - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](./guomi.md))。
+  - groupChannelConnectionsConfig: 
+    - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
+    - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
+  - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK将与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
+
+```eval_rst
+.. important::
+    控制台配置说明
+
+    - **说明：** 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
+``` 
+#### 启动控制台
+```
+$ bash start
 # 输出下述信息表明启动成功
 =====================================================================================
 Welcome to FISCO BCOS console!
@@ -84,30 +120,25 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =====================================================================================
 ```
 
-```eval_rst
-.. important::
-    控制台配置说明
-
-    - **说明1：** 控制台配置文件（console/conf/applicationContext.xml）默认配置的是一个在群组1内的节点，其ip为127.0.0.1，端口为20200。如果需要更改连接配置，参考sdk文档。
-    - **说明2：** 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此sdk轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
-``` 
-
-### 3.2 启动脚本说明
+#### 启动脚本说明
 ```
-bash start [groupID] [privateKey]   
+$ bash start [groupID] [privateKey]   
 ```
 启动命令可以指定两个可选参数：           
-- `groupId`: - 群组ID, 不指定默认为群组1。           
-- `privateKey`: - 交易发送者外部账号的私钥，不指定默认随机生成外部账号私钥。 
+- `groupId`: - 群组ID, 不指定则默认为群组1。           
+- `privateKey`: - 交易发送者外部账号的私钥，不指定则默认从conf目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
 
-### 3.3 启用国密版控制台   
-控制台需要连接采用国密算法的节点，控制台的配置文件打开国密开关（具体配置方式见[sdk文档](../sdk/index.html)），即可使用国密版控制台，其命令使用方式与普通版一致。
+示例
+```
+# 以群组2，私钥账号地址为3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4登录控制台
+$ bash start 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4  
+```
 
-## 4 控制台命令
+## 控制台命令
 ### **help**
 输入help或h，查看控制台所有的命令。
 
-```
+```text
 > help
 -------------------------------------------------------------------------------------
 help(h)                                       Provide help information.
@@ -597,8 +628,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 > deploy HelloWorld
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
-**注：** 
-- 用户编写的合约进行部署和调用，请使用sdk，具体使用参考[sdk文档](../sdk/index.html)。
+**注：** 部署用户编写的合约，只需要将solidity合约文件放到solidity/contracts/目录下，然后进行部署即可。
 
 ### **call**
 运行call或c，调用合约。                                
@@ -628,8 +658,7 @@ deployByCNS或dbc，利用[CNS](../design/features/CNS_contract_name_service.md)
 > dbc HelloWorld 1.0
 0x7956881392a8e2893d6c3f514ef5c37f9d5e52ef
 ```
-**注：** 
-- 用户编写的合约利用CNS进行部署和调用，请使用sdk，具体使用参考[sdk文档](../sdk/index.html)。
+**注：** 部署用户编写的合约，只需要将solidity合约文件放到solidity/contracts/目录下，然后进行部署即可。
 
 ### **queryCNS**
 运行queryCNS或qcs，根据合约名称和合约版本号（可选参数）查询CNS表记录信息。                                 
@@ -703,8 +732,8 @@ Hello,FISCO-BCOS
 ### **setSystemConfigByKey**
 运行setSystemConfigByKey或ssc，以键值对方式设置系统配置。目前设置的系统配置支持tx_count_limit和tx_gas_limit，系统配置用法见[多群组操作指南](build_group.md)                                  
 参数： 
-- 键
-- 值
+- key
+- value
 ```bash
 > ssc tx_count_limit 100
 {
@@ -715,7 +744,7 @@ Hello,FISCO-BCOS
 ### **getSystemConfigByKey**
 运行getSystemConfigByKey或gsc，根据键查询系统配置的值。                                  
 参数： 
-- 键
+- key
 ```bash
 > gsc tx_count_limit
 100
