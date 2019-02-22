@@ -23,7 +23,7 @@ FISCO BCOS二进制提供以下获取方式，用户可以自由选择安装方�
 
 ## 合约开发
 
-[合约开发](developer/index.html)提供Solidity、CRUD合约和Precompiled合约的开发教程。
+[合约开发](developer/index.html)提供Solidity、CRUD合约和预编译（Precompiled）合约的开发教程。
 
 ## 企业工具
 
