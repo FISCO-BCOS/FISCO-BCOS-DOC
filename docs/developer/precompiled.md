@@ -2,7 +2,7 @@
 # Precompiled合约开发
 
 ## 一. 简介
-precompiled合约(预编译合约)是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[[precompiled设计原理]](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/virtual_machine/precompiled.md)。   
+precompiled合约(预编译合约)是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[[precompiled设计原理]](../design/virtual_machine/precompiled.md)。   
 本文作为一篇入门指导，旨在指引用户如何实现自己的precompiled合约,并实现precompiled合约的调用。
 
 ## 二. 实现precompiled合约  
@@ -25,12 +25,12 @@ precompiled合约(预编译合约)是一项以太坊原生支持的功能：在�
 
 | 地址   | 功能                 | 文档链接                                                                                                                               | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
 |--------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| 0x1000 | 系统参数管理         | [系统参数](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md)                    | SystemConfigPrecompiled.cpp                                                                            |
-| 0x1001 | CRUD合约操作存储接口 | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud_sol.md)                                         | TableFactoryPrecompiled.cpp                                                                            |
-| 0x1002 | CRUD合约             | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud_sol.md)                                         | CRUDPrecompiled.cpp                                                                                    |
-| 0x1003 | 共识节点管理         | [共识节点管理](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md)                | ConsensusPrecompiled.h .cpp                                                                            |
-| 0x1004 | CNS功能              | [CNS文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/features/CNS_contract_name_service.md)           | CNSPrecompiled.h .cpp                                                                                  |
-| 0x1005 | 存储表权限管理       | [权限管理文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/security_control/node_access_management.md) | AuthorityPrecompiled.h .cpp                                                                            |
+| 0x1000 | 系统参数管理         | [系统参数](../manual/build_group.md)                    | SystemConfigPrecompiled.cpp                                                                            |
+| 0x1001 | CRUD合约操作存储接口 | [CRUD](../developer/crud_sol.md)                                         | TableFactoryPrecompiled.cpp                                                                            |
+| 0x1002 | CRUD合约             | [CRUD](../developer/crud_sol.md)                                         | CRUDPrecompiled.cpp                                                                                    |
+| 0x1003 | 共识节点管理         | [共识节点管理](../manual/build_group.md)                | ConsensusPrecompiled.h .cpp                                                                            |
+| 0x1004 | CNS功能              | [CNS文档](../design/features/CNS_contract_name_service.md)           | CNSPrecompiled.h .cpp                                                                                  |
+| 0x1005 | 存储表权限管理       | [权限管理文档](../design/security_control/node_access_management.md) | AuthorityPrecompiled.h .cpp                                                                            |
 
 - **定义合约接口**  
 
@@ -49,7 +49,7 @@ precompiled合约(预编译合约)是一项以太坊原生支持的功能：在�
 
 - **设计存储结构**  
 
-precompiled合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构)， [存储结构](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/storage/storage.md)。  
+precompiled合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构)， [存储结构](../design/storage/storage.md)。  
 **注意：不涉及存储操作可以省略该流程**  
  
 - **实现调用逻辑**  
@@ -175,9 +175,9 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 ```
 
 #### 2.2.6 其他流程  
-[源码编译](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/install.md#编译) 
+[源码编译](..//manual/install.md#编译) 
  
- [环境搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_chain.md)
+ [环境搭链](../manual/build_chain.md)
 
 ## 三 调用 
 
