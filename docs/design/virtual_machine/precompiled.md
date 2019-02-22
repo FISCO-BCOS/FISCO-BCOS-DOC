@@ -1,10 +1,10 @@
 ## Precompiled
 
-Precompiled合约提供一种使用C++编写合约的方法，合约逻辑与数据分离，相比于solidity合约具有更好的性能，可以通过修改底层代码实现合约升级。
+预编译合约提供一种使用C++编写合约的方法，合约逻辑与数据分离，相比于solidity合约具有更好的性能，可以通过修改底层代码实现合约升级。
 
-### Precompiled合约与Solidity合约对比
+### 预编译合约与Solidity合约对比
 
-|表名      |  Precompiled合约                         |     Solidity合约|
+|表名      |  预编译合约                         |     Solidity合约|
 |:--------|:-----|:-----|
 |地址      | 固定地址，代码中定义                       |   部署时确定|
 |合约代码  |  数据存储在表中，与合约分离，可升级合约逻辑|     合约变量和数据存储在MPT树中|
@@ -18,7 +18,7 @@ Precompiled的架构如下图所示：
 ![](../../../images/precompiled/architecture.png)
 
 ### 关键流程
-- 执行Precompiled合约时首先需要根据合约地址获取到预编译合约的对象。
+- 执行预编译合约时首先需要根据合约地址获取到预编译合约的对象。
 - 每个预编译合约对象都会实现`call`接口，预编译合约的具体逻辑在该接口中实现。
 - `call`根据交易的abi编码，获取到`Function Selector`和参数，然后执行对应的逻辑。
 
@@ -26,7 +26,7 @@ Precompiled的架构如下图所示：
 
 ### 接口定义
 
-每个Precompiled合约都必须实现自己的`call`接口，接口接受三个参数，分别是`ExecutiveContext`执行上下文、`bytesConstRef`参数的abi编码和外部账户地址，其中外部账户地址用于判断是否具有写权限。[`Precompiled`源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/04db9d5e9d7a9d321d90cef8dc5e2010a53ed8d3/libblockverifier/Precompiled.h#L37)。
+每个预编译合约都必须实现自己的`call`接口，接口接受三个参数，分别是`ExecutiveContext`执行上下文、`bytesConstRef`参数的abi编码和外部账户地址，其中外部账户地址用于判断是否具有写权限。[`Precompiled`源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/04db9d5e9d7a9d321d90cef8dc5e2010a53ed8d3/libblockverifier/Precompiled.h#L37)。
 
 |接口名|参数说明|接口说明|
 |:----|:------|:------|
