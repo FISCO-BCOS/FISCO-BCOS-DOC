@@ -124,7 +124,8 @@ contract HelloWorld {
 
 HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操作，需要 设计存储的表结构。
 
-表名： ```__test_hello_world__```  
+表名： ```__test_hello_world__```    
+
 表结构：
 
 |key       | value
