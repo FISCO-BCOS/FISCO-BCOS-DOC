@@ -4,7 +4,7 @@
 
 ## 首次部署FISCO BCOS联盟链
 
-### 使用`build_chain`脚本
+### 使用[`build_chain`][build_chain_code]脚本
 
 本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 
@@ -23,15 +23,6 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./bin/fisco-bcos -v
-```
-
-执行完上述步骤后，fisco目录下结构如下:
-
-```bash
-fisco
-├── bin
-│   └── fisco-bcos
-└── build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链:
@@ -235,7 +226,7 @@ contract HelloWorld{
 # 查看当前块高
 > getBlockNumber
 1
-# 调用get接口获取name变量
+# 调用get接口获取name变量 此处的合约地址是deploy指令返回的地址
 > call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
 # 调用set设置name
@@ -248,3 +239,5 @@ Hello,FISCO-BCOS
 > getBlockNumber
 2
 ```
+
+[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/tools/build_chain.sh
