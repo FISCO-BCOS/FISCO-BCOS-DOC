@@ -8,7 +8,6 @@ FISCO BCOS二进制提供以下获取方式，用户可以自由选择安装方�
 
 初次接触FISCO BCOS的用户建议从[Hello World](manual/hello_world.md)教程开始，通过在本机部署FISCO BCOS以及部署和调用Hello World合约快速入门。
 
-
 ## 用户手册
 
 [用户手册](manual/index.html)提供FISCO BCOS各种功能的操作说明。
@@ -23,7 +22,7 @@ FISCO BCOS二进制提供以下获取方式，用户可以自由选择安装方�
 
 ## 合约开发
 
-[合约开发](developer/index.html)提供Solidity、CRUD合约和Precompiled合约的开发教程。
+[合约开发](developer/index.html)提供Solidity、CRUD合约和预编译（Precompiled）合约的开发教程。
 
 ## 企业工具
 

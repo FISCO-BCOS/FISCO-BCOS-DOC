@@ -26,21 +26,24 @@ Table中的删改查接口支持传入条件，这三种接口会返回根据条
 
 ### 举例
 
-下面以某个资产统计表为例，解释上述名词。
+以某公司员工领用物资登记表为例，解释上述名词。
 
-|姓名*|资产名|价值/w|
-|:--|:---|:----|
-|老王|住房|500|
-|老王|车|30|
-|小李|住房|600|
-|小张|车|15|
+|Name*|item_id|item_name|
+|:--|:---|:---|
+|Alice|1001001|laptop|
+|Alice|1001002|screen|
+|Bob|1002001|macbook|
+|Chris|1003001|PC|
 
 解释如下：
-- 上面可以作为一个Table，**姓名**是AMDB主key。
-- 表中的每一行为一个Entry。一共有4个Entry，每个Entry以Map存储数据，其中列名为key，对应值为value存。
-- Table中以**姓名**为主key，存有3个Entries对象。第1个Entries中存有老王的2条记录，第2个Entries中存有小李的1条记录，第3个Entries中存有小张的一条记录。
-- 调用Table类的查询接口时，可以设置`资产价值 > 40`，会查询出老王和小李的两条记录。
-
+- 表中**Name**是AMDB主key。
+- 表中的每一行为一个Entry。一共有4个Entry，每个Entry以Map存储数据。4个Entry如下：
+    + Entry1：`{Name:Alice，item_id:1001001,item_name:laptop}`
+    + Entry2：`{Name:Alice，item_id:1001001,item_name:screen}`
+    + Entry3：`{Name:Bob，item_id:1001001,item_name:macbook}`
+    + Entry4：`{Name:Chris，item_id:1001001,item_name:PC}`
+- Table中以**Name**为主key，存有3个Entries对象。第1个Entries中存有Alice的2条记录，第2个Entries中存有Bob的1条记录，第3个Entries中存有Chris的一条记录。
+- 调用Table类的查询接口时，查接口需要指定AMDB主key和条件，设置AMDB主key为Alice，条件为`price > 40`，会查询出Entry1。
 
 ## AMDB表分类
 
