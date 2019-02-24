@@ -2,8 +2,9 @@
 # 预编译合约开发
 
 ## 一. 简介
-预编译合约(预编译合约)是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[[precompiled设计原理]](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/virtual_machine/precompiled.md)。   
-本文作为一篇入门指导，旨在指引用户如何实现自己的预编译合约,并实现预编译合约的调用。
+
+预编译（precompiled）合约(预编译合约)是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[[precompiled设计原理]](../design/virtual_machine/precompiled.md)。   
+本文作为一篇入门指导，旨在指引用户如何实现自己的precompiled合约,并实现precompiled合约的调用。
 
 ## 二. 实现预编译合约  
 
@@ -12,6 +13,7 @@
 ![流程](../../images/precompiled/create_process.png)
 
 - **分配合约地址**  
+
 调用solidity合约或者预编译合约需要根据合约地址来区分，地址空间划分：
 
 | 以太坊precompiled | 保留          | FISCO-BCOS precompied | FISCO-BCOS预留 | 用户分配区间    | CRUD临时合约 | solidity |
@@ -20,18 +22,20 @@
 
  用户分配地址空间为```0x5001-0xffff```,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。 
  
- FISCO-BCOS中实现的precompild合约列表以及地址分配：
-    
-| 地址   | 功能                 | 文档链接                                                                                                                               | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
-|--------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| 0x1000 | 系统参数管理         | [系统参数](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md)                    | SystemConfigPrecompiled.cpp                                                                            |
-| 0x1001 | CRUD合约操作存储接口 | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud_sol.md)                                         | TableFactoryPrecompiled.cpp                                                                            |
-| 0x1002 | CRUD合约             | [CRUD](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/developer/crud_sol.md)                                         | CRUDPrecompiled.cpp                                                                                    |
-| 0x1003 | 共识节点管理         | [共识节点管理](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_group.md)                | ConsensusPrecompiled.h .cpp                                                                            |
-| 0x1004 | CNS功能              | [CNS文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/features/CNS_contract_name_service.md)           | CNSPrecompiled.h .cpp                                                                                  |
-| 0x1005 | 存储表权限管理       | [权限管理文档](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/security_control/node_access_management.md) | AuthorityPrecompiled.h .cpp                                                                            |
+FISCO-BCOS中实现的precompild合约列表以及地址分配:
+
+
+| 地址   | 功能   | 文档链接      | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
+|--------|--------|----------|---------|
+| 0x1000 | 系统参数管理         | [系统参数](../manual/build_group.html) | SystemConfigPrecompiled.cpp |
+| 0x1001 | CRUD合约操作存储接口 | [CRUD](../developer/crud_sol.html) | TableFactoryPrecompiled.cpp |
+| 0x1002 | CRUD合约            | [CRUD](../developer/crud_sol.html) | CRUDPrecompiled.cpp |
+| 0x1003 | 共识节点管理         | [共识节点管理](../manual/build_group.html) | ConsensusPrecompiled.cpp |
+| 0x1004 | CNS功能  | [CNS文档](../design/features/CNS_contract_name_service.html) | CNSPrecompiled.cpp |
+| 0x1005 | 存储表权限管理 | [权限管理文档](../design/security_control/node_access_management.html) | AuthorityPrecompiled.cpp |
 
 - **定义合约接口**  
+
 同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI 链接](https://solidity.readthedocs.io/en/develop/abi-spec.html)。  
  
 > 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**辅助合约**，辅助合约在调用预编译合约时需要使用。 
@@ -46,10 +50,12 @@
 ```  
 
 - **设计存储结构**  
-预编译合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构)， [存储结构](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/design/storage/storage.md)。  
+
+预编译合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构)， [存储结构](../design/storage/storage.md)。  
 **注意：不涉及存储操作可以省略该流程**  
  
 - **实现调用逻辑**  
+
 实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承[Precompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/Precompiled.h#L37), 重载call函数， 在call函数中实现各个接口的调用行为。  
 ```
     //libblockverifier/Precompiled.h
@@ -61,7 +67,8 @@
 ```
 
 - **注册合约**  
-最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用预编译合约时合约的执行逻辑才能被正确识别执行， 查看注册的[预编译合约列表](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/ExecutiveContextFactory.cpp#L36)。   
+
+最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用precompiled合约时合约的执行逻辑才能被正确识别执行， 查看注册的[预编译合约列表](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/ExecutiveContextFactory.cpp#L36)。   
 注册路径：
 ```
     file        libblockverifier/ExecutiveContextFactory.cpp
@@ -71,7 +78,7 @@
 ### 2.2 step by step sample  
 ```
 //HelloWorld.sol
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.25;
 
 contract HelloWorld{
     string name;
@@ -89,11 +96,12 @@ contract HelloWorld{
     }
 }
 ```
-上述源码为solidity编写的HelloWorld合约， 本章节会使用precompiled方式实现一个相同功能的合约，通过step by step使用户对预编译合约编写有个直观的了解。   
-示例的c++[源码路径](https://github.com/ywy2090/FISCO-BCOS/blob/helloworld/libprecompiled/HelloWorldPrecompiled.cpp)：
+<<<<<<< HEAD
+上述源码为solidity编写的HelloWorld合约， 本章节会实现一个相同功能的预编译合约，通过step by step使用户对预编译合约编写有直观的认识。   
+示例的c++[源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/extension/HelloWorldPrecompiled.cpp)：
 ```
-    libprecompiled/HelloWorldPrecompiled.h 
-    libprecompiled/HelloWorldPrecompiled.cpp
+    extension/HelloWorldPrecompiled.h 
+    extension/HelloWorldPrecompiled.cpp
 ```
 
 #### 2.2.1 分配合约地址  
@@ -107,7 +115,7 @@ contract HelloWorld{
 
 需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的辅助合约：
 ```
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.25;
 
 contract HelloWorld {
     function get() public constant returns(string) {}
@@ -119,7 +127,8 @@ contract HelloWorld {
 
 HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操作，需要 设计存储的表结构。
 
-表名： ```__test_hello_world__```  
+表名： ```_ext_hello_world_```    
+
 表结构：
 
 |key       | value
@@ -131,7 +140,7 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 该表只存储一对键值对，key字段为hello_key，value字段为hello_value 存储对应的字符串值，可以通过set(string)接口修改，通过get()接口获取。
 
 #### 2.2.4 实现调用逻辑  
-添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/ywy2090/FISCO-BCOS/blob/helloworld/libprecompiled/HelloWorldPrecompiled.cpp#L85)。
+添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/extension/HelloWorldPrecompiled.cpp#L85)。
 ```
 //file HelloWorldPrecompiled.h
 //file HelloWorldPrecompiled.cpp
@@ -169,8 +178,9 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 ```
 
 #### 2.2.6 其他流程  
-[源码编译](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/install.md#编译)  
-[环境搭链](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/feature-2.0.0/docs/manual/build_chain.md)
+[源码编译](../manual/install.md)
+
+ [环境搭链](../manual/build_chain.md)
 
 ## 三 调用 
 
