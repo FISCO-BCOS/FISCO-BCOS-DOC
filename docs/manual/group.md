@@ -20,11 +20,14 @@ $ sudo yum -y install openssl openssl-devel leveldb leveldb-devel curl
 
 ### Ubuntu
 $ sudo apt-get install openssl libssl-dev libleveldb-dev curl
+
+### Mac OS
+$ brew install openssl leveldb
 ```
 
 ## 星形拓扑
 
-本章以介绍构建本机七节点三群组四机构的星形组网拓扑为例，介绍多群组使用方法。星型组网区块链详细组网情况如下：
+本章以介绍构建本机四机构三群组七节点的星形组网拓扑为例，介绍多群组使用方法。星型组网区块链详细组网情况如下：
 
 本章以构建上图所示的<font color=#FF0000>星形拓扑区块链</font>为例，介绍多群组使用方法。
 
@@ -80,7 +83,7 @@ $ cat ip_list
 127.0.0.1:2 agencyD 3
 ```
 
-**使用build_chain脚本构建星形区块链**
+**使用build_chain脚本构建星形区块链安装包**
 
 ```bash
 # 根据配置生成星形区块链
@@ -158,7 +161,18 @@ app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/fisco/12
 
 **查看群组共识状态**
 
-不发交易时，共识正常的节点会刷出`+++`日志，本例中，`node0、node1`同时属于`group1、group2和group3`；`node2、node3`属于`group1`；`node4、node5`属于`group2`；`node6、node7`属于`group3`，可通过`tail -f xxx.log | grep "g:${group_id}.*++"`查看各节点是否正常：
+不发交易时，共识正常的节点会刷出`+++`日志，本例中，`node0、node1`同时属于`group1、group2和group3`；`node2、node3`属于`group1`；`node4、node5`属于`group2`；`node6、node7`属于`group3`，可通过`tail -f xxx.log | grep "g:${group_id}.*++"`查看各节点是否正常。
+
+```eval_rst
+.. important::
+
+    节点正常共识打印 ``+++`` 日志， ``+++`` 日志字段含义：
+     - ``g:``：群组ID
+     - ``blkNum``：Leader节点产生的新区块高度；
+     - ``tx``: 新区块中包含的交易数目；
+     - ``myIdx``: 本节点索引；
+     - ``hash``: Leader节点产生的最新区块哈希。
+```
 
 ```bash
 # 查看node0的group1是否正常共识
@@ -193,7 +207,19 @@ info|2019-02-11 15:39:58.994218| [g:3][p:776][CONSENSUS][SEALER]++++++++Generati
 
 ```bash
 $ bash transTest.sh ${交易数目} ${群组ID}
+```
 
+```eval_rst
+.. important::
+    
+    节点每出一个新块，会打印一条Report日志，Report日志中各字段含义如下：
+     - ``g:``：群组ID
+     - ``num``：出块高度；
+     - ``idx``：出块节点索引；
+     - ``hash``：区块哈希；
+     - ``next``：下一个区块高度；
+     - ``tx``：区块包含的交易数；
+     - ``myIdx``： 当前节点索引。
 ```
 
 ```bash
@@ -205,7 +231,7 @@ Send transaction:  2
 {"id":83,"jsonrpc":"2.0","result":"0x9f69fa21081ef18be04536de6583d8c633bf0387b15eb8b8aa9d7f6bbbd9654e"}
 ......此处省略其他输出......
 
-# 查看出块情况
+# 查看出块情况：有新区块产生
 $ cat node0/log/* |grep "g:2.*Report"
 info|2019-02-11 16:07:35.947676| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,......此处省略其他输出......
 
@@ -217,7 +243,7 @@ Send transaction:  2
 {"id":83,"jsonrpc":"2.0","result":"0x6f2279b37b98b79960e2e7291afbd89fceb9116c8d40859bf3d8374e2711b2dd"}
 ......此处省略其他输出......
 
-# 查看出块情况
+# 查看出块情况：有新区块产生
 $ cat node0/log/* |grep "g:3.*Report"
 info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1,idx=3,hash=843f6498...,next=2,tx=1,myIdx=3
 ......此处省略其他输出......
@@ -225,7 +251,7 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 
 ### 节点加入/退出群组
 
-通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](node_access_management.md)。<font color=#FF0000>控制台配置参考[控制台操作手册](console.html#id7)</font>。
+通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](node_access_management.md)，控制台配置参考[控制台操作手册](console.html#id7)。
 
 ```eval_rst
 .. important::
@@ -267,7 +293,7 @@ $ cat conf/applicationContext.xml | grep "[0-9].*:[0-9].*" | grep value
 <value>127.0.0.1:20200</value>
 
 # 启动web3sdk，连接group2所有节点
-$ bash start 2
+$ bash start.sh 2
 ```
 
 **将node2加入group2为共识节点**
@@ -332,8 +358,8 @@ Send transaction:  1
 Send transaction:  2
 ......此处省略其他输出......
 
-# 查看node2节点group2的出块情况
-$ tail -f node2/log/* | grep "g:2.*Report"
+# 查看node2节点group2的：有新区块产生
+$ cat node2/log/* | grep "g:2.*Report"
 info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9,idx=3,hash=80c98d31...,next=10,tx=1,myIdx=1
 ......此处省略其他输出......
 ```
@@ -355,7 +381,7 @@ info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9
 
 ### 构建单群组四节点区块链
 
-> **用build_chain脚本生成单群组四节点区块链**
+> **用build_chain脚本生成单群组四节点区块链安装包**
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
@@ -448,8 +474,8 @@ $ cp group.2.genesis node2/conf
 $ cp group.2.genesis node3/conf
 
 # 重启区块链
-$ bash stop.sh
-$ bash start.sh
+$ bash stop_all.sh
+$ bash start_all.sh
 ```
 
 ### 查看群组共识情况
@@ -486,8 +512,8 @@ Send transaction:  2
 {"id":83,"jsonrpc":"2.0","result":"0x42058b83924248adbedf2e8f65e60b0986d378ee5255b89fd72cd76f5b0d07bf"}
 ......此处省略其他输出......
 
-# 查看节点出块情况
-$ tail -f node0/log/log_2019021121.12.log | grep "g:1.*Report"
+# 查看节点出块情况(其中num是块高, idx是出块节点索引, tx是区块中包含交易数，myIdx是当前节点索引):有新区块产生
+$ cat node0/log/* | grep "g:1.*Report"
 info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,idx=3,hash=be961c98...,next=2,tx=1,myIdx=2
 ......此处省略其他输出......
 
@@ -499,8 +525,8 @@ Send transaction:  2
 {"id":83,"jsonrpc":"2.0","result":"0x43dca46e44c7658bb86db15d555081869e0157bd8ff7bc901fb3f648ead13d8e"}
 ......此处省略其他输出......
 
-# 查看节点出块情况
-$ tail -f node0/log/log_2019021121.12.log | grep "g:2.*Report"
+# 查看节点出块情况：有新区块产生
+$ cat node0/log/log_2019021121.12.log | grep "g:2.*Report"
 info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,idx=3,hash=5d006230...,next=2,tx=1,myIdx=2
 ......此处省略其他输出......
 
