@@ -7,6 +7,6 @@
 .. toctree::
    :maxdepth: 1
 
-   install.md
+   get_executable.md
    build_chain.md
    hello_world.md  
