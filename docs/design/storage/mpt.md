@@ -6,7 +6,7 @@ MPT State是以太坊上级经典的数据存储方式。通过MPT树的方式�
 
 MPT(Merkle Paricia Trie)，是一种用hash索引数据的前缀树。
 
-从宏观上来说，在MPT树是一棵前缀树，用key查询value。通过key去查询value，就是用key去在MPT树上进行索引，在经过多个中间节点后，最终到达存储数据的叶子节点。
+从宏观上来说，MPT树是一棵前缀树，用key查询value。通过key去查询value，就是用key去在MPT树上进行索引，在经过多个中间节点后，最终到达存储数据的叶子节点。
 
 从细节上来说，MPT树，是一棵Merkle树，每个树上节点的索引，都是这个节点的hash值。在用key查找value的时候，是根据key在某节点内部，获取下一个需要跳转的节点的hash值，拿到下一个节点的hash值，才能从底层的数据库中取出下一个节点的数据，之后，再用key，去下一个节点中查询下下个节点的hash值，直至到达value所在的叶子节点。
 
@@ -32,7 +32,7 @@ state root是区块中的一个字段，每个区块对应着不同的“状态�
 
 MPT State的引入，是为了实现对数据的追溯。根据不同区块下的state root，就能查询到当时区块下account的历史信息。而MPT State的引入，带来了大量hash的计算，同时也打散了底层数据的存储的连续性。在性能方面，MPT State存在着天然的劣势。可以说，MPT State是极致的最求可追溯性，而大大的忽略了性能。
 
-在FISCO BCOS的业务场景中，性能与可追溯性相比，更为重要。FISCO BCOS对底层的存储进行了重新的设计，实现了Storage State。Storage State牺牲了部分的可追溯性，但带来了性能上的提升。
+在FISCO BCOS的业务场景中，性能与可追溯性相比，性能更为重要。FISCO BCOS对底层的存储进行了重新的设计，实现了[Storage State](storage.md)。Storage State牺牲了部分的可追溯性，但带来了性能上的提升。
 
 
 
