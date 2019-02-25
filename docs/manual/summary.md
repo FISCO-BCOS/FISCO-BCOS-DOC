@@ -1,4 +1,4 @@
-# 资源指南
+# 内容索引
 
 TODO(qyan): Add missing summary for the resources.
 
