@@ -5,6 +5,7 @@
 ![](../../../images/enterprise/simple.png)
 
 group1 :
+
  | 节点序号 | P2P IP | RPC IP | P2P Port | Channel Port | RPC Port |
  | :-: | :-: | :-: | :-: | :-: | :-: |
  | node0 | 127.0.0.1 | 127.0.0.1 | 30300 | 20200 | 8545 |
@@ -13,6 +14,7 @@ group1 :
  | node3 | 127.0.0.1 | 127.0.0.1 | 30303 | 20203 | 8548 |
 
 group2 :
+
  | 节点序号 | P2P IP | RPC IP | P2P Port | Channel Port | RPC Port |
  | :-: | :-: | :-: | :-: | :-: | :-: |
  | node0 | 127.0.0.1 | 127.0.0.1 | 30300 | 20200 | 8545 |
