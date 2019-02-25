@@ -1,10 +1,16 @@
 # 建链脚本
 
+```eval_rst
+.. important::
+    
+    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业工具 <../enterprise/index.html>`_ 。
+```
+
 ## 脚本功能简介
 
-- [`build_chain`][build_chain]脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。
+- `build_chain`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，提供了创建更加复杂的链的功能。**`-l`和`-f`选项必须指定一个且不可共存**。
-- 建议测试时使用`-T`和`-i`选项选项，`-T`开启log级别到DEBUG，`-i`设置RPC和channel监听`0.0.0.0`。p2p模块默认监听`0.0.0.0`。
+- 建议测试时使用`-T`和`-i`选项，`-T`开启log级别到DEBUG，`-i`设置RPC和channel监听`0.0.0.0`。p2p模块默认监听`0.0.0.0`。
 
 ## 帮助
 
@@ -12,7 +18,7 @@
 Usage:
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList". eg "127.0.0.1:4 agency1 1,2"
-    -e <FISCO-BCOS binary path>         Default download from GitHub
+    -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
@@ -24,13 +30,7 @@ Usage:
     -T <Enable debug log>               Default off. If set -T, enable debug log
     -h Help
 e.g
-    ../tools/build_chain.sh -l "127.0.0.1:4"
-```
-
-```eval_rst
-.. important::
-    
-    build_chain目标是让用户最快使用FISCO BCOS，对于企业级应用请参考 `企业工具 <../enterprise/index.html>`_ 。
+    build_chain.sh -l "127.0.0.1:4"
 ```
 
 ## 选项介绍
@@ -58,7 +58,7 @@ bash build_chain.sh -f ipconf -T -i
 ```
 
 - **`e`选项[**Optional**]**
-用于指定`fisco-bcos`二进制所在的路径，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
+用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
 
 - **`o`选项[**Optional**]**
 指定生成的配置所在的目录。
@@ -86,9 +86,9 @@ bash build_chain.sh -f ipconf -T -i
 该选项用于指定生成证书时的证书配置文件。
 
 - **`T`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的log级别为DEBUG。log详细内容[参考这里](log.md)
+无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](log.md)。
 
-## 节点组织结构
+## 节点文件组织结构
 
 - cert文件夹下存放链的根证书和机构证书。
 - 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行文件、sdk所需的证书文件。
@@ -138,7 +138,7 @@ nodes/
 
 ### 单服务器单群组
 
-构建本机上4节点的FISCO BCOS联盟连，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`），监听外网`Channel`和`jsonrpc`端口允许外网通过SDK或API与节点交互。
+构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`），监听外网`Channel`和`jsonrpc`端口允许外网通过SDK或API与节点交互。
 
 ```bash
 # 下载最新预编译二进制

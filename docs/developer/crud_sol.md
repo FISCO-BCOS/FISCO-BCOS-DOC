@@ -72,7 +72,9 @@ contract TableTest {
     
     //创建表
     function create() public {
-        TableFactory tf = TableFactory(0x1001); //TableFactory的地址固定为0x1001
+        TableFactory tf = TableFactory(0x1001); // TableFactory的地址固定为0x1001
+        // 创建t_test表，表的key_field为name，value_field为item_id,item_name 
+        // key_field表示AMDB主key value_field表示表中的列，可以有多列，以逗号分隔
         tf.createTable("t_test", "name", "item_id,item_name");
     }
 
@@ -81,8 +83,8 @@ contract TableTest {
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
         
+        // 条件为空表示不筛选 也可以根据需要使用条件筛选
         Condition condition = table.newCondition();
-        //condition.EQ("name", name);
         
         Entries entries = table.select(name, condition);
         bytes32[] memory user_name_bytes_list = new bytes32[](uint256(entries.size()));
@@ -148,7 +150,11 @@ contract TableTest {
     }
 }
 ```
-TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创建用户表 t_test，并对 t_test 表进行增删改查的功能。
+TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创建用户表`t_test`，并对`t_test`表进行增删改查的功能。`t_test`表结构如下，该表记录某公司员工领用物资和编号。
+
+|name*|item_name|item_id|
+|:----|:----|:------|
+|Bob|Laptop|100010001001|
 
 > **注意：** 
 客户端需要调用转换为 Java 文件的合约代码，需要将 TableTest.sol 和 Table.sol 放入 web3sdk 的 src/test/resources/contract 目录下，通过 web3sdk 的编译脚本生成 TableTest.java。
