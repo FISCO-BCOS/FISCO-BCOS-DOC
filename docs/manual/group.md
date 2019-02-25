@@ -206,7 +206,7 @@ Send transaction:  2
 ......此处省略其他输出......
 
 # 查看出块情况
-$ tail -f node0/log/* |grep "g:2.*Report"
+$ cat node0/log/* |grep "g:2.*Report"
 info|2019-02-11 16:07:35.947676| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,......此处省略其他输出......
 
 # ...向group3发交易...
@@ -218,7 +218,7 @@ Send transaction:  2
 ......此处省略其他输出......
 
 # 查看出块情况
-$ tail -f node0/log/* |grep "g:3.*Report"
+$ cat node0/log/* |grep "g:3.*Report"
 info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1,idx=3,hash=843f6498...,next=2,tx=1,myIdx=3
 ......此处省略其他输出......
 ```

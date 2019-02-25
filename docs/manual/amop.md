@@ -50,8 +50,8 @@ SDK配置（Spring Bean）：
     					<property name="groupId" value="1" />
     					<property name="connectionsStr">
     						<list>
-    							<value>10.107.105.138:20200</value>
-    							<value>10.107.105.138:20201</value>
+    							<value>127.0.0.1:20200</value>
+    							<value>127.0.0.1:20201</value>
     						</list>
     					</property>
     				</bean>
