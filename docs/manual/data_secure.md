@@ -1,6 +1,10 @@
 # 落盘加密
 
-在进行操作前，可先阅读：[落盘加密的介绍](../design/features/disk_encryption.md)
+联盟链的数据，只对联盟内部成员可见。落盘加密，保证了运行联盟链的数据，在硬盘上的安全性。一旦硬盘被带出联盟链自己的内网环境，数据将无法被解密。
+
+落盘加密是对节点存储在硬盘上的内容进行加密，加密的内容包括：合约的数据、节点的私钥。
+
+具体的落盘加密介绍，可参考：[落盘加密的介绍](../design/features/disk_encryption.md)
 
 ## 部署Key Center
 
@@ -8,7 +12,7 @@
 
 ## 生成节点
 
-用```build_chain.sh```脚本，用普通的操作方法，先生成节点。
+用[```build_chain.sh```](build_chain.md)脚本，用普通的操作方法，先生成节点。
 
 ``` shell
 cd FISCO-BCOS/tools
@@ -42,7 +46,7 @@ cd keycenter/scripts
 bash gen_data_secure_key.sh 127.0.0.1 31443 123456
 ```
 
-得到cipherDataKey，脚本自动打印出落盘加密需要的ini配置。此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
+得到cipherDataKey，脚本自动打印出落盘加密需要的ini配置(如下)。此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
 
 ```ini
 [data_secure]
@@ -52,7 +56,7 @@ keycenter_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
-将落盘加密的ini配置，写入节点配置文件中
+将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](configs.md)）中。
 
 ```shell
 vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini
@@ -119,9 +123,13 @@ cd nodes/node_127.0.0.1_0/
 
 ## 正确性判断
 
-（1）节点正常运行，正常出块
+（1）节点正常运行，正常出块，不断刷出出块信息。
 
-（2）keycenter在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Center正确返回的日志如下。
+``` shell
+tail -f nodes/node_127.0.0.1_0/log/* |grep Report
+```
+
+（2）keycenter在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Center直接输出的日志如下。
 
 ``` log
 [1546504272699][TRACE][Dec]Respond
