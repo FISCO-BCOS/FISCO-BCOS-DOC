@@ -12,4 +12,4 @@
    console.md
    crud_sol_contract.md
    precompiled_contract.md
-   enterprise/index.rst
+   enterprise_tools/index.rst
