@@ -1,7 +1,8 @@
 # 示例详解 -- 网状模式组网
 
-在本节中，我们将在本机IP为`127.0.0.1`生成一个网络拓扑结构为2群组4节点的组网模式，每个节点的ip，端口号分别为：
+在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2群组4节点的组网模式，每个节点的ip，端口号分别为：
 
+![](../../../images/enterprise/simple.png)
 
 group1 :
  | 节点序号 | P2P IP | RPC IP | P2P Port | Channel Port | RPC Port |
@@ -34,7 +35,6 @@ group1中有3个节点，节点序号为0、1、2。
 
 group2中有3个节点，节点序号为0、1、3。
 
-![](../../../images/enterprise/simple_simple1.png)
 
 组网步骤如下：
 
@@ -172,7 +172,10 @@ info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
 ```
 
-至此 我们完成了构建group1的操作。
+至此 我们完成了如图所示构建group1的操作。
+
+![](../../../images/enterprise/simple1.png)
+
 
 ## 构建group2
 
@@ -281,6 +284,6 @@ info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
 ```
 
-至此 我们完成了构建group2的操作。
+至此 我们完成了所示构建group2的操作。
 
 通过上述命令，我们在本机生成一个网络拓扑结构为2群组4节点的多群组架构联盟链。
