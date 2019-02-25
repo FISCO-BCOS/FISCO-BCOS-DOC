@@ -1,4 +1,4 @@
-# CA黑名单操作手册
+# CA黑名单
 
 本文档描述CA黑名单的实践操作，建议阅读本操作文档前请先行了解[《CA黑名单介绍》](../design/security_control/certificate_rejected_list.md)。
 

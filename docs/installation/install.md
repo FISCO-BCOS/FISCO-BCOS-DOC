@@ -1,15 +1,19 @@
 # 安装
 
-## 二进制安装
+用户可以自由选择以下任一方式安装FISCO BCOS可执行文件。
+- 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行，参考[预编译安装](manual/install.html#id2)获取。
+- 源码编译获取可执行文件，参考[源码编译](manual/install.html#id3)。
 
-请从[Release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)页面下载最新的二进制程序，我们提供静态的二进制程序，在Ubuntu16.04和CentOS7经过测试。
+## 预编译安装
+
+请从[Release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)页面下载最新的预编译程序，我们提供静态链接的预编译程序，在Ubuntu16.04和CentOS7经过测试。
 
 ## 源码编译
 
 ```eval_rst
 .. important::
     
-    源码编译适合于有开发经验的用户，编译过程中需要下载依赖库请保持网络畅通，编译耗时受网络和机器配置的影响在10-20分钟不等。
+    源码编译适合于有丰富开发经验的用户，编译过程中需要下载依赖库请保持网络畅通，编译耗时受网络和机器配置的影响在10-20分钟不等。
 ```
 
 FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台的构建文件，这意味着无论您使用什么操作系统工作流都非常相似：
