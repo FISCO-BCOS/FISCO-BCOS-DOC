@@ -8,15 +8,13 @@
    :maxdepth: 1
 
    resource_summary.md
-   build_group.md
+   design/index.rst
+   api/index.rst
    group_use_cases.md
-   configuration.md
-   data_security.md
+   storage_security.md
    node_management.md
    permission_control.md
    certificate_blacklist.md
    amop_protocol.md
    guomi_crypto.md
    log_access.md
-   design/index.rst
-   api/index.rst
