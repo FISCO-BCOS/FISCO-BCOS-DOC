@@ -8,7 +8,6 @@
    :maxdepth: 1
 
    resource_summary.md
-   design/index.rst
    api/index.rst
    group_use_cases.md
    storage_security.md
