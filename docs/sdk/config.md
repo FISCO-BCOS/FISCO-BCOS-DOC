@@ -6,23 +6,23 @@
 
    gradle:
 ```bash
-	compile ('org.fisco-bcos:web3sdk:2.0.2')
+compile ('org.fisco-bcos:web3sdk:2.0.2')
 ```
    maven:
 ```bash
-	<dependency>
-   		<groupId>org.fisco-bcos</groupId>
-   		<artifactId>web3sdk</artifactId>
-                <version>2.0.2</version>
-	</dependency>
+<dependency>
+    <groupId>org.fisco-bcos</groupId>
+    <artifactId>web3sdk</artifactId>
+              <version>2.0.2</version>
+</dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库
 
 ```bash
-    repositories {
-            mavenCentral()
-            maven { url "https://dl.bintray.com/ethereum/maven/" }
-        }
+repositories {
+        mavenCentral()
+        maven { url "https://dl.bintray.com/ethereum/maven/" }
+    }
 ```
 ## 配置SDK
 
@@ -61,7 +61,7 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
 ### Spring项目开发指引
 #### 调用SDK的API(参考[SDK API列表](./api.md))设置或查询相关的区块链数据。
 1) 调用SDK Web3j的API：需要加载配置文件，SDK与区块链节点建立连接。获取web3j对象，根据Web3j对象调用相关API。示例代码如下：
-```bash
+```java
     //读取配置文件，SDK与区块链节点建立连接
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
@@ -75,7 +75,7 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
     System.out.println(blockNumber);
 ```
 2) 调用SDK Precompiled的API：需要加载配置文件，SDK与区块链节点建立连接。获取SDK Precompiled Service对象，调用相关的API。示例代码如下：
-```bash
+```java
     //读取配置文件，SDK与区块链节点建立连接，获取Web3j对象
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
