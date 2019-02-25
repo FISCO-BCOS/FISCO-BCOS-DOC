@@ -23,11 +23,11 @@ EVMC (Ethereum Client-VM Connector API)，是以太坊抽象出来的执行器�
    evm.md
    precompiled.md
 
-.. _Executor: ./evm.md
+.. _Executor: ./evm.html
 
 .. _Consensus: ../consensus
 
-.. _Tx Pool: ../architecture/transaction_stream.md
+.. _Tx Pool: ../architecture/transaction_stream.html
 
 .. _JIT: https://github.com/ethereum/evmjit
 
