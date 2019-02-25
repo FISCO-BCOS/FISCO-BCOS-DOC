@@ -1,5 +1,5 @@
 ##############################################################
-技术资源
+使用手册
 ##############################################################
 
 本章提供了FISCO BCOS平台相关的技术资源，包括平台API和高级功能的使用指南。
@@ -9,6 +9,10 @@
 
    resource_summary.md
    api/index.rst
+   crud_sol_contract.md
+   precompiled_contract.md
+   build_group.md
+   configuration.md
    group_use_cases.md
    storage_security.md
    node_management.md

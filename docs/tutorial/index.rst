@@ -1,5 +1,5 @@
 ##############################################################
-使用
+教程
 ##############################################################
 
 本章将介绍使用FISCO BCOS快速上手开发DApp的基本流程和相关的核心概念。
@@ -9,9 +9,5 @@
    :maxdepth: 1
 
    key_concepts.md
-   console.md
-   crud_sol_contract.md
-   precompiled_contract.md
-   build_group.md
-   configuration.md
+   hello_world.md
    enterprise_tools/index.rst
