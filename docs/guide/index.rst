@@ -12,4 +12,6 @@
    console.md
    crud_sol_contract.md
    precompiled_contract.md
+   build_group.md
+   configuration.md
    enterprise_tools/index.rst
