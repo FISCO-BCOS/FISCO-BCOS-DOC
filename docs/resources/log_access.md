@@ -1,4 +1,4 @@
-# 日志操作手册
+# 日志操作
 
 FISCO BCOS同时支持轻量级日志系统[easylogging++](https://github.com/zuhd-org/easyloggingpp)和功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，默认使用boostlog，可通过编译选项`EASYLOG`选择不同的日志系统。
 

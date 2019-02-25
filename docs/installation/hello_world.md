@@ -1,4 +1,4 @@
-# Hello World
+# Hello World示例
 
 本教程面向初次接触FISCO BCOS的用户，通过在本机部署FISCO BCOS以及部署和调用Hello World合约，帮助初学者快速入门FISCO BCOS。
 

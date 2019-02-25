@@ -6,6 +6,8 @@
     build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业工具 <../enterprise/index.html>`_ 。
 ```
 
+为了简化安装与配置，FISCO BCOS提供了[build_chain](build_chain.md)脚本来帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行文件进行相关环境的搭建。
+
 ## 脚本功能简介
 
 - `build_chain`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
