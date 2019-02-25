@@ -21,8 +21,13 @@ $ cd ~ && mkdir fisco && cd fisco
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
 # 准备fisco-bcos二进制文件
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
-# 检查二进制是否可执行 执行下述命令，看是否输出版本信息
+# 检查二进制是否可执行 执行下述命令，看是否输出类似下面的版本信息
 $ ./bin/fisco-bcos -v
+FISCO-BCOS Version : 2.0.0
+Build Time         : 20190121 06:21:05
+Build Type         : Linux/clang/Debug
+Git Branch         : release-2.0.1
+Git Commit Hash    : a322f0bff5cb395157fb5734219fcb2f2686ef08
 ```
 
 - 搭建4节点FISCO BCOS链:
@@ -71,14 +76,14 @@ $ ./start_all.sh
 
 ```bash
 # 检查进程是否启动 如果进程数不为4，那么进程没启动的原因一般是端口被占用
-$ ps -ef | grep -v grep | grep fisco
+$ ps -ef | grep -v grep | grep fisco-bcos
 fisco       5453     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
 fisco       5459     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
 fisco       5464     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
 fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 
 # 检查监听的端口，当前版本每个节点监听3个端口，分别用于p2p、jsonrpc、channel
-$ netstat -ntlp | grep fisco
+$ netstat -ntlp | grep fisco-bcos
 (Not all processes could be identified, non-owned process info
  will not be shown, you would have to be root to see it all.)
 tcp        0      0 0.0.0.0:30300           0.0.0.0:*               LISTEN      5453/fisco-bcos
