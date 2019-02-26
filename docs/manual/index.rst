@@ -11,6 +11,9 @@
    api/index.rst
    crud_sol_contract.md
    precompiled_contract.md
+   get_executable.md
+   build_chain.md
+   console.md
    build_group.md
    group_use_cases.md
    configuration.md

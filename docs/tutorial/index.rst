@@ -9,4 +9,3 @@
    :maxdepth: 1
 
    key_concepts.md
-   hello_world.md
