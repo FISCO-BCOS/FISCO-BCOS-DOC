@@ -1,6 +1,6 @@
 # 节点准入管理
 
-本文档描述节点准入管理的实践操作，建议阅读本操作文档前请先行了解[《节点准入管理介绍》](../design/security_control/node_access_management.md)。
+本文档描述节点准入管理的实践操作，建议阅读本操作文档前请先行了解[《节点准入管理介绍》](../design/security_control/node_management.md)。
 
 ## 操作项目
 
@@ -20,7 +20,7 @@
 
 本节将以下图为例对上述六种操作进行描述。虚线表示节点间能进行网络通信，实线表示节点间在可通信的基础上具备群组关系，不同颜色区分不同的群组关系。图中有一个网络，包含三个群组，其中群组Group3有三个节点。Group3是否与其他群组存在交集节点，不影响以下操作过程的通用性。
 
-![](../../images/node_access_management/multi_ledger_example.png)
+![](../../images/node_management/multi_ledger_example.png)
 
 <center>群组例子</center>
 
@@ -168,7 +168,7 @@ nohup: appending output to ‘nohup.out’
 $ cat node1/conf/node.nodeid 
 aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
 $ vim node0/config.ini
-;certificate rejected list
+;certificate black list
 [crl]
     ;crl.0 should be nodeid, nodeid's length is 128 
     crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943

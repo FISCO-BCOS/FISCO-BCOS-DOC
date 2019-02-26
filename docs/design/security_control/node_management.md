@@ -1,6 +1,6 @@
 # 节点准入管理介绍
 
-本文档对节点准入管理进行介绍性说明，实践方法参见[《节点准入管理操作文档》](../../manual/node_access_management.md)。
+本文档对节点准入管理进行介绍性说明，实践方法参见[《节点准入管理操作文档》](../../manual/node_management.md)。
 
 ## 概述
 
@@ -13,7 +13,7 @@
 
 作为联盟链的FISCO BCOS，对链上隐私这一问题，提出了**单链多账本**的解决方案。FISCO BCOS通过引入**群组**概念，使联盟链从原有一链一账本的存储/执行机制扩展为一链多账本的存储/执行机制，基于群组维度实现同一条链上的数据隔离和保密。
 
-![](../../../images/node_access_management/multi_ledger.png)
+![](../../../images/node_management/multi_ledger.png)
 <center>多账本</center>
 
 如上图所示，节点ABC加入蓝色群组，并共同维护蓝色账本; 节点B和C加入橙色群组并维护橙色账本; 节点A和B加入绿色群组并维护绿色账本。三个群组间共享公共的网络服务，但各群组有各自私有的账本存储及交易执行环境。客户端将交易发到节点所属的某个群组上，该群组内部对交易及数据进行共识并存储，其他群组对该交易无感知不可见。
@@ -34,7 +34,7 @@
 
 节点关系如下：
 
-![](../../../images/node_access_management/node_relationship.png)
+![](../../../images/node_management/node_relationship.png)
 <center>节点关系</center>
 
 ### 配置类型
@@ -96,7 +96,7 @@
 
 ## 模块架构
 
-![](../../../images/node_access_management/architecture.png)
+![](../../../images/node_management/architecture.png)
 <center>模块架构</center>
 
 <font color=#FF0000>配置项及系统模块关系图</font>如上，箭头方向A->B表示B模块依赖A模块的数据，同时B模块晚于A模块初始化。
@@ -105,14 +105,14 @@
 
 ### 一般初始化流程
 
-![](../../../images/node_access_management/initialization.png)
+![](../../../images/node_management/initialization.png)
 <center>一般初始化流程</center>
 
 ### 首次初始化流程
 
 节点在首次启动时，对其所属的各个群组，以群组为单位将固定配置文件的内容写入第0块并直接提交上链。初始化的具体逻辑为：
 
-![](../../../images/node_access_management/first_initialization.png)
+![](../../../images/node_management/first_initialization.png)
 <center>首次初始化流程</center>
 
 这一阶段需写入的与节点准入管理相关的配置内容有：**群组节点初始列表->群组节点系统表**。
@@ -134,14 +134,14 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
 
 三种节点类型（共识节点+观察节点+游离节点）可通过相关接口进行如下转换：
 
-![](../../../images/node_access_management/type_and_conversion_of_nodes.png)
+![](../../../images/node_management/type_and_conversion_of_nodes.png)
 <center>共识节点相关类型及其转换操作</center>
 
 ## 接口及配置描述
 
 ### 节点配置文件层级
 
-![](../../../images/node_access_management/config_file_organization.png)
+![](../../../images/node_management/config_file_organization.png)
 <center>配置文件的层级关系</center>
 
 配置文件的组织规则为：**各群组的配置独立**、**固定配置和可改配置相独立**。目前使用的文件有**网络可改配置文件**`config.ini`、**群组固定配置文件**`group.N.genesis`和**群组可改配置文件**`group.N.ini`，其中`N`为节点所在的群组号。对于**网络/群组可改配置文件**，如果文件中没有显式定义一配置项的值，程序将使用该配置项的默认值。
@@ -161,7 +161,7 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
     node.2=127.0.0.1:30302
     node.3=127.0.0.1:30303
     
-;certificate rejected list
+;certificate blacklist
 [crl]
     ;crl.0 should be nodeid, nodeid's length is 128 
     ;crl.0=

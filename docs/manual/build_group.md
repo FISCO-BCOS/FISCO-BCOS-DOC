@@ -86,7 +86,7 @@ $ bash start.sh 1
 ## 节点入网操作
 
 
-为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_access_management.html#id6)，这三种节点类型可通过控制台相互转换，具体可参考[节点入网](./node_access_management.md)。
+为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换，具体可参考[节点入网](./node_management.md)。
 
 控制台提供了 **[AddSealer(as)](./console.html#addminer)** 、**[AddObserver(ao)](./console.html#addobserver)** 和 **[RemoveNode(rn)](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList(gsl)](./console.html#getminerlist)**、**[getObserverList(gol)](./console.html#getobserverlist)** 和 **[getNodeIDList(gnl)](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 

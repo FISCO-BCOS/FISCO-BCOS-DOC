@@ -32,7 +32,7 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配:
 | 0x1002 | CRUD合约            | [CRUD](../developer/crud_sol.html) | CRUDPrecompiled.cpp |
 | 0x1003 | 共识节点管理         | [共识节点管理](../manual/build_group.html) | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS功能  | [CNS文档](../design/features/CNS_contract_name_service.html) | CNSPrecompiled.cpp |
-| 0x1005 | 存储表权限管理 | [权限管理文档](../design/security_control/node_access_management.html) | AuthorityPrecompiled.cpp |
+| 0x1005 | 存储表权限管理 | [权限管理文档](../design/security_control/node_management.html) | AuthorityPrecompiled.cpp |
 
 - **定义合约接口**  
 

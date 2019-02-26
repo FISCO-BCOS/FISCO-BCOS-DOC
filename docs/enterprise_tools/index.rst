@@ -16,7 +16,7 @@ fisco-generator_ 是针对多机构组网，适用于多机构部署维护多群
 
    introduction.md
    hardware_requirement.md
-   installing.md
+   installation.md
    quick_start.md
    config.md
    manual/index.rst

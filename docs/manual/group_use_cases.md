@@ -251,7 +251,7 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 
 ### 节点加入/退出群组
 
-通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](node_access_management.md)，控制台配置参考[控制台操作手册](console.html#id7)。
+通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](node_management.md)，控制台配置参考[控制台操作手册](console.html#id7)。
 
 ```eval_rst
 .. important::
