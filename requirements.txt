@@ -6,4 +6,5 @@ sphinx-markdown-tables
 sphinx-notfound-page == 0.1
 commonmarkextensions == 0.0.4
 commonmark == 0.8.0
+sphinxcontrib-mermaid == 0.2
 git-lfs
