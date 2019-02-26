@@ -26,6 +26,6 @@
 .. toctree::
    :maxdepth: 1
    
-   node_access_management.md
-   certificate_rejected_list.md
-   priority_control.md
+   node_management.md
+   certificate_blacklist.md
+   permission_control.md
