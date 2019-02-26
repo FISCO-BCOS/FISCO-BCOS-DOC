@@ -205,9 +205,9 @@ easylogging++示例配置如下：
 
 - `enable`： 是否开启落盘加密，默认不开启；
 
-- `keycenter_ip`：[Key Center](https://github.com/FISCO-BCOS/keycenter)服务的部署IP；
+- `key_manager_ip`：[Key Manager](https://github.com/FISCO-BCOS/key-manager)服务的部署IP；
 
-- `keycenter_port`：[Key Center](https://github.com/FISCO-BCOS/keycenter)服务的监听端口；
+- `key_manager_port`：[Key Manager](https://github.com/FISCO-BCOS/key-manager)服务的监听端口；
 
 - `cipher_data_key`: 节点数据加密密钥的密文，`cipher_data_key`的产生参考[落盘加密操作手册](./disk_encryption.md)。
 
@@ -216,8 +216,8 @@ easylogging++示例配置如下：
 ```ini
 [data_secure]
 enable=true
-keycenter_ip=127.0.0.1
-keycenter_port=31443
+key_manager_ip=127.0.0.1
+key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
