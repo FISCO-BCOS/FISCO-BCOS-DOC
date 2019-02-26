@@ -244,6 +244,11 @@ $ ./generator --build ./data2
 $ cp ./mycert/node_127.0.0.1_30303/node.key ./data2/node_127.0.0.1_30303/conf/
 # 当私钥较多时，可以使用
 # $ ./generator --deploykey ./mycert ./data2
+
+```
+```eval_rst
+.. important::
+    生成group2时，node_127.0.0.1_30300,node_127.0.0.1_30301已经有了节点，因此使用--creete命令也是可以的，在实际生产中，每个机构只需关注自己所处的节点需要进行部署为生成安装包，还是生成新群组。
 ```
 
 5. 将group2配置导入data节点下
