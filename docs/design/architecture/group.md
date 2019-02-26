@@ -23,7 +23,7 @@
 > 
 > 一段时间后，机构A、B启动业务2，且不希望该业务相关数据、交易处理被机构C感知，有和解？
 
-多群组架构中，群组间共享网络，通过[网络准入和账本白名单](../security_control/node_access_management.md)实现各账本间网络消息隔离。
+多群组架构中，群组间共享网络，通过[网络准入和账本白名单](../security_control/node_management.md)实现各账本间网络消息隔离。
 
 ![](../../../images/architecture/ledger.png)
 
