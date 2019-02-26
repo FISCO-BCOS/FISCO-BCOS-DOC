@@ -11,13 +11,12 @@
    api/index.rst
    crud_sol_contract.md
    precompiled_contract.md
-   build_group.md
-   group_use_cases.md
    configuration.md
    storage_security.md
    node_management.md
    permission_control.md
    certificate_blacklist.md
+   sys_params.md
    amop_protocol.md
    guomi_crypto.md
    log_access.md
