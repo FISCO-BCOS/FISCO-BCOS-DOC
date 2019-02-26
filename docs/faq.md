@@ -1,4 +1,4 @@
-# FAQ
+# 常见问题解答
 
 ## 版本相关
 
@@ -11,9 +11,9 @@
   开发者如何与FISCO BCOS平台交互？<br>
 答:
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
-  1. FISCO BCOS v2.0提供jsonrpc接口，具体请 [参考这里](./api.md)。
-  2. FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/index.html)。
-  3. FISCO BCOS v2.0提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
+  - FISCO BCOS v2.0提供jsonrpc接口，具体请 [参考这里](./api.md)。
+  - FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/index.html)。
+  - FISCO BCOS v2.0提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
 
 问:
   FISCO BCOS v2.0如何搭建？<br>
@@ -94,8 +94,8 @@
 答: 
   共识可改配置可以通过控制台修改。共识可改配置项查询除了控制台外，还可以通过RPC接口查询，具体请 [参考这里](./design/rpc.md)。
 
-  + [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey(ssc)更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见ssc -h 。
-  + [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addSealer(as)，addObserver(ao)，removeNode(rn)，具体参考《节点管理》。
+  - [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey(ssc)更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见ssc -h 。
+  - [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addSealer(as)，addObserver(ao)，removeNode(rn)，具体参考《节点管理》。
 
 
 问:
