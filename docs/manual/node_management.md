@@ -1,37 +1,41 @@
 # 节点准入管理
 
-为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换，具体可参考[节点入网](./node_management.md)。
+为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
 
 ## 操作命令
 
 控制台提供了 **[AddSealer(as)](./console.html#addminer)** 、**[AddObserver(ao)](./console.html#addobserver)** 和 **[RemoveNode(rn)](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList(gsl)](./console.html#getminerlist)**、**[getObserverList(gol)](./console.html#getobserverlist)** 和 **[getNodeIDList(gnl)](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 
-- addSealer：根据节点NodeID设置对应节点为共识节点
-- addObserver：根据节点NodeID设置对应节点为观察节点
-- removeNode：根据节点NodeID设置对应节点为游离节点
-- getSealerList：查看群组中共识节点列表
-- getObserverList：查看群组中观察节点列表
+- addSealer：根据节点NodeID设置对应节点为共识节点；
+- addObserver：根据节点NodeID设置对应节点为观察节点；
+- removeNode：根据节点NodeID设置对应节点为游离节点；
+- getSealerList：查看群组中共识节点列表；
+- getObserverList：查看群组中观察节点列表。
 
 例：
-将指定节点分别转换成组1的共识节点、观察者节点、游离节点，具体操作和验证步骤如下：
+将指定节点分别转换成共识节点、观察者节点、游离节点，主要操作命令如下：
 
 ```eval_rst
 .. important::
     
-    转换节点类型前，请确保节点Node ID存在，节点Node ID可在节点目录下执行 cat conf/node.nodeid获取
+    节点准入操作前，请确保：
+
+     - 操作节点Node ID存在，节点Node ID可在节点目录下执行 cat conf/node.nodeid获取
+     - 节点加入的区块链所有节点共识正常：正常共识的节点会输出+++日志
 ```
 
 ```bash
+# 设节点位于~/fisco/nodes/192.168.0.1/node0目录下
 $ mkdir -p ~/fisco && cd ~/fisco
 
 # 获取节点Node ID（设节点目录为~/nodes/192.168.0.1/node0/）
 $ cat ~/fisco/nodes/192.168.0.1/node0/conf/node.nodeid
 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 
-# 连接组1的控制台(设控制台位于~/console目录)
+# 连接控制台(设控制台位于~/fisco/console目录)
 $ cd ~/fisco/console
 
-$ bash start.sh 1
+$ bash start.sh
 
 # 将指定节点转换为共识节点
 > addSealer 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
@@ -67,11 +71,7 @@ $ bash start.sh 1
 
 ## 操作案例
 
-本文档对以下六个操作项目进行说明：
-
-1. 一节点加入/退出网络
-2. 一节点加入/退出群组（节点类型的修改、群组节点的查询）
-3. 一节点将他节点列入/移除CA黑名单
+下面结合具体操作案例详细阐述 **节点如何加入/退出网络**、**节点如何加入/退出群组**。
 
 ### 操作方式
 
