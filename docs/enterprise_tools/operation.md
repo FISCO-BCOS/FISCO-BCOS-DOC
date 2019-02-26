@@ -2,7 +2,7 @@
 
 ## 快速体验命令 --demo
 
-```shell
+```s
 $ git clone https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ ./generator --demo
@@ -34,7 +34,7 @@ $ ./generator --demo
 
 操作示例
 
-```shell
+```s
 $ cp node0/node.crt ./meta/cert_127.0.0.1_30300.crt
 ...
 $ cp noden/node.crt ./meta/cert_127.0.0.1_3030n.crt
@@ -52,7 +52,7 @@ nargs=2, 指定参数1.存放有原有群组信息的路径，2.生成安装包�
 
 给定原有group中节点的配置，和新节点的证书，生成安装包
 
-```shell
+```s
 $ vim ./conf/mexpand.ini
 $ cp node0/node.crt ./meta/cert_127.0.0.1_30307.crt
 $ cp /tmp/config.ini /tmp/group.1.genesis /tmp/group.1.ini ./expand
@@ -73,7 +73,7 @@ $ ./generator --expand ./expand ~/mydata
 
 操作范例
 
-```shell
+```s
 $ cp node0/node.crt ./meta/cert_127.0.0.1_3030n.crt
 ...
 $ vim ./conf/group.ini
@@ -92,7 +92,7 @@ fisco generator提供自签证书操作。示例如下：
 
 用户可以指定目录，生成根证书
 
-```shell
+```s
 $ ./genrator --chainca ./dir_chain_ca(SET)
 ```
 
@@ -102,7 +102,7 @@ $ ./genrator --chainca ./dir_chain_ca(SET)
 
 用户可以指定机构证书目录，链证书存放目录和机构名称，生成机构证书
 
-```shell
+```s
 $ ./genrator --agencyca ./dir_agency_ca(SET) ./chain_ca_dir The_Agency_Name
 ```
 
@@ -112,7 +112,7 @@ $ ./genrator --agencyca ./dir_agency_ca(SET) ./chain_ca_dir The_Agency_Name
 
 用户可以指定sdk存放目录，机构证书存放目录，生成sdk证书
 
-```shell
+```s
 $ ./genrator --sdkca ./dir_sdk_ca(SET) ./dir_agency_ca
 ```
 
@@ -122,7 +122,7 @@ $ ./genrator --sdkca ./dir_sdk_ca(SET) ./dir_agency_ca
 
 用户可以指定机构证书目录，节点存放目录和节点名称，生成节点证书
 
-```shell
+```s
 $ ./genrator --nodeca ./agency_dir node_dir(SET) node_name
 ```
 
@@ -171,13 +171,13 @@ $ ./genrator --certexpand ./cert
 
 使用示例：
 
-```shell
+```s
 $ ./generator -h
 ```
 
 使用后会显示相关提示
 
-```shell
+```s
 $ ./generator -h
 usage: generator [-h] [--version] [--build data_dir]
                  [--expand conf_dir, data_dir conf_dir, data_dir]

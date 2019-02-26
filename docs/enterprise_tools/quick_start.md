@@ -6,7 +6,7 @@ $ cd generator
 $ ./generator --demo
 ```
 
-此操作会在执行目前的所有操作
+此命令会执行的操作为：
 
 1. 按照./conf/mchain.ini中的配置在./meta下生成证书
 2. 按照./conf/mchain.ini的配置在./data下生成安装包
