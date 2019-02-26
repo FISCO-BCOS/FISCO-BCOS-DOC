@@ -10,4 +10,3 @@
 
    key_concepts.md
    hello_world.md
-   enterprise_tools/index.rst

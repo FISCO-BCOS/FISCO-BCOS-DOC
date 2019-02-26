@@ -9,10 +9,10 @@ fisco-generator_ 是针对多机构组网，适用于多机构部署维护多群
 
 .. _fisco-generator: https://github.com/FISCO-BCOS/generator
 
-.. image:: ../../../images/enterprise/toolshow.png
+.. image:: ../../images/enterprise/toolshow.png
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    introduction.md
    hardware_requirement.md
