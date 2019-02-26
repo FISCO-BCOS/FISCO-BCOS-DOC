@@ -141,7 +141,7 @@ $ tree
 
 ```bash
 # 进入节点目录
-$ cd nodes/127.0.0.1
+$ cd ~/fisco/nodes/127.0.0.1
 
 # 启动节点
 $ bash start_all.sh
@@ -161,7 +161,7 @@ app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/fisco/12
 
 **查看群组共识状态**
 
-不发交易时，共识正常的节点会刷出`+++`日志，本例中，`node0、node1`同时属于`group1、group2和group3`；`node2、node3`属于`group1`；`node4、node5`属于`group2`；`node6、node7`属于`group3`，可通过`tail -f xxx.log | grep "g:${group_id}.*++"`查看各节点是否正常。
+不发交易时，共识正常的节点会输出`+++`日志，本例中，`node0、node1`同时属于`group1、group2和group3`；`node2、node3`属于`group1`；`node4、node5`属于`group2`；`node6、node7`属于`group3`，可通过`tail -f xxx.log | grep "g:${group_id}.*++"`查看各节点是否正常。
 
 ```eval_rst
 .. important::
@@ -258,7 +258,7 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
     
     新节点加入群组前，请确保：
     
-    - 新加入节点正常共识： 正常共识的节点会刷出+++日志
+    - 新加入节点正常共识： 正常共识的节点会输出+++日志
     - 群组内节点正常共识
 ````
 
@@ -269,28 +269,44 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 ```bash
 $ mkidr -p ~/fisco
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
-&& tar -zxf console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
 
 # 进入控制台操作目录
-$ cd console
+$ cd ~/fisco/console
 
-# 拷贝group2节点(node0, node1, node4, node5)的证书到控制台配置目录(以node0为例)
-$ cp ~/fisco/nodes/127.0.0.1/node0/conf/node.* conf/
+# 拷贝group2节点证书到控制台配置目录
+$ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
 
 # 获取node0的channel_listen_port
-$ cat ~/nodes/127.0.0.1/node4/config.ini | grep channel_listen_port
-channel_listen_port=20200
+$ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
+5:  channel_listen_port=20200
 
-# 参考控制台操作文档，
-# 修改~/console/conf/applicationContext.xml的group id为2, ip:channel_listen_port为127.0.0.1:20200
-# 确认Group ID:2
-$ cat conf/applicationContext.xml | grep "groupId"
-<property name="groupId" value="2" />
+# 参考控制台操作文档，配置~/fisco/console/conf/applicationContext.xml的group id为2, ip:channel_listen_port为127.0.0.1:20200 
+# Group2的关键配置如下：
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+<property name="allChannelConnections">
+<list>
+    ... 省略若干行... 
+    <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+        <property name="groupId" value="2" />
+            <property name="connectionsStr">
+            <list>
+            <value>127.0.0.1:20200</value>
+            </list>
+            </property>
+    </bean>
+    ... 省略若干行...
+</list>
+</property>
+</bean>
 
-# 确认channel_listen_port
-$ cat conf/applicationContext.xml | grep "[0-9].*:[0-9].*" | grep value
-<value>127.0.0.1:20200</value>
+# 配置channelService
+ <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+        <property name="groupId" value="2" />
+        <property name="orgID" value="fisco" />
+        <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+</bean>
+
 
 # 启动web3sdk，连接group2所有节点
 $ bash start.sh 2
@@ -299,6 +315,8 @@ $ bash start.sh 2
 **将node2加入group2为共识节点**
 
 ```bash
+$ cd ~/fisco/nodes/127.0.0.1
+
 # ...获取node2的node id...
 $ cat node2/conf/node.nodeid 
 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
