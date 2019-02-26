@@ -1,10 +1,10 @@
-# 多群组操作指南
+# 多群组搭建部署
 
 本教程面向使用FISCO-BCOS多群组特性的用户，介绍如何通过`build_chain`脚本创建多群组区块链节点以及如何通过控制台操作区块链。
 
-## 创建多群组区块链
+## 创建多群组区块链安装包
 
-FISCO BCOS提供了一键安装脚本`build_chain.sh`用于快速生成链配置文件。该脚本使用可参考[快速建链指南](./build_chain.md)。
+FISCO BCOS提供了一键安装脚本`build_chain.sh`用于快速生成链配置文件。该脚本使用可参考[建链脚本](./build_chain.md)。
 
 创建下图所示拓扑的区块链系统，具体操作如下：
 
@@ -61,6 +61,7 @@ $ tail -f nodes/log/* | grep +++
     - 若节点启动失败，请查看node*/nohup.out文件检查启动失败原因
 
     - 节点启动失败可能的原因： 启动端口与其他应用端口重复
+    - 源码编译FISCO BCOS请参考 `这里 <./install.html>`_
 ```
 
 ## 配置并启动控制台
@@ -69,7 +70,7 @@ $ tail -f nodes/log/* | grep +++
 
 控制台是对web3sdk的封装，配置控制台前，需先部署web3sdk，详细配置可参考[配置控制台](./console.html#id7)
 
-控制台配置完毕后，通过`bash start group_id`启动组`group_id`的控制台:
+控制台配置完毕后，通过`bash start.sh group_id`启动组`group_id`的控制台:
 
 ```bash
 # 获取控制台
@@ -77,7 +78,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar
 $ cd console
 
 # 设启动组1的控制台
-$ bash start 1
+$ bash start.sh 1
 
 ```
 
@@ -85,7 +86,7 @@ $ bash start 1
 ## 节点入网操作
 
 
-为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_access_management.html#id6)，这三种节点类型可通过控制台相互转换，具体可参考[节点入网](./node_access_management.md)。
+为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换，具体可参考[节点入网](./node_management.md)。
 
 控制台提供了 **[AddSealer(as)](./console.html#addminer)** 、**[AddObserver(ao)](./console.html#addobserver)** 和 **[RemoveNode(rn)](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList(gsl)](./console.html#getminerlist)**、**[getObserverList(gol)](./console.html#getobserverlist)** 和 **[getNodeIDList(gnl)](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 
@@ -108,7 +109,7 @@ $ cat ~/fisco/nodes/192.168.0.1/node0/conf/node.nodeid
 # 连接组1的控制台(设控制台位于~/console目录)
 $ cd ~/fisco/console
 
-$ bash start 1
+$ bash start.sh 1
 
 # 将指定节点转换为共识节点
 > addSealer 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
