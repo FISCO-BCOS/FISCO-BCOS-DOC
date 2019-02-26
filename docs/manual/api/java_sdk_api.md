@@ -63,7 +63,7 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 调用Precompiled Service API示例参考[Java SDK配置与使用](./config.md)。
 
 ### AuthorityService
-SDK提供对[分布式控制权限](../manual/priority_control.md)的支持，AuthorityService可以配置权限信息，其API如下：
+SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，AuthorityService可以配置权限信息，其API如下：
 - **public String addUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
 - **public String removeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
 - **public List\<AuthorityInfo\> queryUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
@@ -95,7 +95,7 @@ SDK提供对系统配置的支持。SystemConfigSerivce可以配置系统属性�
 - **String setValueByKey(String key, String value)：** 根据键设置对应的值（查询键对应的值，参考Web3j API中的getSystemConfigByKey接口）。
 
 ### ConsensusService 
-SDK提供对[节点类型](../design/security_control/node_access_management.md)配置的支持。ConsensusService可以设置节点类型，其API如下：
+SDK提供对[节点类型](../design/security_control/node_management.md)配置的支持。ConsensusService可以设置节点类型，其API如下：
 - **String addSealer(String nodeId)：** 根据节点NodeID设置对应节点为共识节点。
 - **String addObserver(String nodeId)：** 根据节点NodeID设置对应节点为观察节点。
 - **String removeNode(String nodeId)：** 根据节点NodeID设置对应节点为游离节点。
