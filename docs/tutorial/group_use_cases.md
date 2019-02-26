@@ -305,6 +305,7 @@ $ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
         <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
 </bean>
 
+
 # 启动web3sdk，连接group2所有节点
 $ bash start.sh 2
 ```
