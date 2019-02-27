@@ -59,7 +59,7 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release
 $ ./meta/fisco-bcos -v
 ```
 
-## 构建gourp1
+## 构建第一个群组group1
 
 1. 修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1
 
@@ -178,7 +178,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 ![](../../../images/enterprise/simple1.png)
 
 
-## 构建group2
+## 构建第二个群组group2
 
 [构建group1]的操作中，我们已经生成了一条具有3个节点，处于group1中的联盟链，接下来将生成有3个节点的group2，节点序号为0、1、3。
 
@@ -244,6 +244,11 @@ $ ./generator --build ./data2
 $ cp ./mycert/node_127.0.0.1_30303/node.key ./data2/node_127.0.0.1_30303/conf/
 # 当私钥较多时，可以使用
 # $ ./generator --deploykey ./mycert ./data2
+
+```
+```eval_rst
+.. important::
+    生成group2时，node_127.0.0.1_30300,node_127.0.0.1_30301已经有了节点，因此使用--creete命令也是可以的，在实际生产中，每个机构只需关注自己所处的节点需要进行部署为生成安装包，还是生成新群组。
 ```
 
 5. 将group2配置导入data节点下
