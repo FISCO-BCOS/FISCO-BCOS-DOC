@@ -1,4 +1,4 @@
-# 快速入门
+# 下载安装
 
 ## 安装
 
@@ -8,7 +8,7 @@ Fisco generator依赖python, openssl, curl, nc工具。使用前请检查是否�
 
 ```bash
 # 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./bin/fisco-bcos -v
 ```

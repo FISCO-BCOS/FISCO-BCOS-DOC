@@ -8,4 +8,3 @@ fisco generator针对不同的组网形式进行了分析，以下为不同场�
 
    using_playground.md
    simple.md
-   sample_simplenet.md
