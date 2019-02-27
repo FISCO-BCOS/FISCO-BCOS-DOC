@@ -14,7 +14,6 @@
    get_executable.md
    build_chain.md
    console.md
-   build_group.md
    configuration.md
    storage_security.md
    node_management.md
