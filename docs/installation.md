@@ -4,9 +4,9 @@
 
 ## 单群组FISCO BCOS联盟链的搭建
 
-本节以搭建单群组FISCO BCOS链为例操作。搭建多群组链操作类似[TODO:链接到多群组教程]()。
+本节以搭建单群组FISCO BCOS链为例操作。搭建**多群组**的链操作类似，请[参考这里](tutorial/group_use_cases.md)。
 
-本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。TODO:mac支持。
+本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。macOS请参考[源码编译](manual/get_executable.md)并配合`build_chain`的`-e`选项操作。
 
 ### 准备环境
 
