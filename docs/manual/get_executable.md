@@ -1,8 +1,8 @@
 # 获取可执行文件
 
 用户可以自由选择以下任一方式安装FISCO BCOS可执行文件。
-- 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行，参考[预编译安装](manual/install.html#id2)获取。
-- 源码编译获取可执行文件，参考[源码编译](manual/install.html#id3)。
+- 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行，参考[预编译安装](manual/get_executable.html#id2)获取。
+- 源码编译获取可执行文件，参考[源码编译](manual/get_executable.html#id3)。
 
 ## 预编译安装
 
@@ -60,7 +60,7 @@ $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```bash
 $ cd FISCO-BCOS
-# 切换到release-2.0.1分支
+# 切换到release-2.0.1分支 TODO: 发布删除切换分支操作
 $ git checkout release-2.0.1
 $ mkdir build && cd build
 # CentOS请使用cmake3

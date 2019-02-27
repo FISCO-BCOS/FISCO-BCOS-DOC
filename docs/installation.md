@@ -4,13 +4,17 @@
 
 ## 单群组FISCO BCOS联盟链的搭建
 
-本节以搭建单群组FISCO BCOS链为例操作。搭建**多群组**的链操作类似，请[参考这里](tutorial/group_use_cases.md)。
+本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 
-本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。macOS请参考[源码编译](manual/get_executable.md)并配合`build_chain`的`-e`选项操作。
+```eval_rst
+.. note::
+    - macOS请参考 `源码编译 <manual/get_executable.html>`_ 并配合 `build_chain <manual/build_chain.html#id4>`_ 的-e选项操作。
+    - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
+```
 
 ### 准备环境
 
-[`build_chain`](build_chain.md)脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
+`build_chain`脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
 
 ```bash
 # Ubuntu 16.04 安装依赖
@@ -118,11 +122,11 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 配置及使用控制台
 
-控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台依赖于**Java 8**以上版本，Ubuntu 16.04系统安装**openjdk 8**即可。控制台详细文档[参考这里](console.md)。
+控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍[参考这里](console.md)。
 
 ```eval_rst
 .. important::
-    CentOS请安装Oracle Java 8以上版本。
+    控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
 ```
 
 
