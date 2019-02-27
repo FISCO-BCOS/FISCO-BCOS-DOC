@@ -1,22 +1,86 @@
 # 节点准入管理
 
-本文档描述节点准入管理的实践操作，建议阅读本操作文档前请先行了解[《节点准入管理介绍》](../design/security_control/node_management.md)。
+为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
 
-## 操作项目
+## 操作命令
 
-本文档对以下六个操作项目进行说明：
+控制台提供了 **[AddSealer(as)](./console.html#addminer)** 、**[AddObserver(ao)](./console.html#addobserver)** 和 **[RemoveNode(rn)](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList(gsl)](./console.html#getminerlist)**、**[getObserverList(gol)](./console.html#getobserverlist)** 和 **[getNodeIDList(gnl)](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 
-1. 一节点加入/退出网络
-2. 一节点加入/退出群组（节点类型的修改、群组节点的查询）
-3. 一节点将他节点列入/移除CA黑名单
+- addSealer：根据节点NodeID设置对应节点为共识节点；
+- addObserver：根据节点NodeID设置对应节点为观察节点；
+- removeNode：根据节点NodeID设置对应节点为游离节点；
+- getSealerList：查看群组中共识节点列表；
+- getObserverList：查看群组中观察节点列表。
 
-## 操作方式
+例：
+将指定节点分别转换成共识节点、观察者节点、游离节点，主要操作命令如下：
+
+```eval_rst
+.. important::
+    
+    节点准入操作前，请确保：
+
+     - 操作节点Node ID存在，节点Node ID可在节点目录下执行 cat conf/node.nodeid获取
+     - 节点加入的区块链所有节点共识正常：正常共识的节点会输出+++日志
+```
+
+```bash
+# 设节点位于~/fisco/nodes/192.168.0.1/node0目录下
+$ mkdir -p ~/fisco && cd ~/fisco
+
+# 获取节点Node ID（设节点目录为~/nodes/192.168.0.1/node0/）
+$ cat ~/fisco/nodes/192.168.0.1/node0/conf/node.nodeid
+7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+
+# 连接控制台(设控制台位于~/fisco/console目录)
+$ cd ~/fisco/console
+
+$ bash start.sh
+
+# 将指定节点转换为共识节点
+> addSealer 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+# 查询共识节点列表
+> getSealerList
+[
+	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+]
+
+# 将指定节点转换为观察者节点
+> addObserver 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+
+# 查询观察者节点列表
+> getObserverList
+[
+	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+]
+
+# 将指定节点转换为游离节点
+> removeNode 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+
+# 查询节点列表
+> getNodeIDList
+[
+	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+]
+> getSealerList
+[]
+> getObserverList
+[]
+
+```
+
+## 操作案例
+
+下面结合具体操作案例详细阐述 **节点如何加入/退出网络**、**节点如何加入/退出群组**。
+
+### 操作方式
 
 - 修改节点配置：节点修改自身配置后重启生效，涉及的操作项目包括**网络的加入/退出、CA黑名单的列入/移除**。
 - 交易共识上链：节点发送上链交易修改需群组共识的配置项，涉及的操作项目包括**节点类型的修改**。目前提供的发送交易途径为控制台、SDK提供的precompiled service接口。
 - RPC查询：使用curl命令查询链上信息，涉及的操作项目包括**群组节点的查询**。
 
-## 操作示例
+
+### 操作步骤
 
 本节将以下图为例对上述六种操作进行描述。虚线表示节点间能进行网络通信，实线表示节点间在可通信的基础上具备群组关系，不同颜色区分不同的群组关系。图中有一个网络，包含三个群组，其中群组Group3有三个节点。Group3是否与其他群组存在交集节点，不影响以下操作过程的通用性。
 
@@ -32,7 +96,7 @@ Group3的相关节点信息举例为：
 
 节点3的目录名为node2，IP端口为127.0.0.1:30402，nodeID前四个字节为d6b01a96...
 
-### A节点加入网络
+> **A节点加入网络**
 
 场景描述：
 
@@ -92,7 +156,7 @@ info|2019-02-21 10:30:18.694294| [P2P][Service] heartBeat connected count,size=2
 - 节点1和2不需修改自身的P2P节点连接列表；
 - 步骤1中所选择的群组建议为节点3后续需加入的群组。
 
-### A节点退出网络
+> **A节点退出网络**
 
 场景描述：
 
@@ -119,7 +183,7 @@ nohup: appending output to ‘nohup.out’
 - 网络连接由节点主动发起，如缺少第2步，节点3仍可感知节点1和节点2发起的P2P连接请求，并建立连接；
 - 如果节点3想拒绝节点1和节点2的连接请求，可参考**A节点将B节点列入CA黑名单**进行操作。
 
-### A节点加入群组
+> **A节点加入群组**
 
 场景描述：
 
@@ -139,7 +203,7 @@ nohup: appending output to ‘nohup.out’
 - <font color=#FF0000>节点3需先完成网络准入后，再执行加入群组的操作，系统将校验操作顺序</font>；
 - <font color=#FF0000>节点3的群组固定配置文件需与节点1和2的一致</font>。
 
-### A节点退出群组
+> **A节点退出群组**
 
 场景描述：
 
@@ -153,74 +217,3 @@ nohup: appending output to ‘nohup.out’
 补充说明：
 
 - 节点3可以共识节点或观察节点的身份执行退出操作。
-
-### A节点将B节点列入CA黑名单
-
-场景描述：
-
-节点1和节点2在群组Group3中，三节点轮流出块，现在节点1将节点2加入自身黑名单。
-
-操作顺序：
-
-1 . 对于节点1（node0），将节点2（node1）的公钥nodeID加入自身的<font color=#FF0000>CA黑名单</font>；
-
-```
-$ cat node1/conf/node.nodeid 
-aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
-$ vim node0/config.ini
-;certificate black list
-[crl]
-    ;crl.0 should be nodeid, nodeid's length is 128 
-    crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
-```
-
-2 . 重启节点1；
-
-3 . 确认节点1与节点2的原有连接已经断开，加入黑名单操作完成。
-
-补充说明：
-
-- 节点1添加节点2到自身CA黑名单的操作，将断开与节点2的网络连接及AMOP通信；
-- <font color=#FF0000>节点1添加节点2到自身CA黑名单的操作，将对节点1所在群组Group3的共识及同步消息/数据转发</font>。
-
-### A节点将B节点移除CA黑名单
-
-场景描述：
-
-节点1的CA黑名单中有节点2的nodeID，节点2的CA黑名单中没有节点1的nodeID，现在节点1将节点2移除自身的CA黑名单。
-
-操作顺序：
-
-1. 对于节点1，将节点2的公钥nodeID从自身的<font color=#FF0000>CA黑名单</font>移除；
-2. 重启节点1；
-3. 确认节点1与节点2重新建立连接，移除黑名单操作完成。
-
-## 操作工具
-
-### 控制台
-
-控制台提供的命令包括：
-
-- addSealer：根据节点NodeID设置对应节点为共识节点
-- addObserver：根据节点NodeID设置对应节点为观察节点
-- removeNode：根据节点NodeID设置对应节点为游离节点
-- getSealerList：查看群组中共识节点列表
-- getObserverList：查看群组中观察节点列表
-
-控制台详细使用方法请参考[《控制台》](../manual/console.md)。
-
-### SDK
-- String addSealer(String nodeId)： 根据节点NodeID设置对应节点为共识节点
-- String addObserver(String nodeId)： 根据节点NodeID设置对应节点为观察节点
-- String removeNode(String nodeId)： 根据节点NodeID设置对应节点为游离节点
-
-控制台详细使用方法请参考[《SDK》](../sdk/api.md)。
-
-### RPC
-
-查询群组节点的RPC接口包括：
-
-- getSealerList：查看群组中共识节点列表
-- getObserverList：查看群组中观察节点列表
-
-RPC详细使用方法请参考[《RPC》](../api.md)。
