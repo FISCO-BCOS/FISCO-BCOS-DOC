@@ -22,6 +22,7 @@ import sphinx_rtd_theme
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
+
 DOC_SOURCES_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(DOC_SOURCES_DIR))
 sys.path.insert(0, DOC_SOURCES_DIR)
@@ -60,7 +61,8 @@ source_suffix = ['.rst', '.md']
 # ones.
 extensions = [
   'sphinx_markdown_tables',
-  'notfound.extension'
+  'notfound.extension',
+  'sphinxcontrib.mermaid'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -135,7 +137,6 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
 html_theme_options = {'navigation_depth': 4,}
 using_rtd_theme = True
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
@@ -334,17 +335,6 @@ texinfo_documents = [
 
 # Markdown support
 
-
-# The suffix of source filenames.
-#source_suffix = ['.rst', '.md']
-#source_parsers = {
-#	'.md': CommonMarkParser,
-#}
-#extensions = [
-#    'sphinx.ext.todo',
-#    'sphinx.ext.mathjax',
-#    'sphinx.ext.ifconfig',
-#]
 
 github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
 def setup(app):
