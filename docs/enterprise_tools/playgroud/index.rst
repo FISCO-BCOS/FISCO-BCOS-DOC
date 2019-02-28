@@ -8,8 +8,3 @@ fisco generator针对不同的组网形式进行了分析，以下为不同场�
 
    using_playground.md
    simple.md
-   net.md
-   star.md
-   ring.md
-   sample_simplenet.md
-   sample_starnet.md

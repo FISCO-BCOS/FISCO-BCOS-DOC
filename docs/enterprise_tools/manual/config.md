@@ -12,6 +12,15 @@ meta文件夹下需要存放生成节点的证书，包括`fisco bcos`二进制�
 
 通过修改`mchain.ini`的配置，用户可以使用--build命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包.
 
+配置文件中字段的含义解释如下：
+| | |
+| :-: | :-: |
+| p2p_ip | 节点之间p2p通信ip |
+| rpc_ip | 节点与sdk通信ip |
+| p2p_listen_port | 节点之间p2p通信端口 |
+| channel_listen_port | sdk与节点通信端口 |
+| jsonrpc_listen_port | 节点rpc端口 |
+
 ```bash
 [node0]
 p2p_ip=127.0.0.1 # 节点p2p通信ip
