@@ -1,33 +1,34 @@
 # 操作手册
 
-## 配置文件
+## 配置文件夹conf
 
-FISCO BCOS generator的配置文件在./conf文件夹下，共有三个配置文件，`mchain.ini`、`mexpand.ini`和`mgroup.ini`。分别对应新建节点及群组、扩容新节点加入现有群组、节点划分新群组三种操作。
+FISCO BCOS generator的配置文件在./conf文件夹下，共有三个配置文件：`mchain.ini`、`mexpand.ini`和`mgroup.ini`。分别对应新建节点及群组、扩容新节点加入现有群组、节点划分新群组三种操作的配置。
 
-### meta文件夹
+### meta元数据文件夹
 
-meta文件夹下需要存放生成节点的证书，包括`fisco bcos`二进制文件(或者用户指定版本，待讨论)、链证书ca.crt、节点证书。
+meta文件夹下需要存放`fisco bcos`二进制文件、链证书ca.crt、节点证书等。
 
 证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。节点证书需要已经拼装好agency.crt。
 
 ### mchain.ini
 
-通过修改`mchain.ini`的配置，用户可以使用--build命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包.
+通过修改`mchain.ini`的配置，用户可以使用build命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个`section[node]`即为生成好的链的安装包.
 
 配置文件中字段的含义解释如下：
+<!-- 
 | | |
 | :-: | :-: |
 | p2p_ip | 节点之间p2p通信ip |
 | rpc_ip | 节点与sdk通信ip |
 | p2p_listen_port | 节点之间p2p通信端口 |
 | channel_listen_port | sdk与节点通信端口 |
-| jsonrpc_listen_port | 节点rpc端口 |
+| jsonrpc_listen_port | 节点rpc端口 | -->
 
-```bash
+```ini
 [node0]
-p2p_ip=127.0.0.1 # 节点p2p通信ip
-rpc_ip=127.0.0.1 # 节点与sdk通信ip
-p2p_listen_port=30300 # 节点通信端口
+p2p_ip=127.0.0.1 # 节点之间p2p通信ip
+rpc_ip=127.0.0.1 # 节点与sdk通信ip 
+p2p_listen_port=30300 # 节点之间p2p通信端口
 channel_listen_port=20200 # sdk与节点通信端口
 jsonrpc_listen_port=8545 # 节点rpc端口
 
@@ -56,20 +57,19 @@ jsonrpc_listen_port=8548
 group_id=1
 ```
 
-上述配置在执行--build命令后会在指定目录下生成名为node_127.0.0.1_30300、node_127.0.0.1_30301、node_127.0.0.1_30302、node_127.0.0.1_30303的不含节点私钥的安装包。节点处于group1中。
+上述配置在执行build命令后会在指定目录下生成名为node_127.0.0.1_30300、node_127.0.0.1_30301、node_127.0.0.1_30302、node_127.0.0.1_30303的不含节点私钥的安装包。生成的节点处于群组group1中。
 
 ### mexpand.ini
 
-```bash
 与`mchain.ini`配置相似，通过修改`mexpand.ini`的配置，用户可以使用--expand命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包。
 
-
+```ini
 [node0]
-p2p_ip=127.0.0.1 # 节点p2p通信ip
-rpc_ip=127.0.0.1 # 节点与sdk通信ip
-p2p_listen_port=30304 # 节点通信端口
-channel_listen_port=20205 # sdk与节点通信端口
-jsonrpc_listen_port=8549 # 节点rpc端口
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30304
+channel_listen_port=20205
+jsonrpc_listen_port=8549
 
 [node1]
 p2p_ip=127.0.0.1
@@ -82,13 +82,13 @@ jsonrpc_listen_port=8550
 group_id=1
 ```
 
-上述配置在执行--build命令后会在指定目录下生成名为node_127.0.0.1_30304、node_127.0.0.1_30305的不含节点私钥的安装包。节点包含group1中配置文件，但是不在群组内，需要group1中的节点发交易允许新节点入网。
+上述配置在执行expand命令后会在指定目录下生成名为node_127.0.0.1_30304、node_127.0.0.1_30305的不含节点私钥的安装包。节点包含group1中配置文件，经过group1中的节点发交易后作为新节点加入group1的共识/观察列表中。
 
 ### mgroup.ini
 
-通过修改`mgourp.ini`的配置，用户可以在指定目录下生成新群组的相关配置，如group.2.ini和group.2.genesis。
+通过修改`mgourp.ini`的配置，用户可以在指定目录下生成新群组的相关配置，如`group.2.ini`和`group.2.genesis`。
 
-```bash
+```ini
 [group]
 ; group : group index
 group_id=2 #群组序号
@@ -104,13 +104,13 @@ FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书�
 | 命令名称 | 命令参数 | 基本功能 | 适用场景 |
 | :-: | :-: | :-: | :-:|
 | demo | 无 | 快速部署一条测试链 | 体验、测试FISCO BCOS |
-| build | 指定文件夹 | 在指定文件夹下生成mchain.ini中配置的节点安装包（需要在meta下存放证书） | 用户需要生成节点安装包和群组配置文件。需要交换证书 |
+| build | 指定目录下不存在的文件夹 | 在指定文件夹下生成mchain.ini中配置的节点安装包（需要在meta下存放证书） | 用户需要生成节点安装包和群组配置文件。需要在meta文件夹下存放证书 |
 | expand | 1.存放原有群组节点的文件夹  2.扩容节点安装包文件夹 | 根据mexpand.ini，以及现有群组和节点配置文件，生成扩容节点安装包 | 用户需要为现有群组生成节点安装包，需要交换配置文件，不需要交换证书 |
-| create | 指定文件夹 | 在指定文件夹下根据mcreate.ini和meta下的证书生成群组配置文件 | 用户已有节点，但需要生成新群组 。需要交换证书 |
+| create | 指定文件夹 | 在指定文件夹下根据mcreate.ini和meta下的证书生成群组配置文件 | 用户已有节点，但需要生成新群组 。需要在meta文件夹下存放证书 |
 | *ca | 证书目录 | 生成相关证书 | 用户需要生成自签相关根证书、机构证书、节点证书、sdk证书时 |
 | cert* | 证书存放目录| 根据配置文件生成相关证书 | 用户需要批量根据配置文件生成节点证书时 |
 | combine | 需要合并的两个节点配置配置文件 | 将两个节点配置文件中的P2P部分合并 | 扩容节点后需要更新节点P2P配置项时 |
-| deploykey | 私钥存放目录 安装包存放目录| 将私钥批量导入生成的安装包中 | 用户已经拥有私钥和生成的安装包，需要将私钥批量导入安装包中时 |
+| deploykey | 1.私钥存放目录 2.安装包存放目录| 将私钥批量导入生成的安装包中 | 用户已经拥有私钥和生成的安装包，需要将私钥批量导入安装包中时 |
 | version | 无 | 打印当前版本号 | 提示性命令 |
 | h/help | 无 | 帮助命令 | 提示性命令 |
 
