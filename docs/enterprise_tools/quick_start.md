@@ -107,7 +107,7 @@ group_id=1
 2. 生成节点序号为0、1、2、3的证书和私钥，并导入meta文件夹
 
 ```eval_rst
-.. important::
+.. 重要::
     实际应用中，证书和私钥应该由用户自己生成，只需将证书导入工具。
     本示例中生成的证书机构名默认为agency_fisco，根证书私钥和机构证书私钥默认放置在meta文件夹下，节点证书和私钥放置在用户指定目录下，本例中为./mycert
 ```
@@ -208,10 +208,10 @@ ps aux| grep fisco-bcos |grep -v grep
 cd ..
 ```
 
-可以看到现在一共有六个fisco bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识
+可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识
 
 ```eval_rst
-.. important::
+.. 重要::
     生成扩容安装包时需要fisco-bcos可执行文件、group.1.genesis和group.1.ini
 ```
 
