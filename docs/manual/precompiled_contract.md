@@ -96,7 +96,6 @@ contract HelloWorld{
     }
 }
 ```
-<<<<<<< HEAD
 上述源码为solidity编写的HelloWorld合约， 本章节会实现一个相同功能的预编译合约，通过step by step使用户对预编译合约编写有直观的认识。   
 示例的c++[源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/extension/HelloWorldPrecompiled.cpp)：
 ```
