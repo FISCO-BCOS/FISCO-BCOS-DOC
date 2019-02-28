@@ -41,7 +41,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 - `listen_ip`: 安全考虑，建链脚本默认监听127.0.0.1，如果需要外网访问RPC或外网使用SDK请监听`外网IP`或`0.0.0.0`；
 - `channel_listen_port`: Channel端口，对应到[SDK](../sdk/config.html#id1)配置中的`channel_listen_port`；
-- `jsonrpc_listen_port`: JSONRPC端口。
+- `jsonrpc_listen_port`: JSON-RPC端口。
 
 
 RPC配置示例如下：
@@ -103,7 +103,6 @@ P2P配置示例如下：
 
 ```ini
 [secure]
-   ;directory the certificates located in
     data_path=conf/
     key=node.key
     cert=node.crt
@@ -122,7 +121,7 @@ P2P配置示例如下：
 黑名单列表配置示例如下：
 
 ```ini
-;certificate blacklist
+; certificate blacklist
 [crl]
     crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e
 3787c338a4
@@ -140,9 +139,7 @@ FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easylogg
 boostlog示例配置如下：
 
 ```ini
-;log configurations
 [log]
-    ;the directory of the log
     log_path=./log
     level=info
     ; max log size, default is 200MB
@@ -160,13 +157,11 @@ boostlog示例配置如下：
 easylogging++示例配置如下：
 
 ```ini
-;log configurations
 [log]
-    ;the directory of the log
     log_path=./log
     level=info
     max_log_file_size=209715200
-    ;easylog config
+    ; easylog config
     format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
     log_flush_threshold=100
 ```
@@ -237,11 +232,11 @@ index=2
 ```ini
 ;consensus configuration
 [consensus]
-    ;consensus algorithm type, now support PBFT(consensus_type=pbft) and Raft(consensus_type=raft)
+    ; consensus algorithm type, now support PBFT(consensus_type=pbft) and Raft(consensus_type=raft)
     consensus_type=pbft
-    ;the max number of transactions of a block
+    ; the max number of transactions of a block
     max_trans_num=1000
-    ;the node id of leaders
+    ; the node id of leaders
     node.0=123d24a998b54b31f7602972b83d899b5176add03369395e53a5f60c303acb719ec0718ef1ed51feb7e9cf4836f266553df44a1cae5651bc6ddf50
 e01789233a
     node.1=70ee8e4bf85eccda9529a8daf5689410ff771ec72fc4322c431d67689efbd6fbd474cb7dc7435f63fa592b98f22b13b2ad3fb416d136878369eb41
@@ -269,10 +264,9 @@ e01789233a
 
 ```ini
 [storage]
-    ;storage db type, now support leveldb 
+    ; db type, now support leveldb 
     type=LevelDB
 [state]
-    ;support storag/mpt
     type=storage
 ```
 
@@ -281,7 +275,6 @@ e01789233a
 FISCO BCOS兼容以太坊虚拟机([evm](../design/virtual_machine/evm.md))，为了防止针对[evm](../design/virtual_machine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，<font color=#FF0000>仅保留交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configs.html#id8)和交易最大gas限制一起约束</font>。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.html#setsystemconfigbykey)动态调整gas限制。
 
 ```ini
-;tx gas limit
 [tx]
     gas_limit=300000000
 ```
@@ -300,7 +293,6 @@ FISCO-BCOS将交易池容量配置开放给用户，用户可根据自己的业�
 交易池配置示例如下：
 
 ```ini
-;txpool limit
 [tx_pool]
     limit=10000
 ```

@@ -22,11 +22,11 @@ Table.sol文件代码如下:
 ```js
 
 contract TableFactory {
-    function openTable(string) public constant returns (Table); //打开表
-    function createTable(string,string,string) public constant returns(Table); //创建表
+    function openTable(string) public constant returns (Table); // 打开表
+    function createTable(string,string,string) public constant returns(Table); // 创建表
 }
 
-//查询条件
+// 查询条件
 contract Condition {
     function EQ(string, int);
     function EQ(string, string);
@@ -44,7 +44,7 @@ contract Condition {
     function limit(int, int);
 }
 
-//单条数据记录
+// 单条数据记录
 contract Entry {
     function getInt(string) public constant returns(int);
     function getAddress(string) public constant returns(address);
@@ -55,21 +55,21 @@ contract Entry {
     function set(string, string) public;
 }
 
-//数据记录集
+// 数据记录集
 contract Entries {
     function get(int) public constant returns(Entry);
     function size() public constant returns(int);
 }
 
-//Table主类
+// Table主类
 contract Table {
-    //查询接口
+    // 查询接口
     function select(string, Condition) public constant returns(Entries);
-    //插入接口
+    // 插入接口
     function insert(string, Entry) public returns(int);
-    //更新接口
+    // 更新接口
     function update(string, Entry, Condition) public returns(int);
-    //删除接口
+    // 删除接口
     function remove(string, Condition) public returns(int);
     
     function newEntry() public constant returns(Entry);
@@ -86,7 +86,7 @@ contract TableTest {
     event updateResult(int count);
     event removeResult(int count);
     
-    //创建表
+    // 创建表
     function create() public {
         TableFactory tf = TableFactory(0x1001); // TableFactory的地址固定为0x1001
         // 创建t_test表，表的key_field为name，value_field为item_id,item_name 
@@ -94,7 +94,7 @@ contract TableTest {
         tf.createTable("t_test", "name", "item_id,item_name");
     }
 
-    //查询数据
+    // 查询数据
     function select(string name) public constant returns(bytes32[], int[], bytes32[]){
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
@@ -118,7 +118,7 @@ contract TableTest {
  
         return (user_name_bytes_list, item_id_list, item_name_bytes_list);
     }
-    //插入数据
+    // 插入数据
     function insert(string name, int item_id, string item_name) public returns(int) {
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
@@ -133,7 +133,7 @@ contract TableTest {
         
         return count;
     }
-    //更新数据
+    // 更新数据
     function update(string name, int item_id, string item_name) public returns(int) {
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
@@ -150,7 +150,7 @@ contract TableTest {
         
         return count;
     }
-    //删除数据
+    // 删除数据
     function remove(string name, int item_id) public returns(int){
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
