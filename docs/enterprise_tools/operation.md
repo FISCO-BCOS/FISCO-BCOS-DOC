@@ -251,7 +251,7 @@ $ ./genrator --certbuild ./cert
 ```
 
 ```eval_rst
-.. important::
+.. note::
     
     此命令会根据meta目录下存放的ca.crt和ca.key生成相应的节点证书，如果没有根证书会自动生成
 ```
