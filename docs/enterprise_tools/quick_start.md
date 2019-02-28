@@ -212,7 +212,7 @@ cd ..
 
 ```eval_rst
 .. important::
-    生成扩容安装包时需要fisco-bcos可执行文件、group.1.genesis和group.1.ini
+    生成扩容安装包时需要fisco-bcos可执行程序、group.1.genesis和group.1.ini
 ```
 
 ## 构建第二个群组group2
