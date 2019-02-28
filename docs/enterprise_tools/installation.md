@@ -4,7 +4,7 @@
 
 Fisco generator依赖python, openssl, curl, nc工具。使用前请检查是否满足依赖，同时，需要先满足FISCO BCOS启动时的条件，参考[依赖安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/feature-2.0.0/docs/manual/install.html?highlight=%E4%BE%9D%E8%B5%96#id4)
 
-在使用本工具时，需要用户已经生成所需的fisco bcos二进制文件（除demo命令外），fisco bcos二进制文件的生成方式可以通过获取fisco bcos二进制文件:
+在使用本工具时，需要用户已经生成所需的`fisco-bcos`二进制文件（除demo命令外），`fisco-bcos`二进制文件的生成方式可以通过获取:
 
 ```bash
 # 准备fisco-bcos二进制文件
@@ -13,7 +13,11 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release
 $ ./bin/fisco-bcos -v
 ```
 
-或者参考[源码编译](../manual/install.md)
+```eval_rst
+.. 注解::
+    二进制文件的获取可以参考 源码编译_
+.. 源码编译_: https://github.com/FISCO-BCOS/generator
+```
 
 ```shell
 $ git clone https://github.com/FISCO-BCOS/generator.git
