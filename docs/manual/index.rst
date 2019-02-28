@@ -7,13 +7,11 @@
 .. toctree::
    :maxdepth: 1
 
-   summary.md
-   api/index.rst
-   crud_sol_contract.md
-   precompiled_contract.md
-   build_group.md
-   group_use_cases.md
+   get_executable.md
+   build_chain.md
    configuration.md
+   console.md
+   smart_contract.md
    storage_security.md
    node_management.md
    permission_control.md

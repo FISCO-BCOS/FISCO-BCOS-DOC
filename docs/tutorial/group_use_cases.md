@@ -1,10 +1,9 @@
 # 多群组使用案例
 
-如下图，并行多组和星形组网拓扑是区块链应用中使用较广泛的两种组网方式。
+如下图，星形组网拓扑和并行多组组网拓扑是区块链应用中使用较广泛的两种组网方式。
 
-- **并行多组**：区块链中每个节点均属于多个群组，每个群组运行独立的应用；
-
-- **星形拓扑**：中心机构节点同时属于多个群组，运行多家机构应用，其他每家机构属于不同群组，运行各自应用。
+- **星形拓扑**：中心机构节点同时属于多个群组，运行多家机构应用，其他每家机构属于不同群组，运行各自应用；
+- **并行多组**：区块链中每个节点均属于多个群组，每个群组运行独立的应用。
 
 ![](../../images/group/group.png)
 
@@ -27,9 +26,7 @@ $ brew install openssl leveldb
 
 ## 星形拓扑
 
-本章以介绍构建本机四机构三群组七节点的星形组网拓扑为例，介绍多群组使用方法。星型组网区块链详细组网情况如下：
-
-本章以构建上图所示的<font color=#FF0000>星形拓扑区块链</font>为例，介绍多群组使用方法。
+本章以构建上图所示的**本机四机构三群组七节点的星形组网拓扑**为例，介绍多群组使用方法。
 
 星形区块链组网如下：
 
@@ -40,35 +37,31 @@ $ brew install openssl leveldb
 
 ```eval_rst
 .. important::
-   - 真实应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目
-   - **星形网络拓扑** 中，核心节点(本例中agencyA节点)同属于所有群组，负载较大，**建议单独部署在性能较好的机器** 
+   - 实际应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，请参考 `硬件配置 <../manual/configuration.html>`_
+   - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器** 
 ```
 
-### 构建星形区块链
+### 构建星形区块链安装包
 
-[build_chain](./build_chain.md)简单方便地支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链：
+[build_chain](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链安装包：
 
-**获取预编译二进制可执行程序**
+**准备依赖**
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
-```
-
-**获取build_chain.sh脚本**
-
-```bash
-$ mkdir -p ~/fisco && cd ~/fisco
+# 获取预编译可执行程序
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
+# 获取build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
 
 ```bash
-$ mkdir -p ~/fisco && cd ~/fisco
+$ cd ~/fisco
 
 # 生成区块链配置文件ip_list
-$ cat > ip_list << EOF
+$ cat > ipconf << EOF
 127.0.0.1:2 agencyA 1,2,3
 127.0.0.1:2 agencyB 1
 127.0.0.1:2 agencyC 2
@@ -76,7 +69,7 @@ $ cat > ip_list << EOF
 EOF
 
 # 查看配置文件ip_list内容
-$ cat ip_list
+$ cat ipconf
 127.0.0.1:2 agencyA 1,2,3
 127.0.0.1:2 agencyB 1
 127.0.0.1:2 agencyC 2
@@ -87,7 +80,7 @@ $ cat ip_list
 
 ```bash
 # 根据配置生成星形区块链
-$ bash build_chain.sh -f ip_list -e ./bin/fisco-bcos
+$ bash build_chain.sh -f ipconf -e ./bin/fisco-bcos
 Generating CA key...
 ==============================================================
 Generating keys ...
@@ -99,15 +92,15 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 ......此处省略其他输出......
 ==============================================================
 [INFO] FISCO-BCOS Path   : ./bin/fisco-bcos
-[INFO] IP List File      : ip_list
+[INFO] IP List File      : ipconf
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:2 127.0.0.1:2 127.0.0.1:2 127.0.0.1:2
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/fisco/nodes
-[INFO] CA Key Path       : /home/fisco/nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu16/fisco/nodes
+[INFO] CA Key Path       : /home/ubuntu16/fisco/nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/fisco/nodes
+[INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 
 # 生成的节点文件如下
 $ tree
@@ -126,10 +119,10 @@ $ tree
 |   |   |   |-- group.3.ini
 |   |   |   |-- node.crt
 |   |   |   |-- node.key
-|   |   |   `-- node.nodeid
-|   |   |-- config.ini
-|   |   |-- start.sh
-|   |   `-- stop.sh
+|   |   |   `-- node.nodeid # 记录节点Node ID信息
+|   |   |-- config.ini #节点配置文件
+|   |   |-- start.sh  #节点启动脚本
+|   |   `-- stop.sh   #节点停止脚本
 |   |-- node1
 |   |   |-- conf
 ......此处省略其他输出......
@@ -141,27 +134,26 @@ $ tree
 
 ```bash
 # 进入节点目录
-$ cd nodes/127.0.0.1
+$ cd ~/fisco/nodes/127.0.0.1
 
 # 启动节点
 $ bash start_all.sh
 
 # 查看节点进程
-$ ps aux |grep fisco-bcos
-app         301  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node5/../fisco-bcos -c config.ini
-app         306  0.9  0.0 986644  6928 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node6/../fisco-bcos -c config.ini
-app         311  0.9  0.0 986644  7184 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node7/../fisco-bcos -c config.ini
-app      131048  2.1  0.0 1429036 7452 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node0/../fisco-bcos -c config.ini
-app      131053  2.1  0.0 1429032 7180 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node1/../fisco-bcos -c config.ini
-app      131058  0.8  0.0 986644  7928 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node2/../fisco-bcos -c config.ini
-app      131063  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node3/../fisco-bcos -c config.ini
-app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node4/../fisco-bcos -c config.ini
-
+$ ps aux | grep fisco-bcos
+ubuntu16         301  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node5/../fisco-bcos -c config.ini
+ubuntu16         306  0.9  0.0 986644  6928 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/../fisco-bcos -c config.ini
+ubuntu16         311  0.9  0.0 986644  7184 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/../fisco-bcos -c config.ini
+ubuntu16      131048  2.1  0.0 1429036 7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+ubuntu16      131053  2.1  0.0 1429032 7180 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+ubuntu16      131058  0.8  0.0 986644  7928 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+ubuntu16      131063  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+ubuntu16      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node4/../fisco-bcos -c config.ini
 ```
 
 **查看群组共识状态**
 
-不发交易时，共识正常的节点会刷出`+++`日志，本例中，`node0、node1`同时属于`group1、group2和group3`；`node2、node3`属于`group1`；`node4、node5`属于`group2`；`node6、node7`属于`group3`，可通过`tail -f xxx.log | grep "g:${group_id}.*++"`查看各节点是否正常。
+不发交易时，共识正常的节点会输出`+++`日志，本例中，`node0、node1`同时属于`group1、group2和group3`；`node2、node3`属于`group1`；`node4、node5`属于`group2`；`node6、node7`属于`group3`，可通过`tail -f xxx.log | grep "g:${group_id}.*++"`查看各节点是否正常。
 
 ```eval_rst
 .. important::
@@ -171,7 +163,7 @@ app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/fisco/12
      - ``blkNum``：Leader节点产生的新区块高度；
      - ``tx``: 新区块中包含的交易数目；
      - ``myIdx``: 本节点索引；
-     - ``hash``: Leader节点产生的最新区块哈希。
+     - ``hash``: 共识节点产生的最新区块哈希。
 ```
 
 ```bash
@@ -183,11 +175,8 @@ info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 $ tail -f node0/log/* | grep "g:2.*++" 
 info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=ef59cf17...
 
-# 查看node0的group3是否正常共识
-$ tail -f node0/log/* | grep "g:3.*++"
-info|2019-02-11 15:33:51.022444| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=2c455288...
+# ... 查看node1节点每个群组是否正常可参考以上操作方法...
 
-# ... 查看node1的所有群组是否正常可参考node0操作方法...
 # 查看node3的group1是否正常共识
 $ tail -f node3/log/*| grep "g:1.*++"  
 info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=5e94bf63...
@@ -196,9 +185,6 @@ info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 $ tail -f node5/log/* | grep "g:2.*++" 
 info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=b80a724d...
 
-# 查看node6的group3是否正常共识
-$ tail -f node6/log/* | grep "g:3.*++" 
-info|2019-02-11 15:39:58.994218| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=eb5801bf...
 ```
 
 ### 向群组发交易
@@ -219,28 +205,27 @@ $ bash transTest.sh ${交易数目} ${群组ID}
      - ``hash``：区块哈希；
      - ``next``：下一个区块高度；
      - ``tx``：区块包含的交易数；
-     - ``myIdx``： 当前节点索引。
+     - ``myIdx``：当前节点索引。
 ```
 
 ```bash
+# 进入脚本目录
+$ cd ~/fisco/nodes/127.0.0.1
+
 # ... 向group1发交易...
 $ bash transTest.sh 10 1
 Send transaction:  1
 {"id":83,"jsonrpc":"2.0","result":"0x226e54480ce325a5858240a10864d7fc1127f2adc17e3e02dd314f91baab074b"}
-Send transaction:  2
-{"id":83,"jsonrpc":"2.0","result":"0x9f69fa21081ef18be04536de6583d8c633bf0387b15eb8b8aa9d7f6bbbd9654e"}
 ......此处省略其他输出......
 
 # 查看出块情况：有新区块产生
-$ cat node0/log/* |grep "g:2.*Report"
+$ cat node0/log/* |grep "g:1.*Report"
 info|2019-02-11 16:07:35.947676| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,......此处省略其他输出......
 
 # ...向group3发交易...
 $ bash transTest.sh 10 3
 Send transaction:  1
 {"id":83,"jsonrpc":"2.0","result":"0x5f7a7c0a035a32a6fa17f0b797cc98eca45285f3e6347c6cd927efb7cd2a1a0b"}
-Send transaction:  2
-{"id":83,"jsonrpc":"2.0","result":"0x6f2279b37b98b79960e2e7291afbd89fceb9116c8d40859bf3d8374e2711b2dd"}
 ......此处省略其他输出......
 
 # 查看出块情况：有新区块产生
@@ -251,15 +236,15 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 
 ### 节点加入/退出群组
 
-通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](node_management.md)，控制台配置参考[控制台操作手册](console.html#id7)。
+通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](../manual/node_management.md)，控制台配置参考[控制台操作手册](../manual/console.html#id7)。
 
 ```eval_rst
 .. important::
     
     新节点加入群组前，请确保：
     
-    - 新加入节点正常共识： 正常共识的节点会刷出+++日志
-    - 群组内节点正常共识
+    - 新加入NodeID存在
+    - 群组内节点正常共识：正常共识的节点会输出+++日志
 ````
 
 将星形区块链系统中的node2加入group2为共识节点，具体操作方法如下：
@@ -267,30 +252,47 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 **启动控制台**
 
 ```bash
-$ mkidr -p ~/fisco
+$ cd ~/fisco
+
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
-&& tar -zxf console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
 
 # 进入控制台操作目录
-$ cd console
+$ cd ~/fisco/console
 
-# 拷贝group2节点(node0, node1, node4, node5)的证书到控制台配置目录(以node0为例)
-$ cp ~/fisco/nodes/127.0.0.1/node0/conf/node.* conf/
+# 拷贝group2节点证书到控制台配置目录
+$ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
 
 # 获取node0的channel_listen_port
-$ cat ~/nodes/127.0.0.1/node4/config.ini | grep channel_listen_port
+$ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
 channel_listen_port=20200
 
-# 参考控制台操作文档，
-# 修改~/console/conf/applicationContext.xml的group id为2, ip:channel_listen_port为127.0.0.1:20200
-# 确认Group ID:2
-$ cat conf/applicationContext.xml | grep "groupId"
-<property name="groupId" value="2" />
+# 参考控制台操作文档，配置~/fisco/console/conf/applicationContext.xml, 配置ip:channel_listen_port为127.0.0.1:20200 
+# group2的关键配置如下：
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+<property name="allChannelConnections">
+<list>
+    ... 省略若干行... 
+    <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+        <property name="groupId" value="2" />
+            <property name="connectionsStr">
+            <list>
+            <value>127.0.0.1:20200</value>
+            </list>
+            </property>
+    </bean>
+    ... 省略若干行...
+</list>
+</property>
+</bean>
 
-# 确认channel_listen_port
-$ cat conf/applicationContext.xml | grep "[0-9].*:[0-9].*" | grep value
-<value>127.0.0.1:20200</value>
+# 配置channelService
+ <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+        <property name="groupId" value="2" />
+        <property name="orgID" value="fisco" />
+        <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+</bean>
+
 
 # 启动web3sdk，连接group2所有节点
 $ bash start.sh 2
@@ -299,15 +301,17 @@ $ bash start.sh 2
 **将node2加入group2为共识节点**
 
 ```bash
-# ...获取node2的node id...
-$ cat node2/conf/node.nodeid 
-6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
+$ cd ~/fisco/nodes/127.0.0.1
 
 # ... 从node0拷贝group2的配置到node2...
 $ cp node0/conf/group.2.* node2/conf
 
-# ...重启node2...
+# ...重启node2(重启后请确定节点正常共识)...
 $ cd node2 && bash stop.sh && bash start.sh
+
+# ...获取node2的node id...
+$ cat node2/conf/node.nodeid 
+6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 
 # ...通过控制台将node2加入为共识节点
 # 1. 查看当前共识节点列表
@@ -340,7 +344,7 @@ $ cd node2 && bash stop.sh && bash start.sh
 
 通过以上操作可看出，node2已成功加入group2。
 
-> 通过`tail -f node2/log/* | grep "g:2.*++"`查看node2的group2是否出块正常：
+> 通过`tail -f node2/log/* | grep "g:2.*++"`查看node2的group2是否共识正常：
 
 ```bash
 # 查看节点共识情况
@@ -407,10 +411,10 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/fisco/multi_nodes
-[INFO] CA Key Path       : /home/fisco/multi_nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu16/fisco/multi_nodes
+[INFO] CA Key Path       : /home/ubuntu16/fisco/multi_nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/fisco/multi_nodes
+[INFO] All completed. Files in /home/ubuntu16/fisco/multi_nodes
 
 ```
 
@@ -423,10 +427,10 @@ $ bash start_all.sh
 
 # 查看进程情况
 $ ps aux | grep fisco-bcos
-app       55028  0.9  0.0 986384  6624 pts/2    Sl   20:59   0:00 /home/fisco/multi_nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-app       55034  0.8  0.0 986104  6872 pts/2    Sl   20:59   0:00 /home/fisco/multi_nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
-app       55041  0.8  0.0 986384  6584 pts/2    Sl   20:59   0:00 /home/fisco/multi_nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-app       55047  0.8  0.0 986396  6656 pts/2    Sl   20:59   0:00 /home/fisco/multi_nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+ubuntu16       55028  0.9  0.0 986384  6624 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+ubuntu16       55034  0.8  0.0 986104  6872 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+ubuntu16       55041  0.8  0.0 986384  6584 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+ubuntu16       55047  0.8  0.0 986396  6656 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 
 ```
 
@@ -463,8 +467,8 @@ info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 $ cp node0/conf/group.1.genesis group.2.genesis
 
 # 修改群组ID
-$ vim group.2.genesis
-[group]
+$ sed -i "s/index=1/index=2/g" group.2.genesis
+$ cat group.2.genesis | grep "index"
     index=2
 
 # 将配置拷贝到各个节点
@@ -505,11 +509,9 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ```bash
 # ...向group1发交易，并查看节点共识情况...
-bash transTest.sh 10 1
+$ bash transTest.sh 10 1
 Send transaction:  1
 {"id":83,"jsonrpc":"2.0","result":"0x24827ef7b0bed013123d9981ff61ba0a1761747a475e187467e70d9ff20c0714"}
-Send transaction:  2
-{"id":83,"jsonrpc":"2.0","result":"0x42058b83924248adbedf2e8f65e60b0986d378ee5255b89fd72cd76f5b0d07bf"}
 ......此处省略其他输出......
 
 # 查看节点出块情况(其中num是块高, idx是出块节点索引, tx是区块中包含交易数，myIdx是当前节点索引):有新区块产生
@@ -521,8 +523,6 @@ info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1
  bash transTest.sh 10 2
 Send transaction:  1
 {"id":83,"jsonrpc":"2.0","result":"0xf8278a38d9243bfc6c7c146cb222fe13a7f8436b7df169bd1a90f7e17954c6a6"}
-Send transaction:  2
-{"id":83,"jsonrpc":"2.0","result":"0x43dca46e44c7658bb86db15d555081869e0157bd8ff7bc901fb3f648ead13d8e"}
 ......此处省略其他输出......
 
 # 查看节点出块情况：有新区块产生

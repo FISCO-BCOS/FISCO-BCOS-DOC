@@ -1,4 +1,4 @@
-# 启用国密算法
+# 使用国密
 
 为了充分支持国产密码学算法，金链盟基于国产密码学标准，在FISCO BCOS平台中集成了国密加解密、签名、验签、哈希算法、国密SSL通信协议，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)。
 
@@ -16,7 +16,7 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1
 # 准备fisco-bcos二进制文件
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -g
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
-# 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行文件
+# 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行程序
 $ ./bin/fisco-bcos -v
 FISCO-BCOS gm version 2.0
 ```
