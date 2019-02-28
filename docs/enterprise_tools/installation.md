@@ -15,7 +15,7 @@ $ ./bin/fisco-bcos -v
 
 ```eval_rst
 .. note::
-    二进制文件的获取可以参考 源码编译_
+    二进制文件的获取可以参考 源码编译
 .. 源码编译_: https://github.com/FISCO-BCOS/generator
 ```
 
@@ -34,7 +34,7 @@ $ cd generator
 $ ./generator --demo
 ```
 
-此操作会在执行目前的所有操作
+此命令会执行下列操作：
 
 1. 按照./conf/mchain.ini中的配置在./meta下生成证书
 2. 按照./conf/mchain.ini的配置在./data下生成安装包
