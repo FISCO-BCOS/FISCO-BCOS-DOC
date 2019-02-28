@@ -38,12 +38,11 @@ group1中有3个节点，节点序号为0、1、2。
 
 group2中有3个节点，节点序号为0、1、3。
 
-
 组网步骤如下：
 
 ## 安装generator
 
-```s
+```bash
 $ git clone https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ bash ./scripts/install.sh
@@ -54,7 +53,7 @@ $ ./generator -h
 
 工具启动时需要导入可用的fisco-bcos二进制文件，以从官网下载为例(mac用户需自己[手动编译](../../manual/install.md))，操作如下
 
-```s
+```bash
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1 -o ./meta
 $ ./meta/fisco-bcos -v
 ```
@@ -63,7 +62,7 @@ $ ./meta/fisco-bcos -v
 
 1. 修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1
 
-```s
+```bash
 $ vim ./conf/mchain.ini
 ```
 修改为
@@ -95,31 +94,31 @@ group_id=1
 ```
 
 ```eval_rst
-.. important::
+.. note::
     生成第一个群组不包括node3，所以需要将node3删掉
 ```
 
 2. 生成节点序号为0、1、2的证书和私钥，并导入meta文件夹
 
 ```eval_rst
-.. important::
+.. note::
     实际应用中，证书和私钥应该由用户自己生成，然后将只需将证书导入工具
     生成的证书机构名默认为agency_fisco，根证书私钥和机构证书私钥默认放置在meta文件夹下，节点证书和私钥放置在用户指定目录下，本例中为./mycert
 ```
 
-```s
+```bash
 $ ./generator --certbuild ./mycert
 ```
 
 3. 使用build命令，在data下生成group1节点安装包
 
-```s
+```bash
 $ ./generator --build ./data
 ```
 
 执行成功后在./data目录下可以看到
 
-```s
+```bash
 .
 |-- config.ini
 |-- group.1.genesis
@@ -142,7 +141,7 @@ $ ./generator --build ./data
 
 上述3.中生成的安装包是不含节点私钥的，需要导入2.中的节点私钥，命令如下
 
-```s
+```bash
 $ ./generator --deploykey ./mycert ./data
 ```
 
@@ -150,13 +149,13 @@ $ ./generator --deploykey ./mycert ./data
 
 导入私钥后即可启动节点
 
-```s
+```bash
 $ ./start_all.sh
 ```
 
 查看节点进程
 
-```s
+```bash
 $ ps -ef | grep fisco
 # 可以看到如下所示的三个进程
 fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30300/fisco-bcos -c config.ini
@@ -166,7 +165,7 @@ fisco  15457     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30
 
 查看节点log
 
-```s
+```bash
 $ tail -f data/node*/log/log*  | grep +++
 info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
 info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
@@ -186,7 +185,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 1. 修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2
 
-```s
+```bash
 $ vim ./conf/mchain.ini
 ```
 修改为
@@ -218,21 +217,21 @@ group_id=2
 ```
 
 ```eval_rst
-.. important::
+.. note::
     生成第二个群组中仍然只有3个节点，因此第三个节点的序号仍然为node2，但是端口号与上面的node2不同，为不同的节点
     注意 此步的group_id为2
 ```
 
 2. 生成node_127.0.0.1_30303的节点证书，并放置与meta文件夹下
 
-```s
+```bash
 $ ./generator --nodeca ./mycert ./meta/agency_fisco node_127.0.0.1_30303
 $ cp ./mycert/node_127.0.0.1_30303/node.crt ./meta/cert_127.0.0.1_30303.crt 
 ```
 
 3. 使用build命令，生成group2安装包
 
-```s
+```bash
 $ ./generator --build ./data2
 ```
 
@@ -240,14 +239,14 @@ $ ./generator --build ./data2
 
 上述3.中生成的安装包是不含节点私钥的，需要导入2.中的节点私钥，命令如下
 
-```s
+```bash
 $ cp ./mycert/node_127.0.0.1_30303/node.key ./data2/node_127.0.0.1_30303/conf/
 # 当私钥较多时，可以使用
 # $ ./generator --deploykey ./mycert ./data2
 
 ```
 ```eval_rst
-.. important::
+.. note::
     生成group2时，node_127.0.0.1_30300,node_127.0.0.1_30301已经有了节点，因此使用--creete命令也是可以的，在实际生产中，每个机构只需关注自己所处的节点需要进行部署为生成安装包，还是生成新群组。
 ```
 
@@ -262,7 +261,7 @@ $ ./data2/group.2.* ./data/node_127.0.0.1_30302/
 6. 启动节点
 
 
-```s
+```bash
 # 启动新生成的节点
 $ bash ./data2/node_127.0.0.1_30303/start.sh
 # 从启data中节点
@@ -272,7 +271,7 @@ $ ./start_all.sh
 
 查看节点进程
 
-```s
+```bash
 $ ps -ef | grep fisco
 # 可以看到如下所示的三个进程
 fisco  16356     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30300/fisco-bcos -c config.ini
@@ -283,7 +282,7 @@ fisco  16489     1  0 17:22 pts/2    00:00:00 ~/generator/data1/node_127.0.0.1_3
 
 查看节点log
 
-```s
+```bash
 $ tail -f data/node*/log/log*  | grep +++
 info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
 info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...

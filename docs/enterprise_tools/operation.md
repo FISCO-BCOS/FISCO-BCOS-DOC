@@ -2,7 +2,7 @@
 
 ## 配置文件
 
-fisco generator的配置文件在./conf文件夹下，共有三个配置文件，`mchain.ini`、`mexpand.ini`和`mgroup.ini`。分别对应新建节点及群组、扩容新节点加入现有群组、节点划分新群组三种操作。
+FISCO BCOS generator的配置文件在./conf文件夹下，共有三个配置文件，`mchain.ini`、`mexpand.ini`和`mgroup.ini`。分别对应新建节点及群组、扩容新节点加入现有群组、节点划分新群组三种操作。
 
 ### meta文件夹
 
@@ -99,7 +99,7 @@ member2=127.0.0.1:30303 # 新群组成员
 
 ## 命令详解
 
-fisco generator 提供多种节点生成、扩容、群组划分、证书相关操作，简略介绍如下：
+FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书相关操作，简略介绍如下：
 
 | 命令名称 | 命令参数 | 基本功能 | 适用场景 |
 | :-: | :-: | :-: | :-:|
@@ -116,7 +116,7 @@ fisco generator 提供多种节点生成、扩容、群组划分、证书相关�
 
 ### 快速体验命令 --demo
 
-```s
+```bash
 $ git clone https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ ./generator --demo
@@ -152,7 +152,7 @@ $ ./generator --demo
 
 操作示例
 
-```s
+```bash
 $ cp node0/node.crt ./meta/cert_127.0.0.1_30300.crt
 ...
 $ cp noden/node.crt ./meta/cert_127.0.0.1_3030n.crt
@@ -170,7 +170,7 @@ nargs=2, 指定参数1.存放有原有群组信息的路径，2.生成安装包�
 
 给定原有group中节点的配置，和新节点的证书，生成安装包
 
-```s
+```bash
 $ vim ./conf/mexpand.ini
 $ cp node0/node.crt ./meta/cert_127.0.0.1_30307.crt
 $ cp /tmp/config.ini /tmp/group.1.genesis /tmp/group.1.ini ./expand
@@ -191,7 +191,7 @@ $ ./generator --expand ./expand ~/mydata
 
 操作范例
 
-```s
+```bash
 $ cp node0/node.crt ./meta/cert_127.0.0.1_3030n.crt
 ...
 $ vim ./conf/group.ini
@@ -206,7 +206,7 @@ $ ./generator --create ~/mydata
 
 用户可以指定目录，生成根证书
 
-```s
+```bash
 $ ./genrator --chainca ./dir_chain_ca(SET)
 ```
 
@@ -216,7 +216,7 @@ $ ./genrator --chainca ./dir_chain_ca(SET)
 
 用户可以指定机构证书目录，链证书存放目录和机构名称，生成机构证书
 
-```s
+```bash
 $ ./genrator --agencyca ./dir_agency_ca(SET) ./chain_ca_dir The_Agency_Name
 ```
 
@@ -226,7 +226,7 @@ $ ./genrator --agencyca ./dir_agency_ca(SET) ./chain_ca_dir The_Agency_Name
 
 用户可以指定sdk存放目录，机构证书存放目录，生成sdk证书
 
-```s
+```bash
 $ ./genrator --sdkca ./dir_sdk_ca(SET) ./dir_agency_ca
 ```
 
@@ -236,7 +236,7 @@ $ ./genrator --sdkca ./dir_sdk_ca(SET) ./dir_agency_ca
 
 用户可以指定机构证书目录，节点存放目录和节点名称，生成节点证书
 
-```s
+```bash
 $ ./genrator --nodeca ./agency_dir node_dir(SET) node_name
 ```
 
@@ -279,13 +279,13 @@ $ ./genrator --certexpand ./cert
 
 使用示例：
 
-```s
+```bash
 $ ./generator -h
 ```
 
 使用后会显示相关提示
 
-```s
+```bash
 $ ./generator -h
 usage: generator [-h] [--version] [--build data_dir]
                  [--expand conf_dir, data_dir conf_dir, data_dir]
@@ -303,7 +303,7 @@ usage: generator [-h] [--version] [--build data_dir]
 
 如 A目录下的config.ini文件的p2p section为
 
-```s
+```ini
 [p2p]
 listen_ip = 127.0.0.1
 listen_port = 30300
@@ -315,7 +315,7 @@ node.3 = 127.0.0.1:30303
 
 B目录下的config.ini文件的p2p section为
 
-```s
+```ini
 [p2p]
 listen_ip = 127.0.0.1
 listen_port = 30303
@@ -326,7 +326,7 @@ node.3 = 192.167.1.1:30301
 ```
 使用此命令后会成为：
 
-```s
+```ini
 [p2p]
 listen_ip = 127.0.0.1
 listen_port = 30304
@@ -340,7 +340,7 @@ node.5 = 192.167.1.1:30301
 
 使用示例
 
-```s
+```bash
 $ ./generator --combine ~/mydata/node_A/config.ini  ~/mydata/node_B/config.ini
 ```
 
@@ -352,7 +352,7 @@ $ ./generator --combine ~/mydata/node_A/config.ini  ~/mydata/node_B/config.ini
 
 使用示例:
 
-```s
+```bash
 $./generator --deploykey ./cert ./data
 ```
 
@@ -366,13 +366,13 @@ $./generator --deploykey ./cert ./data
 
 使用--version命令查看当前部署工具的版本号
 
-```s
+```bash
 $ ./generator --version
 ```
 
 ## 监控设计
 
-fisco generator 生成的安装包提供了内置的监控脚本，用户可以通过对其进行配置，将节点的告警信息发送至指定地址。fisco generator会将monitir脚本放置于生成节点安装包的指定目录下，假设用户指定生成的文件夹名为data，则monitor脚本会在data目录下的monitor文件夹下
+FISCO BCOS generator 生成的安装包提供了内置的监控脚本，用户可以通过对其进行配置，将节点的告警信息发送至指定地址。FISCO BCOS generator会将monitir脚本放置于生成节点安装包的指定目录下，假设用户指定生成的文件夹名为data，则monitor脚本会在data目录下的monitor文件夹下
 
 使用方式如下：
 
@@ -394,7 +394,7 @@ $ cd ./data/monitor
 
 使用monitor命令查看脚本使用方式
 
-```shell
+```bash
 $ ./monitor.sh -h
 Usage : bash monitor.sh
    -s : send alert to your address
@@ -428,18 +428,18 @@ Usage : bash monitor.sh
 
 - 使用脚本监控指定路径下节点，发送给接收者Alice
 
-```shell
+```bash
 $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -o alice/nodes -r Alice
 ```
 
 - 使用脚本统计指定路径下节点信息，发送给接收者Alice
 
-```shell
+```bash
 $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statistics -o alice/nodes -r Alice
 ```
 
 - 使用脚本统计指定路径下节点指定log指定群组1和群组2的信息，发送给接收者Alice
 
-```shell
+```bash
 $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statistics -f node0/log/log_2019021314.log -g 1 2 -o alice/nodes -r Alice
 ```

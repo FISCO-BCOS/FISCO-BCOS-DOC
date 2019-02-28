@@ -152,7 +152,7 @@ Traceback (most recent call last):
 答:
   系统缺少python configparser模块，请按照以下命令安装
 
-```shell
+```bash
   $ pip install configparser
 ```
 
