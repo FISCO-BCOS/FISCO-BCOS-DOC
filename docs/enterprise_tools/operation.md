@@ -155,7 +155,7 @@ $ ./generator --demo
     此操作仅供体验，实际生产部署中请勿使用本命令
 ```
 
-### b/build_install_package
+### build_install_package
 
 |  |  |
 | :-: | :-: |
@@ -234,7 +234,7 @@ $ ./generator --create_group_config ~/mydata
 | 适用场景 | 用户需要生成自签相关根证书 |
 
 ```bash
-$ ./genrator --generate_chain_certificate ./dir_chain_ca(SET)
+$ ./generator --generate_chain_certificate ./dir_chain_ca(SET)
 ```
 
 执行完成后用户可以在指定文件夹下看到根证书ca.crt 和私钥ca.key。
@@ -250,7 +250,7 @@ $ ./genrator --generate_chain_certificate ./dir_chain_ca(SET)
 | 适用场景 | 用户需要生成自签相关机构证书 |
 
 ```bash
-$ ./genrator --generate_agency_certificate ./dir_agency_ca(SET) ./chain_ca_dir The_Agency_Name
+$ ./generator --generate_agency_certificate ./dir_agency_ca(SET) ./chain_ca_dir The_Agency_Name
 ```
 
 执行完成后可以在./dir_agency_ca(SET)路径下生成名为The_Agency_Name的文件夹，包含相应的机构证书
@@ -266,7 +266,7 @@ $ ./genrator --generate_agency_certificate ./dir_agency_ca(SET) ./chain_ca_dir T
 | 适用场景 | 用户需要生成自签相关节点证书 |
 
 ```bash
-$ ./genrator --generate_node_certificate node_dir(SET) ./agency_dir  node_name
+$ ./generator --generate_node_certificate node_dir(SET) ./agency_dir  node_p2pip_port
 ```
 
 执行完成后可以在node_dir(SET) 路径下生成节点证书
@@ -282,7 +282,7 @@ $ ./genrator --generate_node_certificate node_dir(SET) ./agency_dir  node_name
 | 适用场景 | 用户需要生成自签相关sdk证书 |
 
 ```bash
-$ ./genrator --generate_sdk_certificate ./dir_sdk_ca(SET) ./dir_agency_ca
+$ ./generator --generate_sdk_certificate ./dir_sdk_ca(SET) ./dir_agency_ca
 ```
 
 执行完成后可以在./dir_sdk_ca(SET)路径下生成名为sdk的文件夹，包含相应的sdk证书
@@ -298,7 +298,7 @@ $ ./genrator --generate_sdk_certificate ./dir_sdk_ca(SET) ./dir_agency_ca
 | 适用场景 | 用户生成本机构节点时 |
 
 ```
-$ ./genrator --generate_all_certificates ./cert
+$ ./generator --generate_all_certificates ./cert
 ```
 
 ```eval_rst
@@ -320,7 +320,7 @@ $ ./genrator --generate_all_certificates ./cert
 | 适用场景 | 用户扩容本机构节点时 |
 
 ```
-$ ./genrator --expand_all_certificates ./cert
+$ ./generator --expand_all_certificates ./cert
 ```
 
 执行完成后会在./cert文件夹下生成节点的相关证书与私钥，并拷贝节点证书放置于./meta下
