@@ -26,7 +26,7 @@ $ brew install openssl leveldb
 
 ## 星形拓扑
 
-本章以构建上图所示的<font color=#FF0000>本机四机构三群组七节点的星形组网拓扑</font>为例，介绍多群组使用方法。
+本章以构建上图所示的**本机四机构三群组七节点的星形组网拓扑**为例，介绍多群组使用方法。
 
 星形区块链组网如下：
 
@@ -37,35 +37,31 @@ $ brew install openssl leveldb
 
 ```eval_rst
 .. important::
-   - 真实应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，节点硬件配置请参考 `这里 <../enterprise_tools/hardware_requirement.html>`_
-   - **星形网络拓扑** 中，核心节点(本例中agencyA节点)同属于所有群组，负载较大，**建议单独部署于性能较好的机器** 
+   - 实际应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，请参考 `硬件配置 <../manual/configuration.html>`_
+   - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器** 
 ```
 
 ### 构建星形区块链安装包
 
-[build_chain](../installation/build_chain.md )简单方便地支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链安装包：
+[build_chain](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链安装包：
 
-**获取预编译静态二进制可执行程序**
-
-```bash
-$ mkdir -p ~/fisco && cd ~/fisco
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
-```
-
-**获取build_chain.sh脚本**
+**准备依赖**
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
+# 获取预编译可执行程序
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
+# 获取build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
 
 ```bash
-$ mkdir -p ~/fisco && cd ~/fisco
+$ cd ~/fisco
 
 # 生成区块链配置文件ip_list
-$ cat > ip_list << EOF
+$ cat > ipconf << EOF
 127.0.0.1:2 agencyA 1,2,3
 127.0.0.1:2 agencyB 1
 127.0.0.1:2 agencyC 2
@@ -73,7 +69,7 @@ $ cat > ip_list << EOF
 EOF
 
 # 查看配置文件ip_list内容
-$ cat ip_list
+$ cat ipconf
 127.0.0.1:2 agencyA 1,2,3
 127.0.0.1:2 agencyB 1
 127.0.0.1:2 agencyC 2
@@ -84,7 +80,7 @@ $ cat ip_list
 
 ```bash
 # 根据配置生成星形区块链
-$ bash build_chain.sh -f ip_list -e ./bin/fisco-bcos
+$ bash build_chain.sh -f ipconf -e ./bin/fisco-bcos
 Generating CA key...
 ==============================================================
 Generating keys ...
@@ -96,15 +92,15 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 ......此处省略其他输出......
 ==============================================================
 [INFO] FISCO-BCOS Path   : ./bin/fisco-bcos
-[INFO] IP List File      : ip_list
+[INFO] IP List File      : ipconf
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:2 127.0.0.1:2 127.0.0.1:2 127.0.0.1:2
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/app/fisco/nodes
-[INFO] CA Key Path       : /home/app/fisco/nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu16/fisco/nodes
+[INFO] CA Key Path       : /home/ubuntu16/fisco/nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/app/fisco/nodes
+[INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 
 # 生成的节点文件如下
 $ tree
@@ -144,16 +140,15 @@ $ cd ~/fisco/nodes/127.0.0.1
 $ bash start_all.sh
 
 # 查看节点进程
-$ ps aux |grep fisco-bcos
-app         301  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/app/fisco/nodes/127.0.0.1/node5/../fisco-bcos -c config.ini
-app         306  0.9  0.0 986644  6928 pts/0    Sl   15:21   0:00 /home/app/fisco/nodes/127.0.0.1/node6/../fisco-bcos -c config.ini
-app         311  0.9  0.0 986644  7184 pts/0    Sl   15:21   0:00 /home/app/fisco/127.0.0.1/node7/../fisco-bcos -c config.ini
-app      131048  2.1  0.0 1429036 7452 pts/0    Sl   15:21   0:00 /home/app/fisco/127.0.0.1/node0/../fisco-bcos -c config.ini
-app      131053  2.1  0.0 1429032 7180 pts/0    Sl   15:21   0:00 /home/app/fisco/127.0.0.1/node1/../fisco-bcos -c config.ini
-app      131058  0.8  0.0 986644  7928 pts/0    Sl   15:21   0:00 /home/app/fisco/127.0.0.1/node2/../fisco-bcos -c config.ini
-app      131063  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/app/fisco/127.0.0.1/node3/../fisco-bcos -c config.ini
-app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/app/fisco/127.0.0.1/node4/../fisco-bcos -c config.ini
-
+$ ps aux | grep fisco-bcos
+ubuntu16         301  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node5/../fisco-bcos -c config.ini
+ubuntu16         306  0.9  0.0 986644  6928 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/../fisco-bcos -c config.ini
+ubuntu16         311  0.9  0.0 986644  7184 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/../fisco-bcos -c config.ini
+ubuntu16      131048  2.1  0.0 1429036 7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+ubuntu16      131053  2.1  0.0 1429032 7180 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+ubuntu16      131058  0.8  0.0 986644  7928 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+ubuntu16      131063  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+ubuntu16      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node4/../fisco-bcos -c config.ini
 ```
 
 **查看群组共识状态**
@@ -180,10 +175,6 @@ info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 $ tail -f node0/log/* | grep "g:2.*++" 
 info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=ef59cf17...
 
-# 查看node0的group3是否正常共识
-$ tail -f node0/log/* | grep "g:3.*++"
-info|2019-02-11 15:33:51.022444| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=2c455288...
-
 # ... 查看node1节点每个群组是否正常可参考以上操作方法...
 
 # 查看node3的group1是否正常共识
@@ -194,9 +185,6 @@ info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 $ tail -f node5/log/* | grep "g:2.*++" 
 info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=b80a724d...
 
-# 查看node6的group3是否正常共识
-$ tail -f node6/log/* | grep "g:3.*++" 
-info|2019-02-11 15:39:58.994218| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=eb5801bf...
 ```
 
 ### 向群组发交易
@@ -264,7 +252,7 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 **启动控制台**
 
 ```bash
-$ mkdir -p ~/fisco
+$ cd ~/fisco
 
 # 获取控制台
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
@@ -276,8 +264,8 @@ $ cd ~/fisco/console
 $ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
 
 # 获取node0的channel_listen_port
-$ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
-5:  channel_listen_port=20200
+$ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
+channel_listen_port=20200
 
 # 参考控制台操作文档，配置~/fisco/console/conf/applicationContext.xml, 配置ip:channel_listen_port为127.0.0.1:20200 
 # group2的关键配置如下：
@@ -423,10 +411,10 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/app/fisco/multi_nodes
-[INFO] CA Key Path       : /home/app/fisco/multi_nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu16/fisco/multi_nodes
+[INFO] CA Key Path       : /home/ubuntu16/fisco/multi_nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/app/fisco/multi_nodes
+[INFO] All completed. Files in /home/ubuntu16/fisco/multi_nodes
 
 ```
 
@@ -439,10 +427,10 @@ $ bash start_all.sh
 
 # 查看进程情况
 $ ps aux | grep fisco-bcos
-app       55028  0.9  0.0 986384  6624 pts/2    Sl   20:59   0:00 /home/app/fisco/multi_nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-app       55034  0.8  0.0 986104  6872 pts/2    Sl   20:59   0:00 /home/app/fisco/multi_nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
-app       55041  0.8  0.0 986384  6584 pts/2    Sl   20:59   0:00 /home/app/fisco/multi_nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-app       55047  0.8  0.0 986396  6656 pts/2    Sl   20:59   0:00 /home/app/fisco/multi_nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+ubuntu16       55028  0.9  0.0 986384  6624 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+ubuntu16       55034  0.8  0.0 986104  6872 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+ubuntu16       55041  0.8  0.0 986384  6584 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+ubuntu16       55047  0.8  0.0 986396  6656 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 
 ```
 

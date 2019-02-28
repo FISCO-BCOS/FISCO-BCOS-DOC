@@ -2,11 +2,10 @@
 
 ```eval_rst
 .. important::
-    
     build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业工具 <../enterprise/index.html>`_ 。
 ```
 
-FISCO BCOS提供了`build_chain`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行文件进行相关环境的搭建。
+FISCO BCOS提供了`build_chain`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
 
 ## 脚本功能简介
 
@@ -54,6 +53,7 @@ e.g
 192.168.0.3:5 agency3 2,3
 192.168.0.4:2 agency2 3
 ```
+
 **假设上述文件名为`ipconf`**，则使用下列命令建链
 ```bash
 bash build_chain.sh -f ipconf -T -i
@@ -93,7 +93,7 @@ bash build_chain.sh -f ipconf -T -i
 ## 节点文件组织结构
 
 - cert文件夹下存放链的根证书和机构证书。
-- 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行文件、sdk所需的证书文件。
+- 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行程序、sdk所需的证书文件。
 - 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](configuration.md)。每个节点中还提供两个脚本，用于启动和停止节点。
 - 每个IP文件夹下的提供`start_all.sh`和`stop_all.sh`两个脚本用于启动和停止所有节点。
 
@@ -144,7 +144,7 @@ nodes/
 
 ```bash
 # 下载最新预编译二进制 TODO: 发布后删除二进制下载步骤
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -b release-2.0.1
+bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
 # 构建FISCO-BCOS联盟链
 $ bash build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -i
 # 生成成功后，输出`All completed`提示
