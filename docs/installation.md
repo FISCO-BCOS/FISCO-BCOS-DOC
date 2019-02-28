@@ -29,10 +29,10 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release
 # 检查二进制是否可执行 执行下述命令，看是否输出类似下面的版本信息
 $ ./bin/fisco-bcos -v
 FISCO-BCOS Version : 2.0.0
-Build Time         : 20190121 06:21:05
-Build Type         : Linux/clang/Debug
+Build Time         : 20190226 04:01:24
+Build Type         : Linux/clang/RelWithDebInfo
 Git Branch         : release-2.0.1
-Git Commit Hash    : a322f0bff5cb395157fb5734219fcb2f2686ef08
+Git Commit Hash    : c213e033328631b1b8c2ee936059d7126fd98d1a
 ```
 
 ### 搭建4节点FISCO BCOS链
@@ -61,10 +61,10 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /mnt/d/fisco/nodes
-[INFO] CA Key Path       : /mnt/d/fisco/nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu16/fisco/nodes
+[INFO] CA Key Path       : /home/ubuntu16/fisco/nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /mnt/d/fisco/nodes
+[INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 ```
 
 ### 启动FISCO BCOS链
