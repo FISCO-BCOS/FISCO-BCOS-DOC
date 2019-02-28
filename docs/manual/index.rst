@@ -9,8 +9,8 @@
 
    get_executable.md
    build_chain.md
-   console.md
    configuration.md
+   console.md
    smart_contract.md
    storage_security.md
    node_management.md

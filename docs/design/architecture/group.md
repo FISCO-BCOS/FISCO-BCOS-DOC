@@ -4,7 +4,7 @@
 
 
 ```eval_rst
-.. important::
+.. note::
 
     举个栗子:
 

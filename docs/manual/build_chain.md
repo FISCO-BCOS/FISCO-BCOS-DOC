@@ -2,7 +2,6 @@
 
 ```eval_rst
 .. important::
-    
     build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业工具 <../enterprise/index.html>`_ 。
 ```
 
