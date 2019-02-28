@@ -1,39 +1,44 @@
-# 教程示例
+# 快速上手
 
 在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2群组6节点的组网模式，每个节点的ip，端口号分别为：
 
+```eval_rst
+.. important::
+    
+    使用前请确认已经完成了 下载安装_
+.. 下载安装_: ./installation.md
+```
+
 ![](../../images/enterprise/simple3.png)
 
-group1 :
+群组1 :
 
-| 节点序号 |   P2P IP     |   RPC IP     | P2P Port | Channel Port | RPC Port |
-| :-----------: | :-------------: | :-------------: | :-----------: | :-------------------: | :-----------: |
-|   节点0     | 127.0.0.1 | 127.0.0.1 |   30300     |       20200         |     8545     |
-|   节点1     | 127.0.0.1 | 127.0.0.1 |   30301     |       20201         |     8546     |
-|   节点2     | 127.0.0.1 | 127.0.0.1 |   30302     |       20202         |     8547     |
-|   节点3     | 127.0.0.1 | 127.0.0.1 |   30303     |       20203         |     8548     |
-|  节点4   | 127.0.0.1 | 127.0.0.1 |  30304   |    20204     |   8549   |
-|  节点5   | 127.0.0.1 | 127.0.0.1 |  30305   |    20205     |   8550   |
+| 节点序号 |   P2P地址     |   RPC/channel地址     |
+| :-----------: | :-------------: | :-------------: |
+|   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 |
+|   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 |
+|   节点2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 |
+|   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 |
+|  节点4      | 127.0.0.1:30304| 127.0.0.1:8549/:20204 |
+|  节点5      | 127.0.0.1:30305| 127.0.0.1:8550/:20205 |
 
-group2 :
+群组2 :
 
-| 节点序号 | P2P IP | RPC IP | P2P Port | Channel Port | RPC Port |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| 节点0 | 127.0.0.1 | 127.0.0.1 | 30300 | 20200 | 8545 |
-| 节点1 | 127.0.0.1 | 127.0.0.1 | 30301 | 20201 | 8546 |
-| 节点2 | 127.0.0.1 | 127.0.0.1 | 30302 | 20202 | 8547 |
-| 节点3 | 127.0.0.1 | 127.0.0.1 | 30303 | 20203 | 8548 |
+| 节点序号 |   P2P地址     |   RPC/channel地址     |
+| :-----------: | :-------------: | :-------------: |
+|   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 |
+|   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 |
+|   节点2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 |
+|   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 |
+
 
 配置文件中字段的含义解释如下：
 
 |              |                        |
 | :----------: | :--------------------: |
 |   节点序号   | 节点在配置文件中的序号 |
-|    P2P IP    |   节点之间p2p通信ip    |
-|    RPC IP    |    节点与sdk通信ip     |
-|   P2P Port   |  节点之间p2p通信端口   |
-| Channel Port |   sdk与节点通信端口    |
-|   RPC Port   |      节点rpc端口       |
+|    P2P地址    |   节点之间p2p通信地址    |
+|    RPC地址    |    节点与sdk通信地址     |
 
 假设如图所示，联盟链中共有2个群组，4个节点。
 
@@ -42,24 +47,6 @@ group2 :
 群组2中有3个节点，节点序号为0、1、2、3。
 
 组网步骤如下：
-
-## 安装generator
-
-```bash
-$ git clone https://github.com/FISCO-BCOS/generator.git
-$ cd generator
-$ bash ./scripts/install.sh
-$ ./generator -h
-```
-
-## 导入fisco-bcos二进制文件
-
-工具启动时需要导入可用的fisco-bcos二进制文件，以从官网下载为例(mac用户需自己[手动编译](../../manual/install.md))，操作如下
-
-```bash
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -o ./meta
-$ ./meta/fisco-bcos -v
-```
 
 ## 构建第一个群组group1
 
@@ -112,13 +99,13 @@ group_id=1
 ```
 
 ```bash
-$ ./generator --certbuild ./mycert
+$ ./generator --generate_all_certificates ./mycert
 ```
 
 3. 使用build命令，在data下生成group1节点安装包
 
 ```bash
-$ ./generator --build ./data
+$ ./generator --build_install_package ./data
 ```
 
 执行成功后在./data目录下可以看到
@@ -146,7 +133,7 @@ $ ./generator --build ./data
 上述3.中生成的安装包是不含节点私钥的，需要导入2.中的节点私钥，命令如下
 
 ```bash
-$ ./generator --deploykey ./mycert ./data
+$ ./generator --deploy_private_key ./mycert ./data
 ```
 
 5. 启动节点
@@ -188,13 +175,11 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 # 回到上级目录
 cd ..
 # 生成扩容节点所需证书和私钥
-./generator --certexpand ./myexpandcert
-# 拷贝扩容所需文件到同一文件夹
-cp ./meta/fisco-bcos ./data
+./generator --expand_all_certificates ./myexpandcert
 # 生成扩容安装包
-./generator --expand ./data ./expand
+./generator --build_expand_package ./data ./expand
 # 导入私钥至扩容安装包
-./generator --deploykey ./myexpandcert ./expand
+./generator --deploy_private_key ./myexpandcert ./expand
 # 启动节点
 cd ./expand
 ./start_all.sh
@@ -239,7 +224,7 @@ member3=127.0.0.1:30303
 
 ```bash
 # 生成group2群组配置文件
-./generator --create ./data
+./generator --create_group_config ./data
 cd ./data
 # 拷贝群组配置至节点文件夹
 cp group.2.ini group.2.genesis ./node_127.0.0.1_30300/conf/
