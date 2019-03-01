@@ -36,7 +36,7 @@ $ brew install openssl leveldb
 - `agencyA`：同时属于`group1、group2、group3`，包括两个节点，节点IP均为`127.0.0.1`；
 - `agencyB`：属于`group1`，包括两个节点，节点IP均为`127.0.0.1`；
 - `agencyC`：属于`group2`，包括两个节点，节点IP均为`127.0.0.1`；
-- `agencyD`：属于`group3`，包括一个节点，节点IP均为`127.0.0.1`。
+- `agencyD`：属于`group3`，包括两个节点，节点IP均为`127.0.0.1`。
 
 ```eval_rst
 .. important::
@@ -127,9 +127,9 @@ $ tree
 |   |   |   |-- node.crt
 |   |   |   |-- node.key
 |   |   |   `-- node.nodeid
-|   |   |-- config.ini
-|   |   |-- start.sh
-|   |   `-- stop.sh
+|   |   |-- config.ini  #节点配置文件
+|   |   |-- start.sh    #节点启动脚本
+|   |   `-- stop.sh     #节点停止脚本
 |   |-- node1
 |   |   |-- conf
 ......此处省略其他输出......
@@ -150,18 +150,18 @@ $ bash start_all.sh
 $ ps aux |grep fisco-bcos
 app         301  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node5/../fisco-bcos -c config.ini
 app         306  0.9  0.0 986644  6928 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node6/../fisco-bcos -c config.ini
-app         311  0.9  0.0 986644  7184 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node7/../fisco-bcos -c config.ini
-app      131048  2.1  0.0 1429036 7452 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node0/../fisco-bcos -c config.ini
-app      131053  2.1  0.0 1429032 7180 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node1/../fisco-bcos -c config.ini
-app      131058  0.8  0.0 986644  7928 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node2/../fisco-bcos -c config.ini
-app      131063  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node3/../fisco-bcos -c config.ini
-app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/fisco/127.0.0.1/node4/../fisco-bcos -c config.ini
+app         311  0.9  0.0 986644  7184 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node7/../fisco-bcos -c config.ini
+app      131048  2.1  0.0 1429036 7452 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+app      131053  2.1  0.0 1429032 7180 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+app      131058  0.8  0.0 986644  7928 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+app      131063  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/fisco/nodes/127.0.0.1/node4/../fisco-bcos -c config.ini
 
 ```
 
 **查看群组共识状态**
 
-不发交易时，共识正常的节点会输出`+++`日志，本例中，`node0、node1`同时属于`group1、group2和group3`；`node2、node3`属于`group1`；`node4、node5`属于`group2`；`node6、node7`属于`group3`，可通过`tail -f xxx.log | grep "g:${group_id}.*++"`查看各节点是否正常。
+不发交易时，共识正常的节点会输出`+++`日志，本例中，`node0`、`node1`同时属于`group1`、`group2`和`group3`；`node2`、`node3`属于`group1`；`node4`、`node5`属于`group2`；`node6`、`node7`属于`group3`，可通过`tail -f node*/log/* | grep "++"`查看各节点是否正常。
 
 ```eval_rst
 .. important::
@@ -170,40 +170,41 @@ app      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/fisco/12
      - ``g:``：群组ID
      - ``blkNum``：Leader节点产生的新区块高度；
      - ``tx``: 新区块中包含的交易数目；
-     - ``myIdx``: 本节点索引；
+     - ``nodeIdx``: 本节点索引；
      - ``hash``: Leader节点产生的最新区块哈希。
 ```
 
 ```bash
-# 查看node0的group1是否正常共识
+# 查看node0 group1是否正常共识
 $ tail -f node0/log/* | grep "g:1.*++" 
-info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=72254a42....
+info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=72254a42....
 
-# 查看node0的group2是否正常共识
+# 查看node0 group2是否正常共识
 $ tail -f node0/log/* | grep "g:2.*++" 
-info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=ef59cf17...
+info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=ef59cf17...
 
-# 查看node0的group3是否正常共识
+# 查看node0 group3是否正常共识
 $ tail -f node0/log/* | grep "g:3.*++"
-info|2019-02-11 15:33:51.022444| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=2c455288...
+info|2019-02-11 15:33:51.022444| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=2c455288...
 
-# ... 查看node1的所有群组是否正常可参考node0操作方法...
+# ... 查看node1和node2的所有群组是否正常可参考node0操作方法...
+
 # 查看node3的group1是否正常共识
 $ tail -f node3/log/*| grep "g:1.*++"  
-info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=5e94bf63...
+info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=5e94bf63...
 
 # 查看node5的group2是否正常共识
 $ tail -f node5/log/* | grep "g:2.*++" 
-info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=b80a724d...
+info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=b80a724d...
 
 # 查看node6的group3是否正常共识
 $ tail -f node6/log/* | grep "g:3.*++" 
-info|2019-02-11 15:39:58.994218| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=eb5801bf...
+info|2019-02-11 15:39:58.994218| [g:3][p:776][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=eb5801bf...
 ```
 
 ### 向群组发交易
 
-`build_chain`提供了`transTest.sh`脚本，可向指定群组发交易，该脚本使用方法：
+`build_chain`提供了`transTest.sh`脚本，可向指定群组发交易，本例中脚本位于`~/fisco/nodes/127.0.0.1`目录下，该脚本使用方法：
 
 ```bash
 $ bash transTest.sh ${交易数目} ${群组ID}
@@ -215,11 +216,11 @@ $ bash transTest.sh ${交易数目} ${群组ID}
     节点每出一个新块，会打印一条Report日志，Report日志中各字段含义如下：
      - ``g:``：群组ID
      - ``num``：出块高度；
-     - ``idx``：出块节点索引；
+     - ``sealerIdx``：出块节点索引；
      - ``hash``：区块哈希；
      - ``next``：下一个区块高度；
      - ``tx``：区块包含的交易数；
-     - ``myIdx``： 当前节点索引。
+     - ``nodeIdx``： 当前节点索引。
 ```
 
 ```bash
@@ -231,8 +232,8 @@ Send transaction:  2
 {"id":83,"jsonrpc":"2.0","result":"0x9f69fa21081ef18be04536de6583d8c633bf0387b15eb8b8aa9d7f6bbbd9654e"}
 ......此处省略其他输出......
 
-# 查看出块情况：有新区块产生
-$ cat node0/log/* |grep "g:2.*Report"
+# 查看group1出块情况：有新区块产生
+$ cat node0/log/* |grep "g:1.*Report"
 info|2019-02-11 16:07:35.947676| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,......此处省略其他输出......
 
 # ...向group3发交易...
@@ -245,7 +246,7 @@ Send transaction:  2
 
 # 查看出块情况：有新区块产生
 $ cat node0/log/* |grep "g:3.*Report"
-info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1,idx=3,hash=843f6498...,next=2,tx=1,myIdx=3
+info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=843f6498...,next=2,tx=1,nodeIdx=3
 ......此处省略其他输出......
 ```
 
@@ -267,12 +268,12 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 **启动控制台**
 
 ```bash
-$ mkidr -p ~/fisco
+$ cd ~/fisco
 # 获取控制台
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
 
 # 进入控制台操作目录
-$ cd ~/fisco/console
+$ cd console
 
 # 拷贝group2节点证书到控制台配置目录
 $ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
@@ -281,12 +282,14 @@ $ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
 $ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
 5:  channel_listen_port=20200
 
-# 参考控制台操作文档，配置~/fisco/console/conf/applicationContext.xml的group id为2, ip:channel_listen_port为127.0.0.1:20200 
-# Group2的关键配置如下：
+```
+
+参考控制台操作文档，配置~/fisco/console/conf/applicationContext.xml的group id为2, ip:channel_listen_port为127.0.0.1:20200，Group2的关键配置如下：
+
+```xml
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 <property name="allChannelConnections">
 <list>
-    ... 省略若干行... 
     <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
         <property name="groupId" value="2" />
             <property name="connectionsStr">
@@ -295,21 +298,25 @@ $ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
             </list>
             </property>
     </bean>
-    ... 省略若干行...
 </list>
 </property>
 </bean>
+```
 
-# 配置channelService
+**配置channelService**
+
+```xml
  <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
         <property name="groupId" value="2" />
         <property name="orgID" value="fisco" />
         <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
 </bean>
+```
 
+**配置完毕后，启动web3sdk，连接group2所有节点**
 
-# 启动web3sdk，连接group2所有节点
-$ bash start.sh 2
+```
+$ bash start 2
 ```
 
 **将node2加入group2为共识节点**
@@ -363,7 +370,7 @@ $ cd node2 && bash stop.sh && bash start.sh
 ```bash
 # 查看节点共识情况
 $ tail -f node2/log/* | grep "g:2.*++"
-info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=9,tx=0,myIdx=1,hash=c8a1ed9c...
+info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=9,tx=0,nodeIdx=1,hash=c8a1ed9c...
 ......此处省略其他输出......
 ```
 
@@ -378,7 +385,7 @@ Send transaction:  2
 
 # 查看node2节点group2的：有新区块产生
 $ cat node2/log/* | grep "g:2.*Report"
-info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9,idx=3,hash=80c98d31...,next=10,tx=1,myIdx=1
+info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9,sealerIdx=3,hash=80c98d31...,next=10,tx=1,nodeIdx=1
 ......此处省略其他输出......
 ```
 
@@ -453,19 +460,19 @@ app       55047  0.8  0.0 986396  6656 pts/2    Sl   20:59   0:00 /home/fisco/mu
 ```bash
 # 查看node0共识情况
 $ tail -f node0/log/* | grep "g:1.*++"
-info|2019-02-11 20:59:52.065958| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=da72649e...
+info|2019-02-11 20:59:52.065958| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=da72649e...
 
 # 查看node1共识情况
 $ tail -f node1/log/* | grep "g:1.*++" 
-info|2019-02-11 20:59:54.070297| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=0,hash=11c9354d...
+info|2019-02-11 20:59:54.070297| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=11c9354d...
 
 # 查看node2共识情况
 $ tail -f node2/log/* | grep "g:1.*++" 
-info|2019-02-11 20:59:55.073124| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=1,hash=b65cbac8...
+info|2019-02-11 20:59:55.073124| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=b65cbac8...
 
 # 查看node3共识情况
 $ tail -f node3/log/* | grep "g:1.*++" 
-info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=0467e5c4...
+info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=0467e5c4...
 
 ```
 
@@ -501,19 +508,19 @@ $ bash start_all.sh
 ```bash
 # 查看node0 group2共识情况
 $ tail -f node0/log/* | grep "g:2.*++" 
-info|2019-02-11 21:13:28.541596| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=f3562664...
+info|2019-02-11 21:13:28.541596| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=f3562664...
 
 # 查看node1 group2共识情况
 $ tail -f node1/log/* | grep "g:2.*++"
-info|2019-02-11 21:13:30.546011| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=0,hash=4b17e74f...
+info|2019-02-11 21:13:30.546011| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=4b17e74f...
 
 # 查看node2 group2共识情况
 $ tail -f node2/log/* | grep "g:2.*++" 
-info|2019-02-11 21:13:59.653615| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=1,hash=90cbd225...
+info|2019-02-11 21:13:59.653615| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=90cbd225...
 
 # 查看node3 group2共识情况
 $ tail -f node3/log/* | grep "g:2.*++" 
-info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,myIdx=3,hash=d7dcb462...
+info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=d7dcb462...
 
 ```
 
@@ -530,9 +537,9 @@ Send transaction:  2
 {"id":83,"jsonrpc":"2.0","result":"0x42058b83924248adbedf2e8f65e60b0986d378ee5255b89fd72cd76f5b0d07bf"}
 ......此处省略其他输出......
 
-# 查看节点出块情况(其中num是块高, idx是出块节点索引, tx是区块中包含交易数，myIdx是当前节点索引):有新区块产生
+# 查看节点出块情况(其中num是块高, idx是出块节点索引, tx是区块中包含交易数，nodeIdx是当前节点索引):有新区块产生
 $ cat node0/log/* | grep "g:1.*Report"
-info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,idx=3,hash=be961c98...,next=2,tx=1,myIdx=2
+info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=be961c98...,next=2,tx=1,nodeIdx=2
 ......此处省略其他输出......
 
 # ...向group2发交易，并查看节点出块情况...
@@ -545,7 +552,7 @@ Send transaction:  2
 
 # 查看节点出块情况：有新区块产生
 $ cat node0/log/log_2019021121.12.log | grep "g:2.*Report"
-info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,idx=3,hash=5d006230...,next=2,tx=1,myIdx=2
+info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=5d006230...,next=2,tx=1,nodeIdx=2
 ......此处省略其他输出......
 
 ```
