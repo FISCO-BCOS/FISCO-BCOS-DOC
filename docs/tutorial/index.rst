@@ -7,6 +7,6 @@
 
 .. toctree::
    :maxdepth: 1
-
+   sdk_application.md
    key_concepts.md
    group_use_cases.md
