@@ -1,16 +1,12 @@
 # 极简Java应用开发
-FISCO BCOS区块链平台用于搭建多方参与的联盟链。业务开发可以结合智能合约和web3sdk，开发向区块链部署智能合约、发送交易、获得结果的业务模块。
 
-本文将介绍从头开发一个最简的Java业务示例应用，开发者通过该示例，跑通流程，后续可扩展更多的功能。主要内容分为如三部曲：
-- 合约开发
-- 合约编译
-- SDK配置与开发
+本文将介绍开发一个简单的基于FISCO BCOS区块链的Java示例应用。开发者通过该示例，可以熟悉开发环境，应用配置，合约开发与编译，合约部署与调用等功能，后续可以扩展其他功能。
 
 **使用前提：请参考[安装文档](../installation.md)完成FISCO BCOS区块链的搭建和控制台的下载工作。** 
 
-## 示例应用介绍
+## 示例应用需求
 
-该示例应用将建立一个学生成绩管理系统，目标需求如下：
+该示例应用将建立一个学生成绩管理系统，其基本业务需求如下：
 - 老师可以录入学生的课程分数，保存到区块链上。
 - 学生可以从区块链上查询课程分数。
 - 当课程分数需要更新时，老师可以更新区块链上的课程分数。学生可以从区块链上查询到更新后的课程分数。
@@ -22,7 +18,7 @@ FISCO BCOS区块链平台用于搭建多方参与的联盟链。业务开发可�
 - subject：课程名称(字符串类型)
 - score：分数(整型)
 
-其中name是主键，即操作`t_student_score`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。该主键字段的值可以重复，与传统关系型数据库中的主键不同。`t_student_score`表示例如下：
+其中name是主键，即操作`t_student_score`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_student_score`表示例如下：
 
 | name |  subject   | score  |
 |：---|：------|：------| 
@@ -30,7 +26,7 @@ FISCO BCOS区块链平台用于搭建多方参与的联盟链。业务开发可�
 | Alice | Chinese | 90 | 
 | Bob | English | 95 |
 
-**业务合约开发：**  设计好了学生成绩表`t_student_score`，现在需要设计一个管理学生成绩的智能合约可以操作该成绩表。FISCO BCOS提供[CRUD合约](../manual/crud_sol_contract.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`StudentScore.sol`合约，通过该合约操作学生成绩表`t_student_score`。
+**业务合约开发：**  如果操作学生成绩表？可以设计一个管理学生成绩的智能合约对学生成绩表进行管理。FISCO BCOS提供[CRUD合约](../manual/crud_sol_contract.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`StudentScore.sol`合约，通过该合约操作学生成绩表`t_student_score`。
 - `StudentScore.sol`合约设计如下：
 ```solidity
 pragma solidity ^0.4.25;
@@ -139,26 +135,19 @@ contract StudentScore {
 }
 ```
 
-```eval_rst
-.. important：：
+ **注：** `StudentScore.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.md)。
 
-    ``StudentScore.sol`` 合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 ``Table.sol`` ，该系统合约文件中的接口由FISCO BCOS底层提供实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。``Table.sol`` 合约详细接口可 `参考这里 <../manual/crud_sol_contract.html>`_
-
-```
-
-**小结：** 第一步，我们根据业务需求设计了一个业务表`t_student_score`，根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，因此，接下来需要将开发的`StudentScore.sol`合约编译为Java合约文件，供Java应用使用。
+**小结：** 第一步，我们根据业务需求设计了一个业务表`t_student_score`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，因此，接下来需要将开发的`StudentScore.sol`合约编译为Java合约文件，供Java应用使用。
 
 ## 合约编译
-通过上一步，我们已经开发完成了学生成绩合约`StudentScore.sol`。现在将该solidity合约文件编译为对应的Java合约文件。
-
-控制台提供了合约编译工具。将`StudentScore.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约的编译，命令如下：
+控制台提供了合约编译工具。将`StudentScore.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
 ```bash
 # 切换到fisco/console/tools目录
 $ cd ~/fisco/console/tools/
 # 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
 $ ./sol2java.sh org.bcos.student.contract
 ```
-运行成功之后，将会在console/tools目录生成java、abi、bin目录，如下所示。
+运行成功之后，将会在console/tools目录生成java、abi和bin目录，如下所示。
 ```bash
 |-- abi // 编译生成的abi目录，存放solidity合约编译的abi文件
 |   |-- StudentScore.abi
@@ -178,9 +167,9 @@ $ ./sol2java.sh org.bcos.student.contract
 |                   |-- Table.java  // 编译成功的系统CRUD合约接口Java文件
 |-- sol2java.sh
 ```
-我们关注的是，java目录下生成了`org/bcos/student/student`包路径目录，包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`是Java应用所需要的Java合约文件。
+我们关注的是，java目录下生成了`org/bcos/student/student/contract`包路径目录，包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`是Java应用所需要的Java合约文件。
 
-**小结：**  第二步，我们通过控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与业务的开发。
+**小结：** 我们通过控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与业务的开发。
 
 ## SDK配置
 
@@ -188,7 +177,7 @@ $ ./sol2java.sh org.bcos.student.contract
 ```
 # 获取Java工程项目压缩包
 curl -LO https：//github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
-# 解压得到Java工程项目bcos-client目录
+# 解压得到Java工程项目student-score-app目录
 tar -zxf student-score-app.tar.gz
 ```
 student-score-app项目的目录结构如下：
@@ -250,7 +239,7 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 ### 节点证书与项目配置文件设置
 - **区块链节点证书配置:**  
 ```bash
-# 切回~/fisco目录
+# 进入~/fisco目录
 $ cd ~/fisco
 # 拷贝节点证书到项目的资源目录
 $ cp nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
@@ -258,11 +247,11 @@ $ cp nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
 - **`applicationContext.xml`配置**，**已提供默认配置，不需要更改。** 若搭建区块链的节点参数有改动，配置`applicationContext.xml`请参考[SDK使用文档](../sdk/api_configuration.md#spring)。
 。
 
-**小结：** 这一节，我们为应用配置好了SDK，下一步将进入实际业务开发。
+**小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
-### 业务开发
+## 业务开发
 这一部分有三项工作，每一项工作增加一个Java类。项目相关路径下已有开发完成的三个Java类，可以直接使用。现在分别介绍这个三个Java类的设计与实现。
-- `StudentScore.java`： 此类由`StudentScore.sol`通过控制台编译工具转换生成，提供了solidity合约接口对应的Java合约相关接口，放置在包路径目录`/src/main/java/org/bcos/student/contract`。
+- `StudentScore.java`： 此类由`StudentScore.sol`通过控制台编译工具编译生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/bcos/student/contract`。
 - `StudentScoreService.java`：此类负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/bcos/student/service`，其核心设计代码如下：
 ```java
 // 部署合约
@@ -332,7 +321,7 @@ public Tuple3<List<byte[]>, List<byte[]>, List<BigInteger>> selectStudentScore(S
 }
 
 ```
-- `StudentScoreClient.java`：此类是应用的入口，通过调用`StudenScoreService.java`实现业务功能。放置在包路径目录`/src/main/java/org/bcos/student/client`。其核心设计代码如下：
+- `StudentScoreClient.java`：此类是应用的入口，通过调用`StudenScoreService.java`实现业务功能。放置在包路径目录`/src/main/java/org/bcos/student/client`，其核心设计代码如下：
 ```java
 // 应用的main函数入口
 public static void main(String[] args) throws Exception {
@@ -407,9 +396,9 @@ public void initialize(String cmd) throws Exception {
   // 日志记录发送交易的账号地址和私钥
   logger.debug("address is " + credentials.getAddress() + ", privateKey is " + credentials.getEcKeyPair().getPrivateKey().toString(16));
   
+  // 加载合约地址
   if (!cmd.equals("deploy")) {
     
-    // 加载合约地址
     Properties prop = new Properties();
     final Resource contractResource = new ClassPathResource("contract.properties");
     prop.load(contractResource.getInputStream());
@@ -496,10 +485,10 @@ public void selectStudentScore(String name) {
   }
 }
 ```
-**小结：** 本结通过Java合约文件，设计了一个业务Service类和调用入口类，已完成学生成绩管理系统的业务功能。接下来可以运行项目，测试功能是否正常。
+**小结：** 通过Java合约文件，设计了一个业务Service类和调用入口类，已完成学生成绩管理系统的业务功能。接下来可以运行项目，测试功能是否正常。
 
-##运行
-通过以上三步，应用开发完成。现在编译项目：
+## 运行
+编译项目。
 ```bash
 # 切换到项目目录
 $ cd ~/fisco/student-score-app
@@ -547,4 +536,4 @@ Remove student score successfully.
 $ ./run.sh select Alice
 Alice's score count = 0
 ```
-**总结：** 至此，我们通过合约开发，合约编译和SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
+**总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
