@@ -6,20 +6,14 @@ FISCO BCOS区块链平台用于搭建多方参与的联盟链。业务开发可�
 - 合约编译
 - SDK配置与开发
 
+**使用前提：请参考[安装文档](../installation.md)完成FISCO BCOS区块链的搭建和控制台的下载工作。** 
+
 ## 示例应用介绍
 
-该示例应用将建立一个学生成绩管理模块。老师可以录入学生的课程分数，保存到区块链上，学生可以从区块链上查询课程分数。当课程分数需要更新时，老师可以更新区块链上的课程分数，学生可以从区块链上查询到更新后的课程分数。
-
-## 前置条件
-```eval_rst
-.. important::
-
-    - java版本
-     要求 `jdk1.8+ <https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html>`_，推荐使用jdk8u181。
-    - FISCO BCOS区块链环境搭建
-     参考 `FISCO BCOS建链教程 <https://fisco-doc.readthedocs.io/en/feature-2.0.0/docs/manual/build_chain.html>`_
-
-```
+该示例应用将建立一个学生成绩管理系统，目标需求如下：
+- 老师可以录入学生的课程分数，保存到区块链上。
+- 学生可以从区块链上查询课程分数。
+- 当课程分数需要更新时，老师可以更新区块链上的课程分数。学生可以从区块链上查询到更新后的课程分数。
 
 ## 合约开发
 
@@ -31,7 +25,7 @@ FISCO BCOS区块链平台用于搭建多方参与的联盟链。业务开发可�
 其中name是主键，即操作`t_student_score`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。该主键字段的值可以重复，与传统关系型数据库中的主键不同。`t_student_score`表示例如下：
 
 | name |  subject   | score  |
-|:---|:------|:------| 
+|：---|：------|：------| 
 | Alice | Math | 98 | 
 | Alice | Chinese | 90 | 
 | Bob | English | 95 |
@@ -146,25 +140,23 @@ contract StudentScore {
 ```
 
 ```eval_rst
-.. important::
+.. important：：
 
-    ``StudentScore.sol``合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件``Table.sol``，该系统合约文件中的接口由FISCO BCOS底层提供实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。``Table.sol``合约详细接口可参考`这里 <../manual/crud_sol_contract.html>`_
+    ``StudentScore.sol`` 合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 ``Table.sol`` ，该系统合约文件中的接口由FISCO BCOS底层提供实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。``Table.sol`` 合约详细接口可 `参考这里 <../manual/crud_sol_contract.html>`_
 
 ```
 
 **小结：** 第一步，我们根据业务需求设计了一个业务表`t_student_score`，根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，因此，接下来需要将开发的`StudentScore.sol`合约编译为Java合约文件，供Java应用使用。
 
 ## 合约编译
-通过上一步，我们已经开发完成了学生成绩合约`StudentScore.sol`。现在将该solidity合约文件编译为对应的Java合约文件，FISCO BCOS的控制台提供了合约编译工具，可以方便使用。控制台的获取方式如下：
+通过上一步，我们已经开发完成了学生成绩合约`StudentScore.sol`。现在将该solidity合约文件编译为对应的Java合约文件。
+
+控制台提供了合约编译工具。将`StudentScore.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约的编译，命令如下：
 ```bash
-# 获取控制台压缩包
-curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
-# 解压得到控制台console目录
-tar -zxf console.tar.gz
-```
-`console/tools`目录下提供了一个合约编译的可执行脚本`sol2java.sh`，运行该脚本可以将存放在`console/tools/contracts`目录下的solidity合约文件全部编译为Java合约文件。默认`console/tools/contracts`目录下已经存放了系统的CRUD合约接口文件`Table.sol`。因此，我们现在只需将开发的`StudentScore.sol`合约拷贝到该目录下即可。拷贝完毕后，可以运行合约编译脚本`sol2java.sh`，该脚本运行需要指定一个Java的包名参数，可以根据实际项目路径指定包名。执行命令如下：
-```
-./sol2java.sh org.bcos.student.score
+# 切换到fisco/console/tools目录
+$ cd ~/fisco/console/tools/
+# 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
+$ ./sol2java.sh org.bcos.student.contract
 ```
 运行成功之后，将会在console/tools目录生成java、abi、bin目录，如下所示。
 ```bash
@@ -181,30 +173,34 @@ tar -zxf console.tar.gz
 |   |-- org
 |       |-- bcos
 |           |-- student
-|               |-- score
+|               |-- contract
 |                   |-- StudentScore.java // 编译成功的目标Java文件
-|                   |-- Table.java  // 编译成功的系统CRUD合约接口Java文件，不需要导入到Java应用
+|                   |-- Table.java  // 编译成功的系统CRUD合约接口Java文件
 |-- sol2java.sh
 ```
-我们关注的是，java目录下生成了`org/bcos/student/score`包路径目录，包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`Java合约文件正是Java应用所需要的Java文件。
+我们关注的是，java目录下生成了`org/bcos/student/student`包路径目录，包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`是Java应用所需要的Java合约文件。
 
-**小结：**  第二步，我们通过FISCO BCOS提供的控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与Java应用的开发。
+**小结：**  第二步，我们通过控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与业务的开发。
 
-## SDK配置与开发
+## SDK配置
 
-### SDK配置
 我们提供了一个Java工程项目供开发使用，首先获取Java工程项目：
 ```
 # 获取Java工程项目压缩包
-curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
+curl -LO https：//github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
 # 解压得到Java工程项目bcos-client目录
 tar -zxf student-score-app.tar.gz
 ```
-**温馨提示:** 如果熟悉IDEA或者Eclipse集成开发工具，可以以Gradle项目的方式导入集成开发环境进行后续开发。
-
 student-score-app项目的目录结构如下：
 ```bash
 |-- build.gradle // gradle配置文件
+|-- gradle
+|   |-- wrapper
+|       |-- gradle-wrapper.jar // 用于下载Gradle的相关代码实现
+|       |-- gradle-wrapper.properties // wrapper所使用的配置信息，比如gradle的版本等信息
+|-- gradlew // Linux或者Unix下用于执行wrapper命令的Shell脚本
+|-- gradlew.bat // Windows下用于执行wrapper命令的批处理脚本
+|-- settings.gradle
 |-- src
 |   |-- main
 |   |   |-- java
@@ -212,10 +208,10 @@ student-score-app项目的目录结构如下：
 |   |           |-- bcos
 |   |               |-- student
 |   |                   |-- client // 放置客户端调用类
-|   |                   |   |-- BcosClient.java
+|   |                   |   |-- StudentScoreClient.java
 |   |                   |-- contract // 放置Java合约类
 |   |                   |   |-- StudentScore.java
-|   |                   |-- service // 放置业务实现类，调用部署和调用合约
+|   |                   |-- service // 放置业务实现类，部署和调用合约
 |   |                       |-- StudentScoreService.java
 |   |-- test 
 |       |-- java 
@@ -226,59 +222,329 @@ student-score-app项目的目录结构如下：
 |           |-- node.key // 节点证书
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
+|           |-- contract //存放solidity约文件
+|           |   |-- StudentScore.sol
+|           |   |-- Table.sol
+
 |-- tool
-    |-- student_score.sh // 运行脚本
+    |-- run.sh // 项目运行脚本
 ```
 
-#### 项目引入SDK
-引入了以太坊的solidity编译器相关jar包，需要在gradle配置文件build.gradle中添加以太坊的远程仓库：
+### 项目引入SDK
+**项目的`build.gradle`文件已引入SDK，不需修改**。其引入方法介绍如下：
+- SDK引入了以太坊的solidity编译器相关jar包，因此在`build.gradle`文件需要添加以太坊的远程仓库：
 ```java
 repositories {
     maven {
-        url "http://maven.aliyun.com/nexus/content/groups/public/"
+        url "http：//maven.aliyun.com/nexus/content/groups/public/"
     }
-    maven { url "https://dl.bintray.com/ethereum/maven/" }
+    maven { url "https：//dl.bintray.com/ethereum/maven/" }
     mavenCentral()
 }
 ```
-在build.gradle文件，引入SDK jar包到项目，增加如下依赖：
+- 引入SDK jar包，增加如下依赖：
 ```java
-compile ('org.fisco-bcos:web3sdk:2.0.2')
+compile ('org.fisco-bcos：web3sdk：2.0.2')
 ```
 
-#### 节点证书与项目配置文件设置
-首先拷贝区块链节点目录nodes/${ip}/sdk下的ca.crt 、node.crt和node.key到src/test/resource/目录下。然后配置applicationContext.xml。其配置如下图所示，红框标记的内容根据区块链节点配置做相应修改。
+### 节点证书与项目配置文件设置
+- **区块链节点证书配置:**  
+```bash
+# 切回~/fisco目录
+$ cd ~/fisco
+# 拷贝节点证书到项目的资源目录
+$ cp nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
+```
+- **`applicationContext.xml`配置**，**已提供默认配置，不需要更改。** 若搭建区块链的节点参数有改动，配置`applicationContext.xml`请参考[SDK使用文档](../sdk/api_configuration.md#spring)。
+。
 
-![](../../images/sdk/sdk_xml.png)
+**小结：** 这一节，我们为应用配置好了SDK，下一步将进入实际业务开发。
 
-applicationContext.xml配置项详细说明:
-- encryptType: 国密算法开关(默认为0)                              
-  - 0: 不使用国密算法发交易                              
-  - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi_crypto.md))
-- groupChannelConnectionsConfig: 
-  - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
-  - 每个群组可以配置一个或多个节点，设置群组节点的配置文件`config.ini`中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
-- channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
+### 业务开发
+这一部分有三项工作，每一项工作增加一个Java类。项目相关路径下已有开发完成的三个Java类，可以直接使用。现在分别介绍这个三个Java类的设计与实现。
+- `StudentScore.java`： 此类由`StudentScore.sol`通过控制台编译工具转换生成，提供了solidity合约接口对应的Java合约相关接口，放置在包路径目录`/src/main/java/org/bcos/student/contract`。
+- `StudentScoreService.java`：此类负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/bcos/student/service`，其核心设计代码如下：
+```java
+// 部署合约
+public String deployStudentScoreContract() throws Exception {
 
-**小结：**  这一节，我们为应用配置好了SDK，下一步将进入实际业务开发。
+  StudentScore studentScore = StudentScore.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
 
-### 业务开发:
-将第二步编译好的StudentScore.java文件拷贝到org/bcos/student/score包目录下。并在该目录下创建BcosClient.java文件，用于部署和调用合约操作，实现我们的业务功能。BcosClient代码如下:
+  logger.info("Deploy  StudentScore contract successfully, address is {}", studentScore.getContractAddress());
 
-下面开始一一验证开头定下的需求。
+  return studentScore.getContractAddress();
+}
 
-**运行测试：**
+// 插入学生成绩
+public void insertStudentScore(String name, String subject, BigInteger score) throws Exception {
 
-部署合约
+  TransactionReceipt receipt = studentScore.insert(name, subject, score).send();
+  List<InsertResultEventResponse> response = studentScore.getInsertResultEvents(receipt);
+  
+  if (response.isEmpty()) {
+    throw new Exception("Insert failed, event log not found, may be transaction not exec.");
+  }
+  
+  if ((response.get(0).count.compareTo(new BigInteger("1")) != 0)) {
+    throw new Exception("Insert failed, ret code = " + response.get(0).count.toString());
+  }
+  logger.info("Insert  StudentScore contract successfully, ,name is {}, subject is {}, score is {} ", name, subject,
+      score);
+}
 
-老师录入学生课程分数
+// 更新学生成绩
+public void updateStudentScore(String name, String subject, BigInteger score) throws Exception {
 
-学生查询课程分数
+  TransactionReceipt receipt = studentScore.update(name, subject, score).send();
+  List<UpdateResultEventResponse> response = studentScore.getUpdateResultEvents(receipt);
+  
+  if (response.isEmpty()) {
+    throw new Exception("Update failed, event log not found, may be transaction not exec.");
+  }
+  
+  logger.info("Update  StudentScore contract successfully, ,name is {}, subject is {}, score is {} ", name, subject,
+      score);
+}
 
-老师修改学生课程分数
+// 移除学生成绩
+public void removeStudentScore(String name) throws Exception {
 
-学生再查询课程分数 
+  TransactionReceipt receipt = studentScore.remove(name).send();
+  List<RemoveResultEventResponse> response = studentScore.getRemoveResultEvents(receipt);
+  
+  if (response.isEmpty()) {
+    throw new Exception("Remove failed, event log not found, may be transaction not exec.");
+  }
+  
+  logger.info("Remove StudentScore contract successfully, name is {} ", name);
 
-老师移除学习课程分数
+}
 
-学生查询课程分数 
+// 查询学生成绩 
+public Tuple3<List<byte[]>, List<byte[]>, List<BigInteger>> selectStudentScore(String name)
+    throws Exception {
+
+  Tuple3<List<byte[]>, List<byte[]>, List<BigInteger>> result = studentScore.select(name).send();
+
+  logger.info("Select StudentScore contract successfully, name is {}, result is {} ", name, result);
+
+  return result;
+}
+
+```
+- `StudentScoreClient.java`：此类是应用的入口，通过调用`StudenScoreService.java`实现业务功能。放置在包路径目录`/src/main/java/org/bcos/student/client`。其核心设计代码如下：
+```java
+// 应用的main函数入口
+public static void main(String[] args) throws Exception {
+
+  if (args.length < 1) {
+    Usage();
+  }
+
+  StudentScoreClient client = new StudentScoreClient();
+  client.initialize(args[0]);
+
+  switch (args[0]) {
+  case "deploy":
+    client.deployStudentScoreAndRecordAddr();
+    break;
+  case "select":
+    if (args.length < 2) {
+      Usage();
+    }
+    client.selectStudentScore(args[1]);
+    break;
+  case "update":
+    if (args.length < 4) {
+      Usage();
+    }
+    client.updateStudentScore(args[1], args[2], new BigInteger(args[3]));
+    break;
+  case "remove":
+    if (args.length < 2) {
+      Usage();
+    }
+    client.removeStudentScore(args[1]);
+    break;
+  case "insert":
+    if (args.length < 4) {
+      Usage();
+    }
+    client.insertStudentScore(args[1], args[2], new BigInteger(args[3]));
+    break;
+
+  default: {
+    Usage();
+  }
+  }
+
+  System.exit(0);
+}
+
+public void initialize(String cmd) throws Exception {
+
+  // 初始化Service
+  ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml"); 
+  Service service = context.getBean(Service.class);
+  service.run();
+
+  ChannelEthereumService channelEthereumService = new ChannelEthereumService();
+  channelEthereumService.setChannelService(service);
+  // 创建Web3j对象，第二个参数为群组ID
+  Web3j web3j = Web3j.build(channelEthereumService, 1);
+
+  // 构建随机的交易账号
+  // 可以通过指定特定私钥的方式指定特定账号发生交易，示例：
+  // Credentials credentials = Credentials.create("3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4");
+  Credentials credentials = Credentials.create(Keys.createEcKeyPair());
+  
+  StudentScoreService studentScoreService = new StudentScoreService();
+  studentScoreService.setCredentials(credentials);
+  studentScoreService.setWeb3j(web3j);
+
+  setStudentScoreService(studentScoreService);
+
+  // 日志记录发送交易的账号地址和私钥
+  logger.debug("address is " + credentials.getAddress() + ", privateKey is " + credentials.getEcKeyPair().getPrivateKey().toString(16));
+  
+  if (!cmd.equals("deploy")) {
+    
+    // 加载合约地址
+    Properties prop = new Properties();
+    final Resource contractResource = new ClassPathResource("contract.properties");
+    prop.load(contractResource.getInputStream());
+    String contractAddress = prop.getProperty("address");
+    
+    if (contractAddress == null || contractAddress.trim().equals("")) {
+      throw new Exception("Load student score contract address failed, deploy it first. ");
+    }
+    
+    StudentScore studentScore = StudentScore.load(contractAddress, web3j, credentials, new StaticGasProvider(new BigInteger("300000000"), new BigInteger("300000000")));
+    studentScoreService.setStudentScore(studentScore);
+  }
+}
+
+// 部署合约
+public void deployStudentScoreAndRecordAddr() {
+
+  try {
+    String address = studentScoreService.deployStudentScoreContract();
+    System.out.println("Deploy StudentScore contract successfully, contract address is " + address);
+
+    Properties prop = new Properties();
+    prop.setProperty("address", address);
+    final Resource contractResource = new ClassPathResource("contract.properties");
+    FileOutputStream fileOutputStream = new FileOutputStream(contractResource.getFile());
+    prop.store(fileOutputStream, "contract address");
+
+  } catch (Exception e) {
+    System.out.println("Deploy StudentScore contract failed, error message is  " + e.getMessage());
+  }
+}
+// 插入学生成绩，参数：学生姓名，学科，分数
+public void insertStudentScore(String name, String subject, BigInteger score) {
+  try {
+
+    studentScoreService.insertStudentScore(name, subject, score);
+
+    System.out.println("Insert student score successfully. ");
+  } catch (Exception e) {
+    System.out.println("Insert student score failed, error message is " + e.getMessage());
+  }
+}
+// 更新学生成绩，参数：学生姓名，学科，分数
+public void updateStudentScore(String name, String subject, BigInteger score) {
+
+  try {
+
+    studentScoreService.updateStudentScore(name, subject, score);
+
+    System.out.println("Update student score successfully. ");
+  } catch (Exception e) {
+    System.out.println("Update student score failed, error message is " + e.getMessage());
+  }
+}
+// 移除学生成绩，参数：学生姓名
+public void removeStudentScore(String name) {
+  try {
+
+    studentScoreService.removeStudentScore(name);
+
+    System.out.println("Remove student score successfully. ");
+  } catch (Exception e) {
+    System.out.println("Remove student score failed, error message is " + e.getMessage());
+  }
+}
+// 查询学生成绩，参数：学生姓名
+public void selectStudentScore(String name) {
+  try {
+
+    Tuple3<List<byte[]>, List<byte[]>, List<BigInteger>> result = studentScoreService
+        .selectStudentScore(name);
+
+    List<byte[]> value1 = result.getValue1();
+    List<byte[]> value2 = result.getValue2();
+    List<BigInteger> value3 = result.getValue3();
+
+    System.out.println(name + "'s score count = " + value1.size());
+
+    for (int i = 0; i < value1.size(); i++) {
+      System.out.printf("Subject => %s, score => %s\n", new String(value2.get(i)), value3.get(i).toString());
+    }
+  } catch (Exception e) {
+    System.out.println("Select student score failed, error message is " + e.getMessage());
+  }
+}
+```
+**小结：** 本结通过Java合约文件，设计了一个业务Service类和调用入口类，已完成学生成绩管理系统的业务功能。接下来可以运行项目，测试功能是否正常。
+
+##运行
+通过以上三步，应用开发完成。现在编译项目：
+```bash
+# 切换到项目目录
+$ cd ~/fisco/student-score-app
+# 编译项目
+$ ./gradlew build
+# 进入dist目录
+$ cd dist/
+```
+编译成功之后，将在项目根目录下生成`dist`目录。dist目录下有一个`run.sh`脚本，简化项目运行。现在开始一一验证本文开始定下的需求。
+
+- 部署`StudentScore.sol`合约
+```bash
+$ ./run.sh deploy
+Deploy StudentScore contract successfully, contract address is 0xd996558d2fceeca464b454a745a0aa5832fac715
+```
+- 老师录入学生课程分数
+```bash
+$ ./run.sh insert Alice Math 75
+Insert student score successfully. 
+```
+- 学生查询课程分数
+```bash
+$ ./run.sh select Alice              
+Alice's score count = 1
+Subject => Math, score => 75
+```
+- 老师修改学生课程分数
+```bash
+$ ./run.sh update Alice Math 98
+Update student score successfully.
+```
+- 学生查询课程分数 
+```bash
+$ ./run.sh select Alice
+Alice's score count = 1
+Subject => Math, score => 98
+```
+- 老师移除学习课程分数
+```bash
+$ ./run.sh remove Alice 
+Remove student score successfully.
+```
+- 学生查询课程分数 
+```bash
+$ ./run.sh select Alice
+Alice's score count = 0
+```
+**总结：** 至此，我们通过合约开发，合约编译和SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
