@@ -151,7 +151,8 @@ contract StudentScore {
     ``StudentScore.sol``合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件``Table.sol``，该系统合约文件中的接口由FISCO BCOS底层提供实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。``Table.sol``合约详细接口可参考`这里 <../manual/crud_sol_contract.html>`_
 
 ```
-> 第一步，我们根据业务需求设计了一个业务表`t_student_score`，根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，因此，接下来需要将开发的`StudentScore.sol`合约编译为Java合约文件，供Java应用使用。
+
+**小结：** 第一步，我们根据业务需求设计了一个业务表`t_student_score`，根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，因此，接下来需要将开发的`StudentScore.sol`合约编译为Java合约文件，供Java应用使用。
 
 ## 合约编译
 通过上一步，我们已经开发完成了学生成绩合约`StudentScore.sol`。现在将该solidity合约文件编译为对应的Java合约文件，FISCO BCOS的控制台提供了合约编译工具，可以方便使用。控制台的获取方式如下：
@@ -187,7 +188,7 @@ tar -zxf console.tar.gz
 ```
 我们关注的是，java目录下生成了`org/bcos/student/score`包路径目录，包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`Java合约文件正是Java应用所需要的Java文件。
 
-> 第二步，我们通过FISCO BCOS提供的控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与Java应用的开发。
+**小结：**  第二步，我们通过FISCO BCOS提供的控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与Java应用的开发。
 
 ## SDK配置与开发
 
@@ -259,7 +260,7 @@ applicationContext.xml配置项详细说明:
   - 每个群组可以配置一个或多个节点，设置群组节点的配置文件`config.ini`中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
-> 这一节，我们为应用配置好了SDK，下一步将进入实际业务开发。
+**小结：**  这一节，我们为应用配置好了SDK，下一步将进入实际业务开发。
 
 ### 业务开发:
 将第二步编译好的StudentScore.java文件拷贝到org/bcos/student/score包目录下。并在该目录下创建BcosClient.java文件，用于部署和调用合约操作，实现我们的业务功能。BcosClient代码如下:
