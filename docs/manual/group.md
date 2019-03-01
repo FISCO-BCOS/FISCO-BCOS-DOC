@@ -309,7 +309,7 @@ $ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
 </bean>
 ```
 
-**配置完毕后，启动web3sdk，连接group2所有节点**
+**配置完毕后，启动控制台连接group2**
 
 ```
 $ bash start 2
