@@ -143,6 +143,7 @@ $ bash start_all.sh
 $ ps aux | grep fisco-bcos
 ubuntu16         301  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node5/../fisco-bcos -c config.ini
 ubuntu16         306  0.9  0.0 986644  6928 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/../fisco-bcos -c config.ini
+ubuntu16         311  0.9  0.0 986644  7184 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/../fisco-bcos -c config.ini
 ubuntu16      131048  2.1  0.0 1429036 7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
 ubuntu16      131053  2.1  0.0 1429032 7180 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
 ubuntu16      131058  0.8  0.0 986644  7928 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
