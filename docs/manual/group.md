@@ -284,7 +284,7 @@ $ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
 
 ```
 
-参考控制台操作文档，配置~/fisco/console/conf/applicationContext.xml的group id为2, ip:channel_listen_port为127.0.0.1:20200，Group2的关键配置如下：
+参考[控制台操作文档](./console.md#id4)，配置`~/fisco/console/conf/applicationContext.xml`的groupId为2, ip:channel_listen_port为127.0.0.1:20200，group 2的关键配置如下：
 
 ```xml
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -301,11 +301,7 @@ $ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
 </list>
 </property>
 </bean>
-```
 
-**配置channelService**
-
-```xml
  <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
         <property name="groupId" value="2" />
         <property name="orgID" value="fisco" />
