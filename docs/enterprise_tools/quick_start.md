@@ -1,261 +1,142 @@
-# 快速上手
+# 案例分析
 
-在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2群组6节点的组网模式，每个节点的ip，端口号分别为：
+本节中我们将给出一个常见场景的例子。在本场景中，共有4家机构，分别为A、B、C、D。部署节点如下表所示
+
+| 节点序号 |   P2P地址     |   RPC/channel地址     |   所属机构     |   所在群组     |
+| :-----------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 | 机构A | 群组1、2、3 |
+|   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 | 机构B | 群组1 |
+|   节点2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 | 机构C | 群组2 |
+|   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 | 机构D | 群组3 |
+
+![](../../images/enterprise/star.png)
+
+机构A、B、C、D分别维护一个节点，机构A的节点0同时处于三个群组中，接下来我们将讲解如何对等的部署上述模式的多群组联盟链。
+
+## 证书协商
+
+### 机构获取证书资格
+
+1. 机构A、B、C、D在本机生成使用agency.key，和机构证书请求文件agency.csr。
+
+2. 机构A、B、C、D向第三方权威机构申请联盟链组网资格，由第三方权威机构生成根证书ca.crt，同时发送agency.csr至第三方，得到机构证书agency.crt
+
+生成私钥，生成证书请求文件，生成机构证书
+
+### 协商节点证书
+
+1. 机构A、B、C、D本别用自己的机构私钥agency,key和机构证书agency.crt生成自己节点的证书cert_127.0.0.1_30300.crt，cert_127.0.0.1_30301.crt，cert_127.0.0.1_30302.crt，cert_127.0.0.1_30303.crt。
+
+2. 机构A分别与B、C、D协商节点证书，放置与meta文件夹下
 
 ```eval_rst
-.. important::
+.. note::
     
-    使用前请确认已经完成了 下载安装_
-.. 下载安装_: ./installation.md
+    在这种场景中，A协商后需要有4个节点的所有证书，而B、C、D分别只需要机构A节点0的证书和自己的节点证书即可。如机构B需要cert_127.0.0.1_30300.crt和cert_127.0.0.1_30301.crt。
 ```
 
-![](../../images/enterprise/simple3.png)
+## 机构A、B生成group1
 
-群组1 :
+此时，机构A和B都没有生成过节点安装包，组网流程如下：
 
-| 节点序号 |   P2P地址     |   RPC/channel地址     |
-| :-----------: | :-------------: | :-------------: |
-|   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 |
-|   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 |
-|   节点2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 |
-|   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 |
-|  节点4      | 127.0.0.1:30304| 127.0.0.1:8549/:20204 |
-|  节点5      | 127.0.0.1:30305| 127.0.0.1:8550/:20205 |
+![](../../images/enterprise/simple_star1.png)
 
-群组2 :
+1. 机构A、B分别将节点0，1证书，fisco-bcos可执行程序放置于meta文件夹下
 
-| 节点序号 |   P2P地址     |   RPC/channel地址     |
-| :-----------: | :-------------: | :-------------: |
-|   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 |
-|   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 |
-|   节点2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 |
-|   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 |
+2. 机构A、B分别修改`mchain.ini`中的信息，配置为节点0和节点1的信息
 
+3. 机构A、B分别使用-b/--build_install_package命令生成节点安装包
 
-配置文件中字段的含义解释如下：
+4. 机构A、B分别使用将节点私钥导入生成的节点安装包中，启动节点
 
-|              |                        |
-| :----------: | :--------------------: |
-|   节点序号   | 节点在配置文件中的序号 |
-|    P2P地址    |   节点之间p2p通信地址    |
-|    RPC地址    |    节点与sdk通信地址     |
+至此，完成机构A、B生成group1的操作
 
-假设如图所示，联盟链中共有2个群组，4个节点。
+## 机构A、C生成group2
 
-群组1中有6个节点，节点序号为0、1、2、3，之后扩容节点4、5。
+此时，机构A已经拥有节点安装包，需要生成group2，机构C尚未拥有节点安装包，组网流程如下：
 
-群组2中有3个节点，节点序号为0、1、2、3。
+![](../../images/enterprise/simple_star2.png)
 
-组网步骤如下：
+1. 机构A需要将将节点0，2证书，fisco-bcos可执行程序放置于meta文件夹下
 
-## 构建第一个群组group1
+2. 机构C将节点0，2证书，fisco-bcos可执行程序放置于meta文件夹下
 
-1. 修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1
+3. 机构A修改`mgroup.ini`中的信息，配置为节点0和节点2的信息
 
-```bash
-$ vim ./conf/mchain.ini
-```
-修改为
+4. 机构C分别修改`mchain.ini`中的信息，配置为节点0和节点2的信息
 
-```ini
-[node0]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30300
-channel_listen_port=20200
-jsonrpc_listen_port=8545
+5. 机构A使用-c/--create_group_config命令生成group2的配置文件，将group.2.genesis和group.2.ini拷贝到节点0安装包的conf目录下，从启节点
 
-[node1]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30301
-channel_listen_port=20201
-jsonrpc_listen_port=8546
+6. 机构B使用-b/--build_install_package命令生成节点安装包，将私钥导入生成的节点安装包中，启动节点
 
-[node2]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30302
-channel_listen_port=20202
-jsonrpc_listen_port=8547
+至此，完成机构A、C生成group3的操作
 
-[node3]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30303
-channel_listen_port=20203
-jsonrpc_listen_port=8548
+## 机构A、D生成group3
 
-[group]
-group_id=1
-```
+此时，机构A已经拥有节点安装包，需要生成group3，机构D尚未拥有节点安装包，组网流程与机构A、C生成新群组类似：
 
-2. 生成节点序号为0、1、2、3的证书和私钥，并导入meta文件夹
+![](../../images/enterprise/star.png)
 
-```eval_rst
-.. note::
-    实际应用中，证书和私钥应该由用户自己生成，只需将证书导入工具。
-    本示例中生成的证书机构名默认为agency_fisco，根证书私钥和机构证书私钥默认放置在meta文件夹下，节点证书和私钥放置在用户指定目录下，本例中为./mycert
-```
+1. 机构A需要将将节点0，3证书，fisco-bcos可执行程序放置于meta文件夹下
 
-```bash
-$ ./generator --generate_all_certificates ./mycert
-```
+2. 机构C将节点0，3证书，fisco-bcos可执行程序放置于meta文件夹下
 
-3. 使用build命令，在data下生成group1节点安装包
+3. 机构A修改`mgroup.ini`中的信息，配置为节点0和节点3的信息
 
-```bash
-$ ./generator --build_install_package ./data
-```
+4. 机构C分别修改`mchain.ini`中的信息，配置为节点0和节点3的信息
 
-执行成功后在./data目录下可以看到
+5. 机构A使用-c/--create_group_config命令生成group3的配置文件，将group.3.genesis和group.3.ini拷贝到节点0安装包的conf目录下，从启节点
 
-```bash
-.
-# 节点配置文件及群组配置文件
-|-- config.ini
-|-- group.1.genesis
-|-- group.1.ini
-# 监控脚本
-|-- monitor
-# 节点配置文件
-|-- node_127.0.0.1_30300
-|-- node_127.0.0.1_30301
-|-- node_127.0.0.1_30302
-|-- node_127.0.0.1_30303
-# 操作脚本
-|-- start_all.sh
-|-- stop_all.sh
-```
+6. 机构B使用-b/--build_install_package命令生成节点安装包，将私钥导入生成的节点安装包中，启动节点
 
-4. 导入节点私钥到对应节点安装包的conf文件夹下
+至此，完成机构A、D生成group3的操作
 
-上述3.中生成的安装包是不含节点私钥的，需要导入2.中的节点私钥，命令如下
+## 配置SDK
 
-```bash
-$ ./generator --deploy_private_key ./mycert ./data
-```
+完成上述初始组网操作后，机构业务需要完成sdk及控制台的配置，配置文档连接如下：
 
-5. 启动节点
+[配置web3sdk](../sdk/index.html)
 
-导入私钥后即可启动节点
+[配置控制台](../manual/console.md)
 
-```bash
-cd ./data
-$ ./start_all.sh
-```
+## 机构E进入group1
 
-查看节点进程
+在这种场景中，机构E需要扩容一个节点进入group1中，如下表所示
 
-```bash
-$ ps -ef | grep fisco
-# 可以看到如下所示的三个进程
-fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30300/fisco-bcos -c config.ini
-fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  15457     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  15498     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30303/fisco-bcos -c config.ini
-```
+| 节点序号 |   P2P地址     |   RPC/channel地址     |   所属机构     |   所在群组     |
+| :-----------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 | 机构A | 群组1、2、3 |
+|   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 | 机构B | 群组1 |
+|   节点2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 | 机构C | 群组2 |
+|   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 | 机构D | 群组3 |
+|   节点4     | 127.0.0.1:30304| 127.0.0.1:8549/:20204 | 机构E | 群组1 |
 
-查看节点log
+![](../../images/enterprise/simple_star3.png)
 
-```bash
-$ tail -f data/node*/log/log*  | grep +++
-info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
-info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
-info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
-```
+过程如下：
 
-至此 我们完成了如图所示构建group1的操作。
+### 机构E获取证书资格
 
-![](../../images/enterprise/simple1.png)
+1. 机构E在本机生成使用agency.key，和机构证书请求文件agency.csr。
 
-## 为群组group1扩容两个节点
+2. 机构E向第三方权威机构申请联盟链组网资格，由第三方权威机构根据group1的根证书ca.crt，签发agency.crt。
 
-```bash
-# 回到上级目录
-cd ..
-# 生成扩容节点所需证书和私钥
-./generator --expand_all_certificates ./myexpandcert
-# 生成扩容安装包
-./generator --build_expand_package ./data ./expand
-# 导入私钥至扩容安装包
-./generator --deploy_private_key ./myexpandcert ./expand
-# 启动节点
-cd ./expand
-./start_all.sh
-# 查看节点进程
-ps aux| grep fisco-bcos |grep -v grep
-# 返回上级目录
-cd ..
-```
+### 机构E生成节点证书
 
-可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识
+机构E用自己的机构私钥agency,key和机构证书agency.crt生成自己节点的证书cert_127.0.0.1_30304.crt。
 
-```eval_rst
-.. note::
-    生成扩容安装包时需要fisco-bcos可执行文件、group.1.genesis和group.1.ini
-```
+## 机构E生成group1扩容节点安装包
 
-## 构建第二个群组group2
+此时，机构E没有生成过节点安装包，但group1已经存在，组网流程如下：
 
-[构建group1]的操作中，我们已经生成了一条具有6个节点，处于群组group1中的联盟链，接下来将划分有4个节点的群组group2。
+1. 机构E向机构A或B请求group1配置文件，获取group1中已经运行节点的config.ini，group.1.genesis,group.1.ini
 
-![](../../images/enterprise/simple2.png)
+2. 机构E将节点4证书，fisco-bcos可执行程序，config.ini，group.1.genesis,group.1.ini放置于meta文件夹下
 
-1. 修改mcreate.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2
+3. 机构E修改`mexpand.ini`中的信息，配置为节点4的信息
 
-```bash
-$ vim ./conf/mgroup.ini
-```
-修改为
+4. 机构E使用-e/--build_expand_package命令生成扩容节点4安装包，导入私钥，启动节点
 
-```ini
-[group]
-group_id=2
+5. 机构E向机构A或B发送节点4入网请求，等待机构A或B使用控制台或sdk发送节点入网交易，注册节点4入网。
 
-[member]
-member0=127.0.0.1:30300
-member1=127.0.0.1:30301
-member2=127.0.0.1:30302
-member3=127.0.0.1:30303
-```
-
-操作步骤如下：
-
-```bash
-# 生成group2群组配置文件
-./generator --create_group_config ./data
-cd ./data
-# 拷贝群组配置至节点文件夹
-cp group.2.ini group.2.genesis ./node_127.0.0.1_30300/conf/
-cp group.2.ini group.2.genesis ./node_127.0.0.1_30301/conf/
-cp group.2.ini group.2.genesis ./node_127.0.0.1_30302/conf/
-cp group.2.ini group.2.genesis ./node_127.0.0.1_30303/conf/
-# 重启节点
-./stop_all.sh
-./start_all.sh
-```
-
-此时，可以看到查看节点进程已经从新启动
-
-```bash
-$ ps -ef | grep fisco
-# 可以看到如下所示的四个进程
-fisco  16356     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30300/fisco-bcos -c config.ini
-fisco  16422     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  16467     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  16489     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30303/fisco-bcos -c config.ini
-```
-
-查看节点log
-
-```bash
-$ tail -f data/node*/log/log*  | grep +++
-info|2019-02-25 17:25:56.028692| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
-info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
-info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
-```
-
-至此 我们完成了所示构建群组group2的操作。
-
-通过上述命令，我们在本机生成一个网络拓扑结构为2群组6节点的多群组架构联盟链。
+至此，完成机构E扩容节点加入group1的操作
