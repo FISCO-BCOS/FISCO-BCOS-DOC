@@ -61,11 +61,11 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /mnt/c/Users/asherli/Desktop/keycenter/build/nodes
-[INFO] CA Key Path       : /mnt/c/Users/asherli/Desktop/keycenter/build/nodes/gmcert/ca.key
+[INFO] Output Dir        : /mnt/c/Users/asherli/Desktop/key-manager/build/nodes
+[INFO] CA Key Path       : /mnt/c/Users/asherli/Desktop/key-manager/build/nodes/gmcert/ca.key
 [INFO] Guomi mode        : yes
 ==============================================================
-[INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/keycenter/build/nodes
+[INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/key-manager/build/nodes
 ```
 
 当国密联盟链部署完成之后，其余操作与[hello world](./hello_world.md)的操作相同。
@@ -104,9 +104,9 @@ ca_cert: gmca证书路径
 
 ## 国密落盘加密配置
 
-### 国密版Key Center
+### 国密版Key Manager
 
-国密版的Key Center需重新编译Key Center，不同点在于cmake时带上``` -DBUILD_GM=ON ```选项。
+国密版的Key Manager需重新编译Key Manager，不同点在于cmake时带上``` -DBUILD_GM=ON ```选项。
 
 ``` shell
 # centos下
@@ -115,14 +115,14 @@ cmake3 .. -DBUILD_GM=ON
 cmake .. -DBUILD_GM=ON
 ```
 
-其它步骤与标准版Key Center相同，请参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)。
+其它步骤与标准版Key Manager相同，请参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)。
 
 ### 国密版节点配置
 
 FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两套证书，分别为：conf/gmnode.key 和 conf/origin_cert/node.key。其它与[标准版落盘加密操作](./disk_encryption.md)相同。
 
 ``` shell
-cd keycenter/scripts
+cd key-manager/scripts
 #加密 conf/gmnode.key 参数：ip port 节点私钥文件 cipherDataKey
 bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea 
 #加密 conf/origin_cert/node.key 参数：ip port 节点私钥文件 cipherDataKey
