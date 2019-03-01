@@ -507,13 +507,13 @@ public void selectStudentScore(String name) {
 $ cd ~/fisco/student-score-app
 # 编译项目
 $ ./gradlew build
-# 进入dist目录
-$ cd dist/
 ```
 编译成功之后，将在项目根目录下生成`dist`目录。dist目录下有一个`run.sh`脚本，简化项目运行。现在开始一一验证本文开始定下的需求。
 
 - 部署`StudentScore.sol`合约
 ```bash
+# 进入dist目录
+$ cd dist
 $ ./run.sh deploy
 Deploy StudentScore contract successfully, contract address is 0xd996558d2fceeca464b454a745a0aa5832fac715
 ```
