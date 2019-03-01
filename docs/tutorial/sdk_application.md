@@ -1,8 +1,12 @@
 # 极简Java应用开发
 
-本文将介绍开发一个简单的基于FISCO BCOS区块链的Java示例应用。开发者通过该示例，可以熟悉开发环境，应用配置，合约开发与编译，合约部署与调用等功能，后续可以扩展其他功能。
+本文将介绍开发一个基于FISCO BCOS区块链的Java示例应用。开发者通过该示例，可以熟悉开发环境，应用配置，合约开发与编译。可以实现合约部署与调用功能，后续可以扩展其他功能。
 
-**使用前提：请参考[安装文档](../installation.md)完成FISCO BCOS区块链的搭建和控制台的下载工作。** 
+
+```eval_rst
+.. important::
+    请参考 `安装文档 <../installation.html>`_ 完成FISCO BCOS区块链的搭建和控制台的下载工作。
+```
 
 ## 示例应用需求
 
@@ -20,13 +24,22 @@
 
 其中name是主键，即操作`t_student_score`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_student_score`表示例如下：
 
-| name |  subject   | score  |
-|：---|：------|：------| 
-| Alice | Math | 98 | 
-| Alice | Chinese | 90 | 
-| Bob | English | 95 |
 
-**业务合约开发：**  如果操作学生成绩表？可以设计一个管理学生成绩的智能合约对学生成绩表进行管理。FISCO BCOS提供[CRUD合约](../manual/crud_sol_contract.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`StudentScore.sol`合约，通过该合约操作学生成绩表`t_student_score`。
+```eval_rst
+
++------+----------+-------+
+|name  |subject   |score  |
++======+==========+=======+
+|Alice |Math      |98     |
++------+----------+-------+
+|Alice |Chinese   |90     |
++------+----------+-------+
+|Bob   |English   |95     |
++------+----------+-------+
+
+```
+
+**业务合约开发：**  针对学生成绩表，可以设计一个学生成绩的智能合约对学生成绩表进行操作。FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`StudentScore.sol`合约，通过该合约操作学生成绩表`t_student_score`。
 - `StudentScore.sol`合约设计如下：
 ```solidity
 pragma solidity ^0.4.25;
@@ -51,6 +64,7 @@ contract StudentScore {
     // 创建学生成绩表
     function createTable() public {
         TableFactory tf = TableFactory(0x1001); 
+        // 参数：表名，主键字段，普通字段(使用逗号分隔)
         tf.createTable("t_student_score", "name", "subject,score");
     }
 
@@ -135,9 +149,9 @@ contract StudentScore {
 }
 ```
 
- **注：** `StudentScore.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.md)。
+ **注：** `StudentScore.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-**小结：** 第一步，我们根据业务需求设计了一个业务表`t_student_score`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，因此，接下来需要将开发的`StudentScore.sol`合约编译为Java合约文件，供Java应用使用。
+**小结：** 我们根据业务需求设计了一个业务表`t_student_score`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，下一步将开发的`StudentScore.sol`合约编译为Java合约文件。
 
 ## 合约编译
 控制台提供了合约编译工具。将`StudentScore.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
@@ -167,7 +181,7 @@ $ ./sol2java.sh org.bcos.student.contract
 |                   |-- Table.java  // 编译成功的系统CRUD合约接口Java文件
 |-- sol2java.sh
 ```
-我们关注的是，java目录下生成了`org/bcos/student/student/contract`包路径目录，包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`是Java应用所需要的Java合约文件。
+我们关注的是，java目录下生成了`org/bcos/student/student/contract`包路径目录。包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`是Java应用所需要的Java合约文件。
 
 **小结：** 我们通过控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与业务的开发。
 
@@ -237,20 +251,19 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 ```
 
 ### 节点证书与项目配置文件设置
-- **区块链节点证书配置:**  
+- **区块链节点证书配置：**  
 ```bash
 # 进入~/fisco目录
 $ cd ~/fisco
 # 拷贝节点证书到项目的资源目录
 $ cp nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
 ```
-- **`applicationContext.xml`配置**，**已提供默认配置，不需要更改。** 若搭建区块链的节点参数有改动，配置`applicationContext.xml`请参考[SDK使用文档](../sdk/api_configuration.md#spring)。
-。
+- **`applicationContext.xml`配置**：**已提供默认配置，不需要更改。** 若搭建区块链的节点参数有改动，配置`applicationContext.xml`请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
 ## 业务开发
-这一部分有三项工作，每一项工作增加一个Java类。项目相关路径下已有开发完成的三个Java类，可以直接使用。现在分别介绍这个三个Java类的设计与实现。
+这一部分有三项工作，每一项工作增加一个Java类。**项目相关路径下已有开发完成的三个Java类，可以直接使用**。现在分别介绍这个三个Java类的设计与实现。
 - `StudentScore.java`： 此类由`StudentScore.sol`通过控制台编译工具编译生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/bcos/student/contract`。
 - `StudentScoreService.java`：此类负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/bcos/student/service`，其核心设计代码如下：
 ```java
