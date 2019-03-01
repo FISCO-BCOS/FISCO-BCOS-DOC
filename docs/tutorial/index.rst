@@ -10,3 +10,4 @@
 
    key_concepts.md
    group_use_cases.md
+   enterprise_quick_start.md
