@@ -31,7 +31,7 @@
 
 
 
-落盘加密是在机构内部进行的，每个机构独立管理自己硬盘数据的安全。内网中，每个节点的硬盘数据是被加密的。所有加密数据的访问权限，通过Key Center来管理。Key Center是部署在机构内网内，专门管理节点硬盘数据访问秘钥的服务，外网无法访问。当内网的节点启动时，从Key Center处获取加密数据的访问秘钥，来对自身的加密数据进行访问。
+落盘加密是在机构内部进行的，每个机构独立管理自己硬盘数据的安全。内网中，每个节点的硬盘数据是被加密的。所有加密数据的访问权限，通过Key Manager来管理。Key Manager是部署在机构内网内，专门管理节点硬盘数据访问秘钥的服务，外网无法访问。当内网的节点启动时，从Key Manager处获取加密数据的访问秘钥，来对自身的加密数据进行访问。
 
 加密保护的对象包括：
 
@@ -40,22 +40,22 @@
 
 ## 具体实现
 
-具体的实现过程，是通过节点自身持有的秘钥（dataKey）和Key Center管理的全局秘钥（superKey）来完成的。
+具体的实现过程，是通过节点自身持有的秘钥（dataKey）和Key Manager管理的全局秘钥（superKey）来完成的。
 
 **节点**
 
 * 节点用自己的dataKey，对自身加密的数据（Encrypted Space）进行加解密。
 * 节点本身不会在本地磁盘中存储dataKey，而是存储dataKey被加密后的cipherDataKey。
-* 节点启动时，拿cipherDataKey向KeyCenter请求，获取dataKey。
+* 节点启动时，拿cipherDataKey向Key Manager请求，获取dataKey。
 * dataKey只在节点的内存中，当节点关闭后，dataKey自动丢弃。
 
-**Key Center**
+**Key Manager**
 
 持有全局的superKey，负责对所有节点启动时的授权请求进行响应，授权。
 
-- Key Center必须实时在线，响应节点的启动请求。
-- 当节点启动时，发来cipherDataKey，Key Center用superKey对cipherDataKey进行解密，若解密成功，就将节点的dataK返回给节点。
-- Key Center只能在内网访问，机构内的外网无法访问Key Center.
+- Key Manager必须实时在线，响应节点的启动请求。
+- 当节点启动时，发来cipherDataKey，Key Manager用superKey对cipherDataKey进行解密，若解密成功，就将节点的dataK返回给节点。
+- Key Manager只能在内网访问，机构内的外网无法访问Key Manager.
 
 
 
@@ -73,7 +73,7 @@
 
 **注意：节点在生成后，启动前，必须决定好是否采用落盘加密，一旦节点配置成功，并正常启动，将无法切换状态。**
 
-（1）管理员定义好节点的的dataKey，并将dataKey发送给Key Center，从Key Center处获取cipherDataKey。
+（1）管理员定义好节点的的dataKey，并将dataKey发送给Key Manager，从Key Manager处获取cipherDataKey。
 
 （2）将cipherDataKey配置到节点的配置文件中
 
@@ -81,11 +81,11 @@
 
 ### 节点安全运行
 
-节点启动时，会通过Key Center，获取本地数据访问的秘钥dataKey。
+节点启动时，会通过Key Manager，获取本地数据访问的秘钥dataKey。
 
-（1）节点启动，从配置文件中读取cipherDataKey，并发送给Key Center。
+（1）节点启动，从配置文件中读取cipherDataKey，并发送给Key Manager。
 
-（2）Key Center收到cipherDataKey，用superKey解密cipherDataKey，若解密成功，则将解密后的dataKey返回给节点。
+（2）Key Manager收到cipherDataKey，用superKey解密cipherDataKey，若解密成功，则将解密后的dataKey返回给节点。
 
 （3）节点拿到dataKey，用dataKey对本地的数据（Encrypted Space）进行交互。从Encrypted Space读取的数据，用dataKey解密获取真实数据。要写入Encrypted Space的数据，先用dataKey加密，再写入。
 
@@ -93,10 +93,10 @@
 
 当某节点的硬盘被意外的带到内网环境之外，数据是不会泄露的。
 
-（1）当节点在内网之外启动时，无法连接Key Center，虽然有cipherDataKey，也无法获取dataKey。
+（1）当节点在内网之外启动时，无法连接Key Manager，虽然有cipherDataKey，也无法获取dataKey。
 
 （2）不启动节点，直接对节点本地的数据进行操作，由于拿不到dataKey，无法解密Encrypted Space，拿不到敏感数据。
 
 
 
-具体落盘加密的使用，可参考：[落盘加密操作](../../manual/disk_encryption.md)
+具体落盘加密的使用，可参考：[落盘加密操作](../../manual/storage_security.md)
