@@ -9,4 +9,5 @@
    :maxdepth: 1
 
    key_concepts.md
+   sdk_application.md
    group_use_cases.md
