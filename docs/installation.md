@@ -137,18 +137,18 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
-$ tar -zxf console.tar.gz && chmod u+x console/start
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console-0.4.25.tar.gz
+$ tar -zxf console-0.4.25.tar.gz && chmod u+x console-0.4.25/start.sh
 # 配置控制台证书
-$ cp nodes/127.0.0.1/sdk/* console/conf/
+$ cp nodes/127.0.0.1/sdk/* console-0.4.25/conf/
 ```
 
 ### 启动控制台
 
 ```bash
 # # 回到fisco目录
-$ cd ~/fisco/console
-$ bash ./start
+$ cd ~/fisco/console-0.4.25
+$ ./start.sh
 # 输出下述信息表明启动成功
 =============================================================================================
 Welcome to FISCO BCOS console！
