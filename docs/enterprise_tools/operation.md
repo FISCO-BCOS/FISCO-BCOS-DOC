@@ -140,8 +140,8 @@ $ ./generator --demo
 1. 按照./conf/mchain.ini中的配置在./meta下生成证书
 2. 按照./conf/mchain.ini的配置在./data下生成安装包
 3. 拷贝./meta下的私钥至./data的安装包
-4. 按照./conf/expand.ini中的配置在./meta下生成证书
-5. 按照./conf/expand.ini的配置在./expand下生成扩容安装包
+4. 按照./conf/mexpand.ini中的配置在./meta下生成证书
+5. 按照./conf/mexpand.ini的配置在./expand下生成扩容安装包
 6. 按照./conf/mgroup.ini的配置在./data下生成group2的相关配置
 
 操作完成后，用户可以:
@@ -215,7 +215,7 @@ $ ./generator --build_expand_package ./expand ~/mydata
 ```bash
 $ cp node0/node.crt ./meta/cert_127.0.0.1_3030n.crt
 ...
-$ vim ./conf/group.ini
+$ vim ./conf/mgroup.ini
 $ ./generator --create_group_config ~/mydata
 ```
 

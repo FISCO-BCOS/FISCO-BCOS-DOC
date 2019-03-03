@@ -6,9 +6,9 @@
 
 具体的落盘加密介绍，可参考：[落盘加密的介绍](design/features/disk_encryption.md)
 
-## 部署Key Center
+## 部署Key Manager
 
-每个机构一个Key Center，具体的部署步骤，可参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)
+每个机构一个Key Manager，具体的部署步骤，可参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)
 
 ## 生成节点
 
@@ -21,18 +21,18 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 
 **注意：节点生成后，不能启动，待dataKey配置后，再启动。节点在第一次运行前，必须配置好是否采用落盘加密。一旦节点开始运行，无法切换状态。**
 
-## 启动Key Center
+## 启动Key Manager
 
-直接启动keycenter。若未部署keycenter，可参考：[keycenter repository](https://github.com/FISCO-BCOS/keycenter)
+直接启动key-manager。若未部署key-manager，可参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)
 
 ```shell
-./keycenter 31443 123xyz #参数：端口，superkey
+./key-manager 31443 123xyz #参数：端口，superkey
 ```
 
 启动成功，打印日志
 
 ```log
-[1546501342949][TRACE][Load]keycenter stared,port=31443
+[1546501342949][TRACE][Load]key-manager stared,port=31443
 ```
 
 ## 配置dataKey
@@ -42,7 +42,7 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 执行脚本，定义dataKey，获取cipherDataKey
 
 ```shell
-cd keycenter/scripts
+cd key-manager/scripts
 bash gen_data_secure_key.sh 127.0.0.1 31443 123456
 ```
 
@@ -51,8 +51,8 @@ bash gen_data_secure_key.sh 127.0.0.1 31443 123456
 ```ini
 [data_secure]
 enable=true
-keycenter_ip=127.0.0.1
-keycenter_port=31443
+key_manager_ip=127.0.0.1
+key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -79,8 +79,8 @@ vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini
 	;略
 [data_secure]
 enable=true
-keycenter_ip=127.0.0.1
-keycenter_port=31443
+key_manager_ip=127.0.0.1
+key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -89,7 +89,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 执行脚本，加密节点私钥
 
 ```shell
-cd keycenter/scripts
+cd key-manager/scripts
 bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea #参数：ip port 节点私钥文件 cipherDataKey
 ```
 
@@ -129,7 +129,7 @@ cd nodes/node_127.0.0.1_0/
 tail -f nodes/node_127.0.0.1_0/log/* |grep Report
 ```
 
-（2）keycenter在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Center直接输出的日志如下。
+（2）key-manager在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Manager直接输出的日志如下。
 
 ``` log
 [1546504272699][TRACE][Dec]Respond
