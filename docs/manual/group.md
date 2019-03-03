@@ -312,7 +312,7 @@ $ grep -n "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
 **配置完毕后，启动控制台连接group2**
 
 ```
-$ bash start 2
+$ bash start.sh 2
 ```
 
 **将node2加入group2为共识节点**
