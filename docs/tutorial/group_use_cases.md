@@ -296,7 +296,7 @@ channel_listen_port=20200
 **启动控制台连接group2**
 
 ```bash
-$ bash start 2
+$ bash start.sh 2
 ```
 
 **将node2加入group2为共识节点**

@@ -410,7 +410,7 @@ Empty set.
 
 指定外部账号1登录控制台(其中数字1代表群组1，字符串3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4为外部账号1的私钥)
 ```bash
-bash start 1 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
+bash start.sh 1 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
 ```
 
 #### 4.3.1 默认示例
@@ -506,7 +506,7 @@ bash start 1 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
 
 现在以账号2登陆控制台： 
 ```
-bash start 1 ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e   
+bash start.sh 1 ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e   
 ```
 查看共识节点列表：
 ```

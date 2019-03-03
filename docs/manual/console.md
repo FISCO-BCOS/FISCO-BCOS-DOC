@@ -103,7 +103,7 @@ tar -zxf console.tar.gz
 ``` 
 #### 启动控制台
 ```
-$ bash start
+$ bash start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
 Welcome to FISCO BCOS console!
@@ -123,7 +123,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 #### 启动脚本说明
 ```
-$ bash start [groupID] [privateKey]   
+$ bash start.sh [groupID] [privateKey]   
 ```
 启动命令可以指定两个可选参数：           
 - `groupId`: - 群组ID, 不指定则默认为群组1。           
