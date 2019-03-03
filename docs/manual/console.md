@@ -132,7 +132,7 @@ $ bash start.sh [groupID] [privateKey]
 示例
 ```
 # 以群组2，私钥账号地址为3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4登录控制台
-$ bash start 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4  
+$ bash start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4  
 ```
 
 ## 控制台命令
