@@ -4,11 +4,15 @@
 
 FISCO BCOS generator的配置文件在./conf文件夹下，共有三个配置文件：`mchain.ini`、`mexpand.ini`和`mgroup.ini`。分别对应新建节点及群组、扩容新节点加入现有群组、节点划分新群组三种操作的配置。
 
-### meta元数据文件夹
+用户通过对conf文件夹下文件的操作，配置生成节点安装包的具体信息。
 
-meta文件夹下需要存放`fisco bcos`二进制文件、链证书ca.crt、节点证书等。
+### 元数据文件夹meta
+
+FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书ca.crt、节点证书等。
 
 证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。节点证书需要已经拼装好agency.crt。
+
+FISCO BCOS generator会跟进用户在元数据文件夹下放置的相关证书、可执行程序生成用户在conf下配置的节点安装包。
 
 ### mchain.ini
 
