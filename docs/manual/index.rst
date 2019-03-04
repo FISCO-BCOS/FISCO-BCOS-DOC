@@ -17,6 +17,6 @@
    node_access_management.md
    certificate_rejected_list.md
    priority_control.md
-   disk_encryption.md
+   data_secure.md
    guomi.md
    log.md

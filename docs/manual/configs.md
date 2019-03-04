@@ -4,7 +4,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 - `config.ini`：主配置文件，主要配置RPC、P2P、SSL证书、账本配置文件路径等信息；
 
-- `group.group_id.genesis`：群组不可变配置文件，须保证群组内所有节点该配置一致，节点启动后，不可更改该配置，主要配置群组共识算法、存储类型、最大gas限制等系统信息；
+- `group.group_id.genesis`：群组系统配置文件，须保证群组内所有节点该配置一致，节点启动后，不可手动更改该配置，仅可通过控制台修改该配置，主要包括群组共识算法、存储类型、最大gas限制等；
 
 - `group.group_id.ini`：群组可变配置文件，包括交易池大小等，配置后重启节点生效。
 
@@ -38,7 +38,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
     网络配置须知：
 
-    - 云主机的公网ip均为虚拟ip，若listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
+    - 云主机的公网IP均为虚拟IP，若listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
 
     - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
 ```
@@ -56,7 +56,7 @@ RPC配置示例如下：
 
 ```ini
 [rpc]
-    ;rpc listen ip
+    ;rpc listen IP
     listen_ip=127.0.0.1
     ;channelserver listen port
     channel_listen_port=30301
@@ -68,17 +68,17 @@ RPC配置示例如下：
 
 当前版本FISCO BCOS必须在`config.ini`配置中配置连接节点的`IP`和`Port`，P2P相关配置包括：
 
-- `listen_ip`：P2P监听端口，若为127.0.0.1，则仅监听本机RPC请求，为0.0.0.0和内网ip时，监听所有请求；
+- `listen_ip`：P2P监听IP，若为127.0.0.1，则仅监听本机RPC请求，为0.0.0.0和内网IP时，监听所有请求；
 
 - `listen_port`：节点P2P监听端口；
 
-- `node.*`: 节点需连接的所有节点`ip:port`。
+- `node.*`: 节点需连接的所有节点`IP:port`。
 
 P2P配置示例如下：
 
 ```ini
 [p2p]
-    ;p2p listen ip
+    ;p2p listen IP
     listen_ip=0.0.0.0
     ;p2p listen port
     listen_port=30300
@@ -154,7 +154,7 @@ FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easylogg
 
 - `level`: 日志级别，当前主要包括`trace、debug、info、warning、error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`；
 
-- `max_log_file_size`：每个日志文件最大容量；
+- `max_log_file_size`：每个日志文件最大容量，**计量单位为字节，默认为200MB**；
 
 - `flush`：boostlog默认开启日志自动刷新，若需提升系统性能，建议将该值设置为false。
 
@@ -169,6 +169,7 @@ boostlog示例配置如下：
     log_path=./log
     ;log level INFO DEBUG TRACE
     level=info
+    ; max log size, default is 200MB
     max_log_file_size=209715200
     flush=true
 ```
@@ -222,20 +223,20 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 
 
 
-## 群组不可变配置说明
+## 群组系统配置说明
 
-每个群组都有单独的配置文件，按照启动后是否可更改，可分为<font color=#FF0000>群组不可变配置</font>和<font color=#FF0000>群组可变配置</font>。
-群组不可变配置一般位于节点的`conf`目录下<font color=#FF0000>`.genesis`后缀配置文件</font>中。
+每个群组都有单独的配置文件，按照启动后是否可更改，可分为<font color=#FF0000>群组系统配置</font>和<font color=#FF0000>群组可变配置</font>。
+群组系统配置一般位于节点的`conf`目录下<font color=#FF0000>`.genesis`后缀配置文件</font>中。
 
-如：`group1`的不可变配置一般命名为`group.1.genesis`，群组不可变配置主要包括<font color=#FF0000>群组ID、共识、存储和gas</font>相关的配置。
+如：`group1`的系统配置一般命名为`group.1.genesis`，群组系统配置主要包括<font color=#FF0000>群组ID、共识、存储和gas</font>相关的配置。
 
 ```eval_rst
 .. important:: 
 
-    配置不可变配置时，需注意：
+    配置系统配置时，需注意：
 
-    - **配置群组内一致** ：群组不可变配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
-    - **节点启动后不可更改** ：不可变配置已经作为创世块写入了系统表，链初始化后不可更改
+    - **配置群组内一致** ：群组系统配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
+    - **节点启动后不可更改** ：系统配置已经作为创世块写入了系统表，链初始化后不可更改
     - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
     - 由于genesis配置要求群组内所有节点一致，建议使用 `build_chain <build_chain.html>`_ 生成该配置
 ```
@@ -332,7 +333,7 @@ FISCO-BCOS将交易池容量配置开放给用户，用户可根据自己的业�
     limit=10000
 ```
 
-### 共识配置
+### PBFT共识消息广播配置
 
 `PBFT`共识算法为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`TTL`来控制消息最大转发次数，消息最大转发次数为`TTL-1`，**该配置项仅对PBFT有效**。
 
