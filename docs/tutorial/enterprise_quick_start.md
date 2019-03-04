@@ -74,7 +74,7 @@ $ ./meta/fisco-bcos -v
 
 组网步骤如下：
 
-## 构建第一个群组group1
+## 构建第一个群组
 
 1. 修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1
 
@@ -84,6 +84,9 @@ $ vim ./conf/mchain.ini
 修改为
 
 ```ini
+[group]
+group_id=1
+
 [node0]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
@@ -111,9 +114,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
-
-[group]
-group_id=1
 ```
 
 2. 生成节点序号为0、1、2、3的证书和私钥，并导入meta文件夹
@@ -195,7 +195,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ![](../../images/enterprise/simple1.png)
 
-## 为群组group1扩容两个节点
+## 扩容两个节点
 
 ```bash
 # 回到上级目录
@@ -222,7 +222,7 @@ cd ..
     生成扩容安装包时需要fisco-bcos可执行文件、group.1.genesis和group.1.ini
 ```
 
-## 构建第二个群组group2
+## 构建第二个群组
 
 [构建group1]的操作中，我们已经生成了一条具有6个节点，处于群组group1中的联盟链，接下来将划分有4个节点的群组group2。
 
