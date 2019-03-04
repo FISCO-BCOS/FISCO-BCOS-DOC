@@ -1,7 +1,15 @@
-# 极简Java应用开发
+# 构建第一个区块链应用
 
-本文将介绍开发一个基于FISCO BCOS区块链的Java示例应用。开发者通过该示例，可以熟悉开发环境，应用配置，合约开发与编译。可以实现合约部署与调用功能，后续可以扩展其他功能。
+本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Java SDK实现对区块链上合约的调用访问。
+本章教程要求用户具备Java开发的基本技能，能够使用Gradle工具，有一定的Solidity使用经验，如果没有也无妨，能大致看懂合约逻辑即可。
+通过学习本章教程，你将会掌握以下几个重要知识点（如果走完流程之后仍然未掌握，可以到各个知识点的章节详细了解对应的教程）
+1，知道如何将一个业务场景的逻辑用合约的形式表达
+2，知道如何将Solidity合约转化成Java类
+3，知道如何配置Web3SDK，掌握Web3SDK配置所需相关文件
+4，知道如何构建一个应用，并将SDK集成进来
+5，知道如何调用SDK的最基本接口，完成合约调用访问  
 
+最后，教程中会提供示例的完整项目源码，用户可以在此基础上快速的修改或者集成自己的功能模块。
 
 ```eval_rst
 .. important::
@@ -190,9 +198,10 @@ $ ./sol2java.sh org.bcos.student.contract
 我们提供了一个Java工程项目供开发使用，首先获取Java工程项目：
 ```
 # 获取Java工程项目压缩包
-curl -LO https：//github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
+$ cd ~
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
 # 解压得到Java工程项目student-score-app目录
-tar -zxf student-score-app.tar.gz
+$ tar -zxf student-score-app.tar.gz
 ```
 student-score-app项目的目录结构如下：
 ```bash
@@ -254,135 +263,21 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 - **区块链节点证书配置：**  
 ```bash
 # 进入~/fisco目录
-$ cd ~/fisco
 # 拷贝节点证书到项目的资源目录
-$ cp nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
+$ cd ~
+$ cp fisco/nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
 ```
-- **`applicationContext.xml`配置**：**已提供默认配置，不需要更改。** 若搭建区块链的节点参数有改动，配置`applicationContext.xml`请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
+- `student-score-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点的channel_ip与channel_port有所改动，需要配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
 ## 业务开发
 这一部分有三项工作，每一项工作增加一个Java类。**项目相关路径下已有开发完成的三个Java类，可以直接使用**。现在分别介绍这个三个Java类的设计与实现。
 - `StudentScore.java`： 此类由`StudentScore.sol`通过控制台编译工具编译生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/bcos/student/contract`。
-- `StudentScoreService.java`：此类负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/bcos/student/service`，其核心设计代码如下：
-```java
-// 部署合约
-public String deployStudentScoreContract() throws Exception {
-
-  StudentScore studentScore = StudentScore.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
-
-  logger.info("Deploy  StudentScore contract successfully, address is {}", studentScore.getContractAddress());
-
-  return studentScore.getContractAddress();
-}
-
-// 插入学生成绩
-public void insertStudentScore(String name, String subject, BigInteger score) throws Exception {
-
-  TransactionReceipt receipt = studentScore.insert(name, subject, score).send();
-  List<InsertResultEventResponse> response = studentScore.getInsertResultEvents(receipt);
-  
-  if (response.isEmpty()) {
-    throw new Exception("Insert failed, event log not found, may be transaction not exec.");
-  }
-  
-  if ((response.get(0).count.compareTo(new BigInteger("1")) != 0)) {
-    throw new Exception("Insert failed, ret code = " + response.get(0).count.toString());
-  }
-  logger.info("Insert  StudentScore contract successfully, ,name is {}, subject is {}, score is {} ", name, subject,
-      score);
-}
-
-// 更新学生成绩
-public void updateStudentScore(String name, String subject, BigInteger score) throws Exception {
-
-  TransactionReceipt receipt = studentScore.update(name, subject, score).send();
-  List<UpdateResultEventResponse> response = studentScore.getUpdateResultEvents(receipt);
-  
-  if (response.isEmpty()) {
-    throw new Exception("Update failed, event log not found, may be transaction not exec.");
-  }
-  
-  logger.info("Update  StudentScore contract successfully, ,name is {}, subject is {}, score is {} ", name, subject,
-      score);
-}
-
-// 移除学生成绩
-public void removeStudentScore(String name) throws Exception {
-
-  TransactionReceipt receipt = studentScore.remove(name).send();
-  List<RemoveResultEventResponse> response = studentScore.getRemoveResultEvents(receipt);
-  
-  if (response.isEmpty()) {
-    throw new Exception("Remove failed, event log not found, may be transaction not exec.");
-  }
-  
-  logger.info("Remove StudentScore contract successfully, name is {} ", name);
-
-}
-
-// 查询学生成绩 
-public Tuple3<List<byte[]>, List<byte[]>, List<BigInteger>> selectStudentScore(String name)
-    throws Exception {
-
-  Tuple3<List<byte[]>, List<byte[]>, List<BigInteger>> result = studentScore.select(name).send();
-
-  logger.info("Select StudentScore contract successfully, name is {}, result is {} ", name, result);
-
-  return result;
-}
-
-```
+- `StudentScoreService.java`：此类负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/bcos/student/service`。
 - `StudentScoreClient.java`：此类是应用的入口，通过调用`StudenScoreService.java`实现业务功能。放置在包路径目录`/src/main/java/org/bcos/student/client`，其核心设计代码如下：
 ```java
 // 应用的main函数入口
-public static void main(String[] args) throws Exception {
-
-  if (args.length < 1) {
-    Usage();
-  }
-
-  StudentScoreClient client = new StudentScoreClient();
-  client.initialize(args[0]);
-
-  switch (args[0]) {
-  case "deploy":
-    client.deployStudentScoreAndRecordAddr();
-    break;
-  case "select":
-    if (args.length < 2) {
-      Usage();
-    }
-    client.selectStudentScore(args[1]);
-    break;
-  case "update":
-    if (args.length < 4) {
-      Usage();
-    }
-    client.updateStudentScore(args[1], args[2], new BigInteger(args[3]));
-    break;
-  case "remove":
-    if (args.length < 2) {
-      Usage();
-    }
-    client.removeStudentScore(args[1]);
-    break;
-  case "insert":
-    if (args.length < 4) {
-      Usage();
-    }
-    client.insertStudentScore(args[1], args[2], new BigInteger(args[3]));
-    break;
-
-  default: {
-    Usage();
-  }
-  }
-
-  System.exit(0);
-}
-
 public void initialize(String cmd) throws Exception {
 
   // 初始化Service
@@ -399,103 +294,8 @@ public void initialize(String cmd) throws Exception {
   // 可以通过指定特定私钥的方式指定特定账号发生交易，示例：
   // Credentials credentials = Credentials.create("3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4");
   Credentials credentials = Credentials.create(Keys.createEcKeyPair());
-  
-  StudentScoreService studentScoreService = new StudentScoreService();
-  studentScoreService.setCredentials(credentials);
-  studentScoreService.setWeb3j(web3j);
 
-  setStudentScoreService(studentScoreService);
-
-  // 日志记录发送交易的账号地址和私钥
-  logger.debug("address is " + credentials.getAddress() + ", privateKey is " + credentials.getEcKeyPair().getPrivateKey().toString(16));
-  
-  // 加载合约地址
-  if (!cmd.equals("deploy")) {
-    
-    Properties prop = new Properties();
-    final Resource contractResource = new ClassPathResource("contract.properties");
-    prop.load(contractResource.getInputStream());
-    String contractAddress = prop.getProperty("address");
-    
-    if (contractAddress == null || contractAddress.trim().equals("")) {
-      throw new Exception("Load student score contract address failed, deploy it first. ");
-    }
-    
-    StudentScore studentScore = StudentScore.load(contractAddress, web3j, credentials, new StaticGasProvider(new BigInteger("300000000"), new BigInteger("300000000")));
-    studentScoreService.setStudentScore(studentScore);
-  }
-}
-
-// 部署合约
-public void deployStudentScoreAndRecordAddr() {
-
-  try {
-    String address = studentScoreService.deployStudentScoreContract();
-    System.out.println("Deploy StudentScore contract successfully, contract address is " + address);
-
-    Properties prop = new Properties();
-    prop.setProperty("address", address);
-    final Resource contractResource = new ClassPathResource("contract.properties");
-    FileOutputStream fileOutputStream = new FileOutputStream(contractResource.getFile());
-    prop.store(fileOutputStream, "contract address");
-
-  } catch (Exception e) {
-    System.out.println("Deploy StudentScore contract failed, error message is  " + e.getMessage());
-  }
-}
-// 插入学生成绩，参数：学生姓名，学科，分数
-public void insertStudentScore(String name, String subject, BigInteger score) {
-  try {
-
-    studentScoreService.insertStudentScore(name, subject, score);
-
-    System.out.println("Insert student score successfully. ");
-  } catch (Exception e) {
-    System.out.println("Insert student score failed, error message is " + e.getMessage());
-  }
-}
-// 更新学生成绩，参数：学生姓名，学科，分数
-public void updateStudentScore(String name, String subject, BigInteger score) {
-
-  try {
-
-    studentScoreService.updateStudentScore(name, subject, score);
-
-    System.out.println("Update student score successfully. ");
-  } catch (Exception e) {
-    System.out.println("Update student score failed, error message is " + e.getMessage());
-  }
-}
-// 移除学生成绩，参数：学生姓名
-public void removeStudentScore(String name) {
-  try {
-
-    studentScoreService.removeStudentScore(name);
-
-    System.out.println("Remove student score successfully. ");
-  } catch (Exception e) {
-    System.out.println("Remove student score failed, error message is " + e.getMessage());
-  }
-}
-// 查询学生成绩，参数：学生姓名
-public void selectStudentScore(String name) {
-  try {
-
-    Tuple3<List<byte[]>, List<byte[]>, List<BigInteger>> result = studentScoreService
-        .selectStudentScore(name);
-
-    List<byte[]> value1 = result.getValue1();
-    List<byte[]> value2 = result.getValue2();
-    List<BigInteger> value3 = result.getValue3();
-
-    System.out.println(name + "'s score count = " + value1.size());
-
-    for (int i = 0; i < value1.size(); i++) {
-      System.out.printf("Subject => %s, score => %s\n", new String(value2.get(i)), value3.get(i).toString());
-    }
-  } catch (Exception e) {
-    System.out.println("Select student score failed, error message is " + e.getMessage());
-  }
+  // others
 }
 ```
 **小结：** 通过Java合约文件，设计了一个业务Service类和调用入口类，已完成学生成绩管理系统的业务功能。接下来可以运行项目，测试功能是否正常。
@@ -504,7 +304,7 @@ public void selectStudentScore(String name) {
 编译项目。
 ```bash
 # 切换到项目目录
-$ cd ~/fisco/student-score-app
+$ cd ~/student-score-app
 # 编译项目
 $ ./gradlew build
 ```
