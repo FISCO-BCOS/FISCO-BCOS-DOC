@@ -202,8 +202,10 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 cd ..
 # 生成扩容节点所需证书和私钥
 ./generator --expand_all_certificates ./myexpandcert
+# 拷贝群组1配置文件
+cp ./data/group.1.genesis ./meta # 由于扩容步骤在本地完成，此步已经生成过群组创世区块文件
 # 生成扩容安装包
-./generator --build_expand_package ./data ./expand
+./generator --build_expand_package ./expand
 # 导入私钥至扩容安装包
 ./generator --deploy_private_key ./myexpandcert ./expand
 # 启动节点

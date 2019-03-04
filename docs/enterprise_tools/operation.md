@@ -355,7 +355,7 @@ $ ./generator -h
 ```bash
 $ ./generator -h
 usage: generator [-h] [--version] [--build_install_package data_dir]
-                 [--build_expand_package conf_dir data_dir]
+                 [--build_expand_package data_dir]
                  [--create_group_config data_dir]
                  [--generate_chain_certificate chain_dir]
                  [--generate_agency_certificate agency_dir chain_dir agency_name]
