@@ -273,10 +273,10 @@ contract HelloWorld{
 }
 ```
 上述源码为solidity编写的HelloWorld合约， 本章节会实现一个相同功能的预编译合约，通过step by step使用户对预编译合约编写有直观的认识。   
-示例的c++[源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/extension/HelloWorldPrecompiled.cpp)：
+示例的c++[源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp)：
 ```
-    extension/HelloWorldPrecompiled.h 
-    extension/HelloWorldPrecompiled.cpp
+    libprecompiled/extension/HelloWorldPrecompiled.h 
+    libprecompiled/extension/HelloWorldPrecompiled.cpp
 ```
 
 ##### 2.2.1 分配合约地址  
@@ -315,33 +315,88 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 该表只存储一对键值对，key字段为hello_key，value字段为hello_value 存储对应的字符串值，可以通过set(string)接口修改，通过get()接口获取。
 
 ##### 2.2.4 实现调用逻辑  
-添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/extension/HelloWorldPrecompiled.cpp#L85)。
+添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L85)。
 ```
 //file HelloWorldPrecompiled.h
 //file HelloWorldPrecompiled.cpp
-bytes HelloWorldPrecompiled::call(
-    dev::blockverifier::ExecutiveContext::Ptr context, bytesConstRef param, Address const& origin)
+bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
+    bytesConstRef _param, Address const& _origin)
 {
-    // 函数名解析
-    uint32_t func = getParamFunc(param);
-    // 参数解析
-    bytesConstRef data = getParamData(param);
-    // 返回值
+    PRECOMPILED_LOG(TRACE) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("call")
+                           << LOG_KV("param", toHex(_param));
+
+    // parse function name
+    uint32_t func = getParamFunc(_param);
+    bytesConstRef data = getParamData(_param);
     bytes out;
-    
-    if (func == name2Selector[HELLO_WORLD_METHOD_GET])
-    {  // get() function call operation
+    dev::eth::ContractABI abi;
+
+    Table::Ptr table = openTable(_context, HELLO_WORLD_TABLE_NAME);
+    if (!table)
+    {
+        // table is not exist, create it.
+        table = createTable(_context, HELLO_WORLD_TABLE_NAME, HELLOWORLD_KEY_FIELD,
+            HELLOWORLD_VALUE_FIELD, _origin);
+        if (!table)
+        {
+            PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("set")
+                                   << LOG_DESC("open table failed.");
+            out = abi.abiIn("", CODE_NO_AUTHORIZED);
+            return out;
+        }
     }
-    else if (func == name2Selector[DAG_TRANSFER_METHOD_SAV_STR_UINT])
-    {  // set(string) function call operation
+    if (func == name2Selector[HELLO_WORLD_METHOD_GET])
+    {  // get() function call
+        // default retMsg
+        std::string retValue = "Hello World!";
+
+        auto entries = table->select(HELLOWORLD_KEY_FIELD_NAME, table->newCondition());
+        if (0u != entries->size())
+        {
+            auto entry = entries->get(0);
+            retValue = entry->getField(HELLOWORLD_VALUE_FIELD);
+            PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("get")
+                                   << LOG_KV("value", retValue);
+        }
+        out = abi.abiIn("", retValue);
+    }
+    else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
+    {  // set(string) function call
+
+        std::string strValue;
+        abi.abiOut(data, strValue);
+        auto entries = table->select(HELLOWORLD_KEY_FIELD_NAME, table->newCondition());
+        auto entry = table->newEntry();
+        entry->setField(HELLOWORLD_KEY_FIELD, HELLOWORLD_KEY_FIELD_NAME);
+        entry->setField(HELLOWORLD_VALUE_FIELD, strValue);
+
+        int count = 0;
+        if (0u != entries->size())
+        {  // update
+            count = table->update(HELLOWORLD_KEY_FIELD_NAME, entry, table->newCondition(),
+                std::make_shared<AccessOptions>(_origin));
+        }
+        else
+        {  // insert
+            count = table->insert(
+                HELLOWORLD_KEY_FIELD_NAME, entry, std::make_shared<AccessOptions>(_origin));
+        }
+
+        if (count == CODE_NO_AUTHORIZED)
+        {  //  permission denied
+            PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("set")
+                                   << LOG_DESC("non-authorized");
+        }
+        out = abi.abiIn("", count);
     }
     else
     {  // unkown function call
-        
+        PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC(" unkown func ")
+                               << LOG_KV("func", func);
     }
+
     return out;
 }
-
 ```
 
 ##### 2.2.5 注册合约
