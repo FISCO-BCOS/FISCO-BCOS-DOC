@@ -43,25 +43,25 @@
 ```
 针对用户表和每个系统表，SDK分别实现三个接口进行权限相关操作：
 - 用户表：
-  - **public String addUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
-  - **public String removeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
-  - **public List\<AuthorityInfo\> queryUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
+  - **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
+  - **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
+  - **public List\<AuthorityInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
 - _sys_tables_表：
   - **public String addDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
   - **public String removeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
   - **public List\<AuthorityInfo\> queryDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
 - _sys_table_access_表：
-  - **public String addAuthorityManager(String address)：** 增加外部账号地址的管理权限的权限。
-  - **public String removeAuthorityManager(String address)：** 移除外部账号地址的管理权限的权限。
-  - **public List\<AuthorityInfo\> queryAuthorityManager()：** 查询拥有管理权限的权限记录列表。
+  - **public String grantPermissionManager(String address)：** 增加外部账号地址的管理权限的权限。
+  - **public String revokePermissionManager(String address)：** 移除外部账号地址的管理权限的权限。
+  - **public List\<AuthorityInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
 - _sys_consensus_表：
-  - **public String addNodeManager(String address)：** 增加外部账号地址的节点管理权限。
-  - **public String removeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
-  - **public List\<AuthorityInfo\> queryNodeManager()：** 查询拥有节点管理的权限记录列表。
+  - **public String grantNodeManager(String address)：** 增加外部账号地址的节点管理权限。
+  - **public String revokeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
+  - **public List\<AuthorityInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
 - _sys_cns_表：
-  - **public String addCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
-  - **public String removeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
-  - **public List\<AuthorityInfo\> queryCNSManager()：** 查询拥有使用CNS的权限记录列表。
+  - **public String grantCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
+  - **public String revokeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
+  - **public List\<AuthorityInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
 - _sys_config_表：
   - **public String addSysConfig(String address)：** 增加外部账号地址的系统参数管理权限。
   - **public String removeSysConfig(String address)：** 移除外部账号地址的系统参数管理权限。

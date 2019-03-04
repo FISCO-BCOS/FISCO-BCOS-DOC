@@ -270,7 +270,7 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 ```bash
 $ cd ~/fisco
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console/console-0.4.25.tar.gz && tar -zxf console-0.4.25.tar.gz
 
 # 进入控制台操作目录
 $ cd console

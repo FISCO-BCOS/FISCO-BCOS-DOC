@@ -74,7 +74,7 @@ $ tail -f nodes/log/* | grep +++
 
 ```bash
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console/console-0.4.25.tar.gz && tar -zxf console-0.4.25.tar.gz
 $ cd console
 
 # 设启动组1的控制台
