@@ -180,7 +180,7 @@ getGroupPeers                            Query nodeId list for sealer and observ
 getPeers                                 Query peers currently connected to the client.
 getConsensusStatus                       Query consensus status.
 getSyncStatus                            Query sync status.
-getClientVersion                         Query the current client version.
+getNodeVersion                         Query the current client version.
 getGroupList                             Query group list.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
@@ -397,10 +397,10 @@ Switched to group 2.
 }
 ```
 
-### **getClientVersion**
-运行getClientVersion，查看节点的版本。
+### **getNodeVersion**
+运行getNodeVersion，查看节点的版本。
 ```bash
-1> getClientVersion
+1> getNodeVersion
 {
 	"Build Time":"20190107 10:15:23",
 	"Build Type":"Linux/g++/RelWithDebInfo",

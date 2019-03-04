@@ -33,9 +33,9 @@ SDK提供对[分布式控制权限](../manual/priority_control.md)的支持，Au
 - **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
 - **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
 - **public List\<AuthorityInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
-- **public String addDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
-- **public String removeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
-- **public List\<AuthorityInfo\> queryDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
+- **public String grantDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
+- **public String revokeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
+- **public List\<AuthorityInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
 - **public String grantPermissionManager(String address)：** 增加外部账号地址的管理权限的权限。
 - **public String revokePermissionManager(String address)：** 移除外部账号地址的管理权限的权限。
 - **public List\<AuthorityInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
