@@ -4,11 +4,15 @@
 
 FISCO BCOS generator的配置文件在./conf文件夹下，共有三个配置文件：`mchain.ini`、`mexpand.ini`和`mgroup.ini`。分别对应新建节点及群组、扩容新节点加入现有群组、节点划分新群组三种操作的配置。
 
-### meta元数据文件夹
+用户通过对conf文件夹下文件的操作，配置生成节点安装包的具体信息。
 
-meta文件夹下需要存放`fisco bcos`二进制文件、链证书ca.crt、节点证书等。
+### 元数据文件夹meta
+
+FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书ca.crt、节点证书、群组创世区块文件等。
 
 证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。节点证书需要已经拼装好agency.crt。
+
+FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书、可执行程序生成用户在conf下配置的节点安装包。
 
 ### mchain.ini
 
@@ -64,6 +68,9 @@ group_id=1
 与`mchain.ini`配置相似，通过修改`mexpand.ini`的配置，用户可以使用--expand命令在指定文件夹下生成节点不含私钥的安装包。用户配置的每个section[node]即为生成好的链的安装包。
 
 ```ini
+[group]
+group_id=1
+
 [node0]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
@@ -78,8 +85,11 @@ p2p_listen_port=30305
 channel_listen_port=20205
 jsonrpc_listen_port=8550
 
-[group]
-group_id=1
+[members]
+member0=127.0.0.1:30300 # 已在group1中的节点p2p地址信息
+member1=127.0.0.1:30301
+member2=127.0.0.1:30302
+member3=127.0.0.1:30303
 ```
 
 上述配置在执行expand命令后会在指定目录下生成名为node_127.0.0.1_30304、node_127.0.0.1_30305的不含节点私钥的安装包。节点包含group1中配置文件，经过group1中的节点发交易后作为新节点加入group1的共识/观察列表中。
@@ -155,7 +165,7 @@ $ ./generator --demo
     此操作仅供体验，实际生产部署中请勿使用本命令
 ```
 
-### build_install_package
+### b/build_install_package
 
 |  |  |
 | :-: | :-: |
@@ -182,8 +192,8 @@ $ ./generator --build_install_package ~/mydata
 |  |  |
 | :-: | :-: |
 | 命令解释 | 扩容新节点加入现有群组 |
-| 使用前提 | 用户需配置`mexpand.ini`，并在meta下配置相关节点的证书，并收集扩容群组已运行节点的配置信息  |
-| 参数设置 | 1.指定原有群组节点配置文件夹 2.指文件夹作为扩容包存放路径 |
+| 使用前提 | 用户需配置`mexpand.ini`，并在meta下配置相关节点的证书，并收集扩容群组已运行群组的创世区块信息  |
+| 参数设置 | 指文件夹作为扩容包存放路径 |
 | 实现功能 | 通过给定节点证书和现有群组节点信息，生成安装包，并加入现有群组中 |
 | 适用场景 | 可用于区块链群组已存在，需要扩容节点安装包 |
 
@@ -192,11 +202,11 @@ $ ./generator --build_install_package ~/mydata
 ```bash
 $ vim ./conf/mexpand.ini
 $ cp node0/node.crt ./meta/cert_127.0.0.1_30307.crt
-$ cp /tmp/config.ini /tmp/group.1.genesis /tmp/group.1.ini ./expand
-$ ./generator --build_expand_package ./expand ~/mydata
+$ cp /tmp/group.1.genesis .meta
+$ ./generator --build_expand_package ./expand
 ```
 
-程序执行完成后，会在~/mydata文件夹下生成名为node_127.0.0.1_30307的文件夹，推送到对应服务器解压后，拷贝私钥到conf下即可启动节点
+程序执行完成后，会在./expand文件夹下生成名为node_127.0.0.1_30307的文件夹，推送到对应服务器解压后，拷贝私钥到conf下即可启动节点
 
 节点正常启动后，使用sdk将节点加入群组，完成扩容操作
 
@@ -345,7 +355,7 @@ $ ./generator -h
 ```bash
 $ ./generator -h
 usage: generator [-h] [--version] [--build_install_package data_dir]
-                 [--build_expand_package conf_dir data_dir]
+                 [--build_expand_package data_dir]
                  [--create_group_config data_dir]
                  [--generate_chain_certificate chain_dir]
                  [--generate_agency_certificate agency_dir chain_dir agency_name]
