@@ -315,7 +315,7 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 该表只存储一对键值对，key字段为hello_key，value字段为hello_value 存储对应的字符串值，可以通过set(string)接口修改，通过get()接口获取。
 
 ##### 2.2.4 实现调用逻辑  
-添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L85)。
+添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
 ```
 //file HelloWorldPrecompiled.h
 //file HelloWorldPrecompiled.cpp
@@ -417,7 +417,7 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 从用户角度，预编译合约与solidity合约的调用方式基本相同，唯一的区别是solidity合约在部署之后才能获取到调用的合约地址，预编译合约的地址为预分配，不用部署，可以直接使用。
 
 #### 3.1 web3sdk调用  
-web3sdk调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用辅助合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。
+web3sdk调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用辅助合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。[web3sdk应用构建案例参考](../tutorial/sdk_application.md)
 
 #### 3.2 solidity调用  
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
