@@ -1,4 +1,4 @@
-# 权限控制手册
+# 权限控制
 
 本文档描述权限控制的实践操作，有关权限控制的详细设计请参考[权限控制设计文档](../design/security_control/permission_control.md)。
 
