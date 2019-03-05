@@ -23,17 +23,17 @@
 |:----|:---|
 |0|success|
 |50000|permission denied|
-|51000|table name and address exist|
+|51000|table name and address already exist|
 |51001|table name and address does not exist|
-|51100|invalid nodeId|
+|51100|invalid node ID|
 |51101|the last sealer cannot be removed|
-|51102|table name and address does not exist|
+|51102|the node is not reachable|
 |51103|the node is not in group peers|
 |51104|the node is already in sealer list|
 |51105|the node is already in observer list|
-|51200|contract name and version exist|
-|51201|version exceeds maximum(40) length|
-|51300|invalid configuration key|
+|51200|contract name and version already exist|
+|51201|version string length exceeds the maximum limit|
+|51300|invalid configuration entry|
 
 ## 控制台配置与运行
 
