@@ -1,16 +1,16 @@
 # 构建第一个区块链应用
 
-本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Java SDK实现对区块链上合约的调用访问。
+本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Web3SDK实现对区块链上合约的调用访问。
 
-本章节教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉Solidity语法。通过学习本教程，你将会了解到以下内容：
+本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉Solidity语法。通过学习教程，你将会了解到以下内容：
 
 1. 如何将一个业务场景的逻辑用合约的形式表达
 2. 如何将Solidity合约转化成Java类
-3. 如何配置Web3SDK，掌握Web3SDK配置所需相关文件
+3. 如何配置Web3SDK
 4. 如何构建一个应用，并集成Web3SDK到应用工程
-5. 如何使用Web3SDK调用合约接口，了解Web3SDK调用合约接口的原理
+5. 如何通过Web3SDK调用合约接口，了解Web3SDK调用合约接口的原理
 
-最后，教程中会提供示例的完整项目源码，用户可以在此基础上快速的修改或者集成自己的功能模块。
+最后，教程中会提供示例的完整项目源码，用户可以在此基础上快速开发自己的应用。
 
 ```eval_rst
 .. important::
@@ -28,21 +28,13 @@
 
 在区块链上进行应用开发时，结合业务需求，首先需要设计对应的智能合约，确定合约需要储存的数据，在此基础上确定智能合约对外提供的接口，最后给出各个接口的具体实现。
 
-### 储存设计 
+### 存储设计 
 
-实现资产管理，首先需要存储资产账户与资产金额的对应关系，逻辑上的存储结构如下：
-
-| 资产账户 | 金额  |
-----------|-------
-|   Alice | 10000 |
-|   Bob   | 20000 |
-
-
-FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。首先需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 - account: 主键，资产账户(字符串类型)
 - asset_value: 资产金额(整形)
 
-其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_asset`表示例如下：
+其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。`t_asset`表示例如下：
 
 | account  | asset_value |
 -----------|-------------
@@ -85,12 +77,12 @@ contract Asset {
         // |---------------------|-------------------|
         //
         // 创建表
-        tf.createTable("t_asset_management", "account", "asset_value");
+        tf.createTable("t_asset", "account", "asset_value");
     }
 
     function openTable() private returns(Table) {
         TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_asset_management");
+        Table table = tf.openTable("t_asset");
         return table;
     }
 
@@ -123,10 +115,9 @@ contract Asset {
     描述 : 资产注册
     参数 ： 
             account : 资产账户
-            amount        : 资产金额
+            amount  : 资产金额
     返回值：
             0  资产注册成功
-            -1 参数错误
             -1 资产账户已存在
             -2 其他错误
     */
@@ -345,7 +336,7 @@ repositories {
 compile ('org.fisco-bcos：web3sdk：2.0.2')
 ```
 
-### 节点证书与项目
+### 证书与配置文件
 - **区块链节点证书配置：**  
 ```bash
 # 进入~/fisco目录
