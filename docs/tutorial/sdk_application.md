@@ -378,7 +378,31 @@ to do :
     3. Asset类使用
 ```
 
-- `Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/fisco/bcos/asset/contract`。
+- `Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/fisco/bcos/asset/contract`。Asset.java的主要接口：
+```java
+package org.fisco.bcos.asset.contract;
+
+public class Asset extends Contract {
+    // Asset.sol合约 transfer接口生成， 同步调用
+    public RemoteCall<TransactionReceipt> transfer(String from_asset_account, String to_asset_account, BigInteger amount);
+    // Asset.sol合约 transfer接口生成， 异步调用
+    public void transfer(String from_asset_account, String to_asset_account, BigInteger amount, TransactionSucCallback callback);
+
+    // Asset.sol合约 register接口生成， 同步调用
+    public RemoteCall<TransactionReceipt> register(String asset_account, BigInteger amount);
+    // Asset.sol合约 register接口生成， 异步调用
+    public void register(String asset_account, BigInteger amount, TransactionSucCallback callback);
+    // Asset.sol合约 select接口生成
+    public RemoteCall<Tuple2<BigInteger, BigInteger>> select(String asset_account);
+
+    // 加载Asset.sol地址，生成Asset对象
+    public static Asset load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
+
+    // 部署Assert.sol合约
+    public static RemoteCall<Asset> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
+}
+
+```
 - `AssetClient.java`：此类是应用的入口，负责应用的核心业务逻辑处理，通过调用`Asset.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
 ```java
 public void initialize() throws Exception {
@@ -391,6 +415,7 @@ public void initialize() throws Exception {
 
 		ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 		channelEthereumService.setChannelService(service);
+        
 		Web3j web3j = Web3j.build(channelEthereumService, 1);
 
 		// init Credentials
