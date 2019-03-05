@@ -14,7 +14,7 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 
 ```
 
-控制台提供 **[setSystemConfigByKey(ssc)](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey(gsc)](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
+控制台提供 **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
 
 
 ```eval_rst

@@ -29,17 +29,17 @@
 
 ## 安装依赖
 
-部署FISCO BCOS区块链节点前，需安装`openssl，leveldb，curl`等依赖软件，具体命令如下：
+部署FISCO BCOS区块链节点前，需安装`openssl，curl`等依赖软件，具体命令如下：
 
 ```bash
 ### CentOS
-$ sudo yum -y install openssl openssl-devel leveldb leveldb-devel curl
+$ sudo yum install -y openssl openssl-devel curl
 
 ### Ubuntu
-$ sudo apt-get install openssl libssl-dev libleveldb-dev curl
+$ sudo apt-get install -y openssl libssl-dev curl
 
 ### Mac OS
-$ brew install openssl leveldb
+$ brew install -y openssl
 ```
 
 ## 星形拓扑
@@ -59,9 +59,9 @@ $ brew install openssl leveldb
    - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器** 
 ```
 
-### 构建星形区块链安装包
+### 构建星形区块链节点配置文件夹
 
-[build_chain](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链安装包：
+[build_chain](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链节点配置文件夹：
 
 **准备依赖**
 
@@ -98,7 +98,7 @@ $ cat ipconf
 127.0.0.1:2 agencyD 3
 ```
 
-**使用build_chain脚本构建星形区块链安装包**
+**使用build_chain脚本构建星形区块链节点配置文件夹**
 
 ```bash
 # 根据配置生成星形区块链
@@ -413,7 +413,7 @@ info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9
 
 ### 构建单群组四节点区块链
 
-> **用build_chain脚本生成单群组四节点区块链安装包**
+> **用build_chain脚本生成单群组四节点区块链节点配置文件夹**
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
