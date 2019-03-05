@@ -444,9 +444,9 @@ deploy Asset success, contract address is 0x23461960a54ec0d41e82631e92118bab12bc
 - 注册资产信息
 ```bash
 $ bash asset_run.sh register Alice 999999999
-register asset account success => asset: Alice, amount: 999999999
+register asset account success => asset: Alice, value: 999999999
 $ bash asset_run.sh register Bob 111111111
-register asset account success => asset: Bob, amount: 111111111 
+register asset account success => asset: Bob, value: 111111111 
 ```
 - 查询资产信息
 ```bash
@@ -460,9 +460,9 @@ asset account Bob, value 111111111
 $ bash asset_run.sh transfer Alice Bob  555555
 transfer success => from_asset: Alice, to_asset: Bob, amount: 555555 
 $ bash asset_run.sh query Alice 
-asset account Alice, amount 999444444 
+asset account Alice, value 999444444 
 $ bash asset_run.sh query Bob
-asset account Bob, amount 111666666
+asset account Bob, value 111666666
 ```
 
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
