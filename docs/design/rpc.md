@@ -8,7 +8,7 @@ RPC(Remote Procedure Call，远程过程调用)是客户端与区块链系统交
 ## 2 模块架构
  ![](../../images/rpc/rpc.png)
  
- RPC模块负责提供FISCO BCOS的外部接口，客户端通过RPC发送请求，RPC通过调用[账本管理模块](architecture/group.md)和[p2p模块](p2p/P2P.md)获取相关响应，并将响应返回给客户端。其中账本管理模块通过多账本机制管理区块链底层的相关模块，具体包括[共识模块](consensus/index.html)，[同步模块](sync/sync.md)，区块管理模块，交易池模块以及区块验证模块。
+ RPC模块负责提供FISCO BCOS的外部接口，客户端通过RPC发送请求，RPC通过调用[账本管理模块](architecture/group.md)和[p2p模块](p2p/p2p.md)获取相关响应，并将响应返回给客户端。其中账本管理模块通过多账本机制管理区块链底层的相关模块，具体包括[共识模块](consensus/index.html)，[同步模块](sync/sync.md)，区块管理模块，交易池模块以及区块验证模块。
 
 ## 3 数据定义
 ### 3.1 客户端请求

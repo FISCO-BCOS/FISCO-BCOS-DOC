@@ -766,7 +766,7 @@ Hello,FISCO-BCOS
 ```
 
 ### **deployByCNS**
-deployByCNS，利用[CNS](../design/features/CNS_contract_name_service.md)部署合约。                                 
+deployByCNS，利用[CNS](../design/features/cns_contract_name_service.md)部署合约。                                 
 参数：
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
