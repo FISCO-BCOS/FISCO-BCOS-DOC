@@ -1,8 +1,11 @@
 # 案例分析
 
-## 组网示例
+```eval_rst
+.. important::
+    使用前建议优先阅读 `教程-使用企业工具 <../tutorial/enterprise_quick_start.html>`_ 
+```
 
-使用前建议优先阅读[教程-使用企业工具](../tutorial/enterprise_quick_start.md)
+## 组网示例
 
 本节中我们将给出一个常见场景的例子。在本场景中，共有4家机构，分别为A、B、C、D。部署节点如下表所示
 
