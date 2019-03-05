@@ -1,6 +1,6 @@
 # JSON-RPC API
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[listen_ip]`和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误返回码参考[RPC设计文档](design/rpc.md)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[listen_ip]`和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.md)。
 
 ## getClientVersion
 返回节点的版本信息
@@ -88,7 +88,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 共识节点nodeID列表         
+- `array` - 共识节点nodeId列表         
 - 示例          
 ```
 // Request
@@ -111,7 +111,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id"
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 观察节点nodeID列表       
+- `array` - 观察节点nodeId列表       
 - 示例          
 ```
 // Request
@@ -145,9 +145,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
    -  `highestblockNumber`: `unsigned int` - 最新区块高度            
    -  `leaderFailed`: `bool` - leader失败标志            
    -  `max_faulty_leader`: `unsigned int` - 最大容错节点数            
-   -  `sealer.index`: `string` - 节点序号为index的nodeID            
+   -  `sealer.index`: `string` - 节点序号为index的nodeId            
    -  `node index`: `unsigned int` - 节点的序号            
-   -  `nodeID`: `string` - 节点的nodeID            
+   -  `nodeId`: `string` - 节点的nodeId            
    -  `nodeNum`: `unsigned int` - 节点的数            
    -  `omitEmptyBlock`: `bool` - 忽略空块标志位            
    -  `protocolId`: `unsigned int` - 协议ID号            
@@ -179,12 +179,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
     - `groupId`: `unsigned int` - 群组ID            
     - `highestblockHash`: `string` - 最新块哈希            
     - `highestblockNumber`: `unsigned int` - 最新区块高度            
-    - `leaderId`: `string` - leader的nodeID            
+    - `leaderId`: `string` - leader的nodeId            
     - `leaderIdx`: `unsigned int` - leader的序号            
     - `max_faulty_leader`: `unsigned int` - 最大容错节点数            
-    - `sealer.index`: `string` - 节点序号为index的nodeID            
+    - `sealer.index`: `string` - 节点序号为index的nodeId            
     - `node index`: `unsigned int` - 节点的index            
-    - `nodeID`: `string` - 节点的nodeID            
+    - `nodeId`: `string` - 节点的nodeId            
     - `nodeNum`: `unsigned int` - 节点的数            
     - `omitEmptyBlock`: `bool` - 忽略空块标志位            
     - `protocolId`: `unsigned int` - 协议ID号            
@@ -207,7 +207,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
             "consensusedBlockNumber":4,
             "currentView":153,
             "groupId":1,
-            "highestblockHash":"98e186095a88f7b1b4cd02e3c405f031950577626dab55b639e024b9f2f8788b",
+            "highestblockHash":"0x98e186095a88f7b1b4cd02e3c405f031950577626dab55b639e024b9f2f8788b",
             "highestblockNumber":3,
             "leaderFailed":false,
             "max_faulty_leader":1,
@@ -216,32 +216,32 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
             "sealer.2":"87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1",
             "sealer.3":"d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
             "node index":1,
-            "nodeID":"41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
+            "nodeId":"41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
             "nodeNum":4,
             "omitEmptyBlock":true,
             "protocolId":264,
             "toView":153
         },
         {
-            "prepareCache_blockHash":"0000000000000000000000000000000000000000000000000000000000000000",
+            "prepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
             "prepareCache_height":-1,
             "prepareCache_idx":"65535",
             "prepareCache_view":"9223372036854775807"
         },
         {
-            "rawPrepareCache_blockHash":"0000000000000000000000000000000000000000000000000000000000000000",
+            "rawPrepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
             "rawPrepareCache_height":-1,
             "rawPrepareCache_idx":"65535",
             "rawPrepareCache_view":"9223372036854775807"
         },
         {
-            "committedPrepareCache_blockHash":"2e4c63cfac7726691d1fe436ec05a7c5751dc4150d724822ff6c36a608bb39f2",
+            "committedPrepareCache_blockHash":"0x2e4c63cfac7726691d1fe436ec05a7c5751dc4150d724822ff6c36a608bb39f2",
             "committedPrepareCache_height":3,
             "committedPrepareCache_idx":"2",
             "committedPrepareCache_view":"60"
         },
         {
-            "futureCache_blockHash":"0000000000000000000000000000000000000000000000000000000000000000",
+            "futureCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
             "futureCache_height":-1,
             "futureCache_idx":"65535",
             "futureCache_view":"9223372036854775807"
@@ -272,7 +272,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
       "cfgErr": false,
       "consensusedBlockNumber": 1,
       "groupId": 1,
-      "highestblockHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+      "highestblockHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
       "highestblockNumber": 0,
       "leaderId": "d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
       "leaderIdx": 3,
@@ -282,7 +282,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
       "sealer.2": "87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1",
       "sealer.3": "d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
       "node index": 1,
-      "nodeID": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
+      "nodeId": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
       "nodeNum": 4,
       "omitEmptyBlock": true,
       "protocolId": 267
@@ -300,14 +300,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
     - `genesisHash`: `string` - 创世块哈希            
     - `isSyncing`: `bool` - 正在同步标志            
     - `latestHash`: `string` - 最新区块哈希            
-    - `nodeId`: `string` - 节点的nodeID            
+    - `nodeId`: `string` - 节点的nodeId            
     - `protocolId`: `unsigned int` - 协议ID号            
     - `txPoolSize`: `string` - 交易池中交易的数量            
     - `peers`: `array` - 已连接的指定群组内p2p节点，节点信息字段如下: 
         - `blockNumber`: `unsigned int` - 最新区块高度            
         - `genesisHash`: `string` - 创始区块哈希            
         - `latestHash`: `string` - 最新块哈希            
-        - `nodeId`: `string` - 节点的nodeID            
+        - `nodeId`: `string` - 节点的nodeId            
        
 - 示例
 ```
@@ -320,27 +320,27 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
   "jsonrpc": "2.0",
   "result": {
     "blockNumber": 0,
-    "genesisHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+    "genesisHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "isSyncing": false,
-    "latestHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+    "latestHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "nodeId": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
     "peers": [
       {
         "blockNumber": 0,
-        "genesisHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-        "latestHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+        "genesisHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+        "latestHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
         "nodeId": "29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0"
       },
       {
         "blockNumber": 0,
-        "genesisHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-        "latestHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+        "genesisHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+        "latestHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
         "nodeId": "87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1"
       },
       {
         "blockNumber": 0,
-        "genesisHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-        "latestHash": "4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+        "genesisHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
+        "latestHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
         "nodeId": "d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8"
       }
     ],
@@ -356,7 +356,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 ### 返回值          
 - `array` - 已连接的p2p节点信息，字段如下：
     - `IPAndPort`: `string` - 节点连接的ip和端口            
-    - `NodeID`: `string` - 节点的nodeID            
+    - `nodeId`: `string` - 节点的nodeId            
     - `Topic`: `array` - 节点关注的topic信息            
       
 - 示例          
@@ -372,17 +372,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
     "result": [
         {
             "IPAndPort": "127.0.0.1:30308",
-            "NodeID": "0701cc9f05716690437b78db5b7c9c97c4f8f6dd05794ba4648b42b9267ae07cfcd589447ac36c491e7604242149601d67c415504a838524939ef2230d36ffb8",
+            "nodeId": "0701cc9f05716690437b78db5b7c9c97c4f8f6dd05794ba4648b42b9267ae07cfcd589447ac36c491e7604242149601d67c415504a838524939ef2230d36ffb8",
             "Topic": [ ]
         },
         {
             "IPAndPort": "127.0.0.1:58348",
-            "NodeID": "353ab5990997956f21b75ff5d2f11ab2c6971391c73585963e96fe2769891c4bc5d8b7c3d0d04f50ad6e04c4445c09e09c38139b1c0a5937a5778998732e34da",
+            "nodeId": "353ab5990997956f21b75ff5d2f11ab2c6971391c73585963e96fe2769891c4bc5d8b7c3d0d04f50ad6e04c4445c09e09c38139b1c0a5937a5778998732e34da",
             "Topic": [ ]
         },
         {
             "IPAndPort": "127.0.0.1:30300",
-            "NodeID": "73aebaea2baa9640df416d0e879d6e0a6859a221dad7c2d34d345d5dc1fe9c4cda0ab79a7a3f921dfc9bdea4a49bb37bdb0910c338dadab2d8b8e001186d33bd",
+            "nodeId": "73aebaea2baa9640df416d0e879d6e0a6859a221dad7c2d34d345d5dc1fe9c4cda0ab79a7a3f921dfc9bdea4a49bb37bdb0910c338dadab2d8b8e001186d33bd",
             "Topic": [ ]
         }
     ]
@@ -393,7 +393,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
-- `array` - 共识节点和观察节点的nodeID列表     
+- `array` - 共识节点和观察节点的nodeId列表     
         
 - 示例          
 ```
@@ -412,17 +412,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
     ]
 }
 ```
-## getNodeIDList
+## getnodeIdList
 返回节点本身和已连接的p2p节点列表
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 节点本身和已连接p2p节点的nodeID列表 
+- `array` - 节点本身和已连接p2p节点的nodeId列表 
 
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getnodeIdList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -470,7 +470,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `logsBloom`: `string` - log的布隆过滤器值     
     - `number`: `string` - 区块高度               
     - `parentHash`: `string` - 父区块哈希      
-    - `sealer`: `string` - 共识节点序号     
+    - `sealer`: `string` - 共识节点序号
+    - `sealerList`: `array` - 共识节点列表      
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](#getTransactionByHash)）
@@ -493,6 +494,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
     "number": "0x1",
     "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "sealer": "0x3",
+    "sealerList":[
+    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
+    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
+    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
+    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    ],
     "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
     "timestamp": "0x1687e801d99",
     "transactions": [
@@ -530,6 +537,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
     "number": "0x1",
     "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "sealer": "0x3",
+    "sealerList":[
+    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
+    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
+    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
+    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    ],    
     "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
     "timestamp": "0x1687e801d99",
     "transactions": [
