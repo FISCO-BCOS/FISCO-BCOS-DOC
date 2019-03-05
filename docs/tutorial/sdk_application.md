@@ -29,17 +29,17 @@ to do:
 
 ## 合约开发
 
-**业务表设计：** 实现资产管理，首先需要设计一个存储资产管理的表`t_asset_management`，该表字段如下：
-- asset_account：主键，资产账户(字符串类型)
-- asset_amount：资产金额(整形)
+**业务表设计：** 实现资产管理，首先需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+- account：主键，资产账户(字符串类型)
+- asset_value：资产金额(整形)
 
-其中asset_account是主键，即操作`t_asset_management`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_asset_management`表示例如下：
+其中asset_account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_asset`表示例如下：
 
 
 ```eval_rst
 
 +-----------------+------------------+
-|  asset_account  |   asset_amount   |
+|     account     |   asset_value   |
 +=================+==================+
 |      Alice      |     10000        |
 +-----------------+------------------+
@@ -48,7 +48,7 @@ to do:
 
 ```
 
-**业务合约开发：**  针对资产管理表，可以设计一个智能合约对资产进行操作。FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`Asset.sol`合约，通过该合约操作资产表`t_asset_management`。
+**业务合约开发：**  针对资产管理表，可以设计一个智能合约对资产进行操作。FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`Asset.sol`合约，通过该合约操作资产表`t_asset`。
 - `Asset.sol`合约设计如下：
 ```solidity
 pragma solidity ^0.4.25;
@@ -57,77 +57,79 @@ import "./Table.sol";
 
 contract Asset {
 
-    event RegisterEvent(int256 ret, string asset_account, uint256 amount);
-    event TransferEvent(int256 ret, string from_asset_account, string to_asset_account, uint256 amount);
+    event RegisterEvent(int256 ret, string account, uint256 amount);
+    event TransferEvent(int256 ret, string from_account, string to_account, uint256 amount);
 
     function Asset() public {
         createTable();
     }
 
+    // 创建t_asset表
     function createTable() private {
         TableFactory tf = TableFactory(0x1001); 
-        // 资产管理表, key : asset_account, field : asset_amount
+        // 资产管理表, key : account, field : asset_value
         // |  资产账户(主键)      |     资产金额       |
         // |-------------------- |-------------------|
-        // |  asset_account      |  asset_amount     |     
+        // |      account        |   asset_value     |     
         // |---------------------|-------------------|
         //
         // 创建表
-        tf.createTable("t_asset_management", "asset_account", "asset_amount");
+        tf.createTable("t_asset", "account", "asset_value");
     }
 
+    // 打开t_asset表
     function openTable() private returns(Table) {
         TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_asset_management");
+        Table table = tf.openTable("t_asset");
         return table;
     }
 
     /*
     描述 : 根据资产账户查询资产金额
     参数 ： 
-            asset_account : 资产账户
+            account : 资产账户
 
     返回值：
             第一个参数： 成功返回0, 账户不存在返回-1
             第二个参数： 第一个参数为0时有效，资产金额
     */
-    function select(string asset_account) public constant returns(int256, uint256) {
+    function select(string account) public constant returns(int256, uint256) {
 
         Table table = openTable();
         Condition condition = table.newCondition();
-        condition.EQ("asset_account", asset_account);
+        condition.EQ("account", account);
         
-        Entries entries = table.select(asset_account, table.newCondition());
+        Entries entries = table.select(account, table.newCondition());
         uint256 amount = 0;
         if (0 == uint256(entries.size())) {
             return (-1, amount);
         } else {
             Entry entry = entries.get(0);
-            return (0, uint256(entry.getInt("asset_amount")));
+            return (0, uint256(entry.getInt("asset_value")));
         }
     }
 
     /*
     描述 : 资产注册
     参数 ： 
-            asset_account : 资产账户
+            account : 资产账户
             amount        : 资产金额
     返回值：
             0  资产注册成功
             -1 资产账户已存在
             -2 其他错误
     */
-    function register(string asset_account, uint256 amount) public returns(int256){
+    function register(string account, uint256 amount) public returns(int256){
         int256 ret_code = 0;
-        var (ret, temp_amount) = select(asset_account);
+        var (ret, temp_amount) = select(account);
         if(ret != 0) {
             Table table = openTable();
             //插入
             Entry entry = table.newEntry();
-            entry.set("asset_account", asset_account);
-            entry.set("asset_amount", int256(amount));
+            entry.set("account", account);
+            entry.set("asset_value", int256(amount));
 
-            int count = table.insert(asset_account, entry);
+            int count = table.insert(account, entry);
             if (count == 1) {
                 ret_code = 0;
             } else {
@@ -138,8 +140,7 @@ contract Asset {
             ret_code = -1;
         }
 
-        RegisterEvent(ret_code, asset_account, amount);
-
+        RegisterEvent(ret_code, account, amount);
         return ret_code;
     }
 
@@ -170,7 +171,6 @@ contract Asset {
             //转移资产的账户不存在
             TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
             return ret_code;
-
         }
 
         // 查询接收资产账户信息
@@ -198,12 +198,12 @@ contract Asset {
 
         Table table = openTable();
         Condition condition0 = table.newCondition();
-        condition0.EQ("asset_account", from_asset_account);
+        condition0.EQ("account", from_asset_account);
 
         //插入
         Entry entry0 = table.newEntry();
-        entry0.set("asset_account", from_asset_account);
-        entry0.set("asset_amount", int256(from_asset_amount - amount));
+        entry0.set("account", from_asset_account);
+        entry0.set("asset_value", int256(from_asset_amount - amount));
         
         int count = table.update(from_asset_account, entry0, condition0);
         if(count != 1) {
@@ -214,24 +214,22 @@ contract Asset {
         }
 
         Condition condition1 = table.newCondition();
-        condition1.EQ("asset_account", to_asset_account);
+        condition1.EQ("account", to_asset_account);
 
         Entry entry1 = table.newEntry();
-        entry1.set("asset_account", to_asset_account);
-        entry1.set("asset_amount", int256(to_asset_amount + amount));
+        entry1.set("account", to_asset_account);
+        entry1.set("asset_value", int256(to_asset_amount + amount));
         table.update(to_asset_account, entry1, condition1);
 
         TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
-
         return ret_code;
-
     }
 }
 ```
 
  **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-**小结：** 我们根据业务需求设计了一个业务表`t_asset_management`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`Asset.sol`。由于Java应用不能直接调用solidity合约文件，下一步将开发的`Asset.sol`合约编译为Java合约文件。
+**小结：** 我们根据业务需求设计了一个业务表`t_asset`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`Asset.sol`。由于Java应用不能直接调用solidity合约文件，下一步将开发的`Asset.sol`合约编译为Java合约文件。
 
 ## 合约编译
 控制台提供了合约编译工具。将`Asset.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
@@ -307,9 +305,9 @@ asset-app项目的目录结构如下：
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
 |           |-- contract //存放solidity约文件
-|           |   |-- Asset.sol
-|           |   |-- Table.sol
-
+|                   |-- Asset.sol
+|                   |-- Table.sol
+|
 |-- tool
     |-- asset_run.sh // 项目运行脚本
 ```
@@ -331,7 +329,7 @@ repositories {
 compile ('org.fisco-bcos：web3sdk：2.0.2')
 ```
 
-### 节点证书与项目配置文件设置
+### 节点证书与项目
 - **区块链节点证书配置：**  
 ```bash
 # 进入~/fisco目录
@@ -339,7 +337,7 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
-- `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点的channel_ip与channel_port有所改动，需要配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
+- `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
@@ -353,7 +351,7 @@ to do :
     3. Asset类使用
 ```
 
-- `Asset.java`： 此类由`Asset.sol`通过控制台编译工具编译生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/fisco/bcos/asset/contract`。
+- `Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/fisco/bcos/asset/contract`。
 - `AssetClient.java`：此类是应用的入口，负责应用的核心业务逻辑处理，通过调用`Asset.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
 ```java
 public void initialize() throws Exception {
