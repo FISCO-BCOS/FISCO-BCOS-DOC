@@ -314,7 +314,7 @@ $ ./generator --generate_all_certificates ./cert
 ```eval_rst
 .. note::
     
-    此命令会根据meta目录下存放的ca.crt和ca.key生成相应的节点证书，如果没有根证书会自动生成
+    此命令会根据meta目录下存放的ca.crt和ca.key生成相应的节点证书，如果没有根证书会自动生成。此步中如果用户已经拥有根证书ca.crt，但是缺少私钥ca.key（或缺少机构证书agency.crt和机构私钥agency.key，只需拥有一个私钥即可）则无法生成证书
 ```
 
 执行完成后会在./cert文件夹下生成节点的相关证书与私钥，并拷贝节点证书放置于./meta下
