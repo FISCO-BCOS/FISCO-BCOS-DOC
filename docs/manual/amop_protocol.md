@@ -112,9 +112,9 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 
 服务端代码案例：
 
-```
+```java
 package org.fisco.bcos.channel.test.amop;
-	
+
 import org.fisco.bcos.channel.client.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,38 +124,38 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.HashSet;
 import java.util.Set;
 
-	
-	public class Channel2Server {
-		static Logger logger = LoggerFactory.getLogger(Channel2Server.class);
-		
-		public static void main(String[] args) throws Exception {
-			if(args.length < 1) {
-				System.out.println("参数: 接收topic");
-				return;
-			}
-			
-			String topic = args[0];
-	
-			ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-			Service service = context.getBean(Service.class);
-			
-			//设置topic，支持多个topic
-			Set<String> topics = new HashSet<String>();
-        	topics.add(topic);
-        	service.setTopics(topics);
-			
-			//处理消息的PushCallback类，参见Callback代码
-			PushCallback cb = new PushCallback();
-			service.setPushCallback(cb);
-			
-			//启动服务
-			service.run();
-		}
-	}
+public class Channel2Server {
+    static Logger logger = LoggerFactory.getLogger(Channel2Server.class);
+
+    public static void main(String[] args) throws Exception {
+        if(args.length < 1) {
+            System.out.println("参数: 接收topic");
+            return;
+        }
+
+        String topic = args[0];
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        Service service = context.getBean(Service.class);
+
+        // 设置topic，支持多个topic
+        Set<String> topics = new HashSet<String>();
+        topics.add(topic);
+        service.setTopics(topics);
+
+        // 处理消息的PushCallback类，参见Callback代码
+        PushCallback cb = new PushCallback();
+        service.setPushCallback(cb);
+
+        // 启动服务
+        service.run();
+    }
+}
 ```
+
 服务端的PushCallback类案例：
 
-```
+```java
 package org.fisco.bcos.channel.test.amop;
 
 import java.time.LocalDateTime;
@@ -169,28 +169,29 @@ import org.fisco.bcos.channel.dto.ChannelPush;
 import org.fisco.bcos.channel.dto.ChannelResponse;
 
 class PushCallback extends ChannelPushCallback {
-	static Logger logger = LoggerFactory.getLogger(PushCallback2.class);
-	
-	//onPush方法，在收到AMOP消息时被调用
-	@Override
-	public void onPush(ChannelPush push) {
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		logger.debug("收到PUSH消息:" + push.getContent());
-		
-		System.out.println(df.format(LocalDateTime.now()) + "server:收到PUSH消息:" + push.getContent());
-		
-		//回包消息
-		ChannelResponse response = new ChannelResponse();
-		response.setContent("receive request seq:" + String.valueOf(push.getMessageID()));
-		response.setErrorCode(0);
-		
-		push.sendResponse(response);
-	}
+    static Logger logger = LoggerFactory.getLogger(PushCallback2.class);
+
+    // onPush方法，在收到AMOP消息时被调用
+    @Override
+    public void onPush(ChannelPush push) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        logger.debug("收到PUSH消息:" + push.getContent());
+
+        System.out.println(df.format(LocalDateTime.now()) + "server:收到PUSH消息:" + push.getContent());
+
+        // 回包消息
+        ChannelResponse response = new ChannelResponse();
+        response.setContent("receive request seq:" + String.valueOf(push.getMessageID()));
+        response.setErrorCode(0);
+
+        push.sendResponse(response);
+    }
 }
 ```
 
 客户端案例：
-```
+
+```java
 package org.fisco.bcos.channel.test.amop;
 
 import java.time.LocalDateTime;
@@ -206,36 +207,36 @@ import org.fisco.bcos.channel.dto.ChannelRequest;
 import org.fisco.bcos.channel.dto.ChannelResponse;
 
 public class Channel2Client {
-	static Logger logger = LoggerFactory.getLogger(Channel2Client.class);
-	
-	public static void main(String[] args) throws Exception {
-		if(args.length < 2) {
-				System.out.println("param: target topic total number of request");
-				return;
-			}
-		
-		String topic = args[0];
-			Integer count = Integer.parseInt(args[1]);
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    static Logger logger = LoggerFactory.getLogger(Channel2Client.class);
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+    public static void main(String[] args) throws Exception {
+        if(args.length < 2) {
+            System.out.println("param: target topic total number of request");
+            return;
+        }
 
-		Service service = context.getBean(Service.class);
-		service.run();
-		
-		Thread.sleep(2000); //建立连接需要一点时间，如果立即发送消息会失败
+        String topic = args[0];
+            Integer count = Integer.parseInt(args[1]);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-		ChannelRequest request = new ChannelRequest();
-		request.setToTopic(topic); //设置消息topic
-		request.setMessageID(service.newSeq()); //消息序列号，唯一标识某条消息，可用newSeq()随机生成
-		request.setTimeout(5000); //消息的超时时间
-			
-		request.setContent("request seq:" + request.getMessageID()); //发送的消息内容
-			
-		ChannelResponse response = service.sendChannelMessage2(request); //发送消息
-			
-		System.out.println(df.format(LocalDateTime.now()) + "response seq:" + String.valueOf(response.getMessageID()) + ", 错误码:" + response.getErrorCode() + ", 内容:" + response.getContent());
-	}
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+
+        Service service = context.getBean(Service.class);
+        service.run();
+
+        Thread.sleep(2000);  // 建立连接需要一点时间，如果立即发送消息会失败
+
+        ChannelRequest request = new ChannelRequest();
+        request.setToTopic(topic);  // 设置消息topic
+        request.setMessageID(service.newSeq());  // 消息序列号，唯一标识某条消息，可用newSeq()随机生成
+        request.setTimeout(5000);  // 消息的超时时间
+
+        request.setContent("request seq:" + request.getMessageID());  // 发送的消息内容
+
+        ChannelResponse response = service.sendChannelMessage2(request);  // 发送消息
+
+        System.out.println(df.format(LocalDateTime.now()) + "response seq:" + String.valueOf(response.getMessageID()) + ", 错误码:" + response.getErrorCode() + ", 内容:" + response.getContent());
+    }
 }
 ```
 
@@ -243,15 +244,14 @@ public class Channel2Client {
 按上述说明配置好后，用户指定一个主题：topic，执行以下两个命令可以进行测试。  
 
 启动amop服务端：  
-```
+```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
 ```  
 启动amop客户端：   
-```
+```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Client [topic] [消息条数]
 ```
 
 ## 错误码
-- 99：发送消息失败，AMOP经由所有链路的尝试后，消息未能发到服务端，建议使用发送时生成的seq，检查链路上各个节点的处理情况。
+- 99：发送消息失败，AMOP经由所有链路的尝试后，消息未能发到服务端，建议使用发送时生成的`seq`，检查链路上各个节点的处理情况。
 - 102：消息超时，建议检查服务端是否正确处理了消息，带宽是否足够。
-
