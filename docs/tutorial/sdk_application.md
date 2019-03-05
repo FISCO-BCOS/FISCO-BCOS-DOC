@@ -353,6 +353,7 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
+
 - `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。

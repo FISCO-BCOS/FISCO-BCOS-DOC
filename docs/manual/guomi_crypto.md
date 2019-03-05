@@ -68,7 +68,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/key-manager/build/nodes
 ```
 
-当国密联盟链部署完成之后，其余操作与[hello world](./hello_world.md)的操作相同。
+当国密联盟链部署完成之后，其余操作与[安装](../installation.md)的操作相同。
 
 ## 国密配置信息
 
@@ -96,7 +96,7 @@ ca_cert: gmca证书路径
 
 ## 国密版SDK使用
 
-详细操作参考[sdk文档](../../docs/sdk/config.html#id8)。
+详细操作参考[SDK文档](../sdk/sdk.html#id9)。
 
 ## 国密控制台使用
 
@@ -119,7 +119,7 @@ cmake .. -DBUILD_GM=ON
 
 ### 国密版节点配置
 
-FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两套证书，分别为：conf/gmnode.key 和 conf/origin_cert/node.key。其它与[标准版落盘加密操作](./disk_encryption.md)相同。
+FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两套证书，分别为：conf/gmnode.key 和 conf/origin_cert/node.key。其它与[标准版落盘加密操作](./storage_security.md)相同。
 
 ``` shell
 cd key-manager/scripts
