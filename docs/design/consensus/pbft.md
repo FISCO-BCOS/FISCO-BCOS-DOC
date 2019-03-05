@@ -122,9 +122,7 @@ PBFT共识主要包括Pre-parepare、Prepare和Commit三个阶段：
 
          classDef yellow fill:#FFEEB8,stroke:#FFEEB8,stroke-width:4px, font:#1D263F, text-align:center;
 
-         classDef light fill:#EBF5FF,stroke:#EBF5FF,stroke-width:4px,  font:#1D263F, text-align:center;
-
-         classDef red fill:#FF5656,stroke:#FF5656,stroke-width:4px,  font:#1D263F, text-align:center;
+         classDef light fill:#EBF5FF,stroke:#1D263F,stroke-width:2px,  font:#1D263F, text-align:center;
 
          subgraph 共识处理流程
          A((开始))-->B
