@@ -33,6 +33,6 @@ FISCO BCOS引入的合约命名服务CNS通过提供链上合约名称与合约�
 .. toctree::
    :maxdepth: 1
 
-   CNS_contract_name_service.md
+   cns_contract_name_service.md
    guomi.md
    storage_security.md
