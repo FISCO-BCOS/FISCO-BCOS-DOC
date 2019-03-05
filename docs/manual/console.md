@@ -16,41 +16,24 @@
 
 **注：**
 - 控制台的命令调用RPC接口时，当RPC返回错误响应(具体错误码见[RPC设计文档](../design/rpc.md))，将以json格式显示错误响应的error字段信息。
-- 命令操作系统功能时，会返回json字段，其中code是返回码，msg是返回码的描述信息。响应分为三类：
-    - 操作成功响应：code大于等于0表示操作成功，其code值为成功操作的记录数，msg为“success”。    
-    - 系统性错误响应：无权限操作，其code为-1， msg是“non-authorized”。
-    - 逻辑性错误响应：定义如下。
 
+- 命令操作系统功能时，会返回json字段，其中code是返回码，msg是返回码的描述信息。
 
-```eval_rst
-
-+------+------------------------------------------+
-|code  |msg                                       |
-+======+==========================================+
-|-30   |table name and address exist              |
-+------+------------------------------------------+
-|-31   |table name and address does not exist     |
-+------+------------------------------------------+
-|-40   |invalid nodeId                            |
-+------+------------------------------------------+
-|-41   |last sealer cannot be removed             |
-+------+------------------------------------------+
-|-42   |nodeId is not in network                  |
-+------+------------------------------------------+
-|-43   |nodeId is not in group peers              |
-+------+------------------------------------------+
-|-44   |nodeId is already in sealer list          |
-+------+------------------------------------------+
-|-45   |nodeId is already in observer list        |
-+------+------------------------------------------+
-|-50   |address and version exist                 |
-+------+------------------------------------------+
-|-51   |version exceeds maximum(40) length        |
-+------+------------------------------------------+
-|-60   |set invalid configuration values          |
-+------+------------------------------------------+
-
-```
+|错误码|消息内容|
+|:----|:---|
+|0|success|
+|50000|permission denied|
+|51000|table name and address exist|
+|51001|table name and address does not exist|
+|51100|invalid nodeId|
+|51101|the last sealer cannot be removed|
+|51102|table name and address does not exist|
+|51103|the node is not in group peers|
+|51104|the node is already in sealer list|
+|51105|the node is already in observer list|
+|51200|contract name and version exist|
+|51201|version exceeds maximum(40) length|
+|51300|invalid configuration key|
 
 ## 控制台配置与运行
 
@@ -59,8 +42,8 @@
 #### 控制台配置
 **获取控制台**
 ```bash
-curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
-tar -zxf console.tar.gz
+curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console/console-0.4.25.tar.gz
+tar -zxf console-0.4.25.tar.gz
 ```
 目录结构如下：
 ```
@@ -87,7 +70,49 @@ tar -zxf console.tar.gz
   - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到conf目录下。
   - **通过[企业工具](../enterprise/index.html)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise/manual/cert.md))生成证书和私钥，将生成sdk目录下的ca.crt、node.crt和node.key文件拷贝到conf目录下。
 - 配置conf目录下的applicationContext.xml文件，配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
-  ![](../../images/sdk/sdk_xml.png)
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+         http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+         http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
+        </bean>
+
+        <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <property name="allChannelConnections">
+                        <list>
+                                <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                                        <property name="groupId" value="1" /> <!-- 群组的groupID -->
+                                        <property name="connectionsStr">
+                                                <list>
+                                                        <value>127.0.0.1:20200</value>  <!-- IP:channel_port -->
+                                                </list>
+                                        </property>
+                                </bean>
+                        </list>
+                </property>
+        </bean>
+
+        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+                <property name="groupId" value="1" /> <!-- 连接ID为1的群组 -->
+                <property name="orgID" value="fisco" />
+                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+        </bean>
+
+</beans>
+```
   配置项详细说明如下:
   - encryptType: 国密算法开关(默认为0)                              
     - 0: 不使用国密算法发交易                              
@@ -142,9 +167,10 @@ $ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
 输入help，查看控制台所有的命令。
 
 ```text
->help
+1> help
 -------------------------------------------------------------------------------------
-help                                     Provide help information.
+help(h)                                  Provide help information.
+switch(s)                                Switch to a specific group by group ID.
 getBlockNumber                           Query the number of most recent block.
 getPbftView                              Query the pbft view of node.
 getSealerList                            Query nodeId list for sealer nodes.
@@ -154,7 +180,7 @@ getGroupPeers                            Query nodeId list for sealer and observ
 getPeers                                 Query peers currently connected to the client.
 getConsensusStatus                       Query consensus status.
 getSyncStatus                            Query sync status.
-getClientVersion                         Query the current client version.
+getNodeVersion                         Query the current client version.
 getGroupList                             Query group list.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
@@ -165,7 +191,7 @@ getTransactionByBlockNumberAndIndex      Query information about a transaction b
 getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
 getPendingTransactions                   Query pending transactions.
 getPendingTxSize                         Query pending transactions size.
-getCode(gc)                              Query code at a given address.
+getCode                                  Query code at a given address.
 getTotalTransactionCount                 Query total transaction count.
 deploy                                   Deploy a contract on blockchain.
 call                                     Call a contract by a function and paramters.
@@ -195,32 +221,39 @@ listCNSManager                           Query permission information for CNS.
 grantSysConfigManager                    Grant permission for system configuration by address.
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 listSysConfigManager                     Query permission information for system configuration.
-quit                                     Quit console.
+quit(q)                                  Quit console.
 -------------------------------------------------------------------------------------
 ```
 **注：**                                       
 - help显示每条命令的含义是：命令 命令功能描述                   
 - 查看具体命令的使用介绍说明，输入命令 -h或--help查看。例如：   
 ```bash
->getBlockByNumber -h
+1> getBlockByNumber -h
 Query information about a block by block number.
-Usage: gbbn blockNumber [boolean]
+Usage: getBlockByNumber blockNumber [boolean]
 blockNumber -- Integer of a block number.
 boolean -- (optional) If true it returns the full transaction objects, if false only the hashes of the transactions.
+```
+### **switch**
+运行switch，切换到连接节点的其他群组。
+
+```bash
+1> switch 2
+Switched to group 2.
 ```
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
 
 ```bash
->getBlockNumber
+1> getBlockNumber
 90
 ```
 ### **getSealerList**
 运行getSealerList，查看共识节点列表。
 
 ```bash
->getSealerList 
+1> getSealerList 
 [
 	0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801,
 	10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34,
@@ -231,7 +264,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ### **getObserverList**
 运行getObserverList，查看观察节点列表。
 ```bash
->getObserverList
+1> getObserverList
 [
 037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772
 ]
@@ -239,7 +272,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ### **getnodeIdList**
 运行getnodeIdList，查看节点及连接p2p节点的nodeId列表。
 ```bash
->getnodeIdList
+1> getnodeIdList
 [
 	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
 	87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1,
@@ -252,14 +285,14 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 运行getPbftView，查看pbft视图。
 
 ```bash
->getPbftView  
+1> getPbftView  
 2730
 ```
 ### **getConsensusStatus**
 运行getConsensusStatus，查看共识状态。
 
 ```bash
->getConsensusStatus
+1> getConsensusStatus
 [
     {
         "accountType":1,
@@ -332,7 +365,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 运行getSyncStatus，查看同步状态。
 
 ```bash
->getSyncStatus
+1> getSyncStatus
 {
     "blockNumber":5,
     "genesisHash":"0xeccad5274949b9d25996f7a96b89c0ac5c099eb9b72cc00d65bc6ef09f7bd10b",
@@ -364,10 +397,10 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 }
 ```
 
-### **getClientVersion**
-运行getClientVersion，查看节点的版本。
+### **getNodeVersion**
+运行getNodeVersion，查看节点的版本。
 ```bash
->getClientVersion
+1> getNodeVersion
 {
 	"Build Time":"20190107 10:15:23",
 	"Build Type":"Linux/g++/RelWithDebInfo",
@@ -379,7 +412,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ### **getPeers**
 运行getPeers，查看节点的peers。
 ```bash
->getPeers
+1> getPeers
 [
 	{
 		"IPAndPort":"127.0.0.1:50723",
@@ -407,13 +440,13 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ### **getGroupPeers**
 运行getGroupPeers，查看节点所在group的peers。
 ```bash
->getGroupPeers
+1> getGroupPeers
 [3106a6310b5edc07658d09cf6a96ba597a5cfc8fbec8587c6786112808286c11f2bc81db9133328983bc641f1c97ce38fe41d74a4a71027def6ee85cc0579215, 8fc9661baa057034f10efacfd8be3b7984e2f2e902f83c5c4e0e8a60804341426ace51492ffae087d96c0b968bd5e92fa53ea094ace8d1ba72de6e4515249011, 8718579e9a6fee647b3d7404d59d66749862aeddef22e6b5abaafe1af6fc128fc33ed5a9a105abddab51e12004c6bfe9083727a1c3a22b067ddbaac3fa349f7f, 697e81e512cffc55fc9c506104fb888a9ecf4e29eabfef6bb334b0ebb6fc4ef8fab60eb614a0f2be178d0b5993464c7387e2b284235402887cdf640f15cb2b4a]
 ```
 ### **getGroupList**
 运行getGroupList，查看群组列表:
 ```bash
->getGroupList
+1> getGroupList
 [1]
 ```
 ### **getBlockByHash**
@@ -422,7 +455,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 - 区块哈希：0x开头的区块哈希值。   
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 ```bash
->getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
+1> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 {
     "extraData":[
         
@@ -447,7 +480,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
     ],
     "transactionsRoot":"0x516787f85980a86fd04b0e9ce82a1a75950db866e8cdf543c2cae3e4a51d91b7"
 }
->getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855 true
+1> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855 true
 {
     "extraData":[
         
@@ -491,7 +524,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 - 区块高度：十进制整数。    
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。      
 ```bash
->getBlockByNumber 1  
+1> getBlockByNumber 1  
 {
     "extraData":[
         
@@ -522,7 +555,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 参数：           
 - 区块高度：十进制整数。
 ```bash
->getBlockHashByNumber 1
+1> getBlockHashByNumber 1
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
 ### **getTransactionByHash**
@@ -530,7 +563,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 参数：        
 - 交易哈希：0x开头的交易哈希值。
 ```bash
->getTransactionByHash 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
+1> getTransactionByHash 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
 	"blockNumber":"0x5a",
@@ -551,7 +584,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 - 区块哈希：0x开头的区块哈希值。       
 - 交易索引：十进制整数。     
 ```bash
->getTransactionByBlockHashAndIndex 0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02 0
+1> getTransactionByBlockHashAndIndex 0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02 0
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
 	"blockNumber":"0x5a",
@@ -573,7 +606,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 - 区块高度：十进制整数。
 - 交易索引：十进制整数。
 ```bash
->getTransactionByBlockNumberAndIndex 2 0
+1> getTransactionByBlockNumberAndIndex 2 0
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
 	"blockNumber":"0x5a",
@@ -593,7 +626,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 参数：
 - 交易哈希：0x开头的交易哈希值。
 ```bash
->getTransactionReceipt 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
+1> getTransactionReceipt 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
 	"blockNumber":"0x5a",
@@ -613,14 +646,14 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ### **getPendingTransactions**
 运行getPendingTransactions，查询等待处理的交易。              
 ```bash
->getPendingTransactions
+1> getPendingTransactions
 []
 ```
 
 ### **getPendingTxSize**
 运行getPendingTxSize，查询等待处理的交易数量。              
 ```bash
->getPendingTxSize
+1> getPendingTxSize
 0
 ```
 
@@ -630,14 +663,14 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
 - 
 ```bash
->getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
+1> getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
 ```
 
 ### **getTotalTransactionCount**
 运行getTotalTransactionCount，查询当前块高和总交易数。                          
 ```bash
->getTotalTransactionCount
+1> getTotalTransactionCount
 {
 	"blockNumber":1,
 	"txSum":1
@@ -650,11 +683,11 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
                            
 ```bash
 # 部署HelloWorld合约
->deploy HelloWorld.sol
+1> deploy HelloWorld.sol
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # 部署TableTest合约
->deploy TableTest.sol 
+1> deploy TableTest.sol 
 0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```
 **注：部署用户编写的合约，只需要将solidity合约文件放到console根目录下的solidity/contracts/目录下，然后进行部署即可。按tab键可搜索solidity/contracts目录下的合约名称。**
@@ -668,27 +701,27 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 - 参数：由合约接口参数决定，**参数空格分隔，字符串需要双引号标识。**
 ```bash
 # 调用HelloWorld的get接口获取name字符串
->call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+1> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
 
 # 调用HelloWorld的set设置name字符串
->call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello,FISCO-BCOS"
+1> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello,FISCO-BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
 
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
->call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+1> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello,FISCO-BCOS
 
 # 调用TableTest的create接口创建用户表t_test
->call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a create
+1> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a create
 0x09fea224ce266c26a927c01668f4b28224f4b7b58399790e8534c055a698fc37
 
 # 调用TableTest的insert接口插入记录，字段为name, item_id, item_name
->call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a insert "fruit" 1 "apple"
+1> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a insert "fruit" 1 "apple"
 0x7206d0a6e30f57795475a66ae18169dd65d9994f4ea5af1e3e469364d9f0b392
 
 # 调用TableTest的select接口查询记录
->call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a select "fruit"
+1> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a select "fruit"
 [[fruit], [1], [apple]]
 ```
 
@@ -699,11 +732,11 @@ deployByCNS，利用[CNS](../design/features/CNS_contract_name_service.md)部署
 - 合约版本号：部署的合约版本号(长度不能超过40)。
 ```bash
 # 部署HelloWorld合约
->deploy HelloWorld.sol 1.0
+1> deploy HelloWorld.sol 1.0
 0x3554a56ea2905f366c345bd44fa374757fb4696a
 
 # 部署TableTest合约
->deploy TableTest.sol 1.0
+1> deploy TableTest.sol 1.0
 0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
 **注：部署用户编写的合约，只需要将solidity合约文件放到console根目录下的solidity/contracts/目录下，然后进行部署即可。按tab键可搜索solidity/contracts目录下的合约名称。**
@@ -714,13 +747,13 @@ deployByCNS，利用[CNS](../design/features/CNS_contract_name_service.md)部署
 - 合约名称：部署的合约名称。
 - 合约版本号：(可选)部署的合约版本号。
 ```bash
->queryCNS HelloWorld.sol 
+1> queryCNS HelloWorld.sol 
 ---------------------------------------------------------------------------------------------
 |                   version                   |                   address                   |
 |                     1.0                     | 0x3554a56ea2905f366c345bd44fa374757fb4696a  |
 ---------------------------------------------------------------------------------------------
 
->queryCNS HelloWorld 1.0
+1> queryCNS HelloWorld 1.0
 ---------------------------------------------------------------------------------------------
 |                   version                   |                   address                   |
 |                     1.0                     | 0x3554a56ea2905f366c345bd44fa374757fb4696a  |
@@ -735,11 +768,11 @@ deployByCNS，利用[CNS](../design/features/CNS_contract_name_service.md)部署
 - 参数：由合约接口参数决定，参数空格分隔，字符串需要双引号标识。
 ```bash
 # 调用HelloWorld的get接口获取name字符串
->callByCNS HelloWorld 1.0 set "Hello,CNS"
+1> callByCNS HelloWorld 1.0 set "Hello,CNS"
 0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
 
 # 调用HelloWorld的set设置name字符串
->callByCNS HelloWorld 1.0 get
+1> callByCNS HelloWorld 1.0 get
 Hello,CNS
 ```
 
@@ -748,7 +781,8 @@ Hello,CNS
 参数： 
 - 节点nodeId
 ```bash
->as ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+1> addSealer
+ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":1,
 	"msg":"success"
@@ -760,7 +794,7 @@ Hello,CNS
 参数： 
 - 节点nodeId
 ```bash
->addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+1> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":1,
 	"msg":"success"
@@ -772,7 +806,7 @@ Hello,CNS
 参数： 
 - 节点nodeId
 ```bash
->removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+1> removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":1,
 	"msg":"success"
@@ -784,7 +818,7 @@ Hello,CNS
 - key
 - value
 ```bash
->setSystemConfigByKey tx_count_limit 100
+1> setSystemConfigByKey tx_count_limit 100
 {
 	"code":1,
 	"msg":"success"
@@ -795,7 +829,7 @@ Hello,CNS
 参数： 
 - key
 ```bash
->getSystemConfigByKey tx_count_limit
+1> getSystemConfigByKey tx_count_limit
 100
 ```
 ### **grantPermissionManager**
@@ -804,7 +838,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -817,7 +851,7 @@ Hello,CNS
 ### **listPermissionManager**
 运行listPermissionManager，查询拥有管理权限的权限记录列表。                                  
 ```bash
->listPermissionManager 
+1> listPermissionManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -828,7 +862,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -840,7 +874,7 @@ Hello,CNS
 - 表名
 - 外部账号地址
 ```bash
->grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -851,7 +885,7 @@ Hello,CNS
 参数： 
 - 表名
 ```bash
->listUserTableManager t_test 
+1> listUserTableManager t_test 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -863,7 +897,7 @@ Hello,CNS
 - 表名
 - 外部账号地址
 ```bash
->revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -875,7 +909,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -884,7 +918,7 @@ Hello,CNS
 ### **listDeployAndCreateManager**
 运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的权限记录列表。                                  
 ```bash
->listDeployAndCreateManager 
+1> listDeployAndCreateManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -895,7 +929,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -907,7 +941,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -917,7 +951,7 @@ Hello,CNS
 运行listNodeManager，查询拥有节点管理的权限记录列表。
 
 ```bash
->listNodeManager 
+1> listNodeManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -928,7 +962,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -940,7 +974,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -950,7 +984,7 @@ Hello,CNS
 运行listCNSManager，查询拥有使用CNS的权限记录列表。
                                   
 ```bash
->listCNSManager 
+1> listCNSManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -961,7 +995,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -973,7 +1007,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"
@@ -983,7 +1017,7 @@ Hello,CNS
 运行listSysConfigManager，查询拥有系统参数管理的权限记录列表。
                                   
 ```bash
->listSysConfigManager 
+1> listSysConfigManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -994,7 +1028,7 @@ Hello,CNS
 参数： 
 - 外部账号地址
 ```bash
->revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+1> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":1,
 	"msg":"success"

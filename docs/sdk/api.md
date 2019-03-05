@@ -10,55 +10,41 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 
 设置和移除接口返回json字符串，包含code和msg字段，当无权限操作时，其code定义-1，msg定义为“non-authorized”。当成功操作时，其code为1(影响1条记录)，msg为“success”。其他返回码如下：
 
-```eval_rst
-
-+------+------------------------------------------+
-|code  |msg                                       |
-+======+==========================================+
-|-30   |table name and address exist              |
-+------+------------------------------------------+
-|-31   |table name and address does not exist     |
-+------+------------------------------------------+
-|-40   |invalid nodeID                            |
-+------+------------------------------------------+
-|-41   |last sealer cannot be removed             |
-+------+------------------------------------------+
-|-42   |nodeID is not in network                  |
-+------+------------------------------------------+
-|-43   |nodeID is not in group peers              |
-+------+------------------------------------------+
-|-44   |nodeID is already in sealer list          |
-+------+------------------------------------------+
-|-45   |nodeID is already in observer list        |
-+------+------------------------------------------+
-|-50   |address and version exist                 |
-+------+------------------------------------------+
-|-51   |version exceeds maximum(40) length        |
-+------+------------------------------------------+
-|-60   |set invalid configuration values          |
-+------+------------------------------------------+
-
-```
+|错误码|消息内容|
+|:----|:---|
+|0|success|
+|50000|permission denied|
+|51000|table name and address exist|
+|51001|table name and address does not exist|
+|51100|invalid nodeId|
+|51101|the last sealer cannot be removed|
+|51102|table name and address does not exist|
+|51103|the node is not in group peers|
+|51104|the node is already in sealer list|
+|51105|the node is already in observer list|
+|51200|contract name and version exist|
+|51201|version exceeds maximum(40) length|
+|51300|invalid configuration key|
 
 调用Precompiled Service API示例参考[Java SDK配置与使用](./config.md)。
 
 ### AuthorityService
 SDK提供对[分布式控制权限](../manual/priority_control.md)的支持，AuthorityService可以配置权限信息，其API如下：
-- **public String addUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
-- **public String removeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
-- **public List\<AuthorityInfo\> queryUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
-- **public String addDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
-- **public String removeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
-- **public List\<AuthorityInfo\> queryDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
-- **public String addAuthorityManager(String address)：** 增加外部账号地址的管理权限的权限。
-- **public String removeAuthorityManager(String address)：** 移除外部账号地址的管理权限的权限。
-- **public List\<AuthorityInfo\> queryAuthorityManager()：** 查询拥有管理权限的权限记录列表。
-- **public String addNodeManager(String address)：** 增加外部账号地址的节点管理权限。
-- **public String removeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
-- **public List\<AuthorityInfo\> queryNodeManager()：** 查询拥有节点管理的权限记录列表。
-- **public String addCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
-- **public String removeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
-- **public List\<AuthorityInfo\> queryCNSManager()：** 查询拥有使用CNS的权限记录列表。
+- **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
+- **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
+- **public List\<AuthorityInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
+- **public String grantDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
+- **public String revokeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
+- **public List\<AuthorityInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
+- **public String grantPermissionManager(String address)：** 增加外部账号地址的管理权限的权限。
+- **public String revokePermissionManager(String address)：** 移除外部账号地址的管理权限的权限。
+- **public List\<AuthorityInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
+- **public String grantNodeManager(String address)：** 增加外部账号地址的节点管理权限。
+- **public String revokeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
+- **public List\<AuthorityInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
+- **public String grantCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
+- **public String revokeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
+- **public List\<AuthorityInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
 - **public String addSysConfig(String address)：** 增加外部账号地址的系统参数管理权限。
 - **public String removeSysConfig(String address)：** 移除外部账号地址的系统参数管理权限。
 - **public List\<AuthorityInfo\> querySysConfig()：** 查询拥有系统参数管理的权限记录列表。
