@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业工具 <../enterprise/index.html>`_ 。
+    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业工具 <../enterprise_tools/index.html>`_ 。
 ```
 
 FISCO BCOS提供了`build_chain`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
@@ -88,7 +88,7 @@ bash build_chain.sh -f ipconf -T -i
 该选项用于指定生成证书时的证书配置文件。
 
 - **`T`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](log.md)。
+无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](log_access.md)。
 
 ## 节点文件组织结构
 
@@ -169,6 +169,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ### 多服务器多群组
 
-使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里TODO:修改此处链接](group.md)。
+使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../tutorial/group_use_cases.md)。
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/tools/build_chain.sh

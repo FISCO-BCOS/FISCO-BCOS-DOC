@@ -1,6 +1,6 @@
 # 权限控制手册
 
-本文档描述权限控制的实践操作，有关权限控制的详细设计请参考[权限控制设计文档](../design/security_control/priority_control.md)。
+本文档描述权限控制的实践操作，有关权限控制的详细设计请参考[权限控制设计文档](../design/security_control/permission_control.md)。
 
 
 ## 1 操作内容
@@ -20,7 +20,7 @@
 ## 3 权限控制工具
 ### 3.1 控制台工具
 ### 控制台权限控制命令
-针对普通用户，FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/api.md)的AuthorityService接口使用权限功能），其中涉及的权限控命令如下:
+针对普通用户，FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/sdk.md)的AuthorityService接口使用权限功能），其中涉及的权限控命令如下:
 
 |命令全称|命令参数|功能|
 |:----|:-----|:----|

@@ -129,8 +129,8 @@
 问:
   Java SDK对Java版本有要求吗？<br>
 答:
-  推荐使用oracle jdk 1.8（open-jdk 1.8在某些操作系统上会缺少椭圆曲线的包。） 
-
+  要求 `JDK8或以上 <https://openjdk.java.net/>`_，推荐使用OpenJDK11。
+  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`OpenJDK11下载地址 <https://jdk.java.net/11/>`_ `安装指南 <https://openjdk.java.net/install/index.html>`_ 
 
 问:
   Java SDK配置完成，发送交易失败的原因是什么？<br>
