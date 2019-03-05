@@ -423,12 +423,6 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
 context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>());  // HelloWorld precompiled 注册
 ```
 
-##### 2.2.6 其他流程
-
-[源码编译](../installation.md)
-
-[环境搭链](../manual/build_chain.md)
-
 ### 三 调用
 
 从用户角度，预编译合约与solidity合约的调用方式基本相同，唯一的区别是solidity合约在部署之后才能获取到调用的合约地址，预编译合约的地址为预分配，不用部署，可以直接使用。
