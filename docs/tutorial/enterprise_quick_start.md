@@ -1,8 +1,12 @@
 # 使用企业工具
 
+考虑到联盟链多个企业地位对等安全的诉求，[FISCO BCOS企业工具](../enterprise_tools/index.md)提供一种多机构间合作部署联盟链的方式。
+
+本章主要以部署群组6节点的组网模式，为用户讲解企业工具的使用方法。
+
 ## 下载安装
 
-FISCO BCOS generator依赖python, openssl, curl, nc工具。使用前请检查是否满足依赖，同时，需要先满足FISCO BCOS启动时的条件，参考[依赖安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/feature-2.0.0/docs/manual/install.html?highlight=%E4%BE%9D%E8%B5%96#id4)
+使用前请确认已经满足[环境依赖](../enterprise_tools/installation.md)
 
 ```bash
 $ git clone https://github.com/FISCO-BCOS/generator.git
@@ -128,7 +132,7 @@ jsonrpc_listen_port=8548
 $ ./generator --generate_all_certificates ./mycert
 ```
 
-3. 使用build命令，在data下生成group1节点安装包
+3. 使用build命令，在data下生成group1节点配置文件
 
 ```bash
 $ ./generator --build_install_package ./data
@@ -154,9 +158,9 @@ $ ./generator --build_install_package ./data
 |-- stop_all.sh
 ```
 
-4. 导入节点私钥到对应节点安装包的conf文件夹下
+4. 导入节点私钥到对应节点配置文件的conf文件夹下
 
-上述3.中生成的安装包是不含节点私钥的，需要导入2.中的节点私钥，命令如下
+上述3.中生成的节点配置文件夹是不含节点私钥的，需要导入2.中的节点私钥，命令如下
 
 ```bash
 $ ./generator --deploy_private_key ./mycert ./data
@@ -204,9 +208,9 @@ cd ..
 ./generator --expand_all_certificates ./myexpandcert
 # 拷贝群组1配置文件
 cp ./data/group.1.genesis ./meta # 由于扩容步骤在本地完成，此步已经生成过群组创世区块文件
-# 生成扩容安装包
+# 生成扩容配置文件夹
 ./generator --build_expand_package ./expand
-# 导入私钥至扩容安装包
+# 导入私钥至扩容配置文件夹
 ./generator --deploy_private_key ./myexpandcert ./expand
 # 启动节点
 cd ./expand
@@ -221,7 +225,7 @@ cd ..
 
 ```eval_rst
 .. note::
-    生成扩容安装包时需要fisco-bcos可执行文件、group.1.genesis和group.1.ini
+    生成扩容配置文件夹时需要fisco-bcos可执行文件、group.1.genesis和group.1.ini
 ```
 
 ## 构建第二个群组
