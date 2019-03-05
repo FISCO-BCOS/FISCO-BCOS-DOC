@@ -128,39 +128,39 @@ PBFT共识主要包括Pre-parepare、Prepare和Commit三个阶段：
 
          subgraph 共识处理流程
          A((开始))-->B
-         B[获取PBFT请求类型]-->|Prepare请求|C
+         B(获取PBFT请求类型)-->|Prepare请求|C
          B-->|Sign请求|D
          B-->|Commit请求|F
-         C[Prepare包是否有效?]-->|是|G
+         C(Prepare是否有效?)-->|是|G
          C-->|否|B
 
-         G(addRawPrepare<br/>缓存收到的Prepare请求)-->H
-         H[Prepare请求内的区块是空块?]-->|否|I
+         G(addRawPrepare<br/>缓存Prepare请求)-->H
+         H(Prepare内区块是空块?)-->|否|I
          H-->|是|T
          T(视图切换)
 
          I(execBlock<br/>执行Prepare内区块)-->J
-         J(generateSignPacket<br/>用执行后的区块哈希产生签名请求)-->K
-         K(addPrepareCache<br/>缓存执行后的区块)-->L
-         L(broadcacstSignReq<br/>广播签名包)
+         J(generateSignPacket<br/>产生签名请求)-->K
+         K(addPrepareCache<br/>缓存执行后区块)-->L
+         L(broadcacstSignReq<br/>广播签名请求)
 
-         D(isSignReqValid<br/>签名包是否有效?)-->|是|M
+         D(isSignReqValid<br/>签名请求是否有效?)-->|是|M
          D-->|否|B
-         M(addSignReq<br/>将收到的签名请求写入本地缓存)-->N
-         N(checkSignEnough<br/>收到同一个区块的签名请求是否达到2*f+1?)-->|是|O
+         M(addSignReq<br/>缓存收到的签名请求)-->N
+         N(checkSignEnough<br/>签名请求是否达到2*f+1?)-->|是|O
          N-->|否|B
-         O(updateLocalPrepare<br/>备份Prepare请求, 防止节点宕机)-->P
+         O(updateLocalPrepare<br/>备份Prepare请求)-->P
          P(broadcastCommitReq<br/>广播Commit请求, 表明节点已达到可提交区块状态)
             
          F(isCommitReqValid <br/> Commit请求是否有效?)-->|是|Q
-         Q(addCommitReq <br/> 将Commit请求加入本地缓存)-->R
-         R(checkCommitEnough <br/> 同一个区块的Commit请求是否达到2*f+1?)-->|是|S
+         Q(addCommitReq <br/> 缓存Commit请求)-->R
+         R(checkCommitEnough <br/> Commit请求是否达到2*f+1?)-->|是|S
          R-->|否|B
          S(CommitBlock<br> 将缓存的执行后区块提交到DB)
 
-         class A,B red
-         class C,G,H,I,J,K,L,T blue
-         class D,M,N,O,P yellow
+         class A,B light
+         class C,G,H,I,J,K,L,T light
+         class D,M,N,O,P light
          class Q,F,R,S light
          end
 ```
