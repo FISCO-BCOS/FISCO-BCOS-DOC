@@ -93,16 +93,16 @@
 
 #### 4.1 用户表权限控制流程
 外部账户查询表不进行权限控制。当需要更新，增加或移除记录时，将通过查询权限表进行权限控制。流程如下图所示。
-![](../../../images/priority_control/ac1.png)
+![](../../../images/permission_control/ac1.png)
 
 #### 4.2 系统表权限控制流程
-对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk使用文档](../../sdk/index.html)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
-![](../../../images/priority_control/ac2.png)
+对于SDK层，用户合约不可以直接操作权限表，通过SDK的AuthorityService接口（详见[SDK使用文档](../../sdk/sdk.md)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
+![](../../../images/permission_control/ac2.png)
 
 **注：** _sys_consensus_表（ConsensusPrecompiled），_sys_cns_表（CNSPrecompiled），_sys_config_表（SystemConfigPrecompiled）控制流程与对权限表的控制流程类似。
 
 ## 5 权限控制工具
 
 FISCO BCOS的分布式存储权限控制有如下使用方式：
-- 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制操作文档](../../manual/priority_control.md)。
-- 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是增加，移除和查询权限接口。可以调用[SDK API](../../sdk/api.md)的AuthorityService接口使用权限功能。
+- 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制操作文档](../../manual/permission_control.md)。
+- 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是增加，移除和查询权限接口。可以调用[SDK API](../../sdk/sdk.md)的AuthorityService接口使用权限功能。

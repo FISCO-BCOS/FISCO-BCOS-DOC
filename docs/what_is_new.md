@@ -14,7 +14,7 @@
 
 另外，FISCO BCOS还将持续基于群组架构，实现动态管理和跨链服务，实现企业间建立联盟和组建链像建“聊天群”一样便利。
 
-更多的群组介绍，请参考[群组架构设计文档](./design/architecture/group.md)和[群组功能使用文档](./manual/build_group.md)
+更多的群组介绍，请参考[群组架构设计文档](./design/architecture/group.md)和[群组使用教程](./tutorial/group_use_cases.md)
 
 ## 分布式存储
 2.0版本中新增了对分布式数据存储的支持，克服了本地化数据存储的诸多限制。
@@ -42,7 +42,7 @@ Solidity具有很多优良的特性，比如图灵完备、可扩展性强等等
 同时，预编译合约兼容Solidity的调用方式，使用方式保持一致。
 
 FISCO BCOS 1.0的所有系统合约已经采用预编译合约方式实现，天然集成在底层平台，无需用户手动部署。
-另外，还有类似CRUD操作等也由预编译合约实现，更多预编译合约的介绍，请参考[预编译设计文档](./design/virtual_machine/precompiled.md)和[预编译合约开发文档](./developer/precompiled.md)
+另外，还有类似CRUD操作等也由预编译合约实现，更多预编译合约的介绍，请参考[预编译设计文档](./design/virtual_machine/precompiled.md)和[预编译合约开发文档](./manual/smart_contract.html#id2)
 
 ## CRUD合约
 2.0版本中新增了符合CRUD接口的合约接口规范，简化了将主流的面向SQL设计的商业应用迁移到区块链上的成本。
@@ -51,9 +51,9 @@ FISCO BCOS 1.0的所有系统合约已经采用预编译合约方式实现，天
 2.0版本基于预编译合约，实现了一套CRUD基本数据访问接口规范合约，基于CRUD接口编写业务合约，实现传统面向SQL方式的业务开发流程，这种方式有下面几个好处：
 - 与传统业务开发模式类似，简化了合约开发学习成本；
 - 合约只需关系核心逻辑，存储与计算分离，方便合约升级；
-- CRUD底层逻辑基于预编译合约实现，数据存储采用[分布式存储](design/storage/storage.md)，效率更高；
+- CRUD底层逻辑基于预编译合约实现，数据存储采用[分布式存储](./design/storage/storage.md)，效率更高；
 
-同时，2.0版本仍然兼容1.0版本的合约，更多关于CRUD合约的介绍，请参考[CRUD合约开发](./developer/crud_sol.md)
+同时，2.0版本仍然兼容1.0版本的合约，更多关于CRUD合约的介绍，请参考[CRUD合约开发](./manual/smart_contract.html#crud)
 
 ## 并行交易处理
 2.0版本中新增了合约交易的并行处理机制，进一步提升了合约的并发吞吐量。
@@ -62,10 +62,10 @@ FISCO BCOS 1.0的所有系统合约已经采用预编译合约方式实现，天
 2.0版本基于预编译合约，实现一套并行交易处理模型，基于这个模型可以自定义交易互斥变量。
 在区块执行过程中，系统将会根据交易互斥变量自动构建交易依赖关系图——DAG，基于DAG并行执行交易，最好情况下性能可提升数倍（取决于CPU核数）。
 
-更多关于并行交易处理的介绍，请参考[并行交易处理模型](./design/virtual_machine/dag.md)
+正在紧张开发测试中，将在2.0后续版本中加入。
 
 ## 虚拟机
-2.0版本引入了最新的以太坊虚拟机版本，支持Solidity 0.5版本。同时，引入了evmc扩展框架，支持扩展不同虚拟机引擎。
+2.0版本引入了最新的以太坊虚拟机版本，支持Solidity 0.5版本。同时，引入了EVMC扩展框架，支持扩展不同虚拟机引擎。
 底层内部集成支持interpreter虚拟机，未来可扩展支持WASM/JIT等虚拟机。
 
 更多关于虚拟机的介绍，请参考[虚拟机设计文档](./design/virtual_machine/index.html)
@@ -80,7 +80,7 @@ FISCO BCOS 1.0的所有系统合约已经采用预编译合约方式实现，天
 2.0版本对落盘加密进行了重塑升级，开启落盘加密功能时，依赖KeyManager服务进行密钥管理，安全性更强。
 
 KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的，支持机构设计实现符合自身密钥管理规范的KeyManager服务，比如采用硬件加密机技术。
-该部分更详细的文档请参考[使用文档](./manual/disk_encryption.md)和[设计文档](./design/features/disk_encryption.md)
+该部分更详细的文档请参考[使用文档](./manual/storage_security.md)和[设计文档](./design/features/storage_security.md)
 
 ## 准入控制
 2.0版本对准入机制进行了重塑升级，包括网络准入机制和群组准入机制，在不同维度对链和数据访问进行安全控制。

@@ -1,6 +1,6 @@
-# 权限控制手册
+# 权限控制
 
-本文档描述权限控制的实践操作，有关权限控制的详细设计请参考[权限控制设计文档](../design/security_control/priority_control.md)。
+本文档描述权限控制的实践操作，有关权限控制的详细设计请参考[权限控制设计文档](../design/security_control/permission_control.md)。
 
 
 ## 1 操作内容
@@ -20,7 +20,7 @@
 ## 3 权限控制工具
 ### 3.1 控制台工具
 ### 控制台权限控制命令
-针对普通用户，FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/api.md)的AuthorityService接口使用权限功能），其中涉及的权限控命令如下:
+针对普通用户，FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/sdk.md)的AuthorityService接口使用权限功能），其中涉及的权限控命令如下:
 
 |命令全称|命令参数|功能|
 |:----|:-----|:----|
@@ -538,7 +538,7 @@ rnm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 然后分别再以账号1、2、3对节点类型进行操作。
 
 ### 4.4 CNS控制示例
-控制台提供3个涉及[CNS](../design/features/CNS_contract_name_service.md)的命令，如下所示：
+控制台提供3个涉及[CNS](../design/features/cns_contract_name_service.md)的命令，如下所示：
 
 
 ```eval_rst
@@ -617,24 +617,24 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 +--------------------------+-----------+--------------------------------+
 |命令全称(缩写)            |命令参数   |功能                            |
 +==========================+===========+================================+
-|setSystemConfigByKey(ssc) |key value  |设置键为key，值为value的系统配置|
+|setSystemConfigByKey |key value  |设置键为key，值为value的系统配置|
 +--------------------------+-----------+--------------------------------+
-|getSystemConfigByKey(gsc) |key        |根据key查询value                |
+|getSystemConfigByKey |key        |根据key查询value                |
 +--------------------------+-----------+--------------------------------+
 
 ```
 **注：**     
-目前支持键为tx_count_limit和tx_gas_limit的系统参数设置。其中ssc命令受权限可以控制，gsc命令不受权限控制。
+目前支持键为tx_count_limit和tx_gas_limit的系统参数设置。其中setSystemConfigByKey命令受权限可以控制，gsc命令不受权限控制。
 
 #### 4.5.1 默认示例
 以账号1登陆控制台，首先查询系统字段tx_count_limit的值：
 ```
-> gsc tx_count_limit
+> getSystemConfigByKey tx_count_limit
 1000
 ```
 修改系统字段tx_count_limit的值为2000：
 ```
-> ssc tx_count_limit 2000
+> setSystemConfigByKey tx_count_limit 2000
 {
 	"code":1,
 	"msg":"success"
@@ -643,7 +643,7 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 设置成功。    
 查询系统字段tx_count_limit的值：
 ```
-> gsc tx_count_limit
+> setSystemConfigByKey tx_count_limit
 2000
 ```
 确认设置成功。
@@ -666,7 +666,7 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 ```
 以外部账号2登陆控制台，设置系统字段tx_count_limit的值为3000：
 ```
-> ssc tx_count_limit 3000
+> setSystemConfigByKey tx_count_limit 3000
 {
 	"code":-1,
 	"msg":"non-authorized"
@@ -675,7 +675,7 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 设置失败。
 查询系统字段tx_count_limit的值:
 ```
-> gsc tx_count_limit
+> getSystemConfigByKey tx_count_limit
 2000
 ```
 确认设置失败，账号2无权限修改系统参数。类似账号3登陆控制台也将无权限修改系统参数。
@@ -802,5 +802,5 @@ Empty set.
 ### 5.1 推荐管理员机制
 由于系统默认无权限设置记录，因此任何账号均可以使用权限设置功能。例如当账号1设置账号1有权限部署合约，但是账号2也可以设置账号2有权限部署合约。那么账号1的设置将失去控制的意义，因为其他账号可以自由添加权限。因此，联盟链组建之前，推荐确定权限使用规则，可以设置管理员账号，即指定特定账号可以使用权限设置功能，非管理员账号无权限使用功能。
 
-### 5.2 推荐使用sdk的接口管理
-[SDK](../sdk/api.md)提供AuthorityService类的接口，可以设置、移除和查询权限信息。虽然控制台提供简单的命令可以管理权限，但不适合自定义开发。推荐开发者调用AuthorityService类接口实现权限的控制。
+### 5.2 推荐使用SDK的接口管理
+[SDK](../sdk/sdk.md)提供AuthorityService类的接口，可以设置、移除和查询权限信息。虽然控制台提供简单的命令可以管理权限，但不适合自定义开发。推荐开发者调用AuthorityService类接口实现权限的控制。
