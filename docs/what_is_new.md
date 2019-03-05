@@ -42,7 +42,7 @@ Solidity具有很多优良的特性，比如图灵完备、可扩展性强等等
 同时，预编译合约兼容Solidity的调用方式，使用方式保持一致。
 
 FISCO BCOS 1.0的所有系统合约已经采用预编译合约方式实现，天然集成在底层平台，无需用户手动部署。
-另外，还有类似CRUD操作等也由预编译合约实现，更多预编译合约的介绍，请参考[预编译设计文档](./design/virtual_machine/precompiled.md)和[预编译合约开发文档](./manual/smart_contract.md#id2)
+另外，还有类似CRUD操作等也由预编译合约实现，更多预编译合约的介绍，请参考[预编译设计文档](./design/virtual_machine/precompiled.md)和[预编译合约开发文档](./manual/smart_contract.html#id2)
 
 ## CRUD合约
 2.0版本中新增了符合CRUD接口的合约接口规范，简化了将主流的面向SQL设计的商业应用迁移到区块链上的成本。
@@ -53,7 +53,7 @@ FISCO BCOS 1.0的所有系统合约已经采用预编译合约方式实现，天
 - 合约只需关系核心逻辑，存储与计算分离，方便合约升级；
 - CRUD底层逻辑基于预编译合约实现，数据存储采用[分布式存储](./design/storage/storage.md)，效率更高；
 
-同时，2.0版本仍然兼容1.0版本的合约，更多关于CRUD合约的介绍，请参考[CRUD合约开发](./manual/smart_contract.md#crud)
+同时，2.0版本仍然兼容1.0版本的合约，更多关于CRUD合约的介绍，请参考[CRUD合约开发](./manual/smart_contract.html#crud)
 
 ## 并行交易处理
 2.0版本中新增了合约交易的并行处理机制，进一步提升了合约的并发吞吐量。
