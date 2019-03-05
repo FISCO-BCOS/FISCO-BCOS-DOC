@@ -165,7 +165,7 @@ $ ./generator --demo
     此操作仅供体验，实际生产部署中请勿使用本命令
 ```
 
-### b/build_install_package
+### build_install_package (-b)
 
 |  |  |
 | :-: | :-: |
@@ -187,7 +187,7 @@ $ ./generator --build_install_package ~/mydata
 
 程序执行完成后，会在~/mydata文件夹下生成多个名为node_hostip_port的文件夹，推送到对应服务器后，拷贝私钥到节点conf下即可启动节点
 
-### e/build_expand_package
+### build_expand_package (-e)
 
 |  |  |
 | :-: | :-: |
@@ -210,7 +210,7 @@ $ ./generator --build_expand_package ./expand
 
 节点正常启动后，使用sdk将节点加入群组，完成扩容操作
 
-### c/create_group_config
+### create_group_config (-c)
 
 |  |  |
 | :-: | :-: |
@@ -344,7 +344,7 @@ $ ./generator --expand_all_certificates ./cert
   由于扩容节点与链本身节点的根证书必须相同，此命令会根据meta目录下存放的(ca.crt和ca.key)或(agency.crt和agency.key)生成相应的节点证书，如果没有根证书抛出异常  
 ```
 
-### h/help
+### help (-h)
 
 用户可以使用-h或--help命令查看帮助菜单
 
@@ -371,7 +371,7 @@ usage: generator [-h] [--version] [--build_install_package data_dir]
                  [--merge_config config.ini config.ini]
 ```
 
-### m/merge_config
+### merge_config (-m)
 
 使用--merge_config命令可以合并两个config.ini中的p2p section
 
@@ -420,7 +420,7 @@ $ ./generator --merge_config ~/mydata/node_A/config.ini  ~/mydata/node_B/config.
 
 使用成功后会将node_A和node_B的config.ini中p2p section合并与 ~/mydata/node_B/config.ini的文件中
 
-### d/deploy_private_key
+### deploy_private_key (-d)
 
 使用--deploy_private_key可以将路径下名称相同的节点私钥导入到生成好的安装包中。
 
@@ -436,7 +436,7 @@ $./generator --deploy_private_key ./cert ./data
 
 执行完成后可以将./cert下的对应的节点私钥导入./data的安装包中
 
-### v/version
+### version (-v)
 
 使用--version命令查看当前部署工具的版本号
 
