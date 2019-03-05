@@ -83,7 +83,7 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
 ## 使用SDK 
 
 ### Spring项目开发指引
-#### 调用SDK的API(参考[SDK API列表](../sdk/sdk.md#java-sdk-api))设置或查询相关的区块链数据。
+#### 调用SDK的API(参考[SDK API列表](../sdk/sdk.html#java-sdk-api))设置或查询相关的区块链数据。
 1) 调用SDK Web3j的API：需要加载配置文件，SDK与区块链节点建立连接。获取web3j对象，根据Web3j对象调用相关API。示例代码如下：
 ```java
     //读取配置文件，SDK与区块链节点建立连接

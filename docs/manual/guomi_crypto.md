@@ -96,7 +96,7 @@ ca_cert: gmca证书路径
 
 ## 国密版SDK使用
 
-详细操作参考[SDK文档](../sdk/sdk.md#id9)。
+详细操作参考[SDK文档](../sdk/sdk.html#id9)。
 
 ## 国密控制台使用
 
