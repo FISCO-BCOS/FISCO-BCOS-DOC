@@ -1,6 +1,6 @@
 # 控制台手册
 
-控制台是FISCO BCOS 2.0重要的交互式客户端工具，它通过[SDK](../sdk/index.html)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将solidity合约文件编译为java合约文件。
+控制台是FISCO BCOS 2.0重要的交互式客户端工具，它通过[SDK](../sdk/sdk.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将solidity合约文件编译为java合约文件。
 
 ### 控制台命令
 控制台命令由两部分组成，即指令和指令相关的参数：   
@@ -51,7 +51,7 @@ $ tar -zxf console-0.4.25.tar.gz
 ```
 目录结构如下：
 ```bash
-|-- apps # 依赖的sdk jar包目录
+|-- apps # 依赖的SDK jar包目录
 |   -- web3sdk.jar 
 |-- lib # 相关依赖的jar包目录
 |-- conf
@@ -102,7 +102,7 @@ $ tar -zxf console-0.4.25.tar.gz
 ### 配置控制台
 - 区块链节点和证书的配置：
   - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`node.crt`和`node.key`文件拷贝到conf目录下。
-  - **通过[企业工具](../enterprise/index.html)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise_tools/operation.html#id2))生成证书和私钥，将生成sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到conf目录下。
+  - **通过[企业工具](../enterprise_tools/index.md)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise_tools/operation.html#id2))生成证书和私钥，将生成sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到conf目录下。
 - 配置conf目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
 
 ```xml

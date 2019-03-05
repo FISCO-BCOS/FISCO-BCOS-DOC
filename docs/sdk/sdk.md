@@ -5,7 +5,7 @@ FISCO BCOS提供了Java语言SDK用以访问节点，查询节点状态，改变
 该版本（2.0）的技术文档只适用Java SDK V2.0及以上版本(与FISCO BCOS V2.0及以上版本适配)，Java SDK V1.3.x版本的技术文档请查看[Java SDK V1.3.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html)。[Java SDK Github](https://github.com/FISCO-BCOS/web3sdk)提供访问FISCO BCOS节点的Java API。
 
 - 提供调用FISCO BCOS JSON-RPC的Java API   
-- [链上信使协议](../manual/amop_protocol.html)，为联盟链提供安全高效的消息信道。
+- [链上信使协议](../manual/amop_protocol.md)，为联盟链提供安全高效的消息信道。
 - 支持使用国密算法发交易
 - 支持预编译（Precompiled）合约管理区块链
 
@@ -54,7 +54,7 @@ repositories {
 FISCO-BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、node.crt)和私钥(node.key)进行双向认证。
 
 - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
-- **通过[企业工具](../enterprise/index.html)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise/manual/cert.md))生成证书和私钥，将生成sdk目录下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
+- **通过[企业工具](../enterprise_tools/index.md)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise_tools/operation.md#id2))生成证书和私钥，将生成sdk目录下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
 
 ### 配置文件设置
 Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
@@ -67,7 +67,7 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS
 applicationContext.xml配置项详细说明:
 - encryptType: 国密算法开关(默认为0)                              
   - 0: 不使用国密算法发交易                              
-  - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi.md))
+  - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi_crypto.md))
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
   - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
@@ -83,7 +83,7 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
 ## 使用SDK 
 
 ### Spring项目开发指引
-#### 调用SDK的API(参考[SDK API列表](./api.md))设置或查询相关的区块链数据。
+#### 调用SDK的API(参考[SDK API列表](../sdk/sdk.md#java-sdk-api))设置或查询相关的区块链数据。
 1) 调用SDK Web3j的API：需要加载配置文件，SDK与区块链节点建立连接。获取web3j对象，根据Web3j对象调用相关API。示例代码如下：
 ```java
     //读取配置文件，SDK与区块链节点建立连接
@@ -179,7 +179,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
 提供[spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)示例项目供参考。Spring Boot项目开发与Spring项目开发类似，其主要区别在于配置文件方式的差异。该示例项目提供丰富的测试案例，具体描述参考示例项目的README文档。
 
 ### SDK国密功能使用
-- 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi.md)。
+- 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi_crypto.md)。
 - 启用国密功能：application.xml/application.yml配置文件中将encryptType属性设置为1。
 
 国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。SDK源码的lib目录下已有国密版的编译器jar包，用于将Solidity合约文件转为国密版的Java合约文件。因此，使用国密版SDK只需要修改SDK源码根目录下的build.gradle文件，注释掉普通版编译器jar包，引入国密编译器jar包。
@@ -195,7 +195,7 @@ Solidity合约文件转换为国密版Java合约文件的步骤、部署和调�
 Java SDK API主要分为Web3j API和Precompiled Service API。其中Web3j API可以查询区块链相关的状态，发送和查询交易信息；Precompiled Service API可以管理区块链相关配置以及实现特定功能。
 
 ### Web3j API
-Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API相同，参考[RPC API文档](../api.md)。调用Web3j API示例参考[SDK配置与使用](./configuration.md)。
+Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API相同，参考[RPC API文档](../api.md)。调用Web3j API示例参考[SDK配置与使用](../sdk/sdk.md)。
 
 ### Precompiled Service API
 预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](../manual/console.md)。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的AuthorityService，[CNS](../design/features/CNS_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。
@@ -217,7 +217,7 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 |51200|contract name and version exist|
 |51201|version exceeds maximum(40) length|
 |51300|invalid configuration key|
-调用Precompiled Service API示例参考[Java SDK配置与使用](./configuration.md)。
+调用Precompiled Service API示例参考[Java SDK配置与使用](../sdk/sdk.md)。
 
 #### AuthorityService
 SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，AuthorityService可以配置权限信息，其API如下：
