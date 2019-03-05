@@ -19,7 +19,7 @@
 
 ## 示例应用需求
 
-区块链天然具有防篡改，可追溯等特性，这些特性决定其更容易受金融领域的青睐，本文将会提供一个简易的资产管理的开发示例，并最终包含以下功能：
+区块链天然具有防篡改，可追溯等特性，这些特性决定其更容易受金融领域的青睐，本文将会提供一个简易的资产管理的开发示例，并最终实现以下功能：
 - 能够在区块链上进行资产注册
 - 能够实现不同账户的转账
 - 可以查询账户的资产金额
@@ -69,23 +69,23 @@ import "./Table.sol";
 
 contract Asset {
 
-    event RegisterEvent(int256 ret, string asset_account, uint256 amount);
-    event TransferEvent(int256 ret, string from_asset_account, string to_asset_account, uint256 amount);
-
-    function Asset() public {
+    event RegisterEvent(int256 ret, string account, uint256 amount);
+    event TransferEvent(int256 ret, string from_account, string to_account, uint256 amount);
+    
+    constructor() public {
         createTable();
     }
 
     function createTable() private {
         TableFactory tf = TableFactory(0x1001); 
-        // 资产管理表, key : asset_account, field : asset_amount
+        // 资产管理表, key : account, field : asset_value
         // |  资产账户(主键)      |     资产金额       |
         // |-------------------- |-------------------|
-        // |  asset_account      |  asset_amount     |     
+        // |        account      |    asset_value    |     
         // |---------------------|-------------------|
         //
         // 创建表
-        tf.createTable("t_asset_management", "asset_account", "asset_amount");
+        tf.createTable("t_asset_management", "account", "asset_value");
     }
 
     function openTable() private returns(Table) {
@@ -97,32 +97,32 @@ contract Asset {
     /*
     描述 : 根据资产账户查询资产金额
     参数 ： 
-            asset_account : 资产账户
+            account : 资产账户
 
     返回值：
             第一个参数： 成功返回0, 账户不存在返回-1
             第二个参数： 第一个参数为0时有效，资产金额
     */
-    function select(string asset_account) public constant returns(int256, uint256) {
+    function select(string account) public constant returns(int256, uint256) {
 
         Table table = openTable();
         Condition condition = table.newCondition();
-        condition.EQ("asset_account", asset_account);
+        condition.EQ("account", account);
         
-        Entries entries = table.select(asset_account, table.newCondition());
+        Entries entries = table.select(account, table.newCondition());
         uint256 amount = 0;
         if (0 == uint256(entries.size())) {
             return (-1, amount);
         } else {
             Entry entry = entries.get(0);
-            return (0, uint256(entry.getInt("asset_amount")));
+            return (0, uint256(entry.getInt("asset_value")));
         }
     }
 
     /*
     描述 : 资产注册
     参数 ： 
-            asset_account : 资产账户
+            account : 资产账户
             amount        : 资产金额
     返回值：
             0  资产注册成功
@@ -130,17 +130,19 @@ contract Asset {
             -1 资产账户已存在
             -2 其他错误
     */
-    function register(string asset_account, uint256 amount) public returns(int256){
+    function register(string account, uint256 amount) public returns(int256){
         int256 ret_code = 0;
-        var (ret, temp_amount) = select(asset_account);
+        int256 ret= 0;
+        uint256 asset_value = 0;
+        (ret, asset_value) = select(account);
         if(ret != 0) {
             Table table = openTable();
             //插入
             Entry entry = table.newEntry();
-            entry.set("asset_account", asset_account);
-            entry.set("asset_amount", int256(amount));
+            entry.set("account", account);
+            entry.set("asset_value", int256(amount));
 
-            int count = table.insert(asset_account, entry);
+            int count = table.insert(account, entry);
             if (count == 1) {
                 ret_code = 0;
             } else {
@@ -151,7 +153,7 @@ contract Asset {
             ret_code = -1;
         }
 
-        RegisterEvent(ret_code, asset_account, amount);
+        emit RegisterEvent(ret_code, account, amount);
 
         return ret_code;
     }
@@ -159,8 +161,8 @@ contract Asset {
     /*
     描述 : 资产转移
     参数 ： 
-            from_asset_account : 转移资产账户
-            to_asset_account ： 接收资产账户
+            from_account : 转移资产账户
+            to_account ： 接收资产账户
             amount ： 转移金额
     返回值：
             0  资产转移成功
@@ -170,71 +172,71 @@ contract Asset {
             -4 金额溢出
             -5 其他错误
     */
-    function transfer(string from_asset_account, string to_asset_account, uint256 amount) public returns(int256) {
+    function transfer(string from_account, string to_account, uint256 amount) public returns(int256) {
         // 查询转移资产账户信息
         int ret_code = 0;
         int256 ret = 0;
-        uint256 from_asset_amount = 0;
-        uint256 to_asset_amount = 0;
+        uint256 from_asset_value = 0;
+        uint256 to_asset_value = 0;
         
-        (ret, from_asset_amount) = select(from_asset_account);
+        (ret, from_asset_value) = select(from_account);
         if(ret != 0) {
             ret_code = -1;
             //转移资产的账户不存在
-            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
 
         }
 
         // 查询接收资产账户信息
-        (ret, to_asset_amount) = select(to_asset_account);
+        (ret, to_asset_value) = select(to_account);
         if(ret != 0) {
             ret_code = -2;
             //接收资产的账户不存在
-            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         }
 
-        if(from_asset_amount < amount) {
+        if(from_asset_value < amount) {
             ret_code = -3;
             //转移资产的账户金额不足
-            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         } 
 
-        if (to_asset_amount + amount < to_asset_amount) {
+        if (to_asset_value + amount < to_asset_value) {
             ret_code = -4;
             //接收资产的账户金额溢出
-            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         }
 
         Table table = openTable();
         Condition condition0 = table.newCondition();
-        condition0.EQ("asset_account", from_asset_account);
+        condition0.EQ("account", from_account);
 
         //插入
         Entry entry0 = table.newEntry();
-        entry0.set("asset_account", from_asset_account);
-        entry0.set("asset_amount", int256(from_asset_amount - amount));
+        entry0.set("account", from_account);
+        entry0.set("asset_value", int256(from_asset_value - amount));
         
-        int count = table.update(from_asset_account, entry0, condition0);
+        int count = table.update(from_account, entry0, condition0);
         if(count != 1) {
             ret_code = -5;
             //更新错误
-            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         }
 
         Condition condition1 = table.newCondition();
-        condition1.EQ("asset_account", to_asset_account);
+        condition1.EQ("account", to_account);
 
         Entry entry1 = table.newEntry();
-        entry1.set("asset_account", to_asset_account);
-        entry1.set("asset_amount", int256(to_asset_amount + amount));
-        table.update(to_asset_account, entry1, condition1);
+        entry1.set("account", to_account);
+        entry1.set("asset_value", int256(to_asset_value + amount));
+        table.update(to_account, entry1, condition1);
 
-        TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+        emit TransferEvent(ret_code, from_account, to_account, amount);
 
         return ret_code;
 
@@ -246,7 +248,7 @@ contract Asset {
 **小结：** 我们根据业务需求设计了合约`Asset.sol`的存储与接口，并给出了完整实现。java应用需要调用合约时，需要首先将solidity文件转换为Java合约文件，这是下一步需要的工作。
 
 ## 合约编译
-控制台提供了合约编译工具。将`Asset.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
+控制台提供了合约编译工具。将`Asset.sol Table.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
 ```bash
 # 切换到fisco/console/tools目录
 $ cd ~/fisco/console/tools/
@@ -356,7 +358,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
 ## 业务开发
-**asset-app项目已经包含完整的源码，用户可以直接使用**，现在分别介绍Java类的设计与实现。
+**asset-app项目已经包含示例的完整源码，用户可以直接使用**，现在分别介绍Java类的设计与实现。
 
 - `Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，路径`/src/main/java/org/fisco/bcos/asset/contract`，Asset.java的主要接口：
 ```java
@@ -382,31 +384,44 @@ public class Asset extends Contract {
     public static RemoteCall<Asset> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
 }
 ```
+其中load与deploy函数用于构造Asset对象，其他接口分别用来调用对应的solidity的接口
 
-- `AssetClient.java`：入口类，通过调用`Asset.java`实现对合约的部署与调用。路径`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
+- `AssetClient.java`：入口类，通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`
+- 初始化  
+初始化代码的主要功能为构造Web3j与Credentials对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 ```java
-public void initialize() throws Exception {
+// function initialize
+ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+Service service = context.getBean(Service.class);
+service.run();
 
-		// init the Service
-		@SuppressWarnings("resource")
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		Service service = context.getBean(Service.class);
-		service.run();
-
-		ChannelEthereumService channelEthereumService = new ChannelEthereumService();
-		channelEthereumService.setChannelService(service);
-        
-		Web3j web3j = Web3j.build(channelEthereumService, 1);
-
-		// init Credentials
-		Credentials credentials = Credentials.create(Keys.createEcKeyPair());
-
-		setCredentials(credentials);
-		setWeb3j(web3j);
-
-		logger.debug(" web3j is " + web3j + " ,credentials is " + credentials);
-	}
+ChannelEthereumService channelEthereumService = new ChannelEthereumService();
+channelEthereumService.setChannelService(service);
+// init Web3j
+Web3j web3j = Web3j.build(channelEthereumService, 1);
+// init Credentials
+Credentials credentials = Credentials.create(Keys.createEcKeyPair());
 ```
+- 构造合约类对象  
+可以使用deploy或者load函数初始化合约对象，两者使用场景不同，前者适用于初次部署合约，后者在合约已经部署并且已知合约地址时使用。
+```java
+// 部署合约
+Asset asset = Asset.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
+// 加载合约地址
+Asset asset = Asset.load(contractAddress, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
+```
+
+- 接口调用
+使用合约对象调用对应的接口，处理返回结果。
+```java
+// select接口调用
+Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount).send();
+// register接口调用
+TransactionReceipt receipt = asset.register(assetAccount, amount).send();
+// transfer接口
+TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount).send();
+```
+
 **小结：** 通过Java合约文件，设计了一个业务Service类和调用入口类，已完资产管理的业务功能。接下来可以运行项目，测试功能是否正常。
 
 ## 运行
@@ -428,26 +443,26 @@ deploy Asset success, contract address is 0x23461960a54ec0d41e82631e92118bab12bc
 ```
 - 注册资产信息
 ```bash
-$ bash asset_run.sh register Asset_0 999999999
-register asset account success => asset: Asset_0, amount: 999999999
-$ bash asset_run.sh register Asset_1 111111111
-register asset account success => asset: Asset_1, amount: 111111111 
+$ bash asset_run.sh register Alice 999999999
+register asset account success => asset: Alice, amount: 999999999
+$ bash asset_run.sh register Bob 111111111
+register asset account success => asset: Bob, amount: 111111111 
 ```
 - 查询资产信息
 ```bash
-$ bash asset_run.sh query Asset_0              
-asset account Asset_0, amount 999999999
-$ bash asset_run.sh query Asset_1              
-asset account Asset_0, amount 111111111
+$ bash asset_run.sh query Alice              
+asset account Alice, amount 999999999
+$ bash asset_run.sh query Bob              
+asset account Bob, amount 111111111
 ```
 - 资产转移
 ```bash
-$ bash asset_run.sh transfer Asset_0 Asset_1  555555
-transfer success => from_asset: Asset_0, to_asset: Asset_1, amount: 555555 
-$ bash asset_run.sh query Asset_0 
-asset account Asset_0, amount 999444444 
-$ bash asset_run.sh query Asset_1
-asset account Asset_1, amount 111666666
+$ bash asset_run.sh transfer Alice Bob  555555
+transfer success => from_asset: Alice, to_asset: Bob, amount: 555555 
+$ bash asset_run.sh query Alice 
+asset account Alice, amount 999444444 
+$ bash asset_run.sh query Bob
+asset account Bob, amount 111666666
 ```
 
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
