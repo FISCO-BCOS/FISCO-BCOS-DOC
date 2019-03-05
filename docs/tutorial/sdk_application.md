@@ -360,7 +360,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ## 业务开发
 **asset-app项目已经包含示例的完整源码，用户可以直接使用**，现在分别介绍Java类的设计与实现。
 
-- `Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，路径`/src/main/java/org/fisco/bcos/asset/contract`，Asset.java的主要接口：
+`Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，路径`/src/main/java/org/fisco/bcos/asset/contract`，Asset.java的主要接口：
 ```java
 package org.fisco.bcos.asset.contract;
 
@@ -386,7 +386,7 @@ public class Asset extends Contract {
 ```
 其中load与deploy函数用于构造Asset对象，其他接口分别用来调用对应的solidity的接口
 
-- `AssetClient.java`：入口类，通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`
+`AssetClient.java`：入口类，通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`，初始化以及调用流程都在该类中进行。
 - 初始化  
 初始化代码的主要功能为构造Web3j与Credentials对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 ```java
@@ -451,9 +451,9 @@ register asset account success => asset: Bob, amount: 111111111
 - 查询资产信息
 ```bash
 $ bash asset_run.sh query Alice              
-asset account Alice, amount 999999999
+asset account Alice, value 999999999
 $ bash asset_run.sh query Bob              
-asset account Bob, amount 111111111
+asset account Bob, value 111111111
 ```
 - 资产转移
 ```bash
