@@ -190,7 +190,7 @@ $ ./sol2java.sh org.bcos.student.contract
 我们提供了一个Java工程项目供开发使用，首先获取Java工程项目：
 ```
 # 获取Java工程项目压缩包
-curl -LO https：//github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
+curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
 # 解压得到Java工程项目student-score-app目录
 tar -zxf student-score-app.tar.gz
 ```
