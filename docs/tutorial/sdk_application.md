@@ -38,7 +38,7 @@ to do:
 ```eval_rst
 
 +-----------------+------------------+
-|    资产账户      |       金额        |
+|    资产账户      |       金额       |
 +=================+==================+
 |      Alice      |     10000        |
 +-----------------+------------------+
@@ -56,7 +56,7 @@ FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，�
 ```eval_rst
 
 +-----------------+------------------+
-|     account     |   asset_value   |
+|     account     |   asset_value    |
 +=================+==================+
 |      Alice      |     10000        |
 +-----------------+------------------+
@@ -67,7 +67,7 @@ FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，�
 
 ### 接口设计
 
- 按照业务的设计目标，需要实现资产注册，转账，查询功能，可以确定```Asset.sol```需要以下三个接口：
+ 按照业务的设计目标，需要实现资产注册，转账，查询功能，对应功能的接口如下：
 ```solidity
 // 查询资产金额
 function select(string account) public constant returns(int256, uint256) 
@@ -256,7 +256,7 @@ contract Asset {
 ```
  **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-**小结：** 我们根据业务需求设计了合约`Asset.sol`的存储与接口，并给出了完整实现。java应用需要调用合约时，需要首先将solidity文件转换为Java合约文件，这是我们下一步需要的工作。
+**小结：** 我们根据业务需求设计了合约`Asset.sol`的存储与接口，并给出了完整实现。java应用需要调用合约时，需要首先将solidity文件转换为Java合约文件，这是下一步需要的工作。
 
 ## 合约编译
 控制台提供了合约编译工具。将`Asset.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
@@ -287,7 +287,7 @@ $ ./sol2java.sh org.fisco.bcos.asset.contract
 |                             |--Table.java  // 编译成功的系统CRUD合约接口Java文件
 |-- sol2java.sh
 ```
-我们关注的是，java目录下生成了`org/fisco/bcos/asset/contract`包路径目录。包路径目录下将会生成Java合约文件`Asset.java`和`Table.java`。其中`Asset.java`是Java应用所需要的Java合约文件。
+我们关注的是，java目录下生成了`org/fisco/bcos/asset/contract`包路径目录。包路径目录下将会生成Java合约文件`Asset.java`和`Table.java`，其中`Asset.java`是Java应用所需要的Java合约文件。
 
 **小结：** 我们通过控制台合约编译工具将设计的`Asset.sol`合约编译为了`Asset.java`，下一步将进入SDK的配置与业务的开发。
 
@@ -451,8 +451,3 @@ to do :
 ```
 
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
-
-```
-to do :
-    1. 总结用户进行应用开发的流程
-```
