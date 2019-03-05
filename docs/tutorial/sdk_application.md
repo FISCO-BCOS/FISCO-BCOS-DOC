@@ -258,7 +258,7 @@ $ cd ~/fisco
 # 拷贝节点证书到项目的资源目录
 $ cp nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
 ```
-- **`applicationContext.xml`配置**：**已提供默认配置，不需要更改。** 若搭建区块链的节点参数有改动，配置`applicationContext.xml`请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
+- **`applicationContext.xml`配置**：**已提供默认配置，不需要更改。** 若搭建区块链的节点参数有改动，配置`applicationContext.xml`请参考[SDK使用文档](../sdk/sdk.html#spring)。
 
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 

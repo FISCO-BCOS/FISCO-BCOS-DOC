@@ -31,17 +31,17 @@
 
 ## 安装依赖
 
-部署FISCO BCOS区块链节点前，需安装`openssl，leveldb，curl`等依赖软件，具体命令如下：
+部署FISCO BCOS区块链节点前，需安装`openssl，curl`等依赖软件，具体命令如下：
 
 ```bash
 ### CentOS
-$ sudo yum -y install openssl openssl-devel leveldb leveldb-devel curl
+$ sudo yum install -y openssl openssl-devel curl
 
 ### Ubuntu
-$ sudo apt-get install openssl libssl-dev libleveldb-dev curl
+$ sudo apt-get install -y openssl libssl-dev curl
 
 ### Mac OS
-$ brew install openssl leveldb
+$ brew install -y openssl
 ```
 
 ## 星形拓扑
