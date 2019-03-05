@@ -4,7 +4,7 @@
 
 落盘加密是对节点存储在硬盘上的内容进行加密，加密的内容包括：合约的数据、节点的私钥。
 
-具体的落盘加密介绍，可参考：[落盘加密的介绍](design/features/disk_encryption.md)
+具体的落盘加密介绍，可参考：[落盘加密的介绍](design/features/storage_security.md)
 
 ## 部署Key Manager
 
@@ -56,7 +56,7 @@ key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
-将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](configs.md)）中。
+将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](configuration.md)）中。
 
 ```shell
 vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini

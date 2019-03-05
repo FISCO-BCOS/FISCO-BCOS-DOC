@@ -39,7 +39,7 @@ boostlog示例配置如下：
 
 ### 配置easylogging++
 
-为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的`[log]`配置，一般建议不手动更改除了日志级别外的其他配置，开启easylogging++的方法可参考[启用easylogging++](log.html#easylogging)。
+为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的`[log]`配置，一般建议不手动更改除了日志级别外的其他配置，开启easylogging++的方法可参考[启用easylogging++](log_access.html#id4)。
 
 - `format`：全局日志格式；
 
