@@ -19,180 +19,250 @@
 
 ## 示例应用需求
 
-区块链天然具有防串改的特性，因此将学生成绩，本文提供一个学生成绩管理的示例，其基本业务需求如下：
-- 老师可以录入学生的课程分数，保存到区块链上。
-- 学生可以从区块链上查询课程分数。
-- 当课程分数需要更新时，老师可以更新区块链上的课程分数。学生可以从区块链上查询到更新后的课程分数。
+本文提供一个资产管理的示例，其基本业务需求如下：
+- 可以完成在区块链上进行资产注册。
+- 查询资产金额。
+- 能够在链上进行资产转移。
 
 ## 合约开发
 
-**业务表设计：** 实现学生成绩管理，首先需要设计一个存储学生成绩的表`t_student_score`，该表字段如下：
-- name：主键，学生姓名(字符串类型)
-- subject：课程名称(字符串类型)
-- score：分数(整型)
+**业务表设计：** 实现资产管理，首先需要设计一个存储资产管理的表`t_asset_management`，该表字段如下：
+- asset_account：主键，资产账户(字符串类型)
+- asset_amount：资产金额(字符串类型)
 
-其中name是主键，即操作`t_student_score`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_student_score`表示例如下：
+其中asset_account是主键，即操作`t_asset_management`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_asset_management`表示例如下：
 
 
 ```eval_rst
 
-+------+----------+-------+
-|name  |subject   |score  |
-+======+==========+=======+
-|Alice |Math      |98     |
-+------+----------+-------+
-|Alice |Chinese   |90     |
-+------+----------+-------+
-|Bob   |English   |95     |
-+------+----------+-------+
++-----------------+------------------+
+|  asset_account  |   asset_amount   |
++=================+==================+
+|      Tencent    |     10000        |
++-----------------+------------------+
+|        Ali      |     99999999     |
++-----------------+------------------+
 
 ```
 
-**业务合约开发：**  针对学生成绩表，可以设计一个学生成绩的智能合约对学生成绩表进行操作。FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`StudentScore.sol`合约，通过该合约操作学生成绩表`t_student_score`。
-- `StudentScore.sol`合约设计如下：
+**业务合约开发：**  针对资产管理表，可以设计一个智能合约对资产进行操作。FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`Asset.sol`合约，通过该合约操作资产表`t_asset_management`。
+- `Asset.sol`合约设计如下：
 ```solidity
 pragma solidity ^0.4.25;
+// 引用Table.sol文件，需要与Table.sol放入同级目录
+import "./Table.sol";
 
-// Table.sol与StudentScore.sol放在同级目录时，需要在合约名前加"./"符号。
-import "./Table.sol"; 
+contract Asset {
 
-contract StudentScore {
-    
-    // 插入成绩记录event事件
-    event insertResult(int count);
-    // 更新成绩记录event事件
-    event updateResult(int count);
-    // 移除成绩记录event事件
-    event removeResult(int count);
+    event RegisterEvent(int256 ret, string asset_account, uint256 amount);
+    event TransferEvent(int256 ret, string from_asset_account, string to_asset_account, uint256 amount);
 
-    // 合约构造函数，构造函数调用将会创建学生成绩表
-    function StudentScore() public {
+    function Asset() public {
         createTable();
     }
 
-    // 创建学生成绩表
-    function createTable() public {
+    function createTable() private {
         TableFactory tf = TableFactory(0x1001); 
-        // 参数：表名，主键字段，普通字段(使用逗号分隔)
-        tf.createTable("t_student_score", "name", "subject,score");
+        // 资产管理表, key : asset_account, field : asset_amount
+        // |  资产账户(主键)      |     资产金额       |
+        // |-------------------- |-------------------|
+        // |  asset_account      |  asset_amount     |     
+        // |---------------------|-------------------|
+        //
+        // 创建表
+        tf.createTable("t_asset_management", "asset_account", "asset_amount");
     }
 
-    // 打开学生成绩表
-    function openTable() public returns(Table) {
+    function openTable() private returns(Table) {
         TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_student_score");
+        Table table = tf.openTable("t_asset_management");
         return table;
     }
 
-    // 查询成绩记录
-    function select(string name) public constant returns(bytes32[], bytes32[], int[]) {
+    /*
+    描述 : 根据资产账户查询资产金额
+    参数 ： 
+            asset_account : 资产账户
+
+    返回值：
+            第一个参数： 成功返回0, 账户不存在返回-1
+            第二个参数： 第一个参数为0时有效，资产金额
+    */
+    function select(string asset_account) public constant returns(int256, uint256) {
 
         Table table = openTable();
         Condition condition = table.newCondition();
+        condition.EQ("asset_account", asset_account);
         
-        Entries entries = table.select(name, condition);
-        bytes32[] memory name_list = new bytes32[](uint256(entries.size()));
-        bytes32[] memory subject_list = new bytes32[](uint256(entries.size()));
-        int[] memory score_list = new int[](uint256(entries.size()));
-        
-        for(int i=0; i<entries.size(); ++i) {
-            Entry entry = entries.get(i);
-            
-            name_list[uint256(i)] = entry.getBytes32("name");
-            subject_list[uint256(i)] = entry.getBytes32("subject");
-            score_list[uint256(i)] = entry.getInt("score");
+        Entries entries = table.select(asset_account, table.newCondition());
+        uint256 amount = 0;
+        if (0 == uint256(entries.size())) {
+            return (-1, amount);
+        } else {
+            Entry entry = entries.get(0);
+            return (0, uint256(entry.getInt("asset_amount")));
         }
- 
-        return (name_list, subject_list, score_list);
     }
 
-    // 插入成绩记录
-    function insert(string name, string subject, int score) public returns(int) {
+    /*
+    描述 : 资产注册
+    参数 ： 
+            asset_account : 资产账户
+            amount        : 资产金额
+    返回值：
+            0  资产注册成功
+            -1 参数错误
+            -1 资产账户已存在
+            -2 其他错误
+    */
+    function register(string asset_account, uint256 amount) public returns(int256){
+        int256 ret_code = 0;
+        var (ret, temp_amount) = select(asset_account);
+        if(ret != 0) {
+            Table table = openTable();
+            //插入
+            Entry entry = table.newEntry();
+            entry.set("asset_account", asset_account);
+            entry.set("asset_amount", int256(amount));
 
-        Table table = openTable();
-        
-        Entry entry = table.newEntry();
-        entry.set("name", name);
-        entry.set("subject", subject);
-        entry.set("score", score);
-        
-        int count = table.insert(name, entry);
-        insertResult(count);
-        
-        return count;
+            int count = table.insert(asset_account, entry);
+            if (count == 1) {
+                ret_code = 0;
+            } else {
+                ret_code = -2;
+            }
+        } else {
+            //资产账户已存在
+            ret_code = -1;
+        }
+
+        RegisterEvent(ret_code, asset_account, amount);
+
+        return ret_code;
     }
 
-    // 更新成绩记录
-    function update(string name, string subject, int score) public returns(int) {
+    /*
+    描述 : 资产转移
+    参数 ： 
+            from_asset_account : 转移资产账户
+            to_asset_account ： 接收资产账户
+            amount ： 转移金额
+    返回值：
+            0  资产转移成功
+            -1 转移资产账户不存在
+            -2 接收资产账户不存在
+            -3 金额不足
+            -4 金额溢出
+            -5 其他错误
+    */
+    function transfer(string from_asset_account, string to_asset_account, uint256 amount) public returns(int256) {
+        // 查询转移资产账户信息
+        int ret_code = 0;
+        int256 ret = 0;
+        uint256 from_asset_amount = 0;
+        uint256 to_asset_amount = 0;
+        
+        (ret, from_asset_amount) = select(from_asset_account);
+        if(ret != 0) {
+            ret_code = -1;
+            //转移资产的账户不存在
+            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            return ret_code;
+
+        }
+
+        // 查询接收资产账户信息
+        (ret, to_asset_amount) = select(to_asset_account);
+        if(ret != 0) {
+            ret_code = -2;
+            //接收资产的账户不存在
+            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            return ret_code;
+        }
+
+        if(from_asset_amount < amount) {
+            ret_code = -3;
+            //转移资产的账户金额不足
+            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            return ret_code;
+        } 
+
+        if (to_asset_amount + amount < to_asset_amount) {
+            ret_code = -4;
+            //接收资产的账户金额溢出
+            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            return ret_code;
+        }
 
         Table table = openTable();
-       
-        Entry entry = table.newEntry();
-        entry.set("name", name);
-        entry.set("subject", subject);
-        entry.set("score", score);
-        
-        Condition condition = table.newCondition();
-        condition.EQ("name", name);
-        condition.EQ("subject", subject);
-        
-        int count = table.update(name, entry, condition);
-        updateResult(count);
-        
-        return count;
-    }
+        Condition condition0 = table.newCondition();
+        condition0.EQ("asset_account", from_asset_account);
 
-    // 移除成绩记录
-    function remove(string name) public returns(int) {
+        //插入
+        Entry entry0 = table.newEntry();
+        entry0.set("asset_account", from_asset_account);
+        entry0.set("asset_amount", int256(from_asset_amount - amount));
+        
+        int count = table.update(from_asset_account, entry0, condition0);
+        if(count != 1) {
+            ret_code = -5;
+            //更新错误
+            TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+            return ret_code;
+        }
 
-        Table table = openTable();
-       
-        Condition condition = table.newCondition();
-        condition.EQ("name", name);
-        
-        int count = table.remove(name, condition);
-        removeResult(count);
-        
-        return count;
+        Condition condition1 = table.newCondition();
+        condition1.EQ("asset_account", to_asset_account);
+
+        Entry entry1 = table.newEntry();
+        entry1.set("asset_account", to_asset_account);
+        entry1.set("asset_amount", int256(to_asset_amount + amount));
+        table.update(to_asset_account, entry1, condition1);
+
+        TransferEvent(ret_code, from_asset_account, to_asset_account, amount);
+
+        return ret_code;
+
     }
 }
 ```
 
- **注：** `StudentScore.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
+ **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-**小结：** 我们根据业务需求设计了一个业务表`t_student_score`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`StudentScore.sol`。由于Java应用不能直接调用solidity合约文件，下一步将开发的`StudentScore.sol`合约编译为Java合约文件。
+**小结：** 我们根据业务需求设计了一个业务表`t_asset_management`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`Asset.sol`。由于Java应用不能直接调用solidity合约文件，下一步将开发的`Asset.sol`合约编译为Java合约文件。
 
 ## 合约编译
-控制台提供了合约编译工具。将`StudentScore.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
+控制台提供了合约编译工具。将`Asset.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
 ```bash
 # 切换到fisco/console/tools目录
 $ cd ~/fisco/console/tools/
 # 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
-$ ./sol2java.sh org.bcos.student.contract
+$ ./sol2java.sh org.fisco.bcos.asset.contract
 ```
 运行成功之后，将会在console/tools目录生成java、abi和bin目录，如下所示。
 ```bash
 |-- abi // 编译生成的abi目录，存放solidity合约编译的abi文件
-|   |-- StudentScore.abi
+|   |-- Asset.abi
 |   |-- Table.abi
 |-- bin // 编译生成的bin目录，存放solidity合约编译的bin文件
-|   |-- StudentScore.bin
+|   |-- Asset.bin
 |   |-- Table.bin
 |-- contracts // 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
-|   |-- StudentScore.sol // 拷贝进来的StudentScore.sol合约，依赖Table.sol
+|   |-- Asset.sol // 拷贝进来的StudentScore.sol合约，依赖Table.sol
 |   |-- Table.sol // 默认提供的系统CRUD合约接口文件
 |-- java  // 存放编译的包路径及Java合约文件
 |   |-- org
-|       |-- bcos
-|           |-- student
-|               |-- contract
-|                   |-- StudentScore.java // 编译成功的目标Java文件
-|                   |-- Table.java  // 编译成功的系统CRUD合约接口Java文件
+|        |--fisco
+|             |--bcos
+|                  |--asset
+|                       |--contract
+|                             |--Asset.java  // 编译成功的目标Java文件
+|                             |--Table.java  // 编译成功的系统CRUD合约接口Java文件
 |-- sol2java.sh
 ```
-我们关注的是，java目录下生成了`org/bcos/student/student/contract`包路径目录。包路径目录下将会生成Java合约文件`StudentScore.java`和`Table.java`。其中`StudentScore.java`是Java应用所需要的Java合约文件。
+我们关注的是，java目录下生成了`org/fisco/bcos/asset/contract`包路径目录。包路径目录下将会生成Java合约文件`Asset.java`和`Table.java`。其中`Asset.java`是Java应用所需要的Java合约文件。
 
-**小结：** 我们通过控制台合约编译工具将设计的`StudentScore.sol`合约编译为了`StudentScore.java`，下一步将进入SDK的配置与业务的开发。
+**小结：** 我们通过控制台合约编译工具将设计的`Asset.sol`合约编译为了`Asset.java`，下一步将进入SDK的配置与业务的开发。
 
 ## SDK配置
 
@@ -200,11 +270,11 @@ $ ./sol2java.sh org.bcos.student.contract
 ```
 # 获取Java工程项目压缩包
 $ cd ~
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/student-score-app.tar.gz
-# 解压得到Java工程项目student-score-app目录
-$ tar -zxf student-score-app.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
+# 解压得到Java工程项目asset-app目录
+$ tar -zxf asset-app.tar.gz
 ```
-student-score-app项目的目录结构如下：
+asset-app项目的目录结构如下：
 ```bash
 |-- build.gradle // gradle配置文件
 |-- gradle
@@ -217,15 +287,14 @@ student-score-app项目的目录结构如下：
 |-- src
 |   |-- main
 |   |   |-- java
-|   |       |-- org
-|   |           |-- bcos
-|   |               |-- student
-|   |                   |-- client // 放置客户端调用类
-|   |                   |   |-- StudentScoreClient.java
-|   |                   |-- contract // 放置Java合约类
-|   |                   |   |-- StudentScore.java
-|   |                   |-- service // 放置业务实现类，部署和调用合约
-|   |                       |-- StudentScoreService.java
+|   |         |-- org
+|   |             |-- fisco
+|   |                   |-- bcos
+|   |                         |-- asset
+|   |                               |-- client // 放置客户端调用类
+|   |                                      |-- AssetClient.java
+|   |                               |-- contract // 放置Java合约类
+|   |                                      |-- Asset.java
 |   |-- test 
 |       |-- java 
 |       |-- resources // 存放代码资源文件
@@ -236,11 +305,11 @@ student-score-app项目的目录结构如下：
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
 |           |-- contract //存放solidity约文件
-|           |   |-- StudentScore.sol
+|           |   |-- Asset.sol
 |           |   |-- Table.sol
 
 |-- tool
-    |-- run.sh // 项目运行脚本
+    |-- asset_run.sh // 项目运行脚本
 ```
 
 ### 项目引入SDK
@@ -266,88 +335,78 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 # 进入~/fisco目录
 # 拷贝节点证书到项目的资源目录
 $ cd ~
-$ cp fisco/nodes/127.0.0.1/sdk/* student-score-app/src/test/resources/
+$ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
 - `student-score-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点的channel_ip与channel_port有所改动，需要配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
 ## 业务开发
-这一部分有三项工作，每一项工作增加一个Java类。**项目相关路径下已有开发完成的三个Java类，可以直接使用**。现在分别介绍这个三个Java类的设计与实现。
-- `StudentScore.java`： 此类由`StudentScore.sol`通过控制台编译工具编译生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/bcos/student/contract`。
-- `StudentScoreService.java`：此类负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/bcos/student/service`。
-- `StudentScoreClient.java`：此类是应用的入口，通过调用`StudenScoreService.java`实现业务功能。放置在包路径目录`/src/main/java/org/bcos/student/client`，其核心设计代码如下：
+这一部分有两项工作，每一项工作增加一个Java类。**项目相关路径下已有开发完成的两个Java类，可以直接使用**。现在分别介绍这个三个Java类的设计与实现。
+- `Asset.java`： 此类由`Asset.sol`通过控制台编译工具编译生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/fisco/bcos/asset/contract`。
+- `StudentScoreClient.java`：此类是应用的入口，负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
 ```java
-// 应用的main函数入口
-public void initialize(String cmd) throws Exception {
+public void initialize() throws Exception {
 
-  // 初始化Service
-  ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml"); 
-  Service service = context.getBean(Service.class);
-  service.run();
+		// init the Service
+		@SuppressWarnings("resource")
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+		Service service = context.getBean(Service.class);
+		service.run();
 
-  ChannelEthereumService channelEthereumService = new ChannelEthereumService();
-  channelEthereumService.setChannelService(service);
-  // 创建Web3j对象，第二个参数为群组ID
-  Web3j web3j = Web3j.build(channelEthereumService, 1);
+		ChannelEthereumService channelEthereumService = new ChannelEthereumService();
+		channelEthereumService.setChannelService(service);
+		Web3j web3j = Web3j.build(channelEthereumService, 1);
 
-  // 构建随机的交易账号
-  // 可以通过指定特定私钥的方式指定特定账号发生交易，示例：
-  // Credentials credentials = Credentials.create("3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4");
-  Credentials credentials = Credentials.create(Keys.createEcKeyPair());
+		// init Credentials
+		Credentials credentials = Credentials.create(Keys.createEcKeyPair());
 
-  // others
-}
+		setCredentials(credentials);
+		setWeb3j(web3j);
+
+		logger.debug(" web3j is " + web3j + " ,credentials is " + credentials);
+	}
 ```
-**小结：** 通过Java合约文件，设计了一个业务Service类和调用入口类，已完成学生成绩管理系统的业务功能。接下来可以运行项目，测试功能是否正常。
+**小结：** 通过Java合约文件，设计了一个业务Service类和调用入口类，已完资产管理的业务功能。接下来可以运行项目，测试功能是否正常。
 
 ## 运行
 编译项目。
 ```bash
 # 切换到项目目录
-$ cd ~/student-score-app
+$ cd ~/asset-app
 # 编译项目
 $ ./gradlew build
 ```
-编译成功之后，将在项目根目录下生成`dist`目录。dist目录下有一个`run.sh`脚本，简化项目运行。现在开始一一验证本文开始定下的需求。
+编译成功之后，将在项目根目录下生成`dist`目录。dist目录下有一个`asset_run.sh`脚本，简化项目运行。现在开始一一验证本文开始定下的需求。
 
-- 部署`StudentScore.sol`合约
+- 部署`Asset.sol`合约
 ```bash
 # 进入dist目录
 $ cd dist
-$ ./run.sh deploy
-Deploy StudentScore contract successfully, contract address is 0xd996558d2fceeca464b454a745a0aa5832fac715
+$ bash asset_run.sh deploy
+deploy Asset success, contract address is 0x23461960a54ec0d41e82631e92118bab12bc8a04
 ```
-- 老师录入学生课程分数
+- 注册资产信息
 ```bash
-$ ./run.sh insert Alice Math 75
-Insert student score successfully. 
+$ bash asset_run.sh register Asset_0 999999999
+register asset account success => asset: Asset_0, amount: 999999999
+$ bash asset_run.sh register Asset_1 111111111
+register asset account success => asset: Asset_1, amount: 111111111 
 ```
-- 学生查询课程分数
+- 查询资产信息
 ```bash
-$ ./run.sh select Alice              
-Alice's score count = 1
-Subject => Math, score => 75
+$ bash asset_run.sh query Asset_0              
+asset account Asset_0, amount 999999999
+$ bash asset_run.sh query Asset_1              
+asset account Asset_0, amount 111111111
 ```
-- 老师修改学生课程分数
+- 资产转移
 ```bash
-$ ./run.sh update Alice Math 98
-Update student score successfully.
-```
-- 学生查询课程分数 
-```bash
-$ ./run.sh select Alice
-Alice's score count = 1
-Subject => Math, score => 98
-```
-- 老师移除学习课程分数
-```bash
-$ ./run.sh remove Alice 
-Remove student score successfully.
-```
-- 学生查询课程分数 
-```bash
-$ ./run.sh select Alice
-Alice's score count = 0
+$ bash asset_run.sh transfer Asset_0 Asset_1  555555
+transfer success => from_asset: Asset_0, to_asset: Asset_1, amount: 555555 
+$ bash asset_run.sh query Asset_0 
+asset account Asset_0, amount 999444444 
+$ bash asset_run.sh query Asset_1
+asset account Asset_1, amount 111666666
 ```
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
