@@ -403,6 +403,7 @@ Web3j web3j = Web3j.build(channelEthereumService, 1);
 Credentials credentials = Credentials.create(Keys.createEcKeyPair());
 ```
 - 构造合约类对象  
+
 可以使用deploy或者load函数初始化合约对象，两者使用场景不同，前者适用于初次部署合约，后者在合约已经部署并且已知合约地址时使用。
 ```java
 // 部署合约
@@ -411,7 +412,8 @@ Asset asset = Asset.deploy(web3j, credentials, new StaticGasProvider(gasPrice, g
 Asset asset = Asset.load(contractAddress, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
 ```
 
-- 接口调用
+- 接口调用  
+
 使用合约对象调用对应的接口，处理返回结果。
 ```java
 // select接口调用
