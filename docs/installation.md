@@ -170,7 +170,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```json
 # 获取客户端版本
-> getClientVersion
+> getNodeVersion
 {
     "Build Time":"20190121 06:21:05",
     "Build Type":"Linux/clang/Debug",

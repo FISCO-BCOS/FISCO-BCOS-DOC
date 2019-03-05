@@ -4,15 +4,15 @@
 
 FISCO BCOS generator的配置文件在./conf文件夹下，共有三个配置文件：`mchain.ini`、`mexpand.ini`和`mgroup.ini`。分别对应新建节点及群组、扩容新节点加入现有群组、节点划分新群组三种操作的配置。
 
-用户通过对conf文件夹下文件的操作，配置生成节点安装包的具体信息。
+用户通过对conf文件夹下文件的操作，配置生成节点配置文件夹的具体信息。
 
 ### 元数据文件夹meta
 
-FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书ca.crt、节点证书、群组创世区块文件等。
+FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书`ca.crt`、节点证书、群组创世区块文件等。
 
-证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。节点证书需要已经拼装好agency.crt。
+证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。节点证书需要已经拼装好`agency.crt`。
 
-FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书、可执行程序生成用户在conf下配置的节点安装包。
+FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书、conf下的配置文件，生成用户下配置的节点配置文件夹。
 
 ### mchain.ini
 
@@ -114,8 +114,8 @@ FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书�
 <!-- | 命令名称 | 命令参数 | 基本功能 | 适用场景 |
 | :-: | :-: | :-: | :-:|
 | demo | 无 | 快速部署一条测试链 | 体验、测试FISCO BCOS |
-| build | 指定目录下不存在的文件夹 | 在指定文件夹下生成mchain.ini中配置的节点安装包（需要在meta下存放证书） | 用户需要生成节点安装包和群组配置文件。需要在meta文件夹下存放证书 |
-| expand | 1.存放原有群组节点的文件夹  2.扩容节点安装包文件夹 | 根据mexpand.ini，以及现有群组和节点配置文件，生成扩容节点安装包 | 用户需要为现有群组生成节点安装包，需要交换配置文件，不需要交换证书 |
+| build | 指定目录下不存在的文件夹 | 在指定文件夹下生成mchain.ini中配置的节点配置文件夹（需要在meta下存放证书） | 用户需要生成节点配置文件夹和群组配置文件。需要在meta文件夹下存放证书 |
+| expand | 1.存放原有群组节点的文件夹  2.扩容节点配置文件夹 | 根据mexpand.ini，以及现有群组和节点配置文件，生成扩容节点配置文件 | 用户需要为现有群组生成节点配置文件，需要交换配置文件，不需要交换证书 |
 | create | 指定文件夹 | 在指定文件夹下根据mcreate.ini和meta下的证书生成群组配置文件 | 用户已有节点，但需要生成新群组 。需要在meta文件夹下存放证书 |
 | *ca | 证书目录 | 生成相关证书 | 用户需要生成自签相关根证书、机构证书、节点证书、sdk证书时 |
 | cert* | 证书存放目录| 根据配置文件生成相关证书 | 用户需要批量根据配置文件生成节点证书时 |
@@ -127,8 +127,8 @@ FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书�
 | 命令名称 | 基本功能 |
 | :-: | :-: |
 | demo | 快速部署一条测试链 |
-| build_install_package | 在指定文件夹下生成mchain.ini中配置的节点安装包（需要在meta下存放证书） |
-| build_expand_package | 根据mexpand.ini，以及现有群组和节点配置文件，生成扩容节点安装包 |
+| build_install_package | 在指定文件夹下生成mchain.ini中配置的节点配置文件夹（需要在meta下存放证书） |
+| build_expand_package | 根据mexpand.ini，以及现有群组和节点配置文件，生成扩容节点配置文件夹 |
 | create_group_config | 指定文件夹 | 在指定文件夹下根据mcreate.ini和meta下的证书生成群组配置文件 |
 | generate_*_certificate | 生成相关证书 |
 | *_all_certificates | 根据配置文件生成相关证书 |
@@ -165,7 +165,7 @@ $ ./generator --demo
     此操作仅供体验，实际生产部署中请勿使用本命令
 ```
 
-### b/build_install_package
+### build_install_package (-b)
 
 |  |  |
 | :-: | :-: |
@@ -187,7 +187,7 @@ $ ./generator --build_install_package ~/mydata
 
 程序执行完成后，会在~/mydata文件夹下生成多个名为node_hostip_port的文件夹，推送到对应服务器后，拷贝私钥到节点conf下即可启动节点
 
-### e/build_expand_package
+### build_expand_package (-e)
 
 |  |  |
 | :-: | :-: |
@@ -195,7 +195,7 @@ $ ./generator --build_install_package ~/mydata
 | 使用前提 | 用户需配置`mexpand.ini`，并在meta下配置相关节点的证书，并收集扩容群组已运行群组的创世区块信息  |
 | 参数设置 | 指文件夹作为扩容包存放路径 |
 | 实现功能 | 通过给定节点证书和现有群组节点信息，生成安装包，并加入现有群组中 |
-| 适用场景 | 可用于区块链群组已存在，需要扩容节点安装包 |
+| 适用场景 | 可用于区块链群组已存在，需要扩容节点配置文件夹 |
 
 操作示例
 
@@ -210,7 +210,7 @@ $ ./generator --build_expand_package ./expand
 
 节点正常启动后，使用sdk将节点加入群组，完成扩容操作
 
-### c/create_group_config
+### create_group_config (-c)
 
 |  |  |
 | :-: | :-: |
@@ -229,9 +229,9 @@ $ vim ./conf/mgroup.ini
 $ ./generator --create_group_config ~/mydata
 ```
 
-程序执行完成后，会在~/mydata文件夹下生成mgroup.ini中配置的group.i.genesis和group.i.ini
+程序执行完成后，会在~/mydata文件夹下生成mgroup.ini中配置的`group.i.genesis`和`group.i.ini`
 
-用户将生成的group.i.genesis和group.i.ini拷贝至对应节点的conf文件夹下，即可完成新群组划分操作
+用户将生成的`group.i.genesis`和`group.i.ini`拷贝至对应节点的conf文件夹下，即可完成新群组划分操作
 
 ### generate_chain_certificate
 
@@ -247,7 +247,7 @@ $ ./generator --create_group_config ~/mydata
 $ ./generator --generate_chain_certificate ./dir_chain_ca(SET)
 ```
 
-执行完成后用户可以在指定文件夹下看到根证书ca.crt 和私钥ca.key。
+执行完成后用户可以在指定文件夹下看到根证书`ca.crt` 和私钥`ca.key`。
 
 ### generate_agency_certificate
 
@@ -313,8 +313,12 @@ $ ./generator --generate_all_certificates ./cert
 
 ```eval_rst
 .. note::
-    
-    此命令会根据meta目录下存放的ca.crt和ca.key生成相应的节点证书，如果没有根证书会自动生成
+    上述命令会根据meta目录下存放的ca.crt和ca.key生成相应的其他证书。
+
+    - 如果没有根证书ca.crt会自动生成相应的根证书ca.crt，私钥ca.key，机构证书agency.crt，机构私钥agency.key及其他必备的证书。
+    - 如果用户已经拥有根证书ca.crt，但是缺少私钥ca.key，则无法生成任何证书，程序会抛出异常。
+    - 如果用户拥有根证书ca.crt，机构证书`agency.crt`，但是缺少机构私钥agency.key，则无法生成节点证书，程序会抛出异常。
+
 ```
 
 执行完成后会在./cert文件夹下生成节点的相关证书与私钥，并拷贝节点证书放置于./meta下
@@ -340,34 +344,7 @@ $ ./generator --expand_all_certificates ./cert
   由于扩容节点与链本身节点的根证书必须相同，此命令会根据meta目录下存放的(ca.crt和ca.key)或(agency.crt和agency.key)生成相应的节点证书，如果没有根证书抛出异常  
 ```
 
-### h/help
-
-用户可以使用-h或--help命令查看帮助菜单
-
-使用示例：
-
-```bash
-$ ./generator -h
-```
-
-使用后会显示相关提示
-
-```bash
-$ ./generator -h
-usage: generator [-h] [--version] [--build_install_package data_dir]
-                 [--build_expand_package data_dir]
-                 [--create_group_config data_dir]
-                 [--generate_chain_certificate chain_dir]
-                 [--generate_agency_certificate agency_dir chain_dir agency_name]
-                 [--generate_node_certificate node_dir agency_dir node_name]
-                 [--generate_sdk_certificate sdk_dir agency_dir] [--use_guomi]
-                 [--demo] [--generate_all_certificates cert_dir]
-                 [--expand_all_certificates cert_dir]
-                 [--deploy_private_key cert_dir pkg_dir]
-                 [--merge_config config.ini config.ini]
-```
-
-### m/merge_config
+### merge_config (-m)
 
 使用--merge_config命令可以合并两个config.ini中的p2p section
 
@@ -416,7 +393,7 @@ $ ./generator --merge_config ~/mydata/node_A/config.ini  ~/mydata/node_B/config.
 
 使用成功后会将node_A和node_B的config.ini中p2p section合并与 ~/mydata/node_B/config.ini的文件中
 
-### d/deploy_private_key
+### deploy_private_key (-d)
 
 使用--deploy_private_key可以将路径下名称相同的节点私钥导入到生成好的安装包中。
 
@@ -432,7 +409,7 @@ $./generator --deploy_private_key ./cert ./data
 
 执行完成后可以将./cert下的对应的节点私钥导入./data的安装包中
 
-### v/version
+### version (-v)
 
 使用--version命令查看当前部署工具的版本号
 
@@ -440,9 +417,36 @@ $./generator --deploy_private_key ./cert ./data
 $ ./generator --version
 ```
 
+### help (-h)
+
+用户可以使用-h或--help命令查看帮助菜单
+
+使用示例：
+
+```bash
+$ ./generator -h
+```
+
+使用后会显示相关提示
+
+```bash
+$ ./generator -h
+usage: generator [-h] [--version] [--build_install_package data_dir]
+                 [--build_expand_package data_dir]
+                 [--create_group_config data_dir]
+                 [--generate_chain_certificate chain_dir]
+                 [--generate_agency_certificate agency_dir chain_dir agency_name]
+                 [--generate_node_certificate node_dir agency_dir node_name]
+                 [--generate_sdk_certificate sdk_dir agency_dir] [--use_guomi]
+                 [--demo] [--generate_all_certificates cert_dir]
+                 [--expand_all_certificates cert_dir]
+                 [--deploy_private_key cert_dir pkg_dir]
+                 [--merge_config config.ini config.ini]
+```
+
 ## 监控设计
 
-FISCO BCOS generator 生成的安装包提供了内置的监控脚本，用户可以通过对其进行配置，将节点的告警信息发送至指定地址。FISCO BCOS generator会将monitir脚本放置于生成节点安装包的指定目录下，假设用户指定生成的文件夹名为data，则monitor脚本会在data目录下的monitor文件夹下
+FISCO BCOS generator 生成的安装包提供了内置的监控脚本，用户可以通过对其进行配置，将节点的告警信息发送至指定地址。FISCO BCOS generator会将monitor脚本放置于生成节点配置文件的指定目录下，假设用户指定生成的文件夹名为data，则monitor脚本会在data目录下的monitor文件夹下
 
 使用方式如下：
 
@@ -452,7 +456,7 @@ $ cd ./data/monitor
 
 ### 配置告警服务
 
-用户使用前，首先需要配置告警信息服务，这里以server酱的微信推送为例，可以参考配置[server酱](http://sc.ftqq.com/3.version)
+用户使用前，首先需要配置告警信息服务，这里以**server酱**的微信推送为例，可以参考配置[server酱](http://sc.ftqq.com/3.version)
 
 绑定自己的github账号，以及微信后，可以使用本脚本向微信发送告警信息，使用本脚本的-s命令 可以向指定微信发送告警信息
 
@@ -462,7 +466,7 @@ $ cd ./data/monitor
 
 ### help命令
 
-使用monitor命令查看脚本使用方式
+使用help命令查看脚本使用方式
 
 ```bash
 $ ./monitor.sh -h
