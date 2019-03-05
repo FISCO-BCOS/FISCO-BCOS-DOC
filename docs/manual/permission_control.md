@@ -617,24 +617,24 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 +--------------------------+-----------+--------------------------------+
 |命令全称(缩写)            |命令参数   |功能                            |
 +==========================+===========+================================+
-|setSystemConfigByKey(ssc) |key value  |设置键为key，值为value的系统配置|
+|setSystemConfigByKey |key value  |设置键为key，值为value的系统配置|
 +--------------------------+-----------+--------------------------------+
-|getSystemConfigByKey(gsc) |key        |根据key查询value                |
+|getSystemConfigByKey |key        |根据key查询value                |
 +--------------------------+-----------+--------------------------------+
 
 ```
 **注：**     
-目前支持键为tx_count_limit和tx_gas_limit的系统参数设置。其中ssc命令受权限可以控制，gsc命令不受权限控制。
+目前支持键为tx_count_limit和tx_gas_limit的系统参数设置。其中setSystemConfigByKey命令受权限可以控制，gsc命令不受权限控制。
 
 #### 4.5.1 默认示例
 以账号1登陆控制台，首先查询系统字段tx_count_limit的值：
 ```
-> gsc tx_count_limit
+> getSystemConfigByKey tx_count_limit
 1000
 ```
 修改系统字段tx_count_limit的值为2000：
 ```
-> ssc tx_count_limit 2000
+> setSystemConfigByKey tx_count_limit 2000
 {
 	"code":1,
 	"msg":"success"
@@ -643,7 +643,7 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 设置成功。    
 查询系统字段tx_count_limit的值：
 ```
-> gsc tx_count_limit
+> setSystemConfigByKey tx_count_limit
 2000
 ```
 确认设置成功。
@@ -666,7 +666,7 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 ```
 以外部账号2登陆控制台，设置系统字段tx_count_limit的值为3000：
 ```
-> ssc tx_count_limit 3000
+> setSystemConfigByKey tx_count_limit 3000
 {
 	"code":-1,
 	"msg":"non-authorized"
@@ -675,7 +675,7 @@ rcm 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 设置失败。
 查询系统字段tx_count_limit的值:
 ```
-> gsc tx_count_limit
+> getSystemConfigByKey tx_count_limit
 2000
 ```
 确认设置失败，账号2无权限修改系统参数。类似账号3登陆控制台也将无权限修改系统参数。

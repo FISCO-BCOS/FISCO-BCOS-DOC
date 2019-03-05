@@ -101,9 +101,9 @@ $ tar -zxf console-0.4.25.tar.gz
 
 ### 配置控制台
 - 区块链节点和证书的配置：
-  - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`node.crt`和`node.key`文件拷贝到conf目录下。
-  - **通过[企业工具](../enterprise_tools/index.md)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise_tools/operation.html#id2))生成证书和私钥，将生成sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到conf目录下。
-- 配置conf目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
+  - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
+  - **通过[企业工具](../enterprise_tools/index.md)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的[证书生成相关命令](../enterprise_tools/operation.html#id2))生成证书和私钥，将生成sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
+- 配置`conf`目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -148,13 +148,13 @@ $ tar -zxf console-0.4.25.tar.gz
 </beans>
 ```
   配置项详细说明如下:
-  - encryptType: 国密算法开关(默认为0)                              
+  - `encryptType`: 国密算法开关(默认为0)                              
     - 0: 不使用国密算法发交易                              
     - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](./guomi_crypto.md))。
-  - groupChannelConnectionsConfig: 
+  - `groupChannelConnectionsConfig`: 
     - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
     - 每个群组可以配置一个或多个节点，设置群组节点的配置文件`config.ini`中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
-  - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK将与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
+  - `channelService`: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是`groupChannelConnectionsConfig`配置中的群组ID。SDK将与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
 ```eval_rst
 .. important::
@@ -188,7 +188,7 @@ $ ./start.sh [groupID] [privateKey]
 ```
 启动命令可以指定两个可选参数：           
 - `groupId`: 群组ID, 不指定则默认为群组1。           
-- `privateKey`: 交易发送者外部账号的私钥，不指定则默认从conf目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
+- `privateKey`: 交易发送者外部账号的私钥，不指定则默认从`conf`目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
 
 示例
 ```
