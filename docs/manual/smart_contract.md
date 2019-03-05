@@ -12,18 +12,19 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 ### [Solidity合约开发](https://solidity.readthedocs.io/en/latest/)
 
 - [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
-- [Remix](https://remix.ethereum.org/)
+- [Remix在线IDE](https://remix.ethereum.org/)
 
 ### CRUD合约开发
 
-访问 AMDB 需要使用 AMDB 专用的智能合约 Table.sol 接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
+访问 AMDB 需要使用 AMDB 专用的智能合约`Table.sol`接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
-Table.sol文件代码如下:
+`Table.sol`文件代码如下:
+
 ```js
 
 contract TableFactory {
-    function openTable(string) public constant returns (Table); // 打开表
-    function createTable(string,string,string) public constant returns(Table); // 创建表
+    function openTable(string) public constant returns (Table);  // 打开表
+    function createTable(string,string,string) public constant returns(Table);  // 创建表
 }
 
 // 查询条件
@@ -76,8 +77,10 @@ contract Table {
     function newCondition() public constant returns(Condition);
 }
 ```
-提供一个合约案例 TableTest.sol，代码如下：
-``` js
+
+提供一个合约案例`TableTest.sol`，代码如下：
+
+```js
 import "./Table.sol";
 
 contract TableTest {
@@ -88,7 +91,7 @@ contract TableTest {
     
     // 创建表
     function create() public {
-        TableFactory tf = TableFactory(0x1001); // TableFactory的地址固定为0x1001
+        TableFactory tf = TableFactory(0x1001);  // TableFactory的地址固定为0x1001
         // 创建t_test表，表的key_field为name，value_field为item_id,item_name 
         // key_field表示AMDB主key value_field表示表中的列，可以有多列，以逗号分隔
         tf.createTable("t_test", "name", "item_id,item_name");
@@ -166,20 +169,21 @@ contract TableTest {
     }
 }
 ```
-TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创建用户表`t_test`，并对`t_test`表进行增删改查的功能。`t_test`表结构如下，该表记录某公司员工领用物资和编号。
+
+`TableTest.sol`调用了 AMDB 专用的智能合约`Table.sol`，实现的是创建用户表`t_test`，并对`t_test`表进行增删改查的功能。`t_test`表结构如下，该表记录某公司员工领用物资和编号。
 
 |name*|item_name|item_id|
 |:----|:----|:------|
 |Bob|Laptop|100010001001|
 
 > **注意：** 
-客户端需要调用转换为 Java 文件的合约代码，需要将 TableTest.sol 和 Table.sol 放入 web3sdk 的 src/test/resources/contract 目录下，通过 web3sdk 的编译脚本生成 TableTest.java。
+客户端需要调用转换为 Java 文件的合约代码，需要将`TableTest.sol`和`Table.sol`放入 web3sdk 的`src/test/resources/contract`目录下，通过 web3sdk 的编译脚本生成`TableTest.java`。
 
 ## 预编译合约开发
 
 ### 一. 简介
 
-预编译（precompiled）合约(预编译合约)是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[precompiled设计原理](../design/virtual_machine/precompiled.md)。   
+预编译（precompiled）合约是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[precompiled设计原理](../design/virtual_machine/precompiled.md)。   
 本文作为一篇入门指导，旨在指引用户如何实现自己的precompiled合约,并实现precompiled合约的调用。
 
 ### 二. 实现预编译合约  
@@ -192,15 +196,21 @@ TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创�
 
 调用solidity合约或者预编译合约需要根据合约地址来区分，地址空间划分：
 
-| 以太坊precompiled | 保留          | FISCO-BCOS precompied | FISCO-BCOS预留 | 用户分配区间    | CRUD临时合约 | solidity |
-|-------------------|---------------|-----------------------|----------------|-----------------|--------------|----------|
-| 0x0001-0x0004     | 0x0005-0x0fff | 0x1000-0x1006         | 0x1007-0x5000  | 0x5001 - 0xffff | 0x10000+     | 其他     |
+| 地址用途 | 地址范围 |
+| --------- | --------- |
+| 以太坊precompiled | 0x0001-0x0004 |
+| 保留 | 0x0005-0x0fff |
+| FISCO-BCOS precompied | 0x1000-0x1006 |
+| FISCO-BCOS预留 | 0x1007-0x5000 |
+| 用户分配区间 | 0x5001 - 0xffff |
+| CRUD临时合约 | 0x10000+ |
+| solidity | 其他 |
 
- 用户分配地址空间为`0x5001-0xffff`,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。
+ 用户分配地址空间为`0x5001`-`0xffff`,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。
 
 FISCO-BCOS中实现的precompild合约列表以及地址分配：
 
-| 地址   | 功能   || 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
+| 地址   | 功能   | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
 |--------|--------|---------|
 | 0x1000 | 系统参数管理 | SystemConfigPrecompiled.cpp |
 | 0x1001 | 表工厂合约 | TableFactoryPrecompiled.cpp |
@@ -211,11 +221,11 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
 
 - **定义合约接口**  
 
-同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI 链接](https://solidity.readthedocs.io/en/develop/abi-spec.html)。  
+同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI链接](https://solidity.readthedocs.io/en/develop/abi-spec.html)。  
  
 > 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**辅助合约**，辅助合约在调用预编译合约时需要使用。 
 
-```
+```js
     pragma solidity ^0.4.25;
     contract Contract_Name {
         function interface0(parameters ... ) {}
@@ -231,9 +241,10 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
  
 - **实现调用逻辑**  
 
-实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承[Precompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/Precompiled.h#L37), 重载call函数， 在call函数中实现各个接口的调用行为。  
-```
-    //libblockverifier/Precompiled.h
+实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承[Precompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/Precompiled.h#L37), 重载call函数， 在call函数中实现各个接口的调用行为。
+
+```cpp
+    // libblockverifier/Precompiled.h
     class Precompiled
     {
         virtual bytes call(std::shared_ptr<ExecutiveContext> context, bytesConstRef param,
@@ -245,14 +256,16 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
 
 最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用precompiled合约时合约的执行逻辑才能被正确识别执行， 查看注册的[预编译合约列表](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/ExecutiveContextFactory.cpp#L36)。   
 注册路径：
+
 ```
     file        libblockverifier/ExecutiveContextFactory.cpp
     function    initExecutiveContext  
 ```
 
-#### 2.2 step by step sample  
-```
-//HelloWorld.sol
+#### 2.2 示例合约开发
+
+```js
+// HelloWorld.sol
 pragma solidity ^0.4.25;
 
 contract HelloWorld{
@@ -271,10 +284,12 @@ contract HelloWorld{
     }
 }
 ```
-上述源码为solidity编写的HelloWorld合约， 本章节会实现一个相同功能的预编译合约，通过step by step使用户对预编译合约编写有直观的认识。   
+
+上述源码为solidity编写的HelloWorld合约， 本章节会实现一个相同功能的预编译合约，通过step by step使用户对预编译合约编写有直观的认识。
 示例的c++[源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp)：
-```
-    libprecompiled/extension/HelloWorldPrecompiled.h 
+
+```cpp
+    libprecompiled/extension/HelloWorldPrecompiled.h
     libprecompiled/extension/HelloWorldPrecompiled.cpp
 ```
 
@@ -288,7 +303,7 @@ contract HelloWorld{
 ##### 2.2.2 定义合约接口  
 
 需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的辅助合约：
-```
+```js
 pragma solidity ^0.4.25;
 
 contract HelloWorld {
@@ -301,7 +316,7 @@ contract HelloWorld {
 
 HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操作，需要 设计存储的表结构。
 
-表名： ```_ext_hello_world_```    
+表名： ```_ext_hello_world_```
 
 表结构：
 
@@ -315,9 +330,10 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 
 ##### 2.2.4 实现调用逻辑  
 添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
-```
-//file HelloWorldPrecompiled.h
-//file HelloWorldPrecompiled.cpp
+
+```cpp
+// file HelloWorldPrecompiled.h
+// file HelloWorldPrecompiled.cpp
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
     bytesConstRef _param, Address const& _origin)
 {
@@ -345,7 +361,7 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
         }
     }
     if (func == name2Selector[HELLO_WORLD_METHOD_GET])
-    {  // get() function call
+    {   // get() function call
         // default retMsg
         std::string retValue = "Hello World!";
 
@@ -360,7 +376,7 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
         out = abi.abiIn("", retValue);
     }
     else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
-    {  // set(string) function call
+    {   // set(string) function call
 
         std::string strValue;
         abi.abiOut(data, strValue);
@@ -399,19 +415,15 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
 ```
 
 ##### 2.2.5 注册合约
-```
+
+```cpp
 // file         libblockverifier/ExecutiveContextFactory.cpp
 // function     initExecutiveContext
 
-context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>()); //HelloWorld precompiled 注册
+context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>());  // HelloWorld precompiled 注册
 ```
 
-##### 2.2.6 其他流程  
-[源码编译](../installation.md)
-
- [环境搭链](../manual/build_chain.md)
-
-### 三 调用 
+### 三 调用
 
 从用户角度，预编译合约与solidity合约的调用方式基本相同，唯一的区别是solidity合约在部署之后才能获取到调用的合约地址，预编译合约的地址为预分配，不用部署，可以直接使用。
 
@@ -420,7 +432,8 @@ web3sdk调用合约时，需要先将合约转换为java代码，对于预编译
 
 #### 3.2 solidity调用  
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
-```
+
+```js
 pragma solidity ^0.4.25;
 contract HelloWorld {
     function get() public constant returns(string) {}
@@ -428,7 +441,7 @@ contract HelloWorld {
 }
 ```
 
-```
+```js
 pragma solidity ^0.4.25;
 import "./HelloWorld.sol";
 
