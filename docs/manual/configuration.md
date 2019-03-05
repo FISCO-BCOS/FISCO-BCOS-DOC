@@ -129,7 +129,7 @@ P2P配置示例如下：
 
 ### 配置日志信息
 
-FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，FISCO BCOS默认使用boostlog，详细可参考[日志操作手册](log.md)。
+FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，FISCO BCOS默认使用boostlog，详细可参考[日志操作手册](log_access.md)。
 
 - `log_path`:日志文件路径。
 - `level`: 日志级别，当前主要包括`trace、debug、info、warning、error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`。
@@ -168,9 +168,9 @@ easylogging++示例配置如下：
 
 ### 可选配置：落盘加密
 
-为了保障节点数据机密性，FISCO BCOS引入[落盘加密](../design/features/disk_encryption.md)保障节点数据的机密性，**落盘加密**操作手册请[参考这里](./disk_encryption.md)。
+为了保障节点数据机密性，FISCO BCOS引入[落盘加密](../design/features/storage_security.md)保障节点数据的机密性，**落盘加密**操作手册请[参考这里](./storage_security.md)。
 
-`config.ini`中的`data_secure`用于配置落盘加密，主要包括（落盘加密具体操作请参考[操作手册](./disk_encryption.md)）：
+`config.ini`中的`data_secure`用于配置落盘加密，主要包括（落盘加密具体操作请参考[操作手册](./storage_security.md)）：
 
 - `enable`： 是否开启落盘加密，默认不开启；
 
@@ -178,7 +178,7 @@ easylogging++示例配置如下：
 
 - `key_manager_port`：[Key Manager](https://github.com/FISCO-BCOS/key-manager)服务的监听端口；
 
-- `cipher_data_key`: 节点数据加密密钥的密文，`cipher_data_key`的产生参考[落盘加密操作手册](./disk_encryption.md)。
+- `cipher_data_key`: 节点数据加密密钥的密文，`cipher_data_key`的产生参考[落盘加密操作手册](./storage_security.md)。
 
 落盘加密节点配置示例如下：
 
@@ -192,10 +192,10 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 
 ## 群组系统配置说明
 
-每个群组都有单独的配置文件，按照启动后是否可更改，可分为<font color=#FF0000>群组系统配置</font>和<font color=#FF0000>群组可变配置</font>。
-群组系统配置一般位于节点的`conf`目录下<font color=#FF0000>`.genesis`后缀配置文件</font>中。
+每个群组都有单独的配置文件，按照启动后是否可更改，可分为**群组系统配置**和**群组可变配置**。
+群组系统配置一般位于节点的`conf`目录下`.genesis`后缀配置文件中。
 
-如：`group1`的系统配置一般命名为`group.1.genesis`，群组系统配置主要包括<font color=#FF0000>群组ID、共识、存储和gas</font>相关的配置。
+如：`group1`的系统配置一般命名为`group.1.genesis`，群组系统配置主要包括**群组ID、共识、存储和gas**相关的配置。
 
 ```eval_rst
 .. important:: 
@@ -253,7 +253,7 @@ e01789233a
 
 - `[storage].type`：存储的DB类型，目前仅支持LevelDB，后续会支持Mysql；
 
-- `[state].type`：state类型，目前支持[Storage state](../design/storage/storage.html)和[MPT state](../design/storage/mpt.html)，<font color=#FF0000>默认为Storage state</font>，Storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在[MPT树](../design/storage/mpt.md)中，效率较低，但包含完整的历史信息。
+- `[state].type`：state类型，目前支持[Storage state](../design/storage/storage.html#id6)和[MPT state](../design/storage/mpt.html)，**默认为Storage state**，Storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在MPT树中，效率较低，但包含完整的历史信息。
 
 
 ```eval_rst
@@ -272,7 +272,7 @@ e01789233a
 
 ### gas配置
 
-FISCO BCOS兼容以太坊虚拟机([evm](../design/virtual_machine/evm.md))，为了防止针对[evm](../design/virtual_machine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，<font color=#FF0000>仅保留交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configs.html#id8)和交易最大gas限制一起约束</font>。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.html#setsystemconfigbykey)动态调整gas限制。
+FISCO BCOS兼容以太坊虚拟机([evm](../design/virtual_machine/evm.md))，为了防止针对[evm](../design/virtual_machine/evm.md)的DOS攻击，evm在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，**仅保留交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configs.html#id8)和交易最大gas限制一起约束**。FISCO BCOS通过genesis的[tx].gas_limit来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.html#setsystemconfigbykey)动态调整gas限制。
 
 ```ini
 [tx]
