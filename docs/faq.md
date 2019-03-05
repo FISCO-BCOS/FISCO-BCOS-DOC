@@ -5,14 +5,14 @@
 问:
   FISCO BCOS v2.0与之前版本有哪些变化？<br>
 答:
-  请 [参考这里](./whats_new.md)。
+  请 [参考这里](./what_is_new.md)。
 
 问:
   开发者如何与FISCO BCOS平台交互？<br>
 答:
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
   - FISCO BCOS v2.0提供jsonrpc接口，具体请 [参考这里](./api.md)。
-  - FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/index.html)。
+  - FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/sdk.md)。
   - FISCO BCOS v2.0提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
 
 问:
@@ -20,17 +20,17 @@
 答:
   FISCO BCOS支持多种搭建方式，常用方式有：
   - build_chain.sh：适合开发者体验、测试FISCO BCOS联盟链，具体请 [参考这里](./manual/build_chain.md)。
-  - FISCO-Generator：使用企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise/index.html)。
+  - FISCO-Generator：使用企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise_tools/index.md)。
 
 问:
   FISCO BCOS v2.0的智能合约与之前版本合约有什么不同，兼容性如何？<br>
 答:
-  FISCO BCOS v2.0支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](developer/index.html)。
+  FISCO BCOS v2.0支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](./manual/smart_contract.md)。
 
 问:
   国密和普通版本的区别有哪些？<br>
 答:
-  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，web3sdk使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi.md)。
+  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，web3sdk使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi_crypto.md)。
 
 问:
   是否支持从1.3或1.5升级到2.0版本?<br>

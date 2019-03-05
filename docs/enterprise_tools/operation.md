@@ -23,17 +23,17 @@ FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书
 | | |
 | :-: | :-: |
 | p2p_ip | 节点之间p2p通信ip |
-| rpc_ip | 节点与sdk通信ip |
+| rpc_ip | 节点与SDK通信ip |
 | p2p_listen_port | 节点之间p2p通信端口 |
-| channel_listen_port | sdk与节点通信端口 |
+| channel_listen_port | SDK与节点通信端口 |
 | jsonrpc_listen_port | 节点rpc端口 | -->
 
 ```ini
 [node0]
 p2p_ip=127.0.0.1 # 节点之间p2p通信ip
-rpc_ip=127.0.0.1 # 节点与sdk通信ip 
+rpc_ip=127.0.0.1 # 节点与SDK通信ip 
 p2p_listen_port=30300 # 节点之间p2p通信端口
-channel_listen_port=20200 # sdk与节点通信端口
+channel_listen_port=20200 # SDK与节点通信端口
 jsonrpc_listen_port=8545 # 节点rpc端口
 
 [node1]
@@ -117,7 +117,7 @@ FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书�
 | build | 指定目录下不存在的文件夹 | 在指定文件夹下生成mchain.ini中配置的节点配置文件夹（需要在meta下存放证书） | 用户需要生成节点配置文件夹和群组配置文件。需要在meta文件夹下存放证书 |
 | expand | 1.存放原有群组节点的文件夹  2.扩容节点配置文件夹 | 根据mexpand.ini，以及现有群组和节点配置文件，生成扩容节点配置文件 | 用户需要为现有群组生成节点配置文件，需要交换配置文件，不需要交换证书 |
 | create | 指定文件夹 | 在指定文件夹下根据mcreate.ini和meta下的证书生成群组配置文件 | 用户已有节点，但需要生成新群组 。需要在meta文件夹下存放证书 |
-| *ca | 证书目录 | 生成相关证书 | 用户需要生成自签相关根证书、机构证书、节点证书、sdk证书时 |
+| *ca | 证书目录 | 生成相关证书 | 用户需要生成自签相关根证书、机构证书、节点证书、SDK证书时 |
 | cert* | 证书存放目录| 根据配置文件生成相关证书 | 用户需要批量根据配置文件生成节点证书时 |
 | combine | 需要合并的两个节点配置配置文件 | 将两个节点配置文件中的P2P部分合并 | 扩容节点后需要更新节点P2P配置项时 |
 | deploykey | 1.私钥存放目录 2.安装包存放目录| 将私钥批量导入生成的安装包中 | 用户已经拥有私钥和生成的安装包，需要将私钥批量导入安装包中时 |
@@ -208,7 +208,7 @@ $ ./generator --build_expand_package ./expand
 
 程序执行完成后，会在./expand文件夹下生成名为node_127.0.0.1_30307的文件夹，推送到对应服务器解压后，拷贝私钥到conf下即可启动节点
 
-节点正常启动后，使用sdk将节点加入群组，完成扩容操作
+节点正常启动后，使用SDK将节点加入群组，完成扩容操作
 
 ### create_group_config (-c)
 
@@ -285,17 +285,17 @@ $ ./generator --generate_node_certificate node_dir(SET) ./agency_dir  node_p2pip
 
 |  |  |
 | :-: | :-: |
-| 命令解释 | 生成sdk证书 |
+| 命令解释 | 生成SDK证书 |
 | 使用前提 | 存在机构证书和私钥 |
 | 参数设置 | 指定节点证书目录，机构证书及私钥存放目录和节点名称 |
-| 实现功能 | 在指定目录生成sdk证书和私钥 |
-| 适用场景 | 用户需要生成自签相关sdk证书 |
+| 实现功能 | 在指定目录生成SDK证书和私钥 |
+| 适用场景 | 用户需要生成自签相关SDK证书 |
 
 ```bash
 $ ./generator --generate_sdk_certificate ./dir_sdk_ca(SET) ./dir_agency_ca
 ```
 
-执行完成后可以在./dir_sdk_ca(SET)路径下生成名为sdk的文件夹，包含相应的sdk证书
+执行完成后可以在./dir_sdk_ca(SET)路径下生成名为SDK的文件夹，包含相应的SDK证书
 
 ### generate_all_certificates
 
