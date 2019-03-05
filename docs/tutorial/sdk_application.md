@@ -435,14 +435,14 @@ $ cd dist
 $ bash asset_run.sh deploy
 deploy Asset success, contract address is 0x23461960a54ec0d41e82631e92118bab12bc8a04
 ```
-- 注册资产信息
+- 注册资产
 ```bash
 $ bash asset_run.sh register Alice 999999999
 register asset account success => asset: Alice, value: 999999999
 $ bash asset_run.sh register Bob 111111111
 register asset account success => asset: Bob, value: 111111111 
 ```
-- 查询资产信息
+- 查询资产
 ```bash
 $ bash asset_run.sh query Alice              
 asset account Alice, value 999999999
