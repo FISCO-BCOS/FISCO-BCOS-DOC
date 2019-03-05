@@ -248,7 +248,7 @@ $ ./sol2java.sh org.fisco.bcos.asset.contract
 |   |-- Asset.bin
 |   |-- Table.bin
 |-- contracts // 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
-|   |-- Asset.sol // 拷贝进来的StudentScore.sol合约，依赖Table.sol
+|   |-- Asset.sol // 拷贝进来的Asset.sol合约，依赖Table.sol
 |   |-- Table.sol // 默认提供的系统CRUD合约接口文件
 |-- java  // 存放编译的包路径及Java合约文件
 |   |-- org
@@ -337,14 +337,14 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
-- `student-score-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点的channel_ip与channel_port有所改动，需要配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
+- `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点的channel_ip与channel_port有所改动，需要配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
 ## 业务开发
 这一部分有两项工作，每一项工作增加一个Java类。**项目相关路径下已有开发完成的两个Java类，可以直接使用**。现在分别介绍这个三个Java类的设计与实现。
 - `Asset.java`： 此类由`Asset.sol`通过控制台编译工具编译生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/fisco/bcos/asset/contract`。
-- `StudentScoreClient.java`：此类是应用的入口，负责应用的核心业务逻辑处理，通过调用`StudentScore.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
+- `AssetClient.java`：此类是应用的入口，负责应用的核心业务逻辑处理，通过调用`Asset.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
 ```java
 public void initialize() throws Exception {
 
