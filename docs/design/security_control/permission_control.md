@@ -96,7 +96,7 @@
 ![](../../../images/priority_control/ac1.png)
 
 #### 4.2 系统表权限控制流程
-对于sdk层，用户合约不可以直接操作权限表，通过sdk的AuthorityService接口（详见[sdk使用文档](../../sdk/index.html)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
+对于SDK层，用户合约不可以直接操作权限表，通过SDK的AuthorityService接口（详见[SDK使用文档](../../sdk/sdk.md)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
 ![](../../../images/priority_control/ac2.png)
 
 **注：** _sys_consensus_表（ConsensusPrecompiled），_sys_cns_表（CNSPrecompiled），_sys_config_表（SystemConfigPrecompiled）控制流程与对权限表的控制流程类似。

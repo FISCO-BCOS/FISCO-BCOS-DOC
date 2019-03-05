@@ -179,7 +179,7 @@ TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创�
 
 ### 一. 简介
 
-预编译（precompiled）合约(预编译合约)是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[[precompiled设计原理]](../design/virtual_machine/precompiled.md)。   
+预编译（precompiled）合约(预编译合约)是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[precompiled设计原理](../design/virtual_machine/precompiled.md)。   
 本文作为一篇入门指导，旨在指引用户如何实现自己的precompiled合约,并实现precompiled合约的调用。
 
 ### 二. 实现预编译合约  
@@ -196,19 +196,18 @@ TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创�
 |-------------------|---------------|-----------------------|----------------|-----------------|--------------|----------|
 | 0x0001-0x0004     | 0x0005-0x0fff | 0x1000-0x1006         | 0x1007-0x5000  | 0x5001 - 0xffff | 0x10000+     | 其他     |
 
- 用户分配地址空间为```0x5001-0xffff```,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。 
- 
-FISCO-BCOS中实现的precompild合约列表以及地址分配:
+ 用户分配地址空间为`0x5001-0xffff`,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。
 
+FISCO-BCOS中实现的precompild合约列表以及地址分配：
 
-| 地址   | 功能   | 文档链接      | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
-|--------|--------|----------|---------|
-| 0x1000 | 系统参数管理         | [系统参数](../manual/build_group.html) | SystemConfigPrecompiled.cpp |
-| 0x1001 | CRUD合约操作存储接口 | [CRUD](../developer/crud_sol.html) | TableFactoryPrecompiled.cpp |
-| 0x1002 | CRUD合约            | [CRUD](../developer/crud_sol.html) | CRUDPrecompiled.cpp |
-| 0x1003 | 共识节点管理         | [共识节点管理](../manual/build_group.html) | ConsensusPrecompiled.cpp |
-| 0x1004 | CNS功能  | [CNS文档](../design/features/CNS_contract_name_service.html) | CNSPrecompiled.cpp |
-| 0x1005 | 存储表权限管理 | [权限管理文档](../design/security_control/node_management.html) | AuthorityPrecompiled.cpp |
+| 地址   | 功能   || 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
+|--------|--------|---------|
+| 0x1000 | 系统参数管理 | SystemConfigPrecompiled.cpp |
+| 0x1001 | 表工厂合约 | TableFactoryPrecompiled.cpp |
+| 0x1002 | CRUD合约 | CRUDPrecompiled.cpp |
+| 0x1003 | 共识节点管理 | ConsensusPrecompiled.cpp |
+| 0x1004 | CNS功能  | CNSPrecompiled.cpp |
+| 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |
 
 - **定义合约接口**  
 
@@ -408,7 +407,7 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 ```
 
 ##### 2.2.6 其他流程  
-[源码编译](../manual/install.md)
+[源码编译](../installation.md)
 
  [环境搭链](../manual/build_chain.md)
 

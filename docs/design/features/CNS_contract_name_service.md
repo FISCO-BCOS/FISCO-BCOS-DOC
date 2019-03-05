@@ -14,7 +14,7 @@
 3. 合约重新部署后，一个或多个调用方都需更新合约地址；
 4. 不便于进行版本管理以及合约灰度升级。
 
-为解决以上问题，给调用者提供良好的智能合约调用体验，FISCO BCOS提出<font color=#FF0000>**CNS合约命名服务**</font>。
+为解决以上问题，给调用者提供良好的智能合约调用体验，FISCO BCOS提出**CNS合约命名服务**。
 
 ## 名词解释
 
@@ -142,7 +142,7 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 - 说明：contractNameAndVersion通过`:`来分割合约名和合约版本，当缺少合约版本时，SDK默认调用使用合约的最新版本进行查询
 
 注意：
-1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[《SDK》](../../sdk/index.html)；
+1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[《SDK》](../../sdk/sdk.md)；
 2. 两个接口的使用例子可参考[ConsoleImpl.java](https://github.com/FISCO-BCOS/web3sdk/blob/release-2.0.1/src/test/java/org/fisco/bcos/web3j/console/ConsoleImpl.java)中的deployByCNS和callByCNS接口实现。
 
 ## 操作工具
