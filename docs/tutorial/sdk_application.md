@@ -23,19 +23,34 @@ to do:
     描述资产管理使用区块链进行管理的优势，两者之间的联系。
 ```
 本文提供一个资产管理的示例，其基本业务需求如下：
-- 可以完成在区块链上进行资产注册。
-- 查询资产金额。
-- 能够在链上进行资产转移。
+- 能够在区块链上进行资产注册
+- 不同账户之间进行资产转移
+- 可以查询资产金额
 
-## 合约开发
+## 合约设计与实现
 
-**业务表设计：** 实现资产管理，首先需要设计一个存储资产管理的表`t_asset`，该表字段如下：
-- account：主键，资产账户(字符串类型)
-- asset_value：资产金额(整形)
+在区块链上进行应用开发时，结合业务需求，首先需要设计对应的智能合约，确定合约需要储存的数据，在此基础上确定智能合约对外提供的接口，最后给出各个接口的具体实现。
 
-其中asset_account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_asset`表示例如下：
+### 储存设计 
 
+**存储设计：** 实现资产管理，首先需要存储资产账户与资产金额的对应关系，逻辑上的存储结构如下：
+```eval_rst
 
++-----------------+------------------+
+|    资产账户      |       金额        |
++=================+==================+
+|      Alice      |     10000        |
++-----------------+------------------+
+|       Bob       |     99999999     |
++-----------------+------------------+
+
+```
+
+FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。首先需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+- account: 主键，资产账户(字符串类型)
+- asset_value: 资产金额(整形)
+
+其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。与传统关系型数据库中的主键不同，该主键字段的值可以重复。`t_asset`表示例如下：
 ```eval_rst
 
 +-----------------+------------------+
@@ -48,8 +63,19 @@ to do:
 
 ```
 
-**业务合约开发：**  针对资产管理表，可以设计一个智能合约对资产进行操作。FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。因此，我们采用CURD合约开发模式设计`Asset.sol`合约，通过该合约操作资产表`t_asset`。
-- `Asset.sol`合约设计如下：
+### 接口设计
+
+ 按照业务的设计目标，需要实现资产注册，转账，查询功能，可以确定```Asset.sol```需要以下三个接口：
+```solidity
+// 查询资产金额
+function select(string account) public constant returns(int256, uint256) 
+// 资产注册
+function register(string account, uint256 amount) public returns(int256)
+// 资产转移
+function transfer(string from_asset_account, string to_asset_account, uint256 amount) public returns(int256)
+```
+
+### 完整源码
 ```solidity
 pragma solidity ^0.4.25;
 // 引用Table.sol文件，需要与Table.sol放入同级目录
@@ -226,10 +252,9 @@ contract Asset {
     }
 }
 ```
-
  **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-**小结：** 我们根据业务需求设计了一个业务表`t_asset`。根据设计的业务表，利用CRUD合约开发模式开发了一个业务合约`Asset.sol`。由于Java应用不能直接调用solidity合约文件，下一步将开发的`Asset.sol`合约编译为Java合约文件。
+**小结：** 我们根据业务需求设计了合约`Asset.sol`的存储与接口，并给出了完整实现。java应用需要调用合约时，需要首先将solidity文件转换为Java合约文件，这是我们下一步需要的工作。
 
 ## 合约编译
 控制台提供了合约编译工具。将`Asset.sol`存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本执行合约编译，命令如下：
