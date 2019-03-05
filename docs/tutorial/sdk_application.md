@@ -420,6 +420,12 @@ asset account Asset_0, amount 999444444
 $ bash asset_run.sh query Asset_1
 asset account Asset_1, amount 111666666
 ```
+
+```
+to do :
+    1. 给出小结，突出区块链不可串改的特性。
+```
+
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
 
 ```
