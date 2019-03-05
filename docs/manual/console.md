@@ -813,7 +813,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 }
 ```
 ### **setSystemConfigByKey**
-运行setSystemConfigByKey，以键值对方式设置系统配置。目前设置的系统配置支持tx_count_limit和tx_gas_limit，系统配置用法见[多群组操作指南](build_group.md)                                  
+运行setSystemConfigByKey，以键值对方式设置系统配置。目前设置的系统配置支持tx_count_limit和tx_gas_limit，系统配置用法见[多群组操作指南](sys_params.md)                                  
 参数： 
 - key
 - value

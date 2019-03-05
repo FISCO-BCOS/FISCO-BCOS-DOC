@@ -119,7 +119,7 @@ cmake .. -DBUILD_GM=ON
 
 ### 国密版节点配置
 
-FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两套证书，分别为：conf/gmnode.key 和 conf/origin_cert/node.key。其它与[标准版落盘加密操作](./disk_encryption.md)相同。
+FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两套证书，分别为：conf/gmnode.key 和 conf/origin_cert/node.key。其它与[标准版落盘加密操作](./storage_security.md)相同。
 
 ``` shell
 cd key-manager/scripts

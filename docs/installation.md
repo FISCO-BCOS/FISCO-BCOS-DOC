@@ -1,6 +1,6 @@
 # 安装
 
-本章将介绍使用FISCO BCOS所需的必要安装和配置。
+本章将介绍使用FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。
 
 ## 单群组FISCO BCOS联盟链的搭建
 
@@ -17,7 +17,7 @@
 `build_chain`脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
 
 ```bash
-# Ubuntu 16.04 安装依赖 CentOS将apt替换为yum安装下面两个包即可
+# Ubuntu 16.04 安装依赖 CentOS将下面命令中的apt替换为yum执行即可
 $ sudo apt install -y openssl curl
 # 准备环境
 $ cd ~ && mkdir fisco && cd fisco
@@ -48,6 +48,9 @@ $ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545
 如果命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
 
 ```bash
+Checking fisco-bcos binary...
+Binary check passed.
+==============================================================
 Generating CA key...
 ==============================================================
 Generating keys ...
@@ -122,13 +125,12 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 配置及使用控制台
 
-控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍[参考这里](console.md)。
+控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍[参考这里](manual/console.md)。
 
 ```eval_rst
 .. important::
     控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
 ```
-
 
 ### 准备依赖
 
