@@ -128,7 +128,7 @@ jsonrpc_listen_port=8548
 $ ./generator --generate_all_certificates ./mycert
 ```
 
-3. 使用build命令，在data下生成group1节点安装包
+3. 使用build命令，在data下生成group1节点配置文件
 
 ```bash
 $ ./generator --build_install_package ./data
@@ -154,7 +154,7 @@ $ ./generator --build_install_package ./data
 |-- stop_all.sh
 ```
 
-4. 导入节点私钥到对应节点安装包的conf文件夹下
+4. 导入节点私钥到对应节点配置文件的conf文件夹下
 
 上述3.中生成的安装包是不含节点私钥的，需要导入2.中的节点私钥，命令如下
 

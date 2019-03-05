@@ -4,12 +4,12 @@
 
 ## 起始组网
 
-A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一个账本，需要生成安装包，启动节点，初始化一个业务。操作步骤如下：
+A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一个账本，需要生成节点配置文件，启动节点，初始化一个业务。操作步骤如下：
 
 1. A、B、C三个机构采用链下安全的方式共享自己的节点证书与节点信息（此步可选择由某一机构统一收集，或是所有机构都收集）
 2. 假设A收集所有资料后，将证书按照指定格式放在meta目录下，并配置`mchain.ini`中的node信息，指定配置文件中的groupid
-3. A机构执行-b/--build_install_package命令，指定生成安装包的目录，会在指定目录下生成多个不含节点私钥的安装包（如果所有机构都收集了证书，可以由各个机构生成自己所属的节点安装包）
-4. A机构将生成的安装包分发给B、C机构，并将自己的安装包推送至对应服务器，拷贝节点私钥至安装包下，启动节点，默认节点加入的群组为mchain.ini的groupid
+3. A机构执行[build_install_package](./operation.html#build-install-package-b)命令，指定生成节点配置文件的目录，会在指定目录下生成多个不含节点私钥的节点配置文件夹（如果所有机构都收集了证书，可以由各个机构生成自己所属的节点节点配置文件）
+4. A机构将生成的节点配置文件夹分发给B、C机构，并将自己的节点配置文件推送至对应服务器，拷贝节点私钥至节点配置文件下，启动节点，默认节点加入的群组为`mchain.ini`的groupid
 
 ## 新节点加入网络
 
@@ -22,22 +22,22 @@ A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一�
 
 1. D机构收集A、B、C组网生成的`config.ini`与`group.1.genesis`，`group.1.ini`文件，统一放置与某一文件夹下
 2. D机构配置`mexpand.ini`中的节点信息，将扩容节点的证书按照指定格式放在meta目录下
-3. D机构使用-e/--build_expand_package命令指定扩容安装包节点输出路径，在输出路径生成扩容节点安装包文件夹
-4. D机构将私钥导入扩容节点安装包，将安装包推送至指定服务器，启动节点
+3. D机构使用[build_expand_package](./operation.html#build-expand-package-e)命令指定扩容节点配置文件节点输出路径，在输出路径生成扩容节点节点配置文件夹
+4. D机构将私钥导入扩容节点配置文件夹，将节点配置文件夹推送至指定服务器，启动节点
 5. D机构请求A、B、C中的某一个机构将自己的节点注册入group1中，完成新节点入网操作
 
 ### 新节点创建新group
 
-在本场景中，节点只需要与链中的某几个节点进行网络连接，并且不需要加入原有群组,以上述[起始组网]为例，假设E、F机构需要与C机构组网，新建一个group2，对于C机构而言，不需要再从新搭建一条链，直接复用[起始组网]中的节点，新建群组即可满足需求
+在本场景中，节点只需要与链中的某几个节点进行网络连接，并且不需要加入原有群组，以上述[起始组网]为例，假设E、F机构需要与C机构组网，新建一个group2，对于C机构而言，不需要再从新搭建一条链，直接复用[起始组网]中的节点，新建群组即可满足需求
 
 操作步骤类似于[起始组网]：
 
 1. C、E、F三个机构采用链下安全方式共享自己的节点证书，节点信息（此步共享原理同上，可选择由某一机构统一收集，或是所有机构都收集）
 2. 假设此步所有机构都收集了新群组节点的证书，C、E、F三个机构将证书按照指定格式放在meta目录下，E、F配置`mchain.ini`中的node信息，指定配置文件中的groupid，
-3. E、F机构执行-b/--build_install_package命令，指定生成安装包的目录，生成所需群组的节点安装包
-4. E、F机构将私钥导入扩容节点安装包，将安装包推送至指定服务器，启动节点
-5. 由于C已经生成了节点安装包，因此C只需配置`mgroup.ini`中的配置
-6. C执行-c/--create_group_config命令，生成`group.2.genesis`和`group.2.ini`，将配置信息拷贝至已经协商过程中已经存在的节点目录下
+3. E、F机构执行[build_install_package](./operation.html#build-install-package-b)命令，指定生成节点配置文件的目录，生成所需群组的节点配置文件夹
+4. E、F机构将私钥导入扩容节点配置文件，将节点配置文件夹推送至指定服务器，启动节点
+5. 由于C已经生成了节点节点配置文件，因此C只需配置`mgroup.ini`中的配置
+6. C执行[create_group_config](./operation.html#create-group-config-c)命令，生成`group.2.genesis`和`group.2.ini`，将配置信息拷贝至已经协商过程中已经存在的节点目录下
 7. C机构从启节点，完成新group的建立
 
 ## 节点新建群组
@@ -48,8 +48,8 @@ A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一�
 
 1. A、B、C、D四个机构采用链下安全的方式共享自己的节点证书与节点信息（此步可选择由某一机构统一收集，或是所有机构都收集）
 2. A配置`mgroup.ini`中的信息，将1中协商的证书放置与meta文件夹下
-3. A执行-c/--create_group_config命令，生成`group.3.genesis`和`group.3.ini`，将生成的配置信息发送给B、C、D
-4. A、B、C、D将生成group.i.genesis和group.i.ini拷贝到已存在的节点文件夹下，从启节点完成新群组的建立
+3. A执行[create_group_config](./operation.html#create-group-config-c)命令，生成`group.3.genesis`和`group.3.ini`，将生成的配置信息发送给B、C、D
+4. A、B、C、D将生成`group.i.genesis`和`group.i.ini`拷贝到已存在的节点文件夹下，从启节点完成新群组的建立
 
 ## 组网模式分析
 
@@ -113,7 +113,7 @@ channel_listen_port=20203
 jsonrpc_listen_port=8548
 ```
 
-3. 使用b/build_install_package命令生成安装包
+3. 使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件
 
 4. 导入私钥、启动节点
 
@@ -126,7 +126,7 @@ group_id=2
 member0=127.0.0.1:30300
 member1=127.0.0.1:30302
 
-6. 节点0和节点2使用c/create_group_config命令生成群组2配置文件
+6. 节点0和节点2使用[create_group_config](./operation.html#create-group-config-c)命令生成群组2配置文件
 
 7. 将生成的配置文件导入节点conf文件夹下，从启节点
 
@@ -170,7 +170,7 @@ channel_listen_port=20202
 jsonrpc_listen_port=8547
 ```
 
-3. 节点0、1、2使用b/build_install_package命令生成安装包
+3. 节点0、1、2使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
 4. 导入私钥、启动节点
 
@@ -212,9 +212,9 @@ channel_listen_port=20203
 jsonrpc_listen_port=8548
 ```
 
-6. 节点0和节点2使用c/create_group_config命令生成群组2配置文件，节点3使用b/build_install_package命令生成安装包
+6. 节点0和节点2使用[create_group_config](./operation.html#create-group-config-c)命令生成群组2配置文件，节点3使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
-7. 节点0和节点2将生成的配置文件导入节点conf文件夹下，从启节点。节点3将私钥导入安装包，启动节点
+7. 节点0和节点2将生成的配置文件导入节点conf文件夹下，从启节点。节点3将私钥导入节点配置文件夹，启动节点
 
 ### 星型模式组网
 
@@ -232,13 +232,13 @@ jsonrpc_listen_port=8548
 
 2. 节点1、2、3分别修改`mchain.ini`中的配置，只用写自己的节点与节点0即可
 
-3. 使用b/build_install_package命令生成安装包
+3. 使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
 4. 导入私钥，启动节点
 
-在这种模式中，节点0首先修改`mchain.ini`中的配置，指向节点1.生成安装包，导入私钥，启动节点。
+在这种模式中，节点0首先修改`mchain.ini`中的配置，指向节点1.生成节点配置文件，导入私钥，启动节点。
 
-之后分别修改`mgroup.ini`的配置，指向节点2、3.生成群组配置文件，导入节点安装包，从启节点。
+之后分别修改`mgroup.ini`的配置，指向节点2、3.生成群组配置文件，导入节点配置文件，从启节点。
 
 ### 孤立模式组网
 
@@ -294,6 +294,6 @@ channel_listen_port=20203
 jsonrpc_listen_port=8548
 ```
 
-3. 4个节点使用b/build_install_package命令生成安装包
+3. 4个节点使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
 4. 导入私钥、启动节点
