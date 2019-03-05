@@ -17,7 +17,7 @@
 `build_chain`脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
 
 ```bash
-# Ubuntu 16.04 安装依赖
+# Ubuntu 16.04 安装依赖 CentOS将apt替换为yum安装下面两个包即可
 $ sudo apt install -y openssl curl
 # 准备环境
 $ cd ~ && mkdir fisco && cd fisco
