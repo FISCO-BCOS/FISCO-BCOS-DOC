@@ -4,9 +4,9 @@
 .. important::
 
     - java版本
-     要求 `jdk1.8+ <https://openjdk.java.net/>`_，推荐使用OpenJDK11
+     要求 `JDK8或以上 <https://openjdk.java.net/>`_，推荐使用OpenJDK11
 
-     > CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载JDK
+     > CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载JDK [OpenJDK11下载地址](https://jdk.java.net/11/) [安装指南](https://openjdk.java.net/install/index.html)
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS搭链教程 <https://fisco-doc.readthedocs.io/en/feature-2.0.0/docs/manual/build_chain.html>`_
     - 网络连通性
