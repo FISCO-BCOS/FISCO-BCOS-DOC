@@ -52,23 +52,21 @@ FISCO-BCOS P2P模块提供高效、通用和安全的网络通信基础功能，
 
 ### 连接建立流程
 
-![连接建立流程](../../../images/p2p/session_connection.png)
-
 ```eval_rst
-..mermaid
+.. mermaid::
 
-sequenceDiagram
-  participant 区块链节点A
-  participant 区块链节点B
+    sequenceDiagram
+        participant 区块链节点A
+        participant 区块链节点B
 
-  区块链节点A->>区块链节点A: 加载密钥和证书
-  区块链节点B->>区块链节点B: 加载密钥和证书
-  区块链节点A->>区块链节点B: 发起连接
-  区块链节点B->>区块链节点A: 连接成功
-  区块链节点B->区块链节点A: 发起SSL握手
-  区块链节点A->>区块链节点A: 从证书获取公钥，作为节点ID
-  区块链节点B->>区块链节点B: 从证书获取公钥，作为节点ID
-  区块链节点B->区块链节点A: 握手成功，建立SSL连接
+        区块链节点A->>区块链节点A: 加载密钥和证书
+        区块链节点B->>区块链节点B: 加载密钥和证书
+        区块链节点A->>区块链节点B: 发起连接
+        区块链节点B->>区块链节点A: 连接成功
+        区块链节点B->区块链节点A: 发起SSL握手
+        区块链节点A->>区块链节点A: 从证书获取公钥，作为节点ID
+        区块链节点B->>区块链节点B: 从证书获取公钥，作为节点ID
+        区块链节点B->区块链节点A: 握手成功，建立SSL连接
 
 ```
 
@@ -82,18 +80,79 @@ sequenceDiagram
 
 ### 单播流程
 
-![单播流程](../../../images/p2p/unicast.png)
+```eval_rst
+.. mermaid::
+
+    sequenceDiagram
+        participant 区块链节点A
+        participant 区块链节点B
+
+        区块链节点A->>区块链节点A: 根据节点ID，筛选在线节点
+        区块链节点A->>区块链节点B: 发送消息
+        区块链节点B->>区块链节点A: 消息回包
+
+```
 
 ### 组播流程
 
-![组播流程](../../../images/p2p/multicast.png)
+```eval_rst
+.. mermaid::
+
+    sequenceDiagram
+        participant 区块链节点A
+        participant 区块链节点B
+        participant 区块链节点C
+        participant 区块链节点D
+
+        区块链节点A->>区块链节点A: 根据Topic，选择节点B、C
+        区块链节点A->>区块链节点B: 发送消息
+        区块链节点A->>区块链节点C: 发送消息
+        区块链节点B->>区块链节点B: 根据Topic，选择节点C、D
+        区块链节点B->>区块链节点C: 发送消息
+        区块链节点B->>区块链节点D: 发送消息
+        区块链节点C->>区块链节点C: 根据Topic，选择节点D
+        区块链节点C->>区块链节点D: 发送消息
+
+```
 
 ### 广播流程
 
-![广播流程](../../../images/p2p/broadcast.png)
+```eval_rst
+.. mermaid::
+
+    sequenceDiagram
+        participant 区块链节点A
+        participant 区块链节点B
+        participant 区块链节点C
+        participant 区块链节点D
+
+        区块链节点A->>区块链节点A: 遍历所有节点ID
+        区块链节点A->>区块链节点B: 发送消息
+        区块链节点A->>区块链节点C: 发送消息
+        区块链节点A->>区块链节点D: 发送消息
+        区块链节点B->>区块链节点B: 遍历所有节点ID
+        区块链节点B->>区块链节点C: 发送消息
+        区块链节点B->>区块链节点D: 发送消息
+        区块链节点C->>区块链节点C: 遍历所有节点ID
+        区块链节点C->>区块链节点D: 发送消息
+
+```
 
 ## 状态同步
 
 每个节点会维护自身的状态，并将状态的Seq在全网定时广播，与其它节点同步
 
-![状态同步](../../../images/p2p/sync_status.png)
+```eval_rst
+.. mermaid::
+
+    sequenceDiagram
+        participant 区块链节点A
+        participant 区块链节点B
+
+        区块链节点A->区块链节点B: 广播seq
+        区块链节点A->>区块链节点A: 判断节点B的seq是否变化
+        区块链节点A->>区块链节点B: seq变化，发起状态查询请求
+        区块链节点B->>区块链节点A: 返回节点状态
+        区块链节点A->>区块链节点A: 更新节点B的状态和seq
+
+```
