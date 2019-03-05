@@ -139,23 +139,23 @@ Raft共识模块中使用心跳机制来触发Leader选举。当节点启动时�
 Raft协议强依赖Leader节点的可用性来确保集群数据的一致性，因为数据只能从Leader节点向Follower节点转移。当Raft Sealer向集群Leader提交区块数据后，Leader将该数据置为未提交（uncommitted）状态，接着Leader 节点会通过在Heartbeat中附加数据的形式并发向所有Follower节点复制数据并等待接收响应，在确保网络中超过半数节点已接收到数据后，再将区块数据写入底层存储中，此时区块数据状态已经进入已提交（committed）状态。此后Leader节点再通过Sync模块向其他Follower节点广播该区块数据，区块复制及提交的流程图如下图所示：
 
 ```eval_rst
-..mermaid
+.. mermaid::
 
-sequenceDiagram
-  participant Sealer
-  participant Leader
-  participant Follower
+  sequenceDiagram
+    participant Sealer
+    participant Leader
+    participant Follower
 
-  Sealer->Leader: 将交易打包为区块，阻塞自身
-  Leader->Follower: 将区块编码为RLP编码随心跳包发送
-  Note right of Follower: 对心跳包进行解码，<br/>并将解码出来的区块<br/>写入缓存中
-  Follower->Leader: 发送ACK
-  loop 收集ACK
-    Leader->Leader: 检查大多数节点是否已经收到区块拷贝
-  end
-  Leader->Sealer: 解除阻塞
-  Leader->Leader: 执行区块
-  Leader->Leader: 丢弃已经上链的交易
+    Sealer->>Leader: 将交易打包为区块，阻塞自身
+    Leader->>Follower: 将区块编码为RLP编码随心跳包发送
+    Note right of Follower: 对心跳包进行解码，<br/>并将解码出来的区块<br/>写入缓存中
+    Follower->>Leader: 发送ACK
+    loop 收集ACK
+      Leader->>Leader: 检查大多数节点是否已经收到区块拷贝
+    end
+    Leader->>Sealer: 解除阻塞
+    Leader->>Leader: 执行区块
+    Leader->>Leader: 丢弃已经上链的交易
 
 ```
 
