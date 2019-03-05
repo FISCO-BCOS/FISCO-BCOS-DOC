@@ -271,6 +271,18 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
     - 群组内节点正常共识：正常共识的节点会输出+++日志
 ````
 
+**拷贝group2群组配置到node2**
+
+```bash
+$ cd ~/fisco/nodes/127.0.0.1
+
+# ... 从node0拷贝group2的配置到node2...
+$ cp node0/conf/group.2.* node2/conf
+
+# ...重启node2(重启后请确定节点正常共识)...
+$ cd node2 && bash stop.sh && bash start.sh
+```
+
 **获取node2的节点ID**
 
 ```bash
@@ -331,16 +343,6 @@ $ bash start.sh 2
 **通过控制台向group2发送命令，将node2加入到group2**
 
 ```bash
-$ cd ~/fisco/nodes/127.0.0.1
-
-# ... 从node0拷贝group2的配置到node2...
-$ cp node0/conf/group.2.* node2/conf
-
-# ...重启node2(重启后请确定节点正常共识)...
-$ cd node2 && bash stop.sh && bash start.sh
-
-
-
 # ...通过控制台将node2加入为共识节点
 # 1. 查看当前共识节点列表
 [group:2]> getSealerList
