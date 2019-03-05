@@ -42,7 +42,7 @@
 问:
   控制台指令区分大小写吗？<br>
 答:
-  只支持小写。
+  区分大小写，命令是完全匹配，但是可以采用`tab`补全命令。
 
 问:
   加入共识列表或观察者列表报错，nodeID is not in network，为什么？<br>
@@ -65,6 +65,14 @@
    可以，在进入控制台时，输入要查看的groupID:  ./start [groupID]
 
 ## FISCO BCOS使用
+
+问:
+  FISCO BCOS v2.0支持哪些部署方式？<br>
+答:
+  用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
+
+- 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行。
+- 源码编译获取可执行程序，参考[源码编译](./manual/get_executable.md)。
 
 问:
   系统配置、群组配置、节点配置分别指什么？<br>
@@ -107,7 +115,7 @@
 问:
   如何将合约纳入CNS管理？<br>
 答:
-  在部署合约时，调用CNS合约接口，将合约name、version、address信息写入CNS表中
+  在部署合约时，调用CNS合约接口，将合约name、version、address信息写入CNS表中。
 
 
 问:
@@ -135,7 +143,7 @@
   企业工具使用时出现找不到pip
 
 答：
-  企业工具依赖python pip，使用以下命令安装
+  企业工具依赖python pip，使用以下命令安装：
 ```
 $ python -m pip install
 ```
@@ -150,7 +158,7 @@ Traceback (most recent call last):
      import configparse
 ```
 答:
-  系统缺少python configparser模块，请按照以下命令安装
+  系统缺少python configparser模块，请按照以下命令安装：
 
 ```bash
   $ pip install configparser

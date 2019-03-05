@@ -4,22 +4,17 @@
 
 本章主要以星形组网和并行多组组网拓扑为例，指导您了解如下内容：
 
->（1）了解如何使用`build-chain`创建多群组区块链安装包；
->
->（2）了解`build-chain`创建的多群组区块链安装包目录组织形式以及如何启动该区块链节点；
->
->（3）了解如何通过日志查看各群组共识状态；
->
->（4）了解如何向各群组发送交易，并通过日志查看群组出块状态；
->
->（5）了解群组内节点管理，包括节点入网、退网等；
->
->（6）了解如何新建群组。
+- 了解如何使用`build_chain`创建多群组区块链安装包；
+- 了解`build_chain`创建的多群组区块链安装包目录组织形式以及如何启动该区块链节点；
+- 学习通过日志查看各群组共识状态；
+- 学习如何向各群组发送交易，并通过日志查看群组出块状态；
+- 了解群组内节点管理，包括节点入网、退网等；
+- 了解如何新建群组。
 
 ```eval_rst
 .. important::
 
-    - build-chain适用于开发者和体验者快速搭链使用，不支持扩容操作
+    - build_chain适用于开发者和体验者快速搭链使用，不支持扩容操作
     - 搭建企业级业务链，推荐使用 `企业搭链工具 <../enterprise_tools/index.html>`_
 ```
 
@@ -66,9 +61,9 @@ $ brew install openssl leveldb
    - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器** 
 ```
 
-### 构建星形区块链安装包
+### 构建星形区块链节点配置文件夹
 
-[build_chain](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链安装包：
+[build_chain](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链节点配置文件夹：
 
 **准备依赖**
 
@@ -101,7 +96,7 @@ $ cat ipconf
 127.0.0.1:2 agencyD 3
 ```
 
-**使用build_chain脚本构建星形区块链安装包**
+**使用build_chain脚本构建星形区块链节点配置文件夹**
 
 ```bash
 # 根据配置生成星形区块链
@@ -280,7 +275,7 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 $ cd ~/fisco
 
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console/console-0.4.25.tar.gz && tar -zxf console-0.4.25.tar.gz
 
 # 进入控制台操作目录
 $ cd ~/fisco/console
@@ -411,7 +406,7 @@ info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9
 
 ### 构建单群组四节点区块链
 
-> **用build_chain脚本生成单群组四节点区块链安装包**
+> **用build_chain脚本生成单群组四节点区块链节点配置文件夹**
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
