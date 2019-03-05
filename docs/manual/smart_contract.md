@@ -303,7 +303,7 @@ contract HelloWorld{
 ##### 2.2.2 定义合约接口  
 
 需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的辅助合约：
-```
+```js
 pragma solidity ^0.4.25;
 
 contract HelloWorld {
@@ -330,7 +330,8 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 
 ##### 2.2.4 实现调用逻辑  
 添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
-```
+
+```cpp
 // file HelloWorldPrecompiled.h
 // file HelloWorldPrecompiled.cpp
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
@@ -414,19 +415,21 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
 ```
 
 ##### 2.2.5 注册合约
-```
+
+```cpp
 // file         libblockverifier/ExecutiveContextFactory.cpp
 // function     initExecutiveContext
 
 context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>());  // HelloWorld precompiled 注册
 ```
 
-##### 2.2.6 其他流程  
+##### 2.2.6 其他流程
+
 [源码编译](../installation.md)
 
- [环境搭链](../manual/build_chain.md)
+[环境搭链](../manual/build_chain.md)
 
-### 三 调用 
+### 三 调用
 
 从用户角度，预编译合约与solidity合约的调用方式基本相同，唯一的区别是solidity合约在部署之后才能获取到调用的合约地址，预编译合约的地址为预分配，不用部署，可以直接使用。
 
@@ -435,6 +438,7 @@ web3sdk调用合约时，需要先将合约转换为java代码，对于预编译
 
 #### 3.2 solidity调用  
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
+
 ```js
 pragma solidity ^0.4.25;
 contract HelloWorld {
