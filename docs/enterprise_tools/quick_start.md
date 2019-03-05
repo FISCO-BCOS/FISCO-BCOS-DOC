@@ -19,7 +19,7 @@
 
 ### 机构获取证书资格
 
-1. 机构A、B、C、D在本机生成使用agency.key，和机构证书请求文件agency.csr。
+1. 机构A、B、C、D在本机生成使用`agency.key`，和机构证书请求文件agency.csr。
 
 2. 机构A、B、C、D向第三方权威机构申请联盟链组网资格，由第三方权威机构生成根证书ca.crt，同时发送agency.csr至第三方，得到机构证书agency.crt
 
@@ -47,7 +47,7 @@
 
 2. 机构A、B分别修改`mchain.ini`中的信息，配置为节点0和节点1的信息
 
-3. 机构A、B分别使用-b/--build_install_package命令生成节点安装包
+3. 机构A、B分别使用[build_install_package](./operation.html#build-install-package-b)命令生成节点安装包
 
 4. 机构A、B分别使用将节点私钥导入生成的节点安装包中，启动节点
 
@@ -119,7 +119,7 @@
 
 ### 机构E获取证书资格
 
-1. 机构E在本机生成使用agency.key，和机构证书请求文件agency.csr。
+1. 机构E在本机生成使用`agency.key`，和机构证书请求文件agency.csr。
 
 2. 机构E向第三方权威机构申请联盟链组网资格，由第三方权威机构根据group1的根证书ca.crt，签发agency.crt。
 
