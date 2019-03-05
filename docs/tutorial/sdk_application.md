@@ -369,16 +369,9 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 **小结：** 我们为应用配置好了SDK，下一步将进入实际业务开发。
 
 ## 业务开发
-这一部分有两项工作，每一项工作增加一个Java类。**项目相关路径下已有开发完成的两个Java类，可以直接使用**。现在分别介绍Java类的设计与实现。
+**asset-app项目已经包含完整的源码，用户可以直接使用**，现在分别介绍Java类的设计与实现。
 
-```
-to do :
-    1. 说明生成的Asset类与Asset.sol合约之间的关系(接口，调用)
-    2. 初始化代码
-    3. Asset类使用
-```
-
-- `Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，放置在包路径目录`/src/main/java/org/fisco/bcos/asset/contract`。Asset.java的主要接口：
+- `Asset.java`： 通过控制台编译工具由`Asset.sol`文件生成，提供了solidity合约接口对应的Java接口，路径`/src/main/java/org/fisco/bcos/asset/contract`。Asset.java的主要接口：
 ```java
 package org.fisco.bcos.asset.contract;
 
@@ -395,15 +388,14 @@ public class Asset extends Contract {
     // Asset.sol合约 select接口生成
     public RemoteCall<Tuple2<BigInteger, BigInteger>> select(String asset_account);
 
-    // 加载Asset.sol地址，生成Asset对象
+    // 加载Asset合约地址，生成Asset对象
     public static Asset load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
 
     // 部署Assert.sol合约
     public static RemoteCall<Asset> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
 }
-
 ```
-- `AssetClient.java`：此类是应用的入口，负责应用的核心业务逻辑处理，通过调用`Asset.java`实现对合约的部署与调用。放置在包路径目录`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
+- `AssetClient.java`：入口类，通过调用`Asset.java`实现对合约的部署与调用。路径`/src/main/java/org/fisco/bcos/asset/client`，其核心设计代码如下：
 ```java
 public void initialize() throws Exception {
 
