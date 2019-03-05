@@ -18,10 +18,7 @@
 ```
 
 ## 示例应用需求
-```
-to do:
-    描述资产管理使用区块链进行管理的优势，两者之间的联系。
-```
+
 本文提供一个资产管理的示例，其基本业务需求如下：
 - 能够在区块链上进行资产注册
 - 不同账户之间进行资产转移
@@ -460,11 +457,6 @@ $ bash asset_run.sh query Asset_0
 asset account Asset_0, amount 999444444 
 $ bash asset_run.sh query Asset_1
 asset account Asset_1, amount 111666666
-```
-
-```
-to do :
-    1. 给出小结，突出区块链不可串改的特性。
 ```
 
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
