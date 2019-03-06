@@ -296,7 +296,7 @@ $ cat node2/conf/node.nodeid
 $ cd ~/fisco
 
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console/console-0.4.25.tar.gz && tar -zxf console-0.4.25.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
 
 # 进入控制台操作目录
 $ cd ~/fisco/console
