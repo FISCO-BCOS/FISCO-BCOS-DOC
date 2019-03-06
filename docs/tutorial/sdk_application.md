@@ -236,7 +236,7 @@ contract Asset {
 
 ## 合约转换
 
-前一小节，我们根据业务需求设计了合约的存储与接口，并给出了```Asset.sol```完整实现。java应用需要调用合约时，首先需要将solidity文件转换为Java合约文件。
+前一小节，我们根据业务需求设计了合约的存储与接口，并给出了```Asset.sol```完整实现。java应用需要调用合约时，首先需要将solidity文件转换为Java文件。
 控制台提供了转换工具，将`Asset.sol Table.sol`两个合约文件存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
 ```bash
 # 切换到fisco/console/tools目录
@@ -265,7 +265,7 @@ $ ./sol2java.sh org.fisco.bcos.asset.contract
 |                             |--Table.java  // Table.sol合约生成的Java文件
 |-- sol2java.sh
 ```
-java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该路径目录包含`Asset.java`和`Table.java`两个文件，其中`Asset.java`是Java应用所需要的Java合约文件。
+java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`Table.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
 
 `Asset.java`的主要接口：
 ```java
@@ -291,7 +291,7 @@ public class Asset extends Contract {
     public static RemoteCall<Asset> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
 }
 ```
-其中load与deploy函数用于构造Asset对象，其他接口分别用来调用对应的solidity的接口，详细使用在下文会有介绍。
+其中load与deploy函数用于构造Asset对象，其他接口分别用来调用对应的solidity合约的接口，详细使用在下文会有介绍。
 
 ## SDK配置
 
@@ -343,7 +343,7 @@ asset-app项目的目录结构如下：
 
 ### 项目引入SDK
 **项目的`build.gradle`文件已引入SDK，不需修改**。其引入方法介绍如下：
-- SDK引入了以太坊的solidity编译器相关jar包，因此在`build.gradle`文件需要添加以太坊的远程仓库：
+- Web3SDK引入了以太坊的solidity编译器相关jar包，因此在`build.gradle`文件需要添加以太坊的远程仓库：
 ```java
 repositories {
     maven {
