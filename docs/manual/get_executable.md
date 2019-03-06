@@ -25,10 +25,10 @@ FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台�
 
 - Ubuntu
 
-推荐Ubuntu 16.04以上版本，16.04以下的版本没有经过测试，源码编译时依赖于编译工具、`leveldb`和`libssl`。
+推荐Ubuntu 16.04以上版本，16.04以下的版本没有经过测试，源码编译时依赖于编译工具和`libssl`。
 
 ```bash
-$ sudo apt install -y libssl-dev libleveldb-dev openssl cmake git build-essential texinfo
+$ sudo apt install -y libssl-dev openssl cmake git build-essential texinfo
 ```
 
 - CentOS
@@ -37,7 +37,7 @@ $ sudo apt install -y libssl-dev libleveldb-dev openssl cmake git build-essentia
 
 ```bash
 $ sudo yum install -y epel-release
-$ sudo yum install -y openssl-devel leveldb-devel openssl cmake3 gcc-c++ git
+$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git
 ```
 
 - macOS
@@ -45,7 +45,7 @@ $ sudo yum install -y openssl-devel leveldb-devel openssl cmake3 gcc-c++ git
 推荐xcode10以上版本。macOS依赖包安装依赖于[Homebrew](https://brew.sh/)。
 
 ```bash
-$ brew install -y leveldb openssl git
+$ brew install -y openssl git
 ```
 
 ### 克隆代码

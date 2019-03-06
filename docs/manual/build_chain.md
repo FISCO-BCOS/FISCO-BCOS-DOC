@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业级部署工具 <../enterprise/index.html>`_ 。
+    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业级部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
 FISCO BCOS提供了`build_chain`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
@@ -88,12 +88,12 @@ bash build_chain.sh -f ipconf -T -i
 该选项用于指定生成证书时的证书配置文件。
 
 - **`T`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](log.md)。
+无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](log_access.md)。
 
 ## 节点文件组织结构
 
 - cert文件夹下存放链的根证书和机构证书。
-- 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行程序、sdk所需的证书文件。
+- 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行程序、SDK所需的证书文件。
 - 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](configuration.md)。每个节点中还提供两个脚本，用于启动和停止节点。
 - 每个IP文件夹下的提供`start_all.sh`和`stop_all.sh`两个脚本用于启动和停止所有节点。
 
@@ -169,6 +169,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ### 多服务器多群组
 
-使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里TODO:修改此处链接](group.md)。
+使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../tutorial/group_use_cases.md)。
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/tools/build_chain.sh
