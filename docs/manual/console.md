@@ -214,7 +214,7 @@ getGroupPeers                            Query nodeId list for sealer and observ
 getPeers                                 Query peers currently connected to the client.
 getConsensusStatus                       Query consensus status.
 getSyncStatus                            Query sync status.
-getNodeVersion                         Query the current client version.
+getNodeVersion                           Query the current client version.
 getGroupList                             Query group list.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
