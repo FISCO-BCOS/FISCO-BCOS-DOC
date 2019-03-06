@@ -12,7 +12,7 @@
 答:
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
   - FISCO BCOS 2.0版本提供JSON-RPC接口，具体请 [参考这里](./api.md)。
-  - FISCO BCOS 2.0版本提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/sdk.md)。
+  - FISCO BCOS 2.0版本提供Web3SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/sdk.md)。
   - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
 
 问:
@@ -57,7 +57,7 @@
 问:
   游离节点（非群组节点）是否可以同步group数据？<br>
 答:
-  游离节点不参与group内的共识、同步和出块，游离节点可以通过am/ao命令可以将退出的节点添加为共识/观察节点。
+  游离节点不参与group内的共识、同步和出块，游离节点可以通过控制台`addSealer/addObserver`命令可以将退出的节点添加为共识/观察节点。
 
 问:
   某节点属于不同的group，是否可以支持查询多group的信息。<br>
@@ -103,7 +103,7 @@
   共识可改配置可以通过控制台修改。共识可改配置项查询除了控制台外，还可以通过RPC接口查询，具体请 [参考这里](./design/rpc.md)。
 
   - [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见setSystemConfigByKey -h 。
-  - [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addSealer(as)，addObserver(ao)，removeNode(rn)，具体参考《节点管理》。
+  - [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addSealer，addObserver，removeNode，具体参考《节点管理》。
 
 
 问:
@@ -124,16 +124,16 @@
   通过web3sdk控制台指令查询，查询指令根据合约name查询。
 
 
-## Java SDK
+## Web3SDK
 
 问:
-  Java SDK对Java版本有要求吗？<br>
+  Web3SDK对Java版本有要求吗？<br>
 答:
-  要求 `JDK8或以上 <https://openjdk.java.net/>`_，推荐使用OpenJDK11。
-  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`OpenJDK11下载地址 <https://jdk.java.net/11/>`_ `安装指南 <https://openjdk.java.net/install/index.html>`_ 
+  要求[JDK8或以上](https://openjdk.java.net/)，推荐使用OpenJDK11。 [OpenJDK11下载地址](https://jdk.java.net/11/)<br>
+  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。 [安装指南](https://openjdk.java.net/install/index.html) 
 
 问:
-  Java SDK配置完成，发送交易失败的原因是什么？<br>
+  Web3SDK配置完成，发送交易失败的原因是什么？<br>
 答:
   applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
 

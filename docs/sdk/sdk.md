@@ -1,8 +1,8 @@
-# SDK
+# Web3SDK
 
 FISCO BCOS提供了Java语言SDK用以访问节点，查询节点状态，改变节点设置和发送交易等功能。
 
-该版本（2.0）的技术文档只适用Java SDK V2.0及以上版本(与FISCO BCOS V2.0及以上版本适配)，Java SDK V1.3.x版本的技术文档请查看[Java SDK V1.3.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html)。[Java SDK Github](https://github.com/FISCO-BCOS/web3sdk)提供访问FISCO BCOS节点的Java API。
+该版本（2.0）的技术文档只适用web3sdk v2.0及以上版本(与FISCO BCOS v2.0及以上版本适配)，v1.3.x版本的技术文档请查看[Web3SDK v1.3.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html)。[web3sdk Github](https://github.com/FISCO-BCOS/web3sdk)提供访问FISCO BCOS节点的Java API。
 
 - 提供调用FISCO BCOS JSON-RPC的Java API   
 - [链上信使协议](../manual/amop_protocol.md)，为联盟链提供安全高效的消息信道。
@@ -16,11 +16,11 @@ FISCO BCOS提供了Java语言SDK用以访问节点，查询节点状态，改变
 
     - java版本
      要求 `JDK8或以上 <https://openjdk.java.net/>`_，推荐使用OpenJDK11
-     > CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`OpenJDK11下载地址 <https://jdk.java.net/11/>`_ `安装指南 <https://openjdk.java.net/install/index.html>`_ 
+     > CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`OpenJDK11下载地址 <https://jdk.java.net/11/>`_ `安装指南 <https://openjdk.java.net/install/index.html>`_ 
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS搭链教程 <../installation.html>`_
     - 网络连通性
-     检查Java SDK连接的FISCO BCOS节点channel_listen_port是否能telnet通，若telnet不通，需要检查网络连通性和安全策略。
+     检查Web3SDK连接的FISCO BCOS节点channel_listen_port是否能telnet通，若telnet不通，需要检查网络连通性和安全策略。
 
 ```
 
@@ -83,7 +83,7 @@ application.yml配置项与applicationContext.xml配置项相对应，详细介�
 ## 使用SDK 
 
 ### Spring项目开发指引
-#### 调用SDK的API(参考[SDK API列表](../sdk/sdk.html#java-sdk-api))设置或查询相关的区块链数据。
+#### 调用SDK的API(参考[Web3SDK API列表](../sdk/sdk.html#java-sdk-api))设置或查询相关的区块链数据。
 1) 调用SDK Web3j的API：需要加载配置文件，SDK与区块链节点建立连接。获取web3j对象，根据Web3j对象调用相关API。示例代码如下：
 ```java
     //读取配置文件，SDK与区块链节点建立连接
@@ -190,15 +190,15 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
   ```
 Solidity合约文件转换为国密版Java合约文件的步骤、部署和调用国密版合约的方法均与普通版SDK相同。
 
-## Java SDK API
+## Web3SDK API
 
-Java SDK API主要分为Web3j API和Precompiled Service API。其中Web3j API可以查询区块链相关的状态，发送和查询交易信息；Precompiled Service API可以管理区块链相关配置以及实现特定功能。
+Web3SDK API主要分为Web3j API和Precompiled Service API。其中Web3j API可以查询区块链相关的状态，发送和查询交易信息；Precompiled Service API可以管理区块链相关配置以及实现特定功能。
 
 ### Web3j API
 Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API相同，参考[RPC API文档](../api.md)。调用Web3j API示例参考[SDK配置与使用](../sdk/sdk.md)。
 
 ### Precompiled Service API
-预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](../manual/console.md)。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的AuthorityService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。
+预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](../manual/console.md)。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的PermissionService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。
 
 设置和移除接口返回json字符串，包含code和msg字段，当无权限操作时，其code定义-1，msg定义为“non-authorized”。当成功操作时，其code为1(影响1条记录)，msg为“success”。其他返回码如下：
 
@@ -206,39 +206,38 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 |:----|:---|
 |0|success|
 |50000|permission denied|
-|51000|table name and address exist|
+|51000|table name and address already exist|
 |51001|table name and address does not exist|
-|51100|invalid nodeId|
+|51100|invalid node ID|
 |51101|the last sealer cannot be removed|
-|51102|table name and address does not exist|
+|51102|the node is not reachable|
 |51103|the node is not in group peers|
 |51104|the node is already in sealer list|
 |51105|the node is already in observer list|
-|51200|contract name and version exist|
-|51201|version exceeds maximum(40) length|
-|51300|invalid configuration key|
-调用Precompiled Service API示例参考[Java SDK配置与使用](../sdk/sdk.md)。
+|51200|contract name and version already exist|
+|51201|version string length exceeds the maximum limit|
+|51300|invalid configuration entry|
 
-#### AuthorityService
-SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，AuthorityService可以配置权限信息，其API如下：
+#### PermissionService
+SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，PermissionService可以配置权限信息，其API如下：
 - **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
 - **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
-- **public List\<AuthorityInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
+- **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
 - **public String grantDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
 - **public String revokeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
-- **public List\<AuthorityInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
+- **public List\<PermissionInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
 - **public String grantPermissionManager(String address)：** 增加外部账号地址的管理权限的权限。
 - **public String revokePermissionManager(String address)：** 移除外部账号地址的管理权限的权限。
-- **public List\<AuthorityInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
+- **public List\<PermissionInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
 - **public String grantNodeManager(String address)：** 增加外部账号地址的节点管理权限。
 - **public String revokeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
-- **public List\<AuthorityInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
+- **public List\<PermissionInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
 - **public String grantCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
 - **public String revokeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
-- **public List\<AuthorityInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
+- **public List\<PermissionInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
 - **public String addSysConfig(String address)：** 增加外部账号地址的系统参数管理权限。
 - **public String removeSysConfig(String address)：** 移除外部账号地址的系统参数管理权限。
-- **public List\<AuthorityInfo\> querySysConfig()：** 查询拥有系统参数管理的权限记录列表。
+- **public List\<PermissionInfo\> querySysConfig()：** 查询拥有系统参数管理的权限记录列表。
 
 #### CnsService
 SDK提供对[CNS](../design/features/cns_contract_name_service.md)的支持。CnsService可以配置CNS信息，其API如下：
