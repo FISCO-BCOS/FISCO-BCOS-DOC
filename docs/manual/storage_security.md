@@ -104,12 +104,14 @@ bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/n
 
 ```eval_rst
 .. important::
-    注意，所有需要加密的文件列举如下，若未加密，节点无法启动。
+    所有需要加密的文件列举如下，若未加密，节点无法启动。
+
+    - 非国密版：conf/node.key
+    - 国密版：conf/gmnode.key和conf/origin_cert/node.key
+
 ```
 
-非国密版：`conf/node.key`
 
-国密版：`conf/gmnode.key`和`conf/origin_cert/node.key`
 
 ## 节点运行
 
