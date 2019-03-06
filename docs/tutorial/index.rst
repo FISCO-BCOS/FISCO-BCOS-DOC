@@ -12,3 +12,4 @@
    sdk_application.md
    group_use_cases.md
    enterprise_quick_start.md
+   enterprise_quick_start_agency.md
