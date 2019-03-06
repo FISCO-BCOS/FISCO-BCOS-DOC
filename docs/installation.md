@@ -151,7 +151,7 @@ $ cp nodes/127.0.0.1/sdk/* console-0.4.25/conf/
 # # 回到fisco目录
 $ cd ~/fisco/console-0.4.25
 $ ./start.sh
-# 输出下述信息表明启动成功
+# 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =============================================================================================
 Welcome to FISCO BCOS console！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
@@ -172,7 +172,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```json
 # 获取客户端版本
-> getNodeVersion
+[group:1]> getNodeVersion
 {
     "Build Time":"20190121 06:21:05",
     "Build Type":"Linux/clang/Debug",
@@ -181,7 +181,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
     "Git Commit Hash":"a322f0bff5cb395157fb5734219fcb2f2686ef08"
 }
 # 获取节点链接信息
-> getPeers
+[group:1]> getPeers
 [
     {
         "IPAndPort":"127.0.0.1:49948",
@@ -233,7 +233,7 @@ contract HelloWorld {
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
-> deploy HelloWorld
+[group:1]> deploy HelloWorld
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
@@ -241,23 +241,25 @@ contract HelloWorld {
 
 ```bash
 # 查看当前块高
-> getBlockNumber
+[group:1]> getBlockNumber
 1
 # 调用get接口获取name变量 此处的合约地址是deploy指令返回的地址
-> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
 # 查看当前块高，块高不变，因为get接口不更改账本状态
-> getBlockNumber
+[group:1]> getBlockNumber
 1
 # 调用set设置name
-> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
+[group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
 # 再次查看当前块高，块高增加表示已出块，账本状态已更改
-> getBlockNumber
+[group:1]> getBlockNumber
 2
 # 调用get接口获取name变量，检查设置是否生效
-> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, FISCO BCOS
+# 退出控制台
+[group:1]> quit
 ```
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/tools/build_chain.sh

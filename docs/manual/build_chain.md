@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业工具 <../enterprise_tools/index.html>`_ 。
+    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业级部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
 FISCO BCOS提供了`build_chain`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
@@ -79,7 +79,7 @@ bash build_chain.sh -f ipconf -T -i
 无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
 
 - **`g`选项[**Optional**]**
-无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。****使用`g`选项时要求二进制fisoc-bcos为国密版本**。
+无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**使用`g`选项时要求二进制fisoc-bcos为国密版本**。
 
 - **`z`选项[**Optional**]**
 无参数选项，设置该选项时，生成节点的tar包。
@@ -133,7 +133,6 @@ nodes/
 │   ├── ca.key
 │   ├── ca.srl
 │   └── cert.cnf
-└── replace_all.sh
 ```
 
 ## 使用举例

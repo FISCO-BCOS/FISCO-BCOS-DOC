@@ -138,18 +138,18 @@
   applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
 
 
-## 企业工具
+## 企业级部署工具
 问：
-  企业工具使用时出现找不到pip
+  企业级部署工具使用时出现找不到pip
 
 答：
-  企业工具依赖python pip，使用以下命令安装：
+  企业级部署工具依赖python pip，使用以下命令安装：
 ```
 $ python -m pip install
 ```
 
 问:
-  企业工具使用时出现
+  企业级部署工具使用时出现
 ```
 Traceback (most recent call last):
    File "./generator", line 19, in <module>
