@@ -46,8 +46,8 @@
 ```bash
 # 下载控制台压缩包
 $ cd ~ && mkdir fisco && cd fisco
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console/console-0.4.25.tar.gz
-$ tar -zxf console-0.4.25.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
+$ tar -zxf console.tar.gz
 ```
 目录结构如下：
 ```bash
@@ -72,17 +72,17 @@ $ tar -zxf console-0.4.25.tar.gz
     |   |-- Table.sol # 默认提供CRUD的合约接口Table.sol文件
     |-- sol2java.sh # solidity合约文件编译为java合约文件的工具脚本
 ```
-**注：** 
+**注1：** 
 - 使用控制台部署和调用合约请将solidity合约文件放在`solidity/contract`目录下，然后运行部署和调用合约命令。
 - **控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
   - 将solidity合约文件放在`tools/contracts`目录下。
   - 通过运行`tools`目录下的`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，拷贝`HelloWorld.sol`合约到`tools/contracts`目录下，指定包名为`org.com.fisco`，命令如下：
     ```bash
-    $ cd ~/fisco/console-0.4.25
+    $ cd ~/fisco/console
     $ cp solidity/contracts/HelloWorld.sol tools/contracts/
     $ ./sol2java.sh org.com.fisco
     ```
-    运行成功之后，将会在`console-0.4.25/tools`目录生成java、abi和bin目录，如下所示。
+    运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
     ```bash
     |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
     |   |-- HelloWorld.abi
@@ -99,11 +99,24 @@ $ tar -zxf console-0.4.25.tar.gz
     ```
     java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`和`Table.java`。其中`HelloWorld.java`是java应用所需要的java合约文件。
 
+**注2：** 获取的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。合约编译器下载方式如下：
+```bash
+# 获取0.4版本合约编译jar包
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
+
+# 获取0.5版本合约编译jar包
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
+
+# 获取国密0.4版本合约编译jar包
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
+
+# 获取国密0.5版本合约编译jar包
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
+```
 ### 配置控制台
 - 区块链节点和证书的配置：
-  - **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
-  - **通过[企业工具](../enterprise_tools/index.md)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的[证书生成相关命令](../enterprise_tools/operation.html#id2))生成证书和私钥，将生成sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
-- 配置`conf`目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
+  - 将节点sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
+  - 配置`conf`目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
