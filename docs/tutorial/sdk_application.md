@@ -236,7 +236,7 @@ contract Asset {
 
 ## 合约转换
 
-前一小节，我们根据业务需求设计了合约的存储与接口，并给出了`Asset.sol`完整实现。java应用需要调用合约时，首先需要将solidity文件转换为Java文件。
+上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将solidity文件转换为Java文件。
 控制台提供了转换工具，将`Asset.sol Table.sol`两个合约文件存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
 ```bash
 # 切换到fisco/console/tools目录
@@ -374,9 +374,12 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 ## 业务开发
 
-**asset-app项目已经包含示例的完整源码，用户可以直接使用**，现在分别介绍Java类的设计与实现。
+我们已经介绍了如何在自己的项目中引入以及配置Web3SDK，本节介绍如何通过Java程序调用合约，同样我们以示例的资产管理说明。
 
-`AssetClient.java`：入口类，通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`，初始化以及调用流程都在该类中进行。
+asset-app项目已经包含示例的完整源码，用户可以直接使用，现在介绍Java类的设计与实现。
+
+`AssetClient.java`: 通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`，初始化以及调用流程都在该类中进行。
+
 - 初始化  
 初始化代码的主要功能为构造Web3j与Credentials对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 ```java
