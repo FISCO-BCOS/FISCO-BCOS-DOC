@@ -250,14 +250,14 @@ Hello, World!
 > getBlockNumber
 1
 # 调用set设置name
-> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello,FISCO-BCOS"
+> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
 # 再次查看当前块高，块高增加表示已出块，账本状态已更改
 > getBlockNumber
 2
 # 调用get接口获取name变量，检查设置是否生效
 > call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello,FISCO-BCOS
+Hello, FISCO BCOS
 ```
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/tools/build_chain.sh
