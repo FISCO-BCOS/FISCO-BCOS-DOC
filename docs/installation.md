@@ -139,7 +139,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console-0.4.25.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console/console-0.4.25.tar.gz
 $ tar -zxf console-0.4.25.tar.gz && chmod u+x console-0.4.25/start.sh
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console-0.4.25/conf/
