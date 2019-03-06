@@ -53,7 +53,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 ```
 
 ## getPbftView
-返回节点所在指定群组内的最新[pbft视图](design/consensus/pbft.md#view)
+返回节点所在指定群组内的最新[pbft视图](design/consensus/pbft.html#view)
 ### 参数         
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值         

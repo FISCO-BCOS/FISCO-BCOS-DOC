@@ -4,11 +4,11 @@
 
 落盘加密是对节点存储在硬盘上的内容进行加密，加密的内容包括：合约的数据、节点的私钥。
 
-具体的落盘加密介绍，可参考：[落盘加密的介绍](design/features/disk_encryption.md)
+具体的落盘加密介绍，可参考：[落盘加密的介绍](design/features/storage_security.md)
 
 ## 部署Key Manager
 
-每个机构一个Key Manager，具体的部署步骤，可参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)
+每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager在线介绍](https://github.com/FISCO-BCOS/key-manager)
 
 ## 生成节点
 
@@ -19,14 +19,18 @@ cd FISCO-BCOS/tools
 bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 ```
 
-**注意：节点生成后，不能启动，待dataKey配置后，再启动。节点在第一次运行前，必须配置好是否采用落盘加密。一旦节点开始运行，无法切换状态。**
+```eval_rst
+.. important::
+    节点生成后，不能启动，待dataKey配置后，再启动。节点在第一次运行前，必须配置好是否采用落盘加密。一旦节点开始运行，无法切换状态。
+```
 
 ## 启动Key Manager
 
-直接启动key-manager。若未部署key-manager，可参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)
+直接启动`key-manager`。若未部署`key-manager`，可参考[Key Manager在线介绍](https://github.com/FISCO-BCOS/key-manager)
 
 ```shell
-./key-manager 31443 123xyz #参数：端口，superkey
+# 参数：端口，superkey
+./key-manager 31443 123xyz
 ```
 
 启动成功，打印日志
@@ -37,16 +41,19 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 
 ## 配置dataKey
 
-**注意：配置dataKey的节点，必须是新生成，未启动过的节点。**
+```eval_rst
+.. important::
+    配置dataKey的节点，必须是新生成，未启动过的节点。
+```
 
-执行脚本，定义dataKey，获取cipherDataKey
+执行脚本，定义`dataKey`，获取`cipherDataKey`
 
 ```shell
 cd key-manager/scripts
 bash gen_data_secure_key.sh 127.0.0.1 31443 123456
 ```
 
-得到cipherDataKey，脚本自动打印出落盘加密需要的ini配置(如下)。此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
+得到`cipherDataKey`，脚本自动打印出落盘加密需要的ini配置(如下)。此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
 
 ```ini
 [data_secure]
@@ -56,7 +63,7 @@ key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
-将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](configs.md)）中。
+将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](configuration.md)）中。
 
 ```shell
 vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini
@@ -65,18 +72,6 @@ vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini
 放在最后即可，如下。
 
 ```ini
-[rpc]
-	;略
-[p2p]
-	;略	
-[crl]		
-	;略
-[group]
-	;略
-[secure]
-	;略
-[log]
-	;略
 [data_secure]
 enable=true
 key_manager_ip=127.0.0.1
@@ -90,7 +85,8 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 
 ```shell
 cd key-manager/scripts
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea #参数：ip port 节点私钥文件 cipherDataKey
+# 参数：ip port 节点私钥文件 cipherDataKey
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
 ```
 
 执行后，节点私钥自动被加密，加密前的文件备份到了文件``` node.key.bak.xxxxxx ```中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**
@@ -100,17 +96,20 @@ bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/n
 [INFO] "nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key" encrypted!
 ```
 
-若查看node.key，可看到，已经被加密为密文
+若查看`node.key`，可看到，已经被加密为密文
 
 ``` shell
 8b2eba71821a5eb15b0cbe710e96f23191419784f644389c58e823477cf33bd73a51b6f14af368d4d3ed647d9de6818938ded7b821394446279490b537d04e7a7e87308b66fc82ab3987fb9f3c7079c2477ed4edaf7060ae151f237b466e4f3f8a19be268af65d7b4ae8be37d81810c30a0f00ec7146a1125812989c2205e1e37375bc5e4654e569c21f0f59b3895b137f3ede01714e2312b74918e2501ac6568ffa3c10ae06f7ce1cbb38595b74783af5fea7a8a735309db3e30c383e4ed1abd8ca37e2aa375c913e3d049cb439f01962dd2f24b9e787008c811abd9a92cfb7b6c336ed78d604a3abe3ad859932d84f11506565f733d244f75c9687ef9334b8fabe139a82e9640db9e956b540f8b61675d04c3fb070620c7c135f3f4f6319aae8b6df2b091949a2c9938e5c1e5bb13c0f530764b7c2a884704637be953ce887
 ```
 
-**注意，所有需要加密的文件列举如下，若未加密，节点无法启动**
+```eval_rst
+.. important::
+    注意，所有需要加密的文件列举如下，若未加密，节点无法启动。
+```
 
-非国密版：conf/node.key
+非国密版：`conf/node.key`
 
-国密版：conf/gmnode.key 和 conf/origin_cert/node.key
+国密版：`conf/gmnode.key`和`conf/origin_cert/node.key`
 
 ## 节点运行
 
@@ -126,10 +125,10 @@ cd nodes/node_127.0.0.1_0/
 （1）节点正常运行，正常出块，不断输出出块信息。
 
 ``` shell
-tail -f nodes/node_127.0.0.1_0/log/* |grep Report
+tail -f nodes/node_127.0.0.1_0/log/* | grep Report
 ```
 
-（2）key-manager在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Manager直接输出的日志如下。
+（2）`key-manager`在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Manager直接输出的日志如下。
 
 ``` log
 [1546504272699][TRACE][Dec]Respond
@@ -139,4 +138,3 @@ tail -f nodes/node_127.0.0.1_0/log/* |grep Report
    "info" : "success"
 }
 ```
-

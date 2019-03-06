@@ -1,4 +1,4 @@
-# 权限控制手册
+# 权限控制
 
 本文档描述权限控制的实践操作，有关权限控制的详细设计请参考[权限控制设计文档](../design/security_control/permission_control.md)。
 
@@ -536,7 +536,7 @@ Empty set.
 
 类似以账号3登陆控制台，均无权限执行addSealer、addObserver和removeNode命令。
 
-#### 4.3.3 移除权限示例
+#### 移除权限示例
 移除外部账号1的权限设置，命令如下：
 ```
 revokeNodeManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
@@ -563,7 +563,7 @@ revokeNodeManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 **注：**     
 其中deployByCNS命令受权限可以控制，**且同时需要部署合约和使用CNS的权限**，callByCNS和queryCNS命令不受权限控制。
 
-#### 4.4.1 默认示例
+#### 默认示例
 利用CNS部署HelloWorld合约：
 ```
 [group:1]> deployByCNS HelloWorld 1.0
@@ -582,7 +582,7 @@ revokeNodeManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 
 类似以账号2和3登陆控制台，均可以利用CNS部署合约。
 
-#### 4.4.2 设置权限示例
+#### 设置权限示例
 进入账号1登录的控制台，设置外部账号1拥有使用CNS的权限。
 ```
 [group:1]> grantCNSManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
@@ -632,7 +632,7 @@ revokeCNSManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 **注：**     
 目前支持键为tx_count_limit和tx_gas_limit的系统参数设置。其中setSystemConfigByKey命令受权限控制，getSystemConfigByKey命令不受权限控制。
 
-#### 4.5.1 默认示例
+#### 默认示例
 进入账号1登陆的控制台，首先查询系统字段tx_count_limit的值：
 ```
 [group:1]> getSystemConfigByKey tx_count_limit
@@ -686,7 +686,7 @@ revokeCNSManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
 ```
 确认设置失败，账号2无权限修改系统参数。类似账号3登陆控制台也将无权限修改系统参数。
 
-#### 4.5.3 移除权限示例
+#### 移除权限示例
 移除外部账号1的权限设置，命令如下：
 ```
 revokeSysConfigManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
@@ -793,7 +793,7 @@ grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 grantPermissionManager 0x1600e34312edea101d8b41a3465f2e381b66baed
 ```
 
-#### 4.6.3 移除权限示例
+#### 移除权限示例
 移除外部账号1的权限设置功能，命令如下：
 ```
 revokePermissionManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
