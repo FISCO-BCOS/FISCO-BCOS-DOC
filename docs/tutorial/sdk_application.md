@@ -236,8 +236,9 @@ contract Asset {
 
 ## 合约转换
 
-上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件转换为Java文件。  
-控制台提供了转换工具，将`Asset.sol Table.sol`两个合约文件存放在`console-0.4.25/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
+上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件转换为Java文件。
+
+控制台提供转换的工具，将`Asset.sol Table.sol`两个合约文件存放在`console-0.4.25/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
 ```bash
 # 切换到fisco/console-0.4.25/tools目录
 $ cd ~/fisco/console-0.4.25/tools/
@@ -341,7 +342,7 @@ asset-app项目的目录结构如下：
     |-- asset_run.sh // 项目运行脚本
 ```
 
-### 项目引入SDK
+### 项目引入WebSDK
 **项目的`build.gradle`文件已引入SDK，不需修改**。其引入方法介绍如下：
 - Web3SDK引入了以太坊的solidity编译器相关jar包，因此在`build.gradle`文件需要添加以太坊的远程仓库：
 ```java
@@ -353,13 +354,15 @@ repositories {
     mavenCentral()
 }
 ```
-- 引入Web3SDK jar包，增加如下依赖：
+- 引入Web3SDK jar包
+
 ```java
 compile ('org.fisco-bcos：web3sdk：2.0.2')
 ```
 
 ### 证书与配置文件
-- 区块链节点证书配置： 
+- 区块链节点证书配置
+
 拷贝区块链节点对应的SDK证书 
 ```bash
 # 进入~/fisco目录
@@ -369,6 +372,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
 
 - applicationContext.xml  
+
 **注意：** `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 
