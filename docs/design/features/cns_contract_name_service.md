@@ -142,7 +142,7 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 - 说明：contractNameAndVersion通过`:`来分割合约名和合约版本，当缺少合约版本时，SDK默认调用使用合约的最新版本进行查询
 
 注意：
-1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[《SDK》](../../sdk/sdk.md)；
+1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[Web3SDK](../../sdk/sdk.md)；
 2. 两个接口的使用例子可参考[ConsoleImpl.java](https://github.com/FISCO-BCOS/console/blob/master/src/main/java/console/ConsoleImpl.java)中的deployByCNS和callByCNS接口实现。
 
 ## 操作工具

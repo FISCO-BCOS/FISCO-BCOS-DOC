@@ -12,7 +12,7 @@
 答:
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
   - FISCO BCOS 2.0版本提供JSON-RPC接口，具体请 [参考这里](./api.md)。
-  - FISCO BCOS 2.0版本提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/sdk.md)。
+  - FISCO BCOS 2.0版本提供Web3SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/sdk.md)。
   - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
 
 问:
@@ -124,16 +124,16 @@
   通过web3sdk控制台指令查询，查询指令根据合约name查询。
 
 
-## Java SDK
+## Web3SDK
 
 问:
-  Java SDK对Java版本有要求吗？<br>
+  Web3SDK对Java版本有要求吗？<br>
 答:
   要求[JDK8或以上](https://openjdk.java.net/)，推荐使用OpenJDK11。 [OpenJDK11下载地址](https://jdk.java.net/11/)<br>
-  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。 [安装指南](https://openjdk.java.net/install/index.html) 
+  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。 [安装指南](https://openjdk.java.net/install/index.html) 
 
 问:
-  Java SDK配置完成，发送交易失败的原因是什么？<br>
+  Web3SDK配置完成，发送交易失败的原因是什么？<br>
 答:
   applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
 
