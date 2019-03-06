@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    使用前建议优先阅读 `教程-使用企业工具 <../tutorial/enterprise_quick_start.html>`_ 
+    使用前建议优先阅读 `教程-使用企业级部署工具 <../tutorial/enterprise_quick_start.html>`_ 
 ```
 
 ## 组网示例
@@ -72,7 +72,7 @@
 
 4. 机构C分别修改`mchain.ini`中的信息，配置为节点0和节点2的信息
 
-5. 机构A使用[create_group_config](./operation.html#create-group-config-c)命令生成group2的配置文件，将group.2.genesis和group.2.ini拷贝到节点0安装包的conf目录下，从启节点
+5. 机构A使用[create_group_config](./operation.html#create-group-config-c)命令生成group2的配置文件，将group.2.genesis和group.2.ini拷贝到节点0配置文件夹的conf目录下，从启节点
 
 6. 机构B使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，将私钥导入生成的节点配置文件中，启动节点
 
@@ -92,7 +92,7 @@
 
 4. 机构C分别修改`mchain.ini`中的信息，配置为节点0和节点3的信息
 
-5. 机构A使用[create_group_config](./operation.html#create-group-config-c)命令生成group3的配置文件，将group.3.genesis和group.3.ini拷贝到节点0安装包的conf目录下，从启节点
+5. 机构A使用[create_group_config](./operation.html#create-group-config-c)命令生成group3的配置文件，将group.3.genesis和group.3.ini拷贝到节点0配置文件夹的conf目录下，从启节点
 
 6. 机构B使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，将私钥导入生成的节点配置文件夹中，启动节点
 

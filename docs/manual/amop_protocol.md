@@ -16,7 +16,7 @@
 - 区块链P2P网络：此区域部署各机构的区块链节点，此区域为逻辑区域，区块链节点也可部署在机构内部。
 
 ## 配置
-AMOP无需任何额外配置，以下为[SDK](./configuration.md)的配置案例
+AMOP无需任何额外配置，以下为[Web3SDK](./configuration.md)的配置案例
 SDK配置（Spring Bean）：
 ```
 

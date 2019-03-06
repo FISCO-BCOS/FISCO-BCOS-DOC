@@ -4,7 +4,7 @@
 
 ## 操作命令
 
-控制台提供了 **[AddSealer(as)](./console.html#addminer)** 、**[AddObserver(ao)](./console.html#addobserver)** 和 **[RemoveNode(rn)](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList(gsl)](./console.html#getminerlist)**、**[getObserverList(gol)](./console.html#getobserverlist)** 和 **[getNodeIDList(gnl)](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
+控制台提供了 **[AddSealer](./console.html#addminer)** 、**[AddObserver](./console.html#addobserver)** 和 **[RemoveNode](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList](./console.html#getminerlist)**、**[getObserverList](./console.html#getobserverlist)** 和 **[getNodeIDList](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 
 - addSealer：根据节点NodeID设置对应节点为共识节点；
 - addObserver：根据节点NodeID设置对应节点为观察节点；

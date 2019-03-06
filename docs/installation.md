@@ -125,7 +125,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 配置及使用控制台
 
-控制台通过Java SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍[参考这里](manual/console.md)。
+控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍[参考这里](manual/console.md)。
 
 ```eval_rst
 .. important::
