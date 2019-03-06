@@ -84,7 +84,7 @@ $ ./start.sh 1 d0fee0a4e3c545a9394965042f8f891b6e5482c212a7428ec175d6aed121353a
 ```
 获取客户端工具：
 ```
-curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/bcosclient_authority2.0.tar.gz
+curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/permission_util.tar.gz
 ```
 解压客户端工具，具体使用参考解压目录中的使用说明文档。
 
