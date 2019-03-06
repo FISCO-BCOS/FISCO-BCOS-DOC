@@ -88,7 +88,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 共识节点nodeId列表         
+- `array` - 共识节点ID列表         
 - 示例          
 ```
 // Request
@@ -111,7 +111,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id"
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 观察节点nodeId列表       
+- `array` - 观察节点ID列表       
 - 示例          
 ```
 // Request
@@ -147,7 +147,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
    -  `max_faulty_leader`: `unsigned int` - 最大容错节点数            
    -  `sealer.index`: `string` - 节点序号为index的nodeId            
    -  `node index`: `unsigned int` - 节点的序号            
-   -  `nodeId`: `string` - 节点的nodeId            
+   -  `nodeId`: `string` - 节点的ID            
    -  `nodeNum`: `unsigned int` - 节点的数            
    -  `omitEmptyBlock`: `bool` - 忽略空块标志位            
    -  `protocolId`: `unsigned int` - 协议ID号            
@@ -184,7 +184,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
     - `max_faulty_leader`: `unsigned int` - 最大容错节点数            
     - `sealer.index`: `string` - 节点序号为index的nodeId            
     - `node index`: `unsigned int` - 节点的index            
-    - `nodeId`: `string` - 节点的nodeId            
+    - `nodeId`: `string` - 节点的ID            
     - `nodeNum`: `unsigned int` - 节点的数            
     - `omitEmptyBlock`: `bool` - 忽略空块标志位            
     - `protocolId`: `unsigned int` - 协议ID号            
@@ -300,14 +300,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
     - `genesisHash`: `string` - 创世块哈希            
     - `isSyncing`: `bool` - 正在同步标志            
     - `latestHash`: `string` - 最新区块哈希            
-    - `nodeId`: `string` - 节点的nodeId            
+    - `nodeId`: `string` - 节点的ID            
     - `protocolId`: `unsigned int` - 协议ID号            
     - `txPoolSize`: `string` - 交易池中交易的数量            
     - `peers`: `array` - 已连接的指定群组内p2p节点，节点信息字段如下: 
         - `blockNumber`: `unsigned int` - 最新区块高度            
         - `genesisHash`: `string` - 创始区块哈希            
         - `latestHash`: `string` - 最新块哈希            
-        - `nodeId`: `string` - 节点的nodeId            
+        - `nodeId`: `string` - 节点的ID            
        
 - 示例
 ```
@@ -356,7 +356,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 ### 返回值          
 - `array` - 已连接的p2p节点信息，字段如下：
     - `IPAndPort`: `string` - 节点连接的ip和端口            
-    - `nodeId`: `string` - 节点的nodeId            
+    - `nodeId`: `string` - 节点的ID            
     - `Topic`: `array` - 节点关注的topic信息            
       
 - 示例          
@@ -393,7 +393,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
-- `array` - 共识节点和观察节点的nodeId列表     
+- `array` - 共识节点和观察节点的ID列表     
         
 - 示例          
 ```
@@ -417,7 +417,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值          
-- `array` - 节点本身和已连接p2p节点的nodeId列表 
+- `array` - 节点本身和已连接p2p节点的ID列表 
 
 - 示例          
 ```
