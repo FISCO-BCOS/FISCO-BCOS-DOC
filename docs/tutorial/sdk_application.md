@@ -236,11 +236,11 @@ contract Asset {
 
 ## 合约转换
 
-上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将solidity文件转换为Java文件。
-控制台提供了转换工具，将`Asset.sol Table.sol`两个合约文件存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
+上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件转换为Java文件。  
+控制台提供了转换工具，将`Asset.sol Table.sol`两个合约文件存放在`console-0.4.25/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
 ```bash
-# 切换到fisco/console/tools目录
-$ cd ~/fisco/console/tools/
+# 切换到fisco/console-0.4.25/tools目录
+$ cd ~/fisco/console-0.4.25/tools/
 # 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
 $ ./sol2java.sh org.fisco.bcos.asset.contract
 ```
@@ -368,15 +368,13 @@ $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
 
-- applicationContext.xml
+- applicationContext.xml  
 **注意：** `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 
 ## 业务开发
 
-我们已经介绍了如何在自己的项目中引入以及配置Web3SDK，本节介绍如何通过Java程序调用合约，同样我们以示例的资产管理说明。
-
-asset-app项目已经包含示例的完整源码，用户可以直接使用，现在介绍Java类的设计与实现。
+我们已经介绍了如何在自己的项目中引入以及配置Web3SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。asset-app项目已经包含示例的完整源码，用户可以直接使用，现在介绍核心类`AssetClient`的设计与实现。
 
 `AssetClient.java`: 通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`，初始化以及调用流程都在该类中进行。
 
