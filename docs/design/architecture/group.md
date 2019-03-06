@@ -32,11 +32,11 @@
 
 ## 核心层
 
-核心层负责将群组的[区块](../../key_concepts.html#id3)数据、区块信息、系统表以及区块执行结果写入底层数据库。
+核心层负责将群组的[区块](../../tutorial/key_concepts.html#id3)数据、区块信息、系统表以及区块执行结果写入底层数据库。
 
 存储分为state和AMDB两部分，state负责存储合约执行的状态信息，可追踪交易历史状态；AMDB则负责将区块数据、区块信息、系统参数等写入系统表中。
 
-AMDB向外暴露简单的查询(select)、提交(commit)和更新(update)接口，具有可插拔特性，后端可支持多种数据库类型，目前仅支持[LevelDB数据库](https://github.com/google/leveldb)，后期会把基于mysql的[AMDB](../storage/storage.html)集成到系统中。
+AMDB向外暴露简单的查询(select)、提交(commit)和更新(update)接口，具有可插拔特性，后端可支持多种数据库类型，目前仅支持[LevelDB数据库](https://github.com/google/leveldb)，后期会把基于mysql的[AMDB](../storage/storage.md)集成到系统中。
 
 
 ![](../../../images/architecture/storage.png)
@@ -57,7 +57,7 @@ AMDB向外暴露简单的查询(select)、提交(commit)和更新(update)接口�
 
 调度层包括共识模块(Consensus)和同步模块(Sync)。
 
-- **共识模块**：包括Sealer线程和Engine线程，分别负责打包交易、执行共识流程。Sealer线程从交易池(TxPool)取交易，并打包成新区块；Engine线程执行共识流程，共识过程会执行区块，共识成功后，将区块以及区块执行结果提交到区块链(BlockChain)，区块链统一将这些信息写入底层存储，并触发交易池删除上链区块中包含的所有交易、将交易执行结果以回调的形式通知客户端，目前FISCO BCOS主要支持[PBFT](../consensus/pbft.html)和[Raft](../consensus/raft.html)共识算法；
+- **共识模块**：包括Sealer线程和Engine线程，分别负责打包交易、执行共识流程。Sealer线程从交易池(TxPool)取交易，并打包成新区块；Engine线程执行共识流程，共识过程会执行区块，共识成功后，将区块以及区块执行结果提交到区块链(BlockChain)，区块链统一将这些信息写入底层存储，并触发交易池删除上链区块中包含的所有交易、将交易执行结果以回调的形式通知客户端，目前FISCO BCOS主要支持[PBFT](../consensus/pbft.md)和[Raft](../storage/storage.md)共识算法；
 
 - **同步模块**：负责广播交易和获取最新区块，
 考虑到共识过程中，[leader](../consensus/pbft.html#id1)负责打包区块，而leader随时有可能切换，因此必须保证客户端的交易尽可能发送到每个区块链节点，节点收到新交易后，同步模块将这些新交易广播给所有其他节点；考虑到区块链网络中机器性能不一致或者新节点加入都会导致部分节点区块高度落后于其他节点，同步模块提供了区块同步功能，该模块向其他节点发送自己节点的最新块高，其他节点发现块高落后于其他节点后，会主动下载最新区块。
