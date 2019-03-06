@@ -144,7 +144,7 @@ nodes/
 ```bash
 # 下载最新预编译二进制 TODO: 发布后删除二进制下载步骤
 bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
-# 构建FISCO-BCOS联盟链
+# 构建FISCO BCOS联盟链
 $ bash build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -i
 # 生成成功后，输出`All completed`提示
 Generating CA key...

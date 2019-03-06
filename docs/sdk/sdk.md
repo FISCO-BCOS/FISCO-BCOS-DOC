@@ -2,9 +2,9 @@
 
 FISCO BCOS提供了Java语言SDK用以访问节点，查询节点状态，改变节点设置和发送交易等功能。
 
-该版本（2.0）的技术文档只适用web3sdk v2.0及以上版本(与FISCO BCOS v2.0及以上版本适配)，v1.3.x版本的技术文档请查看[Web3SDK v1.3.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html)。[web3sdk Github](https://github.com/FISCO-BCOS/web3sdk)提供访问FISCO BCOS节点的Java API。
+该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.3.x版本的技术文档请查看[Web3SDK 1.3.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html)。[Web3SDK Github](https://github.com/FISCO-BCOS/web3sdk)提供访问FISCO BCOS节点的Java API。
 
-- 提供调用FISCO BCOS JSON-RPC的Java API   
+- 提供调用FISCO BCOS JSON-RPC的Java API
 - [链上信使协议](../manual/amop_protocol.md)，为联盟链提供安全高效的消息信道。
 - 支持使用国密算法发交易
 - 支持预编译（Precompiled）合约管理区块链
@@ -51,13 +51,13 @@ repositories {
 ## 配置SDK
 
 ### FISCO BCOS节点证书配置
-FISCO-BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、node.crt)和私钥(node.key)进行双向认证。
+FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、node.crt)和私钥(node.key)进行双向认证。
 
-- **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录nodes/${ip}/sdk下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
+- **通过[建链脚本](../manual/build_chain.md)搭建的节点证书配置：** 需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`node.crt`和`node.key`文件拷贝到项目的资源目录。
 - **通过[企业工具](../enterprise_tools/index.md)搭建的区块节点证书配置：** 企业工具的demo命令生成的证书和私钥与建链脚本相同。如果使用企业工具的build和expand命令，则需要自己生成证书和私钥，或者使用企业工具的--sdkca命令(具体参考企业工具的[证书生成相关命令](../enterprise_tools/operation.html#id2))生成证书和私钥，将生成sdk目录下的ca.crt、node.crt和node.key文件拷贝到项目的资源目录。
 
 ### 配置文件设置
-Java应用的配置文件需要做相关配置。值得关注的是，FISCO-BCOS2.0支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
+Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ### Spring项目配置
 提供Spring项目中关于applicationContext.xml的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
