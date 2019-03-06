@@ -104,11 +104,11 @@ Group3的相关节点信息举例为：
 
 操作顺序：
 
-1 . 执行`tools/gen_node.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
+1 . 执行`tools/gen_node_cert.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
 
 ```
 # 在目录tools下执行
-$ ./gen_node.sh -c nodes/cert/agency -o node2
+$ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
 2 . 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（`node0`、`node1`）同级；
@@ -137,9 +137,11 @@ $ vim node2/config.ini
     node.2=127.0.0.1:30402
 ```
 
-5 . 执行`node2/start.sh`启动节点3；
+5 . 节点3拷贝节点1（或2）的`group.3.genesis`（内含**群组节点初始列表**）和`group.3.ini`到对应位置，不需改动；
 
-6 . 确认节点3与节点1和节点2的连接已经建立，加入网络操作完成。
+6 . 执行`node2/start.sh`启动节点3；
+
+7 . 确认节点3与节点1和节点2的连接已经建立，加入网络操作完成。
 
 ```
 # 在打开DEBUG级别日志前提下，查看自身节点（node2）连接的节点数及所连接的节点信息（nodeID）
@@ -193,10 +195,8 @@ nohup: appending output to ‘nohup.out’
 操作顺序：
 
 1. 节点3加入网络；
-2. 节点3拷贝节点1（或2）的`group.3.genesis`（内含**群组节点初始列表**）和`group.3.ini`到对应位置，不需改动；
-3. 重启节点3；
-4. 使用控制台根据节点3的nodeID设置节点3为**共识节点**；
-5. 使用控制台查询group3的共识节点中是否包含节点3的nodeID，如存在，加入群组操作完成。
+2. 使用控制台根据节点3的nodeID设置节点3为**共识节点**；
+3. 使用控制台查询group3的共识节点中是否包含节点3的nodeID，如存在，加入群组操作完成。
 
 ```eval_rst
 .. note::
