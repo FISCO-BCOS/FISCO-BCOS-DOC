@@ -24,6 +24,18 @@ Precompiled的架构如下图所示：
 
 ![](../../../images/precompiled/process.png)
 
+```eval_rst
+.. mermaid::
+
+    graph TD
+        A(开始) -->B {预编译合约？}
+        B -->|否| C[EVM]
+        B -->|是| D[根据地址获取合约对象]
+        D -->|call| E[从abi解析调用接口与参数]
+        E -->|执行| F(返回执行结果)
+        C -->|执行| F
+```
+
 ### 接口定义
 
 每个预编译合约都必须实现自己的`call`接口，接口接受三个参数，分别是`ExecutiveContext`执行上下文、`bytesConstRef`参数的abi编码和外部账户地址，其中外部账户地址用于判断是否具有写权限。[`Precompiled`源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/04db9d5e9d7a9d321d90cef8dc5e2010a53ed8d3/libblockverifier/Precompiled.h#L37)。
