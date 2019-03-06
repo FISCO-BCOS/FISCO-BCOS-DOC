@@ -10,7 +10,7 @@
 4. 如何构建一个应用，并集成Web3SDK到应用工程
 5. 如何通过Web3SDK调用合约接口，了解Web3SDK调用合约接口的原理
 
-最后，教程中会提供示例的完整项目源码，用户可以在此基础上快速开发自己的应用。
+教程中会提供示例的完整项目源码，用户可以在此基础上快速开发自己的应用。
 
 ```eval_rst
 .. important::
@@ -31,8 +31,8 @@
 ### 存储设计 
 
 FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
-- account: 主键，资产账户(字符串类型)
-- asset_value: 资产金额(整形)
+- account: 主键，资产账户(string类型)
+- asset_value: 资产金额(uint256类型)
 
 其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。`t_asset`表示例如下：
 
@@ -228,7 +228,6 @@ contract Asset {
         emit TransferEvent(ret_code, from_account, to_account, amount);
 
         return ret_code;
-
     }
 }
 ```
@@ -238,10 +237,10 @@ contract Asset {
 
 上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件转换为Java文件。
 
-控制台提供了这种转换的工具，可以将`Asset.sol Table.sol`两个合约文件存放在`console-0.4.25/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
+控制台提供了这种转换的工具，可以将`Asset.sol Table.sol`两个合约文件存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
 ```bash
-# 切换到fisco/console-0.4.25/tools目录
-$ cd ~/fisco/console-0.4.25/tools/
+# 切换到fisco/console/tools目录
+$ cd ~/fisco/console/tools/
 # 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
 $ ./sol2java.sh org.fisco.bcos.asset.contract
 ```
@@ -273,17 +272,12 @@ java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目�
 package org.fisco.bcos.asset.contract;
 
 public class Asset extends Contract {
-    // Asset.sol合约 transfer接口生成， 同步调用
-    public RemoteCall<TransactionReceipt> transfer(String from_asset_account, String to_asset_account, BigInteger amount);
-    // Asset.sol合约 transfer接口生成， 异步调用
-    public void transfer(String from_asset_account, String to_asset_account, BigInteger amount, TransactionSucCallback callback);
-
-    // Asset.sol合约 register接口生成， 同步调用
-    public RemoteCall<TransactionReceipt> register(String asset_account, BigInteger amount);
-    // Asset.sol合约 register接口生成， 异步调用
-    public void register(String asset_account, BigInteger amount, TransactionSucCallback callback);
+    // Asset.sol合约 transfer接口生成
+    public RemoteCall<TransactionReceipt> transfer(String from_account, String to_account, BigInteger amount);
+    // Asset.sol合约 register接口生成
+    public RemoteCall<TransactionReceipt> register(String account, BigInteger asset_value);
     // Asset.sol合约 select接口生成
-    public RemoteCall<Tuple2<BigInteger, BigInteger>> select(String asset_account);
+    public RemoteCall<Tuple2<BigInteger, BigInteger>> select(String account);
 
     // 加载Asset合约地址，生成Asset对象
     public static Asset load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
@@ -342,8 +336,8 @@ asset-app项目的目录结构如下：
     |-- asset_run.sh // 项目运行脚本
 ```
 
-### 项目引入WebSDK
-**项目的`build.gradle`文件已引入SDK，不需修改**。其引入方法介绍如下：
+### 项目引入Web3SDK
+**项目的`build.gradle`文件已引入Web3SDK，不需修改**。其引入方法介绍如下：
 - Web3SDK引入了以太坊的solidity编译器相关jar包，因此在`build.gradle`文件需要添加以太坊的远程仓库：
 ```java
 repositories {
