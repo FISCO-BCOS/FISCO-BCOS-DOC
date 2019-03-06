@@ -129,7 +129,8 @@
 问:
   Java SDK对Java版本有要求吗？<br>
 答:
-  推荐使用oracle jdk 1.8（open-jdk 1.8在某些操作系统上会缺少椭圆曲线的包。） 
+  要求 `JDK8或以上 <https://openjdk.java.net/>`_ ，推荐使用OpenJDK11。 `OpenJDK11下载地址 <https://jdk.java.net/11/>`_ 
+  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。 `安装指南 <https://openjdk.java.net/install/index.html>`_
 
 
 问:
@@ -138,18 +139,18 @@
   applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
 
 
-## 企业工具
+## 企业级部署工具
 问：
-  企业工具使用时出现找不到pip
+  企业级部署工具使用时出现找不到pip
 
 答：
-  企业工具依赖python pip，使用以下命令安装：
+  企业级部署工具依赖python pip，使用以下命令安装：
 ```
 $ python -m pip install
 ```
 
 问:
-  企业工具使用时出现
+  企业级部署工具使用时出现
 ```
 Traceback (most recent call last):
    File "./generator", line 19, in <module>

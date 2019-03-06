@@ -1,8 +1,8 @@
-# 使用企业工具
+# 使用企业级部署工具
 
-考虑到联盟链多个企业地位对等安全的诉求，[FISCO BCOS企业工具](../enterprise_tools/index.md)提供一种多机构间合作部署联盟链的方式。
+考虑到联盟链多个企业地位对等安全的诉求，[FISCO BCOS企业级部署工具](../enterprise_tools/index.md)提供一种多机构间合作部署联盟链的方式。
 
-本章主要以部署群组6节点的组网模式，为用户讲解企业工具的使用方法。
+本章主要以部署2群组6节点的组网模式，为用户讲解企业级部署工具的使用方法。
 
 ## 下载安装
 
@@ -20,7 +20,6 @@ $ ./generator -h
 用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 
 - 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行。
-- 源码编译获取可执行程序，参考[源码编译](../manual/get_executable.md)。
 
 ```bash
 # 准备fisco-bcos二进制文件
@@ -29,6 +28,8 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release
 $ ./meta/fisco-bcos -v
 ```
 
+- 源码编译获取可执行程序，参考[源码编译](../manual/get_executable.md)。
+
 ## 示例分析
 
 在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2群组6节点的组网模式，每个节点的ip，端口号分别为：
@@ -36,7 +37,7 @@ $ ./meta/fisco-bcos -v
 ```eval_rst
 .. important::
 
-    使用前请确认已经完成了下载安装
+    使用前请确认已经完成了上述中的 下载安装 步骤
 ```
 
 ![](../../images/enterprise/simple3.png)
@@ -74,18 +75,13 @@ $ ./meta/fisco-bcos -v
 
 群组1中有6个节点，节点序号为0、1、2、3，之后扩容节点4、5。
 
-群组2中有3个节点，节点序号为0、1、2、3。
+群组2中有4个节点，节点序号为0、1、2、3。
 
 组网步骤如下：
 
 ## 构建第一个群组
 
-1. 修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1
-
-```bash
-$ vim ./conf/mchain.ini
-```
-修改为
+1.修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1，教程中采用默认设置
 
 ```ini
 [group]
@@ -120,7 +116,7 @@ channel_listen_port=20203
 jsonrpc_listen_port=8548
 ```
 
-2. 生成节点序号为0、1、2、3的证书和私钥，并导入meta文件夹
+2.生成节点序号为0、1、2、3的证书和私钥，并导入meta文件夹
 
 ```eval_rst
 .. note::
@@ -132,7 +128,7 @@ jsonrpc_listen_port=8548
 $ ./generator --generate_all_certificates ./mycert
 ```
 
-3. 使用build命令，在data下生成group1节点配置文件
+3.使用build命令，在data下生成group1节点配置文件
 
 ```bash
 $ ./generator --build_install_package ./data
@@ -158,7 +154,7 @@ $ ./generator --build_install_package ./data
 |-- stop_all.sh
 ```
 
-4. 导入节点私钥到对应节点配置文件的conf文件夹下
+4.导入节点私钥到对应节点配置文件的conf文件夹下
 
 上述3.中生成的节点配置文件夹是不含节点私钥的，需要导入2.中的节点私钥，命令如下
 
@@ -166,16 +162,16 @@ $ ./generator --build_install_package ./data
 $ ./generator --deploy_private_key ./mycert ./data
 ```
 
-5. 启动节点
+5.启动节点
 
-导入私钥后即可启动节点
+导入私钥后即可启动节点：
 
 ```bash
 cd ./data
 $ ./start_all.sh
 ```
 
-查看节点进程
+查看节点进程：
 
 ```bash
 $ ps -ef | grep fisco
@@ -186,10 +182,11 @@ fisco  15457     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30
 fisco  15498     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30303/fisco-bcos -c config.ini
 ```
 
-查看节点log
+查看节点log：
 
 ```bash
 $ tail -f data/node*/log/log*  | grep +++
+# +++即为节点正常共识
 info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
 info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
 info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
@@ -230,16 +227,11 @@ cd ..
 
 ## 构建第二个群组
 
-[构建group1]的操作中，我们已经生成了一条具有6个节点，处于群组group1中的联盟链，接下来将划分有4个节点的群组group2。
+构建group1的操作中，我们已经生成了一条具有6个节点，处于群组group1中的联盟链，接下来将新建有4个节点的群组group2。
 
 ![](../../images/enterprise/simple2.png)
 
-1. 修改mcreate.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2
-
-```bash
-$ vim ./conf/mgroup.ini
-```
-修改为
+修改mgroup.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2，教程中使用默认设置
 
 ```ini
 [group]
@@ -279,10 +271,11 @@ fisco  16467     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30
 fisco  16489     1  0 17:22 pts/2    00:00:00 ~/generator/data/node_127.0.0.1_30303/fisco-bcos -c config.ini
 ```
 
-查看节点log
+查看节点log：
 
 ```bash
 $ tail -f data/node*/log/log*  | grep +++
+# 看到g:2 +++ 即为群组2正常共识
 info|2019-02-25 17:25:56.028692| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
 info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
 info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
@@ -290,4 +283,6 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 至此 我们完成了所示构建群组group2的操作。
 
-通过上述命令，我们在本机生成一个网络拓扑结构为2群组6节点的多群组架构联盟链。
+通过本节教程，我们在本机生成一个网络拓扑结构为2群组6节点的多群组架构联盟链。
+
+如果使用该教程遇到问题，请查看[FAQ](../faq.md)
