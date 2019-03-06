@@ -1,12 +1,10 @@
-# 搭建部署多群组
-
-考虑真实应用需求，FISCO BCOS 2.0引入多群组架构，可以基于已有区块链的节点创建、删除群组。详细请参考[群组架构](../what_is_new.html#id2)和[群组架构设计文档](../design/architecture/group.md)。
+# 部署多群组架构
 
 本章主要以星形组网和并行多组组网拓扑为例，指导您了解如下内容：
 
 - 了解如何使用`build_chain`创建多群组区块链安装包；
-- 了解`build_chain`创建的多群组区块链安装包目录组织形式以及如何启动该区块链节点；
-- 学习通过日志查看各群组共识状态；
+- 了解`build_chain`创建的多群组区块链安装包目录组织形式；
+- 学习如何启动该区块链节点，并通过日志查看各群组共识状态；
 - 学习如何向各群组发送交易，并通过日志查看群组出块状态；
 - 了解群组内节点管理，包括节点入网、退网等；
 - 了解如何新建群组。
@@ -23,7 +21,7 @@
 如下图，星形组网拓扑和并行多组组网拓扑是区块链应用中使用较广泛的两种组网方式。
 
 - **星形拓扑**：中心机构节点同时属于多个群组，运行多家机构应用，其他每家机构属于不同群组，运行各自应用；
-- **并行多组**：区块链中每个节点均属于多个群组，每个群组运行独立的应用。
+- **并行多组**：区块链中每个节点均属于多个群组，可用于多方不同业务的横向扩展，或者同一业务的纵向扩展。
 
 ![](../../images/group/group.png)
 
@@ -46,7 +44,7 @@ $ brew install -y openssl
 
 ## 星形拓扑
 
-本章以构建上图所示的**本机四机构三群组七节点的星形组网拓扑**为例，介绍多群组使用方法。
+本章以构建上图所示的**单机、四机构、三群组、七节点的星形组网拓扑**为例，介绍多群组使用方法。
 
 星形区块链组网如下：
 
@@ -90,6 +88,10 @@ EOF
 
 # 查看配置文件ip_list内容
 $ cat ipconf
+# 空格分隔的参数分别表示如下含义：
+# ip:num: 物理机IP以及物理机上的节点数目
+# agency_name: 机构名称
+# group_list: 节点所属的群组列表，不同群组以逗号分隔
 127.0.0.1:2 agencyA 1,2,3
 127.0.0.1:2 agencyB 1
 127.0.0.1:2 agencyC 2
@@ -254,9 +256,11 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 ......此处省略其他输出......
 ```
 
-### 节点加入/退出群组
+### 节点加入群组
 
 通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](../manual/node_management.md)，控制台配置参考[控制台操作手册](../manual/console.html#id7)。
+
+本章以将node2加入group2为例，介绍如何在已有的群组中，加入新节点。
 
 ```eval_rst
 .. important::
@@ -267,9 +271,26 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
     - 群组内节点正常共识：正常共识的节点会输出+++日志
 ````
 
-将星形区块链系统中的node2加入group2为共识节点，具体操作方法如下：
+**拷贝group2群组配置到node2**
 
-**启动控制台**
+```bash
+$ cd ~/fisco/nodes/127.0.0.1
+
+# ... 从node0拷贝group2的配置到node2...
+$ cp node0/conf/group.2.* node2/conf
+
+# ...重启node2(重启后请确定节点正常共识)...
+$ cd node2 && bash stop.sh && bash start.sh
+```
+
+**获取node2的节点ID**
+
+```bash
+$ cat node2/conf/node.nodeid 
+6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
+```
+
+**下载并配置控制台**
 
 ```bash
 $ cd ~/fisco
@@ -288,7 +309,7 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
 channel_listen_port=20200
 ```
 
-**参考[控制台操作文档](../manual/console.md)，配置~/fisco/console/conf/applicationContext.xml**：
+**控制台配置如下：**：
 
 ```xml
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -313,30 +334,18 @@ channel_listen_port=20200
 </bean>
 ```
 
-**启动控制台连接group2**
+**启动控制台，连接group2**
 
 ```bash
 $ bash start.sh 2
 ```
 
-**将node2加入group2为共识节点**
+**通过控制台向group2发送命令，将node2加入到group2**
 
 ```bash
-$ cd ~/fisco/nodes/127.0.0.1
-
-# ... 从node0拷贝group2的配置到node2...
-$ cp node0/conf/group.2.* node2/conf
-
-# ...重启node2(重启后请确定节点正常共识)...
-$ cd node2 && bash stop.sh && bash start.sh
-
-# ...获取node2的node id...
-$ cat node2/conf/node.nodeid 
-6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
-
 # ...通过控制台将node2加入为共识节点
 # 1. 查看当前共识节点列表
-> getSealerList
+[group:2]> getSealerList
 [
     9217e87c6b76184cf70a5a77930ad5886ea68aefbcce1909bdb799e45b520baa53d5bb9a5edddeab94751df179d54d41e6e5b83c338af0a19c0611200b830442,
     227c600c2e52d8ec37aa9f8de8db016ddc1c8a30bb77ec7608b99ee2233480d4c06337d2461e24c26617b6fd53acfa6124ca23a8aa98cb090a675f9b40a9b106,
@@ -344,13 +353,13 @@ $ cat node2/conf/node.nodeid
     8b2c4204982d2a2937261e648c20fe80d256dfb47bda27b420e76697897b0b0ebb42c140b4e8bf0f27dfee64c946039739467b073cf60d923a12c4f96d1c7da6
 ]
 # 2. 将node2加入到共识节点
-> addSealer 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
+[group:2]> addSealer 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 {
     "code":1,
     "msg":"success"
 }
 # 3. 查看共识节点列表
-> getSealerList
+[group:2]> getSealerList
 [
     9217e87c6b76184cf70a5a77930ad5886ea68aefbcce1909bdb799e45b520baa53d5bb9a5edddeab94751df179d54d41e6e5b83c338af0a19c0611200b830442,
     227c600c2e52d8ec37aa9f8de8db016ddc1c8a30bb77ec7608b99ee2233480d4c06337d2461e24c26617b6fd53acfa6124ca23a8aa98cb090a675f9b40a9b106,
@@ -479,8 +488,6 @@ info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 ### 将group2加入区块链
 
 并行多组区块链每个群组的`genesis`配置文件几乎相同，但[group].index不同，为群组号。
-
-> **生成新群组配置**
 
 ```bash
 # 拷贝group1的配置
