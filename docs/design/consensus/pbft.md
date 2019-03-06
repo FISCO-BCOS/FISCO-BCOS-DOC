@@ -7,7 +7,7 @@ FISCO BCOS区块链系统实现了PBFT共识算法。
 
 ## 1. 重要概念
 
-节点类型、节点ID、节点索引和视图是PBFT共识算法的关键概念。区块链系统基本概念请参考[关键概念](../key_concepts.md)。
+节点类型、节点ID、节点索引和视图是PBFT共识算法的关键概念。区块链系统基本概念请参考[关键概念](../../tutorial/key_concepts.md)。
 
 ### 1.1 节点类型
 
@@ -110,14 +110,58 @@ PBFT共识主要包括Pre-parepare、Prepare和Commit三个阶段：
 - **Commit**：负责收集Commit包，某节点收集满`2*f+1`的Commit包后，直接将本地缓存的最新区块提交到数据库。
 
 ![](../../../images/consensus/pbft_process.png)
-```eval_rst
-.. image:: 
 
-```
+
 下图详细介绍了PBFT各个阶段的具体流程：
 
+```eval_rst
+.. mermaid::
 
-![](../../../images/consensus/pbft_engine.png)
+   graph TB
+         classDef blue fill:#4C84FF,stroke:#4C84FF,stroke-width:4px, font:#1D263F, text-align:center;
+
+         classDef yellow fill:#FFEEB8,stroke:#FFEEB8,stroke-width:4px, font:#1D263F, text-align:center;
+
+         classDef light fill:#EBF5FF,stroke:#1D263F,stroke-width:2px,  font:#1D263F, text-align:center;
+
+         subgraph 共识处理流程
+         A((开始))-->B
+         B(获取PBFT请求类型)-->|Prepare请求|C
+         B-->|Sign请求|D
+         B-->|Commit请求|F
+         C(Prepare是否有效?)-->|是|G
+         C-->|否|B
+
+         G(addRawPrepare<br/>缓存Prepare请求)-->H
+         H(Prepare内区块是空块?)-->|否|I
+         H-->|是|T
+         T(视图切换)
+
+         I(execBlock<br/>执行Prepare内区块)-->J
+         J(generateSignPacket<br/>产生签名请求)-->K
+         K(addPrepareCache<br/>缓存执行后区块)-->L
+         L(broadcacstSignReq<br/>广播签名请求)
+
+         D(isSignReqValid<br/>签名请求是否有效?)-->|是|M
+         D-->|否|B
+         M(addSignReq<br/>缓存收到的签名请求)-->N
+         N(checkSignEnough<br/>签名请求是否达到2*f+1?)-->|是|O
+         N-->|否|B
+         O(updateLocalPrepare<br/>备份Prepare请求)-->P
+         P(broadcastCommitReq<br/>广播Commit请求, 表明节点已达到可提交区块状态)
+            
+         F(isCommitReqValid <br/> Commit请求是否有效?)-->|是|Q
+         Q(addCommitReq <br/> 缓存Commit请求)-->R
+         R(checkCommitEnough <br/> Commit请求是否达到2*f+1?)-->|是|S
+         R-->|否|B
+         S(CommitBlock<br> 将缓存的执行后区块提交到DB)
+
+         class A,B light
+         class C,G,H,I,J,K,L,T light
+         class D,M,N,O,P light
+         class Q,F,R,S light
+         end
+```
 
 
 
@@ -136,7 +180,7 @@ PBFT共识算法中，共识节点轮流出块，每一轮共识仅有一个lead
 
 - **从交易池打包交易**: 产生新空块后，从交易池中获取交易，并将获取的交易插入到产生的新区块中；
 
-- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为自己索引，并根据打包的交易计算出所有交易的[transactionRoot](../../key_concepts.html#id3)；
+- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为自己索引，并根据打包的交易计算出所有交易的[transactionRoot](../../tutorial/key_concepts#id3)；
 
 - **产生Prepare包**: 将组装的新区块编码到Prepare包内，通过PBFTEngine线程广播给组内所有共识节点，其他共识节点收到Prepare包后，开始进行三阶段共识。
 

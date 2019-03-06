@@ -3,34 +3,34 @@
 ## 版本相关
 
 问:
-  FISCO BCOS v2.0与之前版本有哪些变化？<br>
+  FISCO BCOS 2.0版本与之前版本有哪些变化？<br>
 答:
-  请 [参考这里](./whats_new.md)。
+  请 [参考这里](./what_is_new.md)。
 
 问:
   开发者如何与FISCO BCOS平台交互？<br>
 答:
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
-  - FISCO BCOS v2.0提供jsonrpc接口，具体请 [参考这里](./api.md)。
-  - FISCO BCOS v2.0提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/index.html)。
-  - FISCO BCOS v2.0提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
+  - FISCO BCOS 2.0版本提供JSON-RPC接口，具体请 [参考这里](./api.md)。
+  - FISCO BCOS 2.0版本提供Java SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/sdk.md)。
+  - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
 
 问:
-  FISCO BCOS v2.0如何搭建？<br>
+  FISCO BCOS 2.0版本如何搭建？<br>
 答:
   FISCO BCOS支持多种搭建方式，常用方式有：
   - build_chain.sh：适合开发者体验、测试FISCO BCOS联盟链，具体请 [参考这里](./manual/build_chain.md)。
-  - FISCO-Generator：使用企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise/index.html)。
+  - FISCO-Generator：使用企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise_tools/index.md)。
 
 问:
-  FISCO BCOS v2.0的智能合约与之前版本合约有什么不同，兼容性如何？<br>
+  FISCO BCOS 2.0版本的智能合约与之前版本合约有什么不同，兼容性如何？<br>
 答:
-  FISCO BCOS v2.0支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](developer/index.html)。
+  FISCO BCOS 2.0版本支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](./manual/smart_contract.md)。
 
 问:
   国密和普通版本的区别有哪些？<br>
 答:
-  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，web3sdk使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi.md)。
+  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，web3sdk使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi_crypto.md)。
 
 问:
   是否支持从1.3或1.5升级到2.0版本?<br>
@@ -67,7 +67,7 @@
 ## FISCO BCOS使用
 
 问:
-  FISCO BCOS v2.0支持哪些部署方式？<br>
+  FISCO BCOS 2.0版本支持哪些部署方式？<br>
 答:
   用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 
@@ -102,7 +102,7 @@
 答: 
   共识可改配置可以通过控制台修改。共识可改配置项查询除了控制台外，还可以通过RPC接口查询，具体请 [参考这里](./design/rpc.md)。
 
-  - [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey(ssc)更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见ssc -h 。
+  - [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见setSystemConfigByKey -h 。
   - [consensus].node.X的更改涉及到节点管理，控制台接口涉及到addSealer(as)，addObserver(ao)，removeNode(rn)，具体参考《节点管理》。
 
 
@@ -129,9 +129,8 @@
 问:
   Java SDK对Java版本有要求吗？<br>
 答:
-  要求 `JDK8或以上 <https://openjdk.java.net/>`_ ，推荐使用OpenJDK11。 `OpenJDK11下载地址 <https://jdk.java.net/11/>`_ 
-  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。 `安装指南 <https://openjdk.java.net/install/index.html>`_
-
+  要求 `JDK8或以上 <https://openjdk.java.net/>`_，推荐使用OpenJDK11。
+  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Java SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`OpenJDK11下载地址 <https://jdk.java.net/11/>`_ `安装指南 <https://openjdk.java.net/install/index.html>`_ 
 
 问:
   Java SDK配置完成，发送交易失败的原因是什么？<br>

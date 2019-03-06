@@ -23,9 +23,9 @@ FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书
 ```ini
 [node0]
 p2p_ip=127.0.0.1 # 节点之间p2p通信ip
-rpc_ip=127.0.0.1 # 节点与sdk通信ip 
+rpc_ip=127.0.0.1 # 节点与SDK通信ip 
 p2p_listen_port=30300 # 节点之间p2p通信端口
-channel_listen_port=20200 # sdk与节点通信端口
+channel_listen_port=20200 # SDK与节点通信端口
 jsonrpc_listen_port=8545 # 节点rpc端口
 
 [node1]
@@ -187,7 +187,7 @@ $ ./generator --build_expand_package ./expand
 
 程序执行完成后，会在./expand文件夹下生成名为node_127.0.0.1_30307的文件夹，推送到对应服务器解压后，拷贝私钥到conf下即可启动节点
 
-节点正常启动后，使用sdk将节点加入群组，完成扩容操作
+节点正常启动后，使用SDK将节点加入群组，完成扩容操作
 
 ### create_group_config (-c)
 
@@ -264,17 +264,17 @@ $ ./generator --generate_node_certificate node_dir(SET) ./agency_dir  node_p2pip
 
 |  |  |
 | :-: | :-: |
-| 命令解释 | 生成sdk证书 |
+| 命令解释 | 生成SDK证书 |
 | 使用前提 | 存在机构证书和私钥 |
 | 参数设置 | 指定节点证书目录，机构证书及私钥存放目录和节点名称 |
-| 实现功能 | 在指定目录生成sdk证书和私钥 |
-| 适用场景 | 用户需要生成自签相关sdk证书 |
+| 实现功能 | 在指定目录生成SDK证书和私钥 |
+| 适用场景 | 用户需要生成自签相关SDK证书 |
 
 ```bash
 $ ./generator --generate_sdk_certificate ./dir_sdk_ca(SET) ./dir_agency_ca
 ```
 
-执行完成后可以在./dir_sdk_ca(SET)路径下生成名为sdk的文件夹，包含相应的sdk证书
+执行完成后可以在./dir_sdk_ca(SET)路径下生成名为SDK的文件夹，包含相应的SDK证书
 
 ### generate_all_certificates
 

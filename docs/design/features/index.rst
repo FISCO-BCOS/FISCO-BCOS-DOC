@@ -27,12 +27,12 @@ FISCO BCOS引入的合约命名服务CNS通过提供链上合约名称与合约�
 
 - **落盘加密特性**
 
-考虑到联盟链的架构中，数据在联盟链的各个机构内是可见的，FISCO BCOS引入了落盘加密特性，对存储到节点数据库中的数据进行加密，并引入Key Center保存加密密钥，保障了节点数据的机密性。
+考虑到联盟链的架构中，数据在联盟链的各个机构内是可见的，FISCO BCOS引入了落盘加密特性，对存储到节点数据库中的数据进行加密，并引入Key Manager保存加密密钥，保障了节点数据的机密性。
 
 
 .. toctree::
    :maxdepth: 1
 
-   CNS_contract_name_service.md
+   cns_contract_name_service.md
    guomi.md
-   data_secure.md
+   storage_security.md
