@@ -103,28 +103,31 @@ Empty set.
 确认初始状态无部署合约和创建用户表权限的权限记录，默认所有外部账号均可以部署合约。   
 - **外部账号1部署合约：** 
 进入客户端工具dist目录，运行部署合约命令：
-	```
+	```bash
 	$ ./run.sh 1 1 deploy
 
 	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	deploy contract address: 0x9e116ecf100be281ae9587c907cf5b450d51af1b
 	deploy contract successful!
 	```
 	外部账号1部署合约成功。   
 - **外部账号2部署合约：** 
-	```
+	```bash
 	$ ./run.sh 2 1 deploy
-	2 1 deploy
+
 	tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+
 	deploy contract address: 0xa5b85cf3728a15b67572af9b180e2ab4e449359a
 	deploy contract successful!
 	```
 	外部账号2部署合约成功。        
 - **外部账号3部署合约：** 
-	```
+	```bash
 	$ ./run.sh 3 1 deploy
-	3 1 deploy
+
 	tx.origin = 0x1600e34312edea101d8b41a3465f2e381b66baed
+
 	deploy contract address: 0xd4ebb24ac68263e92335977c7ea968d5e770eb07
 	deploy contract successful!
 	```
@@ -133,9 +136,11 @@ Empty set.
 #### 创建用户表示例
 - **外部账号1创建用户表t_test:**
 	进入客户端工具dist目录，运行创建用户表命令：
-	```
+	```bash
 	$ ./run.sh 1 1 create
-	1 1 create
+  
+  tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	create t_test table completed.
 	```
 	外部账号1创建t_test表成功，表明有权限创建用户表。类似的，外部账号2和3也可也创建用户表t_test。
@@ -158,51 +163,60 @@ Empty set.
 ```
 #### 合约部署示例
 - **外部账号1部署合约：** 
-	```
+	```bash
 	$ ./run.sh 1 1 deploy
-	1 1 deploy
+
 	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	deploy contract address: 0x31877d5864125b3aa3a5ae60022274d1a4130d00
 	deploy contract successful!
 	```
-	外部账号1部署合约成，有权限部署合约。   
+	外部账号1部署合约成功，有权限部署合约。   
 - **外部账号2部署合约：** 
-	```
+	```bash
 	$ ./run.sh 2 1 deploy
-	2 1 deploy
+
 	tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+
 	non-authorized to deploy contracts!
 	```
 	外部账号2部署合约失败，无权限部署合约。    
 - **外部账号3部署合约：** 
-	```
+	```bash
 	$ ./run.sh 3 1 deploy
-	3 1 deploy
+
 	tx.origin = 0x1600e34312edea101d8b41a3465f2e381b66baed
+
 	non-authorized to deploy contracts!
 	```
 	外部账号3部署合约失败，无权限部署合约。
 
 #### 创建用户表示例
 - **外部账号2创建用户表t_test:**
-	```
+	```bash
 	$ ./run.sh 2 1 create
-	2 1 create
+
+  tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+
 	non-authorized to create t_test table.
 	```
 	外部账号2创建t_test表失败，表明无权限创建用户表。   
 - **外部账号3创建用户表t_test:**
-	```
+	```bash
 	$ ./run.sh 3 1 create
-	3 1 create
+
+  tx.origin = 0x1600e34312edea101d8b41a3465f2e381b66baed
+
 	non-authorized to create t_test table.
 	```
 	外部账号3创建t_test表失败，表明无权限创建用户表。
 
 - **外部账号1创建用户表t_test:**
-	```
+	```bash
 	$ ./run.sh 1 1 create
-	1 1 create
+
+  tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	create t_test table completed.
 	```
 	外部账号1创建t_test表成功，表明有权限创建用户表。
@@ -230,44 +244,49 @@ Empty set.
 确认初始状态没有设置权限，因此默认所有外部账号均可以对t_test进行读写操作。
 #### 账号1示例
 指定外部账号1创建t_test表：
-```
+```bash
 $ ./run.sh 1 1 create
-1 1 create
+
 tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 create t_test table completed.
 ```
 t_test表创建成功。   
 - 通过指定外部账号1向t_test表插入记录：
-	```
+	```bash
 	$ ./run.sh 1 1 insert fruit 1 apple1
-	1 1 insert fruit 1 apple1
+
 	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	insertCount = 1
 	```
 	t_test表插入记录成功。   
 - 通过指定外部账号1向t_test表查询记录：
-	```
+	```bash
 	$ ./run.sh 1 1 select fruit
-	1 1 select fruit
+
 	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	record numbers = 1
 	name = fruit
 	item_id = 1
 	item_name = apple1
 	```
 - 通过指定外部账号1向t_test表更新记录：
-	```
+	```bash
 	$ ./run.sh 1 1 update fruit 1 apple11
-	1 1 update fruit 1 apple11
+
 	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	updateCount = 1
 	```
 	t_test表更新记录成功，可以通过查询记录再次验证。       
 - 通过指定外部账号1向t_test表删除记录：
-	```
+	```bash
 	$ ./run.sh 1 1 remove fruit 1
-	1 1 remove fruit 1
+
 	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 	removeCount = 1
 	```
 	t_test表删除记录成功，可以通过查询记录再次验证。     
@@ -292,77 +311,78 @@ t_test表创建成功。
 设置完毕后，则外部账号1有权限对t_test表进行读写操作，其他外部账号只可以对t_test表执行读操作。    
 - **外部账号1有权限操作t_test表示例：**    
  	- 通过指定外部账号1向t_test表插入记录：
-		```
+		```bash
 		$ ./run.sh 1 1 insert fruit 2 apple1
-		1 1 insert fruit 2 apple1
+
 		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 		insertCount = 1
 		```
 		t_test表插入记录成功。   
 	- 通过指定外部账号1向t_test表查询记录：
-		```
+		```bash
 		$ ./run.sh 1 1 select fruit
-		1 1 select fruit
+
 		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 		record numbers = 1
 		name = fruit
 		item_id = 2
 		item_name = apple1
 		```
 	- 通过指定外部账号1向t_test表更新记录：
-		```
+		```bash
 		$ ./run.sh 1 1 update fruit 2 apple22
-		1 1 update fruit 2 apple22
+
 		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 		updateCount = 1
 		```
 		t_test表更新记录成功，可以通过查询记录再次验证。    
 	- 通过指定外部账号1向t_test表删除记录：
-		```
+		```bash
 		$ ./run.sh 1 1 remove fruit 2
-		1 1 remove fruit 2
+
 		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 		removeCount = 1
 		```
 		t_test表删除记录成功，可以通过查询记录再次验证。      
 
 - **外部账号2或3无权限操作t_test表示例：**   
 	- 通过指定外部账号2向t_test表插入记录：
-		```
+		```bash
 		$ ./run.sh 2 1 insert fruit 2 apple2
-		2 1 insert fruit 2 apple2
+
 		tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+
 		insertCount = 50000
 		```
 		t_test表插入记录失败，可以通过查询记录再次验证。insertCount返回50000表示无权限插入记录。   
-	- 通过指定外部账号2向t_test表查询记录：
-		```
-		$ ./run.sh 2 1 read fruit
-		2 1 read fruit
-		tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-		record numbers = 0
-		```
 	- 通过指定外部账号1向t_test表插入记录：
-		```
+		```bash
 		$ ./run.sh 1 1 insert fruit 2 apple1
-		1 1 insert fruit 2 apple1
+
 		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+
 		insertCount = 1
 		```
-		t_test表插入记录成功，可以通过查询记录再次验证。外部账号1有权限插入记录。  
+		t_test表插入记录成功，可以通过查询记录再次验证。  
 	- 通过指定外部账号2向t_test表更新记录：
-		```
+		```bash
 		$ ./run.sh 2 1 update fruit 2 apple12
-		2 1 update fruit 2 apple12
+	
 		tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+
 		updateCount = 50000
 		```
 		t_test表更新记录失败，可以通过查询记录再次验证。updateCount返回50000表示无权限更新记录。   
 	- 通过指定外部账号2向t_test表删除记录：
-		```
+		```bash
 		$ ./run.sh 2 1 remove fruit 2
-		2 1 remove fruit 2
+
 		tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+
 		removeCount = 50000
 		```
 		t_test表删除记录失败，可以通过查询记录再次验证。removeCount返回50000表示无权限删除记录。
