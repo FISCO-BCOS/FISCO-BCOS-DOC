@@ -60,11 +60,12 @@ pragma solidity ^0.4.25;
 import "./Table.sol";
 
 contract Asset {
-
-    event RegisterEvent(int256 ret, string account, uint256 amount);
+    // event
+    event RegisterEvent(int256 ret, string account, uint256 asset_value);
     event TransferEvent(int256 ret, string from_account, string to_account, uint256 amount);
     
     constructor() public {
+        // 构造函数中创建t_asset表
         createTable();
     }
 
@@ -92,19 +93,17 @@ contract Asset {
             account : 资产账户
 
     返回值：
-            第一个参数： 成功返回0, 账户不存在返回-1
-            第二个参数： 第一个参数为0时有效，资产金额
+            参数一： 成功返回0, 账户不存在返回-1
+            参数二： 第一个参数为0时有效，资产金额
     */
     function select(string account) public constant returns(int256, uint256) {
-
+        // 打开表
         Table table = openTable();
-        Condition condition = table.newCondition();
-        condition.EQ("account", account);
-        
+        // 查询
         Entries entries = table.select(account, table.newCondition());
-        uint256 amount = 0;
+        uint256 asset_value = 0;
         if (0 == uint256(entries.size())) {
-            return (-1, amount);
+            return (-1, asset_value);
         } else {
             Entry entry = entries.get(0);
             return (0, uint256(entry.getInt("asset_value")));
@@ -121,30 +120,33 @@ contract Asset {
             -1 资产账户已存在
             -2 其他错误
     */
-    function register(string account, uint256 amount) public returns(int256){
+    function register(string account, uint256 asset_value) public returns(int256){
         int256 ret_code = 0;
         int256 ret= 0;
-        uint256 asset_value = 0;
-        (ret, asset_value) = select(account);
+        uint256 temp_asset_value = 0;
+        // 查询账号是否存在
+        (ret, temp_asset_value) = select(account);
         if(ret != 0) {
             Table table = openTable();
-            //插入
+            
             Entry entry = table.newEntry();
             entry.set("account", account);
-            entry.set("asset_value", int256(amount));
-
+            entry.set("asset_value", int256(asset_value));
+            // 插入
             int count = table.insert(account, entry);
             if (count == 1) {
+                // 成功
                 ret_code = 0;
             } else {
+                // 失败? 无权限or其他?
                 ret_code = -2;
             }
         } else {
-            //资产账户已存在
+            // 账户已存在
             ret_code = -1;
         }
 
-        emit RegisterEvent(ret_code, account, amount);
+        emit RegisterEvent(ret_code, account, asset_value);
 
         return ret_code;
     }
@@ -170,62 +172,58 @@ contract Asset {
         uint256 from_asset_value = 0;
         uint256 to_asset_value = 0;
         
+        // 转移账户是否存在?
         (ret, from_asset_value) = select(from_account);
         if(ret != 0) {
             ret_code = -1;
-            //转移资产的账户不存在
+            // 转移账户不存在
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
 
         }
 
-        // 查询接收资产账户信息
+        // 接受账户是否存在?
         (ret, to_asset_value) = select(to_account);
         if(ret != 0) {
             ret_code = -2;
-            //接收资产的账户不存在
+            // 接收资产的账户不存在
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         }
 
         if(from_asset_value < amount) {
             ret_code = -3;
-            //转移资产的账户金额不足
+            // 转移资产的账户金额不足
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         } 
 
         if (to_asset_value + amount < to_asset_value) {
             ret_code = -4;
-            //接收资产的账户金额溢出
+            // 接收账户金额溢出
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         }
 
         Table table = openTable();
-        Condition condition0 = table.newCondition();
-        condition0.EQ("account", from_account);
 
-        //插入
         Entry entry0 = table.newEntry();
         entry0.set("account", from_account);
         entry0.set("asset_value", int256(from_asset_value - amount));
-        
-        int count = table.update(from_account, entry0, condition0);
+        // 更新转账账户
+        int count = table.update(from_account, entry0, table.newCondition());
         if(count != 1) {
             ret_code = -5;
-            //更新错误
+            // 失败? 无权限or其他?
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         }
 
-        Condition condition1 = table.newCondition();
-        condition1.EQ("account", to_account);
-
         Entry entry1 = table.newEntry();
         entry1.set("account", to_account);
         entry1.set("asset_value", int256(to_asset_value + amount));
-        table.update(to_account, entry1, condition1);
+        // 更新接收账户
+        table.update(to_account, entry1, table.newCondition());
 
         emit TransferEvent(ret_code, from_account, to_account, amount);
 
