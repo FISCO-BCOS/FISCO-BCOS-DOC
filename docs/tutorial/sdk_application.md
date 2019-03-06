@@ -14,7 +14,7 @@
 
 ```eval_rst
 .. important::
-    请参考 `安装文档 <../installation.html>`_ 完成FISCO BCOS区块链的搭建和控制台的下载工作。
+    请参考 `安装文档 <../installation.html>`_ 完成FISCO BCOS区块链的搭建和控制台的下载工作，本教程中的操作假设在该文档搭建的环境下进行。
 ```
 
 ## 示例应用需求
@@ -138,7 +138,7 @@ contract Asset {
                 // 成功
                 ret_code = 0;
             } else {
-                // 失败? 无权限or其他?
+                // 失败? 无权限或者其他错误
                 ret_code = -2;
             }
         } else {
@@ -214,7 +214,7 @@ contract Asset {
         int count = table.update(from_account, entry0, table.newCondition());
         if(count != 1) {
             ret_code = -5;
-            // 失败? 无权限or其他?
+            // 失败? 无权限或者其他错误?
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
         }
@@ -236,7 +236,7 @@ contract Asset {
 
 ## 合约转换
 
-前一小节，我们根据业务需求设计了合约的存储与接口，并给出了```Asset.sol```完整实现。java应用需要调用合约时，首先需要将solidity文件转换为Java文件。
+前一小节，我们根据业务需求设计了合约的存储与接口，并给出了`Asset.sol`完整实现。java应用需要调用合约时，首先需要将solidity文件转换为Java文件。
 控制台提供了转换工具，将`Asset.sol Table.sol`两个合约文件存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
 ```bash
 # 切换到fisco/console/tools目录
@@ -359,7 +359,8 @@ compile ('org.fisco-bcos：web3sdk：2.0.2')
 ```
 
 ### 证书与配置文件
-- **区块链节点证书配置：**  
+- 区块链节点证书配置： 
+拷贝区块链节点对应的SDK证书 
 ```bash
 # 进入~/fisco目录
 # 拷贝节点证书到项目的资源目录
@@ -367,12 +368,11 @@ $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
 
-- `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
+- applicationContext.xml
+**注意：** `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
 
 
 ## 业务开发
-
-前面的小节我们关注的是项目如何配置以及如何引入Web3SDK jar包，本节内容我们关注如何进行业务开发。
 
 **asset-app项目已经包含示例的完整源码，用户可以直接使用**，现在分别介绍Java类的设计与实现。
 
