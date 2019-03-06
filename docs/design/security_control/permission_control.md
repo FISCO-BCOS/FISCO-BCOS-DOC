@@ -45,27 +45,27 @@
 - 用户表：
   - **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
   - **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
-  - **public List\<AuthorityInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
+  - **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
 - _sys_tables_表：
   - **public String grantDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
   - **public String revokeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
-  - **public List\<AuthorityInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
+  - **public List\<PermissionInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
 - _sys_table_access_表：
   - **public String grantPermissionManager(String address)：** 增加外部账号地址的管理权限的权限。
   - **public String revokePermissionManager(String address)：** 移除外部账号地址的管理权限的权限。
-  - **public List\<AuthorityInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
+  - **public List\<PermissionInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
 - _sys_consensus_表：
   - **public String grantNodeManager(String address)：** 增加外部账号地址的节点管理权限。
   - **public String revokeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
-  - **public List\<AuthorityInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
+  - **public List\<PermissionInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
 - _sys_cns_表：
   - **public String grantCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
   - **public String revokeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
-  - **public List\<AuthorityInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
+  - **public List\<PermissionInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
 - _sys_config_表：
   - **public String addSysConfig(String address)：** 增加外部账号地址的系统参数管理权限。
   - **public String removeSysConfig(String address)：** 移除外部账号地址的系统参数管理权限。
-  - **public List\<AuthorityInfo\> querySysConfig()：** 查询拥有系统参数管理的权限记录列表。
+  - **public List\<PermissionInfo\> querySysConfig()：** 查询拥有系统参数管理的权限记录列表。
 
 设置和移除权限接口返回json字符串，包含code和msg字段，当无权限操作时，其code定义-1，msg定义为“non-authorized”。当成功设置权限时，其code为1(增加了1条权限记录)，msg为“success”。
 
@@ -96,7 +96,7 @@
 ![](../../../images/permission_control/ac1.png)
 
 #### 4.2 系统表权限控制流程
-对于SDK层，用户合约不可以直接操作权限表，通过SDK的AuthorityService接口（详见[SDK使用文档](../../sdk/sdk.md)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过AuthorityPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过AuthorityPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
+对于SDK层，用户合约不可以直接操作权限表，通过SDK的PermissionService接口（详见[SDK使用文档](../../sdk/sdk.md)）和控制台（详见[控制台使用文档](../../manual/console.md)）可以操作系统表。对于C++底层，当需要操作权限表时，通过PermissionPreCompiled进行权限表的操作。其中查询权限表不需要检查权限，新增和移除权限表的记录需要检查权限。整个系统内权限相关的增删查将通过PermissionPreCompiled进行维护。所有权限内容记录在区块链上。交易请求发起后，系统将访问_sys_table_access_表查询该交易发起方是否有对应的权限。如果有权限，执行交易；如果无权限，则返回无权限操作提示。
 ![](../../../images/permission_control/ac2.png)
 
 **注：** _sys_consensus_表（ConsensusPrecompiled），_sys_cns_表（CNSPrecompiled），_sys_config_表（SystemConfigPrecompiled）控制流程与对权限表的控制流程类似。
@@ -105,4 +105,4 @@
 
 FISCO BCOS的分布式存储权限控制有如下使用方式：
 - 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制操作文档](../../manual/permission_control.md)。
-- 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是增加，移除和查询权限接口。可以调用[SDK API](../../sdk/sdk.md)的AuthorityService接口使用权限功能。
+- 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是增加，移除和查询权限接口。可以调用[Web3SDK API](../../sdk/sdk.md)的PermissionService接口使用权限功能。
