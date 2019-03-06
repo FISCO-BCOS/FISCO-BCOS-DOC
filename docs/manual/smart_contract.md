@@ -176,14 +176,17 @@ contract TableTest {
 |:----|:----|:------|
 |Bob|Laptop|100010001001|
 
-> **注意：** 
-客户端需要调用转换为 Java 文件的合约代码，需要将`TableTest.sol`和`Table.sol`放入 web3sdk 的`src/test/resources/contract`目录下，通过 web3sdk 的编译脚本生成`TableTest.java`。
+```eval_rst
+.. important::
+    客户端需要调用转换为 Java 文件的合约代码，需要将TableTest.sol和Table.sol放入 web3sdk 的src/test/resources/contract目录下，通过 Web3SDK 的编译脚本生成TableTest.java。
+```
+
 
 ## 预编译合约开发
 
 ### 一. 简介
 
-预编译（precompiled）合约是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO-BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[precompiled设计原理](../design/virtual_machine/precompiled.md)。   
+预编译（precompiled）合约是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[precompiled设计原理](../design/virtual_machine/precompiled.md)。   
 本文作为一篇入门指导，旨在指引用户如何实现自己的precompiled合约,并实现precompiled合约的调用。
 
 ### 二. 实现预编译合约  
@@ -200,15 +203,15 @@ contract TableTest {
 | --------- | --------- |
 | 以太坊precompiled | 0x0001-0x0004 |
 | 保留 | 0x0005-0x0fff |
-| FISCO-BCOS precompied | 0x1000-0x1006 |
-| FISCO-BCOS预留 | 0x1007-0x5000 |
+| FISCO BCOS precompied | 0x1000-0x1006 |
+| FISCO BCOS预留 | 0x1007-0x5000 |
 | 用户分配区间 | 0x5001 - 0xffff |
 | CRUD临时合约 | 0x10000+ |
 | solidity | 其他 |
 
  用户分配地址空间为`0x5001`-`0xffff`,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。
 
-FISCO-BCOS中实现的precompild合约列表以及地址分配：
+FISCO BCOS中实现的precompild合约列表以及地址分配：
 
 | 地址   | 功能   | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
 |--------|--------|---------|
@@ -236,9 +239,13 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
 
 - **设计存储结构**  
 
-预编译合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构)， [存储结构](../design/storage/storage.md)。  
-**注意：不涉及存储操作可以省略该流程**  
- 
+预编译合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO BCOS中会统一抽象为表结构)， [存储结构](../design/storage/storage.md)。  
+
+```eval_rst
+.. note::
+    不涉及存储操作可以省略该流程。
+```
+
 - **实现调用逻辑**  
 
 实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承[Precompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/Precompiled.h#L37), 重载call函数， 在call函数中实现各个接口的调用行为。

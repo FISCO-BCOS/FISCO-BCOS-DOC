@@ -37,7 +37,7 @@ FISCO BCOS区块链系统实现了PBFT共识算法。
 PBFT共识算法使用视图view记录每个节点的共识状态，相同视图节点维护相同的Leader和Replicas节点列表。当Leader出现故障，会发生视图切换，若视图切换成功(至少2\*f+1个节点达到相同视图)，则根据新的视图选出新leader，新leader开始出块，否则继续进行视图切换，直至全网大部分节点(大于等于2\*f+1)达到一致视图。
 
 
-FISCO-BCOS系统中，leader索引的计算公式如下：
+FISCO BCOS系统中，leader索引的计算公式如下：
 
 ```bash
 leader_idx = (view + block_number) % node_num
