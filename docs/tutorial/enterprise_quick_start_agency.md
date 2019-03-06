@@ -96,9 +96,9 @@ generator-B$ cd ./generator-B
 
 ```bash
 # 机构A生成链证书及私钥
-generator-A$ --generate_chain_certificate ./dir_chain_ca
+generator-A$ ./generator --generate_chain_certificate ./dir_chain_ca
 # 机构A发送链证书及私钥给机构B
-generator-A$ cp ./dir_chain_ca ../generator-B/
+generator-A$ cp -r ./dir_chain_ca ../generator-B/
 # 机构A发生成自己的机构证书及私钥
 generator-A$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca AgencyA
 AgencyA
@@ -115,13 +115,13 @@ generator-A$ cp ./dir_chain_ca/ca.crt ./meta
 # 拷贝机构证书
 generator-A$ cp ./dir_agency_ca/AgencyA/agency.crt ./meta
 # 拷贝节点证书
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30300/node.crt ./meta/cert__127.0.0.1_30300.crt
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30300/node.crt ./meta/cert__127.0.0.1_30301.crt
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30300/node.crt ./meta/cert__127.0.0.1_30304.crt
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30300/node.crt ./meta/cert__127.0.0.1_30305.crt
+generator-A$ cp ./dir_node_ca/node_127.0.0.1_30300/node.crt ./meta/cert_127.0.0.1_30300.crt
+generator-A$ cp ./dir_node_ca/node_127.0.0.1_30301/node.crt ./meta/cert_127.0.0.1_30301.crt
+generator-A$ cp ./dir_node_ca/node_127.0.0.1_30304/node.crt ./meta/cert_127.0.0.1_30304.crt
+generator-A$ cp ./dir_node_ca/node_127.0.0.1_30305/node.crt ./meta/cert_127.0.0.1_30305.crt
 # 交换节点证书至机构B
-generator-A$ cp ./meta/cert__127.0.0.1_30300.crt ../generator-B/meta
-generator-A$ cp ./meta/cert__127.0.0.1_30301.crt ../generator-B/meta
+generator-A$ cp ./meta/cert_127.0.0.1_30300.crt ../generator-B/meta
+generator-A$ cp ./meta/cert_127.0.0.1_30301.crt ../generator-B/meta
 ```
 
 ### 机构B生成相应证书
@@ -142,11 +142,11 @@ generator-B$ cp ./dir_chain_ca/ca.crt ./meta
 # 拷贝机构证书
 generator-B$ cp ./dir_agency_ca/AgencyB/agency.crt ./meta
 # 拷贝节点证书
-generator-B$ cp ./dir_node_ca/node_127.0.0.1_30302/node.crt ./meta/cert__127.0.0.1_30302.crt
-generator-B$ cp ./dir_node_ca/node_127.0.0.1_30303/node.crt ./meta/cert__127.0.0.1_30303.crt
+generator-B$ cp ./dir_node_ca/node_127.0.0.1_30302/node.crt ./meta/cert_127.0.0.1_30302.crt
+generator-B$ cp ./dir_node_ca/node_127.0.0.1_30303/node.crt ./meta/cert_127.0.0.1_30303.crt
 # 交换节点证书至机构A
-generator-B$ cp ./meta/cert__127.0.0.1_30302.crt ../generator-A/meta
-generator-B$ cp ./meta/cert__127.0.0.1_30303.crt ../generator-A/meta
+generator-B$ cp ./meta/cert_127.0.0.1_30302.crt ../generator-A/meta
+generator-B$ cp ./meta/cert_127.0.0.1_30303.crt ../generator-A/meta
 ```
 
 通过上述操作，我们完成了机构A和机构B的证书协商过程，机构A和机构B的节点私钥、机构私钥都在本地。
@@ -305,7 +305,7 @@ generator-A$ ./generator --build_expand_package ./expand
 generator-A$ cp ./dir_node_ca/node_127.0.0.1_30304/node.key ./expand/node_127.0.0.1_30304/conf/
 generator-A$ cp ./dir_node_ca/node_127.0.0.1_30305/node.key ./expand/node_127.0.0.1_30305/conf/
 # 启动节点
-generator-A$ ./expand/start_all.sh
+generator-A$ bash ./expand/start_all.sh
 # 查看节点进程
 ps aux| grep fisco-bcos |grep -v grep
 ```
@@ -362,7 +362,7 @@ generator-A$ bash ./data/start_all.sh
 
 ```bash
 $ ps -ef | grep fisco
-# 可以看到如下所示的四个进程
+# 可以看到如下所示的四个进程 如果上一步扩容的节点没有关闭可以看到六个进程
 fisco  16356     1  0 17:22 pts/2    00:00:00 ~/generator-A/data/node_127.0.0.1_30300/fisco-bcos -c config.ini
 fisco  16422     1  0 17:22 pts/2    00:00:00 ~/generator-A/data/node_127.0.0.1_30301/fisco-bcos -c config.ini
 fisco  16467     1  0 17:22 pts/2    00:00:00 ~/generator-B/data/node_127.0.0.1_30302/fisco-bcos -c config.ini
