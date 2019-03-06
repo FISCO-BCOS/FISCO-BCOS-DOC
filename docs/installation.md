@@ -140,16 +140,16 @@ $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
-$ tar -zxf console-0.4.25.tar.gz && chmod u+x console-0.4.25/start.sh
+$ tar -zxf console.tar.gz && chmod u+x console/start.sh
 # 配置控制台证书
-$ cp nodes/127.0.0.1/sdk/* console-0.4.25/conf/
+$ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 ### 启动控制台
 
 ```bash
 # # 回到fisco目录
-$ cd ~/fisco/console-0.4.25
+$ cd ~/fisco/console
 $ ./start.sh
 # 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =============================================================================================
