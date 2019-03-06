@@ -416,10 +416,11 @@ TransactionReceipt receipt = asset.register(assetAccount, amount).send();
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount).send();
 ```
 
-通过Java合约文件，设计了一个业务Service类和调用入口类，已完资产管理的业务功能。接下来可以运行项目，测试功能是否正常。
-
 ## 运行
-编译项目。
+
+至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
+
+- 编译
 ```bash
 # 切换到项目目录
 $ cd ~/asset-app
