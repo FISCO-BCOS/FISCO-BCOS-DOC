@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    使用前建议优先阅读 `教程-使用企业级部署工具 <../tutorial/enterprise_quick_start.html>`_ 
+    使用前建议优先阅读 `教程-使用企业级部署工具 <../tutorial/enterprise_quick_start_agency.html>`_ 
 ```
 
 ## 组网示例
