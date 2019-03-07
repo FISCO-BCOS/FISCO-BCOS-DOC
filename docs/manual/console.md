@@ -15,7 +15,7 @@
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
 
 **注：**
-- 控制台的命令调用JSON-RPC接口时，当JSON-RPC返回错误响应(具体错误码见[JSON-RPC设计文档](../design/rpc.md))，将以json格式显示错误响应的error字段信息。
+- 控制台的命令调用JSON-RPC接口时，当JSON-RPC返回错误响应(具体错误码见[JSON-RPC设计文档](../design/rpc.html#json-rpc)，将以json格式显示错误响应的error字段信息。
 
 - 命令操作系统功能时，会返回json字段，其中code是错误码，msg是错误码的描述信息。
 
