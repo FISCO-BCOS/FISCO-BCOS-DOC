@@ -114,12 +114,37 @@
 #### 权限控制流程设计
 权限控制的流程如下：首先由客户端发起交易请求，节点获取交易数据，从而确定外部账号和待操作的表以及操作表的方式。如果判断操作方式为写操作，则检查该外部账号针对操作的表的权限信息（权限信息从权限表中查询获取）。若检查有权限则，则执行写操作，交易正常执行；若检查无权限，则拒绝写操作，返回无权限信息。如果判断操作方式为读操作，则不检查权限信息，正常执行读操作，返回查询数据。流程图如下。
 
+```eval_rst
+.. mermaid::
 
+   graph TB
+        classDef blue fill:#4C84FF,stroke:#4C84FF,stroke-width:4px, font:#1D263F, text-align:center;
 
+        classDef yellow fill:#FFEEB8,stroke:#FFEEB8,stroke-width:4px, font:#1D263F, text-align:center;
 
+        classDef light fill:#EBF5FF,stroke:#1D263F,stroke-width:2px,  font:#1D263F, text-align:center;
+
+        subgraph 权限控制流程
+        A((开始))-->B
+        B(客户端发起交易请求)-->C
+        C(确定待操作的表和操作方式)-->D
+        D(操作方式是否为写操作)-->|否|E
+        E(获取查询结果)
+        D-->|是|F
+        F(是否有权限记录缓存)-->|否|G
+        F-->H
+        G(查询权限表)-->H
+        H(是否有权限)-->|否|I
+        H(是否有权限)-->|是|J
+        I(拒绝写操作)
+        J(执行写操作)
+
+        class A,B,C,D,E,F,G,H,I,J light
+        end
+```
 
 ## 权限控制工具
 
 FISCO BCOS的分布式存储权限控制有如下使用方式：
-- 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制操作文档](../../manual/permission_control.md)。
-- 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是增加，移除和查询权限接口。可以调用[SDK API](../../sdk/java_sdk_api.md)的PermissionService接口使用权限功能。
+- 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制使用手册](../../manual/permission_control.md)。
+- 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是授权，撤销和查询权限接口。可以调用[SDK API](../../sdk/sdk.md#web3sdk-api)的PermissionService接口使用权限功能。
