@@ -216,7 +216,7 @@ nohup: appending output to ‘nohup.out’
 
 ```eval_rst
 .. note::
-    - 节点3的NodeID可以使用`cat tools/nodes/127.0.0.1/node2/conf/node.nodeid`获取；
+    - 节点3的NodeID可以使用`cat nodes/127.0.0.1/node2/conf/node.nodeid`获取；
     - 节点3首次启动会将配置的群组节点初始列表内容写入群组节点系统表，区块同步结束后，**群组各节点的群组节点系统表均一致**；
     - **节点3需先完成网络准入后，再执行加入群组的操作，系统将校验操作顺序**；
     - **节点3的群组固定配置文件需与节点1和2的一致**。
