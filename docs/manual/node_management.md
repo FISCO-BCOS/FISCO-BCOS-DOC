@@ -104,18 +104,26 @@ Group3的相关节点信息举例为：
 
 操作顺序：
 
-1 . 执行`gen_node_cert.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
+1 . 进入FISCO-BCOS的tools目录，在tools目录下执行`gen_node_cert.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
 
 ```
 # 获取脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
-# 执行
+# 执行，-c为生成节点所提供的ca路径，agency为机构名，-o为将生成的节点目录名
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
 2 . 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（`node0`、`node1`）同级；
+```
+# 在tools目录执行
+$ cp -r ./node2/ nodes/127.0.0.1/
+```
 
-3 . 拷贝`node0/config.ini`到node2目录;
+3 . 进入`nodes/127.0.0.1/`，拷贝`node0/config.ini`到node2目录;
+```
+$ cd nodes/127.0.0.1/
+$ cp node0/config.ini node2/
+```
 
 4 . 修改`node2/config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
 
@@ -139,9 +147,16 @@ $ vim node2/config.ini
     node.2=127.0.0.1:30402
 ```
 
-5 . 节点3拷贝节点1（或2）的`group.3.genesis`（内含**群组节点初始列表**）和`group.3.ini`到对应位置，不需改动；
+5 . 节点3拷贝节点1的`node1/conf/group.3.genesis`（内含**群组节点初始列表**）和`node1/conf/group.3.ini`到`node2/conf`目录下，不需改动；
+```
+$ cp node1/conf/group.3.genesis node2/ 
+$ cp node1/conf/group.3.ini node2/ 
+```
 
 6 . 执行`node2/start.sh`启动节点3；
+```
+$ ./node2/start.sh
+```
 
 7 . 确认节点3与节点1和节点2的连接已经建立，加入网络操作完成。
 
@@ -158,7 +173,7 @@ info|2019-02-21 10:30:18.694294| [P2P][Service] heartBeat connected count,size=2
 .. note::
     - 从节点1拷贝过来的`config.ini`的其余配置可保持不变；
     - 节点1和2不需修改自身的P2P节点连接列表；
-    - 步骤1中所选择的群组建议为节点3后续需加入的群组。
+    - 步骤5中所选择的群组建议为节点3后续需加入的群组。
 ```
 
 #### A节点退出网络
@@ -197,11 +212,12 @@ nohup: appending output to ‘nohup.out’
 操作顺序：
 
 1. 节点3加入网络；
-2. 使用控制台根据节点3的nodeID设置节点3为**共识节点**；
-3. 使用控制台查询group3的共识节点中是否包含节点3的nodeID，如存在，加入群组操作完成。
+2. 使用控制台addSealer根据节点3的nodeID设置节点3为**共识节点**；
+3. 使用控制台getSealerList查询group3的共识节点中是否包含节点3的nodeID，如存在，加入群组操作完成。
 
 ```eval_rst
 .. note::
+    - 节点3的NodeID可以使用`cat 127.0.0.1/node2/conf/node.nodeid`获取；
     - 节点3首次启动会将配置的群组节点初始列表内容写入群组节点系统表，区块同步结束后，**群组各节点的群组节点系统表均一致**；
     - **节点3需先完成网络准入后，再执行加入群组的操作，系统将校验操作顺序**；
     - **节点3的群组固定配置文件需与节点1和2的一致**。
@@ -215,8 +231,8 @@ nohup: appending output to ‘nohup.out’
 
 操作顺序：
 
-1. 使用控制台根据节点3的NodeID设置节点3为**游离节点**；
-2. 使用控制台查询group3的共识节点中是否包含节点3的nodeID，如已消失，退出群组操作完成。
+1. 使用控制台removeNode根据节点3的NodeID设置节点3为**游离节点**；
+2. 使用控制台getSealerList查询group3的共识节点中是否包含节点3的nodeID，如已消失，退出群组操作完成。
 
 补充说明：
 
