@@ -104,10 +104,12 @@ Group3的相关节点信息举例为：
 
 操作顺序：
 
-1 . 执行`tools/gen_node_cert.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
+1 . 执行`gen_node_cert.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
 
 ```
-# 在目录tools下执行
+# 获取脚本
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
+# 执行
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
