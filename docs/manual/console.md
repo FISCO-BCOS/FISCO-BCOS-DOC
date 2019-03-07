@@ -51,13 +51,13 @@ $ tar -zxf console.tar.gz
 ```
 目录结构如下：
 ```bash
-|-- apps # 依赖的SDK jar包目录
-|   -- web3sdk.jar 
+|-- apps # 控制台jar包目录
+|   -- console.jar 
 |-- lib # 相关依赖的jar包目录
 |-- conf
-|   |-- ca.crt   # ca证书文件
-|   |-- node.crt # 节点证书文件
-|   |-- node.key # 节点私钥文件
+|   |-- ca.crt   # ca证书文件，需要替换
+|   |-- node.crt # 节点证书文件，需要替换
+|   |-- node.key # 节点私钥文件，需要替换
 |   |-- applicationContext.xml # 配置文件
 |   |-- log4j.properties  # 日志配置文件
 |   |-- privateKey.properties # 发送交易的私钥存储文件
@@ -72,11 +72,13 @@ $ tar -zxf console.tar.gz
     |   |-- Table.sol # 默认提供CRUD的合约接口Table.sol文件
     |-- sol2java.sh # solidity合约文件编译为java合约文件的工具脚本
 ```
-**注1：** 
-- 使用控制台部署和调用合约请将solidity合约文件放在`solidity/contract`目录下，然后运行部署和调用合约命令。
-- **控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
-  - 将solidity合约文件放在`tools/contracts`目录下。
-  - 通过运行`tools`目录下的`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，拷贝`HelloWorld.sol`合约到`tools/contracts`目录下，指定包名为`org.com.fisco`，命令如下：
+**注：** 控制台的GitHub地址为：https://github.com/FISCO-BCOS/console
+
+#### 合约编译工具
+
+**控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件。** 使用该工具，分为两步：
+  - 将Solidity合约文件放在`tools/contracts`目录下。
+  - 通过运行`tools`目录下的`sol2java.sh`脚本(**需要指定一个Java的包名**)完成编译合约任务。例如，拷贝`HelloWorld.sol`合约到`tools/contracts`目录下，指定包名为`org.com.fisco`，命令如下：
     ```bash
     $ cd ~/fisco/console
     $ cp solidity/contracts/HelloWorld.sol tools/contracts/
@@ -97,22 +99,29 @@ $ tar -zxf console.tar.gz
     |               |-- HelloWorld.java # 编译成功的目标Java文件
     |               |-- Table.java  # 编译成功的系统CRUD合约接口Java文件
     ```
-    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`和`Table.java`。其中`HelloWorld.java`是java应用所需要的java合约文件。
+    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`和`Table.java`。其中`HelloWorld.java`是java应用所需要的java合约文件。
 
-**注2：** 获取的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。合约编译器下载方式如下：
+**注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。
+
+#### 下载合约编译jar包
+下载0.4版本合约编译jar包
 ```bash
-# 获取0.4版本合约编译jar包
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
-
-# 获取0.5版本合约编译jar包
+```
+下载0.5版本合约编译jar包
+```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
-
-# 获取国密0.4版本合约编译jar包
+```
+下载国密0.4版本合约编译jar包
+```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
 
-# 获取国密0.5版本合约编译jar包
+```
+下载国密0.5版本合约编译jar包
+```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
 ```
+
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
@@ -273,7 +282,7 @@ quit(q)                                  Quit console.
 ```
 **注：**                                       
 - help显示每条命令的含义是：命令 命令功能描述                   
-- 查看具体命令的使用介绍说明，输入命令 -h或--help查看。例如：   
+- 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：   
 ```bash
 [group:1]> getBlockByNumber -h
 Query information about a block by block number.
