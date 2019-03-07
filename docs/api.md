@@ -133,7 +133,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 - `groupID`: `unsigned int` - 群组ID          
 ### 返回值          
 - `object` - 共识状态信息。
-- 1. 当共识机制为pbft时（pbft详细设计参考[pbft设计文档](../consensus/pbft.md)），字段如下：            
+- 1. 当共识机制为pbft时（pbft详细设计参考[pbft设计文档](design/consensus/pbft.md)），字段如下：            
    -  `accountType`: `unsigned int` - 账户类型            
    -  `allowFutureBlocks`: `bool` - 允许未来块标志            
    -  `cfgErr`: `bool` - 配置错误标志            
@@ -171,7 +171,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
    -  `commitCache_cachedSize`: `unsigned int` - commitCache_cached大小            
    -  `viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached大小            
 
-- 2. 当共识机制为raft时（raft详细设计参考[raft设计文档](../consensus/raft.md)），字段如下：     
+- 2. 当共识机制为raft时（raft详细设计参考[raft设计文档](design/consensus/raft.md)），字段如下：     
     - `accountType`: `unsigned int` - 账户类型            
     - `allowFutureBlocks`: `bool` - 允许未来块标志            
     - `cfgErr`: `bool` - 配置错误标志                        
