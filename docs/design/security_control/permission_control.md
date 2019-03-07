@@ -63,8 +63,8 @@
   - **public String revokeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
   - **public List\<PermissionInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
 - _sys_config_表：
-  - **public String addSysConfigManager(String address)：** 增加外部账号地址的系统参数管理权限。
-  - **public String removeSysConfigManager(String address)：** 移除外部账号地址的系统参数管理权限。
+  - **public String grantSysConfigManager(String address)：** 增加外部账号地址的系统参数管理权限。
+  - **public String revokeSysConfigManager(String address)：** 移除外部账号地址的系统参数管理权限。
   - **public List\<PermissionInfo\> listSysConfigManager()：** 查询拥有系统参数管理的权限记录列表。
 
 设置和移除权限接口返回json字符串，包含code和msg字段，当无权限操作时，其code定义50000，msg定义为“permission denied”。当成功设置权限时，其code为0，msg为“success”。
@@ -112,7 +112,7 @@
 ```
 
 #### 权限控制流程设计
-权限控制的流程如下：首先由客户端发起交易请求，节点获取交易数据，从而确定外部账号和待操作的表以及操作表的方式。如果判断操作方式为写操作，则检查该外部账号针对操作的表的权限信息（权限信息从权限表中查询获取）。若检查有权限则，则执行写操作，交易正常执行；若检查无权限，则拒绝写操作，返回无权限信息。如果判断操作方式为读操作，则不检查权限信息，正常执行读操作，返回查询数据。流程图如下。
+权限控制的流程如下：首先由客户端发起交易请求，节点获取交易数据，从而确定外部账号和待操作的表以及操作表的方式。如果判断操作方式为写操作，则检查该外部账号针对操作的表的权限信息（权限信息从权限表中查询获取）。若检查有权限，则执行写操作，交易正常执行；若检查无权限，则拒绝写操作，返回无权限信息。如果判断操作方式为读操作，则不检查权限信息，正常执行读操作，返回查询数据。流程图如下。
 
 ```eval_rst
 .. mermaid::

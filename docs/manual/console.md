@@ -1,6 +1,6 @@
 # 控制台
 
-控制台是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Web3SDK](../sdk/sdk.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将solidity合约文件编译为java合约文件。
+[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Web3SDK](../sdk/sdk.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
 
 ### 控制台命令
 控制台命令由两部分组成，即指令和指令相关的参数：   
@@ -72,7 +72,6 @@ $ tar -zxf console.tar.gz
     |   |-- Table.sol # 默认提供CRUD的合约接口Table.sol文件
     |-- sol2java.sh # solidity合约文件编译为java合约文件的工具脚本
 ```
-**注：** 控制台的GitHub地址为：https://github.com/FISCO-BCOS/console
 
 #### 合约编译工具
 
@@ -104,20 +103,20 @@ $ tar -zxf console.tar.gz
 **注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。
 
 #### 下载合约编译jar包
-下载0.4版本合约编译jar包
+0.4版本合约编译jar包
 ```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
 ```
-下载0.5版本合约编译jar包
+0.5版本合约编译jar包
 ```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
 ```
-下载国密0.4版本合约编译jar包
+国密0.4版本合约编译jar包
 ```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
 
 ```
-下载国密0.5版本合约编译jar包
+国密0.5版本合约编译jar包
 ```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
 ```
