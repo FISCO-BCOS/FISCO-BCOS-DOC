@@ -104,7 +104,7 @@ Group3的相关节点信息举例为：
 
 操作顺序：
 
-1 . 进入FISCO-BCOS的tools目录，在tools目录下执行`gen_node_cert.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
+1 . 进入nodes同级目录，在该目录下拉取并执行`gen_node_cert.sh`生成节点目录，目录名以node2为例，node2内有`conf/`目录；
 
 ```
 # 获取脚本
@@ -115,7 +115,6 @@ $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 
 2 . 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（`node0`、`node1`）同级；
 ```
-# 在tools目录执行
 $ cp -r ./node2/ nodes/127.0.0.1/
 ```
 
@@ -217,7 +216,7 @@ nohup: appending output to ‘nohup.out’
 
 ```eval_rst
 .. note::
-    - 节点3的NodeID可以使用`cat 127.0.0.1/node2/conf/node.nodeid`获取；
+    - 节点3的NodeID可以使用`cat tools/nodes/127.0.0.1/node2/conf/node.nodeid`获取；
     - 节点3首次启动会将配置的群组节点初始列表内容写入群组节点系统表，区块同步结束后，**群组各节点的群组节点系统表均一致**；
     - **节点3需先完成网络准入后，再执行加入群组的操作，系统将校验操作顺序**；
     - **节点3的群组固定配置文件需与节点1和2的一致**。
