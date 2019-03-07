@@ -14,14 +14,13 @@
 - 权限管理控制示例
 
 ## 环境配置  
-- 配置并启动FISCO BCOS2.0的链节点，具体步骤参考 [一键搭链文档](./build_chain.md)。   
-- 配置并启动控制台，具体步骤参考 [控制台手册](./console.md)。
+配置并启动FISCO BCOS 2.0区块链节点和控制台，请参考[安装文档](../installation.md)。   
 
 ## 权限控制工具
 
 ### 权限控制相关命令
 
-针对普通用户，FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/java_sdk_api.md)的PermissionService接口使用权限功能），其中涉及的权限控命令如下:
+针对普通用户，FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/sdk.md#web3sdk-api)的PermissionService接口使用权限功能），其中涉及的权限控命令如下:
 
 |命令名称|命令参数|功能|
 |:----|:-----|:----|
