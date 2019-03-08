@@ -17,6 +17,8 @@
 
 ## 证书协商
 
+FISCO BCOS使用的证书为满足X509协议的证书格式，生成过程可以参考[教程-使用企业级部署工具](../tutorial/enterprise_quick_start.md)
+
 ### 机构获取证书资格
 
 1. 机构A、B、C、D在本机生成使用`agency.key`，和机构证书请求文件`agency.csr`。

@@ -296,7 +296,7 @@ $ ./generator --generate_all_certificates ./cert
 
     - 如果没有根证书ca.crt会自动生成相应的根证书ca.crt，私钥ca.key，机构证书agency.crt，机构私钥agency.key及其他必备的证书。
     - 如果用户已经拥有根证书ca.crt，但是缺少私钥ca.key，则无法生成任何证书，程序会抛出异常。
-    - 如果用户拥有根证书ca.crt，机构证书`agency.crt`，但是缺少机构私钥agency.key，则无法生成节点证书，程序会抛出异常。
+    - 如果用户拥有根证书ca.crt，机构证书agency.crt，但是缺少机构私钥agency.key，则无法生成节点证书，程序会抛出异常。
 
 ```
 
