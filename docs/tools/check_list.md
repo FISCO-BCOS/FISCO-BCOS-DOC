@@ -24,7 +24,8 @@ $ x86_64
 ```
 
 - 操作系统版本检查：
-```
+
+```bash
 CentOS
 $ cat /etc/redhat-release 
 $ CentOS Linux release 7.2.1511 (Core)
@@ -108,8 +109,10 @@ yum/apt不存在openssl, 可以参考下面的替换apt/yum源。
 对此建议可以提前检查yum/apt源。 
 #### 检查列表
 在服务器上面依次执行下面命令:
-```
+
+```bash
 CentOS 依赖
+        sudo yum -y install epel-release
         sudo yum -y install bc
         sudo yum -y install gettext
         sudo yum -y install cmake3
