@@ -219,7 +219,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 
 ```ini
 [group]
-index=2
+id=2
 ```
 
 ### 共识配置
