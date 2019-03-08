@@ -92,7 +92,7 @@ member3=127.0.0.1:30303
 
 ```ini
 [group]
-; group : group index
+; group : group id
 group_id=2 #群组序号
 member0=127.0.0.1:30300 # 新群组成员
 member1=127.0.0.1:30302 # 新群组成员
@@ -296,7 +296,7 @@ $ ./generator --generate_all_certificates ./cert
 
     - 如果没有根证书ca.crt会自动生成相应的根证书ca.crt，私钥ca.key，机构证书agency.crt，机构私钥agency.key及其他必备的证书。
     - 如果用户已经拥有根证书ca.crt，但是缺少私钥ca.key，则无法生成任何证书，程序会抛出异常。
-    - 如果用户拥有根证书ca.crt，机构证书`agency.crt`，但是缺少机构私钥agency.key，则无法生成节点证书，程序会抛出异常。
+    - 如果用户拥有根证书ca.crt，机构证书agency.crt，但是缺少机构私钥agency.key，则无法生成节点证书，程序会抛出异常。
 
 ```
 
@@ -435,7 +435,7 @@ $ cd ./data/monitor
 
 ### 配置告警服务
 
-用户使用前，首先需要配置告警信息服务，这里以**server酱**的微信推送为例，可以参考配置[server酱](http://sc.ftqq.com/3.version)
+用户使用前，首先需要配置告警信息服务，这里以[server酱](http://sc.ftqq.com/3.version)的微信推送为例，可以参考配置[server酱](http://sc.ftqq.com/3.version)
 
 绑定自己的github账号，以及微信后，可以使用本脚本向微信发送告警信息，使用本脚本的-s命令 可以向指定微信发送告警信息
 
