@@ -487,16 +487,16 @@ info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 
 ### 将group2加入区块链
 
-并行多组区块链每个群组的`genesis`配置文件几乎相同，但[group].index不同，为群组号。
+并行多组区块链每个群组的`genesis`配置文件几乎相同，但[group].id不同，为群组号。
 
 ```bash
 # 拷贝group1的配置
 $ cp node0/conf/group.1.genesis group.2.genesis
 
 # 修改群组ID
-$ sed -i "s/index=1/index=2/g" group.2.genesis
-$ cat group.2.genesis | grep "index"
-    index=2
+$ sed -i "s/id=1/id=2/g" group.2.genesis
+$ cat group.2.genesis | grep "id"
+    id=2
 
 # 将配置拷贝到各个节点
 $ cp group.2.genesis node0/conf
