@@ -39,9 +39,9 @@
 
 国密版与标准版FISCO BCOS在数据结构上的差异如下：
 
- | 算法类型 | 国密版FISCO BCOS | 标准版FISCO BCOS |
+ | 算法类型 | 标准版FISCO BCOS | 国密版FISCO BCOS |
  | :-: | :-: | :-: |
- | 签名 | SM2 (公私钥长度：512 bits, 256 bits) | ECDSA (公私钥长度: 512 bits, 256 bits)|
- | 哈希 | SM3 (哈希串长度: 256 bits) | SHA3 (哈希串长度: 256 bits) |
- | 对称加解密 | SM4 (对称密钥长度: 128 bits) | AES (加密秘钥长度: 256 bits) |
- | 交易长度 | 1024bits(128字节，其中公钥512bits,签名长度512bits) | 520bits(其中标识符8bits,签名长度512bits) |
+ | 签名 | ECDSA (公私钥长度: 512 bits, 256 bits)| SM2 (公私钥长度：512 bits, 256 bits) |
+ | 哈希 | SHA3 (哈希串长度: 256 bits) | SM3 (哈希串长度: 256 bits) |
+ | 对称加解密 | AES (加密秘钥长度: 256 bits) | SM4 (对称密钥长度: 128 bits) |
+ | 交易长度 | 520bits(其中标识符8bits,签名长度512bits) | 1024bits(128字节，其中公钥512bits,签名长度512bits) |
