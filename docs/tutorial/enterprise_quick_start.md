@@ -99,9 +99,8 @@ generator-B$ cd ./generator-B
 generator-A$ ./generator --generate_chain_certificate ./dir_chain_ca
 # 机构A发送链证书及私钥给机构B
 generator-A$ cp -r ./dir_chain_ca ../generator-B/
-# 机构A发生成自己的机构证书及私钥
+# 机构A生成自己的机构证书及私钥
 generator-A$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca AgencyA
-AgencyA
 # 机构A生成自己的节点证书及私钥
 generator-A$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyA  node_127.0.0.1_30300
 generator-A$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyA  node_127.0.0.1_30301
@@ -128,15 +127,14 @@ generator-A$ cp ./meta/cert_127.0.0.1_30301.crt ../generator-B/meta
 
 ```bash
 # 机构B已经接受到链证书
-# 机构B发生成自己的机构证书及私钥
+# 机构B生成自己的机构证书及私钥
 generator-B$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca AgencyB
-AgencyA
 # 机构B生成自己的节点证书及私钥
 generator-B$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyB  node_127.0.0.1_30302
 generator-B$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyB  node_127.0.0.1_30303
 # 机构B生成自己的SDK证书及私钥
 generator-B$ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca/AgencyB
-# 机构A将证书拷贝至meta文件夹
+# 机构B将证书拷贝至meta文件夹
 # 拷贝链证书
 generator-B$ cp ./dir_chain_ca/ca.crt ./meta
 # 拷贝机构证书
@@ -153,7 +151,7 @@ generator-B$ cp ./meta/cert_127.0.0.1_30303.crt ../generator-A/meta
 
 ## 构建第一个群组
 
-1.修改mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1，教程中采用默认设置
+1.修改conf文件夹下的mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1，教程中采用默认设置，不需要用户手动修改。
 
 ```ini
 [group]
@@ -188,7 +186,7 @@ channel_listen_port=20203
 jsonrpc_listen_port=8548
 ```
 
-2.在data下生成group1节点配置文件
+2.生成group1节点配置文件至data文件夹下
 
 ```bash
 # 机构A生成节点配置文件夹
@@ -219,7 +217,7 @@ generator-B$ ./generator --build_install_package ./data
 
 3.导入节点私钥到对应节点配置文件的conf文件夹下，启动节点
 
-上述3.中生成的节点配置文件夹是不含节点私钥的，需要导入2.中的节点私钥，命令如下
+上述2.中生成的节点配置文件夹是不含节点私钥的，需要导入1.中生成的节点私钥，命令如下
 
 ```bash
 # 机构A导入本机构节点私钥
@@ -268,7 +266,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 机构A扩容两个节点
 
-机构A修改mexpand.ini中的配置项，使其指向群组1对应节点的ip，端口号，指定组id为group1，和本次扩容节点的相关配置，教程中采用默认设置。
+1.机构A修改conf文件夹下的mexpand.ini中的配置项，使其指向群组1对应节点的ip，端口号，指定组id为group1，和本次扩容节点的相关配置，教程中采用默认设置，不需要用户手动修改。
 
 ```ini
 ;port config, in general, use the default values
@@ -310,12 +308,14 @@ generator-A$ bash ./expand/start_all.sh
 ps aux| grep fisco-bcos |grep -v grep
 ```
 
-可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入群组1中，扩容的节点才会正常工作。
-
 ```eval_rst
 .. note::
-    生成扩容配置文件夹时需要fisco-bcos可执行文件、group.1.genesis和group.1.ini
+    生成扩容配置文件夹时需要fisco-bcos可执行文件、group.1.genesis
 ```
+
+2.使用bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入group1.
+
+可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入群组1中，扩容的节点才会正常工作。
 
 ## 构建第二个群组
 
@@ -323,7 +323,7 @@ ps aux| grep fisco-bcos |grep -v grep
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
-修改mgroup.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2，教程中使用默认设置
+修改conf文件夹下mgroup.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2，教程中使用默认设置，不需要用户手动修改。
 
 ```ini
 [group]
