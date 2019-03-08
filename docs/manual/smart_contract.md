@@ -321,7 +321,7 @@ contract HelloWorld {
 
 ##### 2.2.3 设计存储结构  
 
-HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操作，需要 设计存储的表结构。
+HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操作，需要设计存储的表结构。
 
 表名： ```_ext_hello_world_```
 
