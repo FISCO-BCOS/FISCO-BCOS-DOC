@@ -100,8 +100,8 @@ contract TableTest {
         // key_field表示AMDB主key value_field表示表中的列，可以有多列，以逗号分隔
         int count = tf.createTable("t_test", "name", "item_id,item_name");
         emit createResult(count);
-
-	      return count;
+        
+        return count;
     }
 
     // 查询数据
