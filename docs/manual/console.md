@@ -29,8 +29,8 @@
 |51101|the last sealer cannot be removed|
 |51102|the node is not reachable|
 |51103|the node is not in group peers|
-|51104|the node is already in sealer list|
-|51105|the node is already in observer list|
+|51104|the node is already in the sealer list|
+|51105|the node is already in the observer list|
 |51200|contract name and version already exist|
 |51201|version string length exceeds the maximum limit|
 |51300|invalid configuration entry|
@@ -792,7 +792,7 @@ Hello, FISCO BCOS
 ```
 
 ### **deployByCNS**
-deployByCNS，利用[CNS](../design/features/cns_contract_name_service.md)部署合约。                                 
+运行deployByCNS，利用[CNS](../design/features/cns_contract_name_service.md)部署合约。                                 
 参数：
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
