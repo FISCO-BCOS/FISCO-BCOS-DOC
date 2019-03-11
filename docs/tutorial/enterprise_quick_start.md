@@ -65,7 +65,7 @@ $ ./meta/fisco-bcos -v
 ```eval_rst
 .. important::
 
-    使用时建议用户开启两个终端，分别代表机构A和机构B，以下操作$前表示为generator-A的为机构A进行的操作，generator-B的为机构A进行的操作，没有前缀的为观察操作。
+    使用时建议用户开启两个终端，分别代表机构A和机构B，以下操作$前表示为generator-A的为机构A进行的操作，generator-B的为机构B进行的操作，没有前缀的为观察操作。
 ```
 
 ## 机构初始化
@@ -73,11 +73,11 @@ $ ./meta/fisco-bcos -v
 ```bash
 # 返回generator上级目录
 # 初始化机构A
-generator-A$ cp -r ./generator ./generator-A
-generator-A$ cd ./generator-A
+generator-A$ cp -r ./generator ~/generator-A
+generator-A$ cd ~/generator-A
 # 初始化机构B
-generator-B$ cp -r ./generator ./generator-B
-generator-B$ cd ./generator-B
+generator-B$ cp -r ./generator ~/generator-B
+generator-B$ cd ~/generator-B
 ```
 
 ## 初始化证书
