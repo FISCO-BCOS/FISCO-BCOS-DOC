@@ -129,7 +129,6 @@ $ tree
 |   |-- fisco-bcos
 |   |-- node0
 |   |   |-- conf  #节点配置目录
-|   |   |   |-- agency.crt
 |   |   |   |-- ca.crt
 |   |   |   |-- group.1.genesis
 |   |   |   |-- group.1.ini
