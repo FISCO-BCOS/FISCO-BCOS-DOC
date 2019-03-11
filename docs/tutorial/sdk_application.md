@@ -320,7 +320,6 @@ asset-app项目的目录结构如下：
 |   |                               |-- contract // 放置Java合约类
 |   |                                      |-- Asset.java
 |   |-- test 
-|       |-- java 
 |       |-- resources // 存放代码资源文件
 |           |-- applicationContext.xml // 项目配置文件
 |           |-- ca.crt // 区块链ca证书
