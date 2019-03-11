@@ -125,8 +125,8 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 [INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 
 # 生成的节点文件如下
-$ tree
-.
+$ tree nodes
+nodes
 |-- 127.0.0.1
 |   |-- fisco-bcos
 |   |-- node0
