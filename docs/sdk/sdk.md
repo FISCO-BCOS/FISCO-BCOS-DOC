@@ -182,8 +182,8 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 |51101|the last sealer cannot be removed|
 |51102|the node is not reachable|
 |51103|the node is not in group peers|
-|51104|the node is already in sealer list|
-|51105|the node is already in observer list|
+|51104|the node is already in the sealer list|
+|51105|the node is already in the observer list|
 |51200|contract name and version already exist|
 |51201|version string length exceeds the maximum limit|
 |51300|invalid configuration entry|
