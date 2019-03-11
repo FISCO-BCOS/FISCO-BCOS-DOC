@@ -779,11 +779,11 @@ Hello, FISCO BCOS
 - 合约版本号：部署的合约版本号(长度不能超过40)。
 ```bash
 # 部署HelloWorld合约
-[group:1]> deploy HelloWorld.sol 1.0
+[group:1]> deployByCNS HelloWorld.sol 1.0
 0x3554a56ea2905f366c345bd44fa374757fb4696a
 
 # 部署TableTest合约
-[group:1]> deploy TableTest.sol 1.0
+[group:1]> deployByCNS TableTest.sol 1.0
 0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
 
