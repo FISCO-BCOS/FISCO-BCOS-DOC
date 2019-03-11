@@ -13,27 +13,8 @@
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
-
-**注：**
-- 控制台的命令调用JSON-RPC接口时，当JSON-RPC返回错误响应(具体错误码见[JSON-RPC设计文档](../design/rpc.html#json-rpc)，将以json格式显示错误响应的error字段信息。
-
-- 命令操作系统功能时，会返回json字段，其中code是错误码，msg是错误码的描述信息。
-
-|错误码|消息内容|
-|:----|:---|
-|0|success|
-|50000|permission denied|
-|51000|table name and address already exist|
-|51001|table name and address does not exist|
-|51100|invalid node ID|
-|51101|the last sealer cannot be removed|
-|51102|the node is not reachable|
-|51103|the node is not a group peer|
-|51104|the node is already in the sealer list|
-|51105|the node is already in the observer list|
-|51200|contract name and version already exist|
-|51201|version string length exceeds the maximum limit|
-|51300|invalid configuration entry|
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../design/rpc.html#id6)。
+  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../sdk/sdk.html#precompiled-service-api)。
 
 ## 控制台配置与运行
 
