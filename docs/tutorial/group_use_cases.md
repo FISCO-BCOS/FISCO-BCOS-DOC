@@ -99,8 +99,8 @@ $ cat ipconf
 **使用build_chain脚本构建星形区块链节点配置文件夹**
 
 ```bash
-# 根据配置生成星形区块链
-$ bash build_chain.sh -f ipconf -e ./bin/fisco-bcos
+# 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
+$ bash build_chain.sh -f ipconf -e ./bin/fisco-bcos -p 30300,20200,8545
 Generating CA key...
 ==============================================================
 Generating keys ...
