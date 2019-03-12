@@ -129,7 +129,7 @@
 问:
   Web3SDK对Java版本有要求吗？<br>
 答:
-  要求[JDK8或以上](https://openjdk.java.net/)，推荐使用OpenJDK11。 [OpenJDK11下载地址](https://jdk.java.net/11/)<br>
+  要求[JDK8或以上](https://openjdk.java.net/)<br>
   CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。 [安装指南](https://openjdk.java.net/install/index.html) 
 
 问:
