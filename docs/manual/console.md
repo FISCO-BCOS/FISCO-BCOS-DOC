@@ -73,7 +73,7 @@ $ tar -zxf console.tar.gz
     $ ./sol2java.sh org.com.fisco
     ```
     运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
-    ```text
+    ```bash
     |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
     |   |-- HelloWorld.abi
     |   |-- Table.abi
