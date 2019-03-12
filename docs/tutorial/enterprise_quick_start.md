@@ -89,7 +89,7 @@ generator-B$ cd ~/generator-B
 ```eval_rst
 .. important::
 
-    实际使用中链证书会由可信第三方生成，因此机构A与机构B的证书也由第三方机构签发。
+    实际使用中链证书会由可信第三方生成，因此机构A与机构B的证书也由第三方机构签发。教程中为了简化操作，由机构A生成了机构A与机构B的机构证书及私钥，实际应用场景中不应采取此方式。
 ```
 
 ```bash
@@ -314,7 +314,7 @@ ps aux| grep fisco-bcos |grep -v grep
 
 ```eval_rst
 .. note::
-    生成扩容配置文件夹时需要fisco-bcos可执行文件、group.1.genesis
+    生成扩容配置文件夹时需要fisco-bcos可执行文件和群组创世区块文件group.1.genesis。
 ```
 
 2.节点进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入group1.
