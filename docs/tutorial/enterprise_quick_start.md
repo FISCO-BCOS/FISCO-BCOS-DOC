@@ -15,7 +15,7 @@ $ bash ./scripts/install.sh
 $ ./generator -h
 ```
 
-在使用本工具时，需要在meta文件夹下放置`fisco-bcos`二进制程序（除demo命令外），`fisco-bcos`二进制程序的生成方式可以通过以下方式获取:
+在使用本工具时，需要在meta文件夹下放置`fisco-bcos`二进制程序，`fisco-bcos`二进制程序的生成方式可以通过以下方式获取:
 
 用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 
@@ -84,7 +84,7 @@ generator-B$ cd ~/generator-B
 
 在此步中，将完成机构A、B初始化链证书及私钥，并生成自己所属机构证书与私钥的操作
 
-假设链证书由A生成。
+假设链证书和机构证书及私钥由机构A生成。
 
 ```eval_rst
 .. important::
@@ -92,71 +92,28 @@ generator-B$ cd ~/generator-B
     实际使用中链证书会由可信第三方生成，因此机构A与机构B的证书也由第三方机构签发。
 ```
 
-### 机构A生成相应证书
-
 ```bash
 # 机构A生成链证书及私钥
 generator-A$ ./generator --generate_chain_certificate ./dir_chain_ca
-# 机构A发送链证书及私钥给机构B
-generator-A$ cp -r ./dir_chain_ca ../generator-B/
 # 机构A生成自己的机构证书及私钥
-generator-A$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca AgencyA
-# 机构A生成自己的节点证书及私钥
-generator-A$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyA  node_127.0.0.1_30300
-generator-A$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyA  node_127.0.0.1_30301
-generator-A$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyA  node_127.0.0.1_30304
-generator-A$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyA  node_127.0.0.1_30305
-# 机构A生成自己的SDK证书及私钥
-generator-A$ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca/AgencyA
-# 机构A将证书拷贝至meta文件夹
-# 拷贝链证书
-generator-A$ cp ./dir_chain_ca/ca.crt ./meta
-# 拷贝机构证书
-generator-A$ cp ./dir_agency_ca/AgencyA/agency.crt ./meta
-# 拷贝节点证书
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30300/node.crt ./meta/cert_127.0.0.1_30300.crt
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30301/node.crt ./meta/cert_127.0.0.1_30301.crt
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30304/node.crt ./meta/cert_127.0.0.1_30304.crt
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30305/node.crt ./meta/cert_127.0.0.1_30305.crt
-# 交换节点证书至机构B
-generator-A$ cp ./meta/cert_127.0.0.1_30300.crt ../generator-B/meta
-generator-A$ cp ./meta/cert_127.0.0.1_30301.crt ../generator-B/meta
+generator-A$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
+# 机构A生成机构B证书及私钥
+generator-A$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
+# 机构A拷贝链证书至meta目录
+generator-A$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ./meta/
+# 机构A发送机构证书及私钥至机构B
+generator-A$ cp ./meta/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
 ```
 
-### 机构B生成相应证书
+### 机构A生成节点证书
 
-```bash
-# 机构B已经接受到链证书
-# 机构B生成自己的机构证书及私钥
-generator-B$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca AgencyB
-# 机构B生成自己的节点证书及私钥
-generator-B$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyB  node_127.0.0.1_30302
-generator-B$ ./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/AgencyB  node_127.0.0.1_30303
-# 机构B生成自己的SDK证书及私钥
-generator-B$ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca/AgencyB
-# 机构B将证书拷贝至meta文件夹
-# 拷贝链证书
-generator-B$ cp ./dir_chain_ca/ca.crt ./meta
-# 拷贝机构证书
-generator-B$ cp ./dir_agency_ca/AgencyB/agency.crt ./meta
-# 拷贝节点证书
-generator-B$ cp ./dir_node_ca/node_127.0.0.1_30302/node.crt ./meta/cert_127.0.0.1_30302.crt
-generator-B$ cp ./dir_node_ca/node_127.0.0.1_30303/node.crt ./meta/cert_127.0.0.1_30303.crt
-# 交换节点证书至机构A
-generator-B$ cp ./meta/cert_127.0.0.1_30302.crt ../generator-A/meta
-generator-B$ cp ./meta/cert_127.0.0.1_30303.crt ../generator-A/meta
-```
-
-通过上述操作，我们完成了机构A和机构B的证书协商过程，机构A和机构B的节点私钥、机构私钥都在本地。
-
-## 构建第一个群组
-
-1.修改conf文件夹下的mchain.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group1，教程中采用默认设置，不需要用户手动修改。
+机构A首先修改conf文件夹下的`node_deployment.ini`如下图所示（教程中采用默认设置，不需要修改）：
 
 ```ini
 [group]
 group_id=1
 
+# Owned nodes
 [node0]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
@@ -171,31 +128,85 @@ p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
 
-[node2]
+# Others' nodes
+[peers]
+peer0=127.0.0.1:30302
+peer1=127.0.0.1:30303
+```
+
+```bash
+# 拷贝节点证书
+generator-A$ ./generator --generate_all_certificates ./node_agencyA
+```
+
+### 机构B生成节点证书
+
+机构B首先修改conf文件夹下的`node_deployment.ini`如下图所示：
+
+```ini
+[group]
+group_id=1
+
+# Owned nodes
+[node0]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
 jsonrpc_listen_port=8547
 
-[node3]
+[node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
+
+# Others' nodes
+[peers]
+peer0=127.0.0.1:30300
+peer1=127.0.0.1:30301
 ```
 
-2.生成group1节点配置文件至data文件夹下
+```bash
+# 机构B生成节点证书及私钥
+generator-B$ ./generator --generate_all_certificates ./node_agencyB
+# 交换节点证书至机构A
+generator-B$ cp ./meta/cert_127.0.0.1_30302.crt ~/generator-A/meta
+generator-B$ cp ./meta/cert_127.0.0.1_30303.crt ~/generator-A/meta
+```
+
+通过上述操作，我们完成了机构A和机构B的证书协商过程，在此过程中机构A和机构B的节点私钥在本地。
+
+## 构建第一个群组
+
+1.生成group1群组创世区块
+
+```bash
+# 生成group1群组创世区块
+generator-A$ ./generator --create_group_genesis ./group
+# 发送group1群组创世区块至机构B
+generator-A$ cp ./meta/group.1.genesis ~/generator-B/meta
+```
+
+2.生成节点配置文件夹，启动节点
 
 ```bash
 # 机构A生成节点配置文件夹
-generator-A$ ./generator --build_install_package ./data
+generator-A$ ./generator --build_install_package ./nodeA
+# 导入节点私钥
+generator-A$ ./generator --deploy_private_key ./node_agencyA ./nodeA
+# 启动节点
+generator-A$ bash ./nodeA/start_all.sh
 # 机构B生成节点配置文件夹
-generator-B$ ./generator --build_install_package ./data
+generator-B$ ./generator --build_install_package ./nodeB
+# 导入节点私钥
+generator-B$ ./generator --deploy_private_key ./node_agencyB ./nodeB
+# 启动节点
+generator-B$ bash ./nodeB/start_all.sh
 ```
 
-执行成功后在./data目录下可以看到
+执行成功后机构A在./nodeA目录下可以看到：
 
 ```bash
 .
@@ -208,6 +219,22 @@ generator-B$ ./generator --build_install_package ./data
 # 节点配置文件夹
 |-- node_127.0.0.1_30300
 |-- node_127.0.0.1_30301
+# 操作脚本
+|-- start_all.sh
+|-- stop_all.sh
+```
+
+机构B在./nodeB目录下可以看到：
+
+```bash
+.
+# 节点配置文件及群组配置文件
+|-- config.ini
+|-- group.1.genesis
+|-- group.1.ini
+# 监控脚本
+|-- monitor
+# 节点配置文件夹
 |-- node_127.0.0.1_30302
 |-- node_127.0.0.1_30303
 # 操作脚本
@@ -215,45 +242,23 @@ generator-B$ ./generator --build_install_package ./data
 |-- stop_all.sh
 ```
 
-3.导入节点私钥到对应节点配置文件的conf文件夹下，启动节点
+3.查看节点运行状态
 
-上述2.中生成的节点配置文件夹是不含节点私钥的，需要导入1.中生成的节点私钥，命令如下
-
-```bash
-# 机构A导入本机构节点私钥
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30300/node.key ./data/node_127.0.0.1_30300/conf/
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30301/node.key ./data/node_127.0.0.1_30301/conf/
-# 删除无用文件夹
-generator-A$ rm -rf ./data/node_127.0.0.1_30302
-generator-A$ rm -rf ./data/node_127.0.0.1_30303
-# 启动节点
-generator-A$ bash ./data/start_all.sh
-
-# 机构B导入本机构节点私钥
-generator-B$ cp ./dir_node_ca/node_127.0.0.1_30302/node.key ./data/node_127.0.0.1_30302/conf/
-generator-B$ cp ./dir_node_ca/node_127.0.0.1_30303/node.key ./data/node_127.0.0.1_30303/conf/
-# 删除无用文件夹
-generator-B$ rm -rf ./data/node_127.0.0.1_30300
-generator-B$ rm -rf ./data/node_127.0.0.1_30301
-# 启动节点
-generator-B$ bash ./data/start_all.sh
-```
-
-查看节点进程：
+查看进程：
 
 ```bash
 $ ps -ef | grep fisco
 # 可以看到如下所示的三个进程
-fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator-A/data/node_127.0.0.1_30300/fisco-bcos -c config.ini
-fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator-A/data/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  15457     1  0 17:22 pts/2    00:00:00 ~/generator-B/data/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  15498     1  0 17:22 pts/2    00:00:00 ~/generator-B/data/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco  15457     1  0 17:22 pts/2    00:00:00 ~/generator-B/nodeB/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  15498     1  0 17:22 pts/2    00:00:00 ~/generator-B/nodeB/node_127.0.0.1_30303/fisco-bcos -c config.ini
 ```
 
 查看节点log：
 
 ```bash
-$ tail -f data/node*/log/log*  | grep +++
+$ tail -f ./node*/node*/log/log*  | grep +++
 # +++即为节点正常共识
 info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
 info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
@@ -266,7 +271,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 机构A扩容两个节点
 
-1.机构A修改conf文件夹下的mexpand.ini中的配置项，使其指向群组1对应节点的ip，端口号，指定组id为group1，和本次扩容节点的相关配置，教程中采用默认设置，不需要用户手动修改。
+1.机构A修改conf文件夹下的`node_deployment.ini`中的配置项如下图所示：
 
 ```ini
 ;port config, in general, use the default values
@@ -287,21 +292,20 @@ p2p_listen_port=30305
 channel_listen_port=20205
 jsonrpc_listen_port=8550
 
-[members] # 群组内节点配置
-member0=127.0.0.1:30300
-member1=127.0.0.1:30301
-member2=127.0.0.1:30302
-member3=127.0.0.1:30303
+[peers]
+peer0=127.0.0.1:30300
+peer1=127.0.0.1:30301
+peer2=127.0.0.1:30302
+peer3=127.0.0.1:30303
 ```
 
 ```bash
-# 拷贝群组1配置文件
-generator-A$ cp ./data/group.1.genesis ./meta # 由于扩容步骤在本地完成，此步已经生成过群组创世区块文件
+# 生成扩容节点证书
+generator-A$ ./generator --generate_all_certificates ./expand_agencyA
 # 生成扩容配置文件夹
-generator-A$ ./generator --build_expand_package ./expand
+generator-A$ ./generator --build_install_package ./expand
 # 导入私钥至扩容配置文件夹
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30304/node.key ./expand/node_127.0.0.1_30304/conf/
-generator-A$ cp ./dir_node_ca/node_127.0.0.1_30305/node.key ./expand/node_127.0.0.1_30305/conf/
+generator-A$ ./generator --deploy_private_key  ./expand_agencyA ./expand
 # 启动节点
 generator-A$ bash ./expand/start_all.sh
 # 查看节点进程
@@ -313,7 +317,7 @@ ps aux| grep fisco-bcos |grep -v grep
     生成扩容配置文件夹时需要fisco-bcos可执行文件、group.1.genesis
 ```
 
-2.使用bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入group1.
+2.节点进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入group1.
 
 可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入群组1中，扩容的节点才会正常工作。
 
@@ -323,39 +327,36 @@ ps aux| grep fisco-bcos |grep -v grep
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
-修改conf文件夹下mgroup.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2，教程中使用默认设置，不需要用户手动修改。
+修改conf文件夹下mgroup.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2。
 
 ```ini
 [group]
 group_id=2
 
-[member]
-member0=127.0.0.1:30300
-member1=127.0.0.1:30301
-member2=127.0.0.1:30302
-member3=127.0.0.1:30303
+[nodes]
+node0=127.0.0.1:30300
+node1=127.0.0.1:30301
+node2=127.0.0.1:30302
+node3=127.0.0.1:30303
 ```
 
 操作步骤如下：
 
 ```bash
-# 机构A生成group2群组配置文件
-generator-A$ ./generator --create_group_config ./data
+# 机构A生成group2群组创世区块
+generator-A$ ./generator --create_group_genesis ./data
 # 拷贝群组配置至节点文件夹
-generator-A$ cp ./data/group.2.ini ./data/group.2.genesis ./data/node_127.0.0.1_30300/conf/
-generator-A$ cp ./data/group.2.ini ./data/group.2.genesis ./data/node_127.0.0.1_30301/conf/
+generator-A$ cp ./data/group.2.ini ./data/group.2.genesis ./nodeA/node_127.0.0.1_30300/conf/
+generator-A$ cp ./data/group.2.ini ./data/group.2.genesis ./nodeA/node_127.0.0.1_30301/conf/
+# 发送group2群组创世区块给机构B
+generator-A$ cp ./data/group.2.ini ./data/group.2.genesis ~/generator-B/nodeB/node_127.0.0.1_30302/conf/
+generator-A$ cp ./data/group.2.ini ./data/group.2.genesis ~/generator-B/nodeB/node_127.0.0.1_30303/conf/
 # 机构A重启节点
-generator-A$ bash ./data/stop_all.sh
-generator-A$ bash ./data/start_all.sh
-
-# 机构B生成group2群组配置文件
-generator-B$ ./generator --create_group_config ./data
-# 拷贝群组配置至节点文件夹
-generator-B$ cp ./data/group.2.ini ./data/group.2.genesis ./data/node_127.0.0.1_30302/conf/
-generator-B$ cp ./data/group.2.ini ./data/group.2.genesis ./data/node_127.0.0.1_30303/conf/
+generator-A$ bash ./nodeA/stop_all.sh
+generator-A$ bash ./nodeA/start_all.sh
 # 机构B重启节点
-generator-A$ bash ./data/stop_all.sh
-generator-A$ bash ./data/start_all.sh
+generator-A$ bash ./nodeB/stop_all.sh
+generator-A$ bash ./nodeB/start_all.sh
 ```
 
 此时，可以看到查看节点进程已经从新启动
@@ -363,16 +364,16 @@ generator-A$ bash ./data/start_all.sh
 ```bash
 $ ps -ef | grep fisco
 # 可以看到如下所示的四个进程 如果上一步扩容的节点没有关闭可以看到六个进程
-fisco  16356     1  0 17:22 pts/2    00:00:00 ~/generator-A/data/node_127.0.0.1_30300/fisco-bcos -c config.ini
-fisco  16422     1  0 17:22 pts/2    00:00:00 ~/generator-A/data/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  16467     1  0 17:22 pts/2    00:00:00 ~/generator-B/data/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  16489     1  0 17:22 pts/2    00:00:00 ~/generator-B/data/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  16356     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco  16422     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco  16467     1  0 17:22 pts/2    00:00:00 ~/generator-B/nodeB/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  16489     1  0 17:22 pts/2    00:00:00 ~/generator-B/nodeB/node_127.0.0.1_30303/fisco-bcos -c config.ini
 ```
 
 查看节点log：
 
 ```bash
-$ tail -f data/node*/log/log*  | grep +++
+$ tail -f ./node*/node*/log/log*  | grep +++
 # 看到g:2 +++ 即为群组2正常共识
 info|2019-02-25 17:25:56.028692| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
 info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
