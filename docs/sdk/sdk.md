@@ -14,7 +14,7 @@
 
     - java版本
      要求 `JDK8或以上 <https://openjdk.java.net/>`_。
-     由于CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，因此在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。
+     由于CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，因此在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`安装指南 <https://openjdk.java.net/install/index.html>`_ 
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS安装教程 <../installation.html>`_
     - 网络连通性
