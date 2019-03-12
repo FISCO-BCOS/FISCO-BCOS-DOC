@@ -157,7 +157,7 @@ git-flow将以develop分支为核心，将feature和release过程分开。支持
 
 微信群：添加群管理员微信号fiscobcosfan，拉您入FISCO BCOS官方技术交流群。
 
-群管理员微信二维码：![](https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/doc/FISCO-BCOS.jpeg)
+群管理员微信二维码：![](https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master-1.3/doc/FISCO-BCOS.jpeg)
 
 
 

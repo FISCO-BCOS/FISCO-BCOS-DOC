@@ -4,7 +4,7 @@
 
 .. admonition:: 文档目标
 
-   FISCO-BCOS提供了客户端证书生成脚本   `sdk <https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/cert/sdk.sh>`_ ,该脚本生成客户端证书 ``ca.crt`` 和 ``client.keystore`` , 本文档详细介绍客户端证书 ``client.keystore`` 生成方法。
+   FISCO-BCOS提供了客户端证书生成脚本   `sdk <https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-1.3/cert/sdk.sh>`_ ,该脚本生成客户端证书 ``ca.crt`` 和 ``client.keystore`` , 本文档详细介绍客户端证书 ``client.keystore`` 生成方法。
 
 .. admonition:: ca.crt根证书生成方法
    
