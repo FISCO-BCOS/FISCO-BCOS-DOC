@@ -108,7 +108,7 @@ Group3的相关节点信息举例为：
 
 ```
 # 获取脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
 # 执行，-c为生成节点所提供的ca路径，agency为机构名，-o为将生成的节点目录名
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
