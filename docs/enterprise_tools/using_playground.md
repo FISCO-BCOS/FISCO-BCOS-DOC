@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    使用前建议优先阅读 `教程-使用企业级部署工具 <../tutorial/enterprise_quick_start.html>`_ 
+    使用前建议优先阅读 `教程-使用企业级部署工具 <../tutorial/enterprise_quick_start_agency.html>`_ 
 ```
 
 ## 组网示例
@@ -46,7 +46,7 @@
 
 此时，机构A和B都没有生成过节点配置文件，组网流程如下：
 
-![](../../images/enterprise/simple_star1.png)
+![](../../images/enterprise/sample_star_1.png)
 
 1. 机构A、B分别将节点0，1证书，fisco-bcos可执行程序放置于meta文件夹下
 
@@ -62,7 +62,7 @@
 
 此时，机构A已经拥有节点配置文件，需要生成group2，机构C尚未拥有节点配置文件，组网流程如下：
 
-![](../../images/enterprise/simple_star2.png)
+![](../../images/enterprise/sample_star_2.png)
 
 1. 机构A需要将将节点0，2证书，fisco-bcos可执行程序放置于meta文件夹下
 
@@ -118,7 +118,7 @@
 |   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 | 机构D | 群组3 |
 |   节点4     | 127.0.0.1:30304| 127.0.0.1:8549/:20204 | 机构E | 群组1 |
 
-![](../../images/enterprise/simple_star3.png)
+![](../../images/enterprise/sample_star_3.png)
 
 过程如下：
 
