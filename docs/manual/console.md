@@ -9,6 +9,13 @@
     
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
+常用命令链接：
+- 查看区块高度：[getBlockNumber](./console.html#getblocknumber)
+- 查看共识节点列表：[getSealerList](./console.html#getsealerlist)
+- 部署合约: [deploy](./console.html#deploy)
+- 调用合约: [call](./console.html#call)
+- 切换群组: [switch](./console.html#switch)
+
 ### 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
@@ -31,7 +38,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar
 $ tar -zxf console.tar.gz
 ```
 目录结构如下：
-```text
+```bash
 |-- apps # 控制台jar包目录
 |   -- console.jar 
 |-- lib # 相关依赖的jar包目录
@@ -66,7 +73,7 @@ $ tar -zxf console.tar.gz
     $ ./sol2java.sh org.com.fisco
     ```
     运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
-    ```text
+    ```bash
     |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
     |   |-- HelloWorld.abi
     |   |-- Table.abi
@@ -298,9 +305,9 @@ Switched to group 2.
 ```text
 [group:1]> getSealerList 
 [
-	0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801,
-	10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34,
-	622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73
+    0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801,
+    10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34,
+    622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73
 ]
 ```
 
@@ -310,7 +317,7 @@ Switched to group 2.
 ```text
 [group:1]> getObserverList
 [
-037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772
+    037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772
 ]
 ```
 ### **getNodeIDList**
@@ -318,10 +325,10 @@ Switched to group 2.
 ```text
 [group:1]> getNodeIDList
 [
-	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
-	87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1,
-	29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0,
-	d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8
+    41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
+    87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1,
+    29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0,
+    d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8
 ]
 ```
 
@@ -628,7 +635,7 @@ Switched to group 2.
 }
 ```
 ### **getTransactionByBlockHashAndIndex**
-运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。              
+运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。          
 参数：         
 - 区块哈希：0x开头的区块哈希值。       
 - 交易索引：十进制整数。     
@@ -772,6 +779,7 @@ Hello, FISCO BCOS
 [group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a select "fruit"
 [[fruit], [1], [apple]]
 ```
+**注：** TableTest.sol合约代码[参考这里](smart_contract.html#solidity)。
 
 ### **deployByCNS**
 运行deployByCNS，利用[CNS](../design/features/cns_contract_name_service.md)部署合约。                                 
@@ -828,8 +836,7 @@ Hello,CNS
 参数： 
 - 节点nodeId
 ```text
-[group:1]> addSealer
-ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+[group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":0,
 	"msg":"success"
@@ -880,9 +887,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 100
 ```
 ### **grantPermissionManager**
-运行grantPermissionManager，赋予外部账号地址的管理权限的权限。**即设置权限管理员账号。**
-
-参数： 
+运行grantPermissionManager，赋予外部账号地址的管理权限的权限。**即设置权限管理员账号。** 参数： 
 - 外部账号地址
 ```text
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -988,9 +993,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 }
 ```
 ### **grantNodeManager**
-运行grantNodeManager，赋予外部账号地址的节点管理权限。
-
-参数： 
+运行grantNodeManager，赋予外部账号地址的节点管理权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1021,9 +1024,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 }
 ```
 ### **grantCNSManager**
-运行grantCNSManager，赋予外部账号地址的使用CNS权限。
-
-参数： 
+运行grantCNSManager，赋予外部账号地址的使用CNS权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1043,8 +1044,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeCNSManager**
-运行revokeCNSManager，撤销外部账号地址的使用CNS权限。                                                                 
-参数： 
+运行revokeCNSManager，撤销外部账号地址的使用CNS权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1054,9 +1054,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 }
 ```
 ### **grantSysConfigManager**
-运行grantSysConfigManager，赋予外部账号地址的系统参数管理权限。
-
-参数： 
+运行grantSysConfigManager，赋予外部账号地址的系统参数管理权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1076,8 +1074,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeSysConfigManager**
-运行revokeSysConfigManager，撤销外部账号地址的系统参数管理权限。                                                                 
-参数： 
+运行revokeSysConfigManager，撤销外部账号地址的系统参数管理权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
