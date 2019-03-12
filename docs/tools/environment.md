@@ -1,7 +1,7 @@
 # 环境依赖
 ## 依赖  
 - 机器配置  
-   参考FISCO BCOS[机器配置](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#第一章-部署fisco-bcos环境)  
+   参考FISCO BCOS[机器配置](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#第一章-部署fisco-bcos环境)  
    ```
    使用的测试服务器： 
    CentOS 7.2 64位

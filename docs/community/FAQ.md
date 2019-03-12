@@ -4,10 +4,10 @@
 
 ### 1.如何快速安装部署FISCO BCOS？
 
-**解决方案**：作为范例，[一键快速安装部署](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/sample)提供了快速编译安装FISCO BCOS、并且部署2个节点的指南。
+**解决方案**：作为范例，[一键快速安装部署](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/sample)提供了快速编译安装FISCO BCOS、并且部署2个节点的指南。
 
 ### 2.如何使用Docker安装FISCO BCOS？
-**解决方案**：目前FISCO BCOS平台已经发布了Dockerfile文件和Docker Hub上预构建的镜像，并将持续同步源码的更新。想要使用Docker快速安装一个或者多个节点，请参阅[使用Docker安装部署BCOS指南。](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/docker)
+**解决方案**：目前FISCO BCOS平台已经发布了Dockerfile文件和Docker Hub上预构建的镜像，并将持续同步源码的更新。想要使用Docker快速安装一个或者多个节点，请参阅[使用Docker安装部署BCOS指南。](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/docker)
 
 ### 3.在build路径运行"make -j2" 卡死
 **解决方案**：编译的过程中需要从网络上下载依赖的包，网络条件太差可能卡死。建议在网络条件良好的环境搭建FISCO BCOS，或者从其他渠道下载依赖库包后拷贝到你的编译目标路径下。亦可参见[issue：make -j2 运行卡死](https://github.com/bcosorg/bcos/issues/20)
@@ -129,7 +129,7 @@ echo '{ "presets": ["es2017"] }' > ~/.babelrc
 
 **1.如何运行智能合约？**
 
-**解决方案**：目前FISCO BCOS平台已经发布了[contract_samples](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/contract_samples) (位于项目根目录下)，示范了使用Java 和 Node.js开发智能合约客户端的范例，展示了如何编译、部署、调用智能合约，供参考。更多问题细节，亦可参见[issue:智能合约问题](https://github.com/bcosorg/bcos/issues/35)
+**解决方案**：目前FISCO BCOS平台已经发布了[contract_samples](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/contract_samples) (位于项目根目录下)，示范了使用Java 和 Node.js开发智能合约客户端的范例，展示了如何编译、部署、调用智能合约，供参考。更多问题细节，亦可参见[issue:智能合约问题](https://github.com/bcosorg/bcos/issues/35)
 
 
 

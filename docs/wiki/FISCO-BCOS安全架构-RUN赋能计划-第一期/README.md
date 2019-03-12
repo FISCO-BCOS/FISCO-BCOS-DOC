@@ -399,7 +399,7 @@ FISCO-BCOS国密版本使用SM2,SM3算法从客户端发送交易到节点，节
 
 扫码加入官方微信群，与学霸小姐姐交流~
 
-![https://github.com/FISCO-BCOS/FISCO-BCOS/raw/master/doc/FISCO-BCOS.jpeg](333.jpg)
+![https://github.com/FISCO-BCOS/FISCO-BCOS/raw/master-1.3/doc/FISCO-BCOS.jpeg](333.jpg)
 
  
 

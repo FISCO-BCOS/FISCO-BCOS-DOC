@@ -225,7 +225,7 @@ INFO|2018-08-13 13:54:25:054|PBFTClient.cpp:343|+++++++++++++++++++++++++++ Gene
 ```
 
 ## 私钥证书管理
-- 物料包使用FISCO BCOS的工具分配证书, 工具位于下载的FSICO-BCOS目录的cert子目录, 使用方式参考[FISCO-BCOS 证书生成工具](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#第二章-准备链环境)。
+- 物料包使用FISCO BCOS的工具分配证书, 工具位于下载的FSICO-BCOS目录的cert子目录, 使用方式参考[FISCO-BCOS 证书生成工具](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#第二章-准备链环境)。
 - 构建完成各个服务器的安装包之后, 整条链的根证书、机构证书会保存在创世节点所在服务器的dependencies/cert目录 保存的目录结构为： 
 ```
 cert目录  
