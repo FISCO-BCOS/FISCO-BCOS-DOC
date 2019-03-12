@@ -9,6 +9,13 @@
     
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
+常用命令链接：
+- 查看区块高度：[getBlockNumber](./console.html#getblocknumber)
+- 查看共识节点列表：[getSealerList](./console.html#getsealerlist)
+- 部署合约: [deploy](./console.html#deploy)
+- 调用合约: [call](./console.html#call)
+- 切换群组: [switch](./console.html#switch)
+
 ### 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
