@@ -310,7 +310,7 @@ Switched to group 2.
 ```text
 [group:1]> getObserverList
 [
-037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772
+  037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772
 ]
 ```
 ### **getNodeIDList**
@@ -628,7 +628,7 @@ Switched to group 2.
 }
 ```
 ### **getTransactionByBlockHashAndIndex**
-运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。              
+运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。          
 参数：         
 - 区块哈希：0x开头的区块哈希值。       
 - 交易索引：十进制整数。     
@@ -772,6 +772,7 @@ Hello, FISCO BCOS
 [group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a select "fruit"
 [[fruit], [1], [apple]]
 ```
+**注：** TableTest.sol合约代码[参考这里](smart_contract.html#solidity)。
 
 ### **deployByCNS**
 运行deployByCNS，利用[CNS](../design/features/cns_contract_name_service.md)部署合约。                                 
@@ -828,8 +829,7 @@ Hello,CNS
 参数： 
 - 节点nodeId
 ```text
-[group:1]> addSealer
-ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+[group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":0,
 	"msg":"success"
@@ -880,9 +880,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 100
 ```
 ### **grantPermissionManager**
-运行grantPermissionManager，赋予外部账号地址的管理权限的权限。**即设置权限管理员账号。**
-
-参数： 
+运行grantPermissionManager，赋予外部账号地址的管理权限的权限。**即设置权限管理员账号。** 参数： 
 - 外部账号地址
 ```text
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -988,9 +986,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 }
 ```
 ### **grantNodeManager**
-运行grantNodeManager，赋予外部账号地址的节点管理权限。
-
-参数： 
+运行grantNodeManager，赋予外部账号地址的节点管理权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1021,9 +1017,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 }
 ```
 ### **grantCNSManager**
-运行grantCNSManager，赋予外部账号地址的使用CNS权限。
-
-参数： 
+运行grantCNSManager，赋予外部账号地址的使用CNS权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1043,8 +1037,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeCNSManager**
-运行revokeCNSManager，撤销外部账号地址的使用CNS权限。                                                                 
-参数： 
+运行revokeCNSManager，撤销外部账号地址的使用CNS权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1054,9 +1047,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 }
 ```
 ### **grantSysConfigManager**
-运行grantSysConfigManager，赋予外部账号地址的系统参数管理权限。
-
-参数： 
+运行grantSysConfigManager，赋予外部账号地址的系统参数管理权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1076,8 +1067,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeSysConfigManager**
-运行revokeSysConfigManager，撤销外部账号地址的系统参数管理权限。                                                                 
-参数： 
+运行revokeSysConfigManager，撤销外部账号地址的系统参数管理权限。参数： 
 - 外部账号地址
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
