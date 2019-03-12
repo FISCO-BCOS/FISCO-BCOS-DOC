@@ -101,8 +101,8 @@ $ cat ipconf
 **使用build_chain脚本构建星形区块链节点配置文件夹**
 
 ```bash
-# 根据配置生成星形区块链
-$ bash build_chain.sh -f ipconf -e ./bin/fisco-bcos
+# 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
+$ bash build_chain.sh -f ipconf -e ./bin/fisco-bcos -p 30300,20200,8545
 Generating CA key...
 ==============================================================
 Generating keys ...
@@ -125,13 +125,12 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 [INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 
 # 生成的节点文件如下
-$ tree
-.
+$ tree nodes
+nodes
 |-- 127.0.0.1
 |   |-- fisco-bcos
 |   |-- node0
 |   |   |-- conf  #节点配置目录
-|   |   |   |-- agency.crt
 |   |   |   |-- ca.crt
 |   |   |   |-- group.1.genesis
 |   |   |   |-- group.1.ini
@@ -487,16 +486,16 @@ info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 
 ### 将group2加入区块链
 
-并行多组区块链每个群组的`genesis`配置文件几乎相同，但[group].index不同，为群组号。
+并行多组区块链每个群组的`genesis`配置文件几乎相同，但[group].id不同，为群组号。
 
 ```bash
 # 拷贝group1的配置
 $ cp node0/conf/group.1.genesis group.2.genesis
 
 # 修改群组ID
-$ sed -i "s/index=1/index=2/g" group.2.genesis
-$ cat group.2.genesis | grep "index"
-    index=2
+$ sed -i "s/id=1/id=2/g" group.2.genesis
+$ cat group.2.genesis | grep "id"
+    id=2
 
 # 将配置拷贝到各个节点
 $ cp group.2.genesis node0/conf

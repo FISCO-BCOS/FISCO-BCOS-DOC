@@ -17,6 +17,8 @@
 
 ## 证书协商
 
+FISCO BCOS使用的证书为满足X509协议的证书格式，生成过程可以参考[教程-使用企业级部署工具](../tutorial/enterprise_quick_start.md)
+
 ### 机构获取证书资格
 
 1. 机构A、B、C、D在本机生成使用`agency.key`，和机构证书请求文件`agency.csr`。
@@ -41,7 +43,7 @@
 
 此时，机构A和B都没有生成过节点配置文件，组网流程如下：
 
-![](../../images/enterprise/simple_star1.png)
+![](../../images/enterprise/sample_star_1.png)
 
 1. 机构A、B分别将节点0，1证书，fisco-bcos可执行程序放置于meta文件夹下
 
@@ -57,7 +59,7 @@
 
 此时，机构A已经拥有节点配置文件，需要生成group2，机构C尚未拥有节点配置文件，组网流程如下：
 
-![](../../images/enterprise/simple_star2.png)
+![](../../images/enterprise/sample_star_2.png)
 
 1. 机构A需要将将节点0，2证书，fisco-bcos可执行程序放置于meta文件夹下
 
@@ -113,7 +115,7 @@
 |   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 | 机构D | 群组3 |
 |   节点4     | 127.0.0.1:30304| 127.0.0.1:8549/:20204 | 机构E | 群组1 |
 
-![](../../images/enterprise/simple_star3.png)
+![](../../images/enterprise/sample_star_3.png)
 
 过程如下：
 

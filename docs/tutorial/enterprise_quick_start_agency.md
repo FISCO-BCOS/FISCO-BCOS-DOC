@@ -34,7 +34,7 @@ $ ./meta/fisco-bcos -v
 
 在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2机构2群组6节点的组网模式，每个节点的ip，端口号分别为：
 
-![](../../images/enterprise/simple3.png)
+![](../../images/enterprise/tutorial_step_3.png)
 
 | 节点序号 |   P2P地址     |   RPC/channel地址     |   所属机构     | 所属群组 |
 | :-----------: | :-------------: | :-------------: | :-------------: | :-------------: |
@@ -264,7 +264,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 至此 我们完成了如图所示构建group1的操作。
 
-![](../../images/enterprise/simple1.png)
+![](../../images/enterprise/tutorial_step_1.png)
 
 ## 机构A扩容两个节点
 
@@ -321,7 +321,7 @@ ps aux| grep fisco-bcos |grep -v grep
 
 构建group1的操作中，我们已经生成了一条具有6个节点，处于群组group1中的联盟链，接下来将新建有4个节点的群组group2。
 
-![](../../images/enterprise/simple2.png)
+![](../../images/enterprise/tutorial_step_2.png)
 
 修改mgroup.ini中的配置项，使其指向对应节点的ip，端口号，指定组id为group2，教程中使用默认设置
 

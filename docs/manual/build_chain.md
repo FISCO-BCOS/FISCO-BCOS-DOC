@@ -54,21 +54,32 @@ e.g
 192.168.0.4:2 agency2 3
 ```
 
-**假设上述文件名为`ipconf`**，则使用下列命令建链
+**假设上述文件名为`ipconf`**，则使用下列命令建链，表示使用配置文件，设置日志级别为`DEBUG`，监听`0.0.0.0`。
+
 ```bash
-bash build_chain.sh -f ipconf -T -i
+$ bash build_chain.sh -f ipconf -T -i
 ```
 
 - **`e`选项[**Optional**]**
 用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
+
+```bash
+# 从GitHub下载下载最新release二进制，生成本机4节点
+$ bash build_chain.sh -l "127.0.0.1:4"
+# 使用 bin/fisco-bcos 二进制，生成本机4节点
+$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
+```
 
 - **`o`选项[**Optional**]**
 指定生成的配置所在的目录。
 
 - **`p`选项[**Optional**]**
 指定节点的起始端口，每个节点占用三个端口，分别是p2p,channel,jsonrpc使用`,`分割端口，必须指定三个端口。同一个IP下的不同节点所使用端口从起始端口递增。
-例如`build_chain -l 127.0.0.1:2 -p 30300,20200,8545`，那么两个节点分别占用`30300,20200,8545`和`30301,20201,8546`。
 
+```bash
+# 两个节点分别占用`30300,20200,8545`和`30301,20201,8546`。
+$ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
+```
 - **`i`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
 
