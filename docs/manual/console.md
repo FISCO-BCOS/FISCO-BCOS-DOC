@@ -769,7 +769,7 @@ Hello, FISCO BCOS
 0x7206d0a6e30f57795475a66ae18169dd65d9994f4ea5af1e3e469364d9f0b392
 
 # 调用TableTest的select接口查询记录
-[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a  "fruit"
+[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a select "fruit"
 [[fruit], [1], [apple]]
 ```
 
