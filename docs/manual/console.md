@@ -31,7 +31,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar
 $ tar -zxf console.tar.gz
 ```
 目录结构如下：
-```bash
+```
 |-- apps # 控制台jar包目录
 |   -- console.jar 
 |-- lib # 相关依赖的jar包目录
@@ -66,7 +66,7 @@ $ tar -zxf console.tar.gz
     $ ./sol2java.sh org.com.fisco
     ```
     运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
-    ```bash
+    ```
     |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
     |   |-- HelloWorld.abi
     |   |-- Table.abi
@@ -190,7 +190,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 ### 启动脚本说明
-```
+```bash
 $ ./start.sh [groupID] [privateKey]   
 ```
 启动命令可以指定两个可选参数：           
@@ -198,7 +198,7 @@ $ ./start.sh [groupID] [privateKey]
 - `privateKey`: 交易发送者外部账号的私钥，不指定则默认从`conf`目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
 
 示例
-```
+```bash
 # 以群组2，私钥账号地址为3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4登录控制台
 $ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4  
 ```
@@ -207,7 +207,7 @@ $ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
 ### **help**
 输入help或者h，查看控制台所有的命令。
 
-```text
+```
 [group:1]> help
 -------------------------------------------------------------------------------------
 help(h)                                  Provide help information.
@@ -268,7 +268,7 @@ quit(q)                                  Quit console.
 **注：**                                       
 - help显示每条命令的含义是：命令 命令功能描述                   
 - 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：   
-```bash
+```
 [group:1]> getBlockByNumber -h
 Query information about a block by block number.
 Usage: getBlockByNumber blockNumber [boolean]
@@ -277,7 +277,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 ```
 ### **switch**
 运行switch或者s，切换到连接节点的指定群组。群组号显示在命令提示符前面。
-```bash
+```
 [group:1]> switch 2
 Switched to group 2.
 
@@ -287,14 +287,14 @@ Switched to group 2.
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
 
-```bash
+```
 [group:1]> getBlockNumber
 90
 ```
 ### **getSealerList**
 运行getSealerList，查看共识节点列表。
 
-```bash
+```
 [group:1]> getSealerList 
 [
 	0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801,
@@ -305,7 +305,7 @@ Switched to group 2.
 
 ### **getObserverList**
 运行getObserverList，查看观察节点列表。
-```bash
+```
 [group:1]> getObserverList
 [
 037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772
@@ -313,7 +313,7 @@ Switched to group 2.
 ```
 ### **getNodeIDList**
 运行getNodeIDList，查看节点及连接p2p节点的nodeId列表。
-```bash
+```
 [group:1]> getNodeIDList
 [
 	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
@@ -326,14 +326,14 @@ Switched to group 2.
 ### **getPbftView**
 运行getPbftView，查看pbft视图。
 
-```bash
+```
 [group:1]> getPbftView  
 2730
 ```
 ### **getConsensusStatus**
 运行getConsensusStatus，查看共识状态。
 
-```bash
+```
 [group:1]> getConsensusStatus
 [
     {
@@ -406,7 +406,7 @@ Switched to group 2.
 ### **getSyncStatus**
 运行getSyncStatus，查看同步状态。
 
-```bash
+```
 [group:1]> getSyncStatus
 {
     "blockNumber":5,
@@ -441,7 +441,7 @@ Switched to group 2.
 
 ### **getNodeVersion**
 运行getNodeVersion，查看节点的版本。
-```bash
+```
 [group:1]> getNodeVersion
 {
 	"Build Time":"20190107 10:15:23",
@@ -453,7 +453,7 @@ Switched to group 2.
 ```
 ### **getPeers**
 运行getPeers，查看节点的peers。
-```bash
+```
 [group:1]> getPeers
 [
 	{
@@ -481,7 +481,7 @@ Switched to group 2.
 ```
 ### **getGroupPeers**
 运行getGroupPeers，查看节点所在group的共识节点和观察节点列表。
-```bash
+```
 [group:1]> getGroupPeers
 [
     cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd,
@@ -492,7 +492,7 @@ Switched to group 2.
 ```
 ### **getGroupList**
 运行getGroupList，查看群组列表:
-```bash
+```
 [group:1]> getGroupList
 [1]
 ```
@@ -501,7 +501,7 @@ Switched to group 2.
 参数：
 - 区块哈希：0x开头的区块哈希值。   
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
-```bash
+```
 [group:1]> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 {
     "extraData":[
@@ -570,7 +570,7 @@ Switched to group 2.
 参数：     
 - 区块高度：十进制整数。    
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。      
-```bash
+```
 [group:1]> getBlockByNumber 1  
 {
     "extraData":[
@@ -601,7 +601,7 @@ Switched to group 2.
 运行getBlockHashByNumber，通过区块高度获得区块哈希。              
 参数：           
 - 区块高度：十进制整数。
-```bash
+```
 [group:1]> getBlockHashByNumber 1
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
@@ -609,7 +609,7 @@ Switched to group 2.
 运行getTransactionByHash，通过交易哈希查询交易信息。                   
 参数：        
 - 交易哈希：0x开头的交易哈希值。
-```bash
+```
 [group:1]> getTransactionByHash 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
@@ -630,7 +630,7 @@ Switched to group 2.
 参数：         
 - 区块哈希：0x开头的区块哈希值。       
 - 交易索引：十进制整数。     
-```bash
+```
 [group:1]> getTransactionByBlockHashAndIndex 0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02 0
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
@@ -652,7 +652,7 @@ Switched to group 2.
 参数：      
 - 区块高度：十进制整数。
 - 交易索引：十进制整数。
-```bash
+```
 [group:1]> getTransactionByBlockNumberAndIndex 2 0
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
@@ -672,7 +672,7 @@ Switched to group 2.
 运行getTransactionReceipt，通过交易哈希查询交易回执。              
 参数：
 - 交易哈希：0x开头的交易哈希值。
-```bash
+```
 [group:1]> getTransactionReceipt 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
 {
 	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
@@ -692,14 +692,14 @@ Switched to group 2.
 ```
 ### **getPendingTransactions**
 运行getPendingTransactions，查询等待处理的交易。              
-```bash
+```
 [group:1]> getPendingTransactions
 []
 ```
 
 ### **getPendingTxSize**
 运行getPendingTxSize，查询等待处理的交易数量。              
-```bash
+```
 [group:1]> getPendingTxSize
 0
 ```
@@ -709,14 +709,14 @@ Switched to group 2.
 参数：
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
 - 
-```bash
+```
 [group:1]> getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
 ```
 
 ### **getTotalTransactionCount**
 运行getTotalTransactionCount，查询当前块高和总交易数。                          
-```bash
+```
 [group:1]> getTotalTransactionCount
 {
 	"blockNumber":1,
@@ -728,7 +728,7 @@ Switched to group 2.
 参数：
 - 合约名称：部署的合约名称(可以带.sol后缀)，即HelloWorld或者HelloWorld.sol均可。                          
                            
-```bash
+```
 # 部署HelloWorld合约
 [group:1]> deploy HelloWorld.sol
 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
@@ -746,7 +746,7 @@ Switched to group 2.
 - 合约地址: 部署合约获取的地址。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定，**参数空格分隔，字符串需要双引号标识。**
-```bash
+```
 # 调用HelloWorld的get接口获取name字符串
 [group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
@@ -777,7 +777,7 @@ Hello, FISCO BCOS
 参数：
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
-```bash
+```
 # 部署HelloWorld合约
 [group:1]> deployByCNS HelloWorld.sol 1.0
 0x3554a56ea2905f366c345bd44fa374757fb4696a
@@ -792,7 +792,7 @@ Hello, FISCO BCOS
 参数：
 - 合约名称：部署的合约名称。
 - 合约版本号：(可选)部署的合约版本号。
-```bash
+```
 [group:1]> queryCNS HelloWorld.sol 
 ---------------------------------------------------------------------------------------------
 |                   version                   |                   address                   |
@@ -812,7 +812,7 @@ Hello, FISCO BCOS
 - 合约版本号：部署的合约版本号。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定，参数空格分隔，字符串需要双引号标识。
-```bash
+```
 # 调用HelloWorld的get接口获取name字符串
 [group:1]> callByCNS HelloWorld 1.0 set "Hello,CNS"
 0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
@@ -826,7 +826,7 @@ Hello,CNS
 运行addSealer，将节点添加为共识节点。                                 
 参数： 
 - 节点nodeId
-```bash
+```
 [group:1]> addSealer
 ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
@@ -839,7 +839,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行addObserver，将节点添加为观察节点。                                 
 参数： 
 - 节点nodeId
-```bash
+```
 [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":0,
@@ -851,7 +851,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。                                  
 参数： 
 - 节点nodeId
-```bash
+```
 [group:1]> removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":0,
@@ -863,7 +863,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 参数： 
 - key
 - value
-```bash
+```
 [group:1]> setSystemConfigByKey tx_count_limit 100
 {
 	"code":0,
@@ -874,7 +874,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行getSystemConfigByKe，根据键查询系统配置的值。                                  
 参数： 
 - key
-```bash
+```
 [group:1]> getSystemConfigByKey tx_count_limit
 100
 ```
@@ -883,7 +883,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -901,7 +901,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ```
 ### **listPermissionManager**
 运行listPermissionManager，查询拥有管理权限的权限记录列表。                                  
-```bash
+```
 [group:1]> listPermissionManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
@@ -912,7 +912,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行revokePermissionManager，撤销外部账号地址的权限管理权限。                                                                 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -924,7 +924,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 参数： 
 - 表名
 - 外部账号地址
-```bash
+```
 [group:1]> grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -935,7 +935,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行listUserTableManager，根据用户表名查询赋予的权限记录列表。                                  
 参数： 
 - 表名
-```bash
+```
 [group:1]> listUserTableManager t_test 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
@@ -947,7 +947,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 参数： 
 - 表名
 - 外部账号地址
-```bash
+```
 [group:1]> revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -959,7 +959,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -968,7 +968,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ```
 ### **listDeployAndCreateManager**
 运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的权限记录列表。                                  
-```bash
+```
 [group:1]> listDeployAndCreateManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
@@ -979,7 +979,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行revokeDeployAndCreateManager，撤销外部账号地址的部署合约和创建用户表权限。                                                                 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -991,7 +991,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -1001,7 +1001,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ### **listNodeManager**
 运行listNodeManager，查询拥有节点管理的权限记录列表。
 
-```bash
+```
 [group:1]> listNodeManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
@@ -1012,7 +1012,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行revokeNodeManager，撤销外部账号地址的节点管理权限。                                                                 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -1024,7 +1024,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -1034,7 +1034,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ### **listCNSManager**
 运行listCNSManager，查询拥有使用CNS的权限记录列表。
                                   
-```bash
+```
 [group:1]> listCNSManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
@@ -1045,7 +1045,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行revokeCNSManager，撤销外部账号地址的使用CNS权限。                                                                 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -1057,7 +1057,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -1067,7 +1067,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ### **listSysConfigManager**
 运行listSysConfigManager，查询拥有系统参数管理的权限记录列表。
                                   
-```bash
+```
 [group:1]> listSysConfigManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
@@ -1078,7 +1078,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 运行revokeSysConfigManager，撤销外部账号地址的系统参数管理权限。                                                                 
 参数： 
 - 外部账号地址
-```bash
+```
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
 	"code":0,
@@ -1087,6 +1087,6 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 ```
 ### **quit**
 运行quit或q，退出控制台。
-```bash
+```
 quit
 ```
