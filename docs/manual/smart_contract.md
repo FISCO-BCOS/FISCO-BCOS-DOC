@@ -215,7 +215,7 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
  
 > 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**辅助合约**，辅助合约在调用预编译合约时需要使用。 
 
-```
+```js
     pragma solidity ^0.4.25;
     contract Contract_Name {
         function interface0(parameters ... ) {}
@@ -232,7 +232,7 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
 ##### **实现调用逻辑**  
 
 实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承[Precompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/Precompiled.h#L37), 重载call函数， 在call函数中实现各个接口的调用行为。  
-```
+```c++
     //libblockverifier/Precompiled.h
     class Precompiled
     {
@@ -253,13 +253,13 @@ call函数有三个参数：
 
 最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用precompiled合约时合约的执行逻辑才能被正确识别执行， 查看注册的[预编译合约列表](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/ExecutiveContextFactory.cpp#L36)。   
 注册路径：
-```
+```c++
     file        libblockverifier/ExecutiveContextFactory.cpp
     function    initExecutiveContext  
 ```
 
 #### 2.2 step by step sample  
-```
+```js
 //HelloWorld.sol
 pragma solidity ^0.4.25;
 
@@ -281,7 +281,7 @@ contract HelloWorld{
 ```
 上述源码为solidity编写的HelloWorld合约， 本章节会实现一个相同功能的预编译合约，通过step by step使用户对预编译合约编写有直观的认识。   
 示例的c++[源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp)：
-```
+```c++
     libprecompiled/extension/HelloWorldPrecompiled.h 
     libprecompiled/extension/HelloWorldPrecompiled.cpp
 ```
@@ -296,7 +296,7 @@ contract HelloWorld{
 ##### 2.2.2 定义合约接口  
 
 需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的辅助合约：
-```
+```js
 pragma solidity ^0.4.25;
 
 contract HelloWorld {
@@ -372,7 +372,7 @@ if (!table)
 
 通过getParamFunc解析_param可以区分调用的接口。  
 **注意：合约接口一定要先在构造函数中注册**
-```
+```c++
 uint32_t func = getParamFunc(_param);
 if (func == name2Selector[HELLO_WORLD_METHOD_GET])
 {  
@@ -406,7 +406,7 @@ out = abi.abiIn("", count);
 ```
 
 - [源码：call函数](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
-```
+```c++
 //file HelloWorldPrecompiled.h
 //file HelloWorldPrecompiled.cpp
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
@@ -470,7 +470,7 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
         }
 
         if (count == CODE_NO_AUTHORIZED)
-        {  //  没有表操作权限
+        {  // 没有表操作权限
             PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("set")
                                    << LOG_DESC("non-authorized");
         }
@@ -487,7 +487,7 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
 ```
 
 ##### 2.2.5 注册合约
-```
+```c++
 // file         libblockverifier/ExecutiveContextFactory.cpp
 // function     initExecutiveContext
 
@@ -497,7 +497,7 @@ context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompil
 ##### 2.2.6 其他流程  
 [源码编译](../installation.md)
 
- [环境搭链](../manual/build_chain.md)
+[环境搭链](../manual/build_chain.md)
 
 ### 三 调用 
 
@@ -508,7 +508,7 @@ web3sdk调用合约时，需要先将合约转换为java代码，对于预编译
 
 #### 3.2 solidity调用  
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
-```
+```js
 pragma solidity ^0.4.25;
 contract HelloWorld {
     function get() public constant returns(string) {}
