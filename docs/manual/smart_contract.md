@@ -390,22 +390,44 @@ else
 
 - 参数解析与结果返回  
 
-调用合约时传入的参数会统一按照solidity ABI编码格式序列化在_param中，使用`dev::eth::ContractABI`工具类可以进行参数的序列化与反序列化，在参数解析和返回值时需要使用该工具。[solidity ABI序列化说明文档](https://solidity.readthedocs.io/en/latest/abi-spec.html)。
+调用合约时传入的参数会统一按照Solidity ABI编码格式序列化在_param中，使用`dev::eth::ContractABI`工具类可以进行参数的序列化与解析，同样接口的返回值也需要按照该编码格式返回。[Solidity ABI](https://solidity.readthedocs.io/en/latest/abi-spec.html)。
 
+`dev::eth::ContractABI`类中我们需要使用`abiIn abiOut`两个接口，前者用户参数的序列化，后者可以从序列化的数据中解析参数
 ```c++
-// 参数解析
-bytesConstRef data = getParamData(_param);
-dev::eth::ContractABI abi;
-std::string strValue;
-abi.abiOut(data, strValue);
+// 序列化ABI数据, c++类型数据序列化为evm使用的格式
+// _id : 函数接口声明对应的字符串, 一般默认为""即可。
+template <class... T> bytes abiIn(std::string _id, T const&... _t)
+// 将序列化数据解析为c++类型数据
+template <class... T> void  abiOut(bytesConstRef _data, T&... _t)
+```
+这里给个sample说明接口如何使用:
+```c++ 
+// 对于transfer接口 ： transfer(string,string,uint256)
 
-// 返回值
-bytes out;
-int count = 0;
-out = abi.abiIn("", count);
+// 参数1
+std::string str1 = "fromAccount"; 
+// 参数2
+std::string str2 = "toAccount";
+// 参数3
+uint256 transferAmoumt = 11111;
+
+dev::eth::ContractABI abi;
+// 序列化, abiIn第一个string参数默认""
+bytes out = abi.abiIn("", str1, str2, transferAmoumt);
+
+std::string strOut1;
+std::string strOut2;
+uint256 amoumt;
+
+// 解析参数
+abi.abiOut(out, strOut1, strOut2, amount);
+// 解析之后  
+// strOut1 = "fromAccount";
+// strOut2 = "toAccount"
+// amoumt = 11111
 ```
 
-- [源码：call函数](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
+call函数源码参考[链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
 ```c++
 //file HelloWorldPrecompiled.h
 //file HelloWorldPrecompiled.cpp
