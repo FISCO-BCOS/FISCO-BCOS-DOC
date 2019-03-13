@@ -19,3 +19,4 @@
    amop_protocol.md
    guomi_crypto.md
    log_access.md
+   transaction_parallel.md
