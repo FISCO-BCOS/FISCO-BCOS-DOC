@@ -21,7 +21,7 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 `Table.sol`文件代码如下:
 
 ```js
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 contract TableFactory {
     function openTable(string) public constant returns (Table);  // 打开表
@@ -82,7 +82,7 @@ contract Table {
 提供一个合约案例`TableTest.sol`，代码如下：
 
 ```js
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 import "./Table.sol";
 
@@ -236,7 +236,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 > 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**辅助合约**，辅助合约在调用预编译合约时需要使用。 
 
 ```js
-    pragma solidity ^0.4.25;
+    pragma solidity ^0.4.24;
     contract Contract_Name {
         function interface0(parameters ... ) {}
         ....
@@ -280,7 +280,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 
 ```js
 // HelloWorld.sol
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 contract HelloWorld{
     string name;
@@ -318,7 +318,7 @@ contract HelloWorld{
 
 需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的辅助合约：
 ```js
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 contract HelloWorld {
     function get() public constant returns(string) {}
@@ -448,7 +448,7 @@ web3sdk调用合约时，需要先将合约转换为java代码，对于预编译
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
 
 ```js
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 contract HelloWorld {
     function get() public constant returns(string) {}
     function set(string _m) {}
@@ -456,7 +456,7 @@ contract HelloWorld {
 ```
 
 ```js
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 import "./HelloWorld.sol";
 
 contract HelloWorldHelper {
