@@ -188,7 +188,7 @@ TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创�
 实现预编译合约的流程：
 ![流程](../../images/precompiled/create_process.png)
 
-- **分配合约地址**  
+##### **分配合约地址**  
 
 调用solidity合约或者预编译合约需要根据合约地址来区分，地址空间划分：
 
@@ -209,9 +209,9 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
 | 0x1004 | CNS功能  | CNSPrecompiled.cpp |
 | 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |
 
-- **定义合约接口**  
+##### **定义合约接口**  
 
-同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI 链接](https://solidity.readthedocs.io/en/develop/abi-spec.html)。  
+同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI参考链接](https://solidity.readthedocs.io/en/latest/abi-spec.html)。  
  
 > 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**辅助合约**，辅助合约在调用预编译合约时需要使用。 
 
@@ -224,24 +224,28 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
     }
 ```  
 
-- **设计存储结构**  
+##### **设计存储结构**  
 
 预编译合约涉及存储操作时，需要确定存储的表信息(表名与表结构,存储数据在FISCO-BCOS中会统一抽象为表结构)， [存储结构](../design/storage/storage.md)。  
 **注意：不涉及存储操作可以省略该流程**  
  
-- **实现调用逻辑**  
+##### **实现调用逻辑**  
 
 实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承[Precompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/Precompiled.h#L37), 重载call函数， 在call函数中实现各个接口的调用行为。  
 ```
     //libblockverifier/Precompiled.h
     class Precompiled
     {
-        virtual bytes call(std::shared_ptr<ExecutiveContext> context, bytesConstRef param,
-            Address const& origin = Address()) = 0;
+        bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
+    bytesConstRef _param, Address const& _origin) = 0;
     };
 ```
+call函数有三个参数：  
+`std::shared_ptr<ExecutiveContext> _context` 保存交易执行的上下文  
+`bytesConstRef _param` 调用合约的参数信息，本次调用对应合约哪个接口以及接口的参数可以从param解析获取  
+`Address const& _origin` 交易者发送者，用来进行权限控制
 
-- **注册合约**  
+##### **注册合约**  
 
 最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用precompiled合约时合约的执行逻辑才能被正确识别执行， 查看注册的[预编译合约列表](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libblockverifier/ExecutiveContextFactory.cpp#L36)。   
 注册路径：
@@ -314,53 +318,130 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 该表只存储一对键值对，key字段为hello_key，value字段为hello_value 存储对应的字符串值，可以通过set(string)接口修改，通过get()接口获取。
 
 ##### 2.2.4 实现调用逻辑  
-添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
+
+用户自定义的Precompiled合约需要新增一个类，在类中定义合约的调用行为，在示例中添加HelloWorldPrecompiled类，然后主要需要完成以下工作：
+
+- 接口注册  
+```c++
+// 定义类中所有的接口
+const char* const HELLO_WORLD_METHOD_GET = "get()";
+const char* const HELLO_WORLD_METHOD_SET = "set(string)";
+
+// 在构造函数进行接口注册
+HelloWorldPrecompiled::HelloWorldPrecompiled()
+{
+    // name2Selector是基类Precompiled类中成员，保存接口调用的映射关系
+    name2Selector[HELLO_WORLD_METHOD_GET] = getFuncSelector(HELLO_WORLD_METHOD_GET);
+    name2Selector[HELLO_WORLD_METHOD_SET] = getFuncSelector(HELLO_WORLD_METHOD_SET);
+}
+```
+
+- 创建表
+定义表名，表的字段结构
+```
+// 定义表名
+const std::string HELLO_WORLD_TABLE_NAME = "_ext_hello_world_";
+// 主键字段
+const std::string HELLOWORLD_KEY_FIELD = "key";
+// 其他字段字段，多个字段使用逗号分割，比如 "field0,field1,field2"
+const std::string HELLOWORLD_VALUE_FIELD = "value";
+```
+
+```
+// call函数中，表存在时打开，否则首先创建表
+Table::Ptr table = openTable(_context, HELLO_WORLD_TABLE_NAME);
+if (!table)
+{
+    // 表不存在，首先创建
+    table = createTable(_context, HELLO_WORLD_TABLE_NAME, HELLOWORLD_KEY_FIELD,
+        HELLOWORLD_VALUE_FIELD, _origin);
+    if (!table)
+    {
+        // 创建表失败，返回错误码
+    }
+}
+```
+获取表的操作句柄之后，用户可以实现对表操作的具体逻辑。
+
+- 区分调用接口  
+通过getParamFunc解析_param可以区分调用的接口。  
+**注意：合约接口一定要先在构造函数中注册**
+```
+uint32_t func = getParamFunc(_param);
+if (func == name2Selector[HELLO_WORLD_METHOD_GET])
+{  
+    // get() 接口调用逻辑 
+}
+else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
+{  
+    // set(string) 接口调用逻辑 
+}
+else
+{  
+    // 未知接口，调用错误，返回错误码
+}
+```
+
+- 参数解析与结果返回  
+调用合约时传入的参数会统一按照solidity ABI编码格式序列化在_param中，使用`dev::eth::ContractABI`工具类可以进行参数的序列化与反序列化，在参数解析和返回值时需要使用该工具。[solidity ABI序列化说明文档](https://solidity.readthedocs.io/en/latest/abi-spec.html)。
+
+```c++
+// 参数解析
+bytesConstRef data = getParamData(_param);
+dev::eth::ContractABI abi;
+std::string strValue;
+abi.abiOut(data, strValue);
+
+// 返回值
+bytes out;
+int count = 0;
+out = abi.abiIn("", count);
+```
+
+- [源码：call函数](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
 ```
 //file HelloWorldPrecompiled.h
 //file HelloWorldPrecompiled.cpp
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
     bytesConstRef _param, Address const& _origin)
 {
-    PRECOMPILED_LOG(TRACE) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("call")
-                           << LOG_KV("param", toHex(_param));
-
-    // parse function name
+    // 解析函数接口
     uint32_t func = getParamFunc(_param);
+    // 
     bytesConstRef data = getParamData(_param);
     bytes out;
     dev::eth::ContractABI abi;
 
+    // 打开表
     Table::Ptr table = openTable(_context, HELLO_WORLD_TABLE_NAME);
     if (!table)
     {
-        // table is not exist, create it.
+        // 表不存在，首先创建
         table = createTable(_context, HELLO_WORLD_TABLE_NAME, HELLOWORLD_KEY_FIELD,
             HELLOWORLD_VALUE_FIELD, _origin);
         if (!table)
         {
-            PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("set")
-                                   << LOG_DESC("open table failed.");
+            // 创建表失败，无权限? 
             out = abi.abiIn("", CODE_NO_AUTHORIZED);
             return out;
         }
     }
-    if (func == name2Selector[HELLO_WORLD_METHOD_GET])
-    {  // get() function call
-        // default retMsg
-        std::string retValue = "Hello World!";
 
+    // 区分调用接口，各个接口的具体调用逻辑
+    if (func == name2Selector[HELLO_WORLD_METHOD_GET])
+    {  // get() 接口调用
+        // 默认返回值
+        std::string retValue = "Hello World!";
         auto entries = table->select(HELLOWORLD_KEY_FIELD_NAME, table->newCondition());
         if (0u != entries->size())
-        {
+        { 
             auto entry = entries->get(0);
             retValue = entry->getField(HELLOWORLD_VALUE_FIELD);
-            PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("get")
-                                   << LOG_KV("value", retValue);
         }
         out = abi.abiIn("", retValue);
     }
     else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
-    {  // set(string) function call
+    {  // set(string) 接口调用
 
         std::string strValue;
         abi.abiOut(data, strValue);
@@ -371,25 +452,25 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
 
         int count = 0;
         if (0u != entries->size())
-        {  // update
+        {  // 值存在，更新
             count = table->update(HELLOWORLD_KEY_FIELD_NAME, entry, table->newCondition(),
                 std::make_shared<AccessOptions>(_origin));
         }
         else
-        {  // insert
+        {  // 值不存在，插入
             count = table->insert(
                 HELLOWORLD_KEY_FIELD_NAME, entry, std::make_shared<AccessOptions>(_origin));
         }
 
         if (count == CODE_NO_AUTHORIZED)
-        {  //  permission denied
+        {  //  没有表操作权限
             PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("set")
                                    << LOG_DESC("non-authorized");
         }
         out = abi.abiIn("", count);
     }
     else
-    {  // unkown function call
+    {  // 参数错误，未知的接口调用
         PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC(" unkown func ")
                                << LOG_KV("func", func);
     }
