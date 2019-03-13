@@ -243,9 +243,9 @@ call函数有三个参数：
 
 `std::shared_ptr<ExecutiveContext> _context : ` 保存交易执行的上下文  
 
-`bytesConstRef _param : ` 调用合约的参数信息，本次调用对应合约哪个接口以及接口的参数可以从param解析获取  
+`bytesConstRef _param : ` 调用合约的参数信息，本次调用对应合约接口以及接口的参数可以从_param解析获取  
 
-`Address const& _origin : ` 交易者发送者，用来进行权限控制  
+`Address const& _origin : ` 交易发送者，用来进行权限控制  
 
 如何实现一个Precompiled类在下面的sample中会详细说明。
 
@@ -390,7 +390,7 @@ else
 
 - 参数解析与结果返回  
 
-调用合约时传入的参数会统一按照Solidity ABI编码格式序列化在_param中，使用`dev::eth::ContractABI`工具类可以进行参数的序列化与解析，同样接口的返回值也需要按照该编码格式返回。[Solidity ABI](https://solidity.readthedocs.io/en/latest/abi-spec.html)。
+调用合约时的参数包含在call函数的_param参数中，是按照Solidity ABI格式进行编码，使用`dev::eth::ContractABI`工具类可以进行参数的解析，同样接口返回时返回值也需要按照该编码格编码。[Solidity ABI](https://solidity.readthedocs.io/en/latest/abi-spec.html)。
 
 `dev::eth::ContractABI`类中我们需要使用`abiIn abiOut`两个接口，前者用户参数的序列化，后者可以从序列化的数据中解析参数
 ```c++
@@ -427,10 +427,9 @@ abi.abiOut(out, strOut1, strOut2, amount);
 // amoumt = 11111
 ```
 
-call函数源码参考[链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
+
+最后，给出HelloWorldPrecompiled call函数的完整实现[源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
 ```c++
-//file HelloWorldPrecompiled.h
-//file HelloWorldPrecompiled.cpp
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
     bytesConstRef _param, Address const& _origin)
 {
