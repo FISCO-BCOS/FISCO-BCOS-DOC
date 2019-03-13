@@ -200,7 +200,7 @@ TableTest.sol 调用了 AMDB 专用的智能合约 Table.sol，实现的是创�
 
 FISCO-BCOS中实现的precompild合约列表以及地址分配：
 
-| 地址   | 功能   || 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
+| 地址   | 功能   | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/release-2.0.1/libprecompiled)) |
 |--------|--------|---------|
 | 0x1000 | 系统参数管理 | SystemConfigPrecompiled.cpp |
 | 0x1001 | 表工厂合约 | TableFactoryPrecompiled.cpp |
@@ -236,14 +236,17 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
     //libblockverifier/Precompiled.h
     class Precompiled
     {
-        bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
-    bytesConstRef _param, Address const& _origin) = 0;
+        bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context, bytesConstRef _param, Address const& _origin) = 0;
     };
 ```
 call函数有三个参数：  
-`std::shared_ptr<ExecutiveContext> _context` 保存交易执行的上下文  
-`bytesConstRef _param` 调用合约的参数信息，本次调用对应合约哪个接口以及接口的参数可以从param解析获取  
-`Address const& _origin` 交易者发送者，用来进行权限控制
+`std::shared_ptr<ExecutiveContext> _context : ` 保存交易执行的上下文  
+
+`bytesConstRef _param : ` 调用合约的参数信息，本次调用对应合约哪个接口以及接口的参数可以从param解析获取  
+
+`Address const& _origin : ` 交易者发送者，用来进行权限控制  
+
+如何实现一个Precompiled类在下面的sample中会详细说明。
 
 ##### **注册合约**  
 
