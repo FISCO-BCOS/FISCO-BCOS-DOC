@@ -110,12 +110,6 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 }
 ```
 
-## 部署与调用
-
-
-
-
-
 ## 举例：并行转账
 
 基于账户模型的转账，是一种典型的业务操作。FISCO BCOS内置了一个并行precompile合约的例子（[DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/feature-parallel/libprecompiled/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
