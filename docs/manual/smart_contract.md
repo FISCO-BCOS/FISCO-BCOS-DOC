@@ -240,6 +240,7 @@ FISCO-BCOS中实现的precompild合约列表以及地址分配：
     };
 ```
 call函数有三个参数：  
+
 `std::shared_ptr<ExecutiveContext> _context : ` 保存交易执行的上下文  
 
 `bytesConstRef _param : ` 调用合约的参数信息，本次调用对应合约哪个接口以及接口的参数可以从param解析获取  
@@ -339,9 +340,10 @@ HelloWorldPrecompiled::HelloWorldPrecompiled()
 }
 ```
 
-- 创建表
+- 创建表  
+
 定义表名，表的字段结构
-```
+```c++
 // 定义表名
 const std::string HELLO_WORLD_TABLE_NAME = "_ext_hello_world_";
 // 主键字段
@@ -350,7 +352,7 @@ const std::string HELLOWORLD_KEY_FIELD = "key";
 const std::string HELLOWORLD_VALUE_FIELD = "value";
 ```
 
-```
+```c++
 // call函数中，表存在时打开，否则首先创建表
 Table::Ptr table = openTable(_context, HELLO_WORLD_TABLE_NAME);
 if (!table)
@@ -367,6 +369,7 @@ if (!table)
 获取表的操作句柄之后，用户可以实现对表操作的具体逻辑。
 
 - 区分调用接口  
+
 通过getParamFunc解析_param可以区分调用的接口。  
 **注意：合约接口一定要先在构造函数中注册**
 ```
@@ -386,6 +389,7 @@ else
 ```
 
 - 参数解析与结果返回  
+
 调用合约时传入的参数会统一按照solidity ABI编码格式序列化在_param中，使用`dev::eth::ContractABI`工具类可以进行参数的序列化与反序列化，在参数解析和返回值时需要使用该工具。[solidity ABI序列化说明文档](https://solidity.readthedocs.io/en/latest/abi-spec.html)。
 
 ```c++
