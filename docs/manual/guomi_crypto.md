@@ -12,9 +12,9 @@ $ sudo apt install -y openssl curl
 # 准备环境
 $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 # 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -g
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -g
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 # 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行程序
 $ ./bin/fisco-bcos -v
