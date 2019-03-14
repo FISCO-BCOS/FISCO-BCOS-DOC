@@ -4,7 +4,7 @@
 
 .. admonition:: 参考资料
 
-   - `web3j RPC接口 <https://github.com/FISCO-BCOS/web3sdk/blob/master/src/main/java/org/bcos/web3j/console/Web3RpcApi.java>`_ 
+   - `web3j RPC接口 <https://github.com/FISCO-BCOS/web3sdk/blob/master-1.2/src/main/java/org/bcos/web3j/console/Web3RpcApi.java>`_ 
 
    - `web3j官方文档 <https://docs.web3j.io/>`_
 

@@ -4,7 +4,7 @@
 
 .. admonition:: 参考资料
 
-   - `权限控制API接口 <https://github.com/FISCO-BCOS/web3sdk/blob/master/src/main/java/org/bcos/contract/tools/AuthorityManager.java>`_ 
+   - `权限控制API接口 <https://github.com/FISCO-BCOS/web3sdk/blob/master-1.2/src/main/java/org/bcos/contract/tools/AuthorityManager.java>`_ 
    - `权限控制设计文档 <https://github.com/FISCO-BCOS/Wiki/tree/master/FISCO%20BCOS%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B>`_ 
 
    - `联盟链权限控制体系说明 <https://github.com/FISCO-BCOS/Wiki/tree/master/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E6%9D%83%E9%99%90%E4%BD%93%E7%B3%BB>`_
