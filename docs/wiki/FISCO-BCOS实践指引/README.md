@@ -51,7 +51,7 @@
 ### web3sdk  
   web3sdk是FISCO BCOS的java客户端, 针对FISCO BCOS做了多项优化、改进, 添加了FISCO BCOS的多项特性。    
   [下载地址](https://github.com/FISCO-BCOS/web3sdk)    
-  [使用文档](https://github.com/FISCO-BCOS/web3sdk/blob/master/README.md)    
+  [使用文档](https://github.com/FISCO-BCOS/web3sdk/blob/master-1.2/README.md)    
 
 ###  存证sample
   [源码地址](https://github.com/FISCO-BCOS/Wiki/tree/master/%E5%AD%98%E8%AF%81sample%E8%AF%B4%E6%98%8E)  
