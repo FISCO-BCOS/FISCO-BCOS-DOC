@@ -106,7 +106,7 @@
        ============to balance:4
        ============to balance:8
 
-   (Ok合约详细代码可参考 `Ok.sol  <https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-1.2/tool/Ok.sol>`_ )
+   (Ok合约详细代码可参考 `Ok.sol  <https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-1.3/tool/Ok.sol>`_ )
 ```    
 
 ## applicationContext.xml详细介绍
