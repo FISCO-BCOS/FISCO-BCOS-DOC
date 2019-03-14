@@ -1,4 +1,6 @@
 _build
+.vscode/
+.DS_Store
 .idea
 *.iml
 *.ipr

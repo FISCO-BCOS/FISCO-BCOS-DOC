@@ -25,7 +25,7 @@
    
 
    
-   找到 `web3sdk/dist/conf/applicationContext.xml文件的【区块链节点信息配置】 <https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/applicationContext.xml#L41>`_ 一节，配置keystore密码
+   找到 `web3sdk/dist/conf/applicationContext.xml文件的【区块链节点信息配置】 <https://github.com/FISCO-BCOS/web3sdk/blob/master-1.2/src/test/resources/applicationContext.xml#L41>`_ 一节，配置keystore密码
      .. code-block:: xml
 
          <property name="keystorePassWord" value="【生成client.keystore时对应的keystore密码】" />
@@ -106,7 +106,7 @@
        ============to balance:4
        ============to balance:8
 
-   (Ok合约详细代码可参考 `Ok.sol  <https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tool/Ok.sol>`_ )
+   (Ok合约详细代码可参考 `Ok.sol  <https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-1.2/tool/Ok.sol>`_ )
 ```    
 
 ## applicationContext.xml详细介绍
