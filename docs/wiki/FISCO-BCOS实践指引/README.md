@@ -7,20 +7,20 @@
 
 - 单节点环境  
   指引开发者编译、搭建一个最简单的由一个节点组成的环境, 并进行合约的部署、调用; 同时，能够进行系统合约的部署, 对系统合约有一个简单的认识, 为搭建多节点链做准备。  
-1. [源码编译](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#13-编译源码) ： 搭建FISCO BCOS的配置要求, 软件依赖安装, 源码获取, 源码编译介绍。 
-2. [创建创世节点(单节点环境搭建)](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#第二章-创建创世节点) ：搭建只有一个节点的区块链环境, 创世节点是区块链中的第一个节点, 搭建多节点的链环境, 也需要从创世节点开始。 
-3. [部署调用合约](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#第三章-部署合约调用合约)  ：正确部署、运行sample合约。
-4. [部署系统合约](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#第四章-部署系统合约) : FISCO BCOS区块链为了满足准入控制、身份认证、配置管理、权限管理等需求，在网络启动之初，会部署一套功能强大、结构灵活且支持自定义扩展的智能合约，统称系统合约, 详细了解系统合约可以参考：[系统合约介绍](https://github.com/FISCO-BCOS/Wiki/tree/master/FISCO-BCOS%E7%B3%BB%E7%BB%9F%E5%90%88%E7%BA%A6%E4%BB%8B%E7%BB%8D)。
+1. [源码编译](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#13-编译源码) ： 搭建FISCO BCOS的配置要求, 软件依赖安装, 源码获取, 源码编译介绍。 
+2. [创建创世节点(单节点环境搭建)](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#第二章-创建创世节点) ：搭建只有一个节点的区块链环境, 创世节点是区块链中的第一个节点, 搭建多节点的链环境, 也需要从创世节点开始。 
+3. [部署调用合约](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#第三章-部署合约调用合约)  ：正确部署、运行sample合约。
+4. [部署系统合约](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#第四章-部署系统合约) : FISCO BCOS区块链为了满足准入控制、身份认证、配置管理、权限管理等需求，在网络启动之初，会部署一套功能强大、结构灵活且支持自定义扩展的智能合约，统称系统合约, 详细了解系统合约可以参考：[系统合约介绍](https://github.com/FISCO-BCOS/Wiki/tree/master/FISCO-BCOS%E7%B3%BB%E7%BB%9F%E5%90%88%E7%BA%A6%E4%BB%8B%E7%BB%8D)。
 
 - 多节点组网  
-1. [多节点组网](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#第六章-多节点组网) : 搭建多个节点的链环境, 包括节点的加入、退出功能。
-2. [机构证书准入](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual#第七章-机构证书准入) : FISCO BCOS提供了证书准入的功能。在节点加入网络后，节点间是否能够通信，还可通过证书进行控制。在FISCO BCOS中，节点的证书代表了此节点属于某个机构。FISCO BCOS区块链中的管理者，可以通过配置机构的证书，控制相应证书的节点是否能够与其它节点通信。
+1. [多节点组网](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#第六章-多节点组网) : 搭建多个节点的链环境, 包括节点的加入、退出功能。
+2. [机构证书准入](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual#第七章-机构证书准入) : FISCO BCOS提供了证书准入的功能。在节点加入网络后，节点间是否能够通信，还可通过证书进行控制。在FISCO BCOS中，节点的证书代表了此节点属于某个机构。FISCO BCOS区块链中的管理者，可以通过配置机构的证书，控制相应证书的节点是否能够与其它节点通信。
 
 - 一键快速安装部署
-  [一键快速安装部署](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/sample)：为了能够让初学者快速体验, FISCO BCOS平台提供了快速安装和节点的快速部署工具, 开发者只需要非常简单的命令既可成功搭建多个节点的环境, 不再需要繁琐的配置。  
+  [一键快速安装部署](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/sample)：为了能够让初学者快速体验, FISCO BCOS平台提供了快速安装和节点的快速部署工具, 开发者只需要非常简单的命令既可成功搭建多个节点的环境, 不再需要繁琐的配置。  
 
 - Docker节点部署  
-  [Docker节点部署](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/docker)：FISCO BCOS同样提供了docker下的节点安装流程, 使开发者可以快速在docker环境下搭建、运行、体验。  
+  [Docker节点部署](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/docker)：FISCO BCOS同样提供了docker下的节点安装流程, 使开发者可以快速在docker环境下搭建、运行、体验。  
 
 - 物料包工具  
   [物料包工具](https://github.com/FISCO-BCOS/fisco-package-build-tool): 使用本工具, 进行一些简单配置后, 可以创建区块链节点的安装包, 然后经过一些简单的步骤, 可以快速搭建生产可用的区块链环境。 

@@ -274,7 +274,7 @@ build/node0/
 ```
 [[web3sdk使用说明链接]](https://github.com/FISCO-BCOS/web3sdk)  
 
-[[web3lib、systemcontract、tool目录作用参考用户手册]](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual)
+[[web3lib、systemcontract、tool目录作用参考用户手册]](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual)
 
 ## 启动节点
 

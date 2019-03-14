@@ -18,7 +18,7 @@ P.S.也可以直接参考[存证业务样例](https://github.com/FISCO-BCOS/evid
 
 因为该sdk目前的脚本是在linux上编写的shell脚本，建议在linux服务器上下载编译和使用，如果在windows、mac等开发机上开发，可以把生成的jar包复制到开发机器上。这里注意两点：第一，编译sdk时，必须使用jdk1.8不能使用openjdk；第二，公网以太坊的web3j不能直接使用，FISCO-BCOS使用的版本已经做了大幅修改。
 
-3.在web3sdk同一台机器上，需要智能合约编译器fisco-solc,参见[使用手册](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/doc/manual)中 “1.2.2 安装FISCO BCOS的智能合约编译器“里的下载部署。
+3.在web3sdk同一台机器上，需要智能合约编译器fisco-solc,参见[使用手册](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual)中 “1.2.2 安装FISCO BCOS的智能合约编译器“里的下载部署。
 
 以上，主要环境就绪：
 

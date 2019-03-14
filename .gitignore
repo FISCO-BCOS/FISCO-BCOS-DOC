@@ -1,7 +1,8 @@
 _build
-.vscode/
-.DS_Store
 .idea
 *.iml
 *.ipr
 *.iws
+.DS_Store
+.vscode**
+
