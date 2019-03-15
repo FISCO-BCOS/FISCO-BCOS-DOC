@@ -8,16 +8,11 @@ FISCO BCOS generator的配置文件在./conf文件夹下，配置文件为：群
 
 ### 元数据文件夹meta
 
-FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书`ca.crt`、节点证书、群组创世区块文件等。
+FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书`ca.crt`、本机构机构证书`agency.crt`、机构私钥节点证书、群组创世区块文件等。
 
 证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。
 
 FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书、conf下的配置文件，生成用户下配置的节点配置文件夹。
-
-```eval_rst
-.. note::
-    generate_all_certificates命令还需要在meta文件夹下放置机构证书agency.crt和私钥agency.key
-```
 
 ### group_genesis.ini
 
@@ -28,7 +23,7 @@ FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书
 group_id=1
 
 [nodes]
-node0=127.0.0.1:30300 # 群组创世区块的节点
+node0=127.0.0.1:30300 # 群组创世区块的节点p2p地址
 node1=127.0.0.1:30301
 node2=127.0.0.1:30302
 node3=127.0.0.1:30303
@@ -63,14 +58,9 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30302
-peer1=127.0.0.1:30303
 ```
 
-上述配置在执行build命令后会在指定目录下生成名为node_127.0.0.1_30300、node_127.0.0.1_30301的不含节点私钥的配置文件夹。生成的节点处于群组group1中，会与ip为127.0.0.1，端口号为30302和30303的节点进行通信。
+上述配置在执行build命令后会在指定目录下生成名为node_127.0.0.1_30300、node_127.0.0.1_30301的配置文件夹。生成的节点处于群组group1中。
 
 ```eval_rst
 .. note::
@@ -89,6 +79,8 @@ FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书�
 | generate_*_certificates | 生成相应链、机构、节点、sdk证书及私钥 |
 | merge_config | 将两个节点配置文件中的P2P部分合并 |
 | deploy_private_key | 将私钥批量导入生成的节点配置文件夹中 |
+| add_peers | 将节点连接文件批量导入节点配置文件夹中 |
+| add_group | 将群组创世区块批量导入节点配置文件夹中 |
 | version | 打印当前版本号 |
 | h/help | 帮助命令 |
 
@@ -125,7 +117,7 @@ $ ./generator --create_group_genesis ~/mydata
 |  |  |
 | :-: | :-: |
 | 命令解释 | 部署新节点及新群组 |
-| 使用前提 | 用户需配置`node_deployment.ini`，并在meta下配置相关节点的证书  |
+| 使用前提 | 用户需配置`node_deployment.ini`，并指定节点p2p链接文件  |
 | 参数设置 | 指定文件夹作为配置文件夹存放路径 |
 | 实现功能 | 通过给定群组创世区块、节点证书和节点信息，生成节点配置文件夹 |
 | 适用场景 | 生成节点配置文件夹 |
@@ -133,11 +125,8 @@ $ ./generator --create_group_genesis ~/mydata
 操作示例
 
 ```bash
-$ cp node0/node.crt ./meta/cert_127.0.0.1_30300.crt
-...
-$ cp noden/node.crt ./meta/cert_127.0.0.1_3030n.crt
 $ vim ./conf/node_deployment.ini
-$ ./generator --build_install_package ~/mydata
+$ ./generator --build_install_package ./peers.txt ~/mydata
 ```
 
 程序执行完成后，会在~/mydata文件夹下生成多个名为node_hostip_port的文件夹，推送到对应服务器后，拷贝私钥到节点conf下即可启动节点
@@ -213,8 +202,8 @@ $ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca
 | 命令解释 | 根据node_deployment.ini生成相关证书及私钥 |
 | 使用前提 | 无 |
 | 参数设置 | 指定节点证书目录 |
-| 实现功能 | 在指定目录生成node_deployment.ini中需要的节点证书和私钥 |
-| 适用场景 | 用户生成本机构节点证书及私钥时 |
+| 实现功能 | 根据node_deployment.ini在meta下生成节点私钥、证书，在指定目录生成中需要交换的节点证书、节点p2p连接文件 |
+| 适用场景 | 用户交换节点数据时 |
 
 ```
 $ ./generator --generate_all_certificates ./cert
@@ -295,9 +284,37 @@ $./generator --deploy_private_key ./cert ./data
 
 执行完成后可以将./cert下的对应的节点私钥导入./data的配置文件夹中
 
+### add_peers (-p)
+
+使用--add_peers可以指定的peers文件导入到生成好的节点配置文件夹中。
+
+使用示例:
+
+```bash
+$./generator --add_peers ./meta/peers.txt ./data
+```
+
+./data下有名为node_127.0.0.1_30300，node_127.0.0.1_30301的配置文件夹
+
+执行完成后可以将peers文件中的连接信息导入./data下所有节点的配置文件`config.ini`中
+
+### add_group (-a)
+
+使用--add_group可以指定的peers文件导入到生成好的节点配置文件夹中。
+
+使用示例:
+
+```bash
+$./generator --add_group ./meta/group.2.genesis ./data
+```
+
+./data下有名为node_127.0.0.1_30300，node_127.0.0.1_30301的配置文件夹
+
+执行完成后可以将群组2的连接信息导入./data下所有节点的`conf`文件夹中
+
 ### version (-v)
 
-使用--version命令查看当前部署工具的版本号
+使用--version命令查看当前部署工具的版本号。
 
 ```bash
 $ ./generator --version
@@ -311,22 +328,14 @@ $ ./generator --version
 
 ```bash
 $ ./generator -h
-```
-
-使用后会显示相关提示
-
-```bash
-$ ./generator -h
-usage: generator [-h] [--version] [--build_install_package data_dir]
-                 [--create_group_genesis data_dir]
+usage: generator [-h] [-v] [-b peer_path data_dir] [-c data_dir]
                  [--generate_chain_certificate chain_dir]
                  [--generate_agency_certificate agency_dir chain_dir agency_name]
                  [--generate_node_certificate node_dir agency_dir node_name]
-                 [--generate_sdk_certificate sdk_dir agency_dir] [--use_guomi]
-                 [--demo] [--generate_all_certificates cert_dir]
-                 [--expand_all_certificates cert_dir]
-                 [--deploy_private_key cert_dir pkg_dir]
-                 [--merge_config config.ini config.ini]
+                 [--generate_sdk_certificate sdk_dir agency_dir] [-g]
+                 [--generate_all_certificates cert_dir] [-d cert_dir pkg_dir]
+                 [-m config.ini config.ini] [-p peers config.ini]
+                 [-a group genesis config.ini]
 ```
 
 ## 监控设计
@@ -385,7 +394,7 @@ Usage : bash monitor.sh
 
 ### 使用示例
 
-- 使用脚本监控指定路径下节点，发送给接收者Alice
+- 使用脚本监控指定路径下节点，发送给接收者Alice：
 
 ```bash
 $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -o alice/nodes -r Alice

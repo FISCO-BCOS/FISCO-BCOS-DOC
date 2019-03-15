@@ -48,7 +48,7 @@
 
 1. 机构A将fisco-bcos可执行程序放置于meta文件夹下，修改`group_genesis.ini`，生成group1的创世区块，并将群组创世区块传给机构B
 
-2. 机构A、B分别修改`node_deployment.ini`中的信息，配置为节点0和节点1的信息，此步中`node`为自己机构的节点，`peers`为对应机构的节点
+2. 机构A、B分别修改`node_deployment.ini`中的信息，配置为节点0和节点1的信息，此步中`node`为自己机构的节点，`peers`为对应机构的节点连接信息
 
 3. 机构A、B分别使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
@@ -130,7 +130,7 @@
 
 2. 机构E将节点4证书，fisco-bcos可执行程序，group1群组创世区块`group.1.genesis`放置于meta文件夹下
 
-3. 机构E修改`node_deployment.ini`中的信息，配置为节点4的信息，peers为节点0和节点1的信息
+3. 机构E修改`node_deployment.ini`中的信息，配置为节点4的信息
 
 4. 机构E使用[build_install_package](](./operation.html#build-install-package-b)命令生成节点4配置文件夹，导入私钥，启动节点
 
@@ -150,7 +150,7 @@ A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一�
 
 1. A、B、C三个机构采用链下安全的方式共享自己的节点证书与节点信息（此步可选择由某一机构统一收集，或是所有机构都收集）
 2. 假设A收集所有资料后，将证书按照指定格式放在meta目录下，并配置`group_genesis.ini`中的node信息，指定配置文件中的groupid，生成群组创世区块，发送给B、C
-3. A、B、C机构修改`node_deployment.ini`的`node`和`peers`信息，执行[build_install_package](./operation.html#build-install-package-b)命令，指定生成节点配置文件的目录，会在指定目录下生成多个不含节点私钥的节点配置文件夹
+3. A、B、C机构修改`node_deployment.ini`的`node`信息，执行[build_install_package](./operation.html#build-install-package-b)命令，指定生成节点配置文件的目录，会在指定目录下生成多个不含节点私钥的节点配置文件夹
 4. 各个机构并将自己的节点配置文件推送至对应服务器，拷贝节点私钥至节点配置文件下，启动节点
 
 ## 新节点加入现有group
@@ -159,7 +159,7 @@ A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一�
 假设D机构需要新加入节点到A、B、C的组网的group1中
 
 1. D机构收集A、B、C组网生成的群组创世区块`group.1.genesis`，放置于meta文件夹下
-2. D机构配置`node_deployment.ini`中的`node`和`peers`信息，执行信息，将扩容节点的证书按照指定格式放在meta目录下
+2. D机构配置`node_deployment.ini`中的`node`信息，执行信息，将扩容节点的证书按照指定格式放在meta目录下
 3. D机构使用[build_install_package](](./operation.html#build-install-package-b)命令指定扩容节点配置文件节点输出路径，在输出路径生成扩容节点节点配置文件夹
 4. D机构将私钥导入扩容节点配置文件夹，将节点配置文件夹推送至指定服务器，启动节点
 5. D机构请求A、B、C中的某一个机构将自己的节点注册入group1中，完成新节点入网操作
@@ -237,11 +237,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30302
-peer1=127.0.0.1:30303
 ```
 
 机构B修改如下：
@@ -257,12 +252,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
 jsonrpc_listen_port=8547
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30300
-peer1=127.0.0.1:30301
-peer2=127.0.0.1:30303
 ```
 
 机构C修改如下：
@@ -278,12 +267,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30300
-peer1=127.0.0.1:30301
-peer2=127.0.0.1:30302
 ```
 
 3.使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件
@@ -328,11 +311,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30302
-peer1=127.0.0.1:30303
 ```
 
 机构B修改如下：
@@ -348,13 +326,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
 jsonrpc_listen_port=8547
-
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30300
-peer1=127.0.0.1:30301
-peer1=127.0.0.1:30303
 ```
 
 机构C修改如下：
@@ -370,13 +341,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
-
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30300
-peer1=127.0.0.1:30301
-peer1=127.0.0.1:30302
 ```
 
 5.各机构使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，机构A将group.2.genesis导入节点0的conf文件夹，机构B将group.2.genesis导入节点2的conf文件夹
@@ -450,11 +414,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30302
-peer1=127.0.0.1:30303
 ```
 
 机构B：
@@ -470,12 +429,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
 jsonrpc_listen_port=8547
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30300
-peer1=127.0.0.1:30301
-peer2=127.0.0.1:30303
 ```
 
 机构C：
@@ -491,12 +444,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30300
-peer1=127.0.0.1:30301
-peer2=127.0.0.1:30302
 ```
 
 各机构通过上述配置文件，使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
@@ -556,11 +503,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30302
-peer1=127.0.0.1:30303
 ```
 
 机构B：
@@ -576,10 +518,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
 jsonrpc_listen_port=8547
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30300
 ```
 
 机构C：
@@ -595,10 +533,6 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
-
-# Others' nodes
-[peers]
-peer0=127.0.0.1:30301
 ```
 
 4.机构使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
