@@ -9,6 +9,7 @@
 使用前请确认已经满足[环境依赖](../enterprise_tools/installation.md)
 
 ```bash
+$ cd ~/
 $ git clone https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ bash ./scripts/install.sh
@@ -82,7 +83,6 @@ $ ./meta/fisco-bcos -v
 
 ```bash
 # 证书授权机构准备生成证书
-cd ./generator
 # 初始化链证书
 $ ./generator --generate_chain_certificate ./dir_chain_ca
 # 查看链证书及私钥
@@ -93,15 +93,9 @@ ca.crt  ca.key   cert.cnf # 从左至右分别为链证书、链私钥、证书�
 ## 机构A、B初始化
 
 ```bash
-# 返回generator上级目录
 # 初始化机构A
 $ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-A
 $ cp ./meta/fisco-bcos ~/generator-A/meta
-generator-A$ cd ~/generator-A
-# 初始化机构B
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-B
-$ cp ./meta/fisco-bcos ~/generator-B/meta
-generator-B$ cd ~/generator-B
 # 初始化机构A机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
 # 查看机构证书及私钥
@@ -110,6 +104,9 @@ agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf # 从左至右分�
 # 发送链证书、机构证书、机构私钥至机构A
 # 示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
+# 初始化机构B
+$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-B
+$ cp ./meta/fisco-bcos ~/generator-B/meta
 # 初始化机构B机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
 # 发送链证书、机构证书、机构私钥至机构B
@@ -125,6 +122,7 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/ag
 ```bash
 # 请在~/generator-B目录下执行下述命令
 $ cd ~/generator-B
+$ vi ./conf/node_deployment.ini
 ```
 
 ```ini
@@ -149,9 +147,12 @@ jsonrpc_listen_port=8548
 ### 机构B生成并交换配置文件
 
 ```bash
+# 机构B生成交换文件
 generator-B$ ./generator --generate_all_certificates ./agencyB_send
+# 机构B利用meta下的机构证书和私钥生成sdk证书
+generator-B$ ./generator --generate_sdk_certificate ./meta ./agencyB_sdk
 # 查看需要生成文件
-$ ls agencyB_send
+$ ls ./agencyB_send
 cert_127.0.0.1_30302.crt cert_127.0.0.1_30303.crt peers.txt # 从左至右分别为需要交互给机构A的节点证书，节点连接文件
 # 交换证书与peers至机构A
 generator-B$ cp -r ./agencyB_send ~/generator-A/
@@ -165,6 +166,7 @@ generator-B$ cp -r ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
 ```bash
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-A
+$ vi ./conf/node_deployment.ini
 ```
 
 ```ini
@@ -189,8 +191,11 @@ jsonrpc_listen_port=8546
 ### 机构A生成并交换配置文件
 
 ```bash
+# 机构A生成交换文件
 generator-A$ ./generator --generate_all_certificates ./agencyA_send
-# 由于B机构不需要生成创世区块，因此只需交换peers至机构B
+# 机构A利用meta下的机构证书和私钥生成sdk证书
+generator-A$ ./generator --generate_sdk_certificate ./meta ./agencyA_sdk
+# 由于A机构不需要生成创世区块，因此只需交换peers至机构B
 generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
@@ -201,6 +206,7 @@ generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```bash
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-A
+$ vi ./conf/group_genesis.ini
 ```
 
 ```ini
@@ -264,11 +270,6 @@ generator-B$ bash ./nodeB/start_all.sh
 
 ### 查看群组1节点运行状态
 
-至此，我们完成了如图所示的群组构建：
-
-
-![](../../images/enterprise/tutorial_step_1.png)
-
 查看进程：
 
 ```bash
@@ -290,7 +291,9 @@ info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
 ```
 
-至此，我们完成了教程中机构A、B搭建群组1的操作。
+至此，我们完成了如图所示机构A、B搭建群组1的操作：
+
+![](../../images/enterprise/tutorial_step_1.png)
 
 ## 机构A、C构建群组2
 
@@ -301,14 +304,12 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 ```bash
 # 请回到拥有链证书及私钥的目录下操作
 # 初始化机构C
-$ cd ~/
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-C
-generator-C$ cd ~/generator-C
-# 初始化机构C机构证书
 $ cd ~/generator
+$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-C
+$ cp ./meta/fisco-bcos ~/generator-C/meta
+# 初始化机构C机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
-$ cp ./meta/fisco-bcos ~/generator-C/meta
 ```
 
 ### 机构A交换配置文件
@@ -320,7 +321,7 @@ $ cp ./meta/fisco-bcos ~/generator-C/meta
 $ cd ~/generator-A
 # 交换证书与peers至机构C
 generator-A$ cp -r ./agencyA_send ~/generator-C/
-generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/peersA.txt
+generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/meta/peersA.txt
 ```
 
 ### 机构C修改配置文件
@@ -330,6 +331,7 @@ generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/peersA.txt
 ```bash
 # 请在~/generator-C目录下执行下述命令
 $ cd ~/generator-C
+$ vi ./conf/node_deployment.ini
 ```
 
 ```ini
@@ -356,7 +358,10 @@ jsonrpc_listen_port=8550
 ```bash
 # 请在~/generator-C目录下执行下述命令
 $ cd ~/generator-C
+# 机构C生成交换文件
 generator-C$ ./generator --generate_all_certificates ./agencyC_send
+# 机构B利用meta下的机构证书和私钥生成sdk证书
+generator-C$ ./generator --generate_sdk_certificate ./meta ./agencyC_sdk
 # 交换机构Cpeers至机构A
 generator-C$ cp -r ./agencyC_send/peers.txt ~/generator-A/meta/peersC.txt
 ```
@@ -368,6 +373,7 @@ generator-C$ cp -r ./agencyC_send/peers.txt ~/generator-A/meta/peersC.txt
 ```bash
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-C
+$ vi ./conf/group_genesis.ini
 ```
 
 ```ini
@@ -427,11 +433,6 @@ generator-A$ bash ./nodeA/start_all.sh
 
 ### 查看群组2节点运行状态
 
-至此，我们完成了如图所示的群组构建：
-
-
-![](../../images/enterprise/tutorial_step_2.png)
-
 查看进程：
 
 ```bash
@@ -455,7 +456,9 @@ info|2019-02-25 17:25:59.058625| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
 ```
 
-至此，我们完成了教程中机构A、C搭建群组2的操作。
+至此，我们完成了如图所示的机构A、C搭建群组2构建：
+
+![](../../images/enterprise/tutorial_step_2.png)
 
 ## 扩展教程--机构C节点加入群组1
 
@@ -467,11 +470,15 @@ $ cd ~/generator-A
 # 发送群组1配置文件至机构C节点
 generator-A$ ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 # 从启机构C节点
-bash ~/generator-C/nodeC/stop_all.sh
-bash ~/generator-C/nodeC/start_all.sh
+generator-C$ bash ~/generator-C/nodeC/stop_all.sh
+generator-C$ bash ~/generator-C/nodeC/start_all.sh
 ```
 
 此时节点进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入group1。
+
+Tips:
+
+- 机构生成的sdk证书在./agency_sdk/目录下
 
 可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入群组1中，扩容的节点才会正常工作。
 
