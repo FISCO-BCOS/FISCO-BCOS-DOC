@@ -10,7 +10,7 @@ P.S.也可以直接参考[存证业务样例](https://github.com/FISCO-BCOS/evid
 
 ## 前置条件 
 
-1.按照[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS) 的“2.2 安装说明”，搭建并跑起来至少一个节点，推荐搭建4个节点的链，体验整个部署流程。可使用一键搭链脚本、Docker、物料包等方式快速部署，本文不做详细阐述。如搭链有问题，可到社区里提问（参见页面里 “6.联系我们” ）。目前推荐基于[FISCO BCOS 1.3以上的版本](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)进行搭链，采用release的版本搭链更加稳定，如有任何问题也便于定位解决。
+1.按照[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3) 的“2.2 安装说明”，搭建并跑起来至少一个节点，推荐搭建4个节点的链，体验整个部署流程。可使用一键搭链脚本、Docker、物料包等方式快速部署，本文不做详细阐述。如搭链有问题，可到社区里提问（参见页面里 “6.联系我们” ）。目前推荐基于[FISCO BCOS 1.3以上的版本](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)进行搭链，采用release的版本搭链更加稳定，如有任何问题也便于定位解决。
 
 在搭链的过程中，请注意记录和整理各种关键信息，如节点ID、IP、端口、god帐号、系统代理合约地址、证书、密码等，妥善保管，防止泄露，后续可供客户端配置使用。
 
