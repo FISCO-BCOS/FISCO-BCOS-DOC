@@ -21,11 +21,13 @@ $ cp sdk.* ca.crt client.keystore /mydata/web3sdk/dist/conf/
 
 请注意，由于物料包已经生成好了链证书和机构证书，物料包中配置文件-配置java客户端过程和文档中略有不同。
 
-用户可以直接从编译源码部分开始配置。   
+用户可以直接从编译源码部分开始配置。
 
-修改web3sdk/dist/conf目录的applicationContext.xml文件所需要节点的config.json在物料包目录下的build/node* 下 *为希望选择的节点数
-config.json中包含systemproxyaddress 系统合约地址 rpcport, p2pport,channelPort。
+修改web3sdk/dist/conf目录的applicationContext.xml文件。
 
+用户需要获取的config.json的信息，在物料包目录下的build/node* 下 *为希望连接的节点，如node0，node1
+
+config.json中包含的信息为：systemproxyaddress-系统合约地址，以及相应的端口号rpcport，p2pport，channelPort。
 
 用户根据build/node*/config.json 配置java客户端相关数据：需要更改的有数据有：系统合约地址systemproxyaddress，node port相关信息等
 
