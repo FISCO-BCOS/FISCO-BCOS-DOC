@@ -6,7 +6,7 @@
 ==============================================================================
 FISCO-BCOS特性介绍_
 
-.. _FISCO-BCOS特性介绍: https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/raw/master/docs/features/FISCO-BCOS特性介绍.pdf
+.. _FISCO-BCOS特性介绍: https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/raw/release-1.3/docs/features/FISCO-BCOS特性介绍.pdf
 
 基础特性
 ==============================================================================

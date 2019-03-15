@@ -133,6 +133,7 @@ test_agency/
 ### 生成节点证书
 
 **脚本**：generate_node_cert.sh
+
 **说明**：用机构证书，在节点的data目录下生成节点证书。在使用本脚本前，请先用generate_node_basic.sh生成节点目录。
 
 **参数**：
