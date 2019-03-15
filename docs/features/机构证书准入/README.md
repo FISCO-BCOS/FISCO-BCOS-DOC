@@ -32,7 +32,7 @@
 
 FISCO BCOS通过授权某节点对应的公钥server.crt，控制此节点是否能够与其它节点正常通信。
 
-**注意：若要尝试使用[AMOP(链上链下)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/features/AMOP/README.html)，请直接使用sample目录下的证书。AMOP暂不支持与新生成的证书进行连接。**
+**注意：若要尝试使用[AMOP(链上链下)](../AMOP/README.md)，请直接使用sample目录下的证书。AMOP暂不支持与新生成的证书进行连接。**
 
 **（1）生成根证书ca.crt**
 

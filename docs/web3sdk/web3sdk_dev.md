@@ -65,7 +65,7 @@
     
     这个java文件可以复制到客户端开发环境里，后续建立的java工程的对应的包路径下。
     
-    若转换成java代码时报错，请参考 `faq【合约转换成java代码出错】 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/faq.html>`_ .
+    若转换成java代码时报错，请参考 `faq【合约转换成java代码出错】 <./faq.html>`_ .
     
     Counter.sol对应的Counter.java代码如下：
 
@@ -116,7 +116,7 @@
 
 .. admonition:: 配置java应用
 
-   参考 `web3sdk配置 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html>`_ 配置java应用，主要配置选项包括：
+   参考 `web3sdk配置 <./config_web3sdk.html>`_ 配置java应用，主要配置选项包括：
 
      .. image:: imgs/javaconfig.png
         :align: center
@@ -217,7 +217,6 @@
 .. admonition:: 参考资料
 
     - 智能合约参考文档：http://solidity.readthedocs.io/en/v0.4.24/
-    - AMOP: https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/features/AMOP/README.html
     - web3j JSON-RPC: https://github.com/ethereum/wiki/wiki/JSON-RPC
     - FISCO dev团队提供的示例应用:
        (1) 存证Demo： https://github.com/FISCO-BCOS/evidenceSample

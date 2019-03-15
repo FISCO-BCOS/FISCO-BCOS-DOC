@@ -3,7 +3,7 @@
 ```eval_rst
 .. admonition:: 注意事项
    
-   创建创世节点配置genesis.json前，必须确保已在创世节点data目录生成了节点证书，参考 `证书生成 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/gen_cert.html>`_ 
+   创建创世节点配置genesis.json前，必须确保已在创世节点data目录生成了节点证书，参考 `证书生成 <./gen_cert.html>`_ 
    
 ```
 

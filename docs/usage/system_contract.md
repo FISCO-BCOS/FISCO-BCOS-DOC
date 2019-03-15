@@ -164,7 +164,7 @@ babel-node tool.js CAAction all
 
 编写证书配置
 
-编写文件：ca.json。将序列号填入hash字段。配置status，0表示不可用，1表示可用。其它字段默认即可。如下，让node2的证书可用。即status置1。详细介绍，请参考[机构证书准入说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/features/%E6%9C%BA%E6%9E%84%E8%AF%81%E4%B9%A6%E5%87%86%E5%85%A5/README.html)。
+编写文件：ca.json。将序列号填入hash字段。配置status，0表示不可用，1表示可用。其它字段默认即可。如下，让node2的证书可用。即status置1。详细介绍，请参考[机构证书准入说明](../features/%E6%9C%BA%E6%9E%84%E8%AF%81%E4%B9%A6%E5%87%86%E5%85%A5/README.md)。
 
 ``` json
 {

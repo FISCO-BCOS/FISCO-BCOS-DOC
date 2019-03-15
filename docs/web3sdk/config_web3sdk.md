@@ -4,13 +4,13 @@
 
 .. important::
 
-   - 配置web3sdk前，请确保参考 `web3sdk编译文档 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/compile.html>`_ 成功编译web3sdk
+   - 配置web3sdk前，请确保参考 `web3sdk编译文档 <./compile.html>`_ 成功编译web3sdk
    - 配置web3sdk前，请先生成客户端证书，并将证书拷贝到web3sdk/dist/conf目录：
-    1. 手动搭链：客户端证书生成参考 `FISCO-BCOS快速入门 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html#sdk>`_ **基础配置中的SDK证书配置** ;
+    1. 手动搭链：客户端证书生成参考 `FISCO-BCOS快速入门 <../usage/tools.html#sdk>`_ **基础配置中的SDK证书配置** ;
      
-    2. 由 `FISCO-BCOS物料包搭建的链 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 搭建的FISCO-BCOS链：客户端证书生成参考 `SDK证书生成 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/web3sdk.html#web3sdk>`_ 
+    2. 由 `FISCO-BCOS物料包搭建的链 <../tools/index.html>`_ 搭建的FISCO-BCOS链：客户端证书生成参考 `SDK证书生成 <../tools/web3sdk.html#web3sdk>`_ 
 
-    3. 国密版FISCO-BCOS链SDK证书生成参考 `SDK证书生成 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/gen_cert.html>`_ 
+    3. 国密版FISCO-BCOS链SDK证书生成参考 `SDK证书生成 <../guomi/gen_cert.html>`_ 
 ```
 
 ## 配置java客户端相关信息 
@@ -53,8 +53,8 @@
             <!--系统合约地址: 【系统合约代理地址,对应节点config.json里的systemproxyaddress】-->
             <property name="systemProxyAddress" value="0x0" />
             <!--GOD账户的私钥: -->
-            <!--非国密版FISCO-BCOS获取GOD账户和账户私钥: 【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html】-->
-            <!--国密版FISCO-BCOS获取GOD账户和账户私钥：【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/config_guomi.html#sdk】-->
+            <!--非国密版FISCO-BCOS获取GOD账户和账户私钥: 【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html】-->
+            <!--国密版FISCO-BCOS获取GOD账户和账户私钥：【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/guomi/config_guomi.html#sdk】-->
             <property name="privKey" value="bcec428d5205abe0f0cc8a734083908d9eb8563e31f943d760786edf42ad67dd" />
             <!--GOD账户-->
             <property name="account" value="0x776bd5cf9a88e9437dc783d6414bccc603015cf0" />
@@ -80,7 +80,7 @@
      
      ② **国密版FISCO-BCOS** ：设源码位于~/mydata/FISCO-BCOS目录，则god账号位于~/mydata/FISCO-BCOS/tools/scripts/guomi_godInfo.txt文件中; 若搭链过程中使用系统默认god账号，则god账号位于~/mydata/FISCO-BCOS/tools/scripts/god_info/guomiDefaultGod.txt
     
-    2. 使用 `FISCO-BCOS物料包 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/index.html>`_ 搭链: 可在物料包创世节点dependencies/cert/godInfo.txt路径下获取god账号信息;
+    2. 使用 `FISCO-BCOS物料包 <../tools/index.html>`_ 搭链: 可在物料包创世节点dependencies/cert/godInfo.txt路径下获取god账号信息;
    
    - **这里的端口是对应config.json里的channelPort，而不是rpcport或p2pport** 
    - **list段里可以配置多个value，对应多个节点的信息，实现客户端多活通信** 
@@ -91,7 +91,7 @@
 ```eval_rst
 .. admonition:: 测试web3sdk与节点连接是否正常
    
-   在web3sdk/dist目录下调用TestOk，非国密版web3sdk输出 ``=====INIT ECDSA KEYPAIR From private key===`` 等提示，说明web3sdk与节点连接正常，否则请参考 `faq【dist/bin/web3sdk运行出错】 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/faq.html>`_ .
+   在web3sdk/dist目录下调用TestOk，非国密版web3sdk输出 ``=====INIT ECDSA KEYPAIR From private key===`` 等提示，说明web3sdk与节点连接正常，否则请参考 `faq【dist/bin/web3sdk运行出错】 <./faq.html>`_ .
    
    具体测试过程如下：
     .. code-block:: bash
