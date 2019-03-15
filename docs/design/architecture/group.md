@@ -6,7 +6,7 @@
 ```eval_rst
 .. note::
 
-    举个栗子:
+    举个例子:
 
     机构A、B、C所有节点构成一个区块链网络，运行业务1；一段时间后，机构A、B启动业务2，且不希望该业务相关数据、交易处理被机构C感知，有何解？
 
@@ -16,12 +16,6 @@
 
     显然在达到相同隐私保护需求基础上，FISCO BCOS 2.0具有更好的扩展性、可运维性和灵活性。
 ```
-
-> 举个栗子：
-> 
-> 机构A、B、C所有节点构成一个区块链网络，运行业务1；
-> 
-> 一段时间后，机构A、B启动业务2，且不希望该业务相关数据、交易处理被机构C感知，有和解？
 
 多群组架构中，群组间共享网络，通过[网络准入和账本白名单](../security_control/node_management.md)实现各账本间网络消息隔离。
 
@@ -34,10 +28,7 @@
 
 核心层负责将群组的[区块](../../tutorial/key_concepts.html#id3)数据、区块信息、系统表以及区块执行结果写入底层数据库。
 
-存储分为state和AMDB两部分，state负责存储合约执行的状态信息，可追踪交易历史状态；AMDB则负责将区块数据、区块信息、系统参数等写入系统表中。
-
-AMDB向外暴露简单的查询(select)、提交(commit)和更新(update)接口，具有可插拔特性，后端可支持多种数据库类型，目前仅支持[LevelDB数据库](https://github.com/google/leveldb)，后期会把基于mysql的[AMDB](../storage/storage.md)集成到系统中。
-
+存储分为世界状态(State)和分布式存储(AMDB)两部分，世界状态包括MPTState和StorageState，负责存储交易执行的状态信息，StorageState性能高于MPTState，但不存储区块历史信息；AMDB则向外暴露简单的查询(select)、提交(commit)和更新(update)接口，负责操作合约表、系统表和用户表，具有可插拔特性，后端可支持多种数据库类型，目前仅支持[LevelDB数据库](https://github.com/google/leveldb)，后期会把基于mysql的[AMDB](../storage/storage.md)集成到系统中。
 
 ![](../../../images/architecture/storage.png)
 

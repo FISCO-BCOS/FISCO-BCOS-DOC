@@ -68,9 +68,9 @@ $ brew install -y openssl
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取预编译可执行程序
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh)
 # 获取build_chain.sh脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
@@ -125,8 +125,8 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 [INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 
 # 生成的节点文件如下
-$ tree
-.
+$ tree nodes
+nodes
 |-- 127.0.0.1
 |   |-- fisco-bcos
 |   |-- node0
@@ -222,7 +222,7 @@ $ bash transTest.sh ${交易数目} ${群组ID}
     节点每出一个新块，会打印一条Report日志，Report日志中各字段含义如下：
      - ``g:``：群组ID
      - ``num``：出块高度；
-     - ``sealerIdx``：出块节点索引；
+     - ``sealerIdx``：共识节点索引；
      - ``hash``：区块哈希；
      - ``next``：下一个区块高度；
      - ``tx``：区块包含的交易数；
@@ -420,10 +420,10 @@ info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9
 $ mkdir -p ~/fisco && cd ~/fisco
 
 # 获取fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh)
 
 # 获取build_chain.sh脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 
 # 构建本机单群组四节点区块链(生产环境中，建议节点部署在不同物理机)
 $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos -o multi_nodes
@@ -540,7 +540,7 @@ Send transaction:  1
 {"id":83,"jsonrpc":"2.0","result":"0x24827ef7b0bed013123d9981ff61ba0a1761747a475e187467e70d9ff20c0714"}
 ......此处省略其他输出......
 
-# 查看节点出块情况(其中num是块高, idx是出块节点索引, tx是区块中包含交易数，nodeIdx是当前节点索引):有新区块产生
+# 查看节点出块情况(其中num是块高, idx是共识节点索引, tx是区块中包含交易数，nodeIdx是当前节点索引):有新区块产生
 $ cat node0/log/* | grep "g:1.*Report"
 info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=be961c98...,next=2,tx=1,nodeIdx=2
 ......此处省略其他输出......
