@@ -88,7 +88,7 @@
 
 ## 2 使用说明
 
-本文档分别提供UTXO交易在web3sdk(以下简称sdk)及nodejs中的使用说明。其中sdk的一般性使用说明请参考[web3sdk使用说明文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/index.html)，其中nodejs的一般性使用说明请参考[FISCO BCOS区块链操作手册](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual)。如无特定说明，sdk执行UTXO交易命令的位置位于web3sdk工程根目录执行gradle build生成的dist/bin目录下，nodejs执行UTXO交易命令的位置位于FISCO-BCOS/tool目录下。
+本文档分别提供UTXO交易在web3sdk(以下简称sdk)及nodejs中的使用说明。其中sdk的一般性使用说明请参考[web3sdk使用说明文档](../../web3sdk/index.md)，其中nodejs的一般性使用说明请参考[FISCO BCOS区块链操作手册](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-1.3/doc/manual)。如无特定说明，sdk执行UTXO交易命令的位置位于web3sdk工程根目录执行gradle build生成的dist/bin目录下，nodejs执行UTXO交易命令的位置位于FISCO-BCOS/tool目录下。
 
 ### 2.0 前期准备：启用UTXO交易
 

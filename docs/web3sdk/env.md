@@ -6,7 +6,7 @@
    使用web3sdk前，请确保：
 
     FISCO BCOS节点环境搭建完成
-     参考 `FISCO-BCOS入门 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/getstart/index.html>`_
+     参考 `FISCO-BCOS入门 <./getstart/index.html>`_
     java版本符合要求
      要求 `jdk1.8+ <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_，推荐使用jdk8u141
     网络连通

@@ -41,8 +41,6 @@
        
        # 生成证书sdk.crt
        # 设节点机构证书位于~/mydata/test_agency目录
-       #(手工搭链参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/usage/tools.html#id2)
-       #(国密版FISCO-BCOS证书生成参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/gen_cert.html#)
        $ cp ~/mydata/test_agency/* .
        $ openssl req -new -key sdk.key -config cert.cnf  -out sdk.csr
        $ openssl x509 -req -days 3650 -in sdk.csr -CAkey agency.key -CA agency.crt -force_pubkey sdk.pubkey -out sdk.crt -CAcreateserial -extensions v3_req -extfile cert.cnf

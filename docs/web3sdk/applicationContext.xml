@@ -32,8 +32,8 @@
         <!--交易签名的私钥: 部署权限控制合约必须使用GOD账户私钥 -->
 		<property name="privKey" value="bcec428d5205abe0f0cc8a734083908d9eb8563e31f943d760786edf42ad67dd" />
         <!--GOD账户-->
-		<!--非国密版FISCO-BCOS获取GOD账户和账户私钥: 【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html】-->
-		<!--国密版FISCO-BCOS获取GOD账户和账户私钥：【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/config_guomi.html#sdk】-->
+		<!--非国密版FISCO-BCOS获取GOD账户和账户私钥: 【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html】-->
+		<!--国密版FISCO-BCOS获取GOD账户和账户私钥：【参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/guomi/config_guomi.html#sdk】-->
 		<property name="account" value="0x776bd5cf9a88e9437dc783d6414bccc603015cf0" />
 		<property name="outPutpath" value="./output/" />
 	</bean>

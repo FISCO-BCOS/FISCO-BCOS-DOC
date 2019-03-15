@@ -8,7 +8,7 @@
 
 .. important::
 
-   - 部署系统合约前，请参考 `web3sdk入门 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/index.html>`_ 搭建并运行web3sdk
+   - 部署系统合约前，请参考 `web3sdk入门 <../index.html>`_ 搭建并运行web3sdk
    - 部署系统合约前，请保证web3sdk连接的FISCO-BCOS节点运行正常(可以正常出块)
    - 若FISCO-BCOS节点已部署系统合约，没有必要再用web3sdk再次部署系统合约 
 
