@@ -13,8 +13,7 @@
 .. important::
 
     - java版本
-     要求 `JDK8或以上 <https://openjdk.java.net/>`_，推荐使用OpenJDK11。
-     由于CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，因此在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`OpenJDK11下载地址 <https://jdk.java.net/11/>`_ `安装指南 <https://openjdk.java.net/install/index.html>`_ 
+     要求 `JDK8或以上 <https://openjdk.java.net/>`_。由于CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，因此在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`下载地址 <https://jdk.java.net/java-se-ri/8>`_  `安装指南 <https://openjdk.java.net/install/index.html>`_ 
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS安装教程 <../installation.html>`_
     - 网络连通性
@@ -46,7 +45,7 @@ repositories {
         maven { url "https://dl.bintray.com/ethereum/maven/" }
     }
 ```
-**注：** 如果下载web3sdk的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
+**注：** 如果下载web3sdk的依赖`solcJ-all-0.4.24.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
 
 ## 配置SDK
 
@@ -156,7 +155,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
          exclude module: 'solcJ-all'
     }
     // 0.4版国密合约编译器jar包
-    compile files('lib/solcJ-all-0.4.25-gm.jar')
+    compile files('lib/solcJ-all-0.4.24-gm.jar')
     // 0.5版本国密合约编译器jar包
     // compile files('lib/solcJ-all-0.5.2-gm.jar')
   ```
@@ -181,7 +180,7 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 |51100|invalid node ID|
 |51101|the last sealer cannot be removed|
 |51102|the node is not reachable|
-|51103|the node is not in group peers|
+|51103|the node is not a group peer|
 |51104|the node is already in the sealer list|
 |51105|the node is already in the observer list|
 |51200|contract name and version already exist|
