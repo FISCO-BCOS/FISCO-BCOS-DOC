@@ -153,10 +153,8 @@ nodes/
 构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`），监听外网`Channel`和`jsonrpc`端口允许外网通过SDK或API与节点交互。
 
 ```bash
-# 下载最新预编译二进制 TODO: 发布后删除二进制下载步骤
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
 # 构建FISCO BCOS联盟链
-$ bash build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -i
+$ bash build_chain.sh -l "127.0.0.1:4" -i
 # 生成成功后，输出`All completed`提示
 Generating CA key...
 ==============================================================
@@ -181,4 +179,4 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../tutorial/group_use_cases.md)。
 
-[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/tools/build_chain.sh
+[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

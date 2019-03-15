@@ -23,7 +23,7 @@ $ ./generator -h
 
 ```bash
 # 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -o ./meta
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -o ./meta
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./meta/fisco-bcos -v
 ```
@@ -96,9 +96,11 @@ ca.crt  ca.key   cert.cnf # 从左至右分别为链证书、链私钥、证书�
 # 返回generator上级目录
 # 初始化机构A
 $ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-A
+$ cp ./meta/fisco-bcos ~/generator-A/meta
 generator-A$ cd ~/generator-A
 # 初始化机构B
 $ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-B
+$ cp ./meta/fisco-bcos ~/generator-B/meta
 generator-B$ cd ~/generator-B
 # 初始化机构A机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
@@ -306,6 +308,7 @@ generator-C$ cd ~/generator-C
 $ cd ~/generator
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
+$ cp ./meta/fisco-bcos ~/generator-C/meta
 ```
 
 ### 机构A交换配置文件
