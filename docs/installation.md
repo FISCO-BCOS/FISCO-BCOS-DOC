@@ -27,7 +27,7 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -b master
 # 检查二进制是否可执行 执行下述命令，看是否输出类似下面的版本信息
 $ ./bin/fisco-bcos -v
-FISCO-BCOS Version : 2.0.0
+FISCO-BCOS Version : 2.0.0-rc1
 Build Time         : 20190226 04:01:24
 Build Type         : Linux/g++/RelWithDebInfo
 Git Branch         : master
@@ -174,7 +174,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 {
     "Build Time":"20190121 06:21:05",
     "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0",
+    "FISCO-BCOS Version":"2.0.0-rc1",
     "Git Branch":"master",
     "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
 }
