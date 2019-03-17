@@ -76,8 +76,6 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1
 **生成星形区块链系统配置文件**
 
 ```bash
-$ cd ~/fisco
-
 # 生成区块链配置文件ip_list
 $ cat > ipconf << EOF
 127.0.0.1:2 agencyA 1,2,3
@@ -208,13 +206,144 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ```
 
-### 向群组发交易
+### 配置控制台
 
-`build_chain`提供了`transTest.sh`脚本，可向指定群组发交易，该脚本使用方法：
+控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍参考[这里](../manual/console.md)。
+
+```eval_rst
+.. important::
+   控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
+```
 
 ```bash
-$ bash transTest.sh ${交易数目} ${群组ID}
+#回到fisco目录
+$ cd ~/fisco
+
+# 获取控制台
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
+
+# 进入控制台操作目录
+$ cd console
+
+# 拷贝group2节点证书到控制台配置目录
+$ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
+
+# 获取node0的channel_listen_port
+$ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
+/home/ubuntu16/fisco/nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20200
+/home/ubuntu16/fisco/nodes/127.0.0.1/node1/config.ini:    channel_listen_port=20201
+/home/ubuntu16/fisco/nodes/127.0.0.1/node2/config.ini:    channel_listen_port=20202
+/home/ubuntu16/fisco/nodes/127.0.0.1/node3/config.ini:    channel_listen_port=20203
+/home/ubuntu16/fisco/nodes/127.0.0.1/node4/config.ini:    channel_listen_port=20204
+/home/ubuntu16/fisco/nodes/127.0.0.1/node5/config.ini:    channel_listen_port=20205
+/home/ubuntu16/fisco/nodes/127.0.0.1/node6/config.ini:    channel_listen_port=20206
+/home/ubuntu16/fisco/nodes/127.0.0.1/node7/config.ini:    channel_listen_port=20207
 ```
+
+**控制台配置如下：**：
+
+```xml
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+<property name="allChannelConnections">
+<list>
+    <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+        <property name="groupId" value="1" />
+            <property name="connectionsStr">
+            <list>
+            <value>127.0.0.1:20200</value>
+            </list>
+            </property>
+    </bean>
+    <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+        <property name="groupId" value="2" />
+            <property name="connectionsStr">
+            <list>
+            <value>127.0.0.1:20200</value>
+            </list>
+            </property>
+    </bean>
+    <bean id="group3"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+        <property name="groupId" value="3" />
+            <property name="connectionsStr">
+            <list>
+            <value>127.0.0.1:20200</value>
+            </list>
+            </property>
+    </bean>
+</list>
+</property>
+</bean>
+
+ <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+        <property name="groupId" value="1" />
+        <property name="orgID" value="fisco" />
+        <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+</bean>
+```
+
+**启动控制台**
+
+```bash
+$ bash start.sh
+# 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+=====================================================================================
+Welcome to FISCO BCOS console!
+Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
+ ________ ______  ______   ______   ______       _______   ______   ______   ______  
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+| $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
+| $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
+| $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
+| $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
+ \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
+
+=====================================================================================
+[group:1]> 
+```
+
+### 向群组发交易
+
+上节配置了控制台，本节通过控制台向各群组发交易。
+
+**控制台发送交易**
+
+```bash
+# ... 向group1发交易...
+$ [group:1]> deploy HelloWorld
+0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+# 查看group1当前块高，块高增加为1表明出块正常，否则请检查group1是否共识正常
+$ [group:1]> getBlockNumber 
+1
+
+# ... 向group2发交易...
+# 切换到group2
+$ [group:1]> switch 2
+Switched to group 2.
+# 向group2发交易，返回交易哈希表明交易部署成功，否则请检查group2是否共识正常
+$ [group:2]> deploy HelloWorld
+0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+# 查看group2当前块高，块高增加为1表明出块正常，否则请检查group2是否共识正常
+$ [group:2]> getBlockNumber
+1
+
+# ... 向group3发交易...
+# 切换到group3
+$ [group:2]> switch 3
+Switched to group 3.
+# 向group3发交易，返回交易哈希表明交易部署成功
+$ [group:3]> deploy HelloWorld
+0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+# 查看group3当前块高，块高为1表明出块正常，否则请检查group3是否共识正常
+[group:3]> getBlockNumber
+1
+
+```
+
+**查看日志**
+
+节点出块后，会输出`Report`日志，日志各个字段含义如下：
 
 ```eval_rst
 .. important::
@@ -230,29 +359,21 @@ $ bash transTest.sh ${交易数目} ${群组ID}
 ```
 
 ```bash
-# 进入脚本目录
+# 进入节点目录
 $ cd ~/fisco/nodes/127.0.0.1
 
-# ... 向group1发交易...
-$ bash transTest.sh 10 1
-Send transaction:  1
-{"id":83,"jsonrpc":"2.0","result":"0x226e54480ce325a5858240a10864d7fc1127f2adc17e3e02dd314f91baab074b"}
-......此处省略其他输出......
-
-# 查看出块情况：有新区块产生
+# 查看group1出块情况：有新区块产生
 $ cat node0/log/* |grep "g:1.*Report"
-info|2019-02-11 16:07:35.947676| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,......此处省略其他输出......
+info|2019-02-11 16:08:45.077484| [g:1][p:264][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=1,hash=9b5487a6...,next=2,tx=1,nodeIdx=2
 
-# ...向group3发交易...
-$ bash transTest.sh 10 3
-Send transaction:  1
-{"id":83,"jsonrpc":"2.0","result":"0x5f7a7c0a035a32a6fa17f0b797cc98eca45285f3e6347c6cd927efb7cd2a1a0b"}
-......此处省略其他输出......
+# 查看group2出块情况：有新区块产生
+$ cat node0/log/* |grep "g:2.*Report"
+info|2019-02-11 16:11:55.354881| [g:2][p:520][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=0,hash=434b6e07...,next=2,tx=1,nodeIdx=0
 
-# 查看出块情况：有新区块产生
+# 查看group3出块情况：有新区块产生
 $ cat node0/log/* |grep "g:3.*Report"
-info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=843f6498...,next=2,tx=1,nodeIdx=3
-......此处省略其他输出......
+info|2019-02-11 16:14:33.930978| [g:3][p:776][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=1,hash=3a42fcd1...,next=2,tx=1,nodeIdx=2
+
 ```
 
 ### 节点加入群组
@@ -273,78 +394,29 @@ info|2019-02-11 16:17:17.147941| [g:3][p:776][CONSENSUS][PBFT]^^^^^Report:,num=1
 **拷贝group2群组配置到node2**
 
 ```bash
-$ cd ~/fisco/nodes/127.0.0.1
-
 # ... 从node0拷贝group2的配置到node2...
 $ cp node0/conf/group.2.* node2/conf
 
 # ...重启node2(重启后请确定节点正常共识)...
-$ cd node2 && bash stop.sh && bash start.sh
-```
+$ cd node2 && bash stop.sh && bash start.sh 
 
 **获取node2的节点ID**
 
 ```bash
-$ cat node2/conf/node.nodeid 
+$ cat conf/node.nodeid 
 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
-```
-
-**下载并配置控制台**
-
-```bash
-$ cd ~/fisco
-
-# 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
-
-# 进入控制台操作目录
-$ cd ~/fisco/console
-
-# 拷贝group2节点证书到控制台配置目录
-$ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
-
-# 获取node0的channel_listen_port
-$ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node0/config.ini
-channel_listen_port=20200
-```
-
-**控制台配置如下：**：
-
-```xml
-<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-<property name="allChannelConnections">
-<list>
-    <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="groupId" value="2" />
-            <property name="connectionsStr">
-            <list>
-            <value>127.0.0.1:20200</value>
-            </list>
-            </property>
-    </bean>
-</list>
-</property>
-</bean>
-
- <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-        <property name="groupId" value="2" />
-        <property name="orgID" value="fisco" />
-        <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-</bean>
-```
-
-**启动控制台，连接group2**
-
-```bash
-$ bash start.sh 2
 ```
 
 **通过控制台向group2发送命令，将node2加入到group2**
 
 ```bash
-# ...通过控制台将node2加入为共识节点
+
+# ...回到控制台目录，并启动控制台...
+$ cd ~/fisco/console && bash start.sh 2
+
+# ...通过控制台将node2加入为共识节点...
 # 1. 查看当前共识节点列表
-[group:2]> getSealerList
+$ [group:2]> getSealerList
 [
     9217e87c6b76184cf70a5a77930ad5886ea68aefbcce1909bdb799e45b520baa53d5bb9a5edddeab94751df179d54d41e6e5b83c338af0a19c0611200b830442,
     227c600c2e52d8ec37aa9f8de8db016ddc1c8a30bb77ec7608b99ee2233480d4c06337d2461e24c26617b6fd53acfa6124ca23a8aa98cb090a675f9b40a9b106,
@@ -352,13 +424,13 @@ $ bash start.sh 2
     8b2c4204982d2a2937261e648c20fe80d256dfb47bda27b420e76697897b0b0ebb42c140b4e8bf0f27dfee64c946039739467b073cf60d923a12c4f96d1c7da6
 ]
 # 2. 将node2加入到共识节点
-[group:2]> addSealer 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
+$ [group:2]> addSealer 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 {
-    "code":1,
+    "code":0,
     "msg":"success"
 }
 # 3. 查看共识节点列表
-[group:2]> getSealerList
+$ [group:2]> getSealerList
 [
     9217e87c6b76184cf70a5a77930ad5886ea68aefbcce1909bdb799e45b520baa53d5bb9a5edddeab94751df179d54d41e6e5b83c338af0a19c0611200b830442,
     227c600c2e52d8ec37aa9f8de8db016ddc1c8a30bb77ec7608b99ee2233480d4c06337d2461e24c26617b6fd53acfa6124ca23a8aa98cb090a675f9b40a9b106,
@@ -366,10 +438,21 @@ $ bash start.sh 2
     8b2c4204982d2a2937261e648c20fe80d256dfb47bda27b420e76697897b0b0ebb42c140b4e8bf0f27dfee64c946039739467b073cf60d923a12c4f96d1c7da6,
     6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4 # 新加入节点
 ]
+# 获取group2当前块高
+$ [group:2]> getBlockNumber 
+2
 
+#... 向group2发交易
+# 部署HelloWorld合约，输出合约地址，若合约部署失败，请检查group2共识情况
+$ [group:2] deploy HelloWorld
+0xdfdd3ada340d7346c40254600ae4bb7a6cd8e660
+
+# 获取group2当前块高，块高增加为3，若块高不变，请检查group2共识情况
+$ [group:2]> getBlockNumber 
+3
 ```
 
-**查看新加入节点出块情况**
+**通过日志查看新加入节点出块情况**
 
 通过以上操作可看出，node2已成功加入group2。
 
@@ -378,23 +461,12 @@ $ bash start.sh 2
 ```bash
 # 查看节点共识情况
 $ tail -f node2/log/* | grep "g:2.*++"
-info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=9,tx=0,nodeIdx=1,hash=c8a1ed9c...
-......此处省略其他输出......
-```
-
-> 向group2发交易，查看node2的group2共识情况：
-
-```bash
-$ bash transTest.sh 10 2
-Send transaction:  1
-{"id":83,"jsonrpc":"2.0","result":"0xd834f909861599c475fa0a04b4afa4759b20fdaea683dd9692bbf79541f16b01"}
-Send transaction:  2
+info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=4,tx=0,nodeIdx=1,hash=c8a1ed9c...
 ......此处省略其他输出......
 
-# 查看node2节点group2的：有新区块产生
+# 查看node2 group2出块情况：有新区块产生
 $ cat node2/log/* | grep "g:2.*Report"
-info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9,idx=3,hash=80c98d31...,next=10,tx=1,nodeIdx=1
-......此处省略其他输出......
+info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=3,idx=3,hash=80c98d31...,next=10,tx=1,nodeIdx=1
 ```
 
 
@@ -419,14 +491,14 @@ info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=9
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 
-# 获取fisco-bcos二进制文件
+# 获取fisco-bcos二进制文件(若搭建星形区块链节点已下载fisco-bcos二进制文件，可跳过此步骤)
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh)
 
-# 获取build_chain.sh脚本
+# 获取build_chain.sh脚本(若搭建星形区块链节点已下载build_chain.sh，可跳过此步骤)
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/build_chain.sh && chmod u+x build_chain.sh
 
 # 构建本机单群组四节点区块链(生产环境中，建议节点部署在不同物理机)
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos -o multi_nodes
+$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos -o multi_nodes -p 20000,20100,7545
 Generating CA key...
 ==============================================================
 Generating keys ...
@@ -436,7 +508,7 @@ Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
-[INFO] Start Port        : 30300 20200 8545
+[INFO] Start Port        : 20000 20100 7545
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
@@ -531,29 +603,128 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ### 向群组发交易
 
-> 使用`transTest.sh`脚本向`group1`和`group2`发交易，验证区块链网络是否正常：
+**获取控制台**
 
 ```bash
-# ...向group1发交易，并查看节点共识情况...
-$ bash transTest.sh 10 1
-Send transaction:  1
-{"id":83,"jsonrpc":"2.0","result":"0x24827ef7b0bed013123d9981ff61ba0a1761747a475e187467e70d9ff20c0714"}
-......此处省略其他输出......
+# 若从未下载控制台，请进行下面操作下载控制台：
+$ cd ~/fisco
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
 
-# 查看节点出块情况(其中num是块高, idx是出块节点索引, tx是区块中包含交易数，nodeIdx是当前节点索引):有新区块产生
+# 若在星形组网过程中下载了控制台，进行下面操作：
+# 拷贝控制台到console.multi-node
+$ cp -r console console.multi-node
+```
+
+**配置控制台**
+
+```bash
+# 获取channel_port
+$ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini 
+multi_nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20100
+
+# 进入控制台目录
+$ cd console.multi-node
+# 配置证书
+$ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
+
+# 配置channel listen port
+$ vim conf/applicationContext.xml
+```
+
+`applicationContext.xml`详细配置如下：
+
+```xml
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+<property name="allChannelConnections">
+<list>
+    <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+        <property name="groupId" value="1" />
+            <property name="connectionsStr">
+            <list>
+            <value>127.0.0.1:20100</value>
+            </list>
+            </property>
+    </bean>
+    <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+        <property name="groupId" value="2" />
+            <property name="connectionsStr">
+            <list>
+            <value>127.0.0.1:20100</value>
+            </list>
+            </property>
+    </bean>
+</list>
+</property>
+</bean>
+
+ <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+        <property name="groupId" value="1" />
+        <property name="orgID" value="fisco" />
+        <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+</bean>
+```
+
+
+**通过控制台向群组发交易**
+
+```bash
+# ... 启动控制台 ...
+$ bash start.sh
+# 输出如下信息表明控制台启动成功，若启动失败，请检查是否配置证书、channel listen port配置是否正确
+=====================================================================================
+Welcome to FISCO BCOS console!
+Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
+ ________ ______  ______   ______   ______       _______   ______   ______   ______  
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+| $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
+| $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
+| $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
+| $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
+ \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
+
+=====================================================================================
+# ... 向group1发交易...
+# 获取当前块高
+$ [group:1]> getBlockNumber 
+0
+# 向group1部署HelloWorld合约，若部署失败，请检查group1共识是否正常
+$ [group:1]> deploy HelloWorld
+0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+# 获取当前块高，若块高没有增加，请检查group1共识是否正常
+$ [group:1]> getBlockNumber 
+1
+
+
+# ... 向group2发交易...
+# 切换到group2
+$ [group:1]> switch 2
+Switched to group 2.
+# 获取当前块高
+$ [group:2]> getBlockNumber 
+0
+# 向group2部署HelloWorld合约
+$ [group:2]> deploy HelloWorld
+0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+# 获取当前块高，若块高没有增加，请检查group2共识是否正常
+$ [group:2]> getBlockNumber 
+1
+# 退出控制台
+$[group:2]> q
+```
+
+**通过日志查看节点出块状态**
+
+```bash
+# 切换到节点目录
+$ cd ~/fisco/multi_nodes/127.0.0.1/
+
+# 查看group1出块情况
 $ cat node0/log/* | grep "g:1.*Report"
 info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=be961c98...,next=2,tx=1,nodeIdx=2
-......此处省略其他输出......
 
-# ...向group2发交易，并查看节点出块情况...
- bash transTest.sh 10 2
-Send transaction:  1
-{"id":83,"jsonrpc":"2.0","result":"0xf8278a38d9243bfc6c7c146cb222fe13a7f8436b7df169bd1a90f7e17954c6a6"}
-......此处省略其他输出......
-
-# 查看节点出块情况：有新区块产生
+# 查看group2出块情况
 $ cat node0/log/log_2019021121.12.log | grep "g:2.*Report"
 info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=5d006230...,next=2,tx=1,nodeIdx=2
-......此处省略其他输出......
-
 ```
