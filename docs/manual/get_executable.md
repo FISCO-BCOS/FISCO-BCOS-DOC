@@ -60,8 +60,7 @@ $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```bash
 $ cd FISCO-BCOS
-# 切换到release-2.0.1分支 TODO: 发布删除切换分支操作
-$ git checkout release-2.0.1
+$ git checkout master
 $ mkdir build && cd build
 # CentOS请使用cmake3
 $ cmake ..
