@@ -42,8 +42,6 @@ source_suffix = ['.rst', '.md']
 # ones.
 extensions = [ 
   'sphinx_markdown_tables',
-   'notfound.extension'
-
 ]
 
 # Add any paths that contain templates here, relative to this directory.
