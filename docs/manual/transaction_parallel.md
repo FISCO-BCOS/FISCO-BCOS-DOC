@@ -246,7 +246,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 ## 举例：并行转账
 
-本举例分别给出用两种框架实现的并行合约。
+此处分别给出solidity合约和precompile合约的并行举例。
 
 **配置环境**
 
@@ -267,7 +267,7 @@ Web3SDK用来发送并行交易，FISCO BCOS链用来执行并行交易。相关
 
 ### 并行Solidity合约：ParallelOk
 
-基于账户模型的转账，是一种典型的业务操作。ParallelOk合约，是转账模型的一个举例，能实现并行的转账功能。ParallelOk合约的实现如下。
+基于账户模型的转账，是一种典型的业务操作。ParallelOk合约，是账户模型的一个举例，能实现并行的转账功能。ParallelOk合约的实现如下。
 
 ``` javascript
 pragma solidity ^0.4.25;
@@ -357,8 +357,9 @@ validation:
  	user count is 10000
  	verify_success count is 10000
  	verify_failed count is 0
-
 ```
+
+从图中可看出，本次交易执行的TPS是2905。执行结果校验后，无任何错误(``` verify_failed count is 0 ```)。
 
 #### （4）计算总TPS
 
@@ -370,7 +371,7 @@ validation:
 sh getTps.sh log/log_2019031821.00.log 21:26:24 21:26:59 # 参数：<日志文件> <计算开始时间> <计算结束时间>
 ```
 
-得到TPS（此结果是用2个SDK和4个节点跑出来的。）
+得到TPS（2 SDK、4节点，8核，16G内存）
 
 ```shell
 statistic_end = 21:26:58.631195
@@ -441,7 +442,7 @@ validation:
 sh get_tps.sh log/log_2019031311.17.log 11:25 11:30 # 参数：<日志文件> <计算开始时间> <计算结束时间>
 ```
 
-得到TPS（此结果是用3个SDK和4个节点跑出来的。）
+得到TPS（3 SDK、4节点，8核，16G内存）
 
 ``` shell
 statistic_end = 11:29:59.587145
