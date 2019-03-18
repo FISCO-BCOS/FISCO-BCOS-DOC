@@ -111,7 +111,7 @@ c、判断配置文件中fisco_bcos_src_local配置的路径是否存在名为FI
 
 * [docker] section
 
-与docker节点搭链相关的配置, 参考[FISCO BCOS docker](https://fisco-bcos-documentation.readthedocs.io/zh_CN/dev/docs/tools/appendix.html)。
+与docker节点搭链相关的配置, 参考[FISCO BCOS docker](./appendix.md)。
 
 * [web3sdk] section
 
@@ -119,7 +119,7 @@ c、判断配置文件中fisco_bcos_src_local配置的路径是否存在名为FI
 
 *  [expand] section
   
-扩容操作, 使用参考 ( [扩容流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/dev/docs/tools/expand_blockchain.html) )
+扩容操作, 使用参考 ( [扩容流程](./expand_blockchain.md) )
 
 
 *  [nodes] section
