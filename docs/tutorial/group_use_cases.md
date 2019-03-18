@@ -487,7 +487,7 @@ info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=3
 #### 停止节点
 
 ```bash
-# 回到节点目录
+# 回到节点目录 && 停止节点
 $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```
 
@@ -749,6 +749,6 @@ info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1
 #### 停止节点
 
 ```bash
-# 回到节点目录
+# 回到节点目录 && 停止节点
 $ cd ~/fisco/multi_nodes/127.0.0.1 && bash stop_all.sh
 ```
