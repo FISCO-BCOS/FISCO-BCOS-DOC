@@ -61,7 +61,6 @@ source_suffix = ['.rst', '.md']
 # ones.
 extensions = [
   'sphinx_markdown_tables',
-  'notfound.extension',
   'sphinxcontrib.mermaid'
 ]
 
