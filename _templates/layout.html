@@ -1,4 +1,5 @@
 {% extends "!layout.html" %}
+{%- if pagename == '404' %}{% set metatags = '<base href="/">\n  ' + metatags %}{% endif %}
 {%- if pagename != '404' %}
     {% block sidebartitle %}
     {{ super() }}
