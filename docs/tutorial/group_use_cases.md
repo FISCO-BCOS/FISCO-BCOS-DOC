@@ -238,9 +238,11 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 /home/ubuntu16/fisco/nodes/127.0.0.1/node5/config.ini:    channel_listen_port=20205
 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/config.ini:    channel_listen_port=20206
 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/config.ini:    channel_listen_port=20207
+
+
 ```
 
-**控制台配置如下：**：
+**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下**：
 
 ```xml
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -342,8 +344,12 @@ Switched to group 3.
 $ [group:3]> deploy HelloWorld
 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 查看group3当前块高，块高为1表明出块正常，否则请检查group3是否共识正常
-[group:3]> getBlockNumber
+$ [group:3]> getBlockNumber
 1
+
+# ... 切换到不存在的组4，控制台提示group4不存在，并输出当前的group列表 ...
+$ [group:3]> switch 4
+Group 4 does not exist. The group list is [1, 2, 3].
 
 ```
 
@@ -405,10 +411,12 @@ $ cp node0/conf/group.2.* node2/conf
 
 # ...重启node2(重启后请确定节点正常共识)...
 $ cd node2 && bash stop.sh && bash start.sh 
+```
 
 **获取node2的节点ID**
 
 ```bash
+# 请记住node2的node ID，将node2加入到group2需用到该node ID
 $ cat conf/node.nodeid 
 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 ```
@@ -430,6 +438,7 @@ $ [group:2]> getSealerList
     8b2c4204982d2a2937261e648c20fe80d256dfb47bda27b420e76697897b0b0ebb42c140b4e8bf0f27dfee64c946039739467b073cf60d923a12c4f96d1c7da6
 ]
 # 2. 将node2加入到共识节点
+# addSealer后面的参数是上步获取的node ID
 $ [group:2]> addSealer 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 {
     "code":0,
@@ -473,6 +482,13 @@ info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # 查看node2 group2出块情况：有新区块产生
 $ cat node2/log/* | grep "g:2.*Report"
 info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=3,idx=3,hash=80c98d31...,next=10,tx=1,nodeIdx=1
+```
+
+#### 停止节点
+
+```bash
+# 回到节点目录
+$ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```
 
 
@@ -612,13 +628,9 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 **获取控制台**
 
 ```bash
-# 若从未下载控制台，请进行下面操作下载控制台：
+# 若从未下载控制台，请进行下面操作下载控制台，否则将控制台拷贝到~/fisco目录：
 $ cd ~/fisco
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz && tar -zxf console.tar.gz
-
-# 若在星形组网过程中下载了控制台，进行下面操作：
-# 拷贝控制台到console.multi-node
-$ cp -r console console.multi-node
 ```
 
 **配置控制台**
@@ -629,7 +641,7 @@ $ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini
 multi_nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20100
 
 # 进入控制台目录
-$ cd console.multi-node
+$ cd console
 # 配置证书
 $ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
 
@@ -637,7 +649,7 @@ $ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
 $ vim conf/applicationContext.xml
 ```
 
-`applicationContext.xml`详细配置如下：
+**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下：**
 
 ```xml
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -732,4 +744,11 @@ info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1
 # 查看group2出块情况
 $ cat node0/log/log_2019021121.12.log | grep "g:2.*Report"
 info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=5d006230...,next=2,tx=1,nodeIdx=2
+```
+
+#### 停止节点
+
+```bash
+# 回到节点目录
+$ cd ~/fisco/multi_nodes/127.0.0.1 && bash stop_all.sh
 ```
