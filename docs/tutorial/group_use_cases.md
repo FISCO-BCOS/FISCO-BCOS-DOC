@@ -67,8 +67,6 @@ $ brew install -y openssl
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
-# 获取预编译可执行程序
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh)
 # 获取build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
@@ -100,7 +98,7 @@ $ cat ipconf
 
 ```bash
 # 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
-$ bash build_chain.sh -f ipconf -e ./bin/fisco-bcos -p 30300,20200,8545
+$ bash build_chain.sh -f ipconf -p 30300,20200,8545
 Generating CA key...
 ==============================================================
 Generating keys ...
@@ -512,15 +510,10 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
-
-# 获取fisco-bcos二进制文件(若搭建星形区块链节点已下载fisco-bcos二进制文件，可跳过此步骤)
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh)
-
-# 获取build_chain.sh脚本(若搭建星形区块链节点已下载build_chain.sh二进制文件，可跳过此步骤)
+# 获取build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
-
 # 构建本机单群组四节点区块链(生产环境中，建议节点部署在不同物理机)
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos -o multi_nodes -p 20000,20100,7545
+$ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
 ==============================================================
 Generating keys ...
