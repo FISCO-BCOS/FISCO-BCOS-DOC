@@ -37,13 +37,13 @@ FISCO BCOS提供了智能合约的并行编程的框架，开发者只需按照�
 
 目前，FISCO BCOS提供了solidity与precompile两种合约的并行框架。
 
-#### solidity合约并行框架
+#### solidity并行合约框架
 
-用solidity语言写并行合约。开发者要做的是根据提供的框架，用solidity进行合约开发。按照框架的方式，将合约中的接口定义成并行的接口，之后对此接口的调用，将支持并行的处理。
+用solidity语言写并行合约。开发者要做的是根据提供的框架，用solidity进行合约开发。按照框架的格式，将合约中的接口定义成并行的接口，之后对此接口的调用，将支持并行的处理。
 
 基于并行solidity合约框架开发的合约，可维护，可升级，无需重启节点，比precompile合约更容易维护。
 
-#### precompile合约并行框架
+#### precompile并行合约框架
 
 [precompile合约](../design/virtual_machine/precompile.md)是内置在FISCO BCOS节点中的合约，用C++语言实现。由于precompile合约的执行不依赖于EVM，因此precompile合约的性能比solidity合约的性能高很多（10倍左右）。因此，若需要追求极致的性能，可考虑用precompile实现合约逻辑。
 
@@ -55,8 +55,8 @@ FISCO BCOS提供了precompile合约并行框架，开发者只需要按照框架
 
 | 并行框架               | 开发语言 | 开发难度 | 可维护性                           | 性能 |
 | ---------------------- | -------- | -------- | ---------------------------------- | ---- |
-| solidity合约并行s框架  | solidity | 低       | 高，无需重启节点即可部署           | 高   |
-| precompile合约并行框架 | C++      | 高       | 低，内置于节点中，升级时需重启节点 | 极高 |
+| solidity并行合约框架   | solidity | 低       | 高，无需重启节点即可部署           | 高   |
+| precompile并行合约框架 | C++      | 高       | 低，内置于节点中，升级时需重启节点 | 极高 |
 
 ## 编写并行合约
 
@@ -113,7 +113,7 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 
 具体步骤如下：
 
-（1）将``` ParallelContract ```作为合约的基类
+**（1）将``` ParallelContract ```作为合约的基类**
 
 ``` javascript
 pragma solidity ^0.4.25;
@@ -133,7 +133,7 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 }
 ```
 
-（2）注册/注销可以并行的合约接口
+**（2）注册/注销可以并行的合约接口**
 
 在合约中实现 ``` enableParallel() ``` 函数，调用``` registerParallelFunction() ```进行注册。同时把``` disableParallel() ```也实现了，使合约具备取消并行执行的能力。
 
@@ -156,7 +156,7 @@ function disableParallel() public
 } 
 ```
 
-（3）部署/执行并行合约
+**（3）部署/执行并行合约**
 
 用[控制台](console.md)或[Web3SDK](../sdk/sdk.md)编译和部署合约，此处以控制台为例。
 
@@ -198,13 +198,13 @@ function disableParallel() public
 
 编写并行的precompile合约，开发流程与开发[普通的precompile合约的流程](./smart_contract.html#id2)相同。普通的precompile合约以Precompile为基类，再其上实现合约逻辑。在此基础上，Precompile的基类还为并行提供了两个虚函数，继续实现这两个函数，即可实现并行的precompile合约。
 
-（1）将合约定义成支持并行
+**（1）将合约定义成支持并行**
 
 ``` c++
 bool isParallelPrecompiled() override { return true; }
 ```
 
-（2）定义并行接口和冲突参数
+**（2）定义并行接口和冲突参数**
 
 ​	注意，一旦定义成支持并行，所有的接口都需要进行定义。若返回空，表示此接口无任何冲突对象。
 
@@ -238,7 +238,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 }
 ```
 
-（3）编译，重启节点
+**（3）编译，重启节点**
 
 手动编译节点的方法，参考：[这里](./get_executable.md)
 
@@ -315,7 +315,7 @@ contract ParallelOk is ParallelContract
 
 FISCO BCOS在Web3SDK中内置了ParallelOk合约，此处给出用Web3SDK来发送大量并行交易的操作方法。
 
-#### （1）用SDK部署合约、新建用户、开启合约的并行能力
+**（1）用SDK部署合约、新建用户、开启合约的并行能力**
 
 ``` shell
 # 参数： add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
@@ -325,7 +325,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.Perf
 
 执行成功后，ParallelOk被部署到区块链上，创建的用户信息保存在user文件中，同时开启了ParallelOk的并行能力。
 
-####  （2）批量发送并行转账交易
+**（2）批量发送并行转账交易**
 
 ``` shell
 # 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易冲突百分比：0~10>
@@ -334,7 +334,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.Perf
 # 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的冲突。
 ```
 
-#### （3）验证并行正确性
+**（3）验证并行正确性**
 
 并行交易执行完成后，Web3SDK会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
 
@@ -361,7 +361,7 @@ validation:
 
 从图中可看出，本次交易执行的TPS是2905。执行结果校验后，无任何错误(``` verify_failed count is 0 ```)。
 
-#### （4）计算总TPS
+**（4）计算总TPS**
 
 单个Web3SDK无法发送足够多的交易以达到节点并行执行能力的上限。需要多个Web3SDK同时发送交易。在多个Web3SDK同时发送交易后，单纯的将结果中的TPS加和得到的TPS不够准确，需要直接从节点处获取TPS。
 
@@ -385,7 +385,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 **注意：DagTransferPrecompiled为并行交易的举例，功能较为简单，请勿用于线上业务。**
 
-#### （1）生成用户
+**（1）生成用户**
 
 用Web3SDK发送创建用户的操作，创建的用户信息保存在user文件中
 
@@ -395,7 +395,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.dag.PerfomanceDT add 100
 # 创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
-#### （2）批量发送并行转账交易
+**（2）批量发送并行转账交易**
 
 用Web3SDK发送并行转账交易
 
@@ -405,7 +405,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.dag.PerfomanceDT transfe
 # 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的冲突。
 ```
 
-#### （3）验证并行正确性
+**（3）验证并行正确性**
 
 并行交易执行完成后，Web3SDK会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
 
@@ -432,7 +432,7 @@ validation:
 
 从图中可看出，本次交易执行的TPS是3143。执行结果校验后，无任何错误(``` verify_failed count is 0 ```)。
 
-#### （4）计算总TPS
+**（4）计算总TPS**
 
 单个Web3SDK无法发送足够多的交易以达到节点并行执行能力的上限。需要多个Web3SDK同时发送交易。在多个Web3SDK同时发送交易后，单纯的将结果中的TPS加和得到的TPS不够准确，需要直接从节点处获取TPS。
 
