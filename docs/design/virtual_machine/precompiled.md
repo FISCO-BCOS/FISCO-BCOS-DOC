@@ -22,7 +22,17 @@ Precompiled的架构如下图所示：
 - 每个预编译合约对象都会实现`call`接口，预编译合约的具体逻辑在该接口中实现。
 - `call`根据交易的abi编码，获取到`Function Selector`和参数，然后执行对应的逻辑。
 
-![](../../../images/precompiled/process.png)
+```eval_rst
+.. mermaid::
+
+    graph TB
+        Start(开始) --> branch1{预编译合约}
+        branch1 --> |是|op1[根据地址获取合约对象]
+        branch1 --> |否|op2[EVM]
+        op1 --> op3[解析调用函数及参数]
+        op3 --> End(返回执行结果)
+        op2 --> End(返回执行结果)
+```
 
 ### 接口定义
 
