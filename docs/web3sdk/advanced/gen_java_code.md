@@ -13,7 +13,7 @@
 
 .. important::
    
-   必须先安装好FISCO-BCOS的solidity编译器 `fisco-solc <https://github.com/FISCO-BCOS/fisco-solc>`_ ，详细步骤参考 `FISCO-BCOS入门 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/getstart/index.html>`_ 
+   必须先安装好FISCO-BCOS的solidity编译器 `fisco-solc <https://github.com/FISCO-BCOS/fisco-solc>`_ ，详细步骤参考 `FISCO-BCOS入门 <../../getstart/index.html>`_ 
 
 .. admonition:: 将合约代码转换成java代码
 

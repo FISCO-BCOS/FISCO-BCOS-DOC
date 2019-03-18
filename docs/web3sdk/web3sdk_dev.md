@@ -28,7 +28,7 @@
 
 .. admonition:: 智能合约代码Counter.sol
     
-    根据合约功能要求可实现智能合约 `Counter.sol <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/web3sdk/codes/Counter.sol>`_ ，合约代码如下：
+    根据合约功能要求可实现智能合约 `Counter.sol <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-1.3/docs/web3sdk/codes/Counter.sol>`_ ，合约代码如下：
 
      .. literalinclude:: codes/Counter.sol
         :language: cpp
@@ -65,11 +65,11 @@
     
     这个java文件可以复制到客户端开发环境里，后续建立的java工程的对应的包路径下。
     
-    若转换成java代码时报错，请参考 `faq【合约转换成java代码出错】 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/faq.html>`_ .
+    若转换成java代码时报错，请参考 `faq【合约转换成java代码出错】 <./faq.html>`_ .
     
     Counter.sol对应的Counter.java代码如下：
 
-     `Counter.java <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/web3sdk/codes/Counter.java>`_ 
+     `Counter.java <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-1.3/docs/web3sdk/codes/Counter.java>`_
 
 ```
 
@@ -80,9 +80,9 @@
 ```eval_rst
 .. admonition:: 下载java应用bcosliteclient
 
-   - FISCO-BCOS提供了示例应用bcosliteclient，该应用在 `CounterClient.java <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/web3sdk/codes/CounterClient.java>`_ 中提供Counter.sol合约部署和调用功能。应用下载链接如下:
+   - FISCO-BCOS提供了示例应用bcosliteclient，该应用在 `CounterClient.java <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-1.3/docs/web3sdk/codes/CounterClient.java>`_ 中提供Counter.sol合约部署和调用功能。应用下载链接如下:
 
-     `bcosliteclient.zip <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/web3sdk/codes/bcosliteclient.zip>`_ 
+     `bcosliteclient.zip <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-1.3/docs/web3sdk/codes/bcosliteclient.zip>`_ 
 
 .. admonition:: 编译bcosliteclient应用
 
@@ -116,7 +116,7 @@
 
 .. admonition:: 配置java应用
 
-   参考 `web3sdk配置 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html>`_ 配置java应用，主要配置选项包括：
+   参考 `web3sdk配置 <./config_web3sdk.html>`_ 配置java应用，主要配置选项包括：
 
      .. image:: imgs/javaconfig.png
         :align: center
@@ -201,7 +201,7 @@
 
 .. admonition:: SDK应用部署/调用合约主要流程
 
-   参考 `CounterClient.java <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/master/docs/web3sdk/codes/Counter.java>`_：
+   参考 `CounterClient.java <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-1.3/docs/web3sdk/codes/Counter.java>`_：
     1. 初始化AMOP的ChannelEthereumService
     2. 使用AMOP初始化Web3j
     3. 初始化交易签名密钥对
@@ -217,7 +217,6 @@
 .. admonition:: 参考资料
 
     - 智能合约参考文档：http://solidity.readthedocs.io/en/v0.4.24/
-    - AMOP: https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/features/AMOP/README.html
     - web3j JSON-RPC: https://github.com/ethereum/wiki/wiki/JSON-RPC
     - FISCO dev团队提供的示例应用:
        (1) 存证Demo： https://github.com/FISCO-BCOS/evidenceSample

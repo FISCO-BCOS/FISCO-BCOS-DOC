@@ -186,7 +186,7 @@ send transaction success: 0xa280d823346e1b7ea332a2b4d7a7277ae380b0cc7372bef396c5
 
 *  构建扩容安装包
 
-参考 [扩容流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/expand_blockchain.html) 构建扩容机器上的安装包。
+参考 [扩容流程](./expand_blockchain.md) 构建扩容机器上的安装包。
 
 *  安装启动
 

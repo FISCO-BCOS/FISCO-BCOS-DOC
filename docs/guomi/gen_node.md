@@ -2,7 +2,7 @@
 
 ## 生成节点证书
 
-证书生成可参考[创世节点证书生成](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/gen_cert.html) ,若普通节点与创世节点属于同一机构，必须使用同一机构证书颁发节点证书。
+证书生成可参考[创世节点证书生成](./gen_cert.md) ,若普通节点与创世节点属于同一机构，必须使用同一机构证书颁发节点证书。
 
 ```bash
 # 进入脚本所在目录(设源码位于~/mydata目录)
@@ -43,7 +43,7 @@ server.key
 
 ## 初始化普通节点环境
 
-类似于 [创世节点环境初始化](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/guomi/genesis_node.html#id3), 使用generate_node.sh脚本初始化普通节点环境。
+类似于 [创世节点环境初始化](./genesis_node.html#id3), 使用generate_node.sh脚本初始化普通节点环境。
 
 ```bash
 # 进入脚本所在目录(设源码位于~/mydata目录)
