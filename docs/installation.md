@@ -23,24 +23,16 @@ $ sudo apt install -y openssl curl
 $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
-# 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -b master
-# 检查二进制是否可执行 执行下述命令，看是否输出类似下面的版本信息
-$ ./bin/fisco-bcos -v
-FISCO-BCOS Version : 2.0.0
-Build Time         : 20190226 04:01:24
-Build Type         : Linux/g++/RelWithDebInfo
-Git Branch         : master
-Git Commit Hash    : c213e033328631b1b8c2ee936059d7126fd98d1a
 ```
 
-### 搭建4节点FISCO BCOS链
+### 搭建单群组4节点联盟链
 
 ```bash
 # 生成一条4节点的FISCO链 4个节点都属于同一群组 下面指令在fisco目录下执行
-# -e 指定fisco-bcos路径 -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+# -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
-$ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545
+# 默认从GitHub下载最新稳定版本可执行程序
+$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
 如果命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
