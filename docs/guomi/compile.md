@@ -60,7 +60,7 @@
 
         # 确认fisco-bcos是国密版本
         $ fisco-bcos --version
-        FISCO-BCOS version 1.3.2-gm  # 有-gm，表明是国密版FISCO BCOS
+        FISCO-BCOS version 1.3.7-gm  # 有-gm，表明是国密版FISCO BCOS
         FISCO-BCOS network protocol version: 63
         Client database version: 12041
         Build: ETH_BUILD_PLATFORM/ETH_BUILD_TYPE

@@ -72,7 +72,7 @@ github_url=https://github.com/FISCO-BCOS/FISCO-BCOS.git
 fisco_bcos_src_local=../
 * 需要使用FISCO-BCOS的版本号, 使用物料包时需要将该值改为需要使用FISCO-BCOS的版本号.
 * 版本号可以是FISCO-BCOS已经发布的版本之一, 链接： https://github.com/FISCO-BCOS/FISCO-BCOS/releases
-fisco_bcos_version=v1.3.2
+fisco_bcos_version=v1.3.7
 
 [docker]
 * docker开关, 打开时构建的FISCO BCOS链节点为docker节点 . 0:关闭  1:打开
@@ -129,7 +129,7 @@ github_url=https://github.com/FISCO-BCOS/FISCO-BCOS.git
 fisco_bcos_src_local=../
 * 需要使用FISCO-BCOS的版本号, 使用物料包时需要将该值改为需要使用的版本号.
 * 版本号可以是FISCO-BCOS已经发布的版本之一, 链接： https://github.com/FISCO-BCOS/FISCO-BCOS/releases
-fisco_bcos_version=v1.3.2
+fisco_bcos_version=v1.3.7
 ```
 
 - 物料包在构建安装包过程中(非扩容流程), 会启动一个默认的临时temp节点用来部署进行系统合约的部署, 将所有的节点注册到节点管理合约, 然后导出系统合约信息生成genesis.json文件。
