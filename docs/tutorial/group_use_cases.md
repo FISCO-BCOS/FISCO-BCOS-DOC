@@ -307,6 +307,12 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 上节配置了控制台，本节通过控制台向各群组发交易。
 
+```eval_rst
+.. important::
+   
+   多群组架构中，群组间账本相互独立，向某个群组发交易仅会导致本群组区块高度增加，不会增加其他群组区块高度
+```
+
 **控制台发送交易**
 
 ```bash
