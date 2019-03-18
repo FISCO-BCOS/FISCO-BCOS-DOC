@@ -166,7 +166,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 {
     "Build Time":"20190121 06:21:05",
     "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0",
+    "FISCO-BCOS Version":"2.0.0-rc1",
     "Git Branch":"master",
     "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
 }
