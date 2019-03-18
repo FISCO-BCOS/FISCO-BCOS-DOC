@@ -13,12 +13,6 @@ $ sudo apt install -y openssl curl
 $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
-# 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -g
-# 检查二进制是否可执行 执行下述命令，看是否输出版本信息
-# 执行成功后会在./bin/目录下生成国密版fisco-bcos可执行程序
-$ ./bin/fisco-bcos -v
-FISCO-BCOS gm version 2.0
 ```
 
 执行完上述步骤后，fisco目录下结构如下：
@@ -35,13 +29,11 @@ fisco
 
 ```bash
 # 生成一条4节点的FISCO链 4个节点都属于group1 下面指令在fisco目录下执行
-# -e 指定fisco-bcos路径 -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+# -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
-$ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545 -g
+# -g 国密编译选项，使用成功后会生成国密版的节点。默认从GitHub下载最新稳定版本可执行程序
+$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g
 ```
-
-* -e 为编译的国密版fisco-bcos的路径，需要在脚本后指定。
-* -g 国密编译选项，使用成功后会生成国密版的节点。
 
 关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
 
