@@ -10,7 +10,7 @@
 
 ```bash
 $ cd ~/
-$ git clone https://github.com/FISCO-BCOS/generator.git
+$ git clone -b rc-3 https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ bash ./scripts/install.sh
 $ ./generator -h
@@ -94,7 +94,7 @@ ca.crt  ca.key   cert.cnf # 从左至右分别为链证书、链私钥、证书�
 
 ```bash
 # 初始化机构A
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-A
+$ git clone -b rc-3 https://github.com/FISCO-BCOS/generator.git ~/generator-A
 $ cp ./meta/fisco-bcos ~/generator-A/meta
 # 初始化机构A机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
@@ -105,7 +105,7 @@ agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf # 从左至右分�
 # 示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
 # 初始化机构B
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-B
+$ git clone -b rc-3 https://github.com/FISCO-BCOS/generator.git ~/generator-B
 $ cp ./meta/fisco-bcos ~/generator-B/meta
 # 初始化机构B机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
@@ -305,7 +305,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 # 请回到拥有链证书及私钥的目录下操作
 # 初始化机构C
 $ cd ~/generator
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-C
+$ git clone -b rc-3 https://github.com/FISCO-BCOS/generator.git ~/generator-C
 $ cp ./meta/fisco-bcos ~/generator-C/meta
 # 初始化机构C机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
