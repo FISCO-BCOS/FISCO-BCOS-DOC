@@ -391,7 +391,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 ``` shell
 # 参数： add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.dag.PerfomanceDT add 10000 2500 user
+java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerfomanceDT add 10000 2500 user
 # 创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
@@ -401,7 +401,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.dag.PerfomanceDT add 100
 
 ``` shell
 # 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易冲突百分比：0~10>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.dag.PerfomanceDT transfer 100000 4000 user 2
+java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerfomanceDT transfer 100000 4000 user 2
 # 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的冲突。
 ```
 
