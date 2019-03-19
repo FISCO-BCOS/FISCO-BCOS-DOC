@@ -70,6 +70,7 @@ $ tar -zxf console.tar.gz
     ```bash
     $ cd ~/fisco/console
     $ cp solidity/contracts/HelloWorld.sol tools/contracts/
+    $ cd tools
     $ ./sol2java.sh org.com.fisco
     ```
     运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
@@ -820,7 +821,7 @@ Hello, FISCO BCOS
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号。
 - 合约接口名：调用的合约接口名。
-- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]；布尔类型为true或者false。**
+- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
 ```text
 # 调用HelloWorld的get接口获取name字符串
 [group:1]> callByCNS HelloWorld 1.0 set "Hello,CNS"
