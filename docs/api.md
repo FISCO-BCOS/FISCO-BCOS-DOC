@@ -412,7 +412,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
     ]
 }
 ```
-## getnodeIdList
+## getNodeIDList
 返回节点本身和已连接的p2p节点列表
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
@@ -422,7 +422,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getnodeIdList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -474,7 +474,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `sealerList`: `array` - 共识节点列表      
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
-    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](#getTransactionByHash)）
+    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html./api.html#getTransactionByHash)）
               
 - 示例
 ```
@@ -595,7 +595,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 ### 返回值          
 - `object`: - 交易信息，其字段如下：  
     - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块哈希     
+    - `blockNumber`: `string` - 包含该交易的区块高度     
     - `from`: `string` - 发送者的地址                
     - `gas`: `string` - 发送者提供的gas     
     - `gasPrice`: `string` - 发送者提供的gas的价格     
@@ -636,13 +636,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 - `blockHash`: `string` - 区块哈希          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
-见[getTransactionByHash](#getTransactionByHash)       
+见[getTransactionByHash](./api.html#getTransactionByHash)       
 - 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 ```
-Result见[getTransactionByHash](#getTransactionByHash) 
+Result见[getTransactionByHash](./api.html#getTransactionByHash) 
 
 ## getTransactionByBlockNumberAndIndex
 返回根据区块高度和交易序号查询的交易信息
@@ -651,14 +651,14 @@ Result见[getTransactionByHash](#getTransactionByHash)
 - `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
-见[getTransactionByHash](#getTransactionByHash)            
+见[getTransactionByHash](./api.html#getTransactionByHash)            
 - 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 }
 ```
-Result见[getTransactionByHash](#getTransactionByHash)
+Result见[getTransactionByHash](./api.html#getTransactionByHash)
 
 ## getTransactionReceipt
 返回根据交易哈希查询的交易回执信息
@@ -755,7 +755,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":""getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
