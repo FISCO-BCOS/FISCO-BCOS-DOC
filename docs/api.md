@@ -474,7 +474,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `sealerList`: `array` - 共识节点列表      
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
-    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html./api.html#getTransactionByHash)）
+    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html./api.html#gettransactionbyhash)）
               
 - 示例
 ```
@@ -636,13 +636,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 - `blockHash`: `string` - 区块哈希          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
-见[getTransactionByHash](./api.html#getTransactionByHash)       
+见[getTransactionByHash](./api.html#gettransactionbyhash)       
 - 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 ```
-Result见[getTransactionByHash](./api.html#getTransactionByHash) 
+Result见[getTransactionByHash](./api.html#gettransactionbyhash) 
 
 ## getTransactionByBlockNumberAndIndex
 返回根据区块高度和交易序号查询的交易信息
@@ -651,14 +651,14 @@ Result见[getTransactionByHash](./api.html#getTransactionByHash)
 - `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
-见[getTransactionByHash](./api.html#getTransactionByHash)            
+见[getTransactionByHash](./api.html#gettransactionbyhash)            
 - 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 }
 ```
-Result见[getTransactionByHash](./api.html#getTransactionByHash)
+Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionReceipt
 返回根据交易哈希查询的交易回执信息
