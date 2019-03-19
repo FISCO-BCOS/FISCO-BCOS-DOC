@@ -474,7 +474,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `sealerList`: `array` - 共识节点列表      
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
-    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html./api.html#gettransactionbyhash)）
+    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html#gettransactionbyhash)）
               
 - 示例
 ```
