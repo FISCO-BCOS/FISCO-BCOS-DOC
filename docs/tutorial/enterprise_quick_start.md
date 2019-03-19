@@ -198,7 +198,6 @@ generator-B$ ./generator --build_install_package ./data
 执行成功后在./data目录下可以看到
 
 ```bash
-.
 # 节点配置文件及群组配置文件
 |-- config.ini
 |-- group.1.genesis
