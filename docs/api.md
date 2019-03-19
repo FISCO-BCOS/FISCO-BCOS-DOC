@@ -70,7 +70,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
     "result": "0x1a0"
 }
 ```
-**注：** FISCO BCOS支持[pbft共识](design/consensus/pbft.md)和[raft共识](design/consensus/raft.md)，当访问的区块链采用raft共识时，该接口返回FISCO BCOS自定义错误响应如下:
+**注：** FISCO BCOS支持[PBFT共识](design/consensus/pbft.md)和[Raft共识](design/consensus/raft.md)，当访问的区块链采用Raft共识时，该接口返回FISCO BCOS自定义错误响应如下:
 ```
 {
   "error": {
