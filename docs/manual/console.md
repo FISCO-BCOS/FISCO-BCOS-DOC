@@ -455,7 +455,7 @@ Switched to group 2.
 {
 	"Build Time":"20190107 10:15:23",
 	"Build Type":"Linux/g++/RelWithDebInfo",
-	"FISCO-BCOS Version":"2.0.0",
+	"FISCO-BCOS Version":"2.0.0-rc1",
 	"Git Branch":"master",
 	"Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
 }

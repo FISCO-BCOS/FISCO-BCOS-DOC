@@ -458,7 +458,7 @@ abi.abiOut(out, strOut1, strOut2, amount);
 ```
 
 
-最后，给出HelloWorldPrecompiled call函数的完整实现[源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
+最后，给出HelloWorldPrecompiled call函数的完整实现[源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
 ```c++
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
     bytesConstRef _param, Address const& _origin)
