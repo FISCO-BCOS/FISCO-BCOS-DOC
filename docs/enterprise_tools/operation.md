@@ -312,6 +312,18 @@ $./generator --add_group ./meta/group.2.genesis ./data
 
 执行完成后可以将群组2的连接信息导入./data下所有节点的`conf`文件夹中
 
+### download_fisco
+
+使用--download_fisco可以指定的目录下下载`fisco-bcos`二进制文件。
+
+使用示例:
+
+```bash
+$./generator --download_fisco ./meta
+```
+
+执行完成后会在./meta文件夹下下载`fisco-bcos`可执行二进制文件
+
 ### version (-v)
 
 使用--version命令查看当前部署工具的版本号。
