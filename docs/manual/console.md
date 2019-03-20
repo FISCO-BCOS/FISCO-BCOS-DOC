@@ -34,7 +34,7 @@
 ```bash
 # 下载控制台压缩包
 $ cd ~ && mkdir fisco && cd fisco
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.0/console.tar.gz
 $ tar -zxf console.tar.gz
 ```
 目录结构如下：
