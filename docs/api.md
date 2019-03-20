@@ -559,14 +559,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 - `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)       
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)         
 ### 返回值          
-见[getBlockByHash](./api.html/#getblockbyhash)  
+见[getBlockByHash](./api.html#getblockbyhash)  
   
 - 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[1,"0x0",true],"id":1}' http://127.0.0.1:8545 |jq
 ```
-Result见[getBlockByHash](./api.html/#getblockbyhash)  
+Result见[getBlockByHash](./api.html#getblockbyhash)  
 
 ## getBlockHashByNumber
 返回根据区块高度查询的区块哈希          
