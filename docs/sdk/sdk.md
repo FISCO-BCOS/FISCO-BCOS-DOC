@@ -155,7 +155,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
          exclude module: 'solcJ-all'
     }
     // 0.4版国密合约编译器jar包
-    compile files('lib/solcJ-all-0.4.24-gm.jar')
+    compile files('lib/solcJ-all-0.4.25-gm.jar')
     // 0.5版本国密合约编译器jar包
     // compile files('lib/solcJ-all-0.5.2-gm.jar')
   ```
