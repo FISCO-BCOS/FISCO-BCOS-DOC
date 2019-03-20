@@ -16,7 +16,7 @@ FISCO BCOS generator依赖如下：
 ## 下载安装
 
 ```bash
-$ git clone -b rc-3 https://github.com/FISCO-BCOS/generator.git
+$ git clone -b rc-2 https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ bash ./scripts/install.sh
 $ ./generator -h
