@@ -30,18 +30,25 @@ contract TableFactory {
 
 // 查询条件
 contract Condition {
+    //等于
     function EQ(string, int) public;
     function EQ(string, string) public;
     
+    //不等于
     function NE(string, int) public;
     function NE(string, string)  public;
-
+    
+    //大于
     function GT(string, int) public;
+    //大于或等于
     function GE(string, int) public;
     
+    //小于
     function LT(string, int) public;
+    //小于或等于
     function LE(string, int) public;
     
+    //限制返回记录条数
     function limit(int) public;
     function limit(int, int) public;
 }
