@@ -324,6 +324,30 @@ $./generator --download_fisco ./meta
 
 执行完成后会在./meta文件夹下下载`fisco-bcos`可执行二进制文件
 
+### download_console
+
+使用--download_console可以指定的目录下下载并配置控制台。
+
+使用示例:
+
+```bash
+$./generator --download_console ./meta
+```
+
+执行完成后会在./meta文件夹下根据`node_deployment.ini`完成对控制台的配置
+
+### get_sdk_file
+
+使用--get_sdk_file可以指定的目录下下获取控制台和sdk配置所需要的`node.crt`、`node.key`、`ca.crt`及`applicationContext.xml`。
+
+使用示例:
+
+```bash
+$./generator --get_sdk_file ./sdk
+```
+
+执行完成后会在./sdk文件夹下根据`node_deployment.ini`生成上述配置文件
+
 ### version (-v)
 
 使用--version命令查看当前部署工具的版本号。

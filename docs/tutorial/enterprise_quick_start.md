@@ -469,16 +469,17 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 $ cd ~/generator-A
 # 发送群组1配置文件至机构C节点
 generator-A$ ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
+# 机构A配置控制台
+generator-A$ ./generator --download_console ./
+# generator已经完成了控制台的配置，用户可以直接启动控制台 注意：请确保已经安装java
+generator-A$ cd ./console
+generator-A$ bash ./start.sh
 # 从启机构C节点
 generator-C$ bash ~/generator-C/nodeC/stop_all.sh
 generator-C$ bash ~/generator-C/nodeC/start_all.sh
 ```
 
 此时节点进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入group1。
-
-Tips:
-
-- 机构生成的sdk证书在./agency_sdk/目录下
 
 可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入群组1中，扩容的节点才会正常工作。
 
