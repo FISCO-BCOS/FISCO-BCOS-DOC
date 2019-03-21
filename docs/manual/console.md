@@ -293,7 +293,7 @@ Switched to group 2.
 
 [group:2]> 
 ```
-**注：** 需要切换的群组，请确保在**console/conf**目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息。
+**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息。
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
@@ -748,7 +748,10 @@ Switched to group 2.
 [group:1]> deploy TableTest.sol 
 0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```
-**注：部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。**
+**注：**
+- 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。
+- 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`solidity/contracts/`目录。
+- 如果合约引用了library库，library库文件的名称需要包含`Lib`字符串，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 
 ### **getDeployLog**
 运行getDeployLog，查询部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
@@ -765,7 +768,7 @@ Switched to group 2.
 
 2019-03-19 23:34:59  [group:2]  HelloWorld            0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 ```
-**注：** 查询的部署合约日志信息显示最近的20条数据，如果要查看所有的部署合约信息，请查看`console`目录下的`deploylog.txt`文件。
+**注：** 查询的部署合约日志信息显示最近的20条日志信息，如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。
 
 ### **call**
 运行call，调用合约。                                
