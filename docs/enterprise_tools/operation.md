@@ -23,7 +23,8 @@ FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书
 group_id=1
 
 [nodes]
-node0=127.0.0.1:30300 # 群组创世区块的节点p2p地址
+node0=127.0.0.1:30300
+;群组创世区块的节点p2p地址
 node1=127.0.0.1:30301
 node2=127.0.0.1:30302
 node3=127.0.0.1:30303
@@ -129,7 +130,7 @@ $ vim ./conf/node_deployment.ini
 $ ./generator --build_install_package ./peers.txt ~/mydata
 ```
 
-程序执行完成后，会在~/mydata文件夹下生成多个名为node_hostip_port的文件夹，推送到对应服务器后，拷贝私钥到节点conf下即可启动节点
+程序执行完成后，会在~/mydata文件夹下生成多个名为node_hostip_port的文件夹，推送到对应服务器后即可启动节点
 
 ### generate_chain_certificate
 
@@ -373,6 +374,57 @@ usage: generator [-h] [-v] [-b peer_path data_dir] [-c data_dir]
                  [-m config.ini config.ini] [-p peers config.ini]
                  [-a group genesis config.ini]
 ```
+
+## 国密操作相关
+
+FISCO BCOS generator的所有命令同时支持国密版`fisco-bcos`，使用时，国密证书、私钥均加以前缀`gm`。基本使用解释如下
+
+### 国密开关 (-g)
+
+国密开关-g打开时，生成证书、节点、群组创世区块的操作会相应生成国密版的上述文件。
+
+### 生成证书操作
+
+如generate_*_certificate操作时，配合-g命令会生成相应的国密证书。
+
+操作示例：
+
+```
+$ ./generator --generate_all_certificates ./cert -g
+```
+
+```eval_rst
+.. note::
+    上述命令会根据meta目录下存放的gmca.crt、机构证书gmagency.crt和机构私钥gmagency.key生成相应的节点证书。
+
+    - 如果用户缺少上述三个文件，则无法生成节点证书，程序会抛出异常。
+```
+
+### 生成国密群组创世区块
+
+操作示例
+
+```bash
+$ cp node0/gmnode.crt ./meta/gmcert_127.0.0.1_3030n.crt
+...
+$ vim ./conf/group_genesis.ini
+$ ./generator --create_group_genesis ~/mydata -g
+```
+
+程序执行完成后，会在~/mydata文件夹下生成mgroup.ini中配置的`group.i.genesis`
+
+用户生成的`group.i.genesis`即为群组的创世区块，即可完成新群组划分操作。
+
+### 生成国密节点配置文件夹
+
+操作示例
+
+```bash
+$ vim ./conf/node_deployment.ini
+$ ./generator --build_install_package ./peers.txt ~/mydata -g
+```
+
+程序执行完成后，会在~/mydata文件夹下生成多个名为node_hostip_port的文件夹，推送到对应服务器后即可启动节点
 
 ## 监控设计
 
