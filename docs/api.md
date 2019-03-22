@@ -53,11 +53,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 ```
 
 ## getPbftView
-返回节点所在指定群组内的最新[pbft视图](design/consensus/pbft.html#view)
+返回节点所在指定群组内的最新[PBFT视图](design/consensus/pbft.html#view)
 ### 参数         
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值         
-- `string` - 最新的pbft视图   
+- `string` - 最新的PBFT视图   
 - 示例          
 ```
 // Request
@@ -133,7 +133,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 - `groupID`: `unsigned int` - 群组ID          
 ### 返回值          
 - `object` - 共识状态信息。
-- 1. 当共识机制为pbft时（pbft详细设计参考[pbft设计文档](design/consensus/pbft.md)），字段如下：            
+- 1. 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](design/consensus/pbft.md)），字段如下：            
    -  `accountType`: `unsigned int` - 账户类型            
    -  `allowFutureBlocks`: `bool` - 允许未来块标志            
    -  `cfgErr`: `bool` - 配置错误标志            
@@ -171,7 +171,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
    -  `commitCache_cachedSize`: `unsigned int` - commitCache_cached大小            
    -  `viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached大小            
 
-- 2. 当共识机制为raft时（raft详细设计参考[raft设计文档](design/consensus/raft.md)），字段如下：     
+- 2. 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](design/consensus/raft.md)），字段如下：     
     - `accountType`: `unsigned int` - 账户类型            
     - `allowFutureBlocks`: `bool` - 允许未来块标志            
     - `cfgErr`: `bool` - 配置错误标志                        
@@ -191,7 +191,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 
 - 示例
 ```
-// Request pbft
+// Request PBFT
 curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
@@ -258,7 +258,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
     ]
 }
 
-// Request raft
+// Request Raft
 curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
