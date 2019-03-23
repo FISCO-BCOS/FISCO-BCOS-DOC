@@ -32,10 +32,9 @@
 ### 获取控制台
 
 ```bash
-# 下载控制台压缩包
 $ cd ~ && mkdir fisco && cd fisco
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
-$ tar -zxf console.tar.gz && chmod u+x console/start.sh
+# 获取控制台
+$ bash <(curl -s https://raw.githubusercontent.com/fqliao/console/feature-rc2/tools/console.sh)
 ```
 目录结构如下：
 ```bash
