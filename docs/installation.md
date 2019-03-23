@@ -159,6 +159,11 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
+**注意:** 如果按照上述默认安装步骤，在CentOS系统上启动控制台出现如下错误：
+```bash
+Failed to connect to the node. Please check the node status and the console configruation.
+```
+则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装JDK8或以上版本，然后再启动控制台。
 
 ### 使用控制台获取信息
 
