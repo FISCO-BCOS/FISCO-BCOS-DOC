@@ -753,21 +753,20 @@ Switched to group 2.
 - 如果合约引用了library库，library库文件的名称需要包含`Lib`字符串，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 
 ### **getDeployLog**
-运行getDeployLog，查询部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
-- 群组ID：可选，根据群组ID查询部署的合约日志信息，不提供则查询所有部署的合约日志信息。                          
+运行getDeployLog，查询群组内部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
+- 日志记录行数：可选，根据提供的日志记录行数返回最新不超过记录行数的日志信息，不提供则默认记录行数为20。                          
                            
 ```text
-[group:1]> getDeployLog 
+[group:1]> getDeployLog 2
 
 2019-03-19 23:04:10  [group:1]  TableTest             0x7eec2ac59357866677ab0fa3db4e7dc2b391f7c2
 2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
-2019-03-19 23:34:59  [group:2]  HelloWorld            0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 
-[group:1]> getDeployLog 2
+[group:1]> getDeployLog 1
 
-2019-03-19 23:34:59  [group:2]  HelloWorld            0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
 ```
-**注：** 查询的部署合约日志信息显示最近的20条日志信息，如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。
+**注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。
 
 ### **call**
 运行call，调用合约。                                
