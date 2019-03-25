@@ -34,7 +34,7 @@
 ```bash
 # 下载控制台压缩包
 $ cd ~ && mkdir fisco && cd fisco
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.0/console.tar.gz
 $ tar -zxf console.tar.gz
 ```
 目录结构如下：
@@ -70,6 +70,7 @@ $ tar -zxf console.tar.gz
     ```bash
     $ cd ~/fisco/console
     $ cp solidity/contracts/HelloWorld.sol tools/contracts/
+    $ cd tools
     $ ./sol2java.sh org.com.fisco
     ```
     运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
@@ -106,7 +107,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 ```
 国密0.4版本合约编译jar包
 ```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.24-gm.jar
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
 ```
 国密0.5版本合约编译jar包
 ```bash
@@ -194,6 +195,11 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =====================================================================================
 ```
+**注意:** 如果控制台配置正确，在CentOS系统上启动控制台出现如下错误：
+```bash
+Failed to connect to the node. Please check the node status and the console configruation.
+```
+则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装JDK8或以上版本，然后再启动控制台。
 
 ### 启动脚本说明
 ```bash
@@ -455,7 +461,7 @@ Switched to group 2.
 {
 	"Build Time":"20190107 10:15:23",
 	"Build Type":"Linux/g++/RelWithDebInfo",
-	"FISCO-BCOS Version":"2.0.0",
+	"FISCO-BCOS Version":"2.0.0-rc1",
 	"Git Branch":"master",
 	"Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
 }
@@ -820,7 +826,7 @@ Hello, FISCO BCOS
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号。
 - 合约接口名：调用的合约接口名。
-- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]；布尔类型为true或者false。**
+- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
 ```text
 # 调用HelloWorld的get接口获取name字符串
 [group:1]> callByCNS HelloWorld 1.0 set "Hello,CNS"

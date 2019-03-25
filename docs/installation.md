@@ -23,24 +23,16 @@ $ sudo apt install -y openssl curl
 $ cd ~ && mkdir fisco && cd fisco
 # 下载build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
-# 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -b master
-# 检查二进制是否可执行 执行下述命令，看是否输出类似下面的版本信息
-$ ./bin/fisco-bcos -v
-FISCO-BCOS Version : 2.0.0
-Build Time         : 20190226 04:01:24
-Build Type         : Linux/g++/RelWithDebInfo
-Git Branch         : master
-Git Commit Hash    : c213e033328631b1b8c2ee936059d7126fd98d1a
 ```
 
-### 搭建4节点FISCO BCOS链
+### 搭建单群组4节点联盟链
 
 ```bash
 # 生成一条4节点的FISCO链 4个节点都属于同一群组 下面指令在fisco目录下执行
-# -e 指定fisco-bcos路径 -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+# -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
-$ ./build_chain.sh -e bin/fisco-bcos -l "127.0.0.1:4" -p 30300,20200,8545
+# 默认从GitHub下载最新稳定版本可执行程序
+$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
 如果命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
@@ -137,7 +129,9 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/console.tar.gz
+# 下载控制台压缩包
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.0/console.tar.gz
+# 解压控制台压缩包并赋予控制台启动脚本执行权限
 $ tar -zxf console.tar.gz && chmod u+x console/start.sh
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
@@ -165,6 +159,11 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
+**注意:** 如果按照上述默认安装步骤，在CentOS系统上启动控制台出现如下错误：
+```bash
+Failed to connect to the node. Please check the node status and the console configruation.
+```
+则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装JDK8或以上版本，然后再启动控制台。
 
 ### 使用控制台获取信息
 
@@ -174,7 +173,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 {
     "Build Time":"20190121 06:21:05",
     "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0",
+    "FISCO-BCOS Version":"2.0.0-rc1",
     "Git Branch":"master",
     "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
 }

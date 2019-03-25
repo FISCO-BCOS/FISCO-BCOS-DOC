@@ -30,18 +30,25 @@ contract TableFactory {
 
 // 查询条件
 contract Condition {
+    //等于
     function EQ(string, int) public;
     function EQ(string, string) public;
     
+    //不等于
     function NE(string, int) public;
     function NE(string, string)  public;
-
+    
+    //大于
     function GT(string, int) public;
+    //大于或等于
     function GE(string, int) public;
     
+    //小于
     function LT(string, int) public;
+    //小于或等于
     function LE(string, int) public;
     
+    //限制返回记录条数
     function limit(int) public;
     function limit(int, int) public;
 }
@@ -458,7 +465,7 @@ abi.abiOut(out, strOut1, strOut2, amount);
 ```
 
 
-最后，给出HelloWorldPrecompiled call函数的完整实现[源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-2.0.1/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
+最后，给出HelloWorldPrecompiled call函数的完整实现[源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
 ```c++
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,
     bytesConstRef _param, Address const& _origin)
