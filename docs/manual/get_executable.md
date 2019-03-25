@@ -2,7 +2,7 @@
 
 用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 - 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行。
-- 源码编译获取可执行程序，参考[源码编译](manual/get_executable.html#id3)。
+- 源码编译获取可执行程序，参考[源码编译](get_executable.html#id2)。
 
 ## 下载预编译fisco-bcos
 
