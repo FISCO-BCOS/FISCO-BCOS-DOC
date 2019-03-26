@@ -23,7 +23,7 @@ $ ./generator -h
 
 ```bash
 # 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/ci/download_bin.sh) -o ./meta
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -o ./meta
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./meta/fisco-bcos -v
 ```
@@ -198,7 +198,6 @@ generator-B$ ./generator --build_install_package ./data
 执行成功后在./data目录下可以看到
 
 ```bash
-.
 # 节点配置文件及群组配置文件
 |-- config.ini
 |-- group.1.genesis

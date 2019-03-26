@@ -1,6 +1,6 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以访问节点，查询节点状态，改变节点设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/web3sdk/config_web3sdk.html)。
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以访问节点，查询节点状态，改变节点设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
 
 - 提供调用FISCO BCOS JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
@@ -13,8 +13,7 @@
 .. important::
 
     - java版本
-     要求 `JDK8或以上 <https://openjdk.java.net/>`_，推荐使用OpenJDK11。
-     由于CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，因此在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`OpenJDK11下载地址 <https://jdk.java.net/11/>`_ `安装指南 <https://openjdk.java.net/install/index.html>`_ 
+     要求 `JDK8或以上 <https://openjdk.java.net/>`_。由于CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，因此在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`下载地址 <https://jdk.java.net/java-se-ri/8>`_  `安装指南 <https://openjdk.java.net/install/index.html>`_ 
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS安装教程 <../installation.html>`_
     - 网络连通性
@@ -28,14 +27,14 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.2')
+compile ('org.fisco-bcos:web3sdk:2.0.0-rc1')
 ```
    maven:
 ```bash
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-              <version>2.0.2</version>
+    <version>2.0.0-rc1</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
@@ -152,7 +151,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
 
 国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。国密版的编译器jar包下载请[参考这里](../manual/console.html#jar)，用于将Solidity合约文件转为国密版的Java合约文件。可以在项目src目录下新建一个lib目录，将下载的国密版jar包放置在lib目录下。然后修改项目的build.gradle文件，移除普通版编译器jar包，引入国密编译器jar包。
   ```
-    compile ("org.fisco-bcos:web3sdk:2.0.2"){
+    compile ("org.fisco-bcos:web3sdk:2.0.0-rc1"){
          exclude module: 'solcJ-all'
     }
     // 0.4版国密合约编译器jar包
@@ -181,7 +180,7 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 |51100|invalid node ID|
 |51101|the last sealer cannot be removed|
 |51102|the node is not reachable|
-|51103|the node is not in group peers|
+|51103|the node is not a group peer|
 |51104|the node is already in the sealer list|
 |51105|the node is already in the observer list|
 |51200|contract name and version already exist|

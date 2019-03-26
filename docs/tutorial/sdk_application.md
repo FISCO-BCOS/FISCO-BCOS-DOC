@@ -55,7 +55,7 @@ function transfer(string from_asset_account, string to_asset_account, uint256 am
 
 ### 完整源码
 ```js
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 import "./Table.sol";
 
@@ -350,7 +350,7 @@ repositories {
 - 引入Web3SDK jar包
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.0.2')
+compile ('org.fisco-bcos：web3sdk：2.0.0-rc1')
 ```
 
 ### 证书与配置文件
@@ -366,7 +366,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 - applicationContext.xml  
 
-**注意：** `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/api_configuration.html#spring)。
+**注意：** `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/sdk.html#spring)。
 
 
 ## 业务开发
