@@ -95,4 +95,4 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 2.0版本对核心模块进行升级重塑，进行模块化的单元测试和端对端集成测试，支持自动化持续集成和持续部署。
 
 ## Release note
-请查看[v2.0.0](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0)
+请查看[v2.0.0](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1)

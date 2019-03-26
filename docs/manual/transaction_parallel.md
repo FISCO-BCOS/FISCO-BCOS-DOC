@@ -135,9 +135,13 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 
 **（2）注册/注销可以并行的合约接口**
 
-在合约中实现 ``` enableParallel() ``` 函数，调用``` registerParallelFunction() ```进行注册。同时把``` disableParallel() ```也实现了，使合约具备取消并行执行的能力。
+在合约中实现 ``` enableParallel() ``` 函数，调用``` registerParallelFunction() ```注册可以并行的合约的接口。同时把``` disableParallel() ```也实现了，使合约具备取消并行执行的能力。
 
-**注意：可以并行的合约接口，其实现必须让接口的参数完全标识了此接口的所有冲突。**
+**注意：在写可以并行的合约接口时，必须让接口满足：**
+
+* 接口的参数完全标识了此接口的所有冲突
+* 不能调用外部合约
+* 接口参数仅限：**string、address、uint、uint256、int、int256**（后续支持更多类型）
 
 ``` javascript
 // 注册可以并行的合约接口
