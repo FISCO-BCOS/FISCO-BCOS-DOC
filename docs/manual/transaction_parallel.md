@@ -331,6 +331,8 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.Perf
 
 **（2）批量发送并行转账交易**
 
+**注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
+
 ``` shell
 # 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易冲突百分比：0~10>
 java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerfomanceDT transfer 100000 4000 user 2
@@ -402,6 +404,8 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.Perf
 **（2）批量发送并行转账交易**
 
 用Web3SDK发送并行转账交易
+
+**注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
 ``` shell
 # 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易冲突百分比：0~10>
