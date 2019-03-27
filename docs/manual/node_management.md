@@ -1,5 +1,7 @@
 # 节点准入
 
+**test**
+
 为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
 
 ## 操作命令
