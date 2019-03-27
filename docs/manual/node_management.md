@@ -4,7 +4,7 @@
 
 ## 操作命令
 
-控制台提供了 **[AddSealer](./console.html#addminer)** 、**[AddObserver](./console.html#addobserver)** 和 **[RemoveNode](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList](./console.html#getminerlist)**、**[getObserverList](./console.html#getobserverlist)** 和 **[getNodeIDList](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
+控制台提供了 **[AddSealer](./console.html#addSealer)** 、**[AddObserver](./console.html#addObserver)** 和 **[RemoveNode](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList](./console.html#getSealerlist)**、**[getObserverList](./console.html#getObserverlist)** 和 **[getNodeIDList](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 
 - addSealer：根据节点NodeID设置对应节点为共识节点；
 - addObserver：根据节点NodeID设置对应节点为观察节点；
@@ -108,7 +108,7 @@ Group3的相关节点信息举例为：
 
 ```
 # 获取脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/release-2.0.1/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
 # 执行，-c为生成节点所提供的ca路径，agency为机构名，-o为将生成的节点目录名
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```

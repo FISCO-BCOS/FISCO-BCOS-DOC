@@ -22,7 +22,7 @@
 - 点亮我们的[小星星](https://github.com/FISCO-BCOS/FISCO-BCOS)！ 
 
 
-- 提交代码（Pull requests），我们有<a href="https://github.com/FISCO-BCOS/FISCO-BCOS/blob/dev-2.0/docs/CONTRIBUTING_CN.md">代码贡献流程</a>和<a href="https://github.com/FISCO-BCOS/FISCO-BCOS/blob/dev-2.0/CODING_STYLE.md">编码规范</a>。
+- 提交代码（Pull requests），我们有<a href="https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/docs/CONTRIBUTING_CN.md">代码贡献流程</a>和<a href="https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/CODING_STYLE.md">编码规范</a>。
 
 
 - 也可以[提问和提交BUG](https://github.com/FISCO-BCOS/FISCO-BCOS/issues)。
