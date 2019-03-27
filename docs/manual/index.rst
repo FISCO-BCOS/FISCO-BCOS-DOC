@@ -9,6 +9,7 @@
 
    get_executable.md
    build_chain.md
+   certificates.md
    configuration.md
    console.md
    smart_contract.md

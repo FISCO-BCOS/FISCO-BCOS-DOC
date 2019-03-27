@@ -16,7 +16,7 @@ FISCO BCOS generator依赖如下：
 ## 下载安装
 
 ```bash
-$ git clone https://github.com/FISCO-BCOS/generator.git
+$ git clone -b rc-2 https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ bash ./scripts/install.sh
 $ ./generator -h
@@ -30,7 +30,7 @@ $ ./generator -h
 
 ```bash
 # 准备fisco-bcos二进制文件
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ci/download_bin.sh) -o ./meta
+$ ./generator --download_fisco ./meta
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./meta/fisco-bcos -v
 
