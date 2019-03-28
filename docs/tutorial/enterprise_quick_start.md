@@ -4,7 +4,7 @@
 
 本章主要以部署3机构2群组6节点的组网模式，为用户讲解企业级部署工具的使用方法。
 
-## 下载安装
+## 安装准备
 
 使用前请确认已经满足[环境依赖](../enterprise_tools/installation.md)
 
@@ -24,7 +24,7 @@ $ ./generator -h
 
 ```bash
 # 准备fisco-bcos二进制文件
-$ $ ./generator --download_fisco ./meta
+$ ./generator --download_fisco ./meta
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./meta/fisco-bcos -v
 ```
@@ -71,7 +71,7 @@ $ ./meta/fisco-bcos -v
     使用时建议用户开启三个终端，分别代表机构A、机构B及机构C，以下操作$前表示为generator-A的为机构A进行的操作，generator-B的为机构B进行的操作，generator-C的为机构C进行的操作，没有前缀的为初始化操作。
 ```
 
-机构A作为收集其他机构证书，生成创世区块的机构，整体流程图如下图所示：
+机构A作为生成创世区块的机构，需要收集其他机构证书，并且声称自己节点时需要其他机构节点的p2p连接地址peers文件，整体流程图如下图所示：
 
 ![](../../images/enterprise/agencyA.png)
 
@@ -115,6 +115,8 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/ag
 
 ## 机构A、B构建群组1
 
+构建群组1时，由于机构A生成群组1创世区块需要机构B的证书文件，为简化操作，本示例优先进行机构B的相关操作。
+
 ### 机构B修改配置文件
 
 机构B修改conf文件夹下的`node_deployment.ini`如下图所示:
@@ -122,8 +124,27 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/ag
 ```bash
 # 请在~/generator-B目录下执行下述命令
 $ cd ~/generator-B
-$ vi ./conf/node_deployment.ini
+$ cat > ./conf/node_deployment.ini << EOF
+[group]
+group_id=1
+
+[node0]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30302
+channel_listen_port=20202
+jsonrpc_listen_port=8547
+
+[node1]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30303
+channel_listen_port=20203
+jsonrpc_listen_port=8548
+EOF
 ```
+
+执行之后./conf/node_deployment.ini文件变为：
 
 ```ini
 [group]
@@ -149,8 +170,6 @@ jsonrpc_listen_port=8548
 ```bash
 # 机构B生成交换文件
 generator-B$ ./generator --generate_all_certificates ./agencyB_send
-# 机构B利用meta下的机构证书和私钥生成sdk证书
-generator-B$ ./generator --generate_sdk_certificate ./meta ./agencyB_sdk
 # 查看需要生成文件
 $ ls ./agencyB_send
 cert_127.0.0.1_30302.crt cert_127.0.0.1_30303.crt peers.txt # 从左至右分别为需要交互给机构A的节点证书，节点连接文件
@@ -166,8 +185,27 @@ generator-B$ cp -r ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
 ```bash
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-A
-$ vi ./conf/node_deployment.ini
+$ cat > ./conf/node_deployment.ini << EOF
+[group]
+group_id=1
+
+[node0]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30300
+channel_listen_port=20200
+jsonrpc_listen_port=8545
+
+[node1]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30301
+channel_listen_port=20201
+jsonrpc_listen_port=8546
+EOF
 ```
+
+执行之后./conf/node_deployment.ini文件变为：
 
 ```ini
 [group]
@@ -193,8 +231,6 @@ jsonrpc_listen_port=8546
 ```bash
 # 机构A生成交换文件
 generator-A$ ./generator --generate_all_certificates ./agencyA_send
-# 机构A利用meta下的机构证书和私钥生成sdk证书
-generator-A$ ./generator --generate_sdk_certificate ./meta ./agencyA_sdk
 # 由于A机构不需要生成创世区块，因此只需交换peers至机构B
 generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```
@@ -206,22 +242,33 @@ generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```bash
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-A
-$ vi ./conf/group_genesis.ini
+$ cat > ./conf/group_genesis.ini << EOF
+[group]
+group_id=1
+
+[nodes]
+node0=127.0.0.1:30300
+node1=127.0.0.1:30301
+node2=127.0.0.1:30302
+node3=127.0.0.1:30303
+EOF
 ```
+
+执行之后./conf/group_genesis.ini文件变为：
 
 ```ini
 [group]
 group_id=1
 
 [nodes]
+;机构A节点p2p地址
 node0=127.0.0.1:30300
 ;机构A节点p2p地址
 node1=127.0.0.1:30301
-;机构A节点p2p地址
+;机构B节点p2p地址
 node2=127.0.0.1:30302
 ;机构B节点p2p地址
 node3=127.0.0.1:30303
-;机构B节点p2p地址
 ```
 
 ```bash
@@ -331,8 +378,27 @@ generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/meta/peersA.txt
 ```bash
 # 请在~/generator-C目录下执行下述命令
 $ cd ~/generator-C
-$ vi ./conf/node_deployment.ini
+$ cat > ./conf/node_deployment.ini << EOF
+[group]
+group_id=2
+
+[node0]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30304
+channel_listen_port=20204
+jsonrpc_listen_port=8549
+
+[node1]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30305
+channel_listen_port=20205
+jsonrpc_listen_port=8550
+EOF
 ```
+
+执行之后./conf/node_deployment.ini文件变为：
 
 ```ini
 [group]
@@ -360,8 +426,6 @@ jsonrpc_listen_port=8550
 $ cd ~/generator-C
 # 机构C生成交换文件
 generator-C$ ./generator --generate_all_certificates ./agencyC_send
-# 机构B利用meta下的机构证书和私钥生成sdk证书
-generator-C$ ./generator --generate_sdk_certificate ./meta ./agencyC_sdk
 # 交换机构Cpeers至机构A
 generator-C$ cp -r ./agencyC_send/peers.txt ~/generator-A/meta/peersC.txt
 ```
@@ -373,8 +437,19 @@ generator-C$ cp -r ./agencyC_send/peers.txt ~/generator-A/meta/peersC.txt
 ```bash
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-C
-$ vi ./conf/group_genesis.ini
+$ cat > ./conf/group_genesis.ini << EOF
+[group]
+group_id=2
+
+[nodes]
+node0=127.0.0.1:30300
+node1=127.0.0.1:30301
+node2=127.0.0.1:30304
+node3=127.0.0.1:30305
+EOF
 ```
+
+执行之后./conf/group_genesis.ini文件变为：
 
 ```ini
 [group]
@@ -426,7 +501,7 @@ $ cd ~/generator-A
 generator-A$ ./generator --add_group ./meta/group.2.genesis ./nodeA
 # 添加机构C节点连接文件peers至已有节点
 generator-A$ ./generator --add_peers ./meta/peersC.txt ./nodeA
-# 从启节点
+# 重启节点
 generator-A$ bash ./nodeA/stop_all.sh
 generator-A$ bash ./nodeA/start_all.sh
 ```
@@ -473,15 +548,20 @@ generator-A$ ./generator --add_group ./group/group.1.genesis  ~/generator-C/node
 generator-A$ ./generator --download_console ./
 # generator已经完成了控制台的配置，用户可以直接启动控制台 注意：请确保已经安装java
 generator-A$ cd ./console
-generator-A$ bash ./start.sh
-# 从启机构C节点
+# 启动group1的控制台将机构C的节点加入group1
+generator-A$ bash ./start.sh 1
+# 使用控制台加入机构C节点为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf文件夹下
+$ [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+{
+	"code":0,
+	"msg":"success"
+}
+# 重启机构C节点
 generator-C$ bash ~/generator-C/nodeC/stop_all.sh
 generator-C$ bash ~/generator-C/nodeC/start_all.sh
 ```
 
-此时节点进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入group1。
-
-可以看到现在一共有六个fisco-bcos进程存在，但扩容了两个节点尚未经过group1中的节点共识，需要等待群组1的节点使用[控制台](../manual/console.md)将扩容节点加入群组1中，扩容的节点才会正常工作。
+经过上述操作，机构C的节点加入group1成为了观察节点，此时机构C的节点只能同步group1的数据块，不参与共识，等待机构C节点块高与group1其他节点同步后，再通过[控制台](../manual/console.md)`addSealer`指令将机构C节点变更为group1的记账节点
 
 至此 我们完成了所示构建教程中的所有操作。
 
