@@ -31,7 +31,7 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/
 # 生成一条4节点的FISCO链 4个节点都属于同一群组 下面指令在fisco目录下执行
 # -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
-# 默认从GitHub下载最新稳定版本可执行程序
+# 默认从GitHub下载最新稳定版本可执行程序 macOS建议先安装docker，然后加上-d选项使用docker模式
 $ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
