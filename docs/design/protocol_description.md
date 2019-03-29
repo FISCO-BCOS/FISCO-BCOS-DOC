@@ -2,23 +2,23 @@
 
 ## 交易结构及其RLP编码描述
 
-FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增减字段。FISCO BCOS当前的交易结构字段如下：
+FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增减字段。FISCO BCOS 2.0.0的交易结构字段如下：
 
 | name           | type            | description                                                  | RPL index |
 | :------------- | :-------------- | :----------------------------------------------------------- | --------- |
 | type           | enum            | 交易类型，表明该交易是创建合约还是调用合约交易，初始为空合约 | -         |
-| nonce          | u256            | 消息发送方提供的随机数，用于唯一标示交易                     | 0         |
+| nonce          | u256            | 消息发送方提供的随机数，用于唯一标识交易                     | 0         |
 | value          | u256            | 转账数额，目前去币化的FISCO BCOS不使用该字段                 | 5         |
-| receiveAddress | h160            | 交易接收方地址，type为创建合约是该地为0x0                    | 4         |
-| gasPrice       | u256            | 本次交易的gas的单价，FISCO BCOS中为固定值                    | 1         |
+| receiveAddress | h160            | 交易接收方地址，type为创建合约时该地址为0x0                  | 4         |
+| gasPrice       | u256            | 本次交易的gas的单价，FISCO BCOS中为固定值300000000           | 1         |
 | gas            | u256            | 本次交易允许最多消耗的gas数量，FISCO BCOS可配置该值          | 2         |
-| data           | vector<byte>    | 与交易相关的数据，或者是创建合约的初始化时的些参数           | 6         |
+| data           | vector< byte >  | 与交易相关的数据，或者是创建合约时的初始化参数               | 6         |
 | vrs            | SignatureStruct | 交易发送方对交易7字段RLP编码后的哈希值签名生成的数据         | 7,8,9     |
 | hashWith       | h256            | 交易结构所有字段（含签名信息）RLP编码后的哈希值              | -         |
 | sender         | h160            | 交易发送方地址，基于vrs生成                                  | -         |
 | blockLimit     | u256            | 交易生命周期，该交易最晚被处理的块高，FISCO BCOS新增字段     | 3         |
 | importTime     | u256            | 交易进入交易池的unix时间戳，FISCO BCOS新增字段               | -         |
-| rpcCallback    | function        | 交易出块后RPC回调                                            | -         |
+| rpcCallback    | function        | 交易出块后RPC回调，FISCO BCOS新增字段                        | -         |
 
 表中hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
@@ -26,17 +26,17 @@ FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增�
 
 ## 区块结构及其RPL编码描述
 
-FISCO BCOS区块由以下五组成
+FISCO BCOS的区块由以下五部分组成：
 
-| name                | description                    | RPL index |
-| :------------------ | :----------------------------- | --------- |
-| blockHeader         | 区块头RLP编码                  | 0         |
-| transactions        | 交易列表RLP编码                | 1         |
-| transactionReceipts | 交易回执列表RLP编码            | 2         |
-| hash                | 区块头hash值                   | 3         |
-| sigList             | PBFT共识落盘阶段节点的签名信息 | 4         |
+| name                | description                                      | RPL index |
+| :------------------ | :----------------------------------------------- | --------- |
+| blockHeader         | 区块头RLP编码                                    | 0         |
+| transactions        | 交易列表RLP编码                                  | 1         |
+| transactionReceipts | 交易回执列表RLP编码                              | 2         |
+| hash                | 区块头RLP编码后的哈希值                          | 3         |
+| sigList             | PBFT共识落盘阶段收集到的节点签名信息，Raft不使用 | 4         |
 
-FISCO BCOS区块头中每个字段意义如下：
+FISCO BCOS的区块头中每个字段意义如下：
 
 | name             | type          | description                                                          | RPL index |
 | :--------------- | :------------ | :------------------------------------------------------------------- | --------- |
@@ -57,7 +57,7 @@ FISCO BCOS区块头中每个字段意义如下：
 
 ## 网络传输协议
 
-FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信的数据包为P2PMessage，节点与SDK间通信的数据包为ChannelMessage。
+FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信的数据包为P2PMessage格式，节点与SDK间通信的数据包为ChannelMessage格式。
 
 ![](../../images/node_management/message_type.png)
 
@@ -68,30 +68,30 @@ FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信�
 | name       | type         | description                              |
 | :--------- | :----------- | :--------------------------------------- |
 | lenght     | uint32_t     | 数据包长度，含包头和数据，无最大长度限制 |
-| groupID    | int8_t       | 用于区分群组，群组ID的范围1-127          |
-| ModuleID   | uint8_t      | 模块ID，范围0-255                        |
-| packetType | uint16_t     | 数据包类型，模块ID的子协议标识           |
+| groupID    | int8_t       | 群组ID，范围1-127                        |
+| ModuleID   | uint8_t      | 模块ID，范围1-255                        |
+| packetType | uint16_t     | 数据包类型，同一模块ID下的子协议标识     |
 | seq        | uint32_t     | 数据包序列号，每个数据包自增             |
 | data       | vector<byte> | 数据本身，长度为lenght-12                |
 
 模块ID划分如下：
 
-| code   | message           |
-| :----- | :---------------- |
-| 1      | P2P的AMOP子模块   |
-| 2      | P2P的Topic子模块  |
-| 3~7    | P2P其他子模块预留 |
-| 8      | 共识的PBFT子模块  |
-| 9      | 区块同步模块      |
-| 10     | 线程池模块        |
-| 11     | 共识的Raft子模块  |
-| 12~255 | 其他模块预留      |
+| ModuleID | message           |
+| :------- | :---------------- |
+| 1        | P2P的AMOP子模块   |
+| 2        | P2P的Topic子模块  |
+| 3~7      | P2P其他子模块预留 |
+| 8        | 共识的PBFT子模块  |
+| 9        | 区块同步模块      |
+| 10       | 交易池模块        |
+| 11       | 共识的Raft子模块  |
+| 12~255   | 其他模块预留      |
 
 **补充**
 
-1. P2PMessage不限制包大小，由上层调用模块（共识/同步/AMOP)进行处理；
-2. 群组ID和模块ID可唯一标识协议ID，即protocolID，三者关系为`protocolID = (groupID << 8) | ModuleID`；
-3. 数据包通过protocolID区分请求包和响应包，其中`protocolID > 0`为请求包，`protocolID < 0`为相应包。
+1. P2PMessage不限制包大小，由上层调用模块（共识/同步/AMOP等)进行包大小管理；
+2. 群组ID和模块ID可唯一标识协议ID（protocolID），三者关系为`protocolID = (groupID << 8) | ModuleID`；
+3. 数据包通过protocolID所在的16位二进制数值来区分请求包和响应包，大于0为请求包，小于0为相应包。
 4. 目前AMOP使用的packetType有`SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`。
 
 ### ChannelMessage
@@ -103,7 +103,7 @@ FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信�
 | lenght | uint32_t     | 数据包长度，含包头和数据，最大长度为10M Byte |
 | type   | uint16_t     | 数据包类型                                   |
 | seq    | string       | 数据包序列号，32字节，SDK传入                |
-| result | int          | 返回值类型                                   |
+| result | int          | 处理结果                                     |
 | data   | vector<byte> | 数据本身                                     |
 
 数据包类型枚举值及其对应的含义如下：  
@@ -117,7 +117,7 @@ FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信�
 | 0x32    | 上报Topic信息 | SDK->节点 |
 | 0x10000 | 交易上链回调  | 节点->SDK |
 
-返回值类型枚举值及其对应的含义如下：
+处理结果枚举值及其对应的含义如下：
 
 | code | message    |
 | :--- | :--------- |
