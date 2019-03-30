@@ -15,4 +15,5 @@
    storage/index.rst
    security_control/index.rst
    rpc.md
+   parallel/dag.md
    features/index.rst 

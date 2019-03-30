@@ -23,15 +23,19 @@ Usage:
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
+    -v <FISCO-BCOS binary version>      Default get version from FISCO-BCOS/blob/master/release_note.txt. eg. 2.0.0-rc1
+    -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
-    -s <State type>                     Default storage. if set -s, use mpt 
+    -C <disable compress>               Default enable. If set -C, disable compress
+    -s <State type>                     Default storage. if set -s, use mpt
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
     -T <Enable debug log>               Default off. If set -T, enable debug log
+    -F <Disable log auto flush>         Default on. If set -F, disable log auto flush
     -h Help
 e.g
-    build_chain.sh -l "127.0.0.1:4"
+    ./tools/build_chain.sh -l "127.0.0.1:4"
 ```
 
 ## 选项介绍
@@ -80,8 +84,18 @@ $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 # 两个节点分别占用`30300,20200,8545`和`30301,20201,8546`。
 $ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
 ```
+
 - **`i`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
+
+- **`v`选项[**Optional**]**
+用于指定搭建FISCO BCOS时使用的二进制版本。build_chian默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项，那么修改`config.ini`配置，使用指定的二进制。
+
+- **`d`选项[**Optional**]**
+使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限。该模式下脚本启动节点的命令如下
+```bash
+$ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
+```
 
 - **`c`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。

@@ -27,14 +27,14 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.2')
+compile ('org.fisco-bcos:web3sdk:2.0.0-rc1')
 ```
    maven:
 ```bash
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.0-rc1</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
@@ -45,7 +45,7 @@ repositories {
         maven { url "https://dl.bintray.com/ethereum/maven/" }
     }
 ```
-**注：** 如果下载web3sdk的依赖`solcJ-all-0.4.24.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
+**注：** 如果下载web3sdk的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
 
 ## 配置SDK
 
@@ -151,11 +151,11 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
 
 国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。国密版的编译器jar包下载请[参考这里](../manual/console.html#jar)，用于将Solidity合约文件转为国密版的Java合约文件。可以在项目src目录下新建一个lib目录，将下载的国密版jar包放置在lib目录下。然后修改项目的build.gradle文件，移除普通版编译器jar包，引入国密编译器jar包。
   ```
-    compile ("org.fisco-bcos:web3sdk:2.0.2"){
+    compile ("org.fisco-bcos:web3sdk:2.0.0-rc1"){
          exclude module: 'solcJ-all'
     }
     // 0.4版国密合约编译器jar包
-    compile files('lib/solcJ-all-0.4.24-gm.jar')
+    compile files('lib/solcJ-all-0.4.25-gm.jar')
     // 0.5版本国密合约编译器jar包
     // compile files('lib/solcJ-all-0.5.2-gm.jar')
   ```
