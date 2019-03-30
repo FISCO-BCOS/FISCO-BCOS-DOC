@@ -16,3 +16,4 @@
    security_control/index.rst
    rpc.md
    features/index.rst 
+   protocol_description.md
