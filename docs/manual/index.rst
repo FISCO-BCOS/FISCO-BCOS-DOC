@@ -9,6 +9,7 @@
 
    get_executable.md
    build_chain.md
+   certificates.md
    configuration.md
    console.md
    smart_contract.md
@@ -17,5 +18,6 @@
    permission_control.md
    certificate_blacklist.md
    amop_protocol.md
+   transaction_parallel.md
    guomi_crypto.md
    log_access.md

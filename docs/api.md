@@ -53,11 +53,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 ```
 
 ## getPbftView
-返回节点所在指定群组内的最新[pbft视图](design/consensus/pbft.html#view)
+返回节点所在指定群组内的最新[PBFT视图](design/consensus/pbft.html#view)
 ### 参数         
 - `groupID`: `unsigned int` - 群组ID         
 ### 返回值         
-- `string` - 最新的pbft视图   
+- `string` - 最新的PBFT视图   
 - 示例          
 ```
 // Request
@@ -133,7 +133,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 - `groupID`: `unsigned int` - 群组ID          
 ### 返回值          
 - `object` - 共识状态信息。
-- 1. 当共识机制为pbft时（pbft详细设计参考[pbft设计文档](design/consensus/pbft.md)），字段如下：            
+- 1. 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](design/consensus/pbft.md)），字段如下：            
    -  `accountType`: `unsigned int` - 账户类型            
    -  `allowFutureBlocks`: `bool` - 允许未来块标志            
    -  `cfgErr`: `bool` - 配置错误标志            
@@ -171,7 +171,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
    -  `commitCache_cachedSize`: `unsigned int` - commitCache_cached大小            
    -  `viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached大小            
 
-- 2. 当共识机制为raft时（raft详细设计参考[raft设计文档](design/consensus/raft.md)），字段如下：     
+- 2. 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](design/consensus/raft.md)），字段如下：     
     - `accountType`: `unsigned int` - 账户类型            
     - `allowFutureBlocks`: `bool` - 允许未来块标志            
     - `cfgErr`: `bool` - 配置错误标志                        
@@ -191,7 +191,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 
 - 示例
 ```
-// Request pbft
+// Request PBFT
 curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
@@ -258,7 +258,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
     ]
 }
 
-// Request raft
+// Request Raft
 curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
@@ -412,7 +412,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
     ]
 }
 ```
-## getnodeIdList
+## getNodeIDList
 返回节点本身和已连接的p2p节点列表
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID         
@@ -422,7 +422,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getnodeIdList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -474,7 +474,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `sealerList`: `array` - 共识节点列表      
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
-    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](#getTransactionByHash)）
+    - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html#gettransactionbyhash)）
               
 - 示例
 ```
@@ -559,14 +559,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 - `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)       
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)         
 ### 返回值          
-见[getBlockByHash](#getBlockByHash)  
+见[getBlockByHash](./api.html#getblockbyhash)  
   
 - 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[1,"0x0",true],"id":1}' http://127.0.0.1:8545 |jq
 ```
-Result见[getBlockByHash](#getBlockByHash)  
+Result见[getBlockByHash](./api.html#getblockbyhash)  
 
 ## getBlockHashByNumber
 返回根据区块高度查询的区块哈希          
@@ -595,7 +595,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 ### 返回值          
 - `object`: - 交易信息，其字段如下：  
     - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块哈希     
+    - `blockNumber`: `string` - 包含该交易的区块高度     
     - `from`: `string` - 发送者的地址                
     - `gas`: `string` - 发送者提供的gas     
     - `gasPrice`: `string` - 发送者提供的gas的价格     
@@ -636,13 +636,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 - `blockHash`: `string` - 区块哈希          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
-见[getTransactionByHash](#getTransactionByHash)       
+见[getTransactionByHash](./api.html#gettransactionbyhash)       
 - 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 ```
-Result见[getTransactionByHash](#getTransactionByHash) 
+Result见[getTransactionByHash](./api.html#gettransactionbyhash) 
 
 ## getTransactionByBlockNumberAndIndex
 返回根据区块高度和交易序号查询的交易信息
@@ -651,14 +651,14 @@ Result见[getTransactionByHash](#getTransactionByHash)
 - `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
-见[getTransactionByHash](#getTransactionByHash)            
+见[getTransactionByHash](./api.html#gettransactionbyhash)            
 - 示例          
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 }
 ```
-Result见[getTransactionByHash](#getTransactionByHash)
+Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionReceipt
 返回根据交易哈希查询的交易回执信息
@@ -755,7 +755,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params"
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":""getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {

@@ -96,6 +96,8 @@ $ cat ipconf
 
 **使用build_chain脚本构建星形区块链节点配置文件夹**
 
+`build_chain`使用方法请参考[这里](../manual/build_chain.md)。
+
 ```bash
 # 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
 $ bash build_chain.sh -f ipconf -p 30300,20200,8545
@@ -237,10 +239,14 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/config.ini:    channel_listen_port=20206
 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/config.ini:    channel_listen_port=20207
 
-
 ```
 
-**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下**：
+```eval_rst
+.. important::
+    使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
+```
+
+**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下**，控制台配置方法请参考[这里](../manual/console.html#id7)：
 
 ```xml
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">

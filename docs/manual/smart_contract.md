@@ -30,18 +30,25 @@ contract TableFactory {
 
 // 查询条件
 contract Condition {
+    //等于
     function EQ(string, int) public;
     function EQ(string, string) public;
     
+    //不等于
     function NE(string, int) public;
     function NE(string, string)  public;
-
+    
+    //大于
     function GT(string, int) public;
+    //大于或等于
     function GE(string, int) public;
     
+    //小于
     function LT(string, int) public;
+    //小于或等于
     function LE(string, int) public;
     
+    //限制返回记录条数
     function limit(int) public;
     function limit(int, int) public;
 }
@@ -537,14 +544,19 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
 }
 ```
 
-##### 2.2.5 注册合约
+##### 2.2.5 注册合约并编译源码
+
+- 注册开发的预编译合约。修改`FISCO-BCOS/cmake/templates/UserPrecompiled.h.in`，在下面的函数中注册`HelloWorldPrecompiled`合约的地址。
 
 ```cpp
-// file         libblockverifier/ExecutiveContextFactory.cpp
-// function     initExecutiveContext
-
-context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>());  // HelloWorld precompiled 注册
+void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::blockverifier::ExecutiveContext::Ptr context)
+{
+    // Address should in [0x5001,0xffff]
+    context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>());
+}
 ```
+
+- 编译源码，详情请[参考这里](get_executable.md.html#id2)
 
 ### 三 调用
 
