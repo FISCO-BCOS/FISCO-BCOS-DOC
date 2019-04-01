@@ -136,9 +136,10 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 .. important::
 
   - 如果控制台配置正确，在CentOS系统上启动控制台出现如下错误：
+    
     Failed to connect to the node. Please check the node status and the console configruation.
 
-  则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
+   则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
 
   - 温馨提醒：如果在搭建FISCO BCOS平台时已经安装并配置好Java，则在后续配置FISCO BCOS浏览器的时候则不用再重新安装配置Java。
 
