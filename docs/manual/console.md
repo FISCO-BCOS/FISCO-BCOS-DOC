@@ -200,7 +200,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
   ```bash
   Failed to connect to the node. Please check the node status and the console configruation.
   ```
-  则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装Java 8或以上版本(具体安装步骤[参考附录](../installation.html#java))，安装完毕后再启动控制台。
+  则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装Java 8或以上版本(具体安装步骤[参考附录](./console.html#java))，安装完毕后再启动控制台。
 - 温馨提醒：如果在搭建FISCO BCOS平台时已经安装并配置好Java，则在后续配置FISCO BCOS浏览器的时候则不用再重新安装配置Java。
 
 
@@ -1097,3 +1097,39 @@ Hello,CNS
 ```text
 quit
 ```
+
+## 附录：Java环境配置
+
+### Ubuntu环境安装Java
+```bash
+# 安装默认Java版本(Java 8或以上)
+sudo apt install -y default-jdk
+# 查询Java版本
+java -version 
+```
+
+### CentOS环境安装Java
+```bash
+# 查询centos原有的Java版本
+$ rpm -qa|grep java
+# 删除查询到的Java版本
+$ rpm -e --nodeps java版本
+# 查询Java版本，没有出现版本号则删除完毕
+$ java -version
+# 创建新的文件夹，安装Java 8或以上的版本，将下载的jdk放在software目录
+# 从openJDK官网(https://jdk.java.net/java-se-ri/8)或Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
+$ mkdir /software
+# 解压jdk 
+$ tar -zxvf jdk-8u201-linux-x64.tar.gz
+# 配置Java环境，编辑/etc/profile文件 
+$ vim /etc/profile 
+# 打开以后将下面三句输入到文件里面并退出
+export JAVA_HOME=/software/jdk-8u201-linux-x64.tar.gz
+export PATH=$JAVA_HOME/bin:$PATH 
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+# 生效profile
+$ source /etc/profile 
+# 查询Java版本，出现的版本是自己下载的版本，则安装成功。
+java -version 
+```
+
