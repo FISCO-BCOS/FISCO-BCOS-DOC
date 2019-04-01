@@ -117,11 +117,6 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍[参考这里](manual/console.md)。
 
-```eval_rst
-.. important::
-    控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
-```
-
 ### 准备依赖
 
 ```bash
@@ -137,11 +132,24 @@ $ tar -zxf console.tar.gz && chmod u+x console/start.sh
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
+```eval_rst
+.. important::
+
+  - 如果控制台配置正确，在CentOS系统上启动控制台出现如下错误：
+  ```
+  Failed to connect to the node. Please check the node status and the console configruation.
+  ```
+  则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从`[OpenJDK官网](https://jdk.java.net/java-se-ri/8)`_或`[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)`_下载并安装Java 8或以上版本(具体安装步骤`[参考附录](manual/console.html#java))`_，安装完毕后再启动控制台。
+  - 温馨提醒：如果在搭建FISCO BCOS平台时已经安装并配置好Java，则在后续配置FISCO BCOS浏览器的时候则不用再重新安装配置Java。
+
+```
+
 ### 启动控制台
 
 ```bash
-# # 回到fisco目录
+# 回到控制台目录
 $ cd ~/fisco/console
+# 启动控制台
 $ ./start.sh
 # 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =============================================================================================
@@ -159,12 +167,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
-- 如果控制台配置正确，在CentOS系统上启动控制台出现如下错误：
-  ```bash
-  Failed to connect to the node. Please check the node status and the console configruation.
-  ```
-  则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装Java 8或以上版本(具体安装步骤[参考附录](./installation.html#java))，安装完毕后再启动控制台。
-- 温馨提醒：如果在搭建FISCO BCOS平台时已经安装并配置好Java，则在后续配置FISCO BCOS浏览器的时候则不用再重新安装配置Java。
 
 ### 使用控制台获取信息
 
@@ -262,37 +264,3 @@ Hello, FISCO BCOS
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 
-## 附录：Java环境配置
-
-### Ubuntu环境安装Java
-```bash
-# 安装默认Java版本(Java 8或以上)
-sudo apt install -y default-jdk
-# 查询Java版本
-java -version 
-```
-
-### CentOS环境安装Java
-```bash
-# 查询centos原有的Java版本
-$ rpm -qa|grep java
-# 删除查询到的Java版本
-$ rpm -e --nodeps java版本
-# 查询Java版本，没有出现版本号则删除完毕
-$ java -version
-# 创建新的文件夹，安装Java 8或以上的版本，将下载的jdk放在software目录
-# 从openJDK官网(https://jdk.java.net/java-se-ri/8)或Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
-$ mkdir /software
-# 解压jdk 
-$ tar -zxvf jdk-8u201-linux-x64.tar.gz
-# 配置Java环境，编辑/etc/profile文件 
-$ vim /etc/profile 
-# 打开以后将下面三句输入到文件里面并退出
-export JAVA_HOME=/software/jdk-8u201-linux-x64.tar.gz
-export PATH=$JAVA_HOME/bin:$PATH 
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-# 生效profile
-$ source /etc/profile 
-# 查询Java版本，出现的版本是自己下载的版本，则安装成功。
-java -version 
-```
