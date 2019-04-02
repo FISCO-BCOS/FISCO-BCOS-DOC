@@ -96,6 +96,8 @@ $ cat ipconf
 
 **使用build_chain脚本构建星形区块链节点配置文件夹**
 
+`build_chain`使用方法请参考[这里](../manual/build_chain.md)。
+
 ```bash
 # 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
 $ bash build_chain.sh -f ipconf -p 30300,20200,8545
@@ -218,7 +220,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 $ cd ~/fisco
 
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.0/console.tar.gz && tar -zxf console.tar.gz
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/console.sh)
 
 # 进入控制台操作目录
 $ cd console
@@ -237,10 +239,14 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/config.ini:    channel_listen_port=20206
 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/config.ini:    channel_listen_port=20207
 
-
 ```
 
-**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下**：
+```eval_rst
+.. important::
+    使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
+```
+
+**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下**，控制台配置方法请参考[这里](../manual/console.html#id7)：
 
 ```xml
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -623,7 +629,8 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 ```bash
 # 若从未下载控制台，请进行下面操作下载控制台，否则将控制台拷贝到~/fisco目录：
 $ cd ~/fisco
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.0/console.tar.gz && tar -zxf console.tar.gz
+# 获取控制台
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/console.sh)
 ```
 
 **配置控制台**
