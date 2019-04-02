@@ -220,7 +220,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 $ cd ~/fisco
 
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/console.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 
 # 进入控制台操作目录
 $ cd console
@@ -630,7 +630,7 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # 若从未下载控制台，请进行下面操作下载控制台，否则将控制台拷贝到~/fisco目录：
 $ cd ~/fisco
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/console.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 
 **配置控制台**
