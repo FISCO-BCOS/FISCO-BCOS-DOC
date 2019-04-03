@@ -8,14 +8,13 @@
 
 **附：**
 
-[代码贡献流程](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/docs/CONTRIBUTING_CN.md)  
+[代码贡献流程](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/docs/CONTRIBUTING_CN%2Emd)  
 
-
-[编码规范](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/CODING_STYLE.md)
+[编码规范](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/docs/README_CN%2Emd)
 
 [提问题](https://github.com/FISCO-BCOS/FISCO-BCOS/issues)
 
-![](../images/community/split_line.jpg)
+*********************************************
 
 **资源获取：**
 
