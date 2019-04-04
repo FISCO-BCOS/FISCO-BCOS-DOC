@@ -10,7 +10,8 @@
 - addObserver：根据节点NodeID设置对应节点为观察节点；
 - removeNode：根据节点NodeID设置对应节点为游离节点；
 - getSealerList：查看群组中共识节点列表；
-- getObserverList：查看群组中观察节点列表。
+- getObserverList：查看群组中观察节点列表；
+- getNodeIDList：查看节点已连接的所有其他节点的NodeID。
 
 例：
 将指定节点分别转换成共识节点、观察者节点、游离节点，主要操作命令如下：
