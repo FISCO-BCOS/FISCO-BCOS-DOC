@@ -171,9 +171,17 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
 ```eval_rst
 .. important::
+
     控制台配置说明
 
-    - **说明：** 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
+    - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
+    
+      Failed to connect to the node. Please check the node status and the console configruation.
+
+     则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <./console.html#java>`_ )，安装完毕后再启动控制台。
+
+    - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
+
 ``` 
 ### 启动控制台
 ```text
@@ -194,11 +202,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =====================================================================================
 ```
-**注意:** 如果控制台配置正确，在CentOS系统上启动控制台出现如下错误：
-```bash
-Failed to connect to the node. Please check the node status and the console configruation.
-```
-则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装JDK8或以上版本，然后再启动控制台。
 
 ### 启动脚本说明
 ```bash
@@ -1114,3 +1117,39 @@ Hello,CNS
 ```text
 quit
 ```
+
+## 附录：Java环境配置
+
+### Ubuntu环境安装Java
+```bash
+# 安装默认Java版本(Java 8或以上)
+sudo apt install -y default-jdk
+# 查询Java版本
+java -version 
+```
+
+### CentOS环境安装Java
+```bash
+# 查询centos原有的Java版本
+$ rpm -qa|grep java
+# 删除查询到的Java版本
+$ rpm -e --nodeps java版本
+# 查询Java版本，没有出现版本号则删除完毕
+$ java -version
+# 创建新的文件夹，安装Java 8或以上的版本，将下载的jdk放在software目录
+# 从openJDK官网(https://jdk.java.net/java-se-ri/8)或Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
+$ mkdir /software
+# 解压jdk 
+$ tar -zxvf jdk-8u201-linux-x64.tar.gz
+# 配置Java环境，编辑/etc/profile文件 
+$ vim /etc/profile 
+# 打开以后将下面三句输入到文件里面并退出
+export JAVA_HOME=/software/jdk-8u201-linux-x64.tar.gz
+export PATH=$JAVA_HOME/bin:$PATH 
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+# 生效profile
+$ source /etc/profile 
+# 查询Java版本，出现的版本是自己下载的版本，则安装成功。
+java -version 
+```
+
