@@ -32,10 +32,9 @@
 ### 获取控制台
 
 ```bash
-# 下载控制台压缩包
 $ cd ~ && mkdir fisco && cd fisco
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.0/console.tar.gz
-$ tar -zxf console.tar.gz
+# 获取控制台
+$ bash <(curl -s https://raw.githubusercontent.com/fqliao/console/feature-rc2/tools/console.sh)
 ```
 目录结构如下：
 ```bash
@@ -140,7 +139,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
                 <property name="allChannelConnections">
-                        <list>
+                        <list>  <!-- 每个群组需要配置一个bean -->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
                                         <property name="groupId" value="1" /> <!-- 群组的groupID -->
                                         <property name="connectionsStr">
@@ -250,10 +249,11 @@ getPendingTxSize                         Query pending transactions size.
 getCode                                  Query code at a given address.
 getTotalTransactionCount                 Query total transaction count.
 deploy                                   Deploy a contract on blockchain.
+getDeployLog                             Query the log of deployed contracts.
 call                                     Call a contract by a function and paramters.
 deployByCNS                              Deploy a contract on blockchain by CNS.
-callByCNS                                Call a contract by a function and paramters by CNS.
 queryCNS                                 Query CNS information by contract name and contract version.
+callByCNS                                Call a contract by a function and paramters by CNS.
 addSealer                                Add a sealer node.
 addObserver                              Add an observer node.
 removeNode                               Remove a node.
@@ -292,7 +292,7 @@ blockNumber -- Integer of a block number.
 boolean -- (optional) If true it returns the full transaction objects, if false only the hashes of the transactions.
 ```
 ### **switch**
-运行switch或者s，切换到连接节点的指定群组。群组号显示在命令提示符前面。
+运行switch或者s，切换到指定群组。群组号显示在命令提示符前面。
 
 ```text
 [group:1]> switch 2
@@ -300,6 +300,7 @@ Switched to group 2.
 
 [group:2]> 
 ```
+**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息。
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
@@ -754,13 +755,32 @@ Switched to group 2.
 [group:1]> deploy TableTest.sol 
 0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```
-**注：部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。**
+**注：**
+- 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。
+- 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`solidity/contracts/`目录。
+- 如果合约引用了library库，library库文件的名称需要包含`Lib`字符串，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
+
+### **getDeployLog**
+运行getDeployLog，查询群组内部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
+- 日志行数，可选，根据输入的期望值返回最新的日志信息，当实际条数少于期望值时，按照实际数量返回。当期望值未给出时，默认按照20条返回最新的日志信息。
+                           
+```text
+[group:1]> getDeployLog 2
+
+2019-03-19 23:04:10  [group:1]  TableTest             0x7eec2ac59357866677ab0fa3db4e7dc2b391f7c2
+2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
+
+[group:1]> getDeployLog 1
+
+2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
+```
+**注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
 ### **call**
 运行call，调用合约。                                
 参数： 
 - 合约名称：部署的合约名称(可以带.sol后缀)。
-- 合约地址: 部署合约获取的地址。
+- 合约地址: 部署合约获取的地址，合约地址可以省略`0x`以及前缀0。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]；布尔类型为true或者false。**
 ```text
