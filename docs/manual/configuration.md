@@ -63,6 +63,7 @@ RPC配置示例如下：
 - `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`。
 - `listen_port`：节点P2P监听端口。
 - `node.*`: 节点需连接的所有节点`IP:port`。
+- `enable_compress`：开启网络压缩的配置选项，配置为true，表明开启网络压缩功能，配置为false，表明关闭网络压缩功能，网络压缩详细介绍请参考[这里](../design/features/network_compress.md)。
 
 P2P配置示例如下：
 
@@ -169,6 +170,29 @@ easylogging++示例配置如下：
     log_flush_threshold=100
 ```
 
+
+### 配置节点兼容性
+
+FISCO-BCOS 2.0向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性：
+
+- `supported_version`：当前节点运行的版本
+
+```eval_rst
+.. important::
+    - 可通过 ``./fisco-bcos --version | | grep "FISCO-BCOS Version" | cut -d':' -f2 | sed s/[[:space:]]//g`` 命令查看FISCO BCOS的当前支持的最高版本
+    - build_chain.sh生成的区块链节点配置中，supported_version配置为FISCO BCOS当前的最高版本
+    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可
+```
+
+`release-2.0.0-rc2`节点的`[compatibility]`配置如下：
+
+```ini
+
+[compatibility]
+    supported_version=release-2.0.0-rc2
+```
+
+
 ### 可选配置：落盘加密
 
 为了保障节点数据机密性，FISCO BCOS引入[落盘加密](../design/features/storage_security.md)保障节点数据的机密性，**落盘加密**操作手册请[参考这里](./storage_security.md)。
@@ -192,6 +216,7 @@ key_manager_ip=127.0.0.1
 key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
+
 
 ## 群组系统配置说明
 
@@ -301,7 +326,7 @@ FISCO BCOS将交易池容量配置开放给用户，用户可根据自己的业�
 
 ### PBFT共识消息广播配置
 
-PBFT共识算法为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`TTL`来控制消息最大转发次数，消息最大转发次数为`TTL-1`，**该配置项仅对PBFT有效**。
+PBFT共识算法为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`ttl`来控制消息最大转发次数，消息最大转发次数为`ttl-1`，**该配置项仅对PBFT有效**。
 
 设置共识消息最多转发一次，配置示例如下：
 
@@ -309,6 +334,24 @@ PBFT共识算法为了保证共识过程最大网络容错性，每个共识节�
 ; the ttl for broadcasting pbft message
 [consensus]
 ttl=2
+```
+
+### PBFT共识打包时间配置
+
+考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS 2.0在群组可变配置的`[consensus]`下引入`min_block_generation_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_block_generation_time`才会开始共识流程，处理打包生成的新区块。
+
+```eval_rst
+.. important::
+   - ``min_block_generation_time`` 默认为500ms
+   - 共识节点最长打包时间为1000ms，若超过1000ms新区块中打包到的交易数仍为0，共识模块会进入出空块逻辑，空块并不落盘；
+   - ``min_block_generation_time`` 不可超过出空块时间1000ms，若设置值超过1000ms，系统默认min_block_generation_timew为500ms
+
+```
+
+```
+[consensus]
+;min block generation time(ms), the max block generation time is 1000 ms
+min_block_generation_time=500
 ```
 
 ### 并行交易配置
@@ -319,11 +362,6 @@ FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够�
 [tx_execute]
     enable_parallel=true
 ```
-
-
-
-
-
 
 
 ## 动态配置系统参数

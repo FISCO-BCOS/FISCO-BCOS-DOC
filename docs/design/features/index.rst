@@ -36,3 +36,4 @@ FISCO BCOS引入的合约命名服务CNS通过提供链上合约名称与合约�
    cns_contract_name_service.md
    guomi.md
    storage_security.md
+   network_compress.md
