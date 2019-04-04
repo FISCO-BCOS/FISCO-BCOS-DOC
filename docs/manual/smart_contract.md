@@ -556,7 +556,7 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 }
 ```
 
-- 编译源码，详情请[参考这里](get_executable.md.html#id2)
+- 编译源码，详情请[参考这里](get_executable.html#id2)
 
 ### 三 调用
 
