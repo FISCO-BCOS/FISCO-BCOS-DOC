@@ -117,11 +117,6 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍[参考这里](manual/console.md)。
 
-```eval_rst
-.. important::
-    控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
-```
-
 ### 准备依赖
 
 ```bash
@@ -137,11 +132,23 @@ $ tar -zxf console.tar.gz && chmod u+x console/start.sh
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
+```eval_rst
+.. important::
+
+  - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
+    
+    Failed to connect to the node. Please check the node status and the console configruation.
+
+   则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
+
+```
+
 ### 启动控制台
 
 ```bash
-# # 回到fisco目录
+# 回到控制台目录
 $ cd ~/fisco/console
+# 启动控制台
 $ ./start.sh
 # 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =============================================================================================
@@ -159,11 +166,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
-**注意:** 如果按照上述默认安装步骤，在CentOS系统上启动控制台出现如下错误：
-```bash
-Failed to connect to the node. Please check the node status and the console configruation.
-```
-则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从[OpenJDK官网](https://jdk.java.net/java-se-ri/8)或[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载并安装JDK8或以上版本，然后再启动控制台。
 
 ### 使用控制台获取信息
 
@@ -205,7 +207,7 @@ Failed to connect to the node. Please check the node status and the console conf
 HelloWorld合约提供两个接口，分别是`get()`和`set()`，用于获取/设置合约变量`name`。合约内容如下:
 
 ```solidity
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.24;
 
 contract HelloWorld {
     string name;
@@ -260,3 +262,4 @@ Hello, FISCO BCOS
 ```
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+
