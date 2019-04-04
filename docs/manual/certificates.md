@@ -63,7 +63,7 @@ node.key 节点/SDK私钥
 
 ## 证书生成流程：
 
-FISCO BCOS的证书生成流程如下，用户也可以使用[企业部署工具](./enterprise_tools/operation.md)生成相应证书
+FISCO BCOS的证书生成流程如下，用户也可以使用[企业部署工具](../enterprise_tools/operation.md)生成相应证书
 
 ### 生成链证书：
 
