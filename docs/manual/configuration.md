@@ -31,7 +31,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 ## 主配置文件config.ini
 
-`config.ini`采用`ini`格式，主要包括 **rpc、p2p、group、secure和log** 配置项。
+`config.ini`采用`ini`格式，主要包括 **rpc、p2p、group、network_security和log** 配置项。
 
 
 ```eval_rst
@@ -63,6 +63,7 @@ RPC配置示例如下：
 - `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`。
 - `listen_port`：节点P2P监听端口。
 - `node.*`: 节点需连接的所有节点`IP:port`。
+- `enable_compress`：开启网络压缩的配置选项，配置为true，表明开启网络压缩功能，配置为false，表明关闭网络压缩功能，网络压缩详细介绍请参考[这里](../design/features/network_compress.md)。
 
 P2P配置示例如下：
 
@@ -96,7 +97,7 @@ P2P配置示例如下：
 
 ### 配置证书信息
 
-基于安全考虑，FISCO BCOS节点间采用SSL加密通信，`[secure]`配置SSL连接的证书信息：
+基于安全考虑，FISCO BCOS节点间采用SSL加密通信，`[network_security]`配置SSL连接的证书信息：
 
 - `data_path`：证书和私钥文件所在目录。
 - `key`: 节点私钥相对于`data_path`的路径。
@@ -105,7 +106,7 @@ P2P配置示例如下：
 - `ca_path`: ca证书文件夹，多ca时需要。
 
 ```ini
-[secure]
+[network_security]
     data_path=conf/
     key=node.key
     cert=node.crt
@@ -115,7 +116,7 @@ P2P配置示例如下：
 
 ### 配置黑名单列表
 
-基于防作恶考虑，FISCO BCOS允许节点配置不受信任的节点黑名单列表，拒绝与这些黑名单节点建立连接，通过`[crl]`配置：
+基于防作恶考虑，FISCO BCOS允许节点配置不受信任的节点黑名单列表，拒绝与这些黑名单节点建立连接，通过`[certificate_blacklist]`配置：
 
 > `crl.idx`: 黑名单节点的Node ID, 节点Node ID可通过`node.nodeid`文件获取; `idx`是黑名单节点的索引。
 
@@ -125,7 +126,7 @@ P2P配置示例如下：
 
 ```ini
 ; 证书黑名单
-[crl]
+[certificate_blacklist]
     crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e
 3787c338a4
 ```
@@ -169,11 +170,34 @@ easylogging++示例配置如下：
     log_flush_threshold=100
 ```
 
+
+### 配置节点兼容性
+
+FISCO-BCOS 2.0向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性：
+
+- `supported_version`：当前节点运行的版本
+
+```eval_rst
+.. important::
+    - 可通过 ``./fisco-bcos --version | | grep "FISCO-BCOS Version" | cut -d':' -f2 | sed s/[[:space:]]//g`` 命令查看FISCO BCOS的当前支持的最高版本
+    - build_chain.sh生成的区块链节点配置中，supported_version配置为FISCO BCOS当前的最高版本
+    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可
+```
+
+`release-2.0.0-rc2`节点的`[compatibility]`配置如下：
+
+```ini
+
+[compatibility]
+    supported_version=release-2.0.0-rc2
+```
+
+
 ### 可选配置：落盘加密
 
 为了保障节点数据机密性，FISCO BCOS引入[落盘加密](../design/features/storage_security.md)保障节点数据的机密性，**落盘加密**操作手册请[参考这里](./storage_security.md)。
 
-`config.ini`中的`data_secure`用于配置落盘加密，主要包括（落盘加密具体操作请参考[操作手册](./storage_security.md)）：
+`config.ini`中的`storage_security`用于配置落盘加密，主要包括（落盘加密具体操作请参考[操作手册](./storage_security.md)）：
 
 - `enable`： 是否开启落盘加密，默认不开启；
 
@@ -186,12 +210,13 @@ easylogging++示例配置如下：
 落盘加密节点配置示例如下：
 
 ```ini
-[data_secure]
+[storage_security]
 enable=true
 key_manager_ip=127.0.0.1
 key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
+
 
 ## 群组系统配置说明
 
@@ -229,7 +254,7 @@ id=2
 
 - `max_trans_num`：一个区块可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
 
-- `node.idx`：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过`${data_path}/node.nodeid`文件获取(其中`${data_path}`可通过主配置`config.ini`的`[secure].data_path`配置项获取)
+- `node.idx`：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过`${data_path}/node.nodeid`文件获取(其中`${data_path}`可通过主配置`config.ini`的`[network_security].data_path`配置项获取)
 
 ```ini
 ; 共识协议配置
@@ -301,7 +326,7 @@ FISCO BCOS将交易池容量配置开放给用户，用户可根据自己的业�
 
 ### PBFT共识消息广播配置
 
-PBFT共识算法为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`TTL`来控制消息最大转发次数，消息最大转发次数为`TTL-1`，**该配置项仅对PBFT有效**。
+PBFT共识算法为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`ttl`来控制消息最大转发次数，消息最大转发次数为`ttl-1`，**该配置项仅对PBFT有效**。
 
 设置共识消息最多转发一次，配置示例如下：
 
@@ -309,6 +334,24 @@ PBFT共识算法为了保证共识过程最大网络容错性，每个共识节�
 ; the ttl for broadcasting pbft message
 [consensus]
 ttl=2
+```
+
+### PBFT共识打包时间配置
+
+考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS 2.0在群组可变配置的`[consensus]`下引入`min_block_generation_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_block_generation_time`才会开始共识流程，处理打包生成的新区块。
+
+```eval_rst
+.. important::
+   - ``min_block_generation_time`` 默认为500ms
+   - 共识节点最长打包时间为1000ms，若超过1000ms新区块中打包到的交易数仍为0，共识模块会进入出空块逻辑，空块并不落盘；
+   - ``min_block_generation_time`` 不可超过出空块时间1000ms，若设置值超过1000ms，系统默认min_block_generation_timew为500ms
+
+```
+
+```
+[consensus]
+;min block generation time(ms), the max block generation time is 1000 ms
+min_block_generation_time=500
 ```
 
 ### 并行交易配置
@@ -319,11 +362,6 @@ FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够�
 [tx_execute]
     enable_parallel=true
 ```
-
-
-
-
-
 
 
 ## 动态配置系统参数

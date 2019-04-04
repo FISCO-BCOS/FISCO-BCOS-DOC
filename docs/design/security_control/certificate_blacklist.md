@@ -4,7 +4,7 @@
 
 ## 名词解释
 
-CA黑名单，别称**证书拒绝列表**（certificate blacklist，简称CBL）。CA黑名单基于`config.ini`文件中`[crl]`配置的NodeID进行判断，拒绝此NodeID节点发起的连接。
+CA黑名单，别称**证书拒绝列表**（certificate blacklist，简称CBL）。CA黑名单基于`config.ini`文件中`[certificate_blacklist]`配置的NodeID进行判断，拒绝此NodeID节点发起的连接。
 
 CA黑名单所属的配置类型：
 
@@ -31,10 +31,10 @@ CA黑名单所属的配置类型：
 
 ## 配置格式
 
-节点`config.ini`配置中增加`[crl]`路径（`[crl]`在配置中可选）。CA黑名单内容为节点NodeID列表，node.X为本节点拒绝连接的对方节点NodeID。CA黑名单的配置格式示例如下。
+节点`config.ini`配置中增加`[certificate_blacklist]`路径（`[certificate_blacklist]`在配置中可选）。CA黑名单内容为节点NodeID列表，node.X为本节点拒绝连接的对方节点NodeID。CA黑名单的配置格式示例如下。
 
 ```
-[crl]
+[certificate_blacklist]
     crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e3787c338a4
     crl.1=af57c506be9ae60df8a4a16823fa948a68550a9b6a5624df44afcd3f75ce3afc6bb1416bcb7018e1a22c5ecbd016a80ffa57b4a73adc1aeaff4508666c9b633a
 ```

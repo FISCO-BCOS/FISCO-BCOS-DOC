@@ -148,7 +148,7 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
 
 ### 配置文件示例
 
-对于**网络可改配置文件**`config.ini`，节点准入管理涉及**P2P节点连接列表`[p2p]`**、**节点证书`[secure]`**、**CA黑名单`[crl]`**。`[crl]`可缺少。配置项举例如下：
+对于**网络可改配置文件**`config.ini`，节点准入管理涉及**P2P节点连接列表`[p2p]`**、**节点证书`[network_security]`**、**CA黑名单`[certificate_blacklist]`**。`[certificate_blacklist]`可缺少。配置项举例如下：
 ```
 [p2p]
     ;p2p listen ip
@@ -162,12 +162,12 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
     node.3=127.0.0.1:30303
     
 ;certificate blacklist
-[crl]
+[certificate_blacklist]
     ;crl.0 should be nodeid, nodeid's length is 128 
     ;crl.0=
 
 ;certificate configuration
-[secure]
+[network_security]
     ;directory the certificates located in
     data_path=conf/
     ;the node private key file
