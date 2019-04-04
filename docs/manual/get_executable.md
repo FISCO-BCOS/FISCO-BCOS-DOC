@@ -13,7 +13,7 @@
 
 从v2.0.0版本开始，我们提供对应版本tag的docker镜像。对应于master分支，我们提供`lastest`标签的镜像，更多的docker标签[请参考这里](https://hub.docker.com/r/fiscoorg/fiscobcos)。
 
-build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，方便开发者部署。详情请[参考这里](build_chian.sh)。
+build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，方便开发者部署。详情请[参考这里](build_chain.html#id4)。
 
 ```eval_rst
 .. note::

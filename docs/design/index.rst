@@ -17,3 +17,4 @@
    rpc.md
    parallel/dag.md
    features/index.rst 
+   protocol_description.md
