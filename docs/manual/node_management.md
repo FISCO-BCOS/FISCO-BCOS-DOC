@@ -119,10 +119,12 @@ $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 $ cp -r ./node2/ nodes/127.0.0.1/
 ```
 
-3 . 进入`nodes/127.0.0.1/`，拷贝`node0/config.ini`到node2目录;
+3 . 进入`nodes/127.0.0.1/`，拷贝`node0/config.ini`、`node0/start.sh`和`node0/stop.sh`到node2目录;
 ```
 $ cd nodes/127.0.0.1/
 $ cp node0/config.ini node2/
+$ cp node0/start.sh node2/
+$ cp node0/stop.sh node2/
 ```
 
 4 . 修改`node2/config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
