@@ -211,7 +211,7 @@ SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，
 #### CnsService
 SDK提供对[CNS](../design/features/cns_contract_name_service.md)的支持。CnsService可以配置CNS信息，其API如下：
 - **String registerCns(String name, String version, String address, String abi)：** 根据合约名、合约版本号、合约地址和合约abi注册CNS信息。
-- **String getAddressByContractNameAndVersion(String contractNameAndVersion)：** 根据合约名和合约版本号(合约名和合约版本号用英文冒号连接)查询合约地址。
+- **String getAddressByContractNameAndVersion(String contractNameAndVersion)：** 根据合约名和合约版本号(合约名和合约版本号用英文冒号连接)查询合约地址。若缺失合约版本号，默认使用合约最新版本。
 - **List\<CnsInfo\> queryCnsByName(String name)：** 根据合约名查询CNS信息。
 - **List\<CnsInfo\> queryCnsByNameAndVersion(String name, String version)：** 根据合约名和合约版本号查询CNS信息。
 
