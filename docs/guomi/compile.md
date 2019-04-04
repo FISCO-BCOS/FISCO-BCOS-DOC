@@ -51,7 +51,7 @@
      .. code-block:: bash
         
         # 进入源码目录(设位于~/mydata目录)
-        $ cd ~/mydata/FISCO-BCOS
+        $ cd ~/mydata/FISCO-BCOS && git checkout master-1.3
 
         # 调用build.sh脚本编译国密版fisco-bcos
         # 注: (当前用户需要有sudo权限，期间可能会多次输入密码)
