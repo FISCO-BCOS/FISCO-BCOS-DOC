@@ -147,6 +147,8 @@ nodes
 ......此处省略其他输出......
 ```
 
+> 注：若生成的区块链节点属于不同物理机，需要将区块链节点拷贝到相应的物理机
+
 **启动节点**
 
 节点提供`start_all.sh`和`stop_all.sh`脚本启动和停止节点。
@@ -742,7 +744,7 @@ $ cat node0/log/* | grep "g:1.*Report"
 info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=be961c98...,next=2,tx=1,nodeIdx=2
 
 # 查看group2出块情况
-$ cat node0/log/log_2019021121.12.log | grep "g:2.*Report"
+$ cat node0/log/* | grep "g:2.*Report"
 info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=5d006230...,next=2,tx=1,nodeIdx=2
 ```
 
