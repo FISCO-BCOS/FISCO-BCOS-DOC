@@ -231,7 +231,7 @@ contract HelloWorld {
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
 [group:1]> deploy HelloWorld
-0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
+contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
 ### 调用HelloWorld合约

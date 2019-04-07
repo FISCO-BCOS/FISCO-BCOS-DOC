@@ -160,14 +160,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
 </beans>
 ```
-  配置项详细说明如下:
-  - `encryptType`: 国密算法开关(默认为0)                              
-    - 0: 不使用国密算法发交易                              
-    - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](./guomi_crypto.md))。
-  - `groupChannelConnectionsConfig`: 
-    - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
-    - 每个群组可以配置一个或多个节点，设置群组节点的配置文件`config.ini`中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
-  - `channelService`: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是`groupChannelConnectionsConfig`配置中的群组ID。SDK将与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
+  配置项详细说明[参考这里](../sdk/sdk.html#spring)。
 
 ```eval_rst
 .. important::
@@ -314,7 +307,7 @@ Switched to group 2.
 
 [group:2]> 
 ```
-**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息。
+**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中中配置的节点ip和端口正确，该节点正常运行。
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
@@ -763,11 +756,11 @@ Switched to group 2.
 ```text
 # 部署HelloWorld合约
 [group:1]> deploy HelloWorld.sol
-0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
+contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # 部署TableTest合约
 [group:1]> deploy TableTest.sol 
-0x3554a56ea2905f366c345bd44fa374757fb4696a
+contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```
 **注：**
 - 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。
@@ -802,7 +795,7 @@ Switched to group 2.
 [group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
 
-# 调用HelloWorld的set设置name字符串
+# 调用HelloWorld的set接口设置name字符串
 [group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
 
@@ -830,13 +823,17 @@ Hello, FISCO BCOS
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
 ```text
-# 部署HelloWorld合约
+# 部署HelloWorld合约1.0版
 [group:1]> deployByCNS HelloWorld.sol 1.0
-0x3554a56ea2905f366c345bd44fa374757fb4696a
+contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
+
+# 部署HelloWorld合约2.0版
+[group:1]> deployByCNS HelloWorld.sol 2.0
+contract address:0x07625453fb4a6459cbf14f5aa4d574cae0f17d92
 
 # 部署TableTest合约
 [group:1]> deployByCNS TableTest.sol 1.0
-0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
+contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
 
 ### **queryCNS**
@@ -860,18 +857,25 @@ Hello, FISCO BCOS
 ### **callByCNS**
 运行callByCNS，利用CNS调用合约。                                 
 参数： 
-- 合约名称：部署的合约名称。
-- 合约版本号：部署的合约版本号。
+- 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`或`HelloWorld.sol:1.0`。当省略合约版本号时，例如`HelloWorld`或`HelloWorld.sol`，则调用最新版本的合约。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
 ```text
-# 调用HelloWorld的get接口获取name字符串
-[group:1]> callByCNS HelloWorld 1.0 set "Hello,CNS"
+# 调用HelloWorld合约1.0版，通过set接口设置name字符串
+[group:1]> callByCNS HelloWorld:1.0 set "Hello,CNS"
 0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
 
-# 调用HelloWorld的set设置name字符串
-[group:1]> callByCNS HelloWorld 1.0 get
+# 调用HelloWorld合约2.0版，通过set接口设置name字符串
+[group:1]> callByCNS HelloWorld:2.0 set "Hello,CNS2"
+0x43000d14040f0c67ac080d0179b9499b6885d4a1495d3cfd1a79ffb5f2945f64
+
+# 调用HelloWorld合约1.0版，通过get接口获取name字符串
+[group:1]> callByCNS HelloWorld:1.0 get
 Hello,CNS
+
+# 调用HelloWorld合约最新版(即2.0版)，通过get接口获取name字符串
+[group:1]> callByCNS HelloWorld get
+Hello,CNS2
 ```
 
 ### **addSealer**
