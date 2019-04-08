@@ -302,7 +302,7 @@ exit                                     Quit console.
 [group:1]> getBlockByNumber -h
 Query information about a block by block number.
 Usage: getBlockByNumber blockNumber [boolean]
-blockNumber -- Integer of a block number.
+blockNumber -- Integer of a block number, from 0 to 2147483647.
 boolean -- (optional) If true it returns the full transaction objects, if false only the hashes of the transactions.
 ```
 ### **switch**
