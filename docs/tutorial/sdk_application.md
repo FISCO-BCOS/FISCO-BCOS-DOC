@@ -36,10 +36,10 @@ FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，�
 
 其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。`t_asset`表示例如下：
 
-| account  | asset_value |
------------|-------------
-|   Alice  |   10000     |
-|    Bob   |   20000     |
+| account | asset_value |
+| ------- | ----------- |
+| Alice   | 10000       |
+| Bob     | 20000       |
 
 ### 接口设计
 
@@ -307,7 +307,6 @@ asset-app项目的目录结构如下：
 |       |-- gradle-wrapper.properties // wrapper所使用的配置信息，比如gradle的版本等信息
 |-- gradlew // Linux或者Unix下用于执行wrapper命令的Shell脚本
 |-- gradlew.bat // Windows下用于执行wrapper命令的批处理脚本
-|-- settings.gradle
 |-- src
 |   |-- main
 |   |   |-- java
