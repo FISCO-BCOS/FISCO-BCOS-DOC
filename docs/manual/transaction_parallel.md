@@ -374,7 +374,8 @@ validation:
 用脚本从日志文件中计算TPS
 
 ```shell
-sh getTps.sh log/log_2019031821.00.log 21:26:24 21:26:59 # 参数：<日志文件> <计算开始时间> <计算结束时间>
+cd tools
+sh get_tps.sh log/log_2019031821.00.log 21:26:24 21:26:59 # 参数：<日志文件> <计算开始时间> <计算结束时间>
 ```
 
 得到TPS（2 SDK、4节点，8核，16G内存）
@@ -447,6 +448,7 @@ validation:
 用脚本从日志文件中计算TPS
 
 ``` shell
+cd tools
 sh get_tps.sh log/log_2019031311.17.log 11:25 11:30 # 参数：<日志文件> <计算开始时间> <计算结束时间>
 ```
 
