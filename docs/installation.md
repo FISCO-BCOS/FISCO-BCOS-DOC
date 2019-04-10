@@ -125,7 +125,7 @@ $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/fqliao/console/feature-rc2/tools/console.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
