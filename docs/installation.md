@@ -8,7 +8,7 @@
 
 ```eval_rst
 .. note::
-    - macOS请参考 `源码编译 <manual/get_executable.html>`_ 并配合 `build_chain <manual/build_chain.html#id4>`_ 的-e选项操作。
+    - macOS请参考 `docker安装 <https://docs.docker.com/docker-for-mac/install/>`_ 并配合 `build_chain <manual/build_chain.html#id4>`_ 的-d选项操作。
     - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
 ```
 
@@ -125,7 +125,7 @@ $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/fqliao/console/feature-rc2/tools/console.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
