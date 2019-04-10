@@ -34,7 +34,7 @@
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/fqliao/console/feature-rc2/tools/console.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 目录结构如下：
 ```bash
@@ -188,7 +188,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 $ ./start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
-Welcome to FISCO BCOS console!
+Welcome to FISCO BCOS console(1.0.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
@@ -204,6 +204,19 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 ### 启动脚本说明
+#### 查看启动脚本帮助说明：
+```bash
+$ ./start.sh --help
+Usage
+start console: 	./start.sh [groupID] [privateKey]
+print console version: 	./start.sh --version
+```
+#### 查看当前控制台版本：
+```bash
+./start.sh --version
+console version: 1.0.1
+```
+#### 启动控制台：
 ```bash
 $ ./start.sh [groupID] [privateKey]   
 ```
@@ -235,7 +248,7 @@ getGroupPeers                            Query nodeId list for sealer and observ
 getPeers                                 Query peers currently connected to the client.
 getConsensusStatus                       Query consensus status.
 getSyncStatus                            Query sync status.
-getNodeVersion                           Query the current client version.
+getNodeVersion                           Query the current node version.
 getGroupList                             Query group list.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
@@ -278,6 +291,7 @@ grantSysConfigManager                    Grant permission for system configurati
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 listSysConfigManager                     Query permission information for system configuration.
 quit(q)                                  Quit console.
+exit                                     Quit console.
 -------------------------------------------------------------------------------------
 ```
 **注：**                                       
@@ -288,7 +302,7 @@ quit(q)                                  Quit console.
 [group:1]> getBlockByNumber -h
 Query information about a block by block number.
 Usage: getBlockByNumber blockNumber [boolean]
-blockNumber -- Integer of a block number.
+blockNumber -- Integer of a block number, from 0 to 2147483647.
 boolean -- (optional) If true it returns the full transaction objects, if false only the hashes of the transactions.
 ```
 ### **switch**
@@ -1113,7 +1127,7 @@ Hello,CNS
 }
 ```
 ### **quit**
-运行quit或q，退出控制台。
+运行quit或q或exit，退出控制台。
 ```text
 quit
 ```
