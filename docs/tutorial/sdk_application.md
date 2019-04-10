@@ -55,7 +55,7 @@ function transfer(string from_asset_account, string to_asset_account, uint256 am
 
 ### 完整源码
 ```js
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 import "./Table.sol";
 
