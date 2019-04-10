@@ -1127,7 +1127,7 @@ Hello,CNS
 }
 ```
 ### **quit**
-运行quit或q或exit，退出控制台。
+运行quit、q或exit，退出控制台。
 ```text
 quit
 ```
