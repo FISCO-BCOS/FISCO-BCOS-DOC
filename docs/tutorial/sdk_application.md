@@ -2,7 +2,7 @@
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Web3SDK实现对区块链上合约的调用访问。
 
-本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉Solidity语法。通过学习教程，你将会了解到以下内容：
+本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉Solidity语法[[合约开发教程](../manual/smart_contract.md)]。通过学习教程，你将会了解到以下内容：
 
 1. 如何将一个业务场景的逻辑用合约的形式表达
 2. 如何将Solidity合约转化成Java类
@@ -55,7 +55,7 @@ function transfer(string from_asset_account, string to_asset_account, uint256 am
 
 ### 完整源码
 ```js
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.25;
 
 import "./Table.sol";
 
