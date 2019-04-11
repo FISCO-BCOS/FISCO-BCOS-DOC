@@ -41,16 +41,18 @@
      .. code-block:: bash
         
         # 进入合约编译脚本所在目录 (设web3sdk位于~/mydata目录)
+        # Counter 合约所在目录为 ~/mydata/web3sdk/dist/contracts
         $ cd ~/mydata/web3sdk/dist/bin
         # 执行合约编译脚本
         # (com是java代码所属的包，转换后可手动修改)
         $ bash counter_compile.sh org.bcosliteclient
+        # 也可以使用如下命令编译所有合约
+        $ bash compile.sh org.bcosliteclient
 
     查看生成的java代码
       .. code-block:: bash
 
          $ cd ~/mydata/web3sdk/dist/output
-         $ tree
          # ...此处省略若干输出...
          ├── Counter.abi  # Counter.sol编译生成的abi文件
          ├── Counter.bin  # Counter.sol编译生成的bin文件
