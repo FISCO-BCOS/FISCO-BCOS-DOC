@@ -126,6 +126,8 @@ $ cd ~/fisco
 $ sudo apt install -y default-jdk
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+# 重命名控制台配置文件
+$ mv console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
@@ -150,7 +152,7 @@ $ cd ~/fisco/console
 $ ./start.sh
 # 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =============================================================================================
-Welcome to FISCO BCOS console！
+Welcome to FISCO BCOS console(1.0.1)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________  ______   ______    ______    ______         _______    ______    ______    ______
 |        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \
