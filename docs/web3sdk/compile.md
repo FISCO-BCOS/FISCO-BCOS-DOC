@@ -32,13 +32,16 @@
        #==== 拉取git代码 ====
        $ git clone https://github.com/FISCO-BCOS/web3sdk
        
-       #===编译we3bsdk源码，生成dist目录 ===
        $ cd web3sdk
+       
+       #==切换到目录版本==
+       $ git checkout master-1.2
+       
+       #===编译we3bsdk源码，生成dist目录 ===
        $ dos2unix *.sh
        $ . ./compile.sh
        
        #===编译成功后，web3sdk目录下生成dist文件夹，目录结构如下==========
-       $ tree -L 2
        .
        ├── build
        │   ├── classes
