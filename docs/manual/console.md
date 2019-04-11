@@ -178,7 +178,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 $ ./start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.1)!
+Welcome to FISCO BCOS console(1.0.2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
@@ -204,7 +204,7 @@ print console version: 	./start.sh --version
 #### 查看当前控制台版本：
 ```bash
 ./start.sh --version
-console version: 1.0.1
+console version: 1.0.2
 ```
 #### 启动控制台：
 ```bash
