@@ -42,10 +42,7 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |   -- console.jar 
 |-- lib # 相关依赖的jar包目录
 |-- conf
-|   |-- ca.crt   # ca证书文件，需要替换
-|   |-- node.crt # 节点证书文件，需要替换
-|   |-- node.key # 节点私钥文件，需要替换
-|   |-- applicationContext.xml # 配置文件
+|   |-- applicationContext-sample.xml # 配置文件
 |   |-- log4j.properties  # 日志配置文件
 |   |-- privateKey.properties # 发送交易的私钥存储文件
 |-- solidity # 控制台命令部署和调用的合约所在目录
@@ -116,7 +113,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
-  - 配置`conf`目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -1131,7 +1128,7 @@ Hello,CNS2
 }
 ```
 ### **quit**
-运行quit或q或exit，退出控制台。
+运行quit、q或exit，退出控制台。
 ```text
 quit
 ```
