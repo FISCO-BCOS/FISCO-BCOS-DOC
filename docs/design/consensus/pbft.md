@@ -44,7 +44,7 @@ leader_idx = (view + block_number) % node_num
 ```
 
 
-下图简单展示了`4(3*1+1, f=1)`节点FISCO BCOS系统中，第三个节点(node3)为拜占庭节点情况下，视图切换过程：
+下图简单展示了`4(3*f+1, f=1)`节点FISCO BCOS系统中，第三个节点(node3)为拜占庭节点情况下，视图切换过程：
 
 
 ![](../../../images/consensus/pbft_view.png)
