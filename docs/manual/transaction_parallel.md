@@ -141,7 +141,7 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 
 * 接口的参数完全标识了此接口的所有冲突
 * 不能调用外部合约
-* 接口参数仅限：**string、address、uint、uint256、int、int256**（后续支持更多类型）
+* 接口参数仅限：**string、address、uint256、int256**（后续支持更多类型）
 
 ``` javascript
 // 注册可以并行的合约接口
