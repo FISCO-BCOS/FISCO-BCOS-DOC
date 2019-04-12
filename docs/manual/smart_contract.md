@@ -4,7 +4,7 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 
 - Solidity合约与以太坊相同，支持最新版本。
 
-- CRUD合约通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
+- CRUD接口通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
 
 - 预编译（Precompiled）合约使用C++开发，内置于FISCO BCOS平台，相比于Solidity合约具有更好的性能，其合约接口需要在编译时预先确定，适用于逻辑固定但需要共识的场景，例如群组配置。关于预编译合约的开发将在下一节进行介绍。
 
@@ -14,7 +14,7 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 - [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
 - [Remix在线IDE](https://remix.ethereum.org/)
 
-### CRUD合约开发
+### 使用合约CRUD接口
 
 访问 AMDB 需要使用 AMDB 专用的智能合约`Table.sol`接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
