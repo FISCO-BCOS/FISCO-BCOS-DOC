@@ -88,11 +88,17 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
     service.run(); 
     ChannelEthereumService channelEthereumService = new ChannelEthereumService();
     channelEthereumService.setChannelService(service);
+
     //获取Web3j对象
     Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
     //通过Web3j对象调用API接口getBlockNumber
     BigInteger blockNumber = web3j.getBlockNumber().send().getBlockNumber();
     System.out.println(blockNumber);
+```
+**注：** SDK处理交易超时时间默认为60秒，即60秒内没有收到交易响应，判断为超时。该值可以通过`ChannelEthereumService`进行设置，示例如下：
+```java
+// 设置交易超时时间为100000毫秒，即100秒
+channelEthereumService.setTimeout(100000);
 ```
 2) 调用SDK Precompiled的API：需要加载配置文件，SDK与区块链节点建立连接。获取SDK Precompiled Service对象，调用相关的API。示例代码如下：
 ```java

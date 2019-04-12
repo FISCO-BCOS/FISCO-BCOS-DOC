@@ -68,7 +68,7 @@ Table中的删改查接口支持传入条件，这三种接口会返回根据条
 
 ### 用户表
 
-用户CRUD合约所创建的表，以`_user_<TableName>`为表名，底层自动添加`_user_`前缀。
+用户调用CRUD接口所创建的表，以`_user_<TableName>`为表名，底层自动添加`_user_`前缀。
 
 ### StorageState账户表
 

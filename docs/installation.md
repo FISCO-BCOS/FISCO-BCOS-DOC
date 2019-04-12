@@ -30,6 +30,7 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/
 ```bash
 # 生成一条4节点的FISCO链 4个节点都属于同一群组 下面指令在fisco目录下执行
 # -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+# 为安全jsonrpc/channel默认监听127.0.0.1，需要外网访问请添加 -i 参数
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
 # 默认从GitHub下载最新稳定版本可执行程序
 $ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
@@ -124,10 +125,8 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 $ cd ~/fisco
 # 安装openjdk
 $ sudo apt install -y default-jdk
-# 下载控制台压缩包
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.0/console.tar.gz
-# 解压控制台压缩包并赋予控制台启动脚本执行权限
-$ tar -zxf console.tar.gz && chmod u+x console/start.sh
+# 获取控制台
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
