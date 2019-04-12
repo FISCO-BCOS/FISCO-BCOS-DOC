@@ -4,7 +4,7 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 
 - Solidity合约与以太坊相同，支持最新版本。
 
-- CRUD合约通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
+- CRUD接口通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
 
 - 预编译（Precompiled）合约使用C++开发，内置于FISCO BCOS平台，相比于Solidity合约具有更好的性能，其合约接口需要在编译时预先确定，适用于逻辑固定但需要共识的场景，例如群组配置。关于预编译合约的开发将在下一节进行介绍。
 
@@ -14,7 +14,7 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 - [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
 - [Remix在线IDE](https://remix.ethereum.org/)
 
-### CRUD合约开发
+### 使用合约CRUD接口
 
 访问 AMDB 需要使用 AMDB 专用的智能合约`Table.sol`接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
@@ -247,7 +247,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 
 同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI链接](https://solidity.readthedocs.io/en/latest/abi-spec.html)。  
  
-> 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**辅助合约**，辅助合约在调用预编译合约时需要使用。 
+> 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**接口合约**，接口合约在调用预编译合约时需要使用。 
 
 ```js
     pragma solidity ^0.4.24;
@@ -338,11 +338,11 @@ contract HelloWorld{
 
 ##### 2.2.2 定义合约接口  
 
-需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的辅助合约：
+需要实现HelloWorld合约的功能，接口与HelloWorld接口相同， HelloWorldPrecompiled的接口合约：
 ```js
 pragma solidity ^0.4.24;
 
-contract HelloWorld {
+contract HelloWorldPrecompiled {
     function get() public constant returns(string) {}
     function set(string _m) {}
 }
@@ -571,7 +571,7 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 从用户角度，预编译合约与solidity合约的调用方式基本相同，唯一的区别是solidity合约在部署之后才能获取到调用的合约地址，预编译合约的地址为预分配，不用部署，可以直接使用。
 
 #### 3.1 web3sdk调用  
-web3sdk调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用辅助合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。[web3sdk应用构建案例参考](../tutorial/sdk_application.md)
+web3sdk调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用接口合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。[web3sdk应用构建案例参考](../tutorial/sdk_application.md)
 
 #### 3.2 solidity调用  
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
