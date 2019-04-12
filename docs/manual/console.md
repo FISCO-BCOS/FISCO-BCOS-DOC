@@ -51,8 +51,8 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |-- solidity # 控制台命令部署和调用的合约所在目录
 |   -- contracts  # 部署和调用合约的solidity合约存储目录
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
-|       -- TableTest.sol # CRUD合约：TableTest合约，可部署和调用
-|       -- Table.sol # CRUD合约需要引入的合约接口：Table合约接口
+|       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
+|       -- Table.sol # CRUD需要引入的合约接口：Table合约接口
 |-- start.sh # 控制台启动脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
 |-- tools # 控制台工具目录
