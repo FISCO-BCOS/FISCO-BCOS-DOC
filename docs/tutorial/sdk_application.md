@@ -357,7 +357,7 @@ compile ('org.fisco-bcos：web3sdk：2.0.0-rc1')
 
 拷贝区块链节点对应的SDK证书 
 ```bash
-# 进入~/fisco目录
+# 进入~目录
 # 拷贝节点证书到项目的资源目录
 $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
@@ -387,7 +387,7 @@ ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 channelEthereumService.setChannelService(service);
 // 初始化Web3j对象
 Web3j web3j = Web3j.build(channelEthereumService, 1);
-// 初始化Credentials兑现
+// 初始化Credentials对象
 Credentials credentials = Credentials.create(Keys.createEcKeyPair());
 ```
 - 构造合约类对象  
