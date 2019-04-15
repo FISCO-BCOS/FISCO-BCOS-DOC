@@ -11,8 +11,6 @@ FISCO BCOS generator依赖如下：
 | curl | 默认版本 |
 | nc | 默认版本 |
 
-同时，需要满足FISCO BCOS启动时的条件，参考[依赖安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/feature-2.0.0/docs/manual/install.html?highlight=%E4%BE%9D%E8%B5%96#id4)
-
 ## 下载安装
 
 ```bash
