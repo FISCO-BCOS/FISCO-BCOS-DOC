@@ -20,6 +20,30 @@ fisco-package-build-tool
 ├── README.md                          使用手册
 └── release_note.txt                   版本号
 ```
+## 使用
+```
+bash generate_installation_packages.sh -h
+Usage:
+Optional:
+    -p  <path>          The fisco-bcos path.
+    -d                  Download the specified fisco-bcos version from github.
+    -c                  Clone and build fisco-bcos if /usr/local/bin/fisco-bcos is not exist or not the specified version.
+    -b/build            Build opration.
+    -e/expand           Expand operation.
+    -v                  Version info.
+    -h                  Help.
+Example:
+    bash generate_installation_packages.sh build
+    bash generate_installation_packages.sh -p ../../fisco-bcos
+    bash generate_installation_packages.sh -d -e
+```
+- **-b/build** : 根据config.ini配置文件, 创建一条新的区块链链的安装包
+- **-e/expand** : 根据config.ini配置文件, 创建已经存在的区块链的扩容的安装包
+- **-p** : 指定使用fisco-bcos的路径,适用于用户需要使用自己编译的fisco-bcos的情况
+- **-d** : 从github下载对应版本的fisco-bcos
+- **-c** : 下载FISCO-BCOS源码,编译对应版本fisco-bcos
+- **-v** : 显示物料包版本号
+- **-h** : 帮助信息
 
 ##  配置
 
