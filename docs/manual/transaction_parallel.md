@@ -2,38 +2,37 @@
 
 某些业务场景需要极高的交易执行tps。让交易并行执行，能够最大限度的利用机器的CPU资源，实现：
 
-* 高吞吐量：多笔交易同时被执行。
-* 平行拓展：随着业务的发展，tps要求越来越高，可以通过提高机器的配置来提升交易执行的tps。
+- 高吞吐量：多笔交易同时被执行。
+- 平行拓展：随着业务的发展，tps要求越来越高，可以通过提高机器的配置来提升交易执行的tps。
 
 FISCO BCOS提供了并行交易的编程框架。按照并行框架编写的合约，能够被FISCO BCOS节点并行的执行。本文将指导完成如何编写FISCO BCOS并行合约，以及如何部署和执行。
 
 ## 预备知识
 
-### 并行冲突
+### 并行互斥
 
-两笔交易是否能被并行的执行，依赖于这两笔交易是否存在**冲突**。冲突，是指两笔交易对合约存储变量的“读/写”操作，存在交集。
+两笔交易是否能被并行的执行，依赖于这两笔交易是否存在**互斥**。互斥，是指两笔交易对合约存储变量的“读/写”操作，存在交集。
 
-例如在转账场景中，交易是用户间的转账操作。用transfer(X, Y) 表示从X用户转到Y用户的转账接口。则冲突情况如下。
+例如在转账场景中，交易是用户间的转账操作。用transfer(X, Y) 表示从X用户转到Y用户的转账接口。则互斥情况如下。
 
-| 交易                             | 冲突对象         | 交集   | 是否冲突           |
+| 交易                             | 互斥对象         | 交集   | 是否互斥           |
 | -------------------------------- | ---------------- | ------ | ------------------ |
-| transfer(A, B) 和 transfer(A, C) | [A, B] 和 [A, C] | [A]    | 冲突，不可并行执行 |
-| transfer(A, B) 和 transfer(B, C) | [A, B] 和 [B, C] | [B]    | 冲突，不可并行执行 |
-| transfer(A, C) 和 transfer(B, C) | [A, C] 和 [B, C] | [C]    | 冲突，不可并行执行 |
-| transfer(A, B) 和 transfer(A, B) | [A, B] 和 [A, B] | [A, B] | 冲突，不可并行执行 |
-| transfer(A, B) 和 transfer(C, D) | [A, B] 和 [C, D] | 无     | 无冲突，可并行执行 |
+| transfer(A, B) 和 transfer(A, C) | [A, B] 和 [A, C] | [A]    | 互斥，不可并行执行 |
+| transfer(A, B) 和 transfer(B, C) | [A, B] 和 [B, C] | [B]    | 互斥，不可并行执行 |
+| transfer(A, C) 和 transfer(B, C) | [A, C] 和 [B, C] | [C]    | 互斥，不可并行执行 |
+| transfer(A, B) 和 transfer(A, B) | [A, B] 和 [A, B] | [A, B] | 互斥，不可并行执行 |
+| transfer(A, B) 和 transfer(C, D) | [A, B] 和 [C, D] | 无     | 无互斥，可并行执行 |
 
 此处给出更具体的定义：
 
-- **冲突参数**：合约**接口**中，与合约存储变量的“读/写”操作相关的参数。例如转账的接口transfer(X, Y)，X和Y都是冲突参数。
+- **互斥参数**：合约**接口**中，与合约存储变量的“读/写”操作相关的参数。例如转账的接口transfer(X, Y)，X和Y都是互斥参数。
+- **互斥对象**：一笔**交易**中，根据互斥参数提取出来的，具体的互斥内容。例如转账的接口transfer(X, Y), 一笔调用此接口的交易中，具体的参数是transfer(A, B)，则对于这笔操作，互斥对象是[A, B]；另外一笔交易，调用的参数是transfer(A, C)，则这笔操作的互斥对象是[A, C]。
 
-- **冲突对象**：一笔**交易**中，根据冲突参数提取出来的，具体的冲突内容。例如转账的接口transfer(X, Y), 一笔调用此接口的交易中，具体的参数是transfer(A, B)，则对于这笔操作，冲突对象是[A, B]；另外一笔交易，调用的参数是transfer(A, C)，则这笔操作的冲突对象是[A, C]。
-
-**判断交易间是否有冲突，就是判断冲突对象是否有交集。相互之间交集为空的交易可并行执行。**
+**判断交易间是否有互斥，就是判断互斥对象是否有交集。相互之间交集为空的交易可并行执行。**
 
 ### 并行合约框架
 
-FISCO BCOS提供了智能合约的并行编程的框架，开发者只需按照框架进行合约开发，定义好每个合约接口的冲突参数，即可实现能被并行执行的合约。当合约被部署后，FISCO BCOS即可在执行交易前，自动提取冲突对象，让无冲突的交易并行执行。
+FISCO BCOS提供了智能合约的并行编程的框架，开发者只需按照框架进行合约开发，定义好每个合约接口的互斥参数，即可实现能被并行执行的合约。当合约被部署后，FISCO BCOS即可在执行交易前，自动提取互斥对象，让无互斥的交易并行执行。
 
 目前，FISCO BCOS提供了solidity与precompile两种合约的并行框架。
 
@@ -66,7 +65,7 @@ FISCO BCOS提供了precompile合约并行框架，开发者只需要按照框架
 
 先给出完整的举例，例子中的ParallelOk合约实现了并行转账的功能
 
-``` javascript
+```javascript
 pragma solidity ^0.4.25;
 
 import "./ParallelContract.sol";  // 引入ParallelContract.sol
@@ -97,7 +96,7 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
     // 注册可以并行的合约接口
     function enableParallel() public
     {
-        // 函数定义字符串（注意","后不能有空格）,参数的前几个是冲突参数（设计函数时冲突参数必须放在前面
+        // 函数定义字符串（注意","后不能有空格）,参数的前几个是互斥参数（设计函数时互斥参数必须放在前面
         registerParallelFunction("transfer(string,string,uint256)", 2); // critical: string string
         registerParallelFunction("set(string,uint256)", 1); // critical: string
     } 
@@ -115,7 +114,7 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 
 **（1）将``` ParallelContract ```作为合约的基类**
 
-``` javascript
+```javascript
 pragma solidity ^0.4.25;
 
 import "./ParallelContract.sol"; // 引入ParallelContract.sol
@@ -139,17 +138,17 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 
 **注意：在写可以并行的合约接口时，必须让接口满足：**
 
-* 接口的参数完全标识了此接口的所有冲突
-* 不能调用外部合约
-* 接口参数仅限：**string、address、uint256、int256**（后续支持更多类型）
+- 接口的参数完全标识了此接口的所有互斥
+- 不能调用外部合约
+- 接口参数仅限：**string、address、uint256、int256**（后续支持更多类型）
 
-``` javascript
+```javascript
 // 注册可以并行的合约接口
 function enableParallel() public
 {
-    // 函数定义字符串（注意","后不能有空格）,参数的前几个是冲突参数（设计函数时冲突参数必须放在前面）
-    registerParallelFunction("transfer(string,string,uint256)", 2); // 冲突: string string
-    registerParallelFunction("set(string,uint256)", 1); // 冲突: string
+    // 函数定义字符串（注意","后不能有空格）,参数的前几个是互斥参数（设计函数时互斥参数必须放在前面）
+    registerParallelFunction("transfer(string,string,uint256)", 2); // 互斥: string string
+    registerParallelFunction("set(string,uint256)", 1); // 互斥: string
 }  
 
 // 注销并行合约接口
@@ -166,32 +165,32 @@ function disableParallel() public
 
 部署合约
 
-``` shell
+```shell
 [group:1]> deploy ParallelOk.sol
 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 ```
 
 调用 ``` enableParallel() ```接口，让ParallelOk能并行执行
 
-``` shell
+```shell
 [group:1]> call ParallelOk.sol 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 enableParallel
 ```
 
 发送并行交易 ``` set() ```
 
-``` shell
+```shell
 0x4833dd374db41211eb88e2b618e967f8bdce76711792c394d693f7a98e399b4f
 ```
 
 发送并行交易 ``` transfer() ```
 
-``` shell 
+```shell 
 [group:1]> call ParallelOk.sol 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 transfer "jimmyshi" "jinny" 80000
 ```
 
 查看交易执行结果 ``` balanceOf() ```
 
-``` shell
+```shell
 [group:1]> call ParallelOk.sol 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 balanceOf "jinny"
 80000
 ```
@@ -204,16 +203,18 @@ function disableParallel() public
 
 **（1）将合约定义成支持并行**
 
-``` c++
+```c++
 bool isParallelPrecompiled() override { return true; }
 ```
 
-**（2）定义并行接口和冲突参数**
+**（2）定义并行接口和互斥参数**
 
-​	注意，一旦定义成支持并行，所有的接口都需要进行定义。若返回空，表示此接口无任何冲突对象。
+```
+注意，一旦定义成支持并行，所有的接口都需要进行定义。若返回空，表示此接口无任何互斥对象。
+```
 
-``` c++
-// 根据并行接口，从参数中取出冲突对象，返回冲突对象
+```c++
+// 根据并行接口，从参数中取出互斥对象，返回互斥对象
 std::vector<std::string> getParallelTag(bytesConstRef param) override
 {
     // 获取被调用的函数名（func）和参数（data）
@@ -224,21 +225,21 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
     if (func == name2Selector[DAG_TRANSFER_METHOD_TRS_STR2_UINT]) // 函数是并行接口
     {  
         // 接口为：userTransfer(string,string,uint256)
-        // 从data中取出冲突对象
+        // 从data中取出互斥对象
         std::string fromUser, toUser;
         dev::u256 amount;
         abi.abiOut(data, fromUser, toUser, amount);
         
         if (!invalidUserName(fromUser) && !invalidUserName(toUser) && (amount > 0))
         {
-            // 将冲突对象写到results中
+            // 将互斥对象写到results中
             results.push_back(fromUser);
             results.push_back(toUser);
         }
     }
-    else if ... // 所有的接口都需要给出冲突对象，返回空表示无任何冲突对象
+    else if ... // 所有的接口都需要给出互斥对象，返回空表示无任何互斥对象
         
- 	return results;  //返回冲突
+ 	return results;  //返回互斥
 }
 ```
 
@@ -273,7 +274,7 @@ Web3SDK用来发送并行交易，FISCO BCOS链用来执行并行交易。相关
 
 基于账户模型的转账，是一种典型的业务操作。ParallelOk合约，是账户模型的一个举例，能实现并行的转账功能。ParallelOk合约的实现如下。
 
-``` javascript
+```javascript
 pragma solidity ^0.4.25;
 
 import "./ParallelContract.sol";
@@ -321,7 +322,7 @@ FISCO BCOS在Web3SDK中内置了ParallelOk合约，此处给出用Web3SDK来发�
 
 **（1）用SDK部署合约、新建用户、开启合约的并行能力**
 
-``` shell
+```shell
 # 参数： add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
 java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT add 10000 2500 user
 # 创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
@@ -333,18 +334,18 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.Perf
 
 **注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
-``` shell
-# 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易冲突百分比：0~10>
+```shell
+# 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
 java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT transfer 100000 4000 user 2
 
-# 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的冲突。
+# 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
 ```
 
 **（3）验证并行正确性**
 
 并行交易执行完成后，Web3SDK会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
 
-``` log
+```log
 Total transactions:  100000
 Total time: 34412ms
 TPS: 2905.9630361501804
@@ -396,7 +397,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 用Web3SDK发送创建用户的操作，创建的用户信息保存在user文件中
 
-``` shell
+```shell
 # 参数： add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
 java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT add 10000 2500 user
 # 创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
@@ -408,17 +409,17 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.Perf
 
 **注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
-``` shell
-# 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易冲突百分比：0~10>
+```shell
+# 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
 java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT transfer 100000 4000 user 2
-# 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的冲突。
+# 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
 ```
 
 **（3）验证并行正确性**
 
 并行交易执行完成后，Web3SDK会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
 
-``` log
+```log
 Total transactions:  80000
 Total time: 25451ms
 TPS: 3143.2949589407094
@@ -447,20 +448,15 @@ validation:
 
 用脚本从日志文件中计算TPS
 
-``` shell
+```shell
 cd tools
 sh get_tps.sh log/log_2019031311.17.log 11:25 11:30 # 参数：<日志文件> <计算开始时间> <计算结束时间>
 ```
 
 得到TPS（3 SDK、4节点，8核，16G内存）
 
-``` shell
+```shell
 statistic_end = 11:29:59.587145
 statistic_start = 11:25:00.642866
 total transactions = 3340000, execute_time = 298945ms, tps = 11172 (tx/s)
 ```
-
-
-
-
-
