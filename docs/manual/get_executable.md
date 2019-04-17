@@ -28,7 +28,7 @@ FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台�
 推荐Ubuntu 16.04以上版本，16.04以下的版本没有经过测试，源码编译时依赖于编译工具和`libssl`。
 
 ```bash
-$ sudo apt install -y libssl-dev openssl cmake git build-essential texinfo
+$ sudo apt install -y libssl-dev openssl cmake git build-essential autoconf texinfo
 ```
 
 - CentOS
