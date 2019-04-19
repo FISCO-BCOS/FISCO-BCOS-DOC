@@ -44,7 +44,7 @@ leader_idx = (view + block_number) % node_num
 ```
 
 
-下图简单展示了`4(3*1+1, f=1)`节点FISCO BCOS系统中，第三个节点(node3)为拜占庭节点情况下，视图切换过程：
+下图简单展示了`4(3*f+1, f=1)`节点FISCO BCOS系统中，第三个节点(node3)为拜占庭节点情况下，视图切换过程：
 
 
 ![](../../../images/consensus/pbft_view.png)
@@ -180,7 +180,7 @@ PBFT共识算法中，共识节点轮流出块，每一轮共识仅有一个lead
 
 - **从交易池打包交易**: 产生新空块后，从交易池中获取交易，并将获取的交易插入到产生的新区块中；
 
-- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为自己索引，并根据打包的交易计算出所有交易的[transactionRoot](../../tutorial/key_concepts#id3)；
+- **组装新区块**: Sealer线程打包到交易后，将新区块的打包者(Sealer字段)置为自己索引，并根据打包的交易计算出所有交易的transactionRoot；
 
 - **产生Prepare包**: 将组装的新区块编码到Prepare包内，通过PBFTEngine线程广播给组内所有共识节点，其他共识节点收到Prepare包后，开始进行三阶段共识。
 

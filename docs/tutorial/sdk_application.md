@@ -2,7 +2,7 @@
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Web3SDK实现对区块链上合约的调用访问。
 
-本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉Solidity语法。通过学习教程，你将会了解到以下内容：
+本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉Solidity语法[[合约开发教程](../manual/smart_contract.md)]。通过学习教程，你将会了解到以下内容：
 
 1. 如何将一个业务场景的逻辑用合约的形式表达
 2. 如何将Solidity合约转化成Java类
@@ -30,16 +30,16 @@
 
 ### 存储设计 
 
-FISCO BCOS提供[CRUD合约](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[合约CRUD接口](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 - account: 主键，资产账户(string类型)
 - asset_value: 资产金额(uint256类型)
 
 其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。`t_asset`表示例如下：
 
-| account  | asset_value |
------------|-------------
-|   Alice  |   10000     |
-|    Bob   |   20000     |
+| account | asset_value |
+| ------- | ----------- |
+| Alice   | 10000       |
+| Bob     | 20000       |
 
 ### 接口设计
 
@@ -307,7 +307,6 @@ asset-app项目的目录结构如下：
 |       |-- gradle-wrapper.properties // wrapper所使用的配置信息，比如gradle的版本等信息
 |-- gradlew // Linux或者Unix下用于执行wrapper命令的Shell脚本
 |-- gradlew.bat // Windows下用于执行wrapper命令的批处理脚本
-|-- settings.gradle
 |-- src
 |   |-- main
 |   |   |-- java
@@ -358,7 +357,7 @@ compile ('org.fisco-bcos：web3sdk：2.0.0-rc1')
 
 拷贝区块链节点对应的SDK证书 
 ```bash
-# 进入~/fisco目录
+# 进入~目录
 # 拷贝节点证书到项目的资源目录
 $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
@@ -388,7 +387,7 @@ ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 channelEthereumService.setChannelService(service);
 // 初始化Web3j对象
 Web3j web3j = Web3j.build(channelEthereumService, 1);
-// 初始化Credentials兑现
+// 初始化Credentials对象
 Credentials credentials = Credentials.create(Keys.createEcKeyPair());
 ```
 - 构造合约类对象  
