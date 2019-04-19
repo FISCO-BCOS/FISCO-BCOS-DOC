@@ -231,7 +231,7 @@ jsonrpc_listen_port=8546
 ```bash
 # 机构A生成交换文件
 generator-A$ ./generator --generate_all_certificates ./agencyA_send
-# 由于A机构不需要生成创世区块，因此只需交换peers至机构B
+# 由于B机构不需要生成创世区块，因此只需交换peers至机构B
 generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
