@@ -227,61 +227,61 @@ $ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
 ```text
 [group:1]> help
 -------------------------------------------------------------------------------------
-help(h)                                  Provide help information.
-switch(s)                                Switch to a specific group by group ID.
-getBlockNumber                           Query the number of most recent block.
-getPbftView                              Query the pbft view of node.
-getSealerList                            Query nodeId list for sealer nodes.
-getObserverList                          Query nodeId list for observer nodes.
-getNodeIDList                            Query nodeId list for all connected nodes.
-getGroupPeers                            Query nodeId list for sealer and observer nodes.
-getPeers                                 Query peers currently connected to the client.
-getConsensusStatus                       Query consensus status.
-getSyncStatus                            Query sync status.
-getNodeVersion                           Query the current node version.
-getGroupList                             Query group list.
+addObserver                              Add an observer node.
+addSealer                                Add a sealer node.
+call                                     Call a contract by a function and paramters.
+callByCNS                                Call a contract by a function and paramters by CNS.
+deploy                                   Deploy a contract on blockchain.
+deployByCNS                              Deploy a contract on blockchain by CNS.
+exit                                     Quit console.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
 getBlockHashByNumber                     Query block hash by block number.
-getTransactionByHash                     Query information about a transaction requested by transaction hash.
-getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
-getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
-getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
+getBlockNumber                           Query the number of most recent block.
+getCode                                  Query code at a given address.
+getConsensusStatus                       Query consensus status.
+getDeployLog                             Query the log of deployed contracts.
+getGroupList                             Query group list.
+getGroupPeers                            Query nodeId list for sealer and observer nodes.
+getNodeIDList                            Query nodeId list for all connected nodes.
+getNodeVersion                           Query the current node version.
+getObserverList                          Query nodeId list for observer nodes.
+getPbftView                              Query the pbft view of node.
+getPeers                                 Query peers currently connected to the client.
 getPendingTransactions                   Query pending transactions.
 getPendingTxSize                         Query pending transactions size.
-getCode                                  Query code at a given address.
-getTotalTransactionCount                 Query total transaction count.
-deploy                                   Deploy a contract on blockchain.
-getDeployLog                             Query the log of deployed contracts.
-call                                     Call a contract by a function and paramters.
-deployByCNS                              Deploy a contract on blockchain by CNS.
-queryCNS                                 Query CNS information by contract name and contract version.
-callByCNS                                Call a contract by a function and paramters by CNS.
-addSealer                                Add a sealer node.
-addObserver                              Add an observer node.
-removeNode                               Remove a node.
-setSystemConfigByKey                     Set a system config.
+getSealerList                            Query nodeId list for sealer nodes.
+getSyncStatus                            Query sync status.
 getSystemConfigByKey                     Query a system config value by key.
-grantPermissionManager                   Grant permission for permission configuration by address.
-revokePermissionManager                  Revoke permission for permission configuration by address.
-listPermissionManager                    Query permission information for permission configuration.
-grantUserTableManager                    Grant permission for user table by table name and address.
-revokeUserTableManager                   Revoke permission for user table by table name and address.
-listUserTableManager                     Query permission for user table information.
-grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
-revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
-listDeployAndCreateManager               Query permission information for deploy contract and create user table.
-grantNodeManager                         Grant permission for node configuration by address.
-revokeNodeManager                        Revoke permission for node configuration by address.
-listNodeManager                          Query permission information for node configuration.
+getTotalTransactionCount                 Query total transaction count.
+getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
+getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
+getTransactionByHash                     Query information about a transaction requested by transaction hash.
+getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
 grantCNSManager                          Grant permission for CNS by address.
-revokeCNSManager                         Revoke permission for CNS by address.
-listCNSManager                           Query permission information for CNS.
+grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
+grantNodeManager                         Grant permission for node configuration by address.
+grantPermissionManager                   Grant permission for permission configuration by address.
 grantSysConfigManager                    Grant permission for system configuration by address.
-revokeSysConfigManager                   Revoke permission for system configuration by address.
+grantUserTableManager                    Grant permission for user table by table name and address.
+help(h)                                  Provide help information.
+listCNSManager                           Query permission information for CNS.
+listDeployAndCreateManager               Query permission information for deploy contract and create user table.
+listNodeManager                          Query permission information for node configuration.
+listPermissionManager                    Query permission information for permission configuration.
 listSysConfigManager                     Query permission information for system configuration.
+listUserTableManager                     Query permission for user table information.
+queryCNS                                 Query CNS information by contract name and contract version.
 quit(q)                                  Quit console.
-exit                                     Quit console.
+removeNode                               Remove a node.
+revokeCNSManager                         Revoke permission for CNS by address.
+revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
+revokeNodeManager                        Revoke permission for node configuration by address.
+revokePermissionManager                  Revoke permission for permission configuration by address.
+revokeSysConfigManager                   Revoke permission for system configuration by address.
+revokeUserTableManager                   Revoke permission for user table by table name and address.
+setSystemConfigByKey                     Set a system config.
+switch(s)                                Switch to a specific group by group ID.
 -------------------------------------------------------------------------------------
 ```
 **注：**                                       
