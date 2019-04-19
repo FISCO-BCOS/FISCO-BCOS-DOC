@@ -25,9 +25,10 @@ Usage:
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
     -v <FISCO-BCOS binary version>      Default get version from FISCO-BCOS/blob/master/release_note.txt. eg. 2.0.0-rc1
     -d <docker mode>                    Default off. If set -d, build with docker
+    -s <State type>                     Default storage. if set -s, use mpt 
+    -S <Storage type>                   Default leveldb. if set -S, use external
     -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
-    -C <disable compress>               Default enable. If set -C, disable compress
-    -s <State type>                     Default storage. if set -s, use mpt
+    -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
@@ -97,11 +98,22 @@ $ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
+- **`s`选项[**Optional**]**
+无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
+
+- **`S`选项[**Optional**]**
+无参数选项，设置该选项时，节点使用外部数据库存储数据，目前支持MySQL。
+
 - **`c`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
 
-- **`s`选项[**Optional**]**
-无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
+- **`C`选项[**Optional**]**
+用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
+
+```bash
+# 该链标识为2。
+$ bash build_chain -l 127.0.0.1:2 -C 2
+```
 
 - **`g`选项[**Optional**]**
 无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**使用`g`选项时要求二进制fisoc-bcos为国密版本**。
