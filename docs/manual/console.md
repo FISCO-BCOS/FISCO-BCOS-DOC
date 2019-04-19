@@ -42,10 +42,7 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |   -- console.jar 
 |-- lib # 相关依赖的jar包目录
 |-- conf
-|   |-- ca.crt   # ca证书文件，需要替换
-|   |-- node.crt # 节点证书文件，需要替换
-|   |-- node.key # 节点私钥文件，需要替换
-|   |-- applicationContext.xml # 配置文件
+|   |-- applicationContext-sample.xml # 配置文件
 |   |-- log4j.properties  # 日志配置文件
 |   |-- privateKey.properties # 发送交易的私钥存储文件
 |-- solidity # 控制台命令部署和调用的合约所在目录
@@ -116,7 +113,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
-  - 配置`conf`目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -160,14 +157,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
 </beans>
 ```
-  配置项详细说明如下:
-  - `encryptType`: 国密算法开关(默认为0)                              
-    - 0: 不使用国密算法发交易                              
-    - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](./guomi_crypto.md))。
-  - `groupChannelConnectionsConfig`: 
-    - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
-    - 每个群组可以配置一个或多个节点，设置群组节点的配置文件`config.ini`中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
-  - `channelService`: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是`groupChannelConnectionsConfig`配置中的群组ID。SDK将与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
+  配置项详细说明[参考这里](../sdk/sdk.html#spring)。
 
 ```eval_rst
 .. important::
@@ -188,7 +178,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 $ ./start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.1)!
+Welcome to FISCO BCOS console(1.0.2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
@@ -214,7 +204,7 @@ print console version: 	./start.sh --version
 #### 查看当前控制台版本：
 ```bash
 ./start.sh --version
-console version: 1.0.1
+console version: 1.0.2
 ```
 #### 启动控制台：
 ```bash
@@ -237,61 +227,61 @@ $ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
 ```text
 [group:1]> help
 -------------------------------------------------------------------------------------
-help(h)                                  Provide help information.
-switch(s)                                Switch to a specific group by group ID.
-getBlockNumber                           Query the number of most recent block.
-getPbftView                              Query the pbft view of node.
-getSealerList                            Query nodeId list for sealer nodes.
-getObserverList                          Query nodeId list for observer nodes.
-getNodeIDList                            Query nodeId list for all connected nodes.
-getGroupPeers                            Query nodeId list for sealer and observer nodes.
-getPeers                                 Query peers currently connected to the client.
-getConsensusStatus                       Query consensus status.
-getSyncStatus                            Query sync status.
-getNodeVersion                           Query the current node version.
-getGroupList                             Query group list.
+addObserver                              Add an observer node.
+addSealer                                Add a sealer node.
+call                                     Call a contract by a function and paramters.
+callByCNS                                Call a contract by a function and paramters by CNS.
+deploy                                   Deploy a contract on blockchain.
+deployByCNS                              Deploy a contract on blockchain by CNS.
+exit                                     Quit console.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
 getBlockHashByNumber                     Query block hash by block number.
-getTransactionByHash                     Query information about a transaction requested by transaction hash.
-getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
-getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
-getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
+getBlockNumber                           Query the number of most recent block.
+getCode                                  Query code at a given address.
+getConsensusStatus                       Query consensus status.
+getDeployLog                             Query the log of deployed contracts.
+getGroupList                             Query group list.
+getGroupPeers                            Query nodeId list for sealer and observer nodes.
+getNodeIDList                            Query nodeId list for all connected nodes.
+getNodeVersion                           Query the current node version.
+getObserverList                          Query nodeId list for observer nodes.
+getPbftView                              Query the pbft view of node.
+getPeers                                 Query peers currently connected to the client.
 getPendingTransactions                   Query pending transactions.
 getPendingTxSize                         Query pending transactions size.
-getCode                                  Query code at a given address.
-getTotalTransactionCount                 Query total transaction count.
-deploy                                   Deploy a contract on blockchain.
-getDeployLog                             Query the log of deployed contracts.
-call                                     Call a contract by a function and paramters.
-deployByCNS                              Deploy a contract on blockchain by CNS.
-queryCNS                                 Query CNS information by contract name and contract version.
-callByCNS                                Call a contract by a function and paramters by CNS.
-addSealer                                Add a sealer node.
-addObserver                              Add an observer node.
-removeNode                               Remove a node.
-setSystemConfigByKey                     Set a system config.
+getSealerList                            Query nodeId list for sealer nodes.
+getSyncStatus                            Query sync status.
 getSystemConfigByKey                     Query a system config value by key.
-grantPermissionManager                   Grant permission for permission configuration by address.
-revokePermissionManager                  Revoke permission for permission configuration by address.
-listPermissionManager                    Query permission information for permission configuration.
-grantUserTableManager                    Grant permission for user table by table name and address.
-revokeUserTableManager                   Revoke permission for user table by table name and address.
-listUserTableManager                     Query permission for user table information.
-grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
-revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
-listDeployAndCreateManager               Query permission information for deploy contract and create user table.
-grantNodeManager                         Grant permission for node configuration by address.
-revokeNodeManager                        Revoke permission for node configuration by address.
-listNodeManager                          Query permission information for node configuration.
+getTotalTransactionCount                 Query total transaction count.
+getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
+getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
+getTransactionByHash                     Query information about a transaction requested by transaction hash.
+getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
 grantCNSManager                          Grant permission for CNS by address.
-revokeCNSManager                         Revoke permission for CNS by address.
-listCNSManager                           Query permission information for CNS.
+grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
+grantNodeManager                         Grant permission for node configuration by address.
+grantPermissionManager                   Grant permission for permission configuration by address.
 grantSysConfigManager                    Grant permission for system configuration by address.
-revokeSysConfigManager                   Revoke permission for system configuration by address.
+grantUserTableManager                    Grant permission for user table by table name and address.
+help(h)                                  Provide help information.
+listCNSManager                           Query permission information for CNS.
+listDeployAndCreateManager               Query permission information for deploy contract and create user table.
+listNodeManager                          Query permission information for node configuration.
+listPermissionManager                    Query permission information for permission configuration.
 listSysConfigManager                     Query permission information for system configuration.
+listUserTableManager                     Query permission for user table information.
+queryCNS                                 Query CNS information by contract name and contract version.
 quit(q)                                  Quit console.
-exit                                     Quit console.
+removeNode                               Remove a node.
+revokeCNSManager                         Revoke permission for CNS by address.
+revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
+revokeNodeManager                        Revoke permission for node configuration by address.
+revokePermissionManager                  Revoke permission for permission configuration by address.
+revokeSysConfigManager                   Revoke permission for system configuration by address.
+revokeUserTableManager                   Revoke permission for user table by table name and address.
+setSystemConfigByKey                     Set a system config.
+switch(s)                                Switch to a specific group by group ID.
 -------------------------------------------------------------------------------------
 ```
 **注：**                                       
@@ -314,7 +304,7 @@ Switched to group 2.
 
 [group:2]> 
 ```
-**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息。
+**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中中配置的节点ip和端口正确，该节点正常运行。
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
@@ -763,11 +753,11 @@ Switched to group 2.
 ```text
 # 部署HelloWorld合约
 [group:1]> deploy HelloWorld.sol
-0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
+contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # 部署TableTest合约
 [group:1]> deploy TableTest.sol 
-0x3554a56ea2905f366c345bd44fa374757fb4696a
+contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```
 **注：**
 - 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。
@@ -794,7 +784,7 @@ Switched to group 2.
 运行call，调用合约。                                
 参数： 
 - 合约名称：部署的合约名称(可以带.sol后缀)。
-- 合约地址: 部署合约获取的地址，合约地址可以省略`0x`以及前缀0。
+- 合约地址: 部署合约获取的地址，合约地址可以省略前缀0，例如，0x000ac78可以简写成0xac78。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]；布尔类型为true或者false。**
 ```text
@@ -802,7 +792,7 @@ Switched to group 2.
 [group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
 
-# 调用HelloWorld的set设置name字符串
+# 调用HelloWorld的set接口设置name字符串
 [group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
 
@@ -830,13 +820,17 @@ Hello, FISCO BCOS
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
 ```text
-# 部署HelloWorld合约
+# 部署HelloWorld合约1.0版
 [group:1]> deployByCNS HelloWorld.sol 1.0
-0x3554a56ea2905f366c345bd44fa374757fb4696a
+contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
+
+# 部署HelloWorld合约2.0版
+[group:1]> deployByCNS HelloWorld.sol 2.0
+contract address:0x07625453fb4a6459cbf14f5aa4d574cae0f17d92
 
 # 部署TableTest合约
 [group:1]> deployByCNS TableTest.sol 1.0
-0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
+contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
 
 ### **queryCNS**
@@ -860,18 +854,25 @@ Hello, FISCO BCOS
 ### **callByCNS**
 运行callByCNS，利用CNS调用合约。                                 
 参数： 
-- 合约名称：部署的合约名称。
-- 合约版本号：部署的合约版本号。
+- 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`或`HelloWorld.sol:1.0`。当省略合约版本号时，例如`HelloWorld`或`HelloWorld.sol`，则调用最新版本的合约。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
 ```text
-# 调用HelloWorld的get接口获取name字符串
-[group:1]> callByCNS HelloWorld 1.0 set "Hello,CNS"
+# 调用HelloWorld合约1.0版，通过set接口设置name字符串
+[group:1]> callByCNS HelloWorld:1.0 set "Hello,CNS"
 0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
 
-# 调用HelloWorld的set设置name字符串
-[group:1]> callByCNS HelloWorld 1.0 get
+# 调用HelloWorld合约2.0版，通过set接口设置name字符串
+[group:1]> callByCNS HelloWorld:2.0 set "Hello,CNS2"
+0x43000d14040f0c67ac080d0179b9499b6885d4a1495d3cfd1a79ffb5f2945f64
+
+# 调用HelloWorld合约1.0版，通过get接口获取name字符串
+[group:1]> callByCNS HelloWorld:1.0 get
 Hello,CNS
+
+# 调用HelloWorld合约最新版(即2.0版)，通过get接口获取name字符串
+[group:1]> callByCNS HelloWorld get
+Hello,CNS2
 ```
 
 ### **addSealer**
