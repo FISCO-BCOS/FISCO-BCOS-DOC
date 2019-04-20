@@ -4,25 +4,30 @@
 
 FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增减字段。FISCO BCOS 2.0.0的交易结构字段如下：
 
-| name           | type            | description                                                  | RLP index |
-| :------------- | :-------------- | :----------------------------------------------------------- | --------- |
-| type           | enum            | 交易类型，表明该交易是创建合约还是调用合约交易，初始为空合约 | -         |
-| nonce          | u256            | 消息发送方提供的随机数，用于唯一标识交易                     | 0         |
-| value          | u256            | 转账数额，目前去币化的FISCO BCOS不使用该字段                 | 5         |
-| receiveAddress | h160            | 交易接收方地址，type为创建合约时该地址为0x0                  | 4         |
-| gasPrice       | u256            | 本次交易的gas的单价，FISCO BCOS中为固定值300000000           | 1         |
-| gas            | u256            | 本次交易允许最多消耗的gas数量，FISCO BCOS可配置该值          | 2         |
-| data           | vector< byte >  | 与交易相关的数据，或者是创建合约时的初始化参数               | 6         |
-| vrs            | SignatureStruct | 交易发送方对交易7字段RLP编码后的哈希值签名生成的数据         | 7,8,9     |
-| hashWith       | h256            | 交易结构所有字段（含签名信息）RLP编码后的哈希值              | -         |
-| sender         | h160            | 交易发送方地址，基于vrs生成                                  | -         |
-| blockLimit     | u256            | 交易生命周期，该交易最晚被处理的块高，FISCO BCOS新增字段     | 3         |
-| importTime     | u256            | 交易进入交易池的unix时间戳，FISCO BCOS新增字段               | -         |
-| rpcCallback    | function        | 交易出块后RPC回调，FISCO BCOS新增字段                        | -         |
+| name           | type            | description                                                  | RLP index RC1 | RLP index RC2 |
+| :------------- | :-------------- | :----------------------------------------------------------- | ------------- | ------------- |
+| type           | enum            | 交易类型，表明该交易是创建合约还是调用合约交易，初始为空合约 | -             | -             |
+| nonce          | u256            | 消息发送方提供的随机数，用于唯一标识交易                     | 0             | -             |
+| value          | u256            | 转账数额，目前去币化的FISCO BCOS不使用该字段                 | 5             | -             |
+| receiveAddress | h160            | 交易接收方地址，type为创建合约时该地址为0x0                  | 4             | -             |
+| gasPrice       | u256            | 本次交易的gas的单价，FISCO BCOS中为固定值300000000           | 1             | -             |
+| gas            | u256            | 本次交易允许最多消耗的gas数量，FISCO BCOS可配置该值          | 2             | -             |
+| data           | vector< byte >  | 与交易相关的数据，或者是创建合约时的初始化参数               | 6             | -             |
+| chainId        | u256            | 记录本次交易所属的链信息/业务信息                            | -             | 7             |
+| groupId        | u256            | 记录本次交易所属的群组                                       | -             | 8             |
+| extraData      | vector< byte >  | 预留字段，记录交易信息，内部使用“#”分割信息                | -             | 9             |
+| vrs            | SignatureStruct | 交易发送方对交易7字段RLP编码后的哈希值签名生成的数据         | 7,8,9         | 10,11,12      |
+| hashWith       | h256            | 交易结构所有字段（含签名信息）RLP编码后的哈希值              | -             | -             |
+| sender         | h160            | 交易发送方地址，基于vrs生成                                  | -             | -             |
+| blockLimit     | u256            | 交易生命周期，该交易最晚被处理的块高，FISCO BCOS新增字段     | 3             | -             |
+| importTime     | u256            | 交易进入交易池的unix时间戳，FISCO BCOS新增字段               | -             | -             |
+| rpcCallback    | function        | 交易出块后RPC回调，FISCO BCOS新增字段                        | -             | -             |
 
-表中hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
+RC1的hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
 ![](../../images/node_management/generate_hash_process.png)
+
+RC2的生成流程也类似，只是在第一步`rlp+hash`的transaction结构体中增加chainId、groupId和extraData三个字段。
 
 ## 区块结构及其RLP编码描述
 
