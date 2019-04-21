@@ -432,10 +432,10 @@ generator-C$ cp -r ./agencyC_send/peers.txt ~/generator-A/meta/peersC.txt
 
 ### 机构C生成群组2创世区块
 
-机构A修改conf文件夹下的`group_genesis.ini`如下图所示:
+机构C修改conf文件夹下的`group_genesis.ini`如下图所示:
 
 ```bash
-# 请在~/generator-A目录下执行下述命令
+# 请在~/generator-C目录下执行下述命令
 $ cd ~/generator-C
 $ cat > ./conf/group_genesis.ini << EOF
 [group]
@@ -467,7 +467,7 @@ node3=127.0.0.1:30305
 ```
 
 ```bash
-# 将机构C证书放置于meta文件夹
+# 将机构A证书放置于meta文件夹
 generator-C$ cp ./agencyA_send/* ./meta/
 # 生成群组2创世区块
 generator-C$ ./generator --create_group_genesis ./data
