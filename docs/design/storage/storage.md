@@ -97,20 +97,23 @@ MPTState每个账户使用MPT树存储其数据，当历史数据逐渐增多时
 # amdb环境部署
 
 ## 逻辑架构图
-AMDB多群组架构下，群组下的节点对应一个amdb实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于Group1,B,C属于Group2。节点A和C分别对应1个db实例，B节点对应了2个db实例，逻辑架构图如下：
+amdb多群组架构下，群组下的单个节点对应一个amdb实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于Group1,B,C属于Group2。节点A和C分别对应1个db实例，B节点对应了2个db实例，逻辑架构图如下：
 
-![逻辑架构图](../../../images/storage/logic_archite.png)
+![](../../../images/storage/logic_archite.png)
 
 ## 节点配置
 区块链底层配置 编辑每个群组的group.<群组编号>.genesis文件，修改[storage]段的内容，设置为如下内容：
+```bash
 [storage]
     	;storage db type, now support leveldb, external
     	type=external
         ;这里请注意，需要和要连接的amdb中的amdb.properties中的node.topic保持一致。
     	topic=DB
     	maxRetry=100
+```
 这里需要注意一下：同一条链上的所有节点，group.<群组编号>.genesis中storage和state必须保持一致。
 配置内容描述：
+
 |配置项|可选值|描述|
 |:--|:--|:--|
 |type|leveldb、external|配置类型，当前支持：leveldb：本地数据存储external：外部存储，通过AMOP访问|
@@ -120,11 +123,16 @@ AMDB多群组架构下，群组下的节点对应一个amdb实例，例如，区
 ## amdb代码编译
 
 ### 源码获取
+```bash
 git clone https://github.com/FISCO-BCOS/AMDB.git
+```
 
 ### 源码编译
+```bash
 cd AMDB;gradle build
+```
 编译完成之后，会生成一个dist目录，文件结构如下：
+```bash
 ├── apps
 │   └── AMDB.jar
 ├── conf
@@ -144,6 +152,7 @@ cd AMDB;gradle build
 ├── lib
 ├── log
 └── start.sh
+```
 
 ## 配置文件配置
 ### 证书配置
@@ -151,7 +160,7 @@ cd AMDB;gradle build
 
 ### 配置文件配置
 #### amdb.properties配置
-amdb.properties配置AMDB数据代理需要连接的节点配置信息，2.0之后，不再需要配置keystorePassWord和clientCertPassWord。
+amdb.properties配置AMDB数据代理需要连接的节点配置信息
 ```
 #节点ip
 node.ip=127.0.0.1
@@ -244,5 +253,7 @@ group2下的B节点配置参考如下（部分信息）
 ```
 
 ## amdb进程启动
+```bash
 cd dist;sh start.sh
+```
 ps查看到java进程并确认日志没有问题，确认启动成功就可以启动节点了。
