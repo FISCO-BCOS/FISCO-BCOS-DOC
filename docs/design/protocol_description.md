@@ -62,17 +62,19 @@ FISCO BCOS的区块头中每个字段意义如下：
 
 ## 网络传输协议
 
-FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信的数据包为P2PMessage格式，节点与SDK间通信的数据包为ChannelMessage格式。
+FISCO BCOS 目前有两类数据包格式，节点与节点间通信的数据包为P2PMessage格式，节点与SDK间通信的数据包为ChannelMessage格式。
 
 ![](../../images/node_management/message_type.png)
 
-### P2PMessage
+### P2PMessage: v2.0.0-rc1
 
-![](../../images/node_management/p2p_message.png)
+v2.0.0-rc1 P2PMessage包头长度为12字节，消息包具体格式如下：
+
+![](../../images/node_management/p2p_message_rc1.png)
 
 | name       | type         | description                          |
 | :--------- | :----------- | :----------------------------------- |
-| lenght     | uint32_t     | 数据包长度，含包头和数据             |
+| length     | uint32_t     | 数据包长度，含包头和数据             |
 | groupID    | int8_t       | 群组ID，范围1-127                    |
 | ModuleID   | uint8_t      | 模块ID，范围1-255                    |
 | packetType | uint16_t     | 数据包类型，同一模块ID下的子协议标识 |
@@ -92,10 +94,29 @@ FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信�
 | 11       | 共识的Raft子模块  |
 | 12~255   | 其他模块预留      |
 
+
+### P2PMessage: v2.0.0-rc2
+
+v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组**，且新增了**Version**字段来支持其他特性(如网络压缩)，包头大小为16字节，v2.0.0-rc2的网络数据包结构如下：
+
+![](../../images/features/network_packet.png)
+
+| name       | type         | description                          |
+| :--------- | :----------- | :----------------------------------- |
+| Length     | uint32_t     | 数据包长度，含包头和数据             |
+| Version    | uint16_t     | 记录数据包版本和特性信息，目前最高位0x8000用于记录数据包是否压缩|
+| groupID (GID)    | int16_t  | 群组ID，范围1-32767   |
+| ModuleID (MID)   | uint16_t | 模块ID，范围1-65535   |
+| PacketType | uint16_t     | 数据包类型，同一模块ID下的子协议标识  |
+| Seq        | uint32_t     | 数据包序列号，每个数据包自增         |
+| Data       | vector<byte> | 数据本身，长度为lenght-12           |
+
+
+
 **补充**
 
 1. P2PMessage不限制包大小，由上层调用模块（共识/同步/AMOP等)进行包大小管理；
-2. 群组ID和模块ID可唯一标识协议ID（protocolID），三者关系为`protocolID = (groupID << 8) | ModuleID`；
+2. 群组ID和模块ID可唯一标识协议ID（protocolID），三者关系为`protocolID = (groupID << sizeof(groupID)*8) | ModuleID`；
 3. 数据包通过protocolID所在的16位二进制数值来区分请求包和响应包，大于0为请求包，小于0为相应包。
 4. 目前AMOP使用的packetType有`SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`。
 
