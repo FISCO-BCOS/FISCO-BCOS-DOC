@@ -338,7 +338,7 @@ ttl=2
 
 ### PBFT共识打包时间配置
 
-考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS 2.0在群组可变配置的`[consensus]`下引入`min_block_generation_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_block_generation_time`才会开始共识流程，处理打包生成的新区块。
+考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS 2.0在群组可变配置`group.group_id.ini`的`[consensus]`下引入`min_block_generation_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_block_generation_time`才会开始共识流程，处理打包生成的新区块。
 
 ```eval_rst
 .. important::
@@ -348,11 +348,23 @@ ttl=2
 
 ```
 
-```
+```ini
 [consensus]
 ;min block generation time(ms), the max block generation time is 1000 ms
 min_block_generation_time=500
 ```
+
+### PBFT交易打包动态调整
+
+考虑到CPU负载和网络延迟对系统处理能力的影响，PBFT提供了动态调整一个区块内可打包最大交易数的算法，该算法会根据历史交易处理情况动态调整区块内可打包的最大交易数，默认开启，也可通过将可变配置`group.group_id.ini`的`[consensus].enable_dynamic_block_size`配置项修改为`false`来关闭该算法，此时区块内可最大交易数为`group.group_id.genesis`的`[consensus].max_trans_num`。
+
+关闭区块打包交易数动态调整算法的配置如下：
+
+```ini
+[consensus]
+    enable_dynamic_block_size=false
+```
+
 
 ### 并行交易配置
 
