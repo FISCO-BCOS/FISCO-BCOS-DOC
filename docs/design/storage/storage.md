@@ -120,6 +120,38 @@ amdb多群组架构下，群组下的单个节点对应一个amdb实例，例如
 |topic|字符串|通过AMOP访问外部存储的topic，需要与AMDB服务配置的topic一致|
 |maxRetry|大于0的数字|通过AMOP访问外部存储失败时的最大重试次数，达到最大重试次数后，区块链进程将退出|
 
+## gradle环境配置
+amdb源码编译需要用到gradle，需要预先安装gradle。
+这里为了方便更快速查阅，给出简单步骤，更详细的步骤，请参考[官网](https://gradle.org/install/)。
+从官网下载对应版本的 gradle 安装包，解压到对应目录(请将XXX换成对应的版本号)。
+```bash
+	mkdir /software/
+	unzip -d /software/ gradleXXX.zip
+```
+配置环境变量
+```bash
+	export GRADLE_HOME=/software/gradle-XXX
+	export PATH=$GRADLE_HOME/bin:$PATH
+```
+配置完成后执行下面命令确认配置成功。
+```bash
+gradle --version
+
+------------------------------------------------------------
+Gradle 5.3.1
+------------------------------------------------------------
+
+Build time:   2019-03-28 09:09:23 UTC
+Revision:     f2fae6ba563cfb772c8bc35d31e43c59a5b620c3
+
+Kotlin:       1.3.21
+Groovy:       2.5.4
+Ant:          Apache Ant(TM) version 1.9.13 compiled on July 10 2018
+JVM:          11.0.2 (Oracle Corporation 11.0.2+9-LTS)
+OS:           Linux 3.10.0-327.36.3.el7.x86_64 amd64
+```
+
+
 ## amdb代码编译
 
 ### 源码获取
@@ -185,10 +217,13 @@ db.password=123456
 db.database=bcos
 ```
 #### applicationContext.xml配置
-将/DBChannelService/groupId的值修改为节点所在的groupid。
-在/groupChannelConnectionsConfig/allChannelConnections配置group的connectionsStr。
-例如节点B分别属于group1,group2。B节点的访问地址为127.0.0.1:20600。
-group1下的B节点配置参考如下（部分信息）
+该文件用于amdb代理连接节点。因此，第一步是配置节点所属的group，第二步是配置group下节点的地址。参考如下：
+
+![](../../../images/storage/amdb_config.png)
+
+在多群组架构下，存在一个节点属于多个group的情况，这种情况下，需要为每一个group下的节点配置amdb代理。
+举个例子，节点B分别属于group1,group2。B节点的地址为127.0.0.1:20600（无论节点属于哪个group,节点地址都是一样的），则对应的配置信息如下：
+group1下的节点B配置参考如下（部分信息）
 ```
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
@@ -220,7 +255,7 @@ group1下的B节点配置参考如下（部分信息）
 	</bean>
 ```
 
-group2下的B节点配置参考如下（部分信息）
+group2下的节点B配置参考如下（部分信息）
 ```
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
