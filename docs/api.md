@@ -884,11 +884,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 |1(0x1)  |Unknown |未知异常 |
 |2(0x2)  |BadRLP|无效RLP异常 |
 |3(0x3)  |InvalidFormat |无效格式异常 |
-|4(0x4)  |OutOfGasIntrinsic |gas低于基本的交易费用异常 |
+|4(0x4)  |OutOfGasIntrinsic |gas不足异常 |
 |5(0x5)  |InvalidSignature |无效的签名异常 |
 |6(0x6)  |InvalidNonce |无效nonce异常 |
 |7(0x7)  |NotEnoughCash |cash不足异常 |
-|8(0x8)  |OutOfGasBase |gas低于基本的交易费用异常 |
+|8(0x8)  |OutOfGasBase |gas不足异常 |
 |9(0x9)  |BlockGasLimitReached|GasLimit异常 |
 |10(0xa)  |BadInstruction |错误指令异常 |
 |11(0xb)  |BadJumpDestination |错误目的跳转异常 |
@@ -906,5 +906,5 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 |23(0x17)  |InvalidZeroSignatureFormat |无效签名格式异常 |
 |24(0x18)  |AddressAlreadyUsed |地址占用异常 |
 |25(0x19)  |PermissionDenied |无权限异常 |
-|26(0x20)  |CallAddressError  |合约地址错误 |
+|26(0x20)  |CallAddressError  |合约地址错误异常 |
 
