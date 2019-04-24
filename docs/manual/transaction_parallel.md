@@ -323,9 +323,9 @@ FISCO BCOS在Web3SDK中内置了ParallelOk合约，此处给出用Web3SDK来发�
 **（1）用SDK部署合约、新建用户、开启合约的并行能力**
 
 ```shell
-# 参数： add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT add 10000 2500 user
-# 创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
+# 参数：<groupID> add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
+java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT 1 add 10000 2500 user
+# 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
 执行成功后，ParallelOk被部署到区块链上，创建的用户信息保存在user文件中，同时开启了ParallelOk的并行能力。
@@ -335,10 +335,10 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.Perf
 **注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
 ```shell
-# 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT transfer 100000 4000 user 2
+# 参数：<groupID> transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
+java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT 1 transfer 100000 4000 user 2
 
-# 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
+# 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
 ```
 
 **（3）验证并行正确性**
@@ -387,7 +387,7 @@ statistic_start = 21:26:24.051715
 total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 ```
 
-### 并行Precompile合约：DagTransferPrecompiled
+### 并行预编译合约：DagTransferPrecompiled
 
 与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行precompile合约的例子（[DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/feature-parallel/libprecompiled/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
 
@@ -398,9 +398,9 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 用Web3SDK发送创建用户的操作，创建的用户信息保存在user文件中
 
 ```shell
-# 参数： add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT add 10000 2500 user
-# 创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
+# 参数：<groupID> add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
+java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT 1 add 10000 2500 user
+# 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
 **（2）批量发送并行转账交易**
@@ -410,9 +410,9 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.Perf
 **注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
 ```shell
-# 参数： transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT transfer 100000 4000 user 2
-# 发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
+# 参数：<groupID> transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
+java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT 1 transfer 100000 4000 user 2
+# 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
 ```
 
 **（3）验证并行正确性**
