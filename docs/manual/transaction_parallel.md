@@ -34,19 +34,19 @@ FISCO BCOS提供了并行交易的编程框架。按照并行框架编写的合�
 
 FISCO BCOS提供了智能合约的并行编程的框架，开发者只需按照框架进行合约开发，定义好每个合约接口的互斥参数，即可实现能被并行执行的合约。当合约被部署后，FISCO BCOS即可在执行交易前，自动提取互斥对象，让无互斥的交易并行执行。
 
-目前，FISCO BCOS提供了solidity与precompile两种合约的并行框架。
+目前，FISCO BCOS提供了solidity与预编译合约两种合约的并行框架。
 
 #### solidity并行合约框架
 
 用solidity语言写并行合约。开发者要做的是根据提供的框架，用solidity进行合约开发。按照框架的格式，将合约中的接口定义成并行的接口，之后对此接口的调用，将支持并行的处理。
 
-基于并行solidity合约框架开发的合约，可维护，可升级，无需重启节点，比precompile合约更容易维护。
+基于并行solidity合约框架开发的合约，可维护，可升级，无需重启节点，比预编译合约更容易维护。
 
-#### precompile并行合约框架
+#### 预编译并行合约框架
 
-[precompile合约](../design/virtual_machine/precompile.md)是内置在FISCO BCOS节点中的合约，用C++语言实现。由于precompile合约的执行不依赖于EVM，因此precompile合约的性能比solidity合约的性能高很多（10倍左右）。因此，若需要追求极致的性能，可考虑用precompile实现合约逻辑。
+[预编译合约](../design/virtual_machine/precompile.md)是内置在FISCO BCOS节点中的合约，用C++语言实现。由于预编译合约的执行不依赖于EVM，因此预编译合约的性能比solidity合约的性能高很多（10倍左右）。因此，若需要追求极致的性能，可考虑用预编译合约实现合约逻辑。
 
-FISCO BCOS提供了precompile合约并行框架，开发者只需要按照框架进行编程，即可实现并行的precompile合约。与普通的precompile合约相同，并行的precompile合约内置在节点代码中，必须重启所有节点，才能完成代码逻辑的升级。
+FISCO BCOS提供了预编译合约并行框架，开发者只需要按照框架进行编程，即可实现并行的预编译合约。与普通的预编译合约相同，并行的预编译合约内置在节点代码中，必须重启所有节点，才能完成代码逻辑的升级。
 
 #### 并行框架的选择
 
@@ -55,7 +55,7 @@ FISCO BCOS提供了precompile合约并行框架，开发者只需要按照框架
 | 并行框架               | 开发语言 | 开发难度 | 可维护性                           | 性能 |
 | ---------------------- | -------- | -------- | ---------------------------------- | ---- |
 | solidity并行合约框架   | solidity | 低       | 高，无需重启节点即可部署           | 高   |
-| precompile并行合约框架 | C++      | 高       | 低，内置于节点中，升级时需重启节点 | 极高 |
+| 预编译并行合约框架 | C++      | 高       | 低，内置于节点中，升级时需重启节点 | 极高 |
 
 ## 编写并行合约
 
@@ -197,9 +197,9 @@ function disableParallel() public
 
 用SDK发送大量交易的例子，将在下文的举例中给出。
 
-### precompile合约并行框架
+### 预编译并行合约框架
 
-编写并行的precompile合约，开发流程与开发[普通的precompile合约的流程](./smart_contract.html#id2)相同。普通的precompile合约以Precompile为基类，再其上实现合约逻辑。在此基础上，Precompile的基类还为并行提供了两个虚函数，继续实现这两个函数，即可实现并行的precompile合约。
+编写并行的预编译合约，开发流程与开发[普通预编译合约的流程](./smart_contract.html#id2)相同。普通的预编译合约以Precompile为基类，再其上实现合约逻辑。在此基础上，Precompile的基类还为并行提供了两个虚函数，继续实现这两个函数，即可实现并行的预编译合约。
 
 **（1）将合约定义成支持并行**
 
@@ -251,7 +251,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 ## 举例：并行转账
 
-此处分别给出solidity合约和precompile合约的并行举例。
+此处分别给出solidity合约和预编译合约的并行举例。
 
 **配置环境**
 
@@ -389,7 +389,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 ### 并行预编译合约：DagTransferPrecompiled
 
-与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行precompile合约的例子（[DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/feature-parallel/libprecompiled/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
+与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行预编译合约的例子（[DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/feature-parallel/libprecompiled/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
 
 **注意：DagTransferPrecompiled为并行交易的举例，功能较为简单，请勿用于线上业务。**
 
