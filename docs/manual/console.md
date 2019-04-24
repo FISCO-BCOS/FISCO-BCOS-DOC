@@ -1143,15 +1143,15 @@ quit
 运行create sql语句创建用户表，使用mysql语句形式。
 
 ```text
-# 创建用户表t_demo，其主键为name
+# 创建用户表t_demo，其主键为name，其他字段为item_id和item_name
 [group:1]> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
 Create 't_demo' Ok.
 ```
 **注意：**
-- 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型。
-- 必须指定主键字段，例如创建t_demo表，主键字段为name, 且需要在字段最后指定。
+- 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型，也按照字符串类型设置。
+- 必须指定主键字段。例如创建t_demo表，主键字段为name。
 - 表的主键与关系型数据库中的主键不是相同概念，这里主键取值不是唯一的，区块链底层处理记录时需要传入主键值。
-- 对表的字段进行限定将不会产生作用，例如字段自增，非空，索引等修饰字段。
+- 可以指定字段为主键，但设置的字段自增，非空，索引等修饰关键字不起作用。
 
 ### **desc**
 运行desc语句查询表的字段信息，使用mysql语句形式。
