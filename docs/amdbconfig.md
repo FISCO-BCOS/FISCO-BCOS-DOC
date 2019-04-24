@@ -91,13 +91,14 @@ cd AMDB;gradle build
 └── start.sh
 ```
 
-## 配置文件配置
+## 证书与配置文件配置
+amdb与节点连接过程，amdb是client,节点是server，启动过程是amdb主动连接节点，节点无需配置，amdb需要通过证书准入。因此，配置涉及到证书及配置文件配置。
 ### 证书配置
-将节点sdk目录下所有文件（包括 ca.crt，node.crt，node.key）拷贝到 dist/conf 目录下。
+将节点sdk目录下所有文件（包括 ca.crt，node.crt，node.key）拷贝到dist/conf目录。
 
 ### 配置文件配置
 #### amdb.properties配置
-amdb.properties配置AMDB数据代理需要连接的节点配置信息
+amdb.properties配置amdb需要连接的节点的配置信息
 ```
 #节点ip
 node.ip=127.0.0.1
