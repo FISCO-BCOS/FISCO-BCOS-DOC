@@ -126,7 +126,7 @@
 
 **SSL认证用于确定节点之间是否许可加入某条链**。一条链上的节点均信任可信的第三方（节点证书的颁发者）。
 
-FISCO BCOS要求实现**SSL双向认证**。节点在handshake过程中，从对方节点提供的证书中获取对方节点的nodeID，检查该nodeID是否在自身的CA黑名单。如存在，关闭该connect，如不在，建立session。
+FISCO BCOS要求实现**SSL双向认证**。节点在handshake过程中，从对方节点提供的证书中获取对方节点的nodeID，检查该nodeID是否在自身的CA黑名单。如存在，关闭该connection，如不在，建立session。
 
 CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节点在session建立后，可从session中获取对方节点的nodeID进行判断，如果nodeID在自身的CA黑名单中，将已建立的session断连。
 
