@@ -198,7 +198,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```bash
 $ ./start.sh --help
 Usage
-start console: 	./start.sh [groupID] [privateKey]
+start console: 	./start.sh [groupId] [privateKey]
 print console version: 	./start.sh --version
 ```
 #### 查看当前控制台版本：
@@ -208,10 +208,10 @@ console version: 1.0.2
 ```
 #### 启动控制台：
 ```bash
-$ ./start.sh [groupID] [privateKey]   
+$ ./start.sh [groupId] [privateKey]   
 ```
 启动命令可以指定两个可选参数：           
-- `groupId`: 群组ID, 不指定则默认为群组1。           
+- `groupId`: 群组ID, 不指定则默认为`applicationContext.xml`文件中`channelService`配置的groupId。           
 - `privateKey`: 交易发送者外部账号的私钥，不指定则默认从`conf`目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
 
 示例
