@@ -1,9 +1,9 @@
-# amdb环境部署
+# 分布式存储
 
 ## 逻辑架构图
 amdb多群组架构下，群组下的单个节点对应一个amdb实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于Group1,B,C属于Group2。节点A和C分别对应1个db实例，B节点对应了2个db实例，逻辑架构图如下：
 
-![](../images/storage/logic_archite.png)
+![](../../images/storage/logic_archite.png)
 
 ## 节点配置
 区块链底层配置 编辑每个群组的group.<群组编号>.genesis文件，修改[storage]段的内容，设置为如下内容：
@@ -122,12 +122,15 @@ db.password=123456
 #dbname
 db.database=bcos
 ```
-这里需要在上述的db实例中建好相应的数据库。
+这里需要在上述的db实例中建好相应的数据库，创建语句
+```bash
+CREATE DATABASE bcos;
+```
 
 #### applicationContext.xml配置
 该文件用于amdb代理连接节点。因此，第一步是配置节点所属的group，第二步是配置group下节点的地址。参考如下：
 
-![](../images/storage/amdb_config.png)
+![](../../images/storage/amdb_config.png)
 
 在多群组架构下，存在一个节点属于多个group的情况，这种情况下，需要为每一个group下的节点配置amdb代理。
 举个例子，节点B分别属于group1,group2。B节点的地址为127.0.0.1:20600（无论节点属于哪个group,节点地址都是一样的），则对应的配置信息如下：
@@ -200,3 +203,7 @@ group2下的节点B配置参考如下（部分信息）
 cd dist;sh start.sh
 ```
 ps查看到java进程并确认日志没有问题，确认启动成功就可以启动节点了。
+```bash
+ps -ef|grep amdb
+app    68051      1  3 Apr24 ?        01:05:25 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
+```
