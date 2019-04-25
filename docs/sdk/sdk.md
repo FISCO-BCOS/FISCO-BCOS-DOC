@@ -112,9 +112,9 @@ channelEthereumService.setTimeout(100000);
     //填入用户私钥，用于交易签名
     Credentials credentials = Credentials.create("b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"); 
     //获取SystemConfigService对象
-    SystemConfigSerivce systemConfigSerivce = new SystemConfigSerivce(web3j, credentials);
+    SystemConfigService systemConfigService = new SystemConfigService(web3j, credentials);
     //通过SystemConfigService对象调用API接口setValueByKey
-    String result = systemConfigSerivce.setValueByKey("tx_count_limit", "2000");
+    String result = systemConfigService.setValueByKey("tx_count_limit", "2000");
     //通过Web3j对象调用API接口getSystemConfigByKey
     String value = web3j.getSystemConfigByKey("tx_count_limit").send().getSystemConfigByKey();
     System.out.println(value);
@@ -221,8 +221,8 @@ SDK提供对[CNS](../design/features/cns_contract_name_service.md)的支持。Cn
 - **List\<CnsInfo\> queryCnsByName(String name)：** 根据合约名查询CNS信息。
 - **List\<CnsInfo\> queryCnsByNameAndVersion(String name, String version)：** 根据合约名和合约版本号查询CNS信息。
 
-#### SystemConfigSerivce
-SDK提供对系统配置的支持。SystemConfigSerivce可以配置系统属性值（目前支持tx_count_limit和tx_gas_limit属性的设置），其API如下：
+#### SystemConfigService
+SDK提供对系统配置的支持。SystemConfigService可以配置系统属性值（目前支持tx_count_limit和tx_gas_limit属性的设置），其API如下：
 - **String setValueByKey(String key, String value)：** 根据键设置对应的值（查询键对应的值，参考Web3j API中的getSystemConfigByKey接口）。
 
 #### ConsensusService 
