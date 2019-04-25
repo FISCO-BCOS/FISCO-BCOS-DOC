@@ -906,5 +906,4 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 |23(0x17)  |InvalidZeroSignatureFormat |无效签名格式异常 |
 |24(0x18)  |AddressAlreadyUsed |地址占用异常 |
 |25(0x19)  |PermissionDenied |无权限异常 |
-|26(0x20)  |CallAddressError  |合约地址错误异常 |
 
