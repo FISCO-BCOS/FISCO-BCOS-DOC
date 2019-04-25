@@ -62,10 +62,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ```
 
 
-### 配置amdb代理
-节点启动前需要配置amdb代理，amdb代理的配置请参考文档[amdb配置](./amdbconfig.md)。
-
-
 ### 启动FISCO BCOS链
 
 ```bash
