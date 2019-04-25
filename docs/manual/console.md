@@ -113,7 +113,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
-  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -198,7 +198,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```bash
 $ ./start.sh --help
 Usage
-start console: 	./start.sh [groupID] [privateKey]
+start console: 	./start.sh [groupId] [privateKey]
 print console version: 	./start.sh --version
 ```
 #### 查看当前控制台版本：
@@ -208,10 +208,10 @@ console version: 1.0.2
 ```
 #### 启动控制台：
 ```bash
-$ ./start.sh [groupID] [privateKey]   
+$ ./start.sh [groupId] [privateKey]   
 ```
 启动命令可以指定两个可选参数：           
-- `groupId`: 群组ID, 不指定则默认为群组1。           
+- `groupId`: 群组ID, 不指定则默认为`applicationContext.xml`文件中`channelService`配置的groupId。           
 - `privateKey`: 交易发送者外部账号的私钥，不指定则默认从`conf`目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
 
 示例
