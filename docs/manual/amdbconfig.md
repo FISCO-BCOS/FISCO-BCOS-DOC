@@ -11,7 +11,7 @@ amdb多群组架构下，群组下的单个节点对应一个amdb实例，例如
 [storage]
     	;storage db type, now support leveldb, external
     	type=external
-        ;这里请注意，需要和要连接的amdb中的amdb.properties中的node.topic保持一致。
+        ;这里请注意，需要和要连接的amdb中的amdb.properties中的node.topic保持一致。需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
     	topic=DB
     	maxRetry=100
 ```
@@ -104,7 +104,7 @@ amdb.properties配置amdb需要连接的节点的配置信息
 node.ip=127.0.0.1
 #节点rpc listen port(请参考节点config.ini中的channel_listen_port)
 node.listen_port=20600
-#节点的topic，请与节点中的topic配置保持一致。
+#节点的topic，请与节点中的topic配置保持一致,需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
 node.topic=DB
 ```
 
@@ -133,8 +133,8 @@ CREATE DATABASE bcos;
 ![](../../images/storage/amdb_config.png)
 
 在多群组架构下，存在一个节点属于多个group的情况，这种情况下，需要为每一个group下的节点配置amdb代理。
-举个例子，节点B分别属于group1,group2。B节点的地址为127.0.0.1:20600（无论节点属于哪个group,节点地址都是一样的），则对应的配置信息如下：
-group1下的节点B配置参考如下（部分信息）
+举个例子，节点B分别属于group1,group2。B节点的地址为127.0.0.1:20600（无论节点属于哪个group,节点地址都是一样的），下面给出对应的配置。
+group1下的节点B配置参考如下（部分信息）。
 ```
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
@@ -164,6 +164,37 @@ group1下的节点B配置参考如下（部分信息）
 		</property>
 		<property name="pushCallback" ref="DBHandler"/>
 	</bean>
+```
+对应的amdb.properties配置如下:
+```
+#节点ip
+node.ip=127.0.0.1
+#节点rpc listen port(请参考节点config.ini中的channel_listen_port)
+node.listen_port=20600
+#节点的topic，请与节点中的topic配置保持一致,需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
+node.topic=DB_G1B
+```
+db.properties配置如下:
+```
+#数据库服务器的ip
+db.ip=127.0.0.1
+#数据库服务器监听端口
+db.port=3306
+#数据库用户名
+db.user=root
+#数据库密码
+db.password=123456
+#dbname
+db.database=bcos_g1b
+```
+节点配置如下：
+```
+[storage]
+    	;storage db type, now support leveldb, external
+    	type=external
+        ;这里请注意，需要和要连接的amdb中的amdb.properties中的node.topic保持一致。需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
+    	topic=DB_G1B
+    	maxRetry=100
 ```
 
 group2下的节点B配置参考如下（部分信息）
@@ -196,6 +227,37 @@ group2下的节点B配置参考如下（部分信息）
 		</property>
 		<property name="pushCallback" ref="DBHandler"/>
 	</bean>
+```
+对应的amdb.properties配置如下:
+```
+#节点ip
+node.ip=127.0.0.1
+#节点rpc listen port(请参考节点config.ini中的channel_listen_port)
+node.listen_port=20600
+#节点的topic，请与节点中的topic配置保持一致,需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
+node.topic=DB_G2B
+```
+db.properties配置如下:
+```
+#数据库服务器的ip
+db.ip=127.0.0.1
+#数据库服务器监听端口
+db.port=3306
+#数据库用户名
+db.user=root
+#数据库密码
+db.password=123456
+#dbname
+db.database=bcos_g2b
+```
+节点配置如下：
+```
+[storage]
+    	;storage db type, now support leveldb, external
+    	type=external
+        ;这里请注意，需要和要连接的amdb中的amdb.properties中的node.topic保持一致。需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
+    	topic=DB_G2B
+    	maxRetry=100
 ```
 
 ## amdb进程启动
