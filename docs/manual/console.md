@@ -763,6 +763,7 @@ contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 - 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。
 - 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`solidity/contracts/`目录。
 - 如果合约引用了library库，library库文件的名称需要包含`Lib`字符串，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
+- **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
 ### **getDeployLog**
 运行getDeployLog，查询群组内部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
