@@ -188,7 +188,7 @@ db.password=123456
 db.database=bcos_g1b
 ```
 节点配置如下：
-```bash
+```
 [storage]
     	;storage db type, now support leveldb, external
     	type=external
@@ -251,7 +251,7 @@ db.password=123456
 db.database=bcos_g2b
 ```
 节点配置如下：
-```bash
+```
 [storage]
     	;storage db type, now support leveldb, external
     	type=external
