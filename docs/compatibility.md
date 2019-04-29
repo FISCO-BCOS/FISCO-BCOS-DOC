@@ -1,8 +1,8 @@
 # 版本及兼容
 
-[FISCO BCOS Github Release List](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)
+[FISCO BCOS Release 列表](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)
 
-## 兼容性规则
+## 兼容性说明
 
 FISCO BCOS的兼容包括
 
