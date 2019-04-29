@@ -67,7 +67,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 国密版本FISCO BCOS节点之间采用SSL安全通道发送和接收消息，证书主要配置项集中在如下配置项中：
 
 ```bash
-[secure] section：
+[network_security] section：
 
 data_path：证书文件所在路径
 key：节点私钥相对于data_path的路径
@@ -75,7 +75,7 @@ cert: 证书gmnode.crt相对于data_path的路径
 ca_cert: gmca证书路径
 
 ;certificate configuration
-[secure]
+[network_security]
     ;directory the certificates located in
     data_path=conf/
     ;the node private key file
