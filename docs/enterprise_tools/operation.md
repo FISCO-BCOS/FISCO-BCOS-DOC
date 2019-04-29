@@ -506,3 +506,39 @@ $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statis
 ```bash
 $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statistics -f node0/log/log_2019021314.log -g 1 2 -o alice/nodes -r Alice
 ```
+
+## handshake failed检测
+
+FISCO BCOS generator 的scripts文件夹的`check_certificates.sh`脚本包含了节点log中提示`handshake failed`的异常检测。
+
+### 获取脚本
+
+如果用户需要检测由`buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
+
+```bash
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/develop/scripts/check_certificates.sh && chmod u+x check_certificates.sh
+```
+
+使用generator部署节点的用户可以从generator的根目录下，从scripts/check_certificates.sh获取脚本。
+
+### 检测证书有效期
+
+`check_certificates.sh`的-t命令会根据用户证书签发的有效期，以及当前的系统时间对证书进行检测。
+
+使用示例：
+
+```bash
+$ ./check_certificates.sh -t ~/certificates
+```
+
+验证成功时会提示`check certificates time successful`, 验证失败会提示异常。
+
+### 验证证书
+
+`check_certificates.sh`的-v命令会根据用户指定的根证书从而验证节点证书。
+
+```bash
+$ ./check_certificates.sh -v ~/ca.crt ~/node.crt
+```
+
+验证成功时会提示`use ~/ca.crt verify ~/node.crt successful`, 验证失败会提示异常。

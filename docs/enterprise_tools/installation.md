@@ -11,12 +11,10 @@ FISCO BCOS generator依赖如下：
 | curl | 默认版本 |
 | nc | 默认版本 |
 
-同时，需要满足FISCO BCOS启动时的条件，参考[依赖安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/feature-2.0.0/docs/manual/install.html?highlight=%E4%BE%9D%E8%B5%96#id4)
-
 ## 下载安装
 
 ```bash
-$ git clone -b rc-2 https://github.com/FISCO-BCOS/generator.git
+$ git clone https://github.com/FISCO-BCOS/generator.git
 $ cd generator
 $ bash ./scripts/install.sh
 $ ./generator -h
@@ -34,4 +32,4 @@ $ ./generator --download_fisco ./meta
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./meta/fisco-bcos -v
 
-- 源码编译获取可执行程序，参考[源码编译](../manual/get_executable.md)。
+**PS**：源码编译获取可执行程序，参考[源码编译](../manual/get_executable.md)。
