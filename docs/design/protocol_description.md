@@ -91,7 +91,7 @@ FISCO BCOS v2.0.0-rc1目前有两类数据包格式，节点与节点间通信�
 
 1. P2PMessage不限制包大小，由上层调用模块（共识/同步/AMOP等)进行包大小管理；
 2. 群组ID和模块ID可唯一标识协议ID（protocolID），三者关系为`protocolID = (groupID << 8) | ModuleID`；
-3. 数据包通过protocolID所在的16位二进制数值来区分请求包和响应包，大于0为请求包，小于0为相应包。
+3. 数据包通过protocolID所在的16位二进制数值来区分请求包和响应包，大于0为请求包，小于0为响应包。
 4. 目前AMOP使用的packetType有`SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`。
 
 ### ChannelMessage
