@@ -1,6 +1,6 @@
 # JSON-RPC API
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[listen_ip]`和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[listen_ip]`和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id51)。
 
 ## getClientVersion
 返回节点的版本信息
@@ -887,3 +887,35 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 // RC2 Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq 
 ```
+
+## 交易回执状态列表
+
+|status(十进制/十六进制)  |message   |含义  |
+|:----|:-----|:----|
+|0(0x0)  |None |正常 |
+|1(0x1)  |Unknown |未知异常 |
+|2(0x2)  |BadRLP|无效RLP异常 |
+|3(0x3)  |InvalidFormat |无效格式异常 |
+|4(0x4)  |OutOfGasIntrinsic |gas不足异常 |
+|5(0x5)  |InvalidSignature |无效的签名异常 |
+|6(0x6)  |InvalidNonce |无效nonce异常 |
+|7(0x7)  |NotEnoughCash |cash不足异常 |
+|8(0x8)  |OutOfGasBase |gas不足异常 |
+|9(0x9)  |BlockGasLimitReached|GasLimit异常 |
+|10(0xa)  |BadInstruction |错误指令异常 |
+|11(0xb)  |BadJumpDestination |错误目的跳转异常 |
+|12(0xc)  |OutOfGas |gas不足异常 |
+|13(0xd)  |OutOfStack |栈溢出异常 |
+|14(0xe)  |StackUnderflow |栈下限溢位异常 |
+|15(0xf)  |NonceCheckFail |nonce检测失败异常 |
+|16(0x10)  |BlockLimitCheckFail |blocklimit检测失败异常 |
+|17(0x11)  |FilterCheckFail |filter检测失败异常 |
+|18(0x12)  |NoDeployPermission |非法部署合约异常 |
+|19(0x13)  |NoCallPermission |非法call合约异常 |
+|20(0x14)  |NoTxPermission |非法交易异常 |
+|21(0x15)  |PrecompiledError|precompiled错误异常 |
+|22(0x16)  |RevertInstruction |revert指令异常 |
+|23(0x17)  |InvalidZeroSignatureFormat |无效签名格式异常 |
+|24(0x18)  |AddressAlreadyUsed |地址占用异常 |
+|25(0x19)  |PermissionDenied |无权限异常 |
+

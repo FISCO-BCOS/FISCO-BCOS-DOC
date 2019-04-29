@@ -57,6 +57,7 @@ $ brew install -y openssl
 .. important::
    - 实际应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，请参考 `硬件配置 <../manual/configuration.html>`_
    - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器** 
+   - **在不同机器操作时，请将生成的对应IP的文件夹拷贝到对应机器启动，建链操作只需要执行一次！**
 ```
 
 ### 构建星形区块链节点配置文件夹
@@ -147,7 +148,10 @@ nodes
 ......此处省略其他输出......
 ```
 
-> 注：若生成的区块链节点属于不同物理机，需要将区块链节点拷贝到相应的物理机
+```eval_rst
+.. note::
+   若生成的区块链节点属于不同物理机，需要将区块链节点拷贝到相应的物理机
+```
 
 **启动节点**
 
@@ -295,7 +299,7 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 $ bash start.sh
 # 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =====================================================================================
-Welcome to FISCO BCOS console!
+Welcome to FISCO BCOS console(1.0.2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
@@ -326,7 +330,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```bash
 # ... 向group1发交易...
 $ [group:1]> deploy HelloWorld
-0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 查看group1当前块高，块高增加为1表明出块正常，否则请检查group1是否共识正常
 $ [group:1]> getBlockNumber 
 1
@@ -337,7 +341,7 @@ $ [group:1]> switch 2
 Switched to group 2.
 # 向group2发交易，返回交易哈希表明交易部署成功，否则请检查group2是否共识正常
 $ [group:2]> deploy HelloWorld
-0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 查看group2当前块高，块高增加为1表明出块正常，否则请检查group2是否共识正常
 $ [group:2]> getBlockNumber
 1
@@ -348,7 +352,7 @@ $ [group:2]> switch 3
 Switched to group 3.
 # 向group3发交易，返回交易哈希表明交易部署成功
 $ [group:3]> deploy HelloWorld
-0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 查看group3当前块高，块高为1表明出块正常，否则请检查group3是否共识正常
 $ [group:3]> getBlockNumber
 1
@@ -466,7 +470,7 @@ $ [group:2]> getBlockNumber
 #... 向group2发交易
 # 部署HelloWorld合约，输出合约地址，若合约部署失败，请检查group2共识情况
 $ [group:2] deploy HelloWorld
-0xdfdd3ada340d7346c40254600ae4bb7a6cd8e660
+contract address:0xdfdd3ada340d7346c40254600ae4bb7a6cd8e660
 
 # 获取group2当前块高，块高增加为3，若块高不变，请检查group2共识情况
 $ [group:2]> getBlockNumber 
@@ -692,7 +696,7 @@ $ vim conf/applicationContext.xml
 $ bash start.sh
 # 输出如下信息表明控制台启动成功，若启动失败，请检查是否配置证书、channel listen port配置是否正确
 =====================================================================================
-Welcome to FISCO BCOS console!
+Welcome to FISCO BCOS console(1.0.2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
@@ -711,7 +715,7 @@ $ [group:1]> getBlockNumber
 0
 # 向group1部署HelloWorld合约，若部署失败，请检查group1共识是否正常
 $ [group:1]> deploy HelloWorld
-0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 获取当前块高，若块高没有增加，请检查group1共识是否正常
 $ [group:1]> getBlockNumber 
 1
@@ -725,7 +729,7 @@ $ [group:2]> getBlockNumber
 0
 # 向group2部署HelloWorld合约
 $ [group:2]> deploy HelloWorld
-0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 获取当前块高，若块高没有增加，请检查group2共识是否正常
 $ [group:2]> getBlockNumber 
 1
