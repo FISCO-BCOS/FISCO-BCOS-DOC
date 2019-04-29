@@ -5,7 +5,7 @@
 - 提供调用FISCO BCOS JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
 - 支持[链上信使协议](../manual/amop_protocol.md)为联盟链提供安全高效的消息信道。
-- 支持使用国密算法发交易
+- 支持使用国密算法发送交易
 
 ## 环境要求
 
