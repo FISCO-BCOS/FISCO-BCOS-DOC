@@ -56,7 +56,7 @@ bash gen_data_secure_key.sh 127.0.0.1 31443 123456
 得到`cipherDataKey`，脚本自动打印出落盘加密需要的ini配置(如下)。此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
 
 ```ini
-[data_secure]
+[storage_security]
 enable=true
 key_manager_ip=127.0.0.1
 key_manager_port=31443
@@ -72,7 +72,7 @@ vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini
 放在最后即可，如下。
 
 ```ini
-[data_secure]
+[storage_security]
 enable=true
 key_manager_ip=127.0.0.1
 key_manager_port=31443

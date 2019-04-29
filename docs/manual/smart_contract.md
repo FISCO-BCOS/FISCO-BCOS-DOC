@@ -200,7 +200,7 @@ contract TableTest {
 
 ### 一. 简介
 
-预编译（precompiled）合约是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[precompiled设计原理](../design/virtual_machine/precompiled.md)。   
+预编译（precompiled）合约是一项以太坊原生支持的功能：在底层使用c++代码实现特定功能的合约，提供给EVM模块调用。FISCO BCOS继承并且拓展了这种特性，在此基础上发展了一套功能强大并易于拓展的框架[precompiled设计原理](../design/virtual_machine/precompiled.md)。
 本文作为一篇入门指导，旨在指引用户如何实现自己的precompiled合约,并实现precompiled合约的调用。
 
 ### 二. 实现预编译合约  
@@ -222,7 +222,7 @@ contract TableTest {
 
 | 地址用途 | 地址范围 |
 | --------- | --------- |
-| 以太坊precompiled | 0x0001-0x0004 |
+| 以太坊precompiled | 0x0001-0x0008 |
 | 保留 | 0x0005-0x0fff |
 | FISCO BCOS precompied | 0x1000-0x1006 |
 | FISCO BCOS预留 | 0x1007-0x5000 |
@@ -545,20 +545,26 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
     {  // 参数错误，未知的接口调用
         PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC(" unkown func ")
                                << LOG_KV("func", func);
+        out = abi.abiIn("", u256(CODE_UNKNOW_FUNCTION_CALL));
     }
 
     return out;
 }
 ```
 
-##### 2.2.5 注册合约
+##### 2.2.5 注册合约并编译源码
+
+- 注册开发的预编译合约。修改`FISCO-BCOS/cmake/templates/UserPrecompiled.h.in`，在下面的函数中注册`HelloWorldPrecompiled`合约的地址。
 
 ```cpp
-// file         libblockverifier/ExecutiveContextFactory.cpp
-// function     initExecutiveContext
-
-context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>());  // HelloWorld precompiled 注册
+void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::blockverifier::ExecutiveContext::Ptr context)
+{
+    // Address should in [0x5001,0xffff]
+    context->setAddress2Precompiled(Address(0x5001), std::make_shared<dev::precompiled::HelloWorldPrecompiled>());
+}
 ```
+
+- 编译源码，详情请[参考这里](get_executable.html#id2)
 
 ### 三 调用
 
