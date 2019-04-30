@@ -8,7 +8,7 @@
 
 ```eval_rst
 .. note::
-    - macOS请参考 `源码编译 <manual/get_executable.html>`_ 并配合 `build_chain <manual/build_chain.html#id4>`_ 的-e选项操作。
+    - macOS请参考 `docker安装 <https://docs.docker.com/docker-for-mac/install/>`_ 并配合 `build_chain <manual/build_chain.html#id4>`_ 的-d选项操作。
     - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
 ```
 
@@ -32,7 +32,7 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/
 # -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 为安全jsonrpc/channel默认监听127.0.0.1，需要外网访问请添加 -i 参数
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
-# 默认从GitHub下载最新稳定版本可执行程序
+# 默认从GitHub下载最新稳定版本可执行程序 macOS建议先安装docker，然后加上-d选项使用docker模式
 $ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
@@ -60,6 +60,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 [INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 ```
+
 
 ### 启动FISCO BCOS链
 

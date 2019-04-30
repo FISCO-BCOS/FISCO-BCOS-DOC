@@ -6,7 +6,7 @@ CA黑名单的操作包括**一节点将他节点列入/移除CA黑名单**，�
 
 ## 修改范围
 
-节点`config.ini`配置有`[crl]`路径（可选）。`[crl]`为节点NodeID列表，node.X为本节点拒绝连接的对方节点NodeID。
+节点`config.ini`配置有`[certificate_blacklist]`路径（可选）。`[certificate_blacklist]`为节点NodeID列表，node.X为本节点拒绝连接的对方节点NodeID。
 
 ## 修改示例
 
@@ -33,7 +33,7 @@ $ cat node1/conf/node.nodeid
 aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
 $ vim node0/config.ini
 ;certificate blacklist
-[crl]
+[certificate_blacklist]
     ;crl.0 should be nodeid, nodeid's length is 128 
     crl.0=aab37e73489bbd277aa848a99229ab70b6d6d4e1b81a715a22608a62f0f5d4270d7dd887394e78bd02d9f31b8d366ce4903481f50b1f44f0e4fda67149208943
 ```
