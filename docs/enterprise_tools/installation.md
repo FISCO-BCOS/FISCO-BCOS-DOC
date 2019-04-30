@@ -31,5 +31,6 @@ $ ./generator -h
 $ ./generator --download_fisco ./meta
 # 检查二进制是否可执行 执行下述命令，看是否输出版本信息
 $ ./meta/fisco-bcos -v
+```
 
 **PS**：源码编译获取可执行程序，参考[源码编译](../manual/get_executable.md)。
