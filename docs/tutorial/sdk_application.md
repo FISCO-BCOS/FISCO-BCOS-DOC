@@ -349,7 +349,7 @@ repositories {
 - 引入Web3SDK jar包
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.0.0-rc1')
+compile ('org.fisco-bcos：web3sdk：2.0.0-rc2')
 ```
 
 ### 证书与配置文件
