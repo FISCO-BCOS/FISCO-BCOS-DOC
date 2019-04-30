@@ -44,7 +44,7 @@ FISCO BCOS提供了智能合约的并行编程的框架，开发者只需按照�
 
 #### 预编译并行合约框架
 
-[预编译合约](../design/virtual_machine/precompile.md)是内置在FISCO BCOS节点中的合约，用C++语言实现。由于预编译合约的执行不依赖于EVM，因此预编译合约的性能比solidity合约的性能高很多（10倍左右）。因此，若需要追求极致的性能，可考虑用预编译合约实现合约逻辑。
+[预编译合约](../design/virtual_machine/precompiled.md)是内置在FISCO BCOS节点中的合约，用C++语言实现。由于预编译合约的执行不依赖于EVM，因此预编译合约的性能比solidity合约的性能高很多（10倍左右）。因此，若需要追求极致的性能，可考虑用预编译合约实现合约逻辑。
 
 FISCO BCOS提供了预编译合约并行框架，开发者只需要按照框架进行编程，即可实现并行的预编译合约。与普通的预编译合约相同，并行的预编译合约内置在节点代码中，必须重启所有节点，才能完成代码逻辑的升级。
 
@@ -389,7 +389,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 ### 并行预编译合约：DagTransferPrecompiled
 
-与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行预编译合约的例子（[DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/feature-parallel/libprecompiled/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
+与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行预编译合约的例子（[DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
 
 **注意：DagTransferPrecompiled为并行交易的举例，功能较为简单，请勿用于线上业务。**
 
