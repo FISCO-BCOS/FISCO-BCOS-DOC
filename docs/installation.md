@@ -127,8 +127,8 @@ $ cd ~/fisco
 $ sudo apt install -y default-jdk
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-# 重命名控制台配置文件
-$ mv console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+# 拷贝控制台配置文件
+$ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
