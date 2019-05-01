@@ -137,37 +137,38 @@ $ bash build_chain -l 127.0.0.1:2 -C 2
 ```bash
 nodes/
 ├── 127.0.0.1
-│   ├── fisco-bcos
-│   ├── node0
-│   │   ├── conf
-│   │   │   ├── ca.crt
-│   │   │   ├── group.1.ini
-│   │   │   ├── node.crt
-│   │   │   ├── node.key
-│   │   │   ├── node.nodeid
-│   │   ├── config.ini
-│   │   ├── start.sh
-│   │   └── stop.sh
-│   ├── node1
+│   ├── fisco-bcos # 二进制程序
+│   ├── node0 # 节点0文件夹
+│   │   ├── conf # 配置文件夹
+│   │   │   ├── ca.crt # 链根证书
+│   │   │   ├── group.1.genesis # 群组1初始化配置，该文件不可更改
+│   │   │   ├── group.1.ini # 群组1配置文件
+│   │   │   ├── node.crt # 节点证书
+│   │   │   ├── node.key # 节点私钥
+│   │   │   ├── node.nodeid # 节点id，公钥的16进制表示
+│   │   ├── config.ini # 节点主配置文件，配置监听IP、端口等
+│   │   ├── start.sh # 启动脚本，用于启动节点
+│   │   └── stop.sh # 停止脚本，用于停止节点
+│   ├── node1 # 节点1文件夹
 │   │.....
-│   ├── node2
+│   ├── node2 # 节点2文件夹
 │   │.....
-│   ├── node3
+│   ├── node3 # 节点3文件夹
 │   │.....
-│   ├── sdk
-│   │   ├── ca.crt
-│   │   ├── node.crt
-│   │   └── node.key
-├── cert
-│   ├── agency
-│   │   ├── agency.crt
-│   │   ├── agency.key
+│   ├── sdk # SDK需要用到的
+│   │   ├── ca.crt # 链根证书
+│   │   ├── node.crt # SKD所需的证书文件，建立连接时使用
+│   │   └── node.key # SDK所需的私钥文件，建立连接时使用
+├── cert # 证书文件夹
+│   ├── agency # 机构证书文件夹
+│   │   ├── agency.crt # 机构证书
+│   │   ├── agency.key # 机构私钥
 │   │   ├── agency.srl
 │   │   ├── ca-agency.crt
 │   │   ├── ca.crt
 │   │   └── cert.cnf
-│   ├── ca.crt
-│   ├── ca.key
+│   ├── ca.crt # 链证书
+│   ├── ca.key # 链私钥
 │   ├── ca.srl
 │   └── cert.cnf
 ```
