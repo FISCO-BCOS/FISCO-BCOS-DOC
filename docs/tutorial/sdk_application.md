@@ -343,13 +343,15 @@ repositories {
         url "http：//maven.aliyun.com/nexus/content/groups/public/"
     }
     maven { url "https：//dl.bintray.com/ethereum/maven/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     mavenCentral()
 }
 ```
 - 引入Web3SDK jar包
 
 ```java
-compile ('org.fisco-bcos：web3sdk：x.x.x') //如 web3sdk: 2.0.0
+compile group:"org.fisco-bcos", name:"web3sdk", version:"2.0.3-SNAPSHOT", changing: true
+// compile ('org.fisco-bcos：web3sdk：x.x.x') //如 web3sdk: 2.0.0
 ```
 
 ### 证书与配置文件
