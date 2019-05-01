@@ -27,7 +27,8 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:x.x.x') //如：web3sdk:2.0.0
+compile group:"org.fisco-bcos", name:"web3sdk", version:"2.0.3-SNAPSHOT", changing: true
+//compile ('org.fisco-bcos:web3sdk:x.x.x') //如：web3sdk:2.0.0
 ```
    maven:
 ``` html

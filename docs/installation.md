@@ -78,7 +78,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 - 执行下面指令，启动所有节点
 
 ```bash
-bash ~/fisco/nodes/127.0.0.1/start_all.sh
+bash nodes/127.0.0.1/start_all.sh
 ```
 
 启动成功会输出类似下面内容的相应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
@@ -114,7 +114,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.
 - 执行下面指令，查看节点node0链接的节点数
 
 ```bash
-tail -f ~/fisco/nodes/127.0.0.1/node0/log/log*  | grep connected
+tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
 正常情况会看到类似下面的输出，从输出可以看出node0与另外3个节点有链接。
@@ -128,7 +128,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 
 
 ```bash
-tail -f node0/log/log*  | grep +++
+tail -f nodes/node0/log/log*  | grep +++
 ```
 
 正常情况会不停输出`++++Generating seal`表示共识正常。
