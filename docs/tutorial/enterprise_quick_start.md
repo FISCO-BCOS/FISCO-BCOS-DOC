@@ -110,7 +110,14 @@ $ cp ./meta/fisco-bcos ~/generator-B/meta
 # 初始化机构B机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
 # 发送链证书、机构证书、机构私钥至机构B
+# 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
+```
+
+```eval_rst
+.. important::
+
+    一条联盟链中需要用到一个根证书ca.crt，多服务器部署时不需要再次生成根证书和私钥。
 ```
 
 ## 机构A、B构建群组1
@@ -355,6 +362,7 @@ $ cd ~/generator
 $ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-C
 $ cp ./meta/fisco-bcos ~/generator-C/meta
 # 初始化机构C机构证书
+# 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
 ```
