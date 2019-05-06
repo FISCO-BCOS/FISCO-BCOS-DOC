@@ -202,8 +202,8 @@ generator-B$ ./generator --generate_all_certificates ./agencyB_send
 $ ls ./agencyB_send
 cert_127.0.0.1_30302.crt cert_127.0.0.1_30303.crt peers.txt # 从左至右分别为需要交互给机构A的节点证书，节点连接文件
 # 交换证书与peers至机构A
-generator-B$ cp -r ./agencyB_send ~/generator-A/
-generator-B$ cp -r ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
+generator-B$ cp ./agencyB_send/cert* ~/generator-A/meta/
+generator-B$ cp ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
 ```
 
 ### 机构A修改配置文件
@@ -276,7 +276,7 @@ jsonrpc_listen_port=8546
 # 机构A生成交换文件
 generator-A$ ./generator --generate_all_certificates ./agencyA_send
 # 由于B机构不需要生成创世区块，因此只需交换peers至机构B
-generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
+generator-A$ cp ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
 ### 机构A生成群组1创世区块
@@ -316,9 +316,6 @@ node3=127.0.0.1:30303
 ```
 
 ```bash
-# 将机构B证书放置于meta文件夹
-generator-A$ cp ./agencyB_send/* ./meta/
-
 # 生成群组1群组创世区块
 generator-A$ ./generator --create_group_genesis ./group
 # 将群组1创世区块发送给机构B
@@ -362,7 +359,7 @@ generator-B$ bash ./nodeB/start_all.sh
 ```eval_rst
 .. note::
 
-    节点启动只需要推送对应ip的node文件夹即可，如127.0.0.1的服务器，只需node_127.0.0.1_port对应的节点配置文件夹。
+    节点启动只需要推送对应ip的node文件夹即可，如127.0.0.1的服务器，只需node_127.0.0.1_port对应的节点配置文件夹。多机部署时，只需要将生成的节点文件夹推送至对应服务器即可。
 ```
 
 ### 查看群组1节点运行状态
@@ -418,7 +415,7 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/ag
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-A
 # 交换证书与peers至机构C
-generator-A$ cp -r ./agencyA_send ~/generator-C/
+generator-A$ cp -r ./agencyA_send/cert* ~/generator-C/meta/
 generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/meta/peersA.txt
 ```
 
@@ -534,12 +531,10 @@ node3=127.0.0.1:30305
 ```
 
 ```bash
-# 将机构A证书放置于meta文件夹
-generator-C$ cp ./agencyA_send/* ./meta/
 # 生成群组2创世区块
-generator-C$ ./generator --create_group_genesis ./data
+generator-C$ ./generator --create_group_genesis ./group
 # 将群组2创世区块发送给机构A
-generator-C$ cp ./data/group.2.genesis ~/generator-A/meta/
+generator-C$ cp ./group/group.2.genesis ~/generator-A/meta/
 
 ```
 
