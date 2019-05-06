@@ -2,8 +2,8 @@
 
 本章主要以星形组网和并行多组组网拓扑为例，指导您了解如下内容：
 
-- 了解如何使用`build_chain`创建多群组区块链安装包；
-- 了解`build_chain`创建的多群组区块链安装包目录组织形式；
+- 了解如何使用`build_chain.sh`创建多群组区块链安装包；
+- 了解`build_chain.sh`创建的多群组区块链安装包目录组织形式；
 - 学习如何启动该区块链节点，并通过日志查看各群组共识状态；
 - 学习如何向各群组发送交易，并通过日志查看群组出块状态；
 - 了解群组内节点管理，包括节点入网、退网等；
@@ -12,7 +12,7 @@
 ```eval_rst
 .. important::
 
-    - build_chain适用于开发者和体验者快速搭链使用，不支持扩容操作
+    - build_chain.sh适用于开发者和体验者快速搭链使用，不支持扩容操作
     - 搭建企业级业务链，推荐使用 `企业搭链工具 <../enterprise_tools/index.html>`_
 ```
 
@@ -29,17 +29,16 @@
 
 ## 安装依赖
 
-部署FISCO BCOS区块链节点前，需安装`openssl，curl`等依赖软件，具体命令如下：
+部署FISCO BCOS区块链节点前，需安装`openssl, curl`等依赖软件，具体命令如下：
 
 ```bash
-### CentOS
+# CentOS
 $ sudo yum install -y openssl openssl-devel curl
 
-### Ubuntu
+# Ubuntu
 $ sudo apt-get install -y openssl libssl-dev curl
 
-### Mac OS
-$ brew install -y openssl
+# Mac OS 推荐使用docker
 ```
 
 ## 星形拓扑
@@ -62,7 +61,7 @@ $ brew install -y openssl
 
 ### 构建星形区块链节点配置文件夹
 
-[build_chain](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链节点配置文件夹：
+[build_chain.sh](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链节点配置文件夹：
 
 **准备依赖**
 
@@ -124,7 +123,6 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 [INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 
 # 生成的节点文件如下
-$ tree nodes
 nodes
 |-- 127.0.0.1
 |   |-- fisco-bcos
@@ -252,45 +250,66 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
     使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
 ```
 
-**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下**，控制台配置方法请参考[这里](../manual/console.html#id7)：
+**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台配置方法请参考[这里](../manual/console.html#id7)：
 
 ```xml
-<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-<property name="allChannelConnections">
-<list>
-    <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="groupId" value="1" />
-            <property name="connectionsStr">
-            <list>
-            <value>127.0.0.1:20200</value>
-            </list>
-            </property>
-    </bean>
-    <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="groupId" value="2" />
-            <property name="connectionsStr">
-            <list>
-            <value>127.0.0.1:20200</value>
-            </list>
-            </property>
-    </bean>
-    <bean id="group3"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="groupId" value="3" />
-            <property name="connectionsStr">
-            <list>
-            <value>127.0.0.1:20200</value>
-            </list>
-            </property>
-    </bean>
-</list>
-</property>
-</bean>
+cat > ./conf/applicationContext.xml << EOF
+<?xml version="1.0" encoding="UTF-8" ?>
 
- <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-        <property name="groupId" value="1" />
-        <property name="orgID" value="fisco" />
-        <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-</bean>
+<beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+         http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+         http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
+        </bean>
+
+      <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+        <property name="allChannelConnections">
+        <list>
+            <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                <property name="groupId" value="1" />
+                    <property name="connectionsStr">
+                    <list>
+                    <value>127.0.0.1:20200</value>
+                    </list>
+                    </property>
+            </bean>
+            <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                <property name="groupId" value="2" />
+                    <property name="connectionsStr">
+                    <list>
+                    <value>127.0.0.1:20200</value>
+                    </list>
+                    </property>
+            </bean>
+            <bean id="group3"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                <property name="groupId" value="3" />
+                    <property name="connectionsStr">
+                    <list>
+                    <value>127.0.0.1:20200</value>
+                    </list>
+                    </property>
+            </bean>
+        </list>
+        </property>
+        </bean>
+
+        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+                <property name="groupId" value="1" />
+                <property name="orgID" value="fisco" />
+                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+        </bean>
+</beans>
+EOF
 ```
 
 **启动控制台**
@@ -361,6 +380,8 @@ $ [group:3]> getBlockNumber
 $ [group:3]> switch 4
 Group 4 does not exist. The group list is [1, 2, 3].
 
+# 退出控制台
+$ [group:3]> exit
 ```
 
 **查看日志**
@@ -475,6 +496,9 @@ contract address:0xdfdd3ada340d7346c40254600ae4bb7a6cd8e660
 # 获取group2当前块高，块高增加为3，若块高不变，请检查group2共识情况
 $ [group:2]> getBlockNumber 
 3
+
+# 退出控制台
+$ [group:2]> exit
 ```
 
 **通过日志查看新加入节点出块情况**
@@ -484,6 +508,8 @@ $ [group:2]> getBlockNumber
 > 通过`tail -f node2/log/* | grep "g:2.*++"`查看node2的group2是否共识正常：
 
 ```bash
+# 进入节点所在目录
+cd ~/fisco/nodes/127.0.0.1
 # 查看节点共识情况
 $ tail -f node2/log/* | grep "g:2.*++"
 info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=4,tx=0,nodeIdx=1,hash=c8a1ed9c...
@@ -518,7 +544,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 
 ### 构建单群组四节点区块链
 
-> **用build_chain脚本生成单群组四节点区块链节点配置文件夹**
+> **用build_chain.sh脚本生成单群组四节点区块链节点配置文件夹**
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
@@ -597,10 +623,7 @@ $ cat group.2.genesis | grep "id"
     id=2
 
 # 将配置拷贝到各个节点
-$ cp group.2.genesis node0/conf
-$ cp group.2.genesis node1/conf
-$ cp group.2.genesis node2/conf
-$ cp group.2.genesis node3/conf
+$ echo node*/conf | xargs -n 1 cp -v group.2.genesis
 
 # 重启区块链
 $ bash stop_all.sh
@@ -651,41 +674,59 @@ $ cd console
 # 配置证书
 $ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
 
-# 配置channel listen port
-$ vim conf/applicationContext.xml
 ```
 
-**修改控制台配置文件`conf/applicationContext.xml` bean id为`groupChannelConnectionsConfig`和`channelService`的配置如下：**
+**创建控制台配置文件`conf/applicationContext.xml`的配置如下：**
 
 ```xml
-<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-<property name="allChannelConnections">
-<list>
-    <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="groupId" value="1" />
-            <property name="connectionsStr">
-            <list>
-            <value>127.0.0.1:20100</value>
-            </list>
-            </property>
-    </bean>
-    <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="groupId" value="2" />
-            <property name="connectionsStr">
-            <list>
-            <value>127.0.0.1:20100</value>
-            </list>
-            </property>
-    </bean>
-</list>
-</property>
-</bean>
+ml version="1.0" encoding="UTF-8" ?>
 
- <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-        <property name="groupId" value="1" />
-        <property name="orgID" value="fisco" />
-        <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-</bean>
+<beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+         http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+         http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
+        </bean>
+
+      <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+        <property name="allChannelConnections">
+        <list>
+            <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                <property name="groupId" value="1" />
+                    <property name="connectionsStr">
+                    <list>
+                    <value>127.0.0.1:20100</value>
+                    </list>
+                    </property>
+            </bean>
+            <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                <property name="groupId" value="2" />
+                    <property name="connectionsStr">
+                    <list>
+                    <value>127.0.0.1:20100</value>
+                    </list>
+                    </property>
+            </bean>
+        </list>
+        </property>
+        </bean>
+
+        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+                <property name="groupId" value="1" />
+                <property name="orgID" value="fisco" />
+                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+        </bean>
+</beans>
+EOF
 ```
 
 
@@ -734,7 +775,7 @@ contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 $ [group:2]> getBlockNumber 
 1
 # 退出控制台
-$[group:2]> q
+$[group:2]> exit
 ```
 
 **通过日志查看节点出块状态**

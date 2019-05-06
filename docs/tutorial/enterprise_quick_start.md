@@ -10,8 +10,7 @@
 
 ```bash
 $ cd ~/
-$ git clone https://github.com/FISCO-BCOS/generator.git
-$ cd generator
+$ git clone https://github.com/FISCO-BCOS/generator.git && cd generator
 $ bash ./scripts/install.sh
 $ ./generator -h
 ```
