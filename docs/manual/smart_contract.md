@@ -242,7 +242,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 | 0x1003 | 共识节点管理 | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS功能  | CNSPrecompiled.cpp |
 | 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |
-| 0x1006 | 并行配置 | ParallelConfigPrecompiled.cpp |
+| 0x1006 | 并行合约配置 | ParallelConfigPrecompiled.cpp |
 
 - **定义合约接口**  
 
