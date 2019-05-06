@@ -192,7 +192,7 @@ contract TableTest {
 
 ```eval_rst
 .. important::
-    客户端需要调用转换为 Java 文件的合约代码，需要将TableTest.sol和Table.sol放入 web3sdk 的src/test/resources/contract目录下，通过 Web3SDK 的编译脚本生成TableTest.java。
+    客户端需要调用转换为 Java 文件的合约代码，需要将TableTest.sol和Table.sol放入 Web3SDK 的src/test/resources/contract目录下，通过 Web3SDK 的编译脚本生成TableTest.java。
 ```
 
 
@@ -570,8 +570,8 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 
 从用户角度，预编译合约与solidity合约的调用方式基本相同，唯一的区别是solidity合约在部署之后才能获取到调用的合约地址，预编译合约的地址为预分配，不用部署，可以直接使用。
 
-#### 3.1 web3sdk调用  
-web3sdk调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用接口合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。[web3sdk应用构建案例参考](../tutorial/sdk_application.md)
+#### 3.1 Web3SDK调用  
+Web3SDK调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用接口合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。[Web3SDK应用构建案例参考](../tutorial/sdk_application.md)
 
 #### 3.2 solidity调用  
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
