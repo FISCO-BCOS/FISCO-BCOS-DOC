@@ -308,7 +308,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
         - `genesisHash`: `string` - 创始区块哈希            
         - `latestHash`: `string` - 最新块哈希            
         - `nodeId`: `string` - 节点的ID            
-       
+    
 - 示例
 ```
 // Request
@@ -358,7 +358,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
     - `IPAndPort`: `string` - 节点连接的ip和端口            
     - `nodeId`: `string` - 节点的ID            
     - `Topic`: `array` - 节点关注的topic信息            
-      
+    
 - 示例          
 ```
 // Request
@@ -394,7 +394,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
 - `array` - 共识节点和观察节点的ID列表     
-        
+  
 - 示例          
 ```
 // Request
@@ -475,7 +475,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html#gettransactionbyhash)）
-              
+    
 - 示例
 ```
 // Request
@@ -560,7 +560,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)         
 ### 返回值          
 见[getBlockByHash](./api.html#getblockbyhash)  
-  
+
 - 示例          
 ```
 // Request
@@ -678,7 +678,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希          
     - `transactionIndex`: `string` - 交易序号
-         
+    
 - 示例          
 ```
 // Request
@@ -918,4 +918,5 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 |23(0x17)  |InvalidZeroSignatureFormat |无效签名格式异常 |
 |24(0x18)  |AddressAlreadyUsed |地址占用异常 |
 |25(0x19)  |PermissionDenied |无权限异常 |
+|26(0x1a) |CallAddressError |被调用的合约地址不存在 |
 
