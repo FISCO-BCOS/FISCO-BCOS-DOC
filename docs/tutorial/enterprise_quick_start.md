@@ -37,7 +37,7 @@ $ ./meta/fisco-bcos -v
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
-| 节点序号 |   P2P地址     |   RPC/channel地址     |   所属机构     | 所属群组 |
+| 节点序号 |   P2P地址     |   RPC/channel监听地址     |   所属机构     | 所属群组 |
 | :-----------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 | 机构A | 群组1、2 |
 |   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 | 机构A | 群组1、2 |
@@ -52,8 +52,14 @@ $ ./meta/fisco-bcos -v
 |              |                        |
 | :----------: | :--------------------: |
 |   节点序号   | 节点在配置文件中的序号 |
-|    P2P地址    |   节点之间p2p通信地址    |
-|    RPC地址    |    节点与sdk通信地址     |
+|    P2P监听地址    |   节点之间p2p通信地址    |
+|    RPC监听地址    |    节点开启的RPC/channel监听地址     |
+
+```eval_rst
+.. important::
+
+    针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
+```
 
 假设如图所示，联盟链中共有3个机构、2个群组、6个节点。
 
@@ -136,7 +142,15 @@ $ cat > ./conf/node_deployment.ini << EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
@@ -158,7 +172,15 @@ EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
@@ -197,7 +219,15 @@ $ cat > ./conf/node_deployment.ini << EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30300
 channel_listen_port=20200
@@ -219,7 +249,15 @@ EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30300
 channel_listen_port=20200
@@ -322,6 +360,12 @@ generator-B$ ./generator --build_install_package ./meta/peersA.txt ./nodeB
 generator-B$ bash ./nodeB/start_all.sh
 ```
 
+```eval_rst
+.. note::
+
+    节点启动只需要推送对应ip的node文件夹即可，如127.0.0.1的服务器，只需node_127.0.0.1_port对应的节点配置文件夹。
+```
+
 ### 查看群组1节点运行状态
 
 查看进程：
@@ -391,7 +435,15 @@ $ cat > ./conf/node_deployment.ini << EOF
 group_id=2
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30304
 channel_listen_port=20204
@@ -413,7 +465,15 @@ EOF
 group_id=2
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30304
 channel_listen_port=20204
