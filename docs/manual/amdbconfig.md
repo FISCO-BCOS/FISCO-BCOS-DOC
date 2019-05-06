@@ -30,8 +30,8 @@ amdb源码编译需要用到gradle，需要预先安装gradle。
 
 从官网下载对应版本的 gradle 安装包，解压到对应目录(请将XXX换成对应的版本号)。
 ```bash
-	mkdir /software/
-	unzip -d /software/ gradleXXX.zip
+$ mkdir /software/
+$ unzip -d /software/ gradleXXX.zip
 ```
 配置环境变量
 ```bash
@@ -40,7 +40,7 @@ amdb源码编译需要用到gradle，需要预先安装gradle。
 ```
 配置完成后执行下面命令确认配置成功。
 ```bash
-gradle --version
+$ gradle --version
 
 ------------------------------------------------------------
 Gradle 5.3.1
@@ -61,12 +61,12 @@ OS:           Linux 3.10.0-327.36.3.el7.x86_64 amd64
 
 ### 源码获取
 ```bash
-git clone https://github.com/FISCO-BCOS/AMDB.git
+$ git clone https://github.com/FISCO-BCOS/AMDB.git
 ```
 
 ### 源码编译
 ```bash
-cd AMDB;gradle build
+$ cd AMDB && gradle build
 ```
 编译完成之后，会生成一个dist目录，文件结构如下：
 ```bash
@@ -104,7 +104,8 @@ amdb.properties配置amdb需要连接的节点的配置信息
 node.ip=127.0.0.1
 #节点rpc listen port(请参考节点config.ini中的channel_listen_port)
 node.listen_port=20600
-#节点的topic，请与节点中的topic配置保持一致,需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
+#节点的topic，请与节点中的topic配置保持一致,需要保证单机上的唯一
+#节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样
 node.topic=DB
 ```
 
@@ -133,8 +134,9 @@ CREATE DATABASE bcos;
 ![](../../images/storage/amdb_config.png)
 
 在多群组架构下，存在一个节点属于多个group的情况，这种情况下，需要为每一个group下的节点配置amdb代理。
-举个例子，节点B分别属于group1,group2。B节点的地址为127.0.0.1:20600（无论节点属于哪个group,节点地址都是一样的），下面给出对应的配置。
-group1下的节点B配置参考如下（部分信息）。
+举个例子，节点B分别属于group1,group2。B节点的地址为127.0.0.1:20600，下面给出对应的配置。
+
+`applicationContext.xml`中group1的相关配置参考如下（部分信息）。
 ```
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
@@ -165,7 +167,8 @@ group1下的节点B配置参考如下（部分信息）。
 		<property name="pushCallback" ref="DBHandler"/>
 	</bean>
 ```
-对应的amdb.properties配置如下:
+
+**对应的amdb.properties配置如下:**
 ```
 #节点ip
 node.ip=127.0.0.1
@@ -174,7 +177,8 @@ node.listen_port=20600
 #节点的topic，请与节点中的topic配置保持一致,需要保证单机上的唯一。分2种情况，节点属于多个group或者1台机器部署了多个节点，topic都需要配置成不一样。
 node.topic=DB_G1B
 ```
-db.properties配置如下:
+
+**db.properties配置如下:**
 ```
 #数据库服务器的ip
 db.ip=127.0.0.1
@@ -187,7 +191,8 @@ db.password=123456
 #dbname
 db.database=bcos_g1b
 ```
-节点配置如下：
+
+**节点配置如下：**
 ```
 [storage]
     	;storage db type, now support leveldb, external
