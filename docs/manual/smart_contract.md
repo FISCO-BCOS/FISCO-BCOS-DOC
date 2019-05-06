@@ -242,11 +242,12 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 | 0x1003 | 共识节点管理 | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS功能  | CNSPrecompiled.cpp |
 | 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |
+| 0x1006 | 并行配置 | ParallelConfigPrecompiled.cpp |
 
 - **定义合约接口**  
 
 同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI链接](https://solidity.readthedocs.io/en/latest/abi-spec.html)。  
- 
+
 > 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**接口合约**，接口合约在调用预编译合约时需要使用。 
 
 ```js
@@ -256,7 +257,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
         ....
         function interfaceN(parameters ... ) {}
     }
-```  
+```
 
 - **设计存储结构**  
 
