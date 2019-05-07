@@ -195,7 +195,7 @@ amdb与节点连接过程，amdb是client,节点是server，启动过程是amdb�
 cp ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/AMDB/dist/conf/
 ```
 
-###amdb实例拷贝
+### amdb实例拷贝
 ```bash
 cd ~/fisco;
 ###dist_Group1_A是节点Group1_A对应的amdb实例
