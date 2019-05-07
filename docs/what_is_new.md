@@ -101,5 +101,5 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 * [并行计算模型](#id4)
 * [分布式存储](#id3)
 
-**具体描述（版本、兼容性、升级）请参考：**[版本及兼容](./compatibility.md)
+**具体描述（版本、兼容性、升级）请参考：**[版本及兼容](./changelog/index.md)
 
