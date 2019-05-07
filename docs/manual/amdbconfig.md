@@ -460,14 +460,14 @@ fisco   122910      1  1 17:38 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.
 
 ## 使用控制台发送交易
 
-###准备依赖
+### 准备依赖
 ```bash
 cd ~/fisco;
 bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 $ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
-###修改配置文件
+### 修改配置文件
 ```bash
 cd ~/fisco/console/conf
 ```
@@ -488,7 +488,7 @@ applicationContext.xml修改为如下配置(部分信息)
 		</property>
 	</bean>
 ```
-###启用控制台
+### 启用控制台
 ```bash
 cd ~/fisco/console
 sh start.sh 1
