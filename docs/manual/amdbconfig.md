@@ -455,6 +455,28 @@ fisco   122910      1  1 17:38 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.
 ```
 启动成功，会看到有4个java进程，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
 
+## 检查日志输出
+执行下面指令，查看节点node0链接的节点数（其他节点类似）
+```
+tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+```
+正常情况会看到类似下面的输出，从输出可以看出node0与另外2个节点有连接。
+```
+info|2019-05-07 21:47:22.849910| [P2P][Service] heartBeat connected count,size=2
+info|2019-05-07 21:47:32.849970| [P2P][Service] heartBeat connected count,size=2
+info|2019-05-07 21:47:42.850024| [P2P][Service] heartBeat connected count,size=2
+```
+执行下面指令，检查是否在共识
+```
+tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
+```
+正常情况会不停输出++++Generating seal表示共识正常。
+```
+info|2019-05-07 21:48:54.942111| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=6,tx=0,nodeIdx=1,hash=355790f7...
+info|2019-05-07 21:48:56.946022| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=6,tx=0,nodeIdx=1,hash=4ef772bb...
+info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=6,tx=0,nodeIdx=1,hash=48341ee5...
+```
+
 ## 使用控制台发送交易
 
 ### 准备依赖
