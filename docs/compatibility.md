@@ -1,10 +1,12 @@
 # 版本及兼容
 
-[FISCO BCOS Release 列表](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)
+***
 
 ## FISCO BCOS 1 系列
 
 请参考： [FISCO BCOS 1.0 Release](<https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>)
+
+***
 
 ## [FISCO BCOS 2.0 rc1](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1)
 
@@ -64,6 +66,8 @@
 ### 升级说明
 
 * 从1.0升级：1.0无法直接将数据迁移到2.0上来，只能依靠外部的方式，将历史的交易重放到2.0的新链上。搭建2.0的新链，请参考[安装](./installation.md)部分。
+
+***
 
 ## [FISCO BCOS 2.0 rc2](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2)
 
@@ -127,6 +131,8 @@
 
 * 兼容模式的升级：rc2提供了兼容模式。可直接将rc1的节点二进制替换成rc2的节点二进制完成升级。升级后能修复rc1中的bug，但不会启用rc2的新特性（并行计算模型，分布式存储）。升级后，不可再将rc2的二进制替换回rc1。
 * 使用新特性的升级：先参考[安装](./installation.md)部分搭建新链，再用外部的方式将交易重放到2.0 rc2的新链上。
+
+***
 
 ## 相关操作
 
