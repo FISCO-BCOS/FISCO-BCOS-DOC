@@ -98,33 +98,8 @@ Group:2 has 2 nodes
 │   │   └── node.key
 │   ├── start_all.sh
 │   └── stop_all.sh
-├── cert
-│   ├── agencyA
-│   │   ├── agency.crt
-│   │   ├── agency.key
-│   │   ├── agency.srl
-│   │   ├── ca-agency.crt
-│   │   ├── ca.crt
-│   │   └── cert.cnf
-│   ├── agencyB
-│   │   ├── agency.crt
-│   │   ├── agency.key
-│   │   ├── agency.srl
-│   │   ├── ca-agency.crt
-│   │   ├── ca.crt
-│   │   └── cert.cnf
-│   ├── agencyC
-│   │   ├── agency.crt
-│   │   ├── agency.key
-│   │   ├── agency.srl
-│   │   ├── ca-agency.crt
-│   │   ├── ca.crt
-│   │   └── cert.cnf
-│   ├── ca.crt
-│   ├── ca.key
-│   ├── ca.srl
-│   └── cert.cnf
-└── fisco-bcos
+......此处省略其他输出......
+
 ```
 
 ### group.<群组编号>.genesis修改
@@ -168,7 +143,7 @@ cd ~/fisco/nodes/127.0.0.1/node1/conf;
 
 #### 修改node2下的group.1.genesis配置
 ```bash
-cd ~/fisco/nodes/127.0.0.1/node1/conf;
+cd ~/fisco/nodes/127.0.0.1/node2/conf;
 ```
 修改group.2.genesis[storage]段的内容，设置为如下内容
 ```ini
@@ -469,15 +444,15 @@ cd ~/fisco/nodes/127.0.0.1;sh start_all.sh
 ## 检查进程
 ```bash
 ps -ef|grep org.bcos.amdb.server.Main|grep -v grep
-darren   110734      1  1 17:25 ?        00:00:10 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
-darren   110778      1  1 17:25 ?        00:00:11 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
-darren   110803      1  1 17:25 ?        00:00:10 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
-darren   122676      1 16 17:38 ?        00:00:08 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
+fisco   110734      1  1 17:25 ?        00:00:10 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
+fisco   110778      1  1 17:25 ?        00:00:11 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
+fisco   110803      1  1 17:25 ?        00:00:10 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
+fisco   122676      1 16 17:38 ?        00:00:08 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
 
 ps -ef|grep fisco-bcos|grep -v grep
-darren   111061      1  0 17:25 pts/0    00:00:04 /data/darren/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-darren   111065      1  0 17:25 pts/0    00:00:04 /data/darren/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-darren   122910      1  1 17:38 pts/0    00:00:02 /data/darren/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco   111061      1  0 17:25 pts/0    00:00:04 /data/home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco   111065      1  0 17:25 pts/0    00:00:04 /data/home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco   122910      1  1 17:38 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
 ```
 启动成功，会看到有4个java进程，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
 
