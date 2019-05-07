@@ -8,8 +8,8 @@
 
 **新增特性**
 
-- [群组架构](#id2)
-- [控制台](#id6)、[虚拟机](#id7)、[预编译合约](#id5)、[CRUD合约](#crud)、[密钥管理服务](#id8)、[准入控制](#id9)
+- [群组架构](../what_is_new.html#id2)
+- [控制台](../what_is_new.html#id6)、[虚拟机](../what_is_new.html#id7)、[预编译合约](../what_is_new.html#id5)、[CRUD合约](../what_is_new.html#crud)、[密钥管理服务](../what_is_new.html#id8)、[准入控制](../what_is_new.html#id9)
 
 **变更描述、兼容及升级说明**
 
@@ -21,8 +21,8 @@
 
 **新增特性**
 
-- [并行计算模型](#id4)
-- [分布式存储](#id3)
+- [并行计算模型](../what_is_new.html#id4)
+- [分布式存储](../what_is_new.html#id3)
 
 **变更描述、兼容及升级说明**
 
