@@ -89,6 +89,7 @@ $ ./meta/fisco-bcos -v
 ```bash
 # 证书授权机构准备生成证书
 # 初始化链证书
+# 一条联盟链拥有唯一的链证书ca.crt
 $ ./generator --generate_chain_certificate ./dir_chain_ca
 # 查看链证书及私钥
 $ ls ./dir_chain_ca
@@ -102,6 +103,7 @@ ca.crt  ca.key   cert.cnf # 从左至右分别为链证书、链私钥、证书�
 $ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-A
 $ cp ./meta/fisco-bcos ~/generator-A/meta
 # 初始化机构A机构证书
+# 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
 # 查看机构证书及私钥
 $ ls dir_agency_ca/agencyA/
@@ -113,6 +115,7 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/ag
 $ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-B
 $ cp ./meta/fisco-bcos ~/generator-B/meta
 # 初始化机构B机构证书
+# 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
 # 发送链证书、机构证书、机构私钥至机构B
 # 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
