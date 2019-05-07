@@ -1,8 +1,12 @@
 # 版本及兼容
 
+***
+
 ## FISCO BCOS 1 系列
 
 请参考： [FISCO BCOS 1.0 Release](<https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>)
+
+***
 
 ## FISCO BCOS 2.0 release candidate 1 ([rc1](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1))
 
@@ -15,7 +19,7 @@
 
 * [FISCO BCOS 2.0 rc1](./2.0-rc1.md)
 
-
+***
 
 ## FISCO BCOS 2.0 release candidate 2 ([rc2](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2))
 
@@ -28,7 +32,7 @@
 
 * [FISCO BCOS 2.0 rc2](./2.0-rc2.md)
 
-
+***
 
 ## 相关操作
 
