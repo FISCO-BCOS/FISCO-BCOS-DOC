@@ -6,6 +6,7 @@ amdb多群组架构下，群组下的单个节点对应一个amdb实例，例如
 ![](../../images/storage/logic_archite.png)
 
 以上图为例，描述搭建配置过程。
+A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
 
 ## 节点搭建
 使用amdb之前，需要先搭链，详细搭链过程请参考[搭链](../installation.md)，也可参考如下步骤。
@@ -222,9 +223,13 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/AMDB/dist/conf/
 ###amdb实例拷贝
 ```bash
 cd ~/fisco;
+###dist_Group1_A是节点Group1_A对应的amdb实例
 cp AMDB/dist/ dist_Group1_A -Rf
+###dist_Group1_B是节点Group1_B对应的amdb实例
 cp AMDB/dist/ dist_Group1_B -Rf
+###dist_Group2_B是节点Group2_B对应的amdb实例
 cp AMDB/dist/ dist_Group2_B -Rf
+###dist_Group2_C是节点Group2_C对应的amdb实例
 cp AMDB/dist/ dist_Group2_C -Rf
 ```
 经过上述步骤，可以看到~/fisco目录的文件结构如下：
