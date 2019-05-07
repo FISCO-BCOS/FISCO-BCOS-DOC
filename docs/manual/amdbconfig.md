@@ -472,6 +472,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console/conf
 ```
 applicationContext.xml修改为如下配置(部分信息)
+```ini
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
 			<list>
@@ -486,7 +487,7 @@ applicationContext.xml修改为如下配置(部分信息)
 			</list>
 		</property>
 	</bean>
-
+```
 ###启用控制台
 ```bash
 cd ~/fisco/console
