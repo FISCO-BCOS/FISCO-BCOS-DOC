@@ -52,7 +52,7 @@ Processing IP:127.0.0.1 Total:1 Agency:agencyC Groups:2
 Group:1 has 2 nodes
 Group:2 has 2 nodes
 ```
-### 生成的节点文件如下
+生成的节点文件如下
 ```
 .
 ├── 127.0.0.1
@@ -102,7 +102,7 @@ Group:2 has 2 nodes
 
 ```
 
-### group.<群组编号>.genesis修改
+### 修改节点genesis文件
 #### 修改node0下的group.1.genesis配置
 ```
 cd ~/fisco/nodes/127.0.0.1/node0/conf;
@@ -154,7 +154,7 @@ cd ~/fisco/nodes/127.0.0.1/node2/conf;
     	maxRetry=100
 ```
 
-## amdb代码编译
+## 准备amdb代理
 ### 源码获取
 ```bash
 cd ~/fisco; 
@@ -188,7 +188,7 @@ cd AMDB;gradle build
 └── start.sh
 ```
 
-## 证书与配置文件配置
+## 配置AMDB代理
 amdb与节点连接过程，amdb是client,节点是server，启动过程是amdb主动连接节点，节点无需配置，amdb需要通过证书准入。因此，配置涉及到证书及配置文件配置。
 ### 证书配置
 ```bash
@@ -221,7 +221,7 @@ drwxrwxr-x 4 app app  4096 May  7 15:08 nodes
 
 ### DB创建
 ```bash
-	mysql -uroot -p123456 -A bcos_Group1_A
+	mysql -uroot -p123456
 	CREATE DATABASE `bcos_Group1_A`;
 	CREATE DATABASE `bcos_Group1_B`;
 	CREATE DATABASE `bcos_Group2_B`;
@@ -229,7 +229,7 @@ drwxrwxr-x 4 app app  4096 May  7 15:08 nodes
 ```
 
 ### 配置文件配置
-#### dist_Group1_A目录的配置文件配置
+#### 为Group1的A节点配置AMDB代理
 ```bash
 cd ~/fisco/dist_Group1_A/conf
 ```
@@ -248,7 +248,7 @@ db.password=123456
 db.database=bcos_Group1_A
 ```
 
-applicationContext.xml修改为如下配置(部分信息)
+将applicationContext.xml修改为如下配置(部分信息)
 ```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
@@ -278,7 +278,7 @@ applicationContext.xml修改为如下配置(部分信息)
 	</bean>
 ```
 
-#### dist_Group1_B目录的配置文件配置
+#### 为Group1的B节点配置AMDB代理
 ```bash
 cd ~/fisco/dist_Group1_B/conf
 ```
@@ -297,7 +297,7 @@ db.password=123456
 db.database=bcos_Group1_B
 ```
 
-applicationContext.xml修改为如下配置(部分信息)
+将applicationContext.xml修改为如下配置(部分信息)
 ```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
@@ -326,7 +326,7 @@ applicationContext.xml修改为如下配置(部分信息)
 		<property name="pushCallback" ref="DBHandler"/>
 	</bean>
 ```
-#### dist_Group2_B目录的配置文件配置
+#### 为Group2的B节点配置AMDB代理
 ```bash
 cd ~/fisco/dist_Group2_B/conf
 ```
@@ -344,8 +344,7 @@ db.user=root
 db.password=123456
 db.database=bcos_Group2_B
 ```
-
-applicationContext.xml修改为如下配置(部分信息)
+将applicationContext.xml修改为如下配置(部分信息)
 ```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
@@ -377,7 +376,7 @@ applicationContext.xml修改为如下配置(部分信息)
 	</bean>
 ```
 
-#### dist_Group2_C目录的配置文件配置
+#### 为Group2的C节点配置AMDB代理
 ```bash
 cd ~/fisco/dist_Group2_C/conf
 ```
@@ -396,7 +395,7 @@ db.password=123456
 db.database=bcos_Group2_C
 ```
 
-applicationContext.xml修改为如下配置(部分信息)
+将applicationContext.xml修改为如下配置(部分信息)
 ```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
@@ -429,7 +428,7 @@ applicationContext.xml修改为如下配置(部分信息)
 ```
 
 
-## amdb进程启动
+## 启动AMDB代理
 ```bash
 cd ~/fisco/dist_Group1_A;sh start.sh
 cd ~/fisco/dist_Group1_B;sh start.sh
@@ -437,7 +436,7 @@ cd ~/fisco/dist_Group2_B;sh start.sh
 cd ~/fisco/dist_Group2_C;sh start.sh
 ```
 
-## 节点启动
+## 启动节点
 ```bash
 cd ~/fisco/nodes/127.0.0.1;sh start_all.sh
 ```
@@ -455,8 +454,6 @@ fisco   111065      1  0 17:25 pts/0    00:00:04 /data/home/fisco/nodes/127.0.0.
 fisco   122910      1  1 17:38 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
 ```
 启动成功，会看到有4个java进程，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
-
-
 
 ## 使用控制台发送交易
 
@@ -495,12 +492,14 @@ sh start.sh 1
 #部署TableTest合约
 [group:1]> deploy TableTest
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+```
 
-#查看db中的表
+查看数据库中的表情况
+```bash
 mysql -uroot -p123456 -A bcos_Group1_A
 use bcos_Group1_A;
 show tables;
-+----------------------------------------------------------+
+----------------------------------------------------------+
 | Tables_in_bcos_Group1_A                                  |
 +----------------------------------------------------------+
 | _contract_data_8c17cf316c1063ab6c89df875e96c9f0f5b2f744_ |
@@ -517,13 +516,17 @@ show tables;
 | _sys_tx_hash_2_block_                                    |
 +----------------------------------------------------------+
 12 rows in set (0.02 sec)
+```
 
-
+在控制台中调用create接口。
+```bash
 #创建表
 call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
 0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
+```
 
-#创建表之后，数据库中会多出1个用户表
+查看数据库中的表情况
+```bash
 show tables;
 +----------------------------------------------------------+
 | Tables_in_bcos_Group1_A                                  |
@@ -542,10 +545,17 @@ show tables;
 | _sys_tx_hash_2_block_                                    |
 | _user_t_test                                             |
 +----------------------------------------------------------+
+```
+
+在控制台中调用create接口
+```bash
 #往表里插入数据
 call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
 0x082ca6a5a292f1f7b20abeb3fb03f45e0c6f48b5a79cc65d1246bfe57be358d1
+```
 
+打开mysql客户端，查询_user_t_test表数据
+```bash
 #查看用户表中的数据
 select * from _user_t_test\G;
 *************************** 1. row ***************************
