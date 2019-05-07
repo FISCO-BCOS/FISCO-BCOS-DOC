@@ -93,13 +93,13 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 
 **FISCO BCOS release candidate 1 ([rc1](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1))**
 
-* 架构重塑：[群组架构](#2)
-* 功能升级：[控制台]()、[虚拟机]()、预编译合约、CRUD合约、密钥管理服务、准入控制
+* [群组架构](#id2)
+* [控制台](#id6)、[虚拟机](#id7)、[预编译合约](#id5)、[CRUD合约](#crud)、[密钥管理服务](#id8)、[准入控制](#id9)
 
 **FISCO BCOS release candidate 2 ([rc2](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2))**
 
-* 性能优化：并行计算模型
-* 存储拓展：分布式存储
+* [并行计算模型](#id4)
+* [分布式存储](#id3)
 
 **具体描述（版本、兼容性、升级）请参考：**[版本及兼容](./compatibility.md)
 
