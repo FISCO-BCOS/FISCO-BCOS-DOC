@@ -141,7 +141,7 @@ cd ~/fisco/nodes/127.0.0.1/node1/conf;
     	maxRetry=100
 ```
 
-#### 修改node2下的group.1.genesis配置
+#### 修改node2下的group.2.genesis配置
 ```bash
 cd ~/fisco/nodes/127.0.0.1/node2/conf;
 ```
