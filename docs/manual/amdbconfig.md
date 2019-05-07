@@ -120,7 +120,7 @@ cd ~/fisco/nodes/127.0.0.1/node0/conf;
 cd ~/fisco/nodes/127.0.0.1/node1/conf;
 ```
 修改group.1.genesis[storage]段的内容，设置为如下内容
-```ini
+```bash
 [storage]
     	;storage db type, now support leveldb, external
     	type=external
@@ -133,7 +133,7 @@ cd ~/fisco/nodes/127.0.0.1/node1/conf;
 cd ~/fisco/nodes/127.0.0.1/node1/conf;
 ```
 修改group.2.genesis[storage]段的内容，设置为如下内容
-```ini
+```bash
 [storage]
     	;storage db type, now support leveldb, external
     	type=external
@@ -146,7 +146,7 @@ cd ~/fisco/nodes/127.0.0.1/node1/conf;
 cd ~/fisco/nodes/127.0.0.1/node2/conf;
 ```
 修改group.2.genesis[storage]段的内容，设置为如下内容
-```ini
+```bash
 [storage]
     	;storage db type, now support leveldb, external
     	type=external
@@ -234,13 +234,13 @@ drwxrwxr-x 4 app app  4096 May  7 15:08 nodes
 cd ~/fisco/dist_Group1_A/conf
 ```
 将amdb.properties配置为如下内容:
-```ini
+```bash
 node.ip=127.0.0.1
 node.listen_port=20800
 node.topic=DB_Group1_A
 ```
 将db.properties配置为如下内容:
-```ini
+```bash
 db.ip=127.0.0.1
 db.port=3306
 db.user=root
@@ -249,7 +249,7 @@ db.database=bcos_Group1_A
 ```
 
 applicationContext.xml修改为如下配置(部分信息)
-```
+```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
 			<list>
@@ -283,13 +283,13 @@ applicationContext.xml修改为如下配置(部分信息)
 cd ~/fisco/dist_Group1_B/conf
 ```
 将amdb.properties配置为如下内容:
-```ini
+```bash
 node.ip=127.0.0.1
 node.listen_port=20801
 node.topic=DB_Group1_B
 ```
 将db.properties配置为如下内容:
-```ini
+```bash
 db.ip=127.0.0.1
 db.port=3306
 db.user=root
@@ -298,7 +298,7 @@ db.database=bcos_Group1_B
 ```
 
 applicationContext.xml修改为如下配置(部分信息)
-```
+```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
 			<list>
@@ -337,7 +337,7 @@ node.listen_port=20801
 node.topic=DB_Group2_B
 ```
 将db.properties配置为如下内容:
-```ini
+```bash
 db.ip=127.0.0.1
 db.port=3306
 db.user=root
@@ -346,7 +346,7 @@ db.database=bcos_Group2_B
 ```
 
 applicationContext.xml修改为如下配置(部分信息)
-```
+```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
 			<list>
@@ -382,13 +382,13 @@ applicationContext.xml修改为如下配置(部分信息)
 cd ~/fisco/dist_Group2_C/conf
 ```
 将amdb.properties配置为如下内容:
-```ini
+```bash
 node.ip=127.0.0.1
 node.listen_port=20802
 node.topic=DB_Group2_C
 ```
 将db.properties配置为如下内容:
-```
+```bash
 db.ip=127.0.0.1
 db.port=3306
 db.user=root
@@ -397,7 +397,7 @@ db.database=bcos_Group2_C
 ```
 
 applicationContext.xml修改为如下配置(部分信息)
-```
+```bash
 	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
 			<list>
@@ -472,7 +472,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console/conf
 ```
 applicationContext.xml修改为如下配置(部分信息)
-```ini
+```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 		<property name="allChannelConnections">
 			<list>
