@@ -164,3 +164,37 @@ Traceback (most recent call last):
   $ pip install configparser
 ```
 
+问：
+  企业级部署工具下载fisco-bcos二进制/控制台失败
+
+答：
+  下载失败有两种情况：
+
+  1. 网络异常，ping一下其他服务器，看能否ping通
+  2. 如果网络正常，则可能是代理服务器设置问题，python2.7下载文件模块默认不走代理，建议使用python3，并运行install.sh脚本。
+  如果用户希望在python2下使用download功能，可以修改utils.py：
+
+```python
+15 if sys.version > '3':
+16   import urllib.request
+17 else:
+18    import urllib
+19     # import urllib2 #取消本行注释
+```
+
+以及对该函数进行修改：
+
+```python
+def download_bin(_download_link, _package_name):
+    """dowloand
+    """
+    if sys.version > '3':
+        urllib.request.urlretrieve(_download_link, _package_name, _hook_func)
+    else:
+        urllib.urlretrieve(_download_link, _package_name, _hook_func) #将本行注释
+        # url = _download_link #取消以下5行的注释
+        # f = urllib2.urlopen(url)
+        # data = f.read()
+        # with open(_package_name, 'wb') as code:
+        #     code.write(data)
+```
