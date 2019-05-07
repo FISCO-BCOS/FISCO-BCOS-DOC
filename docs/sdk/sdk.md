@@ -1,10 +1,12 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以支持访问节点、查询节点状态、改变节点设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以支持访问节点、查询节点状态、修改系统设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
+
+2.0版本主要特性包括：
 
 - 提供调用FISCO BCOS JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
-- 支持[链上信使协议](../manual/amop_protocol.md)为联盟链提供安全高效的消息信道。
+- 支持[链上信使协议](../manual/amop_protocol.md)为联盟链提供安全高效的消息信道
 - 支持使用国密算法发送交易
 
 ## 环境要求
@@ -46,7 +48,7 @@ repositories {
         maven { url "https://dl.bintray.com/ethereum/maven/" }
     }
 ```
-**注：** 如果下载web3sdk的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
+**注：** 如果下载Web3SDK的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
 
 ## 配置SDK
 

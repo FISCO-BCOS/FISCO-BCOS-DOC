@@ -5,11 +5,11 @@
     build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业级部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
-FISCO BCOS提供了`build_chain`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
+FISCO BCOS提供了`build_chain.sh`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
 
 ## 脚本功能简介
 
-- `build_chain`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
+- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，支持创建各种复杂业务场景FISCO BCOS链。**`-l`和`-f`选项必须指定一个且不可共存**。
 - 建议测试时使用`-T`和`-i`选项，`-T`开启log级别到DEBUG，`-i`设置RPC和channel监听`0.0.0.0`，p2p模块默认监听`0.0.0.0`。
 
@@ -83,7 +83,7 @@ $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 ```bash
 # 两个节点分别占用`30300,20200,8545`和`30301,20201,8546`。
-$ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
+$ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 ```
 
 - **`i`选项[**Optional**]**
@@ -112,7 +112,7 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 
 ```bash
 # 该链标识为2。
-$ bash build_chain -l 127.0.0.1:2 -C 2
+$ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
 - **`g`选项[**Optional**]**
