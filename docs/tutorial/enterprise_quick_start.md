@@ -4,9 +4,9 @@
 
 本章主要以部署3机构2群组6节点的组网模式，为用户讲解企业级部署工具的使用方法。
 
-## 安装准备
+本章节为多机构对等部署的过程，由单机构一键生成节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
 
-使用前请确认已经满足[环境依赖](../enterprise_tools/installation.md)
+## 安装准备
 
 ```bash
 $ cd ~/
@@ -15,7 +15,7 @@ $ bash ./scripts/install.sh
 $ ./generator -h
 ```
 
-在使用本工具时，需要在meta文件夹下放置`fisco-bcos`二进制程序（除demo命令外），`fisco-bcos`二进制程序的生成方式可以通过以下方式获取:
+在使用本工具时，需要在meta文件夹下放置`fisco-bcos`二进制程序，`fisco-bcos`二进制程序的生成方式可以通过以下方式获取:
 
 用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 
