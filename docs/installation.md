@@ -27,7 +27,7 @@ sudo apt install -y openssl curl
 - 创建操作目录
 
 ```bash
-cd ~ && mkdir fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 ```
 
 - 下载`build_chain.sh`脚本
@@ -120,7 +120,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
-正常情况会看到类似下面的输出，从输出可以看出node0与另外3个节点有链接。
+正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接（按Ctrl+c退回命令行）。
 ```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
@@ -134,7 +134,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 ```
 
-正常情况会不停输出`++++Generating seal`表示共识正常。
+正常情况会不停输出`++++Generating seal`表示共识正常（按Ctrl+c退回命令行）。
 ```bash
 info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
 info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
@@ -256,7 +256,7 @@ contract HelloWorld {
 
 ### 部署HelloWorld合约
 
-为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，所以参考下面命令部署即可。
+为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，参考下面命令部署即可。
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址

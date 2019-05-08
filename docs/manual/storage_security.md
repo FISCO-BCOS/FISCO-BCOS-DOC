@@ -8,7 +8,7 @@
 
 ## 部署Key Manager
 
-每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager在线介绍](https://github.com/FISCO-BCOS/key-manager)
+每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager README](https://github.com/FISCO-BCOS/key-manager)
 
 ## 生成节点
 
@@ -26,7 +26,7 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 
 ## 启动Key Manager
 
-直接启动`key-manager`。若未部署`key-manager`，可参考[Key Manager在线介绍](https://github.com/FISCO-BCOS/key-manager)
+直接启动`key-manager`。若未部署`key-manager`，可参考[Key Manager README](https://github.com/FISCO-BCOS/key-manager)
 
 ```shell
 # 参数：端口，superkey
@@ -124,10 +124,10 @@ cd nodes/node_127.0.0.1_0/
 
 ## 正确性判断
 
-（1）节点正常运行，正常出块，不断输出出块信息。
+（1）节点正常运行，正常共识，不断输出共识打包信息。
 
 ``` shell
-tail -f nodes/node_127.0.0.1_0/log/* | grep Report
+tail -f nodes/node_127.0.0.1_0/log/* | grep +++
 ```
 
 （2）`key-manager`在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Manager直接输出的日志如下。

@@ -1,6 +1,7 @@
 # 2.0版本新特性
 
 ## 群组架构
+
 群组架构是FISCO BCOS 2.0众多新特性中的主线，创造灵感来源于人人都熟悉的群聊模式——群的建立非常灵活，几个人就可以快速拉个主题群进行交流。同一个人可以参与到自己感兴趣的多个群里，并行地收发信息。现有的群也可以继续增加成员。
 
 采用群组架构的网络中，根据业务场景的不同，可存在多个不同的账本，区块链节点可以根据业务关系选择群组加入，参与到对应账本的数据共享和共识过程中。该架构的特点是：
@@ -12,6 +13,7 @@
 更多的群组介绍，请参考[群组架构设计文档](./design/architecture/group.md)和[群组使用教程](./tutorial/group_use_cases.md)
 
 ## 分布式存储
+
 FISCO BCOS 2.0新增了对分布式数据存储的支持，节点可将数据存储在远端分布式系统中，克服了本地化数据存储的诸多限制。该方案有以下优点：
 
 - 支持多种存储引擎，选用高可用的分布式存储系统，可以支持数据简便快速地扩容；
@@ -66,23 +68,38 @@ FISCO BCOS 2.0新增控制台，作为FISCO BCOS 2.0的交互式客户端工具�
 更多关于虚拟机的介绍，请参考[虚拟机设计文档](./design/virtual_machine/index.html)
 
 ## 密钥管理服务
+
 2.0版本对落盘加密进行了重塑升级，开启落盘加密功能时，依赖KeyManager服务进行密钥管理，安全性更强。
 
 KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的，支持机构设计实现符合自身密钥管理规范的KeyManager服务，比如采用硬件加密机技术。
 该部分更详细的文档请参考[使用文档](./manual/storage_security.md)和[设计文档](./design/features/storage_security.md)
 
 ## 准入控制
+
 2.0版本对准入机制进行了重塑升级，包括网络准入机制和群组准入机制，在不同维度对链和数据访问进行安全控制。
 
 采用新的权限控制体系，基于表进行访问权限的设计，另外还支持CA黑名单机制，可以实现对作恶/故障节点的屏蔽。
 详情请查看[准入机制设计文档](./design/security_control/index.html)
 
 ## 异步事件
+
 2.0版本同时支持交易上链异步通知、区块上链异步通知以及自定义的AMOP消息通知等机制。
 
 ## 模块重塑
+
 2.0版本对核心模块进行升级重塑，进行模块化的单元测试和端对端集成测试，支持自动化持续集成和持续部署。
 
 ## Release note
-请查看[FISCO BCOS release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/)
+
+**FISCO BCOS 2.0 release candidate 1 ([rc1](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1))**
+
+* [群组架构](#id2)
+* [控制台](#id6)、[虚拟机](#id7)、[预编译合约](#id5)、[CRUD合约](#crud)、[密钥管理服务](#id8)、[准入控制](#id9)
+
+**FISCO BCOS 2.0 release candidate 2 ([rc2](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2))**
+
+* [并行计算模型](#id4)
+* [分布式存储](#id3)
+
+**具体描述（版本、兼容性、升级）请参考：**[版本及兼容](./changelog/index.md)
 
