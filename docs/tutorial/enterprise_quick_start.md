@@ -10,8 +10,7 @@
 
 ```bash
 $ cd ~/
-$ git clone https://github.com/FISCO-BCOS/generator.git
-$ cd generator
+$ git clone https://github.com/FISCO-BCOS/generator.git && cd generator
 $ bash ./scripts/install.sh
 $ ./generator -h
 ```
@@ -37,7 +36,7 @@ $ ./meta/fisco-bcos -v
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
-| 节点序号 |   P2P地址     |   RPC/channel地址     |   所属机构     | 所属群组 |
+| 节点序号 |   P2P地址     |   RPC/channel监听地址     |   所属机构     | 所属群组 |
 | :-----------: | :-------------: | :-------------: | :-------------: | :-------------: |
 |   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 | 机构A | 群组1、2 |
 |   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 | 机构A | 群组1、2 |
@@ -52,8 +51,14 @@ $ ./meta/fisco-bcos -v
 |              |                        |
 | :----------: | :--------------------: |
 |   节点序号   | 节点在配置文件中的序号 |
-|    P2P地址    |   节点之间p2p通信地址    |
-|    RPC地址    |    节点与sdk通信地址     |
+|    P2P监听地址    |   节点之间p2p通信地址    |
+|    RPC监听地址    |    节点开启的RPC/channel监听地址     |
+
+```eval_rst
+.. important::
+
+    针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
+```
 
 假设如图所示，联盟链中共有3个机构、2个群组、6个节点。
 
@@ -110,7 +115,14 @@ $ cp ./meta/fisco-bcos ~/generator-B/meta
 # 初始化机构B机构证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
 # 发送链证书、机构证书、机构私钥至机构B
+# 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
+```
+
+```eval_rst
+.. important::
+
+    一条联盟链中需要用到一个根证书ca.crt，多服务器部署时不需要再次生成根证书和私钥。
 ```
 
 ## 机构A、B构建群组1
@@ -129,7 +141,15 @@ $ cat > ./conf/node_deployment.ini << EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
@@ -151,7 +171,15 @@ EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30302
 channel_listen_port=20202
@@ -174,8 +202,8 @@ generator-B$ ./generator --generate_all_certificates ./agencyB_send
 $ ls ./agencyB_send
 cert_127.0.0.1_30302.crt cert_127.0.0.1_30303.crt peers.txt # 从左至右分别为需要交互给机构A的节点证书，节点连接文件
 # 交换证书与peers至机构A
-generator-B$ cp -r ./agencyB_send ~/generator-A/
-generator-B$ cp -r ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
+generator-B$ cp ./agencyB_send/cert* ~/generator-A/meta/
+generator-B$ cp ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
 ```
 
 ### 机构A修改配置文件
@@ -190,7 +218,15 @@ $ cat > ./conf/node_deployment.ini << EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30300
 channel_listen_port=20200
@@ -212,7 +248,15 @@ EOF
 group_id=1
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30300
 channel_listen_port=20200
@@ -232,7 +276,7 @@ jsonrpc_listen_port=8546
 # 机构A生成交换文件
 generator-A$ ./generator --generate_all_certificates ./agencyA_send
 # 由于B机构不需要生成创世区块，因此只需交换peers至机构B
-generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
+generator-A$ cp ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
 ### 机构A生成群组1创世区块
@@ -272,9 +316,6 @@ node3=127.0.0.1:30303
 ```
 
 ```bash
-# 将机构B证书放置于meta文件夹
-generator-A$ cp ./agencyB_send/* ./meta/
-
 # 生成群组1群组创世区块
 generator-A$ ./generator --create_group_genesis ./group
 # 将群组1创世区块发送给机构B
@@ -313,6 +354,12 @@ generator-B$ cat ./meta/peersA.txt
 generator-B$ ./generator --build_install_package ./meta/peersA.txt ./nodeB
 # 启动节点
 generator-B$ bash ./nodeB/start_all.sh
+```
+
+```eval_rst
+.. note::
+
+    节点启动只需要推送对应ip的node文件夹即可，如127.0.0.1的服务器，只需node_127.0.0.1_port对应的节点配置文件夹。多机部署时，只需要将生成的节点文件夹推送至对应服务器即可。
 ```
 
 ### 查看群组1节点运行状态
@@ -355,6 +402,7 @@ $ cd ~/generator
 $ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-C
 $ cp ./meta/fisco-bcos ~/generator-C/meta
 # 初始化机构C机构证书
+# 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
 $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
 ```
@@ -367,7 +415,7 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/ag
 # 请在~/generator-A目录下执行下述命令
 $ cd ~/generator-A
 # 交换证书与peers至机构C
-generator-A$ cp -r ./agencyA_send ~/generator-C/
+generator-A$ cp -r ./agencyA_send/cert* ~/generator-C/meta/
 generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/meta/peersA.txt
 ```
 
@@ -383,7 +431,15 @@ $ cat > ./conf/node_deployment.ini << EOF
 group_id=2
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30304
 channel_listen_port=20204
@@ -405,7 +461,15 @@ EOF
 group_id=2
 
 [node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
 p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
 rpc_ip=127.0.0.1
 p2p_listen_port=30304
 channel_listen_port=20204
@@ -467,12 +531,10 @@ node3=127.0.0.1:30305
 ```
 
 ```bash
-# 将机构A证书放置于meta文件夹
-generator-C$ cp ./agencyA_send/* ./meta/
 # 生成群组2创世区块
-generator-C$ ./generator --create_group_genesis ./data
+generator-C$ ./generator --create_group_genesis ./group
 # 将群组2创世区块发送给机构A
-generator-C$ cp ./data/group.2.genesis ~/generator-A/meta/
+generator-C$ cp ./group/group.2.genesis ~/generator-A/meta/
 
 ```
 
