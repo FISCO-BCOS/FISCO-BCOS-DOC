@@ -1,15 +1,5 @@
 # 版本及兼容
 
-```eval_rst
-.. toctree::
-   :maxdepth: 1
-   
-   2.0-rc1.md
-   2.0-rc2.md
-```
-
-
-
 ***
 
 **【FISCO BCOS 1 系列】**
@@ -18,7 +8,7 @@
 
 ***
 
-**[[FISCO BCOS 2.0.0-rc1](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1)】**
+**【[FISCO BCOS 2.0.0-rc1](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1)】**
 
 **新增特性**
 
@@ -75,6 +65,18 @@ grep "supported_version" nodes/127.0.0.1/node0/config.ini
 
 ```ini
 supported_version=2.0.0-rc2
+```
+
+***
+
+**点击链接跳转至相应版本变更描述、兼容及升级说明**
+
+```eval_rst
+.. toctree::
+   :maxdepth: 1
+   
+   2.0-rc1.md
+   2.0-rc2.md
 ```
 
 
