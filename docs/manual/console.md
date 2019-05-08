@@ -1180,7 +1180,7 @@ Insert OK, 1 row affected.
 ```text
 # 查询包含所有字段的记录
 select * from t_demo where name = fruit
-{_hash_=3887f863d15d65c10eb519266d8a994d65898fcce46f606c641da43729402bc2, _id_=0, _num_=3, _status_=1, item_id=1, item_name=apple1, name=fruit}
+{_id_=0, _status_=1, item_id=1, item_name=apple1, name=fruit}
 1 row in set.
 
 # 查询包含指定字段的记录
@@ -1194,24 +1194,23 @@ Insert OK, 1 row affected.
 
 # 使用and关键字连接多个查询条件
 [group:1]> select * from t_demo where name = fruit and item_name = apple2
-{_hash_=781a86e64054052637bb7b32b3676e8ed3e66d28235bba027432a6e8d7ebf91e, _id_=2, _num_=10, _status_=0, item_id=2, item_name=apple2, name=fruit}
+{_id_=2, _status_=0, item_id=2, item_name=apple2, name=fruit}
 1 row in set.
 
 # 使用limit字段，查询第1行记录，没有提供偏移量默认为0
 [group:1]> select * from t_demo where name = fruit limit 1
-{_hash_=3887f863d15d65c10eb519266d8a994d65898fcce46f606c641da43729402bc2, _id_=1, _num_=3, _status_=0, item_id=1, item_name=apple1, name=fruit}
+{_id_=1, _status_=0, item_id=1, item_name=apple1, name=fruit}
 1 row in set.
 
 # 使用limit字段，查询第2行记录，偏移量为1
 [group:1]> select * from t_demo where name = fruit limit 1,1
-{_hash_=781a86e64054052637bb7b32b3676e8ed3e66d28235bba027432a6e8d7ebf91e, _id_=2, _num_=4, _status_=1, item_id=2, item_name=apple2, name=fruit}
+{_id_=2, _status_=1, item_id=2, item_name=apple2, name=fruit}
 1 rows in set.
 ```
 **注意：**
 - 查询记录sql语句必须在where子句中提供表的主键字段值。
 - 关系型数据库中的limit字段可以使用，提供两个参数，分别offset(偏移量)和记录数(count)。
 - 使用*号可以查询到表的系统字段(区块链底层自动添加的字段)，分别如下：
-  - `_hash_`: 插入该记录时交易所在区块的区块哈希值。
   - `_id_`: 自增字段。
   - `_status_`: 标志位，0表示正常状态，1表示删除状态。
 - where条件子句只支持and关键字，其他or、in、like、inner、join，union以及子查询、多表联合查询等均不支持。
