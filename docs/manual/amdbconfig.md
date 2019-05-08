@@ -189,7 +189,7 @@ cd AMDB;gradle build
 ```
 
 ## 配置AMDB代理
-amdb与节点连接过程，amdb是client,节点是server，启动过程是amdb主动连接节点，节点无需配置，amdb需要通过证书准入。因此，配置涉及到证书及配置文件配置。
+amdb与节点连接过程，amdb是client,节点是server，启动过程是amdb主动连接节点，节点只需要配置AMDB关注的topic即可，关于topic的介绍请参考[AMOP](./amop_protocol.md)，amdb需要通过证书准入。
 ### 证书配置
 ```bash
 cp ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/AMDB/dist/conf/
@@ -209,14 +209,14 @@ cp AMDB/dist/ dist_Group2_C -Rf
 ```
 经过上述步骤，可以看到~/fisco目录的文件结构如下：
 ```
-drwxrwxr-x 8 app app  4096 May  7 15:53 AMDB
--rwxrw-r-- 1 app app 37539 May  7 14:58 build_chain.sh
-drwxrwxr-x 5 app app  4096 May  7 15:58 dist_Group1_A
-drwxrwxr-x 5 app app  4096 May  7 15:58 dist_Group1_B
-drwxrwxr-x 5 app app  4096 May  7 15:59 dist_Group2_B
-drwxrwxr-x 5 app app  4096 May  7 15:59 dist_Group2_C
--rw-rw-r-- 1 app app    68 May  7 14:59 ipconf
-drwxrwxr-x 4 app app  4096 May  7 15:08 nodes
+drwxrwxr-x 8 fisco fisco  4096 May  7 15:53 AMDB
+-rwxrw-r-- 1 fisco fisco 37539 May  7 14:58 build_chain.sh
+drwxrwxr-x 5 fisco fisco  4096 May  7 15:58 dist_Group1_A
+drwxrwxr-x 5 fisco fisco  4096 May  7 15:58 dist_Group1_B
+drwxrwxr-x 5 fisco fisco  4096 May  7 15:59 dist_Group2_B
+drwxrwxr-x 5 fisco fisco  4096 May  7 15:59 dist_Group2_C
+-rw-rw-r-- 1 fisco fisco    68 May  7 14:59 ipconf
+drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 ```
 
 ### DB创建
