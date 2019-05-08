@@ -47,10 +47,10 @@ $ sudo apt-get install -y openssl libssl-dev curl
 
 星形区块链组网如下：
 
-- `agencyA`：同时属于`group1、group2、group3`，包括两个节点，节点IP均为`127.0.0.1`；
-- `agencyB`：属于`group1`，包括两个节点，节点IP均为`127.0.0.1`；
-- `agencyC`：属于`group2`，包括两个节点，节点IP均为`127.0.0.1`；
-- `agencyD`：属于`group3`，包括两个节点，节点IP均为`127.0.0.1`。
+- `agencyA`：在`127.0.0.1`上有2个节点，同时属于`group1、group2、group3`；
+- `agencyB`：在`127.0.0.1`上有2个节点，属于`group1`；
+- `agencyC`：在`127.0.0.1`上有2个节点，属于`group2`；
+- `agencyD`：在`127.0.0.1`上有2个节点，属于`group3`。
 
 ```eval_rst
 .. important::
@@ -190,7 +190,7 @@ ubuntu16      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/ubu
 ```
 
 ```bash
-# 查看node0 group1是否正常共识
+# 查看node0 group1是否正常共识（Ctrl+c退回命令行）
 $ tail -f node0/log/* | grep "g:1.*++" 
 info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=72254a42....
 
@@ -250,7 +250,7 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
     使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
 ```
 
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台配置方法请参考[这里](../manual/console.html#id7)：
+**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台从node0(`127.0.0.1:20200`)本别接入三个group中，控制台配置方法请参考[这里](../manual/console.html#id7)。
 
 ```xml
 cat > ./conf/applicationContext.xml << EOF
@@ -437,6 +437,9 @@ info|2019-02-11 16:14:33.930978| [g:3][p:776][CONSENSUS][PBFT]^^^^^^^^Report,num
 **拷贝group2群组配置到node2**
 
 ```bash
+# 进入节点目录
+$ cd ~/fisco/nodes/127.0.0.1
+
 # ... 从node0拷贝group2的配置到node2...
 $ cp node0/conf/group.2.* node2/conf
 
@@ -456,7 +459,7 @@ $ cat conf/node.nodeid
 
 ```bash
 
-# ...回到控制台目录，并启动控制台...
+# ...回到控制台目录，并启动控制台（直接启动到group2）...
 $ cd ~/fisco/console && bash start.sh 2
 
 # ...通过控制台将node2加入为共识节点...
@@ -503,14 +506,10 @@ $ [group:2]> exit
 
 **通过日志查看新加入节点出块情况**
 
-通过以上操作可看出，node2已成功加入group2。
-
-> 通过`tail -f node2/log/* | grep "g:2.*++"`查看node2的group2是否共识正常：
-
 ```bash
 # 进入节点所在目录
 cd ~/fisco/nodes/127.0.0.1
-# 查看节点共识情况
+# 查看节点共识情况（Ctrl+c退回命令行）
 $ tail -f node2/log/* | grep "g:2.*++"
 info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=4,tx=0,nodeIdx=1,hash=c8a1ed9c...
 ......此处省略其他输出......
@@ -518,6 +517,7 @@ info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # 查看node2 group2出块情况：有新区块产生
 $ cat node2/log/* | grep "g:2.*Report"
 info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=3,idx=3,hash=80c98d31...,next=10,tx=1,nodeIdx=1
+# node2也Report了块高为3的区块，说明node2已经加入group2
 ```
 
 #### 停止节点
@@ -550,7 +550,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
-# 构建本机单群组四节点区块链(生产环境中，建议节点部署在不同物理机)
+# 构建本机单群组四节点区块链(生产环境中，建议每个节点部署在不同物理机上)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
 ==============================================================
@@ -590,7 +590,7 @@ ubuntu16       55047  0.8  0.0 986396  6656 pts/2    Sl   20:59   0:00 /home/ubu
 > **查看节点共识情况**
 
 ```bash
-# 查看node0共识情况
+# 查看node0共识情况（Ctrl+c退回命令行）
 $ tail -f node0/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:52.065958| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=da72649e...
 
@@ -614,18 +614,23 @@ info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 并行多组区块链每个群组的`genesis`配置文件几乎相同，但[group].id不同，为群组号。
 
 ```bash
+# 进入节点目录
+$ cd ~/fisco/multi_nodes/127.0.0.1
+
 # 拷贝group1的配置
 $ cp node0/conf/group.1.genesis group.2.genesis
 
 # 修改群组ID
 $ sed -i "s/id=1/id=2/g" group.2.genesis
 $ cat group.2.genesis | grep "id"
-    id=2
+# 已修改到    id=2
 
 # 将配置拷贝到各个节点
-$ echo node*/conf | xargs -n 1 cp -v group.2.genesis
+$ cp node0/conf/group.2.genesis node1/conf/group.2.genesis
+$ cp node0/conf/group.2.genesis node2/conf/group.2.genesis
+$ cp node0/conf/group.2.genesis node3/conf/group.2.genesis
 
-# 重启区块链
+# 重启各个节点
 $ bash stop_all.sh
 $ bash start_all.sh
 ```
@@ -633,7 +638,7 @@ $ bash start_all.sh
 ### 查看群组共识情况
 
 ```bash
-# 查看node0 group2共识情况
+# 查看node0 group2共识情况（Ctrl+c退回命令行）
 $ tail -f node0/log/* | grep "g:2.*++" 
 info|2019-02-11 21:13:28.541596| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=f3562664...
 
@@ -671,12 +676,12 @@ multi_nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20100
 
 # 进入控制台目录
 $ cd console
-# 配置证书
+# 拷贝节点证书
 $ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
 
 ```
 
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下：**
+**创建控制台配置文件`conf/applicationContext.xml`的配置如下，在node0（`127.0.0.1:20100`）上配置了两个group（group1和group2）：**
 
 ```xml
 cat > ./conf/applicationContext.xml << EOF
@@ -785,11 +790,11 @@ $[group:2]> exit
 # 切换到节点目录
 $ cd ~/fisco/multi_nodes/127.0.0.1/
 
-# 查看group1出块情况
+# 查看group1出块情况，看到Report了属于group1的块高为1的块
 $ cat node0/log/* | grep "g:1.*Report"
 info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=be961c98...,next=2,tx=1,nodeIdx=2
 
-# 查看group2出块情况
+# 查看group2出块情况，看到Report了属于group2的块高为1的块
 $ cat node0/log/* | grep "g:2.*Report"
 info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=5d006230...,next=2,tx=1,nodeIdx=2
 ```

@@ -10,7 +10,7 @@
 # Ubuntu16安装依赖
 $ sudo apt install -y openssl curl
 # 准备环境
-$ cd ~ && mkdir fisco && cd fisco
+$ cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 ```

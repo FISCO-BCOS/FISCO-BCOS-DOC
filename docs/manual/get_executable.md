@@ -73,7 +73,7 @@ $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 ```bash
 $ cd FISCO-BCOS
 $ git checkout master
-$ mkdir build && cd build
+$ mkdir -p build && cd build
 # CentOS请使用cmake3
 $ cmake ..
 # 高性能机器可添加-j4使用4核加速编译
