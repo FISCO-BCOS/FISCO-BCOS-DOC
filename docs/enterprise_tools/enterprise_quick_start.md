@@ -115,7 +115,7 @@ EOF
 ## 搭建节点
 
 ```bash
-bash ./click2start.sh ./one_click
+bash ./one_click_generator.sh ./one_click
 ```
 
 执行完毕后，./one_click文件夹结构如下：
