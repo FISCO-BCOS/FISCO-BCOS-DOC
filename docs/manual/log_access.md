@@ -66,7 +66,7 @@ easylogging++示例配置如下：
 
 ```bash
 ## 进入源码目录，新建build文件夹(设源码位于~/FISCO-BCOS路径)
-$ cd ~/FISCO-BCOS && mkdir build
+$ cd ~/FISCO-BCOS && mkdir -p build
 
 ## 关闭EASYLOG编译选项
 # ubuntu系统
@@ -108,7 +108,7 @@ fisco-bcos
 
 ```bash
 ## 进入源码目录，新建build文件夹(设源码位于~/FISCO-BCOS路径)
-$ cd ~/FISCO-BCOS && mkdir build
+$ cd ~/FISCO-BCOS && mkdir -p build
 
 ## 关闭EASYLOG编译选项
 # ubuntu系统
