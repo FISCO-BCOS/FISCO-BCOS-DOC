@@ -4,7 +4,7 @@
 
 本章主要以部署3机构2群组6节点的组网模式，为用户讲解企业级部署工具的使用方法。
 
-本章节为多机构对等部署的过程，由单机构一键生成节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
+<!-- 本章节为多机构对等部署的过程，由单机构一键生成节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md) -->
 
 ## 安装准备
 
