@@ -103,6 +103,7 @@ P2P配置示例如下：
 - `key`: 节点私钥相对于`data_path`的路径。
 - `cert`: 证书`node.crt`相对于`data_path`的路径。
 - `ca_cert`: ca证书文件路径。
+- `ca_path`: ca证书文件夹，多ca时需要。
 
 ```ini
 [network_security]
@@ -110,6 +111,7 @@ P2P配置示例如下：
     key=node.key
     cert=node.crt
     ca_cert=ca.crt
+    ;ca_path=
 ```
 
 ### 配置黑名单列表
