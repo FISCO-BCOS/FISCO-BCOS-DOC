@@ -27,7 +27,7 @@ sudo apt install -y openssl curl
 - 创建操作目录
 
 ```bash
-cd ~ && mkdir fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 ```
 
 - 下载`build_chain.sh`脚本
