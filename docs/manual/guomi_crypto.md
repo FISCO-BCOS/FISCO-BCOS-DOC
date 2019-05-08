@@ -66,8 +66,8 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 国密版本FISCO BCOS节点之间采用SSL安全通道发送和接收消息，证书主要配置项集中在如下配置项中：
 
-```bash
-[network_security] section：
+```ini
+[network_security]
 
 data_path：证书文件所在路径
 key：节点私钥相对于data_path的路径
