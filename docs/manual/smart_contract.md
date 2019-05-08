@@ -223,7 +223,7 @@ contract TableTest {
 | 地址用途 | 地址范围 |
 | --------- | --------- |
 | 以太坊precompiled | 0x0001-0x0008 |
-| 保留 | 0x0005-0x0fff |
+| 保留 | 0x0008-0x0fff |
 | FISCO BCOS precompied | 0x1000-0x1006 |
 | FISCO BCOS预留 | 0x1007-0x5000 |
 | 用户分配区间 | 0x5001 - 0xffff |

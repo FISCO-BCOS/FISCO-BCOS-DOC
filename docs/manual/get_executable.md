@@ -11,13 +11,13 @@
 
 ## docker镜像
 
-从v2.0.0版本开始，我们提供对应版本tag的docker镜像。对应于master分支，我们提供`lastest`标签的镜像，更多的docker标签[请参考这里](https://hub.docker.com/r/fiscoorg/fiscobcos)。
+从v2.0.0版本开始，我们提供对应版本tag的docker镜像。对应于master分支，我们提供`lastest`标签的镜像，更多的docker标签[请参考这里](https://hub.docker.com/r/fiscoorg/fiscobcos/tags)。
 
 build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，方便开发者部署。详情请[参考这里](build_chain.html#id4)。
 
 ```eval_rst
 .. note::
-    build_chain.sh脚本为了简单易用，启动docker使用了--network=host网络模式，实际使用中用户可能需要根据自己的网络场景定制改造。
+    build_chain.sh脚本为了简单易用，启动docker使用了 ``--network=host`` 网络模式，实际使用中用户可能需要根据自己的网络场景定制改造。
 ```
 
 ## 源码编译
@@ -40,7 +40,7 @@ FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台�
 推荐Ubuntu 16.04以上版本，16.04以下的版本没有经过测试，源码编译时依赖于编译工具和`libssl`。
 
 ```bash
-$ sudo apt install -y libssl-dev openssl cmake git build-essential autoconf texinfo
+$ sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo
 ```
 
 - CentOS
