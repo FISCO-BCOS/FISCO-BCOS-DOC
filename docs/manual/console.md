@@ -32,7 +32,7 @@
 ### 获取控制台
 
 ```bash
-$ cd ~ && mkdir fisco && cd fisco
+$ cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
@@ -625,6 +625,7 @@ Switched to group 2.
 }
 ```
 ### **getBlockHashByNumber**
+
 运行getBlockHashByNumber，通过区块高度获得区块哈希。              
 参数：           
 - 区块高度：十进制整数。
@@ -892,8 +893,10 @@ Hello,CNS2
 ```
 
 ### **addSealer**
+
 运行addSealer，将节点添加为共识节点。                                 
 参数： 
+
 - 节点nodeId
 ```text
 [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -995,6 +998,7 @@ Hello,CNS2
 }
 ```
 ### **grantUserTableManager**
+
 运行grantUserTableManager，根据用户表名和外部账号地址赋予权限。                                  
 参数： 
 - 表名
@@ -1007,6 +1011,7 @@ Hello,CNS2
 }
 ```
 ### **listUserTableManager**
+
 运行listUserTableManager，根据用户表名查询赋予的权限记录列表。                                  
 参数： 
 - 表名
@@ -1018,8 +1023,10 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeUserTableManager**
+
 运行revokeUserTableManager，根据用户表名和外部账号地址撤销权限。                                                                 
 参数： 
+
 - 表名
 - 外部账号地址
 ```text
@@ -1062,6 +1069,7 @@ Hello,CNS2
 }
 ```
 ### **grantNodeManager**
+
 运行grantNodeManager，赋予外部账号地址的节点管理权限。参数： 
 - 外部账号地址
 ```text
@@ -1082,6 +1090,7 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeNodeManager**
+
 运行revokeNodeManager，撤销外部账号地址的节点管理权限。                                                                 
 参数： 
 - 外部账号地址
@@ -1133,6 +1142,7 @@ Hello,CNS2
 }
 ```
 ### **listSysConfigManager**
+
 运行listSysConfigManager，查询拥有系统参数管理的权限记录列表。
                                   
 ```text
