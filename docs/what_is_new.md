@@ -23,7 +23,7 @@ FISCO BCOS 2.0新增了对分布式数据存储的支持，节点可将数据存
 - 世界状态的存储从原来的MPT存储结构转为分布式存储，避免了世界状态急剧膨胀导致性能下降的问题；
 - 优化了数据存储的结构，更节约存储空间。
 
-同时，2.0版本仍然兼容1.0版本的本地存储模式。更多关于存储介绍，请参考[分布式存储设计文档](./design/storage/index.html)
+同时，2.0版本仍然兼容1.0版本的本地存储模式。更多关于存储介绍，请参考[分布式存储操作手册](./manual/amdbconfig.md)
 
 ## 并行计算模型
 
@@ -88,18 +88,4 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 ## 模块重塑
 
 2.0版本对核心模块进行升级重塑，进行模块化的单元测试和端对端集成测试，支持自动化持续集成和持续部署。
-
-## Release note
-
-**FISCO BCOS 2.0 release candidate 1 ([rc1](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1))**
-
-* [群组架构](#id2)
-* [控制台](#id6)、[虚拟机](#id7)、[预编译合约](#id5)、[CRUD合约](#crud)、[密钥管理服务](#id8)、[准入控制](#id9)
-
-**FISCO BCOS 2.0 release candidate 2 ([rc2](https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2))**
-
-* [并行计算模型](#id4)
-* [分布式存储](#id3)
-
-**具体描述（版本、兼容性、升级）请参考：**[版本及兼容](./changelog/index.md)
 
