@@ -8,7 +8,7 @@
       - `并行计算模型 <../what_is_new.html#id4>`_ (`操作手册 <../manual/transaction_parallel.html>`_) (`设计文档 <../tutorial/group_use_cases.html>`_)
       - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/amdbconfig.html>`_)
 
-    **变更描述、兼容及升级说明**
+     **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc2 <./2_0_0_rc2.html>`_
 
 
@@ -23,7 +23,7 @@
       - `密钥管理服务 <../what_is_new.html#id8>`_ (`使用手册 <../manual/storage_security.html>`_)
       - `准入控制 <../what_is_new.html#id9>`_ (`设计文档 <../manual/node_management.html>`_)
 
-    **变更描述、兼容及升级说明**
+     **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc1 <./2_0_0_rc1.html>`_
 
     
