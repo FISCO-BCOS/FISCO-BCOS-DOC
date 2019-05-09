@@ -26,7 +26,7 @@
       - `FISCO BCOS 2.0 rc1 <./2.0-rc1.html>`_
 
     
-.. admonition:: `FISCO BCOS 1.0 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>`_
+.. admonition:: `FISCO BCOS 1.x Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>`_
     
     **FISCO BCOS 1.0 Releases:** https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0
 
