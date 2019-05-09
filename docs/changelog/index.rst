@@ -26,9 +26,28 @@
       - `FISCO BCOS 2.0 rc1 <./2.0-rc1.html>`_
 
     
-.. admonition:: `FISCO BCOS 1.x Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>`_
+.. admonition:: FISCO BCOS 1.x Releases
     
-    **FISCO BCOS 1.0 Releases:** https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0
+    **FISCO BCOS 1.3 Releases:**
+     - `FISCO BCOS 1.3.8 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.8>`_
+     - `FISCO BCOS 1.3.7 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.7>`_
+     - `FISCO BCOS 1.3.6 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.6>`_
+     - `FISCO BCOS 1.3.5 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.5>`_
+     - `FISCO-BCOS v1.5.0 pre-release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.5.0-pre-release>`_
+     - `FISCO BCOS 1.3.4 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.4>`_
+     - `FISCO BCOS 1.3.3 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.3>`_
+     - `FISCO BCOS 1.3.2 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.2>`_
+     - `FISCO BCOS 1.3.1 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.1>`_
+     - `FISCO BCOS 1.3.0 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.0>`_
+
+    **FISCO BCOS 1.2 Releases:**
+     - `FISCO BCOS 1.2.0 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.2.0>`_
+    
+    **FISCO BCOS 1.1 Releases:**
+     - `FISCO BCOS 1.1.0 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.1.0>`_
+
+    **FISCO BCOS 1.0 Releases:**
+     - `FISCO BCOS 1.0.0 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>`_
 
 
 .. admonition:: 查看节点和数据版本
