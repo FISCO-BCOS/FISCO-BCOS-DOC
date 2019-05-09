@@ -2,9 +2,14 @@
 版本及兼容
 ##############################################################
 
-.. admonition:: `FISCO BCOS 1.0 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>`_
-    
-    **FISCO BCOS 1.0 Releases:** https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0
+.. admonition:: `FISCO BCOS 2.0.0-rc2 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2>`_
+
+     **新增特性**
+      - `并行计算模型 <../what_is_new.html#id4>`_ (`操作手册 <../manual/transaction_parallel.html>`_ ) (`设计文档 <../tutorial/group_use_cases.html>`_ )
+      - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/amdbconfig.html>`_ )
+
+     **变更描述、兼容及升级说明**
+      - `FISCO BCOS 2.0 rc2 <./2.0-rc2.html>`_
 
 .. admonition:: `FISCO BCOS 2.0.0-rc1 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1>`_
 
@@ -20,15 +25,11 @@
      **变更描述、兼容及升级说明**
       - `FISCO BCOS 2.0 rc1 <./2.0-rc1.html>`_
 
+    
+.. admonition:: `FISCO BCOS 1.0 Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>`_
+    
+    **FISCO BCOS 1.0 Releases:** https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0
 
-.. admonition:: `FISCO BCOS 2.0.0-rc2 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2>`_
-
-     **新增特性**
-      - `并行计算模型 <../what_is_new.html#id4>`_ (`操作手册 <../manual/transaction_parallel.html>`_ ) (`设计文档 <../tutorial/group_use_cases.html>`_ )
-      - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/amdbconfig.html>`_ )
-
-     **变更描述、兼容及升级说明**
-      - `FISCO BCOS 2.0 rc2 <./2.0-rc2.html>`_
 
 .. admonition:: 查看节点和数据版本
 
@@ -39,8 +40,5 @@
 .. toctree::
    :maxdepth: 1
    
-   2.0-rc1.md
    2.0-rc2.md
-
-
-
+   2.0-rc1.md
