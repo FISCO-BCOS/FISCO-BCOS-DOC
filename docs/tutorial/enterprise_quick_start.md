@@ -81,44 +81,41 @@ $ ./meta/fisco-bcos -v
 
 在上述场景中，A机构有两个节点复用，参与到了两个群组。
 
-组网步骤如下：
+### 组网步骤如下
 
-**证书生成机构生成链证书**
+**1. 证书生成机构生成链证书**
 
-**构建group1**
+**2. 构建group1**
+
+假设机构A生成群组1创世区块
 
 ```bash
 1. 证书生成机构为机构A, B生成机构证书
 2. 机构A, B填写节点配置文件
-3. 机构A, B生成节点证书及节点连接文件 # 我们假设机构A生成群组1创世区块
+3. 机构A, B生成节点证书及节点连接文件 
 4. 机构A收集机构B节点证书与节点连接文件，机构B收集机构A节点连接文件
 5. 机构A生成group1群组创世区块，并发送给机构B
 6. 机构A, B生成节点配置文件夹，启动节点
 ```
 
-**构建group2**
+**3. 构建group2**
+
+我们假设机构C生成群组2创世区块，机构A已经在上步生成过证书
 
 ```bash
 1. 证书生成机构为机构C生成机构证书
 2. 机构C填写节点配置文件
-3. 机构C生成节点证书及节点连接文件 # 我们假设机构C生成群组2创世区块，机构A已经在上步生成过证书
+3. 机构C生成节点证书及节点连接文件
 4. 机构C收集机构A节点证书与节点连接文件，机构A收集机构C节点连接文件
 5. 机构C生成group2群组创世区块，并发送给机构A
 6. 机构C生成节点配置文件夹，启动节点，机构A将group2群组创世区块导入节点配置文件夹，从启节点
 ```
 
-```eval_rst
-.. important::
-
-    $符号前的字段含义：
-
-    generator$:证书生成机构
-
-    generator-A$:A机构
-
-    generator-B$:B机构
-
-    generator-C$:C机构
+```bash
+    教程中用generator$表示后面的命令由证书生成机构执行
+    用generator-A$表示后面的命令由机构A执行
+    用generator-B$表示后面的命令由机构B执行
+    用generator-C$表示后面的命令由机构C执行
 ```
 
 <!-- 机构A作为生成创世区块的机构，需要收集其他机构证书，并且声称自己节点时需要其他机构节点的p2p连接地址peers文件，整体流程图如下图所示：
@@ -154,7 +151,8 @@ generator$ cp ./meta/fisco-bcos ~/generator-A/meta
 generator$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
 # 查看机构证书及私钥
 generator$ ls dir_agency_ca/agencyA/
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf # 从左至右分别为机构证书、机构私钥、链证书签发机构证书中间文件、链证书、证书配置文件
+agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书签发机构证书中间文件、链证书、证书配置文件
 # 发送链证书、机构证书、机构私钥至机构A
 # 示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 generator$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
@@ -177,9 +175,8 @@ generator$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_age
 ```eval_rst
 .. important::
 
-    一条联盟链中需要用到一个根证书ca.crt，多服务器部署时不需要再次生成根证书和私钥。
+    一条联盟链中只能用到一个根证书ca.crt，多服务器部署时不要生成多个根证书和私钥。
 ```
-
 
 构建群组1时，由于机构A生成群组1创世区块需要机构B的证书文件，为简化操作，本示例优先进行机构B的相关操作。
 
@@ -317,9 +314,12 @@ jsonrpc_listen_port=8548
 # 请在~/generator-A目录下执行下述命令
 generator-A$ cd ~/generator-A
 # 机构A生成交换文件
-generator-A$ ./generator --generate_all_certificates ./agencyA_send
+generator-A$ ./generator --generate_all_certificates ./agencyA_node_info
+# 查看需要生成文件
+generator-A$ ls ./agencyA_node_info
+cert_127.0.0.1_30300.crt cert_127.0.0.1_30301.crt peers.txt # 从左至右分别为需要交互给机构A的节点证书，节点连接文件
 # 由于B机构不需要生成创世区块，因此只需交换peers至机构B
-generator-A$ cp ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
+generator-A$ cp ./agencyA_node_info/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
 ### 机构B生成并交换配置文件
@@ -328,13 +328,10 @@ generator-A$ cp ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 # 请在~/generator-B目录下执行下述命令
 $ cd ~/generator-B
 # 机构B生成交换文件
-generator-B$ ./generator --generate_all_certificates ./agencyB_send
-# 查看需要生成文件
-generator-B$ ls ./agencyB_send
-cert_127.0.0.1_30302.crt cert_127.0.0.1_30303.crt peers.txt # 从左至右分别为需要交互给机构A的节点证书，节点连接文件
+generator-B$ ./generator --generate_all_certificates ./agencyB_node_info
 # 交换证书与peers至机构A
-generator-B$ cp ./agencyB_send/cert*.crt ~/generator-A/meta/
-generator-B$ cp ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
+generator-B$ cp ./agencyB_node_info/cert*.crt ~/generator-A/meta/
+generator-B$ cp ./agencyB_node_info/peers.txt ~/generator-A/meta/peersB.txt
 ```
 
 ### 机构A生成群组1创世区块
@@ -375,9 +372,10 @@ node3=127.0.0.1:30303
 
 ```bash
 # 生成群组1群组创世区块
+# 此步会根据机构A的meta文件夹下配置的节点证书，生成group_genesis.ini配置的群组创世区块
 generator-A$ ./generator --create_group_genesis ./group
 # 将群组1创世区块发送给机构B
-generator-A$ cp ./meta/group.1.genesis ~/generator-B/meta
+generator-A$ cp ./group/group.1.genesis ~/generator-B/meta
 ```
 
 ### 机构A生成所属节点
@@ -390,6 +388,13 @@ generator-A$ cd ~/generator-A
 ```bash
 # 生成机构A所属节点
 generator-A$ ./generator --build_install_package ./meta/peersB.txt ./nodeA
+# 生成的文件夹nodeA信息如下所示
+├── monitor # monitor脚本
+├── node_127.0.0.1_30300 # 127.0.0.1服务器 端口号30300的节点配置文件夹
+├── node_127.0.0.1_30301
+├── scripts # 节点的相关工具脚本
+├── start_all.sh # 节点批量启动脚本
+└── stop_all.sh # 节点批量停止脚本
 # 启动节点
 generator-A$ bash ./nodeA/start_all.sh
 # 查看节点进程
@@ -473,8 +478,8 @@ generator$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_age
 # 请在~/generator-A目录下执行下述命令
 generator-A$ cd ~/generator-A
 # 交换证书与peers至机构C
-generator-A$ cp -r ./agencyA_send/cert*.crt ~/generator-C/meta/
-generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/meta/peersA.txt
+generator-A$ cp -r ./agencyA_node_info/cert*.crt ~/generator-C/meta/
+generator-A$ cp -r ./agencyA_node_info/peers.txt ~/generator-C/meta/peersA.txt
 ```
 
 ### 机构C修改配置文件
@@ -547,9 +552,9 @@ jsonrpc_listen_port=8550
 # 请在~/generator-C目录下执行下述命令
 generator-C$ cd ~/generator-C
 # 机构C生成交换文件
-generator-C$ ./generator --generate_all_certificates ./agencyC_send
+generator-C$ ./generator --generate_all_certificates ./agencyC_node_info
 # 交换机构Cpeers至机构A
-generator-C$ cp -r ./agencyC_send/peers.txt ~/generator-A/meta/peersC.txt
+generator-C$ cp -r ./agencyC_node_info/peers.txt ~/generator-A/meta/peersC.txt
 ```
 
 ### 机构C生成群组2创世区块
