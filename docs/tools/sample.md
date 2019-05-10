@@ -23,7 +23,7 @@ build/
 ├── stderr.log
 └── temp
 ```
-其中 1127.0.0.1_agent_genesis 即是生成的安装包.
+其中 127.0.0.1_agent_genesis 即是生成的安装包.
 
 ## 安装
 假定需要将FISCO BCOS安装在当前用户home目录下, 安装的目录名fisco-bcos。
