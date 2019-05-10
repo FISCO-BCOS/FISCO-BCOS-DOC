@@ -8,28 +8,26 @@
 
 ## 安装准备
 
-下载
+**下载**
 
 ```bash
-$ cd ~
-$ git clone https://github.com/FISCO-BCOS/generator.git
+$ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
 
-安装
+**安装**
 
 ```bash
-$ cd generator
-$ bash ./scripts/install.sh
+$ cd generator && bash ./scripts/install.sh
 ```
 
 检查是否安装成功
 
 ```bash
-$ ./generator -h
 # 若成功，输出 usage: generator xxx
+$ ./generator -h
 ```
 
-## 拉取节点二进制
+**拉取节点二进制**
 
 拉取最新fisco-bcos二进制文件到meta中
 
@@ -37,11 +35,11 @@ $ ./generator -h
 $ ./generator --download_fisco ./meta
 ```
 
-检查二进制版本
+**检查二进制版本**
 
 ```bash
-$ ./meta/fisco-bcos -v
 # 若成功，输出 FISCO-BCOS Version : x.x.x-x
+$ ./meta/fisco-bcos -v
 ```
 
 **PS**：[源码编译](../manual/get_executable.md)节点二进制的用户，只需要把编译出来的二进制放到``` meta ```文件夹下即可。
@@ -85,19 +83,51 @@ $ ./meta/fisco-bcos -v
 
 组网步骤如下：
 
+**证书生成机构生成链证书**
+
+**构建group1**
+
+```bash
+1. 证书生成机构为机构A, B生成机构证书
+2. 机构A, B填写节点配置文件
+3. 机构A, B生成节点证书及节点连接文件 # 我们假设机构A生成群组1创世区块
+4. 机构A收集机构B节点证书与节点连接文件，机构B收集机构A节点连接文件
+5. 机构A生成group1群组创世区块，并发送给机构B
+6. 机构A, B生成节点配置文件夹，启动节点
+```
+
+**构建group2**
+
+```bash
+1. 证书生成机构为机构C生成机构证书
+2. 机构C填写节点配置文件
+3. 机构C生成节点证书及节点连接文件 # 我们假设机构C生成群组2创世区块，机构A已经在上步生成过证书
+4. 机构C收集机构A节点证书与节点连接文件，机构A收集机构C节点连接文件
+5. 机构C生成group2群组创世区块，并发送给机构A
+6. 机构C生成节点配置文件夹，启动节点，机构A将group2群组创世区块导入节点配置文件夹，从启节点
+```
+
 ```eval_rst
 .. important::
 
-    使用时建议用户开启三个终端，分别代表机构A、机构B及机构C，以下操作$前表示为generator-A的为机构A进行的操作，generator-B的为机构B进行的操作，generator-C的为机构C进行的操作，没有前缀的为初始化操作。
+    $符号前的字段含义：
+
+    generator$:证书生成机构
+
+    generator-A$:A机构
+
+    generator-B$:B机构
+
+    generator-C$:C机构
 ```
 
-机构A作为生成创世区块的机构，需要收集其他机构证书，并且声称自己节点时需要其他机构节点的p2p连接地址peers文件，整体流程图如下图所示：
+<!-- 机构A作为生成创世区块的机构，需要收集其他机构证书，并且声称自己节点时需要其他机构节点的p2p连接地址peers文件，整体流程图如下图所示：
 
 ![](../../images/enterprise/agencyA.png)
 
 机构B、C不需要收集证书，只需要与其他机构交换节点的连接地址peers，整体流程如下图所示：
 
-![](../../images/enterprise/agencyOthers.png)
+![](../../images/enterprise/agencyOthers.png) -->
 
 ## 联盟链初始化
 
@@ -105,36 +135,43 @@ $ ./meta/fisco-bcos -v
 # 证书授权机构准备生成证书
 # 初始化链证书
 # 一条联盟链拥有唯一的链证书ca.crt
-$ ./generator --generate_chain_certificate ./dir_chain_ca
+generator$ ./generator --generate_chain_certificate ./dir_chain_ca
 # 查看链证书及私钥
-$ ls ./dir_chain_ca
+generator$ ls ./dir_chain_ca
 ca.crt  ca.key   cert.cnf # 从左至右分别为链证书、链私钥、证书配置文件
 ```
 
-## 机构A、B初始化
+## 机构A、B构建群组1
+
+### 初始化机构A
 
 ```bash
 # 初始化机构A
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-A
-$ cp ./meta/fisco-bcos ~/generator-A/meta
+generator$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-A
+generator$ cp ./meta/fisco-bcos ~/generator-A/meta
 # 初始化机构A机构证书
 # 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
-$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
+generator$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
 # 查看机构证书及私钥
-$ ls dir_agency_ca/agencyA/
+generator$ ls dir_agency_ca/agencyA/
 agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf # 从左至右分别为机构证书、机构私钥、链证书签发机构证书中间文件、链证书、证书配置文件
 # 发送链证书、机构证书、机构私钥至机构A
 # 示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
-$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
+generator$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
+```
+
+### 初始化机构B
+
+```bash
 # 初始化机构B
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-B
-$ cp ./meta/fisco-bcos ~/generator-B/meta
+generator$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-B
+generator$ cp ./meta/fisco-bcos ~/generator-B/meta
 # 初始化机构B机构证书
 # 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
-$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
+generator$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
 # 发送链证书、机构证书、机构私钥至机构B
 # 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
-$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
+generator$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
 ```
 
 ```eval_rst
@@ -143,9 +180,72 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/ag
     一条联盟链中需要用到一个根证书ca.crt，多服务器部署时不需要再次生成根证书和私钥。
 ```
 
-## 机构A、B构建群组1
 
 构建群组1时，由于机构A生成群组1创世区块需要机构B的证书文件，为简化操作，本示例优先进行机构B的相关操作。
+
+### 机构A修改配置文件
+
+机构A修改conf文件夹下的`node_deployment.ini`如下图所示:
+
+```bash
+# 请在~/generator-A目录下执行下述命令
+generator-A$ cd ~/generator-A
+generator-A$ cat > ./conf/node_deployment.ini << EOF
+[group]
+group_id=1
+
+[node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
+p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30300
+channel_listen_port=20200
+jsonrpc_listen_port=8545
+
+[node1]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30301
+channel_listen_port=20201
+jsonrpc_listen_port=8546
+EOF
+```
+
+<!-- 执行之后./conf/node_deployment.ini文件变为：
+
+```ini
+[group]
+group_id=1
+
+[node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
+p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30300
+channel_listen_port=20200
+jsonrpc_listen_port=8545
+
+[node1]
+p2p_ip=127.0.0.1
+rpc_ip=127.0.0.1
+p2p_listen_port=30301
+channel_listen_port=20201
+jsonrpc_listen_port=8546
+``` -->
 
 ### 机构B修改配置文件
 
@@ -182,7 +282,7 @@ jsonrpc_listen_port=8548
 EOF
 ```
 
-执行之后./conf/node_deployment.ini文件变为：
+<!-- 执行之后./conf/node_deployment.ini文件变为：
 
 ```ini
 [group]
@@ -209,92 +309,32 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
+``` -->
+
+### 机构A生成并交换配置文件
+
+```bash
+# 请在~/generator-A目录下执行下述命令
+generator-A$ cd ~/generator-A
+# 机构A生成交换文件
+generator-A$ ./generator --generate_all_certificates ./agencyA_send
+# 由于B机构不需要生成创世区块，因此只需交换peers至机构B
+generator-A$ cp ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
 ### 机构B生成并交换配置文件
 
 ```bash
+# 请在~/generator-B目录下执行下述命令
+$ cd ~/generator-B
 # 机构B生成交换文件
 generator-B$ ./generator --generate_all_certificates ./agencyB_send
 # 查看需要生成文件
-$ ls ./agencyB_send
+generator-B$ ls ./agencyB_send
 cert_127.0.0.1_30302.crt cert_127.0.0.1_30303.crt peers.txt # 从左至右分别为需要交互给机构A的节点证书，节点连接文件
 # 交换证书与peers至机构A
-generator-B$ cp ./agencyB_send/cert* ~/generator-A/meta/
+generator-B$ cp ./agencyB_send/cert*.crt ~/generator-A/meta/
 generator-B$ cp ./agencyB_send/peers.txt ~/generator-A/meta/peersB.txt
-```
-
-### 机构A修改配置文件
-
-机构A修改conf文件夹下的`node_deployment.ini`如下图所示:
-
-```bash
-# 请在~/generator-A目录下执行下述命令
-$ cd ~/generator-A
-$ cat > ./conf/node_deployment.ini << EOF
-[group]
-group_id=1
-
-[node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
-p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
-; You can check accessible addresses of your network card.
-; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
-; for more instructions.
-rpc_ip=127.0.0.1
-p2p_listen_port=30300
-channel_listen_port=20200
-jsonrpc_listen_port=8545
-
-[node1]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30301
-channel_listen_port=20201
-jsonrpc_listen_port=8546
-EOF
-```
-
-执行之后./conf/node_deployment.ini文件变为：
-
-```ini
-[group]
-group_id=1
-
-[node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
-p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
-; You can check accessible addresses of your network card.
-; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
-; for more instructions.
-rpc_ip=127.0.0.1
-p2p_listen_port=30300
-channel_listen_port=20200
-jsonrpc_listen_port=8545
-
-[node1]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30301
-channel_listen_port=20201
-jsonrpc_listen_port=8546
-```
-
-### 机构A生成并交换配置文件
-
-```bash
-# 机构A生成交换文件
-generator-A$ ./generator --generate_all_certificates ./agencyA_send
-# 由于B机构不需要生成创世区块，因此只需交换peers至机构B
-generator-A$ cp ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
 ### 机构A生成群组1创世区块
@@ -303,8 +343,8 @@ generator-A$ cp ./agencyA_send/peers.txt ~/generator-B/meta/peersA.txt
 
 ```bash
 # 请在~/generator-A目录下执行下述命令
-$ cd ~/generator-A
-$ cat > ./conf/group_genesis.ini << EOF
+generator-A$ cd ~/generator-A
+generator-A$ cat > ./conf/group_genesis.ini << EOF
 [group]
 group_id=1
 
@@ -344,7 +384,7 @@ generator-A$ cp ./meta/group.1.genesis ~/generator-B/meta
 
 ```bash
 # 请在~/generator-A目录下执行下述命令
-$ cd ~/generator-A
+generator-A$ cd ~/generator-A
 ```
 
 ```bash
@@ -416,13 +456,13 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 ```bash
 # 请回到拥有链证书及私钥的目录下操作
 # 初始化机构C
-$ cd ~/generator
-$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-C
-$ cp ./meta/fisco-bcos ~/generator-C/meta
+generator$ cd ~/generator
+generator$ git clone https://github.com/FISCO-BCOS/generator.git ~/generator-C
+generator$ cp ./meta/fisco-bcos ~/generator-C/meta
 # 初始化机构C机构证书
 # 教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥agency.key，再生成证书请求文件，向证书签发机构获取机构证书agency.crt
-$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
-$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
+generator$ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
+generator$ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
 ```
 
 ### 机构A交换配置文件
@@ -431,9 +471,9 @@ $ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/ag
 
 ```bash
 # 请在~/generator-A目录下执行下述命令
-$ cd ~/generator-A
+generator-A$ cd ~/generator-A
 # 交换证书与peers至机构C
-generator-A$ cp -r ./agencyA_send/cert* ~/generator-C/meta/
+generator-A$ cp -r ./agencyA_send/cert*.crt ~/generator-C/meta/
 generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/meta/peersA.txt
 ```
 
@@ -443,8 +483,8 @@ generator-A$ cp -r ./agencyA_send/peers.txt ~/generator-C/meta/peersA.txt
 
 ```bash
 # 请在~/generator-C目录下执行下述命令
-$ cd ~/generator-C
-$ cat > ./conf/node_deployment.ini << EOF
+generator-C$ cd ~/generator-C
+generator-C$ cat > ./conf/node_deployment.ini << EOF
 [group]
 group_id=2
 
@@ -472,7 +512,7 @@ jsonrpc_listen_port=8550
 EOF
 ```
 
-执行之后./conf/node_deployment.ini文件变为：
+<!-- 执行之后./conf/node_deployment.ini文件变为：
 
 ```ini
 [group]
@@ -499,13 +539,13 @@ rpc_ip=127.0.0.1
 p2p_listen_port=30305
 channel_listen_port=20205
 jsonrpc_listen_port=8550
-```
+``` -->
 
 ### 机构C生成配置文件
 
 ```bash
 # 请在~/generator-C目录下执行下述命令
-$ cd ~/generator-C
+generator-C$ cd ~/generator-C
 # 机构C生成交换文件
 generator-C$ ./generator --generate_all_certificates ./agencyC_send
 # 交换机构Cpeers至机构A
@@ -518,8 +558,8 @@ generator-C$ cp -r ./agencyC_send/peers.txt ~/generator-A/meta/peersC.txt
 
 ```bash
 # 请在~/generator-C目录下执行下述命令
-$ cd ~/generator-C
-$ cat > ./conf/group_genesis.ini << EOF
+generator-C$ cd ~/generator-C
+generator-C$ cat > ./conf/group_genesis.ini << EOF
 [group]
 group_id=2
 
@@ -576,7 +616,7 @@ generator-C$ bash ./nodeC/start_all.sh
 
 ```bash
 # 请在~/generator-A目录下执行下述命令
-$ cd ~/generator-A
+generator-A$ cd ~/generator-A
 # 添加群组2配置文件至已有节点
 generator-A$ ./generator --add_group ./meta/group.2.genesis ./nodeA
 # 添加机构C节点连接文件peers至已有节点
@@ -621,7 +661,7 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ```bash
 # 请在~/generator-A目录下执行下述命令
-$ cd ~/generator-A
+generator-A$ cd ~/generator-A
 # 发送群组1配置文件至机构C节点
 generator-A$ ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 # 机构A配置控制台
