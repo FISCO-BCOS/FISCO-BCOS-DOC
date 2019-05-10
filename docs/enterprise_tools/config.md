@@ -59,4 +59,22 @@ channel_listen_port=20201
 jsonrpc_listen_port=8546
 ```
 
-生成节点证书和节点配置文件夹的命令会读取改配合文件。
+生成节点证书和节点配置文件夹的命令会读取该配置文件。
+
+## 模板文件夹tpl
+
+generator的模板文件夹如下图所示：
+
+```bash
+├── applicationContext.xml # sdk配置文件模板
+├── config.ini # 节点配置文件模板
+├── config.ini.gm # 国密节点配置文件模板
+├── group.i.genesis # 群组创世区块模板
+├── group.i.ini # 群组区块配置模板
+├── start.sh  # 节点启动脚本模板
+├── start_all.sh # 节点批量启动脚本模板
+├── stop.sh # 节点停止脚本模板
+└── stop_all.sh # 节点批量停止脚本模板
+```
+
+用户如果需要修改生成节点的共识算法，配置的默认db，只需要修改模板文件`config.ini`的相关配置，在再运行相关命令，即可自定义生成相关节点。
