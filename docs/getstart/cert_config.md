@@ -31,7 +31,7 @@ cd /mydata/FISCO-BCOS/tools/scripts/
 # bash generate_sdk_cert.sh -d 机构证书的目录
 bash generate_sdk_cert.sh -d /mydata/test_agency/
 ```
-生成过程中需要输入一些列密码，测试环境的默认输入123456即可.
+生成过程中需要输入几次密码，测试环境的默认输入123456即可.
 ```bash
 bash generate_sdk_cert.sh -d /mydata/test_agency/
 Signature ok
