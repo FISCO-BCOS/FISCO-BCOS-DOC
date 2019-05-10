@@ -19,16 +19,16 @@ $ ./generate_installation_packages.sh build
 ```
 $ tree -L 1 build
 build/
-├── 127.0.0.1_with_0.0.0.0_genesis_installation_package
+├── 127.0.0.1_agent_genesis
 ├── stderr.log
 └── temp
 ```
-其中 127.0.0.1_with_0.0.0.0_genesis_installation_package 即是生成的安装包.
+其中 1127.0.0.1_agent_genesis 即是生成的安装包.
 
 ## 安装
 假定需要将FISCO BCOS安装在当前用户home目录下, 安装的目录名fisco-bcos。
 ```
-$ mv build/127.0.0.1_with_0.0.0.0_genesis_installation_package ~/fisco-bcos
+$ mv build/127.0.0.1_agent_genesis ~/fisco-bcos
 $ cd ~/fisco-bcos
 $ ./install_node.sh
 ..........
@@ -52,7 +52,7 @@ node3 is running.
 
 ## 验证  
 ```
-$ tail -f node0/log/log_2018080116.log | egrep "seal"
+$ tail -f node0/log/log_*.log | egrep "seal"
 INFO|2018-08-01 16:52:18:362|+++++++++++++++++++++++++++ Generating seal on5b14215cff11d4b8624246de63bda850bcdead20e193b24889a5dff0d0e8a3c3#1tx:0,maxtx:1000,tq.num=0time:1533113538362
 INFO|2018-08-01 16:52:22:432|+++++++++++++++++++++++++++ Generating seal on5e7589906bcbd846c03f5c6e806cced56f0a17526fb1e0c545b855b0f7722e14#1tx:0,maxtx:1000,tq.num=0time:1533113542432
 ```
