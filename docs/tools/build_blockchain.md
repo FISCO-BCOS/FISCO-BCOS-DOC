@@ -12,7 +12,6 @@ $ git clone https://github.com/FISCO-BCOS/fisco-package-build-tool.git
 fisco-package-build-tool
 ├── Changelog.md                       更新记录       
 ├── config.ini                         配置文件
-├── doc                                附加文档
 ├── ext                                拓展目录
 ├── generate_installation_packages.sh  启动shell文件
 ├── installation_dependencies          依赖目录
@@ -55,56 +54,54 @@ $ vim config.ini
 配置文件config.ini
 ```
 [common]
-* 物料包拉取FISCO-BCOS源码的github地址, 用户一般不需要修改.
+; 物料包拉取FISCO-BCOS源码的github地址.
 github_url=https://github.com/FISCO-BCOS/FISCO-BCOS.git
-* 物料包拉取FISCO-BCOS源码之后, 会将源码保存在本地的目录, 保存的目录名称为FISCO-BCOS, 默认拉取的代码会放入物料包同级的目录.
+; 物料包拉取FISCO-BCOS源码之后, 会将源码保存在本地的目录, 保存的目录名称为FISCO-BCOS.
 fisco_bcos_src_local=../
-* 需要使用FISCO-BCOS的版本号, 使用物料包时需要将该值改为需要使用FISCO-BCOS的版本号.
-* 版本号可以是FISCO-BCOS已经发布的版本之一, 链接： https://github.com/FISCO-BCOS/FISCO-BCOS/releases
-fisco_bcos_version=v1.3.7
+; 需要使用FISCO-BCOS的版本号, 使用物料包时需要将该值改为需要使用的版本号.
+; 版本号可以是FISCO-BCOS已经发布的版本之一, 链接： https://github.com/FISCO-BCOS/FISCO-BCOS/releases
+fisco_bcos_version=v1.3.8
+
+; 节点信息
+[nodes]
+; 格式为 : nodeIDX=p2p_ip listen_ip num agent
+; IDX为索引, 从0开始增加.
+; p2p_ip     => 服务器上用于p2p通信的网段的ip.
+; listen_ip  => 服务器上的监听端口, 用来接收rpc、channel的链接请求, 建议默认值为"0.0.0.0".
+; num        => 在服务器上需要启动的节点的数目.
+; agent      => 机构名称, 若是不关心机构信息, 值可以随意, 但是不可以为空.
+node0=127.0.0.1  0.0.0.0  4  agent
+
+;端口配置, 一般不用做修改, 使用默认值即可.
+[ports]
+; p2p端口
+p2p_port=30303
+; rpc端口
+rpc_port=8545
+; channel端口
+channel_port=8821
+
+; 扩容使用的一些参数
+[expand]
+genesis_follow_dir=/follow/
 
 [docker]
-* docker开关, 打开时构建的FISCO BCOS链节点为docker节点 . 0:关闭  1:打开
+; 当前是否构建docker节点的安装包. 0: 否    1：是
 docker_toggle=0
-* docker仓库地址.
+; docker仓库地址.
 docker_repository=fiscoorg/fisco-octo
-* docker镜像版本号, 使用时修改为需要的版本号.
-docker_version=v1.3.1
+; docker版本号.
+docker_version=v1.3.x-latest
 
-* 生成web3sdk证书时使用的keystore与clientcert的密码.
-* 也是生成的web3sdk配置文件applicationContext.xml中keystorePassWord与clientCertPassWord的值, 强烈建议用户修改这两个值.
+; 生成web3sdk证书时使用的keystore与clientcert的密码.
+; 也是生成的web3sdk配置文件applicationContext.xml中keystorePassWord与clientCertPassWord的值.
 [web3sdk]
 keystore_pwd=123456
 clientcert_pwd=123456
 
 [other]
-* CA拓展模式, 目前不使用
+; CA拓展, 目前不需要关心
 ca_ext=0
-
-* 扩容使用的一些参数
-[expand]
-* 扩容依赖的文件的目录,具体使用参考扩容流程
-genesis_follow_dir=/follow/
-
-* 端口配置, 一般不用做修改, 使用默认值即可, 但是要注意不要端口冲突.
-* 每个节点需要占用三个端口:p2p port、rpc port、channel port, 对于单台服务器上的节点端口使用规则, 默认配置的端口开始, 依次增长。
-[ports]
-* p2p端口
-p2p_port=30303
-* rpc端口
-rpc_port=8545
-* channel端口
-channel_port=8821
-
-* 节点信息
-[nodes]
-* 格式为 : nodeIDX=p2p_ip listen_ip num agent
-* IDX为索引, 从0开始增加.
-* p2p_ip     => 服务器上用于p2p通信的网段的ip.
-* listen_ip  => 服务器上的监听端口, 用来接收rpc、channel的链接请求, 建议默认值为"0.0.0.0".
-* num        => 在服务器上需要启动的节点的数目.
-* agent      => 机构名称, 若是不关心机构信息, 值可以随意, 但是不可以为空.
-node0=127.0.0.1  0.0.0.0  4  agent
 ``` 
 
 ###  <a name="configuration" id="configuration">配置详解</a>    
@@ -112,13 +109,13 @@ node0=127.0.0.1  0.0.0.0  4  agent
 * [common] section
 ```
 [common]
-* 物料包拉取FISCO-BCOS源码的github地址.
+; 物料包拉取FISCO-BCOS源码的github地址.
 github_url=https://github.com/FISCO-BCOS/FISCO-BCOS.git
-* 物料包拉取FISCO-BCOS源码之后, 会将源码保存在本地的目录, 保存的目录名称为FISCO-BCOS.
+; 物料包拉取FISCO-BCOS源码之后, 会将源码保存在本地的目录, 保存的目录名称为FISCO-BCOS.
 fisco_bcos_src_local=../
-* 需要使用FISCO-BCOS的版本号, 使用物料包时需要将该值改为需要使用的版本号.
-* 版本号可以是FISCO-BCOS已经发布的版本之一, 链接： https://github.com/FISCO-BCOS/FISCO-BCOS/releases
-fisco_bcos_version=v1.3.7
+; 需要使用FISCO-BCOS的版本号, 使用物料包时需要将该值改为需要使用的版本号.
+; 版本号可以是FISCO-BCOS已经发布的版本之一, 链接： https://github.com/FISCO-BCOS/FISCO-BCOS/releases
+fisco_bcos_version=v1.3.8
 ```
 
 - 物料包在构建安装包过程中(非扩容流程), 会启动一个默认的临时temp节点用来进行系统合约的部署, 将所有的节点注册到节点管理合约, 然后导出系统合约信息生成genesis.json文件。
@@ -150,22 +147,24 @@ c、判断配置文件中fisco_bcos_src_local配置的路径是否存在名为FI
 ```
 需要部署FISCO BCOS服务器上的节点配置信息。
 [nodes]
-* 格式为 : nodeIDX=p2p_ip listen_ip num agent
-* IDX为索引, 从0开始增加
-* p2p_ip     => 服务器上用于p2p通信的网段的ip
-* listen_ip  => 服务器上的监听端口, 用来接收rpc、channel的链接请求, 建议默认值为"0.0.0.0"
-* num        => 在服务器上需要启动的节点的数目
-* agent      => 机构名称, 若是不关心机构信息, 值可以随意, 但是不可以为空
+; 格式为 : nodeIDX=p2p_ip listen_ip num agent
+; IDX为索引, 从0开始增加.
+; p2p_ip     => 服务器上用于p2p通信的网段的ip.
+; listen_ip  => 服务器上的监听端口, 用来接收rpc、channel的链接请求, 建议默认值为"0.0.0.0".
+; num        => 在服务器上需要启动的节点的数目.
+; agent      => 机构名称, 若是不关心机构信息, 值可以随意, 但是不可以为空.
+node0=127.0.0.1  0.0.0.0  4  agent
 ```
 
 *  [ports] section  
 ```
+;端口配置, 一般不用做修改, 使用默认值即可.
 [ports]
-* p2p端口
+; p2p端口
 p2p_port=30303
-* rpc端口
+; rpc端口
 rpc_port=8545
-* channel端口
+; channel端口
 channel_port=8821
 ```
 fisco-bcos的每个节点需要使用3个端口,p2pport、rpcport、channelport,  [ports]配置的端口是服务器上面的第一个节点使用的端口,其他节点依次递增
