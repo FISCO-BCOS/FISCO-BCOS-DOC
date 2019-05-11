@@ -231,13 +231,10 @@ addObserver                              Add an observer node.
 addSealer                                Add a sealer node.
 call                                     Call a contract by a function and paramters.
 callByCNS                                Call a contract by a function and paramters by CNS.
-[create sql]                             Create table by sql.
-[delete sql]                             Remove records by sql.
 deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
 desc                                     Description table information.
 exit                                     Quit console.
-[insert sql]                             Insert records by sql.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
 getBlockHashByNumber                     Query block hash by block number.
@@ -284,9 +281,12 @@ revokeNodeManager                        Revoke permission for node configuratio
 revokePermissionManager                  Revoke permission for permission configuration by address.
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
-[select sql]                             Select records by sql.
 setSystemConfigByKey                     Set a system config.
 switch(s)                                Switch to a specific group by group ID.
+[create sql]                             Create table by sql.
+[delete sql]                             Remove records by sql.
+[insert sql]                             Insert records by sql.
+[select sql]                             Select records by sql.
 [update sql]                             Update records by sql.
 -------------------------------------------------------------------------------------
 ```
