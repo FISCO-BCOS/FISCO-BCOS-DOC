@@ -315,7 +315,7 @@ $ cp ~/generator_agency_B/nodes_cert/cert_127.0.0.1_30303.crt ./meta/
 
 ##### 为群组生成创世块文件
 
-修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/confihtml#d#group-genesis-ini)。
+修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/config.html#group-genesis-ini)。
 
 ``` shell
 $ cat > ./conf/group_genesis.ini << EOF
@@ -330,7 +330,7 @@ node3=127.0.0.1:30303
 EOF
 ```
 
-用[`--create_group_genesis`](../enterprise_tools/operathtml#.md#create-group-genesis-c)命令，生成创世块文件，
+用[`--create_group_genesis`](../enterprise_tools/operation.html#create-group-genesis-c)命令，生成创世块文件，
 
 ``` shell
 # ./generator --create_group_genesis 创世块文件生成目录
@@ -382,7 +382,7 @@ agency.crt agency.key ca.crt # 此三个文件必须存在
 $ cat ./conf/node_deployment.ini # 检查已经配置了需要生成的节点（本例中生成证书步骤时已配置好）
 ```
 
-用[`--build_install_package`](../enterprise_tools/operhtml#on.md#build-install-package-b)命令，生成节点
+用[`--build_install_package`](../enterprise_tools/operation.html#build-install-package-b)命令，生成节点
 
 ``` shell
 # ./generator --build_install_package 提供的peers文件 生成的节点
@@ -527,7 +527,7 @@ $ cp ~/generator_agency_C/nodes_cert/cert_127.0.0.1_30305.crt ./meta/
 
 ##### 为群组生成创世块文件
 
-修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_toolshtml#nfig.md#group-genesis-ini)。
+修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/config.html#group-genesis-ini)。
 
 ```shell
 $ cat > ./conf/group_genesis.ini << EOF
@@ -542,7 +542,7 @@ node3=127.0.0.1:30305
 EOF
 ```
 
-用[--create_group_genesis](../enterprise_tools/html#ration.md#create-group-genesis-c)命令，生成创世块文件，
+用[--create_group_genesis](../enterprise_tools/operation.html#create-group-genesis-c)命令，生成创世块文件，
 
 ```shell
 # ./generator --create_group_genesis 创世块文件生成目录
