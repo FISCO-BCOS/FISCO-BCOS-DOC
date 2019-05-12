@@ -594,7 +594,7 @@ agency.crt agency.key ca.crt # 此三个文件必须存在
 $ cat ./conf/node_deployment.ini # 检查已经配置了需要生成的节点（本例中生成证书步骤时已配置好）
 ```
 
-用[`--build_install_package`](../enterprise_toolhtml#peration.md#build-install-package-b)命令，生成节点
+用[`--build_install_package`](../enterprise_tools/peration.html#build-install-package-b)命令，生成节点
 
 ```shell
 # ./generator --build_install_package 提供的peers文件 生成的节点
@@ -631,7 +631,7 @@ EOF
 
 ##### 配置新群组
 
-用[`--add_group`](../enterprise_tohtml#/operation.md#add-group-a)命令将创世块文件导入已生成的节点目录中
+用[`--add_group`](../enterprise_tools/operation.html#add-group-a)命令将创世块文件导入已生成的节点目录中
 
 ``` shell
 $ ./generator --add_group ./meta/group.2.genesis  ./nodes
@@ -648,7 +648,7 @@ nodes/node_127.0.0.1_30301/conf/:
 group.2.ini  group.2.genesis  # 生成了此2个文件
 ```
 
-用[`--add_peers`](../enterprise_html#ls/operation.md#add-peers-p)命令修改所有需要新增群组的节点配置
+用[`--add_peers`](../enterprise_tools/operation.html#add-peers-p)命令修改所有需要新增群组的节点配置
 
 ``` shell
 $ ./generator --add_peers ./conf/peers_group2.txt ./nodes
