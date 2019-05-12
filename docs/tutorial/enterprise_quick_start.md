@@ -13,8 +13,7 @@ FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了�
 **下载**
 
 ```bash
-$ cd ~
-$ git clone https://github.com/FISCO-BCOS/generator.git
+$ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
@@ -27,8 +26,8 @@ $ bash ./scripts/install.sh # 需输入root密码
 检查是否安装成功
 
 ```bash
-$ ./generator -h
 # 若成功，输出 usage: generator xxx
+$ ./generator -h
 ```
 
 **拉取节点二进制**
@@ -39,11 +38,11 @@ $ ./generator -h
 $ ./generator --download_fisco ./meta
 ```
 
-检查二进制版本
+**检查二进制版本**
 
 ```bash
-$ ./meta/fisco-bcos -v
 # 若成功，输出 FISCO-BCOS Version : x.x.x-x
+$ ./meta/fisco-bcos -v
 ```
 
 **PS**：[源码编译](../manual/get_executable.md)节点二进制的用户，只需要用编译出来的二进制替换掉``` meta ```文件夹下的二进制即可。
@@ -229,16 +228,16 @@ p2p_ip=127.0.0.1
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
 rpc_ip=127.0.0.1
-p2p_listen_port=30300
-channel_listen_port=20200
-jsonrpc_listen_port=8545
+p2p_listen_port=30302
+channel_listen_port=20202
+jsonrpc_listen_port=8547
 
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
-p2p_listen_port=30301
-channel_listen_port=20201
-jsonrpc_listen_port=8546
+p2p_listen_port=30303
+channel_listen_port=20203
+jsonrpc_listen_port=8548
 EOF
 ```
 
@@ -444,8 +443,6 @@ $ bash start_all.sh
 # 检查进程
 $ ps -ef |grep "fisco-bcos"
 ```
-
-
 
 ### 三、新增群组：在已有区块链上新增群组2
 
