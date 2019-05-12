@@ -99,7 +99,7 @@ $ ./meta/fisco-bcos -v
    - 生成节点
    - 启动节点
 
-三、新增群组：在已有区块链上新增群组2
+**三、新增群组：在已有区块链上新增群组2**
 
 1. 证书颁发机构操作：颁发新机构证书
    - 生成机构证书
@@ -133,7 +133,7 @@ $ cp -r ~/generator ~/generator_agency_C    # 机构 C
 
 在证书颁发机构上进行操作
 
-用 [`--generate_chain_certificate`](../enterprise_tools/operation.md#generate-chain-certificate) 命令生成链证书
+用 [`--generate_chain_certificate`](../enterprise_tools/operation.html#generate-chain-certificate) 命令生成链证书
 
 ```shell
 $ cd ~/generator_agency_cert/
@@ -211,7 +211,7 @@ agency.crt agency.key ca.crt # 此三个文件必须存在
 
 ##### 生成节点证书
 
-编写机构节点配置文件`node_deployment.ini`，将本机构的所有节点配置入文件中。配置文件格式请参考[手册](../enterprise_tools/config.md#node-deployment-ini)。
+编写机构节点配置文件`node_deployment.ini`，将本机构的所有节点配置入文件中。配置文件格式请参考[手册](../enterprise_tools/config.html#node-deployment-ini)。
 
 ``` shell
 $ cat > ./conf/node_deployment.ini << EOF
@@ -315,7 +315,7 @@ $ cp ~/generator_agency_B/nodes_cert/cert_127.0.0.1_30303.crt ./meta/
 
 ##### 为群组生成创世块文件
 
-修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/config.md#group-genesis-ini)。
+修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/confihtml#d#group-genesis-ini)。
 
 ``` shell
 $ cat > ./conf/group_genesis.ini << EOF
@@ -330,7 +330,7 @@ node3=127.0.0.1:30303
 EOF
 ```
 
-用[`--create_group_genesis`](../enterprise_tools/operation.md#create-group-genesis-c)命令，生成创世块文件，
+用[`--create_group_genesis`](../enterprise_tools/operathtml#.md#create-group-genesis-c)命令，生成创世块文件，
 
 ``` shell
 # ./generator --create_group_genesis 创世块文件生成目录
@@ -382,7 +382,7 @@ agency.crt agency.key ca.crt # 此三个文件必须存在
 $ cat ./conf/node_deployment.ini # 检查已经配置了需要生成的节点（本例中生成证书步骤时已配置好）
 ```
 
-用[`--build_install_package`](../enterprise_tools/operation.md#build-install-package-b)命令，生成节点
+用[`--build_install_package`](../enterprise_tools/operhtml#on.md#build-install-package-b)命令，生成节点
 
 ``` shell
 # ./generator --build_install_package 提供的peers文件 生成的节点
@@ -527,7 +527,7 @@ $ cp ~/generator_agency_C/nodes_cert/cert_127.0.0.1_30305.crt ./meta/
 
 ##### 为群组生成创世块文件
 
-修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/config.md#group-genesis-ini)。
+修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_toolshtml#nfig.md#group-genesis-ini)。
 
 ```shell
 $ cat > ./conf/group_genesis.ini << EOF
@@ -542,7 +542,7 @@ node3=127.0.0.1:30305
 EOF
 ```
 
-用[--create_group_genesis](../enterprise_tools/operation.md#create-group-genesis-c)命令，生成创世块文件，
+用[--create_group_genesis](../enterprise_tools/html#ration.md#create-group-genesis-c)命令，生成创世块文件，
 
 ```shell
 # ./generator --create_group_genesis 创世块文件生成目录
@@ -594,7 +594,7 @@ agency.crt agency.key ca.crt # 此三个文件必须存在
 $ cat ./conf/node_deployment.ini # 检查已经配置了需要生成的节点（本例中生成证书步骤时已配置好）
 ```
 
-用[`--build_install_package`](../enterprise_tools/operation.md#build-install-package-b)命令，生成节点
+用[`--build_install_package`](../enterprise_toolhtml#peration.md#build-install-package-b)命令，生成节点
 
 ```shell
 # ./generator --build_install_package 提供的peers文件 生成的节点
@@ -631,7 +631,7 @@ EOF
 
 ##### 配置新群组
 
-用[`--add_group`](../enterprise_tools/operation.md#add-group-a)命令将创世块文件导入已生成的节点目录中
+用[`--add_group`](../enterprise_tohtml#/operation.md#add-group-a)命令将创世块文件导入已生成的节点目录中
 
 ``` shell
 $ ./generator --add_group ./meta/group.2.genesis  ./nodes
@@ -648,7 +648,7 @@ nodes/node_127.0.0.1_30301/conf/:
 group.2.ini  group.2.genesis  # 生成了此2个文件
 ```
 
-用[`--add_peers`](../enterprise_tools/operation.md#add-peers-p)命令修改所有需要新增群组的节点配置
+用[`--add_peers`](../enterprise_html#ls/operation.md#add-peers-p)命令修改所有需要新增群组的节点配置
 
 ``` shell
 $ ./generator --add_peers ./conf/peers_group2.txt ./nodes
