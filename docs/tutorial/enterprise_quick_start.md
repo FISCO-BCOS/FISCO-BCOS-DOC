@@ -2,7 +2,7 @@
 
 FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了保证机构的秘钥安全，企业级部署工具提供了一种机构间相互合作的的搭链方式。
 
-企业级部署工具与[```build_chain.sh```](group_use_cases.md)不同。``` build_chain.sh ```面向于初学者和开发者。为了简单，``` build_chain.sh ```牺牲了实际生产环境中需要的安全性和功能的全面性。
+企业级部署工具与[```build_chain.sh```](group_use_cases.md)不同。``` build_chain.sh ```面向于初学者和开发者。为了简单，``` build_chain.sh ```未考虑了实际生产环境中需要的安全性和功能的全面性。
 
 本章以部署6节点3机构2群组的组网模式，演示企业级部署工具的使用方法。具体使用说明，请参考：[FISCO BCOS企业级部署工具](../enterprise_tools/index.md)。
 
@@ -134,14 +134,14 @@ $ cp -r ~/generator ~/generator_agency_C    # 机构 C
 
 用 [`--generate_chain_certificate`](../enterprise_tools/operation.html#generate-chain-certificate) 命令生成链证书
 
-```shell
+```bash
 $ cd ~/generator_agency_cert/
 $ ./generator --generate_chain_certificate ./dir_chain_ca #生成到dir_chain_ca目录下
 ```
 
 查看链证书
 
-```shell
+```bash
 $ ls ./dir_chain_ca
 ca.crt  ca.key   cert.cnf #链证书、链私钥、证书配置文件
 ```
@@ -452,7 +452,7 @@ $ ps -ef |grep "fisco-bcos"
 
 在证书颁发机构上进行操作，与生成机构A、B的步骤相同
 
-```shell
+```bash
 $ cd ~/generator_agency_cert/
 # 生成证书
 $ ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
@@ -515,7 +515,7 @@ $ cd ~/generator_agency_C/
 
 根据搭链拓扑结构，收集群组1中包含的4个节点的证书
 
-```shell
+```bash
 $ cp ~/generator_agency_A/nodes_cert/cert_127.0.0.1_30300.crt ./meta/
 $ cp ~/generator_agency_A/nodes_cert/cert_127.0.0.1_30301.crt ./meta/
 $ cp ~/generator_agency_C/nodes_cert/cert_127.0.0.1_30304.crt ./meta/
@@ -526,7 +526,7 @@ $ cp ~/generator_agency_C/nodes_cert/cert_127.0.0.1_30305.crt ./meta/
 
 修改创世块文件配置`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/config.html#group-genesis-ini)。
 
-```shell
+```bash
 $ cat > ./conf/group_genesis.ini << EOF
 [group]
 group_id=2
@@ -541,14 +541,14 @@ EOF
 
 用[--create_group_genesis](../enterprise_tools/operation.html#create-group-genesis-c)命令，生成创世块文件，
 
-```shell
+```bash
 # ./generator --create_group_genesis 创世块文件生成目录
 $ ./generator --create_group_genesis ./group2
 ```
 
 查看生成的文件
 
-```shell
+```bash
 $ ls ./group2
 group.2.genesis # 自动命名规则：group_id为n命名为 group.n.genesis
 ```
@@ -557,7 +557,7 @@ group.2.genesis # 自动命名规则：group_id为n命名为 group.n.genesis
 
 将创世块文件分发给**所有**属于此组的机构，放到meta下
 
-```shell
+```bash
 $ cp ./group2/group.2.genesis ~/generator_agency_A/meta/
 $ cp ./group2/group.2.genesis ~/generator_agency_C/meta/
 ```
@@ -585,7 +585,7 @@ EOF
 
 检查依赖的文件
 
-```shell
+```bash
 $ ls ./meta/
 agency.crt agency.key ca.crt # 此三个文件必须存在
 $ cat ./conf/node_deployment.ini # 检查已经配置了需要生成的节点（本例中生成证书步骤时已配置好）
@@ -593,14 +593,14 @@ $ cat ./conf/node_deployment.ini # 检查已经配置了需要生成的节点（
 
 用[`--build_install_package`](../enterprise_tools/peration.html#build-install-package-b)命令，生成节点
 
-```shell
+```bash
 # ./generator --build_install_package 提供的peers文件 生成的节点
 $ ./generator --build_install_package ./conf/peers_group2.txt ./nodes
 ```
 
 ##### 启动节点
 
-```shell
+```bash
 $ cd ./nodes
 $ bash start_all.sh
 node_127.0.0.1_30304 start successfully # 节点4成功启动
