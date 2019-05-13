@@ -2,8 +2,6 @@
 
 FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了保证机构的秘钥安全，企业级部署工具提供了一种机构间相互合作的的搭链方式。
 
-企业级部署工具与[```build_chain.sh```](group_use_cases.md)不同。``` build_chain.sh ```面向于初学者和开发者。为了简单，``` build_chain.sh ```未考虑了实际生产环境中需要的安全性和功能的全面性。
-
 本章以部署6节点3机构2群组的组网模式，演示企业级部署工具的使用方法。具体使用说明，请参考：[FISCO BCOS企业级部署工具](../enterprise_tools/index.md)。
 
 本章节为多机构对等部署的过程，由单机构一键生成节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
