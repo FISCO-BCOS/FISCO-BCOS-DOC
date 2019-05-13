@@ -179,7 +179,7 @@ function disableParallel() public
 发送并行交易 ``` set() ```
 
 ```shell
-0x4833dd374db41211eb88e2b618e967f8bdce76711792c394d693f7a98e399b4f
+[group:1]> call ParallelOk.sol 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 set "jimmyshi" 100000
 ```
 
 发送并行交易 ``` transfer() ```
