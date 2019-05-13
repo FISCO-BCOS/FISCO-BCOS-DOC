@@ -674,7 +674,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `gasUsed`: `string` - 交易消耗的gas     
     - `logs`: `array` - 交易产生的log               
     - `logsBloom`: `string` - log的布隆过滤器值      
-    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#)    
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)    
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希          
     - `transactionIndex`: `string` - 交易序号
