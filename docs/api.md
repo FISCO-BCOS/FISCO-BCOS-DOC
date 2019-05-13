@@ -556,7 +556,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 返回根据区块高度查询的区块信息     
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)       
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)       
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)         
 ### 返回值          
 见[getBlockByHash](./api.html#getblockbyhash)  
@@ -572,7 +572,7 @@ Result见[getBlockByHash](./api.html#getblockbyhash)
 返回根据区块高度查询的区块哈希          
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)                  
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)                  
 ### 返回值          
 - `blockHash`: `string` - 区块哈希         
 - 示例          
@@ -648,7 +648,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 返回根据区块高度和交易序号查询的交易信息
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)          
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
 见[getTransactionByHash](./api.html#gettransactionbyhash)            
