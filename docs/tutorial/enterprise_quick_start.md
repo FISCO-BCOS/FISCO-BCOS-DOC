@@ -2,30 +2,28 @@
 
 FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了保证机构的秘钥安全，企业级部署工具提供了一种机构间相互合作的的搭链方式。
 
-本章以部署6节点3机构2群组的组网模式，演示企业级部署工具的使用方法。具体使用说明，请参考：[FISCO BCOS企业级部署工具](../enterprise_tools/index.md)。
-
-本章节为多机构对等部署的过程，由单机构一键生成节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
+本章以部署6节点3机构2群组的组网模式，演示企业级部署工具的使用方法。具体使用说明，请参考：[操作手册](../enterprise_tools/index.md)
 
 ## 下载安装
 
 **下载**
 
 ```bash
-$ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
 
+需输入root密码
+
 ```bash
-$ cd generator
-$ bash ./scripts/install.sh # 需输入root密码
+cd generator && bash ./scripts/install.sh
 ```
 
-检查是否安装成功
+检查是否安装成功，若成功，输出 usage: generator xxx
 
 ```bash
-# 若成功，输出 usage: generator xxx
-$ ./generator -h
+./generator -h
 ```
 
 **拉取节点二进制**
@@ -33,14 +31,15 @@ $ ./generator -h
 拉取最新fisco-bcos二进制文件到meta中
 
 ```bash
-$ ./generator --download_fisco ./meta
+./generator --download_fisco ./meta
 ```
 
 **检查二进制版本**
 
+若成功，输出 FISCO-BCOS Version : x.x.x-x
+
 ```bash
-# 若成功，输出 FISCO-BCOS Version : x.x.x-x
-$ ./meta/fisco-bcos -v
+./meta/fisco-bcos -v
 ```
 
 **PS**：[源码编译](../manual/get_executable.md)节点二进制的用户，只需要用编译出来的二进制替换掉``` meta ```文件夹下的二进制即可。
@@ -81,13 +80,13 @@ $ ./meta/fisco-bcos -v
 
 **一、初始化链证书**
 
-**二、生成群组1：搭建包含群组1的区块链**
+**二、生成第一个群组：搭建包含群组1的区块链**
 
 1. 证书颁发机构操作：颁发机构证书
    - 生成机构证书
    - 发送证书
 2. 机构间独立操作：生成节点证书
-3. 任意选取其中一个机构进行操作：为群组生成创世块
+3. 选取其中一个机构进行操作：为群组生成创世块
    - 收集群组内所有节点证书
    - 为群组生成创世块文件
    - 分发创世块文件
@@ -105,7 +104,7 @@ $ ./meta/fisco-bcos -v
 
 **四、新增群组：在已有区块链上新增群组2**
 
-1. 任意选取其中一个机构进行操作：为群组生成创世块
+1. 选取其中一个机构进行操作：为群组生成创世块
    - 收集群组内所有节点证书
    - 为群组生成创世块文件
    - 分发创世块文件
@@ -120,7 +119,7 @@ $ ./meta/fisco-bcos -v
 
 ## 具体流程
 
-为了操作简洁，本示例所有操作在同一台机器上进行，用不同的目录模拟不同的机构环境。进行了“[下载安装]()”后，请将generator复制到对应机构的generator目录中。
+为了操作简洁，本示例所有操作在同一台机器上进行，用不同的目录模拟不同的机构环境。用文件复制操作来模拟网络的发送。进行了“[下载安装]()”后，请将generator复制到对应机构的generator目录中。
 
 ``` shell
 $ cp -r ~/generator ~/generator_agency_cert # 证书颁发机构
@@ -147,7 +146,7 @@ $ ls ./dir_chain_ca
 ca.crt  ca.key   cert.cnf #链证书、链私钥、证书配置文件
 ```
 
-### 二、生成群组：搭建包含群组1的区块链
+### 二、生成第一个群组：搭建包含群组1的区块链
 
 根据示例的节点组网拓扑结构，搭建区块链。首先生成一个包含群组1的区块链。群组1包含机构A和机构B的所有节点。
 
@@ -296,7 +295,7 @@ $ ./generator --generate_all_certificates ./nodes_cert
 
 #### 3. 选取一个机构进行操作：为群组生成创世块
 
-任意选取此组涉及到机构的其中之一即可，组1有A、B两机构，此处**选取机构A**为例。
+协商选取一个机构为当前群组生成创世区块。组1有A、B两机构，此处**选取机构A**为例。一个群组只有一个创世区块。
 
 ``` shell
 $ cd ~/generator_agency_A/
@@ -508,7 +507,7 @@ $ ./generator --generate_all_certificates ./nodes_cert
 
 #### 1. 选取一个机构进行操作：为群组生成创世块
 
-任意选取一个机构操作即可，此处以选取机构C为例。
+协商选取一个机构为当前群组生成创世区块。此处以选取机构C为例。
 
 ``` shell
 $ cd ~/generator_agency_C/
