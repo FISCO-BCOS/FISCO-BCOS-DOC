@@ -326,7 +326,7 @@ jsonrpc_listen_port=8548
 EOF
 ```
 
-### 机构A生成并交换配置文件
+### 机构A生成并发送节点信息
 
 在~/generator-A目录下执行下述命令
 
@@ -334,7 +334,7 @@ EOF
 cd ~/generator-A
 ```
 
-机构A生成交换文件，此步需要用到上述配置的`node_deployment.ini`，及机构meta文件夹下的机构证书与私钥：
+机构A生成节点证书及P2P连接信息文件，此步需要用到上述配置的`node_deployment.ini`，及机构meta文件夹下的机构证书与私钥，机构A生成节点证书及P2P连接信息文件
 
 ```bash
 ./generator --generate_all_certificates ./agencyA_node_info
@@ -352,13 +352,13 @@ ls ./agencyA_node_info
 cert_127.0.0.1_30300.crt cert_127.0.0.1_30301.crt peers.txt
 ```
 
-由于B机构不需要生成创世区块，不需要节点证书，因此只需要交换节点P2P连接地址文件至机构B
+机构生成节点时需要指定其他节点的节点P2P连接地址，因此，A机构需将节点P2P连接地址文件发送至机构B
 
 ```bash
 cp ./agencyA_node_info/peers.txt ~/generator-B/meta/peersA.txt
 ```
 
-### 机构B生成并交换配置文件
+### 机构B生成并发送节点信息
 
 在~/generator-B目录下执行下述命令
 
@@ -366,21 +366,21 @@ cp ./agencyA_node_info/peers.txt ~/generator-B/meta/peersA.txt
 cd ~/generator-B
 ```
 
-机构B生成交换文件：
+机构B生成节点证书及P2P连接信息文件：
 
 ```bash
 ./generator --generate_all_certificates ./agencyB_node_info
 ```
 
-示例中由机构A生成群组创世区块，因此需要机构B的节点证书和节点P2P连接地址文件，将上述文件发送至机构A
+生成创世区块的机构需要节点证书，示例中由A机构生成创世区块，因此B机构除了发送节点P2P连接地址文件外，还需发送节点证书至机构A
 
-交换证书
+发送证书
 
 ```bash
 cp ./agencyB_node_info/cert*.crt ~/generator-A/meta/
 ```
 
-交换节点P2P连接地址文件
+发送节点P2P连接地址文件
 
 ```bash
 cp ./agencyB_node_info/peers.txt ~/generator-A/meta/peersB.txt
@@ -409,11 +409,12 @@ node3=127.0.0.1:30303
 EOF
 ```
 
-执行之后./conf/group_genesis.ini文件变为：
+命令执行之后会修改./conf/group_genesis.ini文件：
 
 ```ini
 ;命令解释
 [group]
+;群组id
 group_id=1
 
 [nodes]
@@ -429,7 +430,7 @@ node3=127.0.0.1:30303
 
 教程中选择机构A生成群组创世区块，实际生产中可以通过联盟链委员会协商选择。
 
-此步会根据机构A的meta文件夹下配置的节点证书，生成group_genesis.ini配置的群组创世区块。
+此步会根据机构A的meta文件夹下配置的节点证书，生成group_genesis.ini配置的群组创世区块，教程中需要机构A的meta下有名为`cert_127.0.0.1_30300.crt`，`cert_127.0.0.1_30301.crt`，`cert_127.0.0.1_30302.crt`，`cert_127.0.0.1_30303.crt`的节点证书，此步需要用到机构B的节点证书。
 
 ```bash
 ./generator --create_group_genesis ./group
@@ -457,8 +458,14 @@ cd ~/generator-A
 ./generator --build_install_package ./meta/peersB.txt ./nodeA
 ```
 
+查看生成节点配置文件夹：
+
 ```bash
-# 命令解释
+ls ./nodeA
+```
+
+```bash
+# 命令解释 此处采用tree风格显示
 # 生成的文件夹nodeA信息如下所示，
 ├── monitor # monitor脚本
 ├── node_127.0.0.1_30300 # 127.0.0.1服务器 端口号30300的节点配置文件夹
@@ -590,9 +597,9 @@ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agen
 
 接下来，机构C需要与A进行新群组建立操作，示例中以C生成创世区块为例。
 
-### 机构A交换配置文件
+### 机构A发送节点信息
 
-由于机构A已经生成过节点证书及peers文件，操作如下：
+由于机构A已经生成过节点证书及peers文件，只需将之前生成的节点P2P连接信息以及节点证书发送至机构C，操作如下：
 
 在~/generator-A目录下执行下述命令
 
@@ -602,13 +609,13 @@ cd ~/generator-A
 
 示例中由机构C生成群组创世区块，因此需要机构A的节点证书和节点P2P连接地址文件，将上述文件发送至机构C
 
-交换证书
+发送证书
 
 ```bash
 cp ./agencyA_node_info/cert*.crt ~/generator-C/meta/
 ```
 
-交换节点P2P连接地址文件
+发送节点P2P连接地址文件
 
 ```bash
 cp ./agencyA_node_info/peers.txt ~/generator-C/meta/peersA.txt
@@ -653,7 +660,7 @@ jsonrpc_listen_port=8550
 EOF
 ```
 
-### 机构C生成并交换配置文件
+### 机构C生成并发送节点信息
 
 在~/generator-C目录下执行下述命令
 
@@ -661,7 +668,7 @@ EOF
 cd ~/generator-C
 ```
 
-机构C生成交换文件：
+机构C生成节点证书及P2P连接信息文件：
 
 ```bash
 ./generator --generate_all_certificates ./agencyC_node_info
@@ -679,7 +686,7 @@ ls ./agencyC_node_info
 cert_127.0.0.1_30304.crt cert_127.0.0.1_30305.crt peers.txt
 ```
 
-由于A机构不需要生成创世区块，不需要机构C节点证书，因此只需要交换节点P2P连接地址文件至机构A
+机构生成节点时需要指定其他节点的节点P2P连接地址，因此，C机构需将节点P2P连接地址文件发送至机构A
 
 ```bash
 cp ./agencyC_node_info/peers.txt ~/generator-A/meta/peersC.txt
@@ -708,7 +715,7 @@ node3=127.0.0.1:30305
 EOF
 ```
 
-执行之后./conf/group_genesis.ini文件变为：
+命令执行之后会修改./conf/group_genesis.ini文件：
 
 ```ini
 ;命令解释
@@ -858,55 +865,15 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 cd ~/generator-A
 ```
 
+### 发送群组1创世区块至机构C
+
 发送群组1配置文件至机构C节点：
 
 ```bash
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-机构A配置控制台或sdk，教程中以控制台为例：
-
-注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，用户可以直接启动控制台，启动前请确保已经安装java
-
-```bash
-./generator --download_console ./
-```
-
-机构A使用控制台加入机构C节点为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
-
-查看机构C节点nodeid：
-
-```bash 
-cat ~/generator-C/nodeC/node_127.0.0.1_30304/conf/node.nodeid
-```
-
-```bash
-# 命令解释
-# 可以看到如下nodeid
-ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
-```
-
-启动控制台：
-
-```bash
-cd ./console && bash ./start.sh 1
-```
-
-使用控制台`addObserver`命令将节点注册为观察节点：
-
-```bash
-$ [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
-{
-	"code":0,
-	"msg":"success"
-}
-```
-
-退出控制台：
-
-```bash
-$ [group:1]> exit
-```
+当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需从启节点。
 
 重启机构C节点:
 
@@ -918,7 +885,124 @@ bash ~/generator-C/nodeC/stop_all.sh
 bash ~/generator-C/nodeC/start_all.sh
 ```
 
-经过上述操作，机构C的节点加入group1成为了观察节点，此时机构C的节点只能同步group1的数据块，不参与共识，等待机构C节点块高与group1其他节点同步后，再通过[控制台](../manual/console.md)`addSealer`指令将机构C节点变更为group1的记账节点
+### 配置控制台
+
+机构A配置控制台或sdk，教程中以控制台为例：
+
+注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，用户可以直接启动控制台，启动前请确保已经安装java
+
+```bash
+./generator --download_console ./
+```
+
+### 查看机构C节点4信息
+
+机构A使用控制台加入机构C节点4为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
+
+查看机构C节点nodeid：
+
+```bash
+cat ~/generator-C/nodeC/node_127.0.0.1_30304/conf/node.nodeid
+```
+
+```bash
+# 命令解释
+# 可以看到类似于如下nodeid，控制台使用时需要传入该参数
+ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+### 使用控制台注册观察节点
+
+启动控制台：
+
+```bash
+cd ./console && bash ./start.sh 1
+```
+
+使用控制台`addObserver`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+
+```bash
+addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+```bash
+# 命令解释
+# 执行成功会提示success
+$ [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+退出控制台：
+
+```bash
+exit
+```
+
+### 查看机构C节点5信息
+
+机构A使用控制台加入机构C的节点5为共识节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
+
+查看机构C节点nodeid：
+
+```bash
+cat ~/generator-C/nodeC/node_127.0.0.1_30305/conf/node.nodeid
+```
+
+```bash
+# 命令解释
+# 可以看到类似于如下nodeid，控制台使用时需要传入该参数
+5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+```
+
+### 使用控制台注册共识节点
+
+启动控制台：
+
+```bash
+cd ./console && bash ./start.sh 1
+```
+
+使用控制台`addSealer`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+
+```bash
+addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+```
+
+```bash
+# 命令解释
+# 执行成功会提示success
+$ [group:1]> addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+### 查看节点
+
+在~/generator-C目录下执行下述命令
+
+```bash
+cd ~/generator-C
+```
+
+查看节点log内group1信息:
+
+```bash
+cat node*/node_127.0.0.1_3030*/log/log* | grep g:1  | grep Report
+```
+
+```bash
+# 命令解释
+# 观察节点只会同步交易数据，不会同步非交易状态的共识信息
+# log中的^^^即为节点的交易信息，g:1为群组1打印的信息
+info|2019-02-26 16:01:39.914367| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=0,sealerIdx=0,hash=9b76de5d...,next=1,tx=0,nodeIdx=65535
+info|2019-02-26 16:01:40.121075| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=3,hash=46b7f17c...,next=2,tx=1,nodeIdx=65535
+info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=2,sealerIdx=2,hash=fb982013...,next=3,tx=1,nodeIdx=65535
+```
 
 至此 我们完成了所示构建教程中的所有操作。
 
