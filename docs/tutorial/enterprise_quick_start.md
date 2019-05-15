@@ -48,7 +48,7 @@ cd generator && bash ./scripts/install.sh
 
 ## 典型示例
 
-为了保证机构的秘钥安全，企业级部署工具提供了一种机构间相互合作的的搭链方式。本节以部署6节点3机构2群组的组网模式，演示企业间如何相互配合，搭建区块链。
+为了保证机构的密钥安全，企业级部署工具提供了一种机构间相互合作的的搭链方式。本节以部署6节点3机构2群组的组网模式，演示企业间如何相互配合，搭建区块链。
 
 ### 节点组网拓扑结构
 
@@ -872,12 +872,6 @@ cd ~/generator-A
 ./generator --download_console ./
 ```
 
-启动控制台：
-
-```bash
-cd ./console && bash ./start.sh 1
-```
-
 机构A使用控制台加入机构C节点为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
 
 查看机构C节点nodeid：
@@ -892,6 +886,12 @@ cat ~/generator-C/nodeC/node_127.0.0.1_30304/conf/node.nodeid
 ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 ```
 
+启动控制台：
+
+```bash
+cd ./console && bash ./start.sh 1
+```
+
 使用控制台`addObserver`命令将节点注册为观察节点：
 
 ```bash
@@ -900,6 +900,12 @@ $ [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18ccc
 	"code":0,
 	"msg":"success"
 }
+```
+
+退出控制台：
+
+```bash
+$ [group:1]> exit
 ```
 
 重启机构C节点:
