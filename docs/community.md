@@ -1,6 +1,8 @@
 # 社区
 
-![](../images/community/header.png)
+![](../images/community/header0.png)
+<a name="QR"></a>
+![](../images/community/header1.png)
 ![](../images/community/changeable_body.png)
 ![](../images/community/tailer.png)
 
