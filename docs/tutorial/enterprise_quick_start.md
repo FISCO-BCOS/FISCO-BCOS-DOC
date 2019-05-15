@@ -2,7 +2,7 @@
 
 FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了保证机构的密钥安全，企业级部署工具提供了一种机构间相互合作部署联盟链方式。
 
-本章以部署6节点3机构2群组的组网模式，演示企业级部署工具的使用方法。具体使用说明，请参考：[操作手册](../enterprise_tools/index.md)
+本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。具体使用说明，请参考：[操作手册](../enterprise_tools/index.md)
 
 <!-- 本章节为多机构对等部署的过程，由单机构一键生成节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md) -->
 
@@ -58,7 +58,7 @@ cd generator && bash ./scripts/install.sh
 
 ### 机器环境
 
-每个节点的IP，端口号为如下。（为了方便操作，所有的节点都部署在`127.0.0.1`）
+每个节点的IP，端口号为如下：
 
 | 机构  | 节点  | 所属群组  | P2P地址           | RPC/channel监听地址       |
 | --- | --- | ----- | --------------- | --------------------- |
@@ -82,8 +82,8 @@ cd generator && bash ./scripts/install.sh
 
 #### 一、初始化链证书
 
-证书颁发机构操作：
-    \- 生成链证书
+1.  证书颁发机构操作：
+    -   生成链证书
 
 #### 二、生成群组1
 
@@ -103,29 +103,32 @@ cd generator && bash ./scripts/install.sh
     -   生成节点
     -   启动节点
 
-#### 三、生成群组2
+#### 三、初始化新机构
 
 1.  证书颁发机构操作：颁发新机构证书
     -   生成机构证书
     -   发送证书
-2.  新机构独立操作
+
+#### 四、生成群组2
+
+1.  新机构独立操作
     -   修改配置文件`node_deployment.ini`
     -   生成节点证书及节点P2P端口地址文件
-3.  选取其中一个机构为群组生成创世块
+2.  选取其中一个机构为群组生成创世块
     -   收集群组内所有节点证书
     -   修改配置文件`group_genesis.ini`
     -   为群组生成创世块文件
     -   分发创世块文件
-4.  新机构独立操作：生成节点
+3.  新机构独立操作：生成节点
     -   收集群组其他节点的P2P端口地址文件
     -   生成节点
     -   启动节点
-5.  已有机构操作：配置新群组
+4.  已有机构操作：配置新群组
     -   收集群组其他节点的P2P端口地址文件
     -   配置新群组与新增节点的P2P端口地址
     -   重启节点
 
-#### 四、现有节点加入群组1
+#### 五、现有节点加入群组1
 
 1.  群组1原有机构操作：
     -   发送群组1创世区块至现有节点
@@ -240,7 +243,7 @@ cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agen
 ```eval_rst
 .. important::
 
-    一条联盟链中只能用到一个根证书ca.crt，多服务器部署时不要生成多个根证书和私钥。
+    一条联盟链中只能用到一个根证书ca.crt，多服务器部署时不要生成多个根证书和私钥。一个群组只能有一个群组创世区块group.x.genesis
 ```
 
 ### 机构A修改配置文件
@@ -545,11 +548,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ![](../../images/enterprise/tutorial_step_1.png)
 
-## 机构A、C构建群组2
-
-接下来，机构C需要与A进行新群组建立操作，示例中以C生成创世区块为例。
-
-### 证书授权机构初始化机构C
+## 证书授权机构初始化机构C
 
 在证书生成机构目录下操作:
 
@@ -586,6 +585,10 @@ agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf
 ```bash
 cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
 ```
+
+## 机构A、C构建群组2
+
+接下来，机构C需要与A进行新群组建立操作，示例中以C生成创世区块为例。
 
 ### 机构A交换配置文件
 
@@ -875,7 +878,21 @@ cd ~/generator-A
 cd ./console && bash ./start.sh 1
 ```
 
-机构A使用控制台加入机构C节点为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf文件夹下
+机构A使用控制台加入机构C节点为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
+
+查看机构C节点nodeid：
+
+```bash 
+cat ~/generator-C/nodeC/node_127.0.0.1_30304/conf/node.nodeid
+```
+
+```bash
+# 命令解释
+# 可以看到如下nodeid
+ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+使用控制台`addObserver`命令将节点注册为观察节点：
 
 ```bash
 $ [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -885,7 +902,7 @@ $ [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18ccc
 }
 ```
 
-# 重启机构C节点
+重启机构C节点:
 
 ```bash
 bash ~/generator-C/nodeC/stop_all.sh
