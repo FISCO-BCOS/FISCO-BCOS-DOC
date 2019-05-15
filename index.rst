@@ -24,13 +24,13 @@ FISCO BCOS 技术文档
    - FISCO BCOS 2.0新特性请参考 `这里 <./docs/what_is_new.html>`_
    - FISCO BCOS 2.0版本及兼容性说明 `这里 <./docs/change_log/index.html>`_
 
-.. admonition:: FISCO BCOS 2.0关键特性
+.. admonition:: 关键特性
 
     - `多群组 <./docs/design/architecture/group.html>`_: `教程 <./docs/tutorial/group_use_cases.html>`_ ，`使用手册 <./docs/manual/configuration.html>`_
     - `并行计算 <./docs/design/parallel/dag.html>`_：`使用手册 <./docs/manual/transaction_parallel.html>`_
     - `分布式存储 <./docs/design/storage/index.html>`_: `使用手册 <./docs/manual/amdbconfig.html>`_
 
-.. admonition:: FISCO BCOS 2.0工具集
+.. admonition:: 工具集
     
     - `企业级部署工具(Generator) <./docs/enterprise_tools/index.html>`_：支持建链、扩容等操作，**推荐构建企业级区块链时使用**，快速使用方法可参考 `教程 <./docs/tutorial/enterprise_quick_start.html>`_
     - `建链脚本(build_chain) <./docs/manual/build_chain.html>`_：简单快速的建链脚本，不支持扩容，**推荐区块链底层开发者使用**
