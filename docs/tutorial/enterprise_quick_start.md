@@ -741,7 +741,7 @@ node3=127.0.0.1:30305
 ./generator --create_group_genesis ./group
 ```
 
-分发群组2创世区块至机构B：
+分发群组2创世区块至机构A：
 
 ```bash
 cp ./group/group.2.genesis ~/generator-A/meta/
@@ -916,7 +916,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 启动控制台：
 
 ```bash
-cd ./console && bash ./start.sh 1
+cd ~/generator-A/console && bash ./start.sh 1
 ```
 
 使用控制台`addObserver`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
@@ -962,10 +962,10 @@ cat ~/generator-C/nodeC/node_127.0.0.1_30305/conf/node.nodeid
 启动控制台：
 
 ```bash
-cd ./console && bash ./start.sh 1
+cd ~/generator-A/console && bash ./start.sh 1
 ```
 
-使用控制台`addSealer`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
 
 ```bash
 addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
@@ -999,6 +999,9 @@ cat node*/node_127.0.0.1_3030*/log/log* | grep g:1  | grep Report
 # 命令解释
 # 观察节点只会同步交易数据，不会同步非交易状态的共识信息
 # log中的^^^即为节点的交易信息，g:1为群组1打印的信息
+info|2019-02-26 16:01:39.914367| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=0,sealerIdx=0,hash=9b76de5d...,next=1,tx=0,nodeIdx=65535
+info|2019-02-26 16:01:40.121075| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=3,hash=46b7f17c...,next=2,tx=1,nodeIdx=65535
+info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=2,sealerIdx=2,hash=fb982013...,next=3,tx=1,nodeIdx=65535
 info|2019-02-26 16:01:39.914367| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=0,sealerIdx=0,hash=9b76de5d...,next=1,tx=0,nodeIdx=65535
 info|2019-02-26 16:01:40.121075| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=3,hash=46b7f17c...,next=2,tx=1,nodeIdx=65535
 info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=2,sealerIdx=2,hash=fb982013...,next=3,tx=1,nodeIdx=65535
