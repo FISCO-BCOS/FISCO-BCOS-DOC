@@ -14,7 +14,6 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 
 在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2机构1群组4节点的组网模式，每个节点的ip，端口号分别为：
 
-
 | 机构  | 节点  | 所属群组  | P2P地址           | RPC/channel监听地址       |
 | --- | --- | ----- | --------------- | --------------------- |
 | 机构A | 节点0 | 群组1、2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
@@ -145,6 +144,9 @@ ls ./one_click
 
 ```bash
 bash ./one_click/agencyA/node/start_all.sh
+```
+
+```bash
 bash ./one_click/agencyB/node/start_all.sh
 ```
 
