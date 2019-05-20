@@ -458,10 +458,10 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/develop/script
 使用示例：
 
 ```bash
-$ ./check_certificates.sh -t ~/certificates
+$ ./check_certificates.sh -t ~/certificates.crt
 ```
 
-验证成功时会提示`check certificates time successful`, 验证失败会提示异常。
+参数第二项为任意符合x509格式的证书，验证成功时会提示`check certificates time successful`, 验证失败会提示异常。
 
 ## 验证证书
 
