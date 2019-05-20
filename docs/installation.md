@@ -4,7 +4,9 @@
 
 ## 单群组FISCO BCOS联盟链的搭建
 
-本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
+本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。
+
+本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 
 ```eval_rst
 .. note::
@@ -16,7 +18,8 @@
 
 - 安装依赖
 
-`build_chain`脚本依赖于`openssl curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。
+
 ```bash
 sudo apt install -y openssl curl
 ```
@@ -24,7 +27,7 @@ sudo apt install -y openssl curl
 - 创建操作目录
 
 ```bash
-cd ~ && mkdir fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 ```
 
 - 下载`build_chain.sh`脚本
@@ -117,7 +120,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
-正常情况会看到类似下面的输出，从输出可以看出node0与另外3个节点有链接。
+正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接（按Ctrl+c退回命令行）。
 ```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
@@ -128,10 +131,10 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 
 
 ```bash
-tail -f nodes/node0/log/log*  | grep +++
+tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 ```
 
-正常情况会不停输出`++++Generating seal`表示共识正常。
+正常情况会不停输出`++++Generating seal`表示共识正常（按Ctrl+c退回命令行）。
 ```bash
 info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
 info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
@@ -162,7 +165,7 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 
   - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
     
-    Failed to connect to the node. Please check the node status and the console configruation.
+    Failed to connect to the node. Please check the node status and the console configuration.
 
    则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
 
@@ -194,7 +197,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ### 使用控制台获取信息
 
-```json
+```bash
 # 获取客户端版本
 [group:1]> getNodeVersion
 {
@@ -253,7 +256,7 @@ contract HelloWorld {
 
 ### 部署HelloWorld合约
 
-为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，所以参考下面命令部署即可。
+为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，参考下面命令部署即可。
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址

@@ -6,7 +6,7 @@
 控制台命令由两部分组成，即指令和指令相关的参数：   
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
-    
+  
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
 常用命令链接：
@@ -32,7 +32,7 @@
 ### 获取控制台
 
 ```bash
-$ cd ~ && mkdir fisco && cd fisco
+$ cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
@@ -172,8 +172,11 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
     - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
 
-``` 
+```
 ### 启动控制台
+
+在节点正在运行的情况下，启动控制台：
+
 ```text
 $ ./start.sh
 # 输出下述信息表明启动成功
@@ -195,6 +198,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ### 启动脚本说明
 #### 查看启动脚本帮助说明：
+
 ```bash
 $ ./start.sh --help
 Usage
@@ -304,7 +308,7 @@ Switched to group 2.
 
 [group:2]> 
 ```
-**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中中配置的节点ip和端口正确，该节点正常运行。
+**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中配置的节点ip和端口正确，该节点正常运行。
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
@@ -621,6 +625,7 @@ Switched to group 2.
 }
 ```
 ### **getBlockHashByNumber**
+
 运行getBlockHashByNumber，通过区块高度获得区块哈希。              
 参数：           
 - 区块高度：十进制整数。
@@ -721,15 +726,17 @@ Switched to group 2.
 ```
 
 ### **getPendingTxSize**
-运行getPendingTxSize，查询等待处理的交易数量。              
+运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。              
 ```text
 [group:1]> getPendingTxSize
 0
 ```
 
 ### **getCode**
-运行getCode，根据合约地址查询合约代码。                                                   
+
+运行getCode，根据合约地址查询合约二进制代码。                                                   
 参数：
+
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
 ```text
 [group:1]> getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
@@ -737,7 +744,8 @@ Switched to group 2.
 ```
 
 ### **getTotalTransactionCount**
-运行getTotalTransactionCount，查询当前块高和总交易数。                          
+
+运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。                          
 ```text
 [group:1]> getTotalTransactionCount
 {
@@ -746,8 +754,10 @@ Switched to group 2.
 }
 ```
 ### **deploy**
+
 运行deploy，部署合约。(默认提供HelloWorld合约和TableTest.sol进行示例使用)
 参数：
+
 - 合约名称：部署的合约名称(可以带.sol后缀)，即HelloWorld或者HelloWorld.sol均可。                          
                            
 ```text
@@ -766,7 +776,8 @@ contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 - **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
 ### **getDeployLog**
-运行getDeployLog，查询群组内部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
+
+运行getDeployLog，查询群组内**由当前控制台**部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
 - 日志行数，可选，根据输入的期望值返回最新的日志信息，当实际条数少于期望值时，按照实际数量返回。当期望值未给出时，默认按照20条返回最新的日志信息。
                            
 ```text
@@ -782,6 +793,7 @@ contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
 ### **call**
+
 运行call，调用合约。                                
 参数： 
 - 合约名称：部署的合约名称(可以带.sol后缀)。
@@ -816,8 +828,10 @@ Hello, FISCO BCOS
 **注：** TableTest.sol合约代码[参考这里](smart_contract.html#solidity)。
 
 ### **deployByCNS**
-运行deployByCNS，利用[CNS](../design/features/cns_contract_name_service.md)部署合约。                                 
+
+运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)部署合约。用CNS部署的合约，可用合约名直接调用。                                 
 参数：
+
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
 ```text
@@ -835,8 +849,9 @@ contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
 
 ### **queryCNS**
-运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息。                                 
+运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。                                 
 参数：
+
 - 合约名称：部署的合约名称。
 - 合约版本号：(可选)部署的合约版本号。
 ```text
@@ -853,8 +868,9 @@ contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ---------------------------------------------------------------------------------------------
 ```
 ### **callByCNS**
-运行callByCNS，利用CNS调用合约。                                 
+运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。                                 
 参数： 
+
 - 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`或`HelloWorld.sol:1.0`。当省略合约版本号时，例如`HelloWorld`或`HelloWorld.sol`，则调用最新版本的合约。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
@@ -877,8 +893,10 @@ Hello,CNS2
 ```
 
 ### **addSealer**
+
 运行addSealer，将节点添加为共识节点。                                 
 参数： 
+
 - 节点nodeId
 ```text
 [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -912,8 +930,14 @@ Hello,CNS2
 }
 ```
 ### **setSystemConfigByKey**
-运行setSystemConfigByKey，以键值对方式设置系统配置。目前设置的系统配置支持`tx_count_limit`和`tx_gas_limit`。这个两个配置键名可以通过tab键补全。
+
+运行setSystemConfigByKey，以键值对方式设置系统配置。目前设置的系统配置支持`tx_count_limit`和`tx_gas_limit`。这个两个配置键名可以通过tab键补全：
+
+* tx_count_limit：区块最大打包交易数
+* tx_gas_limit：交易执行允许消耗的最大gas数
+
 参数： 
+
 - key
 - value
 ```text
@@ -924,14 +948,17 @@ Hello,CNS2
 }
 ```
 ### **getSystemConfigByKey**
-运行getSystemConfigByKe，根据键查询系统配置的值。                                  
+
+运行getSystemConfigByKey，根据键查询系统配置的值。                                  
 参数： 
+
 - key
 ```text
 [group:1]> getSystemConfigByKey tx_count_limit
 100
 ```
 ### **grantPermissionManager**
+
 运行grantPermissionManager，赋予外部账号地址的管理权限的权限。**即设置权限管理员账号。** 参数： 
 - 外部账号地址
 ```text
@@ -971,6 +998,7 @@ Hello,CNS2
 }
 ```
 ### **grantUserTableManager**
+
 运行grantUserTableManager，根据用户表名和外部账号地址赋予权限。                                  
 参数： 
 - 表名
@@ -983,6 +1011,7 @@ Hello,CNS2
 }
 ```
 ### **listUserTableManager**
+
 运行listUserTableManager，根据用户表名查询赋予的权限记录列表。                                  
 参数： 
 - 表名
@@ -994,8 +1023,10 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeUserTableManager**
+
 运行revokeUserTableManager，根据用户表名和外部账号地址撤销权限。                                                                 
 参数： 
+
 - 表名
 - 外部账号地址
 ```text
@@ -1038,6 +1069,7 @@ Hello,CNS2
 }
 ```
 ### **grantNodeManager**
+
 运行grantNodeManager，赋予外部账号地址的节点管理权限。参数： 
 - 外部账号地址
 ```text
@@ -1058,6 +1090,7 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeNodeManager**
+
 运行revokeNodeManager，撤销外部账号地址的节点管理权限。                                                                 
 参数： 
 - 外部账号地址
@@ -1109,6 +1142,7 @@ Hello,CNS2
 }
 ```
 ### **listSysConfigManager**
+
 运行listSysConfigManager，查询拥有系统参数管理的权限记录列表。
                                   
 ```text
