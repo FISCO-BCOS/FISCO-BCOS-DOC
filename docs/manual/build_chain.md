@@ -5,11 +5,11 @@
     build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业级部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
-FISCO BCOS提供了`build_chain`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
+FISCO BCOS提供了`build_chain.sh`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
 
 ## 脚本功能简介
 
-- `build_chain`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
+- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，支持创建各种复杂业务场景FISCO BCOS链。**`-l`和`-f`选项必须指定一个且不可共存**。
 - 建议测试时使用`-T`和`-i`选项，`-T`开启log级别到DEBUG，`-i`设置RPC和channel监听`0.0.0.0`，p2p模块默认监听`0.0.0.0`。
 
@@ -42,14 +42,14 @@ e.g
 ## 选项介绍
 
 - **`l`选项:** 
-用于指定要生成的链的IP列表以及每个IP下的节点数，以逗号分隔。脚本根据输入的参数生成对应的节点配置文件，其中每个节点的端口号默认从30300开始递增，所有节点属于同一个机构和Group。
+用于指定要生成的链的IP列表以及每个IP下的节点数，以逗号分隔。脚本根据输入的参数生成对应的节点配置文件，其中每个节点的端口号默认从30300开始递增，所有节点属于同一个机构和群组。
 
 - **`f`选项** 
     + 用于根据配置文件生成节点，相比于`l`选项支持更多的定制。
-    + 按行分割，每一行表示一个服务器，格式为`IP:NUM AgencyName GroupList`，每行内的项使用空格分割，不可有空行。
+    + 按行分割，每一行表示一个服务器，格式为`IP:NUM AgencyName GroupList`，每行内的项使用空格分割，**不可有空行**。
     + `IP:NUM`表示机器的IP地址以及该机器上的节点数。`AgencyName`表示机构名，用于指定使用的机构证书。`GroupList`表示该行生成的节点所属的组，以`,`分割。例如`192.168.0.1:2 agency1 1,2`表示`ip`为`192.168.0.1`的机器上有两个节点，这两个节点属于机构`agency1`，属于group1和group2。
 
-下面是一个配置文件的例子，每个配置项以空格分隔，其中`GroupList`表示该服务器所属的组。
+下面是一个配置文件的例子，每个配置项以空格分隔。
 
 ```bash
 192.168.0.1:2 agency1 1,2
@@ -83,14 +83,14 @@ $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 ```bash
 # 两个节点分别占用`30300,20200,8545`和`30301,20201,8546`。
-$ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
+$ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 ```
 
 - **`i`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
 
 - **`v`选项[**Optional**]**
-用于指定搭建FISCO BCOS时使用的二进制版本。build_chian默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项，那么修改`config.ini`配置，使用指定的二进制。
+用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项指定二进制，那么通过`./fisco-bcos --version`获取指定二进制版本，并将`[compatibility].supported_version`设置为获取的二进制版本。
 
 - **`d`选项[**Optional**]**
 使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限。该模式下脚本启动节点的命令如下
@@ -112,7 +112,7 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 
 ```bash
 # 该链标识为2。
-$ bash build_chain -l 127.0.0.1:2 -C 2
+$ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
 - **`g`选项[**Optional**]**
@@ -131,7 +131,7 @@ $ bash build_chain -l 127.0.0.1:2 -C 2
 
 - cert文件夹下存放链的根证书和机构证书。
 - 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行程序、SDK所需的证书文件。
-- 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](configuration.md)。每个节点中还提供两个脚本，用于启动和停止节点。
+- 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](configuration.md)。每个节点中还提供`start.sh`和`stop.sh`脚本，用于启动和停止节点。
 - 每个IP文件夹下的提供`start_all.sh`和`stop_all.sh`两个脚本用于启动和停止所有节点。
 
 ```bash
@@ -177,7 +177,7 @@ nodes/
 
 ### 单服务器单群组
 
-构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`），监听外网`Channel`和`jsonrpc`端口允许外网通过SDK或API与节点交互。
+构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`），监听外网`Channel`和`jsonrpc`端口，允许外网通过SDK或API与节点交互。
 
 ```bash
 # 构建FISCO BCOS联盟链

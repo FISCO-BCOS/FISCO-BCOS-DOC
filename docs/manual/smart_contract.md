@@ -192,7 +192,7 @@ contract TableTest {
 
 ```eval_rst
 .. important::
-    客户端需要调用转换为 Java 文件的合约代码，需要将TableTest.sol和Table.sol放入 web3sdk 的src/test/resources/contract目录下，通过 Web3SDK 的编译脚本生成TableTest.java。
+    客户端需要调用转换为 Java 文件的合约代码，需要将TableTest.sol和Table.sol放入 Web3SDK 的src/test/resources/contract目录下，通过 Web3SDK 的编译脚本生成TableTest.java。
 ```
 
 
@@ -223,7 +223,7 @@ contract TableTest {
 | 地址用途 | 地址范围 |
 | --------- | --------- |
 | 以太坊precompiled | 0x0001-0x0008 |
-| 保留 | 0x0005-0x0fff |
+| 保留 | 0x0008-0x0fff |
 | FISCO BCOS precompied | 0x1000-0x1006 |
 | FISCO BCOS预留 | 0x1007-0x5000 |
 | 用户分配区间 | 0x5001 - 0xffff |
@@ -242,11 +242,12 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 | 0x1003 | 共识节点管理 | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS功能  | CNSPrecompiled.cpp |
 | 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |
+| 0x1006 | 并行合约配置 | ParallelConfigPrecompiled.cpp |
 
 - **定义合约接口**  
 
 同solidity合约，设计合约时需要首先确定合约的ABI接口， precomipiled合约的ABI接口规则与solidity完全相同，[solidity ABI链接](https://solidity.readthedocs.io/en/latest/abi-spec.html)。  
- 
+
 > 定义预编译合约接口时，通常需要定义一个有相同接口的solidity合约，并且将所有的接口的函数体置空，这个合约我们称为预编译合约的**接口合约**，接口合约在调用预编译合约时需要使用。 
 
 ```js
@@ -256,7 +257,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
         ....
         function interfaceN(parameters ... ) {}
     }
-```  
+```
 
 - **设计存储结构**  
 
@@ -570,8 +571,8 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 
 从用户角度，预编译合约与solidity合约的调用方式基本相同，唯一的区别是solidity合约在部署之后才能获取到调用的合约地址，预编译合约的地址为预分配，不用部署，可以直接使用。
 
-#### 3.1 web3sdk调用  
-web3sdk调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用接口合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。[web3sdk应用构建案例参考](../tutorial/sdk_application.md)
+#### 3.1 Web3SDK调用  
+Web3SDK调用合约时，需要先将合约转换为java代码，对于预编译合约，需要使用接口合约生成java代码，并且合约不需要部署，使用其分配地址，调用各个接口。[Web3SDK应用构建案例参考](../tutorial/sdk_application.md)
 
 #### 3.2 solidity调用  
 solidity调用预编译合约时，以上文的HelloWorld预编译合约为例，使用HelloWorldHelper合约对其进行调用：
