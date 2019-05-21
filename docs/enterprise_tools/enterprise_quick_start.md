@@ -119,9 +119,9 @@ bash ./one_click_generator.sh ./one_click
 
 查看执行后的一键部署模板文件夹：
 
-``bash
+```bash
 ls ./one_click
-``
+```
 
 ```bash
 ├── agencyA # A机构文件夹
