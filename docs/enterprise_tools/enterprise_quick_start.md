@@ -1,4 +1,4 @@
-# 一键部署教程
+# 一键部署
 
 本章主要以部署**2机构1群组4节点**的组网模式，为用户讲解单机构一键部署企业级部署工具的使用方法。企业级部署工具多机构对等部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
 
@@ -7,7 +7,7 @@
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git && cd ./generator
 ```
 
 ## 示例分析
@@ -33,9 +33,9 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 
 查看一键部署模板文件夹：
 
-``bash
+```bash
 ls ./one_click
-``
+```
 
 ```bash
 # 参数解释
