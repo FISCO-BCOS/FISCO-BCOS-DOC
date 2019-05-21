@@ -213,9 +213,9 @@ cd ./one_click/agencyA/console && bash ./start.sh 1
 
 同理，配置B机构控制台:
 
-``bash
+```bash
 cd ~/generator && cp -rf ./console ./one_click/agencyB/console
-``
+```
 
 配置机构B控制台对应文件，控制台启动时需要相关证书、私钥以及控制台配置文件：
 
@@ -227,7 +227,7 @@ cp ./one_click/agencyB/sdk/* ./one_click/agencyB/console/conf
 
 企业部署工具的后续操作与[企业部署工具教程](../tutorial/enterprise_quick_start.md)相同。
 
-后续节点的扩容及新群组的划分操作，可以参考[操作手册](./operation.md)，或[教程](../tutorial/enterprise_quick_start.md)。
+后续节点的扩容及新群组的划分操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
 
 新建群组的操作用户可以在执行`click2start.sh`脚本的目录下，通过修改./conf/group_genesis.ini文件，并执行create_group_genesis命令。
 
