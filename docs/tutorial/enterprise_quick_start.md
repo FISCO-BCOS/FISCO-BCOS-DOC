@@ -4,7 +4,7 @@ FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了�
 
 本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。具体使用说明，请参考：[操作手册](../enterprise_tools/index.md)
 
-本章节为多机构对等部署的过程，由单机一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
+本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
 
 ## 下载安装
 
