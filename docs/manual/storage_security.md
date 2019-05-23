@@ -66,7 +66,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](configuration.md)）中。
 
 ```shell
-vim nodes/127.0.0.1/node_127.0.0.1_0/config.ini
+vim nodes/127.0.0.1/node0/config.ini
 ```
 
 放在最后即可，如下。
@@ -86,14 +86,14 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```shell
 cd key-manager/scripts
 # 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
 ```
 
 执行后，节点私钥自动被加密，加密前的文件备份到了文件``` node.key.bak.xxxxxx ```中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**
 
 ```log
-[INFO] File backup to "nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key.bak.1546502474"
-[INFO] "nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key" encrypted!
+[INFO] File backup to "nodes/127.0.0.1/node0/conf/node.key.bak.1546502474"
+[INFO] "nodes/127.0.0.1/node0/conf/node.key" encrypted!
 ```
 
 若查看`node.key`，可看到，已经被加密为密文
@@ -118,7 +118,7 @@ bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/n
 直接启动节点即可
 
 ```shell
-cd nodes/node_127.0.0.1_0/
+cd nodes/node0/
 ./start.sh
 ```
 
@@ -127,7 +127,7 @@ cd nodes/node_127.0.0.1_0/
 （1）节点正常运行，正常共识，不断输出共识打包信息。
 
 ``` shell
-tail -f nodes/node_127.0.0.1_0/log/* | grep +++
+tail -f nodes/node0/log/* | grep +++
 ```
 
 （2）`key-manager`在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Manager直接输出的日志如下。
