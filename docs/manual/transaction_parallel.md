@@ -141,7 +141,7 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 
 - 所有互斥参数排列在接口参数的最前
 
-``` javascript
+```javascript
 mapping (string => uint256) _balance; // 全局mapping
 
 // 互斥变量from、to排在最前，作为transfer()开头的两个参数
@@ -150,7 +150,7 @@ function transfer(string from, string to, uint256 num) public
     _balance[from] -= num;  // from 是全局mapping的key，是互斥参数
     _balance[to] += num; // to 是全局mapping的key，是互斥参数 
 }
-​
+
 // 互斥变量name排在最前，作为set()开头的参数
 function set(string name, uint256 num) public
 {
