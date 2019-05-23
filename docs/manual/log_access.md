@@ -33,7 +33,7 @@ boostlog示例配置如下：
     log_path=./log
     ;log level INFO DEBUG TRACE
     level=info
-    max_log_file_size=209715200
+    max_log_file_size=200
     flush=true
 ```
 
@@ -54,7 +54,7 @@ easylogging++示例配置如下：
     log_path=./log
     ;log level INFO DEBUG TRACE
     level=info
-    max_log_file_size=209715200
+    max_log_file_size=200
     ;easylog config
     format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
     log_flush_threshold=100
@@ -66,7 +66,7 @@ easylogging++示例配置如下：
 
 ```bash
 ## 进入源码目录，新建build文件夹(设源码位于~/FISCO-BCOS路径)
-$ cd ~/FISCO-BCOS && mkdir build
+$ cd ~/FISCO-BCOS && mkdir -p build
 
 ## 关闭EASYLOG编译选项
 # ubuntu系统
@@ -108,7 +108,7 @@ fisco-bcos
 
 ```bash
 ## 进入源码目录，新建build文件夹(设源码位于~/FISCO-BCOS路径)
-$ cd ~/FISCO-BCOS && mkdir build
+$ cd ~/FISCO-BCOS && mkdir -p build
 
 ## 关闭EASYLOG编译选项
 # ubuntu系统

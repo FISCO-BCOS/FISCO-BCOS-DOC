@@ -30,7 +30,7 @@
 问:
   国密和普通版本的区别有哪些？<br>
 答:
-  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，web3sdk使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi_crypto.md)。
+  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，Web3SDK使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi_crypto.md)。
 
 问:
   是否支持从1.3或1.5升级到2.0版本?<br>
@@ -121,7 +121,7 @@
 问:
   如何查询合约CNS表？<br>
 答:
-  通过web3sdk控制台指令查询，查询指令根据合约name查询。
+  通过Web3SDK控制台指令查询，查询指令根据合约name查询。
 
 
 ## Web3SDK
@@ -163,4 +163,3 @@ Traceback (most recent call last):
 ```bash
   $ pip install configparser
 ```
-
