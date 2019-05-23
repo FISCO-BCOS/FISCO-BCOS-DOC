@@ -1,6 +1,6 @@
 # JSON-RPC API
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[listen_ip]`和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[listen_ip]`和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id51)。
 
 ## getClientVersion
 返回节点的版本信息
@@ -26,7 +26,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
   "result": {
     "Build Time": "20190106 20:49:10",
     "Build Type": "Linux/g++/RelWithDebInfo",
-    "FISCO-BCOS Version": "2.0.0-rc1",
+    "FISCO-BCOS Version": "2.0.0",
     "Git Branch": "master",
     "Git Commit Hash": "693a709ddab39965d9c39da0104836cfb4a72054"
   }
@@ -308,7 +308,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
         - `genesisHash`: `string` - 创始区块哈希            
         - `latestHash`: `string` - 最新块哈希            
         - `nodeId`: `string` - 节点的ID            
-       
+    
 - 示例
 ```
 // Request
@@ -358,7 +358,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
     - `IPAndPort`: `string` - 节点连接的ip和端口            
     - `nodeId`: `string` - 节点的ID            
     - `Topic`: `array` - 节点关注的topic信息            
-      
+    
 - 示例          
 ```
 // Request
@@ -394,7 +394,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
 - `array` - 共识节点和观察节点的ID列表     
-        
+  
 - 示例          
 ```
 // Request
@@ -475,7 +475,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `stateRoot`: `string` - 状态根哈希              
     - `timestamp`: `string` - 时间戳      
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html#gettransactionbyhash)）
-              
+    
 - 示例
 ```
 // Request
@@ -556,11 +556,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 返回根据区块高度查询的区块信息     
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)       
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)       
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)         
 ### 返回值          
 见[getBlockByHash](./api.html#getblockbyhash)  
-  
+
 - 示例          
 ```
 // Request
@@ -572,7 +572,7 @@ Result见[getBlockByHash](./api.html#getblockbyhash)
 返回根据区块高度查询的区块哈希          
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)                  
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)                  
 ### 返回值          
 - `blockHash`: `string` - 区块哈希         
 - 示例          
@@ -648,7 +648,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 返回根据区块高度和交易序号查询的交易信息
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(0x开头的十六进制字符串)          
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)          
 - `transactionIndex`: `string` - 交易序号          
 ### 返回值          
 见[getTransactionByHash](./api.html#gettransactionbyhash)            
@@ -674,11 +674,11 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `gasUsed`: `string` - 交易消耗的gas     
     - `logs`: `array` - 交易产生的log               
     - `logsBloom`: `string` - log的布隆过滤器值      
-    - `status`: `string` - 交易的状态值     
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)    
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希          
     - `transactionIndex`: `string` - 交易序号
-         
+    
 - 示例          
 ```
 // Request
@@ -861,17 +861,120 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc
 - `string` - 交易哈希          
 - 示例
 ```
-// Request
+// RC1 Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:8545 |jq
 
-// Result
+// RC1 Result
 {
     "id": 1,
     "jsonrpc": "2.0",
     "result": "0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"
 }
 
+// RC2 Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8d3a003922ee720bb7445e3a914d8ab8f507d1a647296d563100e49548d83fd98865c8411e1a3008411e1a3008201f894d6c8a04b8826b0a37c6d4aa0eaa8644d8e35b79f80a466c9913900000000000000000000000000000000000000000000000000000000000000040101a466c9913900000000000000000000000000000000000000000000000000000000000000041ba08e0d3fae10412c584c977721aeda88df932b2a019f084feda1e0a42d199ea979a016c387f79eb85078be5db40abe1670b8b480a12c7eab719bedee212b7972f775"],"id":1}' http://127.0.0.1:8545 |jq 
+
+// RC2 Result
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": "0x0accad4228274b0d78939f48149767883a6e99c95941baa950156e926f1c96ba"
+}
+
 // FISCO BCOS支持国密算法，采用国密算法的区块链请求示例
-// Request
+// RC1 Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:8545 |jq
+// RC2 Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq 
 ```
+
+## 错误码描述
+
+### RPC 错误码
+
+当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
+
+- code: 使用数值表示该异常的错误类型，必须为整数。          
+- message: 对该错误的简单描述字符串。   
+- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。        
+
+错误对象包含两类错误码，分别是JSON-RPC标准错误码和FISCO BCOS RPC错误码。
+
+#### JSON-RPC标准错误码
+
+标准错误码及其对应的含义如下：  
+
+| code   | message              | 含义                       |
+| :----- | :------------------- | :------------------------- |
+| -32600 | INVALID_JSON_REQUEST | 发送无效的请求对象         |
+| -32601 | METHOD_NOT_FOUND     | 该方法不存在或无效         |
+| -32602 | INVALID_PARAMS       | 无效的方法参数             |
+| -32603 | INTERNAL ERROR       | 内部调用错误               |
+| -32604 | PROCEDURE_IS_METHOD  | 内部错误，请求未提供id字段 |
+| -32700 | JSON_PARSE_ERROR     | 服务端接收到的json无法解析 |
+
+#### FISCO BCOS RPC错误码
+
+FISCO BCOS RPC接口错误码及其对应的含义如下：
+
+| code  | message                                                      | 含义                                        |
+| :---- | :----------------------------------------------------------- | :------------------------------------------ |
+| 40001 | GroupID does not exist                                       | GroupID不存在                               |
+| 40002 | Response json parse error                                    | JSON RPC获取的json数据解析错误              |
+| 40003 | BlockHash does not exist                                     | 区块哈希不存在                              |
+| 40004 | BlockNumber does not exist                                   | 区块高度不存在                              |
+| 40005 | TransactionIndex is out of range                             | 交易索引越界                                |
+| 40006 | Call needs a 'from' field                                    | call接口需要提供from字段                    |
+| 40007 | Only pbft consensus supports the view property               | getPbftView接口，只有pbft共识机制有view属性 |
+| 40008 | Invalid System Config                                        | getSystemConfigByKey接口，查询无效的key     |
+| 40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
+
+### 交易回执状态
+
+|status(十进制/十六进制)  |message   |含义  |
+|:----|:-----|:----|
+|0(0x0)  |None |正常 |
+|1(0x1)  |Unknown |未知异常 |
+|2(0x2)  |BadRLP|无效RLP异常 |
+|3(0x3)  |InvalidFormat |无效格式异常 |
+|4(0x4)  |OutOfGasIntrinsic |gas不足异常 |
+|5(0x5)  |InvalidSignature |无效的签名异常 |
+|6(0x6)  |InvalidNonce |无效nonce异常 |
+|7(0x7)  |NotEnoughCash |cash不足异常 |
+|8(0x8)  |OutOfGasBase |gas不足异常 |
+|9(0x9)  |BlockGasLimitReached|GasLimit异常 |
+|10(0xa)  |BadInstruction |错误指令异常 |
+|11(0xb)  |BadJumpDestination |错误目的跳转异常 |
+|12(0xc)  |OutOfGas |gas不足异常 |
+|13(0xd)  |OutOfStack |栈溢出异常 |
+|14(0xe)  |StackUnderflow |栈下限溢位异常 |
+|15(0xf)  |NonceCheckFail |nonce检测失败异常 |
+|16(0x10)  |BlockLimitCheckFail |blocklimit检测失败异常 |
+|17(0x11)  |FilterCheckFail |filter检测失败异常 |
+|18(0x12)  |NoDeployPermission |非法部署合约异常 |
+|19(0x13)  |NoCallPermission |非法call合约异常 |
+|20(0x14)  |NoTxPermission |非法交易异常 |
+|21(0x15)  |PrecompiledError|precompiled错误异常 |
+|22(0x16)  |RevertInstruction |revert指令异常 |
+|23(0x17)  |InvalidZeroSignatureFormat |无效签名格式异常 |
+|24(0x18)  |AddressAlreadyUsed |地址占用异常 |
+|25(0x19)  |PermissionDenied |无权限异常 |
+|26(0x1a) |CallAddressError |被调用的合约地址不存在 |
+
+### Precompiled Service API 错误码
+
+| 错误码 | 消息内容                                        |
+| :----- | :---------------------------------------------- |
+| 0      | success                                         |
+| 50000  | permission denied                               |
+| 51000  | table name and address already exist            |
+| 51001  | table name and address does not exist           |
+| 51100  | invalid node ID                                 |
+| 51101  | the last sealer cannot be removed               |
+| 51102  | the node is not reachable                       |
+| 51103  | the node is not a group peer                    |
+| 51104  | the node is already in the sealer list          |
+| 51105  | the node is already in the observer list        |
+| 51200  | contract name and version already exist         |
+| 51201  | version string length exceeds the maximum limit |
+| 51300  | invalid configuration entry                     |

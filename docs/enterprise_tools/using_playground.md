@@ -18,7 +18,7 @@
 
 ![](../../images/enterprise/star.png)
 
-机构A、B、C、D分别维护一个节点，机构A的节点0同时处于三个群组中，接下来我们将讲解如何对等的部署上述模式的多群组联盟链。
+机构A、B、C、D分别维护一个节点，机构A的节点0同时处于三个群组中，接下来我们将讲解如何对等地部署上述模式的多群组联盟链。
 
 ### 证书协商
 
@@ -30,7 +30,7 @@
 
 #### 协商节点证书
 
-1. 机构A、B、C、D本别用自己的机构私钥`agency.key`和机构证书`agency.crt`生成自己节点的证书cert_127.0.0.1_30300.crt，cert_127.0.0.1_30301.crt，cert_127.0.0.1_30302.crt，cert_127.0.0.1_30303.crt。
+1. 机构A、B、C、D分别用自己的机构私钥`agency.key`和机构证书`agency.crt`生成自己节点的证书cert_127.0.0.1_30300.crt，cert_127.0.0.1_30301.crt，cert_127.0.0.1_30302.crt，cert_127.0.0.1_30303.crt。
 
 2. 机构A分别与B、C、D协商节点证书，放置与meta文件夹下
 
@@ -132,7 +132,7 @@
 
 3. 机构E修改`node_deployment.ini`中的信息，配置为节点4的信息
 
-4. 机构E使用[build_install_package](](./operation.html#build-install-package-b)命令生成节点4配置文件夹，导入私钥，启动节点
+4. 机构E使用[build_install_package](](./operation.html#build-install-package-b)命令生成节点4配置文件夹，启动节点
 
 5. 机构E向机构A或B发送节点4入网请求，等待机构A或B使用控制台或SDK发送节点入网交易，注册节点4入网。
 
@@ -271,7 +271,7 @@ jsonrpc_listen_port=8548
 
 3.使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件
 
-4.导入私钥、启动节点
+4.启动节点
 
 ### 网状模式组网
 
@@ -345,7 +345,7 @@ jsonrpc_listen_port=8548
 
 5.各机构使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，机构A将group.2.genesis导入节点0的conf文件夹，机构B将group.2.genesis导入节点2的conf文件夹
 
-6.导入私钥、启动节点
+6.启动节点
 
 ### 星型模式组网
 
@@ -448,7 +448,7 @@ jsonrpc_listen_port=8548
 
 各机构通过上述配置文件，使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
-4.导入私钥，机构A还需将`group.2.genesis`，`group.2.ini`，`group.3.genesis`,`group.2.ini`放置于节点0的conf目录下，启动节点
+4.机构A还需将`group.2.genesis`，`group.2.ini`，`group.3.genesis`,`group.2.ini`放置于节点0的conf目录下，启动节点
 
 ### 隔离模式组网
 
@@ -537,5 +537,5 @@ jsonrpc_listen_port=8548
 
 4.机构使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
-5.导入私钥、机构A将节点1中节点创世区块替换为`group.2.genesis`，`group.2.ini`，启动节点
+5.机构A将节点1中节点创世区块替换为`group.2.genesis`，`group.2.ini`，启动节点
 

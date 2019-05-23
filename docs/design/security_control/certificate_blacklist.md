@@ -22,7 +22,7 @@ CA黑名单所属的配置类型：
 
 ## 核心流程
 
-底层实现SSL双向验证。节点在handshake过程中，通过对方提供的证书获取对方节点的nodeID，检查该nodeID是否在自身的CA黑名单。如果在，关闭该connect，继续后续流程。
+底层实现SSL双向验证。节点在handshake过程中，通过对方提供的证书获取对方节点的nodeID，检查该nodeID是否在自身的CA黑名单。如果在，关闭该connection，继续后续流程。
 
 ## 影响范围
 
