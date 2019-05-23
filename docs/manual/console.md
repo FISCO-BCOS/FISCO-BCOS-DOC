@@ -1173,6 +1173,7 @@ Insert OK, 1 row affected.
 ```
 **注意：**
 - 插入记录sql语句必须插入表的主键字段值。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### **[select sql]**
 运行select sql语句查询记录，使用mysql语句形式。
@@ -1180,7 +1181,7 @@ Insert OK, 1 row affected.
 ```text
 # 查询包含所有字段的记录
 select * from t_demo where name = fruit
-{_id_=0, _num_=2, item_id=1, item_name=apple1, name=fruit}
+{item_id=1, item_name=apple1, name=fruit}
 1 row in set.
 
 # 查询包含指定字段的记录
@@ -1194,26 +1195,24 @@ Insert OK, 1 row affected.
 
 # 使用and关键字连接多个查询条件
 [group:1]> select * from t_demo where name = fruit and item_name = apple2
-{_id_=2, _num_=3, item_id=2, item_name=apple2, name=fruit}
+{item_id=2, item_name=apple2, name=fruit}
 1 row in set.
 
 # 使用limit字段，查询第1行记录，没有提供偏移量默认为0
 [group:1]> select * from t_demo where name = fruit limit 1
-{_id_=1, _num_=2, item_id=1, item_name=apple1, name=fruit}
+{item_id=1, item_name=apple1, name=fruit}
 1 row in set.
 
 # 使用limit字段，查询第2行记录，偏移量为1
 [group:1]> select * from t_demo where name = fruit limit 1,1
-{_id_=2, _num_=3, item_id=2, item_name=apple2, name=fruit}
+{item_id=2, item_name=apple2, name=fruit}
 1 rows in set.
 ```
 **注意：**
 - 查询记录sql语句必须在where子句中提供表的主键字段值。
 - 关系型数据库中的limit字段可以使用，提供两个参数，分别offset(偏移量)和记录数(count)。
-- 使用*号可以查询到表的系统字段(区块链底层自动添加的字段)，分别如下：
-  - `_id_`: 记录唯一标志字段：每条记录的`_id_`都不同。
-  - `_num_`: 区块高度字段：插入记录时交易所在的区块高度。
 - where条件子句只支持and关键字，其他or、in、like、inner、join，union以及子查询、多表联合查询等均不支持。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### **[update sql]**
 运行update sql语句更新记录，使用mysql语句形式。
@@ -1224,6 +1223,7 @@ Update OK, 1 row affected.
 ```
 **注意：**
 - 更新记录sql语句的where子句必须提供表的主键字段值。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### **[delete sql]**
 运行delete sql语句删除记录，使用mysql语句形式。
@@ -1234,6 +1234,7 @@ Remove OK, 1 row affected.
 ```
 **注意：**
 - 删除记录sql语句的where子句必须提供表的主键字段值。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ## 附录：Java环境配置
 
