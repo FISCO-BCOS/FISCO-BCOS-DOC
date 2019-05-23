@@ -4,7 +4,9 @@
 
 ## 单群组FISCO BCOS联盟链的搭建
 
-本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
+本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。
+
+本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 
 ```eval_rst
 .. note::
@@ -14,26 +16,38 @@
 
 ### 准备环境
 
-`build_chain`脚本依赖于`openssl`，推荐根据自己操作系统安装`openssl 1.0.2`以上版本。
+- 安装依赖
+
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。
 
 ```bash
-# Ubuntu 16.04 安装依赖 CentOS将下面命令中的apt替换为yum执行即可
-$ sudo apt install -y openssl curl
-# 准备环境
-$ cd ~ && mkdir fisco && cd fisco
-# 下载build_chain.sh脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
+sudo apt install -y openssl curl
+```
+
+- 创建操作目录
+
+```bash
+cd ~ && mkdir -p fisco && cd fisco
+```
+
+- 下载`build_chain.sh`脚本
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 搭建单群组4节点联盟链
 
+在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。需要保证机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
+
 ```bash
-# 生成一条4节点的FISCO链 4个节点都属于同一群组 下面指令在fisco目录下执行
-# -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
-# 为安全jsonrpc/channel默认监听127.0.0.1，需要外网访问请添加 -i 参数
-# 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
-# 默认从GitHub下载最新稳定版本可执行程序 macOS建议先安装docker，然后加上-d选项使用docker模式
-$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+```
+
+```eval_rst
+.. note::
+    - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port，出于安全考虑jsonrpc/channel默认监听127.0.0.1，**需要外网访问请添加-i参数**。
+    - macOS建议先安装docker，然后在上述指令后添加-d使用docker模式建链。
 ```
 
 如果命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
@@ -64,52 +78,64 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ### 启动FISCO BCOS链
 
+- 执行下面指令，启动所有节点
+
 ```bash
-# 进入节点目录 当前目录fisco
-$ cd nodes/127.0.0.1
-# 启动所有节点
-$ ./start_all.sh
+bash nodes/127.0.0.1/start_all.sh
 ```
 
-### 检查进程及端口监听
+启动成功会输出类似下面内容的相应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
+```bash
+try to start node0
+try to start node1
+try to start node2
+try to start node3
+ node1 start successfully
+ node2 start successfully
+ node0 start successfully
+ node3 start successfully
+```
+
+### 检查进程
+
+- 执行下面指令，检查进程是否启动
 
 ```bash
-# 检查进程是否启动 如果进程数不为4，那么进程没启动的原因一般是端口被占用
-$ ps -ef | grep -v grep | grep fisco-bcos
+ps -ef | grep -v grep | grep fisco-bcos
+```
+
+正常情况会的到类似下面的输出，如果进程数不为4，那么进程没启动的原因一般是端口被占用。
+```bash
 fisco       5453     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
 fisco       5459     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
 fisco       5464     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
 fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
-
-# 检查监听的端口，当前版本每个节点监听3个端口，分别用于p2p，channel，jsonrpc通信
-$ netstat -ntlp | grep fisco-bcos
-(Not all processes could be identified, non-owned process info
- will not be shown, you would have to be root to see it all.)
-tcp        0      0 0.0.0.0:30300           0.0.0.0:*               LISTEN      5453/fisco-bcos
-tcp        0      0 127.0.0.1:20200         0.0.0.0:*               LISTEN      5453/fisco-bcos
-tcp        0      0 127.0.0.1:8545          0.0.0.0:*               LISTEN      5453/fisco-bcos
-tcp        0      0 0.0.0.0:30301           0.0.0.0:*               LISTEN      5459/fisco-bcos
-tcp        0      0 127.0.0.1:20201         0.0.0.0:*               LISTEN      5459/fisco-bcos
-tcp        0      0 127.0.0.1:8546          0.0.0.0:*               LISTEN      5459/fisco-bcos
-tcp        0      0 0.0.0.0:30302           0.0.0.0:*               LISTEN      5464/fisco-bcos
-tcp        0      0 127.0.0.1:20202         0.0.0.0:*               LISTEN      5464/fisco-bcos
-tcp        0      0 127.0.0.1:8547          0.0.0.0:*               LISTEN      5464/fisco-bcos
-tcp        0      0 0.0.0.0:30303           0.0.0.0:*               LISTEN      5476/fisco-bcos
-tcp        0      0 127.0.0.1:20203         0.0.0.0:*               LISTEN      5476/fisco-bcos
-tcp        0      0 127.0.0.1:8548          0.0.0.0:*               LISTEN      5476/fisco-bcos
 ```
 
 ### 检查日志输出
 
+- 执行下面指令，查看节点node0链接的节点数
+
 ```bash
-# 查看节点node0链接的节点数，从下面的输出可以看出node0与另外3个节点有链接
-$ tail -f node0/log/log*  | grep connected
+tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+```
+
+正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接（按Ctrl+c退回命令行）。
+```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
+```
 
-# 检查是否在共识，如果不停输出++++Generating seal表示正常输出
-$ tail -f node0/log/log*  | grep +++
+- 执行下面指令，检查是否在共识
+
+
+```bash
+tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
+```
+
+正常情况会不停输出`++++Generating seal`表示共识正常（按Ctrl+c退回命令行）。
+```bash
 info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
 info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
 info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
@@ -128,8 +154,8 @@ $ cd ~/fisco
 $ sudo apt install -y default-jdk
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-# 重命名控制台配置文件
-$ mv console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+# 拷贝控制台配置文件，若节点未采用默认端口，请将文件中的20200替换成其他端口
+$ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 # 配置控制台证书
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
@@ -139,7 +165,7 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 
   - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
     
-    Failed to connect to the node. Please check the node status and the console configruation.
+    Failed to connect to the node. Please check the node status and the console configuration.
 
    则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
 
@@ -171,13 +197,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ### 使用控制台获取信息
 
-```json
+```bash
 # 获取客户端版本
 [group:1]> getNodeVersion
 {
     "Build Time":"20190121 06:21:05",
     "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0-rc1",
+    "FISCO-BCOS Version":"2.0.0",
     "Git Branch":"master",
     "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
 }
@@ -230,7 +256,7 @@ contract HelloWorld {
 
 ### 部署HelloWorld合约
 
-为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，所以参考下面命令部署即可。
+为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，参考下面命令部署即可。
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址

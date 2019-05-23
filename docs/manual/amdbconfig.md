@@ -590,15 +590,3 @@ select * from _user_t_test\G;
 item_name: apple
 1 row in set (0.00 sec)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
