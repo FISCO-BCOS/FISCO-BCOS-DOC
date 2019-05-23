@@ -7,7 +7,7 @@ RPC(Remote Procedure Call，远程过程调用)是客户端与区块链系统交
 
 ## 2 模块架构
  ![](../../images/rpc/rpc.png)
- 
+
  RPC模块负责提供FISCO BCOS的外部接口，客户端通过RPC发送请求，RPC通过调用[账本管理模块](architecture/group.md)和[p2p模块](p2p/p2p.md)获取相关响应，并将响应返回给客户端。其中账本管理模块通过多账本机制管理区块链底层的相关模块，具体包括[共识模块](consensus/index.html)，[同步模块](sync/sync.md)，区块管理模块，交易池模块以及区块验证模块。
 
 ## 3 数据定义
@@ -41,42 +41,10 @@ RPC响应包格式示例:
 服务端响应必须包含result或error成员，但两个成员不能同时包含。
 
 ### 3.3 错误对象
-当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
-
-- code: 使用数值表示该异常的错误类型，必须为整数。          
-- message: 对该错误的简单描述字符串。   
-- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。        
-
-错误对象包含两类错误码，分别是JSON-RPC标准错误码和FISCO BCOS RPC错误码。
-#### 3.3.1 JSON-RPC标准错误码    
-    
-标准错误码及其对应的含义如下：  
-
-|code    |message                 |含义                       |
-|:-------|:-----------------------|:--------------------------|
-|-32600  |INVALID_JSON_REQUEST    |发送无效的请求对象          |
-|-32601  |METHOD_NOT_FOUND        |该方法不存在或无效          |
-|-32602  |INVALID_PARAMS          |无效的方法参数             |
-|-32603  |INTERNAL ERROR          |内部调用错误               |
-|-32604  |PROCEDURE_IS_METHOD     |内部错误，请求未提供id字段  |
-|-32700  |JSON_PARSE_ERROR        |服务端接收到的json无法解析  |
-
-#### 3.3.2 FISCO BCOS RPC错误码    
-FISCO BCOS RPC接口错误码及其对应的含义如下：
-
-|code |message                                                                 |含义                                       |
-|:-------|:--------------------------------------------------------------------|:------------------------------------------|
-|40001|GroupID does not exist                                                  |GroupID不存在                              |
-|40002|Response json parse error                                               |JSON RPC获取的json数据解析错误             |
-|40003|BlockHash does not exist                                                |区块哈希不存在                             |
-|40004|BlockNumber does not exist                                              |区块高度不存在                             |
-|40005|TransactionIndex is out of range                                        |交易索引越界                               |
-|40006|Call needs a 'from' field                                               |call接口需要提供from字段                   |
-|40007|Only pbft consensus supports the view property                          |getPbftView接口，只有pbft共识机制有view属性|
-|40008|Invalid System Config                                                   |getSystemConfigByKey接口，查询无效的key    |
-|40009|Don't send requests to this group, the node doesn't belong to the group |非群组内节点发起无效的请求                 |
+当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，相关的描述和错误码，请参考：[RPC 错误码](../api.html#rpc)
 
 ## 4 RPC接口的设计
+
 FISCO BCOS提供丰富的RPC接口供客户端调用。其中分为3类：
 - 以get开头命名的查询接口：例如`[getBlockNumber]`接口，查询最新的区块高度。
 - `[sendRawTransaction]`接口: 执行一笔签名的交易，将等待区块链共识后才返回响应。

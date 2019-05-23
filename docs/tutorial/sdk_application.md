@@ -64,7 +64,6 @@ $ cd ~/fisco/console/tools/
 ```
 
 ```js
-cat > ./contracts/Asset.sol << EOF
 pragma solidity ^0.4.24;
 
 import "./Table.sol";
@@ -240,7 +239,6 @@ contract Asset {
         return ret_code;
     }
 }
-EOF
 ```
 
  **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
