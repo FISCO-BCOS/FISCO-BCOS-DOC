@@ -95,7 +95,6 @@ import "./Table.sol";
 
 contract TableTest {
     event createResult(int count);
-    event selectResult(bytes32 name, int item_id, bytes32 item_name);
     event insertResult(int count);
     event updateResult(int count);
     event removeResult(int count);
@@ -130,7 +129,6 @@ contract TableTest {
             user_name_bytes_list[uint256(i)] = entry.getBytes32("name");
             item_id_list[uint256(i)] = entry.getInt("item_id");
             item_name_bytes_list[uint256(i)] = entry.getBytes32("item_name");
-            emit selectResult(user_name_bytes_list[uint256(i)], item_id_list[uint256(i)], item_name_bytes_list[uint256(i)]);
         }
  
         return (user_name_bytes_list, item_id_list, item_name_bytes_list);

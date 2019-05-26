@@ -44,13 +44,13 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |-- conf
 |   |-- applicationContext-sample.xml # 配置文件
 |   |-- log4j.properties  # 日志配置文件
-|   |-- privateKey.properties # 发送交易的私钥存储文件
 |-- solidity # 控制台命令部署和调用的合约所在目录
 |   -- contracts  # 部署和调用合约的solidity合约存储目录
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
 |       -- Table.sol # CRUD需要引入的合约接口：Table合约接口
 |-- start.sh # 控制台启动脚本
+|-- get_account.sh # 账号生成脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
 |-- tools # 控制台工具目录
     |-- contracts # 用户编写的solidity合约存放目录
@@ -151,7 +151,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
         <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
                 <property name="groupId" value="1" /> <!-- 连接ID为1的群组 -->
-                <property name="orgID" value="fisco" />
+                <property name="agencyName" value="fisco" />
                 <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
         </bean>
 
@@ -194,30 +194,43 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 ### 启动脚本说明
-#### 查看启动脚本帮助说明：
-```bash
-$ ./start.sh --help
-Usage
-start console: 	./start.sh [groupID] [privateKey]
-print console version: 	./start.sh --version
-```
 #### 查看当前控制台版本：
 ```bash
 ./start.sh --version
 console version: 1.0.3
 ```
-#### 启动控制台：
-```bash
-$ ./start.sh [groupID] [privateKey]   
-```
-启动命令可以指定两个可选参数：           
-- `groupId`: 群组ID, 不指定则默认为群组1。           
-- `privateKey`: 交易发送者外部账号的私钥，不指定则默认从`conf`目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
+#### 账户使用方式
 
-示例
+##### 控制台加载私钥
+- 控制台根目录提供账号生成脚本get_account.sh(脚本用法请参考[账号管理文档]())，生成的的账号文件在根目录的accounts目录，控制台加载的账号文件必须放置在该目录下。
+控制台启动方式有如下几种：
+```
+./start.sh
+./start.sh groupID
+./start.sh groupID -pem pemName
+./start.sh groupID -p12 p12Name password
+```
+##### 默认启动
+控制台随机生成一个账号，使用控制台配置文件指定的群组号启动。
 ```bash
-# 以群组2，私钥账号地址为3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4登录控制台
-$ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4  
+./start.sh
+```
+##### 指定群组号号启动
+控制台随机生成一个账号，使用命令行指定的群组号启动。
+```bash
+./start.sh 2
+```
+- 注意：指定的群组在控制台配置文件中需要配置bean。
+
+##### 使用pem格式私钥文件启动
+- 使用指定的pem文件的账号启动，输入参数：群组号、-pem、pem文件名或路径
+```bash
+./start.sh 1 -pem accounts/c3f70a3cca6a952f6efee95a611b2ae1811b81cb.pem
+```
+##### 使用p12格式私钥文件启动
+- 使用指定的p12文件的账号，输入参数：群组号、-p12、p12文件名或路径、密码
+```bash
+./start.sh 1 -p12 accounts/c3f70a3cca6a952f6efee95a611b2ae1811b81cb.p12 123456
 ```
 
 ## 控制台命令
@@ -701,23 +714,123 @@ Switched to group 2.
 运行getTransactionReceipt，通过交易哈希查询交易回执。              
 参数：
 - 交易哈希：0x开头的交易哈希值。
+- 合约名：可选，发送交易产生该交易回执的合约名称，使用该参数可以将交易回执中的event log解析并输出。
+- event名：可选，event名称，指定该参数则输出指定的event log信息。
+- event索引号：可选，event索引，指定该参数则输出指定event索引位置的event log信息。
 ```text
-[group:1]> getTransactionReceipt 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
+[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
 {
-	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
-	"blockNumber":"0x5a",
-	"contractAddress":"0x0000000000000000000000000000000000000000",
-	"from":"0x7a5b31b49c6e944e9e1768785b1bc9a96cea0c17",
-	"gasUsed":"0xf401",
-	"logs":[
-		
-	],
-	"logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-	"status":"0x0",
-	"to":"0x738eedd873bb9722173194ab990c5b9a6c0beb25",
-	"transactionHash":"0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac",
-	"transactionIndex":"0x0"
+    "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
+    "blockNumber":"0x5",
+    "contractAddress":"0x0000000000000000000000000000000000000000",
+    "from":"0xc44e7a8a4ae20d6afaa43221c6120b5e1e9f9a72",
+    "gasUsed":"0x8be5",
+    "logs":[
+        {
+            "address":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
+            "topics":[
+                "0x66f7705280112a4d1145399e0414adc43a2d6974b487710f417edcf7d4a39d71"
+            ]
+        }
+    ],
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000",
+    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
+    "status":"0x0",
+    "to":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+    "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
+    "transactionIndex":"0x0"
 }
+
+[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest
+{
+    "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
+    "blockNumber":"0x5",
+    "contractAddress":"0x0000000000000000000000000000000000000000",
+    "from":"0xc44e7a8a4ae20d6afaa43221c6120b5e1e9f9a72",
+    "gasUsed":"0x8be5",
+    "logs":[
+        {
+            "address":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
+            "topics":[
+                "0x66f7705280112a4d1145399e0414adc43a2d6974b487710f417edcf7d4a39d71"
+            ]
+        }
+    ],
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000",
+    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
+    "status":"0x0",
+    "to":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+    "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
+    "transactionIndex":"0x0"
+}
+---------------------------------------------------------------------------------------------
+Event logs
+---------------------------------------------------------------------------------------------
+insertResult index: 0
+count = 1
+---------------------------------------------------------------------------------------------
+
+[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest insertResult
+{
+    "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
+    "blockNumber":"0x5",
+    "contractAddress":"0x0000000000000000000000000000000000000000",
+    "from":"0xc44e7a8a4ae20d6afaa43221c6120b5e1e9f9a72",
+    "gasUsed":"0x8be5",
+    "logs":[
+        {
+            "address":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
+            "topics":[
+                "0x66f7705280112a4d1145399e0414adc43a2d6974b487710f417edcf7d4a39d71"
+            ]
+        }
+    ],
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000",
+    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
+    "status":"0x0",
+    "to":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+    "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
+    "transactionIndex":"0x0"
+}
+---------------------------------------------------------------------------------------------
+Event logs
+---------------------------------------------------------------------------------------------
+insertResult index: 0
+count = 1
+---------------------------------------------------------------------------------------------
+
+[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest insertResult 0
+{
+    "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
+    "blockNumber":"0x5",
+    "contractAddress":"0x0000000000000000000000000000000000000000",
+    "from":"0xc44e7a8a4ae20d6afaa43221c6120b5e1e9f9a72",
+    "gasUsed":"0x8be5",
+    "logs":[
+        {
+            "address":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
+            "topics":[
+                "0x66f7705280112a4d1145399e0414adc43a2d6974b487710f417edcf7d4a39d71"
+            ]
+        }
+    ],
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000",
+    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
+    "status":"0x0",
+    "to":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
+    "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
+    "transactionIndex":"0x0"
+}
+---------------------------------------------------------------------------------------------
+Event logs
+---------------------------------------------------------------------------------------------
+insertResult index: 0
+count = 1
+---------------------------------------------------------------------------------------------
 ```
 ### **getPendingTransactions**
 运行getPendingTransactions，查询等待处理的交易。              
@@ -758,12 +871,12 @@ Switched to group 2.
                            
 ```text
 # 部署HelloWorld合约
-[group:1]> deploy HelloWorld.sol
-contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
+[group:1]> deploy HelloWorld.sol 
+contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署TableTest合约
 [group:1]> deploy TableTest.sol 
-contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
+contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 **注：**
 - 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。
@@ -777,12 +890,12 @@ contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```text
 [group:1]> getDeployLog 2
 
-2019-03-19 23:04:10  [group:1]  TableTest             0x7eec2ac59357866677ab0fa3db4e7dc2b391f7c2
-2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
+2019-05-26 08:37:03  [group:1]  HelloWorld            0xc0ce097a5757e2b6e189aa70c7d55770ace47767
+2019-05-26 08:37:45  [group:1]  TableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 [group:1]> getDeployLog 1
 
-2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
+2019-05-26 08:37:45  [group:1]  TableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
@@ -795,27 +908,40 @@ contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]，注意数组参数中不要有空格；布尔类型为true或者false。**
 ```text
 # 调用HelloWorld的get接口获取name字符串
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, World!
 
 # 调用HelloWorld的set接口设置name字符串
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 set "Hello, FISCO BCOS"
+transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1e70
 
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
 
-# 调用TableTest的create接口创建用户表t_test
-[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a create
-0x09fea224ce266c26a927c01668f4b28224f4b7b58399790e8534c055a698fc37
+# 调用TableTest的create接口创建用户表t_test，create接口调用了createResult event，event log会输出。
+# event log由event名称，event日志索引号和event的变量组成，方便用户查看发送交易后的变量状态。createResult event记录的是create接口创建表返回的值count
+[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 create
+transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612bb5
+---------------------------------------------------------------------------------------------
+Event logs
+---------------------------------------------------------------------------------------------
+createResult index: 0
+count = 0
+---------------------------------------------------------------------------------------------
 
 # 调用TableTest的insert接口插入记录，字段为name, item_id, item_name
-[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a insert "fruit" 1 "apple"
-0x7206d0a6e30f57795475a66ae18169dd65d9994f4ea5af1e3e469364d9f0b392
+[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
+transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
+---------------------------------------------------------------------------------------------
+Event logs
+---------------------------------------------------------------------------------------------
+insertResult index: 0
+count = 1
+---------------------------------------------------------------------------------------------
 
 # 调用TableTest的select接口查询记录
-[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a select "fruit"
+[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 select "fruit"
 [[fruit], [1], [apple]]
 ```
 **注：** TableTest.sol合约代码[参考这里](smart_contract.html#solidity)。
@@ -866,11 +992,11 @@ contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```text
 # 调用HelloWorld合约1.0版，通过set接口设置name字符串
 [group:1]> callByCNS HelloWorld:1.0 set "Hello,CNS"
-0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
+transaction hash:0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
 
 # 调用HelloWorld合约2.0版，通过set接口设置name字符串
 [group:1]> callByCNS HelloWorld:2.0 set "Hello,CNS2"
-0x43000d14040f0c67ac080d0179b9499b6885d4a1495d3cfd1a79ffb5f2945f64
+transaction hash:0x43000d14040f0c67ac080d0179b9499b6885d4a1495d3cfd1a79ffb5f2945f64
 
 # 调用HelloWorld合约1.0版，通过get接口获取name字符串
 [group:1]> callByCNS HelloWorld:1.0 get
