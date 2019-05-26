@@ -365,7 +365,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 - applicationContext.xml  
 
-**注意：** `asset-app/src/test/resources/applicationContext.xml`是从fisco/nodes/127.0.0.1/sdk/复制而来，已默认配置好，不需要做额外修改。若搭建区块链节点时，```channel_listen_port```配置被改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/sdk.html#spring)。
+**注意：** 如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/sdk.html#spring)。
 
 
 ## 业务开发

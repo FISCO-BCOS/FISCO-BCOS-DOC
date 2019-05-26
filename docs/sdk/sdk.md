@@ -1,11 +1,11 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以访问节点，查询节点状态，改变节点设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以支持访问节点、查询节点状态、改变节点设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
 
 - 提供调用FISCO BCOS JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
 - 支持[链上信使协议](../manual/amop_protocol.md)为联盟链提供安全高效的消息信道。
-- 支持使用国密算法发交易
+- 支持使用国密算法发送交易
 
 ## 环境要求
 
@@ -231,7 +231,6 @@ SDK提供对[节点类型](../design/security_control/node_management.html#id6)�
 - **String addObserver(String nodeId)：** 根据节点NodeID设置对应节点为观察节点。
 - **String removeNode(String nodeId)：** 根据节点NodeID设置对应节点为游离节点。
 
-
 #### CRUDService 
 SDK提供对CRUD(增删改查)操作的支持。CRUDService可以创建表，对表进行增删改查操作，其API如下：
 - **int createTable(Table table)：** 创建表，提供表对象。表对象需要设置其表名，主键字段名和其他字段名。其中，其他字段名是以英文逗号分隔拼接的字符串。
@@ -239,5 +238,4 @@ SDK提供对CRUD(增删改查)操作的支持。CRUDService可以创建表，对
 - **int update(Table table, Entry entry, Condition condition)：** 更新记录，提供表对象，Entry对象和Condtion对象。表对象需要设置表名和主键字段名；Entry是map对象，提供更新的字段名和字段值；Condition对象是条件对象，可以设置更新的匹配条件。
 - **List\<Map\<String, String\>\> select(Table table, Condition condition)：** 查询记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置查询的匹配条件。
 - **int remove(Table table, Condition condition)：** 移除记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置移除的匹配条件。
-
-
+- **Table desc(String tableName)：** 根据表名查询表的信息，主要包含表的主键和其他属性字段。
