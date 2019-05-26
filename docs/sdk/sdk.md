@@ -249,3 +249,4 @@ SDK提供对CRUD(增删改查)操作的支持。CRUDService可以创建表，对
 - **int update(Table table, Entry entry, Condition condition)：** 更新记录，提供表对象，Entry对象和Condtion对象。表对象需要设置表名和主键字段名；Entry是map对象，提供更新的字段名和字段值；Condition对象是条件对象，可以设置更新的匹配条件。
 - **List\<Map\<String, String\>\> select(Table table, Condition condition)：** 查询记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置查询的匹配条件。
 - **int remove(Table table, Condition condition)：** 移除记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置移除的匹配条件。
+- **Table desc(String tableName)：** 根据表名查询表的信息，主要包含表的主键和其他属性字段。
