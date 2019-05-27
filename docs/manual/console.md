@@ -20,8 +20,8 @@
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../design/rpc.html#id6)。
-  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../sdk/sdk.html#precompiled-service-api)。
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
+  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。
 
 ## 控制台配置与运行
 
