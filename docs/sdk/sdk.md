@@ -177,7 +177,7 @@ channelEthereumService.setTimeout(100000);
     channelEthereumService.setChannelService(service);
     Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
     String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"; 
-    //指定外部账号私钥，用于交易签名
+    //指定外部账户私钥，用于交易签名
     Credentials credentials = GenCredential.create(privateKey); 
     //获取SystemConfigService对象
     SystemConfigService systemConfigService = new SystemConfigService(web3j, credentials);
@@ -187,32 +187,32 @@ channelEthereumService.setTimeout(100000);
     String value = web3j.getSystemConfigByKey("tx_count_limit").send().getSystemConfigByKey();
     System.out.println(value);
 ```
-##### 创建并使用指定外部账号
-sdk发送交易需要一个外部账号，下面是随机创建一个外部账号的方法。
+##### 创建并使用指定外部账户
+sdk发送交易需要一个外部账户，下面是随机创建一个外部账户的方法。
 ```java
-//创建普通外部账号
+//创建普通外部账户
 EncryptType.encryptType = 0;
-//创建国密外部账号，向国密区块链节点发送交易需要使用国密外部账号
+//创建国密外部账户，向国密区块链节点发送交易需要使用国密外部账户
 // EncryptType.encryptType = 1; 
 Credentials credentials = GenCredential.create();
-//账号地址
+//账户地址
 String address = credentials.getAddress();
-//账号私钥 
+//账户私钥 
 String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
-//账号公钥 
+//账户公钥 
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
-使用指定的外部账号
+使用指定的外部账户
 ```java
-//通过指定外部账号私钥使用指定的外部账号
+//通过指定外部账户私钥使用指定的外部账户
 Credentials credentials = GenCredential.create(privateKey);
 ```
 
-##### 加载账号私钥文件
-如果通过账号生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账号私钥文件(账号生成脚本的用法参考[账号管理文档](../tutorial/account.md))，则可以通过加载PEM或PKCS12账号私钥文件使用账号。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
+##### 加载账户私钥文件
+如果通过账户生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账户私钥文件(账户生成脚本的用法参考[账户管理文档](../tutorial/account.md))，则可以通过加载PEM或PKCS12账户私钥文件使用账户。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
 
 * P12Manager用法举例：
-在applicationContext.xml中配置PKCS12账号的私钥文件路径和密码
+在applicationContext.xml中配置PKCS12账户的私钥文件路径和密码
 ```xml
 <bean id="p12" class="org.fisco.bcos.channel.client.P12Manager" init-method="load" >
 	<property name="password" value="123456" />
@@ -224,7 +224,7 @@ Credentials credentials = GenCredential.create(privateKey);
 //加载Bean
 ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 P12Manager p12 = context.getBean(P12Manager.class);
-//提供密码获取ECKeyPair，密码在生产p12账号文件时指定
+//提供密码获取ECKeyPair，密码在生产p12账户文件时指定
 ECKeyPair p12KeyPair = p12.getECKeyPair(p12.getPassword());
 			
 //以十六进制串输出私钥和公钥
@@ -238,7 +238,7 @@ System.out.println("p12 Address: " + credentials.getAddress());
 
 * PEMManager使用举例
 
-在applicationContext.xml中配置PEM账号的私钥文件路径
+在applicationContext.xml中配置PEM账户的私钥文件路径
 ```xml
 <bean id="pem" class="org.fisco.bcos.channel.client.PEMManager" init-method="load" >
 	<property name="pemFile" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
@@ -279,7 +279,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
     BigInteger gasPrice = new BigInteger("300000000");
     BigInteger gasLimit = new BigInteger("300000000");
     String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"; 
-    //指定外部账号私钥，用于交易签名
+    //指定外部账户私钥，用于交易签名
     Credentials credentials = GenCredential.create(privateKey); 
     //部署合约 
     YourSmartContract contract = YourSmartContract.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
@@ -321,23 +321,23 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 
 #### PermissionService
 SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，PermissionService可以配置权限信息，其API如下：
-- **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
-- **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
-- **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
-- **public String grantDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
-- **public String revokeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
+- **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址设置权限信息。
+- **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址去除权限信息。
+- **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账户地址和生效块高)。
+- **public String grantDeployAndCreateManager(String address)：** 增加外部账户地址的部署合约和创建用户表权限。
+- **public String revokeDeployAndCreateManager(String address)：** 移除外部账户地址的部署合约和创建用户表权限。
 - **public List\<PermissionInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
-- **public String grantPermissionManager(String address)：** 增加外部账号地址的管理权限的权限。
-- **public String revokePermissionManager(String address)：** 移除外部账号地址的管理权限的权限。
+- **public String grantPermissionManager(String address)：** 增加外部账户地址的管理权限的权限。
+- **public String revokePermissionManager(String address)：** 移除外部账户地址的管理权限的权限。
 - **public List\<PermissionInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
-- **public String grantNodeManager(String address)：** 增加外部账号地址的节点管理权限。
-- **public String revokeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
+- **public String grantNodeManager(String address)：** 增加外部账户地址的节点管理权限。
+- **public String revokeNodeManager(String address)：** 移除外部账户地址的节点管理权限。
 - **public List\<PermissionInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
-- **public String grantCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
-- **public String revokeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
+- **public String grantCNSManager(String address)：** 增加外部账户地址的使用CNS权限。
+- **public String revokeCNSManager(String address)：** 移除外部账户地址的使用CNS权限。
 - **public List\<PermissionInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
-- **public String grantSysConfigManager(String address)：** 增加外部账号地址的系统参数管理权限。
-- **public String revokeSysConfigManager(String address)：** 移除外部账号地址的系统参数管理权限。
+- **public String grantSysConfigManager(String address)：** 增加外部账户地址的系统参数管理权限。
+- **public String revokeSysConfigManager(String address)：** 移除外部账户地址的系统参数管理权限。
 - **public List\<PermissionInfo\> listSysConfigManager()：** 查询拥有系统参数管理的权限记录列表。
 
 #### CnsService

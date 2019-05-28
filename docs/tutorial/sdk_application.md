@@ -133,7 +133,7 @@ contract Asset {
         int256 ret_code = 0;
         int256 ret= 0;
         uint256 temp_asset_value = 0;
-        // 查询账号是否存在
+        // 查询账户是否存在
         (ret, temp_asset_value) = select(account);
         if(ret != 0) {
             Table table = openTable();

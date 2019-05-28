@@ -50,7 +50,7 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
 |       -- Table.sol # CRUD需要引入的合约接口：Table合约接口
 |-- start.sh # 控制台启动脚本
-|-- get_account.sh # 账号生成脚本
+|-- get_account.sh # 账户生成脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
 |-- tools # 控制台工具目录
     |-- contracts # 用户编写的solidity合约存放目录
@@ -205,7 +205,7 @@ console version: 1.0.3
 #### 账户使用方式
 
 ##### 控制台加载私钥
-控制台提供账号生成脚本get_account.sh(脚本用法请参考[账号管理文档](../tutorial/account.md)，生成的的账号文件在accounts目录下，控制台加载的账号文件必须放置在该目录下。
+控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../tutorial/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
 控制台启动方式有如下几种：
 ```
 ./start.sh
@@ -214,24 +214,24 @@ console version: 1.0.3
 ./start.sh groupID -p12 p12Name
 ```
 ##### 默认启动
-控制台随机生成一个账号，使用控制台配置文件指定的群组号启动。
+控制台随机生成一个账户，使用控制台配置文件指定的群组号启动。
 ```bash
 ./start.sh
 ```
 ##### 指定群组号启动
-控制台随机生成一个账号，使用命令行指定的群组号启动。
+控制台随机生成一个账户，使用命令行指定的群组号启动。
 ```bash
 ./start.sh 2
 ```
 - 注意：指定的群组在控制台配置文件中需要配置bean。
 
 ##### 使用PEM格式私钥文件启动
-- 使用指定的pem文件的账号启动，输入参数：群组号、-pem、pem文件名或路径
+- 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件名或路径
 ```bash
 ./start.sh 1 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
 ```
 ##### 使用PKCS12格式私钥文件启动
-- 使用指定的p12文件的账号，需要输入密码，输入参数：群组号、-p12、p12文件名或路径
+- 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件名或路径
 ```bash
 ./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
 Enter Export Password:
@@ -1091,8 +1091,8 @@ Hello,CNS2
 ```
 ### **grantPermissionManager**
 
-运行grantPermissionManager，赋予外部账号地址的管理权限的权限。**即设置权限管理员账号。** 参数： 
-- 外部账号地址
+运行grantPermissionManager，赋予外部账户地址的管理权限的权限。**即设置权限管理员账户。** 参数： 
+- 外部账户地址
 ```text
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1103,7 +1103,7 @@ Hello,CNS2
 
 ```eval_rst
 .. important::
-    0xc0d0e6ccc0b44c12196266548bec4a3616160e7d地址为管理员账号，该账号登录控制台可以操作后续相关的权限功能。可以使用该账号对应的私钥登录控制台，私钥为ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e，登录控制台命令如下：其中启动脚本第一个参数为群组ID，第二个参数为账号对应的私钥。
+    0xc0d0e6ccc0b44c12196266548bec4a3616160e7d地址为管理员账户，该账户登录控制台可以操作后续相关的权限功能。可以使用该账户对应的私钥登录控制台，私钥为ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e，登录控制台命令如下：其中启动脚本第一个参数为群组ID，第二个参数为账户对应的私钥。
 ```
 
 ```
@@ -1119,9 +1119,9 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokePermissionManager**
-运行revokePermissionManager，撤销外部账号地址的权限管理权限。                                                                 
+运行revokePermissionManager，撤销外部账户地址的权限管理权限。                                                                 
 参数： 
-- 外部账号地址
+- 外部账户地址
 ```text
 [group:1]> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1131,10 +1131,10 @@ Hello,CNS2
 ```
 ### **grantUserTableManager**
 
-运行grantUserTableManager，根据用户表名和外部账号地址赋予权限。                                  
+运行grantUserTableManager，根据用户表名和外部账户地址赋予权限。                                  
 参数： 
 - 表名
-- 外部账号地址
+- 外部账户地址
 ```text
 [group:1]> grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1156,11 +1156,11 @@ Hello,CNS2
 ```
 ### **revokeUserTableManager**
 
-运行revokeUserTableManager，根据用户表名和外部账号地址撤销权限。                                                                 
+运行revokeUserTableManager，根据用户表名和外部账户地址撤销权限。                                                                 
 参数： 
 
 - 表名
-- 外部账号地址
+- 外部账户地址
 ```text
 [group:1]> revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1169,10 +1169,10 @@ Hello,CNS2
 }
 ```
 ### **grantDeployAndCreateManager**
-运行grantDeployAndCreateManager，赋予外部账号地址的部署合约和创建用户表权限。
+运行grantDeployAndCreateManager，赋予外部账户地址的部署合约和创建用户表权限。
 
 参数： 
-- 外部账号地址
+- 外部账户地址
 ```text
 [group:1]> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1190,9 +1190,9 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeDeployAndCreateManager**
-运行revokeDeployAndCreateManager，撤销外部账号地址的部署合约和创建用户表权限。                                                                 
+运行revokeDeployAndCreateManager，撤销外部账户地址的部署合约和创建用户表权限。                                                                 
 参数： 
-- 外部账号地址
+- 外部账户地址
 ```text
 [group:1]> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1202,8 +1202,8 @@ Hello,CNS2
 ```
 ### **grantNodeManager**
 
-运行grantNodeManager，赋予外部账号地址的节点管理权限。参数： 
-- 外部账号地址
+运行grantNodeManager，赋予外部账户地址的节点管理权限。参数： 
+- 外部账户地址
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1223,9 +1223,9 @@ Hello,CNS2
 ```
 ### **revokeNodeManager**
 
-运行revokeNodeManager，撤销外部账号地址的节点管理权限。                                                                 
+运行revokeNodeManager，撤销外部账户地址的节点管理权限。                                                                 
 参数： 
-- 外部账号地址
+- 外部账户地址
 ```text
 [group:1]> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1234,8 +1234,8 @@ Hello,CNS2
 }
 ```
 ### **grantCNSManager**
-运行grantCNSManager，赋予外部账号地址的使用CNS权限。参数： 
-- 外部账号地址
+运行grantCNSManager，赋予外部账户地址的使用CNS权限。参数： 
+- 外部账户地址
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1254,8 +1254,8 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeCNSManager**
-运行revokeCNSManager，撤销外部账号地址的使用CNS权限。参数： 
-- 外部账号地址
+运行revokeCNSManager，撤销外部账户地址的使用CNS权限。参数： 
+- 外部账户地址
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1264,8 +1264,8 @@ Hello,CNS2
 }
 ```
 ### **grantSysConfigManager**
-运行grantSysConfigManager，赋予外部账号地址的系统参数管理权限。参数： 
-- 外部账号地址
+运行grantSysConfigManager，赋予外部账户地址的系统参数管理权限。参数： 
+- 外部账户地址
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1285,8 +1285,8 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeSysConfigManager**
-运行revokeSysConfigManager，撤销外部账号地址的系统参数管理权限。参数： 
-- 外部账号地址
+运行revokeSysConfigManager，撤销外部账户地址的系统参数管理权限。参数： 
+- 外部账户地址
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
