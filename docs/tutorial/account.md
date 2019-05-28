@@ -1,15 +1,15 @@
-# FISCO BCOS账户
-FISCO BCOS采用帐户模型，帐户这个术语是代表着用户、智能合约的唯一性存在。
+# FISCO BCOS账号
+FISCO BCOS采用账号模型，账号这个术语是代表着用户、智能合约的唯一性存在。
 
-在采用公私钥体系的区块链系统里，用户创建一个公私钥对，经过hash等算法换算即得到一个唯一性的地址串，代表这个用户的帐户，用户用该私钥管理这个帐户里的资产。用户帐户在链上不一定有对应的存储空间，而是由智能合约管理用户在链上的数据，因此这种用户帐户也会被称为“外部帐户”。
+在采用公私钥体系的区块链系统里，用户创建一个公私钥对，经过hash等算法换算即得到一个唯一性的地址串，代表这个用户的账号，用户用该私钥管理这个账号里的资产。用户账号在链上不一定有对应的存储空间，而是由智能合约管理用户在链上的数据，因此这种用户账号也会被称为“外部账号”。
 
-对智能合约来说，一个智能合约被部署后，在链上就有了一个唯一的地址，也称为合约帐户，指向这个合约的状态位、二进制代码、相关状态数据的索引等。智能合约运行过程中，会通过这个地址加载二进制代码，根据状态数据索引去访问世界状态存储里对应的数据，根据运行结果将数据写入世界状态存储，更新合约帐户里的状态数据索引。智能合约被注销时，主要是更新合约帐户里的合约状态位，将其置为无效，一般不会直接清除该合约账户的实际数据。
+对智能合约来说，一个智能合约被部署后，在链上就有了一个唯一的地址，也称为合约账号，指向这个合约的状态位、二进制代码、相关状态数据的索引等。智能合约运行过程中，会通过这个地址加载二进制代码，根据状态数据索引去访问世界状态存储里对应的数据，根据运行结果将数据写入世界状态存储，更新合约账号里的状态数据索引。智能合约被注销时，主要是更新合约账号里的合约状态位，将其置为无效，一般不会直接清除该合约账号的实际数据。
 
 FISCO BCOS提供的Web3SDK和控制台支持PEM和PKCS12两种格式的文件用于存储私钥，其中PEM格式使用明文存储私钥，而PKCS12使用用户提供的口令加密存储私钥。
 
-本文将介绍FISCO BCOS账户的生成、存储和使用方式，要求阅读者有一定的Linux基础。
+本文将介绍FISCO BCOS账号的生成、存储和使用方式，要求阅读者有一定的Linux基础。
 
-## FISCO BCOS账户生成
+## FISCO BCOS账号生成
 
 ### get_account.sh脚本
 #### 1. 获取脚本
@@ -31,12 +31,12 @@ Usage: ./get_account.sh
 ```bash
 ./get_account.sh
 ```
-执行上面的命令，可以得到类似下面的输出，包括账户地址和以账户地址明明的私钥PEM文件。
+执行上面的命令，可以得到类似下面的输出，包括账号地址和以账号地址为文件名的私钥PEM文件。
 ```bash
 [INFO] Account Address   : 0xee5fffba2da55a763198e361c7dd627795906ead
 [INFO] Private Key (pem) : accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
 ```
-- 指定PEM私钥文件计算账户地址
+- 指定PEM私钥文件计算账号地址
 ```bash
 ./get_account.sh -k accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
 ```
@@ -56,7 +56,7 @@ Verifying - Enter Export Password:
 [INFO] Account Address   : 0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1
 [INFO] Private Key (p12) : accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
 ```
-- 指定p12私钥文件计算账户地址，**按提示输入p12文件密码**
+- 指定p12私钥文件计算账号地址，**按提示输入p12文件密码**
 ```bash
 ./get_account.sh -P accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
 ```
@@ -82,64 +82,62 @@ String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
 
-## 账户存储方式
-- web3SDK支持通过私钥字符串或者文件加载，所以账户的私钥可以存储在数据库中或者本地文件。
+## 账号存储方式
+- web3SDK支持通过私钥字符串或者文件加载，所以账号的私钥可以存储在数据库中或者本地文件。
 - 本地文件支持两种存储格式，其中PKCS12加密存储，而PEM格式明文存储。
-- 开发业务时可以根据实际业务场景选择私钥的存储管理方式，私钥用于调用。
+- 开发业务时可以根据实际业务场景选择私钥的存储管理方式。
 
-## 账户使用方式
+## 账号使用方式
 
-### 控制台加载私钥
-- 控制台根目录提供账号生成脚本get_account.sh，生成的的账号文件在根目录的accounts目录，控制台加载的账号文件必须存在该目录下。
+### 控制台加载私钥文件
+控制台提供账号生成脚本get_account.sh，生成的的账号文件在accounts目录下，控制台加载的账号文件必须放置在该目录下。
 控制台启动方式有如下几种：
 ```
 ./start.sh
 ./start.sh groupID
 ./start.sh groupID -pem pemName
-./start.sh groupID -p12 p12Name password
+./start.sh groupID -p12 p12Name
 ```
-#### 1. 默认启动
+##### 默认启动
 控制台随机生成一个账号，使用控制台配置文件指定的群组号启动。
 ```bash
 ./start.sh
 ```
-#### 2. 指定群组号号启动
+##### 指定群组号启动
 控制台随机生成一个账号，使用命令行指定的群组号启动。
 ```bash
 ./start.sh 2
 ```
 - 注意：指定的群组在控制台配置文件中需要配置bean。
 
-#### 3. 使用pem格式私钥文件启动
+##### 使用PEM格式私钥文件启动
 - 使用指定的pem文件的账号启动，输入参数：群组号、-pem、pem文件名或路径
 ```bash
-./start.sh 1 -pem accounts/c3f70a3cca6a952f6efee95a611b2ae1811b81cb.pem
+./start.sh 1 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
 ```
-#### 4. 使用p12格式私钥文件启动
-- 使用指定的p12文件的账号，输入参数：群组号、-p12、p12文件名或路径、密码
+##### 使用PKCS12格式私钥文件启动
+- 使用指定的p12文件的账号，需要输入密码，输入参数：群组号、-p12、p12文件名或路径
 ```bash
-./start.sh 1 -p12 accounts/c3f70a3cca6a952f6efee95a611b2ae1811b81cb.p12 123456
+./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
+Enter Export Password:
 ```
 
-### Web3SDK加载私钥
+### Web3SDK加载私钥文件
 
-在Web3SDK中，可以使用代码或者applicationContext.xml来加载P12或PEM密钥
-
-加载密钥的两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12 KeyStore的密钥和证书，PEMManager用于加载PEM格式的密钥
+如果通过账号生成脚本get_accounts.sh生成了PEM或PKCS12格式的账号私钥文件，则可以通过加载PEM或PKCS12账号私钥文件使用账号。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
 
 * P12Manager用法举例：
-
-在applicationContext.xml中配置p12账号的文件路径和密码
-```
-<bean id="keyStore" class="org.fisco.bcos.channel.client.P12Manager" init-method="load" >
+在applicationContext.xml中配置PKCS12账号的私钥文件路径和密码
+```xml
+<bean id="p12" class="org.fisco.bcos.channel.client.P12Manager" init-method="load" >
 	<property name="password" value="123456" />
-	<property name="keyStoreFile" value="classpath:0fc3c4bb89bd90299db4c62be0174c4966286c00.p12" />
+	<property name="p12File" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.p12" />
 </bean>
 ```
 开发代码
-```
+```java
 //加载Bean
-ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext-keystore-sample.xml");
+ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 P12Manager p12 = context.getBean(P12Manager.class);
 //提供密码获取ECKeyPair，密码在生产p12账号文件时指定
 ECKeyPair p12KeyPair = p12.getECKeyPair(p12.getPassword());
@@ -155,14 +153,14 @@ System.out.println("p12 Address: " + credentials.getAddress());
 
 * PEMManager使用举例
 
-在applicationContext.xml中配置pem账号的文件路径
-```
+在applicationContext.xml中配置PEM账号的私钥文件路径
+```xml
 <bean id="pem" class="org.fisco.bcos.channel.client.PEMManager" init-method="load" >
-	<property name="pemFile" value="classpath:0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
+	<property name="pemFile" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
 </bean>
 ```
 使用代码加载
-```
+```java
 //加载Bean
 ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext-keystore-sample.xml");
 PEMManager pem = context.getBean(PEMManager.class);
@@ -177,8 +175,8 @@ Credentials credentialsPEM = Credentials.create(pemKeyPair);
 System.out.println("PEM Address: " + credentialsPEM.getAddress());
 ```
 
-## 账户计算方法
-FISCO BCOS账户由ECDSA公钥计算得来，对ECDSA公钥的16进制表示计算keccak-256sum哈希，取计算结果的后20字节的16进制表示作为账户地址，每个字节需要两个16进制数表示，所以账户地址长度为40。FISCO BCOS账户与以太坊兼容。
+## 账号计算方法
+FISCO BCOS账号由ECDSA公钥计算得来，对ECDSA公钥的16进制表示计算keccak-256sum哈希，取计算结果的后20字节的16进制表示作为账号地址，每个字节需要两个16进制数表示，所以账号地址长度为40。FISCO BCOS账号与以太坊兼容。
 注意keccak-256sum与`SHA3`**不相同**，详情参考[这里](https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use)。
 
 [以太坊地址生成](https://kobl.one/blog/create-full-ethereum-keypair-and-address/)
@@ -209,11 +207,11 @@ openssl ec -in ecprivkey.pem -text -noout 2>/dev/null| sed -n '7,11p' | tr -d ":
 ```
 
 ### 2. 根据公钥计算地址
-本节我们根据公钥计算对应的账户地址。我们需要获取keccak-256sum工具，可以从[这里下载](https://github.com/vkobel/ethereum-generate-wallet/tree/master/lib)。
+本节我们根据公钥计算对应的账号地址。我们需要获取keccak-256sum工具，可以从[这里下载](https://github.com/vkobel/ethereum-generate-wallet/tree/master/lib)。
 ```bash
 openssl ec -in ecprivkey.pem -text -noout 2>/dev/null| sed -n '7,11p' | tr -d ": \n" | awk '{print substr($0,3);}' | ./keccak-256sum -x -l | tr -d ' -' | tail -c 41
 ```
-得到类似下面的输出，就是计算得出的账户地址。
+得到类似下面的输出，就是计算得出的账号地址。
 ```bash
 dcc703c0e500b653ca82273b7bfad8045d85a470
 ```

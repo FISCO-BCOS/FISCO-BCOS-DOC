@@ -208,15 +208,15 @@ String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 Credentials credentials = GenCredential.create(privateKey);
 ```
 
-##### 加载账号密钥文件
-如果通过账号生成脚本`get_accounts.sh`生成了p12或pem格式的账号密钥文件(账号生成脚本的用法参考[账号管理文档]())，则可以通过加载p12或pem账号密钥文件使用账号。加载密钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载p12格式的密钥文件，PEMManager用于加载PEM格式的密钥文件。
+##### 加载账号私钥文件
+如果通过账号生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账号私钥文件(账号生成脚本的用法参考[账号管理文档](../tutorial/account.md))，则可以通过加载PEM或PKCS12账号私钥文件使用账号。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
 
 * P12Manager用法举例：
-在applicationContext.xml中配置p12账号的密钥文件路径和密码
+在applicationContext.xml中配置PKCS12账号的私钥文件路径和密码
 ```xml
 <bean id="p12" class="org.fisco.bcos.channel.client.P12Manager" init-method="load" >
 	<property name="password" value="123456" />
-	<property name="p12File" value="classpath:0fc3c4bb89bd90299db4c62be0174c4966286c00.p12" />
+	<property name="p12File" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.p12" />
 </bean>
 ```
 开发代码
@@ -238,10 +238,10 @@ System.out.println("p12 Address: " + credentials.getAddress());
 
 * PEMManager使用举例
 
-在applicationContext.xml中配置pem账号的文件路径
+在applicationContext.xml中配置PEM账号的私钥文件路径
 ```xml
 <bean id="pem" class="org.fisco.bcos.channel.client.PEMManager" init-method="load" >
-	<property name="pemFile" value="classpath:0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
+	<property name="pemFile" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
 </bean>
 ```
 使用代码加载
