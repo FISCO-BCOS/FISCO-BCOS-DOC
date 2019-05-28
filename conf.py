@@ -51,7 +51,7 @@ if on_rtd:
         except HTTPError as err:
             if err.code != 413:
                 raise
-            logger.error("LFS: request entity too large, splitting in half")
+            print("LFS: request entity too large, splitting in half")
             objects.extend(_patched_fetch_urls(lfs_url, oid_list[:len(oid_list) // 2]))
             objects.extend(_patched_fetch_urls(lfs_url, oid_list[len(oid_list) // 2:]))
 
