@@ -309,11 +309,11 @@ usage: generator [-h] [-v] [-b peer_path data_dir] [-c data_dir]
 
 FISCO BCOS generator的所有命令同时支持国密版`fisco-bcos`，使用时，国密证书、私钥均加以前缀`gm`。基本使用解释如下
 
-## 国密开关 (-g)
+### 国密开关 (-g)
 
 国密开关-g打开时，生成证书、节点、群组创世区块的操作会相应生成国密版的上述文件。
 
-## 生成证书操作
+### 生成证书操作
 
 如generate_*_certificate操作时，配合-g命令会生成相应的国密证书。
 
@@ -330,7 +330,7 @@ $ ./generator --generate_all_certificates ./cert -g
     - 如果用户缺少上述三个文件，则无法生成节点证书，程序会抛出异常。
 ```
 
-## 生成国密群组创世区块
+### 生成国密群组创世区块
 
 操作示例
 
@@ -345,7 +345,7 @@ $ ./generator --create_group_genesis ~/mydata -g
 
 用户生成的`group.i.genesis`即为群组的创世区块，即可完成新群组划分操作。
 
-## 生成国密节点配置文件夹
+### 生成国密节点配置文件夹
 
 操作示例
 
@@ -373,7 +373,7 @@ $ cd ./data/monitor
 3. 分析最近一分钟的节点日志打印, 收集日志关键错误打印信息, 准实时判断节点的状态.
 4. 指定日志文件或者指定时间段, 分析节点的共识消息处理, 出块, 交易数量等信息, 判断节点的健康度. 
 
-## 配置告警服务
+### 配置告警服务
 
 用户使用前，首先需要配置告警信息服务，这里以[server酱](http://sc.ftqq.com/3.version)的微信推送为例，可以参考配置[server酱](http://sc.ftqq.com/3.version)
 
@@ -383,7 +383,7 @@ $ cd ./data/monitor
     # change http server  
 }函数，个性化配置为自己需要的服务
 
-## help命令
+### help命令
 
 使用help命令查看脚本使用方式
 
@@ -417,7 +417,7 @@ Usage : bash monitor.sh
 - -r 指定上报接收者名称
 - -h 帮助命令
 
-## 使用示例
+### 使用示例
 
 - 使用脚本监控指定路径下节点，发送给接收者Alice：
 
@@ -441,7 +441,7 @@ $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statis
 
 FISCO BCOS generator 的scripts文件夹的`check_certificates.sh`脚本包含了节点log中提示`handshake failed`的异常检测。
 
-## 获取脚本
+### 获取脚本
 
 如果用户需要检测由`buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
 
@@ -451,7 +451,7 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/develop/script
 
 使用generator部署节点的用户可以从generator的根目录下，从scripts/check_certificates.sh获取脚本。
 
-## 检测证书有效期
+### 检测证书有效期
 
 `check_certificates.sh`的-t命令会根据用户证书签发的有效期，以及当前的系统时间对证书进行检测。
 
@@ -463,7 +463,7 @@ $ ./check_certificates.sh -t ~/certificates.crt
 
 参数第二项为任意符合x509格式的证书，验证成功时会提示`check certificates time successful`, 验证失败会提示异常。
 
-## 验证证书
+### 验证证书
 
 `check_certificates.sh`的-v命令会根据用户指定的根证书从而验证节点证书。
 
