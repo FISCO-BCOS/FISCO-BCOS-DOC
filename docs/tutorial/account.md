@@ -14,7 +14,7 @@ FISCO BCOS提供的Web3SDK和控制台支持PEM和PKCS12两种格式的文件用
 ### get_account.sh脚本
 #### 1. 获取脚本
 ```bash
-curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/get_account.sh && chmod u+x get_account.sh && ./get_account.sh -h
+curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。
 ```bash
@@ -29,7 +29,7 @@ Usage: ./get_account.sh
 #### 2. 使用脚本生成PEM格式私钥
 - 生成私钥与地址
 ```bash
-./get_account.sh
+bash get_account.sh
 ```
 执行上面的命令，可以得到类似下面的输出，包括账号地址和以账号地址为文件名的私钥PEM文件。
 ```bash
@@ -38,7 +38,7 @@ Usage: ./get_account.sh
 ```
 - 指定PEM私钥文件计算账号地址
 ```bash
-./get_account.sh -k accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
+bash get_account.sh -k accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
 ```
 执行上面的命令，结果如下
 ```bash
@@ -47,7 +47,7 @@ Usage: ./get_account.sh
 #### 3. 使用脚本生成PKCS12格式私钥
 - 生成私钥与地址
 ```bash
-./get_account.sh -p
+bash get_account.sh -p
 ```
 执行上面的命令，可以得到类似下面的输出，按照提示输入密码，生成对应的p12文件。
 ```bash
@@ -58,7 +58,7 @@ Verifying - Enter Export Password:
 ```
 - 指定p12私钥文件计算账号地址，**按提示输入p12文件密码**
 ```bash
-./get_account.sh -P accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
+bash get_account.sh -P accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
 ```
 执行上面的命令，结果如下
 ```bash
