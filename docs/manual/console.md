@@ -205,13 +205,13 @@ console version: 1.0.3
 #### 账户使用方式
 
 ##### 控制台加载私钥
-- 控制台提供账号生成脚本get_account.sh(脚本用法请参考[账号管理文档]())，生成的的账号文件在accounts目录下，控制台加载的账号文件必须放置在该目录下。
+控制台提供账号生成脚本get_account.sh(脚本用法请参考[账号管理文档](../tutorial/account.md)，生成的的账号文件在accounts目录下，控制台加载的账号文件必须放置在该目录下。
 控制台启动方式有如下几种：
 ```
 ./start.sh
 ./start.sh groupID
 ./start.sh groupID -pem pemName
-./start.sh groupID -p12 p12Name password
+./start.sh groupID -p12 p12Name
 ```
 ##### 默认启动
 控制台随机生成一个账号，使用控制台配置文件指定的群组号启动。
@@ -225,15 +225,16 @@ console version: 1.0.3
 ```
 - 注意：指定的群组在控制台配置文件中需要配置bean。
 
-##### 使用pem格式私钥文件启动
+##### 使用PEM格式私钥文件启动
 - 使用指定的pem文件的账号启动，输入参数：群组号、-pem、pem文件名或路径
 ```bash
-./start.sh 1 -pem accounts/c3f70a3cca6a952f6efee95a611b2ae1811b81cb.pem
+./start.sh 1 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
 ```
-##### 使用p12格式私钥文件启动
-- 使用指定的p12文件的账号，输入参数：群组号、-p12、p12文件名或路径、密码
+##### 使用PKCS12格式私钥文件启动
+- 使用指定的p12文件的账号，需要输入密码，输入参数：群组号、-p12、p12文件名或路径
 ```bash
-./start.sh 1 -p12 accounts/c3f70a3cca6a952f6efee95a611b2ae1811b81cb.p12 123456
+./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
+Enter Export Password:
 ```
 
 ## 控制台命令
