@@ -1,40 +1,21 @@
 # 社区
 
-![](../images/community/header.png)
+FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级金融联盟链底层平台。由金融区块链合作联盟（深圳）（简称：金链盟）成立的开源工作组协作打造，工作组成员包括博彦科技、华为、深证通、神州数码、四方精创、腾讯、微众银行、亦笔科技和越秀金科等金链盟成员机构。
+
+## FISCO BCOS资源列表
+
+- [Github主页](https://github.com/FISCO-BCOS/FISCO-BCOS)  
+- [技术文档 ](https://fisco-bcos-documentation.readthedocs.io)
+
+- [深度解析系列文章](http://mp.weixin.qq.com/mp/homepage?__biz=MzU5NTg0MjA4MA==&hid=9&sn=7edf9a62a2f45494671c91f0608db903&scene=18#wechat_redirect) 
+- [贡献代码](https://mp.weixin.qq.com/s/hEn2rxqnqp0dF6OKH6Ua-A)
+- [反馈问题](https://github.com/FISCO-BCOS/FISCO-BCOS/issues)
+- [应用案例集](https://mp.weixin.qq.com/s/vUSq80LkhF8yCfUF7AILgQ)
+
+## 加入FISCO BCOS社区
+
 <a name="QR"></a>
-![](../images/community/qr_code.png)
+![](../images/community/qr_code1.png)
+![](../images/community/qr_code2.png)
 ![](../images/community/changeable_body.png)
 ![](../images/community/tailer.png)
-
-
-
-**附：**
-
-[代码贡献流程](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/docs/CONTRIBUTING_CN%2Emd)  
-
-[编码规范](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/CODING_STYLE%2Emd)
-
-[提问题](https://github.com/FISCO-BCOS/FISCO-BCOS/issues)
-
-*********************************************
-
-**资源获取：**
-
-[FISCO BCOS案例集](https://mp.weixin.qq.com/s/vUSq80LkhF8yCfUF7AILgQ)
-
-
-**联系我们：**
-
-- 微信群 [![](https://img.shields.io/badge/style-Scan_QR_Code-green.svg?logo=wechat&longCache=false&style=social&label=Group)](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2.0/images/community/WeChatQR.jpg) 
-
-
-
-- 公众号 [![](https://img.shields.io/badge/style-Scan_QR_Code-green.svg?logo=wechat&longCache=false&style=social&label=Official%20accounts)](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2.0/images/community/OfficialAccountsQR.jpg)
-
-
-
-- Twitter [![](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow@FiscoBcos)](https://twitter.com/FiscoBcos)
-
-
-
-- 邮件 [![](https://img.shields.io/twitter/url/http/shields.io.svg?logo=Gmail&style=social&label=service@fisco.com.cn)](mailto:service@fisco.com.cn)
