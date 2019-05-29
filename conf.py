@@ -379,4 +379,3 @@ def setup(app):
 
     app.add_transform(AutoStructify)
     app.add_stylesheet('css/custom.css')
-
