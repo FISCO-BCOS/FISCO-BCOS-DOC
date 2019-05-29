@@ -174,7 +174,7 @@ easylogging++示例配置如下：
 
 ### 配置节点兼容性
 
-FISCO-BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性：
+FISCO-BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性，改配置项建链时工具会自动生成，用户不需修改。
 
 - `supported_version`：当前节点运行的版本
 
@@ -182,15 +182,15 @@ FISCO-BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibil
 .. important::
     - 可通过 ``./fisco-bcos --version | grep "FISCO-BCOS Version" | cut -d':' -f2 | sed s/[[:space:]]//g`` 命令查看FISCO BCOS的当前支持的最高版本
     - build_chain.sh生成的区块链节点配置中，supported_version配置为FISCO BCOS当前的最高版本
-    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可
+    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，
 ```
 
-`release-2.0.0-rc2`节点的`[compatibility]`配置如下：
+`release-2.0.0-rc3`节点的`[compatibility]`配置如下：
 
 ```ini
 
 [compatibility]
-    supported_version=release-2.0.0-rc2
+    supported_version=release-2.0.0-rc3
 ```
 
 
