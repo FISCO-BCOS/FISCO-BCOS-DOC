@@ -28,7 +28,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过了
     - 深入了解FISCO BCOS 2.0功能请看 `配置文件和配置项 <./docs/manual/configuration.html>`_、`节点准入 <./docs/manual/node_management.html>`_、`并行交易 <./docs/manual/transaction_parallel.html>`_、`分布式存储 <./docs/manual/amdbconfig.html>`_、`国密 <./docs/manual/guomi_crypto.html>`_ 等请参考 `使用手册 <./docs/manual/index.html>`_
     - `控制台 <./docs/manual/console.html>`_：**交互式命令行工具**，可访问区块链节点，查询区块链状态，部署并调用合约等。
     - `企业级部署工具(Generator) <./docs/enterprise_tools/index.html>`_：支持建链、扩容等操作，**推荐构建企业级区块链时使用**，快速使用方法可参考 `教程 <./docs/tutorial/enterprise_quick_start.html>`_
-    - `Web3SDK <./docs/sdk/sdk.html>`_：提供访问节点、查询节点状态、修改区块链系统配置以及节点发送交易等接口。
+    - `Web3SDK <./docs/sdk/sdk.html>`_：提供访问节点状态、修改区块链系统配置以及节点发送交易等接口。
     - JSON-RPC接口可参考 `JSON-RPC API <./docs/api.html>`_ 
     - 系统设计文档请参考 `系统设计 <./docs/design/index.html>`_ 
 
