@@ -215,12 +215,13 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 
 #### 配置文件配置
 amdb.properties配置amdb数据代理需要连接的节点信息，db.properties配置数据库的连接信息。这里假设mysql的配置信息如下：
+```bash
 |节点|db_ip|db_port|db_username|db_passwd|db_name|
-|:--|:--|:--|:--|:--|:--|
 |Group1_A|127.0.0.1|3306|root|123456|bcos_Group1_A|
 |Group1_B|127.0.0.1|3306|root|123456|bcos_Group1_B|
 |Group2_B|127.0.0.1|3306|root|123456|bcos_Group2_B|
 |Group2_C|127.0.0.1|3306|root|123456|bcos_Group2_C|
+```
 
 
 ##### 为Group1的A节点配置amdb代理
@@ -673,12 +674,13 @@ Group:2 has 2 nodes
 ```
 ### 修改节点ini文件
 group.[群组].ini配置文件中，和本特性相关的是mysql的配置信息。假设mysql的配置信息如下：
+```bash
 |节点|db_ip|db_port|db_username|db_passwd|db_name|
-|:--|:--|:--|:--|:--|:--|
 |Group1_A|127.0.0.1|3306|root|123456|db_Group1_A|
 |Group1_B|127.0.0.1|3306|root|123456|db_Group1_B|
 |Group2_B|127.0.0.1|3306|root|123456|db_Group2_B|
 |Group2_C|127.0.0.1|3306|root|123456|db_Group2_C|
+```
 
 ### 修改node0下的group.1.ini配置
 ```
