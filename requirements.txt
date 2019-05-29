@@ -2,6 +2,7 @@ docutils == 0.12
 sphinx == 1.6.7
 sphinx-rtd-theme
 sphinx-copybutton
+sphinx-version-warning
 sphinx-markdown-tables
 -e git+git://github.com/mgaitan/sphinxcontrib-mermaid#egg=sphinxcontrib-mermaid > 0.3
 -e git+git://github.com/rtfd/recommonmark.git#egg=recommonmark > 0.4.0
