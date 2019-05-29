@@ -275,40 +275,11 @@ e01789233a
 4a5aed2b4a
 ```
 
-### 存储模块配置
+### 状态模式配置
 
-存储主要包括[state](../design/storage/mpt.html)和[AMDB](../design/storage/storage.html)，`state`涉及交易状态存储，AMDB存储涉及数据存储，分别在`[storage]`和`[state]`中配置：
-
-#### 配置storage
-
-主要包括如下配置：
-
-- `type`：存储的DB类型，目前支持`LevelDB`和`external`，DB类型为LevelDB时，区块链系统所有数据存储于LevelDB本地数据库中；type为external时，区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./amdbconfig.html#amdb)
-
-- `topic`：当type为`external`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./amdbconfig.html#id3)
-
-
-下面是存储的DB类型为**LevelDB**的配置示例：
-
-```ini
-[storage]
-    ;storage db type, leveldb or external
-    type=LevelDB
-```
-
-下面是存储的DB类型为**mysql**的配置示例：
-
-```ini
-[storage]
-    ;storage db type, leveldb or external
-    type=external
-    topic=DB
-```
-
-#### 配置state
+[state](../design/storage/mpt.html)用于存储区块链状态信息，位于genesis文件中`[state]`：
 
 - `type`：state类型，目前支持[storage state](../design/storage/storage.html#id6)和[MPT state](../design/storage/mpt.html)，**默认为storage state**，storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在MPT树中，效率较低，但包含完整的历史信息。
-
 
 ```eval_rst
 .. important::
@@ -329,12 +300,51 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
     gas_limit=300000000
 ```
 
-
 ## 账本可变配置说明
 
 账本可变配置位于节点`conf`目录下`.ini`后缀的文件中。
 
 如：`group1`可变配置一般命名为`group.1.ini`，可变配置主要包括交易池大小、PBFT共识消息转发的TTL、PBFT共识打包时间设置、PBFT交易打包动态调整设置、并行交易设置等。
+
+### 配置storage
+
+存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问mysql，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
+
+#### 公共配置项
+
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`External`。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，type为external时，节点根据配置访问mysql数据库。区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./amdbconfig.html#amdb)。
+- `max_capacity`：配置允许节点用于内存缓存的空间大小。
+- `max_forward_block`：配置允许节点用于内存区块的大小，当节点还出的区块超出该数值时，节点停止共识等待区块写入数据库。
+
+#### 数据库相关配置项
+
+- `topic`：当type为`External`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./amdbconfig.html#id3)。
+- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./amdbconfig.html#id3)。
+
+- `db_ip`：当type为`MySQL`时，需要配置该字段，表示MySQL的IP地址。
+- `db_port`：当type为`MySQL`时，需要配置该字段，表示MySQL的端口号。
+- `db_username`：当type为`MySQL`时，需要配置该字段，表示MySQL的用户名。
+- `db_passwd`：当type为`MySQL`时，需要配置该字段，表示MySQL用户对应的密码。
+- `db_name`：当type为`MySQL`时，需要配置该字段，表示MySQL中使用的数据库名。
+
+#### 下面是[storage]的配置示例：
+
+```ini
+[storage]
+    ; storage db type, rocksdb / mysql / external, rocksdb is recommended
+    type=RocksDB
+    max_capacity=256
+    max_forward_block=10
+    ; only for external
+    max_retry=100
+    topic=DB
+    ; only for mysql
+    db_ip=127.0.0.1
+    db_port=3306
+    db_username=
+    db_passwd=
+    db_name=
+```
 
 ### 交易池配置
 
