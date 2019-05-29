@@ -10,7 +10,6 @@
 
 ```eval_rst
 .. note::
-    - macOS请参考 `docker安装 <https://docs.docker.com/docker-for-mac/install/>`_ 并配合 `build_chain <manual/build_chain.html#id4>`_ 的-d选项操作。
     - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
 ```
 
@@ -18,7 +17,7 @@
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。macOS将apt替换为`brew`直行即可。
 
 ```bash
 sudo apt install -y openssl curl
@@ -47,7 +46,6 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```eval_rst
 .. note::
     - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port，出于安全考虑jsonrpc/channel默认监听127.0.0.1，**需要外网访问请添加-i参数**。
-    - macOS建议先安装docker，然后在上述指令后添加-d使用docker模式建链。
 ```
 
 如果命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
