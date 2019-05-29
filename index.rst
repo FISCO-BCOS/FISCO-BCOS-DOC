@@ -4,7 +4,7 @@ FISCO BCOS 技术文档
 
 .. image:: _static/images/FISCO_BCOS_Logo.svg
 
-FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过了外部多家机构、多个应用，长时间在生产环境运行的实际检验。
+FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多家机构、多个应用，长时间在生产环境运行的实际检验。
 
 - `Github主页 <https://github.com/FISCO-BCOS/FISCO-BCOS>`_   
 - `深度解析系列文章 <http://mp.weixin.qq.com/mp/homepage?__biz=MzU5NTg0MjA4MA==&hid=9&sn=7edf9a62a2f45494671c91f0608db903&scene=18#wechat_redirect>`_  
@@ -15,7 +15,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过了
 - `微信群 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2.0/images/community/WeChatQR%2Ejpg>`_
 - `公众号 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2.0/images/community/OfficialAccountsQR%2Ejpg>`_
 
-.. important:: 注意
+.. important::
    
    - 本技术文档只适用FISCO BCOS 2.0及以上版本，FISCO BCOS 1.3.x版本的技术文档请查看 `1.3系列技术文档 <http://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/>`_
    - FISCO BCOS 2.0新特性请参考 `这里 <./docs/what_is_new.html>`_
