@@ -2,546 +2,228 @@
 
 本文档描述权限控制的实践操作，有关权限控制的详细设计请参考[权限控制设计文档](../design/security_control/permission_control.md)。
 
-## 权限控制实践推荐
-
-### 推荐管理员机制
-由于系统默认无权限设置记录，因此任何账户均可以使用权限设置功能。例如当账户1设置账户1有权限部署合约，但是账户2也可以设置账户2有权限部署合约。那么账户1的设置将失去控制的意义，因为其他账户可以自由添加权限。因此，**搭建联盟链之前，推荐确定权限使用规则。** 可以使用`grantPermissionManager`指令设置链管理员账户，即指定特定账户可以使用权限设置功能，非链管理员账户无权限使用功能。
-
-### 推荐使用sdk的接口管理
-[SDK](../sdk/sdk.html#permissionservice)提供PermissionService类的接口，可以设置、移除和查询权限信息。虽然控制台提供简单的命令可以管理权限，但不适合自定义开发。推荐开发者调用PermissionService类接口实现权限的控制。
+```eval_rst
+.. important::
+    推荐管理员机制：由于系统默认无权限设置记录，因此任何账户均可以使用权限设置功能。例如当账户1设置账户1有权限部署合约，但是账户2也可以设置账户2有权限部署合约。那么账户1的设置将失去控制的意义，因为其他账户可以自由添加权限。因此，搭建联盟链之前，推荐确定权限使用规则。可以使用grantPermissionManager指令设置链管理员账户，即指定特定账户可以使用权限分配功能，非链管理员账户无权限分配功能。
+```
 
 ## 操作内容
 
 本文档分别对以下功能进行权限控制的操作介绍：
-- 部署合约和创建用户表控制示例
-- 用户表控制示例
-- 节点类型管理控制示例
-- CNS控制示例
-- 系统参数控制示例
-- 权限管理控制示例
+- [授权账户为链管理员](./permission_control.html#id6)
+- [授权账户为系统管理员](./permission_control.html#id7)
+  - [授权部署合约和创建用户表](./permission_control.html#id8)
+  - [授权利用CNS部署合约](./permission_control.html#cns)
+  - [授权管理节点](./permission_control.html#id9)
+  - [授权修改系统参数](./permission_control.html#id10)
+- [授权账户写用户表](./permission_control.html#id11)
 
 ## 环境配置  
 配置并启动FISCO BCOS 2.0区块链节点和控制台，请参考[安装文档](../installation.md)。   
 
 ## 权限控制工具
-
-### 权限控制相关命令
-
-针对普通用户，FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/sdk.html#permissionservice)的PermissionService接口使用权限功能），其中涉及的权限控命令如下:
+FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/sdk.html#permissionservice)的PermissionService接口使用权限功能），其中涉及的权限控制命令如下:
 
 |命令名称|命令参数|功能|
 |:----|:-----|:----|
-|grantDeployAndCreateManager          |address               |增加外部账户地址的部署合约和创建用户表权限    |
-|revokeDeployAndCreateManager       |address               |移除外部账户地址的部署合约和创建用户表权限    |
-|listDeployAndCreateManager        |                      |查询拥有部署合约和创建用户表权限的权限记录列表|
-|grantUserTableManager                |table_name address    |根据用户表名和外部账户地址设置权限信息        |
-|revokeUserTableManager             |table_name address    |根据用户表名和外部账户地址移除权限信息        |
-|listUserTableManager              |table_name            |根据用户表名查询设置的权限记录列表            |
-|grantNodeManager                     |address               |增加外部账户地址的节点管理权限                |
-|revokeNodeManager                  |address               |移除外部账户地址的节点管理权限                |
-|listNodeManager                   |                      |查询拥有节点管理的权限记录列表                |
-|grantCNSManager                      |address               |增加外部账户地址的使用CNS权限                 |
-|revokeCNSManager                   |address               |移除外部账户地址的使用CNS权限                 |
-|listCNSManager                    |                      |查询拥有使用CNS的权限记录列表                 |
-|grantSysConfigManager                |address               |增加外部账户地址的系统参数管理权限            |
-|revokeSysConfigManager             |address               |移除外部账户地址的系统参数管理权限            |
-|listSysConfigManager              |                      |查询拥有系统参数管理的权限记录列表            |
-|grantPermissionManager                |address               |增加外部账户地址的管理权限的权限              |
-|revokePermissionManager             |address               |移除外部账户地址的管理权限的权限              |
-|listPermissionManager              |                      |查询拥有管理权限的权限记录列表                |
+|grantPermissionManager                |address               |授权账户的链管理员权限              |
+|revokePermissionManager             |address               |撤销账户的链管理员权限              |
+|listPermissionManager              |                      |查询拥有链管理员权限的账户列表                |
+|grantDeployAndCreateManager          |address               |授权账户的部署合约和创建用户表权限    |
+|revokeDeployAndCreateManager       |address               |撤销账户的部署合约和创建用户表权限    |
+|listDeployAndCreateManager        |                      |查询拥有部署合约和创建用户表权限的账户列表|
+|grantNodeManager                     |address               |授权账户的节点管理权限                |
+|revokeNodeManager                  |address               |撤销账户的节点管理权限                |
+|listNodeManager                   |                      |查询拥有节点管理的账户列表                |
+|grantCNSManager                      |address              |授权账户的使用CNS权限                 |
+|revokeCNSManager                   |address               |撤销账户的使用CNS权限                 |
+|listCNSManager                    |                      |查询拥有使用CNS的账户列表                 |
+|grantSysConfigManager                |address             |授权账户的修改系统参数权限            |
+|revokeSysConfigManager             |address               |撤销账户的修改系统参数权限            |
+|listSysConfigManager              |                       |查询拥有修改系统参数的账户列表            |
+|grantUserTableManager                |table_name address  |授权账户对用户表的写权限          |
+|revokeUserTableManager             |table_name address    |撤销账户对用户表的写权限        |
+|listUserTableManager              |table_name            |查询拥有对用户表写权限的账号列表            |
 
-### 权限控制示例外部账户
-控制台启动时可以指定私钥（从而确定对应的外部账户地址）发送交易。因此，通过控制台可以指定外部账户，体验权限控制功能。下面提供三个外部账户私钥及其对应的外部账户地址供使用：
-```bash     
-# 账户1
-私钥：3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
-地址: 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-```
+## 权限控制示例账户
+控制台提供账户生成脚本`get_account.sh`，生成的账户文件在`accounts`目录下。控制台可以指定账户启动，具体用法参考[控制台手册](./console.html#id11)。因此，通过控制台可以指定账户，体验权限控制功能。为了账户安全起见，我们可以在控制台根目录下通过`get_account.sh`脚本生成三个PKCS12格式的账户文件，生成过程中输入的密码需要牢记。生成的三个PKCS12格式的账户文件如下：
 ```bash
-# 账户2:    
-私钥：ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e
-地址: 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+# 账户1 
+0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252.p12
+# 账户2 
+0x7fc8335fec9da5f84e60236029bb4a64a469a021.p12
+# 账户3
+0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12    
 ```
+现在可以打开三个连接Linux的终端，分别以三个账户登录控制台。
+
+指定账户1登录控制台：
 ```bash
-# 账户3：      
-私钥：d0fee0a4e3c545a9394965042f8f891b6e5482c212a7428ec175d6aed121353a
-地址: 0x1600e34312edea101d8b41a3465f2e381b66baed
+$ ./start.sh 1 -p12 accounts/0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252.p12
 ```
-**如果使用国密算法发送交易，则需要使用国密账户。** 下面提供三个国密账户地址供使用：
-```bash     
-# 账户1
-私钥：3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
-地址: 0x811c09b1ee25748d31dac736e8fe805c1a56d3c4
-```
+指定账户2登录控制台：
 ```bash
-# 账户2:    
-私钥：ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e
-地址: 0x112feb55455058aead6a1cf787defe9645e8a2f0
+$ ./start.sh 1 -p12 accounts/0x7fc8335fec9da5f84e60236029bb4a64a469a021.p12
 ```
+指定账户3登录控制台：
 ```bash
-# 账户3：      
-私钥：d0fee0a4e3c545a9394965042f8f891b6e5482c212a7428ec175d6aed121353a
-地址: 0x461f7c1858d0abf94051af9036a0570a91af571e
+$ ./start.sh 1 -p12 accounts/0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12
 ```
-可以打开三个连接Linux的终端，分别以三个账户登录控制台。
 
-指定外部账户1登录控制台(其中数字1代表群组1，字符串3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4为外部账户1的私钥)：
-```bash
-$ ./start.sh 1 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
+## 授权账户为链管理员
+提供的三个账户设为三种角色，设定账户1为链管理员账户，账户2为系统管理员账户，账户3为普通账户。链管理员账户拥有权限管理的权限，即能分配权限。系统管理员账户可以管理系统相关功能的权限，每一种系统功能权限都需要单独分配，具体包括部署合约和创建用户表的权限、管理节点的权限、利用CNS部署合约的权限以及修改系统参数的权限。链管理员账户可以授权其他账户为链管理员账户或系统管理员账户，也可以授权指定账号可以写指定的用户表，即普通账户。
+   
+链初始状态，没有任何权限账户记录。现在，可以进入账户1的控制台，设置账户1成为链管理员账户，则其他账户为非链管理员账户。
 ```
-指定外部账户2登录控制台：
-```bash
-$ ./start.sh 1 ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e
-```
-指定外部账户3登录控制台：
-```bash
-$ ./start.sh 1 d0fee0a4e3c545a9394965042f8f891b6e5482c212a7428ec175d6aed121353a
-```
-### 示例客户端工具
-提供权限控制示例客户端工具，该示例工具可以指定三个外部账户进行部署合约、创建用户表t_test以及对用户表t_test进行增删改查操作。其中三个外部账户地址如下：
-```
-1： tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-2： tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-3： tx.origin = 0x1600e34312edea101d8b41a3465f2e381b66baed
-```
-获取客户端工具：
-```
-curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/permission_util.tar.gz
-```
-解压客户端工具，具体使用参考解压目录中的使用说明文档。
-
-## 权限控制示例
-
-### 部署合约和创建用户表控制示例    
-
-#### 默认权限示例
-默认外部账户均可部署合约和创建表。   
-#### 合约部署示例
-进入以账户1登录的控制台，查询拥有部署合约和创建用户表权限的权限记录。
-```
-[group:1]> listDeployAndCreateManager
-Empty set.
-```
-确认初始状态无部署合约和创建用户表权限的权限记录，默认所有外部账户均可以部署合约。   
-- **外部账户1部署合约：** 
-进入客户端工具dist目录，运行部署合约命令：
-	```bash
-	$ ./run.sh 1 1 deploy
-
-	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-	deploy contract address: 0x9e116ecf100be281ae9587c907cf5b450d51af1b
-	deploy contract successful!
-	```
-	外部账户1部署合约成功。   
-- **外部账户2部署合约：** 
-	```bash
-	$ ./run.sh 2 1 deploy
-
-	tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-
-	deploy contract address: 0xa5b85cf3728a15b67572af9b180e2ab4e449359a
-	deploy contract successful!
-	```
-	外部账户2部署合约成功。        
-- **外部账户3部署合约：** 
-	```bash
-	$ ./run.sh 3 1 deploy
-
-	tx.origin = 0x1600e34312edea101d8b41a3465f2e381b66baed
-
-	deploy contract address: 0xd4ebb24ac68263e92335977c7ea968d5e770eb07
-	deploy contract successful!
-	```
-	外部账户3部署合约成功。  
-
-#### 创建用户表示例
-- **外部账户1创建用户表t_test:**
-	进入客户端工具dist目录，运行创建用户表命令：
-	```bash
-	$ ./run.sh 1 1 create
-  
-  tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-	create t_test table completed.
-	```
-	外部账户1创建t_test表成功，表明有权限创建用户表。类似的，外部账户2和3也可也创建用户表t_test。
-	
-#### 设置权限示例
-进入账户1登录的控制台，设置外部账户1拥有部署合约和创建用户表的权限。
-```
-[group:1]> grantDeployAndCreateManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+[group:1]> grantPermissionManager 0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252
 {
-	"code":0,
-	"msg":"success"
+    "code":0,
+    "msg":"success"
 }
-```
-```
-[group:1]> listDeployAndCreateManager
+
+[group:1]> listPermissionManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                      1                      |
+| 0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252  |                      1                      |
 ---------------------------------------------------------------------------------------------
 ```
-#### 合约部署示例
-- **外部账户1部署合约：** 
-	```bash
-	$ ./run.sh 1 1 deploy
+设置账户1为链管理员成功。
 
-	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+## 授权账户为系统管理员  
 
-	deploy contract address: 0x31877d5864125b3aa3a5ae60022274d1a4130d00
-	deploy contract successful!
-	```
-	外部账户1部署合约成功，有权限部署合约。   
-- **外部账户2部署合约：** 
-	```bash
-	$ ./run.sh 2 1 deploy
-
-	tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-
-	non-authorized to deploy contracts!
-	```
-	外部账户2部署合约失败，无权限部署合约。    
-- **外部账户3部署合约：** 
-	```bash
-	$ ./run.sh 3 1 deploy
-
-	tx.origin = 0x1600e34312edea101d8b41a3465f2e381b66baed
-
-	non-authorized to deploy contracts!
-	```
-	外部账户3部署合约失败，无权限部署合约。
-
-#### 创建用户表示例
-- **外部账户2创建用户表t_test:**
-	```bash
-	$ ./run.sh 2 1 create
-
-  tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-
-	non-authorized to create t_test table.
-	```
-	外部账户2创建t_test表失败，表明无权限创建用户表。   
-- **外部账户3创建用户表t_test:**
-	```bash
-	$ ./run.sh 3 1 create
-
-  tx.origin = 0x1600e34312edea101d8b41a3465f2e381b66baed
-
-	non-authorized to create t_test table.
-	```
-	外部账户3创建t_test表失败，表明无权限创建用户表。
-
-- **外部账户1创建用户表t_test:**
-	```bash
-	$ ./run.sh 1 1 create
-
-  tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-	create t_test table completed.
-	```
-	外部账户1创建t_test表成功，表明有权限创建用户表。
-
-#### 移除权限示例
-进入账户1登录的控制台，移除设置的外部账户1权限，则外部账户1，2和3均可以部署合约和创建用户表。
+### 授权部署合约和创建用户表
+通过账户1授权账户2为系统管理员账户，首先授权账户2可以部署合约和创建用户表。
 ```
-[group:1]> revokeDeployAndCreateManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+[group:1]> grantDeployAndCreateManager 0x7fc8335fec9da5f84e60236029bb4a64a469a021
 {
-	"code":0,
-	"msg":"success"
+    "code":0,
+    "msg":"success"
 }
 
-[group:1]> listDeployAndCreateManager
-Empty set.
-```
-
-### 用户表控制示例
-#### 默认权限示例
-通过示例客户端分别指定三个外部账户进行t_test表的增删改查示例。首先登录控制台，查询t_test表的权限设置记录。
-```
-[group:1]> listUserTableManager t_test
-Empty set.
-```
-确认初始状态没有设置权限，因此默认所有外部账户均可以对t_test进行读写操作。
-#### 账户1示例
-指定外部账户1创建t_test表：
-```bash
-$ ./run.sh 1 1 create
-
-tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-create t_test table completed.
-```
-t_test表创建成功。   
-- 通过指定外部账户1向t_test表插入记录：
-	```bash
-	$ ./run.sh 1 1 insert fruit 1 apple1
-
-	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-	insertCount = 1
-	```
-	t_test表插入记录成功。   
-- 通过指定外部账户1向t_test表查询记录：
-	```bash
-	$ ./run.sh 1 1 select fruit
-
-	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-	record numbers = 1
-	name = fruit
-	item_id = 1
-	item_name = apple1
-	```
-- 通过指定外部账户1向t_test表更新记录：
-	```bash
-	$ ./run.sh 1 1 update fruit 1 apple11
-
-	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-	updateCount = 1
-	```
-	t_test表更新记录成功，可以通过查询记录再次验证。       
-- 通过指定外部账户1向t_test表删除记录：
-	```bash
-	$ ./run.sh 1 1 remove fruit 1
-
-	tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-	removeCount = 1
-	```
-	t_test表删除记录成功，可以通过查询记录再次验证。     
-#### 账户2和3示例
-外部账户1已创建t_test表，无需再创建。与示例外部账户1类似，可以分别指定外部账户2和3对t_test表进行增删改查验证。
-
-#### 设置权限示例
-进入账户1登录的控制台，设置外部账户1可以对t_test表进行读写操作。
-```
-[group:1]> grantUserTableManager t_test 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-{
-	"code":0,
-	"msg":"success"
-}
-
-[group:1]> listUserTableManager t_test
+[group:1]> listDeployAndCreateManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                     11                      |
+| 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
-设置完毕后，则外部账户1有权限对t_test表进行读写操作，其他外部账户只可以对t_test表执行读操作。    
-- **外部账户1有权限操作t_test表示例：**    
- 	- 通过指定外部账户1向t_test表插入记录：
-		```bash
-		$ ./run.sh 1 1 insert fruit 2 apple1
-
-		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-		insertCount = 1
-		```
-		t_test表插入记录成功。   
-	- 通过指定外部账户1向t_test表查询记录：
-		```bash
-		$ ./run.sh 1 1 select fruit
-
-		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-		record numbers = 1
-		name = fruit
-		item_id = 2
-		item_name = apple1
-		```
-	- 通过指定外部账户1向t_test表更新记录：
-		```bash
-		$ ./run.sh 1 1 update fruit 2 apple22
-
-		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-		updateCount = 1
-		```
-		t_test表更新记录成功，可以通过查询记录再次验证。    
-	- 通过指定外部账户1向t_test表删除记录：
-		```bash
-		$ ./run.sh 1 1 remove fruit 2
-
-		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-		removeCount = 1
-		```
-		t_test表删除记录成功，可以通过查询记录再次验证。      
-
-- **外部账户2或3无权限操作t_test表示例：**   
-	- 通过指定外部账户2向t_test表插入记录：
-		```bash
-		$ ./run.sh 2 1 insert fruit 2 apple2
-
-		tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-
-		insertCount = 50000
-		```
-		t_test表插入记录失败，可以通过查询记录再次验证。insertCount返回50000表示无权限插入记录。   
-	- 通过指定外部账户1向t_test表插入记录：
-		```bash
-		$ ./run.sh 1 1 insert fruit 2 apple1
-
-		tx.origin = 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-
-		insertCount = 1
-		```
-		t_test表插入记录成功，可以通过查询记录再次验证。  
-	- 通过指定外部账户2向t_test表更新记录：
-		```bash
-		$ ./run.sh 2 1 update fruit 2 apple12
-	
-		tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-
-		updateCount = 50000
-		```
-		t_test表更新记录失败，可以通过查询记录再次验证。updateCount返回50000表示无权限更新记录。   
-	- 通过指定外部账户2向t_test表删除记录：
-		```bash
-		$ ./run.sh 2 1 remove fruit 2
-
-		tx.origin = 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-
-		removeCount = 50000
-		```
-		t_test表删除记录失败，可以通过查询记录再次验证。removeCount返回50000表示无权限删除记录。
-
-#### 移除权限示例
-进入账户1登录的控制台，移除设置的外部账户1的权限，则外部账户1，2和3均可以对t_test表进行读写操作。
+登录账户2的控制台，部署控制台提供的TableTest合约。TableTest.sol合约代码[参考这里](smart_contract.html#solidity)。其提供创建用户表t_test和相关增删改查的方法。
 ```
-[group:1]> revokeUserTableManager t_test 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+[group:1]> deploy TableTest.sol 
+contract address:0xfe649f510e0ca41f716e7935caee74db993e9de8
+```
+调用TableTest的create接口创建用户表t_test。
+```
+[group:1]> call TableTest.sol 0xfe649f510e0ca41f716e7935caee74db993e9de8 create
+transaction hash:0x67ef80cf04d24c488d5f25cc3dc7681035defc82d07ad983fbac820d7db31b5b
+---------------------------------------------------------------------------------------------
+Event logs
+---------------------------------------------------------------------------------------------
+createResult index: 0
+count = 0
+---------------------------------------------------------------------------------------------
+```
+用户表t_test创建成功。
+
+登录账户3的控制台，部署TableTest合约。
+```
+[group:1]> deploy TableTest.sol 
 {
-	"code":0,
-	"msg":"success"
+    "code":-50000,
+    "msg":"permission denied"
+}
+```
+账户3没有部署合约的权限，部署合约失败。
+
+- **注意：** 其中部署合约和创建用户表是“二合一”的控制项，在使用CRUD合约时，我们建议部署合约的时候一起把合约里用到的表创建了（在合约的构造函数中创建表），否则接下来读写表的交易可能会遇到“缺表”错误。如果业务流程需要动态创建表，动态建表的权限也应该只分配给少数账户，否则链上可能会出现各种废表。
+
+### 授权利用CNS部署合约
+控制台提供3个涉及[CNS](../design/features/CNS_contract_name_service.md)的命令，如下所示：
+
+|命令名称|命令参数|功能|
+|:----|:-----|:----|
+|deployByCNS         |contractName contractVersion                 |利用CNS部署合约           |
+|callByCNS           |contractName contractVersion funcName params |利用CNS调用合约           |
+|queryCNS            |contractName [contractVersion]               |查询CNS信息               |
+
+**注意：** 其中deployByCNS命令受权限可以控制，**且同时需要部署合约和使用CNS的权限**，callByCNS和queryCNS命令不受权限控制。
+
+登录账户1的控制台，授权账户2拥有利用CNS部署合约的权限。
+```
+[group:1]> grantCNSManager 0x7fc8335fec9da5f84e60236029bb4a64a469a021
+{
+    "code":0,
+    "msg":"success"
 }
 
-[group:1]> listUserTableManager t_test
-Empty set.
+[group:1]> listCNSManager 
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                     13                      |
+---------------------------------------------------------------------------------------------
 ```
-### 节点类型管理控制示例
+登录账户2的控制台，利用CNS部署合约。
+```
+[group:1]> deployByCNS TableTest.sol 1.0
+contract address:0x24f902ff362a01335db94b693edc769ba6226ff7
+
+[group:1]> queryCNS TableTest.sol 
+---------------------------------------------------------------------------------------------
+|                   version                   |                   address                   |
+|                     1.0                     | 0x24f902ff362a01335db94b693edc769ba6226ff7  |
+---------------------------------------------------------------------------------------------
+```
+登录账户3的控制台，利用CNS部署合约。
+```
+[group:1]> deployByCNS TableTest.sol 2.0
+{
+    "code":-50000,
+    "msg":"permission denied"
+}
+
+[group:1]> queryCNS TableTest.sol 
+---------------------------------------------------------------------------------------------
+|                   version                   |                   address                   |
+|                     1.0                     | 0x24f902ff362a01335db94b693edc769ba6226ff7  |
+---------------------------------------------------------------------------------------------
+```
+部署失败，账户3无权限利用CNS部署合约。
+
+### 授权管理节点
 
 控制台提供5个有关节点类型操作的命令，如下表所示：
 
-```eval_rst
+|命令名称|命令参数|功能|
+|:----|:-----|:----|
+|addSealer             |nodeID                 |设置节点为共识节点         |
+|addObserver           |nodeID                 |设置节点为观察节点         |
+|removeNode            |nodeID                 |设置节点为游离节点         |
+|getSealerList         |                       |查询共识节点列表           |
+|getObserverList       |                       |查询观察节点列表           |
 
-+----------------+--------+------------------+
-|命令            |命令参数|含义              |
-+================+========+==================+
-|addSealer       |nodeId  |设置节点为共识节点|
-+----------------+--------+------------------+
-|addObserve      |nodeId  |设置节点为观察节点|
-+----------------+--------+------------------+
-|removeNode      |nodeId  |设置节点为游离节点|
-+----------------+--------+------------------+
-|getSealerList   |        |查询共识节点列表  |
-+----------------+--------+------------------+
-|getObserverList |        |查询观察节点列表  |
-+----------------+--------+------------------+
+- **注意：** 其中addSealer、addObserver和removeNode命令受权限控制，getSealerList和getObserverList命令不受权限控制。
 
+登录账户1的控制台，授权账户2拥有管理节点的权限。
 ```
-**注：**     
-其中addSealer、addObserver和removeNode命令受权限可以控制，getSealerList和getObserverList命令不受权限控制。
-
-#### 默认示例
-进入以外部账户1登陆的控制台，查看共识节点列表：
-```
-[group:1]> 
-[
-	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
-	d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8,
-	29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0,
-	87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1
-]
-```
-查看观察节点列表：
-```
-[group:1]> getObserverList
-[]
-```
-将第一个nodeId对应的节点设置为观察节点：
-```
-[group:1]> addObserver 41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba
+[group:1]> grantNodeManager 0x7fc8335fec9da5f84e60236029bb4a64a469a021
 {
-	"code":0,
-	"msg":"success"
+    "code":0,
+    "msg":"success"
 }
-```
-设置成功。  
 
-查看共识节点列表：
-```
-[group:1]> getSealerList
-[
-	d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8,
-	29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0,
-	87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1
-]
-```
-查看观察节点列表：
-```
-[group:1]> getObserverList
-[
-	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba
-]
-```
-确认设置成功。       
-
-将该观察节点设置为共识节点：
-```
-[group:1]> addSealer 41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba
-{
-	"code":0,
-	"msg":"success"
-}
-```
-设置成功。
-
-查看共识节点列表：
-```
-[group:1]> getSealerList
-[
-	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
-	d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8,
-	29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0,
-	87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1
-]
-```
-查看观察节点列表：
-```
-[group:1]> getObserverList
-[]
-```
-确认设置成功。
-
-类似，可以通过账户2和3登陆控制台均可以执行addSealer、addObserver和removeNode命令。
-
-#### 设置权限示例
-以账户1登录控制台，设置账户1拥有节点管理权限。
-```
-[group:1]> grantNodeManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-{
-	"code":0,
-	"msg":"success"
-}
-[group:1]> listNodeManager
+[group:1]> listNodeManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                      1                      |
+| 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                     20                      |
 ---------------------------------------------------------------------------------------------
 ```
-则账户1可以执行addSealer、addObserver和removeNode命令，操作见默认示例。
-
-进入以账户2登陆的控制台，查看共识节点列表：
+登录账户2的控制台，查看共识节点列表。
 ```
-[group:1]> getSealerList
+[group:1]> getSealerList 
 [
-	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
-	d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8,
-	29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0,
-	87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1
+    01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e,
+    279c4adfd1e51e15e7fbd3fca37407db84bd60a6dd36813708479f31646b7480d776b84df5fea2f3157da6df9cad078c28810db88e8044741152eb037a19bc17,
+    320b8f3c485c42d2bfd88bb6bb62504a9433c13d377d69e9901242f76abe2eae3c1ca053d35026160d86db1a563ab2add127f1bbe1ae96e7d15977538d6c0fb4,
+    c26dc878c4ff109f81915accaa056ba206893145a7125d17dc534c0ec41c6a10f33790ff38855df008aeca3a27ae7d96cdcb2f61eb8748fefe88de6412bae1b5
 ]
 ```
 查看观察节点列表：
@@ -549,300 +231,153 @@ Empty set.
 [group:1]> getObserverList
 []
 ```
-将第一个nodeId对应的节点设置为观察节点：
+将第一个nodeID对应的节点设置为观察节点：
 ```
-[group:1]> addObserver 41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba
+[group:1]> addObserver 01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e
 {
-	"code":50000,
-	"msg":"permission denied"
+    "code":0,
+    "msg":"success"
 }
-```
-设置失败，提示无权限信息。
 
-查看共识节点列表：
-```
-[group:1]> getSealerList
+[group:1]> getObserverList 
 [
-	41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba,
-	d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8,
-	29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0,
-	87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1
+    01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e
+]
+
+[group:1]> getSealerList 
+[
+    279c4adfd1e51e15e7fbd3fca37407db84bd60a6dd36813708479f31646b7480d776b84df5fea2f3157da6df9cad078c28810db88e8044741152eb037a19bc17,
+    320b8f3c485c42d2bfd88bb6bb62504a9433c13d377d69e9901242f76abe2eae3c1ca053d35026160d86db1a563ab2add127f1bbe1ae96e7d15977538d6c0fb4,
+    c26dc878c4ff109f81915accaa056ba206893145a7125d17dc534c0ec41c6a10f33790ff38855df008aeca3a27ae7d96cdcb2f61eb8748fefe88de6412bae1b5
 ]
 ```
-查看观察节点列表：
+登录账户3的控制台，将观察节点加入共识节点列表。
 ```
-[group:1]> getObserverList
-[]
-```
-确认设置失败。
-
-类似以账户3登陆控制台，均无权限执行addSealer、addObserver和removeNode命令。
-
-#### 移除权限示例
-移除外部账户1的权限设置，命令如下：
-```
-revokeNodeManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-```
-然后分别再以账户1、2、3对节点类型进行操作。
-
-### CNS控制示例
-控制台提供3个涉及[CNS](../design/features/CNS_contract_name_service.md)的命令，如下所示：
-
-
-```eval_rst
-
-+-----------------+------------------------------------------------+---------------------+
-|命令             |命令参数                                        |功能                 |
-+=================+================================================+=====================+
-|deployByCNS      |contractName contractVersion                    |利用CNS部署合约      |
-+-----------------+------------------------------------------------+---------------------+
-|callByCNS        |contractName contractVersion funcName params    |利用CNS调用合约      |
-+-----------------+------------------------------------------------+---------------------+
-|queryCNS         |contractName [contractVersion]                  |查询CNS信息          |
-+-----------------+------------------------------------------------+---------------------+
-
-```
-**注：**     
-其中deployByCNS命令受权限可以控制，**且同时需要部署合约和使用CNS的权限**，callByCNS和queryCNS命令不受权限控制。
-
-#### 默认示例
-利用CNS部署HelloWorld合约：
-```
-[group:1]> deployByCNS HelloWorld 1.0
-0x001815813a1460a0b989935963c27b90d8654216
-```
-合约部署成功。             
-查询HelloWorld合约的CNS信息：
-```
-[group:1]> queryCNS HelloWorld
----------------------------------------------------------------------------------------------
-|                   version                   |                   address                   |
-|                     1.0                     | 0x001815813a1460a0b989935963c27b90d8654216  |
----------------------------------------------------------------------------------------------
-```
-确认部署合约的CNS信息写入成功。
-
-类似以账户2和3登陆控制台，均可以利用CNS部署合约。
-
-#### 设置权限示例
-进入账户1登录的控制台，设置外部账户1拥有使用CNS的权限。
-```
-[group:1]> grantCNSManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+[group:1]> addSealer 01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e
 {
-	"code":0,
-	"msg":"success"
+    "code":-50000,
+    "msg":"permission denied"
 }
 
-[group:1]> listCNSManager
+[group:1]> getSealerList 
+[
+    279c4adfd1e51e15e7fbd3fca37407db84bd60a6dd36813708479f31646b7480d776b84df5fea2f3157da6df9cad078c28810db88e8044741152eb037a19bc17,
+    320b8f3c485c42d2bfd88bb6bb62504a9433c13d377d69e9901242f76abe2eae3c1ca053d35026160d86db1a563ab2add127f1bbe1ae96e7d15977538d6c0fb4,
+    c26dc878c4ff109f81915accaa056ba206893145a7125d17dc534c0ec41c6a10f33790ff38855df008aeca3a27ae7d96cdcb2f61eb8748fefe88de6412bae1b5
+]
+
+[group:1]> getObserverList 
+[
+    01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e
+]
+```
+添加共识节点失败，账户3没有权限管理节点。现在只有账户2有权限将观察节点加入共识节点列表。
+
+### 授权修改系统参数
+控制台提供2个关于修改系统参数的命令，如下表所示：
+
+|命令名称|命令参数|功能|
+|:----|:-----|:----|
+|setSystemConfigByKey             |key value           |设置键为key，值为value的系统参数  |
+|getSystemConfigByKey             |key                 |根据key查询value                |
+
+- **注意：** 目前支持键为tx_count_limit和tx_gas_limit的系统参数设置。其中setSystemConfigByKey命令受权限控制，getSystemConfigByKey命令不受权限控制。
+
+登录账户1的控制台，授权账户2拥有修改系统参数的权限。
+```
+[group:1]> grantSysConfigManager 0x7fc8335fec9da5f84e60236029bb4a64a469a021
+{
+    "code":0,
+    "msg":"success"
+}
+
+[group:1]> listSysConfigManager 
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                      2                      |
+| 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                     23                      |
 ---------------------------------------------------------------------------------------------
 ```
-进入以账户2登陆的控制台，利用CNS部署合约：
+登录账户2的控制台，修改系统参数tx_count_limit的值为2000。
 ```
-[group:1]> deployByCNS HelloWorld 3.0
-{
-	"code":50000,
-	"msg":"permission denied"
-}
-```
-部署失败，账户2无权限利用CNS部署合约。类似以账户3登陆控制台也将无权限利用CNS部署合约，以账户1登陆控制台则可以利用CNS部署合约。
-
-#### 移除权限示例
-移除外部账户1的权限设置，命令如下：
-```
-revokeCNSManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-```
-然后分别再以账户1、2、3登陆控制台利用CNS部署合约操作。
-
-
-### 系统参数控制示例
-控制台提供2个关于系统配置的命令，如下表所示：
-
-```eval_rst
-
-+--------------------------+-----------+--------------------------------+
-|命令                      |命令参数   |功能                            |
-+==========================+===========+================================+
-|setSystemConfigByKey      |key value  |设置键为key，值为value的系统配置|
-+--------------------------+-----------+--------------------------------+
-|getSystemConfigByKey      |key        |根据key查询value                |
-+--------------------------+-----------+--------------------------------+
-
-```
-**注：**     
-目前支持键为tx_count_limit和tx_gas_limit的系统参数设置。其中setSystemConfigByKey命令受权限控制，getSystemConfigByKey命令不受权限控制。
-
-#### 默认示例
-进入账户1登陆的控制台，首先查询系统字段tx_count_limit的值：
-```
-[group:1]> getSystemConfigByKey tx_count_limit
+[group:1]> getSystemConfigByKey tx_count_limit 
 1000
-```
-修改系统字段tx_count_limit的值为2000：
-```
+
 [group:1]> setSystemConfigByKey tx_count_limit 2000
 {
-	"code":0,
-	"msg":"success"
+    "code":0,
+    "msg":"success"
 }
-```
-设置成功。    
-查询系统字段tx_count_limit的值：
-```
-[group:1]> getSystemConfigByKey tx_count_limit
+
+[group:1]> getSystemConfigByKey tx_count_limit 
 2000
 ```
-确认设置成功。
-
-类似以账户2和3登陆控制台，均可以设置系统字段的值。
-
-#### 设置权限示例
-进入账户1登录的控制台，设置外部账户1拥有系统参数管理的权限。
-```
-[group:1]> grantSysConfigManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-{
-	"code":0,
-	"msg":"success"
-}
-[group:1]> listSysConfigManager
----------------------------------------------------------------------------------------------
-|                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                      3                      |
----------------------------------------------------------------------------------------------
-```
-进入以外部账户2的登陆控制台，设置系统字段tx_count_limit的值为3000：
+登录账户3的控制台，修改系统参数tx_count_limit的值为3000。
 ```
 [group:1]> setSystemConfigByKey tx_count_limit 3000
 {
-	"code":50000,
-	"msg":"permission denied"
+    "code":-50000,
+    "msg":"permission denied"
 }
-```
-设置失败。
-查询系统字段tx_count_limit的值:
-```
-[group:1]> getSystemConfigByKey tx_count_limit
+
+[group:1]> getSystemConfigByKey tx_count_limit 
 2000
 ```
-确认设置失败，账户2无权限修改系统参数。类似账户3登陆控制台也将无权限修改系统参数。
+设置失败，账户3没有修改系统参数的权限。
 
-#### 移除权限示例
-移除外部账户1的权限设置，命令如下：
+## 授权账户写用户表
+通过账户1授权账户3可以写用户表t_test的权限。
 ```
-revokeSysConfigManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-```
-然后分别再以外部账户1、2、3进行系统参数设置操作。
-
-### 权限管理控制示例
-权利管理功能由权限机制本身控制，如果设置指定外部账户有权限管理功能，则指定的外部账户可以称为管理员账户。管理员账户可以设置其他账户为管理员账户，即设置其他账户是否有权限进行权限功能的设置。
-   
-#### 默认示例
-默认所有外部账户均可以使用权限设置功能。以账户1登陆控制台，设置外部账户1有权限读写t_test表：
-```
-[group:1]> grantUserTableManager t_test 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+[group:1]> grantUserTableManager t_test 0xd86572ad4c92d4598852e2f34720a865dd4fc3dd
 {
-	"code":0,
-	"msg":"success"
+    "code":0,
+    "msg":"success"
 }
-```
-设置成功，说明外部账户1有设置权限功能。
-
-查询外部账户1设置的结果:
-```
 [group:1]> listUserTableManager t_test
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                      8                      |
+| 0xd86572ad4c92d4598852e2f34720a865dd4fc3dd  |                      6                      |
 ---------------------------------------------------------------------------------------------
 ```
-删除外部账户1设置的结果:
+登录账户3的控制台，在用户表t_test插入一条记录，然后查询该表的记录。
 ```
-[group:1]> revokeUserTableManager t_test 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-{
-	"code":0,
-	"msg":"success"
-}
-```
-删除成功。类似以账户2和3登陆控制台，均拥有权限设置功能。
+[group:1]> call TableTest.sol 0xfe649f510e0ca41f716e7935caee74db993e9de8 insert "fruit" 1 "apple"
 
-#### 设置权限示例
-设置外部账户1拥有权限设置功能。即账户1成为管理员账户，其他用户为非管理员账户。
+transaction hash:0xc4d261026851c3338f1a64ecd4712e5fc2a028c108363181725f07448b986f7e
+---------------------------------------------------------------------------------------------
+Event logs
+---------------------------------------------------------------------------------------------
+insertResult index: 0
+count = 1
+---------------------------------------------------------------------------------------------
+
+[group:1]> call TableTest.sol 0xfe649f510e0ca41f716e7935caee74db993e9de8 select "fruit"
+[[fruit], [1], [apple]]
 ```
-[group:1]> grantPermissionManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
+登录账户2的控制台，更新账户3插入的记录，并查询该表的记录。
+```
+[group:1]> call TableTest.sol 0xfe649f510e0ca41f716e7935caee74db993e9de8 update "fruit" 1 "orange"
 {
-	"code":0,
-	"msg":"success"
+    "code":-50000,
+    "msg":"permission denied"
+}
+[group:1]> call TableTest.sol 0xfe649f510e0ca41f716e7935caee74db993e9de8 select "fruit"
+[[fruit], [1], [apple]]
+```
+更新失败，账户2没有权限更新用户表t_test。
+
+- 通过账户1撤销账户3写用户表t_test的权限。
+```
+[group:1]> revokeUserTableManager t_test 0xd86572ad4c92d4598852e2f34720a865dd4fc3dd
+{
+    "code":0,
+    "msg":"success"
 }
 
-[group:1]> listPermissionManager
----------------------------------------------------------------------------------------------
-|                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                      7                      |
----------------------------------------------------------------------------------------------
-```
-**外部账户1有权限设置功能示例：**   
-设置外部账户1有权限读写t_test表:
-```
-[group:1]> grantUserTableManager t_test 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-{
-	"code":0,
-	"msg":"success"
-}
-```
-设置成功，说明外部账户1有设置权限功能。
-查询外部账户1设置的结果:
-```
-[group:1]> listUserTableManager t_test
----------------------------------------------------------------------------------------------
-|                   address                   |                 enable_num                  |
-| 0xf1585b8d0e08a0a00fff662e24d67ba95a438256  |                      8                      |
----------------------------------------------------------------------------------------------
-```
-删除外部账户1设置的结果:
-```
-[group:1]> revokeUserTableManager t_test 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-{
-	"code":0,
-	"msg":"success"
-}
-```
-删除成功。
-    
-**外部账户2无权限设置功能示例：**    
-进入以外部账户2登录的控制台，设置外部账户2有权限读写t_test表:
-```
-[group:1]> grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-{
-	"code":50000,
-	"msg":"permission denied"
-}
-```
-设置失败。  
-
-查询外部账户2设置的结果:
-```
 [group:1]> listUserTableManager t_test
 Empty set.
 ```
-查询记录为空，说明外部账户2无设置权限功能。
+撤销成功。
 
-**注：** 
-外部账户3也无设置权限功能，可以类似操作。若需要让外部账户2和3有权限设置功能，可以让账户1登陆控制台，设置账户2和3有权限设置功能。设置命令如下：
-```
-grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-grantPermissionManager 0x1600e34312edea101d8b41a3465f2e381b66baed
-```
+- **注意：** 此时没有账户拥有对用户表t_test的写权限，因此对该表的写权限恢复了初始状态，即所有账户均拥有对该表的写权限。如果让账户1没有对该表的写权限，则可以通过账号1授权另外一个账号，比如账号2拥有该表的写权限实现。
 
-#### 移除权限示例
-移除外部账户1的权限设置功能，命令如下：
-```
-revokePermissionManager 0xf1585b8d0e08a0a00fff662e24d67ba95a438256
-```
-查询拥有管理权限的权限记录列表，命令如下：
-```
-[group:1]> listPermissionManager
-Empty set.
-```
-查询记录为空，则恢复默认权限设置。如果查询的权限记录有其他账户地址，则查出的账户拥有权限设置功能，账户1无权限设置功能。
+
