@@ -1063,7 +1063,7 @@ Hello,CNS2
 ```
 ### **setSystemConfigByKey**
 
-运行setSystemConfigByKey，以键值对方式设置系统配置。目前设置的系统配置支持`tx_count_limit`和`tx_gas_limit`。这个两个配置键名可以通过tab键补全：
+运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`和`tx_gas_limit`。这个两个系统参数的键名可以通过tab键补全：
 
 * tx_count_limit：区块最大打包交易数
 * tx_gas_limit：交易执行允许消耗的最大gas数
@@ -1081,7 +1081,7 @@ Hello,CNS2
 ```
 ### **getSystemConfigByKey**
 
-运行getSystemConfigByKey，根据键查询系统配置的值。                                  
+运行getSystemConfigByKey，根据键查询系统参数的值。                                  
 参数： 
 
 - key
@@ -1091,8 +1091,8 @@ Hello,CNS2
 ```
 ### **grantPermissionManager**
 
-运行grantPermissionManager，赋予外部账户地址的管理权限的权限。**即设置权限管理员账户。** 参数： 
-- 外部账户地址
+运行grantPermissionManager，授权账户的链管理员权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1100,17 +1100,10 @@ Hello,CNS2
 	"msg":"success"
 }
 ```
+**注：权限控制相关命令的示例使用可以参考[权限控制使用文档](./permission_control.md)。**
 
-```eval_rst
-.. important::
-    0xc0d0e6ccc0b44c12196266548bec4a3616160e7d地址为管理员账户，该账户登录控制台可以操作后续相关的权限功能。可以使用该账户对应的私钥登录控制台，私钥为ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e，登录控制台命令如下：其中启动脚本第一个参数为群组ID，第二个参数为账户对应的私钥。
-```
-
-```
-./start.sh 1 ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e
-```
 ### **listPermissionManager**
-运行listPermissionManager，查询拥有管理权限的权限记录列表。                                  
+运行listPermissionManager，查询拥有链管理员权限的账户列表。                                  
 ```text
 [group:1]> listPermissionManager 
 ---------------------------------------------------------------------------------------------
@@ -1119,9 +1112,9 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokePermissionManager**
-运行revokePermissionManager，撤销外部账户地址的权限管理权限。                                                                 
+运行revokePermissionManager，撤销账户的链管理员权限。                                                                 
 参数： 
-- 外部账户地址
+- 账户地址
 ```text
 [group:1]> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1131,10 +1124,10 @@ Hello,CNS2
 ```
 ### **grantUserTableManager**
 
-运行grantUserTableManager，根据用户表名和外部账户地址赋予权限。                                  
+运行grantUserTableManager，授权账户对用户表的写权限。                                  
 参数： 
 - 表名
-- 外部账户地址
+- 账户地址
 ```text
 [group:1]> grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1144,7 +1137,7 @@ Hello,CNS2
 ```
 ### **listUserTableManager**
 
-运行listUserTableManager，根据用户表名查询赋予的权限记录列表。                                  
+运行listUserTableManager，查询拥有对用户表写权限的账号列表。                                  
 参数： 
 - 表名
 ```text
@@ -1156,11 +1149,11 @@ Hello,CNS2
 ```
 ### **revokeUserTableManager**
 
-运行revokeUserTableManager，根据用户表名和外部账户地址撤销权限。                                                                 
+运行revokeUserTableManager，撤销账户对用户表的写权限。                                                                 
 参数： 
 
 - 表名
-- 外部账户地址
+- 账户地址
 ```text
 [group:1]> revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1169,10 +1162,10 @@ Hello,CNS2
 }
 ```
 ### **grantDeployAndCreateManager**
-运行grantDeployAndCreateManager，赋予外部账户地址的部署合约和创建用户表权限。
+运行grantDeployAndCreateManager，授权账户的部署合约和创建用户表权限。
 
 参数： 
-- 外部账户地址
+- 账户地址
 ```text
 [group:1]> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1181,7 +1174,7 @@ Hello,CNS2
 }
 ```
 ### **listDeployAndCreateManager**
-运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的权限记录列表。                                  
+运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的账户列表。                                  
 ```text
 [group:1]> listDeployAndCreateManager 
 ---------------------------------------------------------------------------------------------
@@ -1190,9 +1183,9 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeDeployAndCreateManager**
-运行revokeDeployAndCreateManager，撤销外部账户地址的部署合约和创建用户表权限。                                                                 
+运行revokeDeployAndCreateManager，撤销账户的部署合约和创建用户表权限。                                                                 
 参数： 
-- 外部账户地址
+- 账户地址
 ```text
 [group:1]> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1202,8 +1195,8 @@ Hello,CNS2
 ```
 ### **grantNodeManager**
 
-运行grantNodeManager，赋予外部账户地址的节点管理权限。参数： 
-- 外部账户地址
+运行grantNodeManager，授权账户的节点管理权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1212,7 +1205,7 @@ Hello,CNS2
 }
 ```
 ### **listNodeManager**
-运行listNodeManager，查询拥有节点管理的权限记录列表。
+运行listNodeManager，查询拥有节点管理的账户列表。
 
 ```text
 [group:1]> listNodeManager 
@@ -1223,9 +1216,9 @@ Hello,CNS2
 ```
 ### **revokeNodeManager**
 
-运行revokeNodeManager，撤销外部账户地址的节点管理权限。                                                                 
+运行revokeNodeManager，撤销账户的节点管理权限。                                                                 
 参数： 
-- 外部账户地址
+- 账户地址
 ```text
 [group:1]> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1234,8 +1227,8 @@ Hello,CNS2
 }
 ```
 ### **grantCNSManager**
-运行grantCNSManager，赋予外部账户地址的使用CNS权限。参数： 
-- 外部账户地址
+运行grantCNSManager，授权账户的使用CNS权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1244,7 +1237,7 @@ Hello,CNS2
 }
 ```
 ### **listCNSManager**
-运行listCNSManager，查询拥有使用CNS的权限记录列表。
+运行listCNSManager，查询拥有使用CNS的账户列表。
                                   
 ```text
 [group:1]> listCNSManager 
@@ -1254,8 +1247,8 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeCNSManager**
-运行revokeCNSManager，撤销外部账户地址的使用CNS权限。参数： 
-- 外部账户地址
+运行revokeCNSManager，撤销账户的使用CNS权限。参数： 
+- 账户地址
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1264,8 +1257,8 @@ Hello,CNS2
 }
 ```
 ### **grantSysConfigManager**
-运行grantSysConfigManager，赋予外部账户地址的系统参数管理权限。参数： 
-- 外部账户地址
+运行grantSysConfigManager，授权账户的修改系统参数权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1275,7 +1268,7 @@ Hello,CNS2
 ```
 ### **listSysConfigManager**
 
-运行listSysConfigManager，查询拥有系统参数管理的权限记录列表。
+运行listSysConfigManager，查询拥有修改系统参数的账户列表。
                                   
 ```text
 [group:1]> listSysConfigManager 
@@ -1285,8 +1278,8 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeSysConfigManager**
-运行revokeSysConfigManager，撤销外部账户地址的系统参数管理权限。参数： 
-- 外部账户地址
+运行revokeSysConfigManager，撤销账户的修改系统参数权限。参数： 
+- 账户地址
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
