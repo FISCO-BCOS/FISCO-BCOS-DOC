@@ -10,10 +10,13 @@
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
 常用命令链接：
-- 查看区块高度：[getBlockNumber](./console.html#getblocknumber)
-- 查看共识节点列表：[getSealerList](./console.html#getsealerlist)
+- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
+- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
 - 部署合约: [deploy](./console.html#deploy)
+- 利用CNS部署合约: [deployByCNS](./console.html#deploybycns)
 - 调用合约: [call](./console.html#call)
+- 利用CNS调用合约: [callByCNS](./console.html#callbycns)
+- 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
 - 切换群组: [switch](./console.html#switch)
 
 ### 控制台响应
@@ -44,18 +47,17 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |-- conf
 |   |-- applicationContext-sample.xml # 配置文件
 |   |-- log4j.properties  # 日志配置文件
-|-- solidity # 控制台命令部署和调用的合约所在目录
-|   -- contracts  # 部署和调用合约的solidity合约存储目录
+|-- contracts # 合约所在目录
+|   -- solidity  # solidity合约存放目录
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
-|       -- Table.sol # CRUD需要引入的合约接口：Table合约接口
+|       -- Table.sol # CRUD合约需要引入的Table合约接口
+|   -- console  # 控制台部署合约时编译的合约abi, bin， java文件目录
+|   -- sdk      # sol2java.sh脚本编译的合约abi, bin， java文件目录
 |-- start.sh # 控制台启动脚本
 |-- get_account.sh # 账户生成脚本
+|-- sol2java.sh # solidity合约文件编译为java合约文件的开发工具脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
-|-- tools # 控制台工具目录
-    |-- contracts # 用户编写的solidity合约存放目录
-    |   |-- Table.sol # 默认提供CRUD的合约接口Table.sol文件
-    |-- sol2java.sh # solidity合约文件编译为java合约文件的工具脚本
 ```
 
 #### 合约编译工具
