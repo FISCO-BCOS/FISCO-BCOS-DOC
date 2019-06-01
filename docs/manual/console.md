@@ -17,6 +17,7 @@
 - 调用合约: [call](./console.html#call)
 - 利用CNS调用合约: [callByCNS](./console.html#callbycns)
 - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
 - 切换群组: [switch](./console.html#switch)
 
 ### 控制台响应
@@ -52,8 +53,8 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
 |       -- Table.sol # CRUD合约需要引入的Table合约接口
-|   -- console  # 控制台部署合约时编译的合约abi, bin， java文件目录
-|   -- sdk      # sol2java.sh脚本编译的合约abi, bin， java文件目录
+|   -- console  # 控制台部署合约时编译的合约abi, bin，java文件目录
+|   -- sdk      # sol2java.sh脚本编译的合约abi, bin，java文件目录
 |-- start.sh # 控制台启动脚本
 |-- get_account.sh # 账户生成脚本
 |-- sol2java.sh # solidity合约文件编译为java合约文件的开发工具脚本
@@ -62,31 +63,32 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 
 #### 合约编译工具
 
-**控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件。** 使用该工具，分为两步：
-  - 将Solidity合约文件放在`tools/contracts`目录下。
-  - 通过运行`tools`目录下的`sol2java.sh`脚本(**需要指定一个Java的包名**)完成编译合约任务。例如，拷贝`HelloWorld.sol`合约到`tools/contracts`目录下，指定包名为`org.com.fisco`，命令如下：
+**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
+  - 将solidity合约文件放在`contracts/solidity`目录下。
+  - 通过运行`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，`contracts/solidity`目录下已有`HelloWorld.sol`、`TableTest.sol`、`Table.sol`合约，指定包名为`org.com.fisco`，命令如下：
     ```bash
     $ cd ~/fisco/console
-    $ cp solidity/contracts/HelloWorld.sol tools/contracts/
-    $ cd tools
     $ ./sol2java.sh org.com.fisco
     ```
-    运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
+    运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
     ```bash
     |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
     |   |-- HelloWorld.abi
     |   |-- Table.abi
+    |   |-- TableTest.abi
     |-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
     |   |-- HelloWorld.bin
     |   |-- Table.bin
+    |   |-- TableTest.bin
     |-- java  # 存放编译的包路径及Java合约文件
     |   |-- org
     |       |-- com
     |           |-- fisco
-    |               |-- HelloWorld.java # 编译成功的目标Java文件
-    |               |-- Table.java  # 编译成功的系统CRUD合约接口Java文件
+    |               |-- HelloWorld.java # 编译的HelloWorld Java文件
+    |               |-- Table.java  # 编译的系统CRUD合约接口Java文件
+    |               |-- TableTest.java  # 编译的TableTest Java文件
     ```
-    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`和`Table.java`。其中`HelloWorld.java`是java应用所需要的java合约文件。
+    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
 
 **注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。可以通过`./replace_solc_jar.sh`脚本进行替换，指定下载的编译器jar包路径，命令如下：
 ```bash
