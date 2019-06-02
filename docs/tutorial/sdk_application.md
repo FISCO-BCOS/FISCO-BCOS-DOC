@@ -242,7 +242,7 @@ contract Asset {
 
 上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件编译为Java文件。
 
-控制台提供了这种编译的工具，可以将`Asset.sol`合约文件存放在`console/contracts/solidity`目录(由于该目录默认已存放`HelloWorld.sol`和`TableTest.sol`示例合约，我们不需要编译这个两个合约，可以将这两个合约备份到其他地方)。利用console目录下提供的`sol2java.sh`脚本进行编译，操作如下：
+控制台提供了编译工具，可以将`Asset.sol`合约文件存放在`console/contracts/solidity`目录。利用console目录下提供的`sol2java.sh`脚本进行编译，操作如下：
 ```bash
 # 切换到fisco/console/目录
 $ cd ~/fisco/console/
