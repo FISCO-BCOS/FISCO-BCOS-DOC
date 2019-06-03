@@ -1,6 +1,8 @@
 # 分布式存储
 
-## 逻辑架构图
+
+## 分布式存储之通过代理访问mysql
+### 逻辑架构图
 amdb多群组架构下，群组下的单个节点对应一个amdb实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于Group1,B,C属于Group2。节点A和C分别对应1个db实例，B节点对应了2个db实例，逻辑架构图如下：
 
 ![](../../images/storage/logic_archite.png)
@@ -8,15 +10,15 @@ amdb多群组架构下，群组下的单个节点对应一个amdb实例，例如
 以上图为例，描述搭建配置过程。
 A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
 
-## 节点搭建
+### 节点搭建
 使用amdb之前，需要先搭链，详细搭链过程请参考[搭链](../installation.md)，也可参考如下步骤。
 
-### 准备依赖
+#### 准备依赖
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
-### 生成配置文件
+#### 生成配置文件
 ```bash
 # 生成区块链配置文件ipconf
 cat > ipconf << EOF
@@ -32,7 +34,7 @@ cat ipconf
 127.0.0.1:1 agencyC 2
 ```
 
-### 使用build_chain搭建区块链
+#### 使用build_chain搭建区块链
 ```bash
 ### 搭建区块链（请先确认30600~30602，20800~20802，8565~8567端口没有被占用）
 bash build_chain.sh -f ipconf -p 30600,20800,8565
@@ -81,29 +83,12 @@ Group:2 has 2 nodes
 │   │   ├── config.ini
 │   │   ├── start.sh
 │   │   └── stop.sh
-│   ├── node2
-│   │   ├── conf
-│   │   │   ├── ca.crt
-│   │   │   ├── group.2.genesis
-│   │   │   ├── group.2.ini
-│   │   │   ├── node.crt
-│   │   │   ├── node.key
-│   │   │   └── node.nodeid
-│   │   ├── config.ini
-│   │   ├── start.sh
-│   │   └── stop.sh
-│   ├── sdk
-│   │   ├── ca.crt
-│   │   ├── node.crt
-│   │   └── node.key
-│   ├── start_all.sh
-│   └── stop_all.sh
 ......此处省略其他输出......
 
 ```
 
-### 修改节点genesis文件
-#### 修改node0下的group.1.genesis配置
+#### 修改节点genesis文件 
+##### 修改node0下的group.1.genesis配置
 ```
 cd ~/fisco/nodes/127.0.0.1/node0/conf;
 ```
@@ -115,7 +100,7 @@ cd ~/fisco/nodes/127.0.0.1/node0/conf;
     	topic=DB_Group1_A
     	maxRetry=100
 ```
-#### 修改node1下的group.1.genesis配置
+##### 修改node1下的group.1.genesis配置
 ```bash
 cd ~/fisco/nodes/127.0.0.1/node1/conf;
 ```
@@ -128,7 +113,7 @@ cd ~/fisco/nodes/127.0.0.1/node1/conf;
     	maxRetry=100
 ```
 
-#### 修改node1下的group.2.genesis配置
+##### 修改node1下的group.2.genesis配置
 ```bash
 cd ~/fisco/nodes/127.0.0.1/node1/conf;
 ```
@@ -141,7 +126,7 @@ cd ~/fisco/nodes/127.0.0.1/node1/conf;
     	maxRetry=100
 ```
 
-#### 修改node2下的group.2.genesis配置
+##### 修改node2下的group.2.genesis配置
 ```bash
 cd ~/fisco/nodes/127.0.0.1/node2/conf;
 ```
@@ -154,14 +139,14 @@ cd ~/fisco/nodes/127.0.0.1/node2/conf;
     	maxRetry=100
 ```
 
-## 准备amdb代理
-### 源码获取
+### 准备amdb代理
+#### 源码获取
 ```bash
 cd ~/fisco; 
 git clone https://github.com/FISCO-BCOS/AMDB.git
 ```
 
-### 源码编译
+#### 源码编译
 ```bash
 cd AMDB;gradle build
 ```
@@ -188,14 +173,14 @@ cd AMDB;gradle build
 └── start.sh
 ```
 
-## 配置AMDB代理
+#### 配置amdb代理
 amdb与节点连接过程，amdb是client,节点是server，启动过程是amdb主动连接节点，节点只需要配置AMDB关注的topic即可，关于topic的介绍请参考[AMOP](./amop_protocol.md)，amdb需要通过证书准入。
-### 证书配置
+##### 证书配置
 ```bash
 cp ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/AMDB/dist/conf/
 ```
 
-### amdb实例拷贝
+##### amdb实例拷贝
 ```bash
 cd ~/fisco;
 ###dist_Group1_A是节点Group1_A对应的amdb实例
@@ -219,7 +204,7 @@ drwxrwxr-x 5 fisco fisco  4096 May  7 15:59 dist_Group2_C
 drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 ```
 
-### DB创建
+##### DB创建
 ```bash
 	mysql -uroot -p123456
 	CREATE DATABASE `bcos_Group1_A`;
@@ -228,8 +213,18 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 	CREATE DATABASE `bcos_Group2_C`;
 ```
 
-### 配置文件配置
-#### 为Group1的A节点配置AMDB代理
+#### 配置文件配置
+amdb.properties配置amdb数据代理需要连接的节点信息，db.properties配置数据库的连接信息。这里假设mysql的配置信息如下：
+```bash
+|节点|db_ip|db_port|db_username|db_passwd|db_name|
+|Group1_A|127.0.0.1|3306|root|123456|bcos_Group1_A|
+|Group1_B|127.0.0.1|3306|root|123456|bcos_Group1_B|
+|Group2_B|127.0.0.1|3306|root|123456|bcos_Group2_B|
+|Group2_C|127.0.0.1|3306|root|123456|bcos_Group2_C|
+```
+
+
+##### 为Group1的A节点配置amdb代理
 ```bash
 cd ~/fisco/dist_Group1_A/conf
 ```
@@ -250,20 +245,20 @@ db.database=bcos_Group1_A
 
 将applicationContext.xml修改为如下配置(部分信息)
 ```bash
-	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-		<property name="allChannelConnections">
-			<list>
-				<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-					<property name="groupId" value="1" />
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+	<property name="allChannelConnections">
+		<list>
+			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="1" />
 					<property name="connectionsStr">
-						<list>
+					<list>
 						<value>127.0.0.1:20800</value>
-						</list>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
+					</list>
+				</property>
+			</bean>
+		</list>
+	</property>
+</bean>
 
 <bean id="DBChannelService" class="org.fisco.bcos.channel.client.Service">
 		<property name="groupId" value="1" />
@@ -278,7 +273,7 @@ db.database=bcos_Group1_A
 	</bean>
 ```
 
-#### 为Group1的B节点配置AMDB代理
+##### 为Group1的B节点配置amdb代理
 ```bash
 cd ~/fisco/dist_Group1_B/conf
 ```
@@ -299,20 +294,20 @@ db.database=bcos_Group1_B
 
 将applicationContext.xml修改为如下配置(部分信息)
 ```bash
-	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-		<property name="allChannelConnections">
-			<list>
-				<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-					<property name="groupId" value="1" />
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+	<property name="allChannelConnections">
+		<list>
+			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="1" />
 					<property name="connectionsStr">
-						<list>
+					<list>
 						<value>127.0.0.1:20801</value>
-						</list>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
+					</list>
+				</property>
+			</bean>
+		</list>
+	</property>
+</bean>
 
 <bean id="DBChannelService" class="org.fisco.bcos.channel.client.Service">
 		<property name="groupId" value="1" />
@@ -326,7 +321,7 @@ db.database=bcos_Group1_B
 		<property name="pushCallback" ref="DBHandler"/>
 	</bean>
 ```
-#### 为Group2的B节点配置AMDB代理
+##### 为Group2的B节点配置amdb代理
 ```bash
 cd ~/fisco/dist_Group2_B/conf
 ```
@@ -346,20 +341,20 @@ db.database=bcos_Group2_B
 ```
 将applicationContext.xml修改为如下配置(部分信息)
 ```bash
-	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-		<property name="allChannelConnections">
-			<list>
-				<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-					<property name="groupId" value="2" />
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+	<property name="allChannelConnections">
+		<list>
+			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="1" />
 					<property name="connectionsStr">
-						<list>
-							<value>127.0.0.1:20801</value>
-						</list>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
+					<list>
+						<value>127.0.0.1:20801</value>
+					</list>
+				</property>
+			</bean>
+		</list>
+	</property>
+</bean>
 
 <bean id="DBChannelService" class="org.fisco.bcos.channel.client.Service">
 		<property name="groupId" value="2" />
@@ -376,7 +371,7 @@ db.database=bcos_Group2_B
 	</bean>
 ```
 
-#### 为Group2的C节点配置AMDB代理
+##### 为Group2的C节点配置amdb代理
 ```bash
 cd ~/fisco/dist_Group2_C/conf
 ```
@@ -397,20 +392,20 @@ db.database=bcos_Group2_C
 
 将applicationContext.xml修改为如下配置(部分信息)
 ```bash
-	<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-		<property name="allChannelConnections">
-			<list>
-				<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-					<property name="groupId" value="2" />
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+	<property name="allChannelConnections">
+		<list>
+			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="1" />
 					<property name="connectionsStr">
-						<list>
-							<value>127.0.0.1:20802</value>
-						</list>
-					</property>
-				</bean>
-			</list>
-		</property>
-	</bean>
+					<list>
+						<value>127.0.0.1:20802</value>
+					</list>
+				</property>
+			</bean>
+		</list>
+	</property>
+</bean>
 
 <bean id="DBChannelService" class="org.fisco.bcos.channel.client.Service">
 		<property name="groupId" value="2" />
@@ -428,7 +423,7 @@ db.database=bcos_Group2_C
 ```
 
 
-## 启动AMDB代理
+### 启动amdb代理
 ```bash
 cd ~/fisco/dist_Group1_A;sh start.sh
 cd ~/fisco/dist_Group1_B;sh start.sh
@@ -436,11 +431,11 @@ cd ~/fisco/dist_Group2_B;sh start.sh
 cd ~/fisco/dist_Group2_C;sh start.sh
 ```
 
-## 启动节点
+### 启动节点
 ```bash
 cd ~/fisco/nodes/127.0.0.1;sh start_all.sh
 ```
-## 检查进程
+### 检查进程
 ```bash
 ps -ef|grep org.bcos.amdb.server.Main|grep -v grep
 fisco   110734      1  1 17:25 ?        00:00:10 java -cp conf/:apps/*:lib/* org.bcos.amdb.server.Main
@@ -455,7 +450,7 @@ fisco   122910      1  1 17:38 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.
 ```
 启动成功，会看到有4个java进程，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
 
-## 检查日志输出
+### 检查日志输出
 执行下面指令，查看节点node0链接的节点数（其他节点类似）
 ```
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
@@ -477,16 +472,16 @@ info|2019-05-07 21:48:56.946022| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=6,tx=0,nodeIdx=1,hash=48341ee5...
 ```
 
-## 使用控制台发送交易
+### 使用控制台发送交易
 
-### 准备依赖
+#### 准备依赖
 ```bash
 cd ~/fisco;
 bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 $ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
-### 修改配置文件
+#### 修改配置文件
 ```bash
 cd ~/fisco/console/conf
 ```
@@ -507,7 +502,7 @@ applicationContext.xml修改为如下配置(部分信息)
 		</property>
 	</bean>
 ```
-### 启用控制台
+#### 启用控制台
 ```bash
 cd ~/fisco/console
 sh start.sh 1
@@ -590,3 +585,189 @@ select * from _user_t_test\G;
 item_name: apple
 1 row in set (0.00 sec)
 ```
+
+
+## 分布式存储之节点直连mysql
+fisco-bcos在2.0.0-rc3之后，支持节点通过连接池直连mysql，相对于代理访问mysql方式，配置相对简单，不需要再手动去创建数据库了。
+
+### 逻辑架构图
+多群组架构下，群组下的单个节点对应一个db实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于Group1,B,C属于Group2。节点A和C分别对应1个db实例，B节点对应了2个db实例，逻辑架构图如下
+![](../../images/storage/storage.png)
+以上图为例，描述搭建配置过程。
+A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
+
+### 节点搭建
+使用分布式存储之前，需要先搭链，详细搭链过程请参考[搭链](../installation.md)，也可参考如下步骤。
+
+#### 准备依赖
+```bash
+mkdir -p ~/fisco_direct && cd ~/fisco_direct
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
+```
+#### 生成配置文件
+```bash
+# 生成区块链配置文件ipconf
+cat > ipconf << EOF
+127.0.0.1:1 agencyA 1
+127.0.0.1:1 agencyB 1,2
+127.0.0.1:1 agencyC 2
+EOF
+
+# 查看配置文件
+cat ipconf 
+127.0.0.1:1 agencyA 1
+127.0.0.1:1 agencyB 1,2
+127.0.0.1:1 agencyC 2
+```
+
+#### 使用build_chain搭建区块链
+```bash
+### 搭建区块链（请先确认30700~30702，20700~20702，8575~8577端口没有被占用）
+### 这里唯一的区别是在命令后面追加了参数"-s mysql"
+bash build_chain.sh -f ipconf -p 30700,20700,8575 -s mysql
+==============================================================
+Generating CA key...
+==============================================================
+Generating keys ...
+Processing IP:127.0.0.1 Total:1 Agency:agencyA Groups:1
+Processing IP:127.0.0.1 Total:1 Agency:agencyB Groups:1,2
+Processing IP:127.0.0.1 Total:1 Agency:agencyC Groups:2
+==============================================================
+Generating configurations...
+Processing IP:127.0.0.1 Total:1 Agency:agencyA Groups:1
+Processing IP:127.0.0.1 Total:1 Agency:agencyB Groups:1,2
+Processing IP:127.0.0.1 Total:1 Agency:agencyC Groups:2
+==============================================================
+Group:1 has 2 nodes
+Group:2 has 2 nodes
+```
+生成的节点文件如下
+```
+.
+├── 127.0.0.1
+│   ├── fisco-bcos
+│   ├── node0
+│   │   ├── conf
+│   │   │   ├── ca.crt
+│   │   │   ├── group.1.genesis
+│   │   │   ├── group.1.ini
+│   │   │   ├── node.crt
+│   │   │   ├── node.key
+│   │   │   └── node.nodeid
+│   │   ├── config.ini
+│   │   ├── start.sh
+│   │   └── stop.sh
+│   ├── node1
+│   │   ├── conf
+│   │   │   ├── ca.crt
+│   │   │   ├── group.1.genesis
+│   │   │   ├── group.1.ini
+│   │   │   ├── group.2.genesis
+│   │   │   ├── group.2.ini
+│   │   │   ├── node.crt
+│   │   │   ├── node.key
+│   │   │   └── node.nodeid
+│   │   ├── config.ini
+│   │   ├── start.sh
+│   │   └── stop.sh
+......此处省略其他输出......
+```
+### 修改节点ini文件
+group.[群组].ini配置文件中，和本特性相关的是mysql的配置信息。假设mysql的配置信息如下：
+```bash
+|节点|db_ip|db_port|db_username|db_passwd|db_name|
+|Group1_A|127.0.0.1|3306|root|123456|db_Group1_A|
+|Group1_B|127.0.0.1|3306|root|123456|db_Group1_B|
+|Group2_B|127.0.0.1|3306|root|123456|db_Group2_B|
+|Group2_C|127.0.0.1|3306|root|123456|db_Group2_C|
+```
+
+### 修改node0下的group.1.ini配置
+```
+cd ~/fisco_direct/nodes/127.0.0.1/node0/conf;
+```
+修改group.1.ini[storage]段的内容，新增如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group1_A
+    	db_passwd=123456
+```
+
+### 修改node1下的group.1.ini配置
+```
+cd ~/fisco_direct/nodes/127.0.0.1/node1/conf;
+```
+修改group.1.ini[storage]段的内容，新增如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group1_B
+    	db_passwd=123456
+```
+
+### 修改node1下的group.2.ini配置
+```
+cd ~/fisco_direct/nodes/127.0.0.1/node1/conf;
+```
+修改group.2.ini[storage]段的内容，新增如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group2_B
+    	db_passwd=123456
+```
+### 修改node2下的group.2.ini配置
+```
+cd ~/fisco_direct/nodes/127.0.0.1/node2/conf;
+```
+修改group.2.ini[storage]段的内容，新增如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group2_C
+    	db_passwd=123456
+```
+### 启动节点
+```bash
+cd ~/fisco_direct/nodes/127.0.0.1;sh start_all.sh
+```
+### 检查进程
+```bash
+ps -ef|grep fisco-bcos|grep -v grep
+fisco   111061      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco   111065      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco_direct/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+```
+启动成功，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
+
+### 检查日志输出
+执行下面指令，查看节点node0链接的节点数（其他节点类似）
+```
+tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+```
+正常情况会看到类似下面的输出，从输出可以看出node0与另外2个节点有连接。
+```
+info|2019-05-28 16:28:57.267770|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:07.267935|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:17.268163|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:27.268284|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:37.268467|[P2P][Service] heartBeat,connected count=2
+```
+执行下面指令，检查是否在共识
+```
+tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
+```
+正常情况会不停输出++++Generating seal表示共识正常。
+```
+info|2019-05-28 16:26:32.454059|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=c9c859d5...
+info|2019-05-28 16:26:36.473543|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=6b319fa7...
+info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=2164360f...
+```
+
+### 使用控制台发送交易
+请参考“分布式存储之通过代理访问mysql”中的“使用控制台发送交易”章节。
