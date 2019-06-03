@@ -9,12 +9,29 @@
   
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
-常用命令链接：
-- 查看区块高度：[getBlockNumber](./console.html#getblocknumber)
-- 查看共识节点列表：[getSealerList](./console.html#getsealerlist)
-- 部署合约: [deploy](./console.html#deploy)
-- 调用合约: [call](./console.html#call)
+### 常用命令链接
+#### 合约相关命令
+  - 利用[CNS](../design/features/cns_contract_name_service.md)部署和调用合约(**推荐**)
+    - 部署合约: [deployByCNS](./console.html#deploybycns)
+    - 调用合约: [callByCNS](./console.html#callbycns)
+    - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+  - 普通部署和调用合约
+    - 部署合约: [deploy](./console.html#deploy)
+    - 调用合约: [call](./console.html#call)
+#### 其他命令
+- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
+- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
+- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
 - 切换群组: [switch](./console.html#switch)
+
+### 快捷键
+- `Ctrl+A`：光标移动到行首
+- `Ctrl+D`：退出控制台
+- `Ctrl+E`：光标移动到行尾
+- `Ctrl+R`：搜索输入的历史命令
+- &uarr;：向前浏览历史命令
+- &darr;：向后浏览历史命令
+
 
 ### 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
@@ -44,47 +61,47 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |-- conf
 |   |-- applicationContext-sample.xml # 配置文件
 |   |-- log4j.properties  # 日志配置文件
-|-- solidity # 控制台命令部署和调用的合约所在目录
-|   -- contracts  # 部署和调用合约的solidity合约存储目录
+|-- contracts # 合约所在目录
+|   -- solidity  # solidity合约存放目录
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
-|       -- Table.sol # CRUD需要引入的合约接口：Table合约接口
+|       -- Table.sol # CRUD合约需要引入的Table合约接口
+|   -- console  # 控制台部署合约时编译的合约abi, bin，java文件目录
+|   -- sdk      # sol2java.sh脚本编译的合约abi, bin，java文件目录
 |-- start.sh # 控制台启动脚本
 |-- get_account.sh # 账户生成脚本
+|-- sol2java.sh # solidity合约文件编译为java合约文件的开发工具脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
-|-- tools # 控制台工具目录
-    |-- contracts # 用户编写的solidity合约存放目录
-    |   |-- Table.sol # 默认提供CRUD的合约接口Table.sol文件
-    |-- sol2java.sh # solidity合约文件编译为java合约文件的工具脚本
 ```
 
 #### 合约编译工具
 
-**控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件。** 使用该工具，分为两步：
-  - 将Solidity合约文件放在`tools/contracts`目录下。
-  - 通过运行`tools`目录下的`sol2java.sh`脚本(**需要指定一个Java的包名**)完成编译合约任务。例如，拷贝`HelloWorld.sol`合约到`tools/contracts`目录下，指定包名为`org.com.fisco`，命令如下：
+**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
+  - 将solidity合约文件放在`contracts/solidity`目录下。
+  - 通过运行`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，`contracts/solidity`目录下已有`HelloWorld.sol`、`TableTest.sol`、`Table.sol`合约，指定包名为`org.com.fisco`，命令如下：
     ```bash
     $ cd ~/fisco/console
-    $ cp solidity/contracts/HelloWorld.sol tools/contracts/
-    $ cd tools
     $ ./sol2java.sh org.com.fisco
     ```
-    运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
+    运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
     ```bash
     |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
     |   |-- HelloWorld.abi
     |   |-- Table.abi
+    |   |-- TableTest.abi
     |-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
     |   |-- HelloWorld.bin
     |   |-- Table.bin
+    |   |-- TableTest.bin
     |-- java  # 存放编译的包路径及Java合约文件
     |   |-- org
     |       |-- com
     |           |-- fisco
-    |               |-- HelloWorld.java # 编译成功的目标Java文件
-    |               |-- Table.java  # 编译成功的系统CRUD合约接口Java文件
+    |               |-- HelloWorld.java # 编译的HelloWorld Java文件
+    |               |-- Table.java  # 编译的系统CRUD合约接口Java文件
+    |               |-- TableTest.java  # 编译的TableTest Java文件
     ```
-    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`和`Table.java`。其中`HelloWorld.java`是java应用所需要的java合约文件。
+    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
 
 **注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。可以通过`./replace_solc_jar.sh`脚本进行替换，指定下载的编译器jar包路径，命令如下：
 ```bash
@@ -773,11 +790,11 @@ Switched to group 2.
 ---------------------------------------------------------------------------------------------
 Event logs
 ---------------------------------------------------------------------------------------------
-insertResult index: 0
+InsertResult index: 0
 count = 1
 ---------------------------------------------------------------------------------------------
 
-[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest insertResult
+[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest InsertResult
 {
     "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
     "blockNumber":"0x5",
@@ -803,11 +820,11 @@ count = 1
 ---------------------------------------------------------------------------------------------
 Event logs
 ---------------------------------------------------------------------------------------------
-insertResult index: 0
+InsertResult index: 0
 count = 1
 ---------------------------------------------------------------------------------------------
 
-[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest insertResult 0
+[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest InsertResult 0
 {
     "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
     "blockNumber":"0x5",
@@ -833,7 +850,7 @@ count = 1
 ---------------------------------------------------------------------------------------------
 Event logs
 ---------------------------------------------------------------------------------------------
-insertResult index: 0
+InsertResult index: 0
 count = 1
 ---------------------------------------------------------------------------------------------
 ```
@@ -939,7 +956,7 @@ transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612
 ---------------------------------------------------------------------------------------------
 Event logs
 ---------------------------------------------------------------------------------------------
-createResult index: 0
+CreateResult index: 0
 count = 0
 ---------------------------------------------------------------------------------------------
 
@@ -949,7 +966,7 @@ transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc11
 ---------------------------------------------------------------------------------------------
 Event logs
 ---------------------------------------------------------------------------------------------
-insertResult index: 0
+InsertResult index: 0
 count = 1
 ---------------------------------------------------------------------------------------------
 
