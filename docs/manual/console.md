@@ -10,13 +10,17 @@
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
 ### 常用命令链接
+#### 合约相关命令
+  - 利用[CNS](../design/features/cns_contract_name_service.md)部署和调用合约(**推荐**)
+    - 部署合约: [deployByCNS](./console.html#deploybycns)
+    - 调用合约: [callByCNS](./console.html#callbycns)
+    - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+  - 普通部署和调用合约
+    - 部署合约: [deploy](./console.html#deploy)
+    - 调用合约: [call](./console.html#call)
+#### 其他命令
 - 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
 - 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
-- 部署合约: [deploy](./console.html#deploy)
-- 利用CNS部署合约: [deployByCNS](./console.html#deploybycns)
-- 调用合约: [call](./console.html#call)
-- 利用CNS调用合约: [callByCNS](./console.html#callbycns)
-- 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
 - 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
 - 切换群组: [switch](./console.html#switch)
 
