@@ -51,7 +51,7 @@
   - **public String revokeSysConfigManager(String address)：** 移除外部账户地址的系统参数管理权限。
   - **public List\<PermissionInfo\> listSysConfigManager()：** 查询拥有系统参数管理的权限记录列表。
 
-设置和移除权限接口返回json字符串，包含code和msg字段，当无权限操作时，其code定义50000，msg定义为“permission denied”。当成功设置权限时，其code为0，msg为“success”。
+设置和移除权限接口返回json字符串，包含code和msg字段，当无权限操作时，其code定义-50000，msg定义为“permission denied”。当成功设置权限时，其code为0，msg为“success”。
 
 ## 数据定义
 权限信息以系统表的方式进行存储，权限表表名为_sys_table_access_，其字段信息定义如下：

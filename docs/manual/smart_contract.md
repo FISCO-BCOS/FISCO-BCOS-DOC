@@ -94,10 +94,10 @@ pragma solidity ^0.4.24;
 import "./Table.sol";
 
 contract TableTest {
-    event createResult(int count);
-    event insertResult(int count);
-    event updateResult(int count);
-    event removeResult(int count);
+    event CreateResult(int count);
+    event InsertResult(int count);
+    event UpdateResult(int count);
+    event RemoveResult(int count);
     
     // 创建表
     function create() public returns(int){
@@ -105,7 +105,7 @@ contract TableTest {
         // 创建t_test表，表的key_field为name，value_field为item_id,item_name 
         // key_field表示AMDB主key value_field表示表中的列，可以有多列，以逗号分隔
         int count = tf.createTable("t_test", "name", "item_id,item_name");
-        emit createResult(count);
+        emit CreateResult(count);
         
         return count;
     }
@@ -144,7 +144,7 @@ contract TableTest {
         entry.set("item_name", item_name);
         
         int count = table.insert(name, entry);
-        emit insertResult(count);
+        emit InsertResult(count);
         
         return count;
     }
@@ -161,7 +161,7 @@ contract TableTest {
         condition.EQ("item_id", item_id);
         
         int count = table.update(name, entry, condition);
-        emit updateResult(count);
+        emit UpdateResult(count);
         
         return count;
     }
@@ -175,7 +175,7 @@ contract TableTest {
         condition.EQ("item_id", item_id);
         
         int count = table.remove(name, condition);
-        emit removeResult(count);
+        emit RemoveResult(count);
         
         return count;
     }
