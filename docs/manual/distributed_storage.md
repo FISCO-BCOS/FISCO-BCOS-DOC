@@ -3,7 +3,7 @@
 
 ## 安装MySQL
 
-FISCO-BCOS从2.0.0-rc2开始支持分布式存储，2.0.0-rc2支持“通过代理访问MySQL”的访问方式，2.0.0-rc3新增“节点直连MySQL”的访问方式。当前支持的分布式数据库是MySQL,在使用分布式存储之前，需要先搭建MySQL服务，在Ubuntu和CentOS服务器上的配置方式如下：
+当前支持的分布式数据库是MySQL,在使用分布式存储之前，需要先搭建MySQL服务，在Ubuntu和CentOS服务器上的配置方式如下：
 
 Ubuntu：执行下面三条命令，安装过程中，配置 root 账户密码。
 ```bash
@@ -35,14 +35,274 @@ mysql> set password for root@localhost = password('123456');
 ```
 
 
-## 通过代理访问MySQL
+## 节点直连MySQL
+FISCO-BCOS在2.0.0-rc3之后，支持节点通过连接池直连MySQL，相对于代理访问MySQL方式，配置简单，不需要手动创建数据库。配置方法请参考:
+
 ### 逻辑架构图
-AMDB多群组架构下，群组下的单个节点对应一个AMDB实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于群组1,B,C属于群组2。节点A和C分别对应1个数据库实例，B节点对应了2个数据库实例，逻辑架构图如下：
+多群组架构是指区块链节点支持启动多个群组，群组间交易处理、数据存储、区块共识相互隔离的。因此群组下的每一个节点对应一个数据库实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于Group1,B,C属于Group2。节点A和C分别对应1个数据库实例，B节点对应了2个数据库实例，逻辑架构图如下
+![](../../images/storage/storage.png)
+如上图所示，节点B属于多个群组，不同群组下的同一个节点，对应的数据库实例是分开的，为了区分不同群组下的同一个节点，将A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
+
+下面以上图为例，描述搭建配置过程。
+
+### 节点搭建
+使用分布式存储之前，需要完成联盟链的搭建和多群组的配置，具体参考如下步骤。
+
+#### 准备依赖
+```bash
+mkdir -p ~/fisco_direct && cd ~/fisco_direct
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
+```
+#### 生成配置文件
+```bash
+# 生成区块链配置文件ipconf
+cat > ipconf << EOF
+127.0.0.1:1 agencyA 1
+127.0.0.1:1 agencyB 1,2
+127.0.0.1:1 agencyC 2
+EOF
+
+# 查看配置文件
+cat ipconf 
+127.0.0.1:1 agencyA 1
+127.0.0.1:1 agencyB 1,2
+127.0.0.1:1 agencyC 2
+```
+
+#### 使用build_chain搭建区块链
+```bash
+### 搭建区块链（请先确认30700~30702，20700~20702，8575~8577端口没有被占用）
+### 这里区别是在命令后面追加了参数"-s MySQL" 以及换了端口。
+bash build_chain.sh -f ipconf -p 30700,20700,8575 -s MySQL
+==============================================================
+Generating CA key...
+==============================================================
+Generating keys ...
+Processing IP:127.0.0.1 Total:1 Agency:agencyA Groups:1
+Processing IP:127.0.0.1 Total:1 Agency:agencyB Groups:1,2
+Processing IP:127.0.0.1 Total:1 Agency:agencyC Groups:2
+==============================================================
+Generating configurations...
+Processing IP:127.0.0.1 Total:1 Agency:agencyA Groups:1
+Processing IP:127.0.0.1 Total:1 Agency:agencyB Groups:1,2
+Processing IP:127.0.0.1 Total:1 Agency:agencyC Groups:2
+==============================================================
+Group:1 has 2 nodes
+Group:2 has 2 nodes
+```
+### 修改节点ini文件
+group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息。假设MySQL的配置信息如下：
+```bash
+|节点|db_ip|db_port|db_username|db_passwd|db_name|
+|Group1_A|127.0.0.1|3306|root|123456|db_Group1_A|
+|Group1_B|127.0.0.1|3306|root|123456|db_Group1_B|
+|Group2_B|127.0.0.1|3306|root|123456|db_Group2_B|
+|Group2_C|127.0.0.1|3306|root|123456|db_Group2_C|
+```
+
+### 修改node0下的group.1.ini配置
+
+修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，配置如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group1_A
+    	db_passwd=123456
+```
+
+### 修改node1下的group.1.ini配置
+
+修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，新增如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group1_B
+    	db_passwd=123456
+```
+
+### 修改node1下的group.2.ini配置
+
+修改~/fisco_direct/nodes/127.0.0.1/node1/conf/group.2.ini[storage]段的内容，新增如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group2_B
+    	db_passwd=123456
+```
+### 修改node2下的group.2.ini配置
+
+修改~/fisco_direct/nodes/127.0.0.1/node2/conf/group.2.ini[storage]段的内容，新增如下内容
+```bash
+    	db_ip=127.0.0.1
+    	db_port=3306
+    	db_username=root
+    	db_name=db_Group2_C
+    	db_passwd=123456
+```
+### 启动节点
+```bash
+cd ~/fisco_direct/nodes/127.0.0.1;sh start_all.sh
+```
+### 检查进程
+```bash
+ps -ef|grep fisco-bcos|grep -v grep
+fisco   111061      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco   111065      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco_direct/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+```
+启动成功，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
+
+### 检查日志输出
+执行下面指令，查看节点node0链接的节点数（其他节点类似）
+```
+tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+```
+正常情况会看到类似下面的输出，从输出可以看出node0与另外2个节点有连接。
+```
+info|2019-05-28 16:28:57.267770|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:07.267935|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:17.268163|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:27.268284|[P2P][Service] heartBeat,connected count=2
+info|2019-05-28 16:29:37.268467|[P2P][Service] heartBeat,connected count=2
+```
+执行下面指令，检查是否在共识
+```
+tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
+```
+正常情况会不停输出++++Generating seal表示共识正常。
+```
+info|2019-05-28 16:26:32.454059|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=c9c859d5...
+info|2019-05-28 16:26:36.473543|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=6b319fa7...
+info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=2164360f...
+```
+
+### 使用控制台发送交易
+
+#### 准备依赖
+```bash
+cd ~/fisco_direct;
+bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+cp nodes/127.0.0.1/sdk/* console/conf/
+```
+#### 修改配置文件
+将~/fisco_direct/console/conf/applicationContext.xml修改为如下配置(部分信息)
+```bash
+<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+	<property name="allChannelConnections">
+		<list>
+			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="1" />
+					<property name="connectionsStr">
+					<list>
+						<value>127.0.0.1:20700</value>
+					</list>
+				</property>
+			</bean>
+		</list>
+	</property>
+</bean>
+```
+#### 启用控制台
+```bash
+cd ~/fisco_direct/console
+sh start.sh 1
+#部署TableTest合约
+[group:1]> deploy TableTest
+contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
+```
+
+查看数据库中的表情况
+```bash
+MySQL -uroot -p123456 -A bcos_Group1_A
+use bcos_Group1_A;
+show tables;
+----------------------------------------------------------+
+| Tables_in_bcos_Group1_A                                  |
++----------------------------------------------------------+
+| _contract_data_8c17cf316c1063ab6c89df875e96c9f0f5b2f744_ |
+| _contract_data_f69a2fa2eca49820218062164837c6eecc909abd_ |
+| _sys_block_2_nonces_                                     |
+| _sys_cns_                                                |
+| _sys_config_                                             |
+| _sys_consensus_                                          |
+| _sys_current_state_                                      |
+| _sys_hash_2_block_                                       |
+| _sys_number_2_hash_                                      |
+| _sys_table_access_                                       |
+| _sys_tables_                                             |
+| _sys_tx_hash_2_block_                                    |
++----------------------------------------------------------+
+12 rows in set (0.02 sec)
+```
+
+在控制台中调用create接口。
+```bash
+#创建表
+call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
+0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
+```
+
+查看数据库中的表情况
+```bash
+show tables;
++----------------------------------------------------------+
+| Tables_in_bcos_Group1_A                                  |
++----------------------------------------------------------+
+| _contract_data_8c17cf316c1063ab6c89df875e96c9f0f5b2f744_ |
+| _contract_data_f69a2fa2eca49820218062164837c6eecc909abd_ |
+| _sys_block_2_nonces_                                     |
+| _sys_cns_                                                |
+| _sys_config_                                             |
+| _sys_consensus_                                          |
+| _sys_current_state_                                      |
+| _sys_hash_2_block_                                       |
+| _sys_number_2_hash_                                      |
+| _sys_table_access_                                       |
+| _sys_tables_                                             |
+| _sys_tx_hash_2_block_                                    |
+| _user_t_test                                             |
++----------------------------------------------------------+
+```
+
+在控制台中调用create接口
+```bash
+#往表里插入数据
+call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
+0x082ca6a5a292f1f7b20abeb3fb03f45e0c6f48b5a79cc65d1246bfe57be358d1
+```
+
+打开MySQL客户端，查询_user_t_test表数据
+```bash
+#查看用户表中的数据
+select * from _user_t_test\G;
+*************************** 1. row ***************************
+     _id_: 31
+   _hash_: 0a0ed3b2b0a227a6276114863ef3e8aa34f44e31567a5909d1da0aece31e575e
+    _num_: 3
+ _status_: 0
+     name: fruit
+  item_id: 100
+item_name: apple
+1 row in set (0.00 sec)
+```
+
+
+
+## 通过代理访问MySQL
+
+本使用手册仅对节点版本为2.0.0-rc3的有效，如果需要在2.0.0-rc2中使用“通过代理访问MySQL”的访问方式去搭建分布式存储环境。请参考文档[分布式存储搭建方法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0.0-rc2/docs/manual/amdbconfig.html)
+
+### 逻辑架构图
+多群组架构是指区块链节点支持启动多个群组，群组间交易处理、数据存储、区块共识相互隔离的。因此群组下的每一个节点对应一个AMDB实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于群组1,B,C属于群组2。节点A和C分别对应1个数据库实例，B节点对应了2个数据库实例，逻辑架构图如下：
 
 ![](../../images/storage/logic_archite.png)
 
-以上图为例，描述搭建配置过程。
-A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
+如上图所示，节点B属于多个群组，不同群组下的同一个节点，对应的AMDB服务和MySQL是分开的，为了区分不同群组下的同一个节点，将A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
+下面以上图为例，描述搭建配置过程。
 
 ### 节点搭建
 配置AMDB服务之前，需要完成联盟链的搭建和多群组的配置，具体参考如下步骤。
@@ -89,47 +349,43 @@ Group:1 has 2 nodes
 Group:2 has 2 nodes
 ```
 
-#### 修改节点genesis文件 
-##### 修改node0下的group.1.genesis配置
 
-修改~/fisco/nodes/127.0.0.1/node0/conf/group.1.genesis文件中[storage]段的内容，设置为如下内容
+#### 修改节点ini文件 
+##### 修改node0下的group.1.ini配置
+
+修改~/fisco/nodes/127.0.0.1/node0/conf/group.1.ini文件中[storage]段的内容，设置为如下内容
 ```bash
 [storage]
-    	;storage db type, now support leveldb, external
     	type=external
     	topic=DB_Group1_A
-    	maxRetry=100
+    	max_retry=100
 ```
-##### 修改node1下的group.1.genesis配置
+##### 修改node1下的group.1.ini配置
 
-修改~/fisco/nodes/127.0.0.1/node1/conf/group.1.genesis文件中[storage]段的内容，设置为如下内容
+修改~/fisco/nodes/127.0.0.1/node1/conf/group.1.ini文件中[storage]段的内容，设置为如下内容
 ```bash
 [storage]
-    	;storage db type, now support leveldb, external
     	type=external
     	topic=DB_Group1_B
-    	maxRetry=100
+    	max_retry=100
 ```
 
-##### 修改node1下的group.2.genesis配置
-
-修改~/fisco/nodes/127.0.0.1/node1/conf/group.2.genesis文件中[storage]段的内容，设置为如下内容
+##### 修改node1下的group.2.ini配置
+修改~/fisco/nodes/127.0.0.1/node1/conf/group.2.ini文件中[storage]段的内容，设置为如下内容
 ```bash
 [storage]
-    	;storage db type, now support leveldb, external
     	type=external
     	topic=DB_Group2_B
-    	maxRetry=100
+    	max_retry=100
 ```
 
-##### 修改node2下的group.2.genesis配置
-修改~/fisco/nodes/127.0.0.1/node2/conf/group.2.genesis文件中[storage]段的内容，设置为如下内容
+##### 修改node2下的group.2.ini配置
+修改~/fisco/nodes/127.0.0.1/node2/conf/group.2.ini文件中[storage]段的内容，设置为如下内容
 ```bash
 [storage]
-    	;storage db type, now support leveldb, external
     	type=external
     	topic=DB_Group2_C
-    	maxRetry=100
+    	max_retry=100
 ```
 
 ### 准备amdb代理
@@ -454,259 +710,4 @@ info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 ```
 
 ### 使用控制台发送交易
-
-#### 准备依赖
-```bash
-cd ~/fisco;
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-$ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
-cp nodes/127.0.0.1/sdk/* console/conf/
-```
-#### 修改配置文件
-将~/fisco/console/conf/applicationContext.xml修改为如下配置(部分信息)
-```bash
-<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-	<property name="allChannelConnections">
-		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
-					<property name="connectionsStr">
-					<list>
-						<value>127.0.0.1:20800</value>
-					</list>
-				</property>
-			</bean>
-		</list>
-	</property>
-</bean>
-```
-#### 启用控制台
-```bash
-cd ~/fisco/console
-sh start.sh 1
-#部署TableTest合约
-[group:1]> deploy TableTest
-contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
-```
-
-查看数据库中的表情况
-```bash
-MySQL -uroot -p123456 -A bcos_Group1_A
-use bcos_Group1_A;
-show tables;
-----------------------------------------------------------+
-| Tables_in_bcos_Group1_A                                  |
-+----------------------------------------------------------+
-| _contract_data_8c17cf316c1063ab6c89df875e96c9f0f5b2f744_ |
-| _contract_data_f69a2fa2eca49820218062164837c6eecc909abd_ |
-| _sys_block_2_nonces_                                     |
-| _sys_cns_                                                |
-| _sys_config_                                             |
-| _sys_consensus_                                          |
-| _sys_current_state_                                      |
-| _sys_hash_2_block_                                       |
-| _sys_number_2_hash_                                      |
-| _sys_table_access_                                       |
-| _sys_tables_                                             |
-| _sys_tx_hash_2_block_                                    |
-+----------------------------------------------------------+
-12 rows in set (0.02 sec)
-```
-
-在控制台中调用create接口。
-```bash
-#创建表
-call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
-0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
-```
-
-查看数据库中的表情况
-```bash
-show tables;
-+----------------------------------------------------------+
-| Tables_in_bcos_Group1_A                                  |
-+----------------------------------------------------------+
-| _contract_data_8c17cf316c1063ab6c89df875e96c9f0f5b2f744_ |
-| _contract_data_f69a2fa2eca49820218062164837c6eecc909abd_ |
-| _sys_block_2_nonces_                                     |
-| _sys_cns_                                                |
-| _sys_config_                                             |
-| _sys_consensus_                                          |
-| _sys_current_state_                                      |
-| _sys_hash_2_block_                                       |
-| _sys_number_2_hash_                                      |
-| _sys_table_access_                                       |
-| _sys_tables_                                             |
-| _sys_tx_hash_2_block_                                    |
-| _user_t_test                                             |
-+----------------------------------------------------------+
-```
-
-在控制台中调用create接口
-```bash
-#往表里插入数据
-call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
-0x082ca6a5a292f1f7b20abeb3fb03f45e0c6f48b5a79cc65d1246bfe57be358d1
-```
-
-打开MySQL客户端，查询_user_t_test表数据
-```bash
-#查看用户表中的数据
-select * from _user_t_test\G;
-*************************** 1. row ***************************
-     _id_: 31
-   _hash_: 0a0ed3b2b0a227a6276114863ef3e8aa34f44e31567a5909d1da0aece31e575e
-    _num_: 3
- _status_: 0
-     name: fruit
-  item_id: 100
-item_name: apple
-1 row in set (0.00 sec)
-```
-
-
-## 节点直连MySQL
-FISCO-BCOS在2.0.0-rc3之后，支持节点通过连接池直连MySQL，相对于代理访问MySQL方式，配置相对简单，不需要手动创建数据库。
-
-### 逻辑架构图
-多群组架构下，群组下的单个节点对应一个数据库实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于Group1,B,C属于Group2。节点A和C分别对应1个数据库实例，B节点对应了2个db实例，逻辑架构图如下
-![](../../images/storage/storage.png)
-以上图为例，描述搭建配置过程。
-A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
-
-### 节点搭建
-配置AMDB服务之前，需要完成联盟链的搭建和多群组的配置，具体参考如下步骤。
-
-#### 准备依赖
-```bash
-mkdir -p ~/fisco_direct && cd ~/fisco_direct
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
-```
-#### 生成配置文件
-```bash
-# 生成区块链配置文件ipconf
-cat > ipconf << EOF
-127.0.0.1:1 agencyA 1
-127.0.0.1:1 agencyB 1,2
-127.0.0.1:1 agencyC 2
-EOF
-
-# 查看配置文件
-cat ipconf 
-127.0.0.1:1 agencyA 1
-127.0.0.1:1 agencyB 1,2
-127.0.0.1:1 agencyC 2
-```
-
-#### 使用build_chain搭建区块链
-```bash
-### 搭建区块链（请先确认30700~30702，20700~20702，8575~8577端口没有被占用）
-### 这里唯一的区别是在命令后面追加了参数"-s MySQL"
-bash build_chain.sh -f ipconf -p 30700,20700,8575 -s MySQL
-==============================================================
-Generating CA key...
-==============================================================
-Generating keys ...
-Processing IP:127.0.0.1 Total:1 Agency:agencyA Groups:1
-Processing IP:127.0.0.1 Total:1 Agency:agencyB Groups:1,2
-Processing IP:127.0.0.1 Total:1 Agency:agencyC Groups:2
-==============================================================
-Generating configurations...
-Processing IP:127.0.0.1 Total:1 Agency:agencyA Groups:1
-Processing IP:127.0.0.1 Total:1 Agency:agencyB Groups:1,2
-Processing IP:127.0.0.1 Total:1 Agency:agencyC Groups:2
-==============================================================
-Group:1 has 2 nodes
-Group:2 has 2 nodes
-```
-### 修改节点ini文件
-group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息。假设MySQL的配置信息如下：
-```bash
-|节点|db_ip|db_port|db_username|db_passwd|db_name|
-|Group1_A|127.0.0.1|3306|root|123456|db_Group1_A|
-|Group1_B|127.0.0.1|3306|root|123456|db_Group1_B|
-|Group2_B|127.0.0.1|3306|root|123456|db_Group2_B|
-|Group2_C|127.0.0.1|3306|root|123456|db_Group2_C|
-```
-
-### 修改node0下的group.1.ini配置
-
-修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，配置如下内容
-```bash
-    	db_ip=127.0.0.1
-    	db_port=3306
-    	db_username=root
-    	db_name=db_Group1_A
-    	db_passwd=123456
-```
-
-### 修改node1下的group.1.ini配置
-
-修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，新增如下内容
-```bash
-    	db_ip=127.0.0.1
-    	db_port=3306
-    	db_username=root
-    	db_name=db_Group1_B
-    	db_passwd=123456
-```
-
-### 修改node1下的group.2.ini配置
-
-修改~/fisco_direct/nodes/127.0.0.1/node1/conf/group.2.ini[storage]段的内容，新增如下内容
-```bash
-    	db_ip=127.0.0.1
-    	db_port=3306
-    	db_username=root
-    	db_name=db_Group2_B
-    	db_passwd=123456
-```
-### 修改node2下的group.2.ini配置
-
-修改~/fisco_direct/nodes/127.0.0.1/node2/conf/group.2.ini[storage]段的内容，新增如下内容
-```bash
-    	db_ip=127.0.0.1
-    	db_port=3306
-    	db_username=root
-    	db_name=db_Group2_C
-    	db_passwd=123456
-```
-### 启动节点
-```bash
-cd ~/fisco_direct/nodes/127.0.0.1;sh start_all.sh
-```
-### 检查进程
-```bash
-ps -ef|grep fisco-bcos|grep -v grep
-fisco   111061      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-fisco   111065      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco_direct/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
-```
-启动成功，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
-
-### 检查日志输出
-执行下面指令，查看节点node0链接的节点数（其他节点类似）
-```
-tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
-```
-正常情况会看到类似下面的输出，从输出可以看出node0与另外2个节点有连接。
-```
-info|2019-05-28 16:28:57.267770|[P2P][Service] heartBeat,connected count=2
-info|2019-05-28 16:29:07.267935|[P2P][Service] heartBeat,connected count=2
-info|2019-05-28 16:29:17.268163|[P2P][Service] heartBeat,connected count=2
-info|2019-05-28 16:29:27.268284|[P2P][Service] heartBeat,connected count=2
-info|2019-05-28 16:29:37.268467|[P2P][Service] heartBeat,connected count=2
-```
-执行下面指令，检查是否在共识
-```
-tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
-```
-正常情况会不停输出++++Generating seal表示共识正常。
-```
-info|2019-05-28 16:26:32.454059|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=c9c859d5...
-info|2019-05-28 16:26:36.473543|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=6b319fa7...
-info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=28,tx=0,nodeIdx=3,hash=2164360f...
-```
-
-### 使用控制台发送交易
-请参考“分布式存储之通过代理访问MySQL”中的“使用控制台发送交易”章节。
+请参考“节点直连MySQL”中的“使用控制台发送交易”章节。
