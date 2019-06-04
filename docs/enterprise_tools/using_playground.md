@@ -52,8 +52,6 @@
 
 3. 机构A、B分别使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
 
-4. 机构A、B分别使用将节点私钥导入生成的节点配置文件中，启动节点
-
 至此，完成机构A、B生成group1的操作
 
 ### 机构A、C生成group2
@@ -68,7 +66,7 @@
 
 3. 机构C将fisco-bcos可执行程序放置于meta文件夹下，修改`node_deployment.ini`中的信息，配置为节点0和节点2的信息
 
-4. 机构C使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，将私钥导入生成的节点配置文件中，启动节点
+4. 机构C使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，启动节点
 
 至此，完成机构A、C生成group3的操作
 
@@ -84,7 +82,7 @@
 
 3. 机构D将fisco-bcos可执行程序放置于meta文件夹下，修改`node_deployment.ini`中的信息，配置为节点0和节点3的信息
 
-4. 机构D使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，将私钥导入生成的节点配置文件中，启动节点
+4. 机构D使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，启动节点
 
 至此，完成机构A、D生成group3的操作
 
@@ -150,8 +148,8 @@ A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一�
 
 1. A、B、C三个机构采用链下安全的方式共享自己的节点证书与节点信息（此步可选择由某一机构统一收集，或是所有机构都收集）
 2. 假设A收集所有资料后，将证书按照指定格式放在meta目录下，并配置`group_genesis.ini`中的node信息，指定配置文件中的groupid，生成群组创世区块，发送给B、C
-3. A、B、C机构修改`node_deployment.ini`的`node`信息，执行[build_install_package](./operation.html#build-install-package-b)命令，指定生成节点配置文件的目录，会在指定目录下生成多个不含节点私钥的节点配置文件夹
-4. 各个机构并将自己的节点配置文件推送至对应服务器，拷贝节点私钥至节点配置文件下，启动节点
+3. A、B、C机构修改`node_deployment.ini`的`node`信息，执行[build_install_package](./operation.html#build-install-package-b)命令，指定生成节点配置文件的目录，会在指定目录下生成多个节点配置文件夹
+4. 各个机构并将自己的节点配置文件推送至对应服务器，启动节点
 
 ## 新节点加入现有group
 
@@ -161,7 +159,7 @@ A、B、C三个对等机构需要沟通搭建一条链，开始时只需要一�
 1. D机构收集A、B、C组网生成的群组创世区块`group.1.genesis`，放置于meta文件夹下
 2. D机构配置`node_deployment.ini`中的`node`信息，执行信息，将扩容节点的证书按照指定格式放在meta目录下
 3. D机构使用[build_install_package](](./operation.html#build-install-package-b)命令指定扩容节点配置文件节点输出路径，在输出路径生成扩容节点节点配置文件夹
-4. D机构将私钥导入扩容节点配置文件夹，将节点配置文件夹推送至指定服务器，启动节点
+4. D机构将节点配置文件夹推送至指定服务器，启动节点
 5. D机构请求A、B、C中的某一个机构将自己的节点注册入group1中，完成新节点入网操作
 
 ## 节点新建群组
