@@ -170,6 +170,7 @@ todo_include_todos = True
 html_context = {
     "display_github": True, # Integrate GitHub
     "github_repo": "FISCO-BCOS-DOC", # Repo name
+    "github_user": "FISCO-BCOS",
     "github_version": "master", # Version
     "conf_py_path": "/", # Path in the checkout to the docs root
 }
@@ -269,6 +270,8 @@ htmlhelp_basename = 'FISCO_BCOS_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
+latex_engine = 'pdflatex'
+latex_use_xindy = False
 latex_elements = {
 # The paper size ('letterpaper' or 'a4paper').
 'papersize': 'a4paper',
@@ -297,8 +300,6 @@ latex_elements = {
 # Latex figure (float) alignment
 #'figure_align': 'htbp',
 }
-
-
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
