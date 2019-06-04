@@ -33,12 +33,13 @@
 
 ```bash
 # CentOS
-$ sudo yum install -y openssl openssl-devel curl
+$ sudo yum install -y openssl curl
 
 # Ubuntu
-$ sudo apt-get install -y openssl libssl-dev curl
+$ sudo apt-get install -y openssl curl
 
-# Mac OS 推荐使用docker
+# Mac OS
+$ brew install -y openssl curl
 ```
 
 ## 星形拓扑
