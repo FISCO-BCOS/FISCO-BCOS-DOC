@@ -6,7 +6,7 @@
 
      **新增特性**
       - `并行计算模型 <../what_is_new.html#id4>`_ (`操作手册 <../manual/transaction_parallel.html>`_) (`设计文档 <../tutorial/group_use_cases.html>`_)
-      - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/amdbconfig.html>`_)
+      - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/distributed_storage.html>`_)
 
      **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc2 <./2_0_0_rc2.html>`_

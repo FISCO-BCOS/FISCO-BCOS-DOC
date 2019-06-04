@@ -283,9 +283,9 @@ e01789233a
 
 主要包括如下配置：
 
-- `type`：存储的DB类型，目前支持`LevelDB`和`external`，DB类型为LevelDB时，区块链系统所有数据存储于LevelDB本地数据库中；type为external时，区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./amdbconfig.html#amdb)
+- `type`：存储的DB类型，目前支持`LevelDB`和`external`，DB类型为LevelDB时，区块链系统所有数据存储于LevelDB本地数据库中；type为external时，区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#amdb)
 
-- `topic`：当type为`external`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./amdbconfig.html#id3)
+- `topic`：当type为`external`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./distributed_storage.html#id3)
 
 
 下面是存储的DB类型为**LevelDB**的配置示例：
