@@ -14,11 +14,21 @@ A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1
 使用amdb之前，需要先搭链，详细搭链过程请参考[搭链](../installation.md)，也可参考如下步骤。
 
 #### 准备依赖
+
+- 创建文件夹
+
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
+
+- 获取`build_chain`脚本
+
+```bash
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+```
+
 #### 生成配置文件
+
 ```bash
 # 生成区块链配置文件ipconf
 cat > ipconf << EOF
