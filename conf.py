@@ -34,8 +34,31 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 # Hack for lacking git-lfs support ReadTheDocs
 if on_rtd:
     print('Fetching files with git_lfs')
-    from git_lfs import fetch
-    fetch(DOC_SOURCES_DIR)
+
+    import git_lfs
+    try:
+        from urllib.error import HTTPError
+    except ImportError:
+        from urllib2 import HTTPError
+
+    _fetch_urls = git_lfs.fetch_urls
+    def _patched_fetch_urls(lfs_url, oid_list):
+        """Hack git_lfs library that sometimes makes too big requests"""
+        objects = []
+
+        try:
+            objects.extend(_fetch_urls(lfs_url, oid_list))
+        except HTTPError as err:
+            if err.code != 413:
+                raise
+            print("LFS: request entity too large, splitting in half")
+            objects.extend(_patched_fetch_urls(lfs_url, oid_list[:len(oid_list) // 2]))
+            objects.extend(_patched_fetch_urls(lfs_url, oid_list[len(oid_list) // 2:]))
+
+        return objects
+
+    git_lfs.fetch_urls = _patched_fetch_urls
+    git_lfs.fetch(DOC_SOURCES_DIR)
 
 
 # The suffix of source filenames.
@@ -63,7 +86,6 @@ extensions = [
   'sphinx_markdown_tables',
   'sphinx_copybutton',
   'sphinxcontrib.mermaid',
-
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -147,6 +169,7 @@ todo_include_todos = True
 html_context = {
     "display_github": True, # Integrate GitHub
     "github_repo": "FISCO-BCOS-DOC", # Repo name
+    "github_user": "FISCO-BCOS",
     "github_version": "master", # Version
     "conf_py_path": "/", # Path in the checkout to the docs root
 }
@@ -246,6 +269,8 @@ htmlhelp_basename = 'FISCO_BCOS_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
+latex_engine = 'pdflatex'
+latex_use_xindy = False
 latex_elements = {
 # The paper size ('letterpaper' or 'a4paper').
 'papersize': 'a4paper',
@@ -274,8 +299,6 @@ latex_elements = {
 # Latex figure (float) alignment
 #'figure_align': 'htbp',
 }
-
-
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
@@ -356,4 +379,3 @@ def setup(app):
 
     app.add_transform(AutoStructify)
     app.add_stylesheet('css/custom.css')
-
