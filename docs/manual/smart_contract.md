@@ -18,6 +18,13 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 
 访问 AMDB 需要使用 AMDB 专用的智能合约`Table.sol`接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
+```eval_rst
+.. note::
+
+    为实现AMDB创建的表可被多个合约共享访问，其表名是群组内全局可见且唯一的，所以无法在同一条链上的同一个群组中，创建多个表名相同的表
+
+```
+
 `Table.sol`文件代码如下:
 
 ```js
@@ -94,11 +101,10 @@ pragma solidity ^0.4.24;
 import "./Table.sol";
 
 contract TableTest {
-    event createResult(int count);
-    event selectResult(bytes32 name, int item_id, bytes32 item_name);
-    event insertResult(int count);
-    event updateResult(int count);
-    event removeResult(int count);
+    event CreateResult(int count);
+    event InsertResult(int count);
+    event UpdateResult(int count);
+    event RemoveResult(int count);
     
     // 创建表
     function create() public returns(int){
@@ -106,7 +112,7 @@ contract TableTest {
         // 创建t_test表，表的key_field为name，value_field为item_id,item_name 
         // key_field表示AMDB主key value_field表示表中的列，可以有多列，以逗号分隔
         int count = tf.createTable("t_test", "name", "item_id,item_name");
-        emit createResult(count);
+        emit CreateResult(count);
         
         return count;
     }
@@ -130,7 +136,6 @@ contract TableTest {
             user_name_bytes_list[uint256(i)] = entry.getBytes32("name");
             item_id_list[uint256(i)] = entry.getInt("item_id");
             item_name_bytes_list[uint256(i)] = entry.getBytes32("item_name");
-            emit selectResult(user_name_bytes_list[uint256(i)], item_id_list[uint256(i)], item_name_bytes_list[uint256(i)]);
         }
  
         return (user_name_bytes_list, item_id_list, item_name_bytes_list);
@@ -146,7 +151,7 @@ contract TableTest {
         entry.set("item_name", item_name);
         
         int count = table.insert(name, entry);
-        emit insertResult(count);
+        emit InsertResult(count);
         
         return count;
     }
@@ -163,7 +168,7 @@ contract TableTest {
         condition.EQ("item_id", item_id);
         
         int count = table.update(name, entry, condition);
-        emit updateResult(count);
+        emit UpdateResult(count);
         
         return count;
     }
@@ -177,7 +182,7 @@ contract TableTest {
         condition.EQ("item_id", item_id);
         
         int count = table.remove(name, condition);
-        emit removeResult(count);
+        emit RemoveResult(count);
         
         return count;
     }

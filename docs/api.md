@@ -919,15 +919,15 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 
 | code  | message                                                      | 含义                                        |
 | :---- | :----------------------------------------------------------- | :------------------------------------------ |
-| 40001 | GroupID does not exist                                       | GroupID不存在                               |
-| 40002 | Response json parse error                                    | JSON RPC获取的json数据解析错误              |
-| 40003 | BlockHash does not exist                                     | 区块哈希不存在                              |
-| 40004 | BlockNumber does not exist                                   | 区块高度不存在                              |
-| 40005 | TransactionIndex is out of range                             | 交易索引越界                                |
-| 40006 | Call needs a 'from' field                                    | call接口需要提供from字段                    |
-| 40007 | Only pbft consensus supports the view property               | getPbftView接口，只有pbft共识机制有view属性 |
-| 40008 | Invalid System Config                                        | getSystemConfigByKey接口，查询无效的key     |
-| 40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
+| -40001 | GroupID does not exist                                       | GroupID不存在                               |
+| -40002 | Response json parse error                                    | JSON RPC获取的json数据解析错误              |
+| -40003 | BlockHash does not exist                                     | 区块哈希不存在                              |
+| -40004 | BlockNumber does not exist                                   | 区块高度不存在                              |
+| -40005 | TransactionIndex is out of range                             | 交易索引越界                                |
+| -40006 | Call needs a 'from' field                                    | call接口需要提供from字段                    |
+| -40007 | Only pbft consensus supports the view property               | getPbftView接口，只有pbft共识机制有view属性 |
+| -40008 | Invalid System Config                                        | getSystemConfigByKey接口，查询无效的key     |
+| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
 
 ### 交易回执状态
 
@@ -966,15 +966,21 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | 错误码 | 消息内容                                        |
 | :----- | :---------------------------------------------- |
 | 0      | success                                         |
-| 50000  | permission denied                               |
-| 51000  | table name and address already exist            |
-| 51001  | table name and address does not exist           |
-| 51100  | invalid node ID                                 |
-| 51101  | the last sealer cannot be removed               |
-| 51102  | the node is not reachable                       |
-| 51103  | the node is not a group peer                    |
-| 51104  | the node is already in the sealer list          |
-| 51105  | the node is already in the observer list        |
-| 51200  | contract name and version already exist         |
-| 51201  | version string length exceeds the maximum limit |
-| 51300  | invalid configuration entry                     |
+| -50000  | permission denied                               |
+| -50001  | table name already exist                        |
+| -50100  | unknow function call                            |
+| -50101  | table does not exist                            |
+| -51000  | table name and address already exist            |
+| -51001  | table name and address does not exist           |
+| -51100  | invalid node ID                                 |
+| -51101  | the last sealer cannot be removed               |
+| -51102  | the node is not reachable                       |
+| -51103  | the node is not a group peer                    |
+| -51104  | the node is already in the sealer list          |
+| -51105  | the node is already in the observer list        |
+| -51200  | contract name and version already exist         |
+| -51201  | version string length exceeds the maximum limit |
+| -51300  | invalid configuration entry                     |
+| -51500  | contract name and version already exist         |
+| -51501  | condition parse error                           |
+| -51502  | condition operation undefined                   |
