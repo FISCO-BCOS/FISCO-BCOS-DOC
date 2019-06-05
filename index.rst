@@ -40,6 +40,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
     - 分布式存储: `使用手册 <./docs/manual/distributed_storage.html>`_ `分布式存储设计文档 <./docs/design/storage/index.html>`_
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    
    docs/introduction.md
