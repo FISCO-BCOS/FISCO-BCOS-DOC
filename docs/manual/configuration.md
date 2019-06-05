@@ -326,6 +326,8 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 - `db_username`：当type为`MySQL`时，需要配置该字段，表示MySQL的用户名。
 - `db_passwd`：当type为`MySQL`时，需要配置该字段，表示MySQL用户对应的密码。
 - `db_name`：当type为`MySQL`时，需要配置该字段，表示MySQL中使用的数据库名。
+- `init_connections`：当type为`MySQL`时，可选配置该字段，表示与MySQL建立的初始连接数，默认15。使用默认值即可。
+- `max_connections`：当type为`MySQL`时，可选配置该字段，表示与MySQL建立的最大连接数，默认20。使用默认值即可。
 
 #### 下面是[storage]的配置示例：
 
