@@ -217,11 +217,11 @@ contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 
 查看数据库中的表情况
 ```bash
-MySQL -uroot -p123456 -A bcos_Group1_A
-use bcos_Group1_A;
+MySQL -uroot -p123456 -A db_Group1_A
+use db_Group1_A;
 show tables;
 ----------------------------------------------------------+
-| Tables_in_bcos_Group1_A                                  |
+| Tables_in_db_Group1_A                                  |
 +----------------------------------------------------------+
 | _contract_data_8c17cf316c1063ab6c89df875e96c9f0f5b2f744_ |
 | _contract_data_f69a2fa2eca49820218062164837c6eecc909abd_ |
@@ -250,7 +250,7 @@ call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
 ```bash
 show tables;
 +----------------------------------------------------------+
-| Tables_in_bcos_Group1_A                                  |
+| Tables_in_db_Group1_A                                  |
 +----------------------------------------------------------+
 | _contract_data_8c17cf316c1063ab6c89df875e96c9f0f5b2f744_ |
 | _contract_data_f69a2fa2eca49820218062164837c6eecc909abd_ |
