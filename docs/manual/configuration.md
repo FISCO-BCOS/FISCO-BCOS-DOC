@@ -277,35 +277,8 @@ e01789233a
 
 ### 状态模式配置
 
-存储主要包括[state](../design/storage/mpt.html)和[AMDB](../design/storage/storage.html)，`state`涉及交易状态存储，AMDB存储涉及数据存储，分别在`[storage]`和`[state]`中配置：
+[state](../design/storage/mpt.html)用于存储区块链状态信息，位于genesis文件中`[state]`：
 
-#### 配置storage
-
-主要包括如下配置：
-
-- `type`：存储的DB类型，目前支持`LevelDB`和`external`，DB类型为LevelDB时，区块链系统所有数据存储于LevelDB本地数据库中；type为external时，区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#amdb)
-
-- `topic`：当type为`external`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./distributed_storage.html#id3)
-
-
-下面是存储的DB类型为**LevelDB**的配置示例：
-
-```ini
-[storage]
-    ;storage db type, leveldb or external
-    type=LevelDB
-```
-
-下面是存储的DB类型为**mysql**的配置示例：
-
-```ini
-[storage]
-    ;storage db type, leveldb or external
-    type=external
-    topic=DB
-```
-
-#### 配置state
 - `type`：state类型，目前支持[storage state](../design/storage/storage.html#id6)和[MPT state](../design/storage/mpt.html)，**默认为storage state**，storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在MPT树中，效率较低，但包含完整的历史信息。
 
 ```eval_rst
