@@ -135,7 +135,7 @@ P2P配置示例如下：
 
 FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，FISCO BCOS默认使用boostlog，详细可参考[日志操作手册](log_access.md)。
 
-- `enable`: 启用/禁用日志，设置为`true`，启用日志；设置为`false`，禁用日志，**默认设置为true，性能测试可将该选项设置为`false`，降低打印日志对测试结果的影响**
+- `enable`: 启用/禁用日志，设置为`true`表示启用日志；设置为`false`表示禁用日志，**默认设置为true，性能测试可将该选项设置为`false`，降低打印日志对测试结果的影响**
 - `log_path`:日志文件路径。
 - `level`: 日志级别，当前主要包括`trace`、`debug`、`info`、`warning`、`error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`。
 - `max_log_file_size`：每个日志文件最大容量，**计量单位为MB，默认为200MB**。
@@ -145,7 +145,7 @@ boostlog示例配置如下：
 
 ```ini
 [log]
-    ;是否启用日志，默认为true
+    ; 是否启用日志，默认为true
     enable=true
     log_path=./log
     level=info
