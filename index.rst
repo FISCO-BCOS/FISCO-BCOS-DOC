@@ -15,11 +15,6 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 - `微信群 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2.0/images/community/WeChatQR%2Ejpg>`_
 - `公众号 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2.0/images/community/OfficialAccountsQR%2Ejpg>`_
 
-.. important::
-   
-   - 本技术文档只适用FISCO BCOS 2.0及以上版本，FISCO BCOS 1.3.x版本的技术文档请查看 `1.3系列技术文档 <http://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/>`_
-   - FISCO BCOS 2.0新特性请参考 `这里 <./docs/what_is_new.html>`_
-   - FISCO BCOS 2.0版本及兼容性说明 `这里 <./docs/change_log/index.html>`_
 
 .. admonition:: 概览
 
@@ -35,9 +30,15 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
 .. admonition:: 关键特性
 
-    - 多群组: `教程 <./docs/tutorial/group_use_cases.html>`_ ，`使用手册 <./docs/manual/configuration.html>`_ `多群组设计文档 <./docs/design/architecture/group.html>`_
-    - 并行计算: `使用手册 <./docs/manual/transaction_parallel.html>`_ `并行计算设计文档 <./docs/design/parallel/dag.html>`_
-    - 分布式存储: `使用手册 <./docs/manual/distributed_storage.html>`_ `分布式存储设计文档 <./docs/design/storage/index.html>`_
+    - 多群组: `教程 <./docs/tutorial/group_use_cases.html>`_  `使用手册 <./docs/manual/configuration.html>`_  `设计文档 <./docs/design/architecture/group.html>`_
+    - 并行计算: `使用手册 <./docs/manual/transaction_parallel.html>`_  `设计文档 <./docs/design/parallel/dag.html>`_
+    - 分布式存储: `使用手册 <./docs/manual/distributed_storage.html>`_  `设计文档 <./docs/design/storage/index.html>`_
+
+.. important::
+   
+   - 本技术文档只适用FISCO BCOS 2.0及以上版本，FISCO BCOS 1.3.x版本的技术文档请查看 `1.3系列技术文档 <http://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/>`_
+   - FISCO BCOS 2.0新特性请参考 `这里 <./docs/what_is_new.html>`_
+   - FISCO BCOS 2.0版本及兼容性说明 `这里 <./docs/change_log/index.html>`_
 
 .. toctree::
    :hidden:

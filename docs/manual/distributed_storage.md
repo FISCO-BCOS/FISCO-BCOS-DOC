@@ -7,9 +7,7 @@
 
 Ubuntu：执行下面三条命令，安装过程中，配置 root 账户密码。
 ```bash
-sudo apt-get install mysql-server
-sudo apt install mysql-client
-sudo apt install libmysqlclient-dev
+sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 ```
 启动 MySQL 服务并登陆:
 root 账户密码。
@@ -102,45 +100,45 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 
 ### 修改node0下的group.1.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，配置如下内容
+修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，配置如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
     	db_username=root
     	db_name=db_Group1_A
-    	db_passwd=123456
+    	db_passwd=
 ```
 
 ### 修改node1下的group.1.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，新增如下内容
+修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
     	db_username=root
     	db_name=db_Group1_B
-    	db_passwd=123456
+    	db_passwd=
 ```
 
 ### 修改node1下的group.2.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node1/conf/group.2.ini[storage]段的内容，新增如下内容
+修改~/fisco_direct/nodes/127.0.0.1/node1/conf/group.2.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
     	db_username=root
     	db_name=db_Group2_B
-    	db_passwd=123456
+    	db_passwd=
 ```
 ### 修改node2下的group.2.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node2/conf/group.2.ini[storage]段的内容，新增如下内容
+修改~/fisco_direct/nodes/127.0.0.1/node2/conf/group.2.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
     	db_username=root
     	db_name=db_Group2_C
-    	db_passwd=123456
+    	db_passwd=
 ```
 ### 启动节点
 ```bash
@@ -720,4 +718,4 @@ info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 ```
 
 ### 使用控制台发送交易
-请参考“节点直连MySQL”中的“使用控制台发送交易”章节。
+请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id10)章节。
