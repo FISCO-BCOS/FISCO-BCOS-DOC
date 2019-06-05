@@ -67,6 +67,7 @@ FISCO BCOS generator从上述背景出发，根据灵活、安全、易用、对
 
 ```eval_rst
 .. toctree::
+   :hidden:
    :maxdepth: 1
 
    installation.md
