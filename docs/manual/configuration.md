@@ -277,7 +277,6 @@ e01789233a
 
 ### 状态模式配置
 
-<<<<<<< HEAD
 存储主要包括[state](../design/storage/mpt.html)和[AMDB](../design/storage/storage.html)，`state`涉及交易状态存储，AMDB存储涉及数据存储，分别在`[storage]`和`[state]`中配置：
 
 #### 配置storage
