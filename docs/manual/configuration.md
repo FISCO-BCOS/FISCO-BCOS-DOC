@@ -307,10 +307,6 @@ e01789233a
 ```
 
 #### 配置state
-=======
-[state](../design/storage/mpt.html)用于存储区块链状态信息，位于genesis文件中`[state]`：
->>>>>>> ec15099ff010898f842e5ebed4becee3e0a96570
-
 - `type`：state类型，目前支持[storage state](../design/storage/storage.html#id6)和[MPT state](../design/storage/mpt.html)，**默认为storage state**，storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在MPT树中，效率较低，但包含完整的历史信息。
 
 ```eval_rst
