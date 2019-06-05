@@ -315,20 +315,22 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 
 #### 公共配置项
 
-- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`External`。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，type为external时，节点根据配置访问mysql数据库。区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./amdbconfig.html#amdb)。
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`External`。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，type为external时，节点根据配置访问mysql数据库。区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#amdb)。
 - `max_capacity`：配置允许节点用于内存缓存的空间大小。
 - `max_forward_block`：配置允许节点用于内存区块的大小，当节点还出的区块超出该数值时，节点停止共识等待区块写入数据库。
 
 #### 数据库相关配置项
 
-- `topic`：当type为`External`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./amdbconfig.html#id3)。
-- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./amdbconfig.html#id3)。
+- `topic`：当type为`External`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./distributed_storage.html#id3)。
+- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./distributed_storage.html#id3)。
 
 - `db_ip`：当type为`MySQL`时，需要配置该字段，表示MySQL的IP地址。
 - `db_port`：当type为`MySQL`时，需要配置该字段，表示MySQL的端口号。
 - `db_username`：当type为`MySQL`时，需要配置该字段，表示MySQL的用户名。
 - `db_passwd`：当type为`MySQL`时，需要配置该字段，表示MySQL用户对应的密码。
 - `db_name`：当type为`MySQL`时，需要配置该字段，表示MySQL中使用的数据库名。
+- `init_connections`：当type为`MySQL`时，可选配置该字段，表示与MySQL建立的初始连接数，默认15。使用默认值即可。
+- `max_connections`：当type为`MySQL`时，可选配置该字段，表示与MySQL建立的最大连接数，默认20。使用默认值即可。
 
 #### 下面是[storage]的配置示例：
 
