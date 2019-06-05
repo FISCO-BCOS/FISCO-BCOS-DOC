@@ -17,7 +17,7 @@
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。macOS将apt替换为`brew`直行即可。
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的`apt`替换为`yum`执行即可。macOS将`apt`替换为`brew`直行即可。
 
 ```bash
 sudo apt install -y openssl curl
