@@ -115,12 +115,12 @@ String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 - 注意：指定的群组在控制台配置文件中需要配置bean。
 
 ##### 使用PEM格式私钥文件启动
-- 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件名或路径
+- 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
 ```bash
 ./start.sh 1 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
 ```
 ##### 使用PKCS12格式私钥文件启动
-- 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件名或路径
+- 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
 ```bash
 ./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
 Enter Export Password:
