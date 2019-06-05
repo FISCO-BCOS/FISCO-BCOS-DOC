@@ -17,7 +17,7 @@
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。macOS将apt替换为`brew`直行即可。
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的`apt`替换为`yum`执行即可。macOS将`apt`替换为`brew`直行即可。
 
 ```bash
 sudo apt install -y openssl curl
@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 搭建单群组4节点联盟链
