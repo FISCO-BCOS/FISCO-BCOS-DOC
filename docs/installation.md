@@ -6,18 +6,19 @@
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。
 
-本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
+
 
 ```eval_rst
 .. note::
     - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
+    - 本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 ```
 
 ### 准备环境
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的`apt`替换为`yum`执行即可。macOS将`apt`替换为`brew`直行即可。
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的`apt`替换为`yum`执行即可。macOS将`apt`替换为`brew`执行即可。
 
 ```bash
 sudo apt install -y openssl curl
@@ -118,7 +119,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
-正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接（按Ctrl+c退回命令行）。
+正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接。
 ```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
@@ -132,7 +133,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 ```
 
-正常情况会不停输出`++++Generating seal`表示共识正常（按Ctrl+c退回命令行）。
+正常情况会不停输出`++++Generating seal`表示共识正常。
 ```bash
 info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
 info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
@@ -165,7 +166,7 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
     
     Failed to connect to the node. Please check the node status and the console configuration.
 
-   则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
+   是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
 
 ```
 
