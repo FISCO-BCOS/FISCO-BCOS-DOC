@@ -36,7 +36,7 @@
 $ sudo yum install -y openssl curl
 
 # Ubuntu
-$ sudo apt-get install -y openssl curl
+$ sudo apt install -y openssl curl
 
 # Mac OS
 $ brew install -y openssl curl
@@ -66,10 +66,15 @@ $ brew install -y openssl curl
 
 **准备依赖**
 
+- 创建操作目录
+
 ```bash
-$ mkdir -p ~/fisco && cd ~/fisco
-# 获取build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+mkdir -p ~/fisco && cd ~/fisco
+```
+
+- 获取build_chain.sh脚本
+```bash
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
@@ -97,7 +102,7 @@ $ cat ipconf
 
 **使用build_chain脚本构建星形区块链节点配置文件夹**
 
-`build_chain`使用方法请参考[这里](../manual/build_chain.md)。
+`build_chain`更多参数说明请参考[这里](../manual/build_chain.md)。
 
 ```bash
 # 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
