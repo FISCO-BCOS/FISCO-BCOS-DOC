@@ -18,7 +18,7 @@
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的`apt`替换为`yum`执行即可。macOS将`apt`替换为`brew`执行即可。
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可。
 
 ```bash
 sudo apt install -y openssl curl
@@ -149,7 +149,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 ```bash
 # 回到fisco目录
 $ cd ~/fisco
-# 安装openjdk
+# 安装openjdk macOS执行 brew cask install java 安装java
 $ sudo apt install -y default-jdk
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
