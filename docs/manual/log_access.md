@@ -18,6 +18,7 @@ FISCO BCOS同时支持轻量级日志系统[easylogging++](https://github.com/zu
 
 FISCO BCOS默认使用boostlog，相较于easylogging++，boostlog配置项很简单，主要如下：
 
+- `enable`: 启用/禁用日志，设置为`true`表示启用日志；设置为`false`表示禁用日志，**默认设置为true，性能测试可将该选项设置为`false`，降低打印日志对测试结果的影响**
 - `level`: 日志级别，当前主要包括`trace、debug、info、warning、error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`；
 
 - `max_log_file_size`：每个日志文件最大容量；
@@ -29,10 +30,11 @@ boostlog示例配置如下：
 ```ini
 ;log configurations
 [log]
-    ;the directory of the log
+    ; 是否启用日志，默认为true
+    enable=true
     log_path=./log
-    ;log level INFO DEBUG TRACE
     level=info
+    ; 每个日志文件最大容量，默认为200MB
     max_log_file_size=200
     flush=true
 ```
