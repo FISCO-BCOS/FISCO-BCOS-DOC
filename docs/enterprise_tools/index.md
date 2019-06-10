@@ -74,5 +74,4 @@ FISCO BCOS generator从上述背景出发，根据灵活、安全、易用、对
    enterprise_quick_start.md
    config.md
    operation.md
-   using_playground.md
 ```
