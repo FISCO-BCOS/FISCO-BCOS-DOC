@@ -298,7 +298,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
 - `object` - 同步状态信息，字段如下：            
     - `blockNumber`: `unsigned int` - 最新区块高度            
     - `genesisHash`: `string` - 创世块哈希            
-    - `isSyncing`: `bool` - 正在同步标志            
+    - `isSyncing`: `bool` - 正在同步标志         
+    - `knownHighestNumber`: `unsigned int` - 此节点已知的当前区块链最高块高
+    - `knownLatestHash`: `string` - 此节点已知的当前区块链最高块哈希 
     - `latestHash`: `string` - 最新区块哈希            
     - `nodeId`: `string` - 节点的ID            
     - `protocolId`: `unsigned int` - 协议ID号            
@@ -322,6 +324,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
     "blockNumber": 0,
     "genesisHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "isSyncing": false,
+    "knownHighestNumber":0,
+    "knownLatestHash":"0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "latestHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "nodeId": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
     "peers": [
