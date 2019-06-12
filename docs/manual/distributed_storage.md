@@ -266,7 +266,7 @@ show tables;
 +----------------------------------------------------------+
 ```
 
-在控制台中调用create接口
+往表里面插入一条数据
 ```bash
 #往表里插入数据
 call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
