@@ -69,7 +69,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 vim nodes/127.0.0.1/node0/config.ini
 ```
 
-放在最后即可，如下。
+修改`[storage_security]`中的字段如下。
 
 ```ini
 [storage_security]
