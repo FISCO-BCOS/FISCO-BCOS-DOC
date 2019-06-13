@@ -963,24 +963,24 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 
 ### Precompiled Service API 错误码
 
-| 错误码 | 消息内容                                        |
-| :----- | :---------------------------------------------- |
-| 0      | success                                         |
-| -50000  | permission denied                               |
-| -50001  | table name already exist                        |
-| -50100  | unknow function call                            |
-| -50101  | table does not exist                            |
-| -51000  | table name and address already exist            |
-| -51001  | table name and address does not exist           |
-| -51100  | invalid node ID                                 |
-| -51101  | the last sealer cannot be removed               |
-| -51102  | the node is not reachable                       |
-| -51103  | the node is not a group peer                    |
-| -51104  | the node is already in the sealer list          |
-| -51105  | the node is already in the observer list        |
-| -51200  | contract name and version already exist         |
-| -51201  | version string length exceeds the maximum limit |
-| -51300  | invalid configuration entry                     |
-| -51500  | contract name and version already exist         |
-| -51501  | condition parse error                           |
-| -51502  | condition operation undefined                   |
+| 错误码 | 消息内容                                          | 备注      |
+| :----- | :----------------------------------------------  | :-----   |
+| 0      | success                                          |          |
+| -50000  | permission denied                               |          |
+| -50001  | table name already exist                        |          |
+| -50100  | unknow function call                            |          |
+| -50101  | table does not exist                            |          |
+| -51000  | table name and address already exist            |          |
+| -51001  | table name and address does not exist           |          |
+| -51100  | invalid node ID                                 | SDK错误码 |
+| -51101  | the last sealer cannot be removed               |           |
+| -51102  | the node is not reachable                       | SDK错误码 |
+| -51103  | the node is not a group peer                    | SDK错误码 |
+| -51104  | the node is already in the sealer list          | SDK错误码 |
+| -51105  | the node is already in the observer list        | SDK错误码 |
+| -51200  | contract name and version already exist         | SDK错误码 |
+| -51201  | version string length exceeds the maximum limit | SDK错误码 |
+| -51300  | invalid configuration entry                     |          |
+| -51500  | contract name and version already exist         |          |
+| -51501  | condition parse error                           |          |
+| -51502  | condition operation undefined                   |          |
