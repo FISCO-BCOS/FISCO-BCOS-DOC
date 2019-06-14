@@ -55,6 +55,7 @@ FISCO BCOS 技术文档
    docs/introduction.md
    docs/what_is_new.md
    docs/change_log/index.rst
+   docs/lab_doc/index.rst
    docs/installation.md
    docs/tutorial/index.rst
    docs/manual/index.rst
