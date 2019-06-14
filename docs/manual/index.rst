@@ -21,4 +21,3 @@
    transaction_parallel.md
    distributed_storage.md
    guomi_crypto.md
-   log_access.md
