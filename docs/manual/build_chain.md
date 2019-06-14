@@ -125,7 +125,7 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 该选项用于指定生成证书时的证书配置文件。
 
 - **`T`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](log_access.md)。
+无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](./configuration.html#id6)。
 
 ## 节点文件组织结构
 
