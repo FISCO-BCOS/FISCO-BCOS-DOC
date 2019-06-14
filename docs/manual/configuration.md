@@ -133,7 +133,7 @@ P2P配置示例如下：
 
 ### 配置日志信息
 
-FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，FISCO BCOS默认使用boostlog，详细可参考[日志操作手册](log_access.md)。
+FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，主要配置项如下：
 
 - `enable`: 启用/禁用日志，设置为`true`表示启用日志；设置为`false`表示禁用日志，**默认设置为true，性能测试可将该选项设置为`false`，降低打印日志对测试结果的影响**
 - `log_path`:日志文件路径。
@@ -153,27 +153,6 @@ boostlog示例配置如下：
     max_log_file_size=200
     flush=true
 ```
-
-#### 配置easylogging++
-
-为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的`[log]`配置，一般建议不手动更改除了日志级别外的其他配置，开启easylogging++的方法可参考[启用easylogging++](log_access.html#easylogging)。
-
-- `format`：全局日志格式。
-- `log_flush_threshold`：日志刷新频率设置，即每`log_flush_threshold`行刷新日志到文件一次。
-
-easylogging++示例配置如下：
-
-```ini
-[log]
-    log_path=./log
-    level=info
-    ; 每个日志文件最大容量，默认为200MB
-    max_log_file_size=200
-    ; easylog 配置
-    format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    log_flush_threshold=100
-```
-
 
 ### 配置节点兼容性
 
