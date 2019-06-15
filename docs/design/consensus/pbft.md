@@ -103,7 +103,7 @@ PBFT共识主要包括两个线程:
 
 ## 3. 核心流程
 
-PBFT共识主要包括Pre-parepare、Prepare和Commit三个阶段：
+PBFT共识主要包括Pre-prepare、Prepare和Commit三个阶段：
 
 - **Pre-prepare**：负责执行区块，产生签名包，并将签名包广播给所有共识节点；
 - **Prepare**：负责收集签名包，某节点收集满`2*f+1`的签名包后，表明自身达到可以提交区块的状态，开始广播Commit包；
