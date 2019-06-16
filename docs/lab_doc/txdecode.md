@@ -30,7 +30,7 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     mavenCentral()
 }
-compile group: "org.fisco-bcos", name: "web3sdk", version: "2.0.33-SNAPSHOT"
+compile group: "org.fisco-bcos", name: "web3sdk", version: "2.0.34-SNAPSHOT"
 ```
 
 ## 接口说明
@@ -38,7 +38,9 @@ compile group: "org.fisco-bcos", name: "web3sdk", version: "2.0.33-SNAPSHOT"
 
 1. ``` TransactionDecoder buildTransactionDecoder(String abi, String bin); ```  
    
-   abi：合约的ABI   bin：合约bin，暂无使用，可以直接传入空字符串""  
+   abi：合约的ABI   
+   
+   bin：合约bin，暂无使用，可以直接传入空字符串""  
 
 2. ``` TransactionDecoder buildTransactionDecoder(String contractName); ```  
    
@@ -115,7 +117,7 @@ contract TxDecodeSample
 // TxDecodeSample合约ABI
 String abi = "[{\"constant\":false,\"inputs\":[{\"name\":\"_u\",\"type\":\"uint256\"},{\"name\":\"_i\",\"type\":\"int256\"},{\"name\":\"_b\",\"type\":\"bool\"},{\"name\":\"_addr\",\"type\":\"address\"},{\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"string\"},{\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"do_event\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_u\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_i\",\"type\":\"int256\"},{\"indexed\":false,\"name\":\"_b\",\"type\":\"bool\"},{\"indexed\":false,\"name\":\"_addr\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"_s\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"Event1\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_u\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_i\",\"type\":\"int256\"},{\"indexed\":false,\"name\":\"_b\",\"type\":\"bool\"},{\"indexed\":false,\"name\":\"_addr\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"_s\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"Event2\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"name\":\"_u\",\"type\":\"uint256\"},{\"name\":\"_i\",\"type\":\"int256\"},{\"name\":\"_b\",\"type\":\"bool\"},{\"name\":\"_addr\",\"type\":\"address\"},{\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"string\"},{\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"echo\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"int256\"},{\"name\":\"\",\"type\":\"bool\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"string\"},{\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]";
 String bin = "";
-TransactionDecoder txDecodeSampleDecoder = TransactionDecoder buildTransactionDecoder(abi, bin);
+TransactionDecoder txDecodeSampleDecoder = TransactionDecoder.buildTransactionDecoder(abi, bin);
 ```
 
 ### 解析input
