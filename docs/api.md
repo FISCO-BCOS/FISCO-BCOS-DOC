@@ -674,7 +674,8 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `blockHash`: `string` - 包含该交易的区块哈希      
     - `blockNumber`: `string` - 包含该交易的区块哈希  
     - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
-    - `from`: `string` - 发送者的地址                     
+    - `from`: `string` - 发送者的地址     
+    - `input`: `string` - 交易输入                
     - `gasUsed`: `string` - 交易消耗的gas     
     - `logs`: `array` - 交易产生的log               
     - `logsBloom`: `string` - log的布隆过滤器值      
@@ -921,49 +922,49 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 
 FISCO BCOS RPC接口错误码及其对应的含义如下：
 
-| code  | message                                                      | 含义                                        |
-| :---- | :----------------------------------------------------------- | :------------------------------------------ |
-| 40001 | GroupID does not exist                                       | GroupID不存在                               |
-| 40002 | Response json parse error                                    | JSON RPC获取的json数据解析错误              |
-| 40003 | BlockHash does not exist                                     | 区块哈希不存在                              |
-| 40004 | BlockNumber does not exist                                   | 区块高度不存在                              |
-| 40005 | TransactionIndex is out of range                             | 交易索引越界                                |
-| 40006 | Call needs a 'from' field                                    | call接口需要提供from字段                    |
-| 40007 | Only pbft consensus supports the view property               | getPbftView接口，只有pbft共识机制有view属性 |
-| 40008 | Invalid System Config                                        | getSystemConfigByKey接口，查询无效的key     |
+| code  | message                                                                     | 含义                                        |
+| :---- | :-------------------------------------------------------------------------- | :------------------------------------------ |
+| 40001 | GroupID does not exist                                                      | GroupID不存在                               |
+| 40002 | Response json parse error                                                   | JSON RPC获取的json数据解析错误              |
+| 40003 | BlockHash does not exist                                                    | 区块哈希不存在                              |
+| 40004 | BlockNumber does not exist                                                  | 区块高度不存在                              |
+| 40005 | TransactionIndex is out of range                                            | 交易索引越界                                |
+| 40006 | Call needs a 'from' field                                                   | call接口需要提供from字段                    |
+| 40007 | Only pbft consensus supports the view property                              | getPbftView接口，只有pbft共识机制有view属性 |
+| 40008 | Invalid System Config                                                       | getSystemConfigByKey接口，查询无效的key     |
 | 40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
 
 ### 交易回执状态
 
-|status(十进制/十六进制)  |message   |含义  |
-|:----|:-----|:----|
-|0(0x0)  |None |正常 |
-|1(0x1)  |Unknown |未知异常 |
-|2(0x2)  |BadRLP|无效RLP异常 |
-|3(0x3)  |InvalidFormat |无效格式异常 |
-|4(0x4)  |OutOfGasIntrinsic |gas不足异常 |
-|5(0x5)  |InvalidSignature |无效的签名异常 |
-|6(0x6)  |InvalidNonce |无效nonce异常 |
-|7(0x7)  |NotEnoughCash |cash不足异常 |
-|8(0x8)  |OutOfGasBase |gas不足异常 |
-|9(0x9)  |BlockGasLimitReached|GasLimit异常 |
-|10(0xa)  |BadInstruction |错误指令异常 |
-|11(0xb)  |BadJumpDestination |错误目的跳转异常 |
-|12(0xc)  |OutOfGas |gas不足异常 |
-|13(0xd)  |OutOfStack |栈溢出异常 |
-|14(0xe)  |StackUnderflow |栈下限溢位异常 |
-|15(0xf)  |NonceCheckFail |nonce检测失败异常 |
-|16(0x10)  |BlockLimitCheckFail |blocklimit检测失败异常 |
-|17(0x11)  |FilterCheckFail |filter检测失败异常 |
-|18(0x12)  |NoDeployPermission |非法部署合约异常 |
-|19(0x13)  |NoCallPermission |非法call合约异常 |
-|20(0x14)  |NoTxPermission |非法交易异常 |
-|21(0x15)  |PrecompiledError|precompiled错误异常 |
-|22(0x16)  |RevertInstruction |revert指令异常 |
-|23(0x17)  |InvalidZeroSignatureFormat |无效签名格式异常 |
-|24(0x18)  |AddressAlreadyUsed |地址占用异常 |
-|25(0x19)  |PermissionDenied |无权限异常 |
-|26(0x1a) |CallAddressError |被调用的合约地址不存在 |
+| status(十进制/十六进制) | message                    | 含义                   |
+| :---------------------- | :------------------------- | :--------------------- |
+| 0(0x0)                  | None                       | 正常                   |
+| 1(0x1)                  | Unknown                    | 未知异常               |
+| 2(0x2)                  | BadRLP                     | 无效RLP异常            |
+| 3(0x3)                  | InvalidFormat              | 无效格式异常           |
+| 4(0x4)                  | OutOfGasIntrinsic          | gas不足异常            |
+| 5(0x5)                  | InvalidSignature           | 无效的签名异常         |
+| 6(0x6)                  | InvalidNonce               | 无效nonce异常          |
+| 7(0x7)                  | NotEnoughCash              | cash不足异常           |
+| 8(0x8)                  | OutOfGasBase               | gas不足异常            |
+| 9(0x9)                  | BlockGasLimitReached       | GasLimit异常           |
+| 10(0xa)                 | BadInstruction             | 错误指令异常           |
+| 11(0xb)                 | BadJumpDestination         | 错误目的跳转异常       |
+| 12(0xc)                 | OutOfGas                   | gas不足异常            |
+| 13(0xd)                 | OutOfStack                 | 栈溢出异常             |
+| 14(0xe)                 | StackUnderflow             | 栈下限溢位异常         |
+| 15(0xf)                 | NonceCheckFail             | nonce检测失败异常      |
+| 16(0x10)                | BlockLimitCheckFail        | blocklimit检测失败异常 |
+| 17(0x11)                | FilterCheckFail            | filter检测失败异常     |
+| 18(0x12)                | NoDeployPermission         | 非法部署合约异常       |
+| 19(0x13)                | NoCallPermission           | 非法call合约异常       |
+| 20(0x14)                | NoTxPermission             | 非法交易异常           |
+| 21(0x15)                | PrecompiledError           | precompiled错误异常    |
+| 22(0x16)                | RevertInstruction          | revert指令异常         |
+| 23(0x17)                | InvalidZeroSignatureFormat | 无效签名格式异常       |
+| 24(0x18)                | AddressAlreadyUsed         | 地址占用异常           |
+| 25(0x19)                | PermissionDenied           | 无权限异常             |
+| 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在 |
 
 ### Precompiled Service API 错误码
 
