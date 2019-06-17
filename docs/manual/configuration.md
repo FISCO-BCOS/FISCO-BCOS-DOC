@@ -133,8 +133,9 @@ P2P配置示例如下：
 
 ### 配置日志信息
 
-FISCO BCOS支持轻量级的[easylogging++](https://github.com/zuhd-org/easyloggingpp)，也支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，可通过编译开关配置使用这两种日志，FISCO BCOS默认使用boostlog，详细可参考[日志操作手册](log_access.md)。
+FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，主要配置项如下：
 
+- `enable`: 启用/禁用日志，设置为`true`表示启用日志；设置为`false`表示禁用日志，**默认设置为true，性能测试可将该选项设置为`false`，降低打印日志对测试结果的影响**
 - `log_path`:日志文件路径。
 - `level`: 日志级别，当前主要包括`trace`、`debug`、`info`、`warning`、`error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`。
 - `max_log_file_size`：每个日志文件最大容量，**计量单位为MB，默认为200MB**。
@@ -144,6 +145,8 @@ boostlog示例配置如下：
 
 ```ini
 [log]
+    ; 是否启用日志，默认为true
+    enable=true
     log_path=./log
     level=info
     ; 每个日志文件最大容量，默认为200MB
@@ -151,30 +154,9 @@ boostlog示例配置如下：
     flush=true
 ```
 
-#### 配置easylogging++
-
-为了尽量减少配置文件，FISCO BCOS将easyloggin++的配置信息都集中到了config.ini的`[log]`配置，一般建议不手动更改除了日志级别外的其他配置，开启easylogging++的方法可参考[启用easylogging++](log_access.html#easylogging)。
-
-- `format`：全局日志格式。
-- `log_flush_threshold`：日志刷新频率设置，即每`log_flush_threshold`行刷新日志到文件一次。
-
-easylogging++示例配置如下：
-
-```ini
-[log]
-    log_path=./log
-    level=info
-    ; 每个日志文件最大容量，默认为200MB
-    max_log_file_size=200
-    ; easylog 配置
-    format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    log_flush_threshold=100
-```
-
-
 ### 配置节点兼容性
 
-FISCO-BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性：
+FISCO-BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性，改配置项建链时工具会自动生成，用户不需修改。
 
 - `supported_version`：当前节点运行的版本
 
@@ -182,15 +164,15 @@ FISCO-BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibil
 .. important::
     - 可通过 ``./fisco-bcos --version | grep "FISCO-BCOS Version" | cut -d':' -f2 | sed s/[[:space:]]//g`` 命令查看FISCO BCOS的当前支持的最高版本
     - build_chain.sh生成的区块链节点配置中，supported_version配置为FISCO BCOS当前的最高版本
-    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可
+    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，
 ```
 
-`release-2.0.0-rc2`节点的`[compatibility]`配置如下：
+`release-2.0.0-rc3`节点的`[compatibility]`配置如下：
 
 ```ini
 
 [compatibility]
-    supported_version=release-2.0.0-rc2
+    supported_version=release-2.0.0-rc3
 ```
 
 
@@ -275,40 +257,11 @@ e01789233a
 4a5aed2b4a
 ```
 
-### 存储模块配置
+### 状态模式配置
 
-存储主要包括[state](../design/storage/mpt.html)和[AMDB](../design/storage/storage.html)，`state`涉及交易状态存储，AMDB存储涉及数据存储，分别在`[storage]`和`[state]`中配置：
-
-#### 配置storage
-
-主要包括如下配置：
-
-- `type`：存储的DB类型，目前支持`LevelDB`和`external`，DB类型为LevelDB时，区块链系统所有数据存储于LevelDB本地数据库中；type为external时，区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./amdbconfig.html#amdb)
-
-- `topic`：当type为`external`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./amdbconfig.html#id3)
-
-
-下面是存储的DB类型为**LevelDB**的配置示例：
-
-```ini
-[storage]
-    ;storage db type, leveldb or external
-    type=LevelDB
-```
-
-下面是存储的DB类型为**mysql**的配置示例：
-
-```ini
-[storage]
-    ;storage db type, leveldb or external
-    type=external
-    topic=DB
-```
-
-#### 配置state
+[state](../design/storage/mpt.html)用于存储区块链状态信息，位于genesis文件中`[state]`：
 
 - `type`：state类型，目前支持[storage state](../design/storage/storage.html#id6)和[MPT state](../design/storage/mpt.html)，**默认为storage state**，storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在MPT树中，效率较低，但包含完整的历史信息。
-
 
 ```eval_rst
 .. important::
@@ -329,12 +282,53 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
     gas_limit=300000000
 ```
 
-
 ## 账本可变配置说明
 
 账本可变配置位于节点`conf`目录下`.ini`后缀的文件中。
 
 如：`group1`可变配置一般命名为`group.1.ini`，可变配置主要包括交易池大小、PBFT共识消息转发的TTL、PBFT共识打包时间设置、PBFT交易打包动态调整设置、并行交易设置等。
+
+### 配置storage
+
+存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问mysql，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
+
+#### 公共配置项
+
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`External`。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，type为external时，节点根据配置访问mysql数据库。区块链系统所有数据存储于mysql数据库中，要配置AMDB代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#amdb)。
+- `max_capacity`：配置允许节点用于内存缓存的空间大小。
+- `max_forward_block`：配置允许节点用于内存区块的大小，当节点还出的区块超出该数值时，节点停止共识等待区块写入数据库。
+
+#### 数据库相关配置项
+
+- `topic`：当type为`External`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./distributed_storage.html#id3)。
+- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./distributed_storage.html#id3)。
+
+- `db_ip`：当type为`MySQL`时，需要配置该字段，表示MySQL的IP地址。
+- `db_port`：当type为`MySQL`时，需要配置该字段，表示MySQL的端口号。
+- `db_username`：当type为`MySQL`时，需要配置该字段，表示MySQL的用户名。
+- `db_passwd`：当type为`MySQL`时，需要配置该字段，表示MySQL用户对应的密码。
+- `db_name`：当type为`MySQL`时，需要配置该字段，表示MySQL中使用的数据库名。
+- `init_connections`：当type为`MySQL`时，可选配置该字段，表示与MySQL建立的初始连接数，默认15。使用默认值即可。
+- `max_connections`：当type为`MySQL`时，可选配置该字段，表示与MySQL建立的最大连接数，默认20。使用默认值即可。
+
+#### 下面是[storage]的配置示例：
+
+```ini
+[storage]
+    ; storage db type, rocksdb / mysql / external, rocksdb is recommended
+    type=RocksDB
+    max_capacity=256
+    max_forward_block=10
+    ; only for external
+    max_retry=100
+    topic=DB
+    ; only for mysql
+    db_ip=127.0.0.1
+    db_port=3306
+    db_username=
+    db_passwd=
+    db_name=
+```
 
 ### 交易池配置
 

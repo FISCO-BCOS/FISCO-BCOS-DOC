@@ -86,6 +86,7 @@ extensions = [
   'sphinx_markdown_tables',
   'sphinx_copybutton',
   'sphinxcontrib.mermaid',
+  'versionwarning.extension',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

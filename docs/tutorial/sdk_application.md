@@ -2,13 +2,13 @@
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Web3SDK实现对区块链上合约的调用访问。
 
-本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉Solidity语法\[[合约开发教程](../manual/smart_contract.md)]。通过学习教程，你将会了解到以下内容：
+本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉[Solidity语法](https://solidity.readthedocs.io/en/latest/)。通过学习教程，你将会了解到以下内容：
 
-1.  如何将一个业务场景的逻辑用合约的形式表达
-2.  如何将Solidity合约转化成Java类
-3.  如何配置Web3SDK
-4.  如何构建一个应用，并集成Web3SDK到应用工程
-5.  如何通过Web3SDK调用合约接口，了解Web3SDK调用合约接口的原理
+1. 如何将一个业务场景的逻辑用合约的形式表达
+2. 如何将Solidity合约转化成Java类
+3. 如何配置Web3SDK
+4. 如何构建一个应用，并集成Web3SDK到应用工程
+5. 如何通过Web3SDK调用合约接口，了解Web3SDK调用合约接口的原理
 
 教程中会提供示例的完整项目源码，用户可以在此基础上快速开发自己的应用。
 
@@ -57,11 +57,6 @@ function transfer(string from_asset_account, string to_asset_account, uint256 am
 ```
 
 ### 完整源码
-
-```bash
-# 切换到fisco/console/tools目录
-$ cd ~/fisco/console/tools/
-```
 
 ```js
 pragma solidity ^0.4.24;
@@ -133,7 +128,7 @@ contract Asset {
         int256 ret_code = 0;
         int256 ret= 0;
         uint256 temp_asset_value = 0;
-        // 查询账号是否存在
+        // 查询账户是否存在
         (ret, temp_asset_value) = select(account);
         if(ret != 0) {
             Table table = openTable();
@@ -243,37 +238,38 @@ contract Asset {
 
  **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-## 合约转换
+## 合约编译
 
-上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件转换为Java文件。
+上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件编译为Java文件。
 
-控制台提供了这种转换的工具，可以将`Asset.sol Table.sol`两个合约文件存放在`console/tools/contracts`目录，利用console/tools目录下提供的`sol2java.sh`脚本进行转换，操作如下：
-
+控制台提供了编译工具，可以将`Asset.sol`合约文件存放在`console/contracts/solidity`目录。利用console目录下提供的`sol2java.sh`脚本进行编译，操作如下：
 ```bash
+# 切换到fisco/console/目录
+$ cd ~/fisco/console/
 # 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
 $ ./sol2java.sh org.fisco.bcos.asset.contract
 ```
 
-运行成功之后，将会在console/tools目录生成java、abi和bin目录，如下所示。
+运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
 
 ```bash
-|-- abi // 生成的abi目录，存放solidity合约编译生成的abi文件
+|-- abi # 生成的abi目录，存放solidity合约编译生成的abi文件
 |   |-- Asset.abi
 |   |-- Table.abi
-|-- bin // 生成的bin目录，存放solidity合约编译生成的bin文件
+|-- bin # 生成的bin目录，存放solidity合约编译生成的bin文件
 |   |-- Asset.bin
 |   |-- Table.bin
-|-- contracts // 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
-|   |-- Asset.sol // 拷贝进来的Asset.sol合约，依赖Table.sol
-|   |-- Table.sol // 默认提供的系统CRUD合约接口文件
-|-- java  // 存放编译的包路径及Java合约文件
+|-- contracts # 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
+|   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖Table.sol
+|   |-- Table.sol # 默认提供的系统CRUD合约接口文件
+|-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
 |             |--bcos
 |                  |--asset
 |                       |--contract
-|                             |--Asset.java  // Asset.sol合约生成的Java文件
-|                             |--Table.java  // Table.sol合约生成的Java文件
+|                             |--Asset.java  # Asset.sol合约生成的Java文件
+|                             |--Table.java  # Table.sol合约生成的Java文件
 |-- sol2java.sh
 ```
 

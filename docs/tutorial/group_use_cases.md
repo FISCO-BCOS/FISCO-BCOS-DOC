@@ -33,12 +33,13 @@
 
 ```bash
 # CentOS
-$ sudo yum install -y openssl openssl-devel curl
+$ sudo yum install -y openssl curl
 
 # Ubuntu
-$ sudo apt-get install -y openssl libssl-dev curl
+$ sudo apt install -y openssl curl
 
-# Mac OS 推荐使用docker
+# Mac OS
+$ brew install -y openssl curl
 ```
 
 ## 星形拓扑
@@ -65,10 +66,15 @@ $ sudo apt-get install -y openssl libssl-dev curl
 
 **准备依赖**
 
+- 创建操作目录
+
 ```bash
-$ mkdir -p ~/fisco && cd ~/fisco
-# 获取build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+mkdir -p ~/fisco && cd ~/fisco
+```
+
+- 获取build_chain.sh脚本
+```bash
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
@@ -96,7 +102,7 @@ $ cat ipconf
 
 **使用build_chain脚本构建星形区块链节点配置文件夹**
 
-`build_chain`使用方法请参考[这里](../manual/build_chain.md)。
+`build_chain`更多参数说明请参考[这里](../manual/build_chain.md)。
 
 ```bash
 # 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
@@ -318,7 +324,7 @@ EOF
 $ bash start.sh
 # 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.2)!
+Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
@@ -743,7 +749,7 @@ EOF
 $ bash start.sh
 # 输出如下信息表明控制台启动成功，若启动失败，请检查是否配置证书、channel listen port配置是否正确
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.2)!
+Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 

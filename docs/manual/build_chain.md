@@ -23,11 +23,11 @@ Usage:
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -v <FISCO-BCOS binary version>      Default get version from FISCO-BCOS/blob/master/release_note.txt. eg. 2.0.0
+    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specificd version binary
+    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
-    -s <State type>                     Default storage. if set -s, use mpt 
-    -S <Storage type>                   Default leveldb. if set -S, use external
     -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
+    -m <MPT State type>                 Default storageState. if set -m, use mpt state
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -90,7 +90,7 @@ $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
 
 - **`v`选项[**Optional**]**
-用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项指定二进制，那么通过`./fisco-bcos --version`获取指定二进制版本，并将`[compatibility].supported_version`设置为获取的二进制版本。
+用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项指定二进制，则使用该二进制，配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
 
 - **`d`选项[**Optional**]**
 使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限。该模式下脚本启动节点的命令如下
@@ -98,11 +98,11 @@ $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
-- **`s`选项[**Optional**]**
+- **`m`选项[**Optional**]**
 无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
 
-- **`S`选项[**Optional**]**
-无参数选项，设置该选项时，节点使用外部数据库存储数据，目前支持MySQL。
+- **`s`选项[**Optional**]**
+有参数选项，参数为db名，目前支持rocksdb、mysql、external三种模式。默认使用RocksDB。其中mysql需要在群组ini文件中配置mysql相关信息，external需要配置topic信息并启动AMDB代理。
 
 - **`c`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
@@ -125,7 +125,7 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 该选项用于指定生成证书时的证书配置文件。
 
 - **`T`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](log_access.md)。
+无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](./configuration.html#id6)。
 
 ## 节点文件组织结构
 
