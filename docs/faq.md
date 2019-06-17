@@ -66,13 +66,16 @@
 
 ## FISCO BCOS使用
 
-问:
-  FISCO BCOS 2.0版本支持哪些部署方式？<br>
-答:
-  用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 
-- 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行。
-- 源码编译获取可执行程序，参考[源码编译](./manual/get_executable.md)。
+问:
+  2.0版本证书在哪里使用?<br>
+答:
+  请参考[证书说明文档](manual/certificates.md)
+
+问:
+  2.0版本交易结构包括哪些字段?<br>
+答:
+  请参考[这里](design/protocol_description.html#rlp)
 
 问:
   系统配置、群组配置、节点配置分别指什么？<br>
