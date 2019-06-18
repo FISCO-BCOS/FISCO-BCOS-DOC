@@ -231,8 +231,8 @@ cp ./one_click/agencyB/sdk/* ./one_click/agencyB/console/conf
 
 后续节点的扩容及新群组的划分操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
 
-新建群组的操作用户可以在执行`click2start.sh`脚本的目录下，通过修改./conf/group_genesis.ini文件，并执行create_group_genesis命令。
+新建群组的操作用户可以在执行`click2start.sh`脚本的目录下，通过修改`./conf/group_genesis.ini`文件，并执行`--create_group_genesis`命令。
 
-扩容新节点的操作可以通过修改./conf/node_deployment.ini文件，先使用generate_all_certificates生成证书，再使用build_install_package生成节点。
+扩容新节点的操作可以通过修改`./conf/node_deployment.ini`文件，先使用`--generate_all_certificates`生成证书，再使用`--build_install_package`生成节点。
 
 如果使用该教程遇到问题，请查看[FAQ](../faq.md)
