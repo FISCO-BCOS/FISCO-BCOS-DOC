@@ -39,7 +39,7 @@ $ sudo yum install -y openssl curl
 $ sudo apt install -y openssl curl
 
 # Mac OS
-$ brew install -y openssl curl
+$ brew install openssl curl
 ```
 
 ## 星形拓扑
