@@ -6,19 +6,19 @@
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。
 
-本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
+
 
 ```eval_rst
 .. note::
-    - macOS请参考 `docker安装 <https://docs.docker.com/docker-for-mac/install/>`_ 并配合 `build_chain <manual/build_chain.html#id4>`_ 的-d选项操作。
     - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
+    - 本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 ```
 
 ### 准备环境
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的apt替换为yum执行即可。
+`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。CentOS将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可。
 
 ```bash
 sudo apt install -y openssl curl
@@ -47,7 +47,6 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```eval_rst
 .. note::
     - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port，出于安全考虑jsonrpc/channel默认监听127.0.0.1，**需要外网访问请添加-i参数**。
-    - macOS建议先安装docker，然后在上述指令后添加-d使用docker模式建链。
 ```
 
 如果命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
@@ -120,7 +119,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
-正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接（按Ctrl+c退回命令行）。
+正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接。
 ```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
@@ -134,7 +133,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 ```
 
-正常情况会不停输出`++++Generating seal`表示共识正常（按Ctrl+c退回命令行）。
+正常情况会不停输出`++++Generating seal`表示共识正常。
 ```bash
 info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
 info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
@@ -150,7 +149,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 ```bash
 # 回到fisco目录
 $ cd ~/fisco
-# 安装openjdk
+# 安装openjdk macOS执行 brew cask install java 安装java
 $ sudo apt install -y default-jdk
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
@@ -167,7 +166,7 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
     
     Failed to connect to the node. Please check the node status and the console configuration.
 
-   则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
+   是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
 
 ```
 
@@ -180,7 +179,7 @@ $ cd ~/fisco/console
 $ ./start.sh
 # 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 =============================================================================================
-Welcome to FISCO BCOS console(1.0.2)！
+Welcome to FISCO BCOS console(1.0.3)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________  ______   ______    ______    ______         _______    ______    ______    ______
 |        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \
@@ -288,6 +287,8 @@ Hello, FISCO BCOS
 # 退出控制台
 [group:1]> quit
 ```
+**注：** 部署合约还可以通过`deployByCNS`命令，可以指定部署的合约版本号，使用方式[参考这里](manual/console.html#deploybycns)。调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。
+
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 
