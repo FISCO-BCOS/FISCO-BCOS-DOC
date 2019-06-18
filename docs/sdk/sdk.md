@@ -29,15 +29,14 @@
 
    gradle:
 ```bash
-compile group:"org.fisco-bcos", name:"web3sdk", version:"2.0.3-SNAPSHOT", changing: true
-//compile ('org.fisco-bcos:web3sdk:x.x.x') //如：web3sdk:2.0.0
+compile ('org.fisco-bcos:web3sdk:2.0.3')
 ```
    maven:
-``` html
+``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>x.x.x</version> <!-- 如：2.0.0 -->
+    <version>2.0.3</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
@@ -59,10 +58,59 @@ FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt
 Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ### Spring项目配置
-提供Spring项目中关于`applicationContext.xml`的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
+提供Spring项目中关于`applicationContext.xml`的配置下所示。
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
 
-![](../../images/sdk/sdk_xml.png)
+<beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+         http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+         http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
+
+        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
+        </bean>
+
+        <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <property name="allChannelConnections">
+                        <list>  <!-- 每个群组需要配置一个bean，每个群组可以配置多个节点 -->
+                                <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                                        <property name="groupId" value="1" /> <!-- 群组的groupID -->
+                                        <property name="connectionsStr">
+                                                <list>
+                                                        <value>127.0.0.1:20200</value>  <!-- IP:channel_port -->
+                                                        <value>127.0.0.1:20201</value>
+                                                </list>
+                                        </property>
+                                </bean>
+                                <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                                        <property name="groupId" value="2" /> <!-- 群组的groupID -->
+                                        <property name="connectionsStr">
+                                                <list>
+                                                        <value>127.0.0.1:20202</value> 
+                                                        <value>127.0.0.1:20203</value> 
+                                                </list>
+                                        </property>
+                                </bean>
+                        </list>
+                </property>
+        </bean>
+
+        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+                <property name="groupId" value="1" /> <!-- 配置连接群组1 -->
+                <property name="agencyName" value="fisco" /> <!-- 配置机构名 -->
+                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+        </bean>
+
+</beans>
+```
 `applicationContext.xml`配置项详细说明:
 - encryptType: 国密算法开关(默认为0)                              
   - 0: 不使用国密算法发交易                              
@@ -73,10 +121,24 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
 ### Spring Boot项目配置
-提供Spring Boot项目中关于`application.yml`的配置如下图所示，其中红框标记的内容根据区块链节点配置做相应修改。
-
-![](../../images/sdk/sdk_yml.png)
-
+提供Spring Boot项目中关于`application.yml`的配置如下所示。
+```yml
+encrypt-type: 0  # 0:standard, 1:guomi
+group-channel-connections-config:
+  all-channel-connections:
+  - group-id: 1  #group ID
+    connections-str:
+                    - 127.0.0.1:20200  # node listen_ip:channel_listen_port
+                    - 127.0.0.1:20201
+  - group-id: 2  
+    connections-str:
+                    - 127.0.0.1:20202  # node listen_ip:channel_listen_port
+                    - 127.0.0.1:20203
+ 
+channel-service:
+  group-id: 1 # The specified group to which the SDK connects
+  agency-name: fisco # agency name
+```
 `application.yml`配置项与`applicationContext.xml`配置项相对应，详细介绍参考`applicationContext.xml`配置说明。
 
 ## 使用SDK 
@@ -115,7 +177,7 @@ channelEthereumService.setTimeout(100000);
     channelEthereumService.setChannelService(service);
     Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
     String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"; 
-    //指定外部账号私钥，用于交易签名
+    //指定外部账户私钥，用于交易签名
     Credentials credentials = GenCredential.create(privateKey); 
     //获取SystemConfigService对象
     SystemConfigService systemConfigService = new SystemConfigService(web3j, credentials);
@@ -125,29 +187,82 @@ channelEthereumService.setTimeout(100000);
     String value = web3j.getSystemConfigByKey("tx_count_limit").send().getSystemConfigByKey();
     System.out.println(value);
 ```
-##### 创建并使用指定外部账号
-sdk发送交易需要一个外部账号，下面是随机创建一个外部账号的方法。
+##### 创建并使用指定外部账户
+sdk发送交易需要一个外部账户，下面是随机创建一个外部账户的方法。
 ```java
-//创建普通外部账号
+//创建普通外部账户
 EncryptType.encryptType = 0;
-//创建国密外部账号，向国密区块链节点发送交易需要使用国密外部账号
+//创建国密外部账户，向国密区块链节点发送交易需要使用国密外部账户
 // EncryptType.encryptType = 1; 
 Credentials credentials = GenCredential.create();
-//账号地址
+//账户地址
 String address = credentials.getAddress();
-//账号私钥 
+//账户私钥 
 String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
-//账号公钥 
+//账户公钥 
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
-使用指定的外部账号
+使用指定的外部账户
 ```java
-//通过指定外部账号私钥使用指定的外部账号
+//通过指定外部账户私钥使用指定的外部账户
 Credentials credentials = GenCredential.create(privateKey);
 ```
+
+##### 加载账户私钥文件
+如果通过账户生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账户私钥文件(账户生成脚本的用法参考[账户管理文档](../tutorial/account.md))，则可以通过加载PEM或PKCS12账户私钥文件使用账户。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
+
+* P12Manager用法举例：
+在applicationContext.xml中配置PKCS12账户的私钥文件路径和密码
+```xml
+<bean id="p12" class="org.fisco.bcos.channel.client.P12Manager" init-method="load" >
+	<property name="password" value="123456" />
+	<property name="p12File" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.p12" />
+</bean>
+```
+开发代码
+```java
+//加载Bean
+ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+P12Manager p12 = context.getBean(P12Manager.class);
+//提供密码获取ECKeyPair，密码在生产p12账户文件时指定
+ECKeyPair p12KeyPair = p12.getECKeyPair(p12.getPassword());
+			
+//以十六进制串输出私钥和公钥
+System.out.println("p12 privateKey: " + p12KeyPair.getPrivateKey().toString(16));
+System.out.println("p12 publicKey: " + p12KeyPair.getPublicKey().toString(16));
+
+//生成web3sdk使用的Credentials
+Credentials credentials = Credentials.create(p12KeyPair);
+System.out.println("p12 Address: " + credentials.getAddress());
+```
+
+* PEMManager使用举例
+
+在applicationContext.xml中配置PEM账户的私钥文件路径
+```xml
+<bean id="pem" class="org.fisco.bcos.channel.client.PEMManager" init-method="load" >
+	<property name="pemFile" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
+</bean>
+```
+使用代码加载
+```java
+//加载Bean
+ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext-keystore-sample.xml");
+PEMManager pem = context.getBean(PEMManager.class);
+ECKeyPair pemKeyPair = pem.getECKeyPair();
+
+//以十六进制串输出私钥和公钥
+System.out.println("PEM privateKey: " + pemKeyPair.getPrivateKey().toString(16));
+System.out.println("PEM publicKey: " + pemKeyPair.getPublicKey().toString(16));
+
+//生成web3sdk使用的Credentials
+Credentials credentialsPEM = Credentials.create(pemKeyPair);
+System.out.println("PEM Address: " + credentialsPEM.getAddress());
+```
+
 #### 通过SDK部署并调用合约
 ##### 准备Java合约文件
-控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件，具体使用方式[参考这里](../manual/console.html#id6)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件，具体使用方式[参考这里](../manual/console.html#id10)。
 
 ##### 部署并调用合约
 SDK的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用Java合约类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址以及调用该合约的其他方法实现业务功能。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
@@ -164,7 +279,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
     BigInteger gasPrice = new BigInteger("300000000");
     BigInteger gasLimit = new BigInteger("300000000");
     String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"; 
-    //指定外部账号私钥，用于交易签名
+    //指定外部账户私钥，用于交易签名
     Credentials credentials = GenCredential.create(privateKey); 
     //部署合约 
     YourSmartContract contract = YourSmartContract.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
@@ -206,23 +321,23 @@ Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API
 
 #### PermissionService
 SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，PermissionService可以配置权限信息，其API如下：
-- **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址设置权限信息。
-- **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账号地址去除权限信息。
-- **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账号地址和生效块高)。
-- **public String grantDeployAndCreateManager(String address)：** 增加外部账号地址的部署合约和创建用户表权限。
-- **public String revokeDeployAndCreateManager(String address)：** 移除外部账号地址的部署合约和创建用户表权限。
+- **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址设置权限信息。
+- **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址去除权限信息。
+- **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账户地址和生效块高)。
+- **public String grantDeployAndCreateManager(String address)：** 增加外部账户地址的部署合约和创建用户表权限。
+- **public String revokeDeployAndCreateManager(String address)：** 移除外部账户地址的部署合约和创建用户表权限。
 - **public List\<PermissionInfo\> listDeployAndCreateManager()：** 查询拥有部署合约和创建用户表权限的权限记录列表。
-- **public String grantPermissionManager(String address)：** 增加外部账号地址的管理权限的权限。
-- **public String revokePermissionManager(String address)：** 移除外部账号地址的管理权限的权限。
+- **public String grantPermissionManager(String address)：** 增加外部账户地址的管理权限的权限。
+- **public String revokePermissionManager(String address)：** 移除外部账户地址的管理权限的权限。
 - **public List\<PermissionInfo\> listPermissionManager()：** 查询拥有管理权限的权限记录列表。
-- **public String grantNodeManager(String address)：** 增加外部账号地址的节点管理权限。
-- **public String revokeNodeManager(String address)：** 移除外部账号地址的节点管理权限。
+- **public String grantNodeManager(String address)：** 增加外部账户地址的节点管理权限。
+- **public String revokeNodeManager(String address)：** 移除外部账户地址的节点管理权限。
 - **public List\<PermissionInfo\> listNodeManager()：** 查询拥有节点管理的权限记录列表。
-- **public String grantCNSManager(String address)：** 增加外部账号地址的使用CNS权限。
-- **public String revokeCNSManager(String address)：** 移除外部账号地址的使用CNS权限。
+- **public String grantCNSManager(String address)：** 增加外部账户地址的使用CNS权限。
+- **public String revokeCNSManager(String address)：** 移除外部账户地址的使用CNS权限。
 - **public List\<PermissionInfo\> listCNSManager()：** 查询拥有使用CNS的权限记录列表。
-- **public String grantSysConfigManager(String address)：** 增加外部账号地址的系统参数管理权限。
-- **public String revokeSysConfigManager(String address)：** 移除外部账号地址的系统参数管理权限。
+- **public String grantSysConfigManager(String address)：** 增加外部账户地址的系统参数管理权限。
+- **public String revokeSysConfigManager(String address)：** 移除外部账户地址的系统参数管理权限。
 - **public List\<PermissionInfo\> listSysConfigManager()：** 查询拥有系统参数管理的权限记录列表。
 
 #### CnsService
@@ -241,3 +356,12 @@ SDK提供对[节点类型](../design/security_control/node_management.html#id6)�
 - **String addSealer(String nodeId)：** 根据节点NodeID设置对应节点为共识节点。
 - **String addObserver(String nodeId)：** 根据节点NodeID设置对应节点为观察节点。
 - **String removeNode(String nodeId)：** 根据节点NodeID设置对应节点为游离节点。
+
+#### CRUDService 
+SDK提供对CRUD(增删改查)操作的支持。CRUDService可以创建表，对表进行增删改查操作，其API如下：
+- **int createTable(Table table)：** 创建表，提供表对象。表对象需要设置其表名，主键字段名和其他字段名。其中，其他字段名是以英文逗号分隔拼接的字符串。返回创建表的状态值，返回为0则代表创建成功。
+- **int insert(Table table, Entry entry)：** 插入记录，提供表对象和Entry对象。表对象需要设置表名和主键字段名；Entry是map对象，提供插入的字段名和字段值，注意必须设置主键字段。返回插入的记录数。
+- **int update(Table table, Entry entry, Condition condition)：** 更新记录，提供表对象，Entry对象和Condtion对象。表对象需要设置表名和主键字段名；Entry是map对象，提供更新的字段名和字段值；Condition对象是条件对象，可以设置更新的匹配条件。返回更新的记录数。
+- **List\<Map\<String, String\>\> select(Table table, Condition condition)：** 查询记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置查询的匹配条件。返回查询的记录。
+- **int remove(Table table, Condition condition)：** 移除记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置移除的匹配条件。返回移除的记录数。
+- **Table desc(String tableName)：** 根据表名查询表的信息，主要包含表的主键和其他属性字段。返回表类型，主要包含表的主键字段名和其他属性字段名。

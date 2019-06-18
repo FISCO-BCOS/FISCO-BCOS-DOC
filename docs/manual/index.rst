@@ -19,6 +19,5 @@
    certificate_blacklist.md
    amop_protocol.md
    transaction_parallel.md
-   amdbconfig.md
+   distributed_storage.md
    guomi_crypto.md
-   log_access.md
