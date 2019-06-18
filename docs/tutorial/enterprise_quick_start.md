@@ -987,6 +987,12 @@ $ [group:1]> addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc
 }
 ```
 
+退出控制台：
+
+```bash
+exit
+```
+
 ### 查看节点
 
 在~/generator-C目录下执行下述命令
