@@ -672,7 +672,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 ### 返回值          
 - `object`: - 交易信息，其字段如下：  
     - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块哈希  
+    - `blockNumber`: `string` - 包含该交易的区块高度 
     - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
     - `from`: `string` - 发送者的地址     
     - `input`: `string` - 交易输入                
@@ -806,8 +806,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
     "id": 1,
     "jsonrpc": "2.0",
     "result": {
-        "txSum": "0x1",
-        "blockNumber": "0x1"
+      "blockNumber": "0x1",
+      "failedTxSum": "0x0",
+      "txSum": "0x1"
     }
 }
 ```
