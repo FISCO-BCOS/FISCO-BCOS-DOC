@@ -674,8 +674,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `blockHash`: `string` - 包含该交易的区块哈希      
     - `blockNumber`: `string` - 包含该交易的区块高度 
     - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
-    - `from`: `string` - 发送者的地址     
-    - `input`: `string` - 交易输入                
+    - `from`: `string` - 发送者的地址                
     - `gasUsed`: `string` - 交易消耗的gas     
     - `logs`: `array` - 交易产生的log               
     - `logsBloom`: `string` - log的布隆过滤器值      
