@@ -67,7 +67,7 @@ The relations of node:
 
 ### Node access config items
 
-The config items involving in node access management are: **P2P node connection list**, **node certificate**, **CA blacklist**, **group node intial list** and **group node system list**.
+The config items involving in node access management are: **P2P node connection list**, **node certificate**, **CA blacklist**, **group node initial list** and **group node system list**.
 
 <table border="3">
 <tr bgcolor="#CDCDCD">

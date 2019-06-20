@@ -564,7 +564,7 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
     }
     else
     {  // parameter error, unknown calling interface
-        PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC(" unkown func ")
+        PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC(" unknown func ")
                                << LOG_KV("func", func);
         out = abi.abiIn("", u256(CODE_UNKNOW_FUNCTION_CALL));
     }

@@ -55,7 +55,7 @@ Star networking of blockchain:
 ```eval_rst
 .. important::
    - In actual application cases, it is **not recommended to deploy multiple nodes on one machine**. We suggest users to determine node quantity for deployment depending on, **machine loading**. For reference please check `hardware configuration <../manual/configuration.html>`_
-   - **Star networking topology** requires the center node (or agency A here) to be owned by all groups with heavy loading, so we recommend to **deploy it on a machine with sound performance.** 
+   - **Star networking topology** requires the center node (or agency A here) to be owned by all groups with heavy loading, so we recommend to **deploy it on a machine with sound performance.**
    - **To operate with different machine, users need to copy the folder that contains IP to the other machine. Operation for blockchain building would only be done once!**
 ```
 
@@ -196,11 +196,11 @@ When there is no transaction to send, nodes with normal consensus status will ou
 
 ```bash
 # check if node0 group1 is in normal consensus status
-$ tail -f node0/log/* | grep "g:1.*++" 
+$ tail -f node0/log/* | grep "g:1.*++"
 info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=72254a42....
 
 # check if node0 group2 is in normal consensus status
-$ tail -f node0/log/* | grep "g:2.*++" 
+$ tail -f node0/log/* | grep "g:2.*++"
 info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=ef59cf17...
 
 # ... You can check if all groups of node1 and node2 are in normal status using the above method...
@@ -210,7 +210,7 @@ $ tail -f node3/log/*| grep "g:1.*++"
 info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=5e94bf63...
 
 # check if node5 group2 is in normal consensus status
-$ tail -f node5/log/* | grep "g:2.*++" 
+$ tail -f node5/log/* | grep "g:2.*++"
 info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=b80a724d...
 
 ```
@@ -221,7 +221,7 @@ The console connects nodes on FISCO BCOS through Web3SDK to get quick informatio
 
 ```eval_rst
 .. important::
-   The console depends on system of Java 8 version and above. Ubuntu 16.04 system needs to install openjdk 8. For CentOS please install Oracle Java 8 version and above. 
+   The console depends on system of Java 8 version and above. Ubuntu 16.04 system needs to install openjdk 8. For CentOS please install Oracle Java 8 version and above.
 ```
 
 ```bash
@@ -252,7 +252,7 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 
 ```eval_rst
 .. important::
-    When connecting node with the console, we should make sure that the connected nodes are inside the group configured by the console 
+    When connecting node with the console, we should make sure that the connected nodes are inside the group configured by the console
 ```
 
 **Create console configuration file `conf/applicationContext.xml`'s configuration is as follows**. Console is connected to three groups from node0 (`127.0.0.1:20200`), for console configuration method please refer to [here](../manual/console.html#id7).
@@ -326,17 +326,17 @@ $ bash start.sh
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =====================================================================================
-[group:1]> 
+[group:1]>
 ```
 
 ### Send transaction to groups
@@ -345,7 +345,7 @@ In the above section, we learned how to configure console, this section will int
 
 ```eval_rst
 .. important::
-   
+
    In multi-group structure, the ledgers are independent in each group. And sending transaction to one group will only lead in the increment of block number in this group but not others
 ```
 
@@ -356,7 +356,7 @@ In the above section, we learned how to configure console, this section will int
 $ [group:1]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # check the current block number of group 1, if it's 1 then the block generation is in normal status, otherwise please check if the consensus of group 1 is normal or not
-$ [group:1]> getBlockNumber 
+$ [group:1]> getBlockNumber
 1
 
 # ... send transaction to group 2...
@@ -374,7 +374,7 @@ $ [group:2]> getBlockNumber
 # switch to group 3
 $ [group:2]> switch 3
 Switched to group 3.
-# send transction to group 3, if it is returned with the hash of this transaction, then it has been deployed successfully
+# send transaction to group 3, if it is returned with the hash of this transaction, then it has been deployed successfully
 $ [group:3]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # check the current block number of group 3, if it is 1 then the block generation is in normal status, otherwise please check if group 3 is in normal consensus status
@@ -395,7 +395,7 @@ After the block is generated, the node will output `Report` log, which contains 
 
 ```eval_rst
 .. important:
-    
+
     once a new block is generated, node will print a Report log which contains fields with following definitions:
      - ``g:``: group ID
      - ``num``: block number
@@ -432,9 +432,9 @@ This chapter will take node 2 and group 2 as an example to explain how to add ne
 
 ```eval_rst
 .. important:
-    
+
     Before adding new node to group, please make sure:
-    
+
     - The new NodeID exists.
     - All nodes in the group are in normal consensus status: normal consensus node will output +++ log
 ````
@@ -449,14 +449,14 @@ $ cd ~/fisco/nodes/127.0.0.1
 $ cp node0/conf/group.2.* node2/conf
 
 # ...restart node 2(them make sure the node is in normal consensus status)...
-$ cd node2 && bash stop.sh && bash start.sh 
+$ cd node2 && bash stop.sh && bash start.sh
 ```
 
 **Acquire the ID of node 2**
 
 ```bash
 # please remember the ID of node 2, which is needed when joining group 2
-$ cat conf/node.nodeid 
+$ cat conf/node.nodeid
 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 ```
 
@@ -493,7 +493,7 @@ $ [group:2]> getSealerList
     6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4 # new node
 ]
 # acquire the current block number of group 2
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 2
 
 #... send transaction to group 2
@@ -502,7 +502,7 @@ $ [group:2] deploy HelloWorld
 contract address:0xdfdd3ada340d7346c40254600ae4bb7a6cd8e660
 
 # acquire the current block number of group 2 if it increases to 3. If not, please check the consensus status of group 2
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 3
 
 # exit console
@@ -512,7 +512,7 @@ $ [group:2]> exit
 **Check the block generation status of the new node through log**
 
 ```bash
-# enter the folder where the node is located 
+# enter the folder where the node is located
 cd ~/fisco/nodes/127.0.0.1
 # check the consensus status of node
 $ tail -f node2/log/* | grep "g:2.*++"
@@ -601,15 +601,15 @@ $ tail -f node0/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:52.065958| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=da72649e...
 
 # check consensus status of node 1
-$ tail -f node1/log/* | grep "g:1.*++" 
+$ tail -f node1/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:54.070297| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=11c9354d...
 
 # check consensus status of node 2
-$ tail -f node2/log/* | grep "g:1.*++" 
+$ tail -f node2/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:55.073124| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=b65cbac8...
 
 # check consensus status of node 3
-$ tail -f node3/log/* | grep "g:1.*++" 
+$ tail -f node3/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=0467e5c4...
 
 ```
@@ -645,7 +645,7 @@ $ bash start_all.sh
 
 ```bash
 # check the consensus status of node 0 group 2
-$ tail -f node0/log/* | grep "g:2.*++" 
+$ tail -f node0/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:28.541596| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=f3562664...
 
 # check the consensus status of node 1 group 2
@@ -653,11 +653,11 @@ $ tail -f node1/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:30.546011| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=4b17e74f...
 
 # check the consensus status of node 2 group 2
-$ tail -f node2/log/* | grep "g:2.*++" 
+$ tail -f node2/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:59.653615| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=90cbd225...
 
 # check the consensus status of node 3 group 2
-$ tail -f node3/log/* | grep "g:2.*++" 
+$ tail -f node3/log/* | grep "g:2.*++"
 info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=d7dcb462...
 
 ```
@@ -677,7 +677,7 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 
 ```bash
 # acquire channel_port
-$ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini 
+$ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini
 multi_nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20100
 
 # enter console folder
@@ -753,10 +753,10 @@ $ bash start.sh
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
@@ -765,13 +765,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =====================================================================================
 # ... send transaction to group 1...
 # acquire current block number
-$ [group:1]> getBlockNumber 
+$ [group:1]> getBlockNumber
 0
 # deploy HelloWorld contract to group 1. If failed, please check if group 1 is in normal consensus status
 $ [group:1]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # acquire current block number. If it didn't increase, please check if group 1 is in normal consensus status
-$ [group:1]> getBlockNumber 
+$ [group:1]> getBlockNumber
 1
 
 # ... send transaction to group 2...
@@ -779,13 +779,13 @@ $ [group:1]> getBlockNumber
 $ [group:1]> switch 2
 Switched to group 2.
 # acquire current block number
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 0
 # deploy HelloWorld contract to group2
 $ [group:2]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # acquire current block number. If it didn't increase, please check if group 2 is in normal consensus status
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 1
 # exit console
 $[group:2]> exit

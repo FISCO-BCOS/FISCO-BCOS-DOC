@@ -191,7 +191,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
     - If the console is configured correctly, but when it is launched on Cent0S system, the following error occurs:
 
-      Failed to connect to the node. Please check the node status and the console configruation.
+      Failed to connect to the node. Please check the node status and the console configuration.
 
       It is because the JDK version that comes with the CentOS system is used (it will cause the console and blockchain node's authentication to fail). Please download Java 8 version or above from `OpenJDK official website <https://jdk.java.net/java-se-ri/8>`_ or `Oracle official website <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ and install (specific installation steps `refer to Appendix <./console.html#java>`_). To launch the console after installation.
 
@@ -274,8 +274,8 @@ Enter help or h to see all the commands on the console.
 -------------------------------------------------------------------------------------
 addObserver                              Add an observer node.
 addSealer                                Add a sealer node.
-call                                     Call a contract by a function and paramters.
-callByCNS                                Call a contract by a function and paramters by CNS.
+call                                     Call a contract by a function and parameters.
+callByCNS                                Call a contract by a function and parameters by CNS.
 deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
 exit                                     Quit console.
@@ -349,7 +349,7 @@ Switched to group 2.
 
 [group:2]>
 ```
-**Note: ** For the group that needs to be switched, make sure that the information of the group is configured in `applicationContext.xml` (the initial state of this configuration file only provides the group 1 configuration) in the `console/conf` directory, the configured node ID and port in the group are correct, and the node is runing normally.
+**Note: ** For the group that needs to be switched, make sure that the information of the group is configured in `applicationContext.xml` (the initial state of this configuration file only provides the group 1 configuration) in the `console/conf` directory, the configured node ID and port in the group are correct, and the node is running normally.
 
 
 ### **getBlockNumber**
@@ -1189,7 +1189,7 @@ parameter:
 ```
 ### **listUserTableManager**
 
-Run listUserTableManager to query the account's table that has writting permission to the user table.
+Run listUserTableManager to query the account's table that has writing permission to the user table.
 
 parameter:
 - table name

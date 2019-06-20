@@ -322,15 +322,15 @@ Precomplied contract is an efficient smart contract realized in C++ on FISCO BCO
 SDK supports [distributed permission control](../manual/permission_control.md). PermissionService can configure permission information. The APIs are here:
 - **public String grantUserTableManager(String tableName, String address):** set permissions according to user list name and exterior account address.
 - **public String revokeUserTableManager(String tableName, String address):** revoke permissions according to user list name and exterior account address.
-- **public List\<PermissionInfo\> listUserTableManager(String tableName):** inquire permission record list accoring to the user list name (each record contains exterior account address and effective block number).
+- **public List\<PermissionInfo\> listUserTableManager(String tableName):** inquire permission record list according to the user list name (each record contains exterior account address and effective block number).
 - **public String grantDeployAndCreateManager(String address):** grant permission for exterior account to deploy contract and create user list.
 - **public String revokeDeployAndCreateManager(String address):** revoke permission for exterior account to deploy contract and create user list.
 - **public List\<PermissionInfo\> listDeployAndCreateManager():** inquire the permission record list for exterior account to deploy contract and create user list.
 - **public String grantPermissionManager(String address):** grant permission to exterior accounts for permission control.
 - **public String revokePermissionManager(String address):** revoke permission to exterior accounts for permission control
 - **public List\<PermissionInfo\> listPermissionManager():** inquire permission record list of exterior accounts on permission control.
-- **public String grantNodeManager(String address):** grant permission to exterior accounts for node managment.
-- **public String revokeNodeManager(String address):** revoke permission to exterior accounts for node managment.
+- **public String grantNodeManager(String address):** grant permission to exterior accounts for node management.
+- **public String revokeNodeManager(String address):** revoke permission to exterior accounts for node management.
 - **public List\<PermissionInfo\> listNodeManager():** inquire permission records on node management.
 - **public String grantCNSManager(String address):** grant permission to exterior account for CNS.
 - **public String revokeCNSManager(String address):** revoke permission to exterior account for CNS.
@@ -359,7 +359,7 @@ SDK supports configuration of [node type](../design/security_control/node_manage
 #### CRUDService
 SDK supports CRUD (Create/Retrieve/Updata/Delete) operations. CRUDService of table include create, insert, retrieve, update and delete. Here are its APIs:
 - **int createTable(Table table)：** create table and table object, set the name of table, main key field and other fields; names of other fields are character strings separated by comma; return table status value, return 0 when it is created successfully.
-- **int insert(Table table, Entry entry)：** insert records, offer table object adn Entry object, set table name and main key name; Entry is map object, offer inserted field name and its value, main key field is necessary; return the number of inserted records.
+- **int insert(Table table, Entry entry)：** insert records, offer table object and Entry object, set table name and main key name; Entry is map object, offer inserted field name and its value, main key field is necessary; return the number of inserted records.
 - **int update(Table table, Entry entry, Condition condition)：** update records, offer table object, Entry object, Condition object. Table object needs to be set with table name and main key field name; Entry is map object, offer new field name and value; Condition object can set new conditions； return the number of new records.
 - **List\<Map\<String, String\>\> select(Table table, Condition condition)：** retrieve records, offer table object and Condition object. Table object needs to be set with table name and main key field name; Condition object can set condition for retrieving; return the retrieved record.
 - **int remove(Table table, Condition condition)：** remove records, offer table object and Condition object. Table object needs to be set with table name and main key field name; Condition object can set conditions for removing; remove the number of removed records.

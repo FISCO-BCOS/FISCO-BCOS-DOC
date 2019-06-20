@@ -201,7 +201,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ### Acquire information through console
 
 ```bash
-# aquire client ends version information
+# acquire client ends version information
 [group:1]> getNodeVersion
 {
     "Build Time":"20190121 06:21:05",

@@ -20,12 +20,12 @@ To ensure safe communication and access of data among nodes, FISCO BCOS adopts m
 
 **Storage security control**
 
-The permission control mechanism based on distributed storage controls access in a flexible and delicate way by implementing the restriction on the storage access fpr exterior accounts (tx.origin), which includes contract deployment, table creation and writting.
+The permission control mechanism based on distributed storage controls access in a flexible and delicate way by implementing the restriction on the storage access for exterior accounts (tx.origin), which includes contract deployment, table creation and writing.
 
 
 .. toctree::
    :maxdepth: 1
-   
+
    node_management.md
    certificate_blacklist.md
    permission_control.md
