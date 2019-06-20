@@ -12,7 +12,7 @@ The following context will introduce how to compile, deploy and execute FISCO BC
 
 ### Parallel exclusion
 
-Whether two transactions can be executed parallelly depends on whether they are multually **exclusive**. By exclusive, it means the two transactions have intersection in their contract storage variables collection.
+Whether two transactions can be executed in parallel depends on whether they are mutually **exclusive**. By exclusive, it means the two transactions have intersection in their contract storage variables collection.
 
 Taking payment transfer as an example, it involves transactions of payment transfer between users. Use transfer(X, Y) to represent the access of user X to user Y. The exclusion is as below.
 
@@ -30,11 +30,11 @@ Here are detailed definitions:
 
 - **exclusive object**：the exclusive content extracted from exclusive parameters. Such as the payment transfer interface transfer(X, Y). In a transaction that calls the interface, the parameter is transfer(A, B), then the exclusive object is [A, B]; for another transaction that calls parameter transfer(A, C), the exclusive object is [A, C].
 
-**To judge whether 2 transactions at the same moment are parallely executable can be dependent on whether there is intersection between their exclusive objects. Transaction without intersection can be parallelly executed.**
+**To judge whether 2 transactions at the same moment can be executed in parallel depends on whether there is intersection between their exclusive objects. Transaction without intersection can be executed in parallel.**
 
 ## Compile parallel contract
 
-FISCO BCOS provides **parallel contract development structure**. Developers only need to adhere to its regulation and define the exclusive parameter of each contract interface so as to realize parallelly executed contract. When contract is deployed, FISCO BCOS will auto-analyze exclusive object before the transaction is excuted to make non-dependent transaction executed parallelly as much as possible.
+FISCO BCOS provides **parallel contract development structure**. Developers only need to adhere to its regulation and define the exclusive parameter of each contract interface so as to realize parallelly executed contract. When contract is deployed, FISCO BCOS will auto-analyze exclusive object before the transaction is excuted to make non-dependent transaction execute in parallel as much as possible.
 
 So far, FISCO BCOS offers two types of parallel contract development structure: [solidity](./smart_contract.html#id1) and [Precompiled contract](./smart_contract.html#id2).
 
@@ -53,7 +53,7 @@ contract ParallelOk is ParallelContract // make ParallelContract as the base cla
 {
     // contract realization
     mapping (string => uint256) _balance;
-    
+
     function transfer(string from, string to, uint256 num) public
     {
         // here is a simple example, please use SafeMath instead of "+/-" in real production
@@ -70,21 +70,21 @@ contract ParallelOk is ParallelContract // make ParallelContract as the base cla
     {
         return _balance[name];
     }
-    
+
     // register parallel contract interface
     function enableParallel() public
     {
         // function defined character string (no blank space behind ","), the former part of parameter constitutes exclusive parameter (which should be put ahead when designing function)
         registerParallelFunction("transfer(string,string,uint256)", 2); // critical: string string
         registerParallelFunction("set(string,uint256)", 1); // critical: string
-    } 
+    }
 
     // revoke parallel contract interface
     function disableParallel() public
     {
         unregisterParallelFunction("transfer(string,string,uint256)");
-        unregisterParallelFunction("set(string,uint256)"); 
-    } 
+        unregisterParallelFunction("set(string,uint256)");
+    }
 }
 ```
 
@@ -100,10 +100,10 @@ import "./ParallelContract.sol"; // import ParallelContract.sol
 contract ParallelOk is ParallelContract // make ParallelContract as the base class
 {
    // contract realization
-   
+
    // register parallel contract interface
    function enableParallel() public;
-   
+
    // revoke parallel contract interface
    function disableParallel() public;
 }
@@ -133,25 +133,25 @@ Before compiling interface, please confirm the exclusive parameter of interface.
 
 **Confirm parameter type and sequence**
 
-After the exclusive parameter is confirmed, confirm paramter type and sequence according to following rules:
+After the exclusive parameter is confirmed, confirm parameter type and sequence according to following rules:
 
 - interface parameter is limited to: **string、address、uint256、int256** (more types coming in the future)
 
 - exclusive parameter should all be contained in interface parameter
 
-- all exclusive should be put in the begining of the interface parameter
+- all exclusive should be put in the beginning of the interface parameter
 
 ```javascript
 mapping (string => uint256) _balance; // global mapping
 
-// exclusive variable from, to are put at the begining of transfer()
+// exclusive variable from, to are put at the beginning of transfer()
 function transfer(string from, string to, uint256 num) public
 {
     _balance[from] -= num;  // from is the key of global mapping, the exclusive parameter
-    _balance[to] += num; // to is the key of global mapping, the exclusive parameter 
+    _balance[to] += num; // to is the key of global mapping, the exclusive parameter
 }
 
-// the exclusive variable name is put at the begining of the parameter of set()
+// the exclusive variable name is put at the beginning of the parameter of set()
 function set(string name, uint256 num) public
 {
     _balance[name] = num;
@@ -175,8 +175,8 @@ function enableParallel() public
 function disableParallel() public
 {
     unregisterParallelFunction("transfer(string,string,uint256)");
-    unregisterParallelFunction("set(string,uint256)"); 
-} 
+    unregisterParallelFunction("set(string,uint256)");
+}
 ```
 
 **（4）Deploy/execute parallel contract**
@@ -203,7 +203,7 @@ send parallel transaction ``` set() ```
 
 send parallel transaction ``` transfer() ```
 
-```shell 
+```shell
 [group:1]> call ParallelOk.sol 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 transfer "jimmyshi" "jinny" 80000
 ```
 
@@ -228,7 +228,7 @@ bool isParallelPrecompiled() override { return true; }
 
 **（2）Define parallel interface and exclusive parameter**
 
-It needs attention that once contract is defined parallelable, all interfaces need to be defined. If an interface is returned with null, it has no exclusive object. Exclusive parameter is related to the implementation of precomplied contract, which needs understanding of FISCO BCOS storage. You can read the codes or consult experienced programmer for implementation details. 
+It needs attention that once contract is defined parallelable, all interfaces need to be defined. If an interface is returned with null, it has no exclusive object. Exclusive parameter is related to the implementation of precompiled contract, which needs understanding of FISCO BCOS storage. You can read the codes or consult experienced programmer for implementation details.
 
 ```c++
 // take out exclusive object from parallel interface parameter, return exclusive object
@@ -246,7 +246,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
         std::string fromUser, toUser;
         dev::u256 amount;
         abi.abiOut(data, fromUser, toUser, amount);
-        
+
         if (!invalidUserName(fromUser) && !invalidUserName(toUser) && (amount > 0))
         {
             // write results to exclusive object
@@ -255,7 +255,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
         }
     }
     else if ... // all interfaces needs to offer exclusive object, returning null means no exclusive object
-        
+
  	return results;  //return exclusion
 }
 ```
@@ -277,7 +277,7 @@ The execution environment in this case:
 - Web3SDK client end
 - a FISCO BCOS chain
 
-Web3SDK is to send parallel transaction, FISCO BCOS chain is to execute paralle transaction. The related configuration are:
+Web3SDK is to send parallel transaction, FISCO BCOS chain is to execute parallel transaction. The related configuration are:
 
 - [Web3SDK configuration](../sdk/sdk.md)
 - [Chain building](./build_chain.md)
@@ -289,7 +289,7 @@ For pressure test on maximum performance, it at least needs:
 
 ### Parallel Solidity contract: ParallelOk
 
-Payment transfer based on account model is a typical operation. ParallelOk contract is an example of account model and is capable of paralle transfer. The ParallelOk contract is given in former context.
+Payment transfer based on account model is a typical operation. ParallelOk contract is an example of account model and is capable of parallel transfer. The ParallelOk contract is given in former context.
 
 FISCO BCOS has built-in ParallelOk contract in Web3SDK. Here is the operation method to send massive parallel transactions through Web3SDK.
 
@@ -343,7 +343,7 @@ We can see that the TPS of this transaction is 2905. No error (``` verify_failed
 
 **（4）Count total TPS**
 
-Single Web3SDK cannot send enough transactions to reach the parallel execution limit of nodes. It needs multiple Web3SDKs to send transactions at the same time. TPS by simplely summeing together won't be correct enough when multiple Web3SDKs sending transactions, so it should be acquired directly from node.
+Single Web3SDK cannot send enough transactions to reach the parallel execution limit of nodes. It needs multiple Web3SDKs to send transactions at the same time. TPS by simply summing together won't be correct enough when multiple Web3SDKs sending transactions, so it should be acquired directly from node.
 
 count TPS from log file using script
 
@@ -417,7 +417,7 @@ We can see that in this transaction, the TPS is 3143. No error (``` verify_faile
 
 **（4）Count total TPS**
 
-Single Web3SDK can send enough transactions to meet the parallel execution limit of node. It needs multiple Web3SDK to send tranactions. And by simply suming the TPS of each transaction won't be correct, so the TPS should be acquired from node directly.
+Single Web3SDK can send enough transactions to meet the parallel execution limit of node. It needs multiple Web3SDK to send tranactions. And by simply summing the TPS of each transaction won't be correct, so the TPS should be acquired from node directly.
 
 Count TPS from log file using script
 
@@ -436,4 +436,4 @@ total transactions = 3340000, execute_time = 298945ms, tps = 11172 (tx/s)
 
 ### Result description
 
-The performance result in the example of this chapter is tested in 3SDK, 4 ndoes, 8 cores, 16G memory, 1G network. Each SDK and node are deployed in different VPS with cloud disk. The real TPS depends on the condition of your hardware configuration, operation system and bandwidth.
+The performance result in the example of this chapter is tested in 3SDK, 4 nodes, 8 cores, 16G memory, 1G network. Each SDK and node are deployed in different VPS with cloud disk. The real TPS depends on the condition of your hardware configuration, operation system and bandwidth.

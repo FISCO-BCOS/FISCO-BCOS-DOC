@@ -34,7 +34,7 @@ Usually, there files are needed when adding a node to blockchain network:
 
 Besides a unique node ID, nodes can follow Topic for addressing.
 
-Node addresing:
+Node addressing:
 
 - Addressing by node ID
 
@@ -62,10 +62,10 @@ CA certificate will be used to verify nodes during connection.
         Node A->>Node A: load key and certificate
         Node B->>Node B: load key and certificate
         Node A->>Node B: start connection
-        Node B->>Node A: connected 
+        Node B->>Node A: connected
         Node B->Node A: start SSL shaking
-        Node A->>Node A: acquire public key from certificae as node ID
-        Node B->>Node B: acquire public key from certificae as node ID
+        Node A->>Node A: acquire public key from certificate as node ID
+        Node B->>Node B: acquire public key from certificate as node ID
         Node B->Node A: shaking succeeded, start SSL connection
 
 ```
@@ -75,7 +75,7 @@ CA certificate will be used to verify nodes during connection.
 Messaging among nodes supports unicast, multicast and broadcast.
 
 - Unicast, one node sends messages to another node, addressing through node ID.
-- Mulitcast, one node sends messages to a group of nodes, addressing through Topic.
+- Multicast, one node sends messages to a group of nodes, addressing through Topic.
 - Broadcast, one node sends messages to all nodes.
 
 ### Unicast process

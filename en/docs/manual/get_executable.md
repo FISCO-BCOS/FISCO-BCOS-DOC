@@ -12,7 +12,7 @@ The statically linked precompiled executable provided has been tested on Ubuntu 
 
 ## docker image
 
-From v2.0.0 version, we provide the docker image for the tag version. Corresponding to the master branch, we provide image of `lastest` tag. For more docker tags please refer to[here](https://hub.docker.com/r/fiscoorg/fiscobcos/tags).
+From v2.0.0 version, we provide the docker image for the tag version. Corresponding to the master branch, we provide image of `latest` tag. For more docker tags please refer to[here](https://hub.docker.com/r/fiscoorg/fiscobcos/tags).
 
 build_chain.sh script adds the `-d` option to provide docker mode building for developers to deploy. For details, please refer to [here](build_chain.html#id4).
 
@@ -26,7 +26,7 @@ build_chain.sh script adds the `-d` option to provide docker mode building for d
 
 ```eval_rst
 .. note::
-    
+
     The source code compilation is suitable for the experienced developers. You are required to download all library dependencies during compilation. Network connection would required and would take 5-20 minutes in total.
 ```
 

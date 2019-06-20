@@ -20,7 +20,7 @@ The operations concerning permission control of following functions are introduc
 - [Permission to write user table](./permission_control.html#id11)
 
 ## Environment configuration  
-Configure and start the nodes and console of FISCO BCOS 2.0. For reference please check [Installtion](../installation.md). 
+Configure and start the nodes and console of FISCO BCOS 2.0. For reference please check [Installation](../installation.md).
 
 ## Tools for permission control
 FISCO BCOS offers permission control of console commands (developers can call PermissionService API of [SDK API](../sdk/sdk.html#permissionservice) for permission control). The involved permission control commands are:
@@ -49,9 +49,9 @@ FISCO BCOS offers permission control of console commands (developers can call Pe
 ## Permission control example
 Console provides script `get_account.sh` to generate accounts. The account files will be stored in `accounts` folder. Console can set active accounts. The operation method is introduced in [Console tutorial](./console.html#id11). Therefore, through console we can set account to experience permission control. For account safety, we will generate 3 PKCS12 account files under the root folder of console by `get_account.sh` script. Please remember the password during generation. The 3 PKCS12 account files are:
 ```bash
-# account 1 
+# account 1
 0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252.p12
-# account 2 
+# account 2
 0x7fc8335fec9da5f84e60236029bb4a64a469a021.p12
 # account 3
 0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12    
@@ -73,8 +73,8 @@ $ ./start.sh 1 -p12 accounts/0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12
 
 ## Grant permission of chain manager
 
-The 3 accounts play 3 kinds of roles. Account 1 performs chain manager, account 2 performs system manager and account 3 the regular account. Chain manager has permission for access control, namely granting permissions. System manager can manager permissions related to system functions, each of which should be granted independently, including deploying contract, creating user table, managing nodes and deploying contract with CNS and modifying system parameter. Chain manager can grant other accounts to be chain manaer or system manager, or grant regular accounts to write table list.
-   
+The 3 accounts play 3 kinds of roles. Account 1 performs chain manager, account 2 performs system manager and account 3 the regular account. Chain manager has permission for access control, namely granting permissions. System manager can manager permissions related to system functions, each of which should be granted independently, including deploying contract, creating user table, managing nodes and deploying contract with CNS and modifying system parameter. Chain manager can grant other accounts to be chain manager or system manager, or grant regular accounts to write table list.
+
 Initial status of chain contains no permission records. Now, we can enter the console of account 1 and set itself as the chain manager, so other accounts are regular accounts.
 ```
 [group:1]> grantPermissionManager 0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252
@@ -102,7 +102,7 @@ Account 1 grants permission of system manager to account 2. At first, grant acco
     "msg":"success"
 }
 
-[group:1]> listDeployAndCreateManager 
+[group:1]> listDeployAndCreateManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                      2                      |
@@ -110,7 +110,7 @@ Account 1 grants permission of system manager to account 2. At first, grant acco
 ```
 Log in console with account 2 and deploy TableTest contract offered by console. Code of TableTest.sol contract is [here](smart_contract.html#solidity). The CRUD operations of user table t_test are also provided.
 ```
-[group:1]> deploy TableTest.sol 
+[group:1]> deploy TableTest.sol
 contract address:0xfe649f510e0ca41f716e7935caee74db993e9de8
 ```
 Call create API of TableTest to create user table t_test.
@@ -128,7 +128,7 @@ User table t_test is created successfully.
 
 Log in console with account 3 and deploy TableTest contract.
 ```
-[group:1]> deploy TableTest.sol 
+[group:1]> deploy TableTest.sol
 {
     "code":-50000,
     "msg":"permission denied"
@@ -136,7 +136,7 @@ Log in console with account 3 and deploy TableTest contract.
 ```
 Account 3 fails to deploy contract as it has no permission.
 
-- **Note:** deploying contract and creating user table are "2-in-1" control items. When using CRUD contracts, we suggest to create the needed tables (creating tables in building function of contract) when deploying contract, otherwise "table-missing" error may occur when reading or writing table. If it is needed to dynamically creat table, the permission should be granted to minority accounts, otherwise there will be many invalid tables on blockchain.
+- **Note:** deploying contract and creating user table are "2-in-1" control items. When using CRUD contracts, we suggest to create the needed tables (creating tables in building function of contract) when deploying contract, otherwise "table-missing" error may occur when reading or writing table. If it is needed to dynamically create table, the permission should be granted to minority accounts, otherwise there will be many invalid tables on blockchain.
 
 ### Grant permission to deploy contract using CNS
 Console provides 3 commands involving [CNS](../design/features/CNS_contract_name_service.md):
@@ -157,7 +157,7 @@ Log in console with account 1, grant account 2 with permission to deploy contrac
     "msg":"success"
 }
 
-[group:1]> listCNSManager 
+[group:1]> listCNSManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                     13                      |
@@ -168,7 +168,7 @@ Log in console with account 2, deploy contract using CNS
 [group:1]> deployByCNS TableTest.sol 1.0
 contract address:0x24f902ff362a01335db94b693edc769ba6226ff7
 
-[group:1]> queryCNS TableTest.sol 
+[group:1]> queryCNS TableTest.sol
 ---------------------------------------------------------------------------------------------
 |                   version                   |                   address                   |
 |                     1.0                     | 0x24f902ff362a01335db94b693edc769ba6226ff7  |
@@ -182,7 +182,7 @@ Log in console with account 3, deploy contract using CNS
     "msg":"permission denied"
 }
 
-[group:1]> queryCNS TableTest.sol 
+[group:1]> queryCNS TableTest.sol
 ---------------------------------------------------------------------------------------------
 |                   version                   |                   address                   |
 |                     1.0                     | 0x24f902ff362a01335db94b693edc769ba6226ff7  |
@@ -198,7 +198,7 @@ Console provides 5 commands related to node type management:
 |:----|:-----|:----|
 |addSealer             |nodeID                 |set node as consensus node        |
 |addObserver           |nodeID                 |set node as observer node         |
-|removeNode            |nodeID                 |set ndoe as free node         |
+|removeNode            |nodeID                 |set node as free node         |
 |getSealerList         |                       |inquire consensus node list           |
 |getObserverList       |                       |inquire observer node list           |
 
@@ -212,7 +212,7 @@ Log in console with account 1, grant account 2 with permission to manage nodes.
     "msg":"success"
 }
 
-[group:1]> listNodeManager 
+[group:1]> listNodeManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                     20                      |
@@ -220,7 +220,7 @@ Log in console with account 1, grant account 2 with permission to manage nodes.
 ```
 Log in console with account 2, view consensus node list.
 ```
-[group:1]> getSealerList 
+[group:1]> getSealerList
 [
     01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e,
     279c4adfd1e51e15e7fbd3fca37407db84bd60a6dd36813708479f31646b7480d776b84df5fea2f3157da6df9cad078c28810db88e8044741152eb037a19bc17,
@@ -233,7 +233,7 @@ View observer node list:
 [group:1]> getObserverList
 []
 ```
-Set the first node ID as the observer ndoe:
+Set the first node ID as the observer node:
 ```
 [group:1]> addObserver 01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e
 {
@@ -241,12 +241,12 @@ Set the first node ID as the observer ndoe:
     "msg":"success"
 }
 
-[group:1]> getObserverList 
+[group:1]> getObserverList
 [
     01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e
 ]
 
-[group:1]> getSealerList 
+[group:1]> getSealerList
 [
     279c4adfd1e51e15e7fbd3fca37407db84bd60a6dd36813708479f31646b7480d776b84df5fea2f3157da6df9cad078c28810db88e8044741152eb037a19bc17,
     320b8f3c485c42d2bfd88bb6bb62504a9433c13d377d69e9901242f76abe2eae3c1ca053d35026160d86db1a563ab2add127f1bbe1ae96e7d15977538d6c0fb4,
@@ -261,14 +261,14 @@ Log in console with account 3, add observer node to consensus node list.
     "msg":"permission denied"
 }
 
-[group:1]> getSealerList 
+[group:1]> getSealerList
 [
     279c4adfd1e51e15e7fbd3fca37407db84bd60a6dd36813708479f31646b7480d776b84df5fea2f3157da6df9cad078c28810db88e8044741152eb037a19bc17,
     320b8f3c485c42d2bfd88bb6bb62504a9433c13d377d69e9901242f76abe2eae3c1ca053d35026160d86db1a563ab2add127f1bbe1ae96e7d15977538d6c0fb4,
     c26dc878c4ff109f81915accaa056ba206893145a7125d17dc534c0ec41c6a10f33790ff38855df008aeca3a27ae7d96cdcb2f61eb8748fefe88de6412bae1b5
 ]
 
-[group:1]> getObserverList 
+[group:1]> getObserverList
 [
     01cd46feef2bb385bf03d1743c1d1a52753129cf092392acb9e941d1a4e0f499fdf6559dfcd4dbf2b3ca418caa09d953620c2aa3c5bbe93ad5f6b378c678489e
 ]
@@ -280,7 +280,7 @@ Console provides 2 commands about system parameter modification:
 
 |Command name|parameter|function|
 |:----|:-----|:----|
-|setSystemConfigByKey             |key value           |set system paramter with key and value  |
+|setSystemConfigByKey             |key value           |set system parameter with key and value  |
 |getSystemConfigByKey             |key                 |inquire value by key               |
 
 - **Note:** currently we support system parameter setting with key tx_count_limit or tx_gas_limit. Permission of setSystemConfigByKey command is controllable, while permission of getSystemConfigByKey command is not.
@@ -293,7 +293,7 @@ Log in console with account 1, grant account 2 with permission to modify system 
     "msg":"success"
 }
 
-[group:1]> listSysConfigManager 
+[group:1]> listSysConfigManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                     23                      |
@@ -301,7 +301,7 @@ Log in console with account 1, grant account 2 with permission to modify system 
 ```
 Log in console with account 2, modify the value of system parameter tx_count_limit to 2000.
 ```
-[group:1]> getSystemConfigByKey tx_count_limit 
+[group:1]> getSystemConfigByKey tx_count_limit
 1000
 
 [group:1]> setSystemConfigByKey tx_count_limit 2000
@@ -310,7 +310,7 @@ Log in console with account 2, modify the value of system parameter tx_count_lim
     "msg":"success"
 }
 
-[group:1]> getSystemConfigByKey tx_count_limit 
+[group:1]> getSystemConfigByKey tx_count_limit
 2000
 ```
 Log in console with account 3, modify value of parameter tx_count_limit to 3000.
@@ -321,7 +321,7 @@ Log in console with account 3, modify value of parameter tx_count_limit to 3000.
     "msg":"permission denied"
 }
 
-[group:1]> getSystemConfigByKey tx_count_limit 
+[group:1]> getSystemConfigByKey tx_count_limit
 2000
 ```
 Account 3 fails to set parameter due to no permission.
@@ -365,7 +365,7 @@ Log in console with account 2, update the record inserted by account 3 and inqui
 [group:1]> call TableTest.sol 0xfe649f510e0ca41f716e7935caee74db993e9de8 select "fruit"
 [[fruit], [1], [apple]]
 ```
-Account 2 fails to update information for it has no permission to wirte user table t_test.
+Account 2 fails to update information for it has no permission to write user table t_test.
 
 - Account 1 revoke permission of account 3 to write user table t_test.
 ```
@@ -381,5 +381,3 @@ Empty set.
 Revoked successfully.
 
 - **Note:** now there is no account with permission to write user table t_test, so it is back to initial status, that is, all accounts have permission to write table. Therefore, account 1 can grant another account, like account 2, with permission to write this table.
-
-

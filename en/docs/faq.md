@@ -30,7 +30,7 @@ A:
 Q:
   What is the difference between the national cryptographic version and the normal version? <br>
 A:
-  The national cryptography version FISCO BCOS replaces the cryptographic algorithms of underlying modules such as transaction signature verification, p2p network connection, node connection, and data disk encryption with the national cryptography algorithm. Meanwhile, in compiling version and certificate, disk encryption, and solidity compiling java, there are some difference on web3sdk 
+  The national cryptography version FISCO BCOS replaces the cryptographic algorithms of underlying modules such as transaction signature verification, p2p network connection, node connection, and data disk encryption with the national cryptography algorithm. Meanwhile, in compiling version and certificate, disk encryption, and solidity compiling java, there are some difference on web3sdk
 using national cryptography version and normal version, please refer to [refer to here] (./manual/guomi_crypto.md).
 
 Q:
@@ -81,37 +81,37 @@ Q:
   What are the system configuration, group configuration, and node configuration? <br>
 A:
   System configuration refers to some configuration items that affect the ledger function and require the consensus of the ledger node in the node configuration.
-  Group configuration refers to the configuration of the group which the node belongs to. Each group of nodes has an independent configuration. 
+  Group configuration refers to the configuration of the group which the node belongs to. Each group of nodes has an independent configuration.
   Node configuration refers to all configurable items.
 
 Q:
   Can the group configuration be changed? <br>
-A: 
+A:
   Whether the configuration item could be changed can be measured by:
 
-  - The node that is first time to launch and has generated a genesis block can not be modified. This type of configuration is placed in the group.x.genesis file, where x is the group number, and it is unique in the entire chain. 
-  
+  - The node that is first time to launch and has generated a genesis block can not be modified. This type of configuration is placed in the group.x.genesis file, where x is the group number, and it is unique in the entire chain.
+
   - To implement consistence in ledger by sending the transaction modification configuration item.
 
   - After the configuration file is modified, the node can be restarted to takes effect. This type of configuration is placed in the `group.x.ini` file. After the group configuration is changed, the restart can be changed locally, the changeable item becomes the local configuration. The `group.*.ini` file under nodeX/conf is changed and restarted to takes effect. The involved configuration items are [tx_pool].limit (transaction pool capacity) and [consensus].ttl (node forwarding number).
 
 Q:
   Which configurations can the group configuration user change? <br>
-A: 
-  The group can be modified and configured into consentaneous changeable configuration and manual changeable configuration.
+A:
+  The group can be modified and configured into consensus changeable configuration and manual changeable configuration.
 
-  - consentaneous changeable configuration: all nodes in the group are the same, and takes effect after consensus. [consensus].max_trans_num,[consensus].node.X,[tx].gas_limit.
+  - consensus changeable configuration: all nodes in the group are the same, and takes effect after consensus. [consensus].max_trans_num,[consensus].node.X,[tx].gas_limit.
 
   - manual changeable configuration: it is in the `group.x.ini` file and restarted to take effect after modification. It only affects node. The configuration item has [tx_pool].limit.
 
 Q:
-  How to change and inquire the consentaneous changeable configuration? <br>
-A: 
-  Consentaneous changeable configuration can be changed through console. It can be inquired through console and RPC interface. For detail, please [refer to here] (./design/rpc.md).
+  How to change and inquire the consensus changeable configuration? <br>
+A:
+  Consensus changeable configuration can be changed through console. It can be inquired through console and RPC interface. For detail, please [refer to here] (./design/rpc.md).
 
   - [consensus].max_trans_num,[tx].gas_limit is changed by using the interface setSystemConfigByKey, and the corresponding configuration items are tx_count_limit, tx_gas_limit. See setSystemConfigByKey -h for details.
 
-  - [consensus].node.X's change refers to node management. The console interface refer to addSealer, addObserver, removeNode. For deatil, please refer to Node Management.
+  - [consensus].node.X's change refers to node management. The console interface refer to addSealer, addObserver, removeNode. For detail, please refer to Node Management.
 
 Q:
   What is the difference between Observer node and Sealer node in group? <br>
@@ -134,7 +134,7 @@ Q:
   What does Web3SDK require to Java version? <br>
 A:
   It requires [JDK8 version or above](https://openjdk.java.net/)<br>
-  
+
   The OpenJDK of yum repository of CentOS lacks JCE (Java Cryptography Extension), which causes Web3SDK to fail to connect to blockchain node. When using the CentOS operation system, it is recommended to download it from the OpenJDK website. [Installation Guide] (https://openjdk.java.net/install/index.html)
 
 Q:

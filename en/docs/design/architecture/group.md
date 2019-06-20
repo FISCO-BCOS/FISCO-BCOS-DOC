@@ -1,6 +1,6 @@
 # Multi-group structure
 
-To fit most business scenarios, FISCO BCOS supports various functions including multi-group activation, transactions among groups, data storage and block consensus in separation engined by multi-group structure. It can safely guard the system privacy but also eliminate the difficulty in operation and maintainence of blockchain system.
+To fit most business scenarios, FISCO BCOS supports various functions including multi-group activation, transactions among groups, data storage and block consensus in separation engined by multi-group structure. It can safely guard the system privacy but also eliminate the difficulty in operation and maintenance of blockchain system.
 
 
 ```eval_rst
@@ -8,13 +8,13 @@ To fit most business scenarios, FISCO BCOS supports various functions including 
 
     For example:
 
-    Agency A, B, C, D consituted a blockchain network to operate Project 1. But now, A and B want to start Project 2 in the condition that C has no access to its data and transactions. How to realize it?
+    Agency A, B, C, D constituted a blockchain network to operate Project 1. But now, A and B want to start Project 2 in the condition that C has no access to its data and transactions. How to realize it?
 
     - **1.3 series FISCO BCOS** : Agency A and B build another chain to operate Project 2. Administrator needs to operate and maintain both chains and their ports.
 
-    - **FISCO BCOS 2.0** ：Agency A and B bulid another group for Project 2. Administrator maintains only one chain.
+    - **FISCO BCOS 2.0** ：Agency A and B build another group for Project 2. Administrator maintains only one chain.
 
-    Obviously both solutions can achieve privacy protection, but FISCO BCOS 2.0 gets advantages in scalability, operation and maintainence and flexibility.
+    Obviously both solutions can achieve privacy protection, but FISCO BCOS 2.0 gets advantages in scalability, operation and maintenance and flexibility.
 ```
 
 In multi-group structure, Networking is shared among groups. Groups can isolate messages of some ledger through [networking access and whitelist] (../security_control/node_management.md).
@@ -22,13 +22,13 @@ In multi-group structure, Networking is shared among groups. Groups can isolate 
 ![](../../../images/architecture/ledger.png)
 
 
-Then, data will be isolated with other groups. Every group runs consensus algorithm indepently or differently. Each ledger model contains three layers: Core, Access, Administration (from the bottom to the top). This three layers will cooperate to ensure stable operation of each group in FISCO BCOS platform.
+Then, data will be isolated with other groups. Every group runs consensus algorithm independently or differently. Each ledger model contains three layers: Core, Access, Administration (from the bottom to the top). This three layers will cooperate to ensure stable operation of each group in FISCO BCOS platform.
 
 ## Core
 
 Core layer is responsible for inputing group data [block](../../tutorial/key_concepts.html#id3), block information, system table and execution result into data base.
 
-Storage is formed by two parts: State and AMDB. State contains MPTState and StorageState who store the status information of transactions. StorageState has higher performance than MPTState, but it doesn't store history records of block. AMDB opens accesses of select, commit and update and operates contract table, system table, user table. It is pluggable and adatable to multiple kinds of database. Currently it adapts only to [LevelDB database](https://github.com/google/leveldb). In the future, mysql-based [AMDB](../storage/storage.md) will be integrated to the system. 
+Storage is formed by two parts: State and AMDB. State contains MPTState and StorageState who store the status information of transactions. StorageState has higher performance than MPTState, but it doesn't store history records of block. AMDB opens accesses of select, commit and update and operates contract table, system table, user table. It is pluggable and adaptable to multiple kinds of database. Currently it adapts only to [LevelDB database](https://github.com/google/leveldb). In the future, mysql-based [AMDB](../storage/storage.md) will be integrated to the system.
 
 ![](../../../images/architecture/storage.png)
 

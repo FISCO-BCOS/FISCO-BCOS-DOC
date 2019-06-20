@@ -3,7 +3,7 @@
 ## 1. Description
 
 ### 1.1 Basic introduction
-**This blockchain explorer is adaptable to FISCO-BCOS 2.0.0. FISCO-BCOS 1.2 or 1.3 users please chech [v1.2.1](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1).**
+**This blockchain explorer is adaptable to FISCO-BCOS 2.0.0. FISCO-BCOS 1.2 or 1.3 users please check [v1.2.1](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1).**
 
 Blockchain explorer is capable of blockchain data visualization and real-time presentation. Users can access the information on blockchain through web pages. This explorer is adaptable to [FISCO-BCOS 2.0](https://github.com/FISCO-BCOS/FISCO-BCOS). You can learn its features in [here](../introduction.md). Before using this explorer, basic understanding on groups features of FISCO BCOS 2.0 is needed, which is referred in [here](../what_is_new.html#id2).
 
@@ -13,7 +13,7 @@ Blockchain explorer is capable of blockchain data visualization and real-time pr
 
 #### 1.2 Main function models
 
-This chapter will give a breif introduction on each model of the browser for all-round understanding. Main function models of blockchain browser includes: group switch model, config model and blockchain data demo model.
+This chapter will give a brief introduction on each model of the browser for all-round understanding. Main function models of blockchain browser includes: group switch model, config model and blockchain data demo model.
 
 ##### 1.2.1 Group switch model
 
@@ -37,7 +37,7 @@ Blockchain browser demonstrates detail information of groups on chain including:
 
 ### 2.1 Group building
 
-Data shown in the blockchain browser is synchronized with blockchain. To synchronize data, initialization configuration (adding group information and node information) is needed. So users have to build groups before data synchronizing. [FISCO-BCOS 2.0](https://github.com/FISCO-BCOS/FISCO-BCOS) has provided multiple convenient group buidling methods.
+Data shown in the blockchain browser is synchronized with blockchain. To synchronize data, initialization configuration (adding group information and node information) is needed. So users have to build groups before data synchronizing. [FISCO-BCOS 2.0](https://github.com/FISCO-BCOS/FISCO-BCOS) has provided multiple convenient group building methods.
 
 1. For developers to develop and debug, we recommend [build_chain](../installation.md).
 2. For business applications, we recommend deployment tool [FISCO-BCOS generator](../tutorial/enterprise_quick_start.md).
@@ -93,7 +93,7 @@ Steps of import
 
 #### 4.3.1 Import contract
 
-1. Contract is required to be uploaded as sol file or zip pacakage.
+1. Contract is required to be uploaded as sol file or zip package.
 2. Zip package is adaptable to top level directory at most and defaulted to be uploaded to root directory. Zip package can only contain sol files.
 
 #### 4.3.2 Compile contract

@@ -2,17 +2,17 @@
 
 ## Introduction
 
-The process to call smart contract in Ethereum includes: 
+The process to call smart contract in Ethereum includes:
 1. program contract;
 2. compile contract and get abi description of API;
 3. deploy contract and get address;
-4. encapsulate contract abi and address, and call contract by SDK or ther tools.
+4. encapsulate contract abi and address, and call contract by SDK or other tools.
 
 From the process of calling contract, we know that contract abi and address are needed. This can lead to following problems:
 1. contract abi is a long JSON string, no need to be sensed by caller;
 2. contract address is a 20-byte magic number, difficult to remember, and contract cannot be accessed again if lost it;
 3. one or more callers need to update contract address after re-deployment;
-4. inconvenient for version management and gray release of contract.
+4. inconvenient for version management and grey release of contract.
 
 To solve the problems and offer better experience for callers, FISCO BCOS has proposed **CNS**.
 
@@ -24,14 +24,14 @@ To solve the problems and offer better experience for callers, FISCO BCOS has pr
 
 ## Advantages of CNS
 
-- simplize call of contract;
-- support transparent update and gray release of contract.
+- simplify the call of contract;
+- support transparent update and grey release of contract.
 
 ## Comparison with ENS
 
 ENS is Ethereum Name Service.
 
-ENS has similar functions with DNS(Domain Name Service), though it doesn't offer Internet address. It expresses contract address and wallet address in the form of xxxxxx.eth web address for contract storage and payment transfet. Comparing it with CNS:
+ENS has similar functions with DNS(Domain Name Service), though it doesn't offer Internet address. It expresses contract address and wallet address in the form of xxxxxx.eth web address for contract storage and payment transfer. Comparing it with CNS:
 
 - ENS maps both contract address and wallet address, so does CNS; contract abi will be empty when it's wallet address.
 - ENS has auction function, CNS does not.
@@ -45,7 +45,7 @@ ENS has similar functions with DNS(Domain Name Service), though it doesn't offer
 
 ## Core process
 
-The processes to deploy contractand call contract by SDK are:
+The processes to deploy contract and call contract by SDK are:
 
 ![](../../../images/contract_name_service/deploy_and_call.png)
 
@@ -74,7 +74,7 @@ CNS information is stored in system tables with independent ledgers. Definition 
 <tr><td>version</td><td>string</td><td>No</td><td></td><td>contract name, name and version are joint primary key</td></tr>
 <tr><td>address</td><td>string</td><td>No</td><td></td><td>contract address</td></tr>
 <tr><td>abi</td><td>string</td><td>YES</td><td></td><td>contract abi</td></tr>
-<tr><td>_status_</td><td>string</td><td>No</td><td></td><td>general fields in distrubuted storage, “0” means available, “1” means removed</td></tr>
+<tr><td>_status_</td><td>string</td><td>No</td><td></td><td>general fields in distributed storage, “0” means available, “1” means removed</td></tr>
 </table>
 
 ### Contract API
@@ -90,7 +90,7 @@ contract CNS
 ```
 
 - CNS contract is not exposed to users. It is the interaction API of SDK and CNS table.
-- insert API can wirte CNS information to blockchain, containing 4 parameters: contract name, version, addr and abi information. SDK needs to verify if the composition of name and version has been already recorded in database. Only when it's not repeated can it be written on chain for transaction. When node executing transactions, precompiled logic will Double Check the data, discard the transaction if repeated. Insert API will only increase but not modify contents in CNS table.
+- insert API can write CNS information to blockchain, containing 4 parameters: contract name, version, addr and abi information. SDK needs to verify if the composition of name and version has been already recorded in database. Only when it's not repeated can it be written on chain for transaction. When node executing transactions, precompiled logic will Double Check the data, discard the transaction if repeated. Insert API will only increase but not modify contents in CNS table.
 - selectByName API's parameter is contract name, returns all version records of this contract.
 - selectByNameAndVersion API's parameter are contract name and version, returns the unique address of this version of contract.
 
@@ -138,7 +138,7 @@ SDK developer can realize registration and query of CNS through the following 2 
 - Description：public String resolve(String contractNameAndVersion)
 - Function：inquire contract address based on contract name and version
 - Parameter：contractNameAndVersion——contract name+contract version information
-- Return：contract address, API throw exception if no contract information specified in paramters
+- Return：contract address, API throw exception if no contract information specified in parameters
 - Illustration：contractNameAndVersion splits contract name and version through `:`, SDK is defaulted to call the latest version of contract for query when lacking of version information
 
 Note：

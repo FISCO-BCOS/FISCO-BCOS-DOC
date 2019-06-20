@@ -4,7 +4,7 @@
 
 ### 1.1 DAG
 
-An acyclic directed graph is called **D**irected **A**cyclic **G**raph, or DAG. In a batch of transactions, it can recognize the mutually exclusive resource to be occupied in each transaction, and make a transaction dependency DAG according to the sequence of transaction in block and the occupation relationship of multually exclusive resource. As the picture shows below, transaction with 0 in-degree (no dependent pre-order task) can be executed parallelly. By topological sort based on the sequence of the initial transaction list in the left graphic, you can get transaction DAG in the right graphic.
+An acyclic directed graph is called **D**irected **A**cyclic **G**raph, or DAG. In a batch of transactions, it can recognize the mutually exclusive resource to be occupied in each transaction, and make a transaction dependency DAG according to the sequence of transaction in block and the occupation relationship of mutually exclusive resource. As the picture shows below, transaction with 0 in-degree (no dependent pre-order task) can be executed in parallel. By topological sort based on the sequence of the initial transaction list in the left graphic, you can get transaction DAG in the right graphic.
 
 ![](../../../images/parallel/DAG.png)
 
@@ -13,9 +13,9 @@ An acyclic directed graph is called **D**irected **A**cyclic **G**raph, or DAG. 
 ![](../../../images/parallel/architecture.png)
 Main process includes:
 
-- user directly and indirectly initiates transaction through SDK, transaction can be either parallelly executable or not;
+- user directly and indirectly initiates transaction through SDK, transaction can be either executed in parallel or not;
 - transaction enters txPool and waits to be sealed;
-- transacton gets sealed to block by Sealer and sent to BlockVerifier for verification after consensus;
+- transaction gets sealed to block by Sealer and sent to BlockVerifier for verification after consensus;
 - BlockVerifier generates transaction DAG according to the transaction list in block;
 - BlockVerifier builds the execution context and executes transaction DAG;
 - block is on chain after verified.
@@ -49,7 +49,7 @@ Note:
     - txs：parallel transactions list;
     - bool hasFinished()：return true if the DAG is executed, return false if not;
     - void executeUnit()：take out a transaction without upper level dependency and execute;
-    
+
 #### 3.1.2 Transaction DAG building process
 
 Process:
@@ -57,8 +57,8 @@ Process:
 ![](../../../images/parallel/dag_construction.png)
 
 1. take out all transaction from sealed blocks；
-2. intialize a DAG example with transactions amount as the maximum vertex amount;
-3. read all transactions in sequence. If a transaction is parallelable, analyze the collision domain and check if it collides to former transactions, if does, build dependent edge between transactions; if a transaction is not parallelable, it should be executed after all pre-order transactions are executed, and so there will be a dependent edge between it and the pre-order transactions.
+2. initialize a DAG example with transactions amount as the maximum vertex amount;
+3. read all transactions in sequence. If a transaction can be executed in parallel, analyze the collision domain and check if it collides to former transactions, if does, build dependent edge between transactions; if a transaction cannot be executed in parallel, it should be executed after all pre-order transactions are executed, and so there will be a dependent edge between it and the pre-order transactions.
 
 ### 3.2 DAG execution process
 
@@ -66,5 +66,5 @@ Process:
 
 ![](../../../images/parallel/execution.png)
 
-1. Main thread will intialize a same size thread group according to hardware coreness. If it fails to get hardware coreness, then other threads will not be created;
+1. Main thread will initialize a same size thread group according to hardware coreness. If it fails to get hardware coreness, then other threads will not be created;
 2. When DAG is still in execution, thread waits in loop to pop out 0 out-in degree transaction。 If it works, the transaction will be executed and the in-degree of its later dependent task minus 1. If transaction in-degree is minus to 0, it will be added to topLevel; if fails, then it means that DAG has finished execution and thread has been logged out.

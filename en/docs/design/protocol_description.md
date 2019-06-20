@@ -75,7 +75,7 @@ The header of v2.0.0-rc1 P2PMessage package contains 12 bytes. The basic form is
 
 | name       | type         | description                          |
 | :--------- | :----------- | :----------------------------------- |
-| lenght     | uint32_t     | Data packet length, including header and data             |
+| Length     | uint32_t     | Data packet length, including header and data             |
 | groupID    | int8_t       | Group ID, its range is 1-127                   |
 | ModuleID   | uint8_t      | Module ID，its range is 1-255                    |
 | packetType | uint16_t     | Data packet type, is the identifier of sub-protocol under the same module ID |
@@ -110,7 +110,7 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 | ModuleID (MID)   | uint16_t | model ID, ranging from 1-65535   |
 | PacketType | uint16_t     | data packet type, sub-protocol identification with same mode ID  |
 | Seq        | uint32_t     | data packet serial number, each increment itself         |
-| Data       | vector<byte> | data itseld, length length-12           |
+| Data       | vector<byte> | data itself, length length-12           |
 
 
 
@@ -125,7 +125,7 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 
 | name   | type         | description                                  |
 | :----- | :----------- | :------------------------------------------- |
-| lenght | uint32_t     | Data packet length, including header and data, up to 10M Byte |
+| length| uint32_t     | Data packet length, including header and data, up to 10M Byte |
 | type   | uint16_t     | Data packet type                                   |
 | seq    | string       | Data packet serial number, 32 bytes, introduced by SDK                |
 | result | int          | Process result                                     |

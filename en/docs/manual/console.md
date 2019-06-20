@@ -9,7 +9,7 @@ Console command consists of two parts, the instructions and the parameters relat
 - **Instruction**: instruction is an executed operation command, including blockchain status inquiry and contracts deployment and calling. And some of the instructions call the JSON-RPC interface, so they have same name as the JSON-RPC interface.
 **Use suggestions: instructions can be completed using the tab key, and support for displaying historical input commands by pressing the up and down keys.**
 
-- **Parameters related to the instruction**: parameters required by instruction call interface. Instructions to parameters and parameters to parameters are separated by spaces. The paramenters name same as JSON-RPC interface and the explanation of getting information field can be refered to [JSON-RPC API](../api.md).
+- **Parameters related to the instruction**: parameters required by instruction call interface. Instructions to parameters and parameters to parameters are separated by spaces. The parameters name same as JSON-RPC interface and the explanation of getting information field can be referred to [JSON-RPC API](../api.md).
 
 ### Common command link:
 #### Contract related commands
@@ -29,10 +29,10 @@ Console command consists of two parts, the instructions and the parameters relat
 ### Shortcut key
 - `Ctrl+A`: move cursor to the beginning of line
 - `Ctrl+D`: exit console
-- `Ctrl+E`: mouve cursor to the end of line
-- `Ctrl+R`: search for the history commands have been entered 
+- `Ctrl+E`: move cursor to the end of line
+- `Ctrl+R`: search for the history commands have been entered
 - &uarr;: browse history commands forward
-- &darr;: browse history commands backward 
+- &darr;: browse history commands backward
 
 
 ### Console response
@@ -43,12 +43,12 @@ When a console command is launched, the console will obtain the result of the co
   - When console command call the JSON-RPC interface, error code [reference here](../design/rpc.html#id6).
   - When console command call the Precompiled Service interface, error code  [reference here](../sdk/sdk.html#precompiled-service-api).
 
-## Console configuration and operation 
+## Console configuration and operation
 
 ```eval_rst
 .. important::
     Precondition：to build FISCO BCOS blockchain, please refer to `Building Chain Script <./build_chain.html>`_ or `Enterprise Tools <../enterprise_tools/index.html>`_.
- 
+
 
 ```
 ### Get console
@@ -61,7 +61,7 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 The directory structure is as follows:
 ```bash
 |-- apps # console jar package directory
-|   -- console.jar 
+|   -- console.jar
 |-- lib # related dependent jar package directory
 |-- conf
 |   |-- applicationContext-sample.xml # configuration file
@@ -76,7 +76,7 @@ The directory structure is as follows:
 |-- start.sh # console start script
 |-- get_account.sh # account generate script
 |-- sol2java.sh # development tool script for compiling solidity contract file as java contract file
-|-- replace_solc_jar.sh # a script for replacing the compiling jar package 
+|-- replace_solc_jar.sh # a script for replacing the compiling jar package
 ```
 
 #### Contract compilation tool
@@ -102,8 +102,8 @@ The directory structure is as follows:
     |   |-- org
     |       |-- com
     |           |-- fisco
-    |               |-- HelloWorld.java # the target Java file which is compiled successfully 
-    |               |-- Table.java  # the system CRUD contract interface Java file which is compiled successfully 
+    |               |-- HelloWorld.java # the target Java file which is compiled successfully
+    |               |-- Table.java  # the system CRUD contract interface Java file which is compiled successfully
     |               |-- TableTest.java  # the TableTest Java file which is compiled successfully
     ```
 
@@ -161,7 +161,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
                 <property name="allChannelConnections">
-                        <list>  <!-- each group need to configure a bean --> 
+                        <list>  <!-- each group need to configure a bean -->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
                                         <property name="groupId" value="1" /> <!-- groupID -->
                                         <property name="connectionsStr">
@@ -175,7 +175,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
         </bean>
 
         <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-                <property name="groupId" value="1" /> <!-- to connect to the group with ID 1 --> 
+                <property name="groupId" value="1" /> <!-- to connect to the group with ID 1 -->
                 <property name="orgID" value="fisco" />
                 <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
         </bean>
@@ -197,7 +197,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
     - When the console configuration file configures multiple node connections in a group, some nodes in the group may leave the group during operation. Therefore, it shows a norm which is when the console is polling, the return information may be inconsistent. It is recommended to configure a node or ensure that the configured nodes are always in the group when using the console, so that the inquired information in the group will keep consistent during the synchronization time.
 
-``` 
+```
 ### Launch console
 
 Start the console while the node is running:
@@ -209,10 +209,10 @@ $ ./start.sh
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
@@ -347,7 +347,7 @@ To run switch or s to switch to the specified group. The group number is display
 [group:1]> switch 2
 Switched to group 2.
 
-[group:2]> 
+[group:2]>
 ```
 **Note: ** For the group that needs to be switched, make sure that the information of the group is configured in `applicationContext.xml` (the initial state of this configuration file only provides the group 1 configuration) in the `console/conf` directory, the configured node ID and port in the group are correct, and the node is runing normally.
 
@@ -363,7 +363,7 @@ To run getBlockNumber to view block number.
 To run getSealerList to view the list of consensus nodes.
 
 ```text
-[group:1]> getSealerList 
+[group:1]> getSealerList
 [
     0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801,
     10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34,
@@ -372,7 +372,7 @@ To run getSealerList to view the list of consensus nodes.
 ```
 
 ### **getObserverList**
-To run getSealerList to view the list of obervered nodes.
+To run getSealerList to view the list of observer nodes.
 
 ```text
 [group:1]> getObserverList
@@ -532,27 +532,27 @@ To run getPeers to view the peers of node.
 		"IPAndPort":"127.0.0.1:50723",
 		"nodeId":"8718579e9a6fee647b3d7404d59d66749862aeddef22e6b5abaafe1af6fc128fc33ed5a9a105abddab51e12004c6bfe9083727a1c3a22b067ddbaac3fa349f7f",
 		"Topic":[
-			
+
 		]
 	},
 	{
 		"IPAndPort":"127.0.0.1:50719",
 		"nodeId":"697e81e512cffc55fc9c506104fb888a9ecf4e29eabfef6bb334b0ebb6fc4ef8fab60eb614a0f2be178d0b5993464c7387e2b284235402887cdf640f15cb2b4a",
 		"Topic":[
-			
+
 		]
 	},
 	{
 		"IPAndPort":"127.0.0.1:30304",
 		"nodeId":"8fc9661baa057034f10efacfd8be3b7984e2f2e902f83c5c4e0e8a60804341426ace51492ffae087d96c0b968bd5e92fa53ea094ace8d1ba72de6e4515249011",
 		"Topic":[
-			
+
 		]
 	}
 ]
 ```
 ### **getGroupPeers**
-To run getGroupPeers to view the list of consensus and obervered node of the group where the node is located.
+To run getGroupPeers to view the list of consensus and observer node of the group where the node is located.
 
 ```text
 [group:1]> getGroupPeers
@@ -579,7 +579,7 @@ Parameter:
 [group:1]> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 {
     "extraData":[
-        
+
     ],
     "gasLimit":"0x0",
     "gasUsed":"0x0",
@@ -604,7 +604,7 @@ Parameter:
 [group:1]> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855 true
 {
     "extraData":[
-        
+
     ],
     "gasLimit":"0x0",
     "gasUsed":"0x0",
@@ -649,7 +649,7 @@ Parameter:
 [group:1]> getBlockByNumber 1  
 {
     "extraData":[
-        
+
     ],
     "gasLimit":"0x0",
     "gasUsed":"0x0",
@@ -675,7 +675,7 @@ Parameter:
 ### **getBlockHashByNumber**
 To run getBlockHashByNumber to get hash through block number
 Parameter:
-- Block number: decimal integer. 
+- Block number: decimal integer.
 
 ```text
 [group:1]> getBlockHashByNumber 1
@@ -706,7 +706,7 @@ Parameter:
 To run getTransactionByBlockHashAndIndex to inquire transaction information through block hash and transaction index.
 Parameter:
 - Block hash: the transaction hash starting with 0x.
-- Transaction index: decimal integer. 
+- Transaction index: decimal integer.
 
 ```text
 [group:1]> getTransactionByBlockHashAndIndex 0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02 0
@@ -729,7 +729,7 @@ Parameter:
 To run getTransactionByBlockNumberAndIndex to inquire transaction information through block number and transaction index.
 Parameter:
 - Block number: decimal integer.
-- Transaction index: decimal integer. 
+- Transaction index: decimal integer.
 
 ```text
 [group:1]> getTransactionByBlockNumberAndIndex 2 0
@@ -750,7 +750,7 @@ Parameter:
 ### **getTransactionReceipt**
 To run getTransactionReceipt to inquire transaction receipt through transaction hash.
 Parameter:
-- Transaction hash: the transaction hash starting with 0x. 
+- Transaction hash: the transaction hash starting with 0x.
 - contract name: Optional. The contract name generated by transaction receipt. To use this parameter can parse and output the event log in the transaction receipt.
 - event name: optional. Event Name. To specify this parameter to output the specified event log information.
 - event index number: optional. Event index. To specify this parameter to output the event log information of the specified event index location.
@@ -917,7 +917,7 @@ Parameter:
 contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # To deploy TableTest contract
-[group:1]> deploy TableTest.sol 
+[group:1]> deploy TableTest.sol
 contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```
 
@@ -933,7 +933,7 @@ contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 Run getDeployLog to query the log information of the contract deployed by **current console** in the group. The log information includes the time of deployment contract, the group ID, the contract name, and the contract address. parameter:
 
 - Log number: optional. To return the latest log information according to the expected value entered. When the actual number is less than the expected value, it returns by the actual number. When the expected value is not given, it returns by the latest 20 log information by default.
-                           
+
 ```text
 [group:1]> getDeployLog 2
 
@@ -953,7 +953,7 @@ Parameter:
 - Contract name: the contract name of the deployment (can be suffixed with .sol).
 - Contract address: the address obtained by the deployment contract. The contract address can omit the prefix 0. For example, 0x000ac78 can be abbreviated as 0xac78.
 - Contract interface name: the called interface name.
-- Parameter: determined by contract interface parameters. 
+- Parameter: determined by contract interface parameters.
 
 **Parameters are separated by spaces. The string and byte type parameters need to be enclosed in double quotes; array parameters need to be enclosed in brackets, such as [1,2,3]; array is a string or byte type and needs to be enclosed in double quotation marks, such as ["alice", "bob"]. Note that there are no spaces in the array parameters; boolean types are true or false. **
 
@@ -1038,7 +1038,7 @@ Parameter:
 - Contract name: deployable contract name.
 - Contract version number: (optional) deployable contract version number.
 ```text
-[group:1]> queryCNS HelloWorld.sol 
+[group:1]> queryCNS HelloWorld.sol
 ---------------------------------------------------------------------------------------------
 |                   version                   |                   address                   |
 |                     1.0                     | 0x3554a56ea2905f366c345bd44fa374757fb4696a  |
@@ -1116,7 +1116,7 @@ To run setSystemConfigByKey to set the system configuration in key-value pairs. 
 * tx_count_limit: block maximum number of packaged transactions
 * tx_gas_limit: The maximum number of gas allowed to be consumed
 
-Parameters: 
+Parameters:
 
 - key
 - value
@@ -1155,7 +1155,7 @@ Run grantPermissionManager to grant the account's chain administrator privileges
 ### **listPermissionManager**
 To run listPermissionManager to inquire the list of permission records with administrative privileges.
 ```text
-[group:1]> listPermissionManager 
+[group:1]> listPermissionManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1194,7 +1194,7 @@ Run listUserTableManager to query the account's table that has writting permissi
 parameter:
 - table name
 ```text
-[group:1]> listUserTableManager t_test 
+[group:1]> listUserTableManager t_test
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1202,9 +1202,9 @@ parameter:
 ```
 ### **revokeUserTableManager**
 
-Run revokeUserTableManager to revoke the account's writting permission from the user table.
+Run revokeUserTableManager to revoke the account's writing permission from the user table.
 
-parameter: 
+parameter:
 
 - table name
 - account address
@@ -1219,7 +1219,7 @@ parameter:
 ### **grantDeployAndCreateManager**
 Run grantDeployAndCreateManager to grant the account's permission of deployment contract and user table creation.
 
-parameter: 
+parameter:
 
 - account address
 ```text
@@ -1234,7 +1234,7 @@ parameter:
 Run listDeployAndCreateManager to query the account's permission of deployment contract and user table creation.
 
 ```text
-[group:1]> listDeployAndCreateManager 
+[group:1]> listDeployAndCreateManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1244,7 +1244,7 @@ Run listDeployAndCreateManager to query the account's permission of deployment c
 
 Run revokeDeployAndCreateManager to revoke the account's permission of deployment contract and user table creation.
 
-parameter: 
+parameter:
 
 - account address
 ```text
@@ -1256,7 +1256,7 @@ parameter:
 ```
 ### **grantNodeManager**
 
-Run grantNodeManager to grant the account's node management permission. 
+Run grantNodeManager to grant the account's node management permission.
 
 parameter:
 
@@ -1273,7 +1273,7 @@ parameter:
 Run the listNodeManager to query the list of accounts that have node management.
 
 ```text
-[group:1]> listNodeManager 
+[group:1]> listNodeManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1294,7 +1294,7 @@ parameter:
 ```
 ### **grantCNSManager**
 
-Run grantCNSManager to grant the account's permission of using CNS. 
+Run grantCNSManager to grant the account's permission of using CNS.
 parameter:
 
 - account address
@@ -1308,9 +1308,9 @@ parameter:
 ### **listCNSManager**
 
 Run listCNSManager to query the list of accounts that have CNS.
-                                  
+
 ```text
-[group:1]> listCNSManager 
+[group:1]> listCNSManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1318,7 +1318,7 @@ Run listCNSManager to query the list of accounts that have CNS.
 ```
 ### **revokeCNSManager**
 
-Run revokeCNSManager to revoke the account's permission of using CNS. 
+Run revokeCNSManager to revoke the account's permission of using CNS.
 parameter:
 - account address
 ```text
@@ -1330,7 +1330,7 @@ parameter:
 ```
 ### **grantSysConfigManager**
 
-Run grantSysConfigManager to grant the account's permission of modifying system parameter. 
+Run grantSysConfigManager to grant the account's permission of modifying system parameter.
 parameter:
 
 - account address
@@ -1344,9 +1344,9 @@ parameter:
 ### **listSysConfigManager**
 
 Run listSysConfigManager to query the list of accounts that have modified system parameters.
-                                  
+
 ```text
-[group:1]> listSysConfigManager 
+[group:1]> listSysConfigManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1354,7 +1354,7 @@ Run listSysConfigManager to query the list of accounts that have modified system
 ```
 ### **revokeSysConfigManager**
 
-Run revokeSysConfigManager to revoke the account's permission of modifing system parameter. parameter:
+Run revokeSysConfigManager to revoke the account's permission of modifying system parameter. parameter:
 
 - account address
 ```text
@@ -1483,10 +1483,10 @@ Remove OK, 1 row affected.
 # Install the default Java version (Java 8 version or above)
 sudo apt install -y default-jdk
 # query Java version
-java -version 
+java -version
 ```
 
-### Install Java in CentOS environment 
+### Install Java in CentOS environment
 ```bash
 # To inquire the original Java version of centos
 $ rpm -qa|grep java
@@ -1497,16 +1497,16 @@ $ java -version
 # To create new folder to install Java 8 version or above. To put the downloaded jdk in the software directory
 # Download Java 8 version or above from openJDK official website (https://jdk.java.net/java-se-ri/8) or Oracle official website (https://www.oracle.com/technetwork/java/javase/downloads/index.html). For example, to download jdk-8u201-linux-x64.tar.gz
 $ mkdir /software
-# To unzip jdk 
+# To unzip jdk
 $ tar -zxvf jdk-8u201-linux-x64.tar.gz
 # To configure the Java environment and edit the /etc/profile file.
-$ vim /etc/profile 
+$ vim /etc/profile
 # After opening the file, to enter the following three sentences into the file and exit
 export JAVA_HOME=/software/jdk-8u201-linux-x64.tar.gz
-export PATH=$JAVA_HOME/bin:$PATH 
+export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 # profile takes effect
-$ source /etc/profile 
-# To inquire the Java version. If the result shows the version you just downloaded, the installation is successful. 
-java -version 
+$ source /etc/profile
+# To inquire the Java version. If the result shows the version you just downloaded, the installation is successful.
+java -version
 ```

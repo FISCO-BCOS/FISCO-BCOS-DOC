@@ -23,7 +23,7 @@ Usage:
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specificd version binary
+    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specified version binary
     -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
@@ -41,10 +41,10 @@ e.g
 
 ## Option introduction
 
-- **`l`option:** 
+- **`l`option:**
 Use to specify the chain to be generated and the number of nodes under each IP, separated by commas. The script generates configuration file of corresponding node according to the input parameters. The port number of each node is incremented from 30300 by default. All nodes belong to the same organization and Group.
 
-- **`f`option** 
+- **`f`option**
     + Use to generate node according to configuration file. It supports more customization than `l` option.
     + Split by row. Each row represents a server, in the format of `IP:NUM AgencyName GroupList`. Items in each line are separated by spaces, and there must be **no blank lines**.
     + `IP:NUM` represents the IP address of the machine and the number of nodes on the machine.`AgencyName`represents the name of the institution to specifies the institution certificate to use. `GroupList` represents the group that the generated node belong to, split by`,`. For example, `192.168.0.1:2 agency1 1,2` represents that a machine with `ip` which is `192.168.0.1` exists two nodes. For example, 192.168.0.1:2 agency1 1,2 represents that there are two nodes on the machine with ip 192.168.0.1. These two nodes belong to agency `agency1` and belong to group1 and group2.
@@ -72,7 +72,7 @@ is used to specify **full path** where `fisco-bcos` binary is located.Script wil
 # download the latest release binary from GitHub to generate native 4 nodes
 $ bash build_chain.sh -l "127.0.0.1:4"
 # use bin/fisco-bcos binary to generate native 4 nodes
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
+$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 ```
 
 - **`o`option[**Optional**]**
@@ -147,7 +147,7 @@ nodes/
 │   │   ├── conf # configuration folder
 │   │   │   ├── ca.crt # chain root certificate
 │   │   │   ├── group.1.genesis # the initialized configuration of group1, the file cannot be changed
-│   │   │   ├── group.1.ini # the configuration file of group1 
+│   │   │   ├── group.1.ini # the configuration file of group1
 │   │   │   ├── node.crt # node certificate
 │   │   │   ├── node.key # node private key
 │   │   │   ├── node.nodeid # node id, represented by hexadecimal of public key
@@ -207,7 +207,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 ```
 
-### Multi-server and muti-group
+### Multi-server and multi-group
 
 Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../tutorial/group_use_cases.md).
 

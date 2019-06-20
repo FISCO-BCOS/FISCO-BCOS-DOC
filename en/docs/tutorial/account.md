@@ -1,6 +1,6 @@
 # Create and manage accounts
 
-FISCO BCOS uses accounts to identify and distinguish each individual user. In a blockchain system by using public and private key, each account corresponds to a pair of public and private keys. The account named by the address string calculated by the secure one-way algorithm such as public keys to hash, that is **account address**. For distinguishing from the address of samrt contract and other historical reasons, the account address is often referred to as the **external account address**. The private key only known by user corresponds to the password in the traditional authentication model. Users need to prove that they owns the private key of the corresponding account through secure cryptographic protocol for claiming their ownership of the account, and performing some sensitive account operations.
+FISCO BCOS uses accounts to identify and distinguish each individual user. In a blockchain system by using public and private key, each account corresponds to a pair of public and private keys. The account named by the address string calculated by the secure one-way algorithm such as public keys to hash, that is **account address**. For distinguishing from the address of smart contract and other historical reasons, the account address is often referred to as the **external account address**. The private key only known by user corresponds to the password in the traditional authentication model. Users need to prove that they owns the private key of the corresponding account through secure cryptographic protocol for claiming their ownership of the account, and performing some sensitive account operations.
 
 
 
@@ -12,7 +12,7 @@ FISCO BCOS uses accounts to identify and distinguish each individual user. In a 
 
 In this article we will specifically introduce the creation, storage and use of accounts. Readers are required to have a certain Linux operating basis.
 
-FISCO BCOS provides script and Web3SDK for creating account, and provides Web3SDK and console for storing account private key. Users can choose to store the account private key as a file in PEM or PKCS12 format according to their requirment. PEM format uses plaintext to store private key, and PKCS12 uses password encryption provided by users to store private key.
+FISCO BCOS provides script and Web3SDK for creating account, and provides Web3SDK and console for storing account private key. Users can choose to store the account private key as a file in PEM or PKCS12 format according to their requirement. PEM format uses plaintext to store private key, and PKCS12 uses password encryption provided by users to store private key.
 
 
 ## Account creation
@@ -88,13 +88,13 @@ MAC verified OK
 //create normal account
 EncryptType.encryptType = 0;
 //create national cryptography account, which uses for sending transaction to national blockchain node
-// EncryptType.encryptType = 1; 
+// EncryptType.encryptType = 1;
 Credentials credentials = GenCredential.create();
 //account address
 String address = credentials.getAddress();
-//account private key 
+//account private key
 String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
-//account public key 
+//account public key
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
 
@@ -171,7 +171,7 @@ P12Manager p12 = context.getBean(P12Manager.class);
 
 //provide password to get ECKeyPair. The password is specified when producing p12 account file
 ECKeyPair p12KeyPair = p12.getECKeyPair(p12.getPassword());
-			
+
 //output the private key and public key in hex string
 System.out.println("p12 privateKey: " + p12KeyPair.getPrivateKey().toString(16));
 System.out.println("p12 publicKey: " + p12KeyPair.getPublicKey().toString(16));
@@ -209,7 +209,7 @@ System.out.println("PEM Address: " + credentialsPEM.getAddress());
 
 ## Account address calculation
 
-The account address of FISCO BCOS is calculated by the ECDSA public key. The hexadecimal of ECDSA public key represents the calculation of keccak-256sum hash, and the hexadecimal of the last 20 bytes of the calculaiton result is taken as the account address. Each byte requires two hexadecimal to represent, so the length of account address is 40. FISCO BCOS's account address is compatible with Ethereum.
+The account address of FISCO BCOS is calculated by the ECDSA public key. The hexadecimal of ECDSA public key represents the calculation of keccak-256sum hash, and the hexadecimal of the last 20 bytes of the calculation result is taken as the account address. Each byte requires two hexadecimal to represent, so the length of account address is 40. FISCO BCOS's account address is compatible with Ethereum.
 
 Note: keccak-256sum is different from `SHA3`. For details to refer to [here](https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use).
 

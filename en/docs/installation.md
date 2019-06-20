@@ -16,7 +16,7 @@ This section takes the construction of single group FISCO BCOS chain as an examp
 
 - Installation dependence
 
-`build_chain.sh` script depand on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, to executes `brew install openssl curl`.
+`build_chain.sh` script depend on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, to executes `brew install openssl curl`.
 
 ```bash
 sudo apt install -y openssl curl
@@ -83,7 +83,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 bash nodes/127.0.0.1/start_all.sh
 ```
 
-Successful startup will output a response similar to the following, otherwise, please use `netstat -an | grep tcp` to check whather the machine's `30300~30303, 20200~20203, 8545~8548` ports are occupied.
+Successful startup will output a response similar to the following, otherwise, please use `netstat -an | grep tcp` to check whether the machine's `30300~30303, 20200~20203, 8545~8548` ports are occupied.
 
 ```bash
 try to start node0
@@ -98,7 +98,7 @@ try to start node3
 
 ### Check process
 
-- Execute the following command to check whather the process is started
+- Execute the following command to check whether the process is started
 
 ```bash
 ps -ef | grep -v grep | grep fisco-bcos
@@ -129,7 +129,7 @@ info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
 info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
 ```
 
-- Execute the following command to check whather it is in consensus
+- Execute the following command to check whether it is in consensus
 
 ```bash
 tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
@@ -167,10 +167,10 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 .. important::
 
   - if the console has been configured correctly, but it reports the following exception when starting console in CentOS system:
-    
+
     Failed to connect to the node. Please check the node status and the console configuration.
 
-   this is caused by the in-built JDK version of CentOS system(who will lead to verification failure of console and nodes). Please download and install Java 8 or above version from `OpenJDK official website <https://jdk.java.net/java-se-ri/8>`_ or `Oracle offcial website <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ (for detailed installation steps please check `Additional <manual/console.html#java>`_ ), and start console after finishing installation.
+   this is caused by the in-built JDK version of CentOS system(who will lead to verification failure of console and nodes). Please download and install Java 8 or above version from `OpenJDK official website <https://jdk.java.net/java-se-ri/8>`_ or `Oracle official website <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ (for detailed installation steps please check `Additional <manual/console.html#java>`_ ), and start console after finishing installation.
 
 ```
 
@@ -235,7 +235,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ### HelloWorld contract
 
-HelloWorld contract offers 2 interfaces which are `get()` and `set()` and are used to aquire/set contract variety `name`. The contract content is as below:
+HelloWorld contract offers 2 interfaces which are `get()` and `set()` and are used to acquire/set contract variety `name`. The contract content is as below:
 
 ```solidity
 pragma solidity ^0.4.24;
@@ -295,4 +295,3 @@ Hello, FISCO BCOS
 **Note:** To deploy contract can also specify the contract version number of the deployment through the `deployByCNS` command, using method [reference here](manual/console.html#deploybycns). To call contract via the `callByCNS` command, using the method [reference here](manual/console.html#callbycns).
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
-

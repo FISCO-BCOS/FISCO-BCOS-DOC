@@ -7,9 +7,9 @@ return version information of node
 ### Parameter        
 no          
 ### Return value          
-- `object` - version informaiton, fields:
+- `object` - version information, fields:
     - `Build Time`: `string` - compile time            
-    - `Build Type`: `string` - complie machine environment           
+    - `Build Type`: `string` - compile machine environment           
     - `FISCO-BCOS Version`: `string` - FISCO BCOS version            
     - `Git Branch`: `string` - version branch            
     - `Git Commit Hash`: `string` - the newest commit hash of version           
@@ -96,11 +96,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id"
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
-        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772", 
-        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801", 
+        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772",
+        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801",
         "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73"
     ]
 }
@@ -119,8 +119,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
         "10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34"
     ]
@@ -138,7 +138,7 @@ return consensus status information of the specific group
    -  `allowFutureBlocks`: `bool` - allow future blocks           
    -  `cfgErr`: `bool` - configure errors            
    -  `connectedNodes`: `unsigned int` - connected nodes            
-   -  `consensusedBlockNumber`: `unsigned int` - the newest consensused block number            
+   -  `consensusedBlockNumber`: `unsigned int` - the newest consensus block number            
    -  `currentView`: `unsigned int` - the current view            
    -  `groupId`: `unsigned int` - group ID            
    -  `highestblockHash`: `string` - the hash of the highest block            
@@ -175,7 +175,7 @@ return consensus status information of the specific group
     - `accountType`: `unsigned int` - account type            
     - `allowFutureBlocks`: `bool` - allow future blocks            
     - `cfgErr`: `bool` - configure error                        
-    - `consensusedBlockNumber`: `unsigned int` - the newest consensused block number            
+    - `consensusedBlockNumber`: `unsigned int` - the newest consensus block number            
     - `groupId`: `unsigned int` - group ID            
     - `highestblockHash`: `string` - hash of the newest block            
     - `highestblockNumber`: `unsigned int` - the highest block number           
@@ -306,9 +306,9 @@ return the consensus status information of the specific group
     - `peers`: `array` - connected p2p nodes in the specific group, fields of node information are:
         - `blockNumber`: `unsigned int` - the newest block number            
         - `genesisHash`: `string` - hash of genesis block            
-        - `latestHash`: `string` - hash of the newst block            
+        - `latestHash`: `string` - hash of the newest block            
         - `nodeId`: `string` - node ID           
-       
+
 - Example
 ```
 // Request
@@ -358,7 +358,7 @@ return connected p2p node information
     - `IPAndPort`: `string` - IP and port of connected node            
     - `nodeId`: `string` - node ID            
     - `Topic`: `array` - Topic information followed by node            
-      
+
 - Example          
 ```
 // Request
@@ -389,12 +389,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 }
 ```
 ## getGroupPeers
-return consensus node and obeserver node list in specific group         
+return consensus node and observer node list in specific group         
 ### Parameter          
 - `groupID`: `unsigned int` - group ID           
 ### Return value          
 - `array` - consensus node and observer node ID list     
-        
+
 - Example          
 ```
 // Request
@@ -402,12 +402,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
-        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801", 
-        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772", 
-        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73", 
+        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801",
+        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772",
+        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73",
         "10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34"
     ]
 }
@@ -426,12 +426,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id"
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
-        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801", 
-        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772", 
-        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73", 
+        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801",
+        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772",
+        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73",
         "10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34"
     ]
 }
@@ -441,7 +441,7 @@ return belonged group ID list
 ### Parameter          
 no       
 ### Return value          
-- `array` - group ID list 
+- `array` - group ID list
 
 - Example         
 ```
@@ -470,12 +470,12 @@ return block information inquired by block hash
     - `logsBloom`: `string` - bloom filter value of log    
     - `number`: `string` - block height               
     - `parentHash`: `string` - hash of parent block      
-    - `sealer`: `string` - consens node sequence number
+    - `sealer`: `string` - consensus node sequence number
     - `sealerList`: `array` - consensus nodes list      
     - `stateRoot`: `string` - hash of state root              
     - `timestamp`: `string` - time stamp     
     - `transactions`: `array` - transaction list, when `includeTransactions` is `false`, it shows the hash of transaction; when `includeTransactions` is `true`, it shows transaction details (detail fields please check [getTransactionByHash](./api.html#gettransactionbyhash))
-              
+
 - Example
 ```
 // Request
@@ -560,7 +560,7 @@ return block information inquired by block number
 - `includeTransactions`: `bool` - include transactions ("true" shows transaction details; "false" shows the hash of transaction only)         
 ### Return value          
 please check [getBlockByHash](./api.html#getblockbyhash)  
-  
+
 - Example          
 ```
 // Request
@@ -642,7 +642,7 @@ please see [getTransactionByHash](./api.html#gettransactionbyhash)
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 ```
-see result in [getTransactionByHash](./api.html#gettransactionbyhash) 
+see result in [getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionByBlockNumberAndIndex
 return transaction information inquired by block number and transaction sequence number
@@ -678,7 +678,7 @@ return transaction receipt inquired by transaction hash
     - `to`: `string` - address of receiver, for creating contract, return null
     - `transactionHash`: `string` - transaction hash          
     - `transactionIndex`: `string` - transaction sequence number
-         
+
 - Example          
 ```
 // Request
@@ -832,8 +832,8 @@ execute a request that can be returned with result instantly regardless of conse
 - `object`: - request information, fields are:
     - `from`: `string` - address of sender  
     - `to`: `string` - address of receiver
-    - `value`: `string` - (optional) transfer value 
-    - `data`: `string` - (optional) code parameter. You can read the coding convention in [Ethereum Contract ABI](https://solidity.readthedocs.io/en/develop/abi-spec.html) 
+    - `value`: `string` - (optional) transfer value
+    - `data`: `string` - (optional) code parameter. You can read the coding convention in [Ethereum Contract ABI](https://solidity.readthedocs.io/en/develop/abi-spec.html)
 
 ### Return value          
 - `string` - executed result           
@@ -872,7 +872,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 }
 
 // RC2 Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8d3a003922ee720bb7445e3a914d8ab8f507d1a647296d563100e49548d83fd98865c8411e1a3008411e1a3008201f894d6c8a04b8826b0a37c6d4aa0eaa8644d8e35b79f80a466c9913900000000000000000000000000000000000000000000000000000000000000040101a466c9913900000000000000000000000000000000000000000000000000000000000000041ba08e0d3fae10412c584c977721aeda88df932b2a019f084feda1e0a42d199ea979a016c387f79eb85078be5db40abe1670b8b480a12c7eab719bedee212b7972f775"],"id":1}' http://127.0.0.1:8545 |jq 
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8d3a003922ee720bb7445e3a914d8ab8f507d1a647296d563100e49548d83fd98865c8411e1a3008411e1a3008201f894d6c8a04b8826b0a37c6d4aa0eaa8644d8e35b79f80a466c9913900000000000000000000000000000000000000000000000000000000000000040101a466c9913900000000000000000000000000000000000000000000000000000000000000041ba08e0d3fae10412c584c977721aeda88df932b2a019f084feda1e0a42d199ea979a016c387f79eb85078be5db40abe1670b8b480a12c7eab719bedee212b7972f775"],"id":1}' http://127.0.0.1:8545 |jq
 
 // RC2 Result
 {
@@ -885,7 +885,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 // RC1 Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:8545 |jq
 // RC2 Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq 
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq
 ```
 
 ## Error codes
@@ -969,7 +969,7 @@ FISCO BCOS RPC error codes and their definitions:
 | 0      | success                                         |
 | -50000  | permission denied                               |
 | -50001  | table name already exist                        |
-| -50100  | unknow function call                            |
+| -50100  | unknown function call                            |
 | -50101  | table does not exist                            |
 | -51000  | table name and address already exist            |
 | -51001  | table name and address does not exist           |

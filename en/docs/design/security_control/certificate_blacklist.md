@@ -30,7 +30,7 @@ SSL two-way certificate is implemented in the bottom level of FISCO BCOS. During
 ## Effective area
 
 - CA blacklist has evident influence in P2P node connection in network level and AMOP function by **invalidation**;
-- CA blacklist has potential influence in consens and syncing in ledger level by **interfering message/data transfer**.
+- CA blacklist has potential influence in consensus and syncing in ledger level by **interfering message/data transfer**.
 
 ## Config format
 

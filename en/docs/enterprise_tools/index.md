@@ -13,7 +13,7 @@
 **Design background**
 
 There cannot be exhaustive trust between equal agencies in consortium chain, where e-certificate will be needed for nodes to authenticate each other’s identity.
-Certificate is the identity documentation for each agency. And the generation of certificate depends on its own public & private key pair. Private key represents its identity information that is private and strictly confidential. In the process of activation and operation, node signs on the data packet with private key in order to fulfill identity authentication. Provided that an agency’s private key is revealed, anyone else can pretend as the owner and get authorized without affirmation of this agency.
+Certificate is the identity documentation for each agency. And the generation of certificate depends on its own public & private key pair. Private key represents its identity information that is private and strictly confidential. In the process of activation and operation, node signs on the data packet with private key in order to fulfil identity authentication. Provided that an agency’s private key is revealed, anyone else can pretend as the owner and get authorized without affirmation of this agency.
 
 ```eval_rst
 .. important:

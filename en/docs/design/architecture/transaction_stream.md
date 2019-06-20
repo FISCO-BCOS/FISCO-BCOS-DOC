@@ -2,7 +2,7 @@
 
 ## 1 Solution
 
-User sends RPC request to node through SDK or curl command to start transaction. Node adds transaction to TxPool after receiving it. Sealer will constantly take out transactions from TxPool and pack them into block through certain conditions. After the blocks are generated, they will be verified as consensus by concensus engine. If there are no mistakes and consensus is made among nodes, the blocks will be taken on chain. When node using sync model to download missing blocks from other nodes, the execution and verification on blocks will be conducted also. 
+User sends RPC request to node through SDK or curl command to start transaction. Node adds transaction to TxPool after receiving it. Sealer will constantly take out transactions from TxPool and pack them into block through certain conditions. After the blocks are generated, they will be verified as consensus by consensus engine. If there are no mistakes and consensus is made among nodes, the blocks will be taken on chain. When node using sync model to download missing blocks from other nodes, the execution and verification on blocks will be conducted also.
 
 ## 2 Structure
 The overall structure is as below:
@@ -13,7 +13,7 @@ The overall structure is as below:
 
 **TxPool**: transaction pool, the memory area maintained by node itself for temporarily saving recerived transactions
 
-**Sealer**: block packager 
+**Sealer**: block packager
 
 **Consensus Engine**: consensus engine
 
@@ -28,7 +28,7 @@ The overall structure is as below:
 main relations are as followed:
 
  1. User starts transaction through SDK or curl command to the connected node.
- 2. When node receives transaction, if the current TxPool is not full, node adds transaction to TxPool and propagates to connected nodes; otherwise node discards transaction and output warning notification. 
+ 2. When node receives transaction, if the current TxPool is not full, node adds transaction to TxPool and propagates to connected nodes; otherwise node discards transaction and output warning notification.
  3. Sealer constantly draws transactions from TxPool and packs them into blocks and sends to consensus engine.
  4. Consensus engine calls BlockVerifier to verify block and do consensus process. BlockVerifier calls Executor to execute every transaction within blocks. When the block is verified and is commonly agreed by nodes within network, consensus engine will send it to Blockchain.
  5. BlockChain receives block and checks the information (block number, etc.), then inputs the block data and table date to bottom storage and moves the block on chain.
@@ -43,6 +43,6 @@ Executive engine executes single transaction based on Executive Context, which i
 
 After the EVM contract is created and saved in table _sys_contracts_ of executive context, the address of EVM contract will auto-increment in global state starting from 0x1000001 (customizable). During the execution of EVM contract, Storage variable is saved in table _contract_data_(contract address)_ of executive context.
 
-Precompiled contract can be devided into permanent type and temporary type: (1) permanent precompiled contract, integrated in bottom or components with fixed address; (2) temporary precompiled contract, dynamically created during execution of EVM contract and precompiled contract, the address will auto-increment in executive context starting from 0x1000 and ending at 0x1000000. Temporary precompiled contract is only valid in executive context. Precompiled contract has no Storage variable but has to operate table with process like below:
+Precompiled contract can be divided into permanent type and temporary type: (1) permanent precompiled contract, integrated in bottom or components with fixed address; (2) temporary precompiled contract, dynamically created during execution of EVM contract and precompiled contract, the address will auto-increment in executive context starting from 0x1000 and ending at 0x1000000. Temporary precompiled contract is only valid in executive context. Precompiled contract has no Storage variable but has to operate table with process like below:
 
 ![](../../../images/architecture/precompiled_contract_execution.png)

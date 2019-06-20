@@ -70,10 +70,10 @@ FISCO BCOS certificate generation process is as follows. Users can also use the 
 
 ### Agency certificate generation
 
-* Agency uses openssl command to generate agency private key `agecy.key`
+* Agency uses openssl command to generate agency private key `agency.key`
 * Agency uses private key `agency.key` to get agency certificate request file `agency.csr`, and sends `agency.csr` to alliance chain committee.
 * Alliance chain committee uses chain private key `ca.key` to generate the agency certificate `agency.crt` according to the agency certificate request file `agency.csr`. And send agency certificate `agency.crt` to corresponding agency.
 
 ### Node/SDK certificate generation
 
-* The node generates the private key `node.key` and the certificate request file `node.csr`. The agency administrator uses the private key `agency.key` and the certificate request file `node.csr` to issue the certificate `node.crt` to the node/SDK. 
+* The node generates the private key `node.key` and the certificate request file `node.csr`. The agency administrator uses the private key `agency.key` and the certificate request file `node.csr` to issue the certificate `node.crt` to the node/SDK.

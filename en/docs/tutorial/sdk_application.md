@@ -1,7 +1,7 @@
 # Build the first blockchain application
 
 
-In this chapter we will introduce a whole process of business application scenario development based on FISCO BCOS blockchain. The introduce includes business scenario analysis, contract design implementation, contract compilation, and blockchain delopment. Finally, we introduce an application module implementation which is to implement calling access to the contract on blockchain through the Web3SDK we provide.
+In this chapter we will introduce a whole process of business application scenario development based on FISCO BCOS blockchain. The introduce includes business scenario analysis, contract design implementation, contract compilation, and blockchain development. Finally, we introduce an application module implementation which is to implement calling access to the contract on blockchain through the Web3SDK we provide.
 
 This tutorial requires user to be familiar with the Linux operating environment, has the basic skills of Java development, is able to use the Gradle tool, and is familiar with [Solidity syntax](https://solidity.readthedocs.io/en/latest/). Through the tutorial, you will learn the following:
 
@@ -51,7 +51,7 @@ According to the design goals of the business, it is necessary to implement asse
 
 ```js
 // asset amount query
-function select(string account) public constant returns(int256, uint256) 
+function select(string account) public constant returns(int256, uint256)
 // asset registration
 function register(string account, uint256 amount) public returns(int256)
 // asset transfer
@@ -69,14 +69,14 @@ contract Asset {
     // event
     event RegisterEvent(int256 ret, string account, uint256 asset_value);
     event TransferEvent(int256 ret, string from_account, string to_account, uint256 amount);
-    
+
     constructor() public {
         // create a t_asset table in the constructor
         createTable();
     }
 
     function createTable() private {
-        TableFactory tf = TableFactory(0x1001); 
+        TableFactory tf = TableFactory(0x1001);
         // asset management table, key : account, field : asset_value
         // |  asset account(primary key)      |     asset amount       |
         // |-------------------- |-------------------|
@@ -119,7 +119,7 @@ contract Asset {
 
     /*
     description : asset registration
-    parameter ： 
+    parameter ：
             account : asset account
             amount  : asset amount
     return value：
@@ -135,7 +135,7 @@ contract Asset {
         (ret, temp_asset_value) = select(account);
         if(ret != 0) {
             Table table = openTable();
-            
+
             Entry entry = table.newEntry();
             entry.set("account", account);
             entry.set("asset_value", int256(asset_value));
@@ -160,7 +160,7 @@ contract Asset {
 
     /*
     description : asset transfer
-    parameter ： 
+    parameter ：
             from_account : transferred asset account
             to_account ：received asset account
             amount ： transferred amount
@@ -178,7 +178,7 @@ contract Asset {
         int256 ret = 0;
         uint256 from_asset_value = 0;
         uint256 to_asset_value = 0;
-        
+
         // whather transferred asset account exists?
         (ret, from_asset_value) = select(from_account);
         if(ret != 0) {
@@ -203,7 +203,7 @@ contract Asset {
             // amount of transferred asset account is insufficient
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
-        } 
+        }
 
         if (to_asset_value + amount < to_asset_value) {
             ret_code = -4;
@@ -337,7 +337,7 @@ The directory structure of the asset-app project is as follows:
 |   |                                      |-- AssetClient.java
 |   |                               |-- contract // place the Java contract class
 |   |                                      |-- Asset.java
-|   |-- test 
+|   |-- test
 |       |-- resources // store code resource files
 |           |-- applicationContext.xml // project configuration file
 |           |-- ca.crt // blockchain ca certificate
@@ -390,7 +390,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 -   applicationContext.xml  
 
-**Note:** 
+**Note:**
 
 If the rpc_listen_ip set in the chain is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration does not need to be modified. If the configuration of blockchain node is changed, you need to modify `applicationContext.xml`. For details, please refer to [SDK Usage Document](../sdk/sdk.html#spring).
 
@@ -398,7 +398,7 @@ If the rpc_listen_ip set in the chain is 127.0.0.1 or 0.0.0.0 and the channel_po
 
 We have introduced how to introduce and configure Web3SDK in your own project. In this section, we will introduce how to call a contract through Java program, as well as use an example asset management to explain. The asset-app project already contains the full source code of the sample, which users can use directly. Now we introduces the design and implementation of the core class `AssetClient`.
 
-`AssetClient.java`: to implement contract deployment and calling by calling `Asset.java`. The path is `/src/main/java/org/fisco/bcos/asset/client`. The initialization and the calling process are carrying out in this class. 
+`AssetClient.java`: to implement contract deployment and calling by calling `Asset.java`. The path is `/src/main/java/org/fisco/bcos/asset/client`. The initialization and the calling process are carrying out in this class.
 
 
 -   initialization  
@@ -465,36 +465,36 @@ After the compilation is successful, `dist` directory will be generated under th
 # enter dist directory
 $ cd dist
 $ bash asset_run.sh deploy
-Deploy Asset succesfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
+Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
 ```
 
 -   register asset
 
 ```bash
 $ bash asset_run.sh register Alice 100000
-Register account succesfully => account: Alice, value: 100000 
+Register account successfully => account: Alice, value: 100000
 $ bash asset_run.sh register Bob 100000
-Register account succesfully => account: Bob, value: 100000 
+Register account successfully => account: Bob, value: 100000
 ```
 
 -   query asset
 
 ```bash
 $ bash asset_run.sh query Alice              
-account Alice, value 100000 
+account Alice, value 100000
 $ bash asset_run.sh query Bob              
-account Bob, value 100000 
+account Bob, value 100000
 ```
 
 -   transfer asset
 
 ```bash
 $ bash asset_run.sh transfer Alice Bob  50000
-Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000 
-$ bash asset_run.sh query Alice 
-account Alice, value 50000 
+Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000
+$ bash asset_run.sh query Alice
+account Alice, value 50000
 $ bash asset_run.sh query Bob
-account Bob, value 150000 
+account Bob, value 150000
 ```
 
 **Summary:** By now, we have built an application based on FISCO BCOS alliance chain through contract development, contract compilation, SDK configuration and business development.

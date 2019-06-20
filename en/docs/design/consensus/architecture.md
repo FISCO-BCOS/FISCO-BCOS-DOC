@@ -14,4 +14,4 @@ Sealer thread takes transaction out from txPool and seal transactions based on t
 
 **Engine thread**
 
-Engine thread receives the new block locally or through internet, and finishs consensus process according to the received consensus information, and finally writes the consensused new block to blockchain, after which the transaction will be deleted from txPool. The engine threads of PBFT and Raft are respectively PBFTEngine and RaftEngine.
+Engine thread receives the new block locally or through internet, and finishes consensus process according to the received consensus information, and finally writes the consensused new block to blockchain, after which the transaction will be deleted from txPool. The engine threads of PBFT and Raft are respectively PBFTEngine and RaftEngine.

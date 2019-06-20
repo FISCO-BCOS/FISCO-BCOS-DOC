@@ -1,6 +1,6 @@
 # Configuration files and configuration items
 
-FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers, whose data among them are isolated from each other. And the transaction processing among groups are alos isolated. Each node includes a main configuration `config.ini` and multiple ledger configurations `group.group_id.genesis`, `group.group_id.ini`.
+FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers, whose data among them are isolated from each other. And the transaction processing among groups are also isolated. Each node includes a main configuration `config.ini` and multiple ledger configurations `group.group_id.genesis`, `group.group_id.ini`.
 
 - `config.ini`: The main configuration file, mainly configures with RPC, P2P, SSL certificate, ledger configuration file path, compatibility and other information.
 
@@ -35,7 +35,7 @@ The following table is a recommended configuration for single-group and single-n
 
 ## Main configuration file config.ini
 
-`config.ini` uses `ini` format. It mainly includes the configuration items like ** rpc, p2p, group, secure and log **. 
+`config.ini` uses `ini` format. It mainly includes the configuration items like ** rpc, p2p, group, secure and log **.
 
 
 ```eval_rst
@@ -144,13 +144,13 @@ FISCO BCOS supports light weight [easylogging++](https://github.com/zuhd-org/eas
 - `log_path`:log file patch.
 - `level`: log level, currently includes 5 levels which are `trace`、`debug`、`info`、`warning`、`error`.After setting a certain log level, the log file will be entered with a log equal to or larger than this level.The log level is sorted from large to small by `error > warning > info > debug > trace`.
 - `max_log_file_size`：Maximum size per log file, ** unit of measure is bytes, default is 200MB**
-- `flush`：boostlog enables log auto-refresh by default. To improve system performance, it is recommended to set this value to false.
+- `flush`：boostlog enables log auto-refresh by default. To improves system performance, it is recommended to set this value to false.
 
 boostlog configuration example is as follows:
 
 ```ini
 [log]
-    ; whather to enable log, set to true by default
+    ; whether to enable log, set to true by default
     enable=true
     log_path=./log
     level=info
@@ -202,7 +202,7 @@ All versions of FISCO-BCOS 2.0 are forward compatible. You can configure the com
     supported_version=release-2.0.0-rc3
 ```
 
-### Optional configuration: Disk encryption 
+### Optional configuration: Disk encryption
 In order to protect node data, FISCO BCOS introduces [Disk Encryption](../design/features/storage_security.md) to ensure confidentiality. **Disk Encryption** Operation Manual [Reference](./storage_security.md).
 
 `storage_security` in `config.ini` is used to configure disk encryption. It mainly includes (for the operation of the disk encryption, please refer to [Operation Manual](./storage_security.md)):
@@ -214,10 +214,10 @@ In order to protect node data, FISCO BCOS introduces [Disk Encryption](../design
 
 - `key_manager_port`：[Key Manager](https://github.com/FISCO-BCOS/key-manager)service's listening port；
 
-- `cipher_data_key`: ciphertext of node data encryption key. For `cipher_data_key` generation,refer to [disk encryption operation manual](./storage_security.md).
+- `cipher_data_key`: ciphertext of node data encryption key. For `cipher_data_key` generation, refer to [disk encryption operation manual](./storage_security.md).
 
 
-disk encrption configuration example is as follows:
+disk encryption configuration example is as follows:
 
 ```ini
 [data_secure]
@@ -237,9 +237,9 @@ For example:`group1` system configuration generally names as `group.1.genesis`. 
 ```eval_rst
 .. important::
     When configuring the system configuration, you need to pay attention to:
-        
+
     - **configuration group must be consistent**: group system configuration is used to generate the genesis block (block 0), so the configurations of all nodes in the group must be consistent.
-    
+
     - **node cannot be modified after launching** ：system configuration has been written to the system table as genesis block, so it cannot be modified after chain initializes.
 
     - After chain is initialized, even if genesis configuration is modified, new configuration will not take effect, and system still uses the genesis configuration when initializing the chain.
@@ -249,7 +249,7 @@ For example:`group1` system configuration generally names as `group.1.genesis`. 
 
 ### Group configuration
 
-`[group]`configurates **group ID**. Node initializes the group according to the group ID.
+`[group]`configures **group ID**. Node initializes the group according to the group ID.
 
 group2's configuration example is as follows:
 
@@ -306,12 +306,12 @@ e01789233a
 
 ### Gas configuration
 
-FISCO BCOS is compatible with Ethereum virtual machine ([EVM](../design/virtual_machine/evm.md)). In order to prevent DOS from attacking [EVM](../design/virtual_machine/evm.md), EVM introduces the concept of gas when executing transactions, which is used to measure the computing and storage resources consumed during the execution of smart contracts. The meausre includes the maximum gas limit of transaction and block. If the gas consumed by the transaction or block execution exceeds the gas limit, the transaction or block is discarded.
+FISCO BCOS is compatible with Ethereum virtual machine ([EVM](../design/virtual_machine/evm.md)). In order to prevent DOS from attacking [EVM](../design/virtual_machine/evm.md), EVM introduces the concept of gas when executing transactions, which is used to measure the computing and storage resources consumed during the execution of smart contracts. The measure includes the maximum gas limit of transaction and block. If the gas consumed by the transaction or block execution exceeds the gas limit, the transaction or block is discarded.
 
 
 FISCO BCOS is alliance chain that simplifies gas design. **It retains only maximum gas limit of transaction, and maximum gas of block is constrained together by [consensus configuration max_trans_num](./configs.html#id8) and transaction maximum gas limit.**
 
-FISCO BCOS configures maximum gas limit of the transaction through geneis `[tx].gas_limit`. The default value is 300000000. After chain is initialized, the gas limit can be dynamically adjusted through the [console command](./console.html#setsystemconfigbykey).
+FISCO BCOS configures maximum gas limit of the transaction through genesis `[tx].gas_limit`. The default value is 300000000. After chain is initialized, the gas limit can be dynamically adjusted through the [console command](./console.html#setsystemconfigbykey).
 
 
 ```ini
@@ -326,7 +326,7 @@ Variable configuration of the ledger is located in the file of the `.ini` suffix
 
 For example: `group1` variable configuration is generally named `group.1.ini`. Variable configuration mainly includes transaction pool size, PBFT consensus message forwarding TTL, PBFT consensus packing time setting, PBFT transaction packaging dynamic adjustment setting, parallel transaction settings, etc..
 
-### Configurate storage
+### Configure storage
 
 Storage currently supports three modes: RocksDB, MySQL, and External. Users can choose the DB to use according to their needs. RocksDB has the highest performance. MySQL supports users to use MySQL database for viewing data. External accesses mysql through data proxy, and users need to start and configure the data proxy. The design documentation can be referenced [AMDB Storage Design](../design/storage/storage.html). Since the RC3 version, we have used RocksDB instead of LevelDB for better performance, but still supports LevelDB.
 

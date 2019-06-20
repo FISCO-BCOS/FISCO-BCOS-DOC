@@ -1,6 +1,6 @@
 # Syncing
 
-Syncing is a fundamental function of blockchain nodes. It provides necessary conditions for [consensus](../consensus/). Syncing can be divided into transaction syncing and status syncing. Transaction syncing ensures each transaction reaches nodes correctly. Status syncing ensures that nodes of lagging blocks can catch up with the newest status. Only nodes with the newest status can join in the consensus mechanism. 
+Syncing is a fundamental function of blockchain nodes. It provides necessary conditions for [consensus](../consensus/). Syncing can be divided into transaction syncing and status syncing. Transaction syncing ensures each transaction reaches nodes correctly. Status syncing ensures that nodes of lagging blocks can catch up with the newest status. Only nodes with the newest status can join in the consensus mechanism.
 
 ## Transaction syncing
 
@@ -16,13 +16,13 @@ If there is no limit for nodes to transfer and broadcast transactions, the bandw
 
 * Transactions from SDK will be broadcasted to all nodes.
 * Transactions broadcasted by other nodes will be re-broadcasted to nodes selected randomly in a proportion of 25%.
-* One transaction on one node will be broadcasted only once. When received a existed transaction, there will not be a second broadcast.
+* One transaction on one node will be broadcasted only once. When received an existing transaction, there will not be a second broadcast.
 
-Though the above strategy can ensure reachability of most transactions, the odds of missing still exist, which is admissible. The effort to increase reachability is to guarantee that the transaction can be sealed, consensused, confirmed and returned with result as soon as possible. Even if a node missed the transaction, it will only effect its execution efficiency but not correctness.
+Though the above strategy can ensure reachability of most transactions, the odds of missing still exist, which is admissible. The effort to increase reachability is to guarantee that the transaction can be sealed, in consensus, confirmed and returned with result as soon as possible. Even if a node missed the transaction, it will only effect its execution efficiency but not correctness.
 
 ## Status syncing
 
-Status syncing is to keep the node status updated. When we talk about the new or old status, it means the status of data on the node, namely the high or low of its block number. If a node has the highest block number on blockchain, then it is in the newest status. Only when a node is in the newest status can it be consensused and start the consensus process of a new block.
+Status syncing is to keep the node status updated. When we talk about the new or old status, it means the status of data on the node, namely the high or low of its block number. If a node has the highest block number on blockchain, then it is in the newest status. Only when a node is in the newest status can it be in consensus and start the consensus process of a new block.
 
 ![](../../../images/sync/block.png)
 
@@ -30,7 +30,7 @@ When a new node joined blockchain, or a disconnected node reconnected with the n
 
 **Status syncing and downloading queue**
 
-During operation, a node will regularly broadcast their highest block number to other nodes. Nodes who received the block number will compare it with their own block number. If a node finds its block number behind others, then it will start request for block downloading. 
+During operation, a node will regularly broadcast their highest block number to other nodes. Nodes who received the block number will compare it with their own block number. If a node finds its block number behind others, then it will start request for block downloading.
 Nodes in downloading process will pick nodes who meet the standard and send blocks for downloading. Nodes who received request will return with relative blocks.
 
 ![](../../../images/sync/Download.png)
@@ -81,6 +81,3 @@ When a new node has joined group, and it's its first start, the new member would
 5. members broadcast their status to the new member.
 6. the new member receives the block message and compares with its block number (which is 0), and start downloading.
 7. the following process is the same as block syncing among group members.
-
-
-

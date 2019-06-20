@@ -18,7 +18,7 @@ Implementation diagram of MPT tree (source of picture: the Ethereum Yellowpaper)
 
 ## State
 
-Data is stored in accounts in Ethereum. Each account stores contract (user) code, parameter, nonce, etc., which is retrieved by account addres. Ethereum makes address as the key for query of account by MPT.
+Data is stored in accounts in Ethereum. Each account stores contract (user) code, parameter, nonce, etc., which is retrieved by account address. Ethereum makes address as the key for query of account by MPT.
 
 As the change of account data, the hash will change accordingly. Meanwhile, hash of the MPT root changes too. Different account data indicates different MPT root. For this aspect, Ethereum proposes a concept called State, in which the hash of MPT root is called State Root. Different state roots refers to different states, and will lead to different MPT root nodes. And then search account data of this state from different root nodes through account address. Different state may lead to different MPT root nodes and accounts.
 
@@ -33,6 +33,3 @@ State root is a field of block. Each block has different state. Operation of tra
 MPT State is imported to retrieve data, The historical information of account can be retrieved according to the state root of block. However, it also brings out massive hash computings and breaks the consecutiveness of bottom data storage. MPT state is born with disadvantages in performance. We can say that MPT State has extremely good traceability at the cost of performance.
 
 In transactional cases of FISCO BCOS, performance matters more than traceability. Therefore, FISCO BCOS has re-designed the bottom storage and implemented [Storage State](storage.md). Storage State has better performance regardless of losing part of traceability.
-
-
-

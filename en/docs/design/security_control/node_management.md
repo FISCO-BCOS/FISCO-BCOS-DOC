@@ -11,12 +11,12 @@ Blockchain is a technology with decentralized and transparent distributed data s
 - for public chain, any nodes can join some network and acquire all data from global ledger;
 - for consortium chain, through there is network access mechanism, nodes can still acquire data from global ledger once joined blockchain.
 
-FISCO BCOS, as a consortium chain, has proposed Single-chain multi-ledger solution to solve the privacy issue. It has also adopted **Group** concept, transfering the traditional storage/execution mechanism from one-chain one-ledger to one chain and multi-ledger and realizing independency and secrecy of data on a chain based on groups.
+FISCO BCOS, as a consortium chain, has proposed Single-chain multi-ledger solution to solve the privacy issue. It has also adopted **Group** concept, transferring the traditional storage/execution mechanism from one-chain one-ledger to one chain and multi-ledger and realizing independency and secrecy of data on a chain based on groups.
 
 ![](../../../images/node_management/multi_ledger.png)
 <center>multi-ledger</center>
 
-As the above diagram shows, node A, B, C join the blue group and co-maintain the blue ledger; node B, C join the pink group and co-maintain the pink ledger; node A, B join the yellow group and co-maintain the yellow ledger. The three groups share the public internet service but have independent ledger storage and transaction executive environment each. Client end sends transaction to a group it belongs, in which transaction and data will be consensused and stored by members, while other group can not sense or access to the transaction.
+As the above diagram shows, node A, B, C join the blue group and co-maintain the blue ledger; node B, C join the pink group and co-maintain the pink ledger; node A, B join the yellow group and co-maintain the yellow ledger. The three groups share the public internet service but have independent ledger storage and transaction executive environment each. Client end sends transaction to a group it belongs, in which transaction and data will be consensus and stored by members, while other group can not sense or access to the transaction.
 
 ### Node access mechanism
 
@@ -53,7 +53,7 @@ The relations of node:
   <td>group config</td><td>node configuration affects the group it belongs to; each group has a config <br><B>Config file named group.X.*, X being group number</B></td>
 </tr>
 <tr>
-  <td rowspan="2">configure modifiable or not</td><td>fixed config modifiable or not</td><td>stick to the intial config, modification will be invalid, <br><B>suffix named .genesis</B></td>
+  <td rowspan="2">configure modifiable or not</td><td>fixed config modifiable or not</td><td>stick to the initial config, modification will be invalid, <br><B>suffix named .genesis</B></td>
 </tr>
 <tr>
   <td>config modifiable</td><td>config modifiable, valid when restarting node, <br><B>suffix named .ini</B></td>
@@ -61,7 +61,7 @@ The relations of node:
   <td rowspan="2">store location</td><td>local storage</td><td>config stored in local file for user to modify directly,<br><B>by modifying the file user can restart valid config items</B></td>
 </tr>
 <tr>
-  <td>store on chain</td><td>config stored on blockchain, the modification of which need to be consensused by group. currently there is no content needing global consensus,<br><B>need to reset chan or modify valid config items through transactions</B></td>
+  <td>store on chain</td><td>config stored on blockchain, the modification of which need to be consensus by group. currently there is no content needing global consensus,<br><B>need to reset chan or modify valid config items through transactions</B></td>
 </tr>
 </table>
 
@@ -81,7 +81,7 @@ The config items involving in node access management are: **P2P node connection 
   <td>P2P node connection list</td><td>record nodes that this node wants to connect with</td><td>network config</td><td>config modifiable</td><td>local storage</td>
 </tr>
 <tr>
-  <td>node certifica</td><td>prove itself as a node permitted by a trusted third-party</td><td>network config</td><td>config modifiable</td><td>local storage</td>
+  <td>node certificate</td><td>prove itself as a node permitted by a trusted third-party</td><td>network config</td><td>config modifiable</td><td>local storage</td>
 </tr>
 <tr>
   <td>CA blacklist</td><td>record the nodes that this node forbids to connect with</td><td>network config</td><td>config modifiable</td><td>local storage</td>
@@ -103,10 +103,10 @@ In **the diagram of relation between config items and system model** above, A->B
 
 ## Core process
 
-### Regular intialize process
+### Regular initialize process
 
 ![](../../../images/node_management/initialization.png)
-<center>regular intialize process</center>
+<center>regular initialize process</center>
 
 ### The first initialization
 
@@ -126,9 +126,9 @@ Description:
 
 **SSL certificate to confirm nodes access to blockchain**. Nodes on one chain all trust a trustable third party (issuer of node certificate).
 
-FISCO BCOS requires implementation of **SSL two-way certificate**. During handshake, nodes acquire each other's node ID from the certificates and vertify if it is in CA blacklist. If is, close the connect; if not, creat session.
+FISCO BCOS requires implementation of **SSL two-way certificate**. During handshake, nodes acquire each other's node ID from the certificates and verify if it is in CA blacklist. If is, close the connect; if not, create session.
 
-CA blacklist mechainsm also supports **SSL one-way certificate**, which is used in this case: when node has created senssion, it can acquire the counter node's ID from session to verify if it's in the CA blacklist. If is, shut down the session.
+CA blacklist mechanism also supports **SSL one-way certificate**, which is used in this case: when node has created session, it can acquire the counter node's ID from session to verify if it's in the CA blacklist. If is, shut down the session.
 
 ### Node types and transfer
 
@@ -139,7 +139,7 @@ The three types of nodes (consensus node/observer node/free node) can transfer t
 
 ## API and Config
 
-### Hierarchy of node config file 
+### Hierarchy of node config file
 
 ![](../../../images/node_management/config_file_organization.png)
 <center>Hierarchy of config file</center>
@@ -160,10 +160,10 @@ For **network modifiable config file **`config.ini`, node access management invo
     node.1=127.0.0.1:30301
     node.2=127.0.0.1:30302
     node.3=127.0.0.1:30303
-    
+
 ;certificate blacklist
 [crl]
-    ;crl.0 should be nodeid, nodeid's length is 128 
+    ;crl.0 should be nodeid, nodeid's length is 128
     ;crl.0=
 
 ;certificate configuration

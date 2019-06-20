@@ -1,6 +1,6 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) posesses with access to check node status, modify the settings and send transactions. FISCO BCOS 2.0 documentation only adapts to Web3SDK 2.0 or above version (which only adapt to FISCO BCOS 2.0 or above version in turn). For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) supports accessing nodes to check node status, modify the settings and send transactions. FISCO BCOS 2.0 documentation only adapts to Web3SDK 2.0 or above version (which only adapt to FISCO BCOS 2.0 or above version in turn). For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
 
 Main features of version 2.0 include:
 - provide Java API to call FISCO BCOS JSON-RPC
@@ -14,7 +14,7 @@ Main features of version 2.0 include:
 .. important::
 
     - java version
-     `JDK8 or above version <https://openjdk.java.net/>`_ is required. Because the lack of JCE(Java Cryptography Extension) of OpenJDK in YUM repository of CentOS will fail the connection between Web3SDK and nodes, we recommend users to download it from OpenJDK website when it is CentOS system. `Download here <https://jdk.java.net/java-se-ri/8>`_  `Installation Guide <https://openjdk.java.net/install/index.html>`_ 
+     `JDK8 or above version <https://openjdk.java.net/>`_ is required. Because the lack of JCE(Java Cryptography Extension) of OpenJDK in YUM repository of CentOS will fail the connection between Web3SDK and nodes, we recommend users to download it from OpenJDK website when it is CentOS system. `Download here <https://jdk.java.net/java-se-ri/8>`_  `Installation Guide <https://openjdk.java.net/install/index.html>`_
     - FISCO BCOS environment building
      please check `FISCO BCOS installation guide <../installation.html>`_
     - network connectivity
@@ -93,8 +93,8 @@ The following picture shows how `applicationContext.xml` is configured in Spring
                                         <property name="groupId" value="2" /> <!-- groupID -->
                                         <property name="connectionsStr">
                                                 <list>
-                                                        <value>127.0.0.1:20202</value> 
-                                                        <value>127.0.0.1:20203</value> 
+                                                        <value>127.0.0.1:20202</value>
+                                                        <value>127.0.0.1:20203</value>
                                                 </list>
                                         </property>
                                 </bean>
@@ -114,7 +114,7 @@ Configuration items of `applicationContext.xml`:
 - encryptType: the switch of oscca algorithm (default as 0)                              
   - 0: not use oscca algorithm for transactions                              
   - 1: use oscca algorithm for transactions (switch on oscca algorithm, nodes will be in oscca standard, for reference of building oscca-standard FISCO BCOS blockchain please check [here](../manual/guomi_crypto.md))
-- groupChannelConnectionsConfig: 
+- groupChannelConnectionsConfig:
   - configure the group to be connected, which can be one or more, each should be given a group ID
   - each group configures one or more nodes, set `listen_ip` and `channel_listen_port` of `[rpc]` in node config file **config.ini**.
 - channelService: configure the the group connected with SDK through the given group ID, which is in the configuration of groupChannelConnectionsConfig. SDK will be connected with each node of the group and randomly choose one node to send request.
@@ -133,14 +133,14 @@ group-channel-connections-config:
     connections-str:
                     - 127.0.0.1:20202  # node listen_ip:channel_listen_port
                     - 127.0.0.1:20203
- 
+
 channel-service:
   group-id: 1 # The specified group to which the SDK connects
   agency-name: fisco # agency name
 ```
 The configuration items of `application.yml` corresponds with `applicationContext.xml`. For detailed introduction please check the configuration description of `applicationContext.xml`.
 
-## Operation of SDK 
+## Operation of SDK
 
 ### Guide for development of Spring
 #### to call API of SDK (check the settings of [Web3SDK API list](#web3sdk-api) or related blockchain data).
@@ -150,7 +150,7 @@ load the config file, connect SDK with nodes, acquire web3j object and call API.
     //read config file and connect SDK with nodes
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
-    service.run(); 
+    service.run();
     ChannelEthereumService channelEthereumService = new ChannelEthereumService();
     channelEthereumService.setChannelService(service);
 
@@ -171,12 +171,12 @@ load config file, connect SDK with nodes, acquire Precompiled Service object of 
     //read config file, connect SDK with nodes and acquire Web3j object
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
-    service.run(); 
+    service.run();
     ChannelEthereumService channelEthereumService = new ChannelEthereumService();
     channelEthereumService.setChannelService(service);
     Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
     //fill in user private key for signature in transactions
-    Credentials credentials = Credentials.create("b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"); 
+    Credentials credentials = Credentials.create("b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6");
     //acquire SystemConfigService object
     SystemConfigSerivce systemConfigSerivce = new SystemConfigSerivce(web3j, credentials);
     //call API setValueByKey through SystemConfigService object
@@ -191,13 +191,13 @@ sdk needs an external account to send transactions. Here is a way to create a ex
 //create regular external account
 EncryptType.encryptType = 0;
 //create OSCCA external account, which is needed when sending transaction to OSCCA-standard blockchain nodes
-// EncryptType.encryptType = 1; 
+// EncryptType.encryptType = 1;
 Credentials credentials = GenCredential.create();
 //account address
 String address = credentials.getAddress();
 //account private key
 String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
-//account public key 
+//account public key
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
 Use specific external account
@@ -224,7 +224,7 @@ ApplicationContext context = new ClassPathXmlApplicationContext("classpath:appli
 P12Manager p12 = context.getBean(P12Manager.class);
 //offer password to get ECKeyPair, password is set when creating p12 account file
 ECKeyPair p12KeyPair = p12.getECKeyPair(p12.getPassword());
-			
+
 //output private key and public key in hexadecimal string
 System.out.println("p12 privateKey: " + p12KeyPair.getPrivateKey().toString(16));
 System.out.println("p12 publicKey: " + p12KeyPair.getPublicKey().toString(16));
@@ -268,7 +268,7 @@ The core function of SDK is to deploy/load contract, and to call API of contract
     //read config file, connect SDK with nodes, get web3j object
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
-    service.run(); 
+    service.run();
     ChannelEthereumService channelEthereumService = new ChannelEthereumService();
     channelEthereumService.setChannelService(service);
     channelEthereumService.setTimeout(10000);
@@ -276,17 +276,17 @@ The core function of SDK is to deploy/load contract, and to call API of contract
     //prepare parameters for deploying and calling contract
     BigInteger gasPrice = new BigInteger("300000000");
     BigInteger gasLimit = new BigInteger("300000000");
-    String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"; 
+    String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6";
     //specify external account private key for transaction signature
-    Credentials credentials = GenCredential.create(privateKey); 
-    //deploy contract 
+    Credentials credentials = GenCredential.create(privateKey);
+    //deploy contract
     YourSmartContract contract = YourSmartContract.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
     //load contract according to the contract address
-    //YourSmartContract contract = YourSmartContract.load(address, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)); 
+    //YourSmartContract contract = YourSmartContract.load(address, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
     //send transaction by calling contract method
-    TransactionReceipt transactionReceipt = contract.someMethod(<param1>, ...).send(); 
+    TransactionReceipt transactionReceipt = contract.someMethod(<param1>, ...).send();
     //check data status of the contract by inquiry contract method
-    Type result = contract.someMethod(<param1>, ...).send(); 
+    Type result = contract.someMethod(<param1>, ...).send();
 ```
 ### Guide for Spring Boot development
 We take [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter) as an example. Spring Boot and Spring are similar in development process, except the distinction in config file. Here we will provide some test examples. For detail description on the projects please check the README documents.
@@ -305,7 +305,7 @@ The OSCCA version of SDK shares the same method on calling API with the regular 
     // jar archive of OSCCA contract compiler 0.5
     // compile files('lib/solcJ-all-0.5.2-gm.jar')
   ```
-It shares the same steps with regular SDK in transformation of solidity contract to OSCCA java contract and deploy/call methods. 
+It shares the same steps with regular SDK in transformation of solidity contract to OSCCA java contract and deploy/call methods.
 
 ## Web3SDK API
 
@@ -350,13 +350,13 @@ SDK supports [CNS](../design/features/cns_contract_name_service.md). CnsService 
 SDK offers services for system configuration. SystemConfigSerivce can configure system property value (currently support tx_count_limit and tx_gas_limit)。 The API is here:
 - **String setValueByKey(String key, String value):** set value according to the key（to check the value, please refer to getSystemConfigByKey in Web3j API).
 
-#### ConsensusService 
+#### ConsensusService
 SDK supports configuration of [node type](../design/security_control/node_management.html#id6). ConsensusService is used to set node type. The APIs are here:
 - **String addSealer(String nodeId):** set the node as consensus node according to node ID.
 - **String addObserver(String nodeId):** set the node as observer node according to node ID.
 - **String removeNode(String nodeId):** set the node as free node according to node ID.
 
-#### CRUDService 
+#### CRUDService
 SDK supports CRUD (Create/Retrieve/Updata/Delete) operations. CRUDService of table include create, insert, retrieve, update and delete. Here are its APIs:
 - **int createTable(Table table)：** create table and table object, set the name of table, main key field and other fields; names of other fields are character strings separated by comma; return table status value, return 0 when it is created successfully.
 - **int insert(Table table, Entry entry)：** insert records, offer table object adn Entry object, set table name and main key name; Entry is map object, offer inserted field name and its value, main key field is necessary; return the number of inserted records.

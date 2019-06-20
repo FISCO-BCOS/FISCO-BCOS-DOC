@@ -7,9 +7,9 @@ Disk encryption encrypts the content stored on the hard disk by the node. The en
 For specific disk encryption introduction, please refer to: [Introduction of Disk Encryption](../design/features/storage_security.md)
 
 
-## Key Manager deployment 
+## Key Manager deployment
 
-Each agancy has a Key Manager. For specific deployment steps, please refer to [Key Manager README](https://github.com/FISCO-BCOS/key-manager)
+Each agency has a Key Manager. For specific deployment steps, please refer to [Key Manager README](https://github.com/FISCO-BCOS/key-manager)
 
 ## Node building
 
@@ -89,7 +89,7 @@ To execute script and encrypt node private key
 ```shell
 cd key-manager/scripts
 # parameter:ip port node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```
 
 The node private key is automatically encrypted after execution, and the files before encryption is backed up to the file ``` node.key.bak.xxxxxx ```. **Please take care of the backup private key and delete the backup private key generated on the node**

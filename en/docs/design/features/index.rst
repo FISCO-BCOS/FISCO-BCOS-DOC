@@ -14,7 +14,7 @@ Smart contracts are called by address in Ethereum, which may occurs to following
 
 - One or more callers need to update contract address for re-deployment
 
-- inconvenient for version management and gray release of contract
+- inconvenient for version management and grey release of contract
 
 CNS of FISCO BCOS offers records of map relations between contract name and contract address and query function, so caller can call contract through easier contract name.
 

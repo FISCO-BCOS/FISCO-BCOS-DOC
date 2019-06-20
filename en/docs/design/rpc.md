@@ -23,7 +23,7 @@ The client request sent to blockchain node will trigger an RPC calling. The clie
 - id: The established unique ID of client. The ID must be a string, a numeric value or a NULL value. If the ID does not include one of these, it is considered as a notification.
 
 
-The example format of RPC request packetage:
+The example format of RPC request package:
 ```
 {"jsonrpc": "2.0", "method": "getBlockNumber", "params": [1], "id": 1}
 ```
@@ -41,7 +41,7 @@ When starting an RPC calling, all blockchain nodes must respond others except th
 - error: Error result field. The member must be included in the failure, and must not be included when no error is caused. Its parameter value must be an object defined in the [3.3] (#id6) section.
 - id: Responsive id. The member must be contained. Its value must match the id value in the corresponding client request. If the id of the request object shows errors (such as a parameter error or an invalid request), the value must be null.
 
-The example format of RPC response packetage:
+The example format of RPC response package:
 ```
 {"jsonrpc": "2.0", "result": "0x1", "id": 1}
 ```
@@ -61,4 +61,3 @@ FISCO BCOS provides the rich RPC interfaces for client calling. They are divided
 
 ## 5 RPC interface list
 Refer to [RPC API Documentation] (../api.md)
-

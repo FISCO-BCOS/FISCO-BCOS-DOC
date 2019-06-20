@@ -31,7 +31,7 @@ Disk encryption is conducted inside each agency. Each agency encrypts the disk o
 
 
 
-Disk encryption is conducted and managed securely and independently by each agency. Disk of each node is encrypted. The acess of encrypted data is managed by key manager, which is deployed inside agency and manages key to node disk data that is not open to outside network. When the node is started, it will acquire the key from key manager to acess its own encrypted data.
+Disk encryption is conducted and managed securely and independently by each agency. Disk of each node is encrypted. The access of encrypted data is managed by key manager, which is deployed inside agency and manages key to node disk data that is not open to outside network. When the node is started, it will acquire the key from key manager to access its own encrypted data.
 
 The following objects are encrypted:
 
@@ -40,21 +40,21 @@ The following objects are encrypted:
 
 ## Implementation
 
-The implementation of disk encryption is realized by datakey (hold by node itself) and superky (managed by key manager).
+The implementation of disk encryption is realized by dataKey (hold by node itself) and superKey (managed by key manager).
 
 **Node**
 
 * node encrypts and decrypts its Encrypted Space by dataKey.
-* node doesn't store datakey in local disk, but stores the encrypted datakey-cipherDataKey.
-* When node is started, it requests datakey from key manager by cipherDataKey.
-* DataKey is only in storage of node, when node is stoped, datakey will be discarded.
+* node doesn't store dataKey in local disk, but stores the encrypted dataKey-cipherDataKey.
+* When node is started, it requests dataKey from key manager by cipherDataKey.
+* DataKey is only in storage of node, when node is stoped, dataKey will be discarded.
 
 **Key Manager**
 
-Key manager holds superkey and responds to the access requests from all started nodes.
+Key manager holds superKey and responds to the access requests from all started nodes.
 
 - Key Manager has to be on line in real time to respond to nodes' start request.
-- When node is started, it will send cipherDataKey to Key Manager to decrypt it by superKey. If succeed, key manager will return daraK to node.
+- When node is started, it will send cipherDataKey to Key Manager to decrypt it by superKey. If succeed, key manager will return dataK to node.
 - Key Manager can only be accessed within internal network.
 
 
@@ -72,7 +72,7 @@ Before started, dataKey of node needs to be configured
 
 ```eval_rst
 .. important::
-    When node is generated, before started, it has to be decided whether to adopt disk encryption. Once configured and started, node's status cannot be transferred. 
+    When node is generated, before started, it has to be decided whether to adopt disk encryption. Once configured and started, node's status cannot be transferred.
 ```
 
 （1）Manager defines dataKey of node and sends to Key Manager to acquire cipherDataKey.
@@ -101,4 +101,4 @@ When a node's disk is accidentally brought to external network, the data will no
 
 
 
-The detail opreations of disk encryption are introduced here: [Operations of disk encryption](../../manual/storage_security.md).
+The detail operations of disk encryption are introduced here: [Operations of disk encryption](../../manual/storage_security.md).

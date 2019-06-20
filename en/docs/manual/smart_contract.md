@@ -37,21 +37,21 @@ contract Condition {
     //equal to
     function EQ(string, int) public;
     function EQ(string, string) public;
-    
+
     //unequal to
     function NE(string, int) public;
     function NE(string, string)  public;
-    
+
     //greater than
     function GT(string, int) public;
     //greater than or equal to
     function GE(string, int) public;
-    
+
     //smaller than
     function LT(string, int) public;
     //smaller than or equal to
     function LE(string, int) public;
-    
+
     //limit the number of return record
     function limit(int) public;
     function limit(int, int) public;
@@ -63,7 +63,7 @@ contract Entry {
     function getAddress(string) public constant returns(address);
     function getBytes64(string) public constant returns(byte[64]);
     function getBytes32(string) public constant returns(bytes32);
-    
+
     function set(string, int) public;
     function set(string, string) public;
 }
@@ -84,7 +84,7 @@ contract Table {
     function update(string, Entry, Condition) public returns(int);
     // remove interface
     function remove(string, Condition) public returns(int);
-    
+
     function newEntry() public constant returns(Entry);
     function newCondition() public constant returns(Condition);
 }
@@ -102,7 +102,7 @@ contract TableTest {
     event InsertResult(int count);
     event UpdateResult(int count);
     event RemoveResult(int count);
-    
+
     // create table
     function create() public returns(int){
         TableFactory tf = TableFactory(0x1001);  // TableFactory's address is fixed at 0x1001
@@ -110,7 +110,7 @@ contract TableTest {
         // key_field indicates the row that AMDB's primary key value_field represents in the table. The row can be multiple and spearated by commas.
         int count = tf.createTable("t_test", "name", "item_id,item_name");
         emit CreateResult(count);
-        
+
         return count;
     }
 
@@ -118,69 +118,69 @@ contract TableTest {
     function select(string name) public constant returns(bytes32[], int[], bytes32[]){
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
-        
+
         // If the condition is empty, it means no filtering. You can use conditional filtering as needed.
         Condition condition = table.newCondition();
-        
+
         Entries entries = table.select(name, condition);
         bytes32[] memory user_name_bytes_list = new bytes32[](uint256(entries.size()));
         int[] memory item_id_list = new int[](uint256(entries.size()));
         bytes32[] memory item_name_bytes_list = new bytes32[](uint256(entries.size()));
-        
+
         for(int i=0; i<entries.size(); ++i) {
             Entry entry = entries.get(i);
-            
+
             user_name_bytes_list[uint256(i)] = entry.getBytes32("name");
             item_id_list[uint256(i)] = entry.getInt("item_id");
             item_name_bytes_list[uint256(i)] = entry.getBytes32("item_name");
         }
- 
+
         return (user_name_bytes_list, item_id_list, item_name_bytes_list);
     }
     // insert data
     function insert(string name, int item_id, string item_name) public returns(int) {
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
-        
+
         Entry entry = table.newEntry();
         entry.set("name", name);
         entry.set("item_id", item_id);
         entry.set("item_name", item_name);
-        
+
         int count = table.insert(name, entry);
         emit InsertResult(count);
-        
+
         return count;
     }
     // update data
     function update(string name, int item_id, string item_name) public returns(int) {
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
-        
+
         Entry entry = table.newEntry();
         entry.set("item_name", item_name);
-        
+
         Condition condition = table.newCondition();
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
-        
+
         int count = table.update(name, entry, condition);
         emit UpdateResult(count);
-        
+
         return count;
     }
     // remove data
     function remove(string name, int item_id) public returns(int){
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
-        
+
         Condition condition = table.newCondition();
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
-        
+
         int count = table.remove(name, condition);
         emit RemoveResult(count);
-        
+
         return count;
     }
 }
@@ -223,14 +223,14 @@ The process of implementing a pre-compiled contract:
 
 - **assign contract address**  
 
-For calling a solid contract or pre-compiled contract, you need to distinguishe it by the contract address and address space.
+For calling a solid contract or pre-compiled contract, you need to distinguish it by the contract address and address space.
 
 
 | address use | address range |
 | --------- | --------- |
 | ethereum precompiled | 0x0001-0x0004 |
 | reserve | 0x0005-0x0fff |
-| FISCO BCOS precompied | 0x1000-0x1006 |
+| FISCO BCOS precompiled | 0x1000-0x1006 |
 | FISCO BCOS reserve | 0x1007-0x5000 |
 | user assigned interval | 0x5001 - 0xffff |
 | CRUD temporary contract | 0x10000+ |
@@ -240,7 +240,7 @@ For calling a solid contract or pre-compiled contract, you need to distinguishe 
 The address range of user assigned interval is `0x5001`-`0xffff`. Users needs to assign an unused address to the new precompiled contract. **The precompiled contract addresses must be unique and not conflicting**.
 
 
-List of precompild contracts and address assignments implemented in FISCO BCOS:
+List of precompiled contracts and address assignments implemented in FISCO BCOS:
 
 | address   | feature   | source code ([libprecompiled directory](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled)) |
 |--------|--------|---------|
@@ -253,8 +253,8 @@ List of precompild contracts and address assignments implemented in FISCO BCOS:
 | 0x1006 | parallel contract configuration | ParallelConfigPrecompiled.cpp |
 
 - **define contract interface**  
- 
-It is similar to solidity contract. When designing a contract, you need to determine the ABI interface of the contract first. The ABI interface rules of the precomipiled contract are exactly the same as the solidity. [solidity ABI link](https://solidity.readthedocs.io/en/latest/abi-spec.html).
+
+It is similar to solidity contract. When designing a contract, you need to determine the ABI interface of the contract first. The ABI interface rules of the precompiled contract are exactly the same as the solidity. [solidity ABI link](https://solidity.readthedocs.io/en/latest/abi-spec.html).
 
 
 > When defining a precompiled contract interface, you usually need to define a solidity contract with the same interface, and empty the function body of all interfaces. This contract is called **interface contract** of the precompiled contract. The interface contract need to be used when calling the precompiled contract.
@@ -279,7 +279,7 @@ When a precompiled contract involves a storage operation, it needs to determine 
 
 - **implement contract logic**  
 
-For implementing the calling logic of the new contract, you need to implement a new C++ class that needs to inherit [precompiled] (https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libblockverifier/Precompiled.h) #L37 ) to overload the call function for achieving the calling behavior of each interface.
+For implementing the calling logic of the new contract, you need to implement a new C++ class that needs to inherit [precompiled] (https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libblockverifier/Precompiled.h) #L37 ) to overload the call function for achieving the calling behaviour of each interface.
 
 ```cpp
     // libblockverifier/Precompiled.h
@@ -381,10 +381,10 @@ The table stores only a pair of key-value pairs. The key field is hello_key and 
 To add the HelloWorldPrecompiled class, overload the call function, and implement the calling behavior of all interfaces.[call function source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66).
 
 
-The user-defined Precompiled contract needs to add a new class for defining the calling behavior of the contract in the class. In the example, for adding the HelloWorldPrecompiled class, the following work must complete:
+The user-defined Precompiled contract needs to add a new class for defining the calling behaviour of the contract in the class. In the example, for adding the HelloWorldPrecompiled class, the following work must complete:
 
 
-- interface registration 
+- interface registration
 ```c++
 // define all interfaces in the class
 const char* const HELLO_WORLD_METHOD_GET = "get()";
@@ -431,17 +431,17 @@ After getting the operation handle of the table, user can implement the specific
 
 Parsing _param with getParamFunc can distinguish the call interface.
 
-**Note: the contract interface must be registered in the constructor** 
+**Note: the contract interface must be registered in the constructor**
 
 ```c++
 uint32_t func = getParamFunc(_param);
 if (func == name2Selector[HELLO_WORLD_METHOD_GET])
 {  
-    // get() call interface logic 
+    // get() call interface logic
 }
 else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
 {  
-    // set(string) call interface logic 
+    // set(string) call interface logic
 }
 else
 {  
@@ -466,7 +466,7 @@ template <class... T> void  abiOut(bytesConstRef _data, T&... _t)
 
 The sample code below shows how the interface works:
 
-```c++ 
+```c++
 // for transfer interface: transfer(string,string,uint256)
 
 // Parameter1
@@ -500,7 +500,7 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
 {
     // parse function interface
     uint32_t func = getParamFunc(_param);
-    // 
+    //
     bytesConstRef data = getParamData(_param);
     bytes out;
     dev::eth::ContractABI abi;
@@ -527,7 +527,7 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
         std::string retValue = "Hello World!";
         auto entries = table->select(HELLOWORLD_KEY_FIELD_NAME, table->newCondition());
         if (0u != entries->size())
-        { 
+        {
             auto entry = entries->get(0);
             retValue = entry->getField(HELLOWORLD_VALUE_FIELD);
         }
@@ -556,14 +556,14 @@ bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _con
         }
 
         if (count == CODE_NO_AUTHORIZED)
-        {  // no table operation authority 
+        {  // no table operation authority
             PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC("set")
                                    << LOG_DESC("non-authorized");
         }
         out = abi.abiIn("", u256(count));
     }
     else
-    {  // parameter error, unknown calling interface 
+    {  // parameter error, unknown calling interface
         PRECOMPILED_LOG(ERROR) << LOG_BADGE("HelloWorldPrecompiled") << LOG_DESC(" unkown func ")
                                << LOG_KV("func", func);
         out = abi.abiIn("", u256(CODE_UNKNOW_FUNCTION_CALL));
@@ -593,7 +593,7 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 Given that it is stored under `FISCO-BCOS/build` directory, use the following instruction to build chain for node 4. For more options please [read here](build_chain.md).
 
 ```bash
-bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
+bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 ```
 
 ### 3 Calling
@@ -627,7 +627,7 @@ contract HelloWorldHelper {
     HelloWorldPrecompiled hello;
     function HelloWorldHelper() {
         // call HelloWorld precompiled contract
-        hello = HelloWorldPrecompiled(0x5001); 
+        hello = HelloWorldPrecompiled(0x5001);
     }
     function get() public constant returns(string) {
         return hello.get();

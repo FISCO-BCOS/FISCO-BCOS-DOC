@@ -2,7 +2,7 @@
 
 The process of consensus is operated through contract deployment on blockchain. Ethereum Virtual Machine is a code executor of smart contract.
 
-When smart contract is compiled to binary file and deployed on blockchain, users will start the execution of smart contract by calling its API. EVM executes smart contract and modifies blockchain data (status). The modified data will be consensused to ensure consistency.
+When smart contract is compiled to binary file and deployed on blockchain, users will start the execution of smart contract by calling its API. EVM executes smart contract and modifies blockchain data (status). The modified data will be in consensus to ensure consistency.
 
 
 
@@ -83,7 +83,7 @@ CASE(ADD)
 
 **Jump instruction**
 
-JUMP intruction realizeds the jumping between binary codes. First, take out the address to jump to from stack top ```SP[0]```, verify if it has crossed the limit, put into program counter (PC). The next instruction will start execution from where PC appoints.
+JUMP instruction realize the jumping between binary codes. First, take out the address to jump to from stack top ```SP[0]```, verify if it has crossed the limit, put into program counter (PC). The next instruction will start execution from where PC appoints.
 
 ``` cpp
 CASE(JUMP)
@@ -199,4 +199,3 @@ void VM::caseCall()
 ## Summary
 
 EVM is a machine for status execution, which input as binary instruction of compiled solidity and status data of nodes and output as the modification of node status. Ethereum's adaptability for multiple virtual machines is realized through EVMC. But till now, there has not been a production available virtual machine except interpreter. It is probably too difficult to run the same codes on different virtual machines but get the same result. BCOS will keep following up its development.
-

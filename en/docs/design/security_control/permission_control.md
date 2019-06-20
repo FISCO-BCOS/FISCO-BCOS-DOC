@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Comparing with public chain with open access and free transaction or query, consortium chain are required to have access control, diversive transactions, privacy protection in business level and high stability. Therefore, "permission" and "control" are strongly emphasized in the implementation of consortium chain.
+Comparing with public chain with open access and free transaction or query, consortium chain are required to have access control, diverse transactions, privacy protection in business level and high stability. Therefore, "permission" and "control" are strongly emphasized in the implementation of consortium chain.
 
 In this case, FISCO BCOS has proposed a flexible and delicate permission control mechanism based on distributed storage, which performs fundamental technological supports for its governance. The permission control system manages permissions on contract deployment and table create/insert/update/delete operations (read is not included), based on the access mechanism of exterior accounts (tx.origin). In actual operations, each account owns one and only public and private key pair. Private key is for signature when sending transactions. The receiver will verify to know which account the transaction is from through the public key, helping the management and tracing back of transaction and regulation.     
 
@@ -32,7 +32,7 @@ Targeting user table and each system table, SDK conducts permission management o
   - **public List\<PermissionInfo\> listUserTableManager(String tableName)：** inquire permission information according to the user table name (each record contains exterior account address and valid block number).
 - _sys_tables_表：
   - **public String grantDeployAndCreateManager(String address)：** grant permission of contract deployment and user table creation to exterior account.
-  - **public String revokeDeployAndCreateManager(String address)：** remove permision of contract deployment and user table creation of exterior account.
+  - **public String revokeDeployAndCreateManager(String address)：** remove permission of contract deployment and user table creation of exterior account.
   - **public List\<PermissionInfo\> listDeployAndCreateManager()：** inquire permission records of contract deployment and user table creation.
 - _sys_table_access_表：
   - **public String grantPermissionManager(String address)：** grant permission of management to exterior account.
@@ -51,7 +51,7 @@ Targeting user table and each system table, SDK conducts permission management o
   - **public String revokeSysConfigManager(String address)：** remove system parameter management permission of exterior account.
   - **public List\<PermissionInfo\> listSysConfigManager()：** inquire system parameter management permission records.
 
-Set and remove permission API and return json string, containg code and msg fields. For operations with no permission, code is set to 50000 and msg defined as “permission denied”; for those granted with permission, code is 0 and msg “success”.
+Set and remove permission API and return json string, containing code and msg fields. For operations with no permission, code is set to 50000 and msg defined as “permission denied”; for those granted with permission, code is 0 and msg “success”.
 
 ## Data definition
 Permission information is stored in the form of system table, which is named _sys_table_access_ with following fields:
@@ -96,7 +96,7 @@ Transaction information contains exterior account, pending table and operation m
 ```
 
 #### Process design
-The process of permission control: first, client end sends transaction request, node acquires transaction data to confirm exterior account, pending table and operation type; if it's write operation, check the permission (from permission list), if it has permision, exeture write operation and transaction; if not, reject write operation and return no permission; if it's read operation, skip permission information check, execute read operation and return data. The process is shown below.
+The process of permission control: first, client end sends transaction request, node acquires transaction data to confirm exterior account, pending table and operation type; if it's write operation, check the permission (from permission list), if it has permission, execute write operation; if not, reject write operation and return no permission; if it's read operation, skip permission information check, execute read operation and return data. The process is shown below.
 
 ```eval_rst
 .. mermaid::
@@ -110,7 +110,7 @@ The process of permission control: first, client end sends transaction request, 
 
         subgraph process of permission control
         A((start))-->B
-        B(client end send transction)-->C
+        B(client end send transaction)-->C
         C(confirm pending table and operation type)-->D
         D(operation type is write or not)-->|no|E
         E(get result)

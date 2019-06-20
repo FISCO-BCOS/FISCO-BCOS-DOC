@@ -17,13 +17,13 @@ For example, to convert the specified nodes to Sealer, Observer, and RemoveNode,
 
 ```eval_rst
 .. important::
-    
-    Before accessting the node, please ensure that:
+
+    Before accessing the node, please ensure that:
 
      - Node ID exists and can execute cat that is getting from conf/node.nodeid in the node directory
 
      - All Sealers are normal, and they will output +++ logs.
-     
+
 ```
 
 ```bash
@@ -86,7 +86,7 @@ The following describes the operations of group expansion and node exit in detai
 
 In this section, the following figure is taken as an example to describe the operations of expansion and network exit show above.
 
-The dotted line indicates that network communication can be performed among nodes, and the solid line indicates that nodes have group relationships base on the communication among nodes, and colors' difference distinguishs different group relationships.
+The dotted line indicates that network communication can be performed among nodes, and the solid line indicates that nodes have group relationships base on the communication among nodes, and colors' difference distinguish different group relationships.
 
 The below figure below shows a network with three groups of which Group3 has three nodes. Whether Group3 has intersection nodes with other groups does not affect the versatility of the following operation process.
 
@@ -155,8 +155,8 @@ $ vim node2/config.ini
 
 5 . node 3 copies `node1/conf/group.3.genesis`(which contains **initial list of group nodes**) and `node1/conf/group.3.ini` to `node2/conf` folder, without modification;
 ```
-$ cp node1/conf/group.3.genesis node2/ 
-$ cp node1/conf/group.3.ini node2/ 
+$ cp node1/conf/group.3.genesis node2/
+$ cp node1/conf/group.3.ini node2/
 ```
 
 6 . execute `node2/start.sh` and start node 3;
@@ -202,11 +202,11 @@ nohup: appending output to ‘nohup.out’
 
 2 . For node 1, 2, remove node 3 form their **P2P connecting nodes list**(if has), and restart node 1, 2;
 
-3 . Confirm that node 3 has been disconnected with node 1, 2, and it has quited the network now.
+3 . Confirm that node 3 has been disconnected with node 1, 2, and it has quitted the network now.
 
 ```eval_rst
 .. note::
-    - **node 3 has to quit the group before quiting the network, which is guaranteed by users and will not be verified by the system**;
+    - **node 3 has to quit the group before quitting the network, which is guaranteed by users and will not be verified by the system**;
     - the networking process is started by nodes. If missing step 2, node 3 can still get the p2p connecting request from node 1, 2 and start connection. It can be stopped by using CA blacklist.
 ```
 
@@ -225,7 +225,7 @@ Operation steps:
 ```eval_rst
 .. note::
     - node ID of node 3 can be acquired through `cat nodes/127.0.0.1/node2/conf/node.nodeid`;
-    - the first start of node 3 will write the configured group node intial listto the node system list, when the blocks stop synchronizing, **the node system lists of each node are the same**;
+    - the first start of node 3 will write the configured group node initial list to the node system list, when the blocks stop synchronizing, **the node system lists of each node are the same**;
     - **node 3 needs to have access to the network before joining the group, which will be verified by the system**;
     - **the group fixed configuration file of node 3 should be the same with node 1, 2**.
 ```

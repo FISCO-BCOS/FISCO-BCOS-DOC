@@ -26,7 +26,7 @@ $ cd generator
 $ bash ./scripts/install.sh
 ```
 
-Check if it is intalled successfully
+Check if it is installed successfully
 
 ``` bash
 $ ./generator -h

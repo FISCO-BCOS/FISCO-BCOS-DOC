@@ -31,7 +31,7 @@ boostlog example configuration is as follows:
 ```ini
 ;log configurations
 [log]
-    ; whather to enable log, it is true by default
+    ; whether to enable log, it is true by default
     enable=true
     log_path=./log
     level=info
@@ -40,7 +40,7 @@ boostlog example configuration is as follows:
     flush=true
 ```
 
-### Configure easylogging++ 
+### Configure easylogging++
 
 In order to minimize the configuration file, FISCO BCOS concentrates the configuration information of easyloggin++ to the `[log]` configuration of config.ini. It is generally recommended not to manually change the configuration other than the log level. For the easylogging++ opening method, refer to [open easylogging++] (log_access.html#id4).
 

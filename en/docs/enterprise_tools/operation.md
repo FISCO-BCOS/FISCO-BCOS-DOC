@@ -85,7 +85,7 @@ Now, user can find root certificate `ca.crt` and private key `ca.key` under ./di
 | Command description | generate agency certificate |
 | Premise of use | root certificate and private key have been created |
 | Parameter setting | assign section for agency certificate, chain certificate and private key and create agency name |
-| Function | generate agency certificate and private key under assigned secton |
+| Function | generate agency certificate and private key under assigned section |
 | Adaptable scenario | user needs to generate self-sign agency certificate |
 
 ```bash
@@ -117,8 +117,8 @@ Then user can locate node certificate `node.crt` and private key `node.key` thro
 | Command description | generate SDK certificate |
 | Premise of use | agency certificate and private key have been created |
 | Parameter setting | assign section for node certificate, agency certificate and private key and create node name |
-| Function | generate SDK certificate and privte key under assigned section |
-| Adaptable senario | user needs to generate self-sign SDK certificate |
+| Function | generate SDK certificate and private key under assigned section |
+| Adaptable scenario | user needs to generate self-sign SDK certificate |
 
 ```bash
 $ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca
@@ -130,7 +130,7 @@ Now user can locate SDK file folder containing SDK certificate `node.crt` and pr
 
 |  |  |
 | :-: | :-: |
-| Command descrition | generate certificates and private key according to node_deployment.ini |
+| Command description | generate certificates and private key according to node_deployment.ini |
 | Premise of use | no |
 | Parameter setting | assign section for node certificate |
 | Function | generate private key and node certificate under meta folder, generate node certificate for exchanging and p2p connection file under assigned section according to node_deployment.ini |
@@ -269,7 +269,7 @@ This command will configure the console under ./meta folder according to `node_d
 
 ### get_sdk_file
 
---get_sdk_file command can aquire `node.crt`, `node.key`, `ca.crt` and `applicationContext.xml` that are needed in configuration of console and sdk under assigned section. 
+--get_sdk_file command can aquire `node.crt`, `node.key`, `ca.crt` and `applicationContext.xml` that are needed in configuration of console and sdk under assigned section.
 
 For example:
 
@@ -369,9 +369,9 @@ $ cd ./data/monitor
 Purpose of use:
 
 1. to monitor status of node, to reactive node
-2. to aquire block number of node and view information, to ensure the consensus of nodes
+2. to acquire block number of node and view information, to ensure the consensus of nodes
 3. to analyze printing of node logs in last 1 minutes, to collect critical errors information of printed logs, to monitor status of node in real time
-4. to assign log file or time period, to analyze information of consensus message management, block generation and transaction volume and node's health. 
+4. to assign log file or time period, to analyze information of consensus message management, block generation and transaction volume and node's health.
 
 ### Warning service configuration
 
@@ -395,7 +395,7 @@ Usage : bash monitor.sh
    -f : log file to be analyzed.
    -o : dirpath
    -p : name of the monitored program , default is fisco-bcos
-   -g : specified the group list to be analized
+   -g : specified the group list to be analyzed
    -d : log analyze time range. default : 10(min), it should not bigger than max value : 60(min).
    -r : setting alert receiver
    -h : help.
@@ -439,7 +439,7 @@ $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statis
 
 ## handshake failed test
 
-The `check_certificates.sh` script in scripts folder of FISCO BCOS generator cantains anomaly detection with error message `handshake failed` in node log.
+The `check_certificates.sh` script in scripts folder of FISCO BCOS generator contains anomaly detection with error message `handshake failed` in node log.
 
 ### Acquire test script
 

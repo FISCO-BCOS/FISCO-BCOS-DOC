@@ -23,7 +23,7 @@ This operation requires the user to have sudo permission.
 cd generator && bash ./scripts/install.sh
 ```
 
-Check whather the installation is successful. If it is successful, to output usage: generator xxx
+Check whether the installation is successful. If it is successful, to output usage: generator xxx
 
 ```bash
 ./generator -h
@@ -50,11 +50,11 @@ If it is successful, to output FISCO-BCOS Version : x.x.x-x
 
 ## Typical example
 
-To ensure the security of the agency's private keys, enterprise deployment tool provides a way to build chain for the collaboration between agencys. In this chapter, we will demonstrate how to build chain between agencys in a deployment mode of **6 nodes 3 agencies 2 groups**.
+To ensure the security of the agency's private keys, enterprise deployment tool provides a way to build chain for the collaboration between agencies. In this chapter, we will demonstrate how to build chain between agencies in a deployment mode of **6 nodes 3 agencies 2 groups**.
 
 ### Node networking topology
 
-A networking mode of a 6 nodes 3 agencys 2 groups is shown following. Agency B and agency C are located in Group 1 and Group 2, respectively. Agency A belongs to both Group 1 and Group 2.
+A networking mode of a 6 nodes 3 agencies 2 groups is shown following. Agency B and agency C are located in Group 1 and Group 2, respectively. Agency A belongs to both Group 1 and Group 2.
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
@@ -146,7 +146,7 @@ In this process, we briefly provide **certification agency**. How to cooperate *
 
 ## Alliance chain initialization
 
-For operating simply, all the operations in this example are performed on the same machine. We use different catalogs to simulate different agencys' environment and use the file copy operation to simulate the sending in the network. After performing `Download and Install` in the tutorial, please copy the generator to the corresponding agency's generator directory.
+For operating simply, all the operations in this example are performed on the same machine. We use different catalogs to simulate different agencies' environment and use the file copy operation to simulate the sending in the network. After performing `Download and Install` in the tutorial, please copy the generator to the corresponding agency's generator directory.
 
 ### Institutional initialization
 
@@ -219,7 +219,7 @@ ls dir_agency_ca/agencyA/
 ```bash
 # the above order has explained
 # From left to right, they are agency certificate, agency private key, intermediate file of chain certificate agency, chain certificate, certificate configuration file
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf 
+agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency's working directory.
@@ -596,7 +596,7 @@ ls dir_agency_ca/agencyC/
 ```bash
 # command interpretation
 # From left to right, they are agency certificate, agency private key, intermediate file of chain certificate agency, chain certificate, certificate configuration file
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf 
+agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency’s working directory.
@@ -704,7 +704,7 @@ When agency generates a node, it needs to specify the node P2P connection addres
 cp ./agencyC_node_info/peers.txt ~/generator-A/meta/peersC.txt
 ```
 
-### AgencyC generates genesis block of group2 
+### AgencyC generates genesis block of group2
 
 execute the following command in the ~/generator-C directory
 
@@ -746,15 +746,15 @@ node3=127.0.0.1:30305
 ```
 
 
-In the tutorial, agencyC is chosen to generate gensis block of group. In the actual production, you can negotiate with the alliance chain committee to choose.
+In the tutorial, agency C is chosen to generate genesis block of group. In the actual production, you can negotiate with the alliance chain committee to choose.
 
-This step generates gensis block of group_genesis.ini configuration according to the node certificate configured in the meta folder of agencyC.
+This step generates genesis block of group_genesis.ini configuration according to the node certificate configured in the meta folder of agencyC.
 
 ```bash
 ./generator --create_group_genesis ./group
 ```
 
-distribute gensis block of group2 to agencyA:
+distribute genesis block of group2 to agencyA:
 
 ```bash
 cp ./group/group.2.genesis ~/generator-A/meta/
@@ -801,7 +801,7 @@ execute the following command in the ~/generator-A directory
 cd ~/generator-A
 ```
 
-Add the group2 configuration file to the existing node. This step adds the gensis block of group2 `group.2.genesis` to all nodes under ./nodeA:
+Add the group2 configuration file to the existing node. This step adds the genesis block of group2 `group.2.genesis` to all nodes under ./nodeA:
 
 ```bash
 ./generator --add_group ./meta/group.2.genesis ./nodeA
@@ -887,7 +887,7 @@ Send the configuration file of group1 to agencyC
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-Currently, `FISCO BCOS` does not support file hot update. It is necessary to restart the node after adding gensis block of group1 to agencyC node.
+Currently, `FISCO BCOS` does not support file hot update. It is necessary to restart the node after adding genesis block of group1 to agencyC node.
 
 restart agencyC node:
 

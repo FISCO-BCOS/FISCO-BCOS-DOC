@@ -2,9 +2,9 @@
 
 Distributed storage (Advanced Mass Database, AMDB) can adapt to relational database or split to KV database through design on table structure. Theoretically AMDB supports any relational and KV databases by realizing the storage drive for different database.
 
-- CRUD data, block data and contract code data are defaulted to be stored in AMDB without configuration. Local variables of contract can be configured as MPTState or StorageState if necessary. But contract code remains the same no matther what kind of state.
+- CRUD data, block data and contract code data are defaulted to be stored in AMDB without configuration. Local variables of contract can be configured as MPTState or StorageState if necessary. But contract code remains the same no matter what kind of state.
 - When it's MPTState, contract local variables are stored in MPT tree. When it's StorageState, contract local variables are stored in AMDB table.
-- Although data of MPTState AMDB will all be written to LevelDB finally, but they use different LevelDB instances with no transactional charateristics. Therefore, when it's configured to use MPTState, exceptions during commiting data may lead to difference in data of the 2 LevelDB.
+- Although data of MPTState AMDB will all be written to LevelDB finally, but they use different LevelDB instances with no transactional characteristics. Therefore, when it's configured to use MPTState, exceptions during committing data may lead to difference in data of the 2 LevelDB.
 
 ## Terms definition
 
@@ -57,8 +57,8 @@ The default system table is created in the promise of storage drive.
 |:--------|:--------|:--------|:--------|:--------|
 |`_sys_tables_`         | table_name |key_field,value_field  | store structures of all tables, table name being the primary key           |    tale name of all tables                         |    
 |`_sys_consensus_`      | name       |type,node_id,enable_num| store lists of consensus nodes and observer nodes             |    node                                 |  
-|`_sys_table_access_`   | table_name |address,enable_num     | store exterior account addresses with writting permission of each table     |     table name                            |       
-|`_sys_cns_`            | name       |version,address,abi    | store CNS mapping relation                          | contract name                                  | 
+|`_sys_table_access_`   | table_name |address,enable_num     | store exterior account addresses with writing permission of each table     |     table name                            |       
+|`_sys_cns_`            | name       |version,address,abi    | store CNS mapping relation                          | contract name                                  |
 |`_sys_config_`         | key        |value,enable_num       | store group config items for consensus                |   config items                                |   
 |`_sys_current_state_`  | key        |value                  | store the latest status                           |  current_number/total_transaction_count |
 |`_sys_tx_hash_2_block_`| hash       |value,index            | store map of transaction hash to block number               |   hexadecimal of transaction hash                      |  
