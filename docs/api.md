@@ -806,8 +806,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
     "id": 1,
     "jsonrpc": "2.0",
     "result": {
-        "txSum": "0x1",
-        "blockNumber": "0x1"
+      "blockNumber": "0x1",
+      "failedTxSum": "0x0",
+      "txSum": "0x1"
     }
 }
 ```
