@@ -556,7 +556,7 @@ Parallel multi-group networking is similar with star topology networking. Let's 
 $ mkdir -p ~/fisco && cd ~/fisco
 # acquire build_chain.sh script
 $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
-# build blockchain of 1 group and 4 nodes(in production environment nodes are recommened to be deployed on different physical machines)
+# build blockchain of 1 group and 4 nodes(in production environment nodes are recommend to be deployed on different physical machines)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
 ==============================================================
