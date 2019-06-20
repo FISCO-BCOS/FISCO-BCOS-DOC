@@ -334,9 +334,9 @@ asset-app项目的目录结构如下：
 |   |-- test 
 |       |-- resources // 存放代码资源文件
 |           |-- applicationContext.xml // 项目配置文件
-|           |-- ca.crt // 区块链ca证书
-|           |-- node.crt // 区块链ca证书
-|           |-- node.key // 节点证书
+|           |-- ca.crt // 链证书
+|           |-- node.crt // 节点证书
+|           |-- node.key // 节点私钥
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
 |           |-- contract //存放solidity约文件
