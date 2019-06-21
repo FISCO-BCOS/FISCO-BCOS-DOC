@@ -18,7 +18,7 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
     - web3sdk
      分支：https://github.com/FISCO-BCOS/web3sdk/tree/dev
      
-     maven版本：2.0.33-SNAPSHOT
+     maven版本：2.0.34-SNAPSHOT
 ```
 
 ## 引入jar包

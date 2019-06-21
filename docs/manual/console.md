@@ -886,7 +886,8 @@ count = 1
 [group:1]> getTotalTransactionCount
 {
 	"blockNumber":1,
-	"txSum":1
+	"txSum":1,
+	"failedTxSum":0
 }
 ```
 ### **deploy**
