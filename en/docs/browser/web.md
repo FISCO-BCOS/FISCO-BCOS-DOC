@@ -107,7 +107,7 @@ Please note permission problems when executing command. If any please add sudo
 nginx download address: https://nginx.org/download/(download the latest stable version)
 Or use the following command:
 
-	wget http://nginx.org/download/nginx-1.10.2.tar.gz  (version changable)
+	wget http://nginx.org/download/nginx-1.10.2.tar.gz  (version changeable)
 Move the downloaded packet to /usr/local/
 #### 3.1.3 Install nginx
 ##### 3.1.3.1 Decompress
@@ -128,7 +128,7 @@ Move the downloaded packet to /usr/local/
 Use command:
 
 	/usr/local/nginx/sbin/nginx –t
-	
+
 The output message in normal status:
 
 	nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
