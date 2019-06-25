@@ -4,24 +4,24 @@
 
 The transaction structure of FISCO BCOS has been increased or decreased some fields based on the transaction structure of the original Ethereum. The transaction structure fields of FISCO BCOS 2.0.0 are as follows:
 
-| name           | type            | description                                                  | RLP index |
-| :------------- | :-------------- | :----------------------------------------------------------- | --------- |
-| type           | enum            | Transaction type, represents whether the transaction is a contract creation or a contract transaction, initially an empty contract. | -         |
-| nonce          | u256            | A random number provided by the message sender, to uniquely identify the transaction. | 0         |
-| value          | u256            | The amount of the transfer. FISCO BCOS does not use this field.| 5         |
-| receiveAddress | h160            | The receiver address. type is 0x0 when the contract is created.| 4         |
-| gasPrice       | u256            | The unit price of gas in this transaction. In FISCO BCOS, it is fixed as 300000000.| 1         |
-| gas            | u256            | This transaction allows the maximum amount of gas consumed. In FISCO BCOS, this value can be configured. | 2         |
-| data           | vector< byte >  | It is the data related to the transaction, or the initialization parameter when creating the contract.| 6         |
-| chainId        | u256            | It records chain/transactional information of the transaction                            | -             | 7             |
-| groupId        | u256            | It records the group of the transaction                                       | -             | 8             |
-| extraData      | vector< byte >  | Reserved field, recording transaction information, using “#” internally to separate information                | -             | 9             |
-| vrs            | SignatureStruct | Data that generated after transaction sender signs the hash on 7 field RLP code of the transaction        | 7,8,9         | 10,11,12      |
-| hashWith       | h256            | The hash of all fields (containing signature) after RPL code             | -             | -             |
-| sender         | h160            | Transaction sender's address based on vrs                                 | -             | -             |
-| blockLimit     | u256            | Transaction life cycle, the last processed block number of this transaction, FISCO BCOS new field     | 3             | 3             |
-| importTime     | u256            | Unix timestamp when transaction enters txPool, FISCO BCOS new field               | -             | -             |
-| rpcCallback    | function        | RPC callback after block generation, FISCO BCOS new field                        | -             | -             |
+| name           | type            | description                                                  | RLP index | RLP index RC2 |
+| :------------- | :-------------- | :----------------------------------------------------------- | --------- | ------------- |
+| type           | enum            | Transaction type, represents whether the transaction is a contract creatio -             |n or a contract transaction, initially an empty contract. | -         |
+| nonce          | u256            | A random number provided by the message sender, to uniquely identify the t 0             |ransaction. | 0         |
+| value          | u256            | The amount of the transfer. FISCO BCOS does not use this field.| 5         5             | |
+| receiveAddress | h160            | The receiver address. type is 0x0 when the contract is created.| 4         4             | |
+| gasPrice       | u256            | The unit price of gas in this transaction. In FISCO BCOS, it is fixed as 3 1             |00000000.| 1         |
+| gas            | u256            | This transaction allows the maximum amount of gas consumed. In FISCO BCOS, 2             | this value can be configured. | 2         |
+| data           | vector< byte >  | It is the data related to the transaction, or the initialization parameter 6             | when creating the contract.| 6         |
+| chainId        | u256            | It records chain/transactional information of the transaction              7             |               | -             | 7             |
+| groupId        | u256            | It records the group of the transaction                                    8             |    | -             | 8             |
+| extraData      | vector< byte >  | Reserved field, recording transaction information, using “#” internally to             | separate information                | -             | 9             |
+| vrs            | SignatureStruct | Data that generated after transaction sender signs the hash on 7 field RLP 10,11,12      | code of the transaction        | 7,8,9         | 10,11,12      |
+| hashWith       | h256            | The hash of all fields (containing signature) after RPL code             | -             | -             | -             |
+| sender         | h160            | Transaction sender's address based on vrs                                  -             || -             | -             |
+| blockLimit     | u256            | Transaction life cycle, the last processed block number of this transactio 3             |n, FISCO BCOS new field     | 3             | 3             |
+| importTime     | u256            | Unix timestamp when transaction enters txPool, FISCO BCOS new field        -             |        | -             | -             |
+| rpcCallback    | function        | RPC callback after block generation, FISCO BCOS new field                  -             |       | -             | -             |
 
 The generation process of the hashWith field (also called transaction hash/transaction unique identifier) in RC1 is as follows:
 

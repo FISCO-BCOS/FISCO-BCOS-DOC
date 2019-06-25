@@ -1,36 +1,36 @@
 
 
-# 区块链浏览器前端
+# Build web of Blockchain explorer
 
-本项目是fisco-bcos前端项目，使用框架`vue-cli`。
+This project is to build fisco-bcos web with `vue-cli` framwork.
 
-兼容浏览器IE9及以上，360浏览器兼容版（IE9内核），360浏览器极速版，chrome浏览器。
+It adapts to IE9 or above version, 360 browser of compatible version (IE9 core), 360 browser of speed version, chrome.
 
-## 1、功能
+## 1. Functions
 
-(1)、主要功能是区块链概览，查看区块，查看交易，节点配置以及群组切换。
+(1) The main functions include Blockchain overview, block and transaction details, node configuration and group switch.
 
-(2)、支持群组切换，需要配置群组和节点。
+(2) It supports group switch, which needs to configure groups and nodes.
 
-(3)、上传并编译发送交易的合约后，可以查看交易的inputs和event解码数据。
+(3) Upload and compile the contracts that sending transactions, and view the decoded data of inputs and event of transactions.
 
-(4)、区块链概览，查看区块，查看交易和节点配置页面每10s执行一轮请求。
+(4) It provides Blockchain overview, block details, transaction and node configuration pages that execute each round of request om every 10 seconds.
 
-## 2、部署
+## 2. Deploy
 
-### 2.1 依赖环境
+### 2.1 Environment dependency
 
-| 环境     | 版本              |
+| Environment     | Version              |
 | ------ | --------------- |
-| nginx   | nginx1.6或以上版本    |
+| nginx   | nginx1.6 or above version    |
 
-nginx安装请参考附录
-
-
-### 2.2 拉取代码
+The install of nginx is introduced in Additional.
 
 
-执行命令：(前后端同机部署时，只需要拉取一次)
+### 2.2 Pull code
+
+
+Execute command: (when web and server are deployed on the same machine, it only needs to be pulled once)
 
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
@@ -40,28 +40,28 @@ git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
 cd fisco-bcos-browser
 ```
 
- 然后将其中./web/fisco-bcos-browser-front/目录中的dist目录放到/data/app/web目录下。
+And then, place the dist directory in ./web/fisco-bcos-browser-front/ under /data/app/web directory.
 
-**提示：**目录可以自定义指定，只需要nginx配置文件步骤2保持一致即可。
+**Tip:** the directory can be cutomized, as long as the step 2 of nginx config file is kept the same.
 
-### 2.3 修改nginx配置
+### 2.3 Modify nginx config
 
-在./web/fisco-bcos-browser-front/doc文件下有nginx配置文件，直接可以拿来替换安装的nginx的配置文件nginx.conf；
+There is nginx config file under ./web/fisco-bcos-browser-front/doc, which can replace the installed nginx.conf;
 
-**注意**：如果按照附录安装的nginx，配置文件路径在/usr/local/nginx/conf/nginx.conf 。
+**Note**：If nginx is installed as the way in Additional, the config file route is /usr/local/nginx/conf/nginx.conf.
 
-然后修改nginx.conf；
+And modify nginx.conf;
 
-1. 修改前端服务的ip地址和端口。
-2. 修改前端文件的路径,直接指向已拉取代码的dist目录。
-3. 修改后端服务(fisco-bcos-browser)的ip和端口，注意'/api'不要修改。
+1. Modify IP address and port of web.
+2. Modify web file route and point to dist directory that pulled code.
+3. Modify IP and port of server. Please note that '/api' need not to be changed.
 
 ```Nginx
     server {
-            listen       8081 default_server;   #步骤1、前端nginx监听端口
-            server_name  192.168.0.1;         #步骤1、前端地址，可配置为域名
+            listen       8081 default_server;   #Step 1, web nginx monitoring port
+            server_name  192.168.0.1;         #Step 2, web address, can be configured as domain name
             location / {
-                    root    /data/app/web/dist;   #步骤2、前端文件路径
+                    root    /data/app/web/dist;   #Step 2, web file route
                     index  index.html index.htm;
                     try_files $uri $uri/ /index.html =404;
                 }
@@ -70,7 +70,7 @@ cd fisco-bcos-browser
             include /etc/nginx/default.d/*.conf;
 
             location /api {
-                    proxy_pass    http://192.168.0.1:8088/;    #步骤3、后端服务(fisco-bcos-browser server)地址及端口
+                    proxy_pass    http://192.168.0.1:8088/;    #Step 3, IP and port of server (fisco-bcos-browser server)
                	 	proxy_set_header		Host				$host;
                     proxy_set_header		X-Real-IP			$remote_addr;
                     proxy_set_header		X-Forwarded-For		$proxy_add_x_forwarded_for;
@@ -78,45 +78,45 @@ cd fisco-bcos-browser
             }
 ```
 
-### 2.4 启动nginx
+### 2.4 Start nginx
 
-(1)、启动nginx。
-启动命令：
+(1) Start nginx。
+Start command:
 
 ```shell
 /usr/local/nginx/sbin/nginx   
 ```
-**启动报错重点排查：**
+**Start exception report and troubleshooting:**
 
-1. 日志路径是否正确（error.log和access.log）
-2. nginx有没有添加用户权限。
+1. The log route is correct of not (error.log and access.log)
+2. nginx has been added with access
 
-(2)、打开页面，页面url是nginx配置的前端端口和前端ip。
-例如:上面配置文件的url为   http:192.168.0.1:8081
+(2) Open page, page url is the web port and IP configured by nginx
+Example: the url of the above config file is http:192.168.0.1:8081
 
-(3)、打开页面后，配置群组（群组ip是搭链的群组ip），配置节点（该群组下节点），然后就可以查看具体数据了。
+(3) Open page. configure group (group IP same as build chain), configure nodes (within the group), the we can access the data.
 
-## 3、附录
-### 3.1 安装nginx（可参考[网络教程](http://www.runoob.com/linux/nginx-install-setup.html)）
-#### 3.1.1 下载nginx依赖
-在安装nginx前首先要确认系统中安装了gcc、pcre-devel、zlib-devel、openssl-devel。如果没有，请执行命令
+## 3. Additional
+### 3.1 Install nginx（Please check [Network Tutorial](http://www.runoob.com/linux/nginx-install-setup.html)）
+#### 3.1.1 Download nginx dependency
+Please confirm if gcc, pcre-devel, zlib-devel, openssl-develnginx are installed in the system. If not, execute the command
 
 	yum -y install gcc pcre-devel zlib-devel openssl openssl-devel
-执行命令时注意权限问题，如遇到，请加上sudo
-#### 3.1.2 下载nginx
-nginx下载地址：https://nginx.org/download/（下载最新稳定版本即可）
-或者使用命令：
+Please note permission problems when executing command. If any please add sudo
+#### 3.1.2 Download nginx
+nginx download address: https://nginx.org/download/(download the latest stable version)
+Or use the following command:
 
-	wget http://nginx.org/download/nginx-1.10.2.tar.gz  (版本号可换)
-将下载的包移动到/usr/local/下
-#### 3.1.3 安装nginx
-##### 3.1.3.1 解压
+	wget http://nginx.org/download/nginx-1.10.2.tar.gz  (version changable)
+Move the downloaded packet to /usr/local/
+#### 3.1.3 Install nginx
+##### 3.1.3.1 Decompress
 	tar -zxvf nginx-1.10.2.tar.gz
 
-##### 3.1.3.2 进入nginx目录
+##### 3.1.3.2 Enter nginx directory
 
 	cd nginx-1.10.2
-##### 3.1.3.3 配置
+##### 3.1.3.3 Configure
 
 	./configure --prefix=/usr/local/nginx
 
@@ -124,18 +124,19 @@ nginx下载地址：https://nginx.org/download/（下载最新稳定版本即可
 
 	make
 	make install
-##### 3.1.3.5 测试是否安装成功
-使用命令：
+##### 3.1.3.5 Test the install
+Use command:
 
 	/usr/local/nginx/sbin/nginx –t
-正常情况的信息输出：
+	
+The output message in normal status:
 
 	nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
 	nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
-##### 3.1.3.6 nginx几个常见命令
+##### 3.1.3.6 Common commands of nginx
 ```shell
-/usr/local/nginx/sbin/nginx -s reload            # 重新载入配置文件
-/usr/local/nginx/sbin/nginx -s reopen            # 重启 Nginx
-/usr/local/nginx/sbin/nginx -s stop              # 停止 Nginx
-ps -ef | grep nginx                              # 查看nginx进程
+/usr/local/nginx/sbin/nginx -s reload            # reload config file
+/usr/local/nginx/sbin/nginx -s reopen            # restart Nginx
+/usr/local/nginx/sbin/nginx -s stop              # stop Nginx
+ps -ef | grep nginx                              # view progress of nginx
 ```

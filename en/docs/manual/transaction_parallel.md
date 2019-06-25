@@ -22,7 +22,7 @@ Taking payment transfer as an example, it involves transactions of payment trans
 | transfer(A, B) and transfer(B, C) | [A, B] and [B, C] | [B]    | exclusive, cannot be executed parallelly |
 | transfer(A, C) and transfer(B, C) | [A, C] and [B, C] | [C]    | exclusive, cannot be executed parallelly |
 | transfer(A, B) and transfer(A, B) | [A, B] and [A, B] | [A, B] | exclusive, cannot be executed parallelly |
-| transfer(A, B) and transfer(C, D) | [A, B] and [C, D] | no     | exclusive, cannot be executed parallelly |
+| transfer(A, B) and transfer(C, D) | [A, B] and [C, D] | no     | non-exclusive, can be executed parallelly |
 
 Here are detailed definitions:
 
