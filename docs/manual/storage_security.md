@@ -12,7 +12,7 @@
 
 ```eval_rst
 .. important::
-    注意：若节点为国密版，Key Manager也需是国密版。
+    若节点为国密版，Key Manager也需是国密版。
 ```
 
 ## 生成节点
