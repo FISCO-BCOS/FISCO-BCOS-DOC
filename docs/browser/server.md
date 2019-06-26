@@ -64,9 +64,9 @@ cd dist/conf
 ```shell
 修改当前服务端口：sed -i "s/8088/${your_server_port}/g" application.yml
 修改数据库IP：sed -i "s/127.0.0.1/${your_db_ip}/g" application.yml
-修改数据库用户名：sed -i "s/root/${your_db_account}/g" application.yml
-修改数据库密码：sed -i "s/123456/${your_db_password}/g" application.yml
-修改数据库名称：sed -i "s/testDB/${your_db_name}/g" application.yml
+修改数据库用户名：sed -i "s/dbUsername/${your_db_account}/g" application.yml
+修改数据库密码：sed -i "s/dbPassword/${your_db_password}/g" application.yml
+修改数据库名称：sed -i "s/db_browser/${your_db_name}/g" application.yml
 
 例子（将数据库IP由127.0.0.1改为0.0.0.0）：sed -i "s/127.0.0.1/0.0.0.0/g" application.yml
 ```
@@ -228,7 +228,7 @@ mysql -utest -p123456 -h 127.0.0.1 -P 3306
 创建数据库
 
 ```sql
-mysql > create database testDB;
+mysql > create database db_browser;
 ```
 
 ### 5.3.1 常见错误 
@@ -246,4 +246,3 @@ mysql > create database testDB;
 ```shell
    mysql -uroot -p mysql  
 ```
-

@@ -232,7 +232,7 @@ System.out.println("p12 privateKey: " + p12KeyPair.getPrivateKey().toString(16))
 System.out.println("p12 publicKey: " + p12KeyPair.getPublicKey().toString(16));
 
 //生成web3sdk使用的Credentials
-Credentials credentials = Credentials.create(p12KeyPair);
+Credentials credentials = GenCredential.create(p12KeyPair.getPrivateKey().toString(16));
 System.out.println("p12 Address: " + credentials.getAddress());
 ```
 
@@ -256,7 +256,7 @@ System.out.println("PEM privateKey: " + pemKeyPair.getPrivateKey().toString(16))
 System.out.println("PEM publicKey: " + pemKeyPair.getPublicKey().toString(16));
 
 //生成web3sdk使用的Credentials
-Credentials credentialsPEM = Credentials.create(pemKeyPair);
+Credentials credentialsPEM = GenCredential.create(pemKeyPair.getPrivateKey().toString(16));
 System.out.println("PEM Address: " + credentialsPEM.getAddress());
 ```
 
@@ -296,18 +296,9 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
 ### SDK国密功能使用
 - 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi_crypto.md)。
 - 启用国密功能：application.xml/application.yml配置文件中将encryptType属性设置为1。
+- 加载私钥使用GenCredential类(适用于国密和非国密)，Credential类只适用于加载非国密私钥。
 
-国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。国密版的编译器jar包下载请[参考这里](../manual/console.html#jar)，用于将Solidity合约文件转为国密版的Java合约文件。可以在项目src目录下新建一个lib目录，将下载的国密版jar包放置在lib目录下。然后修改项目的build.gradle文件，移除普通版编译器jar包，引入国密编译器jar包。
-  ```
-    compile ("org.fisco-bcos:web3sdk:x.x.x"){ //如：web3sdk:2.0.0
-         exclude module: 'solcJ-all'
-    }
-    // 0.4版国密合约编译器jar包
-    compile files('lib/solcJ-all-0.4.25-gm.jar')
-    // 0.5版本国密合约编译器jar包
-    // compile files('lib/solcJ-all-0.5.2-gm.jar')
-  ```
-Solidity合约文件转换为国密版Java合约文件的步骤、部署和调用国密版合约的方法均与普通版SDK相同。
+国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。编译国密版的Java合约文件[参考这里](../manual/console.html#id10)。
 
 ## Web3SDK API
 

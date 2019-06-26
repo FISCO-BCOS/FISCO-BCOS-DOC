@@ -197,7 +197,7 @@ contract TableTest {
 
 ```eval_rst
 .. important::
-    客户端需要调用转换为 Java 文件的合约代码，需要将TableTest.sol和Table.sol放入 Web3SDK 的src/test/resources/contract目录下，通过 Web3SDK 的编译脚本生成TableTest.java。
+    客户端需要调用转换为Java文件的合约代码，需要将TableTest.sol和Table.sol放入控制台的contracts/solidity目录下，通过控制台的编译脚本sol2java.sh生成TableTest.java。
 ```
 
 
@@ -588,7 +588,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 #### 3.1 使用控制台调用HelloWorld预编译合约
 
-在控制台solidity/contracts创建HelloWorldPrecompiled.sol文件，文件内容是HelloWorld预编译合约的接口声明，如下
+在控制台contracts/solidity创建HelloWorldPrecompiled.sol文件，文件内容是HelloWorld预编译合约的接口声明，如下
 
 ```bash
 pragma solidity ^0.4.24;
@@ -603,7 +603,7 @@ contract HelloWorldPrecompiled{
 
 #### 3.2 solidity调用  
 
-我们尝试在Solidity合约中创建预编译合约对象并调用其接口。在控制台solidity/contracts创建HelloWorldHelper.sol文件，文件内容如下
+我们尝试在Solidity合约中创建预编译合约对象并调用其接口。在控制台contracts/solidity创建HelloWorldHelper.sol文件，文件内容如下
 
 ```js
 pragma solidity ^0.4.24;
