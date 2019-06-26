@@ -151,7 +151,7 @@ System.out.println("p12 privateKey: " + p12KeyPair.getPrivateKey().toString(16))
 System.out.println("p12 publicKey: " + p12KeyPair.getPublicKey().toString(16));
 
 //生成web3sdk使用的Credentials
-Credentials credentials = Credentials.create(p12KeyPair);
+Credentials credentials =  GenCredential.create(p12KeyPair.getPrivateKey().toString(16));
 System.out.println("p12 Address: " + credentials.getAddress());
 ```
 
@@ -175,7 +175,7 @@ System.out.println("PEM privateKey: " + pemKeyPair.getPrivateKey().toString(16))
 System.out.println("PEM publicKey: " + pemKeyPair.getPublicKey().toString(16));
 
 //生成web3sdk使用的Credentials
-Credentials credentialsPEM = Credentials.create(pemKeyPair);
+Credentials credentialsPEM = GenCredential.create(pemKeyPair.getPrivateKey().toString(16));
 System.out.println("PEM Address: " + credentialsPEM.getAddress());
 ```
 
