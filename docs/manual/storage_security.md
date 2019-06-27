@@ -10,6 +10,11 @@
 
 每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager README](https://github.com/FISCO-BCOS/key-manager)
 
+```eval_rst
+.. important::
+    若节点为国密版，Key Manager也需是国密版。
+```
+
 ## 生成节点
 
 用[```build_chain.sh```](build_chain.md)脚本，用普通的操作方法，先生成节点。
