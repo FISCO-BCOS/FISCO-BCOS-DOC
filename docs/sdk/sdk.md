@@ -123,21 +123,23 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 ### Spring Boot项目配置
 提供Spring Boot项目中关于`application.yml`的配置如下所示。
 ```yml
-encrypt-type: 0  # 0:standard, 1:guomi
+encrypt-type: # 0：普通， 1：国密
+ encrypt-type: 0 
+ 
 group-channel-connections-config:
   all-channel-connections:
-  - group-id: 1  #group ID
+  - group-id: 1  # 群组ID
     connections-str:
-                    - 127.0.0.1:20200  # node listen_ip:channel_listen_port
+                    - 127.0.0.1:20200  # 节点，listen_ip:channel_listen_port
                     - 127.0.0.1:20201
   - group-id: 2  
     connections-str:
-                    - 127.0.0.1:20202  # node listen_ip:channel_listen_port
+                    - 127.0.0.1:20202  # 节点，listen_ip:channel_listen_port
                     - 127.0.0.1:20203
  
 channel-service:
-  group-id: 1 # The specified group to which the SDK connects
-  agency-name: fisco # agency name
+  group-id: 1 # sdk实际连接的群组
+  agency-name: fisco # 机构名称
 ```
 `application.yml`配置项与`applicationContext.xml`配置项相对应，详细介绍参考`applicationContext.xml`配置说明。
 
