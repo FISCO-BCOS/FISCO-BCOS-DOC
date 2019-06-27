@@ -53,7 +53,8 @@ compile group: "org.fisco-bcos", name: "web3sdk", version: "2.0.34-SNAPSHOT"
    ```json
    {"data":[{"name":"","type":"","data":} ... ],"function":"","methodID":""}
    ```
-   function : 函数签名字符串
+   function : 函数签名字符串  
+
    methodID : [函数选择器](https://solidity.readthedocs.io/en/develop/abi-spec.html#function-selector)
 
 2. `InputAndOutputResult decodeInputReturnObject(String input)`  
@@ -90,7 +91,7 @@ compile group: "org.fisco-bcos", name: "web3sdk", version: "2.0.34-SNAPSHOT"
 
 6. `Map<String, List<List<ResultEntity>>> decodeEventReturnObject(List<Log> logList)`  
    
-   解析event列表，返回java Map对象，key为[event签名](https://solidity.readthedocs.io/en/develop/abi-spec.html#events)字符串，List<List<ResultEntity>>为交易中所有的event参数信息
+   解析event列表，返回java Map对象，key为[event签名](https://solidity.readthedocs.io/en/develop/abi-spec.html#events)字符串，`List<ResultEntity>`为交易中单个event参数列表，`List<List<ResultEntity>>`表示单个交易可以包含多个event
 
 `TransactionDecoder`对input，output和event logs均分别提供返回json字符串和java对象的方法。json字符串方便客户端处理数据，java对象方便服务端处理数据。
 
@@ -119,7 +120,7 @@ contract TxDecodeSample
 
 使用`buildTransactionDecoder` 创建`TxDecodeSample`合约的解析对象：
 ```java
-// TxDecodeSample合约ABIå
+// TxDecodeSample合约ABI
 String abi = "[{\"constant\":false,\"inputs\":[{\"name\":\"_u\",\"type\":\"uint256\"},{\"name\":\"_i\",\"type\":\"int256\"},{\"name\":\"_b\",\"type\":\"bool\"},{\"name\":\"_addr\",\"type\":\"address\"},{\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"string\"},{\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"do_event\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_u\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_i\",\"type\":\"int256\"},{\"indexed\":false,\"name\":\"_b\",\"type\":\"bool\"},{\"indexed\":false,\"name\":\"_addr\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"_s\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"Event1\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_u\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"_i\",\"type\":\"int256\"},{\"indexed\":false,\"name\":\"_b\",\"type\":\"bool\"},{\"indexed\":false,\"name\":\"_addr\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"indexed\":false,\"name\":\"_s\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"Event2\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"name\":\"_u\",\"type\":\"uint256\"},{\"name\":\"_i\",\"type\":\"int256\"},{\"name\":\"_b\",\"type\":\"bool\"},{\"name\":\"_addr\",\"type\":\"address\"},{\"name\":\"_bs32\",\"type\":\"bytes32\"},{\"name\":\"_s\",\"type\":\"string\"},{\"name\":\"_bs\",\"type\":\"bytes\"}],\"name\":\"echo\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"},{\"name\":\"\",\"type\":\"int256\"},{\"name\":\"\",\"type\":\"bool\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"string\"},{\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]";
 String bin = "";
 TransactionDecoder txDecodeSampleDecoder = TransactionDecoderFactory.buildTransactionDecoder(abi, bin);
@@ -139,9 +140,96 @@ System.out.println("object => \n" + objectResult);
 输出：
 ```java
 json => 
-{"function":"echo(uint256,int256,bool,address,bytes32,string,bytes)","methodID":"0x406d373b","result":[{"name":"_u","type":"uint256","data":111111},{"name":"_i","type":"int256","data":-1111111},{"name":"_b","type":"bool","data":false},{"name":"_addr","type":"address","data":"0x692a70d2e424a56d2c6c27aa97d1a86395877b3a"},{"name":"_bs32","type":"bytes32","data":"abcdefghiabcdefghiabcdefghiabhji"},{"name":"_s","type":"string","data":"章鱼小丸子ljjkl;adjsfkljlkjl"},{"name":"_bs","type":"bytes","data":"sadfljkjkljkl"}]}
+{
+  "function": "echo(uint256,int256,bool,address,bytes32,string,bytes)",
+  "methodID": "0x406d373b",
+  "result": [
+    {
+      "name": "_u",
+      "type": "uint256",
+      "data": 111111
+    },
+    {
+      "name": "_i",
+      "type": "int256",
+      "data": -1111111
+    },
+    {
+      "name": "_b",
+      "type": "bool",
+      "data": false
+    },
+    {
+      "name": "_addr",
+      "type": "address",
+      "data": "0x692a70d2e424a56d2c6c27aa97d1a86395877b3a"
+    },
+    {
+      "name": "_bs32",
+      "type": "bytes32",
+      "data": "abcdefghiabcdefghiabcdefghiabhji"
+    },
+    {
+      "name": "_s",
+      "type": "string",
+      "data": "章鱼小丸子ljjkl;adjsfkljlkjl"
+    },
+    {
+      "name": "_bs",
+      "type": "bytes",
+      "data": "sadfljkjkljkl"
+    }
+  ]
+}
+
 object => 
-InputAndOutputResult [function=echo(uint256,int256,bool,address,bytes32,string,bytes), methodID=0x406d373b, result=[ResultEntity [name=_u, type=uint256, data=111111], ResultEntity [name=_i, type=int256, data=-1111111], ResultEntity [name=_b, type=bool, data=false], ResultEntity [name=_addr, type=address, data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a], ResultEntity [name=_bs32, type=bytes32, data=abcdefghiabcdefghiabcdefghiabhji], ResultEntity [name=_s, type=string, data=章鱼小丸子ljjkl;adjsfkljlkjl], ResultEntity [name=_bs, type=bytes, data=sadfljkjkljkl]]]
+InputAndOutputResult[
+  function=echo(uint256,
+  int256,
+  bool,
+  address,
+  bytes32,
+  string,
+  bytes),
+  methodID=0x406d373b,
+  result=[
+    ResultEntity[
+      name=_u,
+      type=uint256,
+      data=111111
+    ],
+    ResultEntity[
+      name=_i,
+      type=int256,
+      data=-1111111
+    ],
+    ResultEntity[
+      name=_b,
+      type=bool,
+      data=false
+    ],
+    ResultEntity[
+      name=_addr,
+      type=address,
+      data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+    ],
+    ResultEntity[
+      name=_bs32,
+      type=bytes32,
+      data=abcdefghiabcdefghiabcdefghiabhji
+    ],
+    ResultEntity[
+      name=_s,
+      type=string,
+      data=章鱼小丸子ljjkl;adjsfkljlkjl
+    ],
+    ResultEntity[
+      name=_bs,
+      type=bytes,
+      data=sadfljkjkljkl
+    ]
+  ]
+]
 
 ```
 ### 解析output
@@ -162,10 +250,96 @@ System.out.println("object => \n" + objectResult);
 结果：
 ```java
 json => 
-{"function":"echo(uint256,int256,bool,address,bytes32,string,bytes)","methodID":"0x406d373b","result":[{"name":"","type":"uint256","data":111111},{"name":"","type":"int256","data":-1111111},{"name":"","type":"bool","data":false},{"name":"","type":"address","data":"0x692a70d2e424a56d2c6c27aa97d1a86395877b3a"},{"name":"","type":"bytes32","data":"abcdefghiabcdefghiabcdefghiabhji"},{"name":"","type":"string","data":"章鱼小丸子ljjkl;adjsfkljlkjl"},{"name":"","type":"bytes","data":"sadfljkjkljkl"}]}
-object => 
-InputAndOutputResult [function=echo(uint256,int256,bool,address,bytes32,string,bytes), methodID=0x406d373b, result=[ResultEntity [name=, type=uint256, data=111111], ResultEntity [name=, type=int256, data=-1111111], ResultEntity [name=, type=bool, data=false], ResultEntity [name=, type=address, data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a], ResultEntity [name=, type=bytes32, data=abcdefghiabcdefghiabcdefghiabhji], ResultEntity [name=, type=string, data=章鱼小丸子ljjkl;adjsfkljlkjl], ResultEntity [name=, type=bytes, data=sadfljkjkljkl]]]
+{
+  "function": "echo(uint256,int256,bool,address,bytes32,string,bytes)",
+  "methodID": "0x406d373b",
+  "result": [
+    {
+      "name": "",
+      "type": "uint256",
+      "data": 111111
+    },
+    {
+      "name": "",
+      "type": "int256",
+      "data": -1111111
+    },
+    {
+      "name": "",
+      "type": "bool",
+      "data": false
+    },
+    {
+      "name": "",
+      "type": "address",
+      "data": "0x692a70d2e424a56d2c6c27aa97d1a86395877b3a"
+    },
+    {
+      "name": "",
+      "type": "bytes32",
+      "data": "abcdefghiabcdefghiabcdefghiabhji"
+    },
+    {
+      "name": "",
+      "type": "string",
+      "data": "章鱼小丸子ljjkl;adjsfkljlkjl"
+    },
+    {
+      "name": "",
+      "type": "bytes",
+      "data": "sadfljkjkljkl"
+    }
+  ]
+}
 
+object => 
+InputAndOutputResult[
+  function=echo(uint256,
+  int256,
+  bool,
+  address,
+  bytes32,
+  string,
+  bytes),
+  methodID=0x406d373b,
+  result=[
+    ResultEntity[
+      name=,
+      type=uint256,
+      data=111111
+    ],
+    ResultEntity[
+      name=,
+      type=int256,
+      data=-1111111
+    ],
+    ResultEntity[
+      name=,
+      type=bool,
+      data=false
+    ],
+    ResultEntity[
+      name=,
+      type=address,
+      data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+    ],
+    ResultEntity[
+      name=,
+      type=bytes32,
+      data=abcdefghiabcdefghiabcdefghiabhji
+    ],
+    ResultEntity[
+      name=,
+      type=string,
+      data=章鱼小丸子ljjkl;adjsfkljlkjl
+    ],
+    ResultEntity[
+      name=,
+      type=bytes,
+      data=sadfljkjkljkl
+    ]
+  ]
+]
 ```
 
 ### 解析event logs
@@ -184,7 +358,192 @@ System.out.println("map => \n" + mapResult);
 结果：
 ```java
 json => 
-{"Event1(uint256,int256,bool,address,bytes32,string,bytes)":[[{"name":"_u","type":"uint256","data":111111,"indexed":false},{"name":"_i","type":"int256","data":-1111111,"indexed":false},{"name":"_b","type":"bool","data":false,"indexed":false},{"name":"_addr","type":"address","data":"0x692a70d2e424a56d2c6c27aa97d1a86395877b3a","indexed":false},{"name":"_bs32","type":"bytes32","data":"abcdefghiabcdefghiabcdefghiabhji","indexed":false},{"name":"_s","type":"string","data":"章鱼小丸子ljjkl;adjsfkljlkjl","indexed":false},{"name":"_bs","type":"bytes","data":"sadfljkjkljkl","indexed":false}]],"Event2(uint256,int256,bool,address,bytes32,string,bytes)":[[{"name":"_u","type":"uint256","data":111111,"indexed":false},{"name":"_i","type":"int256","data":-1111111,"indexed":false},{"name":"_b","type":"bool","data":false,"indexed":false},{"name":"_addr","type":"address","data":"0x692a70d2e424a56d2c6c27aa97d1a86395877b3a","indexed":false},{"name":"_bs32","type":"bytes32","data":"abcdefghiabcdefghiabcdefghiabhji","indexed":false},{"name":"_s","type":"string","data":"章鱼小丸子ljjkl;adjsfkljlkjl","indexed":false},{"name":"_bs","type":"bytes","data":"sadfljkjkljkl","indexed":false}]]}
+{
+  "Event1(uint256,int256,bool,address,bytes32,string,bytes)": [
+    [
+      {
+        "name": "_u",
+        "type": "uint256",
+        "data": 111111,
+        "indexed": false
+      },
+      {
+        "name": "_i",
+        "type": "int256",
+        "data": -1111111,
+        "indexed": false
+      },
+      {
+        "name": "_b",
+        "type": "bool",
+        "data": false,
+        "indexed": false
+      },
+      {
+        "name": "_addr",
+        "type": "address",
+        "data": "0x692a70d2e424a56d2c6c27aa97d1a86395877b3a",
+        "indexed": false
+      },
+      {
+        "name": "_bs32",
+        "type": "bytes32",
+        "data": "abcdefghiabcdefghiabcdefghiabhji",
+        "indexed": false
+      },
+      {
+        "name": "_s",
+        "type": "string",
+        "data": "章鱼小丸子ljjkl;adjsfkljlkjl",
+        "indexed": false
+      },
+      {
+        "name": "_bs",
+        "type": "bytes",
+        "data": "sadfljkjkljkl",
+        "indexed": false
+      }
+    ]
+  ],
+  "Event2(uint256,int256,bool,address,bytes32,string,bytes)": [
+    [
+      {
+        "name": "_u",
+        "type": "uint256",
+        "data": 111111,
+        "indexed": false
+      },
+      {
+        "name": "_i",
+        "type": "int256",
+        "data": -1111111,
+        "indexed": false
+      },
+      {
+        "name": "_b",
+        "type": "bool",
+        "data": false,
+        "indexed": false
+      },
+      {
+        "name": "_addr",
+        "type": "address",
+        "data": "0x692a70d2e424a56d2c6c27aa97d1a86395877b3a",
+        "indexed": false
+      },
+      {
+        "name": "_bs32",
+        "type": "bytes32",
+        "data": "abcdefghiabcdefghiabcdefghiabhji",
+        "indexed": false
+      },
+      {
+        "name": "_s",
+        "type": "string",
+        "data": "章鱼小丸子ljjkl;adjsfkljlkjl",
+        "indexed": false
+      },
+      {
+        "name": "_bs",
+        "type": "bytes",
+        "data": "sadfljkjkljkl",
+        "indexed": false
+      }
+    ]
+  ]
+}
+
 map => 
-{Event1(uint256,int256,bool,address,bytes32,string,bytes)=[[ResultEntity [name=_u, type=uint256, data=111111], ResultEntity [name=_i, type=int256, data=-1111111], ResultEntity [name=_b, type=bool, data=false], ResultEntity [name=_addr, type=address, data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a], ResultEntity [name=_bs32, type=bytes32, data=abcdefghiabcdefghiabcdefghiabhji], ResultEntity [name=_s, type=string, data=章鱼小丸子ljjkl;adjsfkljlkjl], ResultEntity [name=_bs, type=bytes, data=sadfljkjkljkl]]], Event2(uint256,int256,bool,address,bytes32,string,bytes)=[[ResultEntity [name=_u, type=uint256, data=111111], ResultEntity [name=_i, type=int256, data=-1111111], ResultEntity [name=_b, type=bool, data=false], ResultEntity [name=_addr, type=address, data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a], ResultEntity [name=_bs32, type=bytes32, data=abcdefghiabcdefghiabcdefghiabhji], ResultEntity [name=_s, type=string, data=章鱼小丸子ljjkl;adjsfkljlkjl], ResultEntity [name=_bs, type=bytes, data=sadfljkjkljkl]]]}
+{
+  Event1(uint256,
+  int256,
+  bool,
+  address,
+  bytes32,
+  string,
+  bytes)=[
+    [
+      ResultEntity[
+        name=_u,
+        type=uint256,
+        data=111111
+      ],
+      ResultEntity[
+        name=_i,
+        type=int256,
+        data=-1111111
+      ],
+      ResultEntity[
+        name=_b,
+        type=bool,
+        data=false
+      ],
+      ResultEntity[
+        name=_addr,
+        type=address,
+        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+      ],
+      ResultEntity[
+        name=_bs32,
+        type=bytes32,
+        data=abcdefghiabcdefghiabcdefghiabhji
+      ],
+      ResultEntity[
+        name=_s,
+        type=string,
+        data=章鱼小丸子ljjkl;adjsfkljlkjl
+      ],
+      ResultEntity[
+        name=_bs,
+        type=bytes,
+        data=sadfljkjkljkl
+      ]
+    ]
+  ],
+  Event2(uint256,
+  int256,
+  bool,
+  address,
+  bytes32,
+  string,
+  bytes)=[
+    [
+      ResultEntity[
+        name=_u,
+        type=uint256,
+        data=111111
+      ],
+      ResultEntity[
+        name=_i,
+        type=int256,
+        data=-1111111
+      ],
+      ResultEntity[
+        name=_b,
+        type=bool,
+        data=false
+      ],
+      ResultEntity[
+        name=_addr,
+        type=address,
+        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+      ],
+      ResultEntity[
+        name=_bs32,
+        type=bytes32,
+        data=abcdefghiabcdefghiabcdefghiabhji
+      ],
+      ResultEntity[
+        name=_s,
+        type=string,
+        data=章鱼小丸子ljjkl;adjsfkljlkjl
+      ],
+      ResultEntity[
+        name=_bs,
+        type=bytes,
+        data=sadfljkjkljkl
+      ]
+    ]
+  ]
+}
 ```
