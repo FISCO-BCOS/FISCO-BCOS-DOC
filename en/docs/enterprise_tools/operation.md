@@ -20,7 +20,7 @@ FISCO BCOS generator contains multiple operations about node generation, expansi
 |  |  |
 | :-: | :-: |
 | Command description | generate group Genesis Block |
-| Premise of use | user needs to configure `group_genesis.ini` and node certificates under meta folder.  |
+| Premise of use | user needs to configure `group_genesis.ini` and node certificates under meta folder  |
 | Parameter setting | assign and generate node configuration file folder for group |
 | Function | generate configuration of new group under assigned section according to the certificates user configured under meta folder |
 | Adaptable scenario | the existed nodes on consortium chain needs to form new group |
