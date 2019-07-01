@@ -1,5 +1,5 @@
 ##############################################################
-Operation Tutorial
+Operation tutorial
 ##############################################################
 
 This chapter provides an operation tutorial of FISCO BCOS platform to introduce its functions and operation methods.
@@ -21,4 +21,3 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    transaction_parallel.md
    distributed_storage.md
    guomi_crypto.md
-   log_access.md

@@ -39,9 +39,9 @@ Explanation
 - In this table **Name** is the AMDB primary key.
 - Each row is an Entry. There are 4 Entries which store data by Map:
     + Entry1：`{Name:Alice，item_id:1001001,item_name:laptop}`
-    + Entry2：`{Name:Alice，item_id:1001001,item_name:screen}`
-    + Entry3：`{Name:Bob，item_id:1001001,item_name:macbook}`
-    + Entry4：`{Name:Chris，item_id:1001001,item_name:PC}`
+    + Entry2：`{Name:Alice，item_id:1001002,item_name:screen}`
+    + Entry3：`{Name:Bob，item_id:1002001,item_name:macbook}`
+    + Entry4：`{Name:Chris，item_id:1003001,item_name:PC}`
 - In the Table **Name** is the primary key with 3 Entries objects. The first Entries stores 2 records of Alice; the second Entries stores one record of Bob; the third Entries stores one record of Chris.
 - When calling retrieve API of Table, the API should set AMDB primary key and condition. Set AMDB primary key as Alice, condition as `price > 40`, it will retrieve Entry1.
 

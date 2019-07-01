@@ -341,8 +341,8 @@ The directory structure of the asset-app project is as follows:
 |       |-- resources // store code resource files
 |           |-- applicationContext.xml // project configuration file
 |           |-- ca.crt // blockchain ca certificate
-|           |-- node.crt // blockchain ca certificate
-|           |-- node.key // node certificate
+|           |-- node.crt // node ca certificate
+|           |-- node.key // node private key
 |           |-- contract.properties // file that stores the deployment contract address
 |           |-- log4j.properties // log configuration file
 |           |-- contract //store Solidity contract files
@@ -372,7 +372,7 @@ repositories {
 -   introduce Web3SDK jar package
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.0.0-rc2')
+compile ('org.fisco-bcos：web3sdk：2.0.3')
 ```
 
 ### Certificate and configuration file
