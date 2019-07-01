@@ -160,14 +160,14 @@ For **network modifiable config file **`config.ini`, node access management invo
     node.1=127.0.0.1:30301
     node.2=127.0.0.1:30302
     node.3=127.0.0.1:30303
-
+    
 ;certificate blacklist
-[crl]
-    ;crl.0 should be nodeid, nodeid's length is 128
+[certificate_blacklist]
+    ;crl.0 should be nodeid, nodeid's length is 128 
     ;crl.0=
 
 ;certificate configuration
-[secure]
+[network_security]
     ;directory the certificates located in
     data_path=conf/
     ;the node private key file

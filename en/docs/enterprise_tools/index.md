@@ -1,4 +1,4 @@
-# Deployment Tool
+# Deployment tool
 
 **Brief introduction**
 
@@ -65,9 +65,11 @@ Users make agreement to generate Genesis Block and node configuration file folde
 
 ```eval_rst
 .. toctree::
+   :hidden:
    :maxdepth: 1
 
    installation.md
-   using_playground.md
+   enterprise_quick_start.md
+   config.md
    operation.md
 ```

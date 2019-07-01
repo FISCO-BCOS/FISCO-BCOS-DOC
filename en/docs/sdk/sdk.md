@@ -28,14 +28,14 @@ Main features of version 2.0 include:
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.0-rc1')
+compile ('org.fisco-bcos:web3sdk:2.0.3')
 ```
    maven:
-```bash
+``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.0-rc1</version>
+    <version>2.0.3</version>
 </dependency>
 ```
 Because the relative jar archive of the solidity compiler of Ethereum is imported, we need to add a remote repository of Ethereum in the gradle configuration file build.gradle of the java application.
@@ -82,7 +82,7 @@ The following picture shows how `applicationContext.xml` is configured in Spring
                         <list>  <!-- each group needs to configure a beam, each group can configure multiple nodes-->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
                                         <property name="groupId" value="1" /> <!-- groupID -->
-                                        <property name="connectionsStr">
+                                         <property name="connectionsStr">
                                                 <list>
                                                         <value>127.0.0.1:20200</value>  <!-- IP:channel_port -->
                                                         <value>127.0.0.1:20201</value>
@@ -93,8 +93,8 @@ The following picture shows how `applicationContext.xml` is configured in Spring
                                         <property name="groupId" value="2" /> <!-- groupID -->
                                         <property name="connectionsStr">
                                                 <list>
-                                                        <value>127.0.0.1:20202</value>
-                                                        <value>127.0.0.1:20203</value>
+                                                        <value>127.0.0.1:20202</value> 
+                                                        <value>127.0.0.1:20203</value> 
                                                 </list>
                                         </property>
                                 </bean>
@@ -133,7 +133,7 @@ group-channel-connections-config:
     connections-str:
                     - 127.0.0.1:20202  # node listen_ip:channel_listen_port
                     - 127.0.0.1:20203
-
+ 
 channel-service:
   group-id: 1 # The specified group to which the SDK connects
   agency-name: fisco # agency name
@@ -147,10 +147,10 @@ The configuration items of `application.yml` corresponds with `applicationContex
 ##### call API of SDK Web3j
 load the config file, connect SDK with nodes, acquire web3j object and call API. The codes are exemplified here:
 ```java
-    //read config file and connect SDK with nodes
+    //read config file, start connection between SDK and nodes
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
-    service.run();
+    service.run(); 
     ChannelEthereumService channelEthereumService = new ChannelEthereumService();
     channelEthereumService.setChannelService(service);
 
@@ -171,16 +171,17 @@ load config file, connect SDK with nodes, acquire Precompiled Service object of 
     //read config file, connect SDK with nodes and acquire Web3j object
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
-    service.run();
+    service.run(); 
     ChannelEthereumService channelEthereumService = new ChannelEthereumService();
     channelEthereumService.setChannelService(service);
     Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
+    String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"; 
     //fill in user private key for signature in transactions
-    Credentials credentials = Credentials.create("b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6");
+    Credentials credentials = GenCredential.create(privateKey); 
     //acquire SystemConfigService object
-    SystemConfigSerivce systemConfigSerivce = new SystemConfigSerivce(web3j, credentials);
+    SystemConfigService systemConfigService = new SystemConfigService(web3j, credentials);
     //call API setValueByKey through SystemConfigService object
-    String result = systemConfigSerivce.setValueByKey("tx_count_limit", "2000");
+    String result = systemConfigService.setValueByKey("tx_count_limit", "2000");
     //call API getSystemConfigByKey through Web3j object
     String value = web3j.getSystemConfigByKey("tx_count_limit").send().getSystemConfigByKey();
     System.out.println(value);
@@ -191,7 +192,7 @@ sdk needs an external account to send transactions. Here is a way to create a ex
 //create regular external account
 EncryptType.encryptType = 0;
 //create OSCCA external account, which is needed when sending transaction to OSCCA-standard blockchain nodes
-// EncryptType.encryptType = 1;
+// EncryptType.encryptType = 1; 
 Credentials credentials = GenCredential.create();
 //account address
 String address = credentials.getAddress();
@@ -268,7 +269,7 @@ The core function of SDK is to deploy/load contract, and to call API of contract
     //read config file, connect SDK with nodes, get web3j object
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
-    service.run();
+    service.run(); 
     ChannelEthereumService channelEthereumService = new ChannelEthereumService();
     channelEthereumService.setChannelService(service);
     channelEthereumService.setTimeout(10000);
@@ -276,17 +277,17 @@ The core function of SDK is to deploy/load contract, and to call API of contract
     //prepare parameters for deploying and calling contract
     BigInteger gasPrice = new BigInteger("300000000");
     BigInteger gasLimit = new BigInteger("300000000");
-    String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6";
+    String privateKey = "b83261efa42895c38c6c2364ca878f43e77f3cddbc922bf57d0d48070f79feb6"; 
     //specify external account private key for transaction signature
-    Credentials credentials = GenCredential.create(privateKey);
+    Credentials credentials = GenCredential.create(privateKey); 
     //deploy contract
     YourSmartContract contract = YourSmartContract.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
     //load contract according to the contract address
-    //YourSmartContract contract = YourSmartContract.load(address, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
+    //YourSmartContract contract = YourSmartContract.load(address, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)); 
     //send transaction by calling contract method
     TransactionReceipt transactionReceipt = contract.someMethod(<param1>, ...).send();
     //check data status of the contract by inquiry contract method
-    Type result = contract.someMethod(<param1>, ...).send();
+    Type result = contract.someMethod(<param1>, ...).send(); 
 ```
 ### Guide for Spring Boot development
 We take [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter) as an example. Spring Boot and Spring are similar in development process, except the distinction in config file. Here we will provide some test examples. For detail description on the projects please check the README documents.

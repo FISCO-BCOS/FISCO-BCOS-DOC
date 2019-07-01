@@ -138,7 +138,7 @@ Blacklist configuration example is as follows:
 
 ### Configure log information
 
-FISCO BCOS supports light weight [easylogging++](https://github.com/zuhd-org/easyloggingpp) and powerful[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html). It can use these two logs through compiling switch configuration, and it uses boostlog by default.  For details, refer to the [Log Operation Manual] (log_access.md).
+FISCO BCOS supports [boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html). Configurations:
 
 - `enable`: Enable/disable log. Set to `true` to enable log; set to `false` to disable log. **set to true by default. For performance test, to set this option to `false` to reduce the impact of print log on test results**
 - `log_path`:log file patch.
@@ -157,25 +157,6 @@ boostlog configuration example is as follows:
     ; Maximum size per log file, default is 200MB
     max_log_file_size=200
     flush=true
-```
-#### Configure easylogging++
-
-In order to minimize the configuration file, FISCO BCOS concentrates the configuration information of easyloggin++ to `[log]` configuration of config.ini. In general, it is not recommended to manually change the configurations other than the log level. For launching easylogging++ method, refer to [Enable easylogging++](log.html#easylogging).
-
-- `format`：log format.
-- `log_flush_threshold`：log refresh frequency setting. Each `log_flush_threshold` line refreshes log to file once.
-
-easylogging++ configuration example is as follows:
-
-```ini
-[log]
-    log_path=./log
-    level=info
-    ; Maximum size per log file, default is 200MB
-    max_log_file_size=209715200
-    ; easylog configuration
-    format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    log_flush_threshold=100
 ```
 
 ### Configure node compatibility
@@ -220,7 +201,7 @@ In order to protect node data, FISCO BCOS introduces [Disk Encryption](../design
 disk encryption configuration example is as follows:
 
 ```ini
-[data_secure]
+[storage_security]
 enable=true
 key_manager_ip=127.0.0.1
 key_manager_port=31443
@@ -377,7 +358,7 @@ Transaction pool configuration example is as follows:
 
 ```ini
 [tx_pool]
-    limit=10000
+    limit=150000
 ```
 
 ### PBFT consensus message broadcast configuration

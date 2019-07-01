@@ -1,8 +1,8 @@
 # Download & install
 
-## Environment dependence
+## Environment dependency
 
-Dependence of FISCO BCOS generator:
+Dependency of FISCO BCOS generator:
 
 | Dependent software | Supported version |
 | :-: | :-: |
@@ -48,4 +48,4 @@ $ ./meta/fisco-bcos -v
 # if succeed, output FISCO-BCOS Version : x.x.x-x
 ```
 
-**PS**：[Source code compilation](../manual/get_executable.md) node binaries user need only to put the compiled binaries to ``` meta ``` folder.
+**PS**：[Source code compilation](../manual/get_executable.md) node binaries user need only to put the compiled binaries to ``` meta ``` directory.

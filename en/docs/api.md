@@ -26,7 +26,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
   "result": {
     "Build Time": "20190106 20:49:10",
     "Build Type": "Linux/g++/RelWithDebInfo",
-    "FISCO-BCOS Version": "2.0.0-rc1",
+    "FISCO-BCOS Version": "2.0.0",
     "Git Branch": "master",
     "Git Commit Hash": "693a709ddab39965d9c39da0104836cfb4a72054"
   }
@@ -298,7 +298,9 @@ return the consensus status information of the specific group
 - `object` - consensus status information, fields are:            
     - `blockNumber`: `unsigned int` - the highest block number            
     - `genesisHash`: `string` - hash of genesis block            
-    - `isSyncing`: `bool` - syncing            
+    - `isSyncing`: `bool` - syncing
+    - `knownHighestNumber`: `unsigned int` - the highest number of the blockchain known by the node
+    - `knownLatestHash`: `string` - the latest hash of the blockchain known by the node
     - `latestHash`: `string` - hash of the newest block            
     - `nodeId`: `string` - node ID            
     - `protocolId`: `unsigned int` - protocol ID            
@@ -322,6 +324,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
     "blockNumber": 0,
     "genesisHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "isSyncing": false,
+    "knownHighestNumber":0,
+    "knownLatestHash":"0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "latestHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
     "nodeId": "41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
     "peers": [
@@ -801,8 +805,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
     "id": 1,
     "jsonrpc": "2.0",
     "result": {
-        "txSum": "0x1",
-        "blockNumber": "0x1"
+      "blockNumber": "0x1",
+      "failedTxSum": "0x0",
+      "txSum": "0x1"
     }
 }
 ```
@@ -964,24 +969,24 @@ FISCO BCOS RPC error codes and their definitions:
 
 ### Precompiled Service API error code
 
-| error code | message                                        |
-| :----- | :---------------------------------------------- |
-| 0      | success                                         |
-| -50000  | permission denied                               |
-| -50001  | table name already exist                        |
-| -50100  | unknown function call                            |
-| -50101  | table does not exist                            |
-| -51000  | table name and address already exist            |
-| -51001  | table name and address does not exist           |
-| -51100  | invalid node ID                                 |
-| -51101  | the last sealer cannot be removed               |
-| -51102  | the node is not reachable                       |
-| -51103  | the node is not a group peer                    |
-| -51104  | the node is already in the sealer list          |
-| -51105  | the node is already in the observer list        |
-| -51200  | contract name and version already exist         |
-| -51201  | version string length exceeds the maximum limit |
-| -51300  | invalid configuration entry                     |
-| -51500  | contract name and version already exist         |
-| -51501  | condition parse error                           |
-| -51502  | condition operation undefined                   |
+| error code | message                                        | Remarks |
+| :----- | :---------------------------------------------- | :-----   |
+| 0      | success                                         |          |
+| -50000  | permission denied                               |          |
+| -50001  | table name already exist                        |          |
+| -50100  | unknown function call                            |          |
+| -50101  | table does not exist                            |          |
+| -51000  | table name and address already exist            |          |
+| -51001  | table name and address does not exist           |          |
+| -51100  | invalid node ID                                 |SDK Error Code |
+| -51101  | the last sealer cannot be removed               |          |
+| -51102  | the node is not reachable                       |SDK Error Code |
+| -51103  | the node is not a group peer                    |SDK Error Code |
+| -51104  | the node is already in the sealer list          |SDK Error Code |
+| -51105  | the node is already in the observer list        |SDK Error Code |
+| -51200  | contract name and version already exist         |SDK Error Code |
+| -51201  | version string length exceeds the maximum limit |SDK Error Code |
+| -51300  | invalid configuration entry                     |          |
+| -51500  | contract name and version already exist         |          |
+| -51501  | condition parse error                           |          |
+| -51502  | condition operation undefined                   |          |
