@@ -59,7 +59,7 @@ $ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git
 xcode10 version and above are recommended. macOS dependent package installation depends on [Homebrew](https://brew.sh/).
 
 ```bash
-$ brew install -y openssl git
+$ brew install openssl git
 ```
 
 ### Code clone
