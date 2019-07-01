@@ -1,4 +1,4 @@
-# FISCO BCOS introduction
+# Introduction
 
 FISCO BCOS platform is a open source platform to be applicable in financial industry collaboratively built by the FISCO open source working group. Members in the working group include: WeBank, Shenzhen Securities Communication, Tencent, Huawei, Digital China, Forms Syntron, Beyondsoft, Yuexiu Financial Holdings (FinTech), YIBI Technology.
 
