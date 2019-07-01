@@ -130,7 +130,7 @@ This option is used to specify the certificate configuration file when certifica
 
 - **`T`option[**Optional**]**
 
-No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](log_access.md).
+No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
 
 ## Node file organization
 

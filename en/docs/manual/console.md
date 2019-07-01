@@ -95,9 +95,11 @@ The directory structure is as follows:
     |-- abi # to compile the generated abi directory and to store the abi file compiled by solidity contract
     |   |-- HelloWorld.abi
     |   |-- Table.abi
+    |   |-- TableTest.abi
     |-- bin # to compile the generated bin directory and to store the bin file compiled by solidity contract
     |   |-- HelloWorld.bin
     |   |-- Table.bin
+    |   |-- TableTest.bin
     |-- java  # to store compiled package path and Java contract file
     |   |-- org
     |       |-- com
@@ -225,7 +227,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 #### To view the current console version:
 ```bash
 ./start.sh --version
-console version: 1.0.2
+console version: 1.0.3
 ```
 #### Account using method
 
@@ -278,6 +280,7 @@ call                                     Call a contract by a function and param
 callByCNS                                Call a contract by a function and parameters by CNS.
 deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
+desc                                     Description table information.
 exit                                     Quit console.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
@@ -327,6 +330,11 @@ revokeSysConfigManager                   Revoke permission for system configurat
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
 switch(s)                                Switch to a specific group by group ID.
+[create sql]                             Create table by sql.
+[delete sql]                             Remove records by sql.
+[insert sql]                             Insert records by sql.
+[select sql]                             Select records by sql.
+[update sql]                             Update records by sql.
 -------------------------------------------------------------------------------------
 ```
 **Note: **                                       
@@ -903,7 +911,8 @@ To run getTotalTransactionCount to inquire the current block number and the tota
 [group:1]> getTotalTransactionCount
 {
 	"blockNumber":1,
-	"txSum":1
+	"txSum":1,
+	"failedTxSum":0
 }
 ```
 ### **deploy**
@@ -961,15 +970,15 @@ Parameter:
 ```text
 ```text
 # To call the get interface of HelloWorld to get the name string
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, World!
 
 # To call the set interface of HelloWorld to set the name string
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 set "Hello, FISCO BCOS"
+transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1e70
 
 # To call the get interface of HelloWorld to get the name string for checking whether the settings take effect
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
 
 # Call the create interface of TableTest to create the user table t_test. The create interface calls the createResult event, and the event log will output.

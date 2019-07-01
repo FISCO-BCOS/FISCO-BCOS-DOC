@@ -6,8 +6,8 @@ FISCO BCOS generator contains multiple operations about node generation, expansi
 | :-: | :-: |
 | create_group_genesis | assign folder | generate group Genesis Block in assigned folder according to group_genesis.ini and the certificates in meta folder |
 | build_install_package | generate <br> node configuration file folder of node_deployment.ini in assigned folder (node certificate should be placed in meta folder) |
-| generate_all_certificate | generate node certificate and private key according to node_deployment.ini |
-| generate_*_certificates | generate chain, agency, node, sdk certificate or private key |
+| generate_all_certificates | generate node certificate and private key according to node_deployment.ini |
+| generate_*_certificate | generate chain, agency, node, sdk certificate or private key |
 | merge_config | merge p2p parts of the two configuration files |
 | deploy_private_key | import private keys in batch to the generated node configuration file folder |
 | add_peers | import node connection files in batch to node configuration file folder |
@@ -15,7 +15,7 @@ FISCO BCOS generator contains multiple operations about node generation, expansi
 | version | print current version code |
 | h/help | help command |
 
-### create_group_genesis (-c)
+## create_group_genesis (-c)
 
 |  |  |
 | :-: | :-: |
@@ -43,7 +43,7 @@ The generated `group.i.genesis` is the Genesis Block of the new group.
     In FISCO BCOS 2.0, each group has one Genesis Block.
 ```
 
-### build_install_package (-b)
+## build_install_package (-b)
 
 |  |  |
 | :-: | :-: |
@@ -62,7 +62,7 @@ $ ./generator --build_install_package ./peers.txt ~/mydata
 
 After the program is executed, a few file folders named node_hostip_port will be generated under ~/mydata folder and pushed to the relative server to activate node.
 
-### generate_chain_certificate
+## generate_chain_certificate
 
 |  |  |
 | :-: | :-: |
@@ -78,7 +78,7 @@ $ ./generator --generate_chain_certificate ./dir_chain_ca
 
 Now, user can find root certificate `ca.crt` and private key `ca.key` under ./dir_chain_ca folder.
 
-### generate_agency_certificate
+## generate_agency_certificate
 
 |  |  |
 | :-: | :-: |
@@ -94,7 +94,7 @@ $ ./generator --generate_agency_certificate ./dir_agency_ca ./chain_ca_dir The_A
 
 Now, user can locate The_Agency_Name folder containing agency certificate `agency.crt` and private key `agency.key` through route ./dir_agency_ca.
 
-### generate_node_certificate
+## generate_node_certificate
 
 |  |  |
 | :-: | :-: |
@@ -110,7 +110,7 @@ $ ./generator --generate_node_certificate node_dir(SET) ./agency_dir  node_p2pip
 
 Then user can locate node certificate `node.crt` and private key `node.key` through route node_dir.
 
-### generate_sdk_certificate
+## generate_sdk_certificate
 
 |  |  |
 | :-: | :-: |
@@ -126,7 +126,7 @@ $ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca
 
 Now user can locate SDK file folder containing SDK certificate `node.crt` and private key `node.key` through route ./dir_sdk_ca.
 
-### generate_all_certificates
+## generate_all_certificates
 
 |  |  |
 | :-: | :-: |
@@ -150,7 +150,7 @@ $ ./generator --generate_all_certificates ./cert
 
 Once the execution is done, user can find node certificate and private key under ./cert folder, and node certificate under ./meta folder.
 
-### merge_config (-m)
+## merge_config (-m)
 
 --merge_config command can merge p2p sections of 2 config.ini
 
@@ -199,7 +199,7 @@ $ ./generator --merge_config ~/mydata/node_A/config.ini  ~/mydata/node_B/config.
 
 When it works, the p2p sections in config.ini of node_A and node_B will be merged to ~/mydata/node_B/config.ini
 
-### deploy_private_key (-d)
+## deploy_private_key (-d)
 
 --deploy_private_key command will import the private key of nodes with same name to the generated configuration file folder
 
@@ -215,7 +215,7 @@ If ./cert contains file folders named node_127.0.0.1_30300 and node_127.0.0.1_30
 
 then this command would import private key under./cert to ./data folder
 
-### add_peers (-p)
+## add_peers (-p)
 
 --add_peers command can import the files of assigned peers to the generated node configuration file folder.
 
@@ -243,7 +243,7 @@ If ./data contains configuration file folder named node_127.0.0.1_30300 and node
 
 then this command will import connection information of Group 2 to `conf` folder of all nodes under ./data.
 
-### download_fisco
+## download_fisco
 
 --download_fisco can download `fisco-bcos` binary file under assigned section.
 
@@ -255,7 +255,7 @@ $./generator --download_fisco ./meta
 
 This command can download `fisco-bcos` executable binary file under ./meta folder.
 
-### download_console
+## download_console
 
 --download_consolecan download and control console under assigned section.
 
@@ -267,7 +267,7 @@ $./generator --download_console ./meta
 
 This command will configure the console under ./meta folder according to `node_deployment.ini`.
 
-### get_sdk_file
+## get_sdk_file
 
 --get_sdk_file command can acquire `node.crt`, `node.key`, `ca.crt` and `applicationContext.xml` that are needed in configuration of console and sdk under assigned section.
 
@@ -279,7 +279,7 @@ $./generator --get_sdk_file ./sdk
 
 This command will generate the above configuration file according to `node_deployment.ini` under ./sdk
 
-### version (-v)
+## version (-v)
 
 --version command can help view the version code of current deployment tool.
 
@@ -287,7 +287,7 @@ This command will generate the above configuration file according to `node_deplo
 $ ./generator --version
 ```
 
-### help (-h)
+## help (-h)
 
 User can use -h or --help command to check help list
 

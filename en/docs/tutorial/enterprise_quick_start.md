@@ -996,6 +996,12 @@ $ [group:1]> addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc
 }
 ```
 
+exit console:
+
+```bash
+exit
+```
+
 ### View node
 
 execute the following command in the ~/generator-C directory

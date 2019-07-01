@@ -48,11 +48,11 @@ The distinguish of the two lies in that build_chain is for better and quicker bu
 
 There are 2 parts in blockchain browser: back-end service "fisco-bcos-browser", front-end web page "fisco-bcos-browser-front".
 
-We provide 2 ways of building in the current version: [**one-key setup**](./deploy.md) and manual setup.
+We provide 2 ways of building in the current version: [**one-click setup**](./deploy.md) and manual setup.
 
-### 3.1.1 One-key setup
+### 3.1.1 One-click setup
 
-One-key setup is suitable for single-machine deployment of frontend and backend and quick experience. The detail process is introduced in [**Installation document**](./deploy.md).
+One-click setup is suitable for single-machine deployment of frontend and backend and quick experience. The detail process is introduced in [**Installation document**](./deploy.md).
 
 ### 3.1.2 Manual setup
 
@@ -75,7 +75,7 @@ After service is set up, users can access frontend IP and port configured by ngi
 
 Group name is made to be meaningful and better understandable for group ID.
 
-Descrption is the further illustration of the name.
+Description is the further illustration of the name.
 
 ### 4.2 Add node
 
