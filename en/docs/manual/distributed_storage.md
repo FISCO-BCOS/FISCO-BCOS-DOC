@@ -64,7 +64,7 @@ cat > ipconf << EOF
 EOF
 
 # view configuration file
-cat ipconf 
+cat ipconf
 127.0.0.1:1 agencyA 1
 127.0.0.1:1 agencyB 1,2
 127.0.0.1:1 agencyC 2
@@ -285,7 +285,7 @@ show tables;
 +----------------------------------------------------------+
 ```
 
-call the create interface in the console.
+Inserting a record to the database
 ```bash
 #insert data into the table
 call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
@@ -354,7 +354,7 @@ cat > ipconf << EOF
 EOF
 
 # view configuration file
-cat ipconf 
+cat ipconf
 127.0.0.1:1 agencyA 1
 127.0.0.1:1 agencyB 1,2
 127.0.0.1:1 agencyC 2
@@ -431,7 +431,7 @@ Modify the contents of the [storage] section in the ~/fisco/nodes/127.0.0.1/node
 ### Prepare amdb proxy
 #### Get source code
 ```bash
-cd ~/fisco; 
+cd ~/fisco;
 git clone https://github.com/FISCO-BCOS/AMDB.git
 ```
 
@@ -648,7 +648,7 @@ modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 		<!-- communication topic configuration of the node -->
 		<property name="topics">
 			<list>
@@ -697,7 +697,7 @@ modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 	<!-- communication topic configuration of the node -->
 	<property name="topics">
 			<list>
