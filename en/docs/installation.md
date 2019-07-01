@@ -1,22 +1,22 @@
 # Installation
 
-This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine on FISCO BCOS.
+This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS.
 
-## To build a single-group consortium chain on FISCO BCOS
+## To build a single-group consortium chain
 
-This section takes the construction of single group FISCO BCOS chain as an example to operate. We use the `build_chain.sh` script to build a 4-node FISCO BCOS chain locally in `Ubuntu 16.04` system as an example to operate.
+This section takes the construction of single group FISCO BCOS chain as an example to operate. We use the `build_chain.sh` script to build a 4-node FISCO BCOS chain locally in `Ubuntu 16.04` system.
 
 ```eval_rst
 .. note::
-    - it is similar to build a multi-group chain, interested can be referred to here<tutorial/group_use_cases.html>`_.
-    - This section uses pre-compiled static `fisco-bcos` binaries to test on CentOS 7 and Ubuntu 16.04.
+    - it is similar to build a multi-group chain, interested can be referred to `here <tutorial/group_use_cases.html>`_ .
+    - This section uses pre-compiled static `fisco-bcos` binaries which tested on CentOS 7 and Ubuntu 16.04.
 ```
 
-### Installation environment
+### Prepare environment
 
-- Installation dependence
+- Install dependence
 
-`build_chain.sh` script depend on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, to executes `brew install openssl curl`.
+`build_chain.sh` script depends on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, to executes `brew install openssl curl`.
 
 ```bash
 sudo apt install -y openssl curl
@@ -34,9 +34,9 @@ cd ~ && mkdir -p fisco && cd fisco
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-### To build a single-group 4-node consortium chain
+### Build a single-group 4-node consortium chain
 
-Execute the following command in the fisco directory to generate a single group 4-node FISCO chain. It is necessary to ensure that the `30300~30303, 20200~20203, 8545~8548` ports of machine are not occupied.
+Execute the following command in the fisco directory to generate a single group 4-node FISCO chain. It is necessary to ensure that the `30300~30303, 20200~20203, 8545~8548` ports of the machine are not occupied.
 
 
 ```bash
@@ -62,7 +62,10 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-==============================================================
+================================================================
+[INFO] Execute the following command to get FISCO-BCOS console
+ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+================================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
@@ -83,7 +86,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 bash nodes/127.0.0.1/start_all.sh
 ```
 
-Successful startup will output a response similar to the following, otherwise, please use `netstat -an | grep tcp` to check whether the machine's `30300~30303, 20200~20203, 8545~8548` ports are occupied.
+Success will output a response similar to the following, otherwise, please use `netstat -an | grep tcp` to check whether the machine's `30300~30303, 20200~20203, 8545~8548` ports are occupied.
 
 ```bash
 try to start node0
@@ -115,7 +118,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.
 
 ### Check log output
 
-- Execute the following command to view the number of nodes that node0 linked to
+- Execute the following command to view the number of nodes that node0 links to
 
 ```bash
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
@@ -143,17 +146,17 @@ info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
 ```
 
-## Configuration and operation of console
+## Using console
 
-Cpnsole links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status inquiry, calling and deploying contracts, and acquire the information soon. The instructions of console are introduced [here](manual/console.md).
+Console links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status query, call and deploy contracts. The instructions of console are introduced [here](manual/console.md).
 
 
-### Prepare the dependent
+### Prepare environment
 
 ```bash
 # back to fisco directory
 $ cd ~/fisco
-# Install openjdk. In macOS, to execute 'brew cask install java' to install java
+# Install openjdk. In macOS, execute 'brew cask install java' to install java
 $ sudo apt install -y default-jdk
 # get console
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
