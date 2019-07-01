@@ -175,12 +175,12 @@ All versions of FISCO-BCOS 2.0 are forward compatible. You can configure the com
 
 ```
 
-`release-2.0.0-rc3` node's `[compatibility]` configuration is as follows:
+`release-2.0.0` node's `[compatibility]` configuration is as follows:
 
 ```ini
 
 [compatibility]
-    supported_version=release-2.0.0-rc3
+    supported_version=release-2.0.0
 ```
 
 ### Optional configuration: Disk encryption

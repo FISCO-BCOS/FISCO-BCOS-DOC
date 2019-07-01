@@ -1,5 +1,5 @@
 ##############################################################
-Operation tutorial
+Manual
 ##############################################################
 
 This chapter provides an operation tutorial of FISCO BCOS platform to introduce its functions and operation methods.

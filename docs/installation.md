@@ -7,7 +7,6 @@
 本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。
 
 
-
 ```eval_rst
 .. note::
     - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
@@ -73,7 +72,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 [INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 ```
-
 
 ### 启动FISCO BCOS链
 
