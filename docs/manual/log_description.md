@@ -75,7 +75,7 @@ warning|2019-06-26 18:00:06.154102|[g:1][CONSENSUS][PBFT]ViewChangeWarning: not 
 ```eval_rst
 .. note::
 
-    向节点发交易，若交易被处理，非游离节点均会输出落盘日志(节点目录下可通过命令 ``tail -f log/* | grep "${group_id}.*Report"查看节点出块情况``)，若没有输出该日志，说明节点已处于异常状态，请优先检查网络连接是否正常、节点证书是否有效
+    向节点发交易，若交易被处理，非游离节点均会输出落盘日志(节点目录下可通过命令 ``tail -f log/* | grep "${group_id}.*Report"`` 查看节点出块情况)，若没有输出该日志，说明节点已处于异常状态，请优先检查网络连接是否正常、节点证书是否有效
 
 ```
 
@@ -98,7 +98,7 @@ info|2019-06-26 18:00:07.802027|[g:1][CONSENSUS][PBFT]^^^^^^^^Report,num=716,sea
 ```eval_rst
 .. note::
 
-    节点目录下可通过命令 ``tail -f log/* | grep "connected count"``若日志输出的网络连接数目不符合预期，请通过 ``netstat -anp | grep fisco-bcos``命令检查节点连接
+    节点目录下可通过命令 ``tail -f log/* | grep "connected count"`` 若日志输出的网络连接数目不符合预期，请通过 ``netstat -anp | grep fisco-bcos`` 命令检查节点连接
 ```
 
 日志示例如下：
