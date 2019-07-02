@@ -2,8 +2,6 @@
 
 本章将介绍使用FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。
 
-若需在已有区块链上进行升级，请转至[版本及兼容](./change_log/index.html)章节。
-
 ## 单群组FISCO BCOS联盟链的搭建
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。
@@ -11,6 +9,7 @@
 
 ```eval_rst
 .. note::
+    - 若需在已有区块链上进行升级，请转至 `版本及兼容 <change_log/index.html>`_ 章节。
     - 搭建多群组的链操作类似，感兴趣可以 `参考这里 <tutorial/group_use_cases.html>`_ 。
     - 本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 ```
