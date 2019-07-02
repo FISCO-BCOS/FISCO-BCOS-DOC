@@ -256,7 +256,7 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
     使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
 ```
 
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台从node0(`127.0.0.1:20200`)本别接入三个group中，控制台配置方法请参考[这里](../manual/console.html#id7)。
+**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台从node0(`127.0.0.1:20200`)分别接入三个group中，控制台配置方法请参考[这里](../manual/console.html#id7)。
 
 ```xml
 cat > ./conf/applicationContext.xml << EOF
