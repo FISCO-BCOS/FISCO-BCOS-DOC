@@ -13,11 +13,11 @@
    configuration.md
    console.md
    smart_contract.md
-   storage_security.md
+   transaction_parallel.md
+   distributed_storage.md
    node_management.md
    permission_control.md
    certificate_blacklist.md
    amop_protocol.md
-   transaction_parallel.md
-   distributed_storage.md
+   storage_security.md
    guomi_crypto.md
