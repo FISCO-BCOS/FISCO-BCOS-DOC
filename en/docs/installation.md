@@ -2,6 +2,8 @@
 
 This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS.
 
+To update an existing chain, please consult with [compatibility](./change_log/index.html) chapter.
+
 ## To build a single-group consortium chain
 
 This section takes the construction of single group FISCO BCOS chain as an example to operate. We use the `build_chain.sh` script to build a 4-node FISCO BCOS chain locally in `Ubuntu 16.04` system.
