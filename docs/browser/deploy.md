@@ -29,7 +29,7 @@ cd fisco-bcos-browser/deploy
 
 ① 可以使用以下命令修改，也可以直接修改文件（vi common.properties）
 
-② 数据库需要提前安装（数据库安装请参看 [附录7.4](./deploy.html#id9)）
+② 数据库需要提前安装（数据库安装请参看 [附录7.3](./deploy.html#id9)）
 
 ③ 服务端口不能小于1024
 
