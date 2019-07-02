@@ -1,7 +1,5 @@
 # 一键部署说明
 
-[TOC]
-
 ## 1、前提条件
 
 | 环境         | 版本                   |
@@ -11,7 +9,7 @@
 | MySQL-python | 1.2.5                  |
 | 数据库       | mysql-5.6或以上版本    |
 
-**备注：** 安装说明请参看 [附录7](#7附录)
+**备注：** 安装说明请参看 [附录7](./deploy.html#id8)
 
 ## 2、拉取代码
 
@@ -31,7 +29,7 @@ cd fisco-bcos-browser/deploy
 
 ① 可以使用以下命令修改，也可以直接修改文件（vi common.properties）
 
-② 数据库需要提前安装（数据库安装请参看 [附录7.4](#74-数据库部署)）
+② 数据库需要提前安装（数据库安装请参看 [附录7.3](./deploy.html#id9)）
 
 ③ 服务端口不能小于1024
 
@@ -68,7 +66,7 @@ python deploy.py stopAll
 python deploy.py help
 ```
 
-**备注：** 部署过程出现问题可以查看 [常见问题8](#8常见问题)
+**备注：** 部署过程出现问题可以查看 [常见问题8](./deploy.html#id10)
 
 ## 5、访问
 
@@ -106,28 +104,13 @@ export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ```
 
-### 7.2 Python部署
+### 7.2 Python request库安装
 
 ```shell
 pip install requests 或 sudo yum install -y requests
 ```
 
-### 7.3 MySQL-python部署
-
-* CentOS
-
-  ```
-  sudo yum install -y MySQL-python
-  ```
-
-* Ubuntu
-
-  ```
-  sudo apt-get install -y python-pip
-  sudo pip install MySQL-python
-  ```
-
-### 7.4 数据库部署
+### 7.3 数据库部署
 
 此处以Centos/Fedora为例。
 
@@ -207,6 +190,20 @@ mysql -utest -p123456 -h 127.0.0.1 -P 3306
 ```sql
 mysql > create database db_browser;
 ```
+### 7.4 MySQL-python部署
+
+* CentOS
+
+  ```
+  sudo yum install -y MySQL-python
+  ```
+
+* Ubuntu
+
+  ```
+  sudo apt-get install -y python-pip
+  sudo pip install MySQL-python
+  ```
 
 ## 8、常见问题
 
@@ -277,3 +274,7 @@ OperationalError: (1045, "Access denied for user 'root'@'localhost' (using passw
 ```
 
 答：确认数据库用户名和密码
+
+### 8.5 Server启动失败
+答：请检查是否设置了JAVA_HOME
+
