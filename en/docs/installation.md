@@ -8,7 +8,8 @@ This section takes the construction of single group FISCO BCOS chain as an examp
 
 ```eval_rst
 .. note::
-    - it is similar to build a multi-group chain, interested can be referred to `here <tutorial/group_use_cases.html>`_ .
+    - To update an existing chain, please refer to `compatibility <change_log/index.html>`_ chapter.
+    - It is similar to build a multi-group chain, interested can be referred to `here <tutorial/group_use_cases.html>`_ .
     - This section uses pre-compiled static `fisco-bcos` binaries which tested on CentOS 7 and Ubuntu 16.04.
 ```
 
