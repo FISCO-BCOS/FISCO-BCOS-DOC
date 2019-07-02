@@ -57,7 +57,7 @@ stop all the service:
 python deploy.py stopAll
 ```
 
-other infomation can be found through the help parameter:
+other information can be found through the help parameter:
 
 ```
 python deploy.py help
