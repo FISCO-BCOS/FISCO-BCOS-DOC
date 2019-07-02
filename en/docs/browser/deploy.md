@@ -68,7 +68,7 @@ python deploy.py help
 Typing the server IP and port had set before in the explorer:
 
 ```shell 
-http://127.0.0.1:8081/#/
+http://127.0.0.1:8081
 ```
 
 ## 6. Log directory
