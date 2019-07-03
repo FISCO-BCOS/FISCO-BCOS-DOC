@@ -1,4 +1,4 @@
-# Core concept
+# Core concept (Work in progress)
 
 Blockchain is intricated with multiple technical approaches. This chapter will illustrate the basic concept of blockchain and knowledges about some relative theories. You can skip this chapter if you are familiar with these techniques.
 

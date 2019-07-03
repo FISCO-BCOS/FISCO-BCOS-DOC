@@ -1,14 +1,14 @@
-# Blockchain explorer
+# Blockchain browser
 
 ## 1. Description
 
 ### 1.1 Basic introduction
-**This blockchain explorer is adaptable to FISCO-BCOS 2.0.0. FISCO-BCOS 1.2 or 1.3 users please check [v1.2.1](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1).**
+**This blockchain browser is adaptable to FISCO-BCOS 2.0.0. FISCO-BCOS 1.2 or 1.3 users please check [v1.2.1](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1).**
 
-Blockchain explorer is capable of blockchain visualization and real-time presentation. Users can get the information of the blockchain through web pages. This explorer is only adaptable to [FISCO-BCOS 2.0](https://github.com/FISCO-BCOS/FISCO-BCOS). You can learn the newest features in [here](../introduction.md). Before using this explorer,  you may need to learn the [groups feature](../what_is_new.html#id2) of FISCO BCOS 2.0.
+Blockchain browser is capable of blockchain visualization and real-time presentation. Users can get the information of the blockchain through web pages. This browser is only adaptable to [FISCO-BCOS 2.0](https://github.com/FISCO-BCOS/FISCO-BCOS). You can learn the newest features in [here](../introduction.md). Before using this browser,  you may need to learn the [groups feature](../what_is_new.html#id2) of FISCO BCOS 2.0.
+
 
 ![](../../images/browser/overview.png)
-
 
 
 #### 1.2 Main functional modules

@@ -1,19 +1,16 @@
 # Create and manage accounts
 
-FISCO BCOS uses accounts to identify and distinguish each individual user. In a blockchain system by using public and private key, each account corresponds to a pair of public and private keys. The account named by the address string calculated by the secure one-way algorithm such as public keys to hash, that is **account address**. For distinguishing from the address of smart contract and other historical reasons, the account address is often referred to as the **external account address**. The private key only known by user corresponds to the password in the traditional authentication model. Users need to prove that they owns the private key of the corresponding account through secure cryptographic protocol for claiming their ownership of the account, and performing some sensitive account operations.
-
-
+FISCO BCOS uses accounts to identify each individual user. In a blockchain system each account corresponds to a pair of public and private keys. The account named by the address string calculated by the secure one-way algorithm such as sha256 hash, that is **account address**. For distinguishing from the address of smart contract, the account address is often referred to as the **external account address**. The private key only known by the user corresponds to the password in the traditional authentication model. Users need to prove that they own the private key of the corresponding account through a secure cryptographic protocol for claiming their ownership of the account, and performing some sensitive account operations.
 
 ```eval_rst
 .. important::
 
-    In the previous tutorials, for simplifying the operation, we operate with the account provided by the tool by default. However, in actual application deployment, users need to create their own accounts and properly save the account private key to avoid the serious security problems such as account private key leakage.
+    In the previous tutorials, for simplifying the operation, we operate with the account provided by the tool by default. However, in actual application deployment, users need to create their own accounts and properly save the account private key to avoid serious security problems such as account private key leakage.
 ```
 
-In this article we will specifically introduce the creation, storage and use of accounts. Readers are required to have a certain Linux operating basis.
+In this article, we will specifically introduce the creation, storage and use of accounts. Readers are required to have a basic knowledge of Linux.
 
-FISCO BCOS provides script and Web3SDK for creating account, and provides Web3SDK and console for storing account private key. Users can choose to store the account private key as a file in PEM or PKCS12 format according to their requirement. PEM format uses plaintext to store private key, and PKCS12 uses password encryption provided by users to store private key.
-
+FISCO BCOS provides the get_account script and Web3SDK to create accounts, as well as a Web3SDK and console to store account private keys. Users can choose to store the account private key as a file in PEM or PKCS12 format according to their needs. The PEM format uses a plaintext storage private key, and the PKCS 12 encrypts and stores the private key using a user-provided password.
 
 ## Account creation
 
@@ -29,12 +26,12 @@ execute the above command and if you see the following output, you are downloadi
 Usage: ./get_account.sh
     default       generate account and store private key in PEM format file
     -p            generate account and store private key in PKCS12 format file
-    -k [FILE]     calculate address of PEM format [FILE]
-    -P [FILE]     calculate address of PKCS12 format [FILE]
+    -k [FILE]     calculate the address of PEM format [FILE]
+    -P [FILE]     calculate the address of PKCS12 format [FILE]
     -h Help
 ```
 
-#### 2. Use script to generate PEM format private key
+#### 2. Use the script to generate PEM format private key
 
 - generate private key and address
 ```bash
@@ -61,7 +58,7 @@ Execute the above command. The result is as follows
 bash get_account.sh -p
 ```
 
-Execute the above command to get output similar to the following. You can follow the prompts to enter the password, and generate the corresponding p12 file.
+Execute the above command to get output similar to the following. You can follow the prompts to enter the password and generate the corresponding p12 file.
 
 ```bash
 Enter Export Password:
@@ -102,7 +99,7 @@ For more details on the operation, to see [Creating and Using a Specified Extern
 
 ## Account storage
 
-- web3SDK supports loading via private key string or file, so the private key of account can be stored in the database or in a local file.
+- web3SDK supports loading via private key string or file, so the private key of the account can be stored in the database or in a local file.
 - Local files support two storage formats, which are PKCS12 encrypted storage and PEM plaintext storage.
 - When developing a service, you can select the storage management of private key according to the actual business scenario.
 
@@ -110,7 +107,7 @@ For more details on the operation, to see [Creating and Using a Specified Extern
 
 ### Console loads private key file
 
-Console provides the account generation script get_account.sh. The generated account file is in the accounts directory, and the account file loaded by console must be placed in this directory.
+The console provides the account generation script get_account.sh. The generated account file is in the accounts directory, and the account file loaded by console must be placed in this directory.
 
 The console startup methods are as follows:
 
@@ -158,8 +155,8 @@ configure the private key file path and password for the PKCS12 account in appli
 
 ```xml
 <bean id="p12" class="org.fisco.bcos.channel.client.P12Manager" init-method="load" >
-	<property name="password" value="123456" />
-	<property name="p12File" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.p12" />
+    <property name="password" value="123456" />
+    <property name="p12File" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.p12" />
 </bean>
 ```
 
@@ -187,7 +184,7 @@ configure the private key file path and password for the PEM account in applicat
 
 ```xml
 <bean id="pem" class="org.fisco.bcos.channel.client.PEMManager" init-method="load" >
-	<property name="pemFile" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
+    <property name="pemFile" value="classpath:0x0fc3c4bb89bd90299db4c62be0174c4966286c00.pem" />
 </bean>
 ```
 
@@ -217,7 +214,7 @@ Note: keccak-256sum is different from `SHA3`. For details to refer to [here](htt
 
 ### 1. generate ECDSA private key
 
-First, we use OpenSSL to generate an elliptic curve private key. The parameters of the elliptic curve is secp256k1. To run the following command to generate a private key in PEM format and save it in the ecprivkey.pem file.
+First, we use OpenSSL to generate an elliptic curve private key. The parameters of the elliptic curve are secp256k1. To run the following command to generate a private key in PEM format and save it in the ecprivkey.pem file.
 
 ```bash
 openssl ecparam -name secp256k1 -genkey -noout -out ecprivkey.pem
@@ -249,7 +246,7 @@ You can get output similar to the following
 
 ### 2. Calculate the address based on the public key
 
-In this section we calculate the corresponding account address based on public key. The keccak-256sum tool we need to get is available for download from [here](https://github.com/vkobel/ethereum-generate-wallet/tree/master/lib).
+In this section, we calculate the corresponding account address based on the public key. The keccak-256sum tool we need to get is available for download from [here](https://github.com/vkobel/ethereum-generate-wallet/tree/master/lib).
 
 ```bash
 openssl ec -in ecprivkey.pem -text -noout 2>/dev/null| sed -n '7,11p' | tr -d ": \n" | awk '{print substr($0,3);}' | ./keccak-256sum -x -l | tr -d ' -' | tail -c 41
