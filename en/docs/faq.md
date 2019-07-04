@@ -1,4 +1,4 @@
-# FAQ (Work in progress)
+# FAQ (Revision in progress)
 
 ## Version
 

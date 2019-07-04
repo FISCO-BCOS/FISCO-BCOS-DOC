@@ -1,4 +1,4 @@
-# Create and manage accounts
+# Manage blockchain accounts
 
 FISCO BCOS uses accounts to identify each individual user. In a blockchain system each account corresponds to a pair of public and private keys. The account named by the address string calculated by the secure one-way algorithm such as sha256 hash, that is **account address**. For distinguishing from the address of smart contract, the account address is often referred to as the **external account address**. The private key only known by the user corresponds to the password in the traditional authentication model. Users need to prove that they own the private key of the corresponding account through a secure cryptographic protocol for claiming their ownership of the account, and performing some sensitive account operations.
 
@@ -12,7 +12,7 @@ In this article, we will specifically introduce the creation, storage and use of
 
 FISCO BCOS provides the get_account script and Web3SDK to create accounts, as well as a Web3SDK and console to store account private keys. Users can choose to store the account private key as a file in PEM or PKCS12 format according to their needs. The PEM format uses a plaintext storage private key, and the PKCS 12 encrypts and stores the private key using a user-provided password.
 
-## Account creation
+## Create your account
 
 ### Use script to create account
 #### 1. get script
@@ -31,7 +31,7 @@ Usage: ./get_account.sh
     -h Help
 ```
 
-#### 2. Use the script to generate PEM format private key
+#### 2. Generate private key in PEM format
 
 - generate private key and address
 ```bash
@@ -97,13 +97,13 @@ String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 
 For more details on the operation, to see [Creating and Using a Specified External Account](../sdk/sdk.html#id5).
 
-## Account storage
+## Store your account credential
 
 - web3SDK supports loading via private key string or file, so the private key of the account can be stored in the database or in a local file.
 - Local files support two storage formats, which are PKCS12 encrypted storage and PEM plaintext storage.
 - When developing a service, you can select the storage management of private key according to the actual business scenario.
 
-## Account using
+## Load your account credential
 
 ### Console loads private key file
 
