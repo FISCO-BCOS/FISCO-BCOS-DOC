@@ -11,7 +11,7 @@ RPC(Remote Procedure Call) is a set of protocols and interfaces that the client 
 ## 2 Module architecture
  ![](../../images/rpc/rpc.png)
 
-The RPC module is responsible for providing the external interface of FISCO BCOS. The client sends the request through RPC, and RPC obtains the relevant response by calling [book management module](architecture/group.md) and [p2p module](p2p/p2p.md), and returns the response to the client. The ledger management module manages the relevant modules at the underlying of blockchain through a multi-book mechanism, including [consensus module] (consensus/index.html), [synchronization module](sync/sync.md), block management module, transaction pool module, and block verification module.
+The RPC module is responsible for providing the external interface of FISCO BCOS. The client sends the request through RPC, and RPC obtains the relevant response by calling [book management module](architecture/group.md) and [p2p module](p2p/p2p.md), and returns the response to the client. The ledger management module manages the relevant modules at the underlying of blockchain through a multi-book mechanism, including [consensus module](consensus/index.html), [synchronization module](sync/sync.md), block management module, transaction pool module, and block verification module.
 
 ## 3 Data definition
 ### 3.1 Client request
