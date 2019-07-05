@@ -1,18 +1,20 @@
 # JSON-RPC API
 
-The following examples in this chapter adopt [curl](https://curl.haxx.se/) command, which is a data transfer tool run under command line in url language. JSON-RPC API of FISCO BCOS can be accessed by sending http post request through curl command. The url address of curl command is set as `[listen_ip]` and `[jsonrpc listen port]` of `[rpc]` in node config file. To format json, [jq](https://stedolan.github.io/jq/) is used as a formatter. For the error codes, please check [RPC Design Documentation](design/rpc.html#json-rpc). For transaction return list, please check [here](./api.html#id51).
+The following examples in this chapter adopt the [curl](https://curl.haxx.se/) command, which is a data transfer tool that runs the command line by the URL language. JSON-RPC API of FISCO BCOS can be accessed by sending HTTP post request through curl commands. The URL address of the curl command is set as `[listen_ip]` and `[jsonrpc listen port]` of `[rpc]` in a node config file. To format the json data, [jq](https://stedolan.github.io/jq/) is used as a formatter. For the error codes, please check the [RPC Design Documentation](design/rpc.html#json-rpc). For the transaction receipt status, please check [here](./api.html#transaction-receipt-status-list).
 
 ## getClientVersion
-return version information of node
-### Parameter        
-no          
-### Return value          
-- `object` - version information, fields:
+Returns the current node version.
+### Parameterss       
+none          
+### Returns          
+- `object` - An object with version data:
     - `Build Time`: `string` - compile time            
     - `Build Type`: `string` - compile machine environment           
-    - `FISCO-BCOS Version`: `string` - FISCO BCOS version            
+    - `Chain Id`: `string` - blockchain id           
+    - `FISCO-BCOS Version`: `string` - The version of the node            
     - `Git Branch`: `string` - version branch            
-    - `Git Commit Hash`: `string` - the newest commit hash of version           
+    - `Git Commit Hash`: `string` - latest commit hash        
+    - `Supported Version`: `string` - The supported version of the node       
 
 - Example          
 ```
@@ -26,19 +28,21 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
   "result": {
     "Build Time": "20190106 20:49:10",
     "Build Type": "Linux/g++/RelWithDebInfo",
+    "Chain Id": "1",
     "FISCO-BCOS Version": "2.0.0",
     "Git Branch": "master",
-    "Git Commit Hash": "693a709ddab39965d9c39da0104836cfb4a72054"
+    "Git Commit Hash": "693a709ddab39965d9c39da0104836cfb4a72054",
+    "Supported Version": "2.0.0-rc3"
   }
 }
 ```
 
 ## getBlockNumber
-return the newest block number of specific group
-### Parameter  
+Returns the number of most recent block in the specific group.
+### Parameters  
 - `groupID`: `unsigned int` - group ID                
-### Return value              
-- `string` - the highest block number (hexadecimal string start with 0x)            
+### Returns              
+- `string` - the highest block number (a hexadecimal string start with 0x)            
 - Example
 ```
 // Request
@@ -53,11 +57,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 ```
 
 ## getPbftView
-return the newest [PBFT View](design/consensus/pbft.html#view) of the specific group
-### Parameter         
+Returns the latest [PBFT View](design/consensus/pbft.html#view) in the specific group.
+### Parameters         
 - `groupID`: `unsigned int` - group ID         
-### Return value         
-- `string` - the newest PBFT view
+### Returns         
+- `string` - PBFT view (a hexadecimal string start with 0x) 
 - Example         
 ```
 // Request
@@ -70,7 +74,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
     "result": "0x1a0"
 }
 ```
-**Note:** FISCO BCOS supports [PBFT Consensus](design/consensus/pbft.md) and [Raft Consensus](design/consensus/raft.md). When the blockchain adopts Raft consensus, the custom error returned by the API is:
+**Note:** FISCO BCOS supports [PBFT Consensus](design/consensus/pbft.md) and [Raft Consensus](design/consensus/raft.md). When the blockchain adopts Raft consensus, the error is:
 ```
 {
   "error": {
@@ -84,10 +88,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 ```
 
 ## getSealerList
-return the consensus nodes list of the specific group
-### Parameter          
+Returns the consensus node list in the specific group.
+### Parameters          
 - `groupID`: `unsigned int` - group ID         
-### Return value         
+### Returns         
 - `array` - consensus node ID list         
 - Example          
 ```
@@ -107,10 +111,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id"
 ```
 
 ## getObserverList
-return observer node list of the specific group
-### Parameter          
+Returns the observer node list in the specific group.
+### Parameters          
 - `groupID`: `unsigned int` - group ID         
-### Return value          
+### Returns          
 - `array` - observer node ID list      
 - Example          
 ```
@@ -128,17 +132,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 ```
 
 ## getConsensusStatus
-return consensus status information of the specific group         
-### Parameter          
+Returns the consensus status data in the specific group.         
+### Parameters          
 - `groupID`: `unsigned int` - group ID          
-### Return value          
-- `object` - consensus status information.
-- 1. When PBFT consensus mechanism is used,（PBFT design is introduced in [PBFT Design Documentation](design/consensus/pbft.md)), the fields are:           
+### Returns          
+- `object` - An object with consensus status data.
+- 1. When PBFT consensus mechanism is used,（PBFT design is introduced in [PBFT Design Documentation](design/consensus/pbft.md)), the fields as follows:           
    -  `accountType`: `unsigned int` - account type            
    -  `allowFutureBlocks`: `bool` - allow future blocks           
    -  `cfgErr`: `bool` - configure errors            
    -  `connectedNodes`: `unsigned int` - connected nodes            
-   -  `consensusedBlockNumber`: `unsigned int` - the newest consensus block number            
+   -  `consensusedBlockNumber`: `unsigned int` - the latest consensus block number            
    -  `currentView`: `unsigned int` - the current view            
    -  `groupId`: `unsigned int` - group ID            
    -  `highestblockHash`: `string` - the hash of the highest block            
@@ -171,13 +175,13 @@ return consensus status information of the specific group
    -  `commitCache_cachedSize`: `unsigned int` - commitCache_cached size            
    -  `viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached size            
 
-- 2. When Raft consensus mechanism is adopted (Raft design is introduced in [Raft Design Documentation](design/consensus/raft.md)), the fields are:     
+- 2. When Raft consensus mechanism is adopted (Raft design is introduced in [Raft Design Documentation](design/consensus/raft.md)), the fields as follows:     
     - `accountType`: `unsigned int` - account type            
     - `allowFutureBlocks`: `bool` - allow future blocks            
     - `cfgErr`: `bool` - configure error                        
-    - `consensusedBlockNumber`: `unsigned int` - the newest consensus block number            
+    - `consensusedBlockNumber`: `unsigned int` - the latest consensus block number            
     - `groupId`: `unsigned int` - group ID            
-    - `highestblockHash`: `string` - hash of the newest block            
+    - `highestblockHash`: `string` - hash of the latest block            
     - `highestblockNumber`: `unsigned int` - the highest block number           
     - `leaderId`: `string` - leader node ID            
     - `leaderIdx`: `unsigned int` - leader node sequence number         
@@ -291,24 +295,24 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
 }
 ```
 ## getSyncStatus
-return the consensus status information of the specific group
-### Parameter        
+Returns the sync status data in the specific group.
+### Parameters        
 - `groupID`: `unsigned int` - group ID          
-### Return value          
-- `object` - consensus status information, fields are:            
+### Returns          
+- `object` - An object with sync status information:            
     - `blockNumber`: `unsigned int` - the highest block number            
     - `genesisHash`: `string` - hash of genesis block            
     - `isSyncing`: `bool` - syncing
     - `knownHighestNumber`: `unsigned int` - the highest number of the blockchain known by the node
     - `knownLatestHash`: `string` - the latest hash of the blockchain known by the node
-    - `latestHash`: `string` - hash of the newest block            
+    - `latestHash`: `string` - hash of the latest block            
     - `nodeId`: `string` - node ID            
     - `protocolId`: `unsigned int` - protocol ID            
     - `txPoolSize`: `string` - transaction volume in txPool            
     - `peers`: `array` - connected p2p nodes in the specific group, fields of node information are:
-        - `blockNumber`: `unsigned int` - the newest block number            
+        - `blockNumber`: `unsigned int` - the latest block number            
         - `genesisHash`: `string` - hash of genesis block            
-        - `latestHash`: `string` - hash of the newest block            
+        - `latestHash`: `string` - hash of the latest block            
         - `nodeId`: `string` - node ID           
 
 - Example
@@ -354,14 +358,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 }
 ```
 ## getPeers
-return connected p2p node information        
-### Parameter          
+Returns the connected p2p node data.        
+### Parameters          
 - `groupID`: `unsigned int` - group ID            
-### Return value         
-- `array` - connected p2p node information, fields are:
-    - `IPAndPort`: `string` - IP and port of connected node            
+### Returns         
+- `array` - The connected p2p node data:
+    - `IPAndPort`: `string` - The IP and port of a node            
     - `nodeId`: `string` - node ID            
-    - `Topic`: `array` - Topic information followed by node            
+    - `Topic`: `array` - The topic data followed by a node            
 
 - Example          
 ```
@@ -369,7 +373,6 @@ return connected p2p node information
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
-格式化JSON：
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -393,11 +396,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 }
 ```
 ## getGroupPeers
-return consensus node and observer node list in specific group         
-### Parameter          
+Returns the consensus node and observer node list in specific group.         
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
-### Return value          
-- `array` - consensus node and observer node ID list     
+### Returns          
+- `array` - The consensus node and observer node ID list     
 
 - Example          
 ```
@@ -417,11 +420,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id"
 }
 ```
 ## getNodeIDList
-return node and connected p2p node list
-### Parameter          
+Returns the node and connected p2p node list.
+### Parameters          
 - `groupID`: `unsigned int` -  group ID         
-### Return value          
-- `array` - node and connected p2p node ID list
+### Returns          
+- `array` - The node and connected p2p node ID list
 
 - Example         
 ```
@@ -441,12 +444,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id"
 }
 ```
 ## getGroupList
-return belonged group ID list
-### Parameter          
-no       
-### Return value          
+Returns the group ID list where the node belongs.
+### Parameters          
+none       
+### Returns          
 - `array` - group ID list
-
 - Example         
 ```
 // Request
@@ -460,13 +462,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
 }
 ```
 ## getBlockByHash
-return block information inquired by block hash
-### Parameters          
+Returns information about a block by hash.
+### Parameterss          
 - `groupID`: `unsigned int` - group ID           
-- `blockHash`: `string` - block hash       
-- `includeTransactions`: `bool` - include transactions ("true" shows transaction details; "false" shows the hash of transaction only)
-### Return value         
-- `object` - block information, fields are:
+- `blockHash`: `string` - hash of a block      
+- `includeTransactions`: `bool` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
+### Returns         
+- `object` - A block object:
     - `extraData`: `array` - extra data      
     - `gasLimit`: `string` - the maximum gas allowed in block     
     - `gasUsed`: `string` - gas used by all transactions                
@@ -557,12 +559,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
 }
 ```
 ## getBlockByNumber     
-return block information inquired by block number     
-### Parameter          
+Returns information about a block by block number.     
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `blockNumber`: `string` - block number (hexadecimal string starts with 0x)       
-- `includeTransactions`: `bool` - include transactions ("true" shows transaction details; "false" shows the hash of transaction only)         
-### Return value          
+- `includeTransactions`: `bool` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.        
+### Returns          
 please check [getBlockByHash](./api.html#getblockbyhash)  
 
 - Example          
@@ -573,11 +575,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[1,"0
 See the result in [getBlockByHash](./api.html#getblockbyhash)  
 
 ## getBlockHashByNumber
-return block hash inquired by block number          
-### Parameters          
+Returns a block hash by a block number.          
+### Parameterss          
 - `groupID`: `unsigned int` - group ID           
 - `blockNumber`: `string` - block number (hexadecimal string starts with 0x)                  
-### Return value          
+### Returns          
 - `blockHash`: `string` - hash of block         
 - Example          
 ```
@@ -592,23 +594,23 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 }
 ```
 ## getTransactionByHash
-return transaction information inquired by transaction hash
-### Parameters         
+Returns the information about a transaction by transaction hash.
+### Parameterss         
 - `groupID`: `unsigned int` - group ID           
 - `transactionHash`: `string` - transaction hash        
-### Return value          
-- `object`: - transaction information, fields are:  
-    - `blockHash`: `string` - include block hash of this transaction      
-    - `blockNumber`: `string` - include block number of this transaction    
-    - `from`: `string` - address of sender               
-    - `gas`: `string` - gas provided by sender    
-    - `gasPrice`: `string` - price of gas from sender     
-    - `hash`: `string` - transaction hash               
-    - `input`: `string` - transaction input      
-    - `nonce`: `string` - nonce value of transaction     
-    - `to`: `string` - address of receiver, return null for transactions of creating contract         
-    - `transactionIndex`: `string` - transaction sequence number
-    - `value`: `string` - transfer value          
+### Returns          
+- `object`: - A transaction object:  
+    - `blockHash`: `string` - hash of the block where this transaction was in.      
+    - `blockNumber`: `string` -  block number where this transaction was in.    
+    - `from`: `string` - address of the sender               
+    - `gas`: `string` - gas provided by the sender    
+    - `gasPrice`: `string` - gas price provided by the sender     
+    - `hash`: `string` - hash of the transaction               
+    - `input`: `string` - the data send along with the transaction      
+    - `nonce`: `string` - the number of transactions made by the sender prior to this one     
+    - `to`: `string` - address of the receiver, `0x0000000000000000000000000000000000000000` when its a contract creation transaction`        
+    - `transactionIndex`: `string` - integer of the transaction's index position in the block
+    - `value`: `string` - value transferred          
 - Example          
 ```
 // Request
@@ -634,12 +636,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 }
 ```
 ## getTransactionByBlockHashAndIndex
-return transaction information inquired by blockhash and transaction sequence number
-### Parameters          
+Returns information about a transaction by block hash and transaction index position.
+### Parameterss          
 - `groupID`: `unsigned int` - group ID           
-- `blockHash`: `string` - block hash          
-- `transactionIndex`: `string` - transaction sequence number          
-### Return value          
+- `blockHash`: `string` - hash of a block          
+- `transactionIndex`: `string` - integer of the transaction index position          
+### Returns          
 please see [getTransactionByHash](./api.html#gettransactionbyhash)       
 - Example
 ```
@@ -649,12 +651,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndInde
 see result in [getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionByBlockNumberAndIndex
-return transaction information inquired by block number and transaction sequence number
-### Parameters          
+Returns information about a transaction by block number and transaction index position.
+### Parameterss          
 - `groupID`: `unsigned int` - group ID           
-- `blockNumber`: `string` - block number (hexadecimal string starts with 0x)          
-- `transactionIndex`: `string` - transaction sequence number          
-### Return value          
+- `blockNumber`: `string` - a block number (hexadecimal string starts with 0x)          
+- `transactionIndex`: `string` - the transaction index position (hexadecimal string starts with 0x)          
+### Returns          
 please see [getTransactionByHash](./api.html#gettransactionbyhash)            
 - Example          
 ```
@@ -665,23 +667,24 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIn
 see result in [getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionReceipt
-return transaction receipt inquired by transaction hash
-### Parameters          
+Returns the receipt of a transaction by transaction hash.
+### Parameterss          
 - `groupID`: `unsigned int` - group ID           
-- `transactionHash`: `string` - transaction hash          
-### Return value          
-- `object`: - transaction information, fields are:  
-    - `blockHash`: `string` - include block hash of this transaction      
-    - `blockNumber`: `string` - include block hash of this transaction  
+- `transactionHash`: `string` - hash of a transaction          
+### Returns          
+- `object`: - transaction information:  
+    - `blockHash`: `string` - hash of the block where this transaction was in      
+    - `blockNumber`: `string` -  block number where this transaction was in  
     - `contractAddress`: `string` - contract address, for creating contract, return "0x0000000000000000000000000000000000000000"     
-    - `from`: `string` - address of sender                     
-    - `gasUsed`: `string` - gas used by transaction     
-    - `logs`: `array` - log created by transaction               
-    - `logsBloom`: `string` - bloom filter value of log      
-    - `status`: `string` - status value of transaction     
-    - `to`: `string` - address of receiver, for creating contract, return null
-    - `transactionHash`: `string` - transaction hash          
-    - `transactionIndex`: `string` - transaction sequence number
+    - `from`: `string` -  address of the sender                     
+    - `gasUsed`: `string` - The amount of gas used by this specific transaction
+    - `input`: `string` - the data send along with the transaction alone     
+    - `logs`: `array` - Array of log objects, which this transaction generated   
+    - `logsBloom`: `string` -  Bloom filter for light clients to quickly retrieve related logs      
+    - `status`: `string` - status value of the transaction     
+    - `to`: `string` - address of the receiver. `0x0000000000000000000000000000000000000000` when its a contract creation.
+    - `transactionHash`: `string` - hash of the transaction          
+    - `transactionIndex`: `string` - integer of the transaction's index position in the block
 
 - Example          
 ```
@@ -698,6 +701,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
         "contractAddress": "0x0000000000000000000000000000000000000000",
         "from": "0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102",
         "gasUsed": "0x64d8",
+        "input": "0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000036162630000000000000000000000000000000000000000000000000000000000",
         "logs": [ ],
         "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "status": "0x0",
@@ -708,22 +712,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
 }
 ```
 ## getPendingTransactions
-return pending transaction information
-### Parameter         
+Returns the pending transactions list.
+### Parameters         
 - `groupID`: `unsigned int` - group ID           
-### Return value          
-- `object`: - pending transaction information, fields are:
-    - `blockHash`: `string` - include block hash of this transaction     
-    - `blockNumber`: `string` - include block number of this transaction  
-    - `contractAddress`: `string` - contract address. If creating contract, return "0x0000000000000000000000000000000000000000"     
-    - `from`: `string` - address of sender                     
-    - `gas`: `string` - gas provided by sender   
-    - `gasPrice`: `string` - price of gas from sender               
-    - `hash`: `string` - transaction hash      
-    - `input`: `string` - transaction input     
-    - `nonce`: `string` - nonce value of transaction
-    - `to`: `string` - address of receiver, for transactions of creating contract return null        
-    - `value`: `string` - transfer value         
+### Returns          
+- `object`: - pending transaction information:
+    - `from`: `string` - address of the sender               
+    - `gas`: `string` - gas provided by the sender    
+    - `gasPrice`: `string` - gas price provided by the sender     
+    - `hash`: `string` - hash of the transaction               
+    - `input`: `string` - the data send along with the transaction      
+    - `nonce`: `string` - the number of transactions made by the sender prior to this one     
+    - `to`: `string` - address of the receiver, `0x0000000000000000000000000000000000000000` when its a contract creation transaction`        
+    - `value`: `string` - value transferred          
 - Example          
 ```
 // Request
@@ -751,11 +752,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params"
 ```
 
 ## getPendingTxSize
-return number of pending transactions
-### Parameter         
+Returns the size of pending transactions
+### Parameters         
 - `groupID`: `unsigned int` - group ID           
-### Return value         
-- `string`: - number of pending transactions         
+### Returns         
+- `string`: - size of pending transactions         
 - Example          
 ```
 // Request
@@ -769,11 +770,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":[1],"
 }
 ```
 ## getCode
-return contract data inquired by contract address
-### Parameter          
+Returns code by a contract address.
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `address`: `string` - contract address
-### Return value          
+### Returns          
 - `string`: - contract data         
 - Example          
 ```
@@ -788,13 +789,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374
 }
 ```
 ## getTotalTransactionCount
-return current transaction total and block number
-### Parameter          
+Returns current total size of transaction and block number.
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
-### Return value          
-- `object`: - current transaction total and block number. fields are:
-    - `txSum`: `string` - transaction total      
+### Returns          
+- `object`: - current total size of transaction and block number:
     - `blockNumber`: `string` - block number          
+    - `failedTxSum`: `string` - the failed total of transaction      
+    - `txSum`: `string` - the total of transaction      
 - Example          
 ```
 // Request
@@ -812,11 +814,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 }
 ```
 ## getSystemConfigByKey
-return value inquired by key value
-### Parameters          
+Returns value by a key value
+### Parameterss          
 - `groupID`: `unsigned int` - group ID       
 - `key`: `string` - support tx_count_limit and tx_gas_limit     
-### Return value          
+### Returns          
 - `string` - value     
 - Example          
 ```
@@ -831,17 +833,18 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 }
 ```
 ## call
-execute a request that can be returned with result instantly regardless of consensus        
-### Parameters          
+Executes a new message call immediately without creating a transaction on the block chain.
+
+### Parameterss          
 - `groupID`: `unsigned int` - group ID           
-- `object`: - request information, fields are:
-    - `from`: `string` - address of sender  
-    - `to`: `string` - address of receiver
+- `object`: - the transaction call object:
+    - `from`: `string` - address of the sender  
+    - `to`: `string` - address of the receiver
     - `value`: `string` - (optional) transfer value
     - `data`: `string` - (optional) code parameter. You can read the coding convention in [Ethereum Contract ABI](https://solidity.readthedocs.io/en/develop/abi-spec.html)
 
-### Return value          
-- `string` - executed result           
+### Returns          
+- `string` - the return value of executed contract           
 - Example          
 ```
 // Request
@@ -853,17 +856,18 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc
     "jsonrpc": "2.0",
     "result": {
         "currentBlockNumber": "0x1",
-        "output": "0x"
+        "output": "0x",
+        "status": "0x1a"
     }
 }
 ```
 ## sendRawTransaction
-execute a transaction of signing, need consensus         
-### Parameters          
+Creates new message call transaction or a contract creation for signed transactions. 
+### Parameterss          
 - `groupID`: `unsigned int` - group ID           
 - `rlp`: `string` - transaction data of signing
-### Return value          
-- `string` - hash of transaction          
+### Returns          
+- `string` - the signed transaction data    
 - Example
 ```
 // RC1 Request
@@ -897,17 +901,17 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 
 ### RPC error code
 
-When error occurs in a RPC call, the returned response object should contain error result field, which includes following member parameters:
+When a rpc call is made, the Server will reply with a response, which contains error result field, which includes as follows:
 
-- code: to show error type in integer       
-- message: to briefly describe the error in string   
-- data: contains the basic type and structured type of additional information of the error; optional parameter
+- code: A Number that indicates the error type that occurred.       
+- message: A String providing a short description of the error.   
+- data: A Primitive or Structured value that contains additional information about the error. This may be omitted.
 
-There are 2 types of error code for error objects: JSON-RPC standard error code and FISCO BCOS RPC error code.
+There are 2 types of error code: JSON-RPC standard error code and FISCO BCOS RPC error code.
 
 #### JSON-RPC standard error code
 
-Standard error codes and their definitions:
+Standard error codes and their corresponding meanings are as follows:
 
 | code   | message              | definition                       |
 | :----- | :------------------- | :------------------------- |
@@ -920,7 +924,7 @@ Standard error codes and their definitions:
 
 #### FISCO BCOS RPC error code
 
-FISCO BCOS RPC error codes and their definitions:
+FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 
 | code  | message                                                      | definition                                        |
 | :---- | :----------------------------------------------------------- | :------------------------------------------ |
@@ -964,7 +968,7 @@ FISCO BCOS RPC error codes and their definitions:
 |23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
 |24(0x18)  |AddressAlreadyUsed |address is already used |
 |25(0x19)  |PermissionDenied |no permission |
-|26(0x20)  |CallAddressError   contract address not exist |
+|26(0x1a)  |CallAddressError   contract address not exist |
 
 
 ### Precompiled Service API error code

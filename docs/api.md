@@ -9,10 +9,12 @@
 ### 返回值          
 - `object` - 版本信息，字段如下：
     - `Build Time`: `string` - 编译时间            
-    - `Build Type`: `string` - 编译机器环境            
-    - `FISCO-BCOS Version`: `string` - FISCO BCOS版本            
+    - `Build Type`: `string` - 编译机器环境
+    - `Chain Id`: `string` - 链ID             
+    - `FISCO-BCOS Version`: `string` - 节点版本            
     - `Git Branch`: `string` - 版本分支            
-    - `Git Commit Hash`: `string` - 版本最新commit哈希            
+    - `Git Commit Hash`: `string` - 版本最新commit哈希  
+    - `Supported Version`: `string` - 节点支持的版本          
 
 - 示例          
 ```
@@ -369,7 +371,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
-格式化JSON：
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -606,7 +607,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
     - `hash`: `string` - 交易哈希               
     - `input`: `string` - 交易的输入      
     - `nonce`: `string` - 交易的nonce值     
-    - `to`: `string` - 接收者的地址，创建合约交易的该值为null         
+    - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`         
     - `transactionIndex`: `string` - 交易的序号
     - `value`: `string` - 转移的值           
 - 示例          
@@ -675,7 +676,8 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `blockNumber`: `string` - 包含该交易的区块高度 
     - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
     - `from`: `string` - 发送者的地址                
-    - `gasUsed`: `string` - 交易消耗的gas     
+    - `gasUsed`: `string` - 交易消耗的gas
+    - `input`: `string` - 交易的输入     
     - `logs`: `array` - 交易产生的log               
     - `logsBloom`: `string` - log的布隆过滤器值      
     - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)    
@@ -698,6 +700,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
         "contractAddress": "0x0000000000000000000000000000000000000000",
         "from": "0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102",
         "gasUsed": "0x64d8",
+        "input": "0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000036162630000000000000000000000000000000000000000000000000000000000",
         "logs": [ ],
         "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "status": "0x0",
@@ -713,9 +716,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
 - `object`: - 带打包的交易信息，其字段如下：
-    - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块哈希  
-    - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
     - `from`: `string` - 发送者的地址                     
     - `gas`: `string` - 发送者提供的gas     
     - `gasPrice`: `string` - 发送者提供的gas的价格               
@@ -793,8 +793,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
 - `object`: - 当前交易总数和区块高度信息，其字段如下：
-    - `txSum`: `string` - 交易总数      
     - `blockNumber`: `string` - 区块高度          
+    - `failedTxSum`: `string` - 失败的交易总数      
+    - `txSum`: `string` - 交易总数      
 - 示例          
 ```
 // Request
