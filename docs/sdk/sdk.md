@@ -29,14 +29,14 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.3')
+compile ('org.fisco-bcos:web3sdk:2.0.4')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
