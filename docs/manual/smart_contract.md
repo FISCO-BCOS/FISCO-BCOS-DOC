@@ -16,12 +16,12 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 
 ### 使用合约CRUD接口
 
-访问 amdb-proxy 需要使用 amdb-proxy 专用的智能合约`Table.sol`接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
+访问 AMDB 需要使用 AMDB 专用的智能合约`Table.sol`接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
 
 ```eval_rst
 .. note::
 
-    为实现amdb-proxy创建的表可被多个合约共享访问，其表名是群组内全局可见且唯一的，所以无法在同一条链上的同一个群组中，创建多个表名相同的表
+    为实现AMDB创建的表可被多个合约共享访问，其表名是群组内全局可见且唯一的，所以无法在同一条链上的同一个群组中，创建多个表名相同的表
 
 ```
 
@@ -110,7 +110,7 @@ contract TableTest {
     function create() public returns(int){
         TableFactory tf = TableFactory(0x1001);  // TableFactory的地址固定为0x1001
         // 创建t_test表，表的key_field为name，value_field为item_id,item_name 
-        // key_field表示amdb-proxy主key value_field表示表中的列，可以有多列，以逗号分隔
+        // key_field表示AMDB主key value_field表示表中的列，可以有多列，以逗号分隔
         int count = tf.createTable("t_test", "name", "item_id,item_name");
         emit CreateResult(count);
         
@@ -189,7 +189,7 @@ contract TableTest {
 }
 ```
 
-`TableTest.sol`调用了 amdb-proxy 专用的智能合约`Table.sol`，实现的是创建用户表`t_test`，并对`t_test`表进行增删改查的功能。`t_test`表结构如下，该表记录某公司员工领用物资和编号。
+`TableTest.sol`调用了 AMDB 专用的智能合约`Table.sol`，实现的是创建用户表`t_test`，并对`t_test`表进行增删改查的功能。`t_test`表结构如下，该表记录某公司员工领用物资和编号。
 
 |name*|item_name|item_id|
 |:----|:----|:------|

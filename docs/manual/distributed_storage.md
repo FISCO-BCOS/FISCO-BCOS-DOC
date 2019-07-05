@@ -400,7 +400,7 @@ Group:2 has 2 nodes
 #### 源码获取
 ```bash
 cd ~/fisco; 
-git clone https://github.com/FISCO-BCOS/AMDB.git
+git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 ```
 
 #### 源码编译

@@ -28,7 +28,7 @@ Then, data will be isolated with other groups. Every group runs consensus algori
 
 Core layer is responsible for inputing group data [block](../../tutorial/key_concepts.html#id3), block information, system table and execution result into data base.
 
-Storage is formed by two parts: State and amdb-proxy. State contains MPTState and StorageState who store the status information of transactions. StorageState has higher performance than MPTState, but it doesn't store history records of block. amdb-proxy opens accesses of select, commit and update and operates contract table, system table, user table. It is pluggable and adaptable to multiple kinds of database. Currently it adapts only to [LevelDB database](https://github.com/google/leveldb). In the future, mysql-based [amdb-proxy](../storage/storage.md) will be integrated to the system.
+Storage is formed by two parts: State and amdb-proxy. State contains MPTState and StorageState who store the status information of transactions. StorageState has higher performance than MPTState, but it doesn't store history records of block. amdb-proxy opens accesses of select, commit and update and operates contract table, system table, user table. It is pluggable and adaptable to multiple kinds of database. Currently supports [RocksDB数据库](https://github.com/facebook/rocksdb) and MySQL[storage](../storage/storage.md).
 
 ![](../../../images/architecture/storage.png)
 
