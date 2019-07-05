@@ -8,13 +8,13 @@
    :maxdepth: 2
 
    architecture/index.rst
-   p2p/p2p.md 
    sync/sync.md
    consensus/index.rst
    virtual_machine/index.rst
    storage/index.rst
    security_control/index.rst
+   p2p/p2p.md 
    rpc.md
+   protocol_description.md
    parallel/dag.md
    features/index.rst 
-   protocol_description.md

@@ -1,11 +1,10 @@
-# Deployment tool for enterprises
+# enterprise deployment tools
 
-FISCO BCOS enterprise deployment tool is designed for multi-agency production environments. To ensure the security of the agency's keys, enterprise deployment tool provides an alliance chain deployed by agency's collaboration.
+FISCO BCOS enterprise deployment tools are designed for multi-agency production environments. To ensure the security of the agency's private keys, enterprise deployment tools provides agencies' collaboration to deploy a alliance chain.
 
-In this chapter, we will demonstrate how to use enterprise deployment tool in a deployment mode of **6 nodes 3 agencies 2 groups**. For more parameter options, please refer to [here](../ enterprise_tools / operation.md)
+This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](../enterprise_tools/operation.md)
 
-In this chapter, you can see a process that multi-agency peer-to-peer deployment and a situation that private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through single agency's one touch can refer to [FISCO BCOS Enterprise Deployment Tool 1 Key deployment](../enterprise_tools/enterprise_quick_start.md)
-
+This chapter is a process that multi-agency peer-to-peer deployment and a situation that private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through single agency's clickstart can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md)
 
 ## Download and install
 
@@ -17,116 +16,115 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 
 **install**
 
-This operation requires the user to have sudo permission.
+This operation requires sudo permission.
 
 ```bash
 cd generator && bash ./scripts/install.sh
 ```
 
-Check whether the installation is successful. If it is successful, to output usage: generator xxx
+Check whether the installation is successful. If it is, output usage: generator xxx
 
 ```bash
 ./generator -h
 ```
 
-**extract node binary**
+**download fisco-bcos binary**
 
-extract the latest fisco-bcos binary to the meta
+download the latest fisco-bcos binary to `./meta`
 
 ```bash
 ./generator --download_fisco ./meta
 ```
 
-**check binary version**
+**check fisco-bcos version**
 
-If it is successful, to output FISCO-BCOS Version : x.x.x-x
+Output will be: FISCO-BCOS Version : x.x.x-x
 
 ```bash
 ./meta/fisco-bcos -v
 ```
 
-**PS**: [Source Code Compile](../manual/get_executable.md) For the node binary users, they only need to replace the binary in the `meta` folder with the compiled binary.
-
+**PS**:  If someone want to use [Source Code Compile](../manual/get_executable.md) fisco-bcos binary, they need to replace the binary in the `meta` folder with the compiled binary.
 
 ## Typical example
 
-To ensure the security of the agency's private keys, enterprise deployment tool provides a way to build chain for the collaboration between agencies. In this chapter, we will demonstrate how to build chain between agencies in a deployment mode of **6 nodes 3 agencies 2 groups**.
+To ensure the security of the agency's private keys, enterprise deployment tools provides a security way to build chain between agencies. This chapter will demonstrate how to build chain between agencies in a deployment mode of **6 nodes 3 agencies 2 groups**.
 
-### Node networking topology
+### Node networking overview
 
-A networking mode of a 6 nodes 3 agencies 2 groups is shown following. Agency B and agency C are located in Group 1 and Group 2, respectively. Agency A belongs to both Group 1 and Group 2.
+A networking mode of a 6 nodes 3 agencies 2 groups is shown as follows. Agency B and agency C are located in Group 1 and Group 2, agency A belongs to both Group 1 and Group 2.
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
-### Machine environment
+### Machine address
 
-IP address of each node and port number are as follows:
+IP address of each node and port are as follows:
 
 | Agency  | Node  | Group  | P2P address           | RPC/channel listening address       |
 | --- | --- | ----- | --------------- | --------------------- |
 | agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
 |     | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
 | agencyB | node2 | group1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | node3 | group1   | 27.0.0.1:30303  | 127.0.0.1:8548/:20203 |
+|     | node3 | group1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
 | agencyC | node4 | group2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204 |
 |     | node5 | group2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205 |
 
 ```eval_rst
 .. important::
-    For the VPS server in the cloud server, the RPC listening address needs to be the real address in the network card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
+    For the VPS server in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
 
 ```
 
-### Involved agencies
+### cooperate agencies
 
 Building chain involves the cooperation between multiple agencies, including:
 
--   Certification agency
--   Building node agency("agency")
+-   Certificate authority agency
+-   alliance chain member agency(next named "agency")
 
 ### Key process
 
-In this process, we briefly provide **certification agency**. How to cooperate **between node agencies** to build a blockchain.
+In this section, we briefly provide How **Certificate authority agency** and **alliance chain member agency** cooperate to build a blockchain.
 
 #### 1. Initialize chain certificate
 
-1. Certification agency operations:
+1. Certificate authority agency operation:
     - Generate chain certificate
 
 #### 2. Generate group 1
 
-1. Certification agency operations: issue certificate
+1. Certificate authority agency operations
     -   generate agency certificate
-    -   send certificate
-2. Independent operation between agencies
+    -   send certificate to agencies
+2. Operation between agencies
     -   modify the configuration file `node_deployment.ini`
-    -   generate node certificate and node P2P port address file       
-3. Select one of agencies as group to generate genesis block
+    -   generate node certificate and node P2P port address file `peers.txt`  
+3. Select one of agencies to generate `group.genesis`
     -	collect all node certificates in the group
     -   modify configuration file `group_genesis.ini`
     -   generate genesis block files for the group
-    -   distribute Genesis block files
-4. Independent operation between organizations: generating nodes
+    -   distribute genesis block files to other agencies
+4. Operation between agencies: generating nodes
     -   collect P2P port address files of other nodes in the group
     -   generate node
     -   start node
 
 #### 3. Initialize a new institution
 
-1. Certification agency operations: issue new certificate
+1. Certificate authority agency operations
     -   generate agency certificate
-    -   send certificate
+    -   send certificate to new agency
 
 #### 4. Generate group2
 
-1. New agency independent operation
+1. New agency operation
     -   modify the configuration file `node_deployment.ini`
-    -   generate node certificate and node P2P port address file          
+    -   generate node certificate and node P2P port address file
 2. Select one of agencies as group to generate genesis block
     -	collect all node certificates in the group
     -   modify configuration file `group_genesis.ini`
     -   generate genesis block files for the group
-    -   distribute Genesis block files
+    -   distribute genesis block files to other agency
 3. New agency independent operation: generate nodes
     -   collect P2P port address files of other nodes in the group
     -   generate nodes
@@ -146,7 +144,7 @@ In this process, we briefly provide **certification agency**. How to cooperate *
 
 ## Alliance chain initialization
 
-For operating simply, all the operations in this example are performed on the same machine. We use different catalogs to simulate different agencies' environment and use the file copy operation to simulate the sending in the network. After performing `Download and Install` in the tutorial, please copy the generator to the corresponding agency's generator directory.
+Simply, all the operations in this example are performed on the local machine. We use different catalogs to simulate different agencies' environment and use the file copy operation to simulate the sending in the network. After performing `Download and Install` in the tutorial, please copy the generator to the corresponding agency's generator directory.
 
 ### Institutional initialization
 
@@ -166,7 +164,7 @@ cp -r ~/generator ~/generator-B
 
 ### Initialize chain certificate
 
-Operating on a certification agency. A single chain has a unique chain certificate ca.crt.
+Operating on a Certificate authority agency. A single chain has a unique chain certificate ca.crt.
 
 use [`--generate_chain_certificate`](../enterprise_tools/operation.html#generate-chain-certificate) command to generate chain certificate
 
@@ -994,6 +992,12 @@ $ [group:1]> addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc
 	"code":0,
 	"msg":"success"
 }
+```
+
+exit console:
+
+```bash
+exit
 ```
 
 ### View node

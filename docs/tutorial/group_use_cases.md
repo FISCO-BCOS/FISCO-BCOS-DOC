@@ -25,7 +25,7 @@
 
 ![](../../images/group/group.png)
 
-下面以构建七节点星形拓扑和四节点并行多组区块链为例，详细介绍多群组操作方法。
+下面以构建八节点星形拓扑和四节点并行多组区块链为例，详细介绍多群组操作方法。
 
 ## 安装依赖
 
@@ -44,7 +44,7 @@ $ brew install openssl curl
 
 ## 星形拓扑
 
-本章以构建上图所示的**单机、四机构、三群组、七节点的星形组网拓扑**为例，介绍多群组使用方法。
+本章以构建上图所示的**单机、四机构、三群组、八节点的星形组网拓扑**为例，介绍多群组使用方法。
 
 星形区块链组网如下：
 
@@ -74,7 +74,7 @@ mkdir -p ~/fisco && cd ~/fisco
 
 - 获取build_chain.sh脚本
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
@@ -555,7 +555,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 # 构建本机单群组四节点区块链(生产环境中，建议每个节点部署在不同物理机上)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...

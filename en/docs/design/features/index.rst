@@ -35,3 +35,4 @@ Considering that data is accessible to each agency in consortium chain structure
    cns_contract_name_service.md
    guomi.md
    storage_security.md
+   network_compress.md

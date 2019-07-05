@@ -1,67 +1,65 @@
-# 网络压缩
+# Network compression
 
-外网环境下，区块链系统性能受限于网络带宽，为了尽量减少网络带宽对系统性能的影响，FISCO BCOS从`relase-2.0.0-rc2`开始支持网络压缩功能，该功能主要在发送端进行网络数据包压缩，在接收端将解包数据，并将解包后的数据传递给上层模块。
+In external network environment, the performance of blockchain system is limited by the network bandwidth. For minimizing the impact of network bandwidth on system performance, FISCO BCOS supports network compression from version `relase-2.0.0-rc2`. This function mainly performs network packet compression on transmit(tx) data (TXD) and packet uncompression on receive(rx) data (RXD), and transmits the unpacked data to the upper module.
 
+## System framework
 
-## 系统框架
-
-网络压缩主要在P2P网络层实现，系统框架如下：
+Network compression is mainly implemented in P2P network underlying. The system framework is as follows:
 
 ![](../../../images/features/network_compress.png)
 
-网络压缩主要包括两个过程：
+Network compression mainly consists of two processes:
 
-- **发送端压缩数据包**：群组层通过P2P层发送数据时，若数据包大小超过1KB，则压缩数据包后，将其发送到目标节点；
+- **packet compression on transmit(tx) data**: When the group layer sending data through the P2P layer, if the data packet size exceeds 1 KB, then packet is sent to the target node after compression.
 
-- **接收端解压数据包**：节点收到数据包后，首判断收到的数据包是否被压缩，若数据包是压缩后的数据包，则将其解压后传递给指定群组，否则直接将数据传递给对应群组。
+- **packet uncompression on receive(rx) data**: After receiving the data packet, the node first determines whether the received data packet is compressed. If the data packet is compressed, to decompress it and transmit to the specified group, otherwise to transmit the data transmitted to the corresponding group directly.
 
+## Core implementation
 
-## 核心实现
+Considering performance, compression efficiency, and etc., we selected [Snappy](https://github.com/google/snappy) to implement data packet compression and decompression. In this section, we mainly introduce the implementation of network compression.
 
-综合考虑性能、压缩效率等，我们选取了[Snappy](https://github.com/google/snappy)来实现数据包压缩和解压功能。本节主要介绍网络压缩的实现。
+### Data compression flag
 
-
-### 数据压缩标记位
-
-FISCO BCOS的网络数据包结构如下图：
+FISCO BCOS's network packet structure is as follows:
 
 ![](../../../images/features/network_packet.png)
 
-网络数据包主要包括包头和数据两部分，包头占了16个字节，各个字段含义如下：
+The network data packet mainly includes two parts: header and data. The header contains 16 bytes. The meanings of the fields are as follows:
 
-- Length: 数据包长度
-- Version: 扩展位，用于扩展网络模块功能
-- ProtocolID: 存储了数据包目的群组ID和模块ID，用于多群组数据包路由，目前最多支持32767个群组
-- PaketType: 标记了数据包类型
-- Seq: 数据包序列号
+- Length: the length of data packet.
+- Version: extension bit, for extending network module function. 
+- ProtocolID: storing the group ID and module ID of Destination Network Address Translation (DNAT) for multi-group packet routing. Currently it supports up to 32767 groups. 
+- PaketType: tagged data packet type.
+- Seq: data packet serial number
 
-**网络压缩模块仅压缩网络数据，不压缩数据包头。**
+**Network compression module only compresses network data but not data packet header. **
 
-考虑到压缩、解压小数据包无法节省数据空间，而且浪费性能，在数据压缩过程中，不压缩过小的数据包，仅压缩数据包大于`c_compressThreshold`的数据包.`c_compressThreshold`默认是1024(1KB)。我们扩展了Version的最高位，作为数据包压缩标志：
+Considering that compressing and decompressing small data packets can not save data space and waste performance, in the data compression process, the undersize packets are not compressed, and only the data packets with size larger than `c_compressThreshold` are compressed. The default value of `c_compressThreshold` is 1024 (1KB). We have extended the highest bit of Version as a packet compression flag:
 
 ![](../../../images/features/network_version.png)
 
-- Version最高位为0，表明数据包对应的数据Data是未压缩的数据；
-- Version最高位为1，表明数据包对应的数据Data是压缩后的数据。
-
-### 处理流程
-
-下面以群组1的一个节点向群组内其他节点发送网络消息包packetA为例（比如发送交易、区块、共识消息包等），详细说明网络压缩模块的关键处理流程。
-
-**发送端处理流程**
-
-- 群组1的群组模块将packetA传入到P2P层;
-- P2P判断packetA的数据包大于`c_compressThreshold`，则调用压缩接口，对packetA进行压缩，否则直接将packetA传递给编码模块；
-- 编码模块给packetA加上包头，附带上数据压缩信息，即：若packetA是压缩后的数据包，将包头Version的最高位置为1，否则置为0；
-- P2P将编码后的数据包传送到目的节点。
-
-**接收端处理流程：**
-
-- 目标机器收到数据包后，解码模块分离出包头，通过包头Version字段的最高位是否为1，判断网络数据是否被压缩；
-- 若网络数据包被压缩过，则调用解压接口，对Data部分数据进行解压，并根据数据包头附带的GID和PID，将解压后的数据传递给指定群组的指定模块；否则直接将数据包传递给上层模块。
+- When the highest value of Version is 0, indicating that the data which is corresponding to data packet is uncompressed.
+- When the highest value of Version is 1, indicating that the data which is corresponding to data packet is compressed.
 
 
-## 兼容性说明
+### Processing flow
 
-- **数据兼容**：不涉及存储数据的变更；
-- **网络兼容rc1**：向前兼容，仅有relase-2.0.0-rc2节点具有网络压缩功能。
+In the following, we take a node in group1 sending network message packet groupA to other nodes(such as sending a transaction, a block, a consensus message packet, etc.) as an example to detail the key processing flow of network compression module.
+
+**Transmit(tx) data processing flow:**
+
+- Group1's group module passes packetA to P2P layer;
+- When P2P determines that the packetA is greater than `c_compressThreshold`, then calls the compression interface to compress packetA, otherwise it directly passes packetA to the encoding module;
+- The encoding module adds header to packetA with data compression information, ie: if packetA is compressed, the highest value of Version(header) is set to 1; otherwise, it is set to 0;
+- P2P transmits the encoded data packet to the destination node.
+
+**Receive(rx) data processing flow:**
+
+- After the target machine receives the data packet, the decoding module separates the packet header, and determines whether the network data is compressed by the highest value of Version is 1 or not;
+
+- If the network packet is compressed, the decompression interface is called to decompress part of data, and transmit the decompressed data to the specified module of group according to the GID and PID attached to the packet header; otherwise, the data packet is directly passed to the upper module.
+
+## Compatibility note
+
+- **Data Compatibility**: not involve the changes of stored data;
+- **Network Compatibility rc1**: Forward compatible, only the relase-2.0.0-rc2 node has network compression.
