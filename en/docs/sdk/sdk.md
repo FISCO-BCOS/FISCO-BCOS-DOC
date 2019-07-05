@@ -1,12 +1,12 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) supports accessing nodes to check node status, modify the settings and send transactions. FISCO BCOS 2.0 documentation only adapts to Web3SDK 2.0 or above version (which only adapt to FISCO BCOS 2.0 or above version in turn). For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO-BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
 
-Main features of version 2.0 include:
+Main features of version 2.0 includes:
 - provide Java API to call FISCO BCOS JSON-RPC
-- support managing blockchain by precompiled contract
-- provide secure and efficient message channel with [Amop](../manual/amop_protocol.md)
-- support transaction in OSCCA standard
+- provide pre-compiled contracts to manage the blockchain
+- provide secure and efficient message channel with [AMOP](../manual/amop_protocol.md)
+- support OSCCA standard
 
 ## Environment requirements
 
@@ -28,14 +28,14 @@ Main features of version 2.0 include:
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.3')
+compile ('org.fisco-bcos:web3sdk:2.0.4')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 Because the relative jar archive of the solidity compiler of Ethereum is imported, we need to add a remote repository of Ethereum in the gradle configuration file build.gradle of the java application.
@@ -290,23 +290,14 @@ The core function of SDK is to deploy/load contract, and to call API of contract
     Type result = contract.someMethod(<param1>, ...).send(); 
 ```
 ### Guide for Spring Boot development
-We take [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter) as an example. Spring Boot and Spring are similar in development process, except the distinction in config file. Here we will provide some test examples. For detail description on the projects please check the README documents.
+We provide [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter) as an example. Spring Boot and Spring are similar in development process, except the distinction in config file. Here we will provide some test examples. For detail description on the projects please check the README documents.
 
 ### Operations on OSCCA function of SDK
 - Preconditions: FISCO BCOS blockchain in OSCCA standard, to build it using OSCCA algorithm, please check [the operation tutorial](../manual/guomi_crypto.md).
 - switch on OSCCA function:  set encryptType as 1 in application.xml/application.yml configuration.
+- The private key is loaded using the `GenCredential` class (for both OSCCA standard and ECDSA standard), and the `Credential` class is only for loading ECDSA standard.
 
-The OSCCA version of SDK shares the same method on calling API with the regular version. The difference is that OSCCA SDK requires a OSCCA version of java contract. To download the jar archive of OSCCA compiler, which is needed for transforming solidity contract into OSCCA version of java contract, please check [here](../manual/console.html#jar). You can also create a lib folder in src folder to place the jar archive when finishing downloading, and modify build.gradle, remove the regular jar archive to replace it with the OSCCA version.
-  ```
-    compile ("org.fisco-bcos:web3sdk:x.x.x"){ //For example: web3sdk:2.0.0
-         exclude module: 'solcJ-all'
-    }
-    // jar archive of OSCCA contract compiler 0.4
-    compile files('lib/solcJ-all-0.4.25-gm.jar')
-    // jar archive of OSCCA contract compiler 0.5
-    // compile files('lib/solcJ-all-0.5.2-gm.jar')
-  ```
-It shares the same steps with regular SDK in transformation of solidity contract to OSCCA java contract and deploy/call methods.
+The OSCCA function of SDK calls the API in the same way as the ECDSA SDK. The difference is that the OSCCA function of SDK needs to generate the OSCCA version Java contract file. Compile the OSCCA version Java contract file [reference here](../manual/console.html#contract-compilation-tool).
 
 ## Web3SDK API
 
@@ -347,8 +338,8 @@ SDK supports [CNS](../design/features/cns_contract_name_service.md). CnsService 
 - **List\<CnsInfo\> queryCnsByName(String name):** inquire CNS information according to contract name.
 - **List\<CnsInfo\> queryCnsByNameAndVersion(String name, String version):** inquire CNS information according to contract name and version.
 
-#### SystemConfigSerivce
-SDK offers services for system configuration. SystemConfigSerivce can configure system property value (currently support tx_count_limit and tx_gas_limit)。 The API is here:
+#### SystemConfigService
+SDK offers services for system configuration. SystemConfigService can configure system property value (currently support tx_count_limit and tx_gas_limit)。 The API is here:
 - **String setValueByKey(String key, String value):** set value according to the key（to check the value, please refer to getSystemConfigByKey in Web3j API).
 
 #### ConsensusService
