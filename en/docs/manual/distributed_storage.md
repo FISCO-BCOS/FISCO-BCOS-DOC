@@ -432,7 +432,7 @@ Modify the contents of the [storage] section in the ~/fisco/nodes/127.0.0.1/node
 #### Get source code
 ```bash
 cd ~/fisco;
-git clone https://github.com/FISCO-BCOS/AMDB.git
+git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 ```
 
 #### Compile source code
