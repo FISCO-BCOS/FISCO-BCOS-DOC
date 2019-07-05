@@ -56,7 +56,7 @@ one_click # 用户指定进行一键部署操作的文件夹
 教程中将配置文件放置与one_click文件夹下的agencyA, agencyB下
 
 ```bash
-cat > ./one_click/agencyAnode_deployment.ini << EOF
+cat > ./one_click/agencyA/node_deployment.ini << EOF
 [group]
 group_id=1
 
