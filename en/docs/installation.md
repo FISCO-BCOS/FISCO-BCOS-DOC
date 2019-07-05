@@ -202,7 +202,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-### Acquire information through console
+### Query blockchain status
 
 ```bash
 # acquire client ends version information
