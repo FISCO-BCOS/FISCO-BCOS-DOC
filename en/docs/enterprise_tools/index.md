@@ -1,6 +1,6 @@
-# Deployment Tool
+# Enterprise deployment tool
 
-**Brief introduction**
+**Introduction**
 
 [FISCO BCOS generator](https://github.com/FISCO-BCOS/generator) provides companies with an easy toolkit for deployment, administration and monitoring of multi-group consortium chain.
 
@@ -65,9 +65,11 @@ Users make agreement to generate Genesis Block and node configuration file folde
 
 ```eval_rst
 .. toctree::
+   :hidden:
    :maxdepth: 1
 
    installation.md
-   using_playground.md
+   enterprise_quick_start.md
+   config.md
    operation.md
 ```

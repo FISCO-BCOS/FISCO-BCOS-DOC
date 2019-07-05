@@ -334,9 +334,6 @@ asset-app项目的目录结构如下：
 |   |-- test 
 |       |-- resources // 存放代码资源文件
 |           |-- applicationContext.xml // 项目配置文件
-|           |-- ca.crt // 链证书
-|           |-- node.crt // 节点证书
-|           |-- node.key // 节点私钥
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
 |           |-- contract //存放solidity约文件
@@ -366,7 +363,7 @@ repositories {
 -   引入Web3SDK jar包
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.0.3')
+compile ('org.fisco-bcos：web3sdk：2.0.4')
 ```
 
 ### 证书与配置文件
