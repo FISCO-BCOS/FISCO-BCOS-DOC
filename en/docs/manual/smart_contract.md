@@ -13,12 +13,12 @@ FISCO BCOS platform currently supports three smart contract forms which are Soli
 
 ### To use contract CRUD interface
 
-Accessing AMDB requires using the AMDB-specific smart contract interface `Table.sol` which is a database contract that can create tables and add, delete, and modify the tables.
+Accessing amdb-proxy requires using the amdb-proxy-specific smart contract interface `Table.sol` which is a database contract that can create tables and add, delete, and modify the tables.
 
 ```eval_rst
 .. note::
 
-    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
+    To make the table created by amdb-proxy accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
 
 ```
 
@@ -107,7 +107,7 @@ contract TableTest {
     function create() public returns(int){
         TableFactory tf = TableFactory(0x1001);  // TableFactory's address is fixed at 0x1001
         // To create a table t_test. Table's key_field as name. Table's value_field as item_id and item_name.
-        // key_field indicates the row that AMDB's primary key value_field represents in the table. The row can be multiple and spearated by commas.
+        // key_field indicates the row that amdb-proxy's primary key value_field represents in the table. The row can be multiple and spearated by commas.
         int count = tf.createTable("t_test", "name", "item_id,item_name");
         emit CreateResult(count);
 
@@ -186,7 +186,7 @@ contract TableTest {
 }
 ```
 
-`TableTest.sol` has called the intelligent contract `Table.sol` of AMDB, which implements creating the user table `t_test` and the functions of adding, deleting and changing `t_test`. The `t_test` table is structured as follows. This table records the item and item's numbers used by a employees.
+`TableTest.sol` has called the intelligent contract `Table.sol` of amdb-proxy, which implements creating the user table `t_test` and the functions of adding, deleting and changing `t_test`. The `t_test` table is structured as follows. This table records the item and item's numbers used by a employees.
 
 |name*|item_name|item_id|
 |:----|:----|:------|

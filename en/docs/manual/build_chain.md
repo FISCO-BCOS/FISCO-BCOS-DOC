@@ -105,7 +105,7 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 No parameter option. When setting this option, node uses [mptstate](../design/storage/mpt.md) to store contract local variables. By default, [storagestate](../design/storage/storage.md) is used to store the contract local variable.
 
 - **`s`option[**Optional**]**
-There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, and external. RocksDB is used by default. mysql needs to configure the information relates to mysql in the group ini file. external needs to configure topic information and start AMDB proxy.
+There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, and external. RocksDB is used by default. mysql needs to configure the information relates to mysql in the group ini file. external needs to configure topic information and start amdb-proxy.
 
 - **`c`option[**Optional**]**
 No parameter option. When setting this option, the consensus algorithm for setting the node is [Raft](../design/consensus/raft.md), and the default setting is [PBFT](../design/consensus/pbft.md).

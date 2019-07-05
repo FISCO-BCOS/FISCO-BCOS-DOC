@@ -11,7 +11,7 @@ FISCO BCOS inherits Ethereum storage while importing distributed storage with hi
 - **StorageState**: store account status by table structure of distributed storage, no historical records stored nor dependency on MPT tree, higher performance
 
 
-**Distributed storage (Advanced Mass Database, AMDB)**: realize consistency of SQL and NOSQL through abstract table structure, support all kinds of data bases by realizing the storage drive, currently support LevelDB and MySQL.
+**Distributed storage (Advanced Mass Database, amdb-proxy)**: realize consistency of SQL and NOSQL through abstract table structure, support all kinds of data bases by realizing the storage drive, currently support LevelDB and MySQL.
 
 .. image:: ../../../images/storage/architecture.png
 

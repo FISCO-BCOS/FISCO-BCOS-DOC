@@ -295,15 +295,15 @@ item_name: apple
 本使用手册仅对节点版本为2.0.0-rc3的有效，如果需要在2.0.0-rc2中使用“通过代理访问MySQL”的访问方式去搭建分布式存储环境。请参考文档[分布式存储搭建方法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0.0-rc2/docs/manual/amdbconfig.html)
 
 ### 逻辑架构图
-多群组架构是指区块链节点支持启动多个群组，群组间交易处理、数据存储、区块共识相互隔离的。因此群组下的每一个节点对应一个AMDB实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于群组1,B,C属于群组2。节点A和C分别对应1个数据库实例，B节点对应了2个数据库实例，逻辑架构图如下：
+多群组架构是指区块链节点支持启动多个群组，群组间交易处理、数据存储、区块共识相互隔离的。因此群组下的每一个节点对应一个amdb-proxy实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于群组1,B,C属于群组2。节点A和C分别对应1个数据库实例，B节点对应了2个数据库实例，逻辑架构图如下：
 
 ![](../../images/storage/logic_archite.png)
 
-如上图所示，节点B属于多个群组，不同群组下的同一个节点，对应的AMDB服务和MySQL是分开的，为了区分不同群组下的同一个节点，将A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
+如上图所示，节点B属于多个群组，不同群组下的同一个节点，对应的amdb-proxy服务和MySQL是分开的，为了区分不同群组下的同一个节点，将A,B,C三个节点，分别用Group1_A（Group1下的A节点，下同），Group1_B，Group2_B，Group2_C表示。
 下面以上图为例，描述搭建配置过程。
 
 ### 节点搭建
-配置AMDB服务之前，需要完成联盟链的搭建和多群组的配置，具体参考如下步骤。
+配置amdb-proxy服务之前，需要完成联盟链的搭建和多群组的配置，具体参考如下步骤。
 
 #### 准备依赖
 
@@ -430,8 +430,8 @@ cd AMDB;gradle build
 └── start.sh
 ```
 
-#### 配置amdb代理
-AMDB与节点连接过程，AMDB是client,节点是server，启动过程是AMDB服务主动连接节点，节点只需要配置AMDB关注的topic即可，关于topic的介绍请参考[AMOP](./amop_protocol.md)，AMDB需要通过证书准入。
+#### 配置amdb-proxy
+amdb-proxy与节点连接过程，amdb-proxy是client,节点是server，启动过程是amdb-proxy服务主动连接节点，节点只需要配置amdb-proxy关注的topic即可，关于topic的介绍请参考[AMOP](./amop_protocol.md)，amdb-proxy需要通过证书准入。
 ##### 证书配置
 ```bash
 cp ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/AMDB/dist/conf/
@@ -471,7 +471,7 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 ```
 
 #### 配置文件配置
-amdb.properties配置AMDB服务需要连接的节点信息，db.properties配置数据库的连接信息。这里假设MySQL的配置信息如下：
+amdb.properties配置amdb-proxy服务需要连接的节点信息，db.properties配置数据库的连接信息。这里假设MySQL的配置信息如下：
 ```bash
 |节点|db_ip|db_port|db_username|db_passwd|db_name|
 |Group1_A|127.0.0.1|3306|root|123456|bcos_Group1_A|
@@ -481,7 +481,7 @@ amdb.properties配置AMDB服务需要连接的节点信息，db.properties配置
 ```
 
 
-##### 为Group1的A节点配置amdb代理
+##### 为Group1的A节点配置amdb-proxy
 将~/fisco/dist_Group1_A/conf/amdb.properties配置为如下内容:
 ```bash
 node.ip=127.0.0.1
@@ -527,7 +527,7 @@ db.database=bcos_Group1_A
 </bean>
 ```
 
-##### 为Group1的B节点配置amdb代理
+##### 为Group1的B节点配置amdb-proxy
 将~/fisco/dist_Group1_B/conf/amdb.properties配置为如下内容:
 ```bash
 node.ip=127.0.0.1
@@ -572,7 +572,7 @@ db.database=bcos_Group1_B
 	<property name="pushCallback" ref="DBHandler"/>
 </bean>
 ```
-##### 为Group2的B节点配置amdb代理
+##### 为Group2的B节点配置amdb-proxy
 将~/fisco/dist_Group2_B/conf/amdb.properties配置为如下内容:
 ```bash
 node.ip=127.0.0.1
@@ -619,7 +619,7 @@ db.database=bcos_Group2_B
 	</bean>
 ```
 
-##### 为Group2的C节点配置amdb代理
+##### 为Group2的C节点配置amdb-proxy
 将~/fisco/dist_Group2_C/conf/amdb.properties配置为如下内容:
 ```bash
 node.ip=127.0.0.1
@@ -668,7 +668,7 @@ db.database=bcos_Group2_C
 ```
 
 
-### 启动amdb代理
+### 启动amdb-proxy
 ```bash
 cd ~/fisco/dist_Group1_A;sh start.sh
 cd ~/fisco/dist_Group1_B;sh start.sh

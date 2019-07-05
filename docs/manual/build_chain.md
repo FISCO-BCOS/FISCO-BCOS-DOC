@@ -102,7 +102,7 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
 
 - **`s`选项[**Optional**]**
-有参数选项，参数为db名，目前支持rocksdb、mysql、external三种模式。默认使用RocksDB。其中mysql需要在群组ini文件中配置mysql相关信息，external需要配置topic信息并启动AMDB代理。
+有参数选项，参数为db名，目前支持rocksdb、mysql、external三种模式。默认使用RocksDB。其中mysql需要在群组ini文件中配置mysql相关信息，external需要配置topic信息并启动amdb-proxy。
 
 - **`c`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
