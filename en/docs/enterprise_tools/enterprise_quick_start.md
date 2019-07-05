@@ -54,7 +54,7 @@ one_click # user specifies a folder for one-click deployment
 According to the tutorial, agency A and agency B place the config file under one_click folder like below:
 
 ```bash
-cat > ./one_click/agencyAnode_deployment.ini << EOF
+cat > ./one_click/agencyA/node_deployment.ini << EOF
 [group]
 group_id=1
 
