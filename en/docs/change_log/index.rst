@@ -2,6 +2,11 @@
 Compatibility
 ##############################################################
 
+.. admonition:: `FISCO BCOS 2.0.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0>`_
+
+     **Change description, compatibility and upgrade instructions**
+      - `FISCO BCOS v2.0.0 <./2_0_0.html>`_
+
 .. admonition:: `FISCO BCOS 2.0.0-rc3 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc3>`_
 
      **New features**
