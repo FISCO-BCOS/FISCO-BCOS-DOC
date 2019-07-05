@@ -1,6 +1,6 @@
-# Deployment tool
+# Enterprise deployment tool
 
-**Brief introduction**
+**Introduction**
 
 [FISCO BCOS generator](https://github.com/FISCO-BCOS/generator) provides companies with an easy toolkit for deployment, administration and monitoring of multi-group consortium chain.
 

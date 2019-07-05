@@ -2,7 +2,7 @@
 
 This chapter introduces the operation method of one-click deployment of single agency with networking model of **2 agencies, 1 group, 4 nodes**.
 
-This turial is adaptable to the deployment of sinle agency building all nodes. For multi-agency deployment please read [Deployment Tool](../tutorial/enterprise_quick_start.md)。
+This turial is compatible with the deployment of sinle agency building all nodes. For multi-agency deployment please read [Deployment Tool](../tutorial/enterprise_quick_start.md)。
 
 ## Download and install
 
