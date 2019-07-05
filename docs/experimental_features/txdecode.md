@@ -14,11 +14,11 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 ```eval_rst
 .. important:: 代码
     - fisco bcos
-     分支：https://github.com/FISCO-BCOS/FISCO-BCOS/tree/dev
+     版本: 2.0.0-rc3 2.0.0
     - web3sdk
-     分支：https://github.com/FISCO-BCOS/web3sdk/tree/dev
+     版本: 2.0.4
      
-     maven版本：2.0.34-SNAPSHOT
+     maven版本：2.0.4
 ```
 
 ## 引入jar包
