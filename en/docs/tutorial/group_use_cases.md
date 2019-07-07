@@ -25,7 +25,7 @@ As shown in the following figure, the star networking topology and the parallel 
 
 ![](../../images/group/group.png)
 
-The following is a detailed description of how to deploy a seven-node star networking blockchain system and a four-node parallel multi-group networking blockchain.
+The following is a detailed description of how to deploy a eight-node star networking blockchain system and a four-node parallel multi-group networking blockchain.
 
 ## Installation dependency
 
@@ -44,7 +44,7 @@ $ brew install openssl curl
 
 ## Star networking topology
 
-In this chapter, we deploy a star networking blockchain system with four agencies, three groups and seven nodes in the local machine.
+In this chapter, we deploy a star networking blockchain system with four agencies, three groups and eight nodes in the local machine.
 
 Here is the detailed configuration of star networking blockchain:
 
