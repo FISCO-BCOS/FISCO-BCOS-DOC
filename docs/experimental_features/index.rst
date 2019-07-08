@@ -6,6 +6,4 @@
 
 .. toctree::
    :maxdepth: 2
-
-   txdecode.md
  
