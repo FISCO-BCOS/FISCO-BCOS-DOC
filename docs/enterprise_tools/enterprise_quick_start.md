@@ -1,5 +1,7 @@
 # 一键部署
 
+`one_click_generator.sh`脚本为根据用户填写的节点配置，一键部署联盟链的脚本。脚本会根据用户指定文件夹下配置的`node_deployment.ini`，在文件夹下生成相应的节点。
+
 本章主要以部署**2机构1群组4节点**的组网模式，为用户讲解单机构一键部署企业级部署工具的使用方法。
 
 本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
@@ -227,11 +229,13 @@ cp ./one_click/agencyB/sdk/* ./one_click/agencyB/console/conf
 
 ## 新建群组及扩容
 
+`one_click_generator.sh`脚本仅支持基础的建立区块链的操作，如需以A机构进行扩容操作，需要在`./one_click/agencyA/generator-agency`文件夹下执行generator的其他操作(其他机构同理)。
+
 企业部署工具的后续操作与[企业部署工具教程](../tutorial/enterprise_quick_start.md)相同。
 
 后续节点的扩容及新群组的划分操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
 
-新建群组的操作用户可以在执行`click2start.sh`脚本的目录下，通过修改`./conf/group_genesis.ini`文件，并执行`--create_group_genesis`命令。
+新建群组的操作用户可以在执行`one_click_generator.sh`脚本的目录下，通过修改`./conf/group_genesis.ini`文件，并执行`--create_group_genesis`命令。
 
 扩容新节点的操作可以通过修改`./conf/node_deployment.ini`文件，先使用`--generate_all_certificates`生成证书，再使用`--build_install_package`生成节点。
 
