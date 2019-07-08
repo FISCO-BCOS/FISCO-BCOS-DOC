@@ -309,7 +309,7 @@ Hello, FISCO BCOS
   
 **注：**  
 1. 部署合约还可以通过`deployByCNS`命令，可以指定部署的合约版本号，使用方式[参考这里](manual/console.html#deploybycns)。  
-2.调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。  
+2. 调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。  
 
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
