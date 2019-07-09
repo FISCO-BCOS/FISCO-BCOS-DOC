@@ -153,21 +153,32 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ### 准备依赖
 
+- 安装openjdk
+
+Ubuntu使用下面命令安装Java，CentOS请手动安装，macOS执行`brew cask install java`安装。
+
 ```bash
-# 回到fisco目录
-$ cd ~/fisco
+sudo apt install -y default-jdk
+```
 
-# 安装openjdk macOS执行 brew cask install java 安装java
-$ sudo apt install -y default-jdk
+- 获取控制台并回到fisco目录
 
-# 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+```bash
+cd ~/fisco && bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+```
 
-# 拷贝控制台配置文件，若节点未采用默认端口，请将文件中的20200替换成其他端口
-$ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+- 拷贝控制台配置文件
 
-# 配置控制台证书
-$ cp nodes/127.0.0.1/sdk/* console/conf/
+若节点未采用默认端口，请将文件中的20200替换成节点对应的channle端口。
+
+```bash
+cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+```
+
+- 配置控制台证书
+
+```bash
+cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 ```eval_rst
@@ -183,14 +194,14 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 
 ### 启动控制台
 
+- 启动
 ```bash
-# 回到控制台目录
-$ cd ~/fisco/console
+bash ~/fisco/console/start.sh
+```
   
-# 启动控制台
-$ ./start.sh
-  
-# 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+
+```bash
 =============================================================================================
 Welcome to FISCO BCOS console(1.0.3)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.

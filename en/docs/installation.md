@@ -151,20 +151,32 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 Console links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status query, call and deploy contracts. The instructions of console are introduced [here](manual/console.md).
 
-
 ### Prepare environment
 
+- Install Java
+
+In macOS, execute `brew cask install java` to install java
+
 ```bash
-# back to fisco directory
-$ cd ~/fisco
-# Install openjdk. In macOS, execute 'brew cask install java' to install java
-$ sudo apt install -y default-jdk
-# get console
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-# Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
-$ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
-# Configure the console certificate
-$ cp nodes/127.0.0.1/sdk/* console/conf/
+sudo apt install -y default-jdk
+```
+
+- Get console
+
+```bash
+cd ~/fisco && bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+```
+
+- Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
+
+```bash
+cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+```
+
+- Configure the console certificate
+
+```bash
+cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 ```eval_rst
@@ -180,12 +192,14 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 
 ### Start console
 
+- Start console
 ```bash
-# back to console folder
-$ cd ~/fisco/console
-# start console
-$ ./start.sh
-# if it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/applicationContext.xml are configured correctly.
+bash ~/fisco/console/start.sh
+```
+
+If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/applicationContext.xml are configured correctly.
+
+```bash
 =============================================================================================
 Welcome to FISCO BCOS console(1.0.3)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
@@ -277,21 +291,27 @@ contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 # check the current block number
 [group:1]> getBlockNumber
 1
+
 # call get interface to acquire name variety, the contract address here is the returned address of deploy instruction
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
+
 # check the current block number, it remains the same, because get interface will not change the ledger status
 [group:1]> getBlockNumber
 1
+
 # call set to set name
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+
 # check the current block number again, if it increased, then it has generated block and the ledger status is changed
 [group:1]> getBlockNumber
 2
+
 # call get interface to acquire name variety, check if the setting is valid
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, FISCO BCOS
+
 # log out console
 [group:1]> quit
 ```
