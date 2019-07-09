@@ -4,8 +4,6 @@
 
 本章介绍FISCO BCOS实验性功能，可以抢先体验，功能稳定后将在正式版本发布。
 
-暂无
-
 .. toctree::
    :maxdepth: 2
  
