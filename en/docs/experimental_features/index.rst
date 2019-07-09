@@ -6,6 +6,4 @@ This chapter introduces some experimental features of FISCO BCOS for user to exp
 
 .. toctree::
    :maxdepth: 2
-
-   txdecode.md
  

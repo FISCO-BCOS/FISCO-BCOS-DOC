@@ -231,7 +231,7 @@ The later operations of the deployment tool is the same with [Deployment tool tu
 
 The later operations of node expansion or new group division is introduced in [Operation tutorial](./operation.md) and [Deplotment tool tutorial](../tutorial/enterprise_quick_start.md).
 
-To create new group, users can modify `./conf/group_genesis.ini` file under the folder that executes `click2start.sh` script, and execute `--create_group_genesis`.
+To create new group, users can modify `./conf/group_genesis.ini` file under the folder that executes `one_click_generator.sh` script, and execute `--create_group_genesis`.
 
 To expand new node, users can modify `./conf/node_deployment.ini`, use `--generate_all_certificates` to generate certificate and use `--build_install_package` to generate node.
 
