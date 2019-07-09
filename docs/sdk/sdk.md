@@ -372,18 +372,6 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 
 交易解析功能帮助用户解析这三个字段为json数据和java对象。
 
-### 引入jar包
-解析工具类在web3sdk中，应用需要首先在build.gradle配置文件中增加如下配置，引入web3sdk jar包。
-```xml
-repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    maven { url "https://dl.bintray.com/ethereum/maven/" }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-    mavenCentral()
-}
-compile group: "org.fisco-bcos", name: "web3sdk", version: "2.0.34-SNAPSHOT"
-```
-
 ### 接口说明
 代码包路径``` org.fisco.bcos.web3j.tx.txdecode ```，使用`TransactionDecoderFactory`工厂类建立交易解析对象`TransactionDecoder`，有两种方式：
 

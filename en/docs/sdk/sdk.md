@@ -370,28 +370,6 @@ Transaction receipt contains three key fields: input (currently fisco bcos compi
 
 Transaction analysis can help user to analyze the 3 fields as json data and java object.
 
-```eval_rst
-.. important:: code
-    - fisco bcos
-     branch：https://github.com/FISCO-BCOS/FISCO-BCOS/tree/dev
-    - web3sdk
-     branch：https://github.com/FISCO-BCOS/web3sdk/tree/dev
-     
-     maven version：2.0.34-SNAPSHOT
-```
-
-### Import jar packet
-Analysis tool class is in web3sdk. First, add the following configurations in build.gradle config file and import web3sdk jar packet.
-```xml
-repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    maven { url "https://dl.bintray.com/ethereum/maven/" }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-    mavenCentral()
-}
-compile group: "org.fisco-bcos", name: "web3sdk", version: "2.0.34-SNAPSHOT"
-```
-
 ### API description
 Code packet route ``` org.fisco.bcos.web3j.tx.txdecode ```, use `TransactionDecoderFactory` factory class to build transaction decoder `TransactionDecoder`. There are 2 ways:
 
