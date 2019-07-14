@@ -11,7 +11,7 @@
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git && cd ./generator
+cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git && cd ~/generator
 ```
 
 ## 示例分析
@@ -116,7 +116,7 @@ EOF
 ## 搭建节点
 
 ```bash
-bash ./one_click_generator.sh ./one_click
+bash ./one_click_generator.sh -b ./one_click
 ```
 
 执行完毕后，./one_click文件夹结构如下：
@@ -165,8 +165,8 @@ ps -ef | grep fisco
 # 可以看到如下进程
 fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
 fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
 ```
 
 ## 查看节点运行状态
@@ -189,24 +189,16 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 由于控制台体积较大，一键部署中没有直接集成，用户可以使用以下命令获取控制台
 
-获取控制台，可能需要较长时间：
+获取控制台，可能需要较长时间，国内用户可以使用`--cdn`命令：
+
+以机构A使用控制台为例
 
 ```bash
-./generator --download_console ./
+cd ./one_click/agencyA/generator-agency
 ```
 
-配置A机构控制台:
-
-拷贝控制台至对应机构A：
-
 ```bash
-cp -rf ./console ./one_click/agencyA/console
-```
-
-配置机构A控制台对应文件，控制台启动时需要相关证书、私钥以及控制台配置文件：
-
-```bash
-cp ./one_click/agencyA/sdk/* ./one_click/agencyA/console/conf
+./generator --download_console ./ --cdn
 ```
 
 启动控制台，需要安装java：
@@ -215,28 +207,223 @@ cp ./one_click/agencyA/sdk/* ./one_click/agencyA/console/conf
 cd ./one_click/agencyA/console && bash ./start.sh 1
 ```
 
-同理，配置B机构控制台:
+## 扩容新节点
+
+机构A，B在现有基础上扩容新节点，并加入机构C
+
+### 机构A、B填写节点信息
+
+教程中将配置文件放置与one_click文件夹下的agencyA, agencyB下
 
 ```bash
-cd ~/generator && cp -rf ./console ./one_click/agencyB/console
-```
+cat > ./one_click/agencyA/node_deployment.ini << EOF
+[group]
+group_id=1
 
-配置机构B控制台对应文件，控制台启动时需要相关证书、私钥以及控制台配置文件：
+[node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
+p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30310
+channel_listen_port=20210
+jsonrpc_listen_port=8555
+EOF
+```
 
 ```bash
-cp ./one_click/agencyB/sdk/* ./one_click/agencyB/console/conf
+cat > ./one_click/agencyB/node_deployment.ini << EOF
+[group]
+group_id=1
+
+[node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
+p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30312
+channel_listen_port=20212
+jsonrpc_listen_port=8557
+EOF
 ```
 
-## 新建群组及扩容
+### 初始化机构C
 
-`one_click_generator.sh`脚本仅支持基础的建立区块链的操作，如需以A机构进行扩容操作，需要在`./one_click/agencyA/generator-agency`文件夹下执行generator的其他操作(其他机构同理)。
+```bash
+mkdir ./one_click/agencyC
+```
 
-企业部署工具的后续操作与[企业部署工具教程](../tutorial/enterprise_quick_start.md)相同。
+```bash
+cat > ./one_click/agencyC/node_deployment.ini << EOF
+[group]
+group_id=1
 
-后续节点的扩容及新群组的划分操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
+[node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
+p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30313
+channel_listen_port=20213
+jsonrpc_listen_port=8558
+EOF
+```
+
+### 生成扩容节点
+
+```bash
+bash ./one_click_generator.sh -e ./one_click
+```
+
+### 启动新节点
+
+调用脚本启动节点：
+
+```bash
+bash ./one_click/agencyA/node/start_all.sh
+```
+
+```bash
+bash ./one_click/agencyB/node/start_all.sh
+```
+
+```bash
+bash ./one_click/agencyC/node/start_all.sh
+```
+
+查看节点进程：
+
+```bash
+ps -ef | grep fisco
+```
+
+```bash
+# 命令解释
+# 可以看到如下进程
+fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco  15403     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30310/fisco-bcos -c config.ini
+fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  15457     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyB/node/node_127.0.0.1_30312/fisco-bcos -c config.ini
+fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyC/node/node_127.0.0.1_30313/fisco-bcos -c config.ini
+```
+
+```eval_rst
+.. important::
+
+    为群组1扩容的新节点需要使用sdk或控制台加入到群组中。
+```
+
+## 为现有节点新建群组2
 
 新建群组的操作用户可以在执行`one_click_generator.sh`脚本的目录下，通过修改`./conf/group_genesis.ini`文件，并执行`--create_group_genesis`命令。
 
-扩容新节点的操作可以通过修改`./conf/node_deployment.ini`文件，先使用`--generate_all_certificates`生成证书，再使用`--build_install_package`生成节点。
+为上述7个节点生成群组2
+
+### 生成群组2创世区块
+
+```eval_rst
+.. important::
+
+    此操作需要在和上述操作generator下执行。
+```
+
+```bash
+cd ~/generator
+```
+
+
+配置群组创世区块文件
+
+```bash
+cat > ./conf/group_genesis.ini << EOF
+[group]
+group_id=2
+
+[nodes]
+node0=127.0.0.1:30300
+node1=127.0.0.1:30301
+node2=127.0.0.1:30302
+node3=127.0.0.1:30303
+node4=127.0.0.1:30310
+node5=127.0.0.1:30312
+node6=127.0.0.1:30313
+EOF
+```
+
+生成群组创世区块：
+
+```bash
+./generator --create_group_genesis ./group2
+```
+
+将群组创世区块加入现有节点：
+
+```bash
+$./generator --add_group ./group2/group.2.genesis ./one_click/agencyA/node
+```
+
+```bash
+$./generator --add_group ./group2/group.2.genesis ./one_click/agencyB/node
+```
+
+```bash
+$./generator --add_group ./group2/group.2.genesis ./one_click/agencyC/node
+```
+
+### 重启节点
+
+重启机构A节点:
+
+```bash
+bash ./one_click/agencyA/node/stop_all.sh
+```
+
+```bash
+bash ./one_click/agencyA/node/start_all.sh
+```
+
+重启机构B节点:
+
+```bash
+bash ./one_click/agencyB/node/stop_all.sh
+```
+
+```bash
+bash ./one_click/agencyB/node/start_all.sh
+```
+
+重启机构C节点:
+
+```bash
+bash ./one_click/agencyC/node/stop_all.sh
+```
+
+```bash
+bash ./one_click/agencyC/node/start_all.sh
+```
+
+## 更多操作
+
+使用控制台将节点加入群组等更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
 
 如果使用该教程遇到问题，请查看[FAQ](../faq.md)

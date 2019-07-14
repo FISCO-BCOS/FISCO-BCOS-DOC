@@ -879,7 +879,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需从启节点。
+当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
 
 重启机构C节点:
 
@@ -897,8 +897,10 @@ bash ~/generator-C/nodeC/start_all.sh
 
 注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，用户可以直接启动控制台，启动前请确保已经安装java
 
+国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
+
 ```bash
-./generator --download_console ./
+./generator --download_console ./ --cdn
 ```
 
 ### 查看机构C节点4信息
