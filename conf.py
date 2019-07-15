@@ -377,4 +377,4 @@ def setup(app):
 
     app.add_transform(AutoStructify)
     app.add_stylesheet('css/custom.css')
-    app.add_javascript('js/readthedocs-analytics.js')
+    app.add_javascript('_static/js/readthedocs-analytics.js')
