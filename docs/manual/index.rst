@@ -12,6 +12,8 @@
    certificates.md
    configuration.md
    console.md
+   group_use_cases.md
+   account.md
    smart_contract.md
    transaction_parallel.md
    distributed_storage.md
