@@ -100,6 +100,29 @@ try to start node3
  node3 start successfully
 ```
 
+
+### 关闭FISCO BCOS链
+
+- 关闭所有节点
+
+```bash
+bash nodes/127.0.0.1/stop_all.sh
+```
+
+关闭成功会输出类似下面内容的相应:
+```bash
+try to stop node0
+try to stop node1
+try to stop node2
+try to stop node3
+ stop node2 success.
+ stop node3 success.
+ stop node0 success.
+ stop node1 success.
+```
+
+
+
 ### 检查进程
 
 - 检查进程是否启动
