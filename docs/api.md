@@ -674,7 +674,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 - `object`: - 交易信息，其字段如下：  
     - `blockHash`: `string` - 包含该交易的区块哈希      
     - `blockNumber`: `string` - 包含该交易的区块高度 
-    - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
+    - `contractAddress`: `string` - 合约地址，如果创建合约交易，则为合约部署地址，如果是调用合约，则为"0x0000000000000000000000000000000000000000"     
     - `from`: `string` - 发送者的地址                
     - `gasUsed`: `string` - 交易消耗的gas
     - `input`: `string` - 交易的输入     

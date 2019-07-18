@@ -675,7 +675,7 @@ Returns the receipt of a transaction by transaction hash.
 - `object`: - transaction information:  
     - `blockHash`: `string` - hash of the block where this transaction was in      
     - `blockNumber`: `string` -  block number where this transaction was in  
-    - `contractAddress`: `string` - contract address, for creating contract, return "0x0000000000000000000000000000000000000000"     
+    - `contractAddress`: `string` - contract address, the contract address created, if the transaction was a contract creation, otherwise "0x0000000000000000000000000000000000000000"     
     - `from`: `string` -  address of the sender                     
     - `gasUsed`: `string` - The amount of gas used by this specific transaction
     - `input`: `string` - the data send along with the transaction alone     
