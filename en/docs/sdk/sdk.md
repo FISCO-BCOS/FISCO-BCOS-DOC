@@ -429,7 +429,7 @@ Transaction decoder `TransactionDecoder` API list:
    The `EventResultEntity` structure as follows:
    ```java
    public class EventResultEntity extends ResultEntity {
-      private boolean indexed; // indexed flag
+      private boolean indexed; // indexed flag， if true it presents the event field modified by the indexed keyword
    }
    ```
    Analyze event list, return java Map object, key is [event signature](https://solidity.readthedocs.io/en/develop/abi-spec.html#events) string, List<List<EventResultEntity>> is all the event parameter information in the transaction.

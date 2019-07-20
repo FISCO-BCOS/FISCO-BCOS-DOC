@@ -432,7 +432,7 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
    `EventResultEntity`结构如下:
    ```java
    public class EventResultEntity extends ResultEntity {
-      private boolean indexed; // indexed flag
+      private boolean indexed; // indexed标志位，true表示event字段使用了indexed关键字修饰
    }
    ```
    解析event列表，返回java Map对象，key为[event签名](https://solidity.readthedocs.io/en/develop/abi-spec.html#events)字符串，`List<EventResultEntity>`为交易中单个event参数列表，`List<List<EventResultEntity>>`表示单个交易可以包含多个event
