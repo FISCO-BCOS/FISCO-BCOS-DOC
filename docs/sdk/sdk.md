@@ -362,7 +362,7 @@ SDK提供对CRUD(增删改查)操作的支持。CRUDService可以创建表，对
 ## 交易解析
 FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署合约，调用合约接口，维护合约的生命周期以及管理资产，进行价值交换等。当交易确认后会产生交易回执，[交易回执](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt)和[交易](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash)均保存在区块里，用于记录交易执行过程生成的信息，如结果码、日志、消耗的gas量等。用户可以使用交易哈希查询交易回执，判定交易是否完成。  
 
-交易回执包含三个关键字段，分别是input（目前dev分支编译的fisco bcos包含该字段，后续合入2.0.0版本）, output , logs:
+交易回执包含三个关键字段，分别是input(FISCO BCOS 2.0.0及以上版本包含该字段)、output和logs:
 
 | 字段   | 类型      | 描述                               |
 | :----- | :-------- | :--------------------------------- |
@@ -398,7 +398,7 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 
 2. `InputAndOutputResult decodeInputReturnObject(String input)`  
    
-   解析input，返回Object对象，InputAndOutputResult结构:
+   解析input，返回Object对象，`InputAndOutputResult`和`ResultEntity`结构如下:
    ```java
    public class InputAndOutputResult {
       private String function; // 函数签名
@@ -428,9 +428,14 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
    {"event1签名":[[{"name":"","type":"","data":}...]...],"event2签名":[[{"name":"","type":"","data":}...]...]...}
    ```
 
-6. `Map<String, List<List<ResultEntity>>> decodeEventReturnObject(List<Log> logList)`  
-   
-   解析event列表，返回java Map对象，key为[event签名](https://solidity.readthedocs.io/en/develop/abi-spec.html#events)字符串，`List<ResultEntity>`为交易中单个event参数列表，`List<List<ResultEntity>>`表示单个交易可以包含多个event
+6. `Map<String, List<List<EventResultEntity>>> decodeEventReturnObject(List<Log> logList)`  
+   `EventResultEntity`结构如下:
+   ```java
+   public class EventResultEntity extends ResultEntity {
+      private boolean indexed; // indexed标志位，true表示event字段使用了indexed关键字修饰
+   }
+   ```
+   解析event列表，返回java Map对象，key为[event签名](https://solidity.readthedocs.io/en/develop/abi-spec.html#events)字符串，`List<EventResultEntity>`为交易中单个event参数列表，`List<List<EventResultEntity>>`表示单个交易可以包含多个event
 
 `TransactionDecoder`对input，output和event logs均分别提供返回json字符串和java对象的方法。json字符串方便客户端处理数据，java对象方便服务端处理数据。
 
@@ -801,40 +806,47 @@ map =>
   string,
   bytes)=[
     [
-      ResultEntity[
+      EventResultEntity[
         name=_u,
         type=uint256,
-        data=111111
+        data=111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_i,
         type=int256,
-        data=-1111111
+        data=-1111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_b,
         type=bool,
-        data=false
+        data=false,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_addr,
         type=address,
-        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs32,
         type=bytes32,
-        data=abcdefghiabcdefghiabcdefghiabhji
+        data=abcdefghiabcdefghiabcdefghiabhji,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_s,
         type=string,
-        data=章鱼小丸子ljjkl;adjsfkljlkjl
+        data=章鱼小丸子ljjkl;adjsfkljlkjl,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs,
         type=bytes,
-        data=sadfljkjkljkl
+        data=sadfljkjkljkl,
+        indexed=false
       ]
     ]
   ],
@@ -846,40 +858,47 @@ map =>
   string,
   bytes)=[
     [
-      ResultEntity[
+      EventResultEntity[
         name=_u,
         type=uint256,
-        data=111111
+        data=111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_i,
         type=int256,
-        data=-1111111
+        data=-1111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_b,
         type=bool,
-        data=false
+        data=false,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_addr,
         type=address,
-        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs32,
         type=bytes32,
-        data=abcdefghiabcdefghiabcdefghiabhji
+        data=abcdefghiabcdefghiabcdefghiabhji,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_s,
         type=string,
-        data=章鱼小丸子ljjkl;adjsfkljlkjl
+        data=章鱼小丸子ljjkl;adjsfkljlkjl,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs,
         type=bytes,
-        data=sadfljkjkljkl
+        data=sadfljkjkljkl,
+        indexed=false
       ]
     ]
   ]

@@ -360,7 +360,7 @@ SDK supports CRUD (Create/Retrieve/Updata/Delete) operations. CRUDService of tab
 ## Transaction analysis
 The transaction in FISCO BCOS is the request data toward blockchain system to deploy contract, call contract API, maintain contract lifecycle and manage assets, value exchange, etc. There will be transaction receipt after it is confirmed: [Transaction receipt](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt) and [Transaction](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash) are all stored in block to record the information generated during transaction execution, like result code, log, consumed gas amount, etc. User can use transaction hash to retrieve transaction receipt and know whether the transaction is accomplished.
 
-Transaction receipt contains three key fields: input (currently fisco bcos compiled by dev branch includes this field), output, logs.
+Transaction receipt contains three key fields: input (included in the FISCO BCOS 2.0.0 and above), output, logs.
 
 | field  | type      | description                                             |
 | :----- | :-------- | :------------------------------------------------------ |
@@ -395,7 +395,7 @@ Transaction decoder `TransactionDecoder` API list:
 
 2. `InputAndOutputResult decodeInputReturnObject(String input)`  
    
-   Analyze input, return java List object, `InputAndOutputResult` structure
+   Analyze input, return java List object, the `InputAndOutputResult` and `ResultEntity` structure as follows:
    ```java
     public class InputAndOutputResult {
       private String function; // function signature
@@ -425,9 +425,14 @@ Transaction decoder `TransactionDecoder` API list:
    {"event1 signature":[[{"name":"_u","type":"","data":}...]...],"event2 signature":[[{"name":"_u","type":"","data":}...]...]...}
    ```
 
-6. `Map<String, List<List<ResultEntity>>> decodeEventReturnObject(List<Log> logList)`  
-   
-   Analyze event list, return java Map object, key is [event signature](https://solidity.readthedocs.io/en/develop/abi-spec.html#events) string, List<List<ResultEntity>> is all the event parameter information in the transaction.
+6. `Map<String, List<List<EventResultEntity>>> decodeEventReturnObject(List<Log> logList)`  
+   The `EventResultEntity` structure as follows:
+   ```java
+   public class EventResultEntity extends ResultEntity {
+      private boolean indexed; // indexed flag， if true it presents the event field modified by the indexed keyword
+   }
+   ```
+   Analyze event list, return java Map object, key is [event signature](https://solidity.readthedocs.io/en/develop/abi-spec.html#events) string, List<List<EventResultEntity>> is all the event parameter information in the transaction.
 
 `TransactionDecoder` provides methods of returning json string and java object respectively to input, output and event logs. Json string helps client end to easily deal data. Java object helps to easily deal data for server.
 
@@ -799,40 +804,47 @@ map =>
   string,
   bytes)=[
     [
-      ResultEntity[
+      EventResultEntity[
         name=_u,
         type=uint256,
-        data=111111
+        data=111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_i,
         type=int256,
-        data=-1111111
+        data=-1111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_b,
         type=bool,
-        data=false
+        data=false,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_addr,
         type=address,
-        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs32,
         type=bytes32,
-        data=abcdefghiabcdefghiabcdefghiabhji
+        data=abcdefghiabcdefghiabcdefghiabhji,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_s,
         type=string,
-        data=章鱼小丸子ljjkl;adjsfkljlkjl
+        data=章鱼小丸子ljjkl;adjsfkljlkjl,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs,
         type=bytes,
-        data=sadfljkjkljkl
+        data=sadfljkjkljkl,
+        indexed=false
       ]
     ]
   ],
@@ -844,40 +856,47 @@ map =>
   string,
   bytes)=[
     [
-      ResultEntity[
+      EventResultEntity[
         name=_u,
         type=uint256,
-        data=111111
+        data=111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_i,
         type=int256,
-        data=-1111111
+        data=-1111111,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_b,
         type=bool,
-        data=false
+        data=false,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_addr,
         type=address,
-        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a
+        data=0x692a70d2e424a56d2c6c27aa97d1a86395877b3a,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs32,
         type=bytes32,
-        data=abcdefghiabcdefghiabcdefghiabhji
+        data=abcdefghiabcdefghiabcdefghiabhji,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_s,
         type=string,
-        data=章鱼小丸子ljjkl;adjsfkljlkjl
+        data=章鱼小丸子ljjkl;adjsfkljlkjl,
+        indexed=false
       ],
-      ResultEntity[
+      EventResultEntity[
         name=_bs,
         type=bytes,
-        data=sadfljkjkljkl
+        data=sadfljkjkljkl,
+        indexed=false
       ]
     ]
   ]
