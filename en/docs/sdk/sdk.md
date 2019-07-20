@@ -360,7 +360,7 @@ SDK supports CRUD (Create/Retrieve/Updata/Delete) operations. CRUDService of tab
 ## Transaction analysis
 The transaction in FISCO BCOS is the request data toward blockchain system to deploy contract, call contract API, maintain contract lifecycle and manage assets, value exchange, etc. There will be transaction receipt after it is confirmed: [Transaction receipt](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt) and [Transaction](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash) are all stored in block to record the information generated during transaction execution, like result code, log, consumed gas amount, etc. User can use transaction hash to retrieve transaction receipt and know whether the transaction is accomplished.
 
-Transaction receipt contains three key fields: input (currently fisco bcos compiled by dev branch includes this field), output, logs.
+Transaction receipt contains three key fields: input (included in the FISCO BCOS 2.0.0 and above), output, logs.
 
 | field  | type      | description                                             |
 | :----- | :-------- | :------------------------------------------------------ |
