@@ -661,7 +661,6 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:8545 |jq
-}
 ```
 Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 
