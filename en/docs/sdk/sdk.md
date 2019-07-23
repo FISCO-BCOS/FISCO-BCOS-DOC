@@ -1,6 +1,6 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO-BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
 
 Main features of version 2.0 includes:
 - provide Java API to call FISCO BCOS JSON-RPC

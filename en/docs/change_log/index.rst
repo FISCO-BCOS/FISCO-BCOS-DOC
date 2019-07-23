@@ -64,7 +64,7 @@ Compatibility
      - `FISCO BCOS 1.0.0 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.0.0>`_
 
     **FISCO BCOS preview version：**
-     - `FISCO-BCOS 1.5.0 pre-release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.5.0-pre-release>`_
+     - `FISCO BCOS 1.5.0 pre-release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.5.0-pre-release>`_
 
 
 .. admonition:: View node and data versions
