@@ -19,7 +19,7 @@ Compatibility
 .. admonition:: `FISCO BCOS 2.0.0-rc2 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2>`_
 
      **New features**
-      - `Parallel computing model <../what_is_new.html#id4>`_ (`Operation Manual <../manual/transaction_parallel.html>`_) (`Operation Tutorial <../tutorial/group_use_cases.html>`_)
+      - `Parallel computing model <../what_is_new.html#id4>`_ (`Operation Manual <../manual/transaction_parallel.html>`_) (`Operation Tutorial <../manual/group_use_cases.html>`_)
       - `Distributed storage <../what_is_new.html#id3>`_ (`Operation Manual <../manual/distributed_storage.html>`_)
 
      **Change description, compatibility and upgrade instructions**
@@ -29,7 +29,7 @@ Compatibility
 .. admonition:: `FISCO BCOS 2.0.0-rc1 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1>`_
 
      **New features**
-      - `Group architecture <../what_is_new.html#id2>`_ (`Operation Tutorial <../tutorial/group_use_cases.html>`_) (`Design Document <../design/architecture/group.html>`_)
+      - `Group architecture <../what_is_new.html#id2>`_ (`Operation Tutorial <../manual/group_use_cases.html>`_) (`Design Document <../design/architecture/group.html>`_)
       - `Console <../what_is_new.html#id6>`_ (`Installation <../installation.html#id7>`_) (`Operation Manual <../manual/console.html>`_)
       - `Virtual machine <../what_is_new.html#id7>`_ 
       - `Compile contract <../what_is_new.html#id5>`_ (`Operation Manual <../manual/smart_contract.html>`_)

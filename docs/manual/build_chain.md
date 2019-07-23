@@ -204,6 +204,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ### 多服务器多群组
 
-使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../tutorial/group_use_cases.md)。
+使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../manual/group_use_cases.md)。
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
