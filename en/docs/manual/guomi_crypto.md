@@ -1,8 +1,8 @@
-# Commercial Cryptography
+# OSCCA-approved cryptography
 
-For fully supporting the commercial cryptography algorithm, FISCO integrates the national encryption, decryption, signature, verification, hash algorithm and SSL communication protocol in the FISCO BCOS platform based on the commercial cryptography standard. The design documents can be found in the [FISCO BCOS Design Manual. commercial cryptography Version](../design/features/guomi.md).
+For fully supporting the OSCCA-approved cryptography algorithm, FISCO integrates the national encryption, decryption, signature, verification, hash algorithm and SSL communication protocol in the FISCO BCOS platform based on the OSCCA-approved cryptography standard. The design documents can be found in the [FISCO BCOS Design Manual. OSCCA-approved cryptography Version](../design/features/guomi.md).
 
-## Initial deployment of FISCO BCOS commercial cryptography version
+## Initial deployment of FISCO BCOS OSCCA-approved cryptography version
 
 This section uses the [`build_chain`] (build_chain.md) script to build a 4-nodes FISCO BCOS chain locally, and uses `Ubuntu 16.04` system as an example to operate. This section uses pre-compiled static `fisco-bcos` binaries for testing on CentOS 7 and Ubuntu 16.04.
 
@@ -30,7 +30,7 @@ fisco
 # Generate a 4-nodes FISCO chain. All nodes belong to group1. The following instructions are executed in the fisco directory.
 # -p specifies the starting ports which are p2p_port, channel_port, jsonrpc_port
 # According to the following instructions, it needs to ensure that the 30300~30303, 20200~20203, 8545~8548 ports of the machine are not occupied.
-# -g The commercial cryptography compilation option. It will generate a node of commercial cryptography after using successfully. Download the latest version from GitHub by default.
+# -g The OSCCA-approved cryptography compilation option. It will generate a node of OSCCA-approved cryptography after using successfully. Download the latest version from GitHub by default.
 $ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g
 ```
 
@@ -59,11 +59,11 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/key-manager/build/nodes
 ```
 
-After the deployment of the commercial cryptography alliance chain is completed, the rest of operations are same as [installation] (../installation.md).
+After the deployment of the OSCCA-approved cryptography alliance chain is completed, the rest of operations are same as [installation] (../installation.md).
 
-## commercial cryptography configuration information
+## OSCCA-approved cryptography configuration information
 
-The nodes of FISCO BCOS commercial cryptography version message through using SSL secure channel. The main configuration items of the SSL certificate are concentrated in the following configuration items:
+The nodes of FISCO BCOS OSCCA-approved cryptography version message through using SSL secure channel. The main configuration items of the SSL certificate are concentrated in the following configuration items:
 
 ```ini
 [network_security]
@@ -85,19 +85,19 @@ ca_cert: the path of certificate gmca
     ca_cert=gmca.crt
 ```
 
-## using commercial cryptography SDK
+## using OSCCA-approved cryptography SDK
 
 For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
 
-## using commercial cryptography console
+## using OSCCA-approved cryptography console
 
-The function of commercial cryptography console is used in the same way as the standard console. See [Console Operations Manual] (../manual/console.md).
+The function of OSCCA-approved cryptography console is used in the same way as the standard console. See [Console Operations Manual] (../manual/console.md).
 
-## commercial cryptography configuration
+## OSCCA-approved cryptography configuration
 
-### commercial cryptography Key Manager
+### OSCCA-approved cryptography Key Manager
 
-Using the commercial cryptography Key Manager needs to be recompiled the standard Key Manager. The difference of them is ``` -DBUILD_GM=ON ``` option needs to be added when doing cmake.
+Using the OSCCA-approved cryptography Key Manager needs to be recompiled the standard Key Manager. The difference of them is ``` -DBUILD_GM=ON ``` option needs to be added when doing cmake.
 
 ``` shell
 # under centos
@@ -108,9 +108,9 @@ cmake .. -DBUILD_GM=ON
 
 Other steps are same as the standard Key Manager. Please refer to [key-manager repository](https://github.com/FISCO-BCOS/key-manager).
 
-### commercial cryptography node configuration
+### OSCCA-approved cryptography node configuration
 
-FISCO BCOS commercial cryptography version adopts dual certificate mode, so two sets of certificates are needed for disk encryption. They  are the conf/gmnode.key and conf/origin_cert/node.key. Other operations of disk encryption are the same as [Standard Edition Loading Encryption Operation] (./storage_security.md).
+FISCO BCOS OSCCA-approved cryptography version adopts dual certificate mode, so two sets of certificates are needed for disk encryption. They  are the conf/gmnode.key and conf/origin_cert/node.key. Other operations of disk encryption are the same as [Standard Edition Loading Encryption Operation] (./storage_security.md).
 
 
 ``` shell
