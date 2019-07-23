@@ -384,7 +384,7 @@ $ [group:3]> getBlockNumber
 
 # ... 切换到不存在的组4，控制台提示group4不存在，并输出当前的group列表 ...
 $ [group:3]> switch 4
-Group 4 does not exist. The group list is [1, 2, 3].
+Switch to group 4 failed! Please check the node status and the console configuration.
 
 # 退出控制台
 $ [group:3]> exit
@@ -624,11 +624,11 @@ info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generati
 $ cd ~/fisco/multi_nodes/127.0.0.1
 
 # 拷贝group1的配置
-$ cp node0/conf/group.1.genesis group.2.genesis
+$ cp node0/conf/group.1.genesis node0/conf/group.2.genesis
 
 # 修改群组ID
-$ sed -i "s/id=1/id=2/g" group.2.genesis
-$ cat group.2.genesis | grep "id"
+$ sed -i "s/id=1/id=2/g" node0/conf/group.2.genesis
+$ cat node0/conf/group.2.genesis | grep "id"
 # 已修改到    id=2
 
 # 将配置拷贝到各个节点
