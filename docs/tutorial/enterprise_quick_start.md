@@ -217,7 +217,7 @@ ls dir_agency_ca/agencyA/
 ```bash
 # 上述命令解释
 # 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
-agency.crt    agency.key    cert.cnf 
+agency.crt  agency.key  ca.crt  cert.cnf 
 ```
 
 发送链证书、机构证书、机构私钥至机构A，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
@@ -590,7 +590,7 @@ ls dir_agency_ca/agencyC/
 ```bash
 # 上述命令解释
 # 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
-agency.crt    agency.key    cert.cnf 
+agency.crt  agency.key  ca.crt  cert.cnf 
 ```
 
 发送链证书、机构证书、机构私钥至机构C，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下

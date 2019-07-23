@@ -217,7 +217,7 @@ ls dir_agency_ca/agencyA/
 ```bash
 # the above order has explained
 # From left to right, they are agency certificate, agency private key, chain certificate, certificate configuration file
-agency.crt    agency.key    cert.cnf
+agency.crt  agency.key  ca.crt  cert.cnf
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency's working directory.
@@ -594,7 +594,7 @@ ls dir_agency_ca/agencyC/
 ```bash
 # command interpretation
 # From left to right, they are agency certificate, agency private key, chain certificate, certificate configuration file
-agency.crt    agency.key    cert.cnf
+agency.crt  agency.key  ca.crt  cert.cnf
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency’s working directory.
