@@ -211,7 +211,7 @@ Credentials credentials = GenCredential.create(privateKey);
 ```
 
 ##### 加载账户私钥文件
-如果通过账户生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账户私钥文件(账户生成脚本的用法参考[账户管理文档](../tutorial/account.md))，则可以通过加载PEM或PKCS12账户私钥文件使用账户。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
+如果通过账户生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账户私钥文件(账户生成脚本的用法参考[账户管理文档](../manual/account.md))，则可以通过加载PEM或PKCS12账户私钥文件使用账户。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
 
 * P12Manager用法举例：
 在applicationContext.xml中配置PKCS12账户的私钥文件路径和密码

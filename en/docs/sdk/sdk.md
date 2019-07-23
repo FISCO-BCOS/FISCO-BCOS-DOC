@@ -208,7 +208,7 @@ Credentials credentials = GenCredential.create(privateKey);
 ```
 
 ##### Load private key file
-After the script `get_accounts.sh` generates PEM or PKCS12 private key file (the use of get-account script is introduced in [Account management document](../tutorial/account.md)), the account can be operated through loading PEM or PKCS12 private key file. There are 2 ways to load private key: P12Manager and PEMManager. P12Manager is to load PKCS12 private key file; PEMManager is to load PEM private key file.
+After the script `get_accounts.sh` generates PEM or PKCS12 private key file (the use of get-account script is introduced in [Account management document](../manual/account.md)), the account can be operated through loading PEM or PKCS12 private key file. There are 2 ways to load private key: P12Manager and PEMManager. P12Manager is to load PKCS12 private key file; PEMManager is to load PEM private key file.
 
 * P12Manager example:
 Configure private key file route and password of PKCS12 account in applicationContext.xml
