@@ -2,9 +2,9 @@
 
 FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了保证机构的密钥安全，企业级部署工具提供了一种机构间相互合作部署联盟链方式。
 
-本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。更多参数选项说明请参考[这里](../enterprise_tools/operation.md)
+本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。更多参数选项说明请参考[这里](../enterprise_tools/operation.md)。
 
-本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
+本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)。
 
 ## 下载安装
 
@@ -216,14 +216,14 @@ ls dir_agency_ca/agencyA/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书签发机构证书中间文件、链证书、证书配置文件
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
+agency.crt  agency.key  ca.crt  cert.cnf 
 ```
 
 发送链证书、机构证书、机构私钥至机构A，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
+cp ./dir_agency_ca/agencyA/* ~/generator-A/meta/
 ```
 
 ### 初始化机构B
@@ -243,7 +243,7 @@ cd ~/generator
 发送链证书、机构证书、机构私钥至机构B，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
+cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
 ```
 
 ```eval_rst
@@ -589,14 +589,14 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书签发机构证书中间文件、链证书、证书配置文件
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
+agency.crt  agency.key  ca.crt  cert.cnf 
 ```
 
 发送链证书、机构证书、机构私钥至机构C，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
+cp ./dir_agency_ca/agencyC/* ~/generator-C/meta/
 ```
 
 ## 机构A、C构建群组2
