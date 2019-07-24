@@ -17,11 +17,12 @@
 
 ## 生成节点
 
-用[```build_chain.sh```](build_chain.md)脚本，用普通的操作方法，先生成节点。
+用[```build_chain.sh```](../installation.md)脚本，用普通的操作方法，先生成节点。
 
 ``` shell
-cd FISCO-BCOS/tools
-bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
 ```eval_rst
@@ -41,7 +42,7 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 启动成功，打印日志
 
 ```log
-[1546501342949][TRACE][Load]key-manager stared,port=31443
+[1546501342949][TRACE][Load]key-manager started,port=31443
 ```
 
 ## 配置dataKey
@@ -56,11 +57,9 @@ bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
 ```shell
 cd key-manager/scripts
 bash gen_data_secure_key.sh 127.0.0.1 31443 123456
-```
 
-得到`cipherDataKey`，脚本自动打印出落盘加密需要的ini配置(如下)。此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
-
-```ini
+CiherDataKey generated: ed157f4588b86d61a2e1745efe71e6ea
+Append these into config.ini to enable disk encryption:
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
@@ -68,6 +67,7 @@ key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
+得到`cipherDataKey`，脚本自动打印出落盘加密需要的ini配置(如下)。此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
 将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](configuration.md)）中。
 
 ```shell
@@ -91,7 +91,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```shell
 cd key-manager/scripts
 # 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
 ```
 
 执行后，节点私钥自动被加密，加密前的文件备份到了文件``` node.key.bak.xxxxxx ```中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**
@@ -123,7 +123,7 @@ bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/node.key ed1
 直接启动节点即可
 
 ```shell
-cd nodes/node0/
+cd nodes/127.0.0.1/node0/
 ./start.sh
 ```
 
@@ -132,7 +132,7 @@ cd nodes/node0/
 （1）节点正常运行，正常共识，不断输出共识打包信息。
 
 ``` shell
-tail -f nodes/node0/log/* | grep +++
+tail -f nodes/127.0.0.1/node0/log/* | grep +++
 ```
 
 （2）`key-manager`在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Manager直接输出的日志如下。
