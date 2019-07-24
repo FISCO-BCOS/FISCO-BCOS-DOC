@@ -13,12 +13,13 @@ Each agency has a Key Manager. For specific deployment steps, please refer to [K
 
 ## Node building
 
-Use the script [```build_chain.sh```] (build_chain.md) to build a node with normal operations.
+Use the script [```build_chain.sh```] (../installation.md) to build a node with normal operations.
 
 
 ``` shell
-cd FISCO-BCOS/tools
-bash build_chain.sh -l "127.0.0.1:4" -p 12300 -e ../build/bin/fisco-bcos
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
 ```eval_rst
@@ -38,7 +39,7 @@ To launch `key-manager` directly. If `key-manager` is not deployed, refer to [Ke
 launch successfully and print the log.
 
 ```log
-[1546501342949][TRACE][Load]key-manager stared,port=31443
+[1546501342949][TRACE][Load]key-manager started,port=31443
 ```
 
 ## DataKey configuration
@@ -53,18 +54,17 @@ To execute the script, define `dataKey`, and get `cipherDataKey`
 ```shell
 cd key-manager/scripts
 bash gen_data_secure_key.sh 127.0.0.1 31443 123456
-```
 
-The script for getting `cipherDataKey` automatically prints out the ini configuration required for the disk encryption (see below). Now, the cipherDataKey is:``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
-
-
-```ini
+CiherDataKey generated: ed157f4588b86d61a2e1745efe71e6ea
+Append these into config.ini to enable disk encryption:
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
 key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
+
+The script for getting `cipherDataKey` automatically prints out the ini configuration required for the disk encryption (see below). Now, the cipherDataKey is:``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
 
 To write the ini configuration that has been disk encryption to the node configuration file ([config.ini](configuration.md)).
 
@@ -89,7 +89,7 @@ To execute script and encrypt node private key
 ```shell
 cd key-manager/scripts
 # parameter:ip port node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 31443 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
 ```
 
 The node private key is automatically encrypted after execution, and the files before encryption is backed up to the file ``` node.key.bak.xxxxxx ```. **Please take care of the backup private key and delete the backup private key generated on the node**
@@ -121,7 +121,7 @@ If you check the `node.key`, you can see that it has been encrypted as ciphertex
 to launch node directly
 
 ```shell
-cd nodes/node0/
+cd nodes/127.0.0.1/node0/
 ./start.sh
 ```
 
@@ -130,7 +130,7 @@ cd nodes/node0/
 (1) The node runs and generates block normally, and the block information is continuously output.
 
 ``` shell
-tail -f nodes/node0/log/* | grep +++
+tail -f nodes/127.0.0.1/node0/log/* | grep +++
 ```
 
 (2) `key-manager` will print a log each time the node launches. For example, when a node launches, the log directly output by Key Manager is as follows.
