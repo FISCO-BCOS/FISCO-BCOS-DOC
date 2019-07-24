@@ -2,9 +2,9 @@
 
 FISCO BCOS enterprise deployment tools are designed for multi-agency production environments. To ensure the security of the agency's private keys, enterprise deployment tools provides agencies' collaboration to deploy a alliance chain.
 
-This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](../enterprise_tools/operation.md)
+This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](../enterprise_tools/operation.md).
 
-This chapter is a process that multi-agency peer-to-peer deployment and a situation that private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through single agency's clickstart can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md)
+This chapter is a process that multi-agency peer-to-peer deployment and a situation that private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through single agency's clickstart can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md).
 
 ## Download and install
 
@@ -216,8 +216,8 @@ ls dir_agency_ca/agencyA/
 
 ```bash
 # the above order has explained
-# From left to right, they are agency certificate, agency private key, intermediate file of chain certificate agency, chain certificate, certificate configuration file
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf
+# From left to right, they are agency certificate, agency private key, chain certificate, certificate configuration file
+agency.crt  agency.key  ca.crt  cert.cnf
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency's working directory.
@@ -225,7 +225,7 @@ For sending the chain certificate, agency certificate, and agency private key to
 
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
+cp ./dir_agency_ca/agencyA/* ~/generator-A/meta/
 ```
 
 ### Initialize agencyB
@@ -245,7 +245,7 @@ generate agencyB certificate:
 For sending the chain certificate, agency certificate, and agency private key to agencyB, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency's working directory.
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
+cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
 ```
 
 ```eval_rst
@@ -593,14 +593,14 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # command interpretation
-# From left to right, they are agency certificate, agency private key, intermediate file of chain certificate agency, chain certificate, certificate configuration file
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf
+# From left to right, they are agency certificate, agency private key, chain certificate, certificate configuration file
+agency.crt  agency.key  ca.crt  cert.cnf
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency’s working directory.
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
+cp ./dir_agency_ca/agencyC/* ~/generator-C/meta/
 ```
 
 ## AgencyA,C build group2
