@@ -11,7 +11,9 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    build_chain.md
    certificates.md
    configuration.md
+   group_use_cases.md
    console.md
+   account.md
    smart_contract.md
    transaction_parallel.md
    distributed_storage.md

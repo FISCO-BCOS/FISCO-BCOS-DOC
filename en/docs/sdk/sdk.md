@@ -1,6 +1,6 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO-BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
 
 Main features of version 2.0 includes:
 - provide Java API to call FISCO BCOS JSON-RPC
@@ -208,7 +208,7 @@ Credentials credentials = GenCredential.create(privateKey);
 ```
 
 ##### Load private key file
-After the script `get_accounts.sh` generates PEM or PKCS12 private key file (the use of get-account script is introduced in [Account management document](../tutorial/account.md)), the account can be operated through loading PEM or PKCS12 private key file. There are 2 ways to load private key: P12Manager and PEMManager. P12Manager is to load PKCS12 private key file; PEMManager is to load PEM private key file.
+After the script `get_accounts.sh` generates PEM or PKCS12 private key file (the use of get-account script is introduced in [Account management document](../manual/account.md)), the account can be operated through loading PEM or PKCS12 private key file. There are 2 ways to load private key: P12Manager and PEMManager. P12Manager is to load PKCS12 private key file; PEMManager is to load PEM private key file.
 
 * P12Manager example:
 Configure private key file route and password of PKCS12 account in applicationContext.xml

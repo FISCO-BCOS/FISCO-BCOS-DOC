@@ -30,7 +30,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
 .. admonition:: 关键特性
 
-    - 多群组: `教程 <./docs/tutorial/group_use_cases.html>`_  `使用手册 <./docs/manual/configuration.html>`_  `设计文档 <./docs/design/architecture/group.html>`_
+    - 多群组: `教程 <./docs/manual/group_use_cases.html>`_  `使用手册 <./docs/manual/configuration.html>`_  `设计文档 <./docs/design/architecture/group.html>`_
     - 并行计算: `使用手册 <./docs/manual/transaction_parallel.html>`_  `设计文档 <./docs/design/parallel/dag.html>`_
     - 分布式存储: `使用手册 <./docs/manual/distributed_storage.html>`_  `设计文档 <./docs/design/storage/index.html>`_
 

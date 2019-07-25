@@ -30,7 +30,7 @@ build_chain.sh script adds the `-d` option to provide docker mode building for d
     The source code compilation is suitable for the experienced developers. You are required to download all library dependencies during compilation. Network connection would required and would take 5-20 minutes in total.
 ```
 
-FISCO-BCOS is using generic [CMake](https://cmake.org) to generate platform-specific build files, which means the steps are similar for most operating systems:
+FISCO BCOS is using generic [CMake](https://cmake.org) to generate platform-specific build files, which means the steps are similar for most operating systems:
 1.	Install build tools and dependent package (depends on platform).
 2.	Clone code from [FISCO BCOS][FSICO-BCOS-GitHub].
 3.	Run `cmake` to generate the build file and compile.
