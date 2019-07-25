@@ -1,6 +1,6 @@
 # Certificate description
 
-FISCO-BCOS network adopts a CA-oriented access mechanism to support any multi-level certificate structure for ensuring information confidentiality, authentication, integrity, and non-repudiation.
+FISCO BCOS network adopts a CA-oriented access mechanism to support any multi-level certificate structure for ensuring information confidentiality, authentication, integrity, and non-repudiation.
 
 FISCO BCOS uses the [x509 protocol certificate format](https://en.wikipedia.org/wiki/X.509). According to the existing business scenario, a three level certificate structure is adopted by default, and from top to bottom, the three levels are chain certificate, agency certificate, and node certificate respective.
 
@@ -22,7 +22,7 @@ The files’ suffixes of FISCO BCOS node running are described as follows:
 
 ## Role definition
 
-There are four roles in the FISCO-BCOS certificate structure, namely the alliance chain committee administrator, agency, node, and SDK.
+There are four roles in the FISCO BCOS certificate structure, namely the alliance chain committee administrator, agency, node, and SDK.
 
 ### Alliance chain committee
 

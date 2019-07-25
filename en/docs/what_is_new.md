@@ -10,7 +10,7 @@ In a network with group architecture, depending on different service scenario, t
 
 - The agency's nodes need to be deployed only once, and can participate in different multi-party collaboration services through group settings, or divide one service into groups according to user, time and other dimensions. The group architecture can be rapidly expanded in parallel. While expanding the scale of business, it greatly simplifies the  complexity of operation and reduces the management cost.
 
-For more group introductions, please refer to [Group Architecture Design Document](./design/architecture/group.md) and [Group Usage Tutorial](./tutorial/group_use_cases.md)
+For more group introductions, please refer to [Group Architecture Design Document](./design/architecture/group.md) and [Group Usage Tutorial](./manual/group_use_cases.md)
 
 ## Distributed storage
 
