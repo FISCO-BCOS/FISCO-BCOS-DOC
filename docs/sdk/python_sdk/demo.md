@@ -7,7 +7,9 @@ Python SDK的源码中提供了完整的Demo供开发者学习
 
 ## 调用节点API
 
-正确的[配置了SDK连接的节点信息](./configuration.md)后。在代码中实例化client结构，并调用client的接口即可。返回json，可以根据对[fisco bcos rpc接口json格式](../../api.md)的理解，进行字段获取和转码。（完整Demo: [demo_get.py](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_get.py)）
+正确的[配置了SDK连接的节点信息](./configuration.md)后。在代码中实例化client结构，并调用client的接口即可。返回json，可以根据对[fisco bcos rpc接口json格式](../../api.md)的理解，进行字段获取和转码。
+
+完整Demo: [demo_get.py](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_get.py)
 
 ``` python
 # 实例化client
@@ -27,7 +29,9 @@ except BcosError as e:
 
 ## 操作合约
 
-正确的[配置了SDK连接的节点信息](./configuration.md)后。按照举例，调用`deploy`，`sendRawTransactionGetReceipt`，`call`，`parse_event_logs`等函数。（完整Demo: [demo_transaction.py](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_transaction.py)）
+正确的[配置了SDK连接的节点信息](./configuration.md)后。可进行部署合约、发送交易、处理回执、查询合约数据的操作。按照举例，调用`deploy`，`sendRawTransactionGetReceipt`，`call`，`parse_event_logs`等函数。
+
+完整Demo: [demo_transaction.py](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_transaction.py)
 
 ``` python
 # 实例化client
