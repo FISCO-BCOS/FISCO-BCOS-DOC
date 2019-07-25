@@ -29,3 +29,4 @@ Python SDK
    configuration.md
    api.md
    console.md
+   demo.md
