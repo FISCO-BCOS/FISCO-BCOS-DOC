@@ -431,6 +431,17 @@ TransactionReceipt receipt = asset.register(assetAccount, amount).send();
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount).send();
 ```
 
+-   结果解析  
+
+通过TransactionReceipt receipt获取合约内部的返回的int返回值：  
+//sol转换成java文件时，会同步生成abi和bin文件，此处需要传入类Asset对应的Asset.abi文件内容  
+String abi = "abi文件内容";  
+TransactionDecoder txDetail = new TransactionDecoder(abi);  
+InputAndOutputResult result = txDetail.decodeOutputReturnObject(result.getInput(), result.getOutput());  
+//其中ResultEntity定义了详细的返回值，如type定义了返回的类型，data定义了返回值的具体结果，下面以返回int对象进行读取  
+List<ResultEntity> entities = result.getResult();  
+int retCode = new BigInteger(result.getResult().get(0).getData().toString()).intValue();  
+
 ## 运行
 
 至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
