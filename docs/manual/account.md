@@ -84,7 +84,7 @@ String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
 
-更多操作详情，请参见[创建并使用指定外部账号](../sdk/sdk.html#id5)。
+更多操作详情，请参见[创建并使用指定外部账号](../sdk/java_sdk.html#id5)。
 
 ## 账户的存储
 - web3SDK支持通过私钥字符串或者文件加载，所以账户的私钥可以存储在数据库中或者本地文件。

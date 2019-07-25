@@ -174,7 +174,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
 </beans>
 ```
-  配置项详细说明[参考这里](../sdk/sdk.html#spring)。
+  配置项详细说明[参考这里](../sdk/java_sdk.html#spring)。
 
 ```eval_rst
 .. important::

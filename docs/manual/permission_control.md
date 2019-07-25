@@ -22,7 +22,7 @@
 配置并启动FISCO BCOS 2.0区块链节点和控制台，请参考[安装文档](../installation.md)。   
 
 ## 权限控制工具
-FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/sdk.html#permissionservice)的PermissionService接口使用权限功能），其中涉及的权限控制命令如下:
+FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/java_sdk.html#permissionservice)的PermissionService接口使用权限功能），其中涉及的权限控制命令如下:
 
 |命令名称|命令参数|功能|
 |:----|:-----|:----|
