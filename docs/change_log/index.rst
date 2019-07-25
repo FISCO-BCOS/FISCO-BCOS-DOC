@@ -19,7 +19,7 @@
 .. admonition:: `FISCO BCOS 2.0.0-rc2 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2>`_
 
      **新增特性**
-      - `并行计算模型 <../what_is_new.html#id4>`_ (`操作手册 <../manual/transaction_parallel.html>`_) (`设计文档 <../tutorial/group_use_cases.html>`_)
+      - `并行计算模型 <../what_is_new.html#id4>`_ (`操作手册 <../manual/transaction_parallel.html>`_) (`设计文档 <../manual/group_use_cases.html>`_)
       - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/distributed_storage.html>`_)
 
      **变更描述、兼容及升级说明**
@@ -29,7 +29,7 @@
 .. admonition:: `FISCO BCOS 2.0.0-rc1 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1>`_
 
      **新增特性**
-      - `群组架构 <../what_is_new.html#id2>`_ (`操作教程 <../tutorial/group_use_cases.html>`_) (`设计文档 <../design/architecture/group.html>`_)
+      - `群组架构 <../what_is_new.html#id2>`_ (`操作教程 <../manual/group_use_cases.html>`_) (`设计文档 <../design/architecture/group.html>`_)
       - `控制台 <../what_is_new.html#id6>`_ (`安装 <../installation.html#id7>`_) (`操作手册 <../manual/console.html>`_)
       - `虚拟机 <../what_is_new.html#id7>`_ 
       - `编译合约 <../what_is_new.html#id5>`_ (`合约开发 <../manual/smart_contract.html>`_)

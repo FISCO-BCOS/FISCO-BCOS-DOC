@@ -233,7 +233,7 @@ console version: 1.0.3
 
 ##### Console loads private key
 
-The console provides the account generation script get_account.sh (for the script tutorial, please refer to [Account Management Document](../tutorial/account.md). The generated account file is in the accounts directory, and the account file loaded by console must be placed in the directory.
+The console provides the account generation script get_account.sh (for the script tutorial, please refer to [Account Management Document](../manual/account.md). The generated account file is in the accounts directory, and the account file loaded by console must be placed in the directory.
 
 
 The console startup methods are as follows:
