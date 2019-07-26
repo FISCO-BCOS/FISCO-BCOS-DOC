@@ -30,7 +30,7 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
 
 .. admonition:: Key features
 
-    - Multi-group: `Quick Guide <./docs/tutorial/group_use_cases.html>`_  `Operation Tutorial <./docs/manual/configuration.html>`_  `Design Documentation <./docs/design/architecture/group.html>`_
+    - Multi-group: `Quick Guide <./docs/manual/group_use_cases.html>`_  `Operation Tutorial <./docs/manual/configuration.html>`_  `Design Documentation <./docs/design/architecture/group.html>`_
     - Parallel computing: `Operation Tutorial <./docs/manual/transaction_parallel.html>`_  `Design documentation <./docs/design/parallel/dag.html>`_
     - Distributed storage: `Operation Tutorial <./docs/manual/distributed_storage.html>`_  `Design documentation <./docs/design/storage/index.html>`_
 
