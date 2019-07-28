@@ -60,8 +60,15 @@ cp client-config.py.template client-config.py
 ```
 
 **安装依赖**
+
 ```bash
 pip install -r requirements.txt
+```
+
+**若因网络原因，安装依赖失败，可使用清华的pip源下载，安装命令如下：**
+
+```bash
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 ```
 
 **SDK使用示例**
