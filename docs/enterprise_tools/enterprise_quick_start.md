@@ -107,6 +107,12 @@ cd ~/generator && bash ./scripts/install.sh
 
 使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](../enterprise_tools/config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
 
+切换到~/目录
+
+```bash
+cd ~/generator
+```
+
 查看一键部署模板文件夹：
 
 ```bash
