@@ -1,10 +1,10 @@
 # enterprise deployment tools
 
-FISCO BCOS enterprise deployment tools are designed for multi-agency production environments. To ensure the security of the agency's private keys, enterprise deployment tools provides agencies' collaboration to deploy a alliance chain.
+FISCO BCOS enterprise deployment tools are designed for multi-agency production environments. For ensure the security of the agency's private keys, enterprise deployment tools provide agencies' collaboration to deploy an alliance chain.
 
 This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](../enterprise_tools/operation.md).
 
-This chapter is a process that multi-agency peer-to-peer deployment and a situation that private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through single agency's clickstart can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md).
+This chapter is a process that multi-agency peer-to-peer deployment and a situation that the private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through a single agency's click start can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md).
 
 ## Download and install
 
@@ -44,30 +44,30 @@ Output will be: FISCO-BCOS Version : x.x.x-x
 ./meta/fisco-bcos -v
 ```
 
-**PS**:  If someone want to use [Source Code Compile](../manual/get_executable.md) fisco-bcos binary, they need to replace the binary in the `meta` folder with the compiled binary.
+**PS**:  If someone wants to use [Source Code Compile](../manual/get_executable.md) fisco-bcos binary, they need to replace the binary in the `meta` folder with the compiled binary.
 
 ## Typical example
 
-To ensure the security of the agency's private keys, enterprise deployment tools provides a security way to build chain between agencies. This chapter will demonstrate how to build chain between agencies in a deployment mode of **6 nodes 3 agencies 2 groups**.
+For ensure the security of the agency's private keys, enterprise deployment tools provide a secure way to build chain between agencies. This chapter will demonstrate how to make a chain between agencies in a deployment model of **6 nodes 3 agencies 2 groups**.
 
 ### Node networking overview
 
-A networking mode of a 6 nodes 3 agencies 2 groups is shown as follows. Agency B and agency C are located in Group 1 and Group 2, agency A belongs to both Group 1 and Group 2.
+A networking model of 6 nodes 3 agencies 2 groups is shown as follows. Agency B and agency C is located in Group 1 and Group 2, and agency A belongs to both Group 1 and Group 2.
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
 ### Machine address
 
-IP address of each node and port are as follows:
+The IP address of each node and port are as follows:
 
-| Agency  | Node  | Group  | P2P address           | RPC/channel listening address       |
-| --- | --- | ----- | --------------- | --------------------- |
-| agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
-|     | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
-| agencyB | node2 | group1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | node3 | group1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
-| agencyC | node4 | group2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204 |
-|     | node5 | group2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205 |
+| Agency  | Node  | Group    | P2P address     | RPC/channel listening address |
+| ------- | ----- | -------- | --------------- | ----------------------------- |
+| agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200         |
+|         | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201         |
+| agencyB | node2 | group1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202         |
+|         | node3 | group1   | 127.0.0.1:30303 | 127.0.0.1:8548/:20203         |
+| agencyC | node4 | group2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204         |
+|         | node5 | group2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205         |
 
 ```eval_rst
 .. important::
