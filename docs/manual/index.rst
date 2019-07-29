@@ -26,25 +26,65 @@
    guomi_crypto.md
    log_description.md
 
-* 区块链部署
-    - 获取可执行程序
-    - 建链脚本
-    - 证书说明
-    - 配置文件与配置项
-    - 多群组部署
-    - 分布式存储
-* 外部调用
-    - 控制台
-    - 账户管理
-    - 链上信使协议
-* 合约开发
-    - 智能合约开发
-    - 并行交易
-* 安全与权限
-    - 节点准入
-    - 权限控制
-    - CA黑名单
-    - 存储安全
-* 其它
-    - 国密支持
-    - 日志说明
+
+.. admonition:: 区块链部署
+
+    - `获取可执行程序 <./get_executable.html>`_
+        + 下载二进制、docker镜像或手动编译
+    - `建链脚本 <./build_chain.html>`_
+        + 脚本选项、生成的节点目录结构
+    - `证书说明 <./certificates.html>`_
+        + 证书格式、证书对应角色、证书生成流程
+    - `配置文件与配置项 <./configuration.html>`_
+        + 节点所有的配置文件的详细说明
+    - `多群组部署 <./group_use_cases.html>`_
+        + 多群组架构的配置指导
+    - `分布式存储 <./distributed_storage.html>`_
+        + 分布式存储的配置指导
+
+
+.. admonition:: 外部调用
+
+    - `控制台 <./console.html>`_
+        + 详细的控制台配置和使用说明
+    - `账户管理 <./account.html>`_
+        + 生成账户、用特定账户操作链
+    - `SDK <../sdk.html>`_
+        + 外部应用调用区块链上的智能合约
+    - `链上信使协议 <./amop_protocol.html>`_
+        + 多个SDK间的消息相互推送
+
+
+.. admonition:: 合约开发
+
+    - `智能合约开发 <./smart_contract.html>`_
+        + 普通智能合约开发、预编译合约开发、CRUD合约开发
+    - `并行交易 <./transaction_parallel.html>`_
+        + 写并行合约，满足高并发场景
+
+
+.. admonition:: 管理与安全
+
+    - `组员管理 <./node_management.html>`_
+        + 节点加入、退出群组
+    - `权限控制 <./permission_control.html>`_
+        + 限制用户对区块链的操作
+    - `CA黑名单 <./certificate_blacklist.html>`_
+        + 通过配置拒绝与不安全的节点建立连接
+    - `存储安全 <./storage_security.html>`_
+        + 落盘加密，对节点存储的数据进行加密
+
+
+.. admonition:: 其它
+
+    - `国密支持 <./guomi_crypto.html>`_
+        + 国密版本的节点、SDK
+    - `日志说明 <./log_description.html>`_
+        + 节点日志格式和说明
+
+.. important:: 
+
+    * 核心特性
+        + `多群组部署 <./group_use_cases.html>`_
+        + `并行交易 <./transaction_parallel.html>`_
+        + `分布式存储 <./distributed_storage.html>`_
