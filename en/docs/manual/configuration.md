@@ -161,7 +161,7 @@ boostlog configuration example is as follows:
 
 ### Configure node compatibility
 
-All versions of FISCO-BCOS 2.0 are forward compatible. You can configure the compatibility of node through `[compatibility]` in `config.ini`. The tool will be automatically generated when changing the configuration item to build chain, so users do not need to change it.
+All versions of FISCO BCOS 2.0 are forward compatible. You can configure the compatibility of node through `[compatibility]` in `config.ini`. The tool will be automatically generated when changing the configuration item to build chain, so users do not need to change it.
 
 
 - `supported_version`：The version of the current node running
