@@ -1,6 +1,12 @@
-# Node access
+# Group members management
 
-For ensuring the security of the blockchain, FISCO BCOS introduces [free nodes, observer nodes and consensus nodes](../design/security_control/node_management.html#id6) which can be converted to each other by the console.
+FISCO BCOS introduces [free nodes, observer nodes and consensus nodes](../design/security_control/node_management.html#id6) which can be converted to each other by the console.
+
+* Group member
+  * Consensus nodes (Sealer)
+  * Observer nodes (Observer)
+* Non-Group member
+  * Free nodes (The node waiting for joining the group)
 
 ## Operation command
 
@@ -93,7 +99,6 @@ The below figure below shows a network with three groups of which Group3 has thr
 ![](../../images/node_management/multi_ledger_example.png)
 
 <center> group example </center>
-
 Here we take the following node information of Group 3 as an example:
 
 The folder name of node 1 is `node0`, IP port 127.0.0.1:30400, the former 4 bytes of nodeID b231b309...
