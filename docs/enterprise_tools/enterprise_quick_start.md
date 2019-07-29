@@ -107,6 +107,12 @@ cd ~/generator && bash ./scripts/install.sh
 
 使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](../enterprise_tools/config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
 
+切换到~/目录
+
+```bash
+cd ~/generator
+```
+
 查看一键部署模板文件夹：
 
 ```bash
@@ -406,7 +412,7 @@ fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/a
 
 获取控制台，可能需要较长时间，国内用户可以使用`--cdn`命令：
 
-以机构A使用控制台为例
+以机构A使用控制台为例，此步需要切换到机构A对应的`generator-agency`文件夹
 
 ```bash
 cd ~/generator/tmp_one_click/agencyA/generator-agency
@@ -418,7 +424,7 @@ cd ~/generator/tmp_one_click/agencyA/generator-agency
 
 ### 查看机构A节点4信息
 
-机构A使用控制台加入机构C节点4为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
+机构A使用控制台加入机构A节点4为共识节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
 
 查看机构C节点nodeid：
 
@@ -440,7 +446,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
 ```
 
-使用控制台`addObserver`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
 
 ```bash
 addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -464,7 +470,7 @@ exit
 
 ### 查看机构C节点5信息
 
-机构A使用控制台加入机构C的节点5为共识节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
+机构A使用控制台加入机构C的节点5为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
 
 查看机构C节点nodeid：
 
@@ -486,7 +492,7 @@ cat ~/generator/tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/conf/node
 cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
 ```
 
-使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+使用控制台`addObserver`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
 
 ```bash
 addObserver 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
