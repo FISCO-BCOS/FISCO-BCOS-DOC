@@ -10,7 +10,7 @@
 
 - 机构的节点只需部署一次，通过群组设置即可参与到不同的多方协作业务中，或将一个业务按用户、时间等维度分到各群组，群组架构可快速地平行扩展，在扩大了业务规模同时，极大简化了运维复杂度，降低管理成本。
 
-更多的群组介绍，请参考[群组架构设计文档](./design/architecture/group.md)和[群组使用教程](./tutorial/group_use_cases.md)
+更多的群组介绍，请参考[群组架构设计文档](./design/architecture/group.md)和[群组使用教程](./manual/group_use_cases.md)
 
 ## 分布式存储
 

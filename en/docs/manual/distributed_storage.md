@@ -34,7 +34,7 @@ mysql> set password for root@localhost = password('123456');
 
 ## Node directly connected to MySQL
 
-FISCO-BCOS in version 2.0.0-rc3 supports nodes directly connected to MySQL through connection pool. Compared to the proxy access MySQL mode, this configuration is simple. No need to manually create a database. Please refer to the configuration method:
+FISCO BCOS in version 2.0.0-rc3 supports nodes directly connected to MySQL through connection pool. Compared to the proxy access MySQL mode, this configuration is simple. No need to manually create a database. Please refer to the configuration method:
 
 ### Logical architecture diagram
 
