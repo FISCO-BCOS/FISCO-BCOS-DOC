@@ -59,7 +59,7 @@
 
     - `智能合约开发 <./smart_contract.html>`_
         + 普通智能合约开发、预编译合约开发、CRUD合约开发
-    - `并行交易 <./transaction_parallel.html>`_
+    - `并行合约 <./transaction_parallel.html>`_
         + 写并行合约，满足高并发场景
 
 
@@ -86,5 +86,5 @@
 
     * 核心特性
         + `多群组部署 <./group_use_cases.html>`_
-        + `并行交易 <./transaction_parallel.html>`_
+        + `并行合约 <./transaction_parallel.html>`_
         + `分布式存储 <./distributed_storage.html>`_
