@@ -28,7 +28,7 @@ cd generator && bash ./scripts/install.sh
 ./generator -h
 ```
 
-**拉取节点二进制**
+**获取节点二进制**
 
 拉取最新fisco-bcos二进制文件到meta中
 
