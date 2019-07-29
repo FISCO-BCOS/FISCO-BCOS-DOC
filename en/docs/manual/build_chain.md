@@ -95,7 +95,12 @@ Used to specify the binary version used when building FISCO BCOS. build_chain do
 
 - **`d`option[**Optional**]**
 
-Use the docker mode to build FISCO BCOS. When using this option, the binary is no longer extracted, but users are required to start the node machine to install docker, and their accounts have docker permission. The command to start the node in this mode is as follows
+Use the docker mode to build FISCO BCOS. When using this option, the binary is no longer extracted, but users are required to start the node machine to install docker, and their accounts have docker permission, which means their accounts should in the docker group.
+Use following command to start node at node home.
+```bash
+$ ./start.sh
+```
+The command to start the node in script start.sh is as follows
 
 ```bash
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
@@ -209,6 +214,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ### Multi-server and multi-group
 
-Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../tutorial/group_use_cases.md).
+Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

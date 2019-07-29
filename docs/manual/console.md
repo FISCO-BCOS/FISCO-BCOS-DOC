@@ -222,7 +222,7 @@ console version: 1.0.4
 #### 账户使用方式
 
 ##### 控制台加载私钥
-控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../tutorial/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
 控制台启动方式有如下几种：
 ```
 ./start.sh
@@ -1459,7 +1459,7 @@ $ tar -zxvf jdk-8u201-linux-x64.tar.gz
 # 配置Java环境，编辑/etc/profile文件 
 $ vim /etc/profile 
 # 打开以后将下面三句输入到文件里面并退出
-export JAVA_HOME=/software/jdk-8u201-linux-x64.tar.gz
+export JAVA_HOME=/software/jdk-8u201  #这是一个文件目录，非文件
 export PATH=$JAVA_HOME/bin:$PATH 
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 # 生效profile
