@@ -9,9 +9,10 @@
 ```eval_rst
 .. important::
 
-    一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，可以尝试用一下命令对meta文件夹进行清理。
-    rm ./meta/cert_*
-    rm -rf ./meta/node_*
+    一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，可以尝试用以下命令对meta文件夹进行清理:
+
+    - rm ./meta/cert_*
+    - rm -rf ./meta/node_*
 ```
 
 ## 下载安装
@@ -19,7 +20,7 @@
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git && cd ~/generator
+cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
@@ -27,7 +28,7 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git && cd ~/generator
 此操作要求用户具有sudo权限。
 
 ```bash
-cd generator && bash ./scripts/install.sh
+cd ~/generator && bash ./scripts/install.sh
 ```
 
 检查是否安装成功，若成功，输出 usage: generator xxx
@@ -98,7 +99,7 @@ cd generator && bash ./scripts/install.sh
     针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
 ``` -->
 
-## 生成群组1及机构A、B节点
+## 生成群组1节点
 
 首先完成如图所示机构A、B搭建群组1的操作：
 
@@ -258,7 +259,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 增加节点至群组1
 
-接下来，我们完成机构A扩容新节点，并加入机构C节点的如图所示操作：
+接下来，我们为机构A和机构C增加新节点，完成下图所示的组网：
 
 ![](../../images/enterprise/one_click_step_2.png)
 
@@ -285,7 +286,7 @@ cp  ~/generator/tmp_one_click/group.1.genesis ~/generator/tmp_one_click_expand/
 拷贝群组1节点P2P连接文件`peers.txt`至扩容文件夹
 
 ```bash
-cp  ~/generator/tmp_one_click/group.1.genesis ~/generator/tmp_one_click_expand/
+cp  ~/generator/tmp_one_click/peers.txt ~/generator/tmp_one_click_expand/
 ```
 
 ### 机构A配置节点信息
@@ -299,13 +300,13 @@ mkdir ~/generator/tmp_one_click_expand/agencyA
 此时机构A已经存在联盟链中，因此需拷贝机构A证书、私钥至对应文件夹
 
 ```bash
-cp -r ~/generator/one_click/agencyA/agency_cert
+cp -r ~/generator/tmp_one_click/agencyA/agency_cert ~/generator/tmp_one_click_expand/agencyA
 ```
 
 机构A填写节点配置信息
 
 ```bash
-cat > ./one_click/agencyA/node_deployment.ini << EOF
+cat > ./tmp_one_click_expand/agencyA/node_deployment.ini << EOF
 [group]
 group_id=1
 
@@ -331,13 +332,13 @@ EOF
 创建机构C扩容节点所在目录
 
 ```bash
-mkdir ~/generator/one_click_expand/agencyC
+mkdir ~/generator/tmp_one_click_expand/agencyC
 ```
 
 机构C填写节点配置信息
 
 ```bash
-cat > ./one_click_expand/agencyC/node_deployment.ini << EOF
+cat > ./tmp_one_click_expand/agencyC/node_deployment.ini << EOF
 [group]
 group_id=1
 
@@ -361,7 +362,7 @@ EOF
 ### 生成扩容节点
 
 ```bash
-bash ./one_click_generator.sh -e ./one_click_expand
+bash ./one_click_generator.sh -e ./tmp_one_click_expand
 ```
 
 ### 启动新节点
@@ -369,11 +370,11 @@ bash ./one_click_generator.sh -e ./one_click_expand
 调用脚本启动节点：
 
 ```bash
-bash ./one_click_expand/agencyA/node/start_all.sh
+bash ./tmp_one_click_expand/agencyA/node/start_all.sh
 ```
 
 ```bash
-bash ./one_click_expand/agencyC/node/start_all.sh
+bash ./tmp_one_click_expand/agencyC/node/start_all.sh
 ```
 
 查看节点进程：
@@ -385,12 +386,12 @@ ps -ef | grep fisco
 ```bash
 # 命令解释
 # 可以看到如下进程
-fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
-fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  15403     1  0 17:22 pts/2    00:00:00 ~/generator/one_click_expand/agencyA/node/node_127.0.0.1_30304/fisco-bcos -c config.ini
-fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
-fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/one_click_expand/agencyC/node/node_127.0.0.1_30305/fisco-bcos -c config.ini
+fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco  15403     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/fisco-bcos -c config.ini
+fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/fisco-bcos -c config.ini
 ```
 
 ```eval_rst
@@ -408,7 +409,7 @@ fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/one_click_expand/agenc
 以机构A使用控制台为例
 
 ```bash
-cd ~/generator/one_click/agencyA/generator-agency
+cd ~/generator/tmp_one_click/agencyA/generator-agency
 ```
 
 ```bash
@@ -422,7 +423,7 @@ cd ~/generator/one_click/agencyA/generator-agency
 查看机构C节点nodeid：
 
 ```bash
-cat ~/generator/one_click_expand/agencyA/node_127.0.0.1_30304/conf/node.nodeid
+cat ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/conf/node.nodeid
 ```
 
 ```bash
@@ -431,24 +432,24 @@ cat ~/generator/one_click_expand/agencyA/node_127.0.0.1_30304/conf/node.nodeid
 ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 ```
 
-### 使用控制台注册观察节点
+### 使用控制台注册共识节点
 
 启动控制台：
 
 ```bash
-cd ~/generator/one_click/agencyA/console && bash ./start.sh 1
+cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
 ```
 
 使用控制台`addObserver`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
 
 ```bash
-addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 ```
 
 ```bash
 # 命令解释
 # 执行成功会提示success
-$ [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+$ [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
 	"code":0,
 	"msg":"success"
@@ -468,7 +469,7 @@ exit
 查看机构C节点nodeid：
 
 ```bash
-cat ~/generator/one_click_expand/agencyC/node_127.0.0.1_30305/conf/node.nodeid
+cat ~/generator/tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/conf/node.nodeid
 ```
 
 ```bash
@@ -477,24 +478,24 @@ cat ~/generator/one_click_expand/agencyC/node_127.0.0.1_30305/conf/node.nodeid
 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
 ```
 
-### 使用控制台注册共识节点
+### 使用控制台注册观察节点
 
 启动控制台：
 
 ```bash
-cd ~/generator/one_click/agencyA/console && bash ./start.sh 1
+cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
 ```
 
 使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
 
 ```bash
-addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+addObserver 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
 ```
 
 ```bash
 # 命令解释
 # 执行成功会提示success
-$ [group:1]> addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+$ [group:1]> addObserver 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
 {
 	"code":0,
 	"msg":"success"
@@ -616,8 +617,40 @@ bash ./tmp_one_click_expand/agencyC/node/stop_all.sh
 bash ./tmp_one_click_expand/agencyC/node/start_all.sh
 ```
 
+### 查看节点
+
+在~/generator-C目录下执行下述命令
+
+```bash
+cd ~/generator-C
+```
+
+查看节点log内group1信息:
+
+```bash
+tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log*  grep g:2 | grep +++
+```
+
+```bash
+# 命令解释
+# +++即为节点正常共识
+info|2019-02-25 17:25:56.028692| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
+info|2019-02-25 17:25:59.058625| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
+info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
+```
+
+至此 我们完成了所示构建教程中的所有操作。
+
+```eval_rst
+.. note::
+
+    使用完成后建议用以下命令对meta文件夹进行清理:
+
+    - rm ./meta/cert_*
+```
+
 ## 更多操作
 
-使用控制台将节点加入群组等更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
+更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
 
 如果使用该教程遇到问题，请查看[FAQ](../faq.md)

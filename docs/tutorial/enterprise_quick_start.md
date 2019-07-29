@@ -19,7 +19,7 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 此操作要求用户具有sudo权限。
 
 ```bash
-cd generator && bash ./scripts/install.sh
+cd ~/generator && bash ./scripts/install.sh
 ```
 
 检查是否安装成功，若成功，输出 usage: generator xxx
