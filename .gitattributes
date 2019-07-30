@@ -4,17 +4,3 @@ im*/** filter=lfs diff=lfs merge=lfs -text
 images/ filter=lfs diff=lfs merge=lfs -text
 en/im*/** filter=lfs diff=lfs merge=lfs -text
 en/images/ filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/sample_star_2.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/star.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/toolshow.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/tutorial_step_2.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/ring.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/sample_star_3.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/simple.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/tutorial_step_3.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/net.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/agencyOthers.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/tutorial_step_1.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/agencyA.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/sample_star_1.png filter=lfs diff=lfs merge=lfs -text
-en/images/enterprise/feature.png filter=lfs diff=lfs merge=lfs -text
