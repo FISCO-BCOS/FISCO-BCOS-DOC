@@ -1,70 +1,135 @@
-# One-click deployment
+# Tutorial of one_click_generator.sh
 
-This chapter introduces the operation method of one-click deployment of single agency with networking model of **2 agencies, 1 group, 4 nodes**.
+The `one_click_generator.sh` script is a script that deploys a federated chain with one click based on the node configuration filled out by the user. The script will generate the corresponding node under the folder according to the `node_deployment.ini` configured under the user-specified folder.
 
-This turial is compatible with the deployment of sinle agency building all nodes. For multi-agency deployment please read [Deployment Tool](../tutorial/enterprise_quick_start.md)。
+This chapter mainly uses the networking mode of deploying **3 organizations 2 groups 6 nodes** to explain the use of enterprise-level deployment tools for single-button one-button deployment.
 
-## Download and install
-
-**Download**
-
-```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git && cd ./generator
-```
-
-## Case analysis
-
-In this section, we will create a networking model with topology of 2 agencies, 1 group and 4 nodes on the machine with IP `127.0.0.1`. Each node's IP and port number is:
-
-| agency  | node  | belonged group  | P2P address           | RPC/channel monitoring address       |
-| --- | --- | ----- | --------------- | --------------------- |
-| agency A | node 0 | group 1 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
-|     | node 1 | group 1 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
-| agency B | node 2 | group 1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | node 3 | group 1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
+This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](../tutorial/enterprise_quick_start.md).
 
 ```eval_rst
 .. important::
 
-    targeting the vps server in cloud servers, RPC monitoring address ahould be the real address (like internal network address or 127.0.0.1) of the network cards, which may be different with the ssh server log in by users.
+     When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can try to clean the meta folder with the following command:
+
+     - rm ./meta/cert_*
+     - rm -rf ./meta/node_*
 ```
 
-## Description
+## Download and install
 
-Users need to prepare a `one_click` file folder as the picture shows, which contains directories of different agencies and each needs a config file [```node_deployment.ini```](../enterprise_tools/config.md#node-deployment-ini). Before use, please make sure that the meta folder of generator has not been operated.
-
-View one-click deployment template folder:
+**download**
 
 ```bash
-ls ./one_click
+cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+```
+
+**Installation**
+
+This action requires the user to have sudo privileges.
+
+```bash
+cd ~/generator && bash ./scripts/install.sh
+```
+
+Check if the installation is successful. If successful, output usage: generator xxx
+
+```bash
+./generator -h
+```
+
+**Get node binary**
+
+Pull the latest fisco-bcos binary to the meta
+
+```bash
+./generator --download_fisco ./meta
+```
+
+**Check the binary version**
+
+If successful, output FISCO-BCOS Version : x.x.x-x
+
+```bash
+./meta/fisco-bcos -v
+```
+
+**PS**: [source compile](../manual/get_executable.md) Node binary user, you only need to replace the binary in the `meta` folder with the compiled binary.
+
+## Typical example
+
+This section demonstrates how to use the one-click deployment function of the enterprise-level deployment tool to build a blockchain.
+
+### Node Network Topology
+
+A networking model of a 6-node 3-institution 2 group as shown. agency B and agency C are located in Group 1 and Group 2, respectively. agency A belongs to both Group 1 and Group 2.
+
+![](../../images/enterprise/one_click_step_3.png)
+
+### Machine Environment
+
+The IP of each node, the port number is as follows:
+
+| agency   | Node   | Group      | P2P Address     | RPC/channel Listening Address |
+| -------- | ------ | ---------- | --------------- | ----------------------------- |
+| agency A | Node 0 | Group 1, 2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200         |
+|          | Node 1 | Group 1, 2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201         |
+|          | Node 4 | Group 1, 2 | 127.0.0.1:30304 | 127.0.0.1:8549/:20204         |
+| agency B | Node 2 | Group 1    | 127.0.0.1:30302 | 127.0.0.1:8547/:20202         |
+|          | Node 3 | Group 1    | 127.0.0.1:30303 | 127.0.0.1:8548/:20203         |
+| agency C | Node 5 | Group 1, 2 | 127.0.0.1:30305 | 127.0.0.1:8550/:20205         |
+
+```eval_rst
+.. important::
+
+   For the VPS in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
+```
+
+\##Generate group 1 node
+
+First, complete the operation of group A and B to set up group 1, as shown in the figure:
+
+![](../../images/enterprise/one_click_step_1.png)
+
+Before use, the user needs to prepare a folder such as `tmp_one_click,` which has a directory of different organizations under the folder. Each agency directory needs to have a corresponding configuration file [```node_deployment.ini```]. ./enterprise_tools/config.md#node-deployment-ini). Before use, you need to ensure that the generator's meta folder has not been used.
+
+Switch to ~/ directory
+
+```bash
+cd ~/generator
+```
+
+View the one-click deployment template folder:
+
+```bash
+ls ./tmp_one_click
 ```
 
 ```bash
-# parameter description
-# for muti-agencies, the folder needs to be created manually
-one_click # user specifies a folder for one-click deployment
-├── agencyA # agency A directory, node of agency A and relative files will be generated there after the commands are executed
-│   └── node_deployment.ini # agency A node config file, according to which one-click deployment command generates node
-└── agencyB # agency B directory, where node of agency B and relative files will be generated after the commands are executed
-    └── node_deployment.ini # agency B node config file, according to which one-click deployment command generates node
+#Parameter explanation
+# For multiple organizations, you need to create this folder manually.
+Tmp_one_click # user specifies the folder for a one-click deployment operation
+├── agencyA #agencyA directory, after the command is executed, the node of the agency A and related files will be generated in the list.
+│ └── node_deployment.ini # Institution A node configuration file, one-click deployment command will create the corresponding node according to the data
+└── agencyB #agencyB directory, after the command is executed, the node of the agency B and related files will be generated in the list.
+    └── node_deployment.ini # Institution B node configuration file, one-click deployment command will generate the corresponding node according to the data
 ```
 
-## Agency fill in node information
+### Institution to fill in node information
 
-According to the tutorial, agency A and agency B place the config file under one_click folder like below:
+The configuration file is placed in the tutorial with agencyA under the tmp_one_click folder, under agencyB
 
 ```bash
-cat > ./one_click/agencyA/node_deployment.ini << EOF
+cat > ./tmp_one_click/agencyA/node_deployment.ini << EOF
 [group]
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -83,17 +148,17 @@ EOF
 ```
 
 ```bash
-cat > ./one_click/agencyB/node_deployment.ini << EOF
+cat > ./tmp_one_click/agencyB/node_deployment.ini << EOF
 [group]
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -111,128 +176,457 @@ jsonrpc_listen_port=8548
 EOF
 ```
 
-## Build node
+### Generate node
 
 ```bash
-bash ./one_click_generator.sh ./one_click
+bash ./one_click_generator.sh -b ./tmp_one_click
 ```
 
-After execution, the structure of ./one_click folder will be like:
+After the execution is completed, the ./tmp_one_click folder structure is as follows:
 
-View the one-click template folder after execution:
+View the one-click deployment template folder after execution:
 
 ```bash
-ls ./one_click
+ls ./tmp_one_click
 ```
 
 ```bash
-├── agencyA # Agency A folder
-│   ├── agency_cert # Agency A certificate and private key
-│   ├── generator-agency # generator folder automately replace agency A for operations
-│   ├── node # node generated by agency A, push to the respective server for multi-machine deployment
-│   ├── node_deployment.ini # node config information of agency A
-│   └── sdk # sdk and console config file of agency A
+├── agencyA # A agency folder
+│ ├── agency_cert # A agency certificate and private key
+│ ├── generator-agency # Automatically replaces the generator folder operated by the A mechanism
+│ ├── node #A node generated by the agency, when the multi-machine is deployed, it can be pushed to the corresponding server.
+│ ├── node_deployment.ini # Node configuration information of A agency
+│ └── SDK # A SDK or console configuration file
 └── agencyB
-    ├── agency_cert
-    ├── generator-agency
-    ├── node
-    ├── node_deployment.ini
-    └── sdk
+     ├── agency_cert
+     ├── generator-agency
+     ├── node
+     ├── node_deployment.ini
+     └── SDK
 ```
 
-## Start node
+### Start node
 
-Call script to start node:
+Call the script to start the node:
 
 ```bash
-bash ./one_click/agencyA/node/start_all.sh
+bash ./tmp_one_click/agencyA/node/start_all.sh
 ```
 
 ```bash
-bash ./one_click/agencyB/node/start_all.sh
+bash ./tmp_one_click/agencyB/node/start_all.sh
 ```
 
-View node progress:
+View the node process:
 
 ```bash
 ps -ef | grep fisco
 ```
 
 ```bash
-# command description
-# you can get the following progress
-fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
-fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
+#Command explanation
+# can see the following process
+fisco 15347 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco 15402 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco 15442 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco 15456 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
 ```
 
-## View node status
+### View node running status
 
-View node log:
+View the node log:
 
 ```bash
-tail -f ~/generator/one_click/agency*/node/node*/log/log*  | grep +++
+tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log* | grep +++
 ```
 
 ```bash
-# command description
-# +++ means that the node is in normal consensus status
-info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
-info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
-info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
+#Command explanation
+# +++ is the normal consensus of the node
+Info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum =1, tx=0, myIdx=0, hash=833bd983...
+Info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum =1, tx=0, myIdx=0, hash=343b1141...
+Info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum =1, tx=0, myIdx=1, hash=ea85c27b...
 ```
 
-## Operate console
+## Add node to group 1
 
-Due to the bulk of console, there is no direct integration during one-click deployment. Users can get console through the following command.
+Next, we add new nodes for agency A and agency C, and complete the networking shown in the following figure:
 
-It may take long to get console:
+![](../../images/enterprise/one_click_step_2.png)
+
+### Initialize the expansion configuration
+
+Create an expansion folder
 
 ```bash
-./generator --download_console ./
+mkdir ~/generator/tmp_one_click_expand/
 ```
 
-Configure console of agency A:
-
-Copy console to agency A:
+Copy the chain certificate and private key to the expansion folder
 
 ```bash
-cp -rf ./console ./one_click/agencyA/console
+cp ~/generator/tmp_one_click/ca.* ~/generator/tmp_one_click_expand/
 ```
 
-Configure files of agency A console. Start of console needs certificate, private key and console config file:
+Copy group 1 creation zone `group.1.genesis` to expansion folder
 
 ```bash
-cp ./one_click/agencyA/sdk/* ./one_click/agencyA/console/conf
+cp ~/generator/tmp_one_click/group.1.genesis ~/generator/tmp_one_click_expand/
 ```
 
-Start of console needs to intall java:
+Copy group 1 node P2P connection file `peers.txt` to expansion folder
 
 ```bash
-cd ./one_click/agencyA/console && bash ./start.sh 1
+cp ~/generator/tmp_one_click/peers.txt ~/generator/tmp_one_click_expand/
 ```
 
-Likewise, configure console of agency B:
+### agency A configuration node information
+
+Create the directory where the agency A expansion node is located.
 
 ```bash
-cd ~/generator && cp -rf ./console ./one_click/agencyB/console
+mkdir ~/generator/tmp_one_click_expand/agencyA
 ```
 
-Configure files of agency B console, start of console needs certificate, private key and console config file:
+At this time, the agency A already exists in the alliance chain. So it is necessary to copy the agency A certificate and the private key to the corresponding folder.
 
 ```bash
-cp ./one_click/agencyB/sdk/* ./one_click/agencyB/console/conf
+cp -r ~/generator/tmp_one_click/agencyA/agency_cert ~/generator/tmp_one_click_expand/agencyA
 ```
 
-## Create new group and expansion
+agency A fills in the node configuration information
 
-The later operations of the deployment tool is the same with [Deployment tool tutorial](../tutorial/enterprise_quick_start.md).
+```bash
+cat > ./tmp_one_click_expand/agencyA/node_deployment.ini << EOF
+[group]
+group_id=1
 
-The later operations of node expansion or new group division is introduced in [Operation tutorial](./operation.md) and [Deplotment tool tutorial](../tutorial/enterprise_quick_start.md).
+[node0]
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
+p2p_ip=127.0.0.1
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30304
+channel_listen_port=20204
+jsonrpc_listen_port=8549
+EOF
+```
 
-To create new group, users can modify `./conf/group_genesis.ini` file under the folder that executes `one_click_generator.sh` script, and execute `--create_group_genesis`.
+### Institution C configuration node information
 
-To expand new node, users can modify `./conf/node_deployment.ini`, use `--generate_all_certificates` to generate certificate and use `--build_install_package` to generate node.
+Create a directory where the agency C expansion node is located.
 
-If you have any problems when reading this tutoril, you can check [FAQ](../faq.md)
+```bash
+mkdir ~/generator/tmp_one_click_expand/agencyC
+```
+
+agency C fills in the node configuration information
+
+```bash
+cat > ./tmp_one_click_expand/agencyC/node_deployment.ini << EOF
+[group]
+group_id=1
+
+[node0]
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
+p2p_ip=127.0.0.1
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30305
+channel_listen_port=20205
+jsonrpc_listen_port=8550
+EOF
+```
+
+### Generate expansion nodes
+
+```bash
+bash ./one_click_generator.sh -e ./tmp_one_click_expand
+```
+
+### Starting a new node
+
+Call the script to start the node:
+
+```bash
+bash ./tmp_one_click_expand/agencyA/node/start_all.sh
+```
+
+```bash
+bash ./tmp_one_click_expand/agencyC/node/start_all.sh
+```
+
+View the node process:
+
+```bash
+ps -ef | grep fisco
+```
+
+```bash
+#Command explanation
+# can see the following process
+fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco  15403     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/fisco-bcos -c config.ini
+fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/fisco-bcos -c config.ini
+```
+
+```eval_rst
+.. important::
+
+   New nodes that are expanded for group 1 need to be added to the group using SDK or console.
+```
+
+### Registering a node with the console
+
+Due to the large size of the console, there is no direct integration in a one-click deployment. Users can use the following command to get the console.
+
+Getting the console may take a long time, and domestic users can use the `--cdn` command:
+
+For example, if the agency A uses the console, this step needs to be switched to the `generator-agency` folder corresponding to the agency A.
+
+```bash
+cd ~/generator/tmp_one_click/agencyA/generator-agency
+```
+
+```bash
+./generator --download_console ./ --cdn
+```
+
+### Viewing agency A node-4 information
+
+agency A uses the console to join the agency A node 4 as the consensus node, where the second parameter needs to be replaced with the nodeid of the joining node, and the nodeid is the `node.nodeid` of the conf of the node folder.
+
+View the agency C node nodeid:
+
+```bash
+cat ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/conf/node.nodeid
+```
+
+```bash
+ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+### Registering Consensus Nodes Using the Console
+
+Start the console:
+
+```bash
+cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
+```
+
+Use the console `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the node `node.nodeid` of the agency C node:
+
+```bash
+addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+```bash
+$ [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+exit console：
+
+```bash
+exit
+```
+
+### Viewing agency C Node 5
+
+agency A uses the console to join node 5 of agency C as the observation node, where the second parameter needs to be replaced with the nodeid of the joining node, and the nodeid is the node.nodeid file of the conf of the node folder.
+
+View the agency C node nodeid:
+
+```bash
+cat ~/generator/tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/conf/node.nodeid
+```
+
+```bash
+5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+```
+
+### Registering an observation node using the console
+
+Start the console:
+
+```bash
+cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
+```
+
+Use the console `addObserver` command to register the node as a watch node. In this step, you need to use the `cat` command to view the node #node.nodeid\` of the agency C node:
+
+```bash
+addObserver 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+```
+
+```bash
+$ [group:1]> addObserver 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+Exit the console:
+
+```bash
+exit
+```
+
+At this point, we have completed the operation of adding a new node to an existing group.
+
+## Existing Node New Group 2
+
+The operation of the new group can be done by modifying the `./conf/group_genesis.ini` file in the directory where the `one_click_generator.sh` is executed and executing the `--create_group_genesis` command.
+
+Generate group 2 as shown in Figure 4
+
+![](../../images/enterprise/one_click_step_3.png)
+
+### Configure Group 2 Creation Zone
+
+```eval_rst
+.. important::
+
+     This operation needs to be performed under the above operation generator.
+```
+
+```bash
+cd ~/generator
+```
+
+Configuring the group creation block file
+
+```bash
+cat > ./conf/group_genesis.ini << EOF
+[group]
+group_id=2
+
+[nodes]
+node0=127.0.0.1:30300
+node1=127.0.0.1:30301
+node2=127.0.0.1:30304
+node3=127.0.0.1:30305
+EOF
+```
+
+### Get the corresponding node certificate
+
+Obtain an agency A node certificate
+
+```bash
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_* ~/generator/meta
+```
+
+Get agency A new node certificate
+
+```bash
+cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_* ~/generator/meta
+```
+
+Obtain an agency C node certificate
+
+```bash
+cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_* ~/generator/meta
+```
+
+### Generating a group creation block
+
+```bash
+./generator --create_group_genesis ./group2
+```
+
+Add the group creation block to the existing node:
+
+```bash
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node
+```
+
+```bash
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node
+```
+
+```bash
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node
+```
+
+### Restart the node
+
+Restart the agency A node:
+
+```bash
+bash ./tmp_one_click/agencyA/node/stop_all.sh
+```
+
+```bash
+bash ./tmp_one_click/agencyA/node/start_all.sh
+```
+
+Restart agency A to add a new node:
+
+```bash
+bash ./tmp_one_click_expand/agencyA/node/stop_all.sh
+```
+
+```bash
+bash ./tmp_one_click_expand/agencyA/node/start_all.sh
+```
+
+Restart the agency C node:
+
+```bash
+bash ./tmp_one_click_expand/agencyC/node/stop_all.sh
+```
+
+```bash
+bash ./tmp_one_click_expand/agencyC/node/start_all.sh
+```
+
+### View node
+
+View the group1 information in the node log:
+
+```bash
+tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log* | grep g:2 | grep +++
+```
+
+```bash
+info|2019-02-25 17:25:56.028692| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
+info|2019-02-25 17:25:59.058625| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
+info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
+```
+
+So far, we have completed all the operations in the build tutorial shown.
+
+```eval_rst
+.. note::
+
+     After using it, it is recommended to clean the meta folder with the following command:
+
+     - rm ./meta/cert_*
+     - rm ./meta/group*
+```
+
+## More operations
+
+For more operations, refer to the [Operation Manual](./operation.md) or [Enterprise Tools Peer-to-Peer Deployment Tutorial](../tutorial/enterprise_quick_start.md).
+
+If you have problems with this tutorial, please check [FAQ](../faq.md)
