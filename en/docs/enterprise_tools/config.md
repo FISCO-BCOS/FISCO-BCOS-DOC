@@ -1,20 +1,20 @@
 # Config file
 
-The config files of FISCO BCOS generator are placed under ./conf folder, including group genesis block config file `group_genesis.ini`, node config file `node_deployment.ini`.
+The config files of FISCO BCOS generator are placed under ./conf folder, including group's genesis block config file `group_genesis.ini`, node config file `node_deployment.ini`.
 
-User configures node config file folder by operations on files under conf folder.
+The user configures node config file folder by operations on files under the conf folder.
 
 ## Metadata folder meta
 
-The meta folder of FISCO BCOS generator is metadata folder to store `fisco bcos` binaries, chain certificate `ca.crt`, agency certificate `agency.crt`, agency private key and node certificate, group genesis block file and so on.
+The meta folder of FISCO BCOS generator is metadata folder to store `fisco-bcos` binaries, chain certificate `ca.crt`, agency certificate `agency.crt`, agency private key and node certificate, group genesis block file, and so on.
 
 The format of stored certificates should be cert_p2pip_port.crt. For example: cert_127.0.0.1_30300.crt.
 
-FISCO BCOS generator will generate node config file according to the certificates under meta folder and the config files under conf folder.
+FISCO BCOS generator will generate nodes config file according to the certificates under the meta folder and the config files under the conf folder.
 
 ## group_genesis.ini
 
-Through modifying the configuration of `group_genesis.ini`, user generates configuration of new group genesis block under specific directory and meta folder. Such as `group.1.genesis`.
+Through modifying the configuration of `group_genesis.ini`, the user generates a configuration of new group genesis block under the specific directory and meta folder. Such as `group.1.genesis`.
 
 ```ini
 [group]
@@ -35,9 +35,9 @@ node3=127.0.0.1:30303
 
 ## node_deployment.ini
 
-Through modifying `node_deployment.ini` configuration, user can use --build_install_package command to generate node config file containing no private key under specific folder. Each `section[node]` configured by user is the needed node config file folder. `section[peers]` is the p2p information for connection with other nodes.
+Through modifying `node_deployment.ini` configuration, user can use --build_install_package command to generate node config file containing no private key under a specific folder. Each `section[node]` configured by the user is the needed node config file folder. `section[peers]` is the p2p information for connection with other nodes.
 
-Config file example:
+For example:
 
 ```ini
 [group]
@@ -59,11 +59,11 @@ channel_listen_port=20201
 jsonrpc_listen_port=8546
 ```
 
-Read node config command. To generate node certificate and node config file folder will need to read the config file.
+Read the node config command. To generate node certificate and node config file folder will need to read the config file.
 
 ## Template folder tpl
 
-The template folder of generator is as below:
+The template folder of the generator is as below:
 
 ```bash
 ├── applicationContext.xml # sdk config file
@@ -77,21 +77,21 @@ The template folder of generator is as below:
 └── stop_all.sh # stop nodes in batch template
 ```
 
-To modify the consensus algorithm of node and the configured default db, user only needs to modify the configuration of `config.ini`, re-execute the commands to set relative node information.
+To modify the consensus algorithm of node and the configured default DB, the user only needs to alter the configuration of `config.ini`, re-execute the commands to set relative node information.
 
 For details of FISCO BCOS configuration please check [FISCO BCOS config file](../manual/configuration.md)
 
 ## P2p node connection file peers.txt
 
-P2p node connection file `peers.txt` is the node connection information of the **other agencies** specified when generating node config file folder. When executing `build_install_package` command, it's needed to specify the p2p node connection file `peers.txt`, according to which node config file folder will start communication with other nodes.
+P2P node connection file `peers.txt` is the node connection information of the **other agencies** specified when generating node config file folder. When executing `build_install_package` command, it's needed to determine the p2p node connection file `peers.txt`, according to which node config file folder will start communication with other nodes.
 
-User that executes `generate_all_certificates` command generates `peers.txt` according to the `node_deployment.ini` filled under `conf` directory. User that adopts other ways to generate certificate needs to generate p2p node connection file manually and send to peers. The format of p2p node connection file is:
+User that executes `generate_all_certificates` command generates `peers.txt` according to the `node_deployment.ini` filled under `conf` directory. The user that adopts other ways to generate certificate needs to generate p2p node connection file manually and send to peers. The format of the p2p node connection file is:
 
 ```bash
 127.0.0.1:30300
 127.0.0.1:30301
 ```
 
-The format: node ip:p2p_listen_port
+Format like this: node ip:p2p_listen_port
 
-- for multi-agency node communication, the files need to be combined
+-   for multi-agency node communication, the files need to be combined

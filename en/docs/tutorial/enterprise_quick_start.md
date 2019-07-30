@@ -71,7 +71,7 @@ The IP address of each node and port are as follows:
 
 ```eval_rst
 .. important::
-    For the VPS server in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
+    For the VPS in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
 ```
 
 ### cooperate agencies
@@ -697,7 +697,7 @@ cp ./agencyC_node_info/peers.txt ~/generator-A/meta/peersC.txt
 
 ### AgencyC generates genesis block of group2
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory.
 
 ```bash
 cd ~/generator-C
@@ -736,15 +736,15 @@ node3=127.0.0.1:30305
 ;agencyC node p2p address
 ```
 
-In the tutorial, agency C is chosen to generate genesis block of group. In the actual production, you can negotiate with the alliance chain committee to choose.
+In the tutorial, agency C is chosen to generate a genesis block of the group. In the actual production, you can negotiate with the alliance chain committee to determine.
 
-This step generates genesis block of group_genesis.ini configuration according to the node certificate configured in the meta folder of agencyC.
+This step generates a genesis block of group_genesis.ini configuration according to the node certificate configured in the meta folder of agencyC.
 
 ```bash
 ./generator --create_group_genesis ./group
 ```
 
-distribute genesis block of group2 to agencyA:
+Distribute genesis block of group2 to agencyA:
 
 ```bash
 cp ./group/group.2.genesis ~/generator-A/meta/
@@ -752,7 +752,7 @@ cp ./group/group.2.genesis ~/generator-A/meta/
 
 ### AgencyC generates the node to which it belongs
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory
 
 ```bash
 cd ~/generator-C
@@ -762,7 +762,7 @@ cd ~/generator-C
 ./generator --build_install_package ./meta/peersA.txt ./nodeC
 ```
 
-agencyC startups node:
+AgencyC startups node:
 
 ```bash
 bash ./nodeC/start_all.sh
@@ -785,7 +785,7 @@ fisco  15589     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1
 
 ### AgencyA initializes group2 for existing nodes
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory
 
 ```bash
 cd ~/generator-A
@@ -803,7 +803,7 @@ Add the agencyC node connect file peers to the existing node. This step adds the
 ./generator --add_peers ./meta/peersC.txt ./nodeA
 ```
 
-restart agencyA node:
+Restart agencyA node:
 
 ```bash
 bash ./nodeA/stop_all.sh
@@ -815,7 +815,7 @@ bash ./nodeA/start_all.sh
 
 ### View group2 node running status
 
-view node's process:
+View node's process:
 
 ```bash
 ps -ef | grep fisco
@@ -832,9 +832,9 @@ fisco  15550     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1
 fisco  15589     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1_30305/fisco-bcos -c config.ini
 ```
 
-view node log：
+View node log：
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory
 
 ```bash
 cd ~/generator-C
@@ -852,17 +852,17 @@ info|2019-02-25 17:25:59.058625| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
 ```
 
-By now, we have completed the construction of agencyA,C to build group2 as shown:
+By now, we have completed the construction of agencyA, C to build group2 as shown:
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
 ## Extended Tutorial--agencyC node joins group1
 
-Adding a node to an existing group requires user to send a command by console. The example of adding node to group is as follows:
+Adding a node to an existing group requires users to send command by console. The example of adding nodes to the group is as follows:
 
-Now there are nodes of agencyA,B and B in group1. Adding the node of agencyC to group1 needs to get permission of the nodes in the group. To take the node of agencyA as example:
+Now there are nodes of agencyA, B and B in group1. Adding the node of agencyC to group1 needs to get the permission of the nodes in the group. To take the node of agencyA as an example:
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory.
 
 ```bash
 cd ~/generator-A
@@ -870,7 +870,7 @@ cd ~/generator-A
 
 ### Send gensis block of group1 to agencyC
 
-Send the configuration file of group1 to agencyC
+Send the configuration file of group1 to agencyC.
 
 ```bash
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
@@ -878,7 +878,7 @@ Send the configuration file of group1 to agencyC
 
 Currently, `FISCO BCOS` does not support file hot update. It is necessary to restart the node after adding genesis block of group1 to agencyC node.
 
-restart agencyC node:
+Restart agencyC's node:
 
 ```bash
 bash ~/generator-C/nodeC/stop_all.sh
@@ -890,7 +890,7 @@ bash ~/generator-C/nodeC/start_all.sh
 
 ### Configure console
 
-agencyA configure console or sdk. In the tutorial, console is used as an example:
+agencyA's configure console or java sdk. In the tutorial, console is used as an example:
 
 Note: This command will complete the console configuration according to the node and group in the user-configured `node_deployment.ini`. User can directly start the console. Please ensure that java is installed before starting.
 
@@ -962,13 +962,13 @@ cat ~/generator-C/nodeC/node_127.0.0.1_30305/conf/node.nodeid
 
 ### Register consensus node by using console
 
-start console:
+Start console:
 
 ```bash
 cd ~/generator-A/console && bash ./start.sh 1
 ```
 
-Use the console `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the `node.nodeid` of agencyC node.
+Use the console's `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the `node.nodeid` of agencyC node.
 
 ```bash
 addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
@@ -984,7 +984,7 @@ $ [group:1]> addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc
 }
 ```
 
-exit console:
+Exit console:
 
 ```bash
 exit
@@ -992,13 +992,13 @@ exit
 
 ### View node
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory
 
 ```bash
 cd ~/generator-C
 ```
 
-view the group1 information in node log:
+View the group1 information in node log:
 
 ```bash
 cat node*/node_127.0.0.1_3030*/log/log* | grep g:1  | grep Report
