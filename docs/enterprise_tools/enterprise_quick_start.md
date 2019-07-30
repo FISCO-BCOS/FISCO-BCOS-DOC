@@ -625,16 +625,10 @@ bash ./tmp_one_click_expand/agencyC/node/start_all.sh
 
 ### 查看节点
 
-在~/generator-C目录下执行下述命令
-
-```bash
-cd ~/generator-C
-```
-
 查看节点log内group1信息:
 
 ```bash
-tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log*  grep g:2 | grep +++
+tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log* | grep g:2 | grep +++
 ```
 
 ```bash
@@ -653,6 +647,7 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
     使用完成后建议用以下命令对meta文件夹进行清理:
 
     - rm ./meta/cert_*
+    - rm ./meta/group*
 ```
 
 ## 更多操作
