@@ -1,6 +1,12 @@
-# 节点准入
+# 组员管理
 
-为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
+FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
+
+* 组员
+  * 共识节点：参与共识的节点，拥有群组的所有数据（搭链时默认都生成共识节点）
+  * 观察者节点：不参与共识，但能实时同步链上数据的节点
+* 非组员
+  * 游离节点：已启动，待等待加入群组的节点。处在一种暂时的节点状态，不能获取链上的数据。
 
 ## 操作命令
 
@@ -88,7 +94,6 @@ $ bash start.sh
 ![](../../images/node_management/multi_ledger_example.png)
 
 <center>群组例子</center>
-
 Group3的相关节点信息举例为：
 
 节点1的目录名为`node0`，IP端口为127.0.0.1:30400，nodeID前四个字节为b231b309...

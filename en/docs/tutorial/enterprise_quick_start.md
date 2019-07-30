@@ -1,10 +1,10 @@
 # enterprise deployment tools
 
-FISCO BCOS enterprise deployment tools are designed for multi-agency production environments. To ensure the security of the agency's private keys, enterprise deployment tools provides agencies' collaboration to deploy a alliance chain.
+FISCO BCOS enterprise deployment tools are designed for multi-agency production environments. For ensure the security of the agency's private keys, enterprise deployment tools provide agencies' collaboration to deploy an alliance chain.
 
 This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](../enterprise_tools/operation.md).
 
-This chapter is a process that multi-agency peer-to-peer deployment and a situation that private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through single agency's clickstart can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md).
+This chapter is a process that multi-agency peer-to-peer deployment and a situation that the private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through a single agency's click start can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md).
 
 ## Download and install
 
@@ -44,35 +44,34 @@ Output will be: FISCO-BCOS Version : x.x.x-x
 ./meta/fisco-bcos -v
 ```
 
-**PS**:  If someone want to use [Source Code Compile](../manual/get_executable.md) fisco-bcos binary, they need to replace the binary in the `meta` folder with the compiled binary.
+**PS**:  If someone wants to use [Source Code Compile](../manual/get_executable.md) fisco-bcos binary, they need to replace the binary in the `meta` folder with the compiled binary.
 
 ## Typical example
 
-To ensure the security of the agency's private keys, enterprise deployment tools provides a security way to build chain between agencies. This chapter will demonstrate how to build chain between agencies in a deployment mode of **6 nodes 3 agencies 2 groups**.
+For ensure the security of the agency's private keys, enterprise deployment tools provide a secure way to build chain between agencies. This chapter will demonstrate how to make a chain between agencies in a deployment model of **6 nodes 3 agencies 2 groups**.
 
 ### Node networking overview
 
-A networking mode of a 6 nodes 3 agencies 2 groups is shown as follows. Agency B and agency C are located in Group 1 and Group 2, agency A belongs to both Group 1 and Group 2.
+A networking model of 6 nodes 3 agencies 2 groups is shown as follows. Agency B and agency C is located in Group 1 and Group 2, and agency A belongs to both Group 1 and Group 2.
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
 ### Machine address
 
-IP address of each node and port are as follows:
+The IP address of each node and port are as follows:
 
-| Agency  | Node  | Group  | P2P address           | RPC/channel listening address       |
-| --- | --- | ----- | --------------- | --------------------- |
-| agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
-|     | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
-| agencyB | node2 | group1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | node3 | group1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
-| agencyC | node4 | group2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204 |
-|     | node5 | group2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205 |
+| Agency  | Node  | Group    | P2P address     | RPC/channel listening address |
+| ------- | ----- | -------- | --------------- | ----------------------------- |
+| agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200         |
+|         | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201         |
+| agencyB | node2 | group1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202         |
+|         | node3 | group1   | 127.0.0.1:30303 | 127.0.0.1:8548/:20203         |
+| agencyC | node4 | group2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204         |
+|         | node5 | group2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205         |
 
 ```eval_rst
 .. important::
-    For the VPS server in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
-
+    For the VPS in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
 ```
 
 ### cooperate agencies
@@ -88,63 +87,63 @@ In this section, we briefly provide How **Certificate authority agency** and **a
 
 #### 1. Initialize chain certificate
 
-1. Certificate authority agency operation:
-    - Generate chain certificate
+1.  Certificate authority agency operation:
+    -   Generate chain certificate
 
 #### 2. Generate group 1
 
-1. Certificate authority agency operations
+1.  Certificate authority agency operations
     -   generate agency certificate
-    -   send certificate to agencies
-2. Operation between agencies
+    -   send the certificate to agencies
+2.  Operation between agencies
     -   modify the configuration file `node_deployment.ini`
     -   generate node certificate and node P2P port address file `peers.txt`  
-3. Select one of agencies to generate `group.genesis`
-    -	collect all node certificates in the group
+3.  Select one of the agencies to create `group.genesis`
+    -   collect all node certificates in the group
     -   modify configuration file `group_genesis.ini`
     -   generate genesis block files for the group
     -   distribute genesis block files to other agencies
-4. Operation between agencies: generating nodes
+4.  Operation between agencies: generating nodes
     -   collect P2P port address files of other nodes in the group
     -   generate node
     -   start node
 
 #### 3. Initialize a new institution
 
-1. Certificate authority agency operations
+1.  Certificate authority agency operations
     -   generate agency certificate
-    -   send certificate to new agency
+    -   send the certificate to the new agency
 
 #### 4. Generate group2
 
-1. New agency operation
+1.  New agency operation
     -   modify the configuration file `node_deployment.ini`
     -   generate node certificate and node P2P port address file
-2. Select one of agencies as group to generate genesis block
-    -	collect all node certificates in the group
+2.  Select one of the agencies as a group to create genesis block
+    -   collect all node certificates in the group
     -   modify configuration file `group_genesis.ini`
     -   generate genesis block files for the group
     -   distribute genesis block files to other agency
-3. New agency independent operation: generate nodes
+3.  New agency independent operation: create nodes
     -   collect P2P port address files of other nodes in the group
     -   generate nodes
     -   start nodes
-4. Existing agency's operations: configure new groups
+4.  Existing agency's operations: configure new groups
     -   collect P2P port address files of other nodes in the group
     -   configure P2P port address of the new group and the new nodes
     -   restart nodes
 
 #### 5. Existing nodes join group 1
 
-1. Group 1 original agency operation:
-    -   send group 1 genesis block to existing node
+1.  Group 1 original agency operation:
+    -   send group 1 genesis block to the existing node
     -   configure console
     -   get the entering node nodeid
     -   add nodes to group1 by using console
 
-## Alliance chain initialization
+## Chain initialization
 
-Simply, all the operations in this example are performed on the local machine. We use different catalogs to simulate different agencies' environment and use the file copy operation to simulate the sending in the network. After performing `Download and Install` in the tutorial, please copy the generator to the corresponding agency's generator directory.
+All the operations in this example are performed on the local machine. We use different catalogs to simulate various agencies' environment and use the file copy operation to simulate the sending in the network. After performing `Download and Install` in the tutorial, please copy the generator to the corresponding agency's generator directory.
 
 ### Institutional initialization
 
@@ -164,11 +163,11 @@ cp -r ~/generator ~/generator-B
 
 ### Initialize chain certificate
 
-Operating on a Certificate authority agency. A single chain has a unique chain certificate ca.crt.
+A single chain has a unique ca.crt.
 
-use [`--generate_chain_certificate`](../enterprise_tools/operation.html#generate-chain-certificate) command to generate chain certificate
+use [`--generate_chain_certificate`](../enterprise_tools/operation.html#generate-chain-certificate) to generate chain certificate
 
-operate in the certificate agency directory:
+Operate in the certificate agency directory:
 
 ```bash
 cd ~/generator
@@ -178,7 +177,7 @@ cd ~/generator
 ./generator --generate_chain_certificate ./dir_chain_ca
 ```
 
-view chain certificate and private key:
+view the chain certificate and the private key:
 
 ```bash
 ls ./dir_chain_ca
@@ -186,7 +185,7 @@ ls ./dir_chain_ca
 
 ```bash
 # the above order has explained
-# From left to right,  they are chain certificate, chain private key, and certificate configuration file
+# From left to right,  they are chain's certificate, chain's private key, and certificate configuration file.
 ca.crt  ca.key   cert.cnf
 ```
 
@@ -194,35 +193,32 @@ ca.crt  ca.key   cert.cnf
 
 ### Initialize agencyA
 
-In the tutorial, for operating simply, the certificate of agency and the private key are directly generated. In actual application, the private key `agency.key` should be generated locally by agency first, and then the certificate request file is generated, and the certificate `agency.crt` is obtained from the certificate agency.
+In the tutorial, for operating simply, the certificate of agency and the private key are directly generated. In actual application, the private key `agency.key` should be created locally by agency first, and then the certificate request file is made, and the certificate `agency.crt` is obtained from the certificate agency
 
-operate in the certificate generator directory:
+Operate in the certificate directory:
 
 ```bash
 cd ~/generator
 ```
 
-generate agencyA certificate:
+Generate agencyA certificate:
 
 ```bash
 ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
 ```
 
-view agency certificate and private key:
+View agency certificate and the private key:
 
 ```bash
 ls dir_agency_ca/agencyA/
 ```
 
 ```bash
-# the above order has explained
-# From left to right, they are agency certificate, agency private key, chain certificate, certificate configuration file
+# From left to right, they are agency's certificate, agency's private key, chain's certificate, certificate configuration file.
 agency.crt  agency.key  ca.crt  cert.cnf
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency's working directory.
-
-
 
 ```bash
 cp ./dir_agency_ca/agencyA/* ~/generator-A/meta/
@@ -230,13 +226,13 @@ cp ./dir_agency_ca/agencyA/* ~/generator-A/meta/
 
 ### Initialize agencyB
 
-operate in the certificate generator directory:
+Operate in the certificate directory:
 
 ```bash
 cd ~/generator
 ```
 
-generate agencyB certificate:
+Generate agencyB certificate:
 
 ```bash
 ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
@@ -251,8 +247,7 @@ cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
 ```eval_rst
 .. important::
 
-    Only one root certificate, ca.crt, can be used in an alliance chain. Do not generate multiple root certificates and private keys when deploying multiple servers. A group can only have one genesis block group.x.genesis.
-
+    Only one root certificate, ca.crt, can be used in an alliance chain. Do not generate multiple root certificates and private keys when deploying various servers. A group can only have one genesis block group.x.genesis.
 ```
 
 ### AgencyA modifies configuration file
@@ -261,7 +256,7 @@ cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
 
 AgencyA modifies the `node_deployment.ini` in the conf folder, as shown below:
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory
 
 ```bash
 cd ~/generator-A
@@ -300,7 +295,7 @@ EOF
 
 AgencyB modifies the `node_deployment.ini` in the conf folder, as shown below:
 
-execute the following command in the ~/generator-B directory
+Execute the following command in the ~/generator-B directory
 
 ```bash
 cd ~/generator-B
@@ -337,14 +332,13 @@ EOF
 
 ### AgencyA generates and sends node information
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory
 
 ```bash
 cd ~/generator-A
 ```
 
 AgencyA generates the node certificate and the P2P connection information file. In this step, we need to use the above configuration `node_deployment.ini` and the agency certificate and private key in the agency meta folder.
-
 
 ```bash
 ./generator --generate_all_certificates ./agencyA_node_info
@@ -357,8 +351,7 @@ ls ./agencyA_node_info
 ```
 
 ```bash
-# the above order has explained
-# From left to right, they are the node certificate that needs to be interacted with the agencyA and the file that node P2P connects to the address (the node information of agency generated by the node_deployment.ini)
+# From left to right, they are the node certificate that needs to have interacted with the agencyA and the file that node P2P connects to the address (the node information of agency generated by the node_deployment.ini)
 cert_127.0.0.1_30300.crt cert_127.0.0.1_30301.crt peers.txt
 ```
 
@@ -370,11 +363,12 @@ cp ./agencyA_node_info/peers.txt ~/generator-B/meta/peersA.txt
 
 ### AgencyB generates and sends node information
 
-execute the following command in the ~/generator-B directory
+Execute the following command in the ~/generator-B directory
 
 ```bash
 cd ~/generator-B
 ```
+
 AgencyB generates the node certificate and the P2P connection information file:
 
 ```bash
@@ -383,13 +377,13 @@ AgencyB generates the node certificate and the P2P connection information file:
 
 The agency that generates the genesis block needs the node certificate. In the example, the agencyA generates the genesis block. Therefore, in addition to sending the node P2P connection address file, the agencyB needs to send the node certificate to agencyA.
 
-send certificate
+Send certificate to agencyA
 
 ```bash
 cp ./agencyB_node_info/cert*.crt ~/generator-A/meta/
 ```
 
-send the node P2P connection address file
+Send the node P2P connection address file to agencyA
 
 ```bash
 cp ./agencyB_node_info/peers.txt ~/generator-A/meta/peersB.txt
@@ -397,14 +391,13 @@ cp ./agencyB_node_info/peers.txt ~/generator-A/meta/peersB.txt
 
 ### AgencyA generates the genesis block of group1
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory
 
 ```bash
 cd ~/generator-A
 ```
 
 AgencyA modifies `group_genesis.ini` in the conf folder. For configuration items, refer to [Manuals](../enterprise_tools/config.md#group-genesis-ini):
-
 
 ```bash
 cat > ./conf/group_genesis.ini << EOF
@@ -438,7 +431,7 @@ node2=127.0.0.1:30302
 node3=127.0.0.1:30303
 ```
 
-In the tutorial, we choose agencyA to generate genesis block of group. But in the actual production, you can negotiate with alliance chain committee to make choice.
+In the tutorial, we choose agencyA to generate genesis block of the group. But in the actual production, you can negotiate with alliance chain committee to make a choice.
 
 This step will generate the genesis block of group_genesis.ini according to the node certificate configured in the meta folder of agencyA. In the tutorial, the agencyA's meta is required to have the node certificates name as  `cert_127.0.0.1_30300.crt`, `cert_127.0.0.1_30301.crt`, `cert_127.0.0.1_30302.crt`, `cert_127.0.0.1_30303.crt`. This step requires the node certificate of agencyB.
 
@@ -446,7 +439,7 @@ This step will generate the genesis block of group_genesis.ini according to the 
 ./generator --create_group_genesis ./group
 ```
 
-distribute group1 genesis block to AgencyB:
+Send group.1.genesis to AgencyB:
 
 ```bash
 cp ./group/group.1.genesis ~/generator-B/meta
@@ -454,7 +447,7 @@ cp ./group/group.1.genesis ~/generator-B/meta
 
 ### AgencyA generates the node to which it belongs
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory
 
 ```bash
 cd ~/generator-A
@@ -462,13 +455,13 @@ cd ~/generator-A
 
 AgencyA generates the node to which it belongs. This command generates the corresponding node configuration folder according to the user-configured file `node_deployment.ini`:
 
-Note. The node P2P connection information `peers.txt` specified in this step is the connect information of other nodes in the group. In the case of multiple agencies networking, they need to be merged.
+Note: The node P2P connection information `peers.txt` specified in this step is the connect information of other nodes in the group. In the case of multiple agencies networking, they need to be merged.
 
 ```bash
 ./generator --build_install_package ./meta/peersB.txt ./nodeA
 ```
 
-view the generated node configuration folder:
+View the generated node configuration folder:
 
 ```bash
 ls ./nodeA
@@ -485,13 +478,13 @@ ls ./nodeA
 └── stop_all.sh # node stops script in batch
 ```
 
-agencyA startups node:
+AgencyA startups node:
 
 ```bash
 bash ./nodeA/start_all.sh
 ```
 
-view node process:
+View node process:
 
 ```bash
 ps -ef | grep fisco
@@ -506,7 +499,7 @@ fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA/node_127.0.0.1
 
 ### AgencyB generates the node to which it belongs
 
-execute the following command in the ~/generator-B directory
+Execute the following command in the ~/generator-B directory
 
 ```bash
 cd ~/generator-B
@@ -518,7 +511,7 @@ AgencyB generates the node to which it belongs. This command generates the corre
 ./generator --build_install_package ./meta/peersA.txt ./nodeB
 ```
 
-agencyB startups node:
+AgencyB startups node:
 
 ```bash
 bash ./nodeB/start_all.sh
@@ -527,13 +520,12 @@ bash ./nodeB/start_all.sh
 ```eval_rst
 .. note::
 
-    Startup node only needs to send the node folder corresponding to ip address. For example, the server of 127.0.0.1 only needs the node configuration folder corresponding to node_127.0.0.1_port. When deploying multiple machines, you only need to send the generated node folder to the corresponding server.
-
+    Startup node only needs to send the node folder corresponding to IP address. For example, the server of 127.0.0.1 only needs the node configuration folder corresponding to node_127.0.0.1_port. When deploying multiple machines, you only need to send the generated node folder to the corresponding server.
 ```
 
 ### View group1 node running status
 
-view process:
+View process:
 
 ```bash
 ps -ef | grep fisco
@@ -568,7 +560,7 @@ By now, we have completed the operation of agencyA,B to build group1 as shown:
 
 ## Certificate authority initialize agencyC
 
-operate in the certificate generator directory:
+Operate in the certificate generator directory:
 
 ```bash
 cd ~/generator
@@ -579,13 +571,14 @@ cd ~/generator
 ```bash
 cp -r ~/generator ~/generator-C
 ```
-generate agencyC certificate:
+
+Generate agencyC certificate:
 
 ```bash
 ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
 ```
 
-view agency certificate and private key:
+View agency certificate and private key:
 
 ```bash
 ls dir_agency_ca/agencyC/
@@ -593,7 +586,7 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # command interpretation
-# From left to right, they are agency certificate, agency private key, chain certificate, certificate configuration file
+# From left to right, they are agency's certificate, agency's private key, chain's certificate, certificate configuration file
 agency.crt  agency.key  ca.crt  cert.cnf
 ```
 
@@ -605,27 +598,27 @@ cp ./dir_agency_ca/agencyC/* ~/generator-C/meta/
 
 ## AgencyA,C build group2
 
-Next, agencyC needs to perform a new group establishment operation with A. We take an example of agencyC generating genesis block.
+Next, agencyC needs to perform a new group establishment operation with agencyA. We take an example of agencyC generating genesis block.
 
 ### AgencyA sends node information
 
 Since agencyA has generated the node certificate and the peers file, we only need to send the previous generated node P2P connection information and the node certificate to agencyC as follows:
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory
 
 ```bash
 cd ~/generator-A
 ```
 
-In the example, the genesis block of group is generated by agencyC, therefore the node certificate of agencyA and the node P2P connection address file are required, and the above file is sent to agencyC.
+In the example, the genesis block of the group is generated by agencyC. Therefore the node certificate of agencyA and the node P2P connection address file are required, and the above file is sent to agencyC.
 
-send certificate
+Send certificate to agencyC
 
 ```bash
 cp ./agencyA_node_info/cert*.crt ~/generator-C/meta/
 ```
 
-send node P2P connection address file
+Send node P2P connection address file to agencyC
 
 ```bash
 cp ./agencyA_node_info/peers.txt ~/generator-C/meta/peersA.txt
@@ -635,7 +628,7 @@ cp ./agencyA_node_info/peers.txt ~/generator-C/meta/peersA.txt
 
 AgencyC modifies `node_deployment.ini` in the conf folder as shown below:
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory.
 
 ```bash
 cd ~/generator-C
@@ -672,7 +665,7 @@ EOF
 
 ### AgencyC generates and sends node information
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory.
 
 ```bash
 cd ~/generator-C
@@ -684,7 +677,7 @@ AgencyC generates node certificate and P2P connection information file:
 ./generator --generate_all_certificates ./agencyC_node_info
 ```
 
-view generated file:
+View generated file:
 
 ```bash
 ls ./agencyC_node_info
@@ -692,11 +685,11 @@ ls ./agencyC_node_info
 
 ```bash
 # command interpretation
-# From left to right, they are the node certificate that needs to be interacted with the agencyA and the file that node P2P connects to the address (the node information of agency generated by the node_deployment.ini)
+# From left to right, they are the node certificate that needs to have interacted with the agencyA and the file that node P2P connects to the address (the node information of agency generated by the node_deployment.ini)
 cert_127.0.0.1_30304.crt cert_127.0.0.1_30305.crt peers.txt
 ```
 
-When agency generates a node, it needs to specify the node P2P connection address of other nodes. Therefore, agencyC needs to send the node P2P connection address file to agencyA.
+When the agency generates a node, it needs to specify the node P2P connection address of other nodes. Therefore, agencyC needs to send the node P2P connection address file to agencyA.
 
 ```bash
 cp ./agencyC_node_info/peers.txt ~/generator-A/meta/peersC.txt
@@ -704,7 +697,7 @@ cp ./agencyC_node_info/peers.txt ~/generator-A/meta/peersC.txt
 
 ### AgencyC generates genesis block of group2
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory.
 
 ```bash
 cd ~/generator-C
@@ -743,16 +736,15 @@ node3=127.0.0.1:30305
 ;agencyC node p2p address
 ```
 
+In the tutorial, agency C is chosen to generate a genesis block of the group. In the actual production, you can negotiate with the alliance chain committee to determine.
 
-In the tutorial, agency C is chosen to generate genesis block of group. In the actual production, you can negotiate with the alliance chain committee to choose.
-
-This step generates genesis block of group_genesis.ini configuration according to the node certificate configured in the meta folder of agencyC.
+This step generates a genesis block of group_genesis.ini configuration according to the node certificate configured in the meta folder of agencyC.
 
 ```bash
 ./generator --create_group_genesis ./group
 ```
 
-distribute genesis block of group2 to agencyA:
+Distribute genesis block of group2 to agencyA:
 
 ```bash
 cp ./group/group.2.genesis ~/generator-A/meta/
@@ -760,7 +752,7 @@ cp ./group/group.2.genesis ~/generator-A/meta/
 
 ### AgencyC generates the node to which it belongs
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory
 
 ```bash
 cd ~/generator-C
@@ -770,7 +762,7 @@ cd ~/generator-C
 ./generator --build_install_package ./meta/peersA.txt ./nodeC
 ```
 
-agencyC startups node:
+AgencyC startups node:
 
 ```bash
 bash ./nodeC/start_all.sh
@@ -793,7 +785,7 @@ fisco  15589     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1
 
 ### AgencyA initializes group2 for existing nodes
 
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory
 
 ```bash
 cd ~/generator-A
@@ -811,7 +803,7 @@ Add the agencyC node connect file peers to the existing node. This step adds the
 ./generator --add_peers ./meta/peersC.txt ./nodeA
 ```
 
-restart agencyA node:
+Restart agencyA node:
 
 ```bash
 bash ./nodeA/stop_all.sh
@@ -823,7 +815,7 @@ bash ./nodeA/start_all.sh
 
 ### View group2 node running status
 
-view node's process:
+View node's process:
 
 ```bash
 ps -ef | grep fisco
@@ -840,9 +832,9 @@ fisco  15550     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1
 fisco  15589     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1_30305/fisco-bcos -c config.ini
 ```
 
-view node log：
+View node log：
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory
 
 ```bash
 cd ~/generator-C
@@ -860,18 +852,17 @@ info|2019-02-25 17:25:59.058625| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
 ```
 
-By now, we have completed the construction of agencyA,C to build group2 as shown:
+By now, we have completed the construction of agencyA, C to build group2 as shown:
 
 ![](../../images/enterprise/tutorial_step_2.png)
 
 ## Extended Tutorial--agencyC node joins group1
 
-Adding a node to an existing group requires user to send a command by console. The example of adding node to group is as follows:
+Adding a node to an existing group requires users to send command by console. The example of adding nodes to the group is as follows:
 
+Now there are nodes of agencyA, B and B in group1. Adding the node of agencyC to group1 needs to get the permission of the nodes in the group. To take the node of agencyA as an example:
 
-Now there are nodes of agencyA,B and B in group1. Adding the node of agencyC to group1 needs to get permission of the nodes in the group. To take the node of agencyA as example:
-
-execute the following command in the ~/generator-A directory
+Execute the following command in the ~/generator-A directory.
 
 ```bash
 cd ~/generator-A
@@ -879,7 +870,7 @@ cd ~/generator-A
 
 ### Send gensis block of group1 to agencyC
 
-Send the configuration file of group1 to agencyC
+Send the configuration file of group1 to agencyC.
 
 ```bash
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
@@ -887,7 +878,7 @@ Send the configuration file of group1 to agencyC
 
 Currently, `FISCO BCOS` does not support file hot update. It is necessary to restart the node after adding genesis block of group1 to agencyC node.
 
-restart agencyC node:
+Restart agencyC's node:
 
 ```bash
 bash ~/generator-C/nodeC/stop_all.sh
@@ -899,7 +890,7 @@ bash ~/generator-C/nodeC/start_all.sh
 
 ### Configure console
 
-agencyA configure console or sdk. In the tutorial, console is used as an example:
+agencyA's configure console or java sdk. In the tutorial, console is used as an example:
 
 Note: This command will complete the console configuration according to the node and group in the user-configured `node_deployment.ini`. User can directly start the console. Please ensure that java is installed before starting.
 
@@ -957,7 +948,6 @@ exit
 
 AgencyA uses console to join node 5 of agencyC as the consensus node. The second parameter needs to be replaced with the joining node 'nodeid', which locates in the `node.nodeid` file of the node folder conf.
 
-
 View the agencyC node nodeid:
 
 ```bash
@@ -972,13 +962,13 @@ cat ~/generator-C/nodeC/node_127.0.0.1_30305/conf/node.nodeid
 
 ### Register consensus node by using console
 
-start console:
+Start console:
 
 ```bash
 cd ~/generator-A/console && bash ./start.sh 1
 ```
 
-Use the console `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the `node.nodeid` of agencyC node.
+Use the console's `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the `node.nodeid` of agencyC node.
 
 ```bash
 addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
@@ -994,7 +984,7 @@ $ [group:1]> addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc
 }
 ```
 
-exit console:
+Exit console:
 
 ```bash
 exit
@@ -1002,13 +992,14 @@ exit
 
 ### View node
 
-execute the following command in the ~/generator-C directory
+Execute the following command in the ~/generator-C directory
 
 ```bash
 cd ~/generator-C
 ```
 
-view the group1 information in node log:
+View the group1 information in node log:
+
 ```bash
 cat node*/node_127.0.0.1_3030*/log/log* | grep g:1  | grep Report
 ```
@@ -1028,7 +1019,6 @@ info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,n
 By now, we have completed all the operations in the tutorial shown.
 
 ![](../../images/enterprise/tutorial_step_3.png)
-
 
 In this tutorial, we have generated a multi-group architecture alliance chain with a network topology of 3 agencies, 2 groups, and 6 nodes.
 
