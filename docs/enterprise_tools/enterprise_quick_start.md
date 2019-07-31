@@ -55,7 +55,7 @@ cd ~/generator && bash ./scripts/install.sh
 
 **PS**：[源码编译](../manual/get_executable.md)节点二进制的用户，只需要用编译出来的二进制替换掉`meta`文件夹下的二进制即可。
 
-## 典型示例
+## 背景介绍
 
 本节以部署6节点3机构2群组的组网模式，演示如何使用企业级部署工具一键部署功能，搭建区块链。
 
@@ -99,7 +99,7 @@ cd ~/generator && bash ./scripts/install.sh
     针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
 ``` -->
 
-## 生成群组1节点
+## 部署网络
 
 首先完成如图所示机构A、B搭建群组1的操作：
 
@@ -139,12 +139,12 @@ cat > ./tmp_one_click/agencyA/node_deployment.ini << EOF
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -168,12 +168,12 @@ cat > ./tmp_one_click/agencyB/node_deployment.ini << EOF
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -263,7 +263,7 @@ info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
 ```
 
-## 增加节点至群组1
+## 新增节点 (扩容新节点)
 
 接下来，我们为机构A和机构C增加新节点，完成下图所示的组网：
 
@@ -317,12 +317,12 @@ cat > ./tmp_one_click_expand/agencyA/node_deployment.ini << EOF
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -349,12 +349,12 @@ cat > ./tmp_one_click_expand/agencyC/node_deployment.ini << EOF
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -422,7 +422,7 @@ cd ~/generator/tmp_one_click/agencyA/generator-agency
 ./generator --download_console ./ --cdn
 ```
 
-### 查看机构A节点4信息
+### 查看机构A节点4
 
 机构A使用控制台加入机构A节点4为共识节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
 
@@ -468,7 +468,7 @@ $ [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd3
 exit
 ```
 
-### 查看机构C节点5信息
+### 查看机构C节点5
 
 机构A使用控制台加入机构C的节点5为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
 
@@ -516,7 +516,7 @@ exit
 
 至此，我们完成了新增节点至现有群组的操作。
 
-## 现有节点新建群组2
+## 新增群组 (扩容新群组)
 
 新建群组的操作用户可以在执行`one_click_generator.sh`脚本的目录下，通过修改`./conf/group_genesis.ini`文件，并执行`--create_group_genesis`命令。
 
