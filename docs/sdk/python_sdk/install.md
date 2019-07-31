@@ -4,8 +4,9 @@
 
 **依赖软件**
 
-- **Ubuntu**: `sudo apt install -y zlib1g-dev libffi6 libffi-dev`
-- **CentOS**：`sudo yum install -y libffi-devel zlib-devel`
+- **Ubuntu**: `sudo apt install -y zlib1g-dev libffi6 libffi-dev wget`
+- **CentOS**：`sudo yum install -y zlib-devel libffi-devel wget`
+- **MacOs**: `brew install wget npm`
 
 **Python环境要求**
 
@@ -40,23 +41,12 @@ git clone https://github.com/FISCO-BCOS/python-sdk
 ```bash
 # 判断python版本，并为不符合条件的python环境安装python 3.7.3的虚拟环境，命名为python-sdk
 # 若python环境符合要求，可以跳过此步
-cd python-sdk && bash init_env.sh
+# 若脚本执行出错，请检查是否参考[依赖软件]说明安装了依赖
+# 提示：安装python-3.7.3可能耗时比较久
+cd python-sdk && bash init_env.sh -p
 
 # 激活python-sdk虚拟环境
 source ~/.bashrc && pyenv activate python-sdk
-```
-
-**拷贝配置**
-
-```eval_rst
-.. note::
-
-    配置项详细说明请参考 `配置说明 <./configuration.html>`_ 
-
-```
-
-```bash
-cp client-config.py.template client-config.py
 ```
 
 **安装依赖**
@@ -69,6 +59,31 @@ pip install -r requirements.txt
 
 ```bash
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+```
+
+**初始化配置**
+
+```eval_rst
+.. note::
+
+   - 配置项详细说明请参考 `配置说明 <./configuration.html>`_ 
+   - 若没有执行初始化步骤，需要将 ``contracts/`` 目录下的sol代码手动编译成bin和abi文件并放置于 ``contracts`` 目录，才可以部署和调用相应合约，合约编译可以使用 `remix <https://remix.ethereum.org>`_ 
+
+```
+
+```bash
+# 该脚本执行操作如下：
+# 1. 拷贝client_config.py.template->client_config.py
+# 2. 安装solc编译器
+bash init_env.sh -i
+```
+
+**若MacOS环境solc安装较慢，可在python-sdk目录下执行如下命令安装solcjs**，并将安装的solcjs路径配置到`client_config.py`的`solcjs_path`(默认为node_modules/solc/solcjs)，python-sdk自动从该路径加载nodejs编译器：
+
+```bash
+# 安装编译器
+# 默认安装到node_modules/solc/solcjs路径
+npm install solc@v0.4.24
 ```
 
 **SDK使用示例**
@@ -118,7 +133,7 @@ Python SDK引入[argcomplete](https://argcomplete.readthedocs.io/en/latest/)支�
 
     - 此步骤仅需设置一次，设置之后以后每次登陆自动生效
     - 请在 **bash环境** 下执行此步骤
-
+    - 目前仅支持bash，不支持zsh 
 ```
 
 ```bash
