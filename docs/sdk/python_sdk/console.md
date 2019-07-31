@@ -49,7 +49,7 @@
 
 ```bash
 # 合约bin文件路径：contracts/HelloWorld.bin
-$ python console.py deploy contracts/HelloWorld.bin save 
+$ ./console.py deploy contracts/HelloWorld.bin save 
 
 >> user input : ['deploy', 'contracts/HelloWorld.bin', 'save']
 
@@ -85,7 +85,7 @@ address save to file:  bin/contract.ini
 ```bash
 # 合约地址：0x42883e01ac97a3a5ef8a70c290abe0f67913964e
 # 调用接口：get
-$ python console.py call HelloWorld 0x42883e01ac97a3a5ef8a70c290abe0f67913964e get
+$./console.py  call HelloWorld 0x42883e01ac97a3a5ef8a70c290abe0f67913964e get
 
 >> user input : ['call', 'HelloWorld', '0x42883e01ac97a3a5ef8a70c290abe0f67913964e', 'get']
 
@@ -107,7 +107,7 @@ call result:  ('Hello, World!',)
 # 合约地址：0x42883e01ac97a3a5ef8a70c290abe0f67913964e
 # 调用接口：set
 # 参数："Hello, FISCO"
-$ python console.py sendtx HelloWorld 0x42883e01ac97a3a5ef8a70c290abe0f67913964e "set" "Hello, FISCO"
+$ ./console.py sendtx HelloWorld 0x42883e01ac97a3a5ef8a70c290abe0f67913964e "set" "Hello, FISCO"
 
 >> user input : ['sendtx', 'HelloWorld', '0x42883e01ac97a3a5ef8a70c290abe0f67913964e', 'set', 'Hello, FISCO']
 
@@ -145,7 +145,7 @@ receipt output : ()
 - inputdata：合约输入参数
 
 ```bash
-$ python console.py txinput HelloWorld "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000c48656c6c6f2c20464953434f0000000000000000000000000000000000000000"
+$ ./console.py txinput HelloWorld "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000c48656c6c6f2c20464953434f0000000000000000000000000000000000000000"
 >> user input : ['txinput', 'HelloWorld', '0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000c48656c6c6f2c20464953434f0000000000000000000000000000000000000000']
 
 abifile :  contracts/HelloWorld.abi
@@ -165,7 +165,7 @@ parse result: {'name': 'set', 'args': ('Hello, FISCO',), 'signature': 'set(strin
     采用创建帐号的命令创建帐号后，若需作为默认帐号使用，注意修改client_config.py的 ``account_keyfile`` 和 ``account_password`` 配置项
 ```
 ```bash
-$ python console.py newaccount test_account "123456"
+$ ./console.py newaccount test_account "123456"
 
 >> user input : ['newaccount', 'test_account', '123456']
 
@@ -196,7 +196,7 @@ account store in file: [bin/accounts/test_account.keystore]
 - password: 账户`keystore`文件口令
 
 ```bash
-$ python console.py showaccount test_account "123456"
+$ ./console.py showaccount test_account "123456"
 
 >> user input : ['showaccount', 'test_account', '123456']
 
@@ -216,13 +216,13 @@ account store in file: [bin/accounts/test_account.keystore]
 输出控制台使用方法：
 
 ```bash
- $ python console.py usage
+ $ ./console.py usage
 
 >> user input : ['usage']
 usage
-    使用说明,输入python console.py [指令 参数列表]
+    使用说明,输入./console.py [指令 参数列表]
     Usage of console (FISCO BCOS 2.0 lite client @python):
-    python console.py [cmd args]
+    ./console.py [cmd args]
     
 1): showaccount [name] [password]
     指定帐户名字(不带后缀)和密码，打开配置文件里默认账户文件路径下的[name].keystore文件，打印公私钥和地址
@@ -239,7 +239,7 @@ usage
 输出Python SDK支持的所有接口：
 
 ```bash
-$ python console.py list
+$ ./console.py list
 >> user input : ['list']
 
 query commands:

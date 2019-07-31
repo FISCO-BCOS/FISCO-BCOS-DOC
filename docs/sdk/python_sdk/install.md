@@ -4,12 +4,15 @@
 
 **依赖软件**
 
-- **Ubuntu**: `sudo apt install -y zlib1g-dev libffi6 libffi-dev`
-- **CentOS**：`sudo yum install -y libffi-devel zlib-devel`
+- **Ubuntu**: `sudo apt install -y zlib1g-dev libffi6 libffi-dev wget`
+- **CentOS**：`sudo yum install -y zlib-devel libffi-devel wget`
+- **MacOs**: `brew install wget npm`
 
 **Python环境要求**
 
-- **支持版本**：python 3.6.3, 3.7.x
+- **支持版本**：
+    - **python 3.6.3**
+    - **3.7.x**
 
 ## 部署Python SDK
 
@@ -27,27 +30,69 @@ git clone https://github.com/FISCO-BCOS/python-sdk
 
 **初始化环境(若python环境符合要求，可跳过)**
 
+```eval_rst
+.. important::
+    - 若python版本小于3.6，执行本步骤会安装 **pyenv** ,并使用pyenv **安装python-3.7.3** ，创建命名为 **python-sdk** 的python虚拟环境
+    - 若 **python版本>= 3.6** 可跳过此步骤
+    - **若安装python-3.7.3出错，请检查是否安装了** `依赖软件 <./install.html>`_ 
+    - 请在 **bash环境** 下执行此步骤
+```
+
 ```bash
 # 判断python版本，并为不符合条件的python环境安装python 3.7.3的虚拟环境，命名为python-sdk
 # 若python环境符合要求，可以跳过此步
-cd python-sdk && bash init_env.sh
+# 若脚本执行出错，请检查是否参考[依赖软件]说明安装了依赖
+# 提示：安装python-3.7.3可能耗时比较久
+cd python-sdk && bash init_env.sh -p
 
 # 激活python-sdk虚拟环境
 source ~/.bashrc && pyenv activate python-sdk
 ```
 
 **安装依赖**
+
 ```bash
 pip install -r requirements.txt
+```
+
+**若因网络原因，安装依赖失败，可使用清华的pip源下载，安装命令如下：**
+
+```bash
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+```
+
+**初始化配置**
+
+```eval_rst
+.. note::
+
+   - 配置项详细说明请参考 `配置说明 <./configuration.html>`_ 
+   - 若没有执行初始化步骤，需要将 ``contracts/`` 目录下的sol代码手动编译成bin和abi文件并放置于 ``contracts`` 目录，才可以部署和调用相应合约，合约编译可以使用 `remix <https://remix.ethereum.org>`_ 
+
+```
+
+```bash
+# 该脚本执行操作如下：
+# 1. 拷贝client_config.py.template->client_config.py
+# 2. 安装solc编译器
+bash init_env.sh -i
+```
+
+**若MacOS环境solc安装较慢，可在python-sdk目录下执行如下命令安装solcjs**，并将安装的solcjs路径配置到`client_config.py`的`solcjs_path`(默认为node_modules/solc/solcjs)，python-sdk自动从该路径加载nodejs编译器：
+
+```bash
+# 安装编译器
+# 默认安装到node_modules/solc/solcjs路径
+npm install solc@v0.4.24
 ```
 
 **SDK使用示例**
 ```bash
 # 查看SDK使用方法
-python console.py usage
+./console.py usage
 
 # 获取节点版本
-python console.py getNodeVersion
+./console.py getNodeVersion
 ```
 
 ## 使用Channel通信协议
@@ -76,5 +121,22 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* bin/
 
 ```bash
 # 获取FISCO BCOS节点版本号
-python console.py getNodeVersion
+./console.py getNodeVersion
+```
+
+## 开启命令行自动补全
+
+Python SDK引入[argcomplete](https://argcomplete.readthedocs.io/en/latest/)支持命令行补全，运行如下命令开启此功能(**bashrc仅需设置一次，设置之后每次登陆自动生效**)
+
+```eval_rst
+.. note::
+
+    - 此步骤仅需设置一次，设置之后以后每次登陆自动生效
+    - 请在 **bash环境** 下执行此步骤
+    - 目前仅支持bash，不支持zsh 
+```
+
+```bash
+echo "eval \"\$(register-python-argcomplete ./console.py)\"" >> ~/.bashrc
+source ~/.bashrc
 ```
