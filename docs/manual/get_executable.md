@@ -74,7 +74,10 @@ $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 $ cd FISCO-BCOS
 $ git checkout master
 $ mkdir -p build && cd build
-# CentOS请使用cmake3
+# 如果需要生成源码文档，请在cmake之前安装Doxygen
+# CentOS请使用yum命令
+$ sudo apt install -y doxygen graphviz
+# 执行编译，CentOS请使用cmake3 
 $ cmake ..
 # 高性能机器可添加-j4使用4核加速编译
 $ make
@@ -89,8 +92,6 @@ $ make
 
 - 生成源码文档。
     ```bash
-    # 安装Doxygen
-    $ sudo apt install -y doxygen graphviz
     # 生成源码文档 生成的源码文档位于build/doc
     $ make doc
     ```
