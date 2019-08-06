@@ -4,13 +4,13 @@ This chapter will introduce the required installations and configurations of FIS
 
 ## To build a single-group consortium chain
 
-This section takes the construction of single group FISCO BCOS chain as an example to operate. We use the `build_chain.sh` script to build a 4-node FISCO BCOS chain locally in `Ubuntu 16.04` system.
+This section takes the construction of single group FISCO BCOS chain as an example to operate. We use the `build_chain.sh` script to build a 4-node FISCO BCOS chain locally in `Ubuntu 16.04 64bit` system.
 
 ```eval_rst
 .. note::
     - To update an existing chain, please refer to `compatibility <change_log/index.html>`_ chapter.
     - It is similar to build a multi-group chain, interested can be referred to `here <manual/group_use_cases.html>`_ .
-    - This section uses pre-compiled static `fisco-bcos` binaries which tested on CentOS 7 and Ubuntu 16.04.
+    - This section uses pre-compiled static `fisco-bcos` binaries which tested on CentOS 7 and Ubuntu 16.04 64bit.
 ```
 
 ### Prepare environment
