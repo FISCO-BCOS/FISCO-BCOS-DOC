@@ -81,10 +81,10 @@ source_suffix = ['.rst', '.md']
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-  'sphinx_markdown_tables',
   'sphinx_copybutton',
   'sphinxcontrib.mermaid',
-  'versionwarning.extension',
+  'sphinx.ext.mathjax',
+  'sphinx_markdown_tables',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -159,6 +159,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
+html_theme = 'sphinx_rtd_theme'
 html_theme_options = {'navigation_depth': 4,}
 using_rtd_theme = True
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
