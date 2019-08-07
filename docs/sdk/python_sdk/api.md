@@ -42,6 +42,69 @@ Python SDK为区块链应用开发者提供了Python API接口，主要包括：
 | sendRawTransactionGetReceipt |  发送交易<br>并获取交易执行结果 | 合约地址<br>合约abi接口名<br>参数列表<br>合约binary code |
 
 
+## Precompile Service
+
+### CNS
+
+**类名**
+```
+client.precompile.cns.cns_service.CnsService
+```
+
+**功能接口**
+- register_cns：注册合约名到(合约地址，合约版本)的映射到CNS系统表中
+- query_cns_by_name：根据合约名查询CNS信息
+- query_cns_by_nameAndVersion：根据合约名和合约名查询CNS信息
+
+### 共识
+
+**类名**
+```
+client.precompile.consensus.consensus_precompile.ConsensusPrecompile
+```
+
+**功能接口**
+
+- addSealer：添加共识节点
+- addObserver：添加观察者节点
+- removeNode：将节点从群组中删除
+
+### 权限控制
+
+**类名**
+```
+client.precompile.permission.permission_service.PermissionService
+```
+**功能接口**
+
+- grant: 将指定表的权限授权给用户
+- revoke：收回指定用户对指定表的写权限
+- list_permission: 显示对指定表有写权限的账户信息
+
+### CRUD
+
+**类名**
+```
+client.precompile.crud.crud_service.Entry
+```
+**功能接口**
+- create_table：创建用户表
+- insert：向用户表插入记录
+- update：更新用户表记录
+- remove：删除用户表指定记录
+- select：查询用户表指定记录
+- desc: 查询用户表信息
+
+### 系统配置
+
+**类名**
+```
+client.precompile.config.config_precompile.ConfigPrecompile
+```
+
+**功能接口**
+- setValueByKey: 设置系统配置项的值
+
 ## 交易结构定义：BcosTransaction
 实现于`client/bcostransaction.py`，定义了FISCO BCOS 2.0的交易数据结构：
 
