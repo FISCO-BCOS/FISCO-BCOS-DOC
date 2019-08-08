@@ -8,7 +8,7 @@ Python SDK
 .. admonition:: **注意**
     :class: red
 
-    **Python SDK目前仅处于个人开发者体验阶段，开发企业级应用请使用** `Web3SDK <../java_sdk.html>`_
+    **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Web3SDK <../java_sdk.html>`_
 
 
 

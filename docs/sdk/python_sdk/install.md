@@ -16,11 +16,16 @@
 
 ## 部署Python SDK
 
-```eval_rst
-.. note::
+**环境要求**
+- Python环境：python 3.6.3, 3.7.x
+- FISCO BCOS节点：请参考[FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)搭建
 
-    部署Python SDK前，请确认已参考 `安装 <../../installation.html#fisco-bcos>`_ 部署了FISCO BCOS区块链节点
-```
+**依赖软件**
+
+- **Ubuntu**: `sudo apt install -y zlib1g-dev libffi6 libffi-dev wget git`
+- **CentOS**：`sudo yum install -y zlib-devel libffi-devel wget git`
+- **MacOs**: `brew install wget npm git`
+
 
 **拉取源代码**
 
@@ -28,15 +33,9 @@
 git clone https://github.com/FISCO-BCOS/python-sdk
 ```
 
-**初始化环境(若python环境符合要求，可跳过)**
+**初始化环境(若python环境符合要求，可跳过)(Windows环境可跳过)**
 
-```eval_rst
-.. important::
-    - 若python版本小于3.6，执行本步骤会安装 **pyenv** ,并使用pyenv **安装python-3.7.3** ，创建命名为 **python-sdk** 的python虚拟环境
-    - 若 **python版本>= 3.6** 可跳过此步骤
-    - **若安装python-3.7.3出错，请检查是否安装了** `依赖软件 <./install.html>`_ 
-    - 请在 **bash环境** 下执行此步骤
-```
+windows环境初始化请参考[这里](./README.md#windows环境配置)
 
 ```bash
 # 判断python版本，并为不符合条件的python环境安装python 3.7.3的虚拟环境，命名为python-sdk
@@ -46,7 +45,7 @@ git clone https://github.com/FISCO-BCOS/python-sdk
 cd python-sdk && bash init_env.sh -p
 
 # 激活python-sdk虚拟环境
-source ~/.bashrc && pyenv activate python-sdk
+source ~/.bashrc && pyenv activate python-sdk && pip install --upgrade pip
 ```
 
 **安装依赖**
@@ -61,15 +60,7 @@ pip install -r requirements.txt
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 ```
 
-**初始化配置**
-
-```eval_rst
-.. note::
-
-   - 配置项详细说明请参考 `配置说明 <./configuration.html>`_ 
-   - 若没有执行初始化步骤，需要将 ``contracts/`` 目录下的sol代码手动编译成bin和abi文件并放置于 ``contracts`` 目录，才可以部署和调用相应合约，合约编译可以使用 `remix <https://remix.ethereum.org>`_ 
-
-```
+**初始化配置(Windows环境可跳过)**
 
 ```bash
 # 该脚本执行操作如下：
@@ -84,6 +75,28 @@ bash init_env.sh -i
 # 安装编译器
 # 默认安装到node_modules/solc/solcjs路径
 npm install solc@v0.4.24
+```
+
+若没有执行以上初始化步骤，需要将`contracts/`目录下的`sol`代码手动编译成`bin`和`abi`文件并放置于`contracts`目录，才可以部署和调用相应合约。合约编译可以使用[remix](https://remix.ethereum.org)
+
+
+## Windows环境配置
+
+在Windows运行Python SDK，需要按照以下步骤安装依赖软件并配置合约编译器：
+
+**依赖软件**
+
+- 直接安装`python-3.7.3`和`git`软件，solc二进制下载请参考`bcos_solc.py`中的描述
+- [Visual C++ 14.0库](https://visualstudio.microsoft.com/downloads)
+
+> (注：Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools"解决方法: https://visualstudio.microsoft.com/downloads （注意选择vs 2005即14.0版）或 https://pan.baidu.com/s/1ZmDUGZjZNgFJ8D14zBu9og 提取码: zrby)
+
+**下载并配置solc编译器**
+修改`client_config.py.template`，配置`solc`编译器路径，solc二进制下载请参考`bcos_solc.py`中的描述
+
+```bash
+# 配置solc编译器路径，若solc存放路径为D:\\open-source\\python-sdk\\bin\\solc，则solc_path配置如下：
+solc_path = D:\\open-source\\python-sdk\\bin\\solc
 ```
 
 **SDK使用示例**
