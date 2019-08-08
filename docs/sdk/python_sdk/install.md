@@ -16,11 +16,16 @@
 
 ## 部署Python SDK
 
-```eval_rst
-.. note::
+**环境要求**
+- Python环境：python 3.6.3, 3.7.x
+- FISCO BCOS节点：请参考[FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)搭建
 
-    部署Python SDK前，请确认已参考 `安装 <../../installation.html#fisco-bcos>`_ 部署了FISCO BCOS区块链节点
-```
+**依赖软件**
+
+- **Ubuntu**: `sudo apt install -y zlib1g-dev libffi6 libffi-dev wget git`
+- **CentOS**：`sudo yum install -y zlib-devel libffi-devel wget git`
+- **MacOs**: `brew install wget npm git`
+
 
 **拉取源代码**
 
@@ -31,14 +36,6 @@ git clone https://github.com/FISCO-BCOS/python-sdk
 **初始化环境(若python环境符合要求，可跳过)(Windows环境可跳过)**
 
 windows环境初始化请参考[这里](./README.md#windows环境配置)
-
-```eval_rst
-.. important::
-    - 若python版本小于3.6，执行本步骤会安装 **pyenv** ,并使用pyenv **安装python-3.7.3** ，创建命名为 **python-sdk** 的python虚拟环境
-    - 若 **python版本>= 3.6** 可跳过此步骤
-    - **若安装python-3.7.3出错，请检查是否安装了** `依赖软件 <./install.html>`_ 
-    - 请在 **bash环境** 下执行此步骤
-```
 
 ```bash
 # 判断python版本，并为不符合条件的python环境安装python 3.7.3的虚拟环境，命名为python-sdk
