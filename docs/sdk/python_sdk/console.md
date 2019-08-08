@@ -122,7 +122,7 @@ receipt output : ()
     
     - 采用创建帐号的命令创建帐号后，若需作为默认帐号使用，注意修改client_config.py的 ``account_keyfile`` 和 ``account_password`` 配置项
     - 账户名不可超过240个字符
-    - 若 ``account_password`` 中包含非法字符，请在 ``account_password`` 周围加上单引号，否则无法解析
+    - 若 ``account_password`` 中包含特殊字符，请在 ``account_password`` 周围加上单引号，否则无法解析
 ```
 
 ```bash

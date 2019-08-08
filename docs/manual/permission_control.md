@@ -12,10 +12,10 @@
 本文档分别对以下功能进行权限控制的操作介绍：
 - [授权账户为链管理员](./permission_control.html#id6)
 - [授权账户为系统管理员](./permission_control.html#id7)
-  - [授权部署合约和创建用户表](./permission_control.html#id8)
-  - [授权利用CNS部署合约](./permission_control.html#cns)
-  - [授权管理节点](./permission_control.html#id9)
-  - [授权修改系统参数](./permission_control.html#id10)
+- [授权部署合约和创建用户表](./permission_control.html#id8)
+- [授权利用CNS部署合约](./permission_control.html#cns)
+- [授权管理节点](./permission_control.html#id9)
+- [授权修改系统参数](./permission_control.html#id10)
 - [授权账户写用户表](./permission_control.html#id11)
 
 ## 环境配置  
