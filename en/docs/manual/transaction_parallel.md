@@ -1,6 +1,6 @@
-# Parallel transaction
+# Parallel contract
 
-FISCO BCOS provides development structure for parallelable contract. Contract developed under the structure regulation can be parallelly executed by nodes of FISCO BCOS. The advantages of parallel contract include:
+FISCO BCOS provides development structure for parallel contract. Contract developed under the structure regulation can be parallelly executed by nodes of FISCO BCOS. The advantages of parallel contract include:
 
 - high TPS: multiple independent transaction being executed at the same time can utilize the CPU resources to the most extent and reach high TPS
 
