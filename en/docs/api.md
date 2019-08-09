@@ -848,7 +848,7 @@ Executes a new message call immediately without creating a transaction on the bl
 - `object`: - result object
     - `currentBlockNumber`: `string` - the current block number  
     - `output`: `string` - result           
-    - `status`: `string` - status              
+    - `status`: `string` - status value of the message(the same as transaction status)              
 - Example          
 ```
 // Request

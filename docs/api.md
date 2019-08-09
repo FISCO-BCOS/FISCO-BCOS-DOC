@@ -846,7 +846,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 - `object`: - 执行的结果
     - `currentBlockNumber`: `string` - 当前区块高度  
     - `output`: `string` - 请求结果           
-    - `status`: `string` - 交易状态           
+    - `status`: `string` - 请求状态（与交易状态码一致）           
 - 示例          
 ```
 // Request
