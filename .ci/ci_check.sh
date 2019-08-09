@@ -10,9 +10,9 @@ function check_PR_limit()
 {
     local files=$(git diff --stat HEAD^ | grep docs | wc -l)
     if [ $(($files%2)) == 0 ] ; then
-        echo "Modified files is including cn an en."
+        echo "Modified files is including cn and en."
     else
-        LOG_ERROR "modify ${files} files, limit is ${file_limit}"
+        LOG_ERROR "Modified files should include cn and en"
         exit 1
     fi
 }
