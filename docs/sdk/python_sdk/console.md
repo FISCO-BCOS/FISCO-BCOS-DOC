@@ -5,9 +5,12 @@
 ```eval_rst
 .. note::
 
-    - Python SDK提供的控制台目前正处于个人开发者体验阶段，提供的功能较少，若有完善的控制台体验需求，请使用 `Java版本控制台 <../../manual/console.html>`_ 
+    - **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Web3SDK <../java_sdk.html>`_
     - 安装Java版本控制台可参考 `这里 <../../installation.html>`_
+    - windows环境下执行console.py请使用 ``.\console.py`` 或者 ``python console.py``
+    
 ```
+
 
 ## 常用命令
 
@@ -1000,6 +1003,13 @@ INFO >> getTotalTransactionCount
 ### getBlockByNumber
 
 根据块高查询区块：
+```bash
+$ ./console.py getBlockByNumber [block_number] [True/False]
+```
+参数包括：
+- block_number：区块高度
+- True/False: 可选，True表明返回的区块信息内包含具体的交易信息；False表明返回的区块内仅包含交易哈希
+
 
 ```bash
 $ ./console.py getBlockByNumber 0
@@ -1044,6 +1054,13 @@ INFO >> getBlockHashByNumber
 
 根据区块哈希获取区块信息：
 
+```
+$ ./console.py getBlockByHash [block_hash] [True/False]
+```
+参数包括：
+- block_hash：区块哈希
+- True/False: 可选，True表明返回的区块内包含交易具体信息；False表明返回的区块仅包含交易哈希
+
 ```bash
 $ ./console.py getBlockByHash 0xff1404962c6c063a98cc9e6a20b408e6a612052dc4267836bb1dc378acc6ce04
 INFO >> user input : ['getBlockByHash', '0xff1404962c6c063a98cc9e6a20b408e6a612052dc4267836bb1dc378acc6ce04']
@@ -1080,7 +1097,15 @@ INFO >> getCode
 ### getTransactionByHash
 
 根据交易哈希获取交易信息：
-[getTransactionByHash] [hash]
+```
+./console.py getTransactionByHash [hash] [contract_name]
+```
+
+参数包括:
+- hash: 交易哈希
+- contract_name：可选，该交易相关的合约名，若输入该参数，会解析返回交易的具体内容
+
+
 ```bash
 $ ./console.py getTransactionByHash 0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91                     
 INFO >> user input : ['getTransactionByHash', '0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91']
@@ -1102,7 +1127,13 @@ INFO >> getTransactionByHash
 ### getTransactionReceipt
 
 根据交易哈希获取交易回执信息：
-[getTransactionReceipt] [hash]
+```bash
+./console.py getTransactionReceipt [hash] [contract_name]
+```
+参数包括：
+- hash：交易哈希
+- contract_name：可选，该交易相关的合约名，若输入该参数，会解析交易和回执的具体内容
+
 ```bash
 $ ./console.py getTransactionReceipt 0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91
 INFO >> user input : ['getTransactionReceipt', '0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91']
@@ -1126,7 +1157,15 @@ INFO >> getTransactionReceipt
 ### getTransactionByBlockHashAndIndex
 
 根据区块哈希和交易索引查询交易信息：
-[getTransactionByBlockHashAndIndex] [blockHash] [transactionIndex]
+
+```bash
+./console.py getTransactionByBlockHashAndIndex [blockHash] [transactionIndex] [contract_name]
+```
+参数包括：
+- blockHash: 交易所在的区块哈希
+- transactionIndex：交易索引
+- contract_name：可选，该交易相关的合约名，若输入该参数，会解析返回交易的具体内容
+
 ```bash
 $  ./console.py getTransactionByBlockHashAndIndex 0x3912605dde5f7358fee40a85a8b97ba6493848eae7766a8c317beecafb2e279d 0
 
@@ -1151,7 +1190,14 @@ INFO >> getTransactionByBlockHashAndIndex
 ### getTransactionByBlockNumberAndIndex
 
 根据块高和交易索引查询交易信息：
- [getTransactionByBlockNumberAndIndex] [blockNumber] [transactionIndex]
+```
+$ ./console.py getTransactionByBlockNumberAndIndex [blockNumber] [transactionIndex] [contract_name]
+```
+参数包括：
+- blockNumber：交易所在的区块块高
+- transactionIndex：交易索引
+- contract_name：可选，该交易相关的合约名，若输入该参数，会解析返回交易的具体内容
+
  ```bash
 $ ./console.py getTransactionByBlockNumberAndIndex 1 0
 INFO >> user input : ['getTransactionByBlockNumberAndIndex', '1', '0']
@@ -1173,7 +1219,7 @@ INFO >> getTransactionByBlockNumberAndIndex
 ### getSystemConfigByKey
 
 获取系统配置信息：
-[getSystemConfigByKey] [tx_count_limit/tx_gas_limit]
+
 ```bash
 # 获取区块可打包最大交易数目
 $ ./console.py getSystemConfigByKey tx_count_limit
