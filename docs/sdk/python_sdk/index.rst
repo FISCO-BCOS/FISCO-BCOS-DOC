@@ -10,8 +10,6 @@ Python SDK
 
     **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Web3SDK <../java_sdk.html>`_
 
-
-
 .. admonition:: **主要特性**
 
     - 提供调用FISCO BCOS `JSON-RPC <../../api.html>`_ 的Python API
