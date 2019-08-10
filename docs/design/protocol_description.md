@@ -91,7 +91,9 @@ v2.0.0-rc2以前的P2PMessage定义请[参考这里](https://fisco-bcos-document
 3. 数据包通过protocolID所在的16位二进制数值来区分请求包和响应包，大于0为请求包，小于0为相应包。
 4. 目前AMOP使用的packetType有`SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`。
 
-### ChannelMessage v1
+### ChannelMessage v2
+
+[ChannelMessage v1 请参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/design/protocol_description.html#channelmessage-v1)
 
 | 字段   | 类型         |长度(Byte)| 描述 |
 | :----- | :----------- |:---| :-------------------|
@@ -117,13 +119,14 @@ AMOP消息包继承ChannelMessage包机构，在data字段添加了自定义内�
 | 类型    |包体| 描述       | 解释 |
 | :------ |:----| :------------ | :-------- |
 | 0x12    |JSONRPC 2.0格式| RPC接口消息包  | SDK->节点 |
-| 0x13    |0或1| 心跳包        |  0:SDK->节点，1:节点->SDK|
+| 0x13    |json格式心跳包`{"Heartbeat":"0"}`| 心跳包        |  0:SDK->节点，1:节点->SDK|
+| 0x14    |json格式的协议版本协商| 握手包    |  SDK->节点的包体`{"MinimumSupport":version,"MaximumSupport":version,"ClientType":"client type , java or python or nodejs, with SDK version"}`,节点->SDK的包体`{"Protocol":version,"NodeVersion":"fisco-bcos version"` |
 | 0x30    |AMOP消息包包体| AMOP请求包    | SDK<->节点，双向 |
 | 0x31    |失败的AMOP消息的包体| AMOP失败响应包    | 节点->SDK或节点->节点 |
 | 0x32    |json数组，存储SDK监听的Topics| 上报Topic信息 | SDK->节点 |
 | 0x35    |AMOP消息包包体| AMOP多播消息  | 节点->节点 |
 | 0x1000  |json格式的交易上链通知| 交易上链回调  | 节点->SDK |
-| 0x1001  |以`,`分割的群组ID和区块高度| 区块高度通知  | 节点->SDK |
+| 0x1001  |json格式的区块上链通知`{"GroupID":"groupID","BlockNumber":"blockNumber"}`| 区块高度通知  | 节点->SDK |
 
 #### 错误码
 
