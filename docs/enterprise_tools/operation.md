@@ -245,7 +245,7 @@ $./generator --add_group ./meta/group.2.genesis ./data
 
 ## download_fisco
 
-使用--download_fisco可以指定的目录下下载`fisco-bcos`二进制文件。
+使用--download_fisco可以指定的目录下下载`fisco-bcos`二进制文件，国内用户可以使用`--cdn`命令从cdn下载。
 
 使用示例:
 
@@ -253,16 +253,28 @@ $./generator --add_group ./meta/group.2.genesis ./data
 $./generator --download_fisco ./meta
 ```
 
+或
+
+```bash
+$./generator --download_fisco ./meta --cdn
+```
+
 执行完成后会在./meta文件夹下下载`fisco-bcos`可执行二进制文件
 
 ## download_console
 
-使用--download_console可以指定的目录下下载并配置控制台。
+使用--download_console可以指定的目录下下载并配置控制台，国内用户可以使用`--cdn`命令从cdn下载。。
 
 使用示例:
 
 ```bash
 $./generator --download_console ./meta
+```
+
+或
+
+```bash
+$./generator --download_console ./meta --cdn
 ```
 
 执行完成后会在./meta文件夹下根据`node_deployment.ini`完成对控制台的配置
