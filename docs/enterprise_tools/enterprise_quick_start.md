@@ -212,12 +212,16 @@ ls ./tmp_one_click
 │   ├── node # A机构生成的节点，多机部署时推送至对应服务器即可
 │   ├── node_deployment.ini # A机构的节点配置信息
 │   └── sdk # A机构的sdk或控制台配置文件
-└── agencyB
-    ├── agency_cert
-    ├── generator-agency
-    ├── node
-    ├── node_deployment.ini
-    └── sdk
+├── agencyB
+|   ├── agency_cert
+|   ├── generator-agency
+|   ├── node
+|   ├── node_deployment.ini
+|   └── sdk
+|── ca.crt # 链证书
+|── ca.key # 链私钥
+|── group.1.genesis #群组1创世区块
+|── peers.txt # 节点的peers.txt信息
 ```
 
 ### 启动节点
