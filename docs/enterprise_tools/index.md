@@ -70,8 +70,8 @@ FISCO BCOS generator从上述背景出发，根据灵活、安全、易用、对
    :hidden:
    :maxdepth: 1
 
-   installation.md
    enterprise_quick_start.md
+   installation.md
    config.md
    operation.md
 ```
