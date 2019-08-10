@@ -185,8 +185,8 @@ ls ./dir_chain_ca
 
 ```bash
 # the above order has explained
-# From left to right,  they are chain's certificate, chain's private key, and certificate configuration file.
-ca.crt  ca.key   cert.cnf
+# From left to right,  they are chain's certificate, and chain's private key.
+ca.crt  ca.key
 ```
 
 ## AgencyA, B to build group 1
@@ -214,8 +214,8 @@ ls dir_agency_ca/agencyA/
 ```
 
 ```bash
-# From left to right, they are agency's certificate, agency's private key, chain's certificate, certificate configuration file.
-agency.crt  agency.key  ca.crt  cert.cnf
+# From left to right, they are agency's certificate, and agency's private key
+agency.crt  agency.key  ca.crt
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency's working directory.
@@ -586,8 +586,8 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # command interpretation
-# From left to right, they are agency's certificate, agency's private key, chain's certificate, certificate configuration file
-agency.crt  agency.key  ca.crt  cert.cnf
+# From left to right, they are agency's certificate, agency's private key, and chain's certificate
+agency.crt  agency.key  ca.crt
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency’s working directory.

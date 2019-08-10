@@ -19,7 +19,7 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 此操作要求用户具有sudo权限。
 
 ```bash
-cd generator && bash ./scripts/install.sh
+cd ~/generator && bash ./scripts/install.sh
 ```
 
 检查是否安装成功，若成功，输出 usage: generator xxx
@@ -28,7 +28,7 @@ cd generator && bash ./scripts/install.sh
 ./generator -h
 ```
 
-**拉取节点二进制**
+**获取节点二进制**
 
 拉取最新fisco-bcos二进制文件到meta中
 
@@ -186,8 +186,8 @@ ls ./dir_chain_ca
 
 ```bash
 # 上述命令解释
-# 从左至右分别为链证书、链私钥、证书配置文件
-ca.crt  ca.key   cert.cnf
+# 从左至右分别为链证书、链私钥
+ca.crt  ca.key
 ```
 
 ## 机构A、B构建群组1
@@ -216,8 +216,8 @@ ls dir_agency_ca/agencyA/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
-agency.crt  agency.key  ca.crt  cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书
+agency.crt  agency.key  ca.crt
 ```
 
 发送链证书、机构证书、机构私钥至机构A，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
@@ -589,8 +589,8 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
-agency.crt  agency.key  ca.crt  cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书
+agency.crt  agency.key  ca.crt
 ```
 
 发送链证书、机构证书、机构私钥至机构C，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
@@ -879,7 +879,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需从启节点。
+当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
 
 重启机构C节点:
 
@@ -897,8 +897,10 @@ bash ~/generator-C/nodeC/start_all.sh
 
 注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，用户可以直接启动控制台，启动前请确保已经安装java
 
+国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
+
 ```bash
-./generator --download_console ./
+./generator --download_console ./ --cdn
 ```
 
 ### 查看机构C节点4信息
