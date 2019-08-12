@@ -220,7 +220,7 @@ ls ./tmp_one_click
 |   └── sdk
 |── ca.crt # 链证书
 |── ca.key # 链私钥
-|── group.1.genesis #群组1创世区块
+|── group.1.genesis # 群组1创世区块
 |── peers.txt # 节点的peers.txt信息
 ```
 

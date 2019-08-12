@@ -205,7 +205,7 @@ ls ./tmp_one_click
 |   └── sdk
 |── ca.crt # chain certificate
 |── ca.key # chain private key
-|── group.1.genesis # group one's init block
+|── group.1.genesis # group one's genesis block
 |── peers.txt # node's peers.txt
 ```
 
