@@ -6,15 +6,6 @@
 
 本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
 
-```eval_rst
-.. important::
-
-    一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，可以尝试用以下命令对meta文件夹进行清理:
-
-    - rm ./meta/cert_*
-    - rm -rf ./meta/node_*
-```
-
 ## 下载安装
 
 **下载**
