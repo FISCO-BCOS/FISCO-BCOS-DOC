@@ -27,9 +27,15 @@
 
    通过gradle或maven引入SDK到java应用
 
-   gradle:
+   gradle: (官方提供的spring boot 项目使用此方案，在build.gradle 文件中)
 ```bash
 compile ('org.fisco-bcos:web3sdk:2.0.4')
+
+或
+dependencies {
+  compile 'org.fisco-bcos:web3sdk:2.0.5'
+}
+
 ```
    maven:
 ``` xml
@@ -85,7 +91,7 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
                                         <property name="groupId" value="1" /> <!-- 群组的groupID -->
                                         <property name="connectionsStr">
                                                 <list>
-                                                        <value>127.0.0.1:20200</value>  <!-- IP:channel_port -->
+                                                        <value>127.0.0.1:20200</value>  <!-- IP:channel_port  如果是生产环境，填写公网ip -->
                                                         <value>127.0.0.1:20201</value>
                                                 </list>
                                         </property>
@@ -102,7 +108,7 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
                         </list>
                 </property>
         </bean>
-
+         
         <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
                 <property name="groupId" value="1" /> <!-- 配置连接群组1 -->
                 <property name="agencyName" value="fisco" /> <!-- 配置机构名 -->
