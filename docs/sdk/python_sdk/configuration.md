@@ -27,7 +27,7 @@
 
 ## 通信配置
 
-- **client_protocol**：Python SDK与节点通信协议，包括`rpc`和`channel`选项，前者使用JSON-RPC接口访问节点，后者使用Channel访问节点，需要配置证书，默认为`rpc`
+- **client_protocol**：Python SDK与节点通信协议，包括`rpc`和`channel`选项，前者使用JSON-RPC接口访问节点，后者使用Channel访问节点，需要配置证书，默认为`channel`
 - **remote_rpcurl**：采用**rpc**通信协议时，节点的rpc IP和端口，参考[这里](../../manual/configuration.html#rpc)获取节点RPC信息，默认为`http://127.0.0.1:8545`，**如采用channel协议，可以留空**
 - **channel_host**：采用channel协议时，节点的channel IP地址，参考[这里](../../manual/configuration.html#rpc)获取节点Channel信息，默认为`127.0.0.1`，**如采用rpc协议通信，可以留空**
 - **channel_port**：节点的channel 端口，默认为`20200`，**如采用rpc协议通信，可以留空**
@@ -64,7 +64,7 @@ class client_config:
     groupid = 1  #群组ID，和要通信的节点*必须*一致，如和其他群组通信，修改这一项，或者设置bcosclient.py里对应的成员变量
     logdir="bin/logs" #默认日志输出目录，该目录必须先建立
     #---------client communication config--------------
-    client_protocol = "rpc"  # or PROTOCOL_CHANNEL to use channel prototol
+    client_protocol = "channel"  # or PROTOCOL_CHANNEL to use channel prototol
     #client_protocol = PROTOCOL_CHANNEL
     remote_rpcurl = "http://127.0.0.1:8545"  # 采用rpc通信时，节点的rpc端口,和要通信的节点*必须*一致,**如采用channel协议通信，这里可以留空**
     channel_host="127.0.0.1" #采用channel通信时，节点的channel ip地址,**如采用rpc协议通信，这里可以留空**

@@ -21,15 +21,17 @@
 - FISCO BCOS节点：请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建
 
 
-### 拉取源代码
+### 初始化环境(若python环境符合要求，可跳过)
+
+#### **Linux环境初始化**
+
+**拉取源代码**
 
 ```bash
 git clone https://github.com/FISCO-BCOS/python-sdk
 ```
 
-### 初始化环境(若python环境符合要求，可跳过)
-
-#### **Linux环境初始化**
+**配置环境**
 
 ```eval_rst
 .. note::
@@ -58,21 +60,38 @@ source ~/.bashrc && pyenv activate python-sdk && pip install --upgrade pip
 
 **安装依赖软件**
 
-- 直接安装`python-3.7.3`和`git`软件，点击[这里](https://github.com/ethereum/solidity/releases/download/v0.4.25/solidity_0.4.25.tar.gz)下载Windows版本solc。
+
+```eval_rst
+.. note::
+    - Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools"解决方法: https://visualstudio.microsoft.com/downloads （注意选择vs 2005即14.0版）或 https://pan.baidu.com/s/1ZmDUGZjZNgFJ8D14zBu9og 提取码: zrby
+
+    - solc编译器下载成功后，解压，将其中的 ``solc.exe`` 文件复制 ``${python-sdk}\bin`` 目录下，若python-sdk路径为 ``D:\\open-source\\python-sdk`` , 则 ``solc.exe`` 文件复制路径为 ``D:\\open-source\\python-sdk\\bin\\solc.exe`` 
+```
+
+- 直接安装[Python-3.7.x](https://www.python.org/downloads/release/python-373/)和[git](https://git-scm.com/download/win)软件
+python环境变量配置可参考[这里](https://jingyan.baidu.com/article/b0b63dbff271e24a4830708d.html)
+
 - [Visual C++ 14.0库](https://visualstudio.microsoft.com/downloads)
 
-> (注：Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools"解决方法: https://visualstudio.microsoft.com/downloads （注意选择vs 2005即14.0版）或 https://pan.baidu.com/s/1ZmDUGZjZNgFJ8D14zBu9og 提取码: zrby)
+- 下载Windows版本solc, 点击[这里](https://github.com/ethereum/solidity/releases/download/v0.4.25/solidity-windows.zip)下载
 
-- python环境变量配置可参考[这里](https://jingyan.baidu.com/article/b0b63dbff271e24a4830708d.html)
 
-**下载并配置solc编译器**
+**拉取源代码**
+
+打开 git，在任意目录执行如下命令
+```bash
+git clone https://github.com/FISCO-BCOS/python-sdk
+```
+
+
+**配置solc编译器**
 
 修改`client_config.py.template`，配置`solc`编译器路径，solc二进制下载请参考`bcos_solc.py`中的描述，并将`client_config.py.template`拷贝为`client_config.py`。
 
 ```bash
 # 修改client_config.py.template: 
-# 配置solc编译器路径，若solc存放路径为D:\open-source\python-sdk\bin\solc.exe，则solc_path配置如下：
-solc_path = "D:\open-source\python-sdk\bin\solc.exe"
+# 配置solc编译器路径，若solc存放路径为D:\\open-source\\python-sdk\\bin\\solc.exe，则solc_path配置如下：
+solc_path = "D:\\open-source\\python-sdk\\bin\\solc.exe"
 
 # 将client_config.py.template拷贝到client_config.py
 ```
@@ -108,36 +127,27 @@ npm install solc@v0.4.25
 若没有执行以上初始化步骤，需要将`contracts/`目录下的`sol`代码手动编译成`bin`和`abi`文件并放置于`contracts`目录，才可以部署和调用相应合约。合约编译可以使用[remix](https://remix.ethereum.org)
 
 
-## SDK使用示例
+## 配置Channel通信协议
 
-```eval_rst
-.. note::
-    windows环境下执行console.py请使用 ``.\console.py`` 或者 ``python console.py`` 
-```
-
-
-```bash
-# 查看SDK使用方法
-./console.py usage
-
-# 获取节点版本
-./console.py getNodeVersion
-```
-
-## 使用Channel通信协议
-
-Python SDK支持使用[Channel协议](../../design/protocol_description.html#channelmessage)与FISCO BCOS节点通信，通过SSL加密通信保障SDK与节点通信的机密性。
+Python SDK支持使用[Channel协议](../../design/protocol_description.html#channelmessage-v1)与FISCO BCOS节点通信，通过SSL加密通信保障SDK与节点通信的机密性。
 
 设SDK连接的节点部署在目录`~/fisco/nodes/127.0.0.1`目录下，则通过如下步骤使用Channel协议：
 
-**修改Python SDK配置**
+**配置Channel信息**
+
+在节点目录下的 config.ini 文件中获取 channel_listen_port, 这里为20200  
+```bash
+[rpc]
+    listen_ip=0.0.0.0
+    channel_listen_port=20200
+    jsonrpc_listen_port=8545
+```
+    
+切换到python-sdk目录，修改 client_config.py 文件中`channel_host`为实际的IP，`channel_port`为上步获取的`channel_listen_port`：
 
 ```bash
-# 切换到python-sdk目录
-cd ~/fisco/python-sdk
-
-# 修改通信协议为channel
-sed -i "s/client_protocol = \"rpc\"/client_protocol = \"channel\"/g" client_config.py
+channel_host = "127.0.0.1"
+channel_port = 20200
 ```
 
 **配置证书**
@@ -147,6 +157,11 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* bin/
 ```
 
 **使用Channel协议访问节点**
+
+```eval_rst
+.. note::
+    windows环境下执行console.py请使用 ``.\console.py`` 或者 ``python console.py``
+```
 
 ```bash
 # 获取FISCO BCOS节点版本号
