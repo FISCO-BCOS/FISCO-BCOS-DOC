@@ -248,7 +248,7 @@ contract Asset {
 ```bash
 # 切换到fisco/console/目录
 $ cd ~/fisco/console/
-# 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
+# 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名（新版sdk 使用的包名为：org.fisco.bcos.solidity;）
 $ ./sol2java.sh org.fisco.bcos.asset.contract
 ```
 
@@ -298,7 +298,7 @@ public class Asset extends Contract {
 }
 ```
 
-其中load与deploy函数用于构造Asset对象，其他接口分别用来调用对应的solidity合约的接口，详细使用在下文会有介绍。
+其中load与deploy函数用于构造Asset对象， deploy 是在合约第一次部署时候调用，load是载入指定合约操作调用的方法。其他接口分别用来调用对应的solidity合约的接口，详细使用在下文会有介绍。
 
 ## SDK配置
 
@@ -366,6 +366,11 @@ repositories {
 
 ```java
 compile ('org.fisco-bcos：web3sdk：2.0.4')
+或者
+dependencies {
+	
+  compile 'org.fisco-bcos:web3sdk:2.0.5'
+}
 ```
 
 ### 证书与配置文件
