@@ -123,7 +123,7 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 
 备注：刚下载时候项目，有些插件可能没有安装，代码会报错。
  当你第一次在IDEA上使用lombok这个工具包时，如果你没有在setting--->Plugins-->Marketplace-->安装Lombok plugin
-　　　　　　同时设置 Setting -> Compiler -> Annotation Processors -> Enable annotation processing勾选。
+　　　　　　同时设置 `Setting -> Compiler -> Annotation Processors -> Enable annotation processing`勾选。
 　　　　　　这样操作才能正常使用lombok下的工具类方法
 
 ### Spring Boot项目配置
