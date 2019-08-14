@@ -117,7 +117,9 @@ contract TableTest {
         return count;
     }
 
-    // 查询数据
+    // 查询数据，备注：如果开发时候说是超过三个以上返回值，可能会报错，原因：总的传参过多
+    // 解决方法有两种：1、减少返回值 2、返回值可以用struct，合约开头加上这个：pragma experimental ABIEncoderV2;
+
     function select(string name) public constant returns(bytes32[], int[], bytes32[]){
         TableFactory tf = TableFactory(0x1001);
         Table table = tf.openTable("t_test");
