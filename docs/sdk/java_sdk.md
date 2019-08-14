@@ -102,7 +102,7 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
                         </list>
                 </property>
         </bean>
-
+ <!-- 如果区块链底层存在多个群组， 但我们只需要配置一个即可，表示当前sdk 连接的群组是哪一个-->
         <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
                 <property name="groupId" value="1" /> <!-- 配置连接群组1 -->
                 <property name="agencyName" value="fisco" /> <!-- 配置机构名 -->
