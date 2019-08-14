@@ -44,6 +44,8 @@ cd fisco-bcos-browser/deploy
 前端服务端口：sed -i "s/8081/${your_web_port}/g" common.properties
 
 例子（将数据库IP由127.0.0.1改为0.0.0.0）：sed -i "s/127.0.0.1/0.0.0.0/g" application.yml
+
+建议直接手动修改 common.properties 文件，采用命令模式修改较为麻烦。
 ```
 
 ## 4、部署
@@ -103,6 +105,9 @@ export JAVA_HOME=/software/jdk1.8.0_121
 export PATH=$JAVA_HOME/bin:$PATH 
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ```
+备注说明：如果操作此步骤 使用 java -version 命令查看，依然是opensdk 版本，那么需要将指定的版本移出。
+
+使用命令whereis java、which java，确认java 位置，将命令下弹出java路径文件夹等移出，最后使用命令 source /etc/profile，重新载入配置。
 
 ### 7.2 Python request库安装
 
