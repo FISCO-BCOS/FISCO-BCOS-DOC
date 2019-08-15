@@ -69,7 +69,7 @@ Modify service config (except for the unchanged parts):
 Database server  should be prepared in advance. The build method can be referred  in Appendix.
 
 ```shell
-modify current server port: sed -i "s/8088/${your_server_port}/g" application.yml
+modify current server port: sed -i "s/5101/${your_server_port}/g" application.yml
 modify database IP: sed -i "s/127.0.0.1/${your_db_ip}/g" application.yml
 modify database user name: sed -i "s/dbUsername/${your_db_account}/g" application.yml
 modify database password: sed -i "s/dbPassword/${your_db_password}/g" application.yml
