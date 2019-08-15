@@ -122,8 +122,8 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
 备注：刚下载项目时，有些插件可能没有安装，代码会报错。当你第一次在IDEA上使用lombok这个工具包时，请按以下步骤操作：
--进入setting->Plugins->Marketplace->选择安装Lombok plugin 　　　　　　
--进入设置Setting-> Compiler -> Annotation Processors -> 勾选Enable annotation processing。
+- 进入setting->Plugins->Marketplace->选择安装Lombok plugin 　　　　　　
+- 进入设置Setting-> Compiler -> Annotation Processors -> 勾选Enable annotation processing。
 
 ### Spring Boot项目配置
 提供Spring Boot项目中关于`application.yml`的配置如下所示。
