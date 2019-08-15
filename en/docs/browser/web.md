@@ -55,8 +55,8 @@ And then modify nginx.conf:
 
 ```Nginx
     server {
-            listen       8081 default_server;   #Step 1, web nginx monitoring port
-            server_name  192.168.0.1;         #Step 2, web address, can be configured as domain name
+            listen       5100 default_server;   #Step 1, web nginx monitoring port
+            server_name  192.168.0.1;           #Step 2, web address, can be configured as domain name
             location / {
                     root    /data/app/web/dist;   #Step 2, web file route
                     index  index.html index.htm;
@@ -67,7 +67,7 @@ And then modify nginx.conf:
             include /etc/nginx/default.d/*.conf;
 
             location /api {
-                    proxy_pass    http://192.168.0.1:8088/;    #Step 3, IP and port of server (fisco-bcos-browser server)
+                    proxy_pass    http://192.168.0.1:5101/;    #Step 3, IP and port of server (fisco-bcos-browser server)
                	 	proxy_set_header		Host				$host;
                     proxy_set_header		X-Real-IP			$remote_addr;
                     proxy_set_header		X-Forwarded-For		$proxy_add_x_forwarded_for;
@@ -91,7 +91,7 @@ Execute command:
 2. nginx service had been granted the access privilege or not.
 
 (2) Access the Browser
-Open the browser, typing the url with the web port and IP configured by nginx. For example: the url of the above config file is `http:192.168.0.1:8081`
+Open the browser, typing the url with the web port and IP configured by nginx. For example: the url of the above config file is `http:192.168.0.1:5100`
 
 (3) Configure the groups
 Once you access the web pages, you may need to configure group (group IP same as build chain) firstly, an then configure nodes (within the group)to get the blockchain information..
