@@ -62,7 +62,7 @@ cd dist/conf
 
 数据库服务器，和数据库需要提前准备，创建方法可以参照附录。
 ```shell
-修改当前服务端口：sed -i "s/8088/${your_server_port}/g" application.yml
+修改当前服务端口：sed -i "s/5101/${your_server_port}/g" application.yml
 修改数据库IP：sed -i "s/127.0.0.1/${your_db_ip}/g" application.yml
 修改数据库用户名：sed -i "s/dbUsername/${your_db_account}/g" application.yml
 修改数据库密码：sed -i "s/dbPassword/${your_db_password}/g" application.yml
@@ -111,8 +111,11 @@ chmod +x *.sh
 ```shell
 gradle build
 ```
-执行后，出现下面错误。**请检查gradle版本，需要使用5.0以上版本。**
-`Could not find method annotationProcessor() for arguments [org.projectlombok:lombok:1.18.2] on object of type org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler.`
+执行后，出现下面错误。**请检查gradle版本，需要使用5.0以上版本。** 
+
+```
+Could not find method annotationProcessor() for arguments [org.projectlombok:lombok:1.18.2] on object of type org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler.
+```
 
 # 5. <a id="chapter-5"></a>附录
 

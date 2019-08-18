@@ -66,36 +66,7 @@ FISCO BCOS 目前有两类数据包格式，节点与节点间通信的数据包
 
 ![](../../images/node_management/message_type.png)
 
-### P2PMessage: v2.0.0-rc1
-
-v2.0.0-rc1 P2PMessage包头长度为12字节，消息包具体格式如下：
-
-![](../../images/node_management/p2p_message_rc1.png)
-
-| name       | type         | description                          |
-| :--------- | :----------- | :----------------------------------- |
-| length     | uint32_t     | 数据包长度，含包头和数据             |
-| groupID    | int8_t       | 群组ID，范围1-127                    |
-| ModuleID   | uint8_t      | 模块ID，范围1-255                    |
-| packetType | uint16_t     | 数据包类型，同一模块ID下的子协议标识 |
-| seq        | uint32_t     | 数据包序列号，每个数据包自增         |
-| data       | vector<byte> | 数据本身，长度为lenght-12            |
-
-模块ID划分如下：
-
-| ModuleID | message           |
-| :------- | :---------------- |
-| 1        | P2P的AMOP子模块   |
-| 2        | P2P的Topic子模块  |
-| 3~7      | P2P其他子模块预留 |
-| 8        | 共识的PBFT子模块  |
-| 9        | 区块同步模块      |
-| 10       | 交易池模块        |
-| 11       | 共识的Raft子模块  |
-| 12~255   | 其他模块预留      |
-
-
-### P2PMessage: v2.0.0-rc2
+### P2PMessage
 
 v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组**，且新增了**Version**字段来支持其他特性(如网络压缩)，包头大小为16字节，v2.0.0-rc2的网络数据包结构如下：
 
@@ -111,7 +82,7 @@ v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组*
 | Seq        | uint32_t     | 数据包序列号，每个数据包自增         |
 | Data       | vector<byte> | 数据本身，长度为lenght-12           |
 
-
+v2.0.0-rc2以前的P2PMessage定义请[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc3/docs/design/protocol_description.html#p2pmessage-v2-0-0-rc1)
 
 **补充**
 
@@ -120,33 +91,44 @@ v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组*
 3. 数据包通过protocolID所在的16位二进制数值来区分请求包和响应包，大于0为请求包，小于0为相应包。
 4. 目前AMOP使用的packetType有`SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`。
 
-### ChannelMessage
+### ChannelMessage v1
 
-| name   | type         | description                                  |
-| :----- | :----------- | :------------------------------------------- |
-| lenght | uint32_t     | 数据包长度，含包头和数据，最大长度为10M Byte |
-| type   | uint16_t     | 数据包类型                                   |
-| seq    | string       | 数据包序列号，32字节，SDK传入                |
-| result | int32_t      | 处理结果                                     |
-| data   | vector<byte> | 数据本身                                     |
+| 字段   | 类型         |长度(Byte)| 描述 |
+| :----- | :----------- |:---| :-------------------|
+| length | uint32_t     |4| 数据包长度，含包头和数据，大端 |
+| type   | uint16_t     |2| 数据包类型，大端          |
+| seq    | string       |32| 数据包序列号，32字节uuid|
+| result | int32_t      |4| 错误码，大端                |
+| data   | bytes |length-42| 数据包体，字节流           |
+
+#### AMOP消息包
+
+AMOP消息包继承ChannelMessage包机构，在data字段添加了自定义内容。包括`0x30,0x31,0x35,0x1001`
+
+||长度Byte|说明|
+|:--|:--|:--|
+|length|1|Topic的长度|
+|topic|length|topic名|
+
+#### 消息包类型
 
 数据包类型枚举值及其对应的含义如下：  
 
-| code    | message       | direction |
-| :------ | :------------ | :-------- |
-| 0x12    | RPC接口消息包  | SDK->节点 |
-| 0x13    | 心跳包        | SDK->节点 |
-| 0x30    | AMOP请求包    | SDK<->节点，双向 |
-| 0x31    | AMOP响应包    | SDK<->节点，双向 |
-| 0x32    | 上报Topic信息 | SDK->节点 |
-| 0x35    | AMOP多播消息  | 节点->节点 |
-| 0x1000  | 交易上链回调  | 节点->SDK |
-| 0x1001  | 区块高度通知  | 节点->SDK |
+| 类型    |包体| 描述       | 解释 |
+| :------ |:----| :------------ | :-------- |
+| 0x12    |JSONRPC 2.0格式| RPC接口消息包  | SDK->节点 |
+| 0x13    |0或1| 心跳包        |  0:SDK->节点，1:节点->SDK|
+| 0x30    |AMOP消息包包体| AMOP请求包    | SDK<->节点，双向 |
+| 0x31    |失败的AMOP消息的包体| AMOP失败响应包    | 节点->SDK或节点->节点 |
+| 0x32    |json数组，存储SDK监听的Topics| 上报Topic信息 | SDK->节点 |
+| 0x35    |AMOP消息包包体| AMOP多播消息  | 节点->节点 |
+| 0x1000  |json格式的交易上链通知| 交易上链回调  | 节点->SDK |
+| 0x1001  |以`,`分割的群组ID和区块高度| 区块高度通知  | 节点->SDK |
 
-处理结果枚举值及其对应的含义如下：
+#### 错误码
 
-| code | message    |
-| :--- | :--------- |
+| code | message   |
+| :--- | :---------|
 | 0    | 成功       |
 | 100  | 节点不可达 |
 | 101  | SDK不可达  |

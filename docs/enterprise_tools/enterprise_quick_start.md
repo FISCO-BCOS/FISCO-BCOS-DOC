@@ -6,13 +6,10 @@
 
 本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
 
-```eval_rst
-.. important::
 
-    一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，可以尝试用以下命令对meta文件夹进行清理:
-
-    - rm ./meta/cert_*
-    - rm -rf ./meta/node_*
+```eval_rst	
+.. important::	
+     一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，请清空meta文件夹。
 ```
 
 ## 下载安装
@@ -212,12 +209,16 @@ ls ./tmp_one_click
 │   ├── node # A机构生成的节点，多机部署时推送至对应服务器即可
 │   ├── node_deployment.ini # A机构的节点配置信息
 │   └── sdk # A机构的sdk或控制台配置文件
-└── agencyB
-    ├── agency_cert
-    ├── generator-agency
-    ├── node
-    ├── node_deployment.ini
-    └── sdk
+├── agencyB
+|   ├── agency_cert
+|   ├── generator-agency
+|   ├── node
+|   ├── node_deployment.ini
+|   └── sdk
+|── ca.crt # 链证书
+|── ca.key # 链私钥
+|── group.1.genesis # 群组1创世区块
+|── peers.txt # 节点的peers.txt信息
 ```
 
 ### 启动节点
