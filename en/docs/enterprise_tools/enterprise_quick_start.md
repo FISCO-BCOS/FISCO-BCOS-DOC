@@ -6,13 +6,10 @@ This chapter mainly uses the networking mode of deploying **3 organizations 2 gr
 
 This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](../tutorial/enterprise_quick_start.md).
 
-```eval_rst
-.. important::
 
-     When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can try to clean the meta folder with the following command:
-
-     - rm ./meta/cert_*
-     - rm -rf ./meta/node_*
+```eval_rst	
+.. important::	
+      When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can clean the meta folder. 
 ```
 
 ## Download and install
@@ -205,7 +202,7 @@ ls ./tmp_one_click
 |   └── sdk
 |── ca.crt # chain certificate
 |── ca.key # chain private key
-|── group.1.genesis # group one's init block
+|── group.1.genesis # group one's genesis block
 |── peers.txt # node's peers.txt
 ```
 

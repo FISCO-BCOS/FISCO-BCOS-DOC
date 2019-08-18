@@ -58,6 +58,7 @@ FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt
 Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ### Spring项目配置
+
 提供Spring项目中关于`applicationContext.xml`的配置下所示。
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -119,6 +120,10 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
   - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
+
+备注：刚下载项目时，有些插件可能没有安装，代码会报错。当你第一次在IDEA上使用lombok这个工具包时，请按以下步骤操作：
+- 进入setting->Plugins->Marketplace->选择安装Lombok plugin 　　　　　　
+- 进入设置Setting-> Compiler -> Annotation Processors -> 勾选Enable annotation processing。
 
 ### Spring Boot项目配置
 提供Spring Boot项目中关于`application.yml`的配置如下所示。
