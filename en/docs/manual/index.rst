@@ -9,6 +9,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    :maxdepth: 1
 
    get_executable.md
+   hardware_requirements.md
    build_chain.md
    certificates.md
    configuration.md
