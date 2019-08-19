@@ -67,35 +67,6 @@ FISCO BCOS currently has two types of data packet formats. The data packets comm
 
 ![](../../images/node_management/message_type.png)
 
-### P2PMessage: v2.0.0-rc1
-
-The header of v2.0.0-rc1 P2PMessage package contains 12 bytes. The basic form is:
-
-![](../../images/node_management/p2p_message_rc1.png)
-
-| name       | type         | description                          |
-| :--------- | :----------- | :----------------------------------- |
-| Length     | uint32_t     | Data packet length, including header and data             |
-| groupID    | int8_t       | Group ID, its range is 1-127                   |
-| ModuleID   | uint8_t      | Module ID，its range is 1-255                    |
-| packetType | uint16_t     | Data packet type, is the identifier of sub-protocol under the same module ID |
-| seq        | uint32_t     | Data packet serial number, increased by each packet        |
-| data       | vector<byte> | Data, its length is length-12            |
-
-The module ID is divided as follows:
-
-| ModuleID | message           |
-| :------- | :---------------- |
-| 1        | AMOP submodule of P2P   |
-| 2        | Topic submodule of P2P  |
-| 3~7      | reserve for other P2P submodules |
-| 8        | PBFT submodule in consensus  |
-| 9        | Block synchronization module     |
-| 10       | Transaction pool module        |
-| 11       | Raft submodule in consensus |
-| 12~255   | reserve for other modules      |
-
-
 ### P2PMessage: v2.0.0-rc2
 
 V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 32767 groups at most**. It has also increased **Version** field for other features (like network compression) with package header being 16 bytes. The network data package structure of v2.0.0-rc2 is as below:
@@ -112,7 +83,7 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 | Seq        | uint32_t     | data packet serial number, each increment itself         |
 | Data       | vector<byte> | data itself, length length-12           |
 
-
+For definitions of P2PMessage before v2.0.0-rc2, please [refer here.](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc3/docs/design/protocol_description.html#p2pmessage-v2-0-rc1)
 
 **Additional**
 
@@ -121,32 +92,45 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 3. The data packet distinguishes between request packet and response packet by the 16-bit binary value where the protocolID is located.  The data greater than 0 is the request packet, and less than 0 is the corresponding packet.
 4. The packetType currently used by AMOP include `SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`.
 
-### ChannelMessage
+### ChannelMessage v1
 
-| name   | type         | description                                  |
-| :----- | :----------- | :------------------------------------------- |
-| length| uint32_t     | Data packet length, including header and data, up to 10M Byte |
-| type   | uint16_t     | Data packet type                                   |
-| seq    | string       | Data packet serial number, 32 bytes, introduced by SDK                |
-| result | int          | Process result                                     |
-| data   | vector<byte> | Data                                     |
+| name   | type         |length(4Byte)| description                          |
+| :----- | :----------- |:----| :------------------------------------------- |
+| length| uint32_t      |4| Data packet length, including header and data|
+| type   | uint16_t     |2| Data packet type                                 |
+| seq    | string       |32| Data packet serial number, 32 bytes|
+| result | int          |4| Process result                                   |
+| data   | bytes |length-42| Data                                     |
 
-The packet type enumeration value and its corresponding description are as follows:
+#### AMOP Message Packet
 
-| code    | message       | direction |
-| :------ | :------------ | :-------- |
-| 0x12    | Ethereum message    | SDK->node |
-| 0x13    | Heartbeat packet        | SDK->node |
-| 0x30    | AMOP request packet    | SDK->node |
-| 0x31    | AMOP response packet    | SDK->node |
-| 0x32    | Report Topic information | SDK->node |
-| 0x10000 | Transaction on chain callback | node->SDK |
+AMOP message packages inherit the ChannelMessage package organization and add custom content to the data field. Includes `0x30, 0x31, 0x35, 0x1001.`
 
-The process result enumeration value and its corresponding description are as follows:
+|| Length Byte | Description|
+|:-- |:-- |:----|
+| Length of length | 1 | Topic|
+| topic | length | topic name|
+
+#### Message Packet Type
+
+Enumeration values of packet types and their corresponding meanings are as follows:
+
+| Type | Inclusion | Description | Interpretation|
+|:------ |:--------|:--------|:--------|
+| 0x12 | JSONRPC 2.0 format | RPC interface message package | SDK - > node|
+| 0x13 | 0 or 1 | Heart Packet | 0: SDK - > Node, 1: Node - > SDK|
+| 0x30 | AMOP message package package package package | AMOP request package | SDK<-> node, bidirectional|
+| 0x31 | Package of failed AMOP message | AMOP Failure Response Package | Node - > SDK or Node - > Node|
+| 0x32 | JSON array to store Topics | report Topic information | SDK - > nodes monitored by SDK|
+| 0x35 | AMOP Message Packet Package | AMOP Multicast Message | Node - > Node|
+| 0x1000 | JSON Format Transaction Uplink Notification | Transaction Uplink Callback | Node - > SDK|
+| 0x1001 | With `,`Split Group ID and Block Height'| Block Height Notification | Node - > SDK|
+
+#### Error code
 
 | code | message    |
 | :--- | :--------- |
-| 0    | successful       |
+| 0    | successful      |
 | 100  | node unreachable |
 | 101  | SDK unreachable |
 | 102  | time out       |

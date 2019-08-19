@@ -42,13 +42,13 @@ cd fisco-bcos-browser
 
  然后将其中./web/fisco-bcos-browser-front/目录中的dist目录放到/data/app/web目录下。
 
-**提示：**目录可以自定义指定，只需要nginx配置文件步骤2保持一致即可。
+**提示：** 目录可以自定义指定，只需要nginx配置文件步骤2保持一致即可。
 
 ### 2.3 修改nginx配置
 
 在./web/fisco-bcos-browser-front/doc文件下有nginx配置文件，直接可以拿来替换安装的nginx的配置文件nginx.conf；
 
-**注意**：如果按照附录安装的nginx，配置文件路径在/usr/local/nginx/conf/nginx.conf 。
+**注意：** 如果按照附录安装的nginx，配置文件路径在/usr/local/nginx/conf/nginx.conf 。
 
 然后修改nginx.conf；
 
@@ -58,8 +58,8 @@ cd fisco-bcos-browser
 
 ```Nginx
     server {
-            listen       8081 default_server;   #步骤1、前端nginx监听端口
-            server_name  192.168.0.1;         #步骤1、前端地址，可配置为域名
+            listen       5100 default_server;   #步骤1、前端nginx监听端口
+            server_name  192.168.0.1;           #步骤1、前端地址，可配置为域名
             location / {
                     root    /data/app/web/dist;   #步骤2、前端文件路径
                     index  index.html index.htm;
@@ -70,7 +70,7 @@ cd fisco-bcos-browser
             include /etc/nginx/default.d/*.conf;
 
             location /api {
-                    proxy_pass    http://192.168.0.1:8088/;    #步骤3、后端服务(fisco-bcos-browser server)地址及端口
+                    proxy_pass    http://192.168.0.1:5101/;    #步骤3、后端服务(fisco-bcos-browser server)地址及端口
                	 	proxy_set_header		Host				$host;
                     proxy_set_header		X-Real-IP			$remote_addr;
                     proxy_set_header		X-Forwarded-For		$proxy_add_x_forwarded_for;
@@ -92,7 +92,7 @@ cd fisco-bcos-browser
 2. nginx有没有添加用户权限。
 
 (2)、打开页面，页面url是nginx配置的前端端口和前端ip。
-例如:上面配置文件的url为   http:192.168.0.1:8081
+例如:上面配置文件的url为   http:192.168.0.1:5100
 
 (3)、打开页面后，配置群组（群组ip是搭链的群组ip），配置节点（该群组下节点），然后就可以查看具体数据了。
 

@@ -119,6 +119,10 @@ Configuration items of `applicationContext.xml`:
   - each group configures one or more nodes, set `listen_ip` and `channel_listen_port` of `[rpc]` in node config file **config.ini**.
 - channelService: configure the the group connected with SDK through the given group ID, which is in the configuration of groupChannelConnectionsConfig. SDK will be connected with each node of the group and randomly choose one node to send request.
 
+Note: Some plugins may not be installed when the project is downloading for the first time, and the code will report an error. When you first use the Lombok toolkit on IDEA, follow these steps:
+  - Enter settings->Plugins->Marketplace->Select to install Lombok plugin
+  - Enter settings->Compiler->Annotation Processors->Check Enable annotation processing
+
 ### Configuration of Spring Boot project
 The configuration of `application.yml` in Spring Boot is exemplified below.
 ```yml
