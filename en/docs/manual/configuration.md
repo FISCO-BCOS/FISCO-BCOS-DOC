@@ -7,32 +7,6 @@ FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers
 - `group.group_id.genesis`：group configurations file. All nodes in the group are consistent. After node launches, you cannot manually change the configuration including items like group consensus algorithm, storage type, and maximum gas limit, etc.
 - `group.group_id.ini`：group variable configuration file, including the transaction pool size, etc.. All configuration changes are effective after node restarts.
 
-
-## Hardware requirements
-
-```eval_rst
-.. note::
-    Since multiple nodes share network bandwidth, CPU, and memory resources, it is not recommended to configure too much nodes on one machine in order to ensure the stability of service.
-
-```
-
-The following table is a recommended configuration for single-group and single-node. Node consumes resources in a linear relationship with the number of groups. You can configure the number of nodes reasonably according to actual business requirement and machine resource.
-
-
-```eval_rst
-+----------+---------+---------------------------------------------+
-| configuration     | minimum | recommended                                    |
-+==========+=========+=============================================+
-| CPU      | 1.5GHz  | 2.4GHz                                      |
-+----------+---------+---------------------------------------------+
-| memory     | 1GB     | 8GB                                         |
-+----------+---------+---------------------------------------------+
-| core     | 1 core     | 4 cores                                         |
-+----------+---------+---------------------------------------------+
-| bandwidth     | 1Mb     | 10Mb                                        |
-+----------+---------+---------------------------------------------+
-```
-
 ## Main configuration file config.ini
 
 `config.ini` uses `ini` format. It mainly includes the configuration items like ** rpc, p2p, group, secure and log **.
@@ -65,11 +39,10 @@ RPC configuration example is as follows:
 
 The current version of FISCO BCOS must be configured with `IP` and `Port` of the connection node in the `config.ini` configuration. The P2P related configurations include:
 
--`listen_ip`: P2P listens for IP, to set `0.0.0.0` by default.
--`listen_port`: Node P2P listening port.
--`node.*`: All nodes `IP:port` which need to be connected to node.
+- `listen_ip`: P2P listens for IP, to set `0.0.0.0` by default. This option supports domain names, but suggests users who need to use it [manually compile source code](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2).  
+- `listen_port`: Node P2P listening port.  
+- `node.*`: All nodes `IP:port` which need to be connected to node.  
 - `enable_compress`: Enable network compression configuration option. Configuring to true, indicates that network compression is enabled. Configuring to false, indicates that network compression is disabled. For details on network compression, please refer to [here](../design/features/network_compress .md).
-
 
 P2P configuration example is as follows:
 
