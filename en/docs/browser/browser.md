@@ -40,7 +40,7 @@ Blockchain browser demonstrates the detail information of specific group on the 
 Data shown in the blockchain browser is synchronized with blockchain. To synchronize data, initialization configuration (adding group information and node information) is needed. So users have to run a FISCO BCOS instance and build groups before data synchronizing. [FISCO BCOS 2.0](https://github.com/FISCO-BCOS/FISCO-BCOS) has provided multiple convenient group building methods.
 
 1. For developers to experience and debug quickly, we recommend the script [build_chain](../installation.md).
-2. For enterprise applications,  [FISCO BCOS generator](../tutorial/enterprise_quick_start.md) is a  more considerable deployment tool.
+2. For enterprise applications,  [FISCO BCOS generator](../enterprise_tools/tutorial_one_click.md) is a  more considerable deployment tool.
 
 The distinguish of the above methods lie in that the script `build_chain` is for better and quicker building experience and it helps developers generate private key of each node in groups; deployment tool doesn't automatically generate private key for safety consideration, and business users need to generate and set by themselves.
 
