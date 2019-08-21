@@ -25,7 +25,7 @@
    storage_security.md
    guomi_crypto.md
    log_description.md
-   Privacy.md
+   privacy.md
 
 
 .. admonition:: 区块链部署
@@ -74,6 +74,8 @@
         + 通过配置拒绝与不安全的节点建立连接
     - `存储安全 <./storage_security.html>`_
         + 落盘加密，对节点存储的数据进行加密
+    - `隐私保护 <./privacy.html>`_
+        + 通过预编译合约，支持同态加密、群/环签名以及零知识证明
 
 
 .. admonition:: 其它
