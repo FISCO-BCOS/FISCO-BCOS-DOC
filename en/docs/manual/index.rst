@@ -21,7 +21,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    distributed_storage.md
    node_management.md
    permission_control.md
-   certificate_blacklist.md
+   certificate_list.md
    amop_protocol.md
    storage_security.md
    guomi_crypto.md
@@ -69,7 +69,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
         + Add/Remove members(nodes) of group
     - `Permission control <./permission_control.html>`_
         + Access control among accounts.
-    - `CA blacklist <./certificate_blacklist.html>`_
+    - `CA blacklist <./certificate_list.html>`_
         + Deny connection from certain node.
     - `Storage security <./storage_security.html>`_
         + Encrypt data during writing into disk
