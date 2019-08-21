@@ -4,7 +4,7 @@
 
 本章主要以部署**3机构2群组6节点**的组网模式，为用户讲解单机构一键部署企业级部署工具的使用方法。
 
-本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
+本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](./tutorial_detail_operation.md)。
 
 
 ```eval_rst	
@@ -102,7 +102,7 @@ cd ~/generator && bash ./scripts/install.sh
 
 ![](../../images/enterprise/one_click_step_1.png)
 
-使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](../enterprise_tools/config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
+使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](./config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
 
 切换到~/目录
 
@@ -653,6 +653,6 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 更多操作
 
-更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
+更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](./tutorial_detail_operation.md)。
 
 如果使用该教程遇到问题，请查看[FAQ](../faq.md)

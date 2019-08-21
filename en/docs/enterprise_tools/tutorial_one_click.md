@@ -4,8 +4,7 @@ The `one_click_generator.sh` script is a script that deploys a federated chain w
 
 This chapter mainly uses the networking mode of deploying **3 organizations 2 groups 6 nodes** to explain the use of enterprise-level deployment tools for single-button one-button deployment.
 
-This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](../tutorial/enterprise_quick_start.md).
-
+This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](./tutorial_one_click.md).
 
 ```eval_rst	
 .. important::	
@@ -87,7 +86,7 @@ First, complete the operation of group A and B to set up group 1, as shown in th
 
 ![](../../images/enterprise/one_click_step_1.png)
 
-Before use, the user needs to prepare a folder such as `tmp_one_click,` which has a directory of different organizations under the folder. Each agency directory needs to have a corresponding configuration file [```node_deployment.ini```]. ./enterprise_tools/config.md#node-deployment-ini). Before use, you need to ensure that the generator's meta folder has not been used.
+Before use, the user needs to prepare a folder such as `tmp_one_click,` which has a directory of different organizations under the folder. Each agency directory needs to have a corresponding configuration file [```node_deployment.ini```](./config.md#node-deployment-ini). Before use, you need to ensure that the generator's meta folder has not been used.
 
 Switch to ~/ directory
 
@@ -628,6 +627,6 @@ So far, we have completed all the operations in the build tutorial shown.
 
 ## More operations
 
-For more operations, refer to the [Operation Manual](./operation.md) or [Enterprise Tools Peer-to-Peer Deployment Tutorial](../tutorial/enterprise_quick_start.md).
+For more operations, refer to the [Operation Manual](./operation.md) or [Enterprise Tools Peer-to-Peer Deployment Tutorial](./tutorial_one_click.md).
 
 If you have problems with this tutorial, please check [FAQ](../faq.md)

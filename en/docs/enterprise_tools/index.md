@@ -70,8 +70,9 @@ Users agree to generate the Genesis Block and node configuration file folder and
    :hidden:
    :maxdepth: 1
 
+   tutorial_one_click.md
+   tutorial_detail_operation.md
    installation.md
-   enterprise_quick_start.md
    config.md
    operation.md
 ```

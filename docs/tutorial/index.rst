@@ -10,4 +10,3 @@
 
    key_concepts.md
    sdk_application.md
-   enterprise_quick_start.md
