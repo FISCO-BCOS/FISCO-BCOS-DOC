@@ -47,7 +47,7 @@ cd FISCO-BCOS
 git checkout master
 mkdir -p build && cd build
 # 开启隐私模块编译选项，CentOS请使用cmake3
-$ cmake -DCRYPTO_EXTENSION=ON ..
+cmake -DCRYPTO_EXTENSION=ON ..
 # 高性能机器可添加-j4使用4核加速编译
 make 
 ```
