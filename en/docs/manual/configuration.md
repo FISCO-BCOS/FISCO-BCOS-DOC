@@ -98,7 +98,7 @@ For preventing vice, FISCO BCOS allows nodes to configure untrusted node blackli
 
 > `crl.idx`: Blacklist node's Node ID, can get from `node.nodeid` file; `idx` is index of the blacklist node.
 
-For details of the blacklist, refer to [CA Blacklist].(./certificate_blacklist.md)
+For details of the blacklist, refer to [CA Blacklist].(./certificate_list.md)
 
 Blacklist configuration example is as follows:
 

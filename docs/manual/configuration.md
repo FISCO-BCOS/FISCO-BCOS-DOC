@@ -96,7 +96,7 @@ P2P配置示例如下：
 
 > `crl.idx`: 黑名单节点的Node ID, 节点Node ID可通过`node.nodeid`文件获取; `idx`是黑名单节点的索引。
 
-黑名单的详细信息还可参考[CA黑名单](./certificate_blacklist.md)
+黑名单的详细信息还可参考[CA黑名单](./certificate_list.md)
 
 黑名单列表配置示例如下：
 
