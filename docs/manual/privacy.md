@@ -8,11 +8,13 @@
 
 同态加密（Homomorphic Encryption）是公钥密码系统领域的明珠之一，已有四十余年的研究历史，由于其绝妙的密码特性以及并不友好的计算复杂度，一直让研究者们和业界人士又爱又恨，欲罢不能。
 
-1. 同态加密本质是一种公钥加密算法，即加密使用公钥$$pk$$，解密使用私钥$$sk$$；
-2. 同态加密支持密文计算，即采用相同公钥加密生成的两个密文可以计算$$f( )$$操作，生成的新密文解密后恰好是两个原始明文计算$$f( )$$操作后的结果；
+1. 同态加密本质是一种公钥加密算法，即加密使用公钥pk，解密使用私钥sk；
+2. 同态加密支持密文计算，即采用相同公钥加密生成的两个密文可以计算​f( )操作，生成的新密文解密后恰好是两个原始明文计算f( )操作后的结果；
 3. 同态加密公式描述如下：
 
-$$C1=Encryption(m1, pk),C2=Encryption(m2, pk)$$
+$$C1=Encryption(m1, pk)$$
+
+$$C2=Encryption(m2, pk)$$
 
 $$C3=Homomorphic(C1, C2, f(), pk)$$
 
@@ -62,7 +64,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 ### 一. 声明接口
 
-隐私模块的代码和用户开发的预编译合约放在一起，位于`FISCO-BCOS/libprecompiled/extension`目录，因此隐私模块的调用方式和用户开发的[预编译合约调用流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html#id12)一模一样，不过有两点需要注意：
+隐私模块的代码和用户开发的预编译合约放在一起，位于`FISCO-BCOS/libprecompiled/extension`目录，因此隐私模块的调用方式和用户开发的预编译合约[调用流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html#id12)一模一样，不过有两点需要注意：
 
 1. 已为隐私模块的预编译合约分配了地址，无需另行注册。隐私模块实现的预编译合约列表以及地址分配如下：
 
