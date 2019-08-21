@@ -2,23 +2,21 @@
 
 隐私保护是联盟链的一大技术挑战。为了保护链上数据、保障联盟成员隐私，并且保证监管的有效性，FISCO BCOS以[预编译合约](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html)的形式集成了同态加密、群/环签名、以及零知识证明，从多个维度，在不影响可用性的情况下保护联盟隐私。
 
-<!--本节只简单介绍要使用隐私模块各密码功能所需要掌握的基础知识,若想更深入了解这些密码方案请查阅其它相关资料。-->
-
 ## 同态加密
 
 ### 算法简介
 
 同态加密（Homomorphic Encryption）是公钥密码系统领域的明珠之一，已有四十余年的研究历史，由于其绝妙的密码特性以及并不友好的计算复杂度，一直让研究者们和业界人士又爱又恨，欲罢不能。
 
-1. 同态加密本质是一种公钥加密算法，即加密使用公钥$pk$，解密使用私钥$sk$；
-2. 同态加密支持密文计算，即采用相同公钥加密生成的两个密文可以计算$f( )$操作，生成的新密文解密后恰好是两个原始明文计算$f( )$操作后的结果；
+1. 同态加密本质是一种公钥加密算法，即加密使用公钥$$pk$$，解密使用私钥$$sk$$；
+2. 同态加密支持密文计算，即采用相同公钥加密生成的两个密文可以计算$$f( )$$操作，生成的新密文解密后恰好是两个原始明文计算$$f( )$$操作后的结果；
 3. 同态加密公式描述如下：
 
-​										$$C1=Encryption(m1, pk),C2=Encryption(m2, pk)$$
+$$C1=Encryption(m1, pk),C2=Encryption(m2, pk)$$
 
-​										$$C3=Homomorphic(C1, C2, f(), pk)$$
+$$C3=Homomorphic(C1, C2, f(), pk)$$
 
-​										$$Decryption(C3, sk) = f(m1, m2)$$
+$$Decryption(C3, sk) = f(m1, m2)$$
 
 FISCO BCOS采用的是paillier加密方案，支持加法和数乘同态。选择该方案主要有两个原因：首先隐私模块中同态功能所辅助的业务场景简单，只需要进行资产的转移；另外不宜在合约中实现太过复杂的计算逻辑，会大幅度降低联盟链性能。因此，paillier这种轻量级的加同态算法自然成了首选。
 
@@ -66,14 +64,14 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 隐私模块的代码和用户开发的预编译合约放在一起，位于`FISCO-BCOS/libprecompiled/extension`目录，因此隐私模块的调用方式和用户开发的[预编译合约调用流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html#id12)一模一样，不过有两点需要注意：
 
-1. 已为隐私模块的预编译合约分配了地址，无需用户注册。隐私模块实现的预编译合约列表以及地址分配如下：
+1. 已为隐私模块的预编译合约分配了地址，无需另行注册。隐私模块实现的预编译合约列表以及地址分配如下：
 
-| 地址   | 功能       | [源码](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension) |
-| ------ | ---------- | ------------------------------------------------------------ |
-| 0x5003 | 同态加密   | PaillierPrecompiled.cpp                                      |
-| 0x5004 | 群签名     | GroupSigPrecompiled.cpp                                      |
-| 0x5005 | 环签名     | RingSigPrecompiled.cpp                                       |
-| 0x5006 | 零知识证明 | ZKsnarkPrecompiled.cpp                                       |
+   | 地址   | 功能       | [源码](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension) |
+   | ------ | ---------- | ------------------------------------------------------------ |
+   | 0x5003 | 同态加密   | PaillierPrecompiled.cpp                                      |
+   | 0x5004 | 群签名     | GroupSigPrecompiled.cpp                                      |
+   | 0x5005 | 环签名     | RingSigPrecompiled.cpp                                       |
+   | 0x5006 | 零知识证明 | ZKsnarkPrecompiled.cpp                                       |
 
 2. 需要通过`solidity`合约方式声明隐私模块预编译合约的接口，合约文件需保存在控制台合约目录`console/contracts/solidity`中，各个隐私功能的合约接口如下，可直接复制使用:
 
@@ -157,7 +155,7 @@ contract CallPaillier {
 
 部署`CallPaillier`合约，然后调用`CallPaillier`合约的接口，结果如下 :
 
-![image-20190820162722912](../../images/privacy/callpaillier.png)
+![](../../images/privacy/callpaillier.png)
 
 
 
