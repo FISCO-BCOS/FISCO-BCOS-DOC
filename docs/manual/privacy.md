@@ -6,7 +6,7 @@
 
 ### 算法简介
 
-同态加密（Homomorphic Encryption）是公钥密码系统领域的明珠之一，已有四十余年的研究历史，由于其绝妙的密码特性以及并不友好的计算复杂度，一直让研究者们和业界人士又爱又恨，欲罢不能。
+同态加密(Homomorphic Encryption)是公钥密码系统领域的明珠之一，已有四十余年的研究历史，由于其绝妙的密码特性以及并不友好的计算复杂度，一直让研究者们和业界人士又爱又恨，欲罢不能。
 
 1. 同态加密本质是一种公钥加密算法，即加密使用公钥pk，解密使用私钥sk；
 2. 同态加密支持密文计算，即采用相同公钥加密生成的两个密文可以计算​f( )操作，生成的新密文解密后恰好是两个原始明文计算f( )操作后的结果；
@@ -20,7 +20,7 @@ $$C3=Homomorphic(C1, C2, f(), pk)$$
 
 $$Decryption(C3, sk) = f(m1, m2)$$
 
-FISCO BCOS采用的是paillier加密方案，支持加法和数乘同态。选择该方案主要有两个原因：首先隐私模块中同态功能所辅助的业务场景简单，只需要进行资产的转移；另外不宜在合约中实现太过复杂的计算逻辑，会大幅度降低联盟链性能。因此，paillier这种轻量级的加同态算法自然成了首选。
+FISCO BCOS采用的是paillier加密方案，支持加法和数乘同态。选择该方案主要有两个原因：首先，隐私模块中同态功能所辅助的业务场景简单，只需要进行资产的转移；另外，不宜在合约中实现太过复杂的计算逻辑，会大幅度降低联盟链性能。基于功能和性能的平衡，paillier这种轻量级的加同态算法自然成了首选。
 
 ### 应用场景
 
@@ -103,7 +103,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
   // RingSigPrecompiled.sol
   pragma solidity ^0.4.24;
   contract RingSigPrecompiled{
-      function 待定义;
+       function ringSigVerify(string signature, string message, string paramInfo) public constant returns(string);
   }
   ```
 
