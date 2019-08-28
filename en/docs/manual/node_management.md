@@ -160,8 +160,8 @@ $ vim node2/config.ini
 
 5 . node 3 copies `node1/conf/group.3.genesis`(which contains **initial list of group nodes**) and `node1/conf/group.3.ini` to `node2/conf` folder, without modification;
 ```
-$ cp node1/conf/group.3.genesis node2/
-$ cp node1/conf/group.3.ini node2/
+$ cp node1/conf/group.3.genesis node2/conf/
+$ cp node1/conf/group.3.ini node2/conf/
 ```
 
 6 . execute `node2/start.sh` and start node 3;
