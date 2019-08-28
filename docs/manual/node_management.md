@@ -125,6 +125,7 @@ $ cp -r ./node2/ nodes/127.0.0.1/
 ```
 
 3 . 进入`nodes/127.0.0.1/`，拷贝`node0/config.ini`、`node0/start.sh`和`node0/stop.sh`到node2目录;
+
 ```
 $ cd nodes/127.0.0.1/
 $ cp node0/config.ini node0/start.sh node0/stop.sh node2/
@@ -176,6 +177,7 @@ info|2019-02-21 10:30:18.694294| [P2P][Service] heartBeat connected count,size=2
 
 ```eval_rst
 .. note::
+	- 若启用了白名单，需确保**所有**节点的config.ini中的白名单都已配置了**所有**的节点，并正确的将白名单配置刷新入节点中。参考`CA黑白名单 <./certificate_list.html>`_
     - 从节点1拷贝过来的config.ini的其余配置可保持不变；
     - 理论上，节点1和2不需修改自身的P2P节点连接列表，即可完成扩容节点3的操作；
     - 步骤5中所选择的群组建议为节点3后续需加入的群组；
@@ -207,6 +209,7 @@ nohup: appending output to ‘nohup.out’
 .. note::
     - **节点3需先退出群组再退出网络，退出顺序由用户保证，系统不再作校验**；
     - 网络连接由节点主动发起，如缺少第2步，节点3仍可感知节点1和节点2发起的P2P连接请求，并建立连接，可使用CA黑名单避免这种情况。
+    - 若启用了白名单，需将退出节点的从所有节点的config.ini的白名单配置中删除，并正确的将新的白名单配置刷入节点中。参考`CA黑白名单 <./certificate_list.html>`_
 ```
 
 #### A节点加入群组
