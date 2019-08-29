@@ -1,7 +1,6 @@
 # 安装
 
-本章介绍FISCO BCOS所需的必要安装和配置。  
-本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。  
+本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](./manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
 
 ## 单群组FISCO BCOS联盟链的搭建
 
@@ -35,7 +34,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/dev/tools/get_buildchain.sh)
 ```
 
 ### 搭建单群组4节点联盟链

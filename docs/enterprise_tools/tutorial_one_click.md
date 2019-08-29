@@ -4,7 +4,7 @@
 
 本章主要以部署**3机构2群组6节点**的组网模式，为用户讲解单机构一键部署企业级部署工具的使用方法。
 
-本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
+本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](./tutorial_detail_operation.md)。
 
 
 ```eval_rst	
@@ -94,7 +94,7 @@ cd ~/generator && bash ./scripts/install.sh
 .. important::
 
     针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
-``` -->
+​``` -->
 
 ## 部署网络
 
@@ -102,11 +102,11 @@ cd ~/generator && bash ./scripts/install.sh
 
 ![](../../images/enterprise/one_click_step_1.png)
 
-使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](../enterprise_tools/config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
+使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](./config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
 
 切换到~/目录
 
-```bash
+​```bash
 cd ~/generator
 ```
 
@@ -537,7 +537,7 @@ exit
 cd ~/generator
 ```
 
-配置群组创世区块文件
+配置群组创世区块文件，指定`group_id`为2。并在`[node]`下指定新群组中各个节点的IP和P2P端口，分别为机构A-节点0，机构A-节点1，机构A-节点4和机构C-节点5。
 
 ```bash
 cat > ./conf/group_genesis.ini << EOF
@@ -554,22 +554,28 @@ EOF
 
 ### 获取对应节点证书
 
-获取机构A节点证书
+机构A-节点0（`node0=127.0.0.1:30300`）
 
 ```bash
-cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_127.0.0.1_30300.crt ~/generator/meta
 ```
 
-获取机构A新增节点证书
+机构A-节点1（`node1=127.0.0.1:30301`）
 
 ```bash
-cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_127.0.0.1_30301.crt ~/generator/meta
 ```
 
-获取机构C节点证书
+机构A-节点4（`node2=127.0.0.1:30304`）
 
 ```bash
-cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_127.0.0.1_30304.crt ~/generator/meta
+```
+
+机构C-节点5（`node3=127.0.0.1:30305`）
+
+```bash
+cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_127.0.0.1_30305.crt ~/generator/meta
 ```
 
 ### 生成群组创世区块
@@ -580,48 +586,56 @@ cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_* ~/gener
 
 将群组创世区块加入现有节点：
 
+机构A-节点0（`node0=127.0.0.1:30300`）
+
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node/node_127.0.0.1_30300
 ```
 
+机构A-节点1（`node1=127.0.0.1:30301`）
+
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node/node_127.0.0.1_30301
 ```
 
+机构A-节点4（`node2=127.0.0.1:30304`）
+
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node
+ ./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304
 ```
 
-### 重启节点
-
-重启机构A节点:
+机构C-节点5（`node3=127.0.0.1:30305`）
 
 ```bash
-bash ./tmp_one_click/agencyA/node/stop_all.sh
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305
 ```
 
+### 加载、启动新群组
+
+节点在运行时，可直接用脚本`load_new_groups.sh`加载新群组
+
+机构A-节点0（`node0=127.0.0.1:30300`）
+
 ```bash
-bash ./tmp_one_click/agencyA/node/start_all.sh
+bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30300/scripts/load_new_groups.sh
 ```
 
-重启机构A新增节点:
+机构A-节点1（`node1=127.0.0.1:30301`）
 
 ```bash
-bash ./tmp_one_click_expand/agencyA/node/stop_all.sh
+bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30301/scripts/load_new_groups.sh
 ```
 
+机构A-节点4（`node2=127.0.0.1:30304`）
+
 ```bash
-bash ./tmp_one_click_expand/agencyA/node/start_all.sh
+bash ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/scripts/load_new_groups.sh
 ```
 
-重启机构C节点:
+机构C-节点5（`node3=127.0.0.1:30305`）
 
 ```bash
-bash ./tmp_one_click_expand/agencyC/node/stop_all.sh
-```
-
-```bash
-bash ./tmp_one_click_expand/agencyC/node/start_all.sh
+bash ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/scripts/load_new_groups.sh
 ```
 
 ### 查看节点
@@ -653,6 +667,6 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 更多操作
 
-更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
+更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](./tutorial_detail_operation.md)。
 
 如果使用该教程遇到问题，请查看[FAQ](../faq.md)

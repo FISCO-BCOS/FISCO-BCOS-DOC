@@ -4,8 +4,7 @@ The `one_click_generator.sh` script is a script that deploys a federated chain w
 
 This chapter mainly uses the networking mode of deploying **3 organizations 2 groups 6 nodes** to explain the use of enterprise-level deployment tools for single-button one-button deployment.
 
-This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](../tutorial/enterprise_quick_start.md).
-
+This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](./tutorial_one_click.md).
 
 ```eval_rst	
 .. important::	
@@ -87,7 +86,7 @@ First, complete the operation of group A and B to set up group 1, as shown in th
 
 ![](../../images/enterprise/one_click_step_1.png)
 
-Before use, the user needs to prepare a folder such as `tmp_one_click,` which has a directory of different organizations under the folder. Each agency directory needs to have a corresponding configuration file [```node_deployment.ini```]. ./enterprise_tools/config.md#node-deployment-ini). Before use, you need to ensure that the generator's meta folder has not been used.
+Before use, the user needs to prepare a folder such as `tmp_one_click,` which has a directory of different organizations under the folder. Each agency directory needs to have a corresponding configuration file [```node_deployment.ini```](./config.md#node-deployment-ini). Before use, you need to ensure that the generator's meta folder has not been used.
 
 Switch to ~/ directory
 
@@ -269,7 +268,7 @@ Copy the chain certificate and private key to the expansion folder
 cp ~/generator/tmp_one_click/ca.* ~/generator/tmp_one_click_expand/
 ```
 
-Copy group 1 creation zone `group.1.genesis` to expansion folder
+Copy group 1 genesis block `group.1.genesis` to expansion folder
 
 ```bash
 cp ~/generator/tmp_one_click/group.1.genesis ~/generator/tmp_one_click_expand/
@@ -502,7 +501,7 @@ Generate group 2 as shown in Figure 4
 
 ![](../../images/enterprise/one_click_step_3.png)
 
-### Configure Group 2 Creation Zone
+### Configure Group 2 genesis block
 
 ```eval_rst
 .. important::
@@ -514,7 +513,7 @@ Generate group 2 as shown in Figure 4
 cd ~/generator
 ```
 
-Configuring the group creation block file
+Configuring the group genesis block file. Add `nodeX=ip:port` under `[nodes]` which belong to the members of new group.  For example they are: AgencyA-Node0, AgencyA-Node1, AgencyA-Node4 and AgencyC-Node5.
 
 ```bash
 cat > ./conf/group_genesis.ini << EOF
@@ -531,77 +530,91 @@ EOF
 
 ### Get the corresponding node certificate
 
-Obtain an agency A node certificate
+AgencyA-Node0（`node0=127.0.0.1:30300`）
 
 ```bash
-cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_127.0.0.1_30300.crt ~/generator/meta
 ```
 
-Get agency A new node certificate
+AgencyA-Node1（`node1=127.0.0.1:30301`）
 
 ```bash
-cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_127.0.0.1_30301.crt ~/generator/meta
 ```
 
-Obtain an agency C node certificate
+AgencyA-Node4（`node2=127.0.0.1:30304`）
 
 ```bash
-cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_127.0.0.1_30304.crt ~/generator/meta
 ```
 
-### Generating a group creation block
+AgencyC-Node5（`node3=127.0.0.1:30305`）
+
+```bash
+cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_127.0.0.1_30305.crt ~/generator/meta
+```
+
+### Generating genesis block and group configure file
 
 ```bash
 ./generator --create_group_genesis ./group2
 ```
 
-Add the group creation block to the existing node:
+将群组创世区块加入现有节点：
+
+AgencyA-Node0（`node0=127.0.0.1:30300`）
 
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node/node_127.0.0.1_30300
 ```
+
+AgencyA-Node1（`node1=127.0.0.1:30301`）
 
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node/node_127.0.0.1_30301
 ```
+
+AgencyA-Node4（`node2=127.0.0.1:30304`）
 
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node
+ ./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304
 ```
 
-### Restart the node
-
-Restart the agency A node:
+AgencyC-Node5（`node3=127.0.0.1:30305`）
 
 ```bash
-bash ./tmp_one_click/agencyA/node/stop_all.sh
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305
 ```
+
+### Load and start new group
+
+Use `load_new_groups.sh` to load and start new group
+
+AgencyA-Node0（`node0=127.0.0.1:30300`）
 
 ```bash
-bash ./tmp_one_click/agencyA/node/start_all.sh
+bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30300/scripts/load_new_groups.sh
 ```
 
-Restart agency A to add a new node:
+AgencyA-Node1（`node1=127.0.0.1:30301`）
 
 ```bash
-bash ./tmp_one_click_expand/agencyA/node/stop_all.sh
+bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30301/scripts/load_new_groups.sh
 ```
+
+AgencyA-Node4（`node2=127.0.0.1:30304`）
 
 ```bash
-bash ./tmp_one_click_expand/agencyA/node/start_all.sh
+bash ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/scripts/load_new_groups.sh
 ```
 
-Restart the agency C node:
+AgencyA-Node5（`node3=127.0.0.1:30305`）
 
 ```bash
-bash ./tmp_one_click_expand/agencyC/node/stop_all.sh
+bash ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/scripts/load_new_groups.sh
 ```
 
-```bash
-bash ./tmp_one_click_expand/agencyC/node/start_all.sh
-```
-
-### View node
+### Check node
 
 View the group1 information in the node log:
 
@@ -628,6 +641,6 @@ So far, we have completed all the operations in the build tutorial shown.
 
 ## More operations
 
-For more operations, refer to the [Operation Manual](./operation.md) or [Enterprise Tools Peer-to-Peer Deployment Tutorial](../tutorial/enterprise_quick_start.md).
+For more operations, refer to the [Operation Manual](./operation.md) or [Enterprise Tools Peer-to-Peer Deployment Tutorial](./tutorial_one_click.md).
 
 If you have problems with this tutorial, please check [FAQ](../faq.md)
