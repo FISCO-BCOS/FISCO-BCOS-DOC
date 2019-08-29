@@ -76,6 +76,7 @@
 .. toctree::
    :hidden:
    
+   2_0_0.md
    2_0_0_rc3.md
    2_0_0_rc2.md
    2_0_0_rc1.md

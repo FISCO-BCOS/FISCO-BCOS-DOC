@@ -43,7 +43,7 @@ $ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}
     cal.1=f306eb1066ceb9d46e3b77d2833a1bde2a9899cfc4d0433d64b01d03e79927aa60a40507c5739591b8122ee609cf5636e71b02ce5009f3b8361930ecc3a9abb0
 ```
 
-若节点未启动，则直接启动节点，若节点已启动，可直接用脚本`reload_whitelist.sh`刷新白名单配置即可（暂时不支持动态刷新黑名单）。
+若节点未启动，则直接启动节点，若节点已启动，可直接用脚本`reload_whitelist.sh`刷新白名单配置即可（暂不支持动态刷新黑名单）。
 
 ```shell
 # 若节点未启动
