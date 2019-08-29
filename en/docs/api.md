@@ -155,25 +155,7 @@ Returns the consensus status data in the specific group.
    -  `nodeNum`: `unsigned int` - number of nodes            
    -  `omitEmptyBlock`: `bool` - omit empty block            
    -  `protocolId`: `unsigned int` - protocol ID           
-   -  `toView`: `unsigned int` - current view value            
-   -  `prepareCache_blockHash`: `string` - prepareCache hash           
-   -  `prepareCache_height`: `int`- prepareCache height            
-   -  `prepareCache_idx`: `unsigned int` - prepareCache sequence number            
-   -  `prepareCache_view`: `unsigned int` - prepareCache view            
-   -  `rawPrepareCache_blockHash`: `string` - rawPrepareCache hash            
-   -  `rawPrepareCache_height`: `int`- rawPrepareCache height           
-   -  `rawPrepareCache_idx`: `unsigned int` - rawPrepareCache sequence number            
-   -  `rawPrepareCache_view`: `unsigned int` - rawPrepareCache view            
-   -  `committedPrepareCache_blockHash`: `string` - committedPrepareCache hash           
-   -  `committedPrepareCache_height`: `int`- committedPrepareCache height            
-   -  `committedPrepareCache_idx`: `unsigned int` - committedPrepareCache sequence number           
-   -  `committedPrepareCache_view`: `unsigned int` - committedPrepareCache view            
-   -  `futureCache_blockHash`: `string` -futureCache hash           
-   -  `futureCache_height`: `int`- futureCache height            
-   -  `futureCache_idx`: `unsigned int` - futureCache sequence number            
-   -  `signCache_cachedSize`: `unsigned int` - signCache_cached size           
-   -  `commitCache_cachedSize`: `unsigned int` - commitCache_cached size            
-   -  `viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached size            
+   -  `toView`: `unsigned int` - current view value                      
 
 - 2. When Raft consensus mechanism is adopted (Raft design is introduced in [Raft Design Documentation](design/consensus/raft.md)), the fields as follows:     
     - `accountType`: `unsigned int` - account type            
