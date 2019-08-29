@@ -853,9 +853,6 @@ INFO >> getConsensusStatus
     "omitEmptyBlock": true,
     "protocolId": 65544,
     ... 省略若干行 ...
-     >> {
-    "info": [],
-    "viewChangeCache_cachedSize": "0"
 }
 ```
 ### getSyncStatus
