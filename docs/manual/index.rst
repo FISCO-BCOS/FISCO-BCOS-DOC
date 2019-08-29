@@ -9,6 +9,7 @@
    :maxdepth: 1
 
    get_executable.md
+   hardware_requirements.md
    build_chain.md
    certificates.md
    configuration.md
@@ -21,7 +22,7 @@
    transaction_parallel.md
    node_management.md
    permission_control.md
-   certificate_blacklist.md
+   certificate_list.md
    storage_security.md
    guomi_crypto.md
    log_description.md
@@ -69,7 +70,7 @@
         + 节点加入、退出群组
     - `权限控制 <./permission_control.html>`_
         + 限制用户对区块链的操作
-    - `CA黑名单 <./certificate_blacklist.html>`_
+    - `CA黑白名单 <./certificate_list.html>`_
         + 通过配置拒绝与不安全的节点建立连接
     - `存储安全 <./storage_security.html>`_
         + 落盘加密，对节点存储的数据进行加密

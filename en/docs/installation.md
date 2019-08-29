@@ -1,6 +1,6 @@
 # Installation
 
-This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS.
+This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS. Please use the supported **hardware and platform** operations [according to here](./manual/hardware_requirements.md).
 
 ## To build a single-group consortium chain
 
@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/dev/tools/get_buildchain.sh)
 ```
 
 ### Build a single-group 4-node consortium chain

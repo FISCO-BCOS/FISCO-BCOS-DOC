@@ -92,7 +92,10 @@ For definitions of P2PMessage before v2.0.0-rc2, please [refer here.](https://fi
 3. The data packet distinguishes between request packet and response packet by the 16-bit binary value where the protocolID is located.  The data greater than 0 is the request packet, and less than 0 is the corresponding packet.
 4. The packetType currently used by AMOP include `SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`.
 
-### ChannelMessage v1
+### ChannelMessage v2
+
+[ChannelMessage v1 Please refer here](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/design/protocol_description.html#channelmessage-v1)
+
 
 | name   | type         |length(4Byte)| description                          |
 | :----- | :----------- |:----| :------------------------------------------- |
@@ -117,14 +120,16 @@ Enumeration values of packet types and their corresponding meanings are as follo
 
 | Type | Inclusion | Description | Interpretation|
 |:------ |:--------|:--------|:--------|
-| 0x12 | JSONRPC 2.0 format | RPC interface message package | SDK - > node|
-| 0x13 | 0 or 1 | Heart Packet | 0: SDK - > Node, 1: Node - > SDK|
+| 0x12 | JSONRPC 2.0 format | RPC interface message package | SDK -> node|
+| 0x13 | JSON format heartbeat package `{"Heartbeat":"0"}`|heartbeat package | 0: SDK -> node, 1: node -> SDK|
+| 0x14 | JSON format, protocol version negotiation | handshake package | SDK -> node's package `{"MinimumSupport":version,"MaximumSupport":version,"ClientType":"client type , java or python or nodejs, with SDK version"}`, node -> SDK's package `{"Protocol":version,"NodeVersion":"fisco-bcos version"`|
 | 0x30 | AMOP message package package package package | AMOP request package | SDK<-> node, bidirectional|
-| 0x31 | Package of failed AMOP message | AMOP Failure Response Package | Node - > SDK or Node - > Node|
-| 0x32 | JSON array to store Topics | report Topic information | SDK - > nodes monitored by SDK|
-| 0x35 | AMOP Message Packet Package | AMOP Multicast Message | Node - > Node|
-| 0x1000 | JSON Format Transaction Uplink Notification | Transaction Uplink Callback | Node - > SDK|
-| 0x1001 | With `,`Split Group ID and Block Height'| Block Height Notification | Node - > SDK|
+| 0x31 | Package of failed AMOP message | AMOP Failure Response Package | Node -> SDK or Node -> Node|
+| 0x32 | JSON array to store Topics | report Topic information | SDK -> nodes monitored by SDK|
+| 0x35 | AMOP Message Packet Package | AMOP Multicast Message | Node -> Node|
+| 0x1000 | JSON Format Transaction Notification | Transaction Callback | Node -> SDK|
+| 0x1001  |json格式的区块上链通知`{"GroupID":"groupID","BlockNumber":"blockNumber"}`| 区块高度通知  | 节点->SDK |
+| Block Notification in 0x1001 | JSON format `{GroupID":"GroupID","BlockNumber":"BlockNumber"}`Block Height Notification'| Node -> SDK|
 
 #### Error code
 
