@@ -160,8 +160,8 @@ $ vim node2/config.ini
 
 5 . node 3 copies `node1/conf/group.3.genesis`(which contains **initial list of group nodes**) and `node1/conf/group.3.ini` to `node2/conf` folder, without modification;
 ```
-$ cp node1/conf/group.3.genesis node2/
-$ cp node1/conf/group.3.ini node2/
+$ cp node1/conf/group.3.genesis node2/conf/
+$ cp node1/conf/group.3.ini node2/conf/
 ```
 
 6 . execute `node2/start.sh` and start node 3;
@@ -182,6 +182,7 @@ info|2019-02-21 10:30:18.694294| [P2P][Service] heartBeat connected count,size=2
 
 ```eval_rst
 .. note::
+	- If CA whitelist is enabled, you should configure every nodeID into every nodes' whitelist configuration and reload the configuration. Read "CA blacklist and whitelist" for more.
     - The other configurations of config.ini copied from node 1 remain the same;
     - Theoretically, node 1, 2 can accomplish the extension of node 3 without changing their p2p connecting nodes list;
     - The group to be chosen in step 5 are recommended to be the group to be joined by node 3;
@@ -213,6 +214,7 @@ nohup: appending output to ‘nohup.out’
 .. note::
     - **node 3 has to quit the group before quitting the network, which is guaranteed by users and will not be verified by the system**;
     - the networking process is started by nodes. If missing step 2, node 3 can still get the p2p connecting request from node 1, 2 and start connection. It can be stopped by using CA blacklist.
+    - If CA whitelist is enabled, you should delete the node from every nodes' whitelist configuration and reload the configuration. Read "CA blacklist and whitelist" for more.
 ```
 
 #### Node A to join a group
