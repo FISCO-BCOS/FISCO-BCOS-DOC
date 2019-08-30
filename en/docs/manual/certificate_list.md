@@ -79,6 +79,7 @@ If we build chain using the certificate coming from CFCA. This chain's CA is CFC
 4. Copy old node's whitelist to new node.
 5. Reconfigure whitelist using `reload_whitelist.sh`.
 6. Start new node.
+7. Add new node into group (addSealer or addObserver)
 
 ## Examples
 
