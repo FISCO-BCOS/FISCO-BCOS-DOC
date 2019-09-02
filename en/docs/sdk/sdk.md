@@ -78,6 +78,9 @@ The following picture shows how `applicationContext.xml` is configured in Spring
         </bean>
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <property name="caCert" value="ca.crt" />
+                <property name="sslCert" value="sdk.crt" />
+                <property name="sslKey" value="sdk.key" />
                 <property name="allChannelConnections">
                         <list>  <!-- each group needs to configure a beam, each group can configure multiple nodes-->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
@@ -117,6 +120,9 @@ Configuration items of `applicationContext.xml`:
 - groupChannelConnectionsConfig:
   - configure the group to be connected, which can be one or more, each should be given a group ID
   - each group configures one or more nodes, set `listen_ip` and `channel_listen_port` of `[rpc]` in node config file **config.ini**.
+  - `caCert` for configuring chain CA certificate path
+  - `sslCert` is used to configure the certificate path used by SDK
+  - `sslKey` is used to configure the private key path corresponding to the certificate used by SDK
 - channelService: configure the the group connected with SDK through the given group ID, which is in the configuration of groupChannelConnectionsConfig. SDK will be connected with each node of the group and randomly choose one node to send request.
 
 Note: Some plugins may not be installed when the project is downloading for the first time, and the code will report an error. When you first use the Lombok toolkit on IDEA, follow these steps:
