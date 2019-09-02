@@ -8,7 +8,8 @@ Python SDK
 .. admonition:: **注意**
     :class: red
 
-    **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Web3SDK <../java_sdk.html>`_
+     - **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Web3SDK <../java_sdk.html>`_
+     - Python SDK目前支持release-2.0.0及其以上版本
 
 .. admonition:: **主要特性**
 
