@@ -79,6 +79,7 @@ $ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}
 4. 将其他节点的白名单配置拷贝到新扩容的节点上
 5. 用脚本`reload_whitelist.sh`刷新已启动的所有节点的白名单配置
 6. 启动扩容节点
+7. 将扩容节点加成组员（addSealer 或 addObserver）
 
 ## 黑白名单操作举例
 
