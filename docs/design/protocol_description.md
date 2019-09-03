@@ -37,9 +37,9 @@ FISCO BCOS的区块由以下五部分组成：
 | :------------------ | :----------------------------------------------- | --------- |
 | blockHeader         | 区块头RLP编码                                    | 0         |
 | transactions        | 交易列表RLP编码                                  | 1         |
-| transactionReceipts | 交易回执列表RLP编码                              | 2         |
-| hash                | 区块头RLP编码后的哈希值                          | 3         |
-| sigList             | PBFT共识落盘阶段收集到的节点签名信息，Raft不使用 | 4         |
+| hash                | 区块头RLP编码后的哈希值                          | 2         |
+| sigList             | PBFT共识落盘阶段收集到的节点签名信息，Raft不使用 | 3         |
+| transactionReceipts | 交易回执列表RLP编码                              | 4         |
 
 FISCO BCOS的区块头中每个字段意义如下：
 
