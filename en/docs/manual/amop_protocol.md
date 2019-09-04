@@ -7,15 +7,14 @@ Advanced Messages Onchain Protocol (AMOP) aims to provide a secure and efficient
 - Real-time: AMOP messages do not rely on blockchain transactions and consensus. Messages are transmitted in real time among nodes with a milliseconds delay.
 - Reliability: When AMOP message is transmitting, it can automatically search all feasible link in blockchain network for communication. As long as at least one link is available, the message is guaranteed to be reachable.
 - Efficiency: The AMOP message has simple structure and efficient processing logic. AMOP message's simple structure and efficient processing logic makes it to fully utilize network bandwidth and require a small amount of CPU usage only.
-- Security: All communication links of AMOP use SSL encryption. The encryption algorithm is configurable.
+- Security: All communication links of AMOP use SSL encryption. The encryption algorithm is configurable.and the topic supports identity authentication mechanism.
 - Easy to use: No additional configuration is required in SDK when using AMOP.
 
 ## Logical architecture
 ![](../../images/sdk/AMOP.jpg)
 We take the typical IDC architecture of the bank as the example to overview each region:
 
-- SF region: The business service region inside the agency. The business subsystem in this region uses blockchain SDK. If there is no DMZ region, the configured SDK connects to the blockchain node, otherwise SDK connects to the blockchain front of DMZ region.
-- DMZ region: The external network isolation region inside the agency. It is not required, if any, the region is deployed in front of blockchain.
+- SF region: The business service region inside the agency. The business subsystem in this region uses blockchain SDK. the configured SDK connects to the blockchain node.
 - Blockchain P2P network: This is a logical region and deployed blockchain nodes of each agency. Blockchain nodes can also be deployed inside the agency.
 
 ## Configuration
@@ -68,43 +67,44 @@ SDK configuration（Spring Bean）：
       <property name="groupId" value="1" />
       <property name="orgID" value="fisco" />
       <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+      <!-- If you want to enable topic authentication, please uncomment the following configuration. -->  
+      <!-- <property name="topic2KeyInfo" ref="amopVerifyTopicToKeyInfo"></property>--> 
     </bean>
-```
 
-blockchain front configuration, if there is a DMZ region:
-```
-<?xml version="1.0" encoding="UTF-8" ?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans   
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
-          http://www.springframework.org/schema/tx   
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
-          http://www.springframework.org/schema/aop   
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-    
-    <!-- blockchain node information configuration -->
-  <bean id="proxyServer" class="org.fisco.bcos.channel.proxy.Server">
-    <property name="remoteConnections">
-      <bean class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="connectionsStr">
-          <list>
-            <value>127.0.0.1:5051</value><!-- format:IP:port -->
-          </list>
-        </property>
-      </bean>
-    </property>
-    
-    <property name="localConnections">
-      <bean class="org.fisco.bcos.channel.handler.ChannelConnections">
-      </bean>
-    </property>
-    <!-- blockchain front listening port configuration, uses for SDK connection -->
-    <property name="bindPort" value="30333"/>
-  </bean>
-</beans>
+  <!-- If you want to enable topic authentication, please uncomment the following configuration. -->  
+  <!--
+    <bean class="org.fisco.bcos.channel.handler.AMOPVerifyTopicToKeyInfo" id="amopVerifyTopicToKeyInfo">
+		<property name="topicToKeyInfo">
+			<map>
+				<entry key="${topicname}" value-ref="AMOPVerifyKeyInfo_${topicname}" />
+			</map>
+		</property>
+	</bean>
+	-->  
+	
+  <!-- If you are a topic producer, you need to configure the publicKey property.
+		Each authenticated consumer holds a different public-private key pair.
+		Please list the public key files of all the authenticated consumers.
+	-->  
+  <!--
+	<bean class="org.fisco.bcos.channel.handler.AMOPVerifyKeyInfo" id="AMOPVerifyKeyInfo_${topicname}">
+		<property name="publicKey">
+			<list>
+				<value>classpath:$consumer_public_key_1.pem$</value>
+				<value>classpath:$consumer_public_key_2.pem$</value>
+			</list>
+		</property>
+	</bean>
+	--> 
+	
+  <!-- If you are a topic consumer, you need to configure the privateKey property.
+		This private key will authenticate you to the corresponding topic producer.
+	--> 
+  <!--
+	<bean class="org.fisco.bcos.channel.handler.AMOPVerifyKeyInfo" id="AMOPVerifyKeyInfo_${topicname}">
+		<property name="privateKey" value="classpath:$consumer_private_key.pem$"></property>
+	</bean>
+	--> 
 ```
 
 ## SDK uses
@@ -269,16 +269,57 @@ public class Channel2Client {
 
 ## Test
 After completing the configuration as described above, user can specify a topic: topic and execute the following two commands for testing.
+### Unicast text
 
-Launch amop server:
+Launch AMOP server:
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
 ```  
-Launch amop client:
+Launch AMOP client:
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Client [topic] [Number of messages]
 ```
 
+In addition to supporting unicast text, AMOP also supports sending binary data, multicast, and authentication mechanisms. The corresponding test commands are as follows:
+
+
+### Unicast binary，multicast text，multicast binary
+
+Launch AMOP server:  
+```shell
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
+```  
+Launch AMOP client:
+```shell
+#unicast binary
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ClientBin [topic] [filename]
+#multicast text
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMulti [topic]  [Number of messages]
+#multicast binary
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMultiBin [topic]  [filename]
+```
+
+
+### Unicast text and binary,multicast text and  binary with authentication mechanisms
+
+Launch AMOP server:
+```shell
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ServerNeedVerify [topic]
+```  
+启动AMOP客户端：
+```shell
+#Unicast text with authentication mechanisms
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ClientNeedVerify [topic] [Number of messages]
+#Unicast binary with authentication mechanisms
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ClientBinNeedVerify [topic] [filename]
+#multicast text with authentication mechanisms
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMultiNeedVerify [topic]  [Number of messages]
+#multicast binary with authentication mechanisms
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMultiBinNeedVerify [topic]  [filename]
+```
+
 ## Error code
 - 99:message failed to be sent. After AMOP attempts to send message by all the links, the message is not sent to the server. It is recommended to use `seq` that is generated during the transmission to check the processing status of each node on the link.
+- 100：message failed to be sent. After AMOP attempts to send message by all the links, the message is not sent to the node from one node by P2P. It is recommended to use `seq` that is generated during the transmission to check the processing status of each node on the link.
+- 101：message failed to be sent. After AMOP attempts to send message by all the links, the message is not sent to the sdk from node. It is recommended to use `seq` that is generated during the transmission to check the processing status of each node on the link.
 - 102: message times out. It is recommended to check whether the server has processed the message correctly and the bandwidth is sufficient.

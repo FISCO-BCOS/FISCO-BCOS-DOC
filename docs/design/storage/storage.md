@@ -2,9 +2,9 @@
 
 分布式存储（Advanced Mass Database，AMDB）通过对表结构的设计，既可以对应到关系型数据库的表，又可以拆分使用KV数据库存储。通过实现对应于不同数据库的存储驱动，AMDB理论上可以支持所有关系型和KV的数据库。
 
-- CRUD数据、区块数据和合约代码数据存储默认情况下都保存在AMDB，无需配置，合约局部变量存储可根据需要配置为MPTState或StorageState，无论配置哪种State，合约代码都不需要变动。
+- CRUD数据、区块数据默认情况下都保存在AMDB，无需配置，合约局部变量存储可根据需要配置为MPTState或StorageState，无论配置哪种State，合约代码都不需要变动。
 - 当使用MPTState时，合约局部变量保存在MPT树中。当使用StorageState时，合约局部变量保存在AMDB表中。
-- 尽管MPTState和AMDB最终数据都会写向LevelDB，但二者使用不同的LevelDB实例，没有事务性，因此当配置成使用MPTState时，提交数据时异常可能导致两个LevelDB数据不一致。
+- 尽管MPTState和AMDB最终数据都会写向RocksDB，但二者使用不同的RocksDB实例，没有事务性，因此当配置成使用MPTState时，提交数据时异常可能导致两个RocksDB数据不一致。
 
 ## 名词解释
 
@@ -43,7 +43,7 @@ Table中的删改查接口支持传入条件，这三种接口会返回根据条
     + Entry3：`{Name:Bob，item_id:1002001,item_name:macbook}`
     + Entry4：`{Name:Chris，item_id:1003001,item_name:PC}`
 - Table中以**Name**为主key，存有3个Entries对象。第1个Entries中存有Alice的2条记录，第2个Entries中存有Bob的1条记录，第3个Entries中存有Chris的一条记录。
-- 调用Table类的查询接口时，查接口需要指定AMDB主key和条件，设置查询的AMDB主key为Alice，条件为`price > 40`，会查询出Entry1。
+- 调用Table类的查询接口时，查接口需要指定AMDB主key和条件，设置查询的AMDB主key为Alice，条件为`item_id = 1001001`，会查询出Entry1。
 
 ## AMDB表分类
 
@@ -91,4 +91,4 @@ StorageState是一种使用AMDB实现的存储账户状态的方式。相比于M
 |账户数据组织方式|AMDB表|MPT树|
 |历史状态|不支持，不维护历史状态|支持|
 
-MPTState每个账户使用MPT树存储其数据，当历史数据逐渐增多时，会因为存储方式和磁盘IO导致性能问题。StorageState每个账户对应一个Table存储其相关数据，包括账户的`nonce`,`code`,`balance`等内容，而AMDB可以通过实现对应的存储驱动支持不同的数据库以提高性能，我们使用LevelDB测试发现，StorageState性能大约是MPTState的两倍。
+MPTState每个账户使用MPT树存储其数据，当历史数据逐渐增多时，会因为存储方式和磁盘IO导致性能问题。StorageState每个账户对应一个Table存储其相关数据，包括账户的`nonce`,`code`,`balance`等内容，而AMDB可以通过实现对应的存储驱动支持不同的数据库以提高性能，我们使用RocksDB测试发现，StorageState性能大约是MPTState的两倍。
