@@ -51,7 +51,7 @@ Before using distributed storage, you need to complete the establishment of the 
 
 #### Prepare dependence
 ```bash
-mkdir -p ~/fisco_direct && cd ~/fisco_direct
+mkdir -p ~/fisco && cd ~/fisco
 bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/dev/tools/get_buildchain.sh)
 ```
 #### Generate configuration file
@@ -72,9 +72,9 @@ cat ipconf
 
 #### Build blockchain with build_chain
 ```bash
-### build blockchain（please confirm the ports of 30700~30702，20700~20702，8575~8577 are not occupied）
+### build blockchain（please confirm the ports of 30300~30302，20200~20202，8545~8547 are not occupied）
 ### The difference right here is that the parameter "-s MySQL" is appended to the command and the port is changed.
-bash build_chain.sh -f ipconf -p 30700,20700,8575 -s MySQL
+bash build_chain.sh -f ipconf -p 30300,20200,8545 -s MySQL
 ==============================================================
 Generating CA key...
 ==============================================================
@@ -105,7 +105,7 @@ In group.[group].ini configuration file, the configuration information of MySQL 
 
 ### Modify the group.1.ini configuration in node0
 
-Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage] and add the following content. Db_passwd is the corresponding password.
+Modify the content in the section ~/fisco/nodes/127.0.0.1/node0/conf/group.1.ini[storage] and add the following content. Db_passwd is the corresponding password.
 
 ```bash
     	db_ip=127.0.0.1
@@ -117,7 +117,7 @@ Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node0/conf/grou
 
 ### Modify the group.1.ini configuration in node1
 
-Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node1/conf/group.1.ini[storage] and add the following content. Db_passwd is the corresponding password.
+Modify the content in the section ~/fisco/nodes/127.0.0.1/node1/conf/group.1.ini[storage] and add the following content. Db_passwd is the corresponding password.
 
 ```bash
     	db_ip=127.0.0.1
@@ -129,7 +129,7 @@ Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node1/conf/grou
 
 ### Modify the group.2.ini configuration in node1
 
-Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node1/conf/group.2.ini[storage] and add the following content. Db_passwd is the corresponding password.
+Modify the content in the section ~/fisco/nodes/127.0.0.1/node1/conf/group.2.ini[storage] and add the following content. Db_passwd is the corresponding password.
 
 ```bash
     	db_ip=127.0.0.1
@@ -140,7 +140,7 @@ Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node1/conf/grou
 ```
 ### Modify the group.2.ini configuration in node2
 
-Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node2/conf/group.2.ini[storage] and add the following content. Db_passwd is the corresponding password.
+Modify the content in the section ~/fisco/nodes/127.0.0.1/node2/conf/group.2.ini[storage] and add the following content. Db_passwd is the corresponding password.
 
 ```bash
     	db_ip=127.0.0.1
@@ -152,14 +152,14 @@ Modify the content in the section ~/fisco_direct/nodes/127.0.0.1/node2/conf/grou
 
 ### Start node
 ```bash
-cd ~/fisco_direct/nodes/127.0.0.1;sh start_all.sh
+cd ~/fisco/nodes/127.0.0.1;sh start_all.sh
 ```
 ### Check process
 ```bash
 ps -ef|grep fisco-bcos|grep -v grep
-fisco   111061      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-fisco   111065      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco_direct/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco   111061      1  0 16:22 pts/0    00:00:04 /data/home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco   111065      1  0 16:22 pts/0    00:00:04 /data/home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
 ```
 If it starts successfully, you can see there are 3 fisco-bcos processes. If it fails, please refer to the log to confirm whether the configuration is correct.
 
@@ -196,13 +196,13 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 
 #### Prepare dependence
 ```bash
-cd ~/fisco_direct;
+cd ~/fisco;
 bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 #### Modify configuration file
-Modify ~/fisco_direct/console/conf/applicationContext.xml to the following configuration (partial information)
+Modify ~/fisco/console/conf/applicationContext.xml to the following configuration (partial information)
 
 ```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -212,7 +212,7 @@ Modify ~/fisco_direct/console/conf/applicationContext.xml to the following confi
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20700</value>
+						<value>127.0.0.1:20200</value>
 					</list>
 				</property>
 			</bean>
@@ -222,7 +222,7 @@ Modify ~/fisco_direct/console/conf/applicationContext.xml to the following confi
 ```
 #### Start console
 ```bash
-cd ~/fisco_direct/console
+cd ~/fisco/console
 sh start.sh 1
 #deploy TableTest contract
 [group:1]> deploy TableTest
@@ -311,7 +311,9 @@ item_name: apple
 
 ## Access MySQL through proxy
 
-This operation tutorial is only valid for the 2.0.0-rc3 node version. If you need to build a distributed storage environment in 2.0.0-rc2 through "accessing MySQL through proxy", please refer to the document [Distributed Storage Building Method](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0.0-rc2/docs/manual/amdbconfig.html)
+This operation tutorial is only valid for the 2.1.0 or newer node version.If you need to build a distributed storage environment in 2.0.0-rc3 or 2.0.0 through "accessing MySQL through proxy", please refer to the document [Distributed Storage Building Method](
+https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/manual/distributed_storage.html) If you need to build a distributed storage environment in 2.0.0-rc2 through "accessing MySQL through proxy", please refer to the document [Distributed Storage Building Method](
+https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc2/docs/manual/amdbconfig.html)
 
 
 ### Logical architecture diagram
@@ -362,9 +364,9 @@ cat ipconf
 
 #### Build blockchain with build_chain
 ```bash
-### build blockchain（please confirm the ports of 30600~30602，20800~20802，8565~8567 are not occupied）
+### build blockchain（please confirm the ports of 30300~30302，20200~20202，8545~8547 are not occupied）
 
-bash build_chain.sh -f ipconf -p 30600,20800,8565
+bash build_chain.sh -f ipconf -p 30300,20200,8545
 ==============================================================
 Generating CA key...
 ==============================================================
@@ -446,12 +448,10 @@ After the compilation is completed, a dist directory is generated, and the file 
 ├── apps
 │   └── AMDB.jar
 ├── conf
-│   ├── amdb.properties
 │   ├── applicationContext.xml
 │   ├── contracts
 │   │   ├── Table.sol
 │   │   ├── TableTest.sol
-│   ├── db.properties
 │   ├── doc
 │   │   ├── amop.png
 │   │   ├── leveldb.png
@@ -507,7 +507,7 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 ```
 
 #### File configuration
-amdb.properties configures the node information that AMDB service needs to connect to, and db.properties configures the connection information of database. Here we assume that the MySQL configuration information is as follows:
+Here we assume that the MySQL configuration information is as follows:
 
 ```bash
 |node|db_ip|db_port|db_username|db_passwd|db_name|
@@ -516,24 +516,9 @@ amdb.properties configures the node information that AMDB service needs to conne
 |Group2_B|127.0.0.1|3306|root|123456|bcos_Group2_B|
 |Group2_C|127.0.0.1|3306|root|123456|bcos_Group2_C|
 ```
+We need to modify  **applicationContext.xml** in configuration process,we need to modify  topic configuration **node.topic**, MySQL configuration items **db.ip**、**db.port**、**db. Database**、 **db.user** and **db.password**.
 
 ##### Configure amdb proxy for Group1's NodeA
-
-configure ~/fisco/dist_Group1_A/conf/amdb.properties as following content:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20800
-node.topic=DB_Group1_A
-```
-
-configure ~/fisco/dist_Group1_A/conf/db.properties as following content:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group1_A
-```
 
 modify ~/fisco/dist_Group1_A/conf/applicationContext.xml to the following configuration (partial information)
 ```bash
@@ -544,42 +529,35 @@ modify ~/fisco/dist_Group1_A/conf/applicationContext.xml to the following config
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20800</value>
+						<value>127.0.0.1:20200</value>
 					</list>
 				</property>
 			</bean>
 		</list>
 	</property>
 </bean>
-
 <bean id="DBChannelService" class="org.fisco.bcos.channel.client.Service">
 		<property name="groupId" value="1" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
 		<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group1_A</value>
 			</list>
 		</property>
 	<property name="pushCallback" ref="DBHandler"/>
 </bean>
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://127.0.0.1:3306/bcos_Group1_A?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
+</bean>
 ```
 
 ##### Configure amdb proxy for Group1's NodeB
-configure ~/fisco/dist_Group1_B/conf/amdb.properties as following content:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20801
-node.topic=DB_Group1_B
-```
-configure ~/fisco/dist_Group1_B/conf/db.properties as following content:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group1_B
-```
 
 modify ~/fisco/dist_Group1_B/conf/applicationContext.xml to the following configuration (partial information)
 
@@ -591,7 +569,7 @@ modify ~/fisco/dist_Group1_B/conf/applicationContext.xml to the following config
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20801</value>
+						<value>127.0.0.1:20201</value>
 					</list>
 				</property>
 			</bean>
@@ -605,28 +583,24 @@ modify ~/fisco/dist_Group1_B/conf/applicationContext.xml to the following config
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
 		<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group1_B</value>
 			</list>
 		</property>
 	<property name="pushCallback" ref="DBHandler"/>
 </bean>
+
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://127.0.0.1:3306/bcos_Group1_B?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
+</bean>
+
 ```
 ##### Configure amdb proxy for Group2's NodeB
 configure ~/fisco/dist_Group2_B/conf/amdb.properties as following content:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20801
-node.topic=DB_Group2_B
-```
-configure ~/fisco/dist_Group2_B/conf/db.properties as following content:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group2_B
-```
-
 modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following configuration (partial information)
 ```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -636,7 +610,7 @@ modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following config
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20801</value>
+						<value>127.0.0.1:20201</value>
 					</list>
 				</property>
 			</bean>
@@ -648,32 +622,27 @@ modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-
+		
 		<!-- communication topic configuration of the node -->
 		<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group2_B</value>
 			</list>
 		</property>
 		<property name="pushCallback" ref="DBHandler"/>
 	</bean>
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://127.0.0.1:3306/bcos_Group2_B?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
+</bean>
+
 ```
 
 ##### Configure amdb proxy for Group2's NodeC
-configure ~/fisco/dist_Group2_C/conf/amdb.properties as following content:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20802
-node.topic=DB_Group2_C
-```
-configure ~/fisco/dist_Group2_C/conf/db.properties as following content:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group2_C
-```
 
 modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following configuration (partial information)
 
@@ -685,7 +654,7 @@ modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following config
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20802</value>
+						<value>127.0.0.1:20202</value>
 					</list>
 				</property>
 			</bean>
@@ -697,14 +666,23 @@ modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-
+		
 	<!-- communication topic configuration of the node -->
 	<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group2_C</value>
 			</list>
 		</property>
 	<property name="pushCallback" ref="DBHandler"/>
+</bean>
+
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://jdbc:mysql://127.0.0.1:3306/bcos_Group2_C?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
 </bean>
 ```
 

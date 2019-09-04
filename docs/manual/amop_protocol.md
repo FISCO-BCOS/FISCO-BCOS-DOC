@@ -5,18 +5,18 @@
 - 实时：AMOP消息不依赖区块链交易和共识，消息在节点间实时传输，延时在毫秒级。  
 - 可靠：AMOP消息传输时，自动寻找区块链网络中所有可行的链路进行通讯，只要收发双方至少有一个链路可用，消息就保证可达。  
 - 高效：AMOP消息结构简洁、处理逻辑高效，仅需少量cpu占用，能充分利用网络带宽。  
-- 安全：AMOP的所有通讯链路使用SSL加密，加密算法可配置。
+- 安全：AMOP的所有通讯链路使用SSL加密，加密算法可配置,支持身份认证机制。
 - 易用：使用AMOP时，无需在SDK做任何额外配置。
 
 ## 逻辑架构
 ![](../../images/sdk/AMOP.jpg)
 以银行典型IDC架构为例，各区域概述：  
-- SF区：机构内部的业务服务区，此区域内的业务子系统使用区块链SDK，如无DMZ区，配置SDK连接到区块链节点，反之配置SDK连接到DMZ区的区块链前置。  
-- DMZ区：机构内部的外网隔离区，非必须，如有，该区域部署区块链前置。  
+- 链外区域：机构内部的业务服务区,此区域内的业务子系统使用区块链SDK，连接到区块链节点。  
 - 区块链P2P网络：此区域部署各机构的区块链节点，此区域为逻辑区域，区块链节点也可部署在机构内部。
 
 ## 配置
-AMOP无需任何额外配置，以下为[Web3SDK](./configuration.md)的配置案例
+说明：2.1.0及之后的sdk和节点版本新增了topic认证功能，默认的配置认证功能没有开启，需要用到认证功能的话请取消相关注释，并配置好公私钥，公私钥的生成方式请参考[生成公私钥脚本](./account.md)。
+AMOP无需任何额外配置，以下为[Web3SDK](./configuration.md)的配置案例。
 SDK配置（Spring Bean）：
 ```
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -64,43 +64,42 @@ SDK配置（Spring Bean）：
       <property name="groupId" value="1" />
       <property name="orgID" value="fisco" />
       <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+      <!-- 如果需要使用topic认证功能，请将下面的注释去除 -->
+      <!-- <property name="topic2KeyInfo" ref="amopVerifyTopicToKeyInfo"></property>--> 
     </bean>
-```
 
-区块链前置配置，如有DMZ区：
-```
-<?xml version="1.0" encoding="UTF-8" ?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans   
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
-          http://www.springframework.org/schema/tx   
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
-          http://www.springframework.org/schema/aop   
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-    
-    <!-- 区块链节点信息配置 -->
-  <bean id="proxyServer" class="org.fisco.bcos.channel.proxy.Server">
-    <property name="remoteConnections">
-      <bean class="org.fisco.bcos.channel.handler.ChannelConnections">
-        <property name="connectionsStr">
-          <list>
-            <value>127.0.0.1:5051</value><!-- 格式：IP:端口 -->
-          </list>
-        </property>
-      </bean>
-    </property>
-    
-    <property name="localConnections">
-      <bean class="org.fisco.bcos.channel.handler.ChannelConnections">
-      </bean>
-    </property>
-    <!-- 区块链前置监听端口配置，区块链SDK连接用 -->
-    <property name="bindPort" value="30333"/>
-  </bean>
-</beans>
+  <!--  这里配置的是topic到公私钥配置信息的映射关系，这里只配置了一个topic，可以通过新增entry的方式来新增映射关系。-->
+  <!--
+    <bean class="org.fisco.bcos.channel.handler.AMOPVerifyTopicToKeyInfo" id="amopVerifyTopicToKeyInfo">
+		<property name="topicToKeyInfo">
+			<map>
+				<entry key="${topicname}" value-ref="AMOPVerifyKeyInfo_${topicname}" />
+			</map>
+		</property>
+	</bean>
+  -->
+
+  <!--  在topic的生产者端，请将如下的注释打开，并配置topic的公钥，
+        每个需要身份验证的消费者都拥有不同的公私钥对，请列出所有需要身份验证的消费者的公钥文件。
+  -->
+  <!--
+	<bean class="org.fisco.bcos.channel.handler.AMOPVerifyKeyInfo" id="AMOPVerifyKeyInfo_${topicname}">
+		<property name="publicKey">
+			<list>
+				<value>classpath:$consumer_public_key_1.pem$</value>
+				<value>classpath:$consumer_public_key_2.pem$</value>
+			</list>
+		</property>
+	</bean>
+	--> 
+
+  <!--  在topic的消费者端，请将如下的注释打开，并配置topic的私钥，程序使用私钥向相应的主题生产者验证您的身份。-->
+  <!--
+	<bean class="org.fisco.bcos.channel.handler.AMOPVerifyKeyInfo" id="AMOPVerifyKeyInfo_${topicname}">
+		<property name="privateKey" value="classpath:$consumer_private_key.pem$"></property>
+	</bean>
+	--> 
+
 ```
 
 ## SDK使用
@@ -266,16 +265,54 @@ public class Channel2Client {
 
 ## 测试
 按上述说明配置好后，用户指定一个主题：topic，执行以下两个命令可以进行测试。  
-
-启动amop服务端：  
+### 单播文本
+启动AMOP服务端：  
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
 ```  
-启动amop客户端：   
+启动AMOP客户端：   
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Client [topic] [消息条数]
 ```
 
+AMOP除了支持单播文本，还支持发送二进制，多播以及身份认证机制。相应的测试命令如下：
+
+### 单播二进制，多播文本，多播二进制
+启动AMOP服务端：  
+```shell
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
+```  
+启动AMOP客户端：
+```shell
+#单播二进制
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ClientBin [topic] [filename]
+#多播文本
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMulti [topic]  [消息条数]
+#多播二进制
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMultiBin [topic]  [filename]
+```
+
+
+### 带认证机制的单播文本，单播二进制，多播文本，多播二进制
+在使用认证机制前，请确保参考配置文件配置好了用于认证的公私钥对。
+启动AMOP服务端：
+```shell
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ServerNeedVerify [topic]
+```  
+启动AMOP客户端：
+```shell
+#带认证机制的单播文本
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ClientNeedVerify [topic] [消息条数]
+#带认证机制的单播二进制
+java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ClientBinNeedVerify [topic] [filename]
+#带认证机制的多播文本
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMultiNeedVerify [topic]  [消息条数]
+#带认证机制的多播二进制
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMultiBinNeedVerify [topic]  [filename]
+```
+
 ## 错误码
 - 99：发送消息失败，AMOP经由所有链路的尝试后，消息未能发到服务端，建议使用发送时生成的`seq`，检查链路上各个节点的处理情况。
+- 100：区块链节点之间经由所有链路的尝试后，消息未能发送到可以接收该消息的节点，和错误码‘99’一样，建议使用发送时生成的‘seq’，检查链路上各个节点的处理情况。
+- 101：区块链节点往Sdk推送消息，经由所有链路的尝试后，未能到达Sdk端，和错误码‘99’一样，建议使用发送时生成的‘seq’，检查链路上各个节点以及Sdk的处理情况。
 - 102：消息超时，建议检查服务端是否正确处理了消息，带宽是否足够。
