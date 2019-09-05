@@ -151,9 +151,32 @@ channel_port = 20200
 ```
 
 **配置证书**
+
 ```bash
-# 拷贝节点证书到SDK配置目录
+# 若节点与python-sdk位于不同机器，请将节点sdk目录下所有相关文件拷贝到bin目录
+# 若节点与sdk位于相同机器，直接拷贝节点证书到SDK配置目录
 cp ~/fisco/nodes/127.0.0.1/sdk/* bin/
+```
+
+**配置证书路径**
+
+```eval_rst
+.. note::
+    - ``client_config.py`` 的 ``channel_node_cert`` 和 ``channel_node_key`` 选项分别用于配置SDK证书和私钥
+    - ``release-2.1.0`` 版本开始，SDK证书和私钥更新为 ``sdk.crt`` 和 ``sdk.key`` ，配置证书路径前，请先检查上步拷贝的证书名和私钥名，并将 ``channel_node_cert`` 配置为SDK证书路径，将 ``channel_node_key`` 配置为SDK私钥路径
+```
+
+检查从节点拷贝的sdk证书路径，若sdk证书和私钥路径分别为`bin/sdk.crt`和`bin/sdk.key`，则`client_config.py`中相关配置项如下：
+
+```bash
+channel_node_cert = "bin/sdk.crt"  # 采用channel协议时，需要设置sdk证书,如采用rpc协议通信，这里可以留空
+channel_node_key = "bin/sdk.key"   # 采用channel协议时，需要设置sdk私钥,如采用rpc协议通信，这里可以留空
+```
+
+若sdk证书和私钥路径分别为`bin/node.crt`和`bin/node.key`，则`client_config.py`中相关配置项如下:
+```bash
+channel_node_cert = "bin/node.crt"  # 采用channel协议时，需要设置sdk证书,如采用rpc协议通信，这里可以留空
+channel_node_key = "bin/node.key"   # 采用channel协议时，需要设置sdk私钥,如采用rpc协议通信，这里可以留空
 ```
 
 **使用Channel协议访问节点**
