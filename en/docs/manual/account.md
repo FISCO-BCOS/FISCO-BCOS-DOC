@@ -17,7 +17,7 @@ FISCO BCOS provides the get_account script and Web3SDK to create accounts, as we
 ### Use script to create account
 #### 1. get script
 ```bash
-curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
 
 execute the above command and if you see the following output, you are downloading the correct script, otherwise please try again.
