@@ -39,9 +39,9 @@ RPC configuration example is as follows:
 
 The current version of FISCO BCOS must be configured with `IP` and `Port` of the connection node in the `config.ini` configuration. The P2P related configurations include:
 
-- `listen_ip`: P2P listens for IP, to set `0.0.0.0` by default. This option supports domain names, but suggests users who need to use it [manually compile source code](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2).  
+- `listen_ip`: P2P listens for IP, to set `0.0.0.0` by default. 
 - `listen_port`: Node P2P listening port.  
-- `node.*`: All nodes `IP:port` which need to be connected to node.  
+- `node.*`: All nodes' `IP:Port` or `DomainName:Port` which need to be connected to node. This option supports domain names, but suggests users who need to use it [manually compile source code](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2).  
 - `enable_compress`: Enable network compression configuration option. Configuring to true, indicates that network compression is enabled. Configuring to false, indicates that network compression is disabled. For details on network compression, please refer to [here](../design/features/network_compress .md).
 
 P2P configuration example is as follows:

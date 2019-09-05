@@ -80,6 +80,9 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
         </bean>
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <property name="caCert" value="ca.crt" />
+                <property name="sslCert" value="sdk.crt" />
+                <property name="sslKey" value="sdk.key" />
                 <property name="allChannelConnections">
                         <list>  <!-- 每个群组需要配置一个bean，每个群组可以配置多个节点 -->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
@@ -119,6 +122,10 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
   - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
+  - `caCert`用于配置链ca证书路径
+  - `sslCert`用于配置SDK所使用的证书路径
+  - `sslKey`用于配置SDK所使用的证书对应的私钥路径
+  
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
 备注：刚下载项目时，有些插件可能没有安装，代码会报错。当你第一次在IDEA上使用lombok这个工具包时，请按以下步骤操作：
