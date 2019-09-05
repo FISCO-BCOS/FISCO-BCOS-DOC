@@ -121,15 +121,15 @@ Enumeration values of packet types and their corresponding meanings are as follo
 | Type | Inclusion | Description | Interpretation|
 |:------ |:--------|:--------|:--------|
 | 0x12 | JSONRPC 2.0 format | RPC interface message package | SDK -> node|
-| 0x13 | JSON format heartbeat package `{"Heartbeat":"0"}`|heartbeat package | 0: SDK -> node, 1: node -> SDK|
-| 0x14 | JSON format, protocol version negotiation | handshake package | SDK -> node's package `{"MinimumSupport":version,"MaximumSupport":version,"ClientType":"client type , java or python or nodejs, with SDK version"}`, node -> SDK's package `{"Protocol":version,"NodeVersion":"fisco-bcos version"`|
+| 0x13 | JSON format heartbeat package `{"heartbeat":"0"}`|heartbeat package | 0: SDK -> node, 1: node -> SDK|
+| 0x14 | SDK -> node's package `{"minimumSupport":version,"maximumSupport":version,"clientType":"client type"}`, node -> SDK's package `{"protocol":version,"nodeVersion":"fisco-bcos version"` | JSON format, protocol version negotiation, handshake package | Node <-> Node|
 | 0x30 | AMOP message package package package package | AMOP request package | SDK<-> node, bidirectional|
 | 0x31 | Package of failed AMOP message | AMOP Failure Response Package | Node -> SDK or Node -> Node|
 | 0x32 | JSON array to store Topics | report Topic information | SDK -> nodes monitored by SDK|
 | 0x35 | AMOP Message Packet Package | AMOP Multicast Message | Node -> Node|
 | 0x1000 | JSON Format Transaction Notification | Transaction Callback | Node -> SDK|
-| 0x1001  |json格式的区块上链通知`{"GroupID":"groupID","BlockNumber":"blockNumber"}`| 区块高度通知  | 节点->SDK |
-| Block Notification in 0x1001 | JSON format `{GroupID":"GroupID","BlockNumber":"BlockNumber"}`Block Height Notification'| Node -> SDK|
+| 0x1001  |JSON format,`{"groupID":"groupID","blockNumber":"blockNumber"}`| Block on-chain notify | 节点->SDK |
+| Block Notification in 0x1001 | JSON format `{groupID":"GroupID","blockNumber":"BlockNumber"}`Block Height Notification'| Node -> SDK|
 
 #### Error code
 

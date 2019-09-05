@@ -468,3 +468,20 @@ $ ./check_certificates.sh -v ~/ca.crt ~/node.crt
 ```
 
 After successful verification, it will prompt `use ~/ca.crt verify ~/node.crt successful`, or prompt exception if it is failing.
+
+## Node configuration error checking
+
+### Acquire script
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/check_node_config.sh && chmod u+x check_node_config.sh
+```
+
+### 使用
+
+Using the following command, the script `-p` option specifies the node path, and the script will analyze the configuration errors based on config. ini under the path.
+
+```bash
+bash check_node_config.sh -p node_127.0.0.1_30300
+```
+
