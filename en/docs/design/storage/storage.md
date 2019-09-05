@@ -2,9 +2,9 @@
 
 Distributed storage (Advanced Mass Database, AMDB) can adapt to relational database or split to KV database through design on table structure. Theoretically AMDB supports any relational and KV databases by realizing the storage drive for different database.
 
-- CRUD data, block data and contract code data are defaulted to be stored in AMDB without configuration. Local variables of contract can be configured as MPTState or StorageState if necessary. But contract code remains the same no matter what kind of state.
+- CRUD data and block data  are defaulted to be stored in AMDB without configuration. Local variables of contract can be configured as MPTState or StorageState if necessary. But contract code remains the same no matter what kind of state.
 - When it's MPTState, contract local variables are stored in MPT tree. When it's StorageState, contract local variables are stored in AMDB table.
-- Although data of MPTState AMDB will all be written to LevelDB finally, but they use different LevelDB instances with no transactional characteristics. Therefore, when it's configured to use MPTState, exceptions during committing data may lead to difference in data of the 2 LevelDB.
+- Although data of MPTState AMDB will all be written to RocksDB finally, but they use different RocksDB instances with no transactional characteristics. Therefore, when it's configured to use MPTState, exceptions during committing data may lead to difference in data of the 2 RocksDB.
 
 ## Terms definition
 
@@ -43,7 +43,7 @@ Explanation
     + Entry3：`{Name:Bob，item_id:1002001,item_name:macbook}`
     + Entry4：`{Name:Chris，item_id:1003001,item_name:PC}`
 - In the Table **Name** is the primary key with 3 Entries objects. The first Entries stores 2 records of Alice; the second Entries stores one record of Bob; the third Entries stores one record of Chris.
-- When calling retrieve API of Table, the API should set AMDB primary key and condition. Set AMDB primary key as Alice, condition as `price > 40`, it will retrieve Entry1.
+- When calling retrieve API of Table, the API should set AMDB primary key and condition. Set AMDB primary key as Alice, condition as `item_id = 1001001`, it will retrieve Entry1.
 
 ## Types of AMDB table
 
@@ -91,4 +91,4 @@ StorageState is a method to store account status by AMDB. It has following diffe
 |organization method of account data|AMDB table|MPT table|
 |historical status|not support/maintain historical status|support|
 
-Every account in MPTState uses MPT tree to store data. As historical data increases, it will lead to low performance due to storage method and disk IO. Every account in StorageState is related to one table and stores its data, including `nonce`, `code`, `balance` of the account. AMDB can improve performance by supporting different databases through their storage drives. We have found in LevelDB test that StorageState is twice as much as MPTState in performance.
+Every account in MPTState uses MPT tree to store data. As historical data increases, it will lead to low performance due to storage method and disk IO. Every account in StorageState is related to one table and stores its data, including `nonce`, `code`, `balance` of the account. AMDB can improve performance by supporting different databases through their storage drives. We have found in RocksDB test that StorageState is twice as much as MPTState in performance.
