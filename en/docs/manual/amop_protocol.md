@@ -18,9 +18,11 @@ We take the typical IDC architecture of the bank as the example to overview each
 - Blockchain P2P network: This is a logical region and deployed blockchain nodes of each agency. Blockchain nodes can also be deployed inside the agency.
 
 ## Configuration
-AMOP does not require any additional configuration. The following is a configuration case for [Web3SDK] (./configuration.md)
-
+Note: The topic authentication feature has been added to the sdk and node versions in 2.1.0 or newer version. authentication feature is not enabled by default. If you need to use the authentication feature, please uncomment corresponding configuration  and configure the public and private keys. Please refer to [Generate Public Private Key Script] (./account.md) to get the way to generate public and private keys.
+AMOP does not require any additional configuration. The following is a configuration case for [Web3SDK] (./configuration.md) .
 SDK configuration（Spring Bean）：
+
+
 ```
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
