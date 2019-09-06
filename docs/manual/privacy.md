@@ -93,7 +93,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
   // GroupSigPrecompiled.sol
   pragma solidity ^0.4.24;
   contract GroupSigPrecompiled{
-      function groupSigVerify(string signature) public constant returns(string)；
+  		function groupSigVerify(string signature, string message, string gpkInfo, string paramInfo) public constant returns(bool);
   }
   ```
 
@@ -103,7 +103,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
   // RingSigPrecompiled.sol
   pragma solidity ^0.4.24;
   contract RingSigPrecompiled{
-       function ringSigVerify(string signature, string message, string paramInfo) public constant returns(string);
+       function ringSigVerify(string signature, string message, string paramInfo) public constant returns(bool);
   }
   ```
 
