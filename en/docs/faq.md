@@ -147,7 +147,7 @@ A:
 Q:
   After the Web3SDK configuration is completed, what is the reason for the failed transaction? <br>
 A:
-  The ip, port, group number in applicationContext.xml are incorrectly filled or the node files of ca.crt, node.crt, and node.key files are missing.
+  The ip, port, group number in applicationContext.xml are incorrectly filled or the node files of ca.crt, sdk.crt, and sdk.key files are missing.
 
 ## Enterprise deployment tool
 Q：

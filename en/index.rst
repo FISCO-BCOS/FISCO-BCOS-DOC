@@ -51,7 +51,7 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
    docs/tutorial/index.rst
    docs/manual/index.rst
    docs/enterprise_tools/index.md
-   docs/sdk/sdk.md
+   docs/sdk/java_sdk.md
    docs/browser/browser.md
    docs/api.md
    docs/faq.md

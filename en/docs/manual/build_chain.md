@@ -167,8 +167,8 @@ nodes/
 │   │.....
 │   ├── sdk # SDK needs to be used
 │   │   ├── ca.crt # chain root certificate
-│   │   ├── node.crt # The certificate file required by SKD, to use when establishing a connection
-│   │   └── node.key # The private key file required by SKD, to use when establishing a connection
+│   │   ├── sdk.crt # The certificate file required by SKD, to use when establishing a connection
+│   │   └── sdk.key # The private key file required by SKD, to use when establishing a connection
 ├── cert # certificate folder
 │   ├── agency # agency certificate folder
 │   │   ├── agency.crt # agency certificate
