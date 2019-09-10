@@ -163,8 +163,8 @@ nodes/
 │   │.....
 │   ├── sdk # SDK需要用到的
 │   │   ├── ca.crt # 链根证书
-│   │   ├── node.crt # SKD所需的证书文件，建立连接时使用
-│   │   └── node.key # SDK所需的私钥文件，建立连接时使用
+│   │   ├── sdk.crt # SKD所需的证书文件，建立连接时使用
+│   │   └── sdk.key # SDK所需的私钥文件，建立连接时使用
 ├── cert # 证书文件夹
 │   ├── agency # 机构证书文件夹
 │   │   ├── agency.crt # 机构证书

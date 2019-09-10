@@ -52,9 +52,11 @@ repositories {
 ## 配置SDK
 
 ### FISCO BCOS节点证书配置
-FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、node.crt)和私钥(node.key)进行双向认证。因此需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`node.crt`和`node.key`文件拷贝到项目的资源目录，供SDK与节点建立连接时使用。
+
+FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、sdk.crt)和私钥(sdk.key)进行双向认证。因此需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录，供SDK与节点建立连接时使用。
 
 ### 配置文件设置
+
 Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ### Spring项目配置
@@ -134,21 +136,25 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 
 ### Spring Boot项目配置
 提供Spring Boot项目中关于`application.yml`的配置如下所示。
-```yml
+
+```yaml
 encrypt-type: # 0：普通， 1：国密
- encrypt-type: 0 
- 
+  encrypt-type: 0
+
 group-channel-connections-config:
+  caCert: ca.crt
+  sslCert: sdk.crt
+  sslKey: sdk.key
   all-channel-connections:
-  - group-id: 1  # 群组ID
-    connections-str:
-                    - 127.0.0.1:20200  # 节点，listen_ip:channel_listen_port
-                    - 127.0.0.1:20201
-  - group-id: 2  
-    connections-str:
-                    - 127.0.0.1:20202  # 节点，listen_ip:channel_listen_port
-                    - 127.0.0.1:20203
- 
+    - group-id: 1 #group ID
+      connections-str:
+        - 127.0.0.1:20200 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20201
+    - group-id: 2
+      connections-str:
+        - 127.0.0.1:20202 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20203
+
 channel-service:
   group-id: 1 # sdk实际连接的群组
   agency-name: fisco # 机构名称
