@@ -51,7 +51,7 @@ repositories {
 ## Configuration of SDK
 
 ### FISCO BCOS node certificate configuration
-FISCO BCOS requires SDK to pass two-way authentication on certificate(ca.crt、node.crt) and private key(node.key) when connecting with nodes. Therefore, we need to copy `ca.crt`, `node.crt` and `node.key` under `nodes/${ip}/sdk` folder of node to the resource folder of the project for SDK to connect with nodes.
+FISCO BCOS requires SDK to pass two-way authentication on certificate(ca.crt、sdk.crt) and private key(sdk.key) when connecting with nodes. Therefore, we need to copy `ca.crt`, `sdk.crt` and `sdk.key` under `nodes/${ip}/sdk` folder of node to the resource folder of the project for SDK to connect with nodes.
 
 ### Configuration of config file
 The config file of java application should be configured. It is noteworthy that FISCO BCOS 2.0 supports [Multi-group function](../design/architecture/group.md), and SDK needs to configure the nodes of the group. The configuration process will be exemplified in this chapter by Spring and Spring Boot project.
@@ -130,23 +130,31 @@ Note: Some plugins may not be installed when the project is downloading for the 
   - Enter settings->Compiler->Annotation Processors->Check Enable annotation processing
 
 ### Configuration of Spring Boot project
+
 The configuration of `application.yml` in Spring Boot is exemplified below.
-```yml
-encrypt-type: 0  # 0:standard, 1:guomi
+
+```yaml
+encrypt-type: # 0:standard, 1:guomi
+  encrypt-type: 0
+
 group-channel-connections-config:
+  caCert: ca.crt
+  sslCert: sdk.crt
+  sslKey: sdk.key
   all-channel-connections:
-  - group-id: 1  #group ID
-    connections-str:
-                    - 127.0.0.1:20200  # node listen_ip:channel_listen_port
-                    - 127.0.0.1:20201
-  - group-id: 2  
-    connections-str:
-                    - 127.0.0.1:20202  # node listen_ip:channel_listen_port
-                    - 127.0.0.1:20203
- 
+    - group-id: 1 #group ID
+      connections-str:
+        - 127.0.0.1:20200 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20201
+    - group-id: 2
+      connections-str:
+        - 127.0.0.1:20202 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20203
+
 channel-service:
   group-id: 1 # The specified group to which the SDK connects
   agency-name: fisco # agency name
+
 ```
 The configuration items of `application.yml` corresponds with `applicationContext.xml`. For detailed introduction please check the configuration description of `applicationContext.xml`.
 

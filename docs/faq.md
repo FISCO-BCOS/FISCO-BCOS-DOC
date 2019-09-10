@@ -145,7 +145,7 @@
 问:
   Web3SDK配置完成，发送交易失败的原因是什么？<br>
 答:
-  applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
+  applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、sdk.crt和sdk.key文件。
 
 
 ## 企业级部署工具
