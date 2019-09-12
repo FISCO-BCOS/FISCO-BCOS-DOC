@@ -106,7 +106,7 @@ cd ~/generator && bash ./scripts/install.sh
 
 切换到~/目录
 
-​```bash
+```bash
 cd ~/generator
 ```
 
