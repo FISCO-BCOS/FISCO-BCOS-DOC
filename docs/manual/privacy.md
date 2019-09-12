@@ -12,13 +12,13 @@
 2. 同态加密支持密文计算，即采用相同公钥加密生成的两个密文可以计算​f( )操作，生成的新密文解密后恰好是两个原始明文计算f( )操作后的结果；
 3. 同态加密公式描述如下：
 
-$$C1=Encryption(m1, pk)$$
+$C1=Encryption(m1, pk)$
 
-$$C2=Encryption(m2, pk)$$
+$C2=Encryption(m2, pk)$
 
-$$C3=Homomorphic(C1, C2, f(), pk)$$
+$C3=Homomorphic(C1, C2, f(), pk)$
 
-$$Decryption(C3, sk) = f(m1, m2)$$
+$Decryption(C3, sk) = f(m1, m2)$
 
 FISCO BCOS采用的是paillier加密方案，支持加法和数乘同态。选择该方案主要有两个原因：首先，隐私模块中同态功能所辅助的业务场景简单，只需要进行资产的转移；另外，不宜在合约中实现太过复杂的计算逻辑，会大幅度降低联盟链性能。基于功能和性能的平衡，paillier这种轻量级的加同态算法自然成了首选。
 
@@ -72,15 +72,15 @@ FISCO BCOS采用的是paillier加密方案，支持加法和数乘同态。选�
 
 - 克隆代码
 
-```
+```bash
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 ```
 
 - 编译
 
-```
+```bash
 cd FISCO-BCOS
-git checkout master
+git checkout feature-paillier
 mkdir -p build && cd build
 # 开启隐私模块编译选项，CentOS请使用cmake3
 cmake -DCRYPTO_EXTENSION=ON ..
@@ -92,7 +92,7 @@ make
 
 假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下，更多选项[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/build_chain.html)。
 
-```
+```bash
 bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
 ```
 
@@ -115,7 +115,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 - 同态加密
 
-  ```
+  ```solidity
   // PaillierPrecompiled.sol
   pragma solidity ^0.4.24;
   contract PaillierPrecompiled{
@@ -125,7 +125,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 - 群签名
 
-  ```
+  ```solidity
   // GroupSigPrecompiled.sol
   pragma solidity ^0.4.24;
   contract GroupSigPrecompiled{
@@ -135,7 +135,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 - 环签名
 
-  ```
+  ```solidity
   // RingSigPrecompiled.sol
   pragma solidity ^0.4.24;
   contract RingSigPrecompiled{
@@ -145,7 +145,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 - 零知识证明
 
-  ```
+  ```solidity
   // ZKsnarkPrecompiled.sol
   pragma solidity ^0.4.24;
   contract ZKsnarkPrecompiled{
@@ -161,7 +161,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 
 使用编译出的二进制搭建节点后，部署控制台v1.0.2以上版本，以调用同态加密为例，执行下面语句即可:
 
-```
+```solidity
 // 在console目录下启动控制台
 bash start.sh
 // 调用合约
@@ -174,7 +174,7 @@ call PaillierPrecompiled.sol 0x5003 paillierAdd "0080932D5857D9FCFD8CEEDB7593F6E
 
 以调用同态加密为例，通过在`solidity`合约中创建预编译合约对象并调用其接口，在控制台`console/contracts/solidity`创建`CallPaillier.sol`文件，文件内容如下:
 
-```
+```solidity
 // CallPaillier.sol
 pragma solidity ^0.4.24;
 import "./PaillierPrecompiled.sol";
