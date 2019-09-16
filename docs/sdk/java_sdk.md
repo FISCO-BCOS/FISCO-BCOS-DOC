@@ -53,7 +53,7 @@ repositories {
 
 ### FISCO BCOS节点证书配置
 
-FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、sdk.crt)和私钥(sdk.key)进行双向认证。因此需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录，供SDK与节点建立连接时使用。
+FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、sdk.crt)和私钥(sdk.key)进行双向认证。因此需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录，供SDK与节点建立连接时使用。（低于2.1版本的FISCO BCOS节点目录下只有`node.crt`和`node.key`，需将其重命名为`sdk.crt`和`sdk.key`以兼容最新的SDK）
 
 ### 配置文件设置
 
