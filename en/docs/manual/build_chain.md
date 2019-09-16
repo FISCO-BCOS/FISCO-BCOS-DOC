@@ -212,6 +212,60 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 ```
 
+### Add new node into Groups
+
+This section takes Group1 generated in the previous section as an example to add a consensus node.
+
+#### Generate private key certificates for new node
+
+The next operation is done under the `nodes/127.0.0.1` directory generated in the previous section.
+
+1. Acquisition certificate generation script
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/gen_node_cert.sh
+```
+
+2. Generating new node private key certificates
+
+```bash
+# -c specify the path where the certificate and private key are located
+# -o Output to the specified folder, where new certificates and private keys issued by agency test exist in newNode/conf
+
+bash gen_node_cert.sh -c cert/test -o newNode
+```
+
+#### Preparing configuration files
+
+1. Copy Node 0 Profile and Tool Script in Group 1
+
+```bash
+cp node0/config.ini newNode/config.ini
+cp node0/conf/group.1.genesis newNode/conf/group.1.genesis
+cp node0/conf/group.1.ini newNode/conf/group.1.ini
+cp node0/*.sh newNode/
+cp -r node0/scripts newNode/
+```
+
+2. Update IP and ports monitored in `newNode/config.ini`
+3. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
+4. Add IP and Port in the new node's P2P configuration to the [p2p] field in the original node's config.ini. Assuming that the new node IP: Port is 127.0.0.1:30304, the modified [P2P] configuration is
+
+    ```bash
+    [p2p]
+        listen_ip=0.0.0.0
+        listen_port=30300
+        ;enable_compress=true
+        ; nodes to connect
+        node.0=127.0.0.1:30300
+        node.1=127.0.0.1:30301
+        node.2=127.0.0.1:30302
+        node.3=127.0.0.1:30303
+        node.4=127.0.0.1:30304
+    ```
+
+#### Start a new node, check links and consensus
+
 ### Multi-server and multi-group
 
 Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
