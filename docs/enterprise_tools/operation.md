@@ -484,3 +484,19 @@ $ ./check_certificates.sh -v ~/ca.crt ~/node.crt
 ```
 
 验证成功时会提示`use ~/ca.crt verify ~/node.crt successful`, 验证失败会提示异常。
+
+## 节点配置错误检查
+
+### 获取脚本
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/check_node_config.sh && chmod u+x check_node_config.sh
+```
+
+### 使用
+
+使用下面的命令，脚本`-p`选项指定节点路径，脚本会根据路径下的config.ini分析配置是否有错误。
+
+```bash
+bash check_node_config.sh -p node_127.0.0.1_30300
+```

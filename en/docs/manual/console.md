@@ -139,7 +139,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
 ### Configure console
 - Blockchain node and certificate configuration:
-   - To copy the `ca.crt`, `node.crt`, and `node.key` files in the sdk node directory to the `conf` directory.
+   - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
    - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the listen_ip set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
 
 ```xml
