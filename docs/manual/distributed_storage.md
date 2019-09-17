@@ -12,7 +12,7 @@ sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 启动 MySQL 服务并登陆:
 root 账户密码。
 ```bash
-sudo service msyql start
+service msyql start
 mysql -uroot -p
 ```
 
@@ -28,8 +28,62 @@ yum install mariadb*
 service mysqld start
 #若安装了mariadb，则使用下面的命令启动
 service mariadb start
-mysql -uroot
+mysql -uroot -p
 mysql> set password for root@localhost = password('123456');
+```
+
+## 配置MySQL参数
+### 查看配置文件my.cnf
+```bash
+mysql --help | grep 'Default options' -A 1
+```
+执行之后可以看到如下如下数据
+
+```
+Default options are read from the following files in the given order:
+/etc/mysql/my.cnf /etc/my.cnf ~/.my.cnf 
+```
+### 配置my.cnf
+mysql依次从/etc/mysql/my.cnf，/etc/my.cnf，~/.my.cnf中加载配置。依次查找这几个文件，找到第一个存在的文件，在[mysqld]段中新增如下内容（如果存在则修改值）。
+```
+max_allowed_packet = 1024M
+sql_mode =STRICT_TRANS_TABLES
+```
+
+### 重启mysql-sever，验证参数。
+
+Ubuntu：执行如下命令重启
+```bash
+service msyql restart
+```
+
+CentOS：执行如下命令重启
+```bash
+service mysqld start
+#若安装了mariadb，则使用下面的命令启动
+service mariadb start
+```
+
+验证参数过程
+```bash
+mysql -uroot -p
+#执行下面命令，查看max_allowed_packet的值
+MariaDB [(none)]>  show variables like 'max_allowed_packet%';
++--------------------+------------+
+| Variable_name      | Value      |
++--------------------+------------+
+| max_allowed_packet | 1073741824 |
++--------------------+------------+
+1 row in set (0.00 sec)
+
+#执行下面命令，查看sql_mode的值
+MariaDB [(none)]>  show variables like 'sql_mode%';
++---------------+---------------------+
+| Variable_name | Value               |
++---------------+---------------------+
+| sql_mode      | STRICT_TRANS_TABLES |
++---------------+---------------------+
+1 row in set (0.00 sec)
 ```
 
 
@@ -691,4 +745,4 @@ info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 ```
 
 ### 使用控制台发送交易
-请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id10)章节。
+请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id12)章节。
