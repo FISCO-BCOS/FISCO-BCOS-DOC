@@ -745,4 +745,4 @@ info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 ```
 
 ### 使用控制台发送交易
-请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id10)章节。
+请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id12)章节。
