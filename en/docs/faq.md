@@ -128,6 +128,13 @@ Q:
 A:
   To query CNS list through the command of web3sdk console, and the query command is queried according to the contract name.
 
+Q:
+  Why can't local SDK connect to FISCO BCOS nodes on cloud servers?<br>
+A:
+  1. Check the node configuration on the cloud server to see if Channel is listening for IP over the extranet, rather than `127.0.0.1`. Port Description [Refer here](https://mp.weixin.qq.com/s/IiHsPlxmvEEBTC84n27I9A)
+  2. Check the console provided by the cloud manufacturer of the cloud server, check whether the security group is configured, and open the channel port used by FISCO BCOS nodes in the security group.
+  3. Check that the generated certificate is correct, [refer to here](./enterprise_tools/operation.md#node-configuration-error-checking)
+
 ## Web3SDK
 
 Q:
@@ -140,7 +147,7 @@ A:
 Q:
   After the Web3SDK configuration is completed, what is the reason for the failed transaction? <br>
 A:
-  The ip, port, group number in applicationContext.xml are incorrectly filled or the node files of ca.crt, node.crt, and node.key files are missing.
+  The ip, port, group number in applicationContext.xml are incorrectly filled or the node files of ca.crt, sdk.crt, and sdk.key files are missing.
 
 ## Enterprise deployment tool
 Q：

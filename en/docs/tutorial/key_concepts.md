@@ -29,7 +29,7 @@ Transaction can be seen as a request data targeting blockchain system to deploy 
 
 As the transaction is confirmed, a receipt will be created and saved in the block correspondently for storage of execution information like result code, log and gas consumption. User can use hash of the transaction to check its receipt to know whether it is finished. Equivalent with “write” transaction, there is a “read-only” method of invocation for reading data on chain.
 
-It shares the similar request method with transaction but invokes functions by call(). When the node receives “read-only” invocation request, it will return with the requested accessed parameter status without inviting the request into consensus process to avoid modification of data on chain.
+It shares the similar request method with transaction but invokes functions by call() (not sendRawTransaction() ). When the node receives “read-only” invocation request, it will return with the requested accessed parameter status without inviting the request into consensus process to avoid modification of data on chain.
 
 #### Account
 
@@ -55,7 +55,7 @@ Consensus mechanism is the core concept of blockchain, as there will not be bloc
 
 A computer installed with software and hardware concerning blockchain system and join the blockchain network can be called a “node”. Nodes take part in network communication, logic calculation, data verification and storage of block, transaction and status, etc., and provide client ends interfaces for transaction process and data inquiry. The identification of node adapts public-private key mechanism, which generates a string of unique Node ID to ensure its uniqueness on blockchain.
 
-According to the involvement of calculation and storage of data, nodes can be categorized into consensus node, observation node and lightweight node. Consensus node fully participates in consensus process, packing block as accountant and verifying block as verifier. Observation node doesn’t join consensus process but synchronize data for verification and storage as a data service provider. Lightweight node only synchronizes block headers and few transactions and status data, providing verification for certain online transaction or data inquiry.
+According to the involvement of calculation and storage of data, nodes can be categorized into consensus node and observation node. Consensus node fully participates in consensus process, packing block as accountant and verifying block as verifier. Observation node doesn’t join consensus process but synchronize data for verification and storage as a data service provider. 
 
 #### Consensus algorithm
 

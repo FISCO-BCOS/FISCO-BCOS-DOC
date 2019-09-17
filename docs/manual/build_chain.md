@@ -163,8 +163,8 @@ nodes/
 │   │.....
 │   ├── sdk # SDK需要用到的
 │   │   ├── ca.crt # 链根证书
-│   │   ├── node.crt # SKD所需的证书文件，建立连接时使用
-│   │   └── node.key # SDK所需的私钥文件，建立连接时使用
+│   │   ├── sdk.crt # SKD所需的证书文件，建立连接时使用
+│   │   └── sdk.key # SDK所需的私钥文件，建立连接时使用
 ├── cert # 证书文件夹
 │   ├── agency # 机构证书文件夹
 │   │   ├── agency.crt # 机构证书
@@ -207,6 +207,59 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 [INFO] All completed. Files in /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 ```
+
+### 群组新增节点
+
+本节以为上一小节生成的群组1新增一个共识节点为例操作。
+
+#### 为新节点生成私钥证书
+
+接下来的操作，都在上一节生成的`nodes/127.0.0.1`目录下进行
+
+1. 获取证书生成脚本
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/gen_node_cert.sh
+```
+
+2. 生成新节点私钥证书
+
+```bash
+# -c指定机构证书及私钥所在路径
+# -o输出到指定文件夹，其中newNode/conf中会存在机构test新签发的证书和私钥
+bash gen_node_cert.sh -c cert/test -o newNode
+```
+
+#### 准备配置文件
+
+1. 拷贝群组1中节点node0配置文件与工具脚本
+
+```bash
+cp node0/config.ini newNode/config.ini
+cp node0/conf/group.1.genesis newNode/conf/group.1.genesis
+cp node0/conf/group.1.ini newNode/conf/group.1.ini
+cp node0/*.sh newNode/
+cp -r node0/scripts newNode/
+```
+
+2. 更新`newNode/config.ini`中监听的IP和端口
+3. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)
+4. 将新节点的P2P配置中的IP和Port加入原有节点的config.ini中的[p2p]字段。假设新节点IP:Port为127.0.0.1:30304则，修改后的[P2P]配置为
+
+    ```bash
+    [p2p]
+        listen_ip=0.0.0.0
+        listen_port=30300
+        ;enable_compress=true
+        ; nodes to connect
+        node.0=127.0.0.1:30300
+        node.1=127.0.0.1:30301
+        node.2=127.0.0.1:30302
+        node.3=127.0.0.1:30303
+        node.4=127.0.0.1:30304
+    ```
+
+#### 启动新节点，检查链接和共识
 
 ### 多服务器多群组
 
