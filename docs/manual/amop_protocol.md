@@ -1,6 +1,7 @@
 # 链上信使协议
 
 ## 介绍
+
 链上信使协议AMOP（Advanced Messages Onchain Protocol）系统旨在为联盟链提供一个安全高效的消息信道，联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用AMOP进行通讯，AMOP有如下优势：  
 - 实时：AMOP消息不依赖区块链交易和共识，消息在节点间实时传输，延时在毫秒级。  
 - 可靠：AMOP消息传输时，自动寻找区块链网络中所有可行的链路进行通讯，只要收发双方至少有一个链路可用，消息就保证可达。  
@@ -9,12 +10,14 @@
 - 易用：使用AMOP时，无需在SDK做任何额外配置。
 
 ## 逻辑架构
+
 ![](../../images/sdk/AMOP.jpg)
 以银行典型IDC架构为例，各区域概述：  
 - 链外区域：机构内部的业务服务区,此区域内的业务子系统使用区块链SDK，连接到区块链节点。  
 - 区块链P2P网络：此区域部署各机构的区块链节点，此区域为逻辑区域，区块链节点也可部署在机构内部。
 
-## Topic认证功能介绍：
+## Topic认证功能
+
 认证功能是指对于特定的topic消息，允许通过认证的接收者接收消息。
 
 2.1.0及之后的sdk和节点版本新增了topic认证功能，默认的配置没有开启认证功能，需要用到认证功能的话请参考[配置文件配置](./amop_protocol.html#id4)配置好公私钥，公私钥的生成方式请参考[生成公私钥脚本](./account.md)。使用过程如下：
@@ -286,7 +289,7 @@ public class Channel2Client {
 启动AMOP服务端：  
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
-```  
+```
 启动AMOP客户端：   
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Client [topic] [消息条数]
@@ -298,7 +301,7 @@ AMOP除了支持单播文本，还支持发送二进制，多播以及身份认�
 启动AMOP服务端：  
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2Server [topic]
-```  
+```
 启动AMOP客户端：
 ```shell
 #单播二进制
@@ -315,7 +318,7 @@ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMul
 启动AMOP服务端：
 ```shell
 java -cp 'conf/:apps/*:lib/*' org.fisco.bcos.channel.test.amop.Channel2ServerNeedVerify [topic]
-```  
+```
 启动AMOP客户端：
 ```shell
 #带认证机制的单播文本
