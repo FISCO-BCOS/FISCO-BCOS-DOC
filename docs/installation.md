@@ -88,7 +88,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 bash nodes/127.0.0.1/start_all.sh
 ```
 
-启动成功会输出类似下面内容的相应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
+启动成功会输出类似下面内容的响应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
 ```bash
 try to start node0
 try to start node1
