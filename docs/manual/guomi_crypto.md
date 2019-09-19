@@ -12,7 +12,7 @@ $ sudo apt install -y openssl curl
 # 准备环境
 $ cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/dev/tools/get_buildchain.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
 ```
 
 执行完上述步骤后，fisco目录下结构如下：

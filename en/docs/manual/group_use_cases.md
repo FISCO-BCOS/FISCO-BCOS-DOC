@@ -79,7 +79,7 @@ mkdir -p ~/fisco && cd ~/fisco
 
 - Download the build_chain.sh script
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/dev/tools/get_buildchain.sh)
+bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
 ```
 
 **Generate configuration for star networking blockchain system**
@@ -564,7 +564,7 @@ In a parallel multi-group scenario, node join and exit group operations are simi
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/dev/tools/get_buildchain.sh)
+$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
 #Build a local single-group four-node blockchain (in a production environment, it is recommended that each node be deployed on a different physical machine)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
