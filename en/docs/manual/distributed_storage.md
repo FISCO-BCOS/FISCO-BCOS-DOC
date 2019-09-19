@@ -52,6 +52,7 @@ Before using distributed storage, you need to complete the establishment of the 
 #### Prepare dependence
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
+# Download build_chain.sh script
 bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
 ```
 #### Generate configuration file
