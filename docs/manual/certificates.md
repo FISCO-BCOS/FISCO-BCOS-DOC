@@ -53,9 +53,11 @@ agency.key 机构私钥
 
 
 ```bash
-ca.crt 链证书
-node.crt 节点/SDK证书
-node.key 节点/SDK私钥
+ca.crt #链证书
+node.crt #节点证书
+node.key #节点私钥
+sdk.crt #SDK证书
+sdk.key #SDK私钥
 ```
 
 节点证书`node.crt`包括节点证书和机构证书信息，节点与其他节点/SDK通信验证时会用自己的私钥`node.key`对消息进行签名，并发送自己的`node.crt`至对方进行验证
@@ -77,4 +79,4 @@ FISCO BCOS的证书生成流程如下，用户也可以使用[企业部署工具
 
 ### 生成节点/SDK证书
 
-* 节点生成私钥`node.key`和证书请求文件`node.csr`，机构管理员使用私钥`agency.key`和证书请求文件`node.csr`为节点/SDK颁发证书`node.crt`
+* 节点生成私钥`node.key`和证书请求文件`node.csr`，机构管理员使用私钥`agency.key`和证书请求文件`node.csr`为节点/SDK颁发证书
