@@ -132,7 +132,7 @@ boostlog示例配置如下：
 
 ### 配置节点兼容性
 
-FISCO BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性，此配置项建链时工具会自动生成，用户不需修改。
+FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性，此配置项建链时工具会自动生成，用户不需修改。
 
 - `supported_version`：当前节点运行的版本
 
@@ -143,12 +143,12 @@ FISCO BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibil
     - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，
 ```
 
-`release-2.0.0`节点的`[compatibility]`配置如下：
+`FISCO BCOS 2.1.0`节点的`[compatibility]`配置如下：
 
 ```ini
 
 [compatibility]
-    supported_version=release-2.0.0
+    supported_version=2.1.0
 ```
 
 

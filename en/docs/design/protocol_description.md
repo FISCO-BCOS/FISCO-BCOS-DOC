@@ -2,7 +2,7 @@
 
 ## Transaction structure and its RLP coding description
 
-The transaction structure of FISCO BCOS has been increased or decreased some fields based on the transaction structure of the original Ethereum. The transaction structure fields of FISCO BCOS 2.0.0 are as follows:
+The transaction structure of FISCO BCOS has been increased or decreased some fields based on the transaction structure of the original Ethereum. The transaction structure fields of FISCO BCOS 2.0+ are as follows:
 
 | name           | type            | description                                                  | RLP index | RLP index RC2 |
 | :------------- | :-------------- | :----------------------------------------------------------- | --------- | ------------- |
