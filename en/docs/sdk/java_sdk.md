@@ -1,8 +1,8 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0+. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
 
-Main features of version 2.0 includes:
+Main features of version 2.0+ includes:
 - provide Java API to call FISCO BCOS JSON-RPC
 - provide pre-compiled contracts to manage the blockchain
 - provide secure and efficient message channel with [AMOP](../manual/amop_protocol.md)
@@ -28,14 +28,14 @@ Main features of version 2.0 includes:
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.4')
+compile ('org.fisco-bcos:web3sdk:2.1.0')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.4</version>
+    <version>2.1.0</version>
 </dependency>
 ```
 Because the relative jar archive of the solidity compiler of Ethereum is imported, we need to add a remote repository of Ethereum in the gradle configuration file build.gradle of the java application.
@@ -54,7 +54,7 @@ repositories {
 FISCO BCOS requires SDK to pass two-way authentication on certificate(ca.crt、sdk.crt) and private key(sdk.key) when connecting with nodes. Therefore, we need to copy `ca.crt`, `sdk.crt` and `sdk.key` under `nodes/${ip}/sdk` folder of node to the resource folder of the project for SDK to connect with nodes.(There are only `node.crt` and `node.key` before FISCO BCOS version 2.1. Rename them to `sdk.crt` and `sdk.key` to compatible with latest SDK version)
 
 ### Configuration of config file
-The config file of java application should be configured. It is noteworthy that FISCO BCOS 2.0 supports [Multi-group function](../design/architecture/group.md), and SDK needs to configure the nodes of the group. The configuration process will be exemplified in this chapter by Spring and Spring Boot project.
+The config file of java application should be configured. It is noteworthy that FISCO BCOS 2.0+ supports [Multi-group function](../design/architecture/group.md), and SDK needs to configure the nodes of the group. The configuration process will be exemplified in this chapter by Spring and Spring Boot project.
 
 ### Configuration of Spring project
 The following picture shows how `applicationContext.xml` is configured in Spring project.

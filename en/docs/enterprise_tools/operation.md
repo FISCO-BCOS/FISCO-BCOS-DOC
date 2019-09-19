@@ -40,7 +40,7 @@ The generated `group.i.genesis` is the Genesis Block of the new group.
 
 ```eval_rst
 .. note::
-    In FISCO BCOS 2.0, each group has one Genesis Block.
+    In FISCO BCOS 2.0+, each group has one Genesis Block.
 ```
 
 ## build_install_package (-b)

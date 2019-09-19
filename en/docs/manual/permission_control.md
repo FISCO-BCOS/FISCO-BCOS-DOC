@@ -20,7 +20,7 @@ The operations concerning permission control of following functions are introduc
 - [Permission to write user table](./permission_control.html#id11)
 
 ## Environment configuration  
-Configure and start the nodes and console of FISCO BCOS 2.0. For reference please check [Installation](../installation.md).
+Configure and start the nodes and console of FISCO BCOS 2.0+. For reference please check [Installation](../installation.md).
 
 ## Tools for permission control
 FISCO BCOS offers permission control of console commands (developers can call PermissionService API of [SDK API](../sdk/sdk.html#permissionservice) for permission control). The involved permission control commands are:
