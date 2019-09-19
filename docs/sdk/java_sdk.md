@@ -2,7 +2,7 @@
 
 [Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以支持访问节点、查询节点状态、修改系统设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
 
-2.0版本主要特性包括：
+2.0+版本主要特性包括：
 
 - 提供调用FISCO BCOS JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
@@ -29,14 +29,14 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.4')
+compile ('org.fisco-bcos:web3sdk:2.1.0')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.4</version>
+    <version>2.1.0</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
@@ -57,7 +57,7 @@ FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt
 
 ### 配置文件设置
 
-Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
+Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0+版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ### Spring项目配置
 
@@ -380,7 +380,7 @@ SDK提供对CRUD(增删改查)操作的支持。CRUDService可以创建表，对
 ## 交易解析
 FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署合约，调用合约接口，维护合约的生命周期以及管理资产，进行价值交换等。当交易确认后会产生交易回执，[交易回执](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt)和[交易](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash)均保存在区块里，用于记录交易执行过程生成的信息，如结果码、日志、消耗的gas量等。用户可以使用交易哈希查询交易回执，判定交易是否完成。  
 
-交易回执包含三个关键字段，分别是input（目前dev分支编译的fisco bcos包含该字段，后续合入2.0.0版本）, output , logs:
+交易回执包含三个关键字段，分别是input, output , logs:
 
 | 字段   | 类型      | 描述                               |
 | :----- | :-------- | :--------------------------------- |
