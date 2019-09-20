@@ -31,7 +31,7 @@ RC2的生成流程也类似，只是在第一步`rlp+hash`的transaction结构�
 
 ## 区块结构及其RLP编码描述
 
-FISCO BCOS的区块由以下五部分组成：
+FISCO BCOS的区块由以下五部分组成（rc1版本）：
 
 | name                | description                                      | RLP index |
 | :------------------ | :----------------------------------------------- | --------- |
@@ -40,6 +40,15 @@ FISCO BCOS的区块由以下五部分组成：
 | transactionReceipts | 交易回执列表RLP编码                              | 2         |
 | hash                | 区块头RLP编码后的哈希值                          | 3         |
 | sigList             | PBFT共识落盘阶段收集到的节点签名信息，Raft不使用 | 4         |
+
+在rc2及以上的版本：
+| name                | description                                      | RLP index |
+| :------------------ | :----------------------------------------------- | --------- |
+| blockHeader         | 区块头RLP编码                                    | 0         |
+| transactions        | 交易列表RLP编码                                  | 1         |
+| hash                | 区块头RLP编码后的哈希值                          | 2         |
+| sigList             | PBFT共识落盘阶段收集到的节点签名信息，Raft不使用 | 3         |
+| transactionReceipts | 交易回执列表RLP编码                              | 4         |
 
 FISCO BCOS的区块头中每个字段意义如下：
 
@@ -132,4 +141,4 @@ AMOP消息包继承ChannelMessage包机构，在data字段添加了自定义内�
 | 0    | 成功       |
 | 100  | 节点不可达 |
 | 101  | SDK不可达  |
-| 102  | 超时       |
+| 102  | 超时       |	
