@@ -402,7 +402,7 @@ FISCO BCOS system currently includes the following system parameters (other syst
 | tx_count_limit  | 1000      | maximum number of transactions that can be packaged in one block
   |
 +-----------------+-----------+---------------------------------+
-| tx_gas_limit    | 300000000 | Maximum block limit for a block            |
+| tx_gas_limit    | 300000000 | Maximum gas limit for a transaction            |
 +-----------------+-----------+---------------------------------+
 
 ```
@@ -418,7 +418,7 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 
     - Hardware performance such as machine network or CPU is limited: to reduce tx_count_limit for reducing business pressure;
 
-    - gas is insufficient when executing blocks for comlicated business logic: increase tx_gas_limit.
+    - gas is insufficient when executing transactions for comlicated business logic: increase tx_gas_limit.
 
 ```
 
@@ -430,7 +430,7 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 > getSystemConfigByKey tx_count_limit
 [500]
 
-# To set block gas limit as  400000000
+# To set transaction gas limit as  400000000
 > getSystemConfigByKey tx_gas_limit 400000000
 > getSystemConfigByKey
 [400000000]

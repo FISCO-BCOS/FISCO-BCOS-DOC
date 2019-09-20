@@ -155,7 +155,7 @@
 答：
   企业级部署工具依赖python pip，使用以下命令安装：
 ```
-$ python -m pip install
+$ bash ./scripts/install.sh
 ```
 
 问:
