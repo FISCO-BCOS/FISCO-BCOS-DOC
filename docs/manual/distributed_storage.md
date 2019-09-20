@@ -617,8 +617,8 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 	<property name="allChannelConnections">
 		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
+			<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="2" />
 					<property name="connectionsStr">
 					<list>
 						<value>127.0.0.1:20201</value>
@@ -659,8 +659,8 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 	<property name="allChannelConnections">
 		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
+			<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="2" />
 					<property name="connectionsStr">
 					<list>
 						<value>127.0.0.1:20202</value>
@@ -743,6 +743,7 @@ info|2019-05-07 21:48:54.942111| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 info|2019-05-07 21:48:56.946022| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=6,tx=0,nodeIdx=1,hash=4ef772bb...
 info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=6,tx=0,nodeIdx=1,hash=48341ee5...
 ```
+
 
 ### 使用控制台发送交易
 请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id12)章节。
