@@ -2,7 +2,7 @@
 
 [Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以支持访问节点、查询节点状态、修改系统设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
 
-2.0版本主要特性包括：
+2.0+版本主要特性包括：
 
 - 提供调用FISCO BCOS JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
@@ -29,14 +29,14 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.4')
+compile ('org.fisco-bcos:web3sdk:2.1.0')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.4</version>
+    <version>2.1.0</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
@@ -52,10 +52,12 @@ repositories {
 ## 配置SDK
 
 ### FISCO BCOS节点证书配置
-FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、node.crt)和私钥(node.key)进行双向认证。因此需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`node.crt`和`node.key`文件拷贝到项目的资源目录，供SDK与节点建立连接时使用。
+
+FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、sdk.crt)和私钥(sdk.key)进行双向认证。因此需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录，供SDK与节点建立连接时使用。（低于2.1版本的FISCO BCOS节点目录下只有`node.crt`和`node.key`，需将其重命名为`sdk.crt`和`sdk.key`以兼容最新的SDK）
 
 ### 配置文件设置
-Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
+
+Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS 2.0+版本支持[多群组功能](../design/architecture/group.md)，SDK需要配置群组的节点信息。将以Spring项目和Spring Boot项目为例，提供配置指引。
 
 ### Spring项目配置
 
@@ -80,6 +82,9 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
         </bean>
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <property name="caCert" value="ca.crt" />
+                <property name="sslCert" value="sdk.crt" />
+                <property name="sslKey" value="sdk.key" />
                 <property name="allChannelConnections">
                         <list>  <!-- 每个群组需要配置一个bean，每个群组可以配置多个节点 -->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
@@ -119,6 +124,10 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
   - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
+  - `caCert`用于配置链ca证书路径
+  - `sslCert`用于配置SDK所使用的证书路径
+  - `sslKey`用于配置SDK所使用的证书对应的私钥路径
+  
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
 备注：刚下载项目时，有些插件可能没有安装，代码会报错。当你第一次在IDEA上使用lombok这个工具包时，请按以下步骤操作：
@@ -127,21 +136,25 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 
 ### Spring Boot项目配置
 提供Spring Boot项目中关于`application.yml`的配置如下所示。
-```yml
+
+```yaml
 encrypt-type: # 0：普通， 1：国密
- encrypt-type: 0 
- 
+  encrypt-type: 0
+
 group-channel-connections-config:
+  caCert: ca.crt
+  sslCert: sdk.crt
+  sslKey: sdk.key
   all-channel-connections:
-  - group-id: 1  # 群组ID
-    connections-str:
-                    - 127.0.0.1:20200  # 节点，listen_ip:channel_listen_port
-                    - 127.0.0.1:20201
-  - group-id: 2  
-    connections-str:
-                    - 127.0.0.1:20202  # 节点，listen_ip:channel_listen_port
-                    - 127.0.0.1:20203
- 
+    - group-id: 1 #group ID
+      connections-str:
+        - 127.0.0.1:20200 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20201
+    - group-id: 2
+      connections-str:
+        - 127.0.0.1:20202 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20203
+
 channel-service:
   group-id: 1 # sdk实际连接的群组
   agency-name: fisco # 机构名称
@@ -358,16 +371,16 @@ SDK提供对[节点类型](../design/security_control/node_management.html#id6)�
 #### CRUDService 
 SDK提供对CRUD(增删改查)操作的支持。CRUDService可以创建表，对表进行增删改查操作，其API如下：
 - **int createTable(Table table)：** 创建表，提供表对象。表对象需要设置其表名，主键字段名和其他字段名。其中，其他字段名是以英文逗号分隔拼接的字符串。返回创建表的状态值，返回为0则代表创建成功。
-- **int insert(Table table, Entry entry)：** 插入记录，提供表对象和Entry对象。表对象需要设置表名和主键字段名；Entry是map对象，提供插入的字段名和字段值，注意必须设置主键字段。返回插入的记录数。
-- **int update(Table table, Entry entry, Condition condition)：** 更新记录，提供表对象，Entry对象和Condtion对象。表对象需要设置表名和主键字段名；Entry是map对象，提供更新的字段名和字段值；Condition对象是条件对象，可以设置更新的匹配条件。返回更新的记录数。
-- **List\<Map\<String, String\>\> select(Table table, Condition condition)：** 查询记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置查询的匹配条件。返回查询的记录。
-- **int remove(Table table, Condition condition)：** 移除记录，提供表对象和Condtion对象。表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置移除的匹配条件。返回移除的记录数。
+- **int insert(Table table, Entry entry)：** 插入记录，提供表对象和Entry对象。表对象需要设置表名和主键值；Entry是map对象，提供插入的字段名和字段值。返回插入的记录数。
+- **int update(Table table, Entry entry, Condition condition)：** 更新记录，提供表对象，Entry对象和Condtion对象。表对象需要设置表名和主键值；Entry是map对象，提供更新的字段名和字段值；Condition对象是条件对象，可以设置更新的匹配条件。返回更新的记录数。
+- **List\<Map\<String, String\>\> select(Table table, Condition condition)：** 查询记录，提供表对象和Condtion对象。表对象需要设置表名和主键值；Condition对象是条件对象，可以设置查询的匹配条件。返回查询的记录。
+- **int remove(Table table, Condition condition)：** 移除记录，提供表对象和Condtion对象。表对象需要设置表名和主键值；Condition对象是条件对象，可以设置移除的匹配条件。返回移除的记录数。
 - **Table desc(String tableName)：** 根据表名查询表的信息，主要包含表的主键和其他属性字段。返回表类型，主要包含表的主键字段名和其他属性字段名。
 
 ## 交易解析
 FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署合约，调用合约接口，维护合约的生命周期以及管理资产，进行价值交换等。当交易确认后会产生交易回执，[交易回执](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt)和[交易](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash)均保存在区块里，用于记录交易执行过程生成的信息，如结果码、日志、消耗的gas量等。用户可以使用交易哈希查询交易回执，判定交易是否完成。  
 
-交易回执包含三个关键字段，分别是input（目前dev分支编译的fisco bcos包含该字段，后续合入2.0.0版本）, output , logs:
+交易回执包含三个关键字段，分别是input, output , logs:
 
 | 字段   | 类型      | 描述                               |
 | :----- | :-------- | :--------------------------------- |
@@ -889,4 +902,439 @@ map =>
     ]
   ]
 }
+```
+
+## 合约事件推送
+### 功能简介
+合约事件推送功能提供了合约事件的异步推送机制，客户端向节点发送注册请求，在请求中携带客户端关注的合约事件的参数，节点根据请求参数对请求区块范围的`Event Log`进行过滤，将结果分次推送给客户端。
+
+### 交互协议
+
+客户端与节点的交互基于[`Channel`](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html#id4)协议。交互分为三个阶段：注册请求，节点回复，Event Log数据推送。
+
+#### 注册请求
+客户端向节点发送Event推送的注册请求:
+
+```Json
+// request sample:
+{
+  "fromBlock": "latest",
+  "toBlock": "latest",
+  "addresses": [
+    0xca5ed56862869c25da0bdf186e634aac6c6361ee
+  ],
+  "topics": [
+    "0x91c95f04198617c60eaf2180fbca88fc192db379657df0e412a9f7dd4ebbe95d"
+  ],
+  "groupID": "1",
+  "filterID": "bb31e4ec086c48e18f21cb994e2e5967"
+}
+```
+
+- filerID：字符串类型，每次请求唯一，标记一次注册任务  
+- groupID：字符串类型，群组ID  
+- fromBlock：整形字符串，初始区块。“latest” 当前块高  
+- toBlock：整形字符串，最终区块。“latest” 处理至当前块高时，继续等待新区块  
+- addresses：字符串或者字符串数组：字符串表示单个合约地址，数组为多个合约地址，数组可以为空
+- topics：字符串类型或者数组类型：字符串表示单个topic，数组为多个topic，数组可以为空
+
+#### 节点回复
+节点接受客户端注册请求时，会对请求参数进行校验，将是否成功接受该注册请求结果回复给客户端。
+
+```Json
+// response sample:
+{
+  "filterID": "bb31e4ec086c48e18f21cb994e2e5967",
+  "result": 0
+}
+```
+
+- filterID：字符串类型，每次请求唯一，标记一次注册任务  
+- result：整形，返回结果。0成功，其余为失败状态码
+
+#### Event Log数据推送
+
+节点验证客户端注册请求成功之后，根据客户端请求参数条件，向客户端推送`Event`的`Log`数据。
+
+```Json
+// event log push sample:
+{
+  "filterID": "bb31e4ec086c48e18f21cb994e2e5967",
+  "result": 0,
+  "logs": [
+    
+  ]
+}
+```
+
+- filterID：字符串类型，每次请求唯一，标记一次注册任务  
+- result：整形 0：`Event Log`数据推送 1：推送完成。客户端一次注册请求对应节点的数据推送会有多次（请求区块范围比较大或者等待新的区块），`result`字段为1时说明节点推送已经结束  
+- logs：Log对象数组，result为0时有效  
+
+### Java SDK教程
+
+#### 注册接口  
+Java SDK中`org.fisco.bcos.channel.client.Service`类提供合约事件的注册接口，用户可以调用`registerEventLogFilter`向节点发送注册请求，并设置回调函数。
+```Java
+  public void registerEventLogFilter(EventLogUserParams params, EventLogPushCallback callback);
+```
+
+##### `params`注册参数  
+事件回调请求注册的参数：  
+
+```Java
+public class EventLogUserParams {
+    private String fromBlock;   
+    private String toBlock;
+    private List<String> addresses;
+    private List<Object> topics;
+}
+```
+
+##### `callback`回调对象
+```Java
+public abstract class EventLogPushCallback {
+    public void onPushEventLog(int status, List<LogResult> logs);
+}
+``` 
+
+- `status` 回调返回状态：  
+```Java
+    0       : 正常推送，此时logs为节点推送的Event日志
+    1       : 推送完成，执行区间的区块都已经处理
+    -41000  : 参数无效，客户端验证参数错误返回
+    -41001  : 参数错误，节点验证参数错误返回
+    -41002  : 群组不存在
+    -41003  : 请求错误的区块区间
+    -41004  : 节点推送数据格式错误
+    -41005  : 请求发送超时
+    -41006  : 其他错误
+```
+
+- `logs`表示回调的`Event Log`对象列表，status为0有效  
+```Java
+  public class LogResult {
+    private List<EventResultEntity> logParams;
+    private Log log;
+  }
+
+  // Log对象
+  public class Log {
+    private String logIndex;
+    private String transactionIndex;
+    private String transactionHash;
+    private String blockHash;
+    private String blockNumber;
+    private String address;
+    private String data;
+    private String type;
+    private List<String> topics;
+  }
+```
+
+`Log log`：Log对象  
+
+`List<EventResultEntity> logParams`：默认值`null`，可以在子类中解析Log的`data`字段，将结果保存入`logParams`   [[参考交易解析]](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id11) 
+
+- 实现回调对象  
+  
+Java SDK默认实现的回调类`ServiceEventLogPushCallback`，将`status`与`logs`在日志中打印，用户可以通过继承`ServiceEventLogPushCallback`类，重写`onPushEventLog`接口，实现自己的回调逻辑处理。 
+```Java
+class MyEventLogPushCallBack extends ServiceEventLogPushCallback {
+    @Override
+    public void onPushEventLog(int status, List<LogResult> logs) {
+        // ADD CODE
+    }
+}
+```
+**注意：`onPushEventLog`接口多次回调的`logs`有重复的可能性，可以根据`Log`对象中的`blockNumber，transactionIndex，logIndex`进行去重**  
+
+##### topic工具  
+`org.fisco.bcos.channel.event.filter.TopicTools`提供将各种类型参数转换为对应topic的工具，用户设置`EventLogUserParams`的`topics`参数可以使用。
+
+```Java
+ class TopicTools {
+    // int1/uint1~uint1/uint256 
+    public static String integerToTopic(BigInteger i)
+    // bool
+    public static String boolToTopic(boolean b)
+    // address
+    public static String addressToTopic(String s)
+    // string
+    public static String stringToTopic(String s)
+    // bytes
+    public static String bytesToTopic(byte[] b)
+    // byte1~byte32
+    public static String byteNToTopic(byte[] b)
+}
+```
+
+#### Solidity To Java
+为了简化使用，`solidity`合约生成对应的`Java`合约代码时，为每个`Event`生成两个重载的同名接口，接口命名规则: `register` + Event名称 + `EventLogFilter`。  
+
+这里以[`Asset`](https://github.com/FISCO-BCOS/LargeFiles/blob/master/tools/asset-app.tar.gz)合约的`TransferEvent`为例说明  
+
+```solidity
+contract Asset {
+    event TransferEvent(int256 ret, string indexed from_account, string indexed to_account, uint256 indexed amount)
+
+    function transfer(string from_account, string to_account, uint256 amount) public returns(int256) {
+        // 结果
+        int result = 0;
+
+        // 其他逻辑，省略
+
+        // TransferEvent 保存结果以及接口参数
+        TransferEvent(result, from_account, to_account, amount);
+    }
+}
+```
+
+将`Asset.sol`生成对应`Java`合约文件[[将solidity合约生成对应的Java调用文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id10)]
+```Java
+class Asset {
+    // 其他生成代码 省略
+
+    public void registerTransferEventEventLogFilter(EventLogPushWithDecodeCallback callback);
+    public void registerTransferEventEventLogFilter(String fromBlock, String toBlock, List<String> otherTopics, EventLogPushWithDecodeCallback callback);
+}
+``` 
+
+##### registerTransferEventEventLogFilter  
+  这两个接口对`org.fisco.bcos.channel.client.Service.registerEventLogFilter`进行了封装，调用等价于将`registerEventLogFilter`的`params`参数设置为：
+```Java
+    EventLogUserParams params = new EventLogUserParams();
+    // fromBlock, 无参数设置为“latest”
+    params.setFromBlock(fromBlock); // params.setFromBlock("latest");
+    // toBlock, 无参数设置为“latest”
+    params.setToBlock(toBlock); // params.setToBlock("latest");
+
+    // addresses，设置为Java合约对象的地址
+    // 当前java合约对象为：Asset asset 
+    ArrayList<String> addresses = new ArrayList<String>();
+    addresses.add(asset.getContractedAddress());
+    params.setAddresses(addresses);
+
+    // topics, topic0设置为Event接口对应的topic
+    ArrayList<Object> topics = new ArrayList<>();
+    topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
+    // 其他topic设置， 没有则忽略
+    topics.addAll(otherTopics);
+```
+可以看出，在关注指定地址特定合约的某个`Event`，使用生成的Java合约对象中的接口，更加简单方便。
+
+##### EventLogPushWithDecodeCallback
+`EventLogPushWithDecodeCallback`与`ServiceEventLogPushCallback`相同，是`EventLogPushCallback`的子类，区别在于：
+- `ServiceEventLogPushCallback`回调接口`onPushEventLog(int status, List<LogResult> logs)` `LogResult`成员`logParams`为空，用户需要使用`Log`数据时需要解析数据
+- `EventLogPushWithDecodeCallback`作为`Asset`对象的成员，可以根据其保存的`ABI`成员构造对应`Event`的解析工具，解析返回的`Log`数据，解析结果保存在`logParams`中。 
+
+### 示例
+这里以`Asset`合约为例，给出合约事件推送的一些场景供用户参考。  
+
+- 场景1：将链上所有/最新的Event回调至客户端
+```Java
+        // 其他初始化逻辑，省略
+        
+        // 参数设置
+        EventLogUserParams params = new EventLogUserParams();
+
+        // 全部Event fromBlock设置为"1" 
+        params.setFromBlock("1");
+
+        // 最新Event fromBlock设置为"latest"
+        // params.setFromBlock("latest");
+
+        // toBlock设置为"latest"，处理至最新区块继续等待新的区块
+        params.setToBlock("latest");
+
+        // addresses设置为空数组，匹配所有的合约地址
+        params.setAddresses(new ArrayList<String>());
+
+        // topics设置为空数组，匹配所有的Event
+        params.setTopics(new ArrayList<Object>());
+
+        // 回调，用户可以替换为自己实现的类的回调对象
+        ServiceEventLogPushCallback callback = new ServiceEventLogPushCallback();
+        service.registerEventLogFilter(params, callback);
+```
+
+- 场景2: 将`Asset`合约最新的`TransferEvent`事件回调至客户端
+```Java
+        // 其他初始化逻辑，省略
+        
+        // 设置参数
+        EventLogUserParams params = new EventLogUserParams();
+
+        // 从最新区块开始，fromBlock设置为"latest"
+        params.setFromBlock("latest");
+        // toBlock设置为"latest"，处理至最新区块继续等待新的区块
+        params.setToBlock("latest");
+
+        // addresses设置为空数组，匹配所有的合约地址
+        params.setAddresses(new ArrayList<String>());
+        
+        // topic0，TransferEvent(int256,string,string,uint256)
+        ArrayList<Object> topics = new ArrayList<>();
+        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
+        params.setTopics(topics);
+
+        // 回调，用户可以替换为自己实现的类的回调对象
+        ServiceEventLogPushCallback callback = new ServiceEventLogPushCallback();
+        service.registerEventLogFilter(params, callback);
+```
+
+
+- 场景3: 将指定地址的`Asset`合约最新的`TransferEvent`事件回调至客户端 
+
+合约地址: `String addr = "0x06922a844c542df030a2a2be8f835892db99f324";`
+
+方案1.  
+```Java
+        // 其他初始化逻辑，省略
+
+        String addr = "0x06922a844c542df030a2a2be8f835892db99f324";
+        
+        // 设置参数
+        EventLogUserParams params = new EventLogUserParams();
+
+        // 从最新区块开始，fromBlock设置为"latest"
+        params.setFromBlock("latest");
+        // toBlock设置为"latest"，处理至最新块并继续等待共识出块
+        params.setToBlock("latest");
+
+        // 合约地址
+        ArrayList<String> addresses = new ArrayList<String>();
+        addresses.add(addr);
+        params.setAddresses(addresses);
+        
+        // topic0，匹配 TransferEvent(int256,string,string,uint256) 事件
+        ArrayList<Object> topics = new ArrayList<>();
+        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,uint256)"));
+        params.setTopics(topics);
+
+        ServiceEventLogPushCallback callback = new ServiceEventLogPushCallback();
+        service.registerEventLogFilter(params, callback);
+```
+
+方案2.
+```Java
+        // 其他初始化逻辑，省略
+
+        String addr = "0x06922a844c542df030a2a2be8f835892db99f324";
+
+        // 构造Asset合约对象
+        Asset asset = Asset.load(addr, ... );
+
+        EventLogPushWithDecodeCallback callback = new EventLogPushWithDecodeCallback();
+        asset.registerTransferEventEventLogFilter(callback);
+```
+
+- 场景4: 将指定地址的`Asset`合约所有`TransferEvent`事件回调至客户端 
+
+合约地址: `String addr = "0x06922a844c542df030a2a2be8f835892db99f324";`
+
+方案1：
+```Java
+        // 其他初始化逻辑，省略
+        
+        // 设置参数
+        EventLogUserParams params = new EventLogUserParams();
+
+        // 从最初区块开始，fromBlock设置为"1"
+        params.setFromBlock("1");
+        // toBlock设置为"latest"，处理至最新块并继续等待共识出块
+        params.setToBlock("latest");
+
+        // 设置合约地址
+        ArrayList<String> addresses = new ArrayList<String>();
+        addresses.add(addr);
+        params.setAddresses(addresses);
+        
+        // TransferEvent(int256,string,string,uint256) 转换为topic
+        ArrayList<Object> topics = new ArrayList<>();
+        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
+        params.setTopics(topics);
+
+        ServiceEventLogPushCallback callback = new ServiceEventLogPushCallback();
+        service.registerEventLogFilter(params, callback);
+```
+
+方案2.
+```Java
+        // 其他初始化逻辑，省略
+        
+        Asset asset = Asset.load(addr, ... );
+        
+        // 设置区块范围
+        String fromBlock = "1";
+        String toBlock = "latest";
+
+        // 参数topic为空
+        ArrayList<Object> otherTopics = new ArrayList<>();
+
+        EventLogPushWithDecodeCallback callback = new EventLogPushWithDecodeCallback();
+
+        asset.registerTransferEventEventLogFilter(fromBlock,toBlock,otherTopics,callback);
+```
+
+- 场景5: 将`Asset`指定合约指定账户转账的所有事件回调至客户端 
+
+合约地址: `String addr = "0x06922a844c542df030a2a2be8f835892db99f324"`  
+
+转账账户: `String fromAccount = "account"`
+
+方案1：
+```Java
+        // 其他初始化逻辑，省略
+
+        String addr = "0x06922a844c542df030a2a2be8f835892db99f324";
+        String fromAccount = "account";
+        
+        // 参数
+        EventLogUserParams params = new EventLogUserParams();
+
+        // 从最初区块开始，fromBlock设置为"1"
+        params.setFromBlock("1");
+        // toBlock设置为"latest"
+        params.setToBlock("latest");
+
+        // 设置合约地址
+        ArrayList<String> addresses = new ArrayList<String>();
+        addresses.add(addr);
+        params.setAddresses(addresses);
+        
+        // 设置topic
+        ArrayList<Object> topics = new ArrayList<>();
+        // TransferEvent(int256,string,string,uint256) 转换为topic
+        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
+        // 转账账户 fromAccount转换为topic
+        topics.add(TopicTools.stringToTopic(fromAccount));
+        params.setTopics(topics);
+
+        ServiceEventLogPushCallback callback = new ServiceEventLogPushCallback();
+        service.registerEventLogFilter(params, callback);
+```
+
+方案2.
+```Java
+        // 其他初始化逻辑，省略
+
+        String addr = "0x06922a844c542df030a2a2be8f835892db99f324";
+        String fromAccount = "account";
+        
+        // 加载合约地址，生成Java合约对象
+        Asset asset = Asset.load(addr, ... );
+
+        // 回调函数
+        EventLogPushWithDecodeCallback callback = new EventLogPushWithDecodeCallback();
+        
+        // 设置区块范围
+        String fromBlock = "1";
+        String toBlock = "latest";
+        // 参数topic
+        ArrayList<Object> otherTopics = new ArrayList<>();
+        // 转账账户 fromAccount转换为topic
+        otherTopics.add(TopicTools.stringToTopic(fromAccount));
+
+        asset.registerRegisterEventEventLogFilter(fromBlock,toBlock,otherTopics,callback);
 ```

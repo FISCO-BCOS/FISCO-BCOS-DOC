@@ -44,7 +44,7 @@ Nodes receive blocks and maintain a download queue locally to buffer and queue u
 The process of a transaction being broadcasted to all nodes:
 
 1. A transaction is sent to a node through channel or RPC.
-2. The node receives transaction and broadcast it to other nodes.
+2. The node receives the transaction and broadcast it to other nodes.
 3. Other nodes receive transaction and select 25% of other nodes to broadcast again to ensure reachability.
 4. When a node received the broadcasted transaction, it will not broadcast again.
 

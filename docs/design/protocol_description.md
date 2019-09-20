@@ -2,7 +2,7 @@
 
 ## 交易结构及其RLP编码描述
 
-FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增减字段。FISCO BCOS 2.0.0的交易结构字段如下：
+FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增减字段。FISCO BCOS 2.0+的交易结构字段如下：
 
 | name           | type            | description                                                  | RLP index RC1 | RLP index RC2 |
 | :------------- | :-------------- | :----------------------------------------------------------- | ------------- | ------------- |
@@ -119,14 +119,14 @@ AMOP消息包继承ChannelMessage包机构，在data字段添加了自定义内�
 | 类型    |包体| 描述       | 解释 |
 | :------ |:----| :------------ | :-------- |
 | 0x12    |JSONRPC 2.0格式| RPC接口消息包  | SDK->节点 |
-| 0x13    |json格式心跳包`{"Heartbeat":"0"}`| 心跳包        |  0:SDK->节点，1:节点->SDK|
-| 0x14    |json格式的协议版本协商| 握手包    |  SDK->节点的包体`{"MinimumSupport":version,"MaximumSupport":version,"ClientType":"client type , java or python or nodejs, with SDK version"}`,节点->SDK的包体`{"Protocol":version,"NodeVersion":"fisco-bcos version"` |
+| 0x13    |json格式心跳包`{"heartbeat":"0"}`| 心跳包        |  0:SDK->节点，1:节点->SDK|
+| 0x14    |SDK->节点的包体`{"minimumSupport":version,"maximumSupport":version,"clientType":"client type"}`,节点->SDK的包体`{"protocol":version,"nodeVersion":"fisco-bcos version"`| 握手包，json格式的协议版本协商    |  SDK<->节点，双向 |
 | 0x30    |AMOP消息包包体| AMOP请求包    | SDK<->节点，双向 |
 | 0x31    |失败的AMOP消息的包体| AMOP失败响应包    | 节点->SDK或节点->节点 |
 | 0x32    |json数组，存储SDK监听的Topics| 上报Topic信息 | SDK->节点 |
 | 0x35    |AMOP消息包包体| AMOP多播消息  | 节点->节点 |
 | 0x1000  |json格式的交易上链通知| 交易上链回调  | 节点->SDK |
-| 0x1001  |json格式的区块上链通知`{"GroupID":"groupID","BlockNumber":"blockNumber"}`| 区块高度通知  | 节点->SDK |
+| 0x1001  |json格式的区块上链通知`{"groupID":"groupID","blockNumber":"blockNumber"}`| 区块高度通知  | 节点->SDK |
 
 #### 错误码
 

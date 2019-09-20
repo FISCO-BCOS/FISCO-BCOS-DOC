@@ -88,15 +88,10 @@ First, complete the operation of group A and B to set up group 1, as shown in th
 
 Before use, the user needs to prepare a folder such as `tmp_one_click,` which has a directory of different organizations under the folder. Each agency directory needs to have a corresponding configuration file [```node_deployment.ini```](./config.md#node-deployment-ini). Before use, you need to ensure that the generator's meta folder has not been used.
 
-Switch to ~/ directory
-
-```bash
-cd ~/generator
-```
-
 View the one-click deployment template folder:
 
 ```bash
+cd ~/generator
 ls ./tmp_one_click
 ```
 

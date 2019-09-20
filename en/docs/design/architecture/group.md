@@ -12,9 +12,9 @@ To fit most business scenarios, FISCO BCOS supports various functions including 
 
     - **1.3 series FISCO BCOS** : Agency A and B build another chain to operate Project 2. Administrator needs to operate and maintain both chains and their ports.
 
-    - **FISCO BCOS 2.0** ：Agency A and B build another group for Project 2. Administrator maintains only one chain.
+    - **FISCO BCOS +** ：Agency A and B build another group for Project 2. Administrator maintains only one chain.
 
-    Obviously both solutions can achieve privacy protection, but FISCO BCOS 2.0 gets advantages in scalability, operation and maintenance and flexibility.
+    Obviously both solutions can achieve privacy protection, but FISCO BCOS 2.0+ gets advantages in scalability, operation and maintenance and flexibility.
 ```
 
 In multi-group structure, Networking is shared among groups. Groups can isolate messages of some ledger through [networking access and whitelist] (../security_control/node_management.md).
