@@ -33,6 +33,8 @@ It is similar with RC2 generation process, only that the transaction struct of `
 
 The block of FISCO BCOS consists of the following five parts:
 
+**rc1:**
+
 | name                | description                                      | RLP index |
 | :------------------ | :----------------------------------------------- | --------- |
 | blockHeader         | Block header RLP coding                                  | 0         |
@@ -41,6 +43,15 @@ The block of FISCO BCOS consists of the following five parts:
 | hash                | The hash encoded by block header RLP encoded                         | 3         |
 | sigList             | The node signature list that is collected during PBFT consensus. Raft does not use this. | 4         |
 
+**rc2, rc3, 2.0 and newer**
+
+| name                | description                                                  | RLP index |
+| :------------------ | :----------------------------------------------------------- | --------- |
+| blockHeader         | Block header RLP coding                                      | 0         |
+| transactions        | Transaction list RLP code                                    | 1         |
+| hash                | The hash encoded by block header RLP encoded                 | 2         |
+| sigList             | The node signature list that is collected during PBFT consensus. Raft does not use this. | 3         |
+| transactionReceipts | Transaction receipt list RLP code                            | 4         |
 
 The description of each field in the block header of FISCO BCOS is as follows:
 
