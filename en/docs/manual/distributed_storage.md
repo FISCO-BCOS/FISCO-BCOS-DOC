@@ -606,8 +606,8 @@ modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following config
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 	<property name="allChannelConnections">
 		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
+			<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="2" />
 					<property name="connectionsStr">
 					<list>
 						<value>127.0.0.1:20201</value>
@@ -650,8 +650,8 @@ modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following config
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 	<property name="allChannelConnections">
 		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
+			<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="2" />
 					<property name="connectionsStr">
 					<list>
 						<value>127.0.0.1:20202</value>
@@ -742,4 +742,4 @@ info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 
 ### Send transaction by console
 
-Please refer to the section [Sending Transaction by Console](./distributed_storage.html#id10) in "Node Direct Connection to MySQL".
+Please refer to the section [Sending Transaction by Console](./distributed_storage.html#id12) in "Node Direct Connection to MySQL".
