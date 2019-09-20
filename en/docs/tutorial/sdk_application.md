@@ -342,9 +342,6 @@ The directory structure of the asset-app project is as follows:
 |   |-- test
 |       |-- resources // resource files
 |           |-- applicationContext.xml // project configuration file
-|           |-- ca.crt // blockchain ca certificate
-|           |-- node.crt // node ca certificate
-|           |-- node.key // node private key
 |           |-- contract.properties // file that stores the deployment contract address
 |           |-- log4j.properties // log configuration file
 |           |-- contract // Solidity contract files
