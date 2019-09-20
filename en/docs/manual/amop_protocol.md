@@ -18,6 +18,7 @@ We take the typical IDC architecture of the bank as the example to overview each
 - Blockchain P2P network: This is a logical region and deployed blockchain nodes of each agency. Blockchain nodes can also be deployed inside the agency.
 
 ## Configuration
+
 AMOP does not require any additional configuration. The following is a configuration case for [Web3SDK] (./configuration.md) .
 SDK configuration（Spring Bean）：
 

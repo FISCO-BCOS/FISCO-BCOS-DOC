@@ -36,9 +36,9 @@ RPC配置示例如下：
 
 当前版本FISCO BCOS必须在`config.ini`配置中配置连接节点的`IP`和`Port`，P2P相关配置包括：
 
-- `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`，该选项支持域名，但建议需要使用的用户[手动**编译源码**](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2)。
+- `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`。
 - `listen_port`：节点P2P监听端口。
-- `node.*`: 节点需连接的所有节点`IP:port`。
+- `node.*`: 节点需连接的所有节点`IP:Port`或`DomainName:Port`。该选项支持域名，但建议需要使用的用户[手动**编译源码**](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2)。
 - `enable_compress`：开启网络压缩的配置选项，配置为true，表明开启网络压缩功能，配置为false，表明关闭网络压缩功能，网络压缩详细介绍请参考[这里](../design/features/network_compress.md)。
 
 P2P配置示例如下：
@@ -132,7 +132,7 @@ boostlog示例配置如下：
 
 ### 配置节点兼容性
 
-FISCO BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性，此配置项建链时工具会自动生成，用户不需修改。
+FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性，此配置项建链时工具会自动生成，用户不需修改。
 
 - `supported_version`：当前节点运行的版本
 
@@ -143,12 +143,12 @@ FISCO BCOS 2.0所有版本向前兼容，可通过`config.ini`中的`[compatibil
     - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，
 ```
 
-`release-2.0.0`节点的`[compatibility]`配置如下：
+`FISCO BCOS 2.1.0`节点的`[compatibility]`配置如下：
 
 ```ini
 
 [compatibility]
-    supported_version=release-2.0.0
+    supported_version=2.1.0
 ```
 
 
