@@ -124,7 +124,7 @@ Then user can locate node certificate `node.crt` and private key `node.key` thro
 $ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca
 ```
 
-Now user can locate SDK file folder containing SDK certificate `node.crt` and private key `node.key` through route ./dir_sdk_ca.
+Now user can locate SDK file folder containing SDK certificate `sdk.crt` and private key `sdk.key` through route ./sdk.
 
 ## generate_all_certificates
 
@@ -263,7 +263,7 @@ This command will configure the console under ./meta folder according to `node_d
 
 ## get_sdk_file
 
-\--get_sdk_file command can acquire `node.crt`, `node.key`, `ca.crt` and `applicationContext.xml` that are needed in configuration of console and sdk under assigned section.
+\--get_sdk_file command can acquire `sdk.crt`, `sdk.key`, `ca.crt` and `applicationContext.xml` that are needed in configuration of console and sdk under assigned section.
 
 For example:
 
