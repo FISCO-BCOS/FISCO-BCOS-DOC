@@ -10,5 +10,4 @@
 
    key_concepts.md
    sdk_application.md
-   group_use_cases.md
    enterprise_quick_start.md

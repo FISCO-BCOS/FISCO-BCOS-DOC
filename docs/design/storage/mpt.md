@@ -30,7 +30,7 @@ state root是区块中的一个字段，每个区块对应着不同的“状态�
 
 ## Trade Off
 
-MPT State的引入，是为了实现对数据的追溯。根据不同区块下的state root，就能查询到当时区块下account的历史信息。而MPT State的引入，带来了大量hash的计算，同时也打散了底层数据的存储的连续性。在性能方面，MPT State存在着天然的劣势。可以说，MPT State是极致的最求可追溯性，而大大的忽略了性能。
+MPT State的引入，是为了实现对数据的追溯。根据不同区块下的state root，就能查询到当时区块下account的历史信息。而MPT State的引入，带来了大量hash的计算，同时也打散了底层数据的存储的连续性。在性能方面，MPT State存在着天然的劣势。可以说，MPT State是极致的追求可追溯性，而大大的忽略了性能。
 
 在FISCO BCOS的业务场景中，性能与可追溯性相比，性能更为重要。FISCO BCOS对底层的存储进行了重新的设计，实现了[Storage State](storage.md)。Storage State牺牲了部分的可追溯性，但带来了性能上的提升。
 

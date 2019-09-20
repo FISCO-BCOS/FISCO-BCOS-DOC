@@ -6,22 +6,39 @@
 控制台命令由两部分组成，即指令和指令相关的参数：   
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
-    
+  
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
-常用命令链接：
-- 查看区块高度：[getBlockNumber](./console.html#getblocknumber)
-- 查看共识节点列表：[getSealerList](./console.html#getsealerlist)
-- 部署合约: [deploy](./console.html#deploy)
-- 调用合约: [call](./console.html#call)
+### 常用命令链接
+#### 合约相关命令
+  - 利用[CNS](../design/features/cns_contract_name_service.md)部署和调用合约(**推荐**)
+    - 部署合约: [deployByCNS](./console.html#deploybycns)
+    - 调用合约: [callByCNS](./console.html#callbycns)
+    - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+  - 普通部署和调用合约
+    - 部署合约: [deploy](./console.html#deploy)
+    - 调用合约: [call](./console.html#call)
+#### 其他命令
+- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
+- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
+- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
 - 切换群组: [switch](./console.html#switch)
+
+### 快捷键
+- `Ctrl+A`：光标移动到行首
+- `Ctrl+D`：退出控制台
+- `Ctrl+E`：光标移动到行尾
+- `Ctrl+R`：搜索输入的历史命令
+- &uarr;：向前浏览历史命令
+- &darr;：向后浏览历史命令
+
 
 ### 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../design/rpc.html#id6)。
-  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../sdk/sdk.html#precompiled-service-api)。
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
+  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。
 
 ## 控制台配置与运行
 
@@ -32,7 +49,7 @@
 ### 获取控制台
 
 ```bash
-$ cd ~ && mkdir fisco && cd fisco
+$ cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
@@ -42,52 +59,49 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |   -- console.jar 
 |-- lib # 相关依赖的jar包目录
 |-- conf
-|   |-- ca.crt   # ca证书文件，需要替换
-|   |-- node.crt # 节点证书文件，需要替换
-|   |-- node.key # 节点私钥文件，需要替换
-|   |-- applicationContext.xml # 配置文件
+|   |-- applicationContext-sample.xml # 配置文件
 |   |-- log4j.properties  # 日志配置文件
-|   |-- privateKey.properties # 发送交易的私钥存储文件
-|-- solidity # 控制台命令部署和调用的合约所在目录
-|   -- contracts  # 部署和调用合约的solidity合约存储目录
+|-- contracts # 合约所在目录
+|   -- solidity  # solidity合约存放目录
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
-|       -- Table.sol # CRUD需要引入的合约接口：Table合约接口
+|       -- Table.sol # CRUD合约需要引入的Table合约接口
+|   -- console  # 控制台部署合约时编译的合约abi, bin，java文件目录
+|   -- sdk      # sol2java.sh脚本编译的合约abi, bin，java文件目录
 |-- start.sh # 控制台启动脚本
+|-- get_account.sh # 账户生成脚本
+|-- sol2java.sh # solidity合约文件编译为java合约文件的开发工具脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
-|-- tools # 控制台工具目录
-    |-- contracts # 用户编写的solidity合约存放目录
-    |   |-- Table.sol # 默认提供CRUD的合约接口Table.sol文件
-    |-- sol2java.sh # solidity合约文件编译为java合约文件的工具脚本
 ```
 
 #### 合约编译工具
 
-**控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件。** 使用该工具，分为两步：
-  - 将Solidity合约文件放在`tools/contracts`目录下。
-  - 通过运行`tools`目录下的`sol2java.sh`脚本(**需要指定一个Java的包名**)完成编译合约任务。例如，拷贝`HelloWorld.sol`合约到`tools/contracts`目录下，指定包名为`org.com.fisco`，命令如下：
+**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
+  - 将solidity合约文件放在`contracts/solidity`目录下。
+  - 通过运行`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，`contracts/solidity`目录下已有`HelloWorld.sol`、`TableTest.sol`、`Table.sol`合约，指定包名为`org.com.fisco`，命令如下：
     ```bash
     $ cd ~/fisco/console
-    $ cp solidity/contracts/HelloWorld.sol tools/contracts/
-    $ cd tools
     $ ./sol2java.sh org.com.fisco
     ```
-    运行成功之后，将会在`console/tools`目录生成java、abi和bin目录，如下所示。
+    运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
     ```bash
     |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
     |   |-- HelloWorld.abi
     |   |-- Table.abi
+    |   |-- TableTest.abi
     |-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
     |   |-- HelloWorld.bin
     |   |-- Table.bin
+    |   |-- TableTest.bin
     |-- java  # 存放编译的包路径及Java合约文件
     |   |-- org
     |       |-- com
     |           |-- fisco
-    |               |-- HelloWorld.java # 编译成功的目标Java文件
-    |               |-- Table.java  # 编译成功的系统CRUD合约接口Java文件
+    |               |-- HelloWorld.java # 编译的HelloWorld Java文件
+    |               |-- Table.java  # 编译的系统CRUD合约接口Java文件
+    |               |-- TableTest.java  # 编译的TableTest Java文件
     ```
-    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`和`Table.java`。其中`HelloWorld.java`是java应用所需要的java合约文件。
+    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
 
 **注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。可以通过`./replace_solc_jar.sh`脚本进行替换，指定下载的编译器jar包路径，命令如下：
 ```bash
@@ -116,7 +130,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
-  - 配置`conf`目录下的`applicationContext.xml`文件，配置如下图所示，其中添加注释的内容根据区块链节点配置做相应修改。
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -154,20 +168,13 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
         <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
                 <property name="groupId" value="1" /> <!-- 连接ID为1的群组 -->
-                <property name="orgID" value="fisco" />
+                <property name="agencyName" value="fisco" />
                 <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
         </bean>
 
 </beans>
 ```
-  配置项详细说明如下:
-  - `encryptType`: 国密算法开关(默认为0)                              
-    - 0: 不使用国密算法发交易                              
-    - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](./guomi_crypto.md))。
-  - `groupChannelConnectionsConfig`: 
-    - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
-    - 每个群组可以配置一个或多个节点，设置群组节点的配置文件`config.ini`中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
-  - `channelService`: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是`groupChannelConnectionsConfig`配置中的群组ID。SDK将与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
+  配置项详细说明[参考这里](../sdk/java_sdk.html#spring)。
 
 ```eval_rst
 .. important::
@@ -182,13 +189,16 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
     - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
 
-``` 
+```
 ### 启动控制台
+
+在节点正在运行的情况下，启动控制台：
+
 ```text
 $ ./start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.1)!
+Welcome to FISCO BCOS console(1.0.4)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
@@ -204,30 +214,44 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 ### 启动脚本说明
-#### 查看启动脚本帮助说明：
-```bash
-$ ./start.sh --help
-Usage
-start console: 	./start.sh [groupID] [privateKey]
-print console version: 	./start.sh --version
-```
 #### 查看当前控制台版本：
 ```bash
 ./start.sh --version
-console version: 1.0.1
+console version: 1.0.4
 ```
-#### 启动控制台：
-```bash
-$ ./start.sh [groupID] [privateKey]   
-```
-启动命令可以指定两个可选参数：           
-- `groupId`: 群组ID, 不指定则默认为群组1。           
-- `privateKey`: 交易发送者外部账号的私钥，不指定则默认从`conf`目录下的privateKey.properties中读取私钥，如果该文件内容被清空，则随机生成外部账号私钥并将生产的私钥保持在该私钥配置文件中。 
+#### 账户使用方式
 
-示例
+##### 控制台加载私钥
+控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台启动方式有如下几种：
+```
+./start.sh
+./start.sh groupID
+./start.sh groupID -pem pemName
+./start.sh groupID -p12 p12Name
+```
+##### 默认启动
+控制台随机生成一个账户，使用控制台配置文件指定的群组号启动。
 ```bash
-# 以群组2，私钥账号地址为3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4登录控制台
-$ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4  
+./start.sh
+```
+##### 指定群组号启动
+控制台随机生成一个账户，使用命令行指定的群组号启动。
+```bash
+./start.sh 2
+```
+- 注意：指定的群组在控制台配置文件中需要配置bean。
+
+##### 使用PEM格式私钥文件启动
+- 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
+```bash
+./start.sh 1 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
+```
+##### 使用PKCS12格式私钥文件启动
+- 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
+```bash
+./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
+Enter Export Password:
 ```
 
 ## 控制台命令
@@ -237,61 +261,67 @@ $ ./start.sh 2 3bed914595c159cbce70ec5fb6aff3d6797e0c5ee5a7a9224a21cae8932d84a4
 ```text
 [group:1]> help
 -------------------------------------------------------------------------------------
-help(h)                                  Provide help information.
-switch(s)                                Switch to a specific group by group ID.
-getBlockNumber                           Query the number of most recent block.
-getPbftView                              Query the pbft view of node.
-getSealerList                            Query nodeId list for sealer nodes.
-getObserverList                          Query nodeId list for observer nodes.
-getNodeIDList                            Query nodeId list for all connected nodes.
-getGroupPeers                            Query nodeId list for sealer and observer nodes.
-getPeers                                 Query peers currently connected to the client.
-getConsensusStatus                       Query consensus status.
-getSyncStatus                            Query sync status.
-getNodeVersion                           Query the current node version.
-getGroupList                             Query group list.
+addObserver                              Add an observer node.
+addSealer                                Add a sealer node.
+call                                     Call a contract by a function and paramters.
+callByCNS                                Call a contract by a function and paramters by CNS.
+deploy                                   Deploy a contract on blockchain.
+deployByCNS                              Deploy a contract on blockchain by CNS.
+desc                                     Description table information.
+exit                                     Quit console.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
 getBlockHashByNumber                     Query block hash by block number.
-getTransactionByHash                     Query information about a transaction requested by transaction hash.
-getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
-getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
-getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
+getBlockNumber                           Query the number of most recent block.
+getCode                                  Query code at a given address.
+getConsensusStatus                       Query consensus status.
+getDeployLog                             Query the log of deployed contracts.
+getGroupList                             Query group list.
+getGroupPeers                            Query nodeId list for sealer and observer nodes.
+getNodeIDList                            Query nodeId list for all connected nodes.
+getNodeVersion                           Query the current node version.
+getObserverList                          Query nodeId list for observer nodes.
+getPbftView                              Query the pbft view of node.
+getPeers                                 Query peers currently connected to the client.
 getPendingTransactions                   Query pending transactions.
 getPendingTxSize                         Query pending transactions size.
-getCode                                  Query code at a given address.
-getTotalTransactionCount                 Query total transaction count.
-deploy                                   Deploy a contract on blockchain.
-getDeployLog                             Query the log of deployed contracts.
-call                                     Call a contract by a function and paramters.
-deployByCNS                              Deploy a contract on blockchain by CNS.
-queryCNS                                 Query CNS information by contract name and contract version.
-callByCNS                                Call a contract by a function and paramters by CNS.
-addSealer                                Add a sealer node.
-addObserver                              Add an observer node.
-removeNode                               Remove a node.
-setSystemConfigByKey                     Set a system config.
+getSealerList                            Query nodeId list for sealer nodes.
+getSyncStatus                            Query sync status.
 getSystemConfigByKey                     Query a system config value by key.
-grantPermissionManager                   Grant permission for permission configuration by address.
-revokePermissionManager                  Revoke permission for permission configuration by address.
-listPermissionManager                    Query permission information for permission configuration.
-grantUserTableManager                    Grant permission for user table by table name and address.
-revokeUserTableManager                   Revoke permission for user table by table name and address.
-listUserTableManager                     Query permission for user table information.
-grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
-revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
-listDeployAndCreateManager               Query permission information for deploy contract and create user table.
-grantNodeManager                         Grant permission for node configuration by address.
-revokeNodeManager                        Revoke permission for node configuration by address.
-listNodeManager                          Query permission information for node configuration.
+getTotalTransactionCount                 Query total transaction count.
+getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
+getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
+getTransactionByHash                     Query information about a transaction requested by transaction hash.
+getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
 grantCNSManager                          Grant permission for CNS by address.
-revokeCNSManager                         Revoke permission for CNS by address.
-listCNSManager                           Query permission information for CNS.
+grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
+grantNodeManager                         Grant permission for node configuration by address.
+grantPermissionManager                   Grant permission for permission configuration by address.
 grantSysConfigManager                    Grant permission for system configuration by address.
-revokeSysConfigManager                   Revoke permission for system configuration by address.
+grantUserTableManager                    Grant permission for user table by table name and address.
+help(h)                                  Provide help information.
+listCNSManager                           Query permission information for CNS.
+listDeployAndCreateManager               Query permission information for deploy contract and create user table.
+listNodeManager                          Query permission information for node configuration.
+listPermissionManager                    Query permission information for permission configuration.
 listSysConfigManager                     Query permission information for system configuration.
+listUserTableManager                     Query permission for user table information.
+queryCNS                                 Query CNS information by contract name and contract version.
 quit(q)                                  Quit console.
-exit                                     Quit console.
+removeNode                               Remove a node.
+revokeCNSManager                         Revoke permission for CNS by address.
+revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
+revokeNodeManager                        Revoke permission for node configuration by address.
+revokePermissionManager                  Revoke permission for permission configuration by address.
+revokeSysConfigManager                   Revoke permission for system configuration by address.
+revokeUserTableManager                   Revoke permission for user table by table name and address.
+setSystemConfigByKey                     Set a system config.
+switch(s)                                Switch to a specific group by group ID.
+[create sql]                             Create table by sql.
+[delete sql]                             Remove records by sql.
+[insert sql]                             Insert records by sql.
+[select sql]                             Select records by sql.
+[update sql]                             Update records by sql.
 -------------------------------------------------------------------------------------
 ```
 **注：**                                       
@@ -314,7 +344,7 @@ Switched to group 2.
 
 [group:2]> 
 ```
-**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息。
+**注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中配置的节点ip和端口正确，该节点正常运行。
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
@@ -370,69 +400,52 @@ Switched to group 2.
 [group:1]> getConsensusStatus
 [
     {
-        "accountType":1,
-        "allowFutureBlocks":true,
-        "cfgErr":false,
-        "connectedNodes":3,
-        "consensusedBlockNumber":6,
-        "currentView":40,
-        "groupId":1,
-        "highestblockHash":"0xb99703130e24702d3b580111b0cf4e39ff60ac530561dd9eb0678d03d7acce1d",
-        "highestblockNumber":5,
-        "leaderFailed":false,
-        "max_faulty_leader":1,
-        "node index":3,
-        "nodeId":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "nodeNum":4,
-        "omitEmptyBlock":true,
-        "protocolId":264,
-        "sealer.0":"0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-        "sealer.1":"2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-        "sealer.2":"cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-        "sealer.3":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "toView":40
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "accountType": 1,
+      "allowFutureBlocks": true,
+      "cfgErr": false,
+      "connectedNodes": 3,
+      "consensusedBlockNumber": 38207,
+      "currentView": 54477,
+      "groupId": 1,
+      "highestblockHash": "0x19a16e8833e671aa11431de589c866a6442ca6c8548ba40a44f50889cd785069",
+      "highestblockNumber": 38206,
+      "leaderFailed": false,
+      "max_faulty_leader": 1,
+      "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "nodeNum": 4,
+      "node_index": 3,
+      "omitEmptyBlock": true,
+      "protocolId": 65544,
+      "sealer.0": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+      "sealer.1": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+      "sealer.2": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+      "sealer.3": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "toView": 54477
     },
     [
-        {
-            "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278":39
-        },
-        {
-            "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108":36
-        },
-        {
-            "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd":37
-        },
-        {
-            "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec":40
-        }
-    ],
-    {
-        "prepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "prepareCache_height":-1,
-        "prepareCache_idx":"65535",
-        "prepareCache_view":"9223372036854775807"
-    },
-    {
-        "rawPrepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "rawPrepareCache_height":-1,
-        "rawPrepareCache_idx":"65535",
-        "rawPrepareCache_view":"9223372036854775807"
-    },
-    {
-        "committedPrepareCache_blockHash":"0xbbf80db21fa393143280e01b4b711eaddd54103e95f370b389af5c0504b1eea5",
-        "committedPrepareCache_height":5,
-        "committedPrepareCache_idx":"1",
-        "committedPrepareCache_view":"17"
-    },
-    {
-        "signCache_cachedSize":"0"
-    },
-    {
-        "commitCache_cachedSize":"0"
-    },
-    {
-        "viewChangeCache_cachedSize":"0"
-    }
+      {
+        "nodeId": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+        "view": 54474
+      },
+      {
+        "nodeId": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+        "view": 54475
+      },
+      {
+        "nodeId": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+        "view": 54476
+      },
+      {
+        "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+        "view": 54477
+      }
+    ]
+  ]
+}
 ]
 ```
 
@@ -479,7 +492,7 @@ Switched to group 2.
 {
 	"Build Time":"20190107 10:15:23",
 	"Build Type":"Linux/g++/RelWithDebInfo",
-	"FISCO-BCOS Version":"2.0.0-rc1",
+	"FISCO-BCOS Version":"2.0.0",
 	"Git Branch":"master",
 	"Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
 }
@@ -631,6 +644,7 @@ Switched to group 2.
 }
 ```
 ### **getBlockHashByNumber**
+
 运行getBlockHashByNumber，通过区块高度获得区块哈希。              
 参数：           
 - 区块高度：十进制整数。
@@ -642,86 +656,197 @@ Switched to group 2.
 运行getTransactionByHash，通过交易哈希查询交易信息。                   
 参数：        
 - 交易哈希：0x开头的交易哈希值。
+- 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
 ```text
-[group:1]> getTransactionByHash 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
+[group:1]> getTransactionByHash 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5 
 {
-	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
-	"blockNumber":"0x5a",
-	"from":"0x7a5b31b49c6e944e9e1768785b1bc9a96cea0c17",
-	"gas":"0x1c9c380",
-	"gasPrice":"0x1",
-	"hash":"0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac",
-	"input":"0x10009562616c6963650000000000000000000000000000000000000000000000000000006a6f726500000000000000000000000000000000000000000000000000000000",
-	"nonce":"0x18711fff2ea68dc8b8dce4a3d3845c62a0630766a448bd9453a9127efe6f9e5",
-	"to":"0x738eedd873bb9722173194ab990c5b9a6c0beb25",
-	"transactionIndex":"0x0",
-	"value":"0x0"
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gas":"0x11e1a300",
+    "gasPrice":"0x11e1a300",
+    "hash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "nonce":"0x1aec6e447da49b9a140bf39a91a4d75fd19ea77f7dc38ccf940d8d510d78bd0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionIndex":"0x0",
+    "value":"0x0"
 }
+# input字段是合约接口的编码，解析后的内容包括接口签名，输入参数值。
+[group:1]> getTransactionByHash 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5 TableTest
+{
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gas":"0x11e1a300",
+    "gasPrice":"0x11e1a300",
+    "hash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "nonce":"0x1aec6e447da49b9a140bf39a91a4d75fd19ea77f7dc38ccf940d8d510d78bd0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionIndex":"0x0",
+    "value":"0x0"
+}
+---------------------------------------------------------------------------------------------
+Input 
+function: insert(string,int256,string)
+input value: (fruit, 1, apple)
+---------------------------------------------------------------------------------------------
 ```
 ### **getTransactionByBlockHashAndIndex**
 运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。          
 参数：         
 - 区块哈希：0x开头的区块哈希值。       
-- 交易索引：十进制整数。     
+- 交易索引：十进制整数。 
+- 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
 ```text
-[group:1]> getTransactionByBlockHashAndIndex 0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02 0
+[group:1]> getTransactionByBlockHashAndIndex 0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b 0
 {
-	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
-	"blockNumber":"0x5a",
-	"from":"0x7a5b31b49c6e944e9e1768785b1bc9a96cea0c17",
-	"gas":"0x1c9c380",
-	"gasPrice":"0x1",
-	"hash":"0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac",
-	"input":"0x10009562616c6963650000000000000000000000000000000000000000000000000000006a6f726500000000000000000000000000000000000000000000000000000000",
-	"nonce":"0x18711fff2ea68dc8b8dce4a3d3845c62a0630766a448bd9453a9127efe6f9e5",
-	"to":"0x738eedd873bb9722173194ab990c5b9a6c0beb25",
-	"transactionIndex":"0x0",
-	"value":"0x0"
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gas":"0x11e1a300",
+    "gasPrice":"0x11e1a300",
+    "hash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "nonce":"0x1aec6e447da49b9a140bf39a91a4d75fd19ea77f7dc38ccf940d8d510d78bd0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionIndex":"0x0",
+    "value":"0x0"
 }
 
+[group:1]> getTransactionByBlockHashAndIndex 0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b 0 TableTest
+{
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gas":"0x11e1a300",
+    "gasPrice":"0x11e1a300",
+    "hash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "nonce":"0x1aec6e447da49b9a140bf39a91a4d75fd19ea77f7dc38ccf940d8d510d78bd0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionIndex":"0x0",
+    "value":"0x0"
+}
+---------------------------------------------------------------------------------------------
+Input 
+function: insert(string,int256,string)
+input value: (fruit, 1, apple)
+---------------------------------------------------------------------------------------------
 ```
 ### **getTransactionByBlockNumberAndIndex**
 运行getTransactionByBlockNumberAndIndex，通过区块高度和交易索引查询交易信息。              
 参数：      
 - 区块高度：十进制整数。
 - 交易索引：十进制整数。
+- 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
 ```text
-[group:1]> getTransactionByBlockNumberAndIndex 2 0
+[group:1]> getTransactionByBlockNumberAndIndex 8 0
 {
-	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
-	"blockNumber":"0x5a",
-	"from":"0x7a5b31b49c6e944e9e1768785b1bc9a96cea0c17",
-	"gas":"0x1c9c380",
-	"gasPrice":"0x1",
-	"hash":"0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac",
-	"input":"0x10009562616c6963650000000000000000000000000000000000000000000000000000006a6f726500000000000000000000000000000000000000000000000000000000",
-	"nonce":"0x18711fff2ea68dc8b8dce4a3d3845c62a0630766a448bd9453a9127efe6f9e5",
-	"to":"0x738eedd873bb9722173194ab990c5b9a6c0beb25",
-	"transactionIndex":"0x0",
-	"value":"0x0"
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gas":"0x11e1a300",
+    "gasPrice":"0x11e1a300",
+    "hash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "nonce":"0x1aec6e447da49b9a140bf39a91a4d75fd19ea77f7dc38ccf940d8d510d78bd0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionIndex":"0x0",
+    "value":"0x0"
 }
+
+[group:1]> getTransactionByBlockNumberAndIndex 8 0 TableTest
+{
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gas":"0x11e1a300",
+    "gasPrice":"0x11e1a300",
+    "hash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "nonce":"0x1aec6e447da49b9a140bf39a91a4d75fd19ea77f7dc38ccf940d8d510d78bd0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionIndex":"0x0",
+    "value":"0x0"
+}
+---------------------------------------------------------------------------------------------
+Input 
+function: insert(string,int256,string)
+input value: (fruit, 1, apple)
+---------------------------------------------------------------------------------------------
 ```
 ### **getTransactionReceipt**
 运行getTransactionReceipt，通过交易哈希查询交易回执。              
 参数：
 - 交易哈希：0x开头的交易哈希值。
+- 合约名：可选，发送交易产生该交易回执的合约名称，使用该参数可以将交易回执中的input、output和event log解析并输出。（注：input字段在web3sdk 2.0.4版本中新增加的字段，之前版本无该字段则只解析output和event log。）
 ```text
-[group:1]> getTransactionReceipt 0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac
+[group:1]> getTransactionReceipt 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
 {
-	"blockHash":"0x77e5b6d799edabaeae654ac5cea9baacd6f8e7ace33531d40c7ed65192de1f02",
-	"blockNumber":"0x5a",
-	"contractAddress":"0x0000000000000000000000000000000000000000",
-	"from":"0x7a5b31b49c6e944e9e1768785b1bc9a96cea0c17",
-	"gasUsed":"0xf401",
-	"logs":[
-		
-	],
-	"logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-	"status":"0x0",
-	"to":"0x738eedd873bb9722173194ab990c5b9a6c0beb25",
-	"transactionHash":"0xed82e2cda98db8614677aba1fa8a795820bd7f68a5919a2f85018ba8c10952ac",
-	"transactionIndex":"0x0"
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "contractAddress":"0x0000000000000000000000000000000000000000",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gasUsed":"0x94f5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "logs":[
+        {
+            "address":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
+            "topics":[
+                "0xc57b01fa77f41df77eaab79a0e2623fab2e7ae3e9530d9b1cab225ad65f2b7ce"
+            ]
+        }
+    ],
+    "logsBloom":"0x00000000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000800000000000000000000000000000000002000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
+    "status":"0x0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionHash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "transactionIndex":"0x0"
 }
+
+[group:1]> getTransactionReceipt 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5 TableTest
+{
+    "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
+    "blockNumber":"0x8",
+    "contractAddress":"0x0000000000000000000000000000000000000000",
+    "from":"0xf0d2115e52b0533e367447f700bfbf2ed35ff6fc",
+    "gasUsed":"0x94f5",
+    "input":"0xebf3b24f0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000005667275697400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056170706c65000000000000000000000000000000000000000000000000000000",
+    "logs":[
+        {
+            "address":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
+            "topics":[
+                "0xc57b01fa77f41df77eaab79a0e2623fab2e7ae3e9530d9b1cab225ad65f2b7ce"
+            ]
+        }
+    ],
+    "logsBloom":"0x00000000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000800000000000000000000000000000000002000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
+    "status":"0x0",
+    "to":"0x42fc572759fd568bd590f46011784be2a2d53f0c",
+    "transactionHash":"0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5",
+    "transactionIndex":"0x0"
+}
+---------------------------------------------------------------------------------------------
+Input 
+function: insert(string,int256,string)
+input value: (fruit, 1, apple)
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+Output 
+function: insert(string,int256,string)
+return type: (int256)
+return value: (1)
+---------------------------------------------------------------------------------------------
+Event logs
+event signature: InsertResult(int256) index: 0
+event value: (1)
+---------------------------------------------------------------------------------------------
 ```
 ### **getPendingTransactions**
 运行getPendingTransactions，查询等待处理的交易。              
@@ -731,15 +856,17 @@ Switched to group 2.
 ```
 
 ### **getPendingTxSize**
-运行getPendingTxSize，查询等待处理的交易数量。              
+运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。              
 ```text
 [group:1]> getPendingTxSize
 0
 ```
 
 ### **getCode**
-运行getCode，根据合约地址查询合约代码。                                                   
+
+运行getCode，根据合约地址查询合约二进制代码。                                                   
 参数：
+
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
 ```text
 [group:1]> getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
@@ -747,101 +874,142 @@ Switched to group 2.
 ```
 
 ### **getTotalTransactionCount**
-运行getTotalTransactionCount，查询当前块高和总交易数。                          
+
+运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。                          
 ```text
 [group:1]> getTotalTransactionCount
 {
 	"blockNumber":1,
-	"txSum":1
+	"txSum":1,
+	"failedTxSum":0
 }
 ```
 ### **deploy**
+
 运行deploy，部署合约。(默认提供HelloWorld合约和TableTest.sol进行示例使用)
 参数：
+
 - 合约名称：部署的合约名称(可以带.sol后缀)，即HelloWorld或者HelloWorld.sol均可。                          
                            
 ```text
 # 部署HelloWorld合约
-[group:1]> deploy HelloWorld.sol
-0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
+[group:1]> deploy HelloWorld.sol 
+contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署TableTest合约
 [group:1]> deploy TableTest.sol 
-0x3554a56ea2905f366c345bd44fa374757fb4696a
+contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 **注：**
-- 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`solidity/contracts/`目录下，然后进行部署即可。按tab键可以搜索`solidity/contracts`目录下的合约名称。
-- 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`solidity/contracts/`目录。
-- 如果合约引用了library库，library库文件的名称需要包含`Lib`字符串，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
+- 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
+- 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
+- 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
+- **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
 ### **getDeployLog**
-运行getDeployLog，查询群组内部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
+
+运行getDeployLog，查询群组内**由当前控制台**部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
 - 日志行数，可选，根据输入的期望值返回最新的日志信息，当实际条数少于期望值时，按照实际数量返回。当期望值未给出时，默认按照20条返回最新的日志信息。
                            
 ```text
 [group:1]> getDeployLog 2
 
-2019-03-19 23:04:10  [group:1]  TableTest             0x7eec2ac59357866677ab0fa3db4e7dc2b391f7c2
-2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
+2019-05-26 08:37:03  [group:1]  HelloWorld            0xc0ce097a5757e2b6e189aa70c7d55770ace47767
+2019-05-26 08:37:45  [group:1]  TableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 [group:1]> getDeployLog 1
 
-2019-03-19 23:04:14  [group:1]  HelloWorld            0x9fde55d2bc8650fc71cc8a4b6dbe9662b5a3b615
+2019-05-26 08:37:45  [group:1]  TableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
 ### **call**
+
 运行call，调用合约。                                
 参数： 
 - 合约名称：部署的合约名称(可以带.sol后缀)。
-- 合约地址: 部署合约获取的地址，合约地址可以省略`0x`以及前缀0。
+- 合约地址: 部署合约获取的地址，合约地址可以省略前缀0，例如，0x000ac78可以简写成0xac78。
 - 合约接口名：调用的合约接口名。
-- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]；布尔类型为true或者false。**
+- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]，注意数组参数中不要有空格；布尔类型为true或者false。**
 ```text
 # 调用HelloWorld的get接口获取name字符串
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, World!
 
-# 调用HelloWorld的set设置name字符串
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+# 调用HelloWorld的set接口设置name字符串
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 set "Hello, FISCO BCOS"
+transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1e70
 
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
 
-# 调用TableTest的create接口创建用户表t_test
-[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a create
-0x09fea224ce266c26a927c01668f4b28224f4b7b58399790e8534c055a698fc37
+# 调用TableTest的create接口创建用户表t_test，该接口返回了值并调用了CreateResult event，交易执行成功后通过解析output输出返回值，通过解析log输出event log信息。
+# Output: 包含调用的接口签名，返回类型，返回值。
+# Event logs: 包含由event 签名，event调用顺序号和event的变量值。CreateResult event记录的是create接口创建表返回的值count。
+[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 create
+transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612bb5
+---------------------------------------------------------------------------------------------
+Output 
+function: create()
+return type: (int256)
+return value: (0)
+---------------------------------------------------------------------------------------------
+Event logs
+event signature: CreateResult(int256) index: 0
+event value: (0)
+---------------------------------------------------------------------------------------------
 
 # 调用TableTest的insert接口插入记录，字段为name, item_id, item_name
-[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a insert "fruit" 1 "apple"
-0x7206d0a6e30f57795475a66ae18169dd65d9994f4ea5af1e3e469364d9f0b392
+[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
+transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
+---------------------------------------------------------------------------------------------
+Output 
+function: insert(string,int256,string)
+return type: (int256)
+return value: (1)
+---------------------------------------------------------------------------------------------
+Event logs
+event signature: InsertResult(int256) index: 0
+event value: (1)
+---------------------------------------------------------------------------------------------
 
 # 调用TableTest的select接口查询记录
-[group:1]> call TableTest.sol 0x3554a56ea2905f366c345bd44fa374757fb4696a select "fruit"
+[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 select "fruit"
 [[fruit], [1], [apple]]
 ```
 **注：** TableTest.sol合约代码[参考这里](smart_contract.html#solidity)。
 
 ### **deployByCNS**
-运行deployByCNS，利用[CNS](../design/features/cns_contract_name_service.md)部署合约。                                 
+
+运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)部署合约。用CNS部署的合约，可用合约名直接调用。                                 
 参数：
+
 - 合约名称：部署的合约名称。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
 ```text
-# 部署HelloWorld合约
+# 部署HelloWorld合约1.0版
 [group:1]> deployByCNS HelloWorld.sol 1.0
-0x3554a56ea2905f366c345bd44fa374757fb4696a
+contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
+
+# 部署HelloWorld合约2.0版
+[group:1]> deployByCNS HelloWorld.sol 2.0
+contract address:0x07625453fb4a6459cbf14f5aa4d574cae0f17d92
 
 # 部署TableTest合约
 [group:1]> deployByCNS TableTest.sol 1.0
-0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
+contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
+**注：**
+- 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
+- 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
+- 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
+- **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
 ### **queryCNS**
-运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息。                                 
+运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。                                 
 参数：
+
 - 合约名称：部署的合约名称。
 - 合约版本号：(可选)部署的合约版本号。
 ```text
@@ -858,25 +1026,35 @@ Hello, FISCO BCOS
 ---------------------------------------------------------------------------------------------
 ```
 ### **callByCNS**
-运行callByCNS，利用CNS调用合约。                                 
+运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。                                 
 参数： 
-- 合约名称：部署的合约名称。
-- 合约版本号：部署的合约版本号。
+
+- 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`或`HelloWorld.sol:1.0`。当省略合约版本号时，例如`HelloWorld`或`HelloWorld.sol`，则调用最新版本的合约。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
 ```text
-# 调用HelloWorld的get接口获取name字符串
-[group:1]> callByCNS HelloWorld 1.0 set "Hello,CNS"
-0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
+# 调用HelloWorld合约1.0版，通过set接口设置name字符串
+[group:1]> callByCNS HelloWorld:1.0 set "Hello,CNS"
+transaction hash:0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
 
-# 调用HelloWorld的set设置name字符串
-[group:1]> callByCNS HelloWorld 1.0 get
+# 调用HelloWorld合约2.0版，通过set接口设置name字符串
+[group:1]> callByCNS HelloWorld:2.0 set "Hello,CNS2"
+transaction hash:0x43000d14040f0c67ac080d0179b9499b6885d4a1495d3cfd1a79ffb5f2945f64
+
+# 调用HelloWorld合约1.0版，通过get接口获取name字符串
+[group:1]> callByCNS HelloWorld:1.0 get
 Hello,CNS
+
+# 调用HelloWorld合约最新版(即2.0版)，通过get接口获取name字符串
+[group:1]> callByCNS HelloWorld get
+Hello,CNS2
 ```
 
 ### **addSealer**
+
 运行addSealer，将节点添加为共识节点。                                 
 参数： 
+
 - 节点nodeId
 ```text
 [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -910,8 +1088,14 @@ Hello,CNS
 }
 ```
 ### **setSystemConfigByKey**
-运行setSystemConfigByKey，以键值对方式设置系统配置。目前设置的系统配置支持`tx_count_limit`和`tx_gas_limit`。这个两个配置键名可以通过tab键补全。
+
+运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`和`tx_gas_limit`。这个两个系统参数的键名可以通过tab键补全：
+
+* tx_count_limit：区块最大打包交易数
+* tx_gas_limit：交易执行允许消耗的最大gas数
+
 参数： 
+
 - key
 - value
 ```text
@@ -922,16 +1106,19 @@ Hello,CNS
 }
 ```
 ### **getSystemConfigByKey**
-运行getSystemConfigByKe，根据键查询系统配置的值。                                  
+
+运行getSystemConfigByKey，根据键查询系统参数的值。                                  
 参数： 
+
 - key
 ```text
 [group:1]> getSystemConfigByKey tx_count_limit
 100
 ```
 ### **grantPermissionManager**
-运行grantPermissionManager，赋予外部账号地址的管理权限的权限。**即设置权限管理员账号。** 参数： 
-- 外部账号地址
+
+运行grantPermissionManager，授权账户的链管理员权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -939,17 +1126,10 @@ Hello,CNS
 	"msg":"success"
 }
 ```
+**注：权限控制相关命令的示例使用可以参考[权限控制使用文档](./permission_control.md)。**
 
-```eval_rst
-.. important::
-    0xc0d0e6ccc0b44c12196266548bec4a3616160e7d地址为管理员账号，该账号登录控制台可以操作后续相关的权限功能。可以使用该账号对应的私钥登录控制台，私钥为ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e，登录控制台命令如下：其中启动脚本第一个参数为群组ID，第二个参数为账号对应的私钥。
-```
-
-```
-./start.sh 1 ab40568a2f77b4cb70706b4c6119916a143eb75c0d618e5f69909af1f9f9695e
-```
 ### **listPermissionManager**
-运行listPermissionManager，查询拥有管理权限的权限记录列表。                                  
+运行listPermissionManager，查询拥有链管理员权限的账户列表。                                  
 ```text
 [group:1]> listPermissionManager 
 ---------------------------------------------------------------------------------------------
@@ -958,9 +1138,9 @@ Hello,CNS
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokePermissionManager**
-运行revokePermissionManager，撤销外部账号地址的权限管理权限。                                                                 
+运行revokePermissionManager，撤销账户的链管理员权限。                                                                 
 参数： 
-- 外部账号地址
+- 账户地址
 ```text
 [group:1]> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -969,10 +1149,11 @@ Hello,CNS
 }
 ```
 ### **grantUserTableManager**
-运行grantUserTableManager，根据用户表名和外部账号地址赋予权限。                                  
+
+运行grantUserTableManager，授权账户对用户表的写权限。                                  
 参数： 
 - 表名
-- 外部账号地址
+- 账户地址
 ```text
 [group:1]> grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -981,7 +1162,8 @@ Hello,CNS
 }
 ```
 ### **listUserTableManager**
-运行listUserTableManager，根据用户表名查询赋予的权限记录列表。                                  
+
+运行listUserTableManager，查询拥有对用户表写权限的账号列表。                                  
 参数： 
 - 表名
 ```text
@@ -992,10 +1174,12 @@ Hello,CNS
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeUserTableManager**
-运行revokeUserTableManager，根据用户表名和外部账号地址撤销权限。                                                                 
+
+运行revokeUserTableManager，撤销账户对用户表的写权限。                                                                 
 参数： 
+
 - 表名
-- 外部账号地址
+- 账户地址
 ```text
 [group:1]> revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1004,10 +1188,10 @@ Hello,CNS
 }
 ```
 ### **grantDeployAndCreateManager**
-运行grantDeployAndCreateManager，赋予外部账号地址的部署合约和创建用户表权限。
+运行grantDeployAndCreateManager，授权账户的部署合约和创建用户表权限。
 
 参数： 
-- 外部账号地址
+- 账户地址
 ```text
 [group:1]> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1016,7 +1200,7 @@ Hello,CNS
 }
 ```
 ### **listDeployAndCreateManager**
-运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的权限记录列表。                                  
+运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的账户列表。                                  
 ```text
 [group:1]> listDeployAndCreateManager 
 ---------------------------------------------------------------------------------------------
@@ -1025,9 +1209,9 @@ Hello,CNS
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeDeployAndCreateManager**
-运行revokeDeployAndCreateManager，撤销外部账号地址的部署合约和创建用户表权限。                                                                 
+运行revokeDeployAndCreateManager，撤销账户的部署合约和创建用户表权限。                                                                 
 参数： 
-- 外部账号地址
+- 账户地址
 ```text
 [group:1]> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1036,8 +1220,9 @@ Hello,CNS
 }
 ```
 ### **grantNodeManager**
-运行grantNodeManager，赋予外部账号地址的节点管理权限。参数： 
-- 外部账号地址
+
+运行grantNodeManager，授权账户的节点管理权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1046,7 +1231,7 @@ Hello,CNS
 }
 ```
 ### **listNodeManager**
-运行listNodeManager，查询拥有节点管理的权限记录列表。
+运行listNodeManager，查询拥有节点管理的账户列表。
 
 ```text
 [group:1]> listNodeManager 
@@ -1056,9 +1241,10 @@ Hello,CNS
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeNodeManager**
-运行revokeNodeManager，撤销外部账号地址的节点管理权限。                                                                 
+
+运行revokeNodeManager，撤销账户的节点管理权限。                                                                 
 参数： 
-- 外部账号地址
+- 账户地址
 ```text
 [group:1]> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1067,8 +1253,8 @@ Hello,CNS
 }
 ```
 ### **grantCNSManager**
-运行grantCNSManager，赋予外部账号地址的使用CNS权限。参数： 
-- 外部账号地址
+运行grantCNSManager，授权账户的使用CNS权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1077,7 +1263,7 @@ Hello,CNS
 }
 ```
 ### **listCNSManager**
-运行listCNSManager，查询拥有使用CNS的权限记录列表。
+运行listCNSManager，查询拥有使用CNS的账户列表。
                                   
 ```text
 [group:1]> listCNSManager 
@@ -1087,8 +1273,8 @@ Hello,CNS
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeCNSManager**
-运行revokeCNSManager，撤销外部账号地址的使用CNS权限。参数： 
-- 外部账号地址
+运行revokeCNSManager，撤销账户的使用CNS权限。参数： 
+- 账户地址
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1097,8 +1283,8 @@ Hello,CNS
 }
 ```
 ### **grantSysConfigManager**
-运行grantSysConfigManager，赋予外部账号地址的系统参数管理权限。参数： 
-- 外部账号地址
+运行grantSysConfigManager，授权账户的修改系统参数权限。参数： 
+- 账户地址
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1107,7 +1293,8 @@ Hello,CNS
 }
 ```
 ### **listSysConfigManager**
-运行listSysConfigManager，查询拥有系统参数管理的权限记录列表。
+
+运行listSysConfigManager，查询拥有修改系统参数的账户列表。
                                   
 ```text
 [group:1]> listSysConfigManager 
@@ -1117,8 +1304,8 @@ Hello,CNS
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeSysConfigManager**
-运行revokeSysConfigManager，撤销外部账号地址的系统参数管理权限。参数： 
-- 外部账号地址
+运行revokeSysConfigManager，撤销账户的修改系统参数权限。参数： 
+- 账户地址
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
@@ -1131,6 +1318,103 @@ Hello,CNS
 ```text
 quit
 ```
+
+### **[create sql]**
+运行create sql语句创建用户表，使用mysql语句形式。
+
+```text
+# 创建用户表t_demo，其主键为name，其他字段为item_id和item_name
+[group:1]> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
+Create 't_demo' Ok.
+```
+**注意：**
+- 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型，也按照字符串类型设置。
+- 必须指定主键字段。例如创建t_demo表，主键字段为name。
+- 表的主键与关系型数据库中的主键不是相同概念，这里主键取值不唯一，区块链底层处理记录时需要传入主键值。
+- 可以指定字段为主键，但设置的字段自增，非空，索引等修饰关键字不起作用。
+
+### **desc**
+运行desc语句查询表的字段信息，使用mysql语句形式。
+
+```text
+# 查询t_demo表的字段信息，可以查看表的主键名和其他字段名
+[group:1]> desc t_demo
+{
+    "key":"name",
+    "valueFields":"item_id,item_name"
+}
+```
+### **[insert sql]**
+运行insert sql语句插入记录，使用mysql语句形式。
+
+```text
+[group:1]> insert into t_demo (name, item_id, item_name) values (fruit, 1, apple1)
+Insert OK, 1 row affected.
+```
+**注意：**
+- 插入记录sql语句必须插入表的主键字段值。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
+
+### **[select sql]**
+运行select sql语句查询记录，使用mysql语句形式。
+
+```text
+# 查询包含所有字段的记录
+select * from t_demo where name = fruit
+{item_id=1, item_name=apple1, name=fruit}
+1 row in set.
+
+# 查询包含指定字段的记录
+[group:1]> select name, item_id, item_name from t_demo where name = fruit
+{name=fruit, item_id=1, item_name=apple1}
+1 row in set.
+
+# 插入一条新记录
+[group:1]> insert into t_demo values (fruit, 2, apple2)
+Insert OK, 1 row affected.
+
+# 使用and关键字连接多个查询条件
+[group:1]> select * from t_demo where name = fruit and item_name = apple2
+{item_id=2, item_name=apple2, name=fruit}
+1 row in set.
+
+# 使用limit字段，查询第1行记录，没有提供偏移量默认为0
+[group:1]> select * from t_demo where name = fruit limit 1
+{item_id=1, item_name=apple1, name=fruit}
+1 row in set.
+
+# 使用limit字段，查询第2行记录，偏移量为1
+[group:1]> select * from t_demo where name = fruit limit 1,1
+{item_id=2, item_name=apple2, name=fruit}
+1 rows in set.
+```
+**注意：**
+- 查询记录sql语句必须在where子句中提供表的主键字段值。
+- 关系型数据库中的limit字段可以使用，提供两个参数，分别offset(偏移量)和记录数(count)。
+- where条件子句只支持and关键字，其他or、in、like、inner、join，union以及子查询、多表联合查询等均不支持。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
+
+### **[update sql]**
+运行update sql语句更新记录，使用mysql语句形式。
+
+```text
+[group:1]> update t_demo set item_name = orange where name = fruit and item_id = 1
+Update OK, 1 row affected.
+```
+**注意：**
+- 更新记录sql语句的where子句必须提供表的主键字段值。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
+
+### **[delete sql]**
+运行delete sql语句删除记录，使用mysql语句形式。
+
+```text
+[group:1]> delete from t_demo where name = fruit and item_id = 1
+Remove OK, 1 row affected.
+```
+**注意：**
+- 删除记录sql语句的where子句必须提供表的主键字段值。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ## 附录：Java环境配置
 
@@ -1158,7 +1442,7 @@ $ tar -zxvf jdk-8u201-linux-x64.tar.gz
 # 配置Java环境，编辑/etc/profile文件 
 $ vim /etc/profile 
 # 打开以后将下面三句输入到文件里面并退出
-export JAVA_HOME=/software/jdk-8u201-linux-x64.tar.gz
+export JAVA_HOME=/software/jdk-8u201  #这是一个文件目录，非文件
 export PATH=$JAVA_HOME/bin:$PATH 
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 # 生效profile

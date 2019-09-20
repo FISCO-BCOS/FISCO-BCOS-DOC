@@ -30,7 +30,7 @@
 问:
   国密和普通版本的区别有哪些？<br>
 答:
-  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，web3sdk使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi_crypto.md)。
+  国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，Web3SDK使用国密版本和普通版本都有区别，具体请 [参考这里](./manual/guomi_crypto.md)。
 
 问:
   是否支持从1.3或1.5升级到2.0版本?<br>
@@ -66,13 +66,16 @@
 
 ## FISCO BCOS使用
 
-问:
-  FISCO BCOS 2.0版本支持哪些部署方式？<br>
-答:
-  用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 
-- 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行。
-- 源码编译获取可执行程序，参考[源码编译](./manual/get_executable.md)。
+问:
+  2.0版本证书在哪里使用?<br>
+答:
+  请参考[证书说明文档](manual/certificates.md)
+
+问:
+  2.0版本交易结构包括哪些字段?<br>
+答:
+  请参考[这里](design/protocol_description.html#rlp)
 
 问:
   系统配置、群组配置、节点配置分别指什么？<br>
@@ -121,7 +124,7 @@
 问:
   如何查询合约CNS表？<br>
 答:
-  通过web3sdk控制台指令查询，查询指令根据合约name查询。
+  通过Web3SDK控制台指令查询，查询指令根据合约name查询。
 
 
 ## Web3SDK
@@ -163,4 +166,3 @@ Traceback (most recent call last):
 ```bash
   $ pip install configparser
 ```
-

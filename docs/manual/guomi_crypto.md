@@ -10,9 +10,9 @@
 # Ubuntu16安装依赖
 $ sudo apt install -y openssl curl
 # 准备环境
-$ cd ~ && mkdir fisco && cd fisco
+$ cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 执行完上述步骤后，fisco目录下结构如下：
@@ -66,8 +66,8 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 国密版本FISCO BCOS节点之间采用SSL安全通道发送和接收消息，证书主要配置项集中在如下配置项中：
 
-```bash
-[network_security] section：
+```ini
+[network_security]
 
 data_path：证书文件所在路径
 key：节点私钥相对于data_path的路径
@@ -88,7 +88,7 @@ ca_cert: gmca证书路径
 
 ## 国密版SDK使用
 
-详细操作参考[SDK文档](../sdk/sdk.html#id8)。
+详细操作参考[SDK文档](../sdk/java_sdk.html#id8)。
 
 ## 国密控制台使用
 
@@ -116,7 +116,7 @@ FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两�
 ``` shell
 cd key-manager/scripts
 #加密 conf/gmnode.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea 
 #加密 conf/origin_cert/node.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node_127.0.0.1_0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea 
 ```

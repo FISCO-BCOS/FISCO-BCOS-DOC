@@ -1,83 +1,13 @@
 # 操作手册
 
-## 配置文件夹conf
-
-FISCO BCOS generator的配置文件在./conf文件夹下，配置文件为：群组创世区块配置文件`group_genesis.ini`和生成节点配置文件`node_deployment.ini`。
-
-用户通过对conf文件夹下文件的操作，配置生成节点配置文件夹的具体信息。
-
-### 元数据文件夹meta
-
-FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书`ca.crt`、本机构机构证书`agency.crt`、机构私钥节点证书、群组创世区块文件等。
-
-证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。
-
-FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书、conf下的配置文件，生成用户下配置的节点配置文件夹。
-
-### group_genesis.ini
-
-通过修改`group_genesis.ini`的配置，用户在指定目录及meta文件夹下生成新群组创世区块的相关配置，如`group.1.genesis`。
-
-```ini
-[group]
-group_id=1
-
-[nodes]
-node0=127.0.0.1:30300
-;群组创世区块的节点p2p地址
-node1=127.0.0.1:30301
-node2=127.0.0.1:30302
-node3=127.0.0.1:30303
-```
-
-```eval_rst
-.. important::
-    生成群组创世区块时需要节点的证书，如上述配置文件中需要4个节点的证书。分别为：cert_127.0.0.1_30301.crt，cert_127.0.0.1_30302.crt，cert_127.0.0.1_30303.crt和cert_127.0.0.1_30304.crt。
-```
-
-### node_deployment.ini
-
-通过修改`node_deployment.ini`的配置，用户可以使用--build_install_package命令在指定文件夹下生成节点不含私钥的节点配置文件夹。用户配置的每个`section[node]`即为用户需要生成的节点配置文件夹.`section[peers]`为需要连接的其他节点p2p信息。
-
-配置文件示例如下：
-
-```ini
-[group]
-group_id=1
-
-# Owned nodes
-[node0]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30300
-channel_listen_port=20200
-jsonrpc_listen_port=8545
-
-[node1]
-p2p_ip=127.0.0.1
-rpc_ip=127.0.0.1
-p2p_listen_port=30301
-channel_listen_port=20201
-jsonrpc_listen_port=8546
-```
-
-上述配置在执行build命令后会在指定目录下生成名为node_127.0.0.1_30300、node_127.0.0.1_30301的配置文件夹。生成的节点处于群组group1中。
-
-```eval_rst
-.. note::
-    生成节点配置文件夹时只需要自己节点的证书，如上述操作中，需要的证书为：cert_127.0.0.1_30300.crt和cert_127.0.0.1_30301.crt
-```
-
-## 命令详解
-
 FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书相关操作，简略介绍如下：
 
 | 命令名称 | 基本功能 |
 | :-: | :-: |
 | create_group_genesis | 指定文件夹 | 在指定文件夹下根据group_genesis.ini和meta下的证书生成群组创世区块文件 |
 | build_install_package | 在指定文件夹下生成node_deployment.ini中配置的<br>节点配置文件夹（需要在meta下存放生成节点的证书） |
-| generate_all_certificate | 根据node_deployment.ini生成相关节点证书和私钥 |
-| generate_*_certificates | 生成相应链、机构、节点、sdk证书及私钥 |
+| generate_all_certificates | 根据node_deployment.ini生成相关节点证书和私钥 |
+| generate_*_certificate | 生成相应链、机构、节点、sdk证书及私钥 |
 | merge_config | 将两个节点配置文件中的P2P部分合并 |
 | deploy_private_key | 将私钥批量导入生成的节点配置文件夹中 |
 | add_peers | 将节点连接文件批量导入节点配置文件夹中 |
@@ -85,7 +15,7 @@ FISCO BCOS generator 提供多种节点生成、扩容、群组划分、证书�
 | version | 打印当前版本号 |
 | h/help | 帮助命令 |
 
-### create_group_genesis (-c)
+## create_group_genesis (-c)
 
 |  |  |
 | :-: | :-: |
@@ -113,7 +43,7 @@ $ ./generator --create_group_genesis ~/mydata
     FISCO BCOS 2.0中每个群组都会有一个群组创世区块。
 ```
 
-### build_install_package (-b)
+## build_install_package (-b)
 
 |  |  |
 | :-: | :-: |
@@ -132,7 +62,7 @@ $ ./generator --build_install_package ./peers.txt ~/mydata
 
 程序执行完成后，会在~/mydata文件夹下生成多个名为node_hostip_port的文件夹，推送到对应服务器后即可启动节点
 
-### generate_chain_certificate
+## generate_chain_certificate
 
 |  |  |
 | :-: | :-: |
@@ -148,7 +78,7 @@ $ ./generator --generate_chain_certificate ./dir_chain_ca
 
 执行完成后用户可以在./dir_chain_ca文件夹下看到根证书`ca.crt` 和私钥`ca.key`。
 
-### generate_agency_certificate
+## generate_agency_certificate
 
 |  |  |
 | :-: | :-: |
@@ -164,7 +94,7 @@ $ ./generator --generate_agency_certificate ./dir_agency_ca ./chain_ca_dir The_A
 
 执行完成后可以在./dir_agency_ca路径下生成名为The_Agency_Name的文件夹，包含相应的机构证书`agency.crt` 和私钥`agency.key`。
 
-### generate_node_certificate
+## generate_node_certificate
 
 |  |  |
 | :-: | :-: |
@@ -180,7 +110,7 @@ $ ./generator --generate_node_certificate node_dir(SET) ./agency_dir  node_p2pip
 
 执行完成后可以在node_dir 路径下生成节点证书`node.crt` 和私钥`node.key`。
 
-### generate_sdk_certificate
+## generate_sdk_certificate
 
 |  |  |
 | :-: | :-: |
@@ -196,7 +126,7 @@ $ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca
 
 执行完成后可以在./dir_sdk_ca路径下生成名为SDK的文件夹，包含相应的SDK证书`node.crt` 和私钥`node.key`。
 
-### generate_all_certificates
+## generate_all_certificates
 
 |  |  |
 | :-: | :-: |
@@ -220,7 +150,7 @@ $ ./generator --generate_all_certificates ./cert
 
 执行完成后会在./cert文件夹下生成节点的相关证书与私钥，并将节点证书放置于./meta下
 
-### merge_config (-m)
+## merge_config (-m)
 
 使用--merge_config命令可以合并两个config.ini中的p2p section
 
@@ -269,7 +199,7 @@ $ ./generator --merge_config ~/mydata/node_A/config.ini  ~/mydata/node_B/config.
 
 使用成功后会将node_A和node_B的config.ini中p2p section合并与 ~/mydata/node_B/config.ini的文件中
 
-### deploy_private_key (-d)
+## deploy_private_key (-d)
 
 使用--deploy_private_key可以将路径下名称相同的节点私钥导入到生成好的配置文件夹中。
 
@@ -285,7 +215,7 @@ $./generator --deploy_private_key ./cert ./data
 
 执行完成后可以将./cert下的对应的节点私钥导入./data的配置文件夹中
 
-### add_peers (-p)
+## add_peers (-p)
 
 使用--add_peers可以指定的peers文件导入到生成好的节点配置文件夹中。
 
@@ -299,7 +229,7 @@ $./generator --add_peers ./meta/peers.txt ./data
 
 执行完成后可以将peers文件中的连接信息导入./data下所有节点的配置文件`config.ini`中
 
-### add_group (-a)
+## add_group (-a)
 
 使用--add_group可以指定的peers文件导入到生成好的节点配置文件夹中。
 
@@ -313,9 +243,9 @@ $./generator --add_group ./meta/group.2.genesis ./data
 
 执行完成后可以将群组2的连接信息导入./data下所有节点的`conf`文件夹中
 
-### download_fisco
+## download_fisco
 
-使用--download_fisco可以指定的目录下下载`fisco-bcos`二进制文件。
+使用--download_fisco可以指定的目录下下载`fisco-bcos`二进制文件，国内用户可以使用`--cdn`命令从cdn下载。
 
 使用示例:
 
@@ -323,11 +253,17 @@ $./generator --add_group ./meta/group.2.genesis ./data
 $./generator --download_fisco ./meta
 ```
 
+或
+
+```bash
+$./generator --download_fisco ./meta --cdn
+```
+
 执行完成后会在./meta文件夹下下载`fisco-bcos`可执行二进制文件
 
-### download_console
+## download_console
 
-使用--download_console可以指定的目录下下载并配置控制台。
+使用--download_console可以指定的目录下下载并配置控制台，国内用户可以使用`--cdn`命令从cdn下载。。
 
 使用示例:
 
@@ -335,9 +271,15 @@ $./generator --download_fisco ./meta
 $./generator --download_console ./meta
 ```
 
+或
+
+```bash
+$./generator --download_console ./meta --cdn
+```
+
 执行完成后会在./meta文件夹下根据`node_deployment.ini`完成对控制台的配置
 
-### get_sdk_file
+## get_sdk_file
 
 使用--get_sdk_file可以指定的目录下下获取控制台和sdk配置所需要的`node.crt`、`node.key`、`ca.crt`及`applicationContext.xml`。
 
@@ -349,7 +291,7 @@ $./generator --get_sdk_file ./sdk
 
 执行完成后会在./sdk文件夹下根据`node_deployment.ini`生成上述配置文件
 
-### version (-v)
+## version (-v)
 
 使用--version命令查看当前部署工具的版本号。
 
@@ -357,7 +299,7 @@ $./generator --get_sdk_file ./sdk
 $ ./generator --version
 ```
 
-### help (-h)
+## help (-h)
 
 用户可以使用-h或--help命令查看帮助菜单
 
@@ -506,3 +448,39 @@ $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statis
 ```bash
 $ bash monitor.sh -s https://sc.ftqq.com/[SCKEY(登入后可见)].send -m statistics -f node0/log/log_2019021314.log -g 1 2 -o alice/nodes -r Alice
 ```
+
+## handshake failed检测
+
+FISCO BCOS generator 的scripts文件夹的`check_certificates.sh`脚本包含了节点log中提示`handshake failed`的异常检测。
+
+### 获取脚本
+
+如果用户需要检测由`buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
+
+```bash
+$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/develop/scripts/check_certificates.sh && chmod u+x check_certificates.sh
+```
+
+使用generator部署节点的用户可以从generator的根目录下，从scripts/check_certificates.sh获取脚本。
+
+### 检测证书有效期
+
+`check_certificates.sh`的-t命令会根据用户证书签发的有效期，以及当前的系统时间对证书进行检测。
+
+使用示例：
+
+```bash
+$ ./check_certificates.sh -t ~/certificates.crt
+```
+
+参数第二项为任意符合x509格式的证书，验证成功时会提示`check certificates time successful`, 验证失败会提示异常。
+
+### 验证证书
+
+`check_certificates.sh`的-v命令会根据用户指定的根证书从而验证节点证书。
+
+```bash
+$ ./check_certificates.sh -v ~/ca.crt ~/node.crt
+```
+
+验证成功时会提示`use ~/ca.crt verify ~/node.crt successful`, 验证失败会提示异常。

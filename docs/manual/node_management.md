@@ -1,10 +1,16 @@
-# 节点准入
+# 组员管理
 
-为保证区块链安全性，FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
+FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
+
+* 组员
+  * 共识节点：参与共识的节点，拥有群组的所有数据（搭链时默认都生成共识节点）
+  * 观察者节点：不参与共识，但能实时同步链上数据的节点
+* 非组员
+  * 游离节点：已启动，待等待加入群组的节点。处在一种暂时的节点状态，不能获取链上的数据。
 
 ## 操作命令
 
-控制台提供了 **[AddSealer](./console.html#addSealer)** 、**[AddObserver](./console.html#addObserver)** 和 **[RemoveNode](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList](./console.html#getSealerlist)**、**[getObserverList](./console.html#getObserverlist)** 和 **[getNodeIDList](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
+控制台提供了 **[addSealer](./console.html#addsealer)** 、**[addObserver](./console.html#addobserver)** 和 **[removeNode](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList](./console.html#getsealerlist)**、**[getObserverList](./console.html#getobserverlist)** 和 **[getNodeIDList](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 
 - addSealer：根据节点NodeID设置对应节点为共识节点；
 - addObserver：根据节点NodeID设置对应节点为观察节点；
@@ -39,33 +45,33 @@ $ cd ~/fisco/console
 $ bash start.sh
 
 # 将指定节点转换为共识节点
-> addSealer 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+[group:1]> addSealer 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 # 查询共识节点列表
-> getSealerList
+[group:1]> getSealerList
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
 
 # 将指定节点转换为观察者节点
-> addObserver 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+[group:1]> addObserver 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 
 # 查询观察者节点列表
-> getObserverList
+[group:1]> getObserverList
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
 
 # 将指定节点转换为游离节点
-> removeNode 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
+[group:1]> removeNode 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 
 # 查询节点列表
-> getNodeIDList
+[group:1]> getNodeIDList
 [
 	7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
 ]
-> getSealerList
+[group:1]> getSealerList
 []
-> getObserverList
+[group:1]> getObserverList
 []
 
 ```
@@ -88,7 +94,6 @@ $ bash start.sh
 ![](../../images/node_management/multi_ledger_example.png)
 
 <center>群组例子</center>
-
 Group3的相关节点信息举例为：
 
 节点1的目录名为`node0`，IP端口为127.0.0.1:30400，nodeID前四个字节为b231b309...
@@ -171,10 +176,10 @@ info|2019-02-21 10:30:18.694294| [P2P][Service] heartBeat connected count,size=2
 
 ```eval_rst
 .. note::
-    - 从节点1拷贝过来的`config.ini`的其余配置可保持不变；
+    - 从节点1拷贝过来的config.ini的其余配置可保持不变；
     - 理论上，节点1和2不需修改自身的P2P节点连接列表，即可完成扩容节点3的操作；
     - 步骤5中所选择的群组建议为节点3后续需加入的群组；
-    - 建议用户在节点1和2的`config.ini`的P2P节点连接列表中加入节点3的信息并重启节点1和2，保持全网节点的全互联状态。
+    - 建议用户在节点1和2的config.ini的P2P节点连接列表中加入节点3的信息并重启节点1和2，保持全网节点的全互联状态。
 ```
 
 #### A节点退出网络
