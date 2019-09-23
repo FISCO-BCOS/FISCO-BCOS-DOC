@@ -119,6 +119,10 @@ Configuration items of `applicationContext.xml`:
   - each group configures one or more nodes, set `listen_ip` and `channel_listen_port` of `[rpc]` in node config file **config.ini**.
 - channelService: configure the the group connected with SDK through the given group ID, which is in the configuration of groupChannelConnectionsConfig. SDK will be connected with each node of the group and randomly choose one node to send request.
 
+Note: Some plugins may not be installed when the project is downloading for the first time, and the code will report an error. When you first use the Lombok toolkit on IDEA, follow these steps:
+  - Enter settings->Plugins->Marketplace->Select to install Lombok plugin
+  - Enter settings->Compiler->Annotation Processors->Check Enable annotation processing
+
 ### Configuration of Spring Boot project
 The configuration of `application.yml` in Spring Boot is exemplified below.
 ```yml
@@ -351,10 +355,10 @@ SDK supports configuration of [node type](../design/security_control/node_manage
 #### CRUDService
 SDK supports CRUD (Create/Retrieve/Updata/Delete) operations. CRUDService of table include create, insert, retrieve, update and delete. Here are its APIs:
 - **int createTable(Table table)：** create table and table object, set the name of table, main key field and other fields; names of other fields are character strings separated by comma; return table status value, return 0 when it is created successfully.
-- **int insert(Table table, Entry entry)：** insert records, offer table object and Entry object, set table name and main key name; Entry is map object, offer inserted field name and its value, main key field is necessary; return the number of inserted records.
-- **int update(Table table, Entry entry, Condition condition)：** update records, offer table object, Entry object, Condition object. Table object needs to be set with table name and main key field name; Entry is map object, offer new field name and value; Condition object can set new conditions； return the number of new records.
-- **List\<Map\<String, String\>\> select(Table table, Condition condition)：** retrieve records, offer table object and Condition object. Table object needs to be set with table name and main key field name; Condition object can set condition for retrieving; return the retrieved record.
-- **int remove(Table table, Condition condition)：** remove records, offer table object and Condition object. Table object needs to be set with table name and main key field name; Condition object can set conditions for removing; remove the number of removed records.
+- **int insert(Table table, Entry entry)：** insert records, offer table object and Entry object, set table name and main key field value; Entry is map object, offer inserted field name and its value, main key field is necessary; return the number of inserted records.
+- **int update(Table table, Entry entry, Condition condition)：** update records, offer table object, Entry object, Condition object. Table object needs to be set with table name and main key field value; Entry is map object, offer new field name and value; Condition object can set new conditions； return the number of new records.
+- **List\<Map\<String, String\>\> select(Table table, Condition condition)：** retrieve records, offer table object and Condition object. Table object needs to be set with table name and main key field value; Condition object can set condition for retrieving; return the retrieved record.
+- **int remove(Table table, Condition condition)：** remove records, offer table object and Condition object. Table object needs to be set with table name and main key field value; Condition object can set conditions for removing; remove the number of removed records.
 - **Table desc(String tableName)：** inquire table information according to table name, mainly contain main key and other property fields; return table type, mainly containing field name of main key and other property.
 
 ## Transaction analysis
