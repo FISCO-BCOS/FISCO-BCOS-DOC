@@ -1451,16 +1451,16 @@ $ source /etc/profile
 java -version 
 ```
 
-###The trustAnchors parameter must be non-empty 问题
+### The trustAnchors parameter must be non-empty 问题
 
-####报错信息：
-```
+#### 报错信息：
+``` log
 Exception in thread "main" javax.net.ssl.SSLException: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty.
 ```
 
 #### 解决方法：
 
-```bash
+``` bash
 # Ubuntu
 sudo apt install ca-certificates-java
 # CentOS
