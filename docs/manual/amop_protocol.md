@@ -282,6 +282,87 @@ public class Channel2Client {
   - 2.5：链外系统1验证签名后，发送消息(消息类型0x38)，请求节点更新topic状态（认证成功或者认证失败）。
 - 3：如果认证成功，链外系统的一条消息到达Node1之后，Node1会将这条消息转发给Node2,Node2会将消息推送给链外系统2。
 
+## 带认证功能的web3sdk配置
+
+默认提供的配置文件不包括认证功能，需要使用认证功能，请参考如下配置文件
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+          http://www.springframework.org/schema/tx   
+    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
+          http://www.springframework.org/schema/aop   
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+    
+<!-- AMOP消息处理线程池配置，根据实际需要配置 -->
+<bean id="pool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+  <property name="corePoolSize" value="50" />
+  <property name="maxPoolSize" value="100" />
+  <property name="queueCapacity" value="500" />
+  <property name="keepAliveSeconds" value="60" />
+  <property name="rejectedExecutionHandler">
+    <bean class="java.util.concurrent.ThreadPoolExecutor.AbortPolicy" />
+  </property>
+</bean>
+
+<!-- 群组信息配置 -->
+  <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+      <property name="allChannelConnections">
+        <list>
+          <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+            <property name="groupId" value="1" />
+            <property name="connectionsStr">
+              <list>
+                <value>127.0.0.1:20200</value> <!-- 格式：IP:端口 -->
+                <value>127.0.0.1:20201</value>
+              </list>
+            </property>
+          </bean>
+        </list>
+      </property>
+    </bean>
+
+  <!-- 区块链节点信息配置 -->
+    <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+      <property name="groupId" value="1" />
+      <property name="orgID" value="fisco" />
+      <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+        <!--  topic认证功能的配置项 -->
+      <property name="topic2KeyInfo" ref="amopVerifyTopicToKeyInfo"></property>> 
+    </bean>
+
+  <!--  这里配置的是topic到公私钥配置信息的映射关系，这里只配置了一个topic，可以通过新增entry的方式来新增映射关系。-->
+    <bean class="org.fisco.bcos.channel.handler.AMOPVerifyTopicToKeyInfo" id="amopVerifyTopicToKeyInfo">
+		<property name="topicToKeyInfo">
+			<map>
+				<entry key="${topicname}" value-ref="AMOPVerifyKeyInfo_${topicname}" />
+			</map>
+		</property>
+	</bean>
+
+  <!--  在topic的生产者端，请在这里配置公钥文件，每个需要身份验证的消费者 都拥有不同的公私钥对，
+        请列出所有需要身份验证的消费者的公钥文件。 程序启动前请确保所有的公钥文件都存在。-->
+	<bean class="org.fisco.bcos.channel.handler.AMOPVerifyKeyInfo" id="AMOPVerifyKeyInfo_${topicname}">
+		<property name="publicKey">
+			<list>
+				<value>classpath:$consumer_public_key_1.pem$</value>
+				<value>classpath:$consumer_public_key_2.pem$</value>
+			</list>
+		</property>
+	</bean>
+
+  <!--  在topic的消费者端，请在这里配置私钥文件，程序使用私钥向相应的主题生产者验证您的身份。程序启动前请确保私钥文件存在。-->
+	<bean class="org.fisco.bcos.channel.handler.AMOPVerifyKeyInfo" id="AMOPVerifyKeyInfo_${topicname}">
+		<property name="privateKey" value="classpath:$consumer_private_key.pem$"></property>
+	</bean>
+
+```
+
+
 
 ## 测试
 按上述说明配置好后，用户指定一个主题：topic，执行以下两个命令可以进行测试。  
