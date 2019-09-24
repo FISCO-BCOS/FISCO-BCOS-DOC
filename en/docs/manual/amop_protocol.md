@@ -7,7 +7,7 @@ Advanced Messages Onchain Protocol (AMOP) aims to provide a secure and efficient
 - Real-time: AMOP messages do not rely on blockchain transactions and consensus. Messages are transmitted in real time among nodes with a milliseconds delay.
 - Reliability: When AMOP message is transmitting, it can automatically search all feasible link in blockchain network for communication. As long as at least one link is available, the message is guaranteed to be reachable.
 - Efficiency: The AMOP message has simple structure and efficient processing logic. AMOP message's simple structure and efficient processing logic makes it to fully utilize network bandwidth and require a small amount of CPU usage only.
-- Security: All communication links of AMOP use SSL encryption. The encryption algorithm is configurable.and the topic supports identity authentication mechanism.
+- Security: All communication links of AMOP use SSL encryption. The encryption algorithm is configurable,and the topic supports identity authentication mechanism.
 - Easy to use: No additional configuration is required in SDK when using AMOP.
 
 ## Logical architecture
