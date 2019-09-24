@@ -63,9 +63,11 @@ contract Entry {
     function getAddress(string) public constant returns(address);
     function getBytes64(string) public constant returns(byte[64]);
     function getBytes32(string) public constant returns(bytes32);
-
+    function getString(string) public constant returns(string);
+    
     function set(string, int) public;
     function set(string, string) public;
+    function set(string, address) public;
 }
 
 // data record set
