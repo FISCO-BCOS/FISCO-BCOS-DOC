@@ -35,8 +35,8 @@
 ## 证书配置
 
 - **channel_ca**：链CA证书，**使用channel协议时设置**，默认为`bin/ca.crt`，
-- **channel_node_cert**：节点证书，**使用channel协议时设置**，默认为`bin/node.crt`，**如采用rpc协议通信，可以留空**
-- **channel_node_key**：Python SDK与节点通信私钥，采用channel协议时须设置，默认为`bin/node.key`，**如采用rpc协议通信，这里可以留空**
+- **channel_node_cert**：节点证书，**使用channel协议时设置**，默认为`bin/sdk.crt`，**如采用rpc协议通信，可以留空**
+- **channel_node_key**：Python SDK与节点通信私钥，采用channel协议时须设置，默认为`bin/sdk.key`，**如采用rpc协议通信，这里可以留空**
 
 ## solc编译器配置
 
@@ -70,8 +70,8 @@ class client_config:
     channel_host="127.0.0.1" #采用channel通信时，节点的channel ip地址,**如采用rpc协议通信，这里可以留空**
     channel_port=20200  ##节点的channel 端口,**如采用rpc协议通信，这里可以留空**
     channel_ca="bin/ca.crt"  #采用channel协议时，需要设置链证书,**如采用rpc协议通信，这里可以留空**
-    channel_node_cert="bin/node.crt"  #采用channel协议时，需要设置节点证书,**如采用rpc协议通信，这里可以留空**
-    channel_node_key="bin/node.key"   #采用channel协议时，需要设置节点key,**如采用rpc协议通信，这里可以留空**
+    channel_node_cert="bin/sdk.crt"  # 采用channel协议时，需要设置sdk证书,如采用rpc协议通信，这里可以留空
+    channel_node_key="bin/sdk.key"   # 采用channel协议时，需要设置sdk私钥,如采用rpc协议通信，这里可以留空
     # ---------console mode, support user input--------------
     background = True
     # ---------compiler related--------------
