@@ -173,3 +173,9 @@ Traceback (most recent call last):
 ```bash
   $ pip install configparser
 ```
+
+问:
+  节点或SDK使用的OpenSSL证书过期了，如何续期？
+
+答:
+  证书续期操作可以参考[证书续期操作](./manual/certificates.md#id9)
