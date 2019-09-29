@@ -1,5 +1,6 @@
 #!/bin/bash
 
+skip_check_words="ignore check"
 
 LOG_ERROR() {
     content=${1}
@@ -8,6 +9,15 @@ LOG_ERROR() {
 
 function check_PR()
 {
+    if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
+        local skip=$(curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS-DOC/pulls/${TRAVIS_PULL_REQUEST} | grep "title\"" | grep "${skip_check_words}")
+        if [ ! -z "${skip}" ]; then
+            LOG_INFO "skip PR check!"
+            exit 0
+        else
+            LOG_INFO "PR-${TRAVIS_PULL_REQUEST}, checking PR..."
+        fi
+    fi
     local files=$(git diff --stat=128 HEAD^ HEAD | grep docs | wc -l)
     local en_files=$(git diff --stat=128 HEAD^ HEAD | grep "en/docs" | wc -l)
     if [ $(($files % 2)) == 0 ]; then
