@@ -227,7 +227,7 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/blob/master/too
 ```bash
 # -c指定机构证书及私钥所在路径
 # -o输出到指定文件夹，其中newNode/conf中会存在机构agency新签发的证书和私钥
-bash gen_node_cert.sh -c cert/agency -o newNode
+bash gen_node_cert.sh -c nodes/cert/agency -o newNode
 ```
 
 #### 准备配置文件
