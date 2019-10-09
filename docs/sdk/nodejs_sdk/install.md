@@ -1,27 +1,38 @@
 # 快速安装
 
 ## 环境要求
-- 基本开发环境
-  - Python 2 或 Python 3
-  - g++
-  - make
 
 - Node.js开发环境
   - Node.js >= 8.10.0
   - npm >= 5.6.0
   
-  如果您没有部署过Node.js环境，推荐使用[nvm](https://github.com/nvm-sh/nvm/blob/master/README.md)快速部署，使用nvm同时也能够避免潜在的导致Node.js SDK部署失败的权限问题。以部署Node.js 8为例，部署步骤如下：
-  
-    ```bash
-    # 安装nvm
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-    # 加载nvm配置
-    source ~/.$(basename $SHELL)rc
-    # 安装Node.js 8
-    nvm install 8
-    # 使用Node.js 8
-    nvm use 8
-    ```
+  如果您没有部署过Node.js环境，可以参考下列部署方式：
+  - 如果您使用Linux或MacOS：
+
+    推荐使用[nvm](https://github.com/nvm-sh/nvm/blob/master/README.md)快速部署，使用nvm同时也能够避免潜在的导致Node.js SDK部署失败的权限问题。以部署Node.js 8为例，部署步骤如下：
+
+      ```bash
+      # 安装nvm
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+      # 加载nvm配置
+      source ~/.$(basename $SHELL)rc
+      # 安装Node.js 8
+      nvm install 8
+      # 使用Node.js 8
+      nvm use 8
+      ```
+
+  - 如果您使用Windows：
+
+    请前往[Node.js官网](https://nodejs.org/en/download/)下载Windows下的安装包进行安装。
+
+- 基本开发组件
+  - Python 2（Windows、Linux及MacOS需要）
+  - g++（Linux及MacOS需要）
+  - make（Linux及MacOS需要）
+  - Git（Windows、Linux及MacOS需要）
+  - Git bash（仅Windows需要）
+  - MSBuild构建环境（仅Windows需要）
 
 - FISCO BCOS节点：请参考[FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)搭建
 
@@ -77,15 +88,11 @@ bash nodes/127.0.0.1/start_all.sh
 
 - 配置证书
 
-    CLI工具需要使用证书来与FISCO BCOS节点通讯，证书文件默认放置于`packages/cli/conf/`目录。如果您使用了快速建链，则证书配置命令如下：
-
-    ```bash
-    cp nodes/127.0.0.1/sdk/* packages/cli/conf/
-    ```
+    修改配置文件，证书配置位于`packages/cli/conf/config.json`文件的`authentication`配置项中。你需要根据您实际使用的证书文件的路径修改该配置项的`key`、`cert`及`ca`配置，其中`key`为SDK私钥文件的路径，`cert`为SDK证书文件的路径，`ca`为链根证书文件的路径，这些文件可以由[建链脚本](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)或[企业级部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html)自动生成，具体的生成方式及文件位置请参阅上述工具的说明文档。
 
 - 配置Channel端口
 
-    Node.js SDK与节点建立通信时需要指定节点的Channel端口。端口配置位于`packages/cli/conf/config.json`文件的`nodes.port`配置项中，您需要根据您要连接FISCO BCOS节点的实际配置修改该配置项。如果您使用了快速搭链，可以跳过此步。
+    修改配置文件，节点IP及端口配置位于`packages/cli/conf/config.json`文件的`nodes`配置项中。您需要根据您要连接FISCO BCOS节点的实际配置修改该配置项的`ip`及`port`配置，其中`ip`为所连节点的IP地址，`port`为节点目录下的 config.ini 文件中的`channel_listen_port`配置项的值。如果您使用了快速搭链，可以跳过此步。
 
 配置完成后，即可开始使用CLI工具，CLI工具位于`packages/cli/cli.js`，所有操作均需要在`packages/cli/`目录下执行，您需要先切换至该目录：
 
