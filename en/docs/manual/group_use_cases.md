@@ -1,35 +1,35 @@
-# 部署多群组架构
+# Deploy Multi-Group Blockchain System
 
-本章主要以星形组网和并行多组组网拓扑为例，指导您了解如下内容：
+This chapter takes the star networking and parallel multi-group networking as an example to guide you to the following.
 
-- 了解如何使用`build_chain.sh`创建多群组区块链安装包；
-- 了解`build_chain.sh`创建的多群组区块链安装包目录组织形式；
-- 学习如何启动该区块链节点，并通过日志查看各群组共识状态；
-- 学习如何向各群组发送交易，并通过日志查看群组出块状态；
-- 了解群组内节点管理，包括节点入网、退网等；
-- 了解如何新建群组。
+- Learn to deploy multi-group blockchain with `build_chain.sh` shell script;
+- Understand the organization of the multi-group blockchain created by `build_chain.sh`
+- Learn how to start the blockchain node and get the consensus status of each group through the log;
+- Learn how to send transactions to the given group and get the block generation status through the log;
+- Understand node management of the blockchain system, including how to add/remove the given consensus node;
+- Learn how to create a new group.
 
 ```eval_rst
 .. important::
+    - ``build_chain.sh`` is suitable for developers and users to use quickly, does not support expansion operations
 
-    - build_chain.sh适用于开发者和体验者快速搭链使用，不支持扩容操作
-    - 搭建企业级业务链，推荐使用 `企业搭链工具 <../enterprise_tools/index.html>`_
+    - Build an enterprise-level business chain, recommend to use `generator <../enterprise_tools/index.html>`_   
 ```
 
-## 星形拓扑和并行多组
+## Introduction of star networking topology and parallel multi-group networking topology
 
-如下图，星形组网拓扑和并行多组组网拓扑是区块链应用中使用较广泛的两种组网方式。
+As shown in the following figure, the star networking topology and the parallel multi-group networking topology are two widely used networking methods in blockchain applications.
 
-- **星形拓扑**：中心机构节点同时属于多个群组，运行多家机构应用，其他每家机构属于不同群组，运行各自应用；
-- **并行多组**：区块链中每个节点均属于多个群组，可用于多方不同业务的横向扩展，或者同一业务的纵向扩展。
+- **Star networking topology**: The nodes of the central agency belong to multiple groups, and runs multiple institutional applications. Nodes of the other agencies belongs to different groups and runs their respective applications;
+- **Parallel multi-group networking topology**: Each node in the blockchain belongs to multiple groups and can be used for multi-service expansion or multi-node expansion of the same service.
 
 ![](../../images/group/group.png)
 
-下面以构建七节点星形拓扑和四节点并行多组区块链为例，详细介绍多群组操作方法。
+The following is a detailed description of how to deploy a eight-node star networking blockchain system and a four-node parallel multi-group networking blockchain.
 
-## 安装依赖
+## Installation dependency
 
-部署FISCO BCOS区块链节点前，需安装`openssl, curl`等依赖软件，具体命令如下：
+Before deploying the FISCO BCOS blockchain, you need to install software such as `openssl`, `curl`, etc. The specific commands are as follows:
 
 ```bash
 # CentOS
@@ -42,45 +42,49 @@ $ sudo apt install -y openssl curl
 $ brew install openssl curl
 ```
 
-## 星形拓扑
+## Star networking topology
 
-本章以构建上图所示的**单机、四机构、三群组、七节点的星形组网拓扑**为例，介绍多群组使用方法。
+In this chapter, we deploy a star networking blockchain system with four agencies, three groups and eight nodes in the local machine.
 
-星形区块链组网如下：
+Here is the detailed configuration of star networking blockchain:
 
-- `agencyA`：在`127.0.0.1`上有2个节点，同时属于`group1、group2、group3`；
-- `agencyB`：在`127.0.0.1`上有2个节点，属于`group1`；
-- `agencyC`：在`127.0.0.1`上有2个节点，属于`group2`；
-- `agencyD`：在`127.0.0.1`上有2个节点，属于`group3`。
+- `agencyA`: belongs to `group1、group2、group3`, including 2 nodes with the same IP address `127.0.0.1`;
+- `agencyB`: belongs to `group1`, including 2 nodes with the same IP address `127.0.0.1`;
+- `agencyC`: belongs to `group2`, including 2 nodes with the same IP address `127.0.0.1`;
+- `agencyD`: belongs to `group3`, including 2 nodes with the same IP address `127.0.0.1`.
+
+
+In a star network topology, the core node (in this case, the agencyA node) belongs to all groups and has a high load. It is recommended to deploy it separately on a machine with better performance.
 
 ```eval_rst
 .. important::
-   - 实际应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，请参考 `硬件配置 <../manual/configuration.html>`_
-   - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器** 
-   - **在不同机器操作时，请将生成的对应IP的文件夹拷贝到对应机器启动，建链操作只需要执行一次！**
+   - In the actual application scenario, it is **not recommended to deploy multiple nodes on the same machine**. It is recommended to select the number of deployed nodes in one machine according to the **machine loading**. Please refer to the `hardware configuration <../manual/configuration.html>`_
+
+   - **In a star network topology**, the core node (in this case, the agencyA node) belongs to all groups and has a high load. It is recommended to deploy it separately on a machine with better performance.
+
+   - **When operating in different machines, please copy the generated IP folder to the corresponding machine to start. The chain building operation only needs to be performed once!**
 ```
 
-### 构建星形区块链节点配置文件夹
+### Generate configuration for star networking blockchain
 
-[build_chain.sh](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链节点配置文件夹：
+`build_chain.sh` supports to generate configurations for blockchain with any topology, you can use this script to build configuration for the star networking blockchain.
 
-**准备依赖**
+**Prepare for dependency**
 
-- 创建操作目录
+- Create an operation directory
 
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 ```
 
-- 获取build_chain.sh脚本
+- Download the build_chain.sh script
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-**生成星形区块链系统配置文件**
-
+**Generate configuration for star networking blockchain system**
 ```bash
-# 生成区块链配置文件ip_list
+# Generate ip_list(configuration)
 $ cat > ipconf << EOF
 127.0.0.1:2 agencyA 1,2,3
 127.0.0.1:2 agencyB 1
@@ -88,24 +92,24 @@ $ cat > ipconf << EOF
 127.0.0.1:2 agencyD 3
 EOF
 
-# 查看配置文件ip_list内容
+# Check the content of ip_list
 $ cat ipconf
-# 空格分隔的参数分别表示如下含义：
-# ip:num: 物理机IP以及物理机上的节点数目
-# agency_name: 机构名称
-# group_list: 节点所属的群组列表，不同群组以逗号分隔
+# Meaning of the space-separated parameters:
+# ip:num: IP of the physical machine and the number of nodes
+# agency_name: agency name
+# group_list: the list of groups the nodes belong to, groups are separated by comma
 127.0.0.1:2 agencyA 1,2,3
 127.0.0.1:2 agencyB 1
 127.0.0.1:2 agencyC 2
 127.0.0.1:2 agencyD 3
 ```
 
-**使用build_chain脚本构建星形区块链节点配置文件夹**
+**Create node configuration folder for star networking blockchain using build_chain script**
 
-`build_chain`更多参数说明请参考[这里](../manual/build_chain.md)。
+Please refer to the [build_chain](../manual/build_chain.md) for more parameter descriptions of `build_chain.sh`.
 
 ```bash
-# 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
+# Generate a blockchain of star networking and make sure ports 30300~30301, 20200~20201, 8545~8546 of the local machine are not occupied
 $ bash build_chain.sh -f ipconf -p 30300,20200,8545
 Generating CA key...
 ==============================================================
@@ -115,7 +119,7 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyB Groups:1
 Processing IP:127.0.0.1 Total:2 Agency:agencyC Groups:2
 Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 ==============================================================
-......此处省略其他输出......
+......Here to omit other outputs......
 ==============================================================
 [INFO] FISCO-BCOS Path   : ./bin/fisco-bcos
 [INFO] IP List File      : ipconf
@@ -128,12 +132,12 @@ Processing IP:127.0.0.1 Total:2 Agency:agencyD Groups:3
 ==============================================================
 [INFO] All completed. Files in /home/ubuntu16/fisco/nodes
 
-# 生成的节点文件如下
+# The generated node file is as follows:
 nodes
 |-- 127.0.0.1
 |   |-- fisco-bcos
 |   |-- node0
-|   |   |-- conf  #节点配置目录
+|   |   |-- conf  # node configuration folder
 |   |   |   |-- ca.crt
 |   |   |   |-- group.1.genesis
 |   |   |   |-- group.1.ini
@@ -143,32 +147,32 @@ nodes
 |   |   |   |-- group.3.ini
 |   |   |   |-- node.crt
 |   |   |   |-- node.key
-|   |   |   `-- node.nodeid # 记录节点Node ID信息
-|   |   |-- config.ini #节点配置文件
-|   |   |-- start.sh  #节点启动脚本
-|   |   `-- stop.sh   #节点停止脚本
+|   |   |   `-- node.nodeid # stores the information of Node ID
+|   |   |-- config.ini # node configuration file
+|   |   |-- start.sh  # shell script to start the node
+|   |   `-- stop.sh   # shell script to stop the node
 |   |-- node1
 |   |   |-- conf
-......此处省略其他输出......
+......omit other outputs here......
 ```
 
 ```eval_rst
 .. note::
-   若生成的区块链节点属于不同物理机，需要将区块链节点拷贝到相应的物理机
+   If the generated nodes belong to different physical machines, the blockchain nodes need to be copied to the corresponding physical machine.
 ```
 
-**启动节点**
+**Start node**
 
-节点提供`start_all.sh`和`stop_all.sh`脚本启动和停止节点。
+FISCO-BCOS provides the `start_all.sh` and `stop_all.sh` scripts to start and stop the node.
 
 ```bash
-# 进入节点目录
+# Switch to the node directory
 $ cd ~/fisco/nodes/127.0.0.1
 
-# 启动节点
+# Start the node
 $ bash start_all.sh
 
-# 查看节点进程
+# Check node process
 $ ps aux | grep fisco-bcos
 ubuntu16         301  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node5/../fisco-bcos -c config.ini
 ubuntu16         306  0.9  0.0 986644  6928 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/../fisco-bcos -c config.ini
@@ -180,65 +184,66 @@ ubuntu16      131063  0.8  0.0 986644  7452 pts/0    Sl   15:21   0:00 /home/ubu
 ubuntu16      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/ubuntu16/fisco/nodes/127.0.0.1/node4/../fisco-bcos -c config.ini
 ```
 
-**查看群组共识状态**
+**Check consensus status of groups**
 
-不发交易时，共识正常的节点会输出`+++`日志，本例中，`node0`、`node1`同时属于`group1`、`group2`和`group3`；`node2`、`node3`属于`group1`；`node4`、`node5`属于`group2`；`node6`、`node7`属于`group3`，可通过`tail -f node*/log/* | grep "++"`查看各节点是否正常。
+When no transaction is sent, the node with normal consensus status will output `+++` log. In this example, `node0` and `node1` belong to `group1`, `group2` and `group3`; `node2` and `node3` belong to `group1`; `node4` and `node5` belong to `group2`; `node6` and `node7` belong to `group3`. Check the status of node by `tail -f node*/log/* | grep "++"`.
 
 ```eval_rst
 .. important::
 
-    节点正常共识打印 ``+++`` 日志， ``+++`` 日志字段含义：
-     - ``g:``：群组ID
-     - ``blkNum``：Leader节点产生的新区块高度；
-     - ``tx``: 新区块中包含的交易数目；
-     - ``nodeIdx``: 本节点索引；
-     - ``hash``: 共识节点产生的最新区块哈希。
+    Node with normal consensus status prints ``+++`` log, fields of ``+++`` log are defined as:
+     - ``g:``: group ID;
+     - ``blkNum``: the newest block number generated by the Leader node;
+     - ``tx``: the number of transactions included in the new block;
+     - ``nodeIdx``: the index of this node;
+     - ``hash``: hash of the newest block generated by consensus nodes.
 ```
 
 ```bash
-# 查看node0 group1是否正常共识（Ctrl+c退回命令行）
-$ tail -f node0/log/* | grep "g:1.*++" 
+# Check if node0 group1 is normal(Ctrl+c returns to the command line)
+$ tail -f node0/log/* | grep "g:1.*++"
 info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=72254a42....
 
-# 查看node0 group2是否正常共识
-$ tail -f node0/log/* | grep "g:2.*++" 
+# Check if node0 group2 is normal
+$ tail -f node0/log/* | grep "g:2.*++"
 info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=ef59cf17...
 
-# ... 查看node1, node2节点每个群组是否正常可参考以上操作方法...
+# ... To check node1, node2 node for each group is normal or not, refer to the above operation method...
 
-# 查看node3 group1是否正常共识
+# Check if node3 group1 is normal
 $ tail -f node3/log/*| grep "g:1.*++"  
 info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=5e94bf63...
 
-# 查看node5 group2是否正常共识
-$ tail -f node5/log/* | grep "g:2.*++" 
+# Check if node5 group2 is normal
+$ tail -f node5/log/* | grep "g:2.*++"
 info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=b80a724d...
 
 ```
 
-### 配置控制台
+### Configuration console
 
-控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。控制台指令详细介绍参考[这里](../manual/console.md)。
+The console connects to the FISCO BCOS node through the Web3SDK, it is used to query the blockchain status and deploy the calling contract, etc. Detailed instructions of console is [here](../manual/console.md).
+
 
 ```eval_rst
 .. important::
-   控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
+   The console relies on Java 8 and above, and Ubuntu 16.04 system needs be installed with openjdk 8. Please install Oracle Java 8 or above for CentOS.
 ```
 
 ```bash
-#回到fisco目录
+# Switch back to ~/fisco folder
 $ cd ~/fisco
 
-# 获取控制台
+# Download console
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 
-# 进入控制台操作目录
+# Switch to console directory
 $ cd console
 
-# 拷贝group2节点证书到控制台配置目录
+# Copy node certificate of group 2 to the configuration directory of console
 $ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
 
-# 获取node0的channel_listen_port
+# Obtain channel_listen_port of node0
 $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 /home/ubuntu16/fisco/nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20200
 /home/ubuntu16/fisco/nodes/127.0.0.1/node1/config.ini:    channel_listen_port=20201
@@ -253,10 +258,10 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 
 ```eval_rst
 .. important::
-    使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
+    When connecting node with the console, we should make sure that the connected nodes are in the group configured by the console
 ```
 
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台从node0(`127.0.0.1:20200`)本别接入三个group中，控制台配置方法请参考[这里](../manual/console.html#id7)。
+**The configuration of the console configuration file `conf/applicationContext.xml` is as follows.**. The console is connected to three groups from node0 (`127.0.0.1:20200`), to get more information of console configuration, please refer to [here](../manual/console.html#id7).
 
 ```xml
 cat > ./conf/applicationContext.xml << EOF
@@ -318,158 +323,157 @@ cat > ./conf/applicationContext.xml << EOF
 EOF
 ```
 
-**启动控制台**
+**Start the console**
 
 ```bash
 $ bash start.sh
-# 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+# The following outputted information means the console has been successfully started. Otherwise, please check if the port configuration of the nodes in conf/applicationContext.xml is correct.
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =====================================================================================
-[group:1]> 
+[group:1]>
 ```
 
-### 向群组发交易
+### Send transactions to groups
 
-上节配置了控制台，本节通过控制台向各群组发交易。
+In the above section, we learned how to configure the console, this section will introduce how to send transactions to groups through the console.
 
 ```eval_rst
 .. important::
-   
-   多群组架构中，群组间账本相互独立，向某个群组发交易仅会导致本群组区块高度增加，不会增加其他群组区块高度
+
+   In the group architecture, the ledgers are independent in each group. And sending transactions to one group only increases the block number of this group but not others
 ```
 
-**控制台发送交易**
+**Send transactions through console**
 
 ```bash
-# ... 向group1发交易...
+# ... Send HelloWorld transaction to group1...
 $ [group:1]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
-# 查看group1当前块高，块高增加为1表明出块正常，否则请检查group1是否共识正常
-$ [group:1]> getBlockNumber 
+# Check the current block number of group1, if the block number is increased to 1,  it indicates that the blockchain is normal. Otherwise, please check if group1 is abnormal.
+$ [group:1]> getBlockNumber
 1
 
-# ... 向group2发交易...
-# 切换到group2
+# ... Send HelloWorld transaction to group2...
+# Switch to group2
 $ [group:1]> switch 2
 Switched to group 2.
-# 向group2发交易，返回交易哈希表明交易部署成功，否则请检查group2是否共识正常
+# Send transaction to group2, return a transaction hash indicates that the transaction is deployed successfully, otherwise, please check if the group2 works normally.
 $ [group:2]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
-# 查看group2当前块高，块高增加为1表明出块正常，否则请检查group2是否共识正常
+# Check the current block number of group2, if the block number is increased to 1,  it indicates that the blockchain is normal. Otherwise, please check if group1 is abnormal
 $ [group:2]> getBlockNumber
 1
 
-# ... 向group3发交易...
-# 切换到group3
+# ... Send transaction to group3...
+# Switch to group3
 $ [group:2]> switch 3
 Switched to group 3.
-# 向group3发交易，返回交易哈希表明交易部署成功
+# Send transaction to group3, return a transaction hash indicates that the transaction is deployed successfully, otherwise, please check if the group2 works normally.
 $ [group:3]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
-# 查看group3当前块高，块高为1表明出块正常，否则请检查group3是否共识正常
+# Check the current block number of group3, if the block number is increased to 1,  it indicates that the blockchain is normal. Otherwise, please check if group1 is abnormal
 $ [group:3]> getBlockNumber
 1
 
-# ... 切换到不存在的组4，控制台提示group4不存在，并输出当前的group列表 ...
+# ... Switch to group 4 that does not exist: the console prompts that group4 does not exist, and outputs the current group list ...
 $ [group:3]> switch 4
 Group 4 does not exist. The group list is [1, 2, 3].
 
-# 退出控制台
+# Exit the console
 $ [group:3]> exit
 ```
 
-**查看日志**
+**Check the log**
 
-节点出块后，会输出`Report`日志，日志各个字段含义如下：
+After the block is generated, the node will output `Report` log, which contains fields with following definitions:
 
 ```eval_rst
-.. important::
-    
-    节点每出一个新块，会打印一条Report日志，Report日志中各字段含义如下：
-     - ``g:``：群组ID
-     - ``num``：出块高度；
-     - ``sealerIdx``：共识节点索引；
-     - ``hash``：区块哈希；
-     - ``next``：下一个区块高度；
-     - ``tx``：区块包含的交易数；
-     - ``nodeIdx``：当前节点索引。
+.. important:
+
+    once a new block is generated, node will print a Report log which contains fields with following definitions:
+     - ``g:``: group ID
+     - ``num``: block number
+     - ``sealerIdx``: index of the consensus node;
+     - ``hash``: the hash of the block;
+     - ``next``: the number of next block;
+     - ``tx``: the number of transactions included in the block;
+     - ``nodeIdx``: index of the current node.
 ```
 
 ```bash
-# 进入节点目录
+# Switch the node directory
 $ cd ~/fisco/nodes/127.0.0.1
 
-# 查看group1出块情况：有新区块产生
+# Check the block generation status of group1: new block generated
 $ cat node0/log/* |grep "g:1.*Report"
 info|2019-02-11 16:08:45.077484| [g:1][p:264][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=1,hash=9b5487a6...,next=2,tx=1,nodeIdx=2
 
-# 查看group2出块情况：有新区块产生
+# Check the block generation status of group2: new block generated
 $ cat node0/log/* |grep "g:2.*Report"
 info|2019-02-11 16:11:55.354881| [g:2][p:520][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=0,hash=434b6e07...,next=2,tx=1,nodeIdx=0
 
-# 查看group3出块情况：有新区块产生
+# Check the block generation status of group3: new block generated
 $ cat node0/log/* |grep "g:3.*Report"
 info|2019-02-11 16:14:33.930978| [g:3][p:776][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=1,hash=3a42fcd1...,next=2,tx=1,nodeIdx=2
 
 ```
 
-### 节点加入群组
+### Node joins the group
+Through the console, FISCO BCOS can add the specified node to the specified group, or delete the node from the specified group. For details, please refer to the [node admission management manual](../manual/node_management.md), for console configuration, please reference [console operation manual](../manual/console.html#id7).
 
-通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](../manual/node_management.md)，控制台配置参考[控制台操作手册](../manual/console.html#id7)。
-
-本章以将node2加入group2为例，介绍如何在已有的群组中，加入新节点。
+Taking how to join node2 to group2 as an example, this chapter introduces how to add a new node to an existing group.
 
 ```eval_rst
-.. important::
-    
-    新节点加入群组前，请确保：
-    
-    - 新加入NodeID存在
-    - 群组内节点正常共识：正常共识的节点会输出+++日志
-````
+.. important:
 
-**拷贝group2群组配置到node2**
+    Before the new node joins the group, make sure that:
 
-```bash
-# 进入节点目录
-$ cd ~/fisco/nodes/127.0.0.1
-
-# ... 从node0拷贝group2的配置到node2...
-$ cp node0/conf/group.2.* node2/conf
-
-# ...重启node2(重启后请确定节点正常共识)...
-$ cd node2 && bash stop.sh && bash start.sh 
+    - The NodeID of the new-joined node exists.
+    - The normal consensus of the nodes in the group: he nodes with normal consensus will output +++ logs
 ```
 
-**获取node2的节点ID**
+**Copy group2 configuration to node2**
 
 ```bash
-# 请记住node2的node ID，将node2加入到group2需用到该node ID
-$ cat conf/node.nodeid 
+# Switch to node directory
+$ cd ~/fisco/nodes/127.0.0.1
+
+# ... Copy group2 configuration of node0 to node2 ...
+$ cp node0/conf/group.2.* node2/conf
+
+# ...Restart node2(make sure the node is in normal consensus after restart)...
+$ cd node2 && bash stop.sh && bash start.sh
+```
+
+**Get the ID of node2**
+
+```bash
+# Please remember the node ID of node2. Add node2 to group2 needs the node ID.
+$ cat conf/node.nodeid
 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 ```
 
-**通过控制台向group2发送命令，将node2加入到group2**
+**Send commands to group2 through the console to add node2 into group2**
 
 ```bash
 
-# ...回到控制台目录，并启动控制台（直接启动到group2）...
+# ...Go back to the console directory and launch the console (direct boot to group2)...
 $ cd ~/fisco/console && bash start.sh 2
 
-# ...通过控制台将node2加入为共识节点...
-# 1. 查看当前共识节点列表
+# ...Join node2 as a consensus node through the console...
+# 1. Check current consensus node list
 $ [group:2]> getSealerList
 [
     9217e87c6b76184cf70a5a77930ad5886ea68aefbcce1909bdb799e45b520baa53d5bb9a5edddeab94751df179d54d41e6e5b83c338af0a19c0611200b830442,
@@ -477,86 +481,91 @@ $ [group:2]> getSealerList
     7a50b646fcd9ac7dd0b87299f79ccaa2a4b3af875bd0947221ba6dec1c1ba4add7f7f690c95cf3e796296cf4adc989f4c7ae7c8a37f4505229922fb6df13bb9e,
     8b2c4204982d2a2937261e648c20fe80d256dfb47bda27b420e76697897b0b0ebb42c140b4e8bf0f27dfee64c946039739467b073cf60d923a12c4f96d1c7da6
 ]
-# 2. 将node2加入到共识节点
-# addSealer后面的参数是上步获取的node ID
+# 2. Add node2 to the consensus node
+# The parameter after addSealer is the node ID obtained in the previous step
 $ [group:2]> addSealer 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 {
     "code":0,
     "msg":"success"
 }
-# 3. 查看共识节点列表
+# 3. Check current consensus node list
 $ [group:2]> getSealerList
 [
     9217e87c6b76184cf70a5a77930ad5886ea68aefbcce1909bdb799e45b520baa53d5bb9a5edddeab94751df179d54d41e6e5b83c338af0a19c0611200b830442,
     227c600c2e52d8ec37aa9f8de8db016ddc1c8a30bb77ec7608b99ee2233480d4c06337d2461e24c26617b6fd53acfa6124ca23a8aa98cb090a675f9b40a9b106,
     7a50b646fcd9ac7dd0b87299f79ccaa2a4b3af875bd0947221ba6dec1c1ba4add7f7f690c95cf3e796296cf4adc989f4c7ae7c8a37f4505229922fb6df13bb9e,
     8b2c4204982d2a2937261e648c20fe80d256dfb47bda27b420e76697897b0b0ebb42c140b4e8bf0f27dfee64c946039739467b073cf60d923a12c4f96d1c7da6,
-    6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4 # 新加入节点
+    6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4 # new node
 ]
-# 获取group2当前块高
-$ [group:2]> getBlockNumber 
+# Get the current block number of group2
+$ [group:2]> getBlockNumber
 2
 
-#... 向group2发交易
-# 部署HelloWorld合约，输出合约地址，若合约部署失败，请检查group2共识情况
+#... Send transaction to group2
+# Deploy the HelloWorld contract and output contract address. If the contract fails to deploy, please check the consensus status of group2
 $ [group:2] deploy HelloWorld
 contract address:0xdfdd3ada340d7346c40254600ae4bb7a6cd8e660
 
-# 获取group2当前块高，块高增加为3，若块高不变，请检查group2共识情况
-$ [group:2]> getBlockNumber 
+# Get the current block number of group2, it increases to 3. If not, please check the consensus status of group2
+$ [group:2]> getBlockNumber
 3
 
-# 退出控制台
+# Exit the console
 $ [group:2]> exit
 ```
 
-**通过日志查看新加入节点出块情况**
+**Check the block generation status of the new node through log**
 
 ```bash
-# 进入节点所在目录
+# Switch to the node directory
 cd ~/fisco/nodes/127.0.0.1
-# 查看节点共识情况（Ctrl+c退回命令行）
+# Check the consensus status of the node(Ctrl+c returns the command line)
 $ tail -f node2/log/* | grep "g:2.*++"
 info|2019-02-11 18:41:31.625599| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=4,tx=0,nodeIdx=1,hash=c8a1ed9c...
-......此处省略其他输出......
+......Other outputs are omitted here......
 
-# 查看node2 group2出块情况：有新区块产生
+# Check the block generation status of node2 and group2: new block generated
 $ cat node2/log/* | grep "g:2.*Report"
 info|2019-02-11 18:53:20.708366| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=3,idx=3,hash=80c98d31...,next=10,tx=1,nodeIdx=1
-# node2也Report了块高为3的区块，说明node2已经加入group2
+# node2 also reports a block with block number 3, indicating that node2 has joined group2.
+
 ```
 
-#### 停止节点
+#### Stop the node
 
 ```bash
-# 回到节点目录 && 停止节点
+# Back to the node directory && stop the node
 $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```
 
 
-## 并行多组
+## Parallel multi-group networking topology
 
-并行多组区块链搭建方法与星形拓扑区块链搭建方法类似，以搭建四节点两群组并行多链系统为例：
+Deploying parallel multi-group networking blockchain is similar with deploying star networking blockchain. Taking a four-node two-group parallel multi-group blockchain as an example:
 
-- 群组1：包括四个节点，节点IP均为`127.0.0.1`；
-- 群组2：包括四个节点，节点IP均为`127.0.0.1`。
+- group 1: includs 4 nodes with the same IP `127.0.0.1`;
+- group 2: includs 4 nodes with the same IP `127.0.0.1`.
+
+In a real application scenario, it is not recommended to deploy multiple nodes on the same machine. It is recommended to select the number of deployed nodes according to the machine load.
+To demonstrate the parallel multi-group expansion process, only group1 is created here first.
+In a parallel multi-group scenario, node join and exit group operations are similar to star networking topology.
 
 ```eval_rst
 .. important::
-   - 真实应用场景中，**不建议将多个节点部署在同一台机器** ，建议根据 **机器负载** 选择部署节点数目
-   - 为演示并行多组扩容流程，这里仅先创建group1
-   - 并行多组场景中，节点加入和退出群组操作与星形组网拓扑类似
+   - In a real application scenario, **it is not recommended to deploy multiple nodes the same machine**, It is recommended to determine the number of deployed nodes according to the machine load
+   - To demonstrate the parallel multi-group expansion process, only group1 is created here first
+   - In a parallel multi-group scenario, the operations of node joining into a group or leaving from a group are similar to star networking blockchain.
 ```
 
-### 构建单群组四节点区块链
+### Build blockchain with a single group and 4 nodes
 
-> **用build_chain.sh脚本生成单群组四节点区块链节点配置文件夹**
+> **Generate a single-group four-node blockchain node configuration folder with the build_chain.sh script**
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
-# 获取build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
-# 构建本机单群组四节点区块链(生产环境中，建议每个节点部署在不同物理机上)
+# Download build_chain.sh script
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+#Build a local single-group four-node blockchain (in a production environment, it is recommended that each node be deployed on a different physical machine)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
 ==============================================================
@@ -578,14 +587,14 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ```
 
-> **启动所有节点**
+> **Start all nodes**
 
 ```bash
-# 进入节点目录
+# Switch to the node directory
 $ cd ~/fisco/multi_nodes/127.0.0.1
 $ bash start_all.sh
 
-# 查看进程情况
+# Check process
 $ ps aux | grep fisco-bcos
 ubuntu16       55028  0.9  0.0 986384  6624 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
 ubuntu16       55034  0.8  0.0 986104  6872 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
@@ -593,101 +602,101 @@ ubuntu16       55041  0.8  0.0 986384  6584 pts/2    Sl   20:59   0:00 /home/ubu
 ubuntu16       55047  0.8  0.0 986396  6656 pts/2    Sl   20:59   0:00 /home/ubuntu16/fisco/multi_nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
-> **查看节点共识情况**
+> **Check consensus status of nodes**
 
 ```bash
-# 查看node0共识情况（Ctrl+c退回命令行）
+# Check consensus status of node0(Ctrl+c returns to the command line)
 $ tail -f node0/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:52.065958| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=da72649e...
 
-# 查看node1共识情况
-$ tail -f node1/log/* | grep "g:1.*++" 
+# Check consensus status of node1
+$ tail -f node1/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:54.070297| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=11c9354d...
 
-# 查看node2共识情况
-$ tail -f node2/log/* | grep "g:1.*++" 
+# Check consensus status of node2
+$ tail -f node2/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:55.073124| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=b65cbac8...
 
-# 查看node3共识情况
-$ tail -f node3/log/* | grep "g:1.*++" 
+# Check consensus status of node3
+$ tail -f node3/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=0467e5c4...
 
 ```
 
 
-### 将group2加入区块链
+### Add group2 to the blockchain
 
-并行多组区块链每个群组的`genesis`配置文件几乎相同，但[group].id不同，为群组号。
+The `genesis` configuration files in each group of parallel multi-group networking blockchain are almost the same, except group ID [group].id, which is the group number.
 
 ```bash
-# 进入节点目录
+# Switch to the node directory
 $ cd ~/fisco/multi_nodes/127.0.0.1
 
-# 拷贝group1的配置
+# Copy the configuration of group 1
 $ cp node0/conf/group.1.genesis group.2.genesis
 
-# 修改群组ID
+# Modify group ID
 $ sed -i "s/id=1/id=2/g" group.2.genesis
 $ cat group.2.genesis | grep "id"
-# 已修改到    id=2
+# Have modified to    id=2
 
-# 将配置拷贝到各个节点
+# Copy the configuration to each node
 $ cp node0/conf/group.2.genesis node1/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node2/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node3/conf/group.2.genesis
 
-# 重启各个节点
+# Restart node
 $ bash stop_all.sh
 $ bash start_all.sh
 ```
 
-### 查看群组共识情况
+### Check consensus status of the group
 
 ```bash
-# 查看node0 group2共识情况（Ctrl+c退回命令行）
-$ tail -f node0/log/* | grep "g:2.*++" 
+# Check the consensus status of node0 group2
+$ tail -f node0/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:28.541596| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=f3562664...
 
-# 查看node1 group2共识情况
+# Check the consensus status of node1 group2
 $ tail -f node1/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:30.546011| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=4b17e74f...
 
-# 查看node2 group2共识情况
-$ tail -f node2/log/* | grep "g:2.*++" 
+# Check the consensus status of node2 group2
+$ tail -f node2/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:59.653615| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=90cbd225...
 
-# 查看node3 group2共识情况
-$ tail -f node3/log/* | grep "g:2.*++" 
+# Check the consensus status of node3 group2
+$ tail -f node3/log/* | grep "g:2.*++"
 info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=d7dcb462...
 
 ```
 
-### 向群组发交易
+### Send transactions to groups
 
-**获取控制台**
+**Download console**
 
 ```bash
-# 若从未下载控制台，请进行下面操作下载控制台，否则将控制台拷贝到~/fisco目录：
+# If you have never downloaded the console, please do the following to download the console, otherwise copy the console to the ~/fisco directory:
 $ cd ~/fisco
-# 获取控制台
+# Download console
 $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 
-**配置控制台**
+**Configuration console**
 
 ```bash
-# 获取channel_port
-$ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini 
+# Get channel_port
+$ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini
 multi_nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20100
 
-# 进入控制台目录
+# Switch to console subdirectory
 $ cd console
-# 拷贝节点证书
+# Copy node certificate
 $ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
 
 ```
 
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下，在node0（`127.0.0.1:20100`）上配置了两个group（group1和group2）：**
+**The configuration of the console configuration file `conf/applicationContext.xml` is created as follows. Two groups (group1 and group2) are configured on node0 (127.0.0.1:20100):**
 
 ```xml
 cat > ./conf/applicationContext.xml << EOF
@@ -742,72 +751,72 @@ EOF
 ```
 
 
-**通过控制台向群组发交易**
+**Send transactions to groups via console**
 
 ```bash
-# ... 启动控制台 ...
+# ... Start console ...
 $ bash start.sh
-# 输出如下信息表明控制台启动成功，若启动失败，请检查是否配置证书、channel listen port配置是否正确
+# The following information output indicates that the console is successfully started. If the startup fails, check whether the certificate configuration and the channel listen port configuration are correct.
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =====================================================================================
-# ... 向group1发交易...
-# 获取当前块高
-$ [group:1]> getBlockNumber 
+# ... Send transaction to group 1...
+# Get the current block number
+$ [group:1]> getBlockNumber
 0
-# 向group1部署HelloWorld合约，若部署失败，请检查group1共识是否正常
+# Deploy the HelloWorld contract to group1. If the deployment fails, check whether the consensus status of group1 is normal
 $ [group:1]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
-# 获取当前块高，若块高没有增加，请检查group1共识是否正常
-$ [group:1]> getBlockNumber 
+# Get the current block number. If the block number is not increased, please check if the group1 is normal
+$ [group:1]> getBlockNumber
 1
 
-# ... 向group2发交易...
-# 切换到group2
+# ... send transaction to group 2...
+# Switch to group2
 $ [group:1]> switch 2
 Switched to group 2.
-# 获取当前块高
-$ [group:2]> getBlockNumber 
+# Get the current block number
+$ [group:2]> getBlockNumber
 0
-# 向group2部署HelloWorld合约
+# Deploy HelloWorld contract to group2
 $ [group:2]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
-# 获取当前块高，若块高没有增加，请检查group2共识是否正常
-$ [group:2]> getBlockNumber 
+# Get the current block number. If the block number is not increased, please check if the group1 is normal
+$ [group:2]> getBlockNumber
 1
-# 退出控制台
+# Exit console
 $[group:2]> exit
 ```
 
-**通过日志查看节点出块状态**
+**Check block generation status of nodes through log**
 
 ```bash
-# 切换到节点目录
+# Switch to the node directory
 $ cd ~/fisco/multi_nodes/127.0.0.1/
 
-# 查看group1出块情况，看到Report了属于group1的块高为1的块
+# Check block generation status of group1, and to see that the block with block number of 1 belonging to group1 is reported.
 $ cat node0/log/* | grep "g:1.*Report"
 info|2019-02-11 21:14:57.216548| [g:1][p:264][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=be961c98...,next=2,tx=1,nodeIdx=2
 
-# 查看group2出块情况，看到Report了属于group2的块高为1的块
+# Check block generation status of group2, and to see that the block with block number of 1 belonging to group2 is reported.
 $ cat node0/log/* | grep "g:2.*Report"
 info|2019-02-11 21:15:25.310565| [g:2][p:520][CONSENSUS][PBFT]^^^^^Report:,num=1,sealerIdx=3,hash=5d006230...,next=2,tx=1,nodeIdx=2
 ```
 
-#### 停止节点
+#### Stop nodes
 
 ```bash
-# 回到节点目录 && 停止节点
+# Back to nodes folder && stop the node
 $ cd ~/fisco/multi_nodes/127.0.0.1 && bash stop_all.sh
 ```

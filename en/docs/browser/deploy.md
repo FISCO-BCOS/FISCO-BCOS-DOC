@@ -1,61 +1,81 @@
-# 一键部署说明
+# One-click deployment
 
-## 1、前提条件
+## 1. Premises
 
-| 环境   | 版本                   |
+| Environment   | Version                   |
 | ------ | ---------------------- |
-| Java   | jdk1.8.0_121或以上版本 |
+| Java   | jdk1.8.0_121 or above version |
 | python | 2.7                    |
-| 数据库 | mysql-5.6或以上版本    |
-## 2、拉取代码
+| database | mysql-5.6 or above version    |
 
-执行命令：
+## 2. Pull code
+
+Execute command:
 
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
 ```
+Enter one-click deployment directory
 
-## 3、进入一键部署目录：
 ```shell
 cd fisco-bcos-browser/deploy
 ```
 
-## 4、修改配置（没有变化的可以不修改）：
+## 3. Modify config (except the unchanged ones):
 
-**注意：**1、数据库服务和数据需要提前准备。2、前端服务端口不能小于1024
+**Note:** 
+
+​    a. Database and data should be prepared in advance.
+
+​    b. The web service port shouldn't be smaller than 1024.
 
 ```shell
-数据库IP：sed -i "s/10.0.0.1/${your_db_ip}/g" common.properties
-数据库用户名：sed -i "s/root/${your_db_account}/g" common.properties
-数据库密码：sed -i "s/123456/${your_db_password}/g" common.properties
-数据库名称：sed -i "s/testDB/${your_db_name}/g" common.properties
+# vi common.properties
+Database IP: sed -i "s/127.0.0.1/${your_db_ip}/g" common.properties
+Database prot: sed -i "s/3306/${your_db_port}/g" common.properties
+Datebase user name: sed -i "s/dbUsername/${your_db_account}/g" common.properties
+Database password: sed -i "s/dbPassword/${your_db_password}/g" common.properties
+Database name: sed -i "s/db_browser/${your_db_name}/g" common.properties
 
-部署服务器IP：sed -i "s/127.0.0.1/${your_server_ip}/g" common.properties
-后端服务端口：sed -i "s/8088/${your_server_port}/g" common.properties
-前端服务端口：sed -i "s/8081/${your_web_port}/g" common.properties
+Web service port: sed -i "s/5100/${your_web_port}/g" common.properties
+Server service port: sed -i "s/5101/${your_server_port}/g" common.properties
 
-例子（将数据库IP由10.0.0.1改为0.0.0.0）：sed -i "s/10.0.0.1/0.0.0.0/g" application.yml
+Example (Change the database IP from 10.0.0.1 to 0.0.0.0): sed -i "s/10.0.0.1/0.0.0.0/g" application.yml
 ```
 
+## 4. Deploy
 
+set up all the service:
 
-## 4、部署
 ```shell
-python deploy.py run
+python deploy.py startAll
 ```
 
-## 5、访问
-例如：在浏览器输入以下访问地址，IP为部署服务器IP，端口为前端服务端口
+stop all the service:
 
-```
-http://127.0.0.1:8081/#/
-```
-
-## 6、日志路径
-```
-部署日志：log/
-后端日志：server/log/
-前端日志：web/log/
+```shell
+python deploy.py stopAll
 ```
 
+other information can be found through the help parameter:
 
+```
+python deploy.py help
+```
+
+## 5. Access the explorer
+
+Typing the server IP and port had set before in the explorer:
+
+```shell 
+http://127.0.0.1:5100
+```
+
+## 6. Log directory
+the default log directory is set as follow:
+
+```
+Deployment log：log/
+Server log：server/log/
+Web log：web/log/
+```

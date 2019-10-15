@@ -1,27 +1,27 @@
-# 配置文件
+# Config file
 
-FISCO BCOS generator的配置文件在./conf文件夹下，配置文件为：群组创世区块配置文件`group_genesis.ini`和生成节点配置文件`node_deployment.ini`。
+The config files of FISCO BCOS generator are placed under ./conf folder, including group's genesis block config file `group_genesis.ini`, node config file `node_deployment.ini`.
 
-用户通过对conf文件夹下文件的操作，配置生成节点配置文件夹的具体信息。
+The user configures node config file folder by operations on files under the conf folder.
 
-## 元数据文件夹meta
+## Metadata folder meta
 
-FISCO BCOS generator的meta文件夹为元数据文件夹，需要存放`fisco bcos`二进制文件、链证书`ca.crt`、本机构机构证书`agency.crt`、机构私钥节点证书、群组创世区块文件等。
+The meta folder of FISCO BCOS generator is metadata folder to store `fisco-bcos` binaries, chain certificate `ca.crt`, agency certificate `agency.crt`, agency private key and node certificate, group genesis block file, and so on.
 
-证书的存放格式需要为cert_p2pip_port.crt的格式，如cert_127.0.0.1_30300.crt。
+The format of stored certificates should be cert_p2pip_port.crt. For example: cert_127.0.0.1_30300.crt.
 
-FISCO BCOS generator会根据用户在元数据文件夹下放置的相关证书、conf下的配置文件，生成用户下配置的节点配置文件夹。
+FISCO BCOS generator will generate nodes config file according to the certificates under the meta folder and the config files under the conf folder.
 
 ## group_genesis.ini
 
-通过修改`group_genesis.ini`的配置，用户在指定目录及meta文件夹下生成新群组创世区块的相关配置，如`group.1.genesis`。
+Through modifying the configuration of `group_genesis.ini`, the user generates a configuration of new group genesis block under the specific directory and meta folder. Such as `group.1.genesis`.
 
 ```ini
 [group]
 group_id=1
 
 [nodes]
-;群组创世区块的节点p2p地址
+;node p2p address of group genesis block
 node0=127.0.0.1:30300
 node1=127.0.0.1:30301
 node2=127.0.0.1:30302
@@ -30,14 +30,14 @@ node3=127.0.0.1:30303
 
 ```eval_rst
 .. important::
-    生成群组创世区块时需要节点的证书，如上述配置文件中需要4个节点的证书。分别为：cert_127.0.0.1_30301.crt，cert_127.0.0.1_30302.crt，cert_127.0.0.1_30303.crt和cert_127.0.0.1_30304.crt。
+    Node certificate is needed during generating genesis block. In the above case, the config file needs 4 nodes' certificates, which are: cert_127.0.0.1_30301.crt, cert_127.0.0.1_30302.crt, cert_127.0.0.1_30303.crt and cert_127.0.0.1_30304.crt.
 ```
 
 ## node_deployment.ini
 
-通过修改`node_deployment.ini`的配置，用户可以使用--build_install_package命令在指定文件夹下生成节点不含私钥的节点配置文件夹。用户配置的每个`section[node]`即为用户需要生成的节点配置文件夹.`section[peers]`为需要连接的其他节点p2p信息。
+Through modifying `node_deployment.ini` configuration, user can use --build_install_package command to generate node config file containing no private key under a specific folder. Each `section[node]` configured by the user is the needed node config file folder. `section[peers]` is the p2p information for connection with other nodes.
 
-配置文件示例如下：
+For example:
 
 ```ini
 [group]
@@ -59,22 +59,39 @@ channel_listen_port=20201
 jsonrpc_listen_port=8546
 ```
 
-读取节点配置的命令，如生成节点证书和节点配置文件夹等会读取该配置文件。
+Read the node config command. To generate node certificate and node config file folder will need to read the config file.
 
-## 模板文件夹tpl
+## Template folder tpl
 
-generator的模板文件夹如下图所示：
+The template folder of the generator is as below:
 
 ```bash
-├── applicationContext.xml # sdk配置文件模板
-├── config.ini # 节点配置文件模板
-├── config.ini.gm # 国密节点配置文件模板
-├── group.i.genesis # 群组创世区块模板
-├── group.i.ini # 群组区块配置模板
-├── start.sh  # 节点启动脚本模板
-├── start_all.sh # 节点批量启动脚本模板
-├── stop.sh # 节点停止脚本模板
-└── stop_all.sh # 节点批量停止脚本模板
+├── applicationContext.xml # sdk config file
+├── config.ini # node config file template
+├── config.ini.gm # OSCCA node config file template
+├── group.i.genesis # group genesis block template
+├── group.i.ini # group block configuration template
+├── start.sh  # start node script template
+├── start_all.sh # start nodes in batch script template
+├── stop.sh # stop node script template
+└── stop_all.sh # stop nodes in batch template
 ```
 
-用户如果需要修改生成节点的共识算法，配置的默认db，只需要修改模板文件`config.ini`的相关配置，在再运行相关命令，即可自定义生成相关节点。
+To modify the consensus algorithm of node and the configured default DB, the user only needs to alter the configuration of `config.ini`, re-execute the commands to set relative node information.
+
+For details of FISCO BCOS configuration please check [FISCO BCOS config file](../manual/configuration.md)
+
+## P2p node connection file peers.txt
+
+P2P node connection file `peers.txt` is the node connection information of the **other agencies** specified when generating node config file folder. When executing `build_install_package` command, it's needed to determine the p2p node connection file `peers.txt`, according to which node config file folder will start communication with other nodes.
+
+User that executes `generate_all_certificates` command generates `peers.txt` according to the `node_deployment.ini` filled under `conf` directory. The user that adopts other ways to generate certificate needs to generate p2p node connection file manually and send to peers. The format of the p2p node connection file is:
+
+```bash
+127.0.0.1:30300
+127.0.0.1:30301
+```
+
+Format like this: node ip:p2p_listen_port
+
+-   for multi-agency node communication, the files need to be combined

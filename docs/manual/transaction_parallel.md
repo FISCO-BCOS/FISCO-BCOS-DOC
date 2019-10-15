@@ -1,4 +1,4 @@
-# 并行交易
+# 并行合约
 
 FISCO BCOS提供了可并行合约开发框架，开发者按照框架规范编写的合约，能够被FISCO BCOS节点并行地执行。并行合约的优势有：
 
@@ -40,7 +40,7 @@ FISCO BCOS提供了**可并行合约开发框架**，开发者只需按照框架
 
 ### solidity合约并行框架
 
-编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将``` ParallelContract ``` 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。
+编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。
 
 先给出完整的举例，例子中的ParallelOk合约实现了并行转账的功能
 

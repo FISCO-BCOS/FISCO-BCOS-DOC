@@ -1,4 +1,4 @@
-# FAQ
+# FAQ (Revision in progress)
 
 ## Version
 
@@ -148,7 +148,7 @@ Q：
 A：
   The enterprise deployment tool relies on python pip. To install it with the following command:
 ```
-$ python -m pip install
+$ bash ./scripts/install.sh
 ```
 
 Q:

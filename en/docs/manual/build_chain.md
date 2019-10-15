@@ -95,7 +95,12 @@ Used to specify the binary version used when building FISCO BCOS. build_chain do
 
 - **`d`option[**Optional**]**
 
-Use the docker mode to build FISCO BCOS. When using this option, the binary is no longer extracted, but users are required to start the node machine to install docker, and their accounts have docker permission. The command to start the node in this mode is as follows
+Use the docker mode to build FISCO BCOS. When using this option, the binary is no longer extracted, but users are required to start the node machine to install docker, and their accounts have docker permission, which means their accounts should in the docker group.
+Use following command to start node at node home.
+```bash
+$ ./start.sh
+```
+The command to start the node in script start.sh is as follows
 
 ```bash
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
@@ -105,7 +110,7 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 No parameter option. When setting this option, node uses [mptstate](../design/storage/mpt.md) to store contract local variables. By default, [storagestate](../design/storage/storage.md) is used to store the contract local variable.
 
 - **`s`option[**Optional**]**
-There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, and external. RocksDB is used by default. mysql needs to configure the information relates to mysql in the group ini file. external needs to configure topic information and start AMDB proxy.
+There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, and external. RocksDB is used by default. mysql needs to configure the information relates to mysql in the group ini file. external needs to configure topic information and start amdb-proxy.
 
 - **`c`option[**Optional**]**
 No parameter option. When setting this option, the consensus algorithm for setting the node is [Raft](../design/consensus/raft.md), and the default setting is [PBFT](../design/consensus/pbft.md).
@@ -130,7 +135,7 @@ This option is used to specify the certificate configuration file when certifica
 
 - **`T`option[**Optional**]**
 
-No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](log_access.md).
+No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
 
 ## Node file organization
 
@@ -209,6 +214,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ### Multi-server and multi-group
 
-Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../tutorial/group_use_cases.md).
+Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

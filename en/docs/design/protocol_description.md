@@ -4,24 +4,24 @@
 
 The transaction structure of FISCO BCOS has been increased or decreased some fields based on the transaction structure of the original Ethereum. The transaction structure fields of FISCO BCOS 2.0.0 are as follows:
 
-| name           | type            | description                                                  | RLP index |
-| :------------- | :-------------- | :----------------------------------------------------------- | --------- |
-| type           | enum            | Transaction type, represents whether the transaction is a contract creation or a contract transaction, initially an empty contract. | -         |
-| nonce          | u256            | A random number provided by the message sender, to uniquely identify the transaction. | 0         |
-| value          | u256            | The amount of the transfer. FISCO BCOS does not use this field.| 5         |
-| receiveAddress | h160            | The receiver address. type is 0x0 when the contract is created.| 4         |
-| gasPrice       | u256            | The unit price of gas in this transaction. In FISCO BCOS, it is fixed as 300000000.| 1         |
-| gas            | u256            | This transaction allows the maximum amount of gas consumed. In FISCO BCOS, this value can be configured. | 2         |
-| data           | vector< byte >  | It is the data related to the transaction, or the initialization parameter when creating the contract.| 6         |
-| chainId        | u256            | It records chain/transactional information of the transaction                            | -             | 7             |
-| groupId        | u256            | It records the group of the transaction                                       | -             | 8             |
-| extraData      | vector< byte >  | Reserved field, recording transaction information, using “#” internally to separate information                | -             | 9             |
-| vrs            | SignatureStruct | Data that generated after transaction sender signs the hash on 7 field RLP code of the transaction        | 7,8,9         | 10,11,12      |
-| hashWith       | h256            | The hash of all fields (containing signature) after RPL code             | -             | -             |
-| sender         | h160            | Transaction sender's address based on vrs                                 | -             | -             |
-| blockLimit     | u256            | Transaction life cycle, the last processed block number of this transaction, FISCO BCOS new field     | 3             | 3             |
-| importTime     | u256            | Unix timestamp when transaction enters txPool, FISCO BCOS new field               | -             | -             |
-| rpcCallback    | function        | RPC callback after block generation, FISCO BCOS new field                        | -             | -             |
+| name           | type            | description                                                  | RLP index | RLP index RC2 |
+| :------------- | :-------------- | :----------------------------------------------------------- | --------- | ------------- |
+| type           | enum            | Transaction type, represents whether the transaction is a contract creatio -             |n or a contract transaction, initially an empty contract. | -         |
+| nonce          | u256            | A random number provided by the message sender, to uniquely identify the t 0             |ransaction. | 0         |
+| value          | u256            | The amount of the transfer. FISCO BCOS does not use this field.| 5         5             | |
+| receiveAddress | h160            | The receiver address. type is 0x0 when the contract is created.| 4         4             | |
+| gasPrice       | u256            | The unit price of gas in this transaction. In FISCO BCOS, it is fixed as 3 1             |00000000.| 1         |
+| gas            | u256            | This transaction allows the maximum amount of gas consumed. In FISCO BCOS, 2             | this value can be configured. | 2         |
+| data           | vector< byte >  | It is the data related to the transaction, or the initialization parameter 6             | when creating the contract.| 6         |
+| chainId        | u256            | It records chain/transactional information of the transaction              7             |               | -             | 7             |
+| groupId        | u256            | It records the group of the transaction                                    8             |    | -             | 8             |
+| extraData      | vector< byte >  | Reserved field, recording transaction information, using “#” internally to             | separate information                | -             | 9             |
+| vrs            | SignatureStruct | Data that generated after transaction sender signs the hash on 7 field RLP 10,11,12      | code of the transaction        | 7,8,9         | 10,11,12      |
+| hashWith       | h256            | The hash of all fields (containing signature) after RPL code             | -             | -             | -             |
+| sender         | h160            | Transaction sender's address based on vrs                                  -             || -             | -             |
+| blockLimit     | u256            | Transaction life cycle, the last processed block number of this transactio 3             |n, FISCO BCOS new field     | 3             | 3             |
+| importTime     | u256            | Unix timestamp when transaction enters txPool, FISCO BCOS new field        -             |        | -             | -             |
+| rpcCallback    | function        | RPC callback after block generation, FISCO BCOS new field                  -             |       | -             | -             |
 
 The generation process of the hashWith field (also called transaction hash/transaction unique identifier) in RC1 is as follows:
 
@@ -33,6 +33,8 @@ It is similar with RC2 generation process, only that the transaction struct of `
 
 The block of FISCO BCOS consists of the following five parts:
 
+**rc1:**
+
 | name                | description                                      | RLP index |
 | :------------------ | :----------------------------------------------- | --------- |
 | blockHeader         | Block header RLP coding                                  | 0         |
@@ -41,6 +43,15 @@ The block of FISCO BCOS consists of the following five parts:
 | hash                | The hash encoded by block header RLP encoded                         | 3         |
 | sigList             | The node signature list that is collected during PBFT consensus. Raft does not use this. | 4         |
 
+**rc2, rc3, 2.0 and newer**
+
+| name                | description                                                  | RLP index |
+| :------------------ | :----------------------------------------------------------- | --------- |
+| blockHeader         | Block header RLP coding                                      | 0         |
+| transactions        | Transaction list RLP code                                    | 1         |
+| hash                | The hash encoded by block header RLP encoded                 | 2         |
+| sigList             | The node signature list that is collected during PBFT consensus. Raft does not use this. | 3         |
+| transactionReceipts | Transaction receipt list RLP code                            | 4         |
 
 The description of each field in the block header of FISCO BCOS is as follows:
 
@@ -67,35 +78,6 @@ FISCO BCOS currently has two types of data packet formats. The data packets comm
 
 ![](../../images/node_management/message_type.png)
 
-### P2PMessage: v2.0.0-rc1
-
-The header of v2.0.0-rc1 P2PMessage package contains 12 bytes. The basic form is:
-
-![](../../images/node_management/p2p_message_rc1.png)
-
-| name       | type         | description                          |
-| :--------- | :----------- | :----------------------------------- |
-| Length     | uint32_t     | Data packet length, including header and data             |
-| groupID    | int8_t       | Group ID, its range is 1-127                   |
-| ModuleID   | uint8_t      | Module ID，its range is 1-255                    |
-| packetType | uint16_t     | Data packet type, is the identifier of sub-protocol under the same module ID |
-| seq        | uint32_t     | Data packet serial number, increased by each packet        |
-| data       | vector<byte> | Data, its length is length-12            |
-
-The module ID is divided as follows:
-
-| ModuleID | message           |
-| :------- | :---------------- |
-| 1        | AMOP submodule of P2P   |
-| 2        | Topic submodule of P2P  |
-| 3~7      | reserve for other P2P submodules |
-| 8        | PBFT submodule in consensus  |
-| 9        | Block synchronization module     |
-| 10       | Transaction pool module        |
-| 11       | Raft submodule in consensus |
-| 12~255   | reserve for other modules      |
-
-
 ### P2PMessage: v2.0.0-rc2
 
 V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 32767 groups at most**. It has also increased **Version** field for other features (like network compression) with package header being 16 bytes. The network data package structure of v2.0.0-rc2 is as below:
@@ -112,7 +94,7 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 | Seq        | uint32_t     | data packet serial number, each increment itself         |
 | Data       | vector<byte> | data itself, length length-12           |
 
-
+For definitions of P2PMessage before v2.0.0-rc2, please [refer here.](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc3/docs/design/protocol_description.html#p2pmessage-v2-0-rc1)
 
 **Additional**
 
@@ -121,32 +103,45 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 3. The data packet distinguishes between request packet and response packet by the 16-bit binary value where the protocolID is located.  The data greater than 0 is the request packet, and less than 0 is the corresponding packet.
 4. The packetType currently used by AMOP include `SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`.
 
-### ChannelMessage
+### ChannelMessage v1
 
-| name   | type         | description                                  |
-| :----- | :----------- | :------------------------------------------- |
-| length| uint32_t     | Data packet length, including header and data, up to 10M Byte |
-| type   | uint16_t     | Data packet type                                   |
-| seq    | string       | Data packet serial number, 32 bytes, introduced by SDK                |
-| result | int          | Process result                                     |
-| data   | vector<byte> | Data                                     |
+| name   | type         |length(4Byte)| description                          |
+| :----- | :----------- |:----| :------------------------------------------- |
+| length| uint32_t      |4| Data packet length, including header and data|
+| type   | uint16_t     |2| Data packet type                                 |
+| seq    | string       |32| Data packet serial number, 32 bytes|
+| result | int          |4| Process result                                   |
+| data   | bytes |length-42| Data                                     |
 
-The packet type enumeration value and its corresponding description are as follows:
+#### AMOP Message Packet
 
-| code    | message       | direction |
-| :------ | :------------ | :-------- |
-| 0x12    | Ethereum message    | SDK->node |
-| 0x13    | Heartbeat packet        | SDK->node |
-| 0x30    | AMOP request packet    | SDK->node |
-| 0x31    | AMOP response packet    | SDK->node |
-| 0x32    | Report Topic information | SDK->node |
-| 0x10000 | Transaction on chain callback | node->SDK |
+AMOP message packages inherit the ChannelMessage package organization and add custom content to the data field. Includes `0x30, 0x31, 0x35, 0x1001.`
 
-The process result enumeration value and its corresponding description are as follows:
+|| Length Byte | Description|
+|:-- |:-- |:----|
+| Length of length | 1 | Topic|
+| topic | length | topic name|
+
+#### Message Packet Type
+
+Enumeration values of packet types and their corresponding meanings are as follows:
+
+| Type | Inclusion | Description | Interpretation|
+|:------ |:--------|:--------|:--------|
+| 0x12 | JSONRPC 2.0 format | RPC interface message package | SDK - > node|
+| 0x13 | 0 or 1 | Heart Packet | 0: SDK - > Node, 1: Node - > SDK|
+| 0x30 | AMOP message package package package package | AMOP request package | SDK<-> node, bidirectional|
+| 0x31 | Package of failed AMOP message | AMOP Failure Response Package | Node - > SDK or Node - > Node|
+| 0x32 | JSON array to store Topics | report Topic information | SDK - > nodes monitored by SDK|
+| 0x35 | AMOP Message Packet Package | AMOP Multicast Message | Node - > Node|
+| 0x1000 | JSON Format Transaction Uplink Notification | Transaction Uplink Callback | Node - > SDK|
+| 0x1001 | With `,`Split Group ID and Block Height'| Block Height Notification | Node - > SDK|
+
+#### Error code
 
 | code | message    |
 | :--- | :--------- |
-| 0    | successful       |
+| 0    | successful      |
 | 100  | node unreachable |
 | 101  | SDK unreachable |
 | 102  | time out       |

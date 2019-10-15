@@ -138,7 +138,7 @@ Blacklist configuration example is as follows:
 
 ### Configure log information
 
-FISCO BCOS supports light weight [easylogging++](https://github.com/zuhd-org/easyloggingpp) and powerful[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html). It can use these two logs through compiling switch configuration, and it uses boostlog by default.  For details, refer to the [Log Operation Manual] (log_access.md).
+FISCO BCOS supports [boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html). Configurations:
 
 - `enable`: Enable/disable log. Set to `true` to enable log; set to `false` to disable log. **set to true by default. For performance test, to set this option to `false` to reduce the impact of print log on test results**
 - `log_path`:log file patch.
@@ -158,29 +158,10 @@ boostlog configuration example is as follows:
     max_log_file_size=200
     flush=true
 ```
-#### Configure easylogging++
-
-In order to minimize the configuration file, FISCO BCOS concentrates the configuration information of easyloggin++ to `[log]` configuration of config.ini. In general, it is not recommended to manually change the configurations other than the log level. For launching easylogging++ method, refer to [Enable easylogging++](log.html#easylogging).
-
-- `format`：log format.
-- `log_flush_threshold`：log refresh frequency setting. Each `log_flush_threshold` line refreshes log to file once.
-
-easylogging++ configuration example is as follows:
-
-```ini
-[log]
-    log_path=./log
-    level=info
-    ; Maximum size per log file, default is 200MB
-    max_log_file_size=209715200
-    ; easylog configuration
-    format=%level|%datetime{%Y-%M-%d %H:%m:%s:%g}|%msg
-    log_flush_threshold=100
-```
 
 ### Configure node compatibility
 
-All versions of FISCO-BCOS 2.0 are forward compatible. You can configure the compatibility of node through `[compatibility]` in `config.ini`. The tool will be automatically generated when changing the configuration item to build chain, so users do not need to change it.
+All versions of FISCO BCOS 2.0 are forward compatible. You can configure the compatibility of node through `[compatibility]` in `config.ini`. The tool will be automatically generated when changing the configuration item to build chain, so users do not need to change it.
 
 
 - `supported_version`：The version of the current node running
@@ -194,12 +175,12 @@ All versions of FISCO-BCOS 2.0 are forward compatible. You can configure the com
 
 ```
 
-`release-2.0.0-rc3` node's `[compatibility]` configuration is as follows:
+`release-2.0.0` node's `[compatibility]` configuration is as follows:
 
 ```ini
 
 [compatibility]
-    supported_version=release-2.0.0-rc3
+    supported_version=release-2.0.0
 ```
 
 ### Optional configuration: Disk encryption
@@ -220,7 +201,7 @@ In order to protect node data, FISCO BCOS introduces [Disk Encryption](../design
 disk encryption configuration example is as follows:
 
 ```ini
-[data_secure]
+[storage_security]
 enable=true
 key_manager_ip=127.0.0.1
 key_manager_port=31443
@@ -333,13 +314,13 @@ Storage currently supports three modes: RocksDB, MySQL, and External. Users can 
 #### Public configuration item
 
 
-- `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL` or `External`, the node accesses mysql database according to the configuration. All data of blockchain system is stored in mysql database. For accessing mysql database, to configure the AMDB proxy. Please refer to [here](./distributed_storage.html#amdb) for the AMDB proxy configuration.
+- `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL` or `External`, the node accesses mysql database according to the configuration. All data of blockchain system is stored in mysql database. For accessing mysql database, to configure the amdb-proxy. Please refer to [here](./distributed_storage.html#amdb) for the amdb-proxy configuration.
 - `max_capacity`: configures the space size of the node that is allowed to use for memory caching.
 - `max_forward_block`: configures the space size of the node that allowed to use for memory block. When the blocks exceeds this value, the node stops the consensus and waits for the blocks to be written to database.
 
 #### Database related configuration item
 
-- `topic`: When the type is `External`, you need to configure this field to indicate the AMDB proxy topic that blockchain system is interested in. For details, please refer to [here](./distributed_storage.html#id3).
+- `topic`: When the type is `External`, you need to configure this field to indicate the amdb-proxy topic that blockchain system is interested in. For details, please refer to [here](./distributed_storage.html#id3).
 - `max_retry`: When the type is `External`, you need to configure this field to indicate the number of retries when writing fails. For details, please refer to [here](./distributed_storage.html#id3).
 - `db_ip`: When the type is `MySQL`, you need to configure this field to indicate the IP address of MySQL.
 - `db_port`: When the type is `MySQL`, you need to configure this field to indicate the port number of MySQL.
@@ -377,7 +358,7 @@ Transaction pool configuration example is as follows:
 
 ```ini
 [tx_pool]
-    limit=10000
+    limit=150000
 ```
 
 ### PBFT consensus message broadcast configuration
@@ -448,7 +429,7 @@ FISCO BCOS system currently includes the following system parameters (other syst
 | tx_count_limit  | 1000      | maximum number of transactions that can be packaged in one block
   |
 +-----------------+-----------+---------------------------------+
-| tx_gas_limit    | 300000000 | Maximum block limit for a block            |
+| tx_gas_limit    | 300000000 | Maximum gas limit for a transaction            |
 +-----------------+-----------+---------------------------------+
 
 ```
@@ -464,7 +445,7 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 
     - Hardware performance such as machine network or CPU is limited: to reduce tx_count_limit for reducing business pressure;
 
-    - gas is insufficient when executing blocks for comlicated business logic: increase tx_gas_limit.
+    - gas is insufficient when executing transactions for comlicated business logic: increase tx_gas_limit.
 
 ```
 
@@ -476,7 +457,7 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 > getSystemConfigByKey tx_count_limit
 [500]
 
-# To set block gas limit as  400000000
+# To set transaction gas limit as  400000000
 > getSystemConfigByKey tx_gas_limit 400000000
 > getSystemConfigByKey
 [400000000]

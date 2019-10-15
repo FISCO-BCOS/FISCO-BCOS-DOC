@@ -1,22 +1,23 @@
 # Installation
 
-This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine on FISCO BCOS.
+This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS.
 
-## To build a single-group consortium chain on FISCO BCOS
+## To build a single-group consortium chain
 
-This section takes the construction of single group FISCO BCOS chain as an example to operate. We use the `build_chain.sh` script to build a 4-node FISCO BCOS chain locally in `Ubuntu 16.04` system as an example to operate.
+This section takes the construction of single group FISCO BCOS chain as an example to operate. We use the `build_chain.sh` script to build a 4-node FISCO BCOS chain locally in `Ubuntu 16.04 64bit` system.
 
 ```eval_rst
 .. note::
-    - it is similar to build a multi-group chain, interested can be referred to here<tutorial/group_use_cases.html>`_.
-    - This section uses pre-compiled static `fisco-bcos` binaries to test on CentOS 7 and Ubuntu 16.04.
+    - To update an existing chain, please refer to `compatibility <change_log/index.html>`_ chapter.
+    - It is similar to build a multi-group chain, interested can be referred to `here <manual/group_use_cases.html>`_ .
+    - This section uses pre-compiled static `fisco-bcos` binaries which tested on CentOS 7 and Ubuntu 16.04 64bit.
 ```
 
-### Installation environment
+### Prepare environment
 
-- Installation dependence
+- Install dependence
 
-`build_chain.sh` script depend on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, to executes `brew install openssl curl`.
+`build_chain.sh` script depends on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, to executes `brew install openssl curl`.
 
 ```bash
 sudo apt install -y openssl curl
@@ -31,12 +32,12 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-### To build a single-group 4-node consortium chain
+### Build a single-group 4-node consortium chain
 
-Execute the following command in the fisco directory to generate a single group 4-node FISCO chain. It is necessary to ensure that the `30300~30303, 20200~20203, 8545~8548` ports of machine are not occupied.
+Execute the following command in the fisco directory to generate a single group 4-node FISCO chain. It is necessary to ensure that the `30300~30303, 20200~20203, 8545~8548` ports of the machine are not occupied.
 
 
 ```bash
@@ -62,7 +63,10 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-==============================================================
+================================================================
+[INFO] Execute the following command to get FISCO-BCOS console
+ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+================================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
@@ -83,7 +87,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 bash nodes/127.0.0.1/start_all.sh
 ```
 
-Successful startup will output a response similar to the following, otherwise, please use `netstat -an | grep tcp` to check whether the machine's `30300~30303, 20200~20203, 8545~8548` ports are occupied.
+Success will output a response similar to the following, otherwise, please use `netstat -an | grep tcp` to check whether the machine's `30300~30303, 20200~20203, 8545~8548` ports are occupied.
 
 ```bash
 try to start node0
@@ -115,7 +119,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.
 
 ### Check log output
 
-- Execute the following command to view the number of nodes that node0 linked to
+- Execute the following command to view the number of nodes that node0 links to
 
 ```bash
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
@@ -143,24 +147,36 @@ info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
 ```
 
-## Configuration and operation of console
+## Using console
 
-Cpnsole links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status inquiry, calling and deploying contracts, and acquire the information soon. The instructions of console are introduced [here](manual/console.md).
+Console links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status query, call and deploy contracts. The instructions of console are introduced [here](manual/console.md).
 
+### Prepare environment
 
-### Prepare the dependent
+- Install Java
+
+In macOS, execute `brew cask install java` to install java
 
 ```bash
-# back to fisco directory
-$ cd ~/fisco
-# Install openjdk. In macOS, to execute 'brew cask install java' to install java
-$ sudo apt install -y default-jdk
-# get console
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-# Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
-$ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
-# Configure the console certificate
-$ cp nodes/127.0.0.1/sdk/* console/conf/
+sudo apt install -y default-jdk
+```
+
+- Get console
+
+```bash
+cd ~/fisco && bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+```
+
+- Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
+
+```bash
+cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+```
+
+- Configure the console certificate
+
+```bash
+cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 ```eval_rst
@@ -176,12 +192,14 @@ $ cp nodes/127.0.0.1/sdk/* console/conf/
 
 ### Start console
 
+- Start console
 ```bash
-# back to console folder
-$ cd ~/fisco/console
-# start console
-$ ./start.sh
-# if it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/applicationContext.xml are configured correctly.
+cd ~/fisco/console && bash start.sh
+```
+
+If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/applicationContext.xml are configured correctly.
+
+```bash
 =============================================================================================
 Welcome to FISCO BCOS console(1.0.3)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
@@ -198,7 +216,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-### Acquire information through console
+### Query blockchain status
 
 ```bash
 # acquire client ends version information
@@ -273,21 +291,27 @@ contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 # check the current block number
 [group:1]> getBlockNumber
 1
+
 # call get interface to acquire name variety, the contract address here is the returned address of deploy instruction
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
+
 # check the current block number, it remains the same, because get interface will not change the ledger status
 [group:1]> getBlockNumber
 1
+
 # call set to set name
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+
 # check the current block number again, if it increased, then it has generated block and the ledger status is changed
 [group:1]> getBlockNumber
 2
+
 # call get interface to acquire name variety, check if the setting is valid
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, FISCO BCOS
+
 # log out console
 [group:1]> quit
 ```

@@ -9,10 +9,12 @@
 ### 返回值          
 - `object` - 版本信息，字段如下：
     - `Build Time`: `string` - 编译时间            
-    - `Build Type`: `string` - 编译机器环境            
-    - `FISCO-BCOS Version`: `string` - FISCO BCOS版本            
+    - `Build Type`: `string` - 编译机器环境
+    - `Chain Id`: `string` - 链ID             
+    - `FISCO-BCOS Version`: `string` - 节点版本            
     - `Git Branch`: `string` - 版本分支            
-    - `Git Commit Hash`: `string` - 版本最新commit哈希            
+    - `Git Commit Hash`: `string` - 版本最新commit哈希  
+    - `Supported Version`: `string` - 节点支持的版本          
 
 - 示例          
 ```
@@ -133,45 +135,28 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 - `groupID`: `unsigned int` - 群组ID          
 ### 返回值          
 - `object` - 共识状态信息。
-- 1. 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](design/consensus/pbft.md)），字段如下：            
-   -  `accountType`: `unsigned int` - 账户类型            
-   -  `allowFutureBlocks`: `bool` - 允许未来块标志            
-   -  `cfgErr`: `bool` - 配置错误标志            
+- 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](design/consensus/pbft.md)），字段如下：            
+   -  `accountType`: `unsigned int` - 节点类型，0表示观察节点，1表示共识节点
+   -  `allowFutureBlocks`: `bool` - 允许未来块标志，当前为true
+   -  `cfgErr`: `bool` - 表明节点是否出错，true表示节点已经异常
    -  `connectedNodes`: `unsigned int` - 连接的节点数            
-   -  `consensusedBlockNumber`: `unsigned int` - 下一个共识的最新块高            
+   -  `consensusedBlockNumber`: `unsigned int` - 当前正在共识的区块高度
    -  `currentView`: `unsigned int` - 当前视图            
    -  `groupId`: `unsigned int` - 群组ID            
    -  `highestblockHash`: `string` - 最新块哈希            
    -  `highestblockNumber`: `unsigned int` - 最新区块高度            
-   -  `leaderFailed`: `bool` - leader失败标志            
+   -  `leaderFailed`: `bool` - leader失败标志，若为false，节点可能正在处理超时            
    -  `max_faulty_leader`: `unsigned int` - 最大容错节点数            
-   -  `sealer.index`: `string` - 节点序号为index的nodeId            
-   -  `node index`: `unsigned int` - 节点的序号            
+   -  `nodeNum`: `unsigned int` - 节点的数
+   -  `node_index`: `unsigned int` - 共识节点索引
    -  `nodeId`: `string` - 节点的ID            
-   -  `nodeNum`: `unsigned int` - 节点的数            
-   -  `omitEmptyBlock`: `bool` - 忽略空块标志位            
+   -  `omitEmptyBlock`: `bool` - 忽略空块标志位，为true            
    -  `protocolId`: `unsigned int` - 协议ID号            
-   -  `toView`: `unsigned int` - 目前到达的view值            
-   -  `prepareCache_blockHash`: `string` - prepareCache哈希            
-   -  `prepareCache_height`: `int`- prepareCache高度            
-   -  `prepareCache_idx`: `unsigned int` - prepareCache序号            
-   -  `prepareCache_view`: `unsigned int` - prepareCache视图            
-   -  `rawPrepareCache_blockHash`: `string` - rawPrepareCache哈希            
-   -  `rawPrepareCache_height`: `int`- rawPrepareCache高度            
-   -  `rawPrepareCache_idx`: `unsigned int` - rawPrepareCache序号            
-   -  `rawPrepareCache_view`: `unsigned int` - rawPrepareCache视图            
-   -  `committedPrepareCache_blockHash`: `string` - committedPrepareCache哈希            
-   -  `committedPrepareCache_height`: `int`- committedPrepareCache高度            
-   -  `committedPrepareCache_idx`: `unsigned int` - committedPrepareCache序号            
-   -  `committedPrepareCache_view`: `unsigned int` - committedPrepareCache视图            
-   -  `futureCache_blockHash`: `string` -futureCache哈希            
-   -  `futureCache_height`: `int`- futureCache高度            
-   -  `futureCache_idx`: `unsigned int` - futureCache序号            
-   -  `signCache_cachedSize`: `unsigned int` - signCache_cached大小            
-   -  `commitCache_cachedSize`: `unsigned int` - commitCache_cached大小            
-   -  `viewChangeCache_cachedSize`: `unsigned int` - viewChangeCache_cached大小            
+   -  `sealer.index`: `string` - 指定索引`index`对应的共识节点nodeID
+   -  `toView`: `unsigned int` - 目前到达的view值        
+   -  与本节点相连的所有共识节点nodeID和视图view信息
 
-- 2. 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](design/consensus/raft.md)），字段如下：     
+- 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](design/consensus/raft.md)），字段如下：     
     - `accountType`: `unsigned int` - 账户类型            
     - `allowFutureBlocks`: `bool` - 允许未来块标志            
     - `cfgErr`: `bool` - 配置错误标志                        
@@ -196,67 +181,53 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
 
 // Result
 {
-    "id": 1,
-    "jsonrpc": "2.0",
-    "result": [
-        {
-            "accountType":1,
-            "allowFutureBlocks":true,
-            "cfgErr":false,
-            "connectedNodes":3,
-            "consensusedBlockNumber":4,
-            "currentView":153,
-            "groupId":1,
-            "highestblockHash":"0x98e186095a88f7b1b4cd02e3c405f031950577626dab55b639e024b9f2f8788b",
-            "highestblockNumber":3,
-            "leaderFailed":false,
-            "max_faulty_leader":1,
-            "sealer.0":"29c34347a190c1ec0c4507c6eed6a5bcd4d7a8f9f54ef26da616e81185c0af11a8cea4eacb74cf6f61820292b24bc5d9e426af24beda06fbd71c217960c0dff0",
-            "sealer.1":"41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
-            "sealer.2":"87774114e4a496c68f2482b30d221fa2f7b5278876da72f3d0a75695b81e2591c1939fc0d3fadb15cc359c997bafc9ea6fc37345346acaf40b6042b5831c97e1",
-            "sealer.3":"d5b3a9782c6aca271c9642aea391415d8b258e3a6d92082e59cc5b813ca123745440792ae0b29f4962df568f8ad58b75fc7cea495684988e26803c9c5198f3f8",
-            "node index":1,
-            "nodeId":"41285429582cbfe6eed501806391d2825894b3696f801e945176c7eb2379a1ecf03b36b027d72f480e89d15bacd43462d87efd09fb0549e0897f850f9eca82ba",
-            "nodeNum":4,
-            "omitEmptyBlock":true,
-            "protocolId":264,
-            "toView":153
-        },
-        {
-            "prepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prepareCache_height":-1,
-            "prepareCache_idx":"65535",
-            "prepareCache_view":"9223372036854775807"
-        },
-        {
-            "rawPrepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-            "rawPrepareCache_height":-1,
-            "rawPrepareCache_idx":"65535",
-            "rawPrepareCache_view":"9223372036854775807"
-        },
-        {
-            "committedPrepareCache_blockHash":"0x2e4c63cfac7726691d1fe436ec05a7c5751dc4150d724822ff6c36a608bb39f2",
-            "committedPrepareCache_height":3,
-            "committedPrepareCache_idx":"2",
-            "committedPrepareCache_view":"60"
-        },
-        {
-            "futureCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-            "futureCache_height":-1,
-            "futureCache_idx":"65535",
-            "futureCache_view":"9223372036854775807"
-        },
-        {
-            "signCache_cachedSize":"0"
-        },
-        {
-            "commitCache_cachedSize":"0"
-        },
-        {
-            "viewChangeCache_cachedSize":"0"
-        }
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "accountType": 1,
+      "allowFutureBlocks": true,
+      "cfgErr": false,
+      "connectedNodes": 3,
+      "consensusedBlockNumber": 38207,
+      "currentView": 54477,
+      "groupId": 1,
+      "highestblockHash": "0x19a16e8833e671aa11431de589c866a6442ca6c8548ba40a44f50889cd785069",
+      "highestblockNumber": 38206,
+      "leaderFailed": false,
+      "max_faulty_leader": 1,
+      "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "nodeNum": 4,
+      "node_index": 3,
+      "omitEmptyBlock": true,
+      "protocolId": 65544,
+      "sealer.0": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+      "sealer.1": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+      "sealer.2": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+      "sealer.3": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "toView": 54477
+    },
+    [
+      {
+        "nodeId": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+        "view": 54474
+      },
+      {
+        "nodeId": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+        "view": 54475
+      },
+      {
+        "nodeId": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+        "view": 54476
+      },
+      {
+        "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+        "view": 54477
+      }
     ]
+  ]
 }
+
 
 // Request Raft
 curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1],"id":1}' http://127.0.0.1:8545 |jq
@@ -369,7 +340,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
-格式化JSON：
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -606,7 +576,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
     - `hash`: `string` - 交易哈希               
     - `input`: `string` - 交易的输入      
     - `nonce`: `string` - 交易的nonce值     
-    - `to`: `string` - 接收者的地址，创建合约交易的该值为null         
+    - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`         
     - `transactionIndex`: `string` - 交易的序号
     - `value`: `string` - 转移的值           
 - 示例          
@@ -660,7 +630,6 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:8545 |jq
-}
 ```
 Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 
@@ -673,11 +642,13 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 - `object`: - 交易信息，其字段如下：  
     - `blockHash`: `string` - 包含该交易的区块哈希      
     - `blockNumber`: `string` - 包含该交易的区块高度 
-    - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
+    - `contractAddress`: `string` - 合约地址，如果创建合约交易，则为合约部署地址，如果是调用合约，则为"0x0000000000000000000000000000000000000000"     
     - `from`: `string` - 发送者的地址                
-    - `gasUsed`: `string` - 交易消耗的gas     
+    - `gasUsed`: `string` - 交易消耗的gas
+    - `input`: `string` - 交易的输入     
     - `logs`: `array` - 交易产生的log               
     - `logsBloom`: `string` - log的布隆过滤器值      
+    - `output`: `string` - 交易的输出     
     - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)    
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希          
@@ -686,23 +657,25 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 - 示例          
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":[1,"0x708b5781b62166bd86e543217be6cd954fd815fd192b9a124ee9327580df8f3f"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
-    "id": 1,
-    "jsonrpc": "2.0",
+    "id": 1, 
+    "jsonrpc": "2.0", 
     "result": {
-        "blockHash": "0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa",
-        "blockNumber": "0x1",
-        "contractAddress": "0x0000000000000000000000000000000000000000",
-        "from": "0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102",
-        "gasUsed": "0x64d8",
-        "logs": [ ],
-        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-        "status": "0x0",
-        "to": "0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d",
-        "transactionHash": "0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f",
+        "blockHash": "0x977efec48c248ea4be87016446b40d7785d7b71b7d4e3aa0b103b9cf0f5fe19e", 
+        "blockNumber": "0xa", 
+        "contractAddress": "0x0000000000000000000000000000000000000000", 
+        "from": "0xcdcce60801c0a2e6bb534322c32ae528b9dec8d2", 
+        "gasUsed": "0x1fb8d", 
+        "input": "0xb602109a000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000000203078313030303030303030303030303030303030303030303030303030303030000000000000000000000000000000000000000000000000000000000000000832303139303733300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002616100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000026262000000000000000000000000000000000000000000000000000000000000", 
+        "logs": [ ], 
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", 
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000000", 
+        "status": "0x0", 
+        "to": "0x15538acd403ac1b2ff09083c70d04856b8c0bdfd", 
+        "transactionHash": "0x708b5781b62166bd86e543217be6cd954fd815fd192b9a124ee9327580df8f3f", 
         "transactionIndex": "0x0"
     }
 }
@@ -713,9 +686,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
 - `object`: - 带打包的交易信息，其字段如下：
-    - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块哈希  
-    - `contractAddress`: `string` - 合约地址，如果创建合约，则为"0x0000000000000000000000000000000000000000"     
     - `from`: `string` - 发送者的地址                     
     - `gas`: `string` - 发送者提供的gas     
     - `gasPrice`: `string` - 发送者提供的gas的价格               
@@ -793,8 +763,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374
 - `groupID`: `unsigned int` - 群组ID           
 ### 返回值          
 - `object`: - 当前交易总数和区块高度信息，其字段如下：
-    - `txSum`: `string` - 交易总数      
     - `blockNumber`: `string` - 区块高度          
+    - `failedTxSum`: `string` - 失败的交易总数      
+    - `txSum`: `string` - 交易总数      
 - 示例          
 ```
 // Request
@@ -841,7 +812,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
     - `data`: `string` - (可选)编码的参数，编码规范参考[Ethereum Contract ABI](https://solidity.readthedocs.io/en/develop/abi-spec.html) 
 
 ### 返回值          
-- `string` - 执行的结果           
+- `object`: - 执行的结果
+    - `currentBlockNumber`: `string` - 当前区块高度  
+    - `output`: `string` - 请求结果           
+    - `status`: `string` - 请求状态（与交易状态码一致）           
 - 示例          
 ```
 // Request
@@ -849,11 +823,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc
 
 // Result
 {
-    "id": 1,
-    "jsonrpc": "2.0",
+    "id": 1, 
+    "jsonrpc": "2.0", 
     "result": {
-        "currentBlockNumber": "0x1",
-        "output": "0x"
+        "currentBlockNumber": "0xb", 
+        "output": "0x", 
+        "status": "0x0"
     }
 }
 ```

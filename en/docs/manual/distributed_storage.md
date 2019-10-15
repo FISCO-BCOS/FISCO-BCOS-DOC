@@ -34,7 +34,7 @@ mysql> set password for root@localhost = password('123456');
 
 ## Node directly connected to MySQL
 
-FISCO-BCOS in version 2.0.0-rc3 supports nodes directly connected to MySQL through connection pool. Compared to the proxy access MySQL mode, this configuration is simple. No need to manually create a database. Please refer to the configuration method:
+FISCO BCOS in version 2.0.0-rc3 supports nodes directly connected to MySQL through connection pool. Compared to the proxy access MySQL mode, this configuration is simple. No need to manually create a database. Please refer to the configuration method:
 
 ### Logical architecture diagram
 
@@ -52,7 +52,7 @@ Before using distributed storage, you need to complete the establishment of the 
 #### Prepare dependence
 ```bash
 mkdir -p ~/fisco_direct && cd ~/fisco_direct
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### Generate configuration file
 ```bash
@@ -64,7 +64,7 @@ cat > ipconf << EOF
 EOF
 
 # view configuration file
-cat ipconf 
+cat ipconf
 127.0.0.1:1 agencyA 1
 127.0.0.1:1 agencyB 1,2
 127.0.0.1:1 agencyC 2
@@ -285,7 +285,7 @@ show tables;
 +----------------------------------------------------------+
 ```
 
-call the create interface in the console.
+Inserting a record to the database
 ```bash
 #insert data into the table
 call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
@@ -340,7 +340,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - get `build_chain` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\." | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### Generate configuration file
@@ -354,7 +354,7 @@ cat > ipconf << EOF
 EOF
 
 # view configuration file
-cat ipconf 
+cat ipconf
 127.0.0.1:1 agencyA 1
 127.0.0.1:1 agencyB 1,2
 127.0.0.1:1 agencyC 2
@@ -431,8 +431,8 @@ Modify the contents of the [storage] section in the ~/fisco/nodes/127.0.0.1/node
 ### Prepare amdb proxy
 #### Get source code
 ```bash
-cd ~/fisco; 
-git clone https://github.com/FISCO-BCOS/AMDB.git
+cd ~/fisco;
+git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 ```
 
 #### Compile source code
@@ -648,7 +648,7 @@ modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 		<!-- communication topic configuration of the node -->
 		<property name="topics">
 			<list>
@@ -697,7 +697,7 @@ modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 	<!-- communication topic configuration of the node -->
 	<property name="topics">
 			<list>

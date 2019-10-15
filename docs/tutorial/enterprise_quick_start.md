@@ -2,9 +2,9 @@
 
 FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了保证机构的密钥安全，企业级部署工具提供了一种机构间相互合作部署联盟链方式。
 
-本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。更多参数选项说明请参考[这里](../enterprise_tools/operation.md)
+本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。更多参数选项说明请参考[这里](../enterprise_tools/operation.md)。
 
-本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)
+本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)。
 
 ## 下载安装
 
@@ -19,7 +19,7 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 此操作要求用户具有sudo权限。
 
 ```bash
-cd generator && bash ./scripts/install.sh
+cd ~/generator && bash ./scripts/install.sh
 ```
 
 检查是否安装成功，若成功，输出 usage: generator xxx
@@ -28,7 +28,7 @@ cd generator && bash ./scripts/install.sh
 ./generator -h
 ```
 
-**拉取节点二进制**
+**获取节点二进制**
 
 拉取最新fisco-bcos二进制文件到meta中
 
@@ -65,7 +65,7 @@ cd generator && bash ./scripts/install.sh
 | 机构A | 节点0 | 群组1、2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
 |     | 节点1 | 群组1、2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
 | 机构B | 节点2 | 群组1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | 节点3 | 群组1   | 27.0.0.1:30303  | 127.0.0.1:8548/:20203 |
+|     | 节点3 | 群组1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
 | 机构C | 节点4 | 群组2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204 |
 |     | 节点5 | 群组2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205 |
 
@@ -186,8 +186,8 @@ ls ./dir_chain_ca
 
 ```bash
 # 上述命令解释
-# 从左至右分别为链证书、链私钥、证书配置文件
-ca.crt  ca.key   cert.cnf
+# 从左至右分别为链证书、链私钥
+ca.crt  ca.key
 ```
 
 ## 机构A、B构建群组1
@@ -216,14 +216,14 @@ ls dir_agency_ca/agencyA/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书签发机构证书中间文件、链证书、证书配置文件
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书
+agency.crt  agency.key  ca.crt
 ```
 
 发送链证书、机构证书、机构私钥至机构A，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyA/agency.crt ./dir_agency_ca/agencyA/agency.key ~/generator-A/meta/
+cp ./dir_agency_ca/agencyA/* ~/generator-A/meta/
 ```
 
 ### 初始化机构B
@@ -243,7 +243,7 @@ cd ~/generator
 发送链证书、机构证书、机构私钥至机构B，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyB/agency.crt ./dir_agency_ca/agencyB/agency.key ~/generator-B/meta/
+cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
 ```
 
 ```eval_rst
@@ -589,14 +589,14 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书签发机构证书中间文件、链证书、证书配置文件
-agency.crt    agency.key    ca-agency.crt ca.crt    cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书
+agency.crt  agency.key  ca.crt
 ```
 
-发送链证书、机构证书、机构私钥至机构A，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
+发送链证书、机构证书、机构私钥至机构C，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 
 ```bash
-cp ./dir_chain_ca/ca.crt ./dir_agency_ca/agencyC/agency.crt ./dir_agency_ca/agencyC/agency.key ~/generator-C/meta/
+cp ./dir_agency_ca/agencyC/* ~/generator-C/meta/
 ```
 
 ## 机构A、C构建群组2
@@ -879,7 +879,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需从启节点。
+当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
 
 重启机构C节点:
 
@@ -897,8 +897,10 @@ bash ~/generator-C/nodeC/start_all.sh
 
 注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，用户可以直接启动控制台，启动前请确保已经安装java
 
+国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
+
 ```bash
-./generator --download_console ./
+./generator --download_console ./ --cdn
 ```
 
 ### 查看机构C节点4信息

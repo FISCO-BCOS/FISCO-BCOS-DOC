@@ -1,29 +1,30 @@
-# 区块链浏览器服务说明
+# Build server of Blockchain explorer 
 
-# 目录
-> * [功能说明](#chapter-1)
-> * [前提条件](#chapter-2)
-> * [部署说明](#chapter-3)
-> * [问题排查](#chapter-4)
-> * [附录](#chapter-5)
+# Content
+> * [Functions](#chapter-1)
+> * [Prerequisites](#chapter-2)
+> * [Deployment](#chapter-3)
+> * [Troubleshooting](#chapter-4)
+> * [Appendix](#chapter-5)
 
-# 1. <a id="chapter-1"></a>功能说明
+# 1. <a id="chapter-1"></a>Functions
 
-本工程是区块链浏览器的后端服务，功能是解析节点数据储存数据库，向前端提供数据接口，页面展示。
+This project aims to build the back-end server of the Blockchain explorer. Its workflow includes  extracting the node's local blockchain data into a database, providinfg database access to the front-end webpage.
 
-# 2. <a id="chapter-2"></a>前提条件
+# 2. <a id="chapter-2"></a>Prerequisites
 
-| 环境     | 版本              |
+| Environment     | Version              |
 | ------ | --------------- |
-| Java   | jdk1.8.0_121或以上版本    |
-| gradle | gradle-5.0或以上版本 |
-| 数据库    | mysql-5.6或以上版本  |
-备注：安装说明请参看附录。
+| Java   | jdk1.8.0_121 or above version    |
+| gradle | gradle-5.0 or above version |
+| database    | mysql-5.6 or above version  |
+Note: the installation details is attached in Additional.
 
-# 3. <a id="chapter-3"></a>部署说明
+# 3. <a id="chapter-3"></a>Deployment
 
-## 3.1 拉取代码
-执行命令：
+## 3.1 Pull code
+Execute command:
+
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
 ```
@@ -32,102 +33,112 @@ git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
 cd fisco-bcos-browser
 ```
 
-## 3.2 编译代码
+## 3.2 Compile code
 
-（1）进入目录：
+Enter the code directory:
+
 ```shell
 cd server/fisco-bcos-browser
 ```
 
-（2）执行构建命令：
+Then, build code:
+
 ```shell
 gradle build
 ```
-构建完成后，会在目录中生成已编译的代码目录dist。
 
-## 3.3 修改配置
+It will create a target directory `dist` after the building.
 
-（1）dist目录中提供了一份配置模板dist/conf_template，**供拷贝参考**：
+## 3.3 Modify config
+
+The directory `dist` provides a config template on `dist/conf_template`(**only for reference**)：
 
 ```shell
- 需要根据配置模板生成一份实际配置dist/conf。初次安装可直接拷贝。
- 例如：cp dist/conf_template dist/conf -r
+# create a config file on dist/conf  and set the parameters according to the template, or copy and rename the template if it's the initial installation.
+ Example：cp dist/conf_template dist/conf -r
 ```
-（2）进入目录：
+
+Enter directory:
+
 ```shell
 cd dist/conf
 ```
 
-（3）修改服务配置（没变化可以不修改）：
+Modify service config (except for the unchanged parts):
 
-数据库服务器，和数据库需要提前准备，创建方法可以参照附录。
+Database server  should be prepared in advance. The build method can be referred  in Appendix.
+
 ```shell
-修改当前服务端口：sed -i "s/8088/${your_server_port}/g" application.yml
-修改数据库IP：sed -i "s/127.0.0.1/${your_db_ip}/g" application.yml
-修改数据库用户名：sed -i "s/root/${your_db_account}/g" application.yml
-修改数据库密码：sed -i "s/123456/${your_db_password}/g" application.yml
-修改数据库名称：sed -i "s/testDB/${your_db_name}/g" application.yml
+modify current server port: sed -i "s/5101/${your_server_port}/g" application.yml
+modify database IP: sed -i "s/127.0.0.1/${your_db_ip}/g" application.yml
+modify database user name: sed -i "s/dbUsername/${your_db_account}/g" application.yml
+modify database password: sed -i "s/dbPassword/${your_db_password}/g" application.yml
+modify database name: sed -i "s/db_browser/${your_db_name}/g" application.yml
 
-例子（将数据库IP由127.0.0.1改为0.0.0.0）：sed -i "s/127.0.0.1/0.0.0.0/g" application.yml
+Example (change the database IP from 127.0.0.1 to 0.0.0.0): sed -i "s/127.0.0.1/0.0.0.0/g" application.yml
 ```
 
-**温馨提示：**
+**Note:**
 
-1. 实际生产中建议将编译后的安装包（dist目录）放到服务部署目录。例如/data/app/fisco-bcos-browser
+In real production, we suggest to place the compiled install package (i.e. the  directory `dist`) to the service deployment directory. For example: /data/app/fisco-bcos-browser
 
-## 3.4 服务启停
+## 3.4 Service start/stop
 
-进入到已编译的代码根目录：
-```shell
-cd dist
-```
-```shell
-启动：sh start.sh
-停止：sh stop.sh
-检查：sh status.sh
-```
+Go to the compiled target directory:
 
-## 3.5 查看日志
-
-进入到已编译的代码根目录：
 ```shell
 cd dist
 ```
 
-查看
+```shell
+start：sh start.sh
+stop：sh stop.sh
+review：sh status.sh
+```
+
+## 3.5 View log
+
+Enter the compiled target directory:
+```shell
+cd dist
+```
+
+Execute the command:
+
 ```shell
 tail -f log/fisco-bcos-browser.log
 ```
 
-# 4. <a id="chapter-4"></a>问题排查
+# 4. <a id="chapter-4"></a>Troubleshooting
 
-## 4.1 启停失败
-如果脚本执行出现问题，尝试以下操作：
+## 4.1 Start/Stop fail
+
+If this problem happens in the above bash script, please try:
+
 ```shell
 chmod +x *.sh
 ```
-## 4.2 gradle build失败
 
-```shell
-gradle build
+## 4.2 gradle build fail
+
+If the following exception occures during the building process. **Please check the gradle version and make sure it is at v 5.0 or above.**
 ```
-执行后，出现下面错误。**请检查gradle版本，需要使用5.0以上版本。**
-`Could not find method annotationProcessor() for arguments [org.projectlombok:lombok:1.18.2] on object of type org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler.`
+Could not find method annotationProcessor() for arguments [org.projectlombok:lombok:1.18.2] on object of type org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler.
+```
 
-# 5. <a id="chapter-5"></a>附录
+# 5. <a id="chapter-5"></a>Appendix
 
-## 5.1 Java环境部署
+## 5.1 Java environment deployment
+Here are simple steps for quick start. For detailed description, please consult [the official website](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 
-此处给出简单步骤，供快速查阅。更详细的步骤，请参考[官网](http://www.oracle.com/technetwork/java/javase/downloads/index.html)。
-
-（1）从[官网](http://www.oracle.com/technetwork/java/javase/downloads/index.html)下载对应版本的java安装包，并解压到相应目录
+Download Java installation package from [the official website](http://www.oracle.com/technetwork/java/javase/downloads/index.html) corresponding to the specific version introduced before, and decompress to the relevant directory:
 
 ```shell
 mkdir /software
 tar -zxvf jdkXXX.tar.gz /software/
 ```
 
-（2）配置环境变量
+Configure environment variable:
 
 ```shell
 export JAVA_HOME=/software/jdk1.8.0_121
@@ -135,115 +146,126 @@ export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ```
 
-## 5.2 gradle环境部署
+## 5.2 gradle enrironment deployment
 
-此处给出简单步骤，供快速查阅。更详细的步骤，请参考[官网](http://www.gradle.org/downloads)。
+Here are simple steps for quick start. For detailed description, please consult [the official website](http://www.gradle.org/downloads).
 
-（1）从[官网](http://www.gradle.org/downloads)下载对应5.0以上版本的gradle安装包，并解压到相应目录
+Download the 5.0 or above version of gradle installation package from [the website](http://www.gradle.org/downloads) and decompress to the relative directory.
 
 ```shell
 mkdir /software/
 unzip -d /software/ gradle-XXX.zip
 ```
 
-（2）配置环境变量
+Configure environment variable
 
 ```shell
 export GRADLE_HOME=/software/gradle-XXX
 export PATH=$GRADLE_HOME/bin:$PATH
 ```
 
-## 5.3 数据库部署
+## 5.3 Set-up MySQL
 
-此处以Centos/Fedora为例。
+Here we take Centos/Fedora as an example.
 
-（1）切换到root
+a. Transfer to the  root user
 
 ```shell
 sudo -s
 ```
 
-（2）安装mysql
+b. Install MySQL
 
 ```shell
 yum install mysql*
-#某些版本的linux，需要安装mariadb，mariadb是mysql的一个分支
+# some versions of Linux needs to install mariadb which is a branch of mysql
 yum install mariadb*
 ```
 
-（3）启动mysql
+c. Start MySQL service
 
 ```shell
 service mysqld start
-#若安装了mariadb，则使用下面的命令启动
+#if mariadb is installed, start it with the following command
 systemctl start mariadb.service
 ```
 
-（4）初始化数据库用户
+d. Initialize database user
 
-初次登录
+Access the database with the root user:
+
 ```shell
 mysql -u root
 ```
 
-给root设置密码和授权远程访问
+Set password for the root user and grant the access privilege to remote login
+
 ```sql
 mysql > SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123456');
 mysql > GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
 ```
 
-**安全温馨提示：**
+**Notes:**
 
-1. 例子中给出的数据库密码（123456）仅为样例，强烈建议设置成复杂密码
-2. 例子中的远程授权设置会使数据库在所有网络上都可以访问，请按具体的网络拓扑和权限控制情况，设置网络和权限帐号
+1. The database password (123456) provided here is only for example. We strongly recommend you to set more complexer password.
+2. The setting of remote access in the example will make the database accessible for the outside network . Please limit the network accessibility according to the specific network topology and permissioned accounts.
 
-授权test用户本地访问数据库
+Create test user and a database `test`, grant the database privilege to the test user:
+
 ```sql
-mysql > create user 'test'@'localhost' identified by '123456';
+mysql > CREATE user 'test'@'localhost' identified by '123456';
+mysql > CREATE DATABASE test;
+mysql > GRANT ALL PRIVILEGES ON test.* TO 'test'@'localhost' IDENTIFIED BY '123456' WITH GRANT OPTION;
 ```
 
-（5）测试连接
+e. Test the connection
 
-另开一个ssh测试本地用户test是否可以登录数据库
+Open another terminal and check the database connection with the test user :
 
 ```shell
 mysql -utest -p123456 -h 127.0.0.1 -P 3306
 ```
 
-登陆成功后，执行以下sql语句，若出现错误，则用户授权不成功
+If login successfully, execute the following SQL commands to check the privilege granting.
 
 ```sql
-mysql > show databases;
-mysql > use test;
+mysql > SHOW DATABASES;
+mysql > USE test;
 ```
 
-（6）创建数据库
+f. Create database
 
-登录数据库
+Login database with root user
 
 ```shell
-mysql -utest -p123456 -h 127.0.0.1 -P 3306
+mysql -uroot -p
 ```
 
-创建数据库
+Create database and grant the privilege to test user
 
 ```sql
-mysql > create database testDB;
+mysql > CREATE DATABASE db_browser;
+mysql > GRANT ALL PRIVILEGES ON db_browser.* TO 'test'@'localhost' IDENTIFIED BY '123456' WITH GRANT OPTION;
 ```
 
-### 5.3.1 常见错误 
-#### 5.3.1.1 腾讯云centos mysql安装完成后，登陆报错：Access denied for user 'root'@'localhost'
+### 5.3.1 Common issues 
 
-1. 编辑 /etc/my.cnf ，在[mysqld] 部分最后添加一行
+**After installing MySQL on centos of Tencent Cloud , it reports the exception: Access denied for user 'root'@'localhost'**
+
+1. Edit /etc/my.cnf, add the follow  in the bottom of [mysqld]
+
 ```
    skip-grant-tables 
 ```
-2. 保存后重启mysql
+
+2. Save and restart MySQL
+
 ```shell
    service mysqld restart 
 ```
-3. 输入以下命令，回车后输入密码再回车登录Mysql
+
+3. Input the following command, press enter, input password and press enter again to login MySQL
+
 ```shell
    mysql -uroot -p mysql  
 ```
-

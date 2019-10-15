@@ -95,9 +95,11 @@ The directory structure is as follows:
     |-- abi # to compile the generated abi directory and to store the abi file compiled by solidity contract
     |   |-- HelloWorld.abi
     |   |-- Table.abi
+    |   |-- TableTest.abi
     |-- bin # to compile the generated bin directory and to store the bin file compiled by solidity contract
     |   |-- HelloWorld.bin
     |   |-- Table.bin
+    |   |-- TableTest.bin
     |-- java  # to store compiled package path and Java contract file
     |   |-- org
     |       |-- com
@@ -225,13 +227,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 #### To view the current console version:
 ```bash
 ./start.sh --version
-console version: 1.0.2
+console version: 1.0.3
 ```
 #### Account using method
 
 ##### Console loads private key
 
-The console provides the account generation script get_account.sh (for the script tutorial, please refer to [Account Management Document](../tutorial/account.md). The generated account file is in the accounts directory, and the account file loaded by console must be placed in the directory.
+The console provides the account generation script get_account.sh (for the script tutorial, please refer to [Account Management Document](../manual/account.md). The generated account file is in the accounts directory, and the account file loaded by console must be placed in the directory.
 
 
 The console startup methods are as follows:
@@ -278,6 +280,7 @@ call                                     Call a contract by a function and param
 callByCNS                                Call a contract by a function and parameters by CNS.
 deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
+desc                                     Description table information.
 exit                                     Quit console.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
@@ -327,6 +330,11 @@ revokeSysConfigManager                   Revoke permission for system configurat
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
 switch(s)                                Switch to a specific group by group ID.
+[create sql]                             Create table by sql.
+[delete sql]                             Remove records by sql.
+[insert sql]                             Insert records by sql.
+[select sql]                             Select records by sql.
+[update sql]                             Update records by sql.
 -------------------------------------------------------------------------------------
 ```
 **Note: **                                       
@@ -407,69 +415,52 @@ To run getConsensusStatus to view the consensus status.
 [group:1]> getConsensusStatus
 [
     {
-        "accountType":1,
-        "allowFutureBlocks":true,
-        "cfgErr":false,
-        "connectedNodes":3,
-        "consensusedBlockNumber":6,
-        "currentView":40,
-        "groupId":1,
-        "highestblockHash":"0xb99703130e24702d3b580111b0cf4e39ff60ac530561dd9eb0678d03d7acce1d",
-        "highestblockNumber":5,
-        "leaderFailed":false,
-        "max_faulty_leader":1,
-        "node index":3,
-        "nodeId":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "nodeNum":4,
-        "omitEmptyBlock":true,
-        "protocolId":264,
-        "sealer.0":"0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-        "sealer.1":"2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-        "sealer.2":"cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-        "sealer.3":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "toView":40
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "accountType": 1,
+      "allowFutureBlocks": true,
+      "cfgErr": false,
+      "connectedNodes": 3,
+      "consensusedBlockNumber": 38207,
+      "currentView": 54477,
+      "groupId": 1,
+      "highestblockHash": "0x19a16e8833e671aa11431de589c866a6442ca6c8548ba40a44f50889cd785069",
+      "highestblockNumber": 38206,
+      "leaderFailed": false,
+      "max_faulty_leader": 1,
+      "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "nodeNum": 4,
+      "node_index": 3,
+      "omitEmptyBlock": true,
+      "protocolId": 65544,
+      "sealer.0": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+      "sealer.1": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+      "sealer.2": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+      "sealer.3": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "toView": 54477
     },
     [
-        {
-            "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278":39
-        },
-        {
-            "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108":36
-        },
-        {
-            "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd":37
-        },
-        {
-            "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec":40
-        }
-    ],
-    {
-        "prepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "prepareCache_height":-1,
-        "prepareCache_idx":"65535",
-        "prepareCache_view":"9223372036854775807"
-    },
-    {
-        "rawPrepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "rawPrepareCache_height":-1,
-        "rawPrepareCache_idx":"65535",
-        "rawPrepareCache_view":"9223372036854775807"
-    },
-    {
-        "committedPrepareCache_blockHash":"0xbbf80db21fa393143280e01b4b711eaddd54103e95f370b389af5c0504b1eea5",
-        "committedPrepareCache_height":5,
-        "committedPrepareCache_idx":"1",
-        "committedPrepareCache_view":"17"
-    },
-    {
-        "signCache_cachedSize":"0"
-    },
-    {
-        "commitCache_cachedSize":"0"
-    },
-    {
-        "viewChangeCache_cachedSize":"0"
-    }
+      {
+        "nodeId": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+        "view": 54474
+      },
+      {
+        "nodeId": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+        "view": 54475
+      },
+      {
+        "nodeId": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+        "view": 54476
+      },
+      {
+        "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+        "view": 54477
+      }
+    ]
+  ]
+}
 ]
 ```
 
@@ -903,7 +894,8 @@ To run getTotalTransactionCount to inquire the current block number and the tota
 [group:1]> getTotalTransactionCount
 {
 	"blockNumber":1,
-	"txSum":1
+	"txSum":1,
+	"failedTxSum":0
 }
 ```
 ### **deploy**
@@ -961,15 +953,15 @@ Parameter:
 ```text
 ```text
 # To call the get interface of HelloWorld to get the name string
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, World!
 
 # To call the set interface of HelloWorld to set the name string
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 set "Hello, FISCO BCOS"
+transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1e70
 
 # To call the get interface of HelloWorld to get the name string for checking whether the settings take effect
-[group:1]> call HelloWorld.sol 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
+[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
 
 # Call the create interface of TableTest to create the user table t_test. The create interface calls the createResult event, and the event log will output.

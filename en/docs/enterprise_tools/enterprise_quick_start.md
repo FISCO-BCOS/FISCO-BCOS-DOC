@@ -1,70 +1,132 @@
-# 一键部署
+# Tutorial of one_click_generator.sh
 
-本章主要以部署**2机构1群组4节点**的组网模式，为用户讲解单机构一键部署企业级部署工具的使用方法。
+The `one_click_generator.sh` script is a script that deploys a federated chain with one click based on the node configuration filled out by the user. The script will generate the corresponding node under the folder according to the `node_deployment.ini` configured under the user-specified folder.
 
-本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
+This chapter mainly uses the networking mode of deploying **3 organizations 2 groups 6 nodes** to explain the use of enterprise-level deployment tools for single-button one-button deployment.
 
-## 下载安装
+This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](../tutorial/enterprise_quick_start.md).
 
-**下载**
 
-```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git && cd ./generator
+```eval_rst	
+.. important::	
+      When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can clean the meta folder. 
 ```
 
-## 示例分析
+## Download and install
 
-在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2机构1群组4节点的组网模式，每个节点的ip，端口号分别为：
+**download**
 
-| 机构  | 节点  | 所属群组  | P2P地址           | RPC/channel监听地址       |
-| --- | --- | ----- | --------------- | --------------------- |
-| 机构A | 节点0 | 群组1 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
-|     | 节点1 | 群组1 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
-| 机构B | 节点2 | 群组1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | 节点3 | 群组1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
+```bash
+cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+```
+
+**Installation**
+
+This action requires the user to have sudo privileges.
+
+```bash
+cd ~/generator && bash ./scripts/install.sh
+```
+
+Check if the installation is successful. If successful, output usage: generator xxx
+
+```bash
+./generator -h
+```
+
+**Get node binary**
+
+Pull the latest fisco-bcos binary to the meta
+
+```bash
+./generator --download_fisco ./meta
+```
+
+**Check the binary version**
+
+If successful, output FISCO-BCOS Version : x.x.x-x
+
+```bash
+./meta/fisco-bcos -v
+```
+
+**PS**: [source compile](../manual/get_executable.md) Node binary user, you only need to replace the binary in the `meta` folder with the compiled binary.
+
+## Typical example
+
+This section demonstrates how to use the one-click deployment function of the enterprise-level deployment tool to build a blockchain.
+
+### Node Network Topology
+
+A networking model of a 6-node 3-institution 2 group as shown. agency B and agency C are located in Group 1 and Group 2, respectively. agency A belongs to both Group 1 and Group 2.
+
+![](../../images/enterprise/one_click_step_3.png)
+
+### Machine Environment
+
+The IP of each node, the port number is as follows:
+
+| agency   | Node   | Group      | P2P Address     | RPC/channel Listening Address |
+| -------- | ------ | ---------- | --------------- | ----------------------------- |
+| agency A | Node 0 | Group 1, 2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200         |
+|          | Node 1 | Group 1, 2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201         |
+|          | Node 4 | Group 1, 2 | 127.0.0.1:30304 | 127.0.0.1:8549/:20204         |
+| agency B | Node 2 | Group 1    | 127.0.0.1:30302 | 127.0.0.1:8547/:20202         |
+|          | Node 3 | Group 1    | 127.0.0.1:30303 | 127.0.0.1:8548/:20203         |
+| agency C | Node 5 | Group 1, 2 | 127.0.0.1:30305 | 127.0.0.1:8550/:20205         |
 
 ```eval_rst
 .. important::
 
-    针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
+   For the VPS in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
 ```
 
-## 使用说明
+\##Generate group 1 node
 
-使用前用户需准备如图如`one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](../enterprise_tools/config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
+First, complete the operation of group A and B to set up group 1, as shown in the figure:
 
-查看一键部署模板文件夹：
+![](../../images/enterprise/one_click_step_1.png)
+
+Before use, the user needs to prepare a folder such as `tmp_one_click,` which has a directory of different organizations under the folder. Each agency directory needs to have a corresponding configuration file [```node_deployment.ini```]. ./enterprise_tools/config.md#node-deployment-ini). Before use, you need to ensure that the generator's meta folder has not been used.
+
+Switch to ~/ directory
 
 ```bash
-ls ./one_click
+cd ~/generator
+```
+
+View the one-click deployment template folder:
+
+```bash
+ls ./tmp_one_click
 ```
 
 ```bash
-# 参数解释
-# 如需多个机构，需要手动创建该文件夹
-one_click # 用户指定进行一键部署操作的文件夹
-├── agencyA # 机构A目录，命令执行后会在该目录下生成机构A的节点及相关文件
-│   └── node_deployment.ini # 机构A节点配置文件，一键部署命令会根据该文件生成相应节点
-└── agencyB # 机构B目录，命令执行后会在该目录下生成机构B的节点及相关文件
-    └── node_deployment.ini # 机构B节点配置文件，一键部署命令会根据该文件生成相应节点
+#Parameter explanation
+# For multiple organizations, you need to create this folder manually.
+Tmp_one_click # user specifies the folder for a one-click deployment operation
+├── agencyA #agencyA directory, after the command is executed, the node of the agency A and related files will be generated in the list.
+│ └── node_deployment.ini # Institution A node configuration file, one-click deployment command will create the corresponding node according to the data
+└── agencyB #agencyB directory, after the command is executed, the node of the agency B and related files will be generated in the list.
+    └── node_deployment.ini # Institution B node configuration file, one-click deployment command will generate the corresponding node according to the data
 ```
 
-## 机构填写节点信息
+### Institution to fill in node information
 
-教程中将配置文件放置与one_click文件夹下的agencyA, agencyB下
+The configuration file is placed in the tutorial with agencyA under the tmp_one_click folder, under agencyB
 
 ```bash
-cat > ./one_click/agencyAnode_deployment.ini << EOF
+cat > ./tmp_one_click/agencyA/node_deployment.ini << EOF
 [group]
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -83,17 +145,17 @@ EOF
 ```
 
 ```bash
-cat > ./one_click/agencyB/node_deployment.ini << EOF
+cat > ./tmp_one_click/agencyB/node_deployment.ini << EOF
 [group]
 group_id=1
 
 [node0]
-; host ip for the communication among peers.
-; Please use your ssh login ip.
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
 p2p_ip=127.0.0.1
-; listen ip for the communication between sdk clients.
-; This ip is the same as p2p_ip for physical host.
-; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
 ; You can check accessible addresses of your network card.
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
@@ -111,128 +173,461 @@ jsonrpc_listen_port=8548
 EOF
 ```
 
-## 搭建节点
+### Generate node
 
 ```bash
-bash ./one_click_generator.sh ./one_click
+bash ./one_click_generator.sh -b ./tmp_one_click
 ```
 
-执行完毕后，./one_click文件夹结构如下：
+After the execution is completed, the ./tmp_one_click folder structure is as follows:
 
-查看执行后的一键部署模板文件夹：
-
-```bash
-ls ./one_click
-```
+View the one-click deployment template folder after execution:
 
 ```bash
-├── agencyA # A机构文件夹
-│   ├── agency_cert # A机构证书及私钥
-│   ├── generator-agency # 自动代替A机构进行操作的generator文件夹
-│   ├── node # A机构生成的节点，多机部署时推送至对应服务器即可
-│   ├── node_deployment.ini # A机构的节点配置信息
-│   └── sdk # A机构的sdk或控制台配置文件
-└── agencyB
-    ├── agency_cert
-    ├── generator-agency
-    ├── node
-    ├── node_deployment.ini
-    └── sdk
-```
-
-## 启动节点
-
-调用脚本启动节点：
-
-```bash
-bash ./one_click/agencyA/node/start_all.sh
+ls ./tmp_one_click
 ```
 
 ```bash
-bash ./one_click/agencyB/node/start_all.sh
+├── agencyA # A agency folder
+│ ├── agency_cert # A agency certificate and private key
+│ ├── generator-agency # Automatically replaces the generator folder operated by the A mechanism
+│ ├── node #A node generated by the agency, when the multi-machine is deployed, it can be pushed to the corresponding server.
+│ ├── node_deployment.ini # Node configuration information of A agency
+│ └── SDK # A SDK or console configuration file
+├── agencyB
+|   ├── agency_cert
+|   ├── generator-agency
+|   ├── node
+|   ├── node_deployment.ini
+|   └── sdk
+|── ca.crt # chain certificate
+|── ca.key # chain private key
+|── group.1.genesis # group one's genesis block
+|── peers.txt # node's peers.txt
 ```
 
-查看节点进程：
+### Start node
+
+Call the script to start the node:
+
+```bash
+bash ./tmp_one_click/agencyA/node/start_all.sh
+```
+
+```bash
+bash ./tmp_one_click/agencyB/node/start_all.sh
+```
+
+View the node process:
 
 ```bash
 ps -ef | grep fisco
 ```
 
 ```bash
-# 命令解释
-# 可以看到如下进程
-fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
-fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
-fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
-fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/one_click/agencyA/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
+#Command explanation
+# can see the following process
+fisco 15347 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco 15402 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco 15442 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco 15456 1 0 17:22 pts/2 00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
 ```
 
-## 查看节点运行状态
+### View node running status
 
-查看节点log：
+View the node log:
 
 ```bash
-tail -f ~/generator/one_click/agency*/node/node*/log/log*  | grep +++
+tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log* | grep +++
 ```
 
 ```bash
-# 命令解释
-# +++即为节点正常共识
-info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
-info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
-info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
+#Command explanation
+# +++ is the normal consensus of the node
+Info|2019-02-25 17:25:56.028692| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum =1, tx=0, myIdx=0, hash=833bd983...
+Info|2019-02-25 17:25:59.058625| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum =1, tx=0, myIdx=0, hash=343b1141...
+Info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum =1, tx=0, myIdx=1, hash=ea85c27b...
 ```
 
-## 使用控制台
+## Add node to group 1
 
-由于控制台体积较大，一键部署中没有直接集成，用户可以使用以下命令获取控制台
+Next, we add new nodes for agency A and agency C, and complete the networking shown in the following figure:
 
-获取控制台，可能需要较长时间：
+![](../../images/enterprise/one_click_step_2.png)
+
+### Initialize the expansion configuration
+
+Create an expansion folder
 
 ```bash
-./generator --download_console ./
+mkdir ~/generator/tmp_one_click_expand/
 ```
 
-配置A机构控制台:
-
-拷贝控制台至对应机构A：
+Copy the chain certificate and private key to the expansion folder
 
 ```bash
-cp -rf ./console ./one_click/agencyA/console
+cp ~/generator/tmp_one_click/ca.* ~/generator/tmp_one_click_expand/
 ```
 
-配置机构A控制台对应文件，控制台启动时需要相关证书、私钥以及控制台配置文件：
+Copy group 1 creation zone `group.1.genesis` to expansion folder
 
 ```bash
-cp ./one_click/agencyA/sdk/* ./one_click/agencyA/console/conf
+cp ~/generator/tmp_one_click/group.1.genesis ~/generator/tmp_one_click_expand/
 ```
 
-启动控制台，需要安装java：
+Copy group 1 node P2P connection file `peers.txt` to expansion folder
 
 ```bash
-cd ./one_click/agencyA/console && bash ./start.sh 1
+cp ~/generator/tmp_one_click/peers.txt ~/generator/tmp_one_click_expand/
 ```
 
-同理，配置B机构控制台:
+### agency A configuration node information
+
+Create the directory where the agency A expansion node is located.
 
 ```bash
-cd ~/generator && cp -rf ./console ./one_click/agencyB/console
+mkdir ~/generator/tmp_one_click_expand/agencyA
 ```
 
-配置机构B控制台对应文件，控制台启动时需要相关证书、私钥以及控制台配置文件：
+At this time, the agency A already exists in the alliance chain. So it is necessary to copy the agency A certificate and the private key to the corresponding folder.
 
 ```bash
-cp ./one_click/agencyB/sdk/* ./one_click/agencyB/console/conf
+cp -r ~/generator/tmp_one_click/agencyA/agency_cert ~/generator/tmp_one_click_expand/agencyA
 ```
 
-## 新建群组及扩容
+agency A fills in the node configuration information
 
-企业部署工具的后续操作与[企业部署工具教程](../tutorial/enterprise_quick_start.md)相同。
+```bash
+cat > ./tmp_one_click_expand/agencyA/node_deployment.ini << EOF
+[group]
+group_id=1
 
-后续节点的扩容及新群组的划分操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
+[node0]
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
+p2p_ip=127.0.0.1
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30304
+channel_listen_port=20204
+jsonrpc_listen_port=8549
+EOF
+```
 
-新建群组的操作用户可以在执行`click2start.sh`脚本的目录下，通过修改./conf/group_genesis.ini文件，并执行create_group_genesis命令。
+### Institution C configuration node information
 
-扩容新节点的操作可以通过修改./conf/node_deployment.ini文件，先使用generate_all_certificates生成证书，再使用build_install_package生成节点。
+Create a directory where the agency C expansion node is located.
 
-如果使用该教程遇到问题，请查看[FAQ](../faq.md)
+```bash
+mkdir ~/generator/tmp_one_click_expand/agencyC
+```
+
+agency C fills in the node configuration information
+
+```bash
+cat > ./tmp_one_click_expand/agencyC/node_deployment.ini << EOF
+[group]
+group_id=1
+
+[node0]
+; Host IP for the communication among peers.
+; Please use your ssh login IP.
+p2p_ip=127.0.0.1
+; listening IP for the communication between SDK clients.
+; This IP is the same as p2p_ip for the physical host.
+; But for virtual host e.g., VPS servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+p2p_listen_port=30305
+channel_listen_port=20205
+jsonrpc_listen_port=8550
+EOF
+```
+
+### Generate expansion nodes
+
+```bash
+bash ./one_click_generator.sh -e ./tmp_one_click_expand
+```
+
+### Starting a new node
+
+Call the script to start the node:
+
+```bash
+bash ./tmp_one_click_expand/agencyA/node/start_all.sh
+```
+
+```bash
+bash ./tmp_one_click_expand/agencyC/node/start_all.sh
+```
+
+View the node process:
+
+```bash
+ps -ef | grep fisco
+```
+
+```bash
+#Command explanation
+# can see the following process
+fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyA/node/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco  15403     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/fisco-bcos -c config.ini
+fisco  15442     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  15456     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click/agencyB/node/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/fisco-bcos -c config.ini
+```
+
+```eval_rst
+.. important::
+
+   New nodes that are expanded for group 1 need to be added to the group using SDK or console.
+```
+
+### Registering a node with the console
+
+Due to the large size of the console, there is no direct integration in a one-click deployment. Users can use the following command to get the console.
+
+Getting the console may take a long time, and domestic users can use the `--cdn` command:
+
+For example, if the agency A uses the console, this step needs to be switched to the `generator-agency` folder corresponding to the agency A.
+
+```bash
+cd ~/generator/tmp_one_click/agencyA/generator-agency
+```
+
+```bash
+./generator --download_console ./ --cdn
+```
+
+### Viewing agency A node-4 information
+
+agency A uses the console to join the agency A node 4 as the consensus node, where the second parameter needs to be replaced with the nodeid of the joining node, and the nodeid is the `node.nodeid` of the conf of the node folder.
+
+View the agency C node nodeid:
+
+```bash
+cat ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/conf/node.nodeid
+```
+
+```bash
+ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+### Registering Consensus Nodes Using the Console
+
+Start the console:
+
+```bash
+cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
+```
+
+Use the console `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the node `node.nodeid` of the agency C node:
+
+```bash
+addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+```bash
+$ [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+exit console：
+
+```bash
+exit
+```
+
+### Viewing agency C Node 5
+
+agency A uses the console to join node 5 of agency C as the observation node, where the second parameter needs to be replaced with the nodeid of the joining node, and the nodeid is the node.nodeid file of the conf of the node folder.
+
+View the agency C node nodeid:
+
+```bash
+cat ~/generator/tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/conf/node.nodeid
+```
+
+```bash
+5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+```
+
+### Registering an observation node using the console
+
+Start the console:
+
+```bash
+cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
+```
+
+Use the console `addObserver` command to register the node as a watch node. In this step, you need to use the `cat` command to view the node #node.nodeid\` of the agency C node:
+
+```bash
+addObserver 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+```
+
+```bash
+$ [group:1]> addObserver 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+Exit the console:
+
+```bash
+exit
+```
+
+At this point, we have completed the operation of adding a new node to an existing group.
+
+## Existing Node New Group 2
+
+The operation of the new group can be done by modifying the `./conf/group_genesis.ini` file in the directory where the `one_click_generator.sh` is executed and executing the `--create_group_genesis` command.
+
+Generate group 2 as shown in Figure 4
+
+![](../../images/enterprise/one_click_step_3.png)
+
+### Configure Group 2 Creation Zone
+
+```eval_rst
+.. important::
+
+     This operation needs to be performed under the above operation generator.
+```
+
+```bash
+cd ~/generator
+```
+
+Configuring the group creation block file
+
+```bash
+cat > ./conf/group_genesis.ini << EOF
+[group]
+group_id=2
+
+[nodes]
+node0=127.0.0.1:30300
+node1=127.0.0.1:30301
+node2=127.0.0.1:30304
+node3=127.0.0.1:30305
+EOF
+```
+
+### Get the corresponding node certificate
+
+Obtain an agency A node certificate
+
+```bash
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_* ~/generator/meta
+```
+
+Get agency A new node certificate
+
+```bash
+cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_* ~/generator/meta
+```
+
+Obtain an agency C node certificate
+
+```bash
+cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_* ~/generator/meta
+```
+
+### Generating a group creation block
+
+```bash
+./generator --create_group_genesis ./group2
+```
+
+Add the group creation block to the existing node:
+
+```bash
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node
+```
+
+```bash
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node
+```
+
+```bash
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node
+```
+
+### Restart the node
+
+Restart the agency A node:
+
+```bash
+bash ./tmp_one_click/agencyA/node/stop_all.sh
+```
+
+```bash
+bash ./tmp_one_click/agencyA/node/start_all.sh
+```
+
+Restart agency A to add a new node:
+
+```bash
+bash ./tmp_one_click_expand/agencyA/node/stop_all.sh
+```
+
+```bash
+bash ./tmp_one_click_expand/agencyA/node/start_all.sh
+```
+
+Restart the agency C node:
+
+```bash
+bash ./tmp_one_click_expand/agencyC/node/stop_all.sh
+```
+
+```bash
+bash ./tmp_one_click_expand/agencyC/node/start_all.sh
+```
+
+### View node
+
+View the group1 information in the node log:
+
+```bash
+tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log* | grep g:2 | grep +++
+```
+
+```bash
+info|2019-02-25 17:25:56.028692| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=833bd983...
+info|2019-02-25 17:25:59.058625| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=0,hash=343b1141...
+info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,myIdx=1,hash=ea85c27b...
+```
+
+So far, we have completed all the operations in the build tutorial shown.
+
+```eval_rst
+.. note::
+
+     After using it, it is recommended to clean the meta folder with the following command:
+
+     - rm ./meta/cert_*
+     - rm ./meta/group*
+```
+
+## More operations
+
+For more operations, refer to the [Operation Manual](./operation.md) or [Enterprise Tools Peer-to-Peer Deployment Tutorial](../tutorial/enterprise_quick_start.md).
+
+If you have problems with this tutorial, please check [FAQ](../faq.md)

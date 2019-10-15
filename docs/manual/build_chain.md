@@ -93,7 +93,13 @@ $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项指定二进制，则使用该二进制，配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
 
 - **`d`选项[**Optional**]**
-使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限。该模式下脚本启动节点的命令如下
+使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限，即用户加入docker群组。
+在节点目录下执行如下命令启动节点
+```bash
+$ ./start.sh
+```
+
+该模式下 start.sh 脚本启动节点的命令如下
 ```bash
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
@@ -102,7 +108,7 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
 
 - **`s`选项[**Optional**]**
-有参数选项，参数为db名，目前支持rocksdb、mysql、external三种模式。默认使用RocksDB。其中mysql需要在群组ini文件中配置mysql相关信息，external需要配置topic信息并启动AMDB代理。
+有参数选项，参数为db名，目前支持rocksdb、mysql、external三种模式。默认使用RocksDB。其中mysql需要在群组ini文件中配置mysql相关信息，external需要配置topic信息并启动amdb-proxy。
 
 - **`c`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
@@ -204,6 +210,6 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ### 多服务器多群组
 
-使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../tutorial/group_use_cases.md)。
+使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../manual/group_use_cases.md)。
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
