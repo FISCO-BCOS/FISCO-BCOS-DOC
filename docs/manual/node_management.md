@@ -154,8 +154,8 @@ $ vim node2/config.ini
 
 5 . 节点3拷贝节点1的`node1/conf/group.3.genesis`（内含**群组节点初始列表**）和`node1/conf/group.3.ini`到`node2/conf`目录下，不需改动；
 ```
-$ cp node1/conf/group.3.genesis node2/ 
-$ cp node1/conf/group.3.ini node2/ 
+$ cp node1/conf/group.3.genesis node2/conf
+$ cp node1/conf/group.3.ini node2/conf
 ```
 
 6 . 执行`node2/start.sh`启动节点3；
