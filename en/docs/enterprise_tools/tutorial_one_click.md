@@ -289,7 +289,7 @@ At this time, the agency A already exists in the alliance chain. So it is necess
 cp -r ~/generator/tmp_one_click/agencyA/agency_cert ~/generator/tmp_one_click_expand/agencyA
 ```
 
-agency A fills in the node configuration information
+agency A views in the node configuration information
 
 ```bash
 cat > ./tmp_one_click_expand/agencyA/node_deployment.ini << EOF
@@ -321,7 +321,7 @@ Create a directory where the agency C expansion node is located.
 mkdir ~/generator/tmp_one_click_expand/agencyC
 ```
 
-agency C fills in the node configuration information
+agency C views in the node configuration information
 
 ```bash
 cat > ./tmp_one_click_expand/agencyC/node_deployment.ini << EOF
