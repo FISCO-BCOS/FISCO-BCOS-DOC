@@ -407,7 +407,7 @@ cd ~/generator/tmp_one_click/agencyA/generator-agency
 
 机构A使用控制台加入机构A节点4为共识节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
 
-查看机构C节点nodeid：
+查看机构A节点nodeid：
 
 ```bash
 cat ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/conf/node.nodeid
@@ -427,7 +427,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
 ```
 
-使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构A节点的`node.nodeid`：
 
 ```bash
 addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
