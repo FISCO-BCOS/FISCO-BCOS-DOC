@@ -406,7 +406,7 @@ cd ~/generator/tmp_one_click/agencyA/generator-agency
 
 agency A uses the console to join the agency A node 4 as the consensus node, where the second parameter needs to be replaced with the nodeid of the joining node, and the nodeid is the `node.nodeid` of the conf of the node folder.
 
-View the agency C node nodeid:
+View the agency A node nodeid:
 
 ```bash
 cat ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/conf/node.nodeid
@@ -424,7 +424,7 @@ Start the console:
 cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
 ```
 
-Use the console `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the node `node.nodeid` of the agency C node:
+Use the console `addSealer` command to register the node as a consensus node. In this step, you need to use the `cat` command to view the node `node.nodeid` of the agency A node:
 
 ```bash
 addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
