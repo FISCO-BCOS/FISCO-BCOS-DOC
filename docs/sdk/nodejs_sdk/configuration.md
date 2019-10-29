@@ -23,7 +23,7 @@ Node.js SDK的配置文件为一个JSON文件，主要包括**通用配置**，*
 
 ## 通信配置
 
-- `nodes`: `list`，必需。FISCO BCOS节点列表，Node.js SDK在访问节点时时会从该列表中随机挑选一个节点进行通信，要求节点数目必须 >= 1。每个节点包含两个字段：
+- `nodes`: `list`，必需。FISCO BCOS节点列表，Node.js SDK在访问节点时时会从该列表中随机挑选一个节点进行通信，要求节点数目必须 >= 1。在FISCO BCOS中，一笔交易上链并不代表网络中的所有节点都已同步到了最新的状态，如果Node.js SDK连接了多个节点，则可能会出现读取不到最新状态的情况，因此在对状态同步有较高要求的场合，请谨慎连接多个节点。每个节点包含两个字段：
   - `ip`: `string`，必需。FISCO BCOS节点的IP地址
   - `port`: `string`，必需，FISCO BCOS节点的Channel端口
 

@@ -230,9 +230,9 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/blob/master/too
 
 ```bash
 # -c specify the path where the certificate and private key are located
-# -o Output to the specified folder, where new certificates and private keys issued by agency test exist in newNode/conf
+# -o Output to the specified folder, where new certificates and private keys issued by agency agency1 exist in newNode/conf
 
-bash gen_node_cert.sh -c cert/test -o newNode
+bash gen_node_cert.sh -c nodes/cert/agency -o newNode
 ```
 
 #### Preparing configuration files

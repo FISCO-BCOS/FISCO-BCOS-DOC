@@ -5,7 +5,7 @@
     build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业级部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
-FISCO BCOS提供了`build_chain.sh`脚本帮助用户快读搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
+FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
 
 ## 脚本功能简介
 
@@ -226,8 +226,8 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/blob/master/too
 
 ```bash
 # -c指定机构证书及私钥所在路径
-# -o输出到指定文件夹，其中newNode/conf中会存在机构test新签发的证书和私钥
-bash gen_node_cert.sh -c cert/test -o newNode
+# -o输出到指定文件夹，其中newNode/conf中会存在机构agency新签发的证书和私钥
+bash gen_node_cert.sh -c nodes/cert/agency -o newNode
 ```
 
 #### 准备配置文件
