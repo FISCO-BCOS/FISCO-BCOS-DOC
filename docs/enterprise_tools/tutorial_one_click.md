@@ -6,7 +6,6 @@
 
 本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](./tutorial_detail_operation.md)。
 
-
 ```eval_rst	
 .. important::	
      一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，请清空meta文件夹。
@@ -246,13 +245,18 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 新增节点 (扩容新节点)
 
+```eval_rst	
+.. important::	
+     一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，请清空meta文件夹。
+```
+
 接下来，我们为机构A和机构C增加新节点，完成下图所示的组网：
 
 ![](../../images/enterprise/one_click_step_2.png)
 
 ### 初始化扩容配置
 
-创建扩容文件夹
+**创建扩容文件夹，示例中tmp_one_click_expand可以为任意名称，请每次扩容使用新的文件夹**
 
 ```bash
 mkdir ~/generator/tmp_one_click_expand/
