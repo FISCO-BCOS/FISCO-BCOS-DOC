@@ -251,7 +251,7 @@ Next, we add new nodes for agency A and agency C, and complete the networking sh
 
 ### Initialize the expansion configuration
 
-Create an expansion folder
+**Create an expansion folder, don't use the same folder**
 
 ```bash
 mkdir ~/generator/tmp_one_click_expand/
