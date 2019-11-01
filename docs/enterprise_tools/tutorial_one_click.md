@@ -252,7 +252,7 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ### 初始化扩容配置
 
-创建扩容文件夹
+**创建扩容文件夹，每次扩容请新建文件夹，不要使用已有文件夹，教程中的tmp_one_click_expand为示例名称，用户可以根据需要自行修改**
 
 ```bash
 mkdir ~/generator/tmp_one_click_expand/
