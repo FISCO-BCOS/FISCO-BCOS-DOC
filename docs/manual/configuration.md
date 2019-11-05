@@ -143,12 +143,12 @@ FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibi
     - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，
 ```
 
-`FISCO BCOS 2.1.0`节点的`[compatibility]`配置如下：
+`FISCO BCOS 2.2.0`节点的`[compatibility]`配置如下：
 
 ```ini
 
 [compatibility]
-    supported_version=2.1.0
+    supported_version=2.2.0
 ```
 
 
@@ -266,15 +266,17 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 
 #### 公共配置项
 
-- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`External`。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库。type为external时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)。
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`、`External`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`external`时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`*1000切换实例，实例以存储的起始区块高度命名。
 - `max_capacity`：配置允许节点用于内存缓存的空间大小。
 - `max_forward_block`：配置允许节点用于内存区块的大小，当节点出的区块超出该数值时，节点停止共识等待区块写入数据库。
+- `binary_log`：当设置为`true`时打开binary_log，此时关闭RocksDB的WAL。
+- `cached_storage`：控制是否使用缓存，默认`true`。
 
 #### 数据库相关配置项
 
 - `topic`：当type为`External`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./distributed_storage.html#id3)。
-- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./distributed_storage.html#id3)。
-
+- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./distributed_storage.html#id3)。 
+- `scroll_threshold_multiple`：当type为`Scalable`时，此配置项用于配置区块数据库的切换阈值，按`scroll_threshold_multiple*1000`。默认为2，区块数据按每2000块存储在不同的RocksDB实例中。
 - `db_ip`：当type为`MySQL`时，需要配置该字段，表示MySQL的IP地址。
 - `db_port`：当type为`MySQL`时，需要配置该字段，表示MySQL的端口号。
 - `db_username`：当type为`MySQL`时，需要配置该字段，表示MySQL的用户名。
