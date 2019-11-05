@@ -41,10 +41,10 @@ e.g
 
 ## Option introduction
 
-- **`l`option:**
+### **`l`option:**
 Use to specify the chain to be generated and the number of nodes under each IP, separated by commas. The script generates configuration file of corresponding node according to the input parameters. The port number of each node is incremented from 30300 by default. All nodes belong to the same organization and Group.
 
-- **`f`option**
+### **`f`option**
     + Use to generate node according to configuration file. It supports more customization than `l` option.
     + Split by row. Each row represents a server, in the format of `IP:NUM AgencyName GroupList`. Items in each line are separated by spaces, and there must be **no blank lines**.
     + `IP:NUM` represents the IP address of the machine and the number of nodes on the machine.`AgencyName`represents the name of the institution to specifies the institution certificate to use. `GroupList` represents the group that the generated node belong to, split by`,`. For example, `192.168.0.1:2 agency1 1,2` represents that a machine with `ip` which is `192.168.0.1` exists two nodes. For example, 192.168.0.1:2 agency1 1,2 represents that there are two nodes on the machine with ip 192.168.0.1. These two nodes belong to agency `agency1` and belong to group1 and group2.
@@ -65,7 +65,7 @@ The following is an example of a configuration file. Each configuration item sep
 $ bash build_chain.sh -f ipconf -T -i
 ```
 
-- **`e`option[**Optional**]**
+### **`e`option[**Optional**]**
 is used to specify **full path** where `fisco-bcos` binary is located.Script will cope `fisco-bcos` to the directory named by IP number. If no path to be specified, the latest binary program of `master` branch is downloaded from GitHub by default.
 
 ```bash
@@ -75,10 +75,10 @@ $ bash build_chain.sh -l "127.0.0.1:4"
 $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 ```
 
-- **`o`option[**Optional**]**
+### **`o`option[**Optional**]**
 specifies the directory where the generated configuration is located.
 
-- **`p`option[**Optional**]**
+### **`p`option[**Optional**]**
 specifies the starting port of the node. Each node occupies three ports which are p2p, channel, and jsonrpc, respectively. The ports are split by, and three ports must be specified. The ports used by different nodes under the same IP address are incremented from the starting port.
 
 ```bash
@@ -86,14 +86,14 @@ specifies the starting port of the node. Each node occupies three ports which ar
 $ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
 ```
 
-- **`i`option[**Optional**]**
+### **`i`option[**Optional**]**
 No parameter option. When setting this option, set the node's RPC and channel to listen to `0.0.0.0`.
 
-- **`v`option[**Optional**]**
+### **`v`option[**Optional**]**
 
 Used to specify the binary version used when building FISCO BCOS. build_chain downloads the latest version of [Release Page] (https://github.com/FISCO-BCOS/FISCO-BCOS/releases) by default. When setting this option, the download parameter specifies the `version` version and sets `[compatibility].supported_version=${version}` in the configuration file `config.ini`. If you specify the binary with the `-e` option, to use the binary and configure `[compatibility].supported_version=${version}` as the latest version number of [Release page](https://github.com/FISCO-BCOS/FISCO-BCOS /releases).
 
-- **`d`option[**Optional**]**
+### **`d`option[**Optional**]**
 
 Use the docker mode to build FISCO BCOS. When using this option, the binary is no longer extracted, but users are required to start the node machine to install docker, and their accounts have docker permission, which means their accounts should in the docker group.
 Use following command to start node at node home.
@@ -106,16 +106,21 @@ The command to start the node in script start.sh is as follows
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
-- **`m`option[**Optional**]**
+### **`m`option[**Optional**]**
 No parameter option. When setting this option, node uses [mptstate](../design/storage/mpt.md) to store contract local variables. By default, [storagestate](../design/storage/storage.md) is used to store the contract local variable.
 
-- **`s`option[**Optional**]**
-There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, and external. RocksDB is used by default. mysql needs to configure the information relates to mysql in the group ini file. external needs to configure topic information and start amdb-proxy.
+### **`s`option[**Optional**]**
+There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, external and scalable. RocksDB is used by default. 
 
-- **`c`option[**Optional**]**
+- rocksdb use RocksDB as backend database.
+- mysql needs to configure the information relates to mysql in the group ini file. 
+- external needs to configure topic information and start amdb-proxy.
+- scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height.
+
+### **`c`option[**Optional**]**
 No parameter option. When setting this option, the consensus algorithm for setting the node is [Raft](../design/consensus/raft.md), and the default setting is [PBFT](../design/consensus/pbft.md).
 
-- **`C`option[**Optional**]**
+### **`C`option[**Optional**]**
 
 Used to specify the chain identifier when building FISCO BCOS. When this option is set, using parameter to set `[chain].id` in the configuration file `config.ini`. The parameter range is a positive integer and the default setting is 1.
 
@@ -124,16 +129,16 @@ Used to specify the chain identifier when building FISCO BCOS. When this option 
 $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
-- **`g`option[**Optional**]**
+### **`g`option[**Optional**]**
 No parameter option. When setting this option, to build the national cryptography version of FISCO BCOS. **The binary fisoc-bcos is required to be national cryptography version when using the `g` option.**
 
-- **`z`option[**Optional**]**
+### **`z`option[**Optional**]**
 No parameter option. When setting this option, the tar package of node is generated.
 
-- **`t`option[**Optional**]**
+### **`t`option[**Optional**]**
 This option is used to specify the certificate configuration file when certificate is generated.
 
-- **`T`option[**Optional**]**
+### **`T`option[**Optional**]**
 
 No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
 

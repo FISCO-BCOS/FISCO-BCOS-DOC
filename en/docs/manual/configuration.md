@@ -148,12 +148,12 @@ All versions of FISCO BCOS 2.0+ are forward compatible. You can configure the co
 
 ```
 
-`FISCO BCOS 2.1.0` node's `[compatibility]` configuration is as follows:
+`FISCO BCOS 2.2.0` node's `[compatibility]` configuration is as follows:
 
 ```ini
 
 [compatibility]
-    supported_version=2.1.0
+    supported_version=2.2.0
 ```
 
 ### Optional configuration: Disk encryption
@@ -290,11 +290,14 @@ Storage currently supports three modes: RocksDB, MySQL, and External. Users can 
 - `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL` or `External`, the node accesses mysql database according to the configuration. All data of blockchain system is stored in mysql database. For accessing mysql database, to configure the amdb-proxy. Please refer to [here](./distributed_storage.html#amdb) for the amdb-proxy configuration.
 - `max_capacity`: configures the space size of the node that is allowed to use for memory caching.
 - `max_forward_block`: configures the space size of the node that allowed to use for memory block. When the blocks exceeds this value, the node stops the consensus and waits for the blocks to be written to database.
+- `binary_log`: default is false. when set to `true`, enable binary log, and then disable the wal of rocksdb.
+- `cached_storage`: controls whether to use the cache. The default is `true`.
 
 #### Database related configuration item
 
 - `topic`: When the type is `External`, you need to configure this field to indicate the amdb-proxy topic that blockchain system is interested in. For details, please refer to [here](./distributed_storage.html#id3).
 - `max_retry`: When the type is `External`, you need to configure this field to indicate the number of retries when writing fails. For details, please refer to [here](./distributed_storage.html#id3).
+- `scroll_threshold_multiple`： when the type is `scalable`, this configuration item is used to configure the handover threshold of the block database. The default value is 2, so Block data is stored in different rocksdb instances every 2000 blocks.
 - `db_ip`: When the type is `MySQL`, you need to configure this field to indicate the IP address of MySQL.
 - `db_port`: When the type is `MySQL`, you need to configure this field to indicate the port number of MySQL.
 - `db_username`: When the type is `MySQL`, you need to configure this field to indicate the MySQL username.
