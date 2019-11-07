@@ -34,7 +34,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 搭建单群组4节点联盟链
