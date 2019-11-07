@@ -115,7 +115,7 @@ There are parameter options. The parameter is the name of db. Currently it suppo
 - rocksdb use RocksDB as backend database.
 - mysql needs to configure the information relates to mysql in the group ini file. 
 - external needs to configure topic information and start amdb-proxy.
-- scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height.
+- scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
 
 ### **`c`option[**Optional**]**
 No parameter option. When setting this option, the consensus algorithm for setting the node is [Raft](../design/consensus/raft.md), and the default setting is [PBFT](../design/consensus/pbft.md).

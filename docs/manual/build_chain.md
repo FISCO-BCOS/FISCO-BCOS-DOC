@@ -113,7 +113,7 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 - RocksDB模式，使用RocksDB作为后端数据库。
 - MySQL模式，使用MySQL作为后端数据库，节点直连MySQL，需要在群组ini文件中配置数据库相关信息。
 - External模式，使用MySQL作为后端数据库，节点使用[`amdb-proxy`](./distributed_storage.md)连接数据库，代理和节点通过amop协议通信，需要在群组ini文件中配置topic信息。
-- scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。
+- scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
 
 ### **`c`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
