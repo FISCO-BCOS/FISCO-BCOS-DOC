@@ -279,7 +279,7 @@ contract HelloWorld {
 
 ### 部署HelloWorld合约
 
-为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，参考下面命令部署即可。
+为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`contracts/solidity/HelloWorld.sol`，参考下面命令部署即可。
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
