@@ -251,7 +251,12 @@ Next, we add new nodes for agency A and agency C, and complete the networking sh
 
 ### Initialize the expansion configuration
 
-Create an expansion folder
+```eval_rst	
+.. important::	
+      When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can clean the meta folder. 
+```
+
+**Create an expansion folder, don't use the same foler**
 
 ```bash
 mkdir ~/generator/tmp_one_click_expand/
