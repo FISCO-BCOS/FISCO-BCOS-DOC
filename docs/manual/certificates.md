@@ -84,7 +84,7 @@ FISCO BCOS的证书生成流程如下，用户也可以使用[企业部署工具
 
 完成证书续期前推荐使用[证书检测脚本](../enterprise_tools/operation.md#handshake-failed)对证书进行检测。
 
-当证书过期时，需要用户使用对当前节点私钥从新签发证书，操作如下：
+当证书过期时，需要用户使用对当前节点私钥重新签发证书，操作如下：
 
 假设用户证书过期的节点目录为`~/mynode`，节点目录入下：
 
@@ -159,7 +159,7 @@ subject=/CN=RenewalNode/O=fisco-bcos/OU=node
 Getting CA Private Key
 ```
 
-操作完成后悔在当前目录下生成续期后的证书证书`node.crt`。
+操作完成后会在当前目录下生成续期后的证书`node.crt`。
 
 - 查看节点新证书
 
@@ -187,7 +187,7 @@ Q6CXDA==
 -----END CERTIFICATE-----
 ```
 
-- 讲机构证书添加到节点证书末尾
+- 将机构证书添加到节点证书末尾
 
 由于fisco-bcos使用三级证书结构，需要将机构证书和节点证书合并
 
@@ -264,9 +264,9 @@ tail -f ~/mynode/log/log*  | grep +++
 
 ## 机构证书/链证书续期
 
-当整条链的证书均已过期时，需要从新对整条链的证书进行续期操作，续期证书的OpenSSL命令与节点续期操作基本相同，或查阅`build_chain.sh`脚本签发证书的操作，简要步骤如下：
+当整条链的证书均已过期时，需要重新对整条链的证书进行续期操作，续期证书的OpenSSL命令与节点续期操作基本相同，或查阅`build_chain.sh`脚本签发证书的操作，简要步骤如下：
 
-- 使用链私钥`ca.key`从新签发链证书`ca.crt`
+- 使用链私钥`ca.key`重新签发链证书`ca.crt`
 - 使用机构证书`agency.key`生成证书请求文件`agency.csr`
 - 使用链私钥`ca.key`对证书请求文件`agency.csr`签发得到机构证书`agency.crt`
 - 使用节点`node.key`生成证书请求文件`node.csr`
