@@ -126,10 +126,10 @@ A parallelable contract interface has to meet following conditions:
 Before compiling interface, please confirm the exclusive parameter of interface. The exclusion of interface is the exclusion of global variables. The confirmation of exclusive parameter has following rules:
 
 - the interface accessed global mapping, the key of mapping is the exclusive parameter
-
 - the interface accessed global arrays, the subscript of a array is the exclusive parameter
-
 - the interface accessed simple type of global variables, all the simple type global variables share one exclusive parameter and use different variable names as the exclusive objects.
+
+> For example: If `setA(int x)`writes `globalA`, we need to declare it as `setA(string aflag, int x)` and call it like `setA("globalA", 10)` by using `globalA` to declare the exclusive object.
 
 **Confirm parameter type and sequence**
 
