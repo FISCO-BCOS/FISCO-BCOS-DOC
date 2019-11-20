@@ -277,7 +277,7 @@ contract HelloWorld {
 
 ### Deploy HelloWorld contract
 
-For quick experience, the console comes with HelloWorld contract and is placed under console folder `solidity/contracts/HelloWorld.sol`. So, users only have to deploy it using the following command.
+For quick experience, the console comes with HelloWorld contract and is placed under console folder `contracts/solidity/HelloWorld.sol`. So, users only have to deploy it using the following command.
 
 ```bash
 # input the following instruction in console, if it is deployed successfully, the contract address will be returned
