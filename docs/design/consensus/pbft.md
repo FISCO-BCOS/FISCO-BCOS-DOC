@@ -98,7 +98,7 @@ PBFT共识主要包括两个线程:
 
 - PBFTSealer: PBFT打包线程，负责从交易池取交易，并将打包好的区块封装成PBFT Prepare包，交给PBFTEngine处理；
 
-- PBFTEngine: PBFT共识线程，从PBFTSealer或者P2P网络接收PBFT共识消息包，区块验证器(Blockverifier)负责开始执行区块，然后完成共识流程，将达成共识的区块写入区块链，区块上链后，从交易池中删除已经上链的交易。
+- PBFTEngine: PBFT共识线程，从PBFTSealer或者P2P网络接收PBFT共识消息包，区块验证器(Blockverifier)负责开始执行区块，完成共识流程，将达成共识的区块写入区块链，区块上链后，从交易池中删除已经上链的交易。
 
 
 ## 3. 核心流程
