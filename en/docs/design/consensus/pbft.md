@@ -98,7 +98,7 @@ PBFT consensus process mainly contains 2 threads:
 
 - PBFTSealer: PBFT sealer thread takes transaction out of txPool, encapsulating the sealed block into PBFT Prepare package and sending the package to PBFTEngine;
 
-- PBFTEngine: PBFT consensus thread receives PBFT consensus message packet from PBFT sealer or P2P network. blockverifier module is response to execute block, after the consensus process completes, transactions will be deleted from txPool.
+- PBFTEngine: PBFT consensus thread receives PBFT consensus message packet from PBFT sealer or P2P network. Blockverifier module is response to execute block, after the consensus process completes, transactions will be deleted from txPool.
 
 
 ## 3. Core process
