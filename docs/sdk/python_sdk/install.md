@@ -37,7 +37,6 @@ git clone https://github.com/FISCO-BCOS/python-sdk
 .. note::
    - ``bash init_env.sh -p`` 主要功能是安装pyenv，并使用pyenv安装名称为 ``python-sdk`` 的python-3.7.3虚拟环境
    - 若python环境符合要求，可以跳过此步
-   - 安装python 3.7.3耗时比较就
    - 若脚本执行出错，请检查是否参考[依赖软件]说明安装了依赖
    - 安装python-3.7.3可能耗时比较久
    - 此步骤仅需初始化一遍，再次登录直接使用命令 ``pyenv activate python-sdk`` 激活 ``python-sdk`` 虚拟环境即可
