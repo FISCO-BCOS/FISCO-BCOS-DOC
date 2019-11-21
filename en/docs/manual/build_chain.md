@@ -223,7 +223,7 @@ The next operation is done under the `nodes/127.0.0.1` directory generated in th
 1. Acquisition certificate generation script
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/gen_node_cert.sh
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
 ```
 
 2. Generating new node private key certificates

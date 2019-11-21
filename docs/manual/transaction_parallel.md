@@ -181,7 +181,7 @@ function disableParallel() public
 
 **（4）部署/执行并行合约**
 
-用[控制台](console.md)或[Web3SDK](../sdk/sdk.md)编译和部署合约，此处以控制台为例。
+用[控制台](console.md)或[Web3SDK](../sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
 
 部署合约
 
@@ -279,7 +279,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 Web3SDK用来发送并行交易，FISCO BCOS链用来执行并行交易。相关配置，可参考：
 
-- [Web3SDK的配置](../sdk/sdk.md)
+- [Web3SDK的配置](../sdk/java_sdk.md)
 - [搭链](./build_chain.md)
 
 若需要压测最大的性能，至少需要：
