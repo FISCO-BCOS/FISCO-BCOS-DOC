@@ -915,6 +915,7 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -40007 | Only pbft consensus supports the view property               | getPbftView interface; only pbft consensus supports the view property |
 | -40008 | Invalid System Config                                        | getSystemConfigByKey interface, inquire invalid key    |
 | -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | invalid request from non-group-member node                  |
+| -400010 | RPC module initialization is incomplete                                    | RPC module initialization is incomplete     |
 
 ## Transaction receipt status list
 
