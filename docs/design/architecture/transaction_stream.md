@@ -7,7 +7,7 @@
 ## 2 整体架构
 整体架构如下图所示：
 
-![](../../../images/architecture/transaction_stream.png)
+![](../../../images/architecture/transaction_stream.jpg)
 
 **Node**：区块节点
 
