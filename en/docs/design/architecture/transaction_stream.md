@@ -7,7 +7,7 @@ User sends RPC request to node through SDK or curl command to start transaction.
 ## 2 Structure
 The overall structure is as below:
 
-![](../../../images/architecture/transaction_stream.png)
+![](../../../images/architecture/transaction_stream.jpg)
 
 **Node**: Node of block
 
