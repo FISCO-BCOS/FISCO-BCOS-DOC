@@ -315,8 +315,8 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
 
 ### SDK国密功能使用
 - 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi_crypto.md)。
-- 启用国密功能：application.xml/application.yml配置文件中将encryptType属性设置为1。
-- 加载私钥使用GenCredential类(适用于国密和非国密)，Credential类只适用于加载非国密私钥。
+- 启用国密功能：`applicationContext.xml`/`application.yml`配置文件中将`encryptType`属性设置为1。
+- 加载私钥使用`GenCredential`类(适用于国密和非国密)，`Credential`类只适用于加载非国密私钥。
 
 国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。编译国密版的Java合约文件[参考这里](../manual/console.html#id10)。
 
