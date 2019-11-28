@@ -235,6 +235,11 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ge
 bash gen_node_cert.sh -c nodes/cert/agency -o newNode
 ```
 
+国密版本请执行下面的指令生成证书。
+```bash
+bash gen_node_cert.sh -c nodes/cert/agency -o newNodeGm -g nodes/gmcert/agency/
+```
+
 #### 准备配置文件
 
 1. 拷贝群组1中节点node0配置文件与工具脚本
@@ -247,7 +252,7 @@ cp node0/*.sh newNode/
 cp -r node0/scripts newNode/
 ```
 
-2. 更新`newNode/config.ini`中监听的IP和端口
+2. 更新`newNode/config.ini`中监听的IP和端口，包括`[rpc]`和`[p2p]`配置项中的IP和端口。
 3. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)
 4. 将新节点的P2P配置中的IP和Port加入原有节点的config.ini中的[p2p]字段。假设新节点IP:Port为127.0.0.1:30304则，修改后的[P2P]配置为
 
