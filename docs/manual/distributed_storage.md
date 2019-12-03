@@ -54,7 +54,7 @@ sql_mode =STRICT_TRANS_TABLES
 
 Ubuntu：执行如下命令重启
 ```bash
-service msyql restart
+service mysql restart
 ```
 
 CentOS：执行如下命令重启
