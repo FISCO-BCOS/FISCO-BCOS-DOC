@@ -82,6 +82,8 @@
         + 国密版本的节点、SDK
     - `日志说明 <./log_description.html>`_
         + 节点日志格式和说明
+    - `Caliper压力测试指南 <./caliper.html>`_
+        + Caliper压力测试指南 
 
 .. important:: 
 
