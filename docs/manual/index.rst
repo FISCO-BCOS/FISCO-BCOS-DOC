@@ -26,6 +26,7 @@
    storage_security.md
    guomi_crypto.md
    log_description.md
+   caliper.md
 
 
 .. admonition:: 区块链部署
