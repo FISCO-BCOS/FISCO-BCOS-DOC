@@ -27,7 +27,7 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 
 | 接口名        | 描述| 参数 | 返回值 |
 | :--| :--| :-- | :-- |
-| getBlockNumber  | 获取最新块高  | 无 | Object，结果位于result字段 |
+| getBlockNumber  | 获取最新块高  | 无 | Object，结果位于result字段\*\* |
 | getPbftView  | 获取PBFT视图  | 无 | 同上 |
 | getObserverList | 获取观察者节点列表  | 无 | 同上 |
 | getSealerList | 获取共识节点列表  | 无 | 同上 |
@@ -55,6 +55,8 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 | call | 调用只读合约  | 合约地址<br>调用接口\*<br>参数列表 | 同上 |
 
 \*调用接口：函数名(参数类型,...)，例如：func(uint,uint)，参数类型之间不能有空格
+
+\*\*可使用`nodejs-sdk/packages/api/common/web3lib/utils`中的decodeParams函数解析返回结果
 
 ## PrecompiledService
 
