@@ -15,6 +15,7 @@
    configuration.md
    group_use_cases.md 
    distributed_storage.md
+   data_governance.md
    console.md
    account.md
    amop_protocol.md
