@@ -12,7 +12,7 @@ sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 Start the MySQL service and log in:
 root account password.
 ```bash
-sudo service msyql start
+sudo service mysql start
 mysql -uroot -p
 ```
 CentOS: Perform the following two commands to install.

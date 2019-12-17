@@ -4,7 +4,7 @@ MPT State是以太坊上级经典的数据存储方式。通过MPT树的方式�
 
 ## MPT树
 
-MPT(Merkle Paricia Trie)，是一种用hash索引数据的前缀树。
+MPT(Merkle Patricia Trie)，是一种用hash索引数据的前缀树。
 
 从宏观上来说，MPT树是一棵前缀树，用key查询value。通过key去查询value，就是用key去在MPT树上进行索引，在经过多个中间节点后，最终到达存储数据的叶子节点。
 

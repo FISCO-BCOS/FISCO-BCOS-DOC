@@ -652,12 +652,13 @@ Returns the receipt of a transaction by transaction hash.
     - `input`: `string` - the data send along with the transaction     
     - `logs`: `array` - Array of log objects, which this transaction generated   
     - `logsBloom`: `string` -  Bloom filter for light clients to quickly retrieve related logs      
-    - `output`: `string` - the data result along with the transaction     
+    - `output`: `string` - the data result along with the transaction  
+    - `root`: `string` - state root   
     - `status`: `string` - status value of the transaction     
     - `to`: `string` - address of the receiver. `0x0000000000000000000000000000000000000000` when its a contract creation.
     - `transactionHash`: `string` - hash of the transaction          
-    - `transactionIndex`: `string` - integer of the transaction's index position in the block
-
+- `transactionIndex`: `string` - integer of the transaction's index position in the block
+    
 - Example          
 ```
 // Request
@@ -677,6 +678,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
         "logs": [ ], 
         "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", 
         "output": "0x0000000000000000000000000000000000000000000000000000000000000000", 
+        "root":"0x38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
         "status": "0x0", 
         "to": "0x15538acd403ac1b2ff09083c70d04856b8c0bdfd", 
         "transactionHash": "0x708b5781b62166bd86e543217be6cd954fd815fd192b9a124ee9327580df8f3f", 
@@ -913,6 +915,7 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -40007 | Only pbft consensus supports the view property               | getPbftView interface; only pbft consensus supports the view property |
 | -40008 | Invalid System Config                                        | getSystemConfigByKey interface, inquire invalid key    |
 | -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | invalid request from non-group-member node                  |
+| -400010 | RPC module initialization is incomplete                                    | RPC module initialization is incomplete     |
 
 ## Transaction receipt status list
 
