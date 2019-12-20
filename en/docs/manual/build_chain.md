@@ -27,7 +27,6 @@ Usage:
     -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
-    -m <MPT State type>                 Default storageState. if set -m, use mpt state
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -105,9 +104,6 @@ The command to start the node in script start.sh is as follows
 ```bash
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
-
-### **`m`option[**Optional**]**
-No parameter option. When setting this option, node uses [mptstate](../design/storage/mpt.md) to store contract local variables. By default, [storagestate](../design/storage/storage.md) is used to store the contract local variable.
 
 ### **`s`option[**Optional**]**
 There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, external and scalable. RocksDB is used by default. 
