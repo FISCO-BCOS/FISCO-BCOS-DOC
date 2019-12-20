@@ -872,7 +872,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 
 
 ## getTransactionByHashWithProof
-返回根据交易哈希查询的带证明的交易信息，本接口仅在兼容性版本为2.2.0及以后的版本有效。
+返回根据交易哈希查询的带证明的交易信息，本接口仅在兼容性版本为2.2.0及以后的版本有效，证明信息是为了验证交易的存在性，交易存在性证明请参考文档[交易证明](./design/merkle_proof.md) 
 ### 参数          
 - `groupID`: `unsigned int` - 群组ID           
 - `transactionHash`: `string` - 交易哈希        
@@ -956,7 +956,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHashWithProof","
 ```
 
 ## getTransactionReceiptByHashWithProof
-返回根据交易哈希查询的带证明的交易回执信息，本接口仅在兼容性版本为2.2.0及以后的版本有效
+返回根据交易哈希查询的带证明的交易回执信息，本接口仅在兼容性版本为2.2.0及以后的版本有效，证明信息是为了验证回执的存在性，回执存在性证明请参考文档[交易证明](./design/merkle_proof.md) 
 - `groupID`: `unsigned int` - 群组ID           
 - `transactionHash`: `string` - 交易哈希          
 ### 返回值

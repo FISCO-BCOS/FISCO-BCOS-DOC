@@ -965,7 +965,7 @@ Returns the information about the receipt and its proof by a transaction hash. P
 ### Parameters 
 - `groupID`: `unsigned int` - group ID           
 - `transactionHash`: `string` - transaction hash          
-### 返回值
+### Returns
 - `array` - proof of receipt: 
    - `left`: `array` - the hash list of left             
    - `right`: `array` - the hash list of right          
@@ -1049,6 +1049,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceiptByHashWithP
 }
 
 ```
+
+
 
 ## Error codes
 
