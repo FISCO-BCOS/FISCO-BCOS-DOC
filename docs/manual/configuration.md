@@ -236,8 +236,8 @@ id=2
 - `type`：state类型，目前支持[storage state](../design/storage/storage.html#id6)和[MPT state](../design/storage/mpt.html)，**默认为storage state**，storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在MPT树中，效率较低，但包含完整的历史信息。
 
 ```eval_rst
-.. important::
-   推荐使用 **storage state** ，除有特殊需求，不建议使用MPT State
+.. deprecated::
+   MPT State将会在v2.3.0弃用，请使用 **storage state**
 ```
 
 ```ini
@@ -265,6 +265,11 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问mysql，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
 
 #### 公共配置项
+
+```eval_rst
+.. deprecated::
+   External模式将会在v2.3.0弃用，若要使用Mysql请用直连模式，配置type为MySQL。
+```
 
 - `type`：存储的DB类型，支持`RocksDB`、`MySQL`、`External`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`external`时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`*1000切换实例，实例以存储的起始区块高度命名。
 - `max_capacity`：配置允许节点用于内存缓存的空间大小。

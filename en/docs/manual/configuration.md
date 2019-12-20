@@ -249,8 +249,8 @@ e01789233a
 
 
 ```eval_rst
-.. important::
-    **storage state** is recommended. MPT State is not recommended except for special requirements.
+.. deprecated::
+    MPT State will be deprecated in v2.3.0, **storage state** is recommended.
 ```
 
 ```ini
@@ -286,6 +286,10 @@ Storage currently supports three modes: RocksDB, MySQL, and External. Users can 
 
 #### Public configuration item
 
+```eval_rst
+.. deprecated::
+   External will be deprecated in v2.3.0, if you want to use MySQL, please set type to MySQL.
+```
 
 - `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL` or `External`, the node accesses mysql database according to the configuration. All data of blockchain system is stored in mysql database. For accessing mysql database, to configure the amdb-proxy. Please refer to [here](./distributed_storage.html#amdb) for the amdb-proxy configuration.
 - `max_capacity`: configures the space size of the node that is allowed to use for memory caching.

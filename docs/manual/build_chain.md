@@ -27,7 +27,6 @@ Usage:
     -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external / scalable, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
-    -m <MPT State type>                 Default storageState. if set -m, use mpt state
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -90,7 +89,7 @@ $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
 
 ### **`v`选项[**Optional**]**
-用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项指定二进制，则使用该二进制，配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
+用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项，则配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
 
 ### **`d`选项[**Optional**]**
 使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限，即用户加入docker群组。
@@ -103,9 +102,6 @@ $ ./start.sh
 ```bash
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
-
-### **`m`选项[**Optional**]**
-无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
 
 ### **`s`选项[**Optional**]**
 有参数选项，参数为db名，目前支持rocksdb、mysql、external、scalable。默认使用RocksDB。
