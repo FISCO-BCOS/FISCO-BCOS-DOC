@@ -312,7 +312,7 @@ We provide [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-start
 
 ### Operations on OSCCA function of SDK
 - Preconditions: FISCO BCOS blockchain in OSCCA standard, to build it using OSCCA algorithm, please check [the operation tutorial](../manual/guomi_crypto.md).
-- switch on OSCCA function:  set encryptType as 1 in application.xml/application.yml configuration.
+- switch on OSCCA function:  set `encryptType` as 1 in `application.xml`/`application.yml` configuration.
 - The private key is loaded using the `GenCredential` class (for both OSCCA standard and ECDSA standard), and the `Credential` class is only for loading ECDSA standard.
 
 The OSCCA function of SDK calls the API in the same way as the ECDSA SDK. The difference is that the OSCCA function of SDK needs to generate the OSCCA version Java contract file. Compile the OSCCA version Java contract file [reference here](../manual/console.html#contract-compilation-tool).

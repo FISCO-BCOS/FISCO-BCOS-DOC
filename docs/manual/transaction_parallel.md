@@ -40,7 +40,7 @@ FISCO BCOS提供了**可并行合约开发框架**，开发者只需按照框架
 
 ### solidity合约并行框架
 
-编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。
+编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。（ParallelContract.sol合约代码[参考这里](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)）
 
 先给出完整的举例，例子中的ParallelOk合约实现了并行转账的功能
 
@@ -126,10 +126,10 @@ contract ParallelOk is ParallelContract // 将ParallelContract 作为基类
 在编写接口前，先确定接口的互斥参数，接口的互斥即是对全局变量的互斥，互斥参数的确定规则为：
 
 - 接口访问了全局mapping，mapping的key是互斥参数
-
 - 接口访问了全局数组，数组的下标是互斥参数
-
 - 接口访问了简单类型的全局变量，所有简单类型的全局变量共用一个互斥参数，用不同的变量名作为互斥对象
+
+> 例如：合约里有多个简单类型的全局变量，不同接口访问了不同的全局变量。如要将不同接口并行，则需要在修改了全局变量的接口参数中定义一个互斥参数，用来调用时指明使用了哪个全局变量。在调用时，主动给互斥参数传递相应修改的全局变量的“变量名”，用以标明此笔交易的互斥对象。如：`setA(int x)`函数中修改了全局参数`globalA`，则需要将`setA`函数定义为`set(string aflag, int x)`， 在调用时，传入`setA("globalA", 10)`，用变量名`“globalA”`来指明此交易的互斥对象是`globalA`。
 
 **确定参数类型和顺序**
 
@@ -181,7 +181,7 @@ function disableParallel() public
 
 **（4）部署/执行并行合约**
 
-用[控制台](console.md)或[Web3SDK](../sdk/sdk.md)编译和部署合约，此处以控制台为例。
+用[控制台](console.md)或[Web3SDK](../sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
 
 部署合约
 
@@ -279,7 +279,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 Web3SDK用来发送并行交易，FISCO BCOS链用来执行并行交易。相关配置，可参考：
 
-- [Web3SDK的配置](../sdk/sdk.md)
+- [Web3SDK的配置](../sdk/java_sdk.md)
 - [搭链](./build_chain.md)
 
 若需要压测最大的性能，至少需要：

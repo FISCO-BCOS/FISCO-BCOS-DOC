@@ -39,7 +39,7 @@
 
 ![](images/pr/propose_file_change.png)
 
-7.跳转至`Comparing changes`页面，检查pr的目标分支是否正确（这次pr的目标分支为`release-2.0`）；如内容正确，点击`Create pull request`按钮；
+7.跳转至`Comparing changes`页面，检查pr的目标分支是否正确（这次pr的目标分支为`release-2`）；如内容正确，点击`Create pull request`按钮；
 
 ![](images/pr/compare.png)
 

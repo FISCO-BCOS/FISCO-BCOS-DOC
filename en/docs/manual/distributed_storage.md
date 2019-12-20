@@ -12,7 +12,7 @@ sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 Start the MySQL service and log in:
 root account password.
 ```bash
-sudo service msyql start
+sudo service mysql start
 mysql -uroot -p
 ```
 CentOS: Perform the following two commands to install.
@@ -53,7 +53,7 @@ Before using distributed storage, you need to complete the establishment of the 
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### Generate configuration file
 ```bash
@@ -343,7 +343,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - get `build_chain` script
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### Generate configuration file

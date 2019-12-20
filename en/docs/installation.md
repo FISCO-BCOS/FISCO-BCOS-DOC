@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### Build a single-group 4-node consortium chain
@@ -277,7 +277,7 @@ contract HelloWorld {
 
 ### Deploy HelloWorld contract
 
-For quick experience, the console comes with HelloWorld contract and is placed under console folder `solidity/contracts/HelloWorld.sol`. So, users only have to deploy it using the following command.
+For quick experience, the console comes with HelloWorld contract and is placed under console folder `contracts/solidity/HelloWorld.sol`. So, users only have to deploy it using the following command.
 
 ```bash
 # input the following instruction in console, if it is deployed successfully, the contract address will be returned

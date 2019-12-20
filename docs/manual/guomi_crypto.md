@@ -12,7 +12,7 @@ $ sudo apt install -y openssl curl
 # 准备环境
 $ cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/get_buildchain.sh)
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 执行完上述步骤后，fisco目录下结构如下：
@@ -88,7 +88,7 @@ ca_cert: gmca证书路径
 
 ## 国密版SDK使用
 
-详细操作参考[SDK文档](../sdk/java_sdk.html#id8)。
+详细操作参考[SDK文档](../sdk/java_sdk.html#id10)。
 
 ## 国密控制台使用
 

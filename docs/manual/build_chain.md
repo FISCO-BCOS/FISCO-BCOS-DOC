@@ -224,7 +224,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 1. 获取证书生成脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/gen_node_cert.sh
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
 ```
 
 2. 生成新节点私钥证书
