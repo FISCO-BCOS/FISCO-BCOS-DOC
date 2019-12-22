@@ -17,4 +17,5 @@
    rpc.md
    protocol_description.md
    parallel/dag.md
-   features/index.rst 
+   sync/sync_block_optimize.md
+   features/index.rst
