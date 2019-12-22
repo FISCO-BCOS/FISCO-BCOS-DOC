@@ -8,7 +8,7 @@
    :maxdepth: 2
 
    architecture/index.rst
-   sync/sync.md
+   sync/index.md
    consensus/index.rst
    virtual_machine/index.rst
    storage/index.rst
@@ -17,5 +17,4 @@
    rpc.md
    protocol_description.md
    parallel/dag.md
-   sync/sync_block_optimize.md
    features/index.rst
