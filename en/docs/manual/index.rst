@@ -19,7 +19,6 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    smart_contract.md
    transaction_parallel.md
    distributed_storage.md
-   data_governance.md
    node_management.md
    permission_control.md
    certificate_list.md
