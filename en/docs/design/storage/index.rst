@@ -21,4 +21,3 @@ FISCO BCOS inherits Ethereum storage while importing distributed storage with hi
    
    storage.md
    mpt.md
-   data_governance.md
