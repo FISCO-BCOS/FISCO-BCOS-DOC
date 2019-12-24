@@ -2,6 +2,11 @@
 版本及兼容
 ##############################################################
 
+.. admonition:: `FISCO BCOS 2.2.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.2.0>`_
+
+     **变更描述、兼容及升级说明**
+      - `FISCO BCOS v2.2.0 <./2_2_0.html>`_
+
 .. admonition:: `FISCO BCOS 2.1.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.1.0>`_
 
      **变更描述、兼容及升级说明**
@@ -81,6 +86,7 @@
 .. toctree::
    :hidden:
    
+   2_2_0.md
    2_1_0.md
    2_0_0.md
    2_0_0_rc3.md
