@@ -352,7 +352,7 @@ min_block_generation_time=500
 
 ### PBFT交易打包动态调整
 
-考虑到CPU负载和网络延迟对系统处理能力的影响，PBFT提供了动态调整一个区块内可打包最大交易数的算法，该算法会根据历史交易处理情况动态调整区块内可打包的最大交易数，默认开启，也可通过将可变配置`group.group_id.ini`的`[consensus].enable_dynamic_block_size`配置项修改为`false`来关闭该算法，此时区块内可最大交易数为`group.group_id.genesis`的`[consensus].max_trans_num`。
+考虑到CPU负载和网络延迟对系统处理能力的影响，PBFT提供了动态调整一个区块内可打包最大交易数的算法，该算法会根据历史交易处理情况动态调整区块内可打包的最大交易数，默认开启，也可通过将可变配置`group.group_id.ini`的`[consensus].enable_dynamic_block_size`配置项修改为`false`来关闭该算法，此时区块内可打包的最大交易数为`group.group_id.genesis`的`[consensus].max_trans_num`。
 
 关闭区块打包交易数动态调整算法的配置如下：
 
@@ -361,6 +361,76 @@ min_block_generation_time=500
     enable_dynamic_block_size=false
 ```
 
+### PBFT消息转发配置
+
+FISCO BCOS v2.2.0优化了PBFT消息转发机制，保证网络断连场景下PBFT消息包能尽量到达每个共识节点的同时，降低网络中冗余的PBFT消息包，PBFT消息转发优化策略请参考[这里](../design/consensus/pbft_optimize.md)。可通过`group.group_id.ini`的`[consensus].enable_ttl_optimization`配置项开启或关闭PBFT消息转发优化策略。
+
+- `[consensus].enable_ttl_optimization`配置为`true`：打开PBFT消息转发优化策略
+- `[consensus].enable_ttl_optimization`配置为`false`：关闭PBFT消息转发优化策略
+- `supported_version`不小于v2.2.0时，默认打开PBFT消息转发策略；`supported_version`小于v2.2.0时，默认关闭PBFT消息转发优化策略
+
+关闭PBFT消息转发优化策略配置如下：
+
+```ini
+[consensus]
+    enable_ttl_optimization=false
+```
+
+### PBFT Prepare包结构优化
+
+考虑到PBFT算法中，Leader广播的Prepare包内区块的交易有极大概率在其他共识节点的交易池中命中，为了节省网络带宽，FISCO BCOS v2.2.0优化了Prepare包结构：Prepare包内的区块仅包含交易哈希列表，其他共识节点收到Prepare包后，优先从本地交易池获取命中的交易，并向Leader请求缺失的交易，详细设计请参考[这里](../design/consensus/pbft_optimize.md)。可通过`group.group_id.ini`的`[consensus].enable_prepare_with_txsHash`配置项开启或关闭该策略。
+
+- `[consensus].enable_prepare_with_txsHash`配置为`true`：打开Prepare包结构优化，Prepare消息包内区块仅包含交易哈希列表
+- `[consensus].enable_prepare_with_txsHash`配置为`false`：关闭Prepare包结构优化，Prepare消息包内区块包含全量的交易
+- `supported_version`不小于v2.2.0时，`[consensus].enable_prepare_with_txsHash`默认为`true`；`supported_version`小于v2.2.0时，`[consensus].enable_prepare_with_txsHash`默认为`false`
+
+关闭PBFT Prepare包结构优化配置如下：
+```ini
+[consensus]
+    enable_prepare_with_txsHash=false
+```
+
+### 区块同步优化配置
+
+为了增强区块链系统在网络带宽受限情况下的可扩展性，FISCO BCOS v2.2.0对区块同步进行了优化，详细的优化策略请参考[这里](../design/sync/sync_block_optimize.md)。可通过`group.group_id.ini`的`[sync].sync_block_by_tree`开启或关闭区块同步优化策略。
+
+- `[sync].sync_block_by_tree`配置为`true`：打开区块同步优化策略
+- `[sync].sync_block_by_tree`配置为`false`：关闭区块同步优化策略
+-  `supported_version`不小于v2.2.0时，`[sync].sync_block_by_tree`默认为`true`；`supported_version`小于v2.2.0时，`[sync].sync_block_by_tree`默认为`false`
+
+此外，为了保障树状拓扑区块同步的健壮性，FISCO BCOS v2.2.0还引入了gossip协议定期同步区块状态，gossip协议相关配置项均位于`group.group_id.ini`的`[sync]`中，具体如下：
+
+```eval_rst
+.. note::
+
+    gossip协议配置项，仅在开启区块树状广播优化时生效
+```
+- `gossip_interval_ms`：gossip协议同步区块状态周期，默认为1000ms
+- `gossip_peers_number`：节点每次同步区块状态时，随机选取的邻居节点数目，默认为3
+
+开启区块树状广播优化配置如下：
+
+```ini
+[sync]
+    sync_block_by_tree=true
+    gossip_interval_ms=1000
+    gossip_peers_number=3
+```
+
+### 交易树状广播优化配置
+
+为了降低SDK直连节点的峰值出带宽，提升区块链系统可扩展性，FISCO BCOS v2.2.0引入了交易树状广播优化策略，详细设计请参考[这里](../design/sync/sync_trans_optimize.md)。可通过`group.group_id.ini`的`[sync].send_txs_by_tree`开启或关闭交易树状广播策略。
+
+- `[sync].send_txs_by_tree`设置为`true`：打开交易树状广播策略
+- `[sync].send_txs_by_tree`设置为`false`：关闭交易树状广播优化策略
+- `supported_version`不小于v2.2.0时，默认打开交易树状广播优化策略；`supported_version`小于v2.2.0时，默认关闭交易树状广播策略。
+
+关闭交易树状广播策略的配置如下：
+
+```ini
+[sync]
+    send_txs_by_tree=false
+```
 
 ### 并行交易配置
 
