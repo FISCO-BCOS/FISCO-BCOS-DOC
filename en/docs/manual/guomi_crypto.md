@@ -89,6 +89,10 @@ ca_cert: the path of certificate gmca
 
 For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
 
+## OSCCA-approved cryptography console configuration
+
+See [Console Operations Manual] (../manual/console.md) `Configure OSCCA-approved cryptography console` chapter。
+
 ## using OSCCA-approved cryptography console
 
 The function of OSCCA-approved cryptography console is used in the same way as the standard console. See [Console Operations Manual] (../manual/console.md).
