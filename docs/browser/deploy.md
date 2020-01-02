@@ -174,7 +174,6 @@ mysql -utest -p123456 -h 127.0.0.1 -P 3306
 
 ```sql
 mysql > show databases;
-mysql > use test;
 ```
 
 （6）创建数据库
