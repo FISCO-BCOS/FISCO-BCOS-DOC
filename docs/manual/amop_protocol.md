@@ -179,7 +179,7 @@ import org.fisco.bcos.channel.dto.ChannelPush;
 import org.fisco.bcos.channel.dto.ChannelResponse;
 
 class PushCallback extends ChannelPushCallback {
-    static Logger logger = LoggerFactory.getLogger(PushCallback2.class);
+    static Logger logger = LoggerFactory.getLogger(PushCallback.class);
 
     // onPush方法，在收到AMOP消息时被调用
     @Override
