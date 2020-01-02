@@ -48,7 +48,7 @@ Example (Change the database IP from 10.0.0.1 to 0.0.0.0): sed -i "s/10.0.0.1/0.
 set up all the service:
 
 ```shell
-python deploy.py startAll
+python deploy.py installAll
 ```
 
 stop all the service:

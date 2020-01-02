@@ -51,7 +51,7 @@ cd fisco-bcos-browser/deploy
 部署所有服务：
 
 ```shell
-python deploy.py startAll
+python deploy.py installAll
 ```
 
 停止所有服务：
