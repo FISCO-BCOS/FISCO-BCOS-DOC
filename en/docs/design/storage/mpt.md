@@ -3,7 +3,7 @@
 MPT State is a classic data storage type in Ethereum. Through MPT tree, all contract data is organized to be inquired and retrieved.
 
 ```eval_rst
-.. deprecated::
+.. important::
     MPT State will be deprecated in v2.3.0, Please use **storage state**.
 ```
 

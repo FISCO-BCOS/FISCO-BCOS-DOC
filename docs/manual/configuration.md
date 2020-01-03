@@ -138,7 +138,7 @@ FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibi
 
 ```eval_rst
 .. important::
-    - 可通过 ``./fisco-bcos --version | grep "FISCO-BCOS Version" | cut -d':' -f2 | sed s/[[:space:]]//g`` 命令查看FISCO BCOS的当前支持的最高版本
+    - 可通过 ``./fisco-bcos --version | grep "Version" `` 命令查看FISCO BCOS的当前支持的最高版本
     - build_chain.sh生成的区块链节点配置中，supported_version配置为FISCO BCOS当前的最高版本
     - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，
 ```
@@ -150,7 +150,6 @@ FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibi
 [compatibility]
     supported_version=2.2.0
 ```
-
 
 ### 可选配置：落盘加密
 
@@ -175,7 +174,6 @@ key_manager_ip=127.0.0.1
 key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
-
 
 ## 群组系统配置说明
 
@@ -236,7 +234,7 @@ id=2
 - `type`：state类型，目前支持[storage state](../design/storage/storage.html#id6)和[MPT state](../design/storage/mpt.html)，**默认为storage state**，storage state将交易执行结果存储在系统表中，效率较高，MPT state将交易执行结果存储在MPT树中，效率较低，但包含完整的历史信息。
 
 ```eval_rst
-.. deprecated::
+.. important::
    MPT State将会在v2.3.0弃用，请使用 **storage state**
 ```
 
@@ -267,7 +265,7 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 #### 公共配置项
 
 ```eval_rst
-.. deprecated::
+.. important::
    External模式将会在v2.3.0弃用，若要使用Mysql请用直连模式，配置type为MySQL。
 ```
 
