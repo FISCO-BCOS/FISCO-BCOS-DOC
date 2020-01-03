@@ -49,9 +49,9 @@
 ### 获取控制台
 
 ```bash
-$ cd ~ && mkdir -p fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 目录结构如下：
 ```bash

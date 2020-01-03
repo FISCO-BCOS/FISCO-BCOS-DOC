@@ -63,10 +63,10 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-================================================================
-[INFO] Execute the following command to get FISCO-BCOS console
- bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-================================================================
+==============================================================
+[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
+ bash download_console.sh
+==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
@@ -164,7 +164,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco && bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+cd ~/fisco && bash nodes/127.0.0.1/download_console.sh
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.

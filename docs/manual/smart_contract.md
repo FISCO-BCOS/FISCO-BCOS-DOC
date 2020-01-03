@@ -96,7 +96,7 @@ contract Table {
 ```
 
 ```eval_rst
-.. deprecated::
+.. important::
    v2.2.0及之前版本CRUD接口的表中中主Key下可以有多条记录，v2.3.0将会废弃该特性。在v2.3.0之后的版本中主Key只允许唯一对应一条记录。
 ```
 

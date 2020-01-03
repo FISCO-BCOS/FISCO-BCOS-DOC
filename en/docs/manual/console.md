@@ -56,7 +56,7 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+$ bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 The directory structure is as follows:
 ```bash

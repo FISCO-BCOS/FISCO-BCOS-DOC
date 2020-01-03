@@ -198,7 +198,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### Prepare dependence
 ```bash
 cd ~/fisco;
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
@@ -317,7 +317,7 @@ https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/manual/distrib
 https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc2/docs/manual/amdbconfig.html)
 
 ```eval_rst
-.. deprecated::
+.. important::
    External will be deprecated in v2.3.0, please use MySQL instead.
 ```
 

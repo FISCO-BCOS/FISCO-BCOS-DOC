@@ -237,7 +237,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### 准备依赖
 ```bash
 cd ~/fisco;
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
@@ -350,7 +350,7 @@ item_name: apple
 本使用手册仅对节点版本2.1.0以及以后的版本有效，需要在2.0.0-rc3或者2.0.0中使用“通过代理访问MySQL”的访问方式去搭建分布式存储环境。请参考文档[分布式存储搭建方法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/manual/distributed_storage.html)。需要在2.0.0-rc2中使用“通过代理访问MySQL”的访问方式去搭建分布式存储环境。请参考文档[分布式存储搭建方法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc2/docs/manual/amdbconfig.html)
 
 ```eval_rst
-.. deprecated::
+.. important::
    External模式将会在v2.3.0弃用，请使用MySQL模式替代。
 ```
 
