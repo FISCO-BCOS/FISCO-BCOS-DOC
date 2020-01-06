@@ -658,7 +658,7 @@ Returns the receipt of a transaction by transaction hash.
     - `to`: `string` - address of the receiver. `0x0000000000000000000000000000000000000000` when its a contract creation.
     - `transactionHash`: `string` - hash of the transaction          
 - `transactionIndex`: `string` - integer of the transaction's index position in the block
-    
+
 - Example          
 ```
 // Request
@@ -1102,15 +1102,15 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 |1(0x1)  |Unknown |unknown exception |
 |2(0x2)  |BadRLP|invalid RLP exception |
 |3(0x3)  |InvalidFormat |invalid format exception |
-|4(0x4)  |OutOfGasIntrinsic |not-enough cash exception |
+|4(0x4)  |OutOfGasIntrinsic |contract to deploy is too long |
 |5(0x5)  |InvalidSignature |invalid signature exception |
 |6(0x6)  |InvalidNonce |invalid nonce exception |
 |7(0x7)  |NotEnoughCash |not-enough cash exception |
-|8(0x8)  |OutOfGasBase |not-enough gas exception |
+|8(0x8)  |OutOfGasBase |input data is too long |
 |9(0x9)  |BlockGasLimitReached|GasLimit exception |
 |10(0xa)  |BadInstruction |wrong instruction exception |
 |11(0xb)  |BadJumpDestination |wrong jump destination exception |
-|12(0xc)  |OutOfGas |out-of-gas exception |
+|12(0xc)  |OutOfGas |out-of-gas during EVM execution |
 |13(0xd)  |OutOfStack |out-of-stack exception |
 |14(0xe)  |StackUnderflow |Stack under flow exception |
 |15(0xf)  |NonceCheckFail |nonce check fail exception |
