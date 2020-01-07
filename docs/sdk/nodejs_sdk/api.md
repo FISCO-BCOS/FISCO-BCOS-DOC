@@ -50,13 +50,11 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 | getTransactionReceipt | 根据交易哈希获取交易回执  | 交易哈希 | 同上 |
 | getCode | 根据合约地址查询的合约数据 | 合约地址 | 同上 |
 | getSystemConfigByKey |  获取系统配置 | 系统配置关键字，目前支持<br>：<br> - tx_count_limit <br> - tx_gas_limit| 同上 |
-| sendRawTransaction | 发送交易，或调用可写合约 | 交易的RLP编码，调用合约时等同于call接口的参数  | 同上 |
+| sendRawTransaction | 发送一个经过签名的交易，该交易随后会被链上节点执行并共识 | 接受数量可变的参数：当参数数量为1时，参数应为交易的RLP编码；当参数数量为3时，参数应为合约地址、方法签名及方法参数  | 同上 |
 | deploy |  部署合约  | 合约路径<br>输出路径| 同上 |
 | call | 调用只读合约  | 合约地址<br>调用接口\*<br>参数列表 | 同上 |
 
-\*调用接口：函数名(参数类型,...)，例如：func(uint,uint)，参数类型之间不能有空格
-
-\*\*可使用`nodejs-sdk/packages/api/common/web3lib/utils`中的decodeParams函数解析返回结果
+\*调用接口：函数名(参数类型,...)，例如：func(uint256,uint256)，参数类型之间不能有空格
 
 ## PrecompiledService
 
