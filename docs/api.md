@@ -1089,35 +1089,35 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 
 ### 交易回执状态
 
-| status(十进制/十六进制) | message                    | 含义                   |
-| :---------------------- | :------------------------- | :--------------------- |
-| 0(0x0)                  | None                       | 正常                   |
-| 1(0x1)                  | Unknown                    | 未知异常               |
-| 2(0x2)                  | BadRLP                     | 无效RLP异常            |
-| 3(0x3)                  | InvalidFormat              | 无效格式异常           |
-| 4(0x4)                  | OutOfGasIntrinsic          | 部署的合约过长         |
-| 5(0x5)                  | InvalidSignature           | 无效的签名异常         |
-| 6(0x6)                  | InvalidNonce               | 无效nonce异常          |
-| 7(0x7)                  | NotEnoughCash              | cash不足异常           |
-| 8(0x8)                  | OutOfGasBase               | 调用合约的参数过长     |
-| 9(0x9)                  | BlockGasLimitReached       | GasLimit异常           |
-| 10(0xa)                 | BadInstruction             | 错误指令异常           |
-| 11(0xb)                 | BadJumpDestination         | 错误目的跳转异常       |
-| 12(0xc)                 | OutOfGas                   | 合约执行时gas不足      |
-| 13(0xd)                 | OutOfStack                 | 栈溢出异常             |
-| 14(0xe)                 | StackUnderflow             | 栈下限溢位异常         |
-| 15(0xf)                 | NonceCheckFail             | nonce检测失败异常      |
-| 16(0x10)                | BlockLimitCheckFail        | blocklimit检测失败异常 |
-| 17(0x11)                | FilterCheckFail            | filter检测失败异常     |
-| 18(0x12)                | NoDeployPermission         | 非法部署合约异常       |
-| 19(0x13)                | NoCallPermission           | 非法call合约异常       |
-| 20(0x14)                | NoTxPermission             | 非法交易异常           |
-| 21(0x15)                | PrecompiledError           | precompiled错误异常    |
-| 22(0x16)                | RevertInstruction          | revert指令异常         |
-| 23(0x17)                | InvalidZeroSignatureFormat | 无效签名格式异常       |
-| 24(0x18)                | AddressAlreadyUsed         | 地址占用异常           |
-| 25(0x19)                | PermissionDenied           | 无权限异常             |
-| 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在 |
+| status(十进制/十六进制) | message                    | 含义                                                  |
+| :---------------------- | :------------------------- | :---------------------------------------------------- |
+| 0(0x0)                  | None                       | 正常                                                  |
+| 1(0x1)                  | Unknown                    | 未知异常                                              |
+| 2(0x2)                  | BadRLP                     | 无效RLP异常                                           |
+| 3(0x3)                  | InvalidFormat              | 无效格式异常                                          |
+| 4(0x4)                  | OutOfGasIntrinsic          | 部署的合约长度超过gas限制/调用合约接口参数超过gas限制 |
+| 5(0x5)                  | InvalidSignature           | 无效的签名异常                                        |
+| 6(0x6)                  | InvalidNonce               | 无效nonce异常                                         |
+| 7(0x7)                  | NotEnoughCash              | cash不足异常                                          |
+| 8(0x8)                  | OutOfGasBase               | 调用合约的参数过长 (RC版本)                           |
+| 9(0x9)                  | BlockGasLimitReached       | GasLimit异常                                          |
+| 10(0xa)                 | BadInstruction             | 错误指令异常                                          |
+| 11(0xb)                 | BadJumpDestination         | 错误目的跳转异常                                      |
+| 12(0xc)                 | OutOfGas                   | 合约执行时gas不足 / 部署的合约长度超过最长上限        |
+| 13(0xd)                 | OutOfStack                 | 栈溢出异常                                            |
+| 14(0xe)                 | StackUnderflow             | 栈下限溢位异常                                        |
+| 15(0xf)                 | NonceCheckFail             | nonce检测失败异常                                     |
+| 16(0x10)                | BlockLimitCheckFail        | blocklimit检测失败异常                                |
+| 17(0x11)                | FilterCheckFail            | filter检测失败异常                                    |
+| 18(0x12)                | NoDeployPermission         | 非法部署合约异常                                      |
+| 19(0x13)                | NoCallPermission           | 非法call合约异常                                      |
+| 20(0x14)                | NoTxPermission             | 非法交易异常                                          |
+| 21(0x15)                | PrecompiledError           | precompiled错误异常                                   |
+| 22(0x16)                | RevertInstruction          | revert指令异常                                        |
+| 23(0x17)                | InvalidZeroSignatureFormat | 无效签名格式异常                                      |
+| 24(0x18)                | AddressAlreadyUsed         | 地址占用异常                                          |
+| 25(0x19)                | PermissionDenied           | 无权限异常                                            |
+| 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在                                |
 
 ### Precompiled Service API 错误码
 
