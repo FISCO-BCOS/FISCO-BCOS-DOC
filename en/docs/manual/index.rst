@@ -49,7 +49,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
         + Configuration and options
     - `Manage blockchain accounts <./account.html>`_
         + Account generation and using guide.
-    - `SDK <../sdk/sdk.html>`_
+    - `SDK <../sdk/index.html>`_
         + The SDK to call smart from outside
     - `AMOP <./amop_protocol.html>`_
         + Send messages between SDKs

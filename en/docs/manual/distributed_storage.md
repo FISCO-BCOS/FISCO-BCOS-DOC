@@ -53,7 +53,7 @@ Before using distributed storage, you need to complete the establishment of the 
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### Generate configuration file
 ```bash
@@ -198,7 +198,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### Prepare dependence
 ```bash
 cd ~/fisco;
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
@@ -316,6 +316,10 @@ This operation tutorial is only valid for the 2.1.0 or newer node version.If you
 https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/manual/distributed_storage.html) If you need to build a distributed storage environment in 2.0.0-rc2 through "accessing MySQL through proxy", please refer to the document [Distributed Storage Building Method](
 https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc2/docs/manual/amdbconfig.html)
 
+```eval_rst
+.. important::
+   External will be deprecated in v2.3.0, please use MySQL instead.
+```
 
 ### Logical architecture diagram
 
@@ -343,7 +347,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - get `build_chain` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### Generate configuration file

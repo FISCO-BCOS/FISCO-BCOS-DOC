@@ -23,7 +23,7 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
     - To know more about functions of FISCO BCOS 2.0+, please read `Config files and items <./docs/manual/configuration.html>`_, `Node access <./docs/manual/node_management.html>`_, `Parallel transactions <./docs/manual/transaction_parallel.html>`_, `Distributed storage <./docs/manual/distributed_storage.html>`_, `OSCCA computing <./docs/manual/guomi_crypto.html>`_ in `Operation Tutorial <./docs/manual/index.html>`_
     - `Console <./docs/manual/console.html>`_：**Interactive command tool** to visit blockchain nodes and check status, deploy or call contract, etc.
     - `Deployment tool(Generator) <./docs/enterprise_tools/index.html>`_：to support operations like building blockchain, expansion, etc., **recommended for business level applications**. You can learn the operation methods in `Quick Guide <./docs/enterprise_tools/tutorial_one_click.html>`_
-    - `Web3SDK <./docs/sdk/sdk.html>`_：offer APIs for node status, blockchain system configuration modification and nodes to send transactions.
+    - `SDK <./docs/sdk/index.html>`_：offer APIs for node status, blockchain system configuration modification and nodes to send transactions.
     - The detailed introduction of browser is in `Browser <./docs/browser/browser.html>`_
     - JSON-RPC interface is introduced in `JSON-RPC API <./docs/api.html>`_
     - System design documentation: `System design <./docs/design/index.html>`_

@@ -921,7 +921,7 @@ map =>
   "fromBlock": "latest",
   "toBlock": "latest",
   "addresses": [
-    0xca5ed56862869c25da0bdf186e634aac6c6361ee
+    "0xca5ed56862869c25da0bdf186e634aac6c6361ee"
   ],
   "topics": [
     "0x91c95f04198617c60eaf2180fbca88fc192db379657df0e412a9f7dd4ebbe95d"

@@ -51,7 +51,7 @@
         + 详细的控制台配置和使用说明
     - `账户管理 <./account.html>`_
         + 生成账户、用特定账户操作链
-    - `SDK <../sdk/sdk.html>`_
+    - `SDK <../sdk/index.html>`_
         + 外部应用调用区块链上的智能合约
     - `链上信使协议 <./amop_protocol.html>`_
         + 多个SDK间的消息相互推送

@@ -34,7 +34,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.1.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 搭建单群组4节点联盟链
@@ -64,19 +64,18 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-================================================================
-[INFO] Execute the following command to get FISCO-BCOS console
- bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-================================================================
+==============================================================
+[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
+ bash download_console.sh
+==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/ubuntu16/fisco/nodes
-[INFO] CA Key Path       : /home/ubuntu16/fisco/nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu/fisco/nodes
+[INFO] CA Key Path       : /home/ubuntu/fisco/nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/ubuntu16/fisco/nodes
+[INFO] All completed. Files in /home/ubuntu/fisco/nodes
 ```
 
 ### 启动FISCO BCOS链
@@ -163,7 +162,7 @@ sudo apt install -y default-jdk
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+cd ~/fisco && bash nodes/127.0.0.1/download_console.sh
 ```
 
 - 拷贝控制台配置文件

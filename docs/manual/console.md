@@ -49,9 +49,9 @@
 ### 获取控制台
 
 ```bash
-$ cd ~ && mkdir -p fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 目录结构如下：
 ```bash
@@ -72,59 +72,6 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |-- get_account.sh # 账户生成脚本
 |-- sol2java.sh # solidity合约文件编译为java合约文件的开发工具脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
-```
-
-#### 合约编译工具
-
-**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
-  - 将solidity合约文件放在`contracts/solidity`目录下。
-  - 通过运行`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，`contracts/solidity`目录下已有`HelloWorld.sol`、`TableTest.sol`、`Table.sol`合约，指定包名为`org.com.fisco`，命令如下：
-    ```bash
-    $ cd ~/fisco/console
-    $ ./sol2java.sh org.com.fisco
-    ```
-    运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
-    ```bash
-    |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
-    |   |-- HelloWorld.abi
-    |   |-- Table.abi
-    |   |-- TableTest.abi
-    |-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
-    |   |-- HelloWorld.bin
-    |   |-- Table.bin
-    |   |-- TableTest.bin
-    |-- java  # 存放编译的包路径及Java合约文件
-    |   |-- org
-    |       |-- com
-    |           |-- fisco
-    |               |-- HelloWorld.java # 编译的HelloWorld Java文件
-    |               |-- Table.java  # 编译的系统CRUD合约接口Java文件
-    |               |-- TableTest.java  # 编译的TableTest Java文件
-    ```
-    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
-
-**注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。可以通过`./replace_solc_jar.sh`脚本进行替换，指定下载的编译器jar包路径，命令如下：
-```bash
-# 下载solcJ-all-0.5.2.jar放在console目录下，示例用法如下
-$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
-```
-
-#### 下载合约编译jar包
-0.4版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
-```
-0.5版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
-```
-国密0.4版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-国密0.5版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
 ```
 
 ### 配置控制台
@@ -189,6 +136,80 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
     - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
 
+```
+
+### 配置国密版控制台
+国密版的控制台配置与非国密版控制台的配置流程有一些区别，流程如下：
+- 区块链节点和证书的配置：
+  - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
+  
+- 打开国密开关
+```
+<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+    <!-- encryptType值设置为1，打开国密开关 -->
+    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
+</bean>
+```
+- 替换国密编译包  
+```bash
+# 下载solcJ-all-0.4.25-gm.jar放在console目录下
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar 
+# 替换Jar包
+$ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
+``` 
+
+#### 合约编译工具
+
+**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
+  - 将solidity合约文件放在`contracts/solidity`目录下。
+  - 通过运行`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，`contracts/solidity`目录下已有`HelloWorld.sol`、`TableTest.sol`、`Table.sol`合约，指定包名为`org.com.fisco`，命令如下：
+    ```bash
+    $ cd ~/fisco/console
+    $ ./sol2java.sh org.com.fisco
+    ```
+    运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
+    ```bash
+    |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
+    |   |-- HelloWorld.abi
+    |   |-- Table.abi
+    |   |-- TableTest.abi
+    |-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
+    |   |-- HelloWorld.bin
+    |   |-- Table.bin
+    |   |-- TableTest.bin
+    |-- java  # 存放编译的包路径及Java合约文件
+    |   |-- org
+    |       |-- com
+    |           |-- fisco
+    |               |-- HelloWorld.java # 编译的HelloWorld Java文件
+    |               |-- Table.java  # 编译的系统CRUD合约接口Java文件
+    |               |-- TableTest.java  # 编译的TableTest Java文件
+    ```
+    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
+
+**注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。可以通过`./replace_solc_jar.sh`脚本进行替换，指定下载的编译器jar包路径，命令如下：
+```bash
+# 下载solcJ-all-0.5.2.jar放在console目录下，示例用法如下
+$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
+```
+
+#### 下载合约编译jar包
+0.4版本合约编译jar包
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
+```
+0.5版本合约编译jar包
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
+```
+国密0.4版本合约编译jar包
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
+```
+国密0.5版本合约编译jar包
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
 ```
 ### 启动控制台
 
