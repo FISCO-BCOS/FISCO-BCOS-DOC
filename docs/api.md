@@ -1126,8 +1126,9 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | 0      | success                                          |          |
 | -50000  | permission denied                               |          |
 | -50001  | table name already exist                        |          |
-| -50100  | unknow function call                            |          |
-| -50101  | table does not exist                            |          |
+| -50100  | table does not exist                            |          |
+| -50101  | unknow function call                            |          |
+| -50102  | address invalid                                 |          |
 | -51000  | table name and address already exist            |          |
 | -51001  | table name and address does not exist           |          |
 | -51100  | invalid node ID                                 | SDK错误码 |
