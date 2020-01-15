@@ -16,6 +16,6 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 
 <a name="QR"></a>
 ![](../images/community/qr_code1.png)
-![](../images/community/qr_code2.png)
+![](../images/community/qr_code2.1.png)
 ![](../images/community/changeable_body.png)
 ![](../images/community/tailer.png)
