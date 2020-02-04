@@ -80,4 +80,4 @@ When a new node has joined group, and it's its first start, the new member would
 4. the manager adds new member to the group.
 5. members broadcast their status to the new member.
 6. the new member receives the block message and compares with its block number (which is 0), and start downloading.
-7. the following process is the same as block syncing among group members.
+7. the following process is the same as block syncing among group members. 

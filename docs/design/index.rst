@@ -8,7 +8,7 @@
    :maxdepth: 2
 
    architecture/index.rst
-   sync/index.md
+   sync/index.rst
    consensus/index.rst
    virtual_machine/index.rst
    storage/index.rst
