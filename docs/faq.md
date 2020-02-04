@@ -129,7 +129,7 @@
 问:
   为什么本地SDK无法连接云服务器上的FISCO BCOS节点？<br>
 答:
-  1. 检查云服务器上的节点配置，channel是否监听外网IP，而不是`127.0.0.1`。端口介绍[参考这里](https://mp.weixin.qq.com/s/IiHsPlxmvEEBTC84n27I9A)
+  1. 检查云服务器上的节点配置，channel是否监听外网IP，而不是`127.0.0.1`。端口介绍[参考这里](https://mp.weixin.qq.com/s/XZ0pXEELaj8kXHo32UFprg)
   2. 检查通过云服务器提厂商提供的控制台，检查是否配置了安全组，需要在安全组中开放FISCO BCOS节点所使用的channel端口。
   3. 检查生成的证书是否正确，[参考这里](./enterprise_tools/operation.md#节点配置错误检查)
 
