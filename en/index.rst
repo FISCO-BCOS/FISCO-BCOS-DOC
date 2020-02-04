@@ -7,10 +7,10 @@ FISCO BCOS Documentation
 FISCO BCOS is a reliable, secure, efficient and portable blockchain platform with proven success from many partners and successful financial-grade applications.
 
 - `Github homepage <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
-- `Insightful articles <http://mp.weixin.qq.com/mp/homepage?__biz=MzU5NTg0MjA4MA==&hid=9&sn=7edf9a62a2f45494671c91f0608db903&scene=18#wechat_redirect>`_
-- `Code contribution <https://mp.weixin.qq.com/s/hEn2rxqnqp0dF6OKH6Ua-A>`_
+- `Insightful articles <http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect>`_
+- `Code contribution <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
 - `Feedback <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
-- `Application cases <https://mp.weixin.qq.com/s/vUSq80LkhF8yCfUF7AILgQ>`_
+- `Application cases <https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA>`_
 
 - `WeChat group <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/WeChatQR%2Ejpg>`_
 - `WeChat official account <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/OfficialAccountsQR%2Ejpg>`_

@@ -131,7 +131,7 @@ A:
 Q:
   Why can't local SDK connect to FISCO BCOS nodes on cloud servers?<br>
 A:
-  1. Check the node configuration on the cloud server to see if Channel is listening for IP over the extranet, rather than `127.0.0.1`. Port Description [Refer here](https://mp.weixin.qq.com/s/IiHsPlxmvEEBTC84n27I9A)
+  1. Check the node configuration on the cloud server to see if Channel is listening for IP over the extranet, rather than `127.0.0.1`. Port Description [Refer here](https://mp.weixin.qq.com/s/XZ0pXEELaj8kXHo32UFprg)
   2. Check the console provided by the cloud manufacturer of the cloud server, check whether the security group is configured, and open the channel port used by FISCO BCOS nodes in the security group.
   3. Check that the generated certificate is correct, [refer to here](./enterprise_tools/operation.md#node-configuration-error-checking)
 
