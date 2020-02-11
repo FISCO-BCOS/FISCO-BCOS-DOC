@@ -65,13 +65,12 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
-[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
- bash download_console.sh
+[INFO] Execute the download_console.sh script in directory named by IP to get FISCO-BCOS console.
+e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh
 ==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] RPC listen IP     : 127.0.0.1
 [INFO] Output Dir        : /home/ubuntu/fisco/nodes
 [INFO] CA Key Path       : /home/ubuntu/fisco/nodes/cert/ca.key
 ==============================================================
@@ -109,10 +108,10 @@ ps -ef | grep -v grep | grep fisco-bcos
 正常情况会有类似下面的输出；  
 如果进程数不为4，则进程没有启动（一般是端口被占用导致的）
 ```bash
-fisco       5453     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-fisco       5459     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
-fisco       5464     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco       5459     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
 ### 检查日志输出
