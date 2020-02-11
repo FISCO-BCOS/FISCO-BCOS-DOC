@@ -1,6 +1,6 @@
 # Installation
 
-This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS.
+This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS. Please use the supported **hardware and platform** operations [according to here](./manual/hardware_requirements.md).
 
 ## To build a single-group consortium chain
 
@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### Build a single-group 4-node consortium chain
@@ -63,10 +63,10 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-================================================================
-[INFO] Execute the following command to get FISCO-BCOS console
- bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-================================================================
+==============================================================
+[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
+ bash download_console.sh
+==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
@@ -164,7 +164,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco && bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+cd ~/fisco && bash nodes/127.0.0.1/download_console.sh
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
@@ -277,7 +277,7 @@ contract HelloWorld {
 
 ### Deploy HelloWorld contract
 
-For quick experience, the console comes with HelloWorld contract and is placed under console folder `solidity/contracts/HelloWorld.sol`. So, users only have to deploy it using the following command.
+For quick experience, the console comes with HelloWorld contract and is placed under console folder `contracts/solidity/HelloWorld.sol`. So, users only have to deploy it using the following command.
 
 ```bash
 # input the following instruction in console, if it is deployed successfully, the contract address will be returned

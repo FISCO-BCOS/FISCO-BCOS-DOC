@@ -1,8 +1,8 @@
 # Web3SDK
 
-[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
+[Web3SDK](https://github.com/FISCO-BCOS/web3sdk) provides the Java API for FISCO BCOS. You can easily and quickly develop your blockchain applications based on the Web3SDK. The version only supports FISCO BCOS 2.0+. For Web3SDK 1.2.x please check [Web3SDK 1.2.x Documentation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html).
 
-Main features of version 2.0 includes:
+Main features of version 2.0+ includes:
 - provide Java API to call FISCO BCOS JSON-RPC
 - provide pre-compiled contracts to manage the blockchain
 - provide secure and efficient message channel with [AMOP](../manual/amop_protocol.md)
@@ -28,14 +28,14 @@ Main features of version 2.0 includes:
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.0.4')
+compile ('org.fisco-bcos:web3sdk:2.1.0')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.0.4</version>
+    <version>2.1.0</version>
 </dependency>
 ```
 Because the relative jar archive of the solidity compiler of Ethereum is imported, we need to add a remote repository of Ethereum in the gradle configuration file build.gradle of the java application.
@@ -51,10 +51,10 @@ repositories {
 ## Configuration of SDK
 
 ### FISCO BCOS node certificate configuration
-FISCO BCOS requires SDK to pass two-way authentication on certificate(ca.crt、node.crt) and private key(node.key) when connecting with nodes. Therefore, we need to copy `ca.crt`, `node.crt` and `node.key` under `nodes/${ip}/sdk` folder of node to the resource folder of the project for SDK to connect with nodes.
+FISCO BCOS requires SDK to pass two-way authentication on certificate(ca.crt、sdk.crt) and private key(sdk.key) when connecting with nodes. Therefore, we need to copy `ca.crt`, `sdk.crt` and `sdk.key` under `nodes/${ip}/sdk` folder of node to the resource folder of the project for SDK to connect with nodes.(There are only `node.crt` and `node.key` before FISCO BCOS version 2.1. Rename them to `sdk.crt` and `sdk.key` to compatible with latest SDK version)
 
 ### Configuration of config file
-The config file of java application should be configured. It is noteworthy that FISCO BCOS 2.0 supports [Multi-group function](../design/architecture/group.md), and SDK needs to configure the nodes of the group. The configuration process will be exemplified in this chapter by Spring and Spring Boot project.
+The config file of java application should be configured. It is noteworthy that FISCO BCOS 2.0+ supports [Multi-group function](../design/architecture/group.md), and SDK needs to configure the nodes of the group. The configuration process will be exemplified in this chapter by Spring and Spring Boot project.
 
 ### Configuration of Spring project
 The following picture shows how `applicationContext.xml` is configured in Spring project.
@@ -78,6 +78,9 @@ The following picture shows how `applicationContext.xml` is configured in Spring
         </bean>
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <property name="caCert" value="ca.crt" />
+                <property name="sslCert" value="sdk.crt" />
+                <property name="sslKey" value="sdk.key" />
                 <property name="allChannelConnections">
                         <list>  <!-- each group needs to configure a beam, each group can configure multiple nodes-->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
@@ -117,26 +120,41 @@ Configuration items of `applicationContext.xml`:
 - groupChannelConnectionsConfig:
   - configure the group to be connected, which can be one or more, each should be given a group ID
   - each group configures one or more nodes, set `listen_ip` and `channel_listen_port` of `[rpc]` in node config file **config.ini**.
+  - `caCert` for configuring chain CA certificate path
+  - `sslCert` is used to configure the certificate path used by SDK
+  - `sslKey` is used to configure the private key path corresponding to the certificate used by SDK
 - channelService: configure the the group connected with SDK through the given group ID, which is in the configuration of groupChannelConnectionsConfig. SDK will be connected with each node of the group and randomly choose one node to send request.
 
+Note: Some plugins may not be installed when the project is downloading for the first time, and the code will report an error. When you first use the Lombok toolkit on IDEA, follow these steps:
+  - Enter settings->Plugins->Marketplace->Select to install Lombok plugin
+  - Enter settings->Compiler->Annotation Processors->Check Enable annotation processing
+
 ### Configuration of Spring Boot project
+
 The configuration of `application.yml` in Spring Boot is exemplified below.
-```yml
-encrypt-type: 0  # 0:standard, 1:guomi
+
+```yaml
+encrypt-type: # 0:standard, 1:guomi
+  encrypt-type: 0
+
 group-channel-connections-config:
+  caCert: ca.crt
+  sslCert: sdk.crt
+  sslKey: sdk.key
   all-channel-connections:
-  - group-id: 1  #group ID
-    connections-str:
-                    - 127.0.0.1:20200  # node listen_ip:channel_listen_port
-                    - 127.0.0.1:20201
-  - group-id: 2  
-    connections-str:
-                    - 127.0.0.1:20202  # node listen_ip:channel_listen_port
-                    - 127.0.0.1:20203
- 
+    - group-id: 1 #group ID
+      connections-str:
+        - 127.0.0.1:20200 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20201
+    - group-id: 2
+      connections-str:
+        - 127.0.0.1:20202 # node listen_ip:channel_listen_port
+        - 127.0.0.1:20203
+
 channel-service:
   group-id: 1 # The specified group to which the SDK connects
   agency-name: fisco # agency name
+
 ```
 The configuration items of `application.yml` corresponds with `applicationContext.xml`. For detailed introduction please check the configuration description of `applicationContext.xml`.
 
@@ -294,7 +312,7 @@ We provide [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-start
 
 ### Operations on OSCCA function of SDK
 - Preconditions: FISCO BCOS blockchain in OSCCA standard, to build it using OSCCA algorithm, please check [the operation tutorial](../manual/guomi_crypto.md).
-- switch on OSCCA function:  set encryptType as 1 in application.xml/application.yml configuration.
+- switch on OSCCA function:  set `encryptType` as 1 in `application.xml`/`application.yml` configuration.
 - The private key is loaded using the `GenCredential` class (for both OSCCA standard and ECDSA standard), and the `Credential` class is only for loading ECDSA standard.
 
 The OSCCA function of SDK calls the API in the same way as the ECDSA SDK. The difference is that the OSCCA function of SDK needs to generate the OSCCA version Java contract file. Compile the OSCCA version Java contract file [reference here](../manual/console.html#contract-compilation-tool).
@@ -351,10 +369,10 @@ SDK supports configuration of [node type](../design/security_control/node_manage
 #### CRUDService
 SDK supports CRUD (Create/Retrieve/Updata/Delete) operations. CRUDService of table include create, insert, retrieve, update and delete. Here are its APIs:
 - **int createTable(Table table)：** create table and table object, set the name of table, main key field and other fields; names of other fields are character strings separated by comma; return table status value, return 0 when it is created successfully.
-- **int insert(Table table, Entry entry)：** insert records, offer table object and Entry object, set table name and main key name; Entry is map object, offer inserted field name and its value, main key field is necessary; return the number of inserted records.
-- **int update(Table table, Entry entry, Condition condition)：** update records, offer table object, Entry object, Condition object. Table object needs to be set with table name and main key field name; Entry is map object, offer new field name and value; Condition object can set new conditions； return the number of new records.
-- **List\<Map\<String, String\>\> select(Table table, Condition condition)：** retrieve records, offer table object and Condition object. Table object needs to be set with table name and main key field name; Condition object can set condition for retrieving; return the retrieved record.
-- **int remove(Table table, Condition condition)：** remove records, offer table object and Condition object. Table object needs to be set with table name and main key field name; Condition object can set conditions for removing; remove the number of removed records.
+- **int insert(Table table, Entry entry)：** insert records, offer table object and Entry object, set table name and main key field value; Entry is map object, offer inserted field name and its value, main key field is necessary; return the number of inserted records.
+- **int update(Table table, Entry entry, Condition condition)：** update records, offer table object, Entry object, Condition object. Table object needs to be set with table name and main key field value; Entry is map object, offer new field name and value; Condition object can set new conditions； return the number of new records.
+- **List\<Map\<String, String\>\> select(Table table, Condition condition)：** retrieve records, offer table object and Condition object. Table object needs to be set with table name and main key field value; Condition object can set condition for retrieving; return the retrieved record.
+- **int remove(Table table, Condition condition)：** remove records, offer table object and Condition object. Table object needs to be set with table name and main key field value; Condition object can set conditions for removing; remove the number of removed records.
 - **Table desc(String tableName)：** inquire table information according to table name, mainly contain main key and other property fields; return table type, mainly containing field name of main key and other property.
 
 ## Transaction analysis
@@ -902,3 +920,7 @@ map =>
   ]
 }
 ```
+
+## Contract Event Push
+
+Waiting for add...

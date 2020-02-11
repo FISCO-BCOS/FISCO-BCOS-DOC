@@ -1,4 +1,4 @@
-# PBFT
+# PBFT基础流程
 
 **PBFT**(Practical Byzantine Fault Tolerance)共识算法可以在少数节点作恶(如伪造消息)场景中达成共识，它采用签名、签名验证、哈希等密码学算法确保消息传递过程中的防篡改性、防伪造性、不可抵赖性，并优化了前人工作，将拜占庭容错算法复杂度从指数级降低到多项式级别，在一个由(3\*f+1)个节点构成的系统中，只要有不少于(2\*f+1)个非恶意节点正常工作，该系统就能达成一致性，如：7个节点的系统中允许2个节点出现拜占庭错误。
 
@@ -98,7 +98,7 @@ PBFT共识主要包括两个线程:
 
 - PBFTSealer: PBFT打包线程，负责从交易池取交易，并将打包好的区块封装成PBFT Prepare包，交给PBFTEngine处理；
 
-- PBFTEngine: PBFT共识线程，从PBFTSealer或者P2P网络接收PBFT共识消息包，完成共识流程，将达成共识的区块写入区块链，区块上链后，从交易池中删除已经上链的交易，区块验证器(Blockverifier)负责执行区块。
+- PBFTEngine: PBFT共识线程，从PBFTSealer或者P2P网络接收PBFT共识消息包，区块验证器(Blockverifier)负责开始执行区块，完成共识流程，将达成共识的区块写入区块链，区块上链后，从交易池中删除已经上链的交易。
 
 
 ## 3. 核心流程
@@ -118,49 +118,49 @@ PBFT共识主要包括Pre-prepare、Prepare和Commit三个阶段：
 .. mermaid::
 
    graph TB
-         classDef blue fill:#4C84FF,stroke:#4C84FF,stroke-width:4px, font:#1D263F, text-align:center;
+        classDef blue fill:#4C84FF,stroke:#4C84FF,stroke-width:4px, font:#1D263F, text-align:center;
 
-         classDef yellow fill:#FFEEB8,stroke:#FFEEB8,stroke-width:4px, font:#1D263F, text-align:center;
+        classDef yellow fill:#FFEEB8,stroke:#FFEEB8,stroke-width:4px, font:#1D263F, text-align:center;
 
-         classDef light fill:#EBF5FF,stroke:#1D263F,stroke-width:2px,  font:#1D263F, text-align:center;
+        classDef light fill:#EBF5FF,stroke:#1D263F,stroke-width:2px,  font:#1D263F, text-align:center;
 
-         subgraph 共识处理流程
-         A((开始))-->B
-         B(获取PBFT请求类型)-->|Prepare请求|C
-         B-->|Sign请求|D
-         B-->|Commit请求|F
-         C(Prepare是否有效?)-->|是|G
-         C-->|否|B
+        subgraph 共识处理流程
+        A((开始))-->B
+        B(获取PBFT请求类型)-->|Prepare请求|C
+        B-->|Sign请求|D
+        B-->|Commit请求|F
+        C(Prepare是否有效?)-->|是|G
+        C-->|否|B
 
-         G(addRawPrepare<br/>缓存Prepare请求)-->H
-         H(Prepare内区块是空块?)-->|否|I
-         H-->|是|T
-         T(视图切换)
+        G(addRawPrepare<br/>缓存Prepare请求)-->H
+        H(Prepare内区块是空块?)-->|否|I
+        H-->|是|T
+        T(视图切换)
 
-         I(execBlock<br/>执行Prepare内区块)-->J
-         J(generateSignPacket<br/>产生签名请求)-->K
-         K(addPrepareCache<br/>缓存执行后区块)-->L
-         L(broadcacstSignReq<br/>广播签名请求)
+        I(execBlock<br/>执行Prepare内区块)-->J
+        J(generateSignPacket<br/>产生签名请求)-->K
+        K(addPrepareCache<br/>缓存执行后区块)-->L
+        L(broadcacstSignReq<br/>广播签名请求)
 
-         D(isSignReqValid<br/>签名请求是否有效?)-->|是|M
-         D-->|否|B
-         M(addSignReq<br/>缓存收到的签名请求)-->N
-         N(checkSignEnough<br/>签名请求是否达到2*f+1?)-->|是|O
-         N-->|否|B
-         O(updateLocalPrepare<br/>备份Prepare请求)-->P
-         P(broadcastCommitReq<br/>广播Commit请求, 表明节点已达到可提交区块状态)
-            
-         F(isCommitReqValid <br/> Commit请求是否有效?)-->|是|Q
-         Q(addCommitReq <br/> 缓存Commit请求)-->R
-         R(checkCommitEnough <br/> Commit请求是否达到2*f+1?)-->|是|S
-         R-->|否|B
-         S(CommitBlock<br> 将缓存的执行后区块提交到DB)
+        D(isSignReqValid<br/>签名请求是否有效?)-->|是|M
+        D-->|否|B
+        M(addSignReq<br/>缓存收到的签名请求)-->N
+        N(checkSignEnough<br/>签名请求是否达到2*f+1?)-->|是|O
+        N-->|否|B
+        O(updateLocalPrepare<br/>备份Prepare请求)-->P
+        P(broadcastCommitReq<br/>广播Commit请求, 表明节点已达到可提交区块状态)
+  
+        F(isCommitReqValid <br/> Commit请求是否有效?)-->|是|Q
+        Q(addCommitReq <br/> 缓存Commit请求)-->R
+        R(checkCommitEnough <br/> Commit请求是否达到2*f+1?)-->|是|S
+        R-->|否|B
+        S(CommitBlock<br> 将缓存的执行后区块提交到DB)
 
-         class A,B light
-         class C,G,H,I,J,K,L,T light
-         class D,M,N,O,P light
-         class Q,F,R,S light
-         end
+        class A,B light
+        class C,G,H,I,J,K,L,T light
+        class D,M,N,O,P light
+        class Q,F,R,S light
+        end
 ```
 
 
@@ -232,7 +232,7 @@ PBFT共识算法中，共识节点轮流出块，每一轮共识仅有一个lead
 
 - **缓存有效ViewChange包**： 防止相同的ViewChange请求被处理多次，也作为判断节点是否可以切换视图的统计依据；
 
-- **收集ViewChange包**：若收到的ViewChange包中附带的view等于本节点的即将切换到的视图toView且本节点收集满`2*f+1`来自不同节点view等于toView的ViewChange包，则说明超过三分之二的节点要切换到toView视图，切换当前视图到toView，否则若至少有三分之一的节点达到其他视图，则将本节点视图切换到这些节点的视图。
+- **收集ViewChange包**：若收到的ViewChange包中附带的view等于本节点的即将切换到的视图toView且本节点收集满`2*f+1`来自不同节点view等于toView的ViewChange包，则说明超过三分之二的节点要切换到toView视图，切换当前视图到toView。
 
 
 

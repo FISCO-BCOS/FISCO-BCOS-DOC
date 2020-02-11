@@ -2,6 +2,16 @@
 版本及兼容
 ##############################################################
 
+.. admonition:: `FISCO BCOS 2.2.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.2.0>`_
+
+     **变更描述、兼容及升级说明**
+      - `FISCO BCOS v2.2.0 <./2_2_0.html>`_
+
+.. admonition:: `FISCO BCOS 2.1.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.1.0>`_
+
+     **变更描述、兼容及升级说明**
+      - `FISCO BCOS v2.1.0 <./2_1_0.html>`_
+
 .. admonition:: `FISCO BCOS 2.0.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0>`_
 
      **变更描述、兼容及升级说明**
@@ -11,7 +21,7 @@
 
      **新增特性**
       - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/distributed_storage.html>`_)
-      - `CRUD接口 <../sdk/sdk.html#crudservice>`_ (`操作手册 <../manual/console.html#create-sql>`_)
+      - `CRUD接口 <../sdk/java_sdk.html#crudservice>`_ (`操作手册 <../manual/console.html#create-sql>`_)
 
      **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc3 <./2_0_0_rc3.html>`_
@@ -76,6 +86,9 @@
 .. toctree::
    :hidden:
    
+   2_2_0.md
+   2_1_0.md
+   2_0_0.md
    2_0_0_rc3.md
    2_0_0_rc2.md
    2_0_0_rc1.md

@@ -12,7 +12,7 @@ Q:
 A:
   FISCO BCOS provides multiple ways for developers to interact with the platform. Please refer as follows:
   - FISCO BCOS 2.0 version provides JSON-RPC interface. For the detail, please refer to [here](./api.md).
-  - FISCO BCOS 2.0 version provides Web3SDK to help developers quickly implement applications. For the detail, please refer to [here](./sdk/sdk.md).
+  - FISCO BCOS 2.0 version provides Web3SDK to help developers quickly implement applications. For the detail, please refer to [here](./sdk/java_sdk.md).
   - FISCO BCOS version 2.0 provides a console to help users quickly understand how to use FISCO BCOS. For the detail, please refer to [here](./manual/console.md).
 
 Q:
@@ -128,6 +128,13 @@ Q:
 A:
   To query CNS list through the command of web3sdk console, and the query command is queried according to the contract name.
 
+Q:
+  Why can't local SDK connect to FISCO BCOS nodes on cloud servers?<br>
+A:
+  1. Check the node configuration on the cloud server to see if Channel is listening for IP over the extranet, rather than `127.0.0.1`. Port Description [Refer here](https://mp.weixin.qq.com/s/XZ0pXEELaj8kXHo32UFprg)
+  2. Check the console provided by the cloud manufacturer of the cloud server, check whether the security group is configured, and open the channel port used by FISCO BCOS nodes in the security group.
+  3. Check that the generated certificate is correct, [refer to here](./enterprise_tools/operation.md#node-configuration-error-checking)
+
 ## Web3SDK
 
 Q:
@@ -140,7 +147,7 @@ A:
 Q:
   After the Web3SDK configuration is completed, what is the reason for the failed transaction? <br>
 A:
-  The ip, port, group number in applicationContext.xml are incorrectly filled or the node files of ca.crt, node.crt, and node.key files are missing.
+  The ip, port, group number in applicationContext.xml are incorrectly filled or the node files of ca.crt, sdk.crt, and sdk.key files are missing.
 
 ## Enterprise deployment tool
 Q：
@@ -148,7 +155,7 @@ Q：
 A：
   The enterprise deployment tool relies on python pip. To install it with the following command:
 ```
-$ python -m pip install
+$ bash ./scripts/install.sh
 ```
 
 Q:
@@ -166,3 +173,5 @@ A:
 ```bash
   $ pip install configparser
 ```
+
+<!-- // TODO: -->

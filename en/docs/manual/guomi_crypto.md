@@ -12,7 +12,7 @@ $ sudo apt install -y openssl curl
 # prepare environment
 $ cd ~ && mkdir -p fisco && cd fisco
 # download build_chain.sh script
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 After performing the above steps, the structure in the fisco directory is as follows:
@@ -88,6 +88,10 @@ ca_cert: the path of certificate gmca
 ## using OSCCA-approved cryptography SDK
 
 For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
+
+## OSCCA-approved cryptography console configuration
+
+See [Console Operations Manual] (../manual/console.md) `Configure OSCCA-approved cryptography console` chapter。
 
 ## using OSCCA-approved cryptography console
 

@@ -16,13 +16,13 @@ Whether two transactions can be executed in parallel depends on whether they are
 
 Taking payment transfer as an example, it involves transactions of payment transfer between users. Use transfer(X, Y) to represent the access of user X to user Y. The exclusion is as below.
 
-| transaction                            | exclusive object         | intersection   | exclusive or not           |
-| -------------------------------- | ---------------- | ------ | ------------------ |
-| transfer(A, B) and transfer(A, C) | [A, B] and [A, C] | [A]    | exclusive, cannot be executed parallelly |
-| transfer(A, B) and transfer(B, C) | [A, B] and [B, C] | [B]    | exclusive, cannot be executed parallelly |
-| transfer(A, C) and transfer(B, C) | [A, C] and [B, C] | [C]    | exclusive, cannot be executed parallelly |
-| transfer(A, B) and transfer(A, B) | [A, B] and [A, B] | [A, B] | exclusive, cannot be executed parallelly |
-| transfer(A, B) and transfer(C, D) | [A, B] and [C, D] | no     | non-exclusive, can be executed parallelly |
+| transaction                       | exclusive object  | intersection | exclusive or not                          |
+| --------------------------------- | ----------------- | ------------ | ----------------------------------------- |
+| transfer(A, B) and transfer(A, C) | [A, B] and [A, C] | [A]          | exclusive, cannot be executed parallelly  |
+| transfer(A, B) and transfer(B, C) | [A, B] and [B, C] | [B]          | exclusive, cannot be executed parallelly  |
+| transfer(A, C) and transfer(B, C) | [A, C] and [B, C] | [C]          | exclusive, cannot be executed parallelly  |
+| transfer(A, B) and transfer(A, B) | [A, B] and [A, B] | [A, B]       | exclusive, cannot be executed parallelly  |
+| transfer(A, B) and transfer(C, D) | [A, B] and [C, D] | no           | non-exclusive, can be executed parallelly |
 
 Here are detailed definitions:
 
@@ -40,7 +40,7 @@ So far, FISCO BCOS offers two types of parallel contract development structure: 
 
 ### Solidity development structure
 
-Parallel solidity contract shares the same development process with [regular solidity contract](./smart_contract.html#id1): make [``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) as the base class of the parallel contract and call ``` registerParallelFunction() ``` to register the interface.
+Parallel solidity contract shares the same development process with [regular solidity contract](./smart_contract.html#id1): make [``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) as the base class of the parallel contract and call ``` registerParallelFunction() ``` to register the interface. （ParallelContract.sol can be found at [here](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)）
 
 Here is a complete example of how ParallelOk contract realize parallel payment transfer
 
@@ -126,10 +126,10 @@ A parallelable contract interface has to meet following conditions:
 Before compiling interface, please confirm the exclusive parameter of interface. The exclusion of interface is the exclusion of global variables. The confirmation of exclusive parameter has following rules:
 
 - the interface accessed global mapping, the key of mapping is the exclusive parameter
-
 - the interface accessed global arrays, the subscript of a array is the exclusive parameter
-
 - the interface accessed simple type of global variables, all the simple type global variables share one exclusive parameter and use different variable names as the exclusive objects.
+
+> For example: If `setA(int x)`writes `globalA`, we need to declare it as `setA(string aflag, int x)` and call it like `setA("globalA", 10)` by using `globalA` to declare the exclusive object.
 
 **Confirm parameter type and sequence**
 
@@ -181,7 +181,7 @@ function disableParallel() public
 
 **（4）Deploy/execute parallel contract**
 
-Compile and deploy contract through [Console](console.md) or [Web3SDK](../sdk/sdk.md). Here we use console as an example.
+Compile and deploy contract through [Console](console.md) or [Web3SDK](../sdk/java_sdk.md). Here we use console as an example.
 
 deploy contract
 
@@ -279,7 +279,7 @@ The execution environment in this case:
 
 Web3SDK is to send parallel transaction, FISCO BCOS chain is to execute parallel transaction. The related configuration are:
 
-- [Web3SDK configuration](../sdk/sdk.md)
+- [Web3SDK configuration](../sdk/java_sdk.md)
 - [Chain building](./build_chain.md)
 
 For pressure test on maximum performance, it at least needs:

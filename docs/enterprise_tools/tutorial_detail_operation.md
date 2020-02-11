@@ -2,9 +2,9 @@
 
 FISCO BCOS企业级部署工具面向于真实的多机构生产环境。为了保证机构的密钥安全，企业级部署工具提供了一种机构间相互合作部署联盟链方式。
 
-本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。更多参数选项说明请参考[这里](../enterprise_tools/operation.md)。
+本章以部署**6节点3机构2群组**的组网模式，演示企业级部署工具的使用方法。更多参数选项说明请参考[这里](./operation.md)。
 
-本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](../enterprise_tools/enterprise_quick_start.md)。
+本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS企业级部署工具一键部署](./tutorial_one_click.md)。
 
 ## 下载安装
 
@@ -166,7 +166,7 @@ cp -r ~/generator ~/generator-B
 
 在证书颁发机构上进行操作，一条联盟链拥有唯一的链证书ca.crt
 
-用 [`--generate_chain_certificate`](../enterprise_tools/operation.html#generate-chain-certificate) 命令生成链证书
+用 [`--generate_chain_certificate`](./operation.html#generate-chain-certificate) 命令生成链证书
 
 在证书生成机构目录下操作:
 
@@ -186,8 +186,8 @@ ls ./dir_chain_ca
 
 ```bash
 # 上述命令解释
-# 从左至右分别为链证书、链私钥、证书配置文件
-ca.crt  ca.key   cert.cnf
+# 从左至右分别为链证书、链私钥
+ca.crt  ca.key
 ```
 
 ## 机构A、B构建群组1
@@ -216,8 +216,8 @@ ls dir_agency_ca/agencyA/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
-agency.crt  agency.key  ca.crt  cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书
+agency.crt  agency.key  ca.crt
 ```
 
 发送链证书、机构证书、机构私钥至机构A，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
@@ -254,7 +254,7 @@ cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
 
 ### 机构A修改配置文件
 
-[node_deployment.ini](../enterprise_tools/config.md#node-deployment-ini)为节点配置文件，企业级部署工具会根据`node_deployment.ini`下的配置生成相关节点证书，及生成节点配置文件夹等。
+[node_deployment.ini](./config.md#node-deployment-ini)为节点配置文件，企业级部署工具会根据`node_deployment.ini`下的配置生成相关节点证书，及生成节点配置文件夹等。
 
 机构A修改conf文件夹下的`node_deployment.ini`如下图所示:
 
@@ -400,7 +400,7 @@ cp ./agencyB_node_info/peers.txt ~/generator-A/meta/peersB.txt
 cd ~/generator-A
 ```
 
-机构A修改conf文件夹下的`group_genesis.ini`，配置项可参考[手册](../enterprise_tools/config.md#group-genesis-ini)。:
+机构A修改conf文件夹下的`group_genesis.ini`，配置项可参考[手册](./config.md#group-genesis-ini)。:
 
 ```bash
 cat > ./conf/group_genesis.ini << EOF
@@ -589,8 +589,8 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # 上述命令解释
-# 从左至右分别为机构证书、机构私钥、链证书、证书配置文件
-agency.crt  agency.key  ca.crt  cert.cnf 
+# 从左至右分别为机构证书、机构私钥、链证书
+agency.crt  agency.key  ca.crt
 ```
 
 发送链证书、机构证书、机构私钥至机构C，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下

@@ -1,7 +1,6 @@
 # 安装
 
-本章介绍FISCO BCOS所需的必要安装和配置。  
-本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。  
+本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](./manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
 
 ## 单群组FISCO BCOS联盟链的搭建
 
@@ -35,7 +34,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 搭建单群组4节点联盟链
@@ -65,19 +64,18 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
-================================================================
-[INFO] Execute the following command to get FISCO-BCOS console
- bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
-================================================================
+==============================================================
+[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
+ bash download_console.sh
+==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/ubuntu16/fisco/nodes
-[INFO] CA Key Path       : /home/ubuntu16/fisco/nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu/fisco/nodes
+[INFO] CA Key Path       : /home/ubuntu/fisco/nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/ubuntu16/fisco/nodes
+[INFO] All completed. Files in /home/ubuntu/fisco/nodes
 ```
 
 ### 启动FISCO BCOS链
@@ -88,7 +86,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 bash nodes/127.0.0.1/start_all.sh
 ```
 
-启动成功会输出类似下面内容的相应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
+启动成功会输出类似下面内容的响应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
 ```bash
 try to start node0
 try to start node1
@@ -164,7 +162,7 @@ sudo apt install -y default-jdk
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+cd ~/fisco && bash nodes/127.0.0.1/download_console.sh
 ```
 
 - 拷贝控制台配置文件
@@ -279,7 +277,7 @@ contract HelloWorld {
 
 ### 部署HelloWorld合约
 
-为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`solidity/contracts/HelloWorld.sol`，参考下面命令部署即可。
+为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`contracts/solidity/HelloWorld.sol`，参考下面命令部署即可。
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址

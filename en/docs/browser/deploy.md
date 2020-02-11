@@ -37,8 +37,8 @@ Datebase user name: sed -i "s/dbUsername/${your_db_account}/g" common.properties
 Database password: sed -i "s/dbPassword/${your_db_password}/g" common.properties
 Database name: sed -i "s/db_browser/${your_db_name}/g" common.properties
 
-Server service port: sed -i "s/8088/${your_server_port}/g" common.properties
-Web service port: sed -i "s/8081/${your_web_port}/g" common.properties
+Web service port: sed -i "s/5100/${your_web_port}/g" common.properties
+Server service port: sed -i "s/5101/${your_server_port}/g" common.properties
 
 Example (Change the database IP from 10.0.0.1 to 0.0.0.0): sed -i "s/10.0.0.1/0.0.0.0/g" application.yml
 ```
@@ -48,7 +48,7 @@ Example (Change the database IP from 10.0.0.1 to 0.0.0.0): sed -i "s/10.0.0.1/0.
 set up all the service:
 
 ```shell
-python deploy.py startAll
+python deploy.py installAll
 ```
 
 stop all the service:
@@ -68,7 +68,7 @@ python deploy.py help
 Typing the server IP and port had set before in the explorer:
 
 ```shell 
-http://127.0.0.1:8081
+http://127.0.0.1:5100
 ```
 
 ## 6. Log directory

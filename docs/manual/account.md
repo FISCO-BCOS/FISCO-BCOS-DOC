@@ -16,8 +16,14 @@ FISCO BCOS提供了脚本和Web3SDK用以创建账户，同时也提供了Web3SD
 ### 使用脚本创建账户
 #### 1. 获取脚本
 ```bash
-curl -LO https://media.githubusercontent.com/media/FISCO-BCOS/LargeFiles/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
+
+国密版本请使用下面的指令获取脚本
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
+```
+
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。
 ```bash
 Usage: ./get_account.sh
@@ -84,7 +90,7 @@ String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
 
-更多操作详情，请参见[创建并使用指定外部账号](../sdk/sdk.html#id5)。
+更多操作详情，请参见[创建并使用指定外部账号](../sdk/java_sdk.html#id5)。
 
 ## 账户的存储
 - web3SDK支持通过私钥字符串或者文件加载，所以账户的私钥可以存储在数据库中或者本地文件。

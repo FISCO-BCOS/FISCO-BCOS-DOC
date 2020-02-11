@@ -1,8 +1,8 @@
-# 编码协议
+# 数据结构与编码协议
 
 ## 交易结构及其RLP编码描述
 
-FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增减字段。FISCO BCOS 2.0.0的交易结构字段如下：
+FISCO BCOS的交易结构在原以太坊的交易结构的基础上，有所增减字段。FISCO BCOS 2.0+的交易结构字段如下：
 
 | name           | type            | description                                                  | RLP index RC1 | RLP index RC2 |
 | :------------- | :-------------- | :----------------------------------------------------------- | ------------- | ------------- |
@@ -31,7 +31,9 @@ RC2的生成流程也类似，只是在第一步`rlp+hash`的transaction结构�
 
 ## 区块结构及其RLP编码描述
 
-FISCO BCOS的区块由以下五部分组成：
+FISCO BCOS的区块由以下五部分组成
+
+**rc1版本**
 
 | name                | description                                      | RLP index |
 | :------------------ | :----------------------------------------------- | --------- |
@@ -40,6 +42,16 @@ FISCO BCOS的区块由以下五部分组成：
 | transactionReceipts | 交易回执列表RLP编码                              | 2         |
 | hash                | 区块头RLP编码后的哈希值                          | 3         |
 | sigList             | PBFT共识落盘阶段收集到的节点签名信息，Raft不使用 | 4         |
+
+**rc2、rc3、2.0及以上版本**
+
+| name                | description                                      | RLP index |
+| :------------------ | :----------------------------------------------- | --------- |
+| blockHeader         | 区块头RLP编码                                    | 0         |
+| transactions        | 交易列表RLP编码                                  | 1         |
+| hash                | 区块头RLP编码后的哈希值                          | 2         |
+| sigList             | PBFT共识落盘阶段收集到的节点签名信息，Raft不使用 | 3         |
+| transactionReceipts | 交易回执列表RLP编码                              | 4         |
 
 FISCO BCOS的区块头中每个字段意义如下：
 
@@ -60,42 +72,26 @@ FISCO BCOS的区块头中每个字段意义如下：
 | sealerList       | vector<h512>  | 区块的共识节点列表（不含观察节点），FISCO BCOS新增字段               | 12        |
 | hash             | h256          | 区块头前13个字段RLP编码后的哈希值，FISCO BCOS新增字段                | -         |
 
+## 交易收据
+
+| name            | type          | description                    | RLP index |
+| :---------------| :------------ | :------------------------------| --------- |
+| stateRoot       | h256          | 区块状态根                       | 0         |
+| gasUsed         | u256          | 交易消耗的gas                    | 1         |
+| contractAddress | Address       | 部署合约的地址                    | 2         |
+| bloom           | h2048         | 布隆滤波器                       | 3         |
+| status          | h256          | 交易执行结果的状态码               | 4         |
+| output          | LogBloom      | 交易返回值                      | 5         |
+| logs            | LogEntry[]    | event logs                    | 6         |
+
+
 ## 网络传输协议
 
 FISCO BCOS 目前有两类数据包格式，节点与节点间通信的数据包为P2PMessage格式，节点与SDK间通信的数据包为ChannelMessage格式。
 
 ![](../../images/node_management/message_type.png)
 
-### P2PMessage: v2.0.0-rc1
-
-v2.0.0-rc1 P2PMessage包头长度为12字节，消息包具体格式如下：
-
-![](../../images/node_management/p2p_message_rc1.png)
-
-| name       | type         | description                          |
-| :--------- | :----------- | :----------------------------------- |
-| length     | uint32_t     | 数据包长度，含包头和数据             |
-| groupID    | int8_t       | 群组ID，范围1-127                    |
-| ModuleID   | uint8_t      | 模块ID，范围1-255                    |
-| packetType | uint16_t     | 数据包类型，同一模块ID下的子协议标识 |
-| seq        | uint32_t     | 数据包序列号，每个数据包自增         |
-| data       | vector<byte> | 数据本身，长度为lenght-12            |
-
-模块ID划分如下：
-
-| ModuleID | message           |
-| :------- | :---------------- |
-| 1        | P2P的AMOP子模块   |
-| 2        | P2P的Topic子模块  |
-| 3~7      | P2P其他子模块预留 |
-| 8        | 共识的PBFT子模块  |
-| 9        | 区块同步模块      |
-| 10       | 交易池模块        |
-| 11       | 共识的Raft子模块  |
-| 12~255   | 其他模块预留      |
-
-
-### P2PMessage: v2.0.0-rc2
+### P2PMessage
 
 v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组**，且新增了**Version**字段来支持其他特性(如网络压缩)，包头大小为16字节，v2.0.0-rc2的网络数据包结构如下：
 
@@ -111,7 +107,7 @@ v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组*
 | Seq        | uint32_t     | 数据包序列号，每个数据包自增         |
 | Data       | vector<byte> | 数据本身，长度为lenght-12           |
 
-
+v2.0.0-rc2以前的P2PMessage定义请[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc3/docs/design/protocol_description.html#p2pmessage-v2-0-0-rc1)
 
 **补充**
 
@@ -120,33 +116,47 @@ v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组*
 3. 数据包通过protocolID所在的16位二进制数值来区分请求包和响应包，大于0为请求包，小于0为相应包。
 4. 目前AMOP使用的packetType有`SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`。
 
-### ChannelMessage
+### ChannelMessage v2
 
-| name   | type         | description                                  |
-| :----- | :----------- | :------------------------------------------- |
-| lenght | uint32_t     | 数据包长度，含包头和数据，最大长度为10M Byte |
-| type   | uint16_t     | 数据包类型                                   |
-| seq    | string       | 数据包序列号，32字节，SDK传入                |
-| result | int32_t      | 处理结果                                     |
-| data   | vector<byte> | 数据本身                                     |
+[ChannelMessage v1 请参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/design/protocol_description.html#channelmessage-v1)
+
+| 字段   | 类型         |长度(Byte)| 描述 |
+| :----- | :----------- |:---| :-------------------|
+| length | uint32_t     |4| 数据包长度，含包头和数据，大端 |
+| type   | uint16_t     |2| 数据包类型，大端          |
+| seq    | string       |32| 数据包序列号，32字节uuid|
+| result | int32_t      |4| 错误码，大端                |
+| data   | bytes |length-42| 数据包体，字节流           |
+
+#### AMOP消息包
+
+AMOP消息包继承ChannelMessage包机构，在data字段添加了自定义内容。包括`0x30,0x31,0x35,0x1001`
+
+||长度Byte|说明|
+|:--|:--|:--|
+|length|1|Topic的长度|
+|topic|length|topic名|
+
+#### 消息包类型
 
 数据包类型枚举值及其对应的含义如下：  
 
-| code    | message       | direction |
-| :------ | :------------ | :-------- |
-| 0x12    | RPC接口消息包  | SDK->节点 |
-| 0x13    | 心跳包        | SDK->节点 |
-| 0x30    | AMOP请求包    | SDK<->节点，双向 |
-| 0x31    | AMOP响应包    | SDK<->节点，双向 |
-| 0x32    | 上报Topic信息 | SDK->节点 |
-| 0x35    | AMOP多播消息  | 节点->节点 |
-| 0x1000  | 交易上链回调  | 节点->SDK |
-| 0x1001  | 区块高度通知  | 节点->SDK |
+| 类型    |包体| 描述       | 解释 |
+| :------ |:----| :------------ | :-------- |
+| 0x12    |JSONRPC 2.0格式| RPC接口消息包  | SDK->节点 |
+| 0x13    |json格式心跳包`{"heartbeat":"0"}`| 心跳包        |  0:SDK->节点，1:节点->SDK|
+| 0x14    |SDK->节点的包体`{"minimumSupport":version,"maximumSupport":version,"clientType":"client type"}`,节点->SDK的包体`{"protocol":version,"nodeVersion":"fisco-bcos version"`| 握手包，json格式的协议版本协商    |  SDK<->节点，双向 |
+| 0x30    |AMOP消息包包体| AMOP请求包    | SDK<->节点，双向 |
+| 0x31    |失败的AMOP消息的包体| AMOP失败响应包    | 节点->SDK或节点->节点 |
+| 0x32    |json数组，存储SDK监听的Topics| 上报Topic信息 | SDK->节点 |
+| 0x35    |AMOP消息包包体| AMOP多播消息  | 节点->节点 |
+| 0x1000  |json格式的交易上链通知| 交易上链回调  | 节点->SDK |
+| 0x1001  |json格式的区块上链通知`{"groupID":"groupID","blockNumber":"blockNumber"}`| 区块高度通知  | 节点->SDK |
 
-处理结果枚举值及其对应的含义如下：
+#### 错误码
 
-| code | message    |
-| :--- | :--------- |
+| code | message   |
+| :--- | :---------|
 | 0    | 成功       |
 | 100  | 节点不可达 |
 | 101  | SDK不可达  |

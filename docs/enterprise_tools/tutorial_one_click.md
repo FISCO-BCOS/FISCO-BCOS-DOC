@@ -4,15 +4,11 @@
 
 本章主要以部署**3机构2群组6节点**的组网模式，为用户讲解单机构一键部署企业级部署工具的使用方法。
 
-本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](../tutorial/enterprise_quick_start.md)。
+本教程适用于单机构搭建所有节点的部署方式，企业级部署工具多机构部署教程可以参考[使用企业级部署工具](./tutorial_detail_operation.md)。
 
-```eval_rst
-.. important::
-
-    一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，可以尝试用以下命令对meta文件夹进行清理:
-
-    - rm ./meta/cert_*
-    - rm -rf ./meta/node_*
+```eval_rst	
+.. important::	
+     一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，请清空meta文件夹。
 ```
 
 ## 下载安装
@@ -84,38 +80,18 @@ cd ~/generator && bash ./scripts/install.sh
     针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
 ```
 
-<!-- 在本节中，我们将在本机IP为`127.0.0.1`生成一个如图所示网络拓扑结构为2机构1群组4节点的组网模式，每个节点的ip，端口号分别为：
-
-| 机构  | 节点  | 所属群组  | P2P地址           | RPC/channel监听地址       |
-| --- | --- | ----- | --------------- | --------------------- |
-| 机构A | 节点0 | 群组1 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
-|     | 节点1 | 群组1 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
-| 机构B | 节点2 | 群组1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | 节点3 | 群组1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
-
-```eval_rst
-.. important::
-
-    针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
-``` -->
-
 ## 部署网络
 
 首先完成如图所示机构A、B搭建群组1的操作：
 
 ![](../../images/enterprise/one_click_step_1.png)
 
-使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](../enterprise_tools/config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
-
-切换到~/目录
-
-```bash
-cd ~/generator
-```
+使用前用户需准备如图如`tmp_one_click`的文件夹，在文件夹下分别拥有不同机构的目录，每个机构目录下需要有对应的配置文件[```node_deployment.ini```](./config.md#node-deployment-ini)。使用前需要保证generator的meta文件夹没有进行过任何操作。
 
 查看一键部署模板文件夹：
 
 ```bash
+cd ~/generator
 ls ./tmp_one_click
 ```
 
@@ -212,12 +188,16 @@ ls ./tmp_one_click
 │   ├── node # A机构生成的节点，多机部署时推送至对应服务器即可
 │   ├── node_deployment.ini # A机构的节点配置信息
 │   └── sdk # A机构的sdk或控制台配置文件
-└── agencyB
-    ├── agency_cert
-    ├── generator-agency
-    ├── node
-    ├── node_deployment.ini
-    └── sdk
+├── agencyB
+|   ├── agency_cert
+|   ├── generator-agency
+|   ├── node
+|   ├── node_deployment.ini
+|   └── sdk
+|── ca.crt # 链证书
+|── ca.key # 链私钥
+|── group.1.genesis # 群组1创世区块
+|── peers.txt # 节点的peers.txt信息
 ```
 
 ### 启动节点
@@ -265,13 +245,18 @@ info|2019-02-25 17:25:57.038284| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 新增节点 (扩容新节点)
 
+```eval_rst	
+.. important::	
+     一键部署脚本使用时需要确保当前meta文件夹下不含节点证书信息，请清空meta文件夹。
+```
+
 接下来，我们为机构A和机构C增加新节点，完成下图所示的组网：
 
 ![](../../images/enterprise/one_click_step_2.png)
 
 ### 初始化扩容配置
 
-创建扩容文件夹
+**创建扩容文件夹，示例中tmp_one_click_expand可以为任意名称，请每次扩容使用新的文件夹**
 
 ```bash
 mkdir ~/generator/tmp_one_click_expand/
@@ -426,7 +411,7 @@ cd ~/generator/tmp_one_click/agencyA/generator-agency
 
 机构A使用控制台加入机构A节点4为共识节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
 
-查看机构C节点nodeid：
+查看机构A节点nodeid：
 
 ```bash
 cat ~/generator/tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/conf/node.nodeid
@@ -446,7 +431,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 cd ~/generator/tmp_one_click/agencyA/generator-agency/console && bash ./start.sh 1
 ```
 
-使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构A节点的`node.nodeid`：
 
 ```bash
 addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -536,7 +521,7 @@ exit
 cd ~/generator
 ```
 
-配置群组创世区块文件
+配置群组创世区块文件，指定`group_id`为2。并在`[node]`下指定新群组中各个节点的IP和P2P端口，分别为机构A-节点0，机构A-节点1，机构A-节点4和机构C-节点5。
 
 ```bash
 cat > ./conf/group_genesis.ini << EOF
@@ -553,22 +538,28 @@ EOF
 
 ### 获取对应节点证书
 
-获取机构A节点证书
+机构A-节点0（`node0=127.0.0.1:30300`）
 
 ```bash
-cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_127.0.0.1_30300.crt ~/generator/meta
 ```
 
-获取机构A新增节点证书
+机构A-节点1（`node1=127.0.0.1:30301`）
 
 ```bash
-cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click/agencyA/generator-agency/meta/cert_127.0.0.1_30301.crt ~/generator/meta
 ```
 
-获取机构C节点证书
+机构A-节点4（`node2=127.0.0.1:30304`）
 
 ```bash
-cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_* ~/generator/meta
+cp ~/generator/tmp_one_click_expand/agencyA/generator-agency/meta/cert_127.0.0.1_30304.crt ~/generator/meta
+```
+
+机构C-节点5（`node3=127.0.0.1:30305`）
+
+```bash
+cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_127.0.0.1_30305.crt ~/generator/meta
 ```
 
 ### 生成群组创世区块
@@ -579,48 +570,56 @@ cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_* ~/gener
 
 将群组创世区块加入现有节点：
 
+机构A-节点0（`node0=127.0.0.1:30300`）
+
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node/node_127.0.0.1_30300
 ```
 
+机构A-节点1（`node1=127.0.0.1:30301`）
+
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click/agencyA/node/node_127.0.0.1_30301
 ```
 
+机构A-节点4（`node2=127.0.0.1:30304`）
+
 ```bash
-./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node
+ ./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304
 ```
 
-### 重启节点
-
-重启机构A节点:
+机构C-节点5（`node3=127.0.0.1:30305`）
 
 ```bash
-bash ./tmp_one_click/agencyA/node/stop_all.sh
+./generator --add_group ./group2/group.2.genesis ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305
 ```
 
+### 加载、启动新群组
+
+节点在运行时，可直接用脚本`load_new_groups.sh`加载新群组
+
+机构A-节点0（`node0=127.0.0.1:30300`）
+
 ```bash
-bash ./tmp_one_click/agencyA/node/start_all.sh
+bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30300/scripts/load_new_groups.sh
 ```
 
-重启机构A新增节点:
+机构A-节点1（`node1=127.0.0.1:30301`）
 
 ```bash
-bash ./tmp_one_click_expand/agencyA/node/stop_all.sh
+bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30301/scripts/load_new_groups.sh
 ```
 
+机构A-节点4（`node2=127.0.0.1:30304`）
+
 ```bash
-bash ./tmp_one_click_expand/agencyA/node/start_all.sh
+bash ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/scripts/load_new_groups.sh
 ```
 
-重启机构C节点:
+机构C-节点5（`node3=127.0.0.1:30305`）
 
 ```bash
-bash ./tmp_one_click_expand/agencyC/node/stop_all.sh
-```
-
-```bash
-bash ./tmp_one_click_expand/agencyC/node/start_all.sh
+bash ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/scripts/load_new_groups.sh
 ```
 
 ### 查看节点
@@ -652,6 +651,6 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 更多操作
 
-更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](../tutorial/enterprise_quick_start.md)。
+更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](./tutorial_detail_operation.md)。
 
 如果使用该教程遇到问题，请查看[FAQ](../faq.md)

@@ -12,7 +12,7 @@
 答:
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
   - FISCO BCOS 2.0版本提供JSON-RPC接口，具体请 [参考这里](./api.md)。
-  - FISCO BCOS 2.0版本提供Web3SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/sdk.md)。
+  - FISCO BCOS 2.0版本提供Web3SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/java_sdk.md)。
   - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，具体请 [参考这里](./manual/console.md)。
 
 问:
@@ -126,6 +126,13 @@
 答:
   通过Web3SDK控制台指令查询，查询指令根据合约name查询。
 
+问:
+  为什么本地SDK无法连接云服务器上的FISCO BCOS节点？<br>
+答:
+  1. 检查云服务器上的节点配置，channel是否监听外网IP，而不是`127.0.0.1`。端口介绍[参考这里](https://mp.weixin.qq.com/s/XZ0pXEELaj8kXHo32UFprg)
+  2. 检查通过云服务器提厂商提供的控制台，检查是否配置了安全组，需要在安全组中开放FISCO BCOS节点所使用的channel端口。
+  3. 检查生成的证书是否正确，[参考这里](./enterprise_tools/operation.md#节点配置错误检查)
+
 
 ## Web3SDK
 
@@ -138,7 +145,7 @@
 问:
   Web3SDK配置完成，发送交易失败的原因是什么？<br>
 答:
-  applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、node.crt和node.key文件。
+  applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、sdk.crt和sdk.key文件。
 
 
 ## 企业级部署工具
@@ -148,7 +155,7 @@
 答：
   企业级部署工具依赖python pip，使用以下命令安装：
 ```
-$ python -m pip install
+$ bash ./scripts/install.sh
 ```
 
 问:
@@ -166,3 +173,9 @@ Traceback (most recent call last):
 ```bash
   $ pip install configparser
 ```
+
+问:
+  节点或SDK使用的OpenSSL证书过期了，如何续期？
+
+答:
+  证书续期操作可以参考[证书续期操作](./manual/certificates.md#id9)

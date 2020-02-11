@@ -2,9 +2,14 @@
 
 MPT State is a classic data storage type in Ethereum. Through MPT tree, all contract data is organized to be inquired and retrieved.
 
+```eval_rst
+.. important::
+    MPT State will be deprecated in v2.3.0, Please use **storage state**.
+```
+
 ## MPT tree
 
-MPT(Merkle Paricia Trie) is a prefix tree to index data by hash.
+MPT(Merkle Patricia Trie) is a prefix tree to index data by hash.
 
 In a broad sense, MPT is a prefix tree to retrieve value by key, which is using key to index in MPT tree, after passing middle nodes it will arrive at the leaf node that stores the data.
 

@@ -25,7 +25,7 @@ When initializing the group of FISCO BCOS, nodes should reach an agreement to cr
 
 Current IT administration tools for consortium chain usually ignore the requirement for equality and security of companies during initialization. And initialization needs agencies to agree on identity information on Genesis Block. So, who should be the information generator is crucial. Firstly, an agency generates its node information first and then activate blockchain for other nodes to join in. Secondly, a third-party authority makes information for all nodes and sends the node configuration files to each agency.
 
-Additionally, FISCO BCOS 2.0 adapts more private and scalable multi-group architecture. It is an architecture where data and transactions between groups are separated by running independent consensus algorithm, a way to maintain privacy and security in blockchain scenarios.
+Additionally, FISCO BCOS 2.0+ adapts more private and scalable multi-group architecture. It is an architecture where data and transactions between groups are separated by running independent consensus algorithm, a way to maintain privacy and security in blockchain scenarios.
 
 In the above models, there is always one agency who gains priority to join the consortium chain or acquires private keys of all nodes.
 
@@ -70,8 +70,9 @@ Users agree to generate the Genesis Block and node configuration file folder and
    :hidden:
    :maxdepth: 1
 
+   tutorial_one_click.md
+   tutorial_detail_operation.md
    installation.md
-   enterprise_quick_start.md
    config.md
    operation.md
 ```

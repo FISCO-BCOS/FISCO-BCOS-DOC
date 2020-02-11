@@ -3,7 +3,9 @@
 
 This chapter will introduce a whole process of business application scenario development based on FISCO BCOS blockchain. The introduce includes business scenario analysis, contract design implementation, contract compilation, and blockchain development. Finally, we introduce an application module implementation which is to implement calling access to the contract on blockchain through the Web3SDK we provide.
 
-This tutorial requires user to be familiar with the Linux operating environment, has the basic skills of Java development, is able to use the Gradle tool, and is familiar with [Solidity syntax](https://solidity.readthedocs.io/en/latest/). Through the tutorial, you will learn the following:
+This tutorial requires user to be familiar with the Linux operating environment, has the basic skills of Java development, is able to use the Gradle tool, and is familiar with [Solidity syntax](https://solidity.readthedocs.io/en/latest/). 
+
+**Through the tutorial, you will learn the following:**
 
 1. How to express the logic of a business scenario in the form of a contract
 2. How to convert Solidity contract into Java class
@@ -340,9 +342,6 @@ The directory structure of the asset-app project is as follows:
 |   |-- test
 |       |-- resources // resource files
 |           |-- applicationContext.xml // project configuration file
-|           |-- ca.crt // blockchain ca certificate
-|           |-- node.crt // node ca certificate
-|           |-- node.key // node private key
 |           |-- contract.properties // file that stores the deployment contract address
 |           |-- log4j.properties // log configuration file
 |           |-- contract // Solidity contract files
@@ -372,7 +371,7 @@ repositories {
 -   introduce the Web3SDK jar package
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.0.3')
+compile ('org.fisco-bcos：web3sdk：2.1.0')
 ```
 
 ### Certificate and configuration file
