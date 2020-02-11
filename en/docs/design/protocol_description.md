@@ -72,6 +72,19 @@ The description of each field in the block header of FISCO BCOS is as follows:
 | sealerList       | vector<h512>  | The list of sealer nodes (without observing nodes). A new field in FISCO BCOS. | 12        |
 | hash             | h256          | The hash of the first 13 fields of the block header after RLP encoding. A new field in FISCO BCOS.               | -         |
 
+## Transaction Receipt
+
+| name            | type          | description                    | RLP index |
+| :---------------| :------------ | :------------------------------| --------- |
+| stateRoot       | h256          | state root of block              | 0         |
+| gasUsed         | u256          | gas used of transaction          | 1         |
+| contractAddress | Address       | the address of deployed contract | 2         |
+| bloom           | h2048         | bloom filter                     | 3         |
+| status          | h256          | status code of transaction       | 4         |
+| output          | LogBloom      | transaction return value         | 5         |
+| logs            | LogEntry[]    | event logs                       | 6        |
+
+
 ## Network transmission protocol
 
 FISCO BCOS currently has two types of data packet formats. The data packets communicated among nodes are in the P2PMessage format, and the data packets communicated between nodes and SDK are in the ChannelMessage format.

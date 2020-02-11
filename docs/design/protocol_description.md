@@ -1,4 +1,4 @@
-# 编码协议
+# 数据结构与编码协议
 
 ## 交易结构及其RLP编码描述
 
@@ -71,6 +71,19 @@ FISCO BCOS的区块头中每个字段意义如下：
 | sealer           | u256          | 打包区块的节点在共识节点列表中的索引，FISCO BCOS新增字段             | 11        |
 | sealerList       | vector<h512>  | 区块的共识节点列表（不含观察节点），FISCO BCOS新增字段               | 12        |
 | hash             | h256          | 区块头前13个字段RLP编码后的哈希值，FISCO BCOS新增字段                | -         |
+
+## 交易收据
+
+| name            | type          | description                    | RLP index |
+| :---------------| :------------ | :------------------------------| --------- |
+| stateRoot       | h256          | 区块状态根                       | 0         |
+| gasUsed         | u256          | 交易消耗的gas                    | 1         |
+| contractAddress | Address       | 部署合约的地址                    | 2         |
+| bloom           | h2048         | 布隆滤波器                       | 3         |
+| status          | h256          | 交易执行结果的状态码               | 4         |
+| output          | LogBloom      | 交易返回值                      | 5         |
+| logs            | LogEntry[]    | event logs                    | 6         |
+
 
 ## 网络传输协议
 
