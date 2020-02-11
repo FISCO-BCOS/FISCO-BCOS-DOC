@@ -64,18 +64,18 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
-[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
- bash download_console.sh
+[INFO] Execute the download_console.sh script in directory named by IP to get FISCO-BCOS console.
+e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh
 ==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/ubuntu16/fisco/nodes
-[INFO] CA Key Path       : /home/ubuntu16/fisco/nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu/fisco/nodes
+[INFO] CA Key Path       : /home/ubuntu/fisco/nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/ubuntu16/fisco/nodes
+[INFO] All completed. Files in /home/ubuntu/fisco/nodes
 ```
 
 
@@ -111,10 +111,10 @@ ps -ef | grep -v grep | grep fisco-bcos
 In normal situation, the output will be similar to the following. If the number of processes is not 4, then the reason why the process does not start is that the port is occupied.
 
 ```bash
-fisco       5453     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-fisco       5459     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
-fisco       5464     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco       5459     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
 ### Check log output
