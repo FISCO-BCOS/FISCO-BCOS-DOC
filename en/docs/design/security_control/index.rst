@@ -27,5 +27,5 @@ The permission control mechanism based on distributed storage controls access in
    :maxdepth: 1
 
    node_management.md
-   certificate_blacklist.md
+   certificate_list.md
    permission_control.md

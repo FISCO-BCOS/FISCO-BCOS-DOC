@@ -63,9 +63,11 @@ contract Entry {
     function getAddress(string) public constant returns(address);
     function getBytes64(string) public constant returns(byte[64]);
     function getBytes32(string) public constant returns(bytes32);
-
+    function getString(string) public constant returns(string);
+    
     function set(string, int) public;
     function set(string, string) public;
+    function set(string, address) public;
 }
 
 // data record set
@@ -88,6 +90,11 @@ contract Table {
     function newEntry() public constant returns(Entry);
     function newCondition() public constant returns(Condition);
 }
+```
+
+```eval_rst
+.. important::
+   There can be multiple records under the primary key in the Table of the current CRUD interface. The feature will be deprecated after v2.3.0. The primary key can only correspond to one record.
 ```
 
 To provide a contract case `TableTest.sol`. The code is as follows:

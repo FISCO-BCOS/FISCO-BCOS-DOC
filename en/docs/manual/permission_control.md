@@ -13,14 +13,14 @@ For the system is defaulted with no permission setting record, any account can p
 The operations concerning permission control of following functions are introduced in this section:
 - [Permission of chain manager](./permission_control.html#id6)
 - [Permission of system manager](./permission_control.html#id7)
-  - [Permission of contract deployment and user table creation](./permission_control.html#id8)
-  - [Permission of Contract deployment using CNS](./permission_control.html#cns)
-  - [Permission of node management](./permission_control.html#id9)
-  - [Permission to modify system parameter](./permission_control.html#id10)
+- [Permission of contract deployment and user table creation](./permission_control.html#id8)
+- [Permission of Contract deployment using CNS](./permission_control.html#cns)
+- [Permission of node management](./permission_control.html#id9)
+- [Permission to modify system parameter](./permission_control.html#id10)
 - [Permission to write user table](./permission_control.html#id11)
 
 ## Environment configuration  
-Configure and start the nodes and console of FISCO BCOS 2.0. For reference please check [Installation](../installation.md).
+Configure and start the nodes and console of FISCO BCOS 2.0+. For reference please check [Installation](../installation.md).
 
 ## Tools for permission control
 FISCO BCOS offers permission control of console commands (developers can call PermissionService API of [SDK API](../sdk/sdk.html#permissionservice) for permission control). The involved permission control commands are:

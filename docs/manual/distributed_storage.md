@@ -12,7 +12,7 @@ sudo apt install -y mysql-server mysql-client libmysqlclient-dev
 启动 MySQL 服务并登陆:
 root 账户密码。
 ```bash
-sudo service msyql start
+service msyql start
 mysql -uroot -p
 ```
 
@@ -28,8 +28,62 @@ yum install mariadb*
 service mysqld start
 #若安装了mariadb，则使用下面的命令启动
 service mariadb start
-mysql -uroot
+mysql -uroot -p
 mysql> set password for root@localhost = password('123456');
+```
+
+## 配置MySQL参数
+### 查看配置文件my.cnf
+```bash
+mysql --help | grep 'Default options' -A 1
+```
+执行之后可以看到如下如下数据
+
+```
+Default options are read from the following files in the given order:
+/etc/mysql/my.cnf /etc/my.cnf ~/.my.cnf 
+```
+### 配置my.cnf
+mysql依次从/etc/mysql/my.cnf，/etc/my.cnf，~/.my.cnf中加载配置。依次查找这几个文件，找到第一个存在的文件，在[mysqld]段中新增如下内容（如果存在则修改值）。
+```
+max_allowed_packet = 1024M
+sql_mode =STRICT_TRANS_TABLES
+```
+
+### 重启mysql-sever，验证参数。
+
+Ubuntu：执行如下命令重启
+```bash
+service mysql restart
+```
+
+CentOS：执行如下命令重启
+```bash
+service mysqld start
+#若安装了mariadb，则使用下面的命令启动
+service mariadb start
+```
+
+验证参数过程
+```bash
+mysql -uroot -p
+#执行下面命令，查看max_allowed_packet的值
+MariaDB [(none)]>  show variables like 'max_allowed_packet%';
++--------------------+------------+
+| Variable_name      | Value      |
++--------------------+------------+
+| max_allowed_packet | 1073741824 |
++--------------------+------------+
+1 row in set (0.00 sec)
+
+#执行下面命令，查看sql_mode的值
+MariaDB [(none)]>  show variables like 'sql_mode%';
++---------------+---------------------+
+| Variable_name | Value               |
++---------------+---------------------+
+| sql_mode      | STRICT_TRANS_TABLES |
++---------------+---------------------+
+1 row in set (0.00 sec)
 ```
 
 
@@ -48,8 +102,9 @@ FISCO BCOS在2.0.0-rc3之后，支持节点通过连接池直连MySQL，相对�
 
 #### 准备依赖
 ```bash
-mkdir -p ~/fisco_direct && cd ~/fisco_direct
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+mkdir -p ~/fisco && cd ~/fisco
+# 获取build_chain.sh脚本
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### 生成配置文件
 ```bash
@@ -69,9 +124,9 @@ cat ipconf
 
 #### 使用build_chain搭建区块链
 ```bash
-### 搭建区块链（请先确认30700~30702，20700~20702，8575~8577端口没有被占用）
+### 搭建区块链（请先确认30300~30302，20200~20202，8545~8547端口没有被占用）
 ### 这里区别是在命令后面追加了参数"-s MySQL" 以及换了端口。
-bash build_chain.sh -f ipconf -p 30700,20700,8575 -s MySQL
+bash build_chain.sh -f ipconf -p 30300,20200,8545 -s MySQL
 ==============================================================
 Generating CA key...
 ==============================================================
@@ -100,7 +155,7 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 
 ### 修改node0下的group.1.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，配置如下内容。db_passwd为对应的密码。
+修改~/fisco/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，配置如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
@@ -111,7 +166,7 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 
 ### 修改node1下的group.1.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
+修改~/fisco/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
@@ -122,7 +177,7 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 
 ### 修改node1下的group.2.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node1/conf/group.2.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
+修改~/fisco/nodes/127.0.0.1/node1/conf/group.2.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
@@ -132,7 +187,7 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 ```
 ### 修改node2下的group.2.ini配置
 
-修改~/fisco_direct/nodes/127.0.0.1/node2/conf/group.2.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
+修改~/fisco/nodes/127.0.0.1/node2/conf/group.2.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
@@ -142,14 +197,14 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 ```
 ### 启动节点
 ```bash
-cd ~/fisco_direct/nodes/127.0.0.1;sh start_all.sh
+cd ~/fisco/nodes/127.0.0.1;sh start_all.sh
 ```
 ### 检查进程
 ```bash
 ps -ef|grep fisco-bcos|grep -v grep
-fisco   111061      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-fisco   111065      1  0 16:22 pts/0    00:00:04 /data/home/fisco_direct/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco_direct/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco   111061      1  0 16:22 pts/0    00:00:04 /data/home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco   111065      1  0 16:22 pts/0    00:00:04 /data/home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
 ```
 启动成功，3个fisco-bcos进程。不成功的话请参考日志确认配置是否正确。
 
@@ -181,13 +236,13 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 
 #### 准备依赖
 ```bash
-cd ~/fisco_direct;
-bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+cd ~/fisco;
+bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 #### 修改配置文件
-将~/fisco_direct/console/conf/applicationContext.xml修改为如下配置(部分信息)
+将~/fisco/console/conf/applicationContext.xml修改为如下配置(部分信息)
 ```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 	<property name="allChannelConnections">
@@ -196,7 +251,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20700</value>
+						<value>127.0.0.1:20200</value>
 					</list>
 				</property>
 			</bean>
@@ -206,7 +261,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 #### 启用控制台
 ```bash
-cd ~/fisco_direct/console
+cd ~/fisco/console
 sh start.sh 1
 #部署TableTest合约
 [group:1]> deploy TableTest
@@ -292,7 +347,12 @@ item_name: apple
 
 ## 通过代理访问MySQL
 
-本使用手册仅对节点版本为2.0.0-rc3的有效，如果需要在2.0.0-rc2中使用“通过代理访问MySQL”的访问方式去搭建分布式存储环境。请参考文档[分布式存储搭建方法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0.0-rc2/docs/manual/amdbconfig.html)
+本使用手册仅对节点版本2.1.0以及以后的版本有效，需要在2.0.0-rc3或者2.0.0中使用“通过代理访问MySQL”的访问方式去搭建分布式存储环境。请参考文档[分布式存储搭建方法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/manual/distributed_storage.html)。需要在2.0.0-rc2中使用“通过代理访问MySQL”的访问方式去搭建分布式存储环境。请参考文档[分布式存储搭建方法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc2/docs/manual/amdbconfig.html)
+
+```eval_rst
+.. important::
+   External模式将会在v2.3.0弃用，请使用MySQL模式替代。
+```
 
 ### 逻辑架构图
 多群组架构是指区块链节点支持启动多个群组，群组间交易处理、数据存储、区块共识相互隔离的。因此群组下的每一个节点对应一个amdb-proxy实例，例如，区块链网络中，有三个节点A,B,C，其中A,B属于群组1,B,C属于群组2。节点A和C分别对应1个数据库实例，B节点对应了2个数据库实例，逻辑架构图如下：
@@ -316,7 +376,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - 获取`build_chain`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### 生成配置文件
@@ -338,8 +398,8 @@ cat ipconf
 
 #### 使用build_chain搭建区块链
 ```bash
-### 搭建区块链（请先确认30600~30602，20800~20802，8565~8567端口没有被占用）
-bash build_chain.sh -f ipconf -p 30600,20800,8565
+### 搭建区块链（请先确认30300~30302，20200~20202，8545~8547端口没有被占用）
+bash build_chain.sh -f ipconf -p 30300,20200,8545
 ==============================================================
 Generating CA key...
 ==============================================================
@@ -412,12 +472,10 @@ cd AMDB;gradle build
 ├── apps
 │   └── AMDB.jar
 ├── conf
-│   ├── amdb.properties
 │   ├── applicationContext.xml
 │   ├── contracts
 │   │   ├── Table.sol
 │   │   ├── TableTest.sol
-│   ├── db.properties
 │   ├── doc
 │   │   ├── amop.png
 │   │   ├── leveldb.png
@@ -471,7 +529,7 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 ```
 
 #### 配置文件配置
-amdb.properties配置amdb-proxy服务需要连接的节点信息，db.properties配置数据库的连接信息。这里假设MySQL的配置信息如下：
+这里假设MySQL的配置信息如下：
 ```bash
 |节点|db_ip|db_port|db_username|db_passwd|db_name|
 |Group1_A|127.0.0.1|3306|root|123456|bcos_Group1_A|
@@ -479,24 +537,9 @@ amdb.properties配置amdb-proxy服务需要连接的节点信息，db.properties
 |Group2_B|127.0.0.1|3306|root|123456|bcos_Group2_B|
 |Group2_C|127.0.0.1|3306|root|123456|bcos_Group2_C|
 ```
-
+配置过程需要修改applicationContext.xml文件，需要修改的配置项包括topic配置**node.topic**,MySQL配置信息配置包括**db.ip**、**db.port**、**db.database**、**db.user**和**db.password**。
 
 ##### 为Group1的A节点配置amdb-proxy
-将~/fisco/dist_Group1_A/conf/amdb.properties配置为如下内容:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20800
-node.topic=DB_Group1_A
-```
-将~/fisco/dist_Group1_A/conf/db.properties配置为如下内容:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group1_A
-```
-
 将~/fisco/dist_Group1_A/conf/applicationContext.xml修改为如下配置(部分信息)
 ```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -506,7 +549,7 @@ db.database=bcos_Group1_A
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20800</value>
+						<value>127.0.0.1:20200</value>
 					</list>
 				</property>
 			</bean>
@@ -520,29 +563,22 @@ db.database=bcos_Group1_A
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
 		<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group1_A</value>
 			</list>
 		</property>
 	<property name="pushCallback" ref="DBHandler"/>
 </bean>
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://127.0.0.1:3306/bcos_Group1_A?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
+</bean>
 ```
 
 ##### 为Group1的B节点配置amdb-proxy
-将~/fisco/dist_Group1_B/conf/amdb.properties配置为如下内容:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20801
-node.topic=DB_Group1_B
-```
-将~/fisco/dist_Group1_B/conf/db.properties配置为如下内容:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group1_B
-```
-
 将~/fisco/dist_Group1_B/conf/applicationContext.xml修改为如下配置(部分信息)
 ```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
@@ -552,7 +588,7 @@ db.database=bcos_Group1_B
 				<property name="groupId" value="1" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20801</value>
+						<value>127.0.0.1:20201</value>
 					</list>
 				</property>
 			</bean>
@@ -566,37 +602,32 @@ db.database=bcos_Group1_B
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
 		<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group1_B</value>
 			</list>
 		</property>
 	<property name="pushCallback" ref="DBHandler"/>
 </bean>
+
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://127.0.0.1:3306/bcos_Group1_B?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
+</bean>
 ```
 ##### 为Group2的B节点配置amdb-proxy
-将~/fisco/dist_Group2_B/conf/amdb.properties配置为如下内容:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20801
-node.topic=DB_Group2_B
-```
-将~/fisco/dist_Group2_B/conf/db.properties配置为如下内容:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group2_B
-```
 将~/fisco/dist_Group2_B/conf/applicationContext.xml修改为如下配置(部分信息)
 ```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 	<property name="allChannelConnections">
 		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
+			<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="2" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20801</value>
+						<value>127.0.0.1:20201</value>
 					</list>
 				</property>
 			</bean>
@@ -612,39 +643,33 @@ db.database=bcos_Group2_B
 		<!-- communication topic configuration of the node -->
 		<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group2_B</value>
 			</list>
 		</property>
 		<property name="pushCallback" ref="DBHandler"/>
 	</bean>
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://127.0.0.1:3306/bcos_Group2_B?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
+</bean>
 ```
 
 ##### 为Group2的C节点配置amdb-proxy
-将~/fisco/dist_Group2_C/conf/amdb.properties配置为如下内容:
-```bash
-node.ip=127.0.0.1
-node.listen_port=20802
-node.topic=DB_Group2_C
-```
-将~/fisco/dist_Group2_C/conf/db.properties配置为如下内容:
-```bash
-db.ip=127.0.0.1
-db.port=3306
-db.user=root
-db.password=123456
-db.database=bcos_Group2_C
-```
 
 将~/fisco/dist_Group2_C/conf/applicationContext.xml修改为如下配置(部分信息)
 ```bash
 <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
 	<property name="allChannelConnections">
 		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
+			<bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+				<property name="groupId" value="2" />
 					<property name="connectionsStr">
 					<list>
-						<value>127.0.0.1:20802</value>
+						<value>127.0.0.1:20202</value>
 					</list>
 				</property>
 			</bean>
@@ -660,13 +685,21 @@ db.database=bcos_Group2_C
 	<!-- communication topic configuration of the node -->
 	<property name="topics">
 			<list>
-				<value>${node.topic}</value>
+				<value>DB_Group2_C</value>
 			</list>
 		</property>
 	<property name="pushCallback" ref="DBHandler"/>
 </bean>
-```
 
+<!-- database connection configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<!-- please configure db connection here-->
+	<property name="url" value="jdbc:mysql://jdbc:mysql://127.0.0.1:3306/bcos_Group2_C?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" />
+	<property name="username" value="root" />
+	<property name="password" value="123456" />
+</bean>
+```
 
 ### 启动amdb-proxy
 ```bash
@@ -717,5 +750,6 @@ info|2019-05-07 21:48:56.946022| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++
 info|2019-05-07 21:48:58.950222| [g:1][p:65544][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=6,tx=0,nodeIdx=1,hash=48341ee5...
 ```
 
+
 ### 使用控制台发送交易
-请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id10)章节。
+请参考“节点直连MySQL”中的[使用控制台发送交易](./distributed_storage.html#id12)章节。

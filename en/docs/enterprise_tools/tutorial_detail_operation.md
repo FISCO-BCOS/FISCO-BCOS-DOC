@@ -2,9 +2,9 @@
 
 FISCO BCOS enterprise deployment tools are designed for multi-agency production environments. For ensure the security of the agency's private keys, enterprise deployment tools provide agencies' collaboration to deploy an alliance chain.
 
-This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](../enterprise_tools/operation.md).
+This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](./operation.md).
 
-This chapter is a process that multi-agency peer-to-peer deployment and a situation that the private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through a single agency's click start can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](../enterprise_tools/enterprise_quick_start.md).
+This chapter is a process that multi-agency peer-to-peer deployment and a situation that the private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through a single agency's click start can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](./tutorial_one_click.md).
 
 ## Download and install
 
@@ -165,7 +165,7 @@ cp -r ~/generator ~/generator-B
 
 A single chain has a unique ca.crt.
 
-use [`--generate_chain_certificate`](../enterprise_tools/operation.html#generate-chain-certificate) to generate chain certificate
+use [`--generate_chain_certificate`](./operation.html#generate-chain-certificate) to generate chain certificate
 
 Operate in the certificate agency directory:
 
@@ -185,8 +185,8 @@ ls ./dir_chain_ca
 
 ```bash
 # the above order has explained
-# From left to right,  they are chain's certificate, chain's private key, and certificate configuration file.
-ca.crt  ca.key   cert.cnf
+# From left to right,  they are chain's certificate, and chain's private key.
+ca.crt  ca.key
 ```
 
 ## AgencyA, B to build group 1
@@ -214,8 +214,8 @@ ls dir_agency_ca/agencyA/
 ```
 
 ```bash
-# From left to right, they are agency's certificate, agency's private key, chain's certificate, certificate configuration file.
-agency.crt  agency.key  ca.crt  cert.cnf
+# From left to right, they are agency's certificate, and agency's private key
+agency.crt  agency.key  ca.crt
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency's working directory.
@@ -252,7 +252,7 @@ cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
 
 ### AgencyA modifies configuration file
 
-[node_deployment.ini](../enterprise_tools/config.md#node-deployment-ini) is the node configuration file. Enterprise deployment tool generates the corresponding node certificate according to the configuration of `node_deployment.ini` and the node configuration folder etc..
+[node_deployment.ini](./config.md#node-deployment-ini) is the node configuration file. Enterprise deployment tool generates the corresponding node certificate according to the configuration of `node_deployment.ini` and the node configuration folder etc..
 
 AgencyA modifies the `node_deployment.ini` in the conf folder, as shown below:
 
@@ -397,7 +397,7 @@ Execute the following command in the ~/generator-A directory
 cd ~/generator-A
 ```
 
-AgencyA modifies `group_genesis.ini` in the conf folder. For configuration items, refer to [Manuals](../enterprise_tools/config.md#group-genesis-ini):
+AgencyA modifies `group_genesis.ini` in the conf folder. For configuration items, refer to [Manuals](./config.md#group-genesis-ini):
 
 ```bash
 cat > ./conf/group_genesis.ini << EOF
@@ -586,8 +586,8 @@ ls dir_agency_ca/agencyC/
 
 ```bash
 # command interpretation
-# From left to right, they are agency's certificate, agency's private key, chain's certificate, certificate configuration file
-agency.crt  agency.key  ca.crt  cert.cnf
+# From left to right, they are agency's certificate, agency's private key, and chain's certificate
+agency.crt  agency.key  ca.crt
 ```
 
 For sending the chain certificate, agency certificate, and agency private key to agencyA, we use an example is to send the certificate from the certificate agency to the corresponding agency through the file copy, and put the certificate in the subdirectory of meta which is agency’s working directory.

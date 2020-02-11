@@ -44,7 +44,7 @@ Nodes receive blocks and maintain a download queue locally to buffer and queue u
 The process of a transaction being broadcasted to all nodes:
 
 1. A transaction is sent to a node through channel or RPC.
-2. The node receives transaction and broadcast it to other nodes.
+2. The node receives the transaction and broadcast it to other nodes.
 3. Other nodes receive transaction and select 25% of other nodes to broadcast again to ensure reachability.
 4. When a node received the broadcasted transaction, it will not broadcast again.
 
@@ -80,4 +80,4 @@ When a new node has joined group, and it's its first start, the new member would
 4. the manager adds new member to the group.
 5. members broadcast their status to the new member.
 6. the new member receives the block message and compares with its block number (which is 0), and start downloading.
-7. the following process is the same as block syncing among group members.
+7. the following process is the same as block syncing among group members. 

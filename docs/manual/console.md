@@ -1,6 +1,6 @@
 # 控制台
 
-[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Web3SDK](../sdk/sdk.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
+[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Web3SDK](../sdk/java_sdk.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
 
 ### 控制台命令
 控制台命令由两部分组成，即指令和指令相关的参数：   
@@ -49,9 +49,9 @@
 ### 获取控制台
 
 ```bash
-$ cd ~ && mkdir -p fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 目录结构如下：
 ```bash
@@ -73,6 +73,91 @@ $ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/too
 |-- sol2java.sh # solidity合约文件编译为java合约文件的开发工具脚本
 |-- replace_solc_jar.sh # 编译jar包替换脚本
 ```
+
+### 配置控制台
+- 区块链节点和证书的配置：
+  - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+         http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+         http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
+        </bean>
+
+        <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <property name="allChannelConnections">
+                        <list>  <!-- 每个群组需要配置一个bean -->
+                                <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
+                                        <property name="groupId" value="1" /> <!-- 群组的groupID -->
+                                        <property name="connectionsStr">
+                                                <list>
+                                                        <value>127.0.0.1:20200</value>  <!-- IP:channel_port -->
+                                                </list>
+                                        </property>
+                                </bean>
+                        </list>
+                </property>
+        </bean>
+
+        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
+                <property name="groupId" value="1" /> <!-- 连接ID为1的群组 -->
+                <property name="agencyName" value="fisco" />
+                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
+        </bean>
+
+</beans>
+```
+  配置项详细说明[参考这里](../sdk/java_sdk.html#spring)。
+
+```eval_rst
+.. important::
+
+    控制台配置说明
+
+    - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
+    
+      Failed to connect to the node. Please check the node status and the console configruation.
+
+     则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <./console.html#java>`_ )，安装完毕后再启动控制台。
+
+    - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
+
+```
+
+### 配置国密版控制台
+国密版的控制台配置与非国密版控制台的配置流程有一些区别，流程如下：
+- 区块链节点和证书的配置：
+  - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
+  
+- 打开国密开关
+```
+<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+    <!-- encryptType值设置为1，打开国密开关 -->
+    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
+</bean>
+```
+- 替换国密编译包  
+```bash
+# 下载solcJ-all-0.4.25-gm.jar放在console目录下
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar 
+# 替换Jar包
+$ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
+``` 
 
 #### 合约编译工具
 
@@ -125,70 +210,6 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 国密0.5版本合约编译jar包
 ```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
-```
-
-### 配置控制台
-- 区块链节点和证书的配置：
-  - 将节点sdk目录下的`ca.crt`、`node.crt`和`node.key`文件拷贝到`conf`目录下。
-  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
-
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-         http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-         http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-
-
-        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
-        </bean>
-
-        <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-                <property name="allChannelConnections">
-                        <list>  <!-- 每个群组需要配置一个bean -->
-                                <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                                        <property name="groupId" value="1" /> <!-- 群组的groupID -->
-                                        <property name="connectionsStr">
-                                                <list>
-                                                        <value>127.0.0.1:20200</value>  <!-- IP:channel_port -->
-                                                </list>
-                                        </property>
-                                </bean>
-                        </list>
-                </property>
-        </bean>
-
-        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-                <property name="groupId" value="1" /> <!-- 连接ID为1的群组 -->
-                <property name="agencyName" value="fisco" />
-                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-        </bean>
-
-</beans>
-```
-  配置项详细说明[参考这里](../sdk/sdk.html#spring)。
-
-```eval_rst
-.. important::
-
-    控制台配置说明
-
-    - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
-    
-      Failed to connect to the node. Please check the node status and the console configruation.
-
-     则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <./console.html#java>`_ )，安装完毕后再启动控制台。
-
-    - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
-
 ```
 ### 启动控制台
 
@@ -400,69 +421,52 @@ Switched to group 2.
 [group:1]> getConsensusStatus
 [
     {
-        "accountType":1,
-        "allowFutureBlocks":true,
-        "cfgErr":false,
-        "connectedNodes":3,
-        "consensusedBlockNumber":6,
-        "currentView":40,
-        "groupId":1,
-        "highestblockHash":"0xb99703130e24702d3b580111b0cf4e39ff60ac530561dd9eb0678d03d7acce1d",
-        "highestblockNumber":5,
-        "leaderFailed":false,
-        "max_faulty_leader":1,
-        "node index":3,
-        "nodeId":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "nodeNum":4,
-        "omitEmptyBlock":true,
-        "protocolId":264,
-        "sealer.0":"0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-        "sealer.1":"2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-        "sealer.2":"cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-        "sealer.3":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "toView":40
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "accountType": 1,
+      "allowFutureBlocks": true,
+      "cfgErr": false,
+      "connectedNodes": 3,
+      "consensusedBlockNumber": 38207,
+      "currentView": 54477,
+      "groupId": 1,
+      "highestblockHash": "0x19a16e8833e671aa11431de589c866a6442ca6c8548ba40a44f50889cd785069",
+      "highestblockNumber": 38206,
+      "leaderFailed": false,
+      "max_faulty_leader": 1,
+      "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "nodeNum": 4,
+      "node_index": 3,
+      "omitEmptyBlock": true,
+      "protocolId": 65544,
+      "sealer.0": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+      "sealer.1": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+      "sealer.2": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+      "sealer.3": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "toView": 54477
     },
     [
-        {
-            "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278":39
-        },
-        {
-            "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108":36
-        },
-        {
-            "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd":37
-        },
-        {
-            "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec":40
-        }
-    ],
-    {
-        "prepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "prepareCache_height":-1,
-        "prepareCache_idx":"65535",
-        "prepareCache_view":"9223372036854775807"
-    },
-    {
-        "rawPrepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "rawPrepareCache_height":-1,
-        "rawPrepareCache_idx":"65535",
-        "rawPrepareCache_view":"9223372036854775807"
-    },
-    {
-        "committedPrepareCache_blockHash":"0xbbf80db21fa393143280e01b4b711eaddd54103e95f370b389af5c0504b1eea5",
-        "committedPrepareCache_height":5,
-        "committedPrepareCache_idx":"1",
-        "committedPrepareCache_view":"17"
-    },
-    {
-        "signCache_cachedSize":"0"
-    },
-    {
-        "commitCache_cachedSize":"0"
-    },
-    {
-        "viewChangeCache_cachedSize":"0"
-    }
+      {
+        "nodeId": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+        "view": 54474
+      },
+      {
+        "nodeId": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+        "view": 54475
+      },
+      {
+        "nodeId": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+        "view": 54476
+      },
+      {
+        "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+        "view": 54477
+      }
+    ]
+  ]
+}
 ]
 ```
 

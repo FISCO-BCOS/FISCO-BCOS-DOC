@@ -27,5 +27,5 @@
    :maxdepth: 1
    
    node_management.md
-   certificate_blacklist.md
+   certificate_list.md
    permission_control.md

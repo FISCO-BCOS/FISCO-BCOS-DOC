@@ -9,6 +9,7 @@
    :maxdepth: 1
 
    get_executable.md
+   hardware_requirements.md
    build_chain.md
    certificates.md
    configuration.md
@@ -21,10 +22,11 @@
    transaction_parallel.md
    node_management.md
    permission_control.md
-   certificate_blacklist.md
+   certificate_list.md
    storage_security.md
    guomi_crypto.md
    log_description.md
+   caliper.md
    privacy.md
 
 
@@ -50,7 +52,7 @@
         + 详细的控制台配置和使用说明
     - `账户管理 <./account.html>`_
         + 生成账户、用特定账户操作链
-    - `SDK <../sdk/sdk.html>`_
+    - `SDK <../sdk/index.html>`_
         + 外部应用调用区块链上的智能合约
     - `链上信使协议 <./amop_protocol.html>`_
         + 多个SDK间的消息相互推送
@@ -70,7 +72,7 @@
         + 节点加入、退出群组
     - `权限控制 <./permission_control.html>`_
         + 限制用户对区块链的操作
-    - `CA黑名单 <./certificate_blacklist.html>`_
+    - `CA黑白名单 <./certificate_list.html>`_
         + 通过配置拒绝与不安全的节点建立连接
     - `存储安全 <./storage_security.html>`_
         + 落盘加密，对节点存储的数据进行加密
@@ -84,6 +86,8 @@
         + 国密版本的节点、SDK
     - `日志说明 <./log_description.html>`_
         + 节点日志格式和说明
+    - `Caliper压力测试指南 <./caliper.html>`_
+        + Caliper压力测试指南 
 
 .. important:: 
 

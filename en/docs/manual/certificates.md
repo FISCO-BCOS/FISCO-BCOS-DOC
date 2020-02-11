@@ -53,9 +53,11 @@ agency.key agency private key
 * SDK includes SDK certificate and private key for establishing SSL encrypted connection with blockchain nodes.
 
 ```bash
-ca.crt chain certificate
-node.crt node/SDK certificate
-node.key node/SDK private key
+ca.crt #chain certificate
+node.crt #node certificate
+node.key #node private key
+sdk.crt #SDK certificate
+sdk.key #SDK private key
 ```
 
 Node certificate `node.crt` includes the node certificate and the agency certificate information. When the node communicates with other nodes/SDKs, it will sign the message with its own private key `node.key`, and send its own `node.crt` to nodes/SDKs to verify.
@@ -76,4 +78,6 @@ FISCO BCOS certificate generation process is as follows. Users can also use the 
 
 ### Node/SDK certificate generation
 
-* The node generates the private key `node.key` and the certificate request file `node.csr`. The agency administrator uses the private key `agency.key` and the certificate request file `node.csr` to issue the certificate `node.crt` to the node/SDK.
+* The node generates the private key `node.key` and the certificate request file `node.csr`. The agency administrator uses the private key `agency.key` and the certificate request file `node.csr` to issue the certificate to the node/SDK.
+
+## TODO

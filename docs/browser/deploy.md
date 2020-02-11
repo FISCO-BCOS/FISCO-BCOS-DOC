@@ -40,8 +40,8 @@ cd fisco-bcos-browser/deploy
 数据库密码：sed -i "s/dbPassword/${your_db_password}/g" common.properties
 数据库名称：sed -i "s/db_browser/${your_db_name}/g" common.properties
 
-后端服务端口：sed -i "s/8088/${your_server_port}/g" common.properties
-前端服务端口：sed -i "s/8081/${your_web_port}/g" common.properties
+前端服务端口：sed -i "s/5100/${your_web_port}/g" common.properties
+后端服务端口：sed -i "s/5101/${your_server_port}/g" common.properties
 
 例子（将数据库IP由127.0.0.1改为0.0.0.0）：sed -i "s/127.0.0.1/0.0.0.0/g" application.yml
 ```
@@ -51,7 +51,7 @@ cd fisco-bcos-browser/deploy
 部署所有服务：
 
 ```shell
-python deploy.py startAll
+python deploy.py installAll
 ```
 
 停止所有服务：
@@ -73,7 +73,7 @@ python deploy.py help
 例如：在浏览器输入以下访问地址，IP为部署服务器IP，端口为前端服务端口
 
 ```
-http://127.0.0.1:8081/
+http://127.0.0.1:5100/
 ```
 
 ## 6、日志路径
@@ -174,7 +174,6 @@ mysql -utest -p123456 -h 127.0.0.1 -P 3306
 
 ```sql
 mysql > show databases;
-mysql > use test;
 ```
 
 （6）创建数据库
@@ -242,7 +241,7 @@ Traceback (most recent call last):
 ImportError: No module named MySQLdb
 ```
 
-答：MySQL-python安装请参看部署附录7.3
+答：MySQL-python安装请参看[附录7.4](./deploy.html#mysql-python)
 
 ### 8.3 部署时编译包下载慢
 

@@ -2,7 +2,7 @@
 
 ## Transaction structure and its RLP coding description
 
-The transaction structure of FISCO BCOS has been increased or decreased some fields based on the transaction structure of the original Ethereum. The transaction structure fields of FISCO BCOS 2.0.0 are as follows:
+The transaction structure of FISCO BCOS has been increased or decreased some fields based on the transaction structure of the original Ethereum. The transaction structure fields of FISCO BCOS 2.0+ are as follows:
 
 | name           | type            | description                                                  | RLP index | RLP index RC2 |
 | :------------- | :-------------- | :----------------------------------------------------------- | --------- | ------------- |
@@ -33,6 +33,8 @@ It is similar with RC2 generation process, only that the transaction struct of `
 
 The block of FISCO BCOS consists of the following five parts:
 
+**rc1:**
+
 | name                | description                                      | RLP index |
 | :------------------ | :----------------------------------------------- | --------- |
 | blockHeader         | Block header RLP coding                                  | 0         |
@@ -41,6 +43,15 @@ The block of FISCO BCOS consists of the following five parts:
 | hash                | The hash encoded by block header RLP encoded                         | 3         |
 | sigList             | The node signature list that is collected during PBFT consensus. Raft does not use this. | 4         |
 
+**rc2, rc3, 2.0 and newer**
+
+| name                | description                                                  | RLP index |
+| :------------------ | :----------------------------------------------------------- | --------- |
+| blockHeader         | Block header RLP coding                                      | 0         |
+| transactions        | Transaction list RLP code                                    | 1         |
+| hash                | The hash encoded by block header RLP encoded                 | 2         |
+| sigList             | The node signature list that is collected during PBFT consensus. Raft does not use this. | 3         |
+| transactionReceipts | Transaction receipt list RLP code                            | 4         |
 
 The description of each field in the block header of FISCO BCOS is as follows:
 
@@ -61,40 +72,24 @@ The description of each field in the block header of FISCO BCOS is as follows:
 | sealerList       | vector<h512>  | The list of sealer nodes (without observing nodes). A new field in FISCO BCOS. | 12        |
 | hash             | h256          | The hash of the first 13 fields of the block header after RLP encoding. A new field in FISCO BCOS.               | -         |
 
+## Transaction Receipt
+
+| name            | type          | description                    | RLP index |
+| :---------------| :------------ | :------------------------------| --------- |
+| stateRoot       | h256          | state root of block              | 0         |
+| gasUsed         | u256          | gas used of transaction          | 1         |
+| contractAddress | Address       | the address of deployed contract | 2         |
+| bloom           | h2048         | bloom filter                     | 3         |
+| status          | h256          | status code of transaction       | 4         |
+| output          | LogBloom      | transaction return value         | 5         |
+| logs            | LogEntry[]    | event logs                       | 6        |
+
+
 ## Network transmission protocol
 
 FISCO BCOS currently has two types of data packet formats. The data packets communicated among nodes are in the P2PMessage format, and the data packets communicated between nodes and SDK are in the ChannelMessage format.
 
 ![](../../images/node_management/message_type.png)
-
-### P2PMessage: v2.0.0-rc1
-
-The header of v2.0.0-rc1 P2PMessage package contains 12 bytes. The basic form is:
-
-![](../../images/node_management/p2p_message_rc1.png)
-
-| name       | type         | description                          |
-| :--------- | :----------- | :----------------------------------- |
-| Length     | uint32_t     | Data packet length, including header and data             |
-| groupID    | int8_t       | Group ID, its range is 1-127                   |
-| ModuleID   | uint8_t      | Module ID，its range is 1-255                    |
-| packetType | uint16_t     | Data packet type, is the identifier of sub-protocol under the same module ID |
-| seq        | uint32_t     | Data packet serial number, increased by each packet        |
-| data       | vector<byte> | Data, its length is length-12            |
-
-The module ID is divided as follows:
-
-| ModuleID | message           |
-| :------- | :---------------- |
-| 1        | AMOP submodule of P2P   |
-| 2        | Topic submodule of P2P  |
-| 3~7      | reserve for other P2P submodules |
-| 8        | PBFT submodule in consensus  |
-| 9        | Block synchronization module     |
-| 10       | Transaction pool module        |
-| 11       | Raft submodule in consensus |
-| 12~255   | reserve for other modules      |
-
 
 ### P2PMessage: v2.0.0-rc2
 
@@ -112,7 +107,7 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 | Seq        | uint32_t     | data packet serial number, each increment itself         |
 | Data       | vector<byte> | data itself, length length-12           |
 
-
+For definitions of P2PMessage before v2.0.0-rc2, please [refer here.](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc3/docs/design/protocol_description.html#p2pmessage-v2-0-rc1)
 
 **Additional**
 
@@ -121,32 +116,50 @@ V2.0.0-rc2 has expanded the range of **group ID and model ID**, **supporting 327
 3. The data packet distinguishes between request packet and response packet by the 16-bit binary value where the protocolID is located.  The data greater than 0 is the request packet, and less than 0 is the corresponding packet.
 4. The packetType currently used by AMOP include `SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`.
 
-### ChannelMessage
+### ChannelMessage v2
 
-| name   | type         | description                                  |
-| :----- | :----------- | :------------------------------------------- |
-| length| uint32_t     | Data packet length, including header and data, up to 10M Byte |
-| type   | uint16_t     | Data packet type                                   |
-| seq    | string       | Data packet serial number, 32 bytes, introduced by SDK                |
-| result | int          | Process result                                     |
-| data   | vector<byte> | Data                                     |
+[ChannelMessage v1 Please refer here](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/design/protocol_description.html#channelmessage-v1)
 
-The packet type enumeration value and its corresponding description are as follows:
 
-| code    | message       | direction |
-| :------ | :------------ | :-------- |
-| 0x12    | Ethereum message    | SDK->node |
-| 0x13    | Heartbeat packet        | SDK->node |
-| 0x30    | AMOP request packet    | SDK->node |
-| 0x31    | AMOP response packet    | SDK->node |
-| 0x32    | Report Topic information | SDK->node |
-| 0x10000 | Transaction on chain callback | node->SDK |
+| name   | type         |length(4Byte)| description                          |
+| :----- | :----------- |:----| :------------------------------------------- |
+| length| uint32_t      |4| Data packet length, including header and data|
+| type   | uint16_t     |2| Data packet type                                 |
+| seq    | string       |32| Data packet serial number, 32 bytes|
+| result | int          |4| Process result                                   |
+| data   | bytes |length-42| Data                                     |
 
-The process result enumeration value and its corresponding description are as follows:
+#### AMOP Message Packet
+
+AMOP message packages inherit the ChannelMessage package organization and add custom content to the data field. Includes `0x30, 0x31, 0x35, 0x1001.`
+
+|| Length Byte | Description|
+|:-- |:-- |:----|
+| Length of length | 1 | Topic|
+| topic | length | topic name|
+
+#### Message Packet Type
+
+Enumeration values of packet types and their corresponding meanings are as follows:
+
+| Type | Inclusion | Description | Interpretation|
+|:------ |:--------|:--------|:--------|
+| 0x12 | JSONRPC 2.0 format | RPC interface message package | SDK -> node|
+| 0x13 | JSON format heartbeat package `{"heartbeat":"0"}`|heartbeat package | 0: SDK -> node, 1: node -> SDK|
+| 0x14 | SDK -> node's package `{"minimumSupport":version,"maximumSupport":version,"clientType":"client type"}`, node -> SDK's package `{"protocol":version,"nodeVersion":"fisco-bcos version"` | JSON format, protocol version negotiation, handshake package | Node <-> Node|
+| 0x30 | AMOP message package package package package | AMOP request package | SDK<-> node, bidirectional|
+| 0x31 | Package of failed AMOP message | AMOP Failure Response Package | Node -> SDK or Node -> Node|
+| 0x32 | JSON array to store Topics | report Topic information | SDK -> nodes monitored by SDK|
+| 0x35 | AMOP Message Packet Package | AMOP Multicast Message | Node -> Node|
+| 0x1000 | JSON Format Transaction Notification | Transaction Callback | Node -> SDK|
+| 0x1001  |JSON format,`{"groupID":"groupID","blockNumber":"blockNumber"}`| Block on-chain notify | 节点->SDK |
+| Block Notification in 0x1001 | JSON format `{groupID":"GroupID","blockNumber":"BlockNumber"}`Block Height Notification'| Node -> SDK|
+
+#### Error code
 
 | code | message    |
 | :--- | :--------- |
-| 0    | successful       |
+| 0    | successful      |
 | 100  | node unreachable |
 | 101  | SDK unreachable |
 | 102  | time out       |

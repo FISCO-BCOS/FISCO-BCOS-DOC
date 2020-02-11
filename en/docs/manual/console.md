@@ -1,6 +1,6 @@
 # Console
 
-[Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
+[Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/java_sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
 
 
 ### Console command
@@ -56,7 +56,7 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+$ bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
 ```
 The directory structure is as follows:
 ```bash
@@ -79,67 +79,9 @@ The directory structure is as follows:
 |-- replace_solc_jar.sh # a script for replacing the compiling jar package
 ```
 
-#### Contract compilation tool
-
-**Console provides a special compilation contract tool that allows developers to compile Solidity contract files into Java contract files.** Two steps for using the tool:
-  - To place the Solidity contract file in the `contracts/solidity` directory.
-  - Complete the task of compiling contract by running the `sol2java.sh` script (**requires specifying a java package name**). For example, there are `HelloWorld.sol`, `TableTest.sol`, and `Table.sol` contracts in the `contracts/solidity` directory, and we specify the package name as `org.com.fisco`. The command is as follows:
-
-    ```bash
-    $ cd ~/fisco/console
-    $ ./sol2java.sh org.com.fisco
-    ```
- After running successfully, the directories of Java, ABI and bin will be generated in the `console/contracts/sdk` directory as shown below.
-
-    ```bash
-    |-- abi # to compile the generated abi directory and to store the abi file compiled by solidity contract
-    |   |-- HelloWorld.abi
-    |   |-- Table.abi
-    |   |-- TableTest.abi
-    |-- bin # to compile the generated bin directory and to store the bin file compiled by solidity contract
-    |   |-- HelloWorld.bin
-    |   |-- Table.bin
-    |   |-- TableTest.bin
-    |-- java  # to store compiled package path and Java contract file
-    |   |-- org
-    |       |-- com
-    |           |-- fisco
-    |               |-- HelloWorld.java # the target Java file which is compiled successfully
-    |               |-- Table.java  # the system CRUD contract interface Java file which is compiled successfully
-    |               |-- TableTest.java  # the TableTest Java file which is compiled successfully
-    ```
-
-In the java directory, `org/com/fisco/` package path directory is generated. In the package path directory, the java contract files `HelloWorld.java`, `TableTest.java` and `Table.java` will be generated. `HelloWorld.java` and `TableTest.java` are the java contract files required by the java application.
-
-**Note: ** The downloaded console contains `solcJ-all-0.4.25.jar` in the `console/lib` directory, so it supports the 0.4 version of the contract compilation. If you are using a 0.5 version contract compiler or a national cryptography contract compiler, please download the relevant contract compiler jar package, and replace `solcJ-all-0.4.25.jar` in the `console/lib` directory. It can be replaced by the `./replace_solc_jar.sh` script. To specify the jar package path, the command is as follows:
-
-```bash
-# To download solcJ-all-0.5.2.jar and to place in console directory, the example usage is as follows
-
-$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
-```
-
-#### Download contract compilation jar package
-0.4 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
-```
-0.5 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
-```
-National cryptography 0.4 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-National cryptography 0.5 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
-```
-
 ### Configure console
 - Blockchain node and certificate configuration:
-   - To copy the `ca.crt`, `node.crt`, and `node.key` files in the sdk node directory to the `conf` directory.
+   - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
    - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the listen_ip set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
 
 ```xml
@@ -199,6 +141,84 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 
     - When the console configuration file configures multiple node connections in a group, some nodes in the group may leave the group during operation. Therefore, it shows a norm which is when the console is polling, the return information may be inconsistent. It is recommended to configure a node or ensure that the configured nodes are always in the group when using the console, so that the inquired information in the group will keep consistent during the synchronization time.
 
+```
+
+### Configure OSCCA-approved cryptography console
+- Blockchain node and certificate configuration:
+   - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
+   - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the listen_ip set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
+  
+- Open OSCCA-approved cryptography switch
+```
+<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+    <!-- set encryptType value to 1 -->
+    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
+</bean>
+```
+- Replace compile Jar package
+```bash
+# Download solcJ-all-0.4.25-gm.jar package, and put it console dictionary
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
+# Replace Jar package.
+$ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
+``` 
+
+#### Contract compilation tool
+
+**Console provides a special compilation contract tool that allows developers to compile Solidity contract files into Java contract files.** Two steps for using the tool:
+  - To place the Solidity contract file in the `contracts/solidity` directory.
+  - Complete the task of compiling contract by running the `sol2java.sh` script (**requires specifying a java package name**). For example, there are `HelloWorld.sol`, `TableTest.sol`, and `Table.sol` contracts in the `contracts/solidity` directory, and we specify the package name as `org.com.fisco`. The command is as follows:
+
+    ```bash
+    $ cd ~/fisco/console
+    $ ./sol2java.sh org.com.fisco
+    ```
+ After running successfully, the directories of Java, ABI and bin will be generated in the `console/contracts/sdk` directory as shown below.
+
+    ```bash
+    |-- abi # to compile the generated abi directory and to store the abi file compiled by solidity contract
+    |   |-- HelloWorld.abi
+    |   |-- Table.abi
+    |   |-- TableTest.abi
+    |-- bin # to compile the generated bin directory and to store the bin file compiled by solidity contract
+    |   |-- HelloWorld.bin
+    |   |-- Table.bin
+    |   |-- TableTest.bin
+    |-- java  # to store compiled package path and Java contract file
+    |   |-- org
+    |       |-- com
+    |           |-- fisco
+    |               |-- HelloWorld.java # the target Java file which is compiled successfully
+    |               |-- Table.java  # the system CRUD contract interface Java file which is compiled successfully
+    |               |-- TableTest.java  # the TableTest Java file which is compiled successfully
+    ```
+
+In the java directory, `org/com/fisco/` package path directory is generated. In the package path directory, the java contract files `HelloWorld.java`, `TableTest.java` and `Table.java` will be generated. `HelloWorld.java` and `TableTest.java` are the java contract files required by the java application.
+
+**Note: ** The downloaded console contains `solcJ-all-0.4.25.jar` in the `console/lib` directory, so it supports the 0.4 version of the contract compilation. If you are using a 0.5 version contract compiler or a national cryptography contract compiler, please download the relevant contract compiler jar package, and replace `solcJ-all-0.4.25.jar` in the `console/lib` directory. It can be replaced by the `./replace_solc_jar.sh` script. To specify the jar package path, the command is as follows:
+
+```bash
+# To download solcJ-all-0.5.2.jar and to place in console directory, the example usage is as follows
+
+$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
+```
+
+#### Download contract compilation jar package
+0.4 version contract compilation jar package
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
+```
+0.5 version contract compilation jar package
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
+```
+National cryptography 0.4 version contract compilation jar package
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
+```
+National cryptography 0.5 version contract compilation jar package
+```bash
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
 ```
 ### Launch console
 
@@ -415,69 +435,52 @@ To run getConsensusStatus to view the consensus status.
 [group:1]> getConsensusStatus
 [
     {
-        "accountType":1,
-        "allowFutureBlocks":true,
-        "cfgErr":false,
-        "connectedNodes":3,
-        "consensusedBlockNumber":6,
-        "currentView":40,
-        "groupId":1,
-        "highestblockHash":"0xb99703130e24702d3b580111b0cf4e39ff60ac530561dd9eb0678d03d7acce1d",
-        "highestblockNumber":5,
-        "leaderFailed":false,
-        "max_faulty_leader":1,
-        "node index":3,
-        "nodeId":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "nodeNum":4,
-        "omitEmptyBlock":true,
-        "protocolId":264,
-        "sealer.0":"0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-        "sealer.1":"2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-        "sealer.2":"cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-        "sealer.3":"ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec",
-        "toView":40
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "accountType": 1,
+      "allowFutureBlocks": true,
+      "cfgErr": false,
+      "connectedNodes": 3,
+      "consensusedBlockNumber": 38207,
+      "currentView": 54477,
+      "groupId": 1,
+      "highestblockHash": "0x19a16e8833e671aa11431de589c866a6442ca6c8548ba40a44f50889cd785069",
+      "highestblockNumber": 38206,
+      "leaderFailed": false,
+      "max_faulty_leader": 1,
+      "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "nodeNum": 4,
+      "node_index": 3,
+      "omitEmptyBlock": true,
+      "protocolId": 65544,
+      "sealer.0": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+      "sealer.1": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+      "sealer.2": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+      "sealer.3": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+      "toView": 54477
     },
     [
-        {
-            "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278":39
-        },
-        {
-            "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108":36
-        },
-        {
-            "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd":37
-        },
-        {
-            "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec":40
-        }
-    ],
-    {
-        "prepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "prepareCache_height":-1,
-        "prepareCache_idx":"65535",
-        "prepareCache_view":"9223372036854775807"
-    },
-    {
-        "rawPrepareCache_blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
-        "rawPrepareCache_height":-1,
-        "rawPrepareCache_idx":"65535",
-        "rawPrepareCache_view":"9223372036854775807"
-    },
-    {
-        "committedPrepareCache_blockHash":"0xbbf80db21fa393143280e01b4b711eaddd54103e95f370b389af5c0504b1eea5",
-        "committedPrepareCache_height":5,
-        "committedPrepareCache_idx":"1",
-        "committedPrepareCache_view":"17"
-    },
-    {
-        "signCache_cachedSize":"0"
-    },
-    {
-        "commitCache_cachedSize":"0"
-    },
-    {
-        "viewChangeCache_cachedSize":"0"
-    }
+      {
+        "nodeId": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
+        "view": 54474
+      },
+      {
+        "nodeId": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
+        "view": 54475
+      },
+      {
+        "nodeId": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
+        "view": 54476
+      },
+      {
+        "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
+        "view": 54477
+      }
+    ]
+  ]
+}
 ]
 ```
 

@@ -66,9 +66,11 @@ contract Entry {
     function getAddress(string) public constant returns(address);
     function getBytes64(string) public constant returns(byte[64]);
     function getBytes32(string) public constant returns(bytes32);
+    function getString(string) public constant returns(string);
     
     function set(string, int) public;
     function set(string, string) public;
+    function set(string, address) public;
 }
 
 // 数据记录集
@@ -91,6 +93,11 @@ contract Table {
     function newEntry() public constant returns(Entry);
     function newCondition() public constant returns(Condition);
 }
+```
+
+```eval_rst
+.. important::
+   v2.2.0及之前版本CRUD接口的表中中主Key下可以有多条记录，v2.3.0将会废弃该特性。在v2.3.0之后的版本中主Key只允许唯一对应一条记录。
 ```
 
 提供一个合约案例`TableTest.sol`，代码如下：

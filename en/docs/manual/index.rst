@@ -9,6 +9,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    :maxdepth: 1
 
    get_executable.md
+   hardware_requirements.md
    build_chain.md
    certificates.md
    configuration.md
@@ -20,7 +21,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    distributed_storage.md
    node_management.md
    permission_control.md
-   certificate_blacklist.md
+   certificate_list.md
    amop_protocol.md
    storage_security.md
    guomi_crypto.md
@@ -48,7 +49,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
         + Configuration and options
     - `Manage blockchain accounts <./account.html>`_
         + Account generation and using guide.
-    - `SDK <../sdk/sdk.html>`_
+    - `SDK <../sdk/index.html>`_
         + The SDK to call smart from outside
     - `AMOP <./amop_protocol.html>`_
         + Send messages between SDKs
@@ -68,7 +69,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
         + Add/Remove members(nodes) of group
     - `Permission control <./permission_control.html>`_
         + Access control among accounts.
-    - `CA blacklist <./certificate_blacklist.html>`_
+    - `CA blacklist <./certificate_list.html>`_
         + Deny connection from certain node.
     - `Storage security <./storage_security.html>`_
         + Encrypt data during writing into disk
