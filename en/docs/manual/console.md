@@ -349,6 +349,10 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
+frozenContract                           Frozen the contract.
+unfrozenContract                         Unfrozen the contract.
+killContract                             Kill the contract.
+queryContractStatus                      Query the status of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1487,6 +1491,59 @@ Remove OK, 1 row affected.
 **Note:**
 - For deleting the where clause of recording sql statement, the primary key field value of the table in the where clause must be provided.
 - The enter values with punctuation, spaces, or strings containing letters starting with a number requires double quotation marks, and no more double quotation marks are allowed inside.
+
+### **frozenContract**
+To run frozenContract to freeze contract according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address.
+The prefix of 0x is not necessary.
+
+```text
+[group:1]> frozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfrozenContract**
+To run unfrozenContract to unfreeze contract according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address.
+The prefix of 0x is not necessary.
+
+```text
+[group:1]> unfrozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **killContract**
+To run killContract to kill contract according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address.
+The prefix of 0x is not necessary.
+
+```text
+[group:1]> killContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **queryContractStatus**
+To run queryContractStatus to query contract status according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address.
+The prefix of 0x is not necessary.
+
+```text
+[group:1]> queryContractStatus 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+The contract is available.
+```
 
 ## Appendix: Java environment configuration
 
