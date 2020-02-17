@@ -44,12 +44,12 @@ SDK配置（Spring Bean）：
 	</bean>
 	
 	<!-- 区块链节点信息配置 -->
-	<bean id="channelService" class="cn.webank.channel.client.Service">
+	<bean id="channelService" class="org.bcos.channel.client.Service">
 		<property name="orgID" value="WB" /> <!-- 配置本机构名称 -->
 			<property name="allChannelConnections">
 				<map>
 					<entry key="WB"> <!-- 配置本机构的区块链节点列表（如有DMZ，则为区块链前置）-->
-						<bean class="cn.webank.channel.handler.ChannelConnections">
+						<bean class="org.bcos.channel.handler.ChannelConnections">
 							<property name="connectionsStr">
 								<list>
 									<value>NodeA@127.0.0.1:30333</value><!-- 格式：节点名@IP地址:端口，节点名可以为任意名称 -->
@@ -79,9 +79,9 @@ SDK配置（Spring Bean）：
 	    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 	    
 	    <!-- 区块链节点信息配置 -->
-		<bean id="proxyServer" class="cn.webank.channel.proxy.Server">
+		<bean id="proxyServer" class="org.bcos.channel.proxy.Server">
 			<property name="remoteConnections">
-				<bean class="cn.webank.channel.handler.ChannelConnections">
+				<bean class="org.bcos.channel.handler.ChannelConnections">
 					<property name="connectionsStr">
 						<list>
 							<value>NodeA@127.0.0.1:5051</value><!-- 格式：节点名@IP地址:端口，节点名可以为任意名称 -->
@@ -91,7 +91,7 @@ SDK配置（Spring Bean）：
 			</property>
 			
 			<property name="localConnections">
-				<bean class="cn.webank.channel.handler.ChannelConnections">
+				<bean class="org.bcos.channel.handler.ChannelConnections">
 				</bean>
 			</property>
 			<!-- 区块链前置监听端口配置，区块链SDK连接用 -->
@@ -109,7 +109,7 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 
 ```
 
-	package cn.webank.channel.test;
+	package org.bcos.channel.test;
 	
 	import java.util.ArrayList;
 	import java.util.List;
@@ -119,7 +119,7 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 	import org.springframework.context.ApplicationContext;
 	import org.springframework.context.support.ClassPathXmlApplicationContext;
 	
-	import cn.webank.channel.client.Service;
+	import org.bcos.channel.client.Service;
 	
 	public class Channel2Server {
 		static Logger logger = LoggerFactory.getLogger(Channel2Server.class);
@@ -153,7 +153,7 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 
 ```
 
-	package cn.webank.channel.test;
+	package org.bcos.channel.test;
 	
 	import java.time.LocalDateTime;
 	import java.time.format.DateTimeFormatter;
@@ -161,9 +161,9 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 	import org.slf4j.Logger;
 	import org.slf4j.LoggerFactory;
 	
-	import cn.webank.channel.client.ChannelPushCallback;
-	import cn.webank.channel.dto.ChannelPush;
-	import cn.webank.channel.dto.ChannelResponse;
+	import org.bcos.channel.client.ChannelPushCallback;
+	import org.bcos.channel.dto.ChannelPush;
+	import org.bcos.channel.dto.ChannelResponse;
 	
 	class PushCallback extends ChannelPushCallback {
 		static Logger logger = LoggerFactory.getLogger(PushCallback2.class);
@@ -189,7 +189,7 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 客户端案例：
 ```
 
-	package cn.webank.channel.test;
+	package org.bcos.channel.test;
 	
 	import java.time.LocalDateTime;
 	import java.time.format.DateTimeFormatter;
@@ -201,9 +201,9 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 	import org.springframework.context.ApplicationContext;
 	import org.springframework.context.support.ClassPathXmlApplicationContext;
 	
-	import cn.webank.channel.client.Service;
-	import cn.webank.channel.dto.ChannelRequest;
-	import cn.webank.channel.dto.ChannelResponse;
+	import org.bcos.channel.client.Service;
+	import org.bcos.channel.dto.ChannelRequest;
+	import org.bcos.channel.dto.ChannelResponse;
 	
 	public class Channel2Client {
 		static Logger logger = LoggerFactory.getLogger(Channel2Client.class);
@@ -244,11 +244,11 @@ AMOP支持在同一个区块链网络中有多个topic收发消息，topic支持
 
 启动amop服务端：  
 ```
-java -cp 'conf/:apps/*:lib/*' cn.webank.channel.test.Channel2Server [topic]
+java -cp 'conf/:apps/*:lib/*' org.bcos.channel.test.Channel2Server [topic]
 ```  
 启动amop客户端：   
 ```
-java -cp 'conf/:apps/*:lib/*' cn.webank.channel.test.Channel2Client [topic] [消息内容] [消息条数]
+java -cp 'conf/:apps/*:lib/*' org.bcos.channel.test.Channel2Client [topic] [消息内容] [消息条数]
 ```
 
 ## 错误码

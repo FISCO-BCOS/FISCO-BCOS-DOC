@@ -64,12 +64,12 @@ evidence/src/main/resources/applicationContext.xml文件配置说明
 
 ### 5.2 区块链节点信息配置
 
-     <bean id="channelService" class="cn.webank.channel.client.Service">
+     <bean id="channelService" class="org.bcos.channel.client.Service">
 		<property name="orgID" value="User" /><!-- 配置角色名称 -->
 		<property name="allChannelConnections">
 			<map>
  		       <entry key="User"><!-- 配置本角色的区块链节点列表-->
- 					<bean class="cn.webank.channel.handler.ChannelConnections">
+ 					<bean class="org.bcos.channel.handler.ChannelConnections">
  						<property name="connectionsStr">
  							<list> 
                                <value>User@127.0.0.1:8541</value><!-- 格式：节点nodeId@IP地址:链上链下端口-->
