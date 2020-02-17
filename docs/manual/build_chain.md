@@ -24,10 +24,9 @@ Usage:
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
     -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specificd version binary
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
+    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external / scalable, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
-    -m <MPT State type>                 Default storageState. if set -m, use mpt state
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -41,10 +40,10 @@ e.g
 
 ## 选项介绍
 
-- **`l`选项:** 
+### **`l`选项:** 
 用于指定要生成的链的IP列表以及每个IP下的节点数，以逗号分隔。脚本根据输入的参数生成对应的节点配置文件，其中每个节点的端口号默认从30300开始递增，所有节点属于同一个机构和群组。
 
-- **`f`选项** 
+### **`f`选项** 
     + 用于根据配置文件生成节点，相比于`l`选项支持更多的定制。
     + 按行分割，每一行表示一个服务器，格式为`IP:NUM AgencyName GroupList`，每行内的项使用空格分割，**不可有空行**。
     + `IP:NUM`表示机器的IP地址以及该机器上的节点数。`AgencyName`表示机构名，用于指定使用的机构证书。`GroupList`表示该行生成的节点所属的组，以`,`分割。例如`192.168.0.1:2 agency1 1,2`表示`ip`为`192.168.0.1`的机器上有两个节点，这两个节点属于机构`agency1`，属于group1和group2。
@@ -65,7 +64,7 @@ e.g
 $ bash build_chain.sh -f ipconf -T -i
 ```
 
-- **`e`选项[**Optional**]**
+### **`e`选项[**Optional**]**
 用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
 
 ```bash
@@ -75,10 +74,10 @@ $ bash build_chain.sh -l "127.0.0.1:4"
 $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
 ```
 
-- **`o`选项[**Optional**]**
+### **`o`选项[**Optional**]**
 指定生成的配置所在的目录。
 
-- **`p`选项[**Optional**]**
+### **`p`选项[**Optional**]**
 指定节点的起始端口，每个节点占用三个端口，分别是p2p,channel,jsonrpc使用`,`分割端口，必须指定三个端口。同一个IP下的不同节点所使用端口从起始端口递增。
 
 ```bash
@@ -86,13 +85,13 @@ $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 ```
 
-- **`i`选项[**Optional**]**
+### **`i`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
 
-- **`v`选项[**Optional**]**
-用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项指定二进制，则使用该二进制，配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
+### **`v`选项[**Optional**]**
+用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项，则配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
 
-- **`d`选项[**Optional**]**
+### **`d`选项[**Optional**]**
 使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限，即用户加入docker群组。
 在节点目录下执行如下命令启动节点
 ```bash
@@ -104,16 +103,18 @@ $ ./start.sh
 $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
-- **`m`选项[**Optional**]**
-无参数选项，设置该选项时，节点使用[mptstate](../design/storage/mpt.md)存储合约局部变量，默认使用[storagestate](../design/storage/storage.md)存储合约局部变量。
+### **`s`选项[**Optional**]**
+有参数选项，参数为db名，目前支持rocksdb、mysql、external、scalable。默认使用RocksDB。
 
-- **`s`选项[**Optional**]**
-有参数选项，参数为db名，目前支持rocksdb、mysql、external三种模式。默认使用RocksDB。其中mysql需要在群组ini文件中配置mysql相关信息，external需要配置topic信息并启动amdb-proxy。
+- RocksDB模式，使用RocksDB作为后端数据库。
+- MySQL模式，使用MySQL作为后端数据库，节点直连MySQL，需要在群组ini文件中配置数据库相关信息。
+- External模式，使用MySQL作为后端数据库，节点使用[`amdb-proxy`](./distributed_storage.md)连接数据库，代理和节点通过amop协议通信，需要在群组ini文件中配置topic信息。
+- scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
 
-- **`c`选项[**Optional**]**
+### **`c`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
 
-- **`C`选项[**Optional**]**
+### **`C`选项[**Optional**]**
 用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
 
 ```bash
@@ -121,16 +122,16 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
-- **`g`选项[**Optional**]**
+### **`g`选项[**Optional**]**
 无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**使用`g`选项时要求二进制fisoc-bcos为国密版本**。
 
-- **`z`选项[**Optional**]**
+### **`z`选项[**Optional**]**
 无参数选项，设置该选项时，生成节点的tar包。
 
-- **`t`选项[**Optional**]**
+### **`t`选项[**Optional**]**
 该选项用于指定生成证书时的证书配置文件。
 
-- **`T`选项[**Optional**]**
+### **`T`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](./configuration.html#id6)。
 
 ## 节点文件组织结构
@@ -230,6 +231,11 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ge
 bash gen_node_cert.sh -c nodes/cert/agency -o newNode
 ```
 
+国密版本请执行下面的指令生成证书。
+```bash
+bash gen_node_cert.sh -c nodes/cert/agency -o newNodeGm -g nodes/gmcert/agency/
+```
+
 #### 准备配置文件
 
 1. 拷贝群组1中节点node0配置文件与工具脚本
@@ -242,7 +248,7 @@ cp node0/*.sh newNode/
 cp -r node0/scripts newNode/
 ```
 
-2. 更新`newNode/config.ini`中监听的IP和端口
+2. 更新`newNode/config.ini`中监听的IP和端口，包括`[rpc]`和`[p2p]`配置项中的IP和端口。
 3. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)
 4. 将新节点的P2P配置中的IP和Port加入原有节点的config.ini中的[p2p]字段。假设新节点IP:Port为127.0.0.1:30304则，修改后的[P2P]配置为
 

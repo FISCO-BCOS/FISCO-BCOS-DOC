@@ -20,6 +20,11 @@ FISCO BCOS provides the get_account script and Web3SDK to create accounts, as we
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
 
+If you use guomi version fisco, please execute below command to get `get_gm_account.sh`
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
+```
+
 execute the above command and if you see the following output, you are downloading the correct script, otherwise please try again.
 
 ```bash

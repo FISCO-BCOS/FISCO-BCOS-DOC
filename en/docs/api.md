@@ -4,7 +4,7 @@ The following examples in this chapter adopt the [curl](https://curl.haxx.se/) c
 
 ## getClientVersion
 Returns the current node version.
-### Parameterss       
+### Parameters       
 none          
 ### Returns          
 - `object` - An object with version data:
@@ -435,7 +435,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
 ```
 ## getBlockByHash
 Returns information about a block by hash.
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `blockHash`: `string` - hash of a block      
 - `includeTransactions`: `bool` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
@@ -548,7 +548,7 @@ See the result in [getBlockByHash](./api.html#getblockbyhash)
 
 ## getBlockHashByNumber
 Returns a block hash by a block number.          
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `blockNumber`: `string` - block number (hexadecimal string starts with 0x)                  
 ### Returns          
@@ -567,12 +567,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 ```
 ## getTransactionByHash
 Returns the information about a transaction by transaction hash.
-### Parameterss         
+### Parameters         
 - `groupID`: `unsigned int` - group ID           
 - `transactionHash`: `string` - transaction hash        
 ### Returns          
 - `object`: - A transaction object:  
-    - `blockHash`: `string` - hash of the block where this transaction was in.      
+    - `blockHash`: `string` - hash of the block where this transaction was in.  
     - `blockNumber`: `string` -  block number where this transaction was in.    
     - `from`: `string` - address of the sender               
     - `gas`: `string` - gas provided by the sender    
@@ -609,7 +609,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 ```
 ## getTransactionByBlockHashAndIndex
 Returns information about a transaction by block hash and transaction index position.
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `blockHash`: `string` - hash of a block          
 - `transactionIndex`: `string` - integer of the transaction index position          
@@ -624,7 +624,7 @@ see result in [getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionByBlockNumberAndIndex
 Returns information about a transaction by block number and transaction index position.
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `blockNumber`: `string` - a block number (hexadecimal string starts with 0x)          
 - `transactionIndex`: `string` - the transaction index position (hexadecimal string starts with 0x)          
@@ -639,7 +639,7 @@ see result in [getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionReceipt
 Returns the receipt of a transaction by transaction hash.
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `transactionHash`: `string` - hash of a transaction          
 ### Returns          
@@ -658,7 +658,7 @@ Returns the receipt of a transaction by transaction hash.
     - `to`: `string` - address of the receiver. `0x0000000000000000000000000000000000000000` when its a contract creation.
     - `transactionHash`: `string` - hash of the transaction          
 - `transactionIndex`: `string` - integer of the transaction's index position in the block
-    
+
 - Example          
 ```
 // Request
@@ -790,7 +790,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 ```
 ## getSystemConfigByKey
 Returns value by a key value
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID       
 - `key`: `string` - support tx_count_limit and tx_gas_limit     
 ### Returns          
@@ -810,7 +810,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 ## call
 Executes a new message call immediately without creating a transaction on the block chain.
 
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `object`: - the transaction call object:
     - `from`: `string` - address of the sender  
@@ -841,7 +841,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc
 ```
 ## sendRawTransaction
 Creates new message call transaction or a contract creation for signed transactions. 
-### Parameterss          
+### Parameters          
 - `groupID`: `unsigned int` - group ID           
 - `rlp`: `string` - transaction data of signing
 ### Returns          
@@ -874,6 +874,183 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 // RC2 Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq
 ```
+
+
+## getTransactionByHashWithProof
+Returns the information about the transaction and its proof by a transaction hash. Please note that this function is supported since 2.2.0.
+### Parameters          
+- `groupID`: `unsigned int` - group ID           
+- `transactionHash`: `string` - transaction hash        
+### Returns          
+- `object`: - A transaction object：  
+    - `blockHash`: `string` - hash of the block where this transaction was in
+    - `blockNumber`: `string` - block number where this transaction was in     
+    - `from`: `string` - address of the sender                
+    - `gas`: `string` - gas provided by the sender      
+    - `gasPrice`: `string` - gas price provided by the sender       
+    - `hash`: `string` - hash of the transaction                  
+    - `input`: `string` - the data send along with the transaction          
+    - `nonce`: `string` - the number of transactions made by the sender prior to this one      
+    - `to`: `string` - address of the receiver, `0x0000000000000000000000000000000000000000` when its a contract creation transaction`        
+    - `transactionIndex`: `string` - integer of the transaction's index position in the block
+    - `value`: `string` - value transferred 
+- `array` - proof of transaction: 
+   - `left`: `array` - the hash list of left            
+   - `right`: `array` - the hash list of right    
+- Examples
+```
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHashWithProof","params":[1,"0xd2c12e211315ef09dbad53407bc820d062780232841534954f9c23ab11d8ab4c"],"id":1}' http://127.0.0.1:8585 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "transaction": {
+      "blockHash": "0xcd31b05e466bce99460b1ed70d6069fdfbb15e6eef84e9b9e4534358edb3899a",
+      "blockNumber": "0x5",
+      "from": "0x148947262ec5e21739fe3a931c29e8b84ee34a0f",
+      "gas": "0x1c9c380",
+      "gasPrice": "0x1c9c380",
+      "hash": "0xd2c12e211315ef09dbad53407bc820d062780232841534954f9c23ab11d8ab4c",
+      "input": "0x8a42ebe90000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000003b9aca00000000000000000000000000000000000000000000000000000000000000000a3564646636663863653800000000000000000000000000000000000000000000",
+      "nonce": "0x208f6fd78d48aad370df51c6fdf866f8ab022de765c2959841ff2e81bfd9af9",
+      "to": "0xd6c8a04b8826b0a37c6d4aa0eaa8644d8e35b79f",
+      "transactionIndex": "0x32",
+      "value": "0x0"
+    },
+    "txProof": [
+      {
+        "left": [
+          "30f0abfcf4ca152815548620e33d21fd0feaa7c78867791c751e57cb5aa38248c2",
+          "31a864156ca9841da8176738bb981d5da9102d9703746039b3e5407fa987e5183e"
+        ],
+        "right": [
+          "33d8078d7e71df3544f8845a9db35aa35b2638e8468a321423152e64b9004367b4",
+          "34343a4bce325ec8f6cf48517588830cd15f69b60a05598b78b03c3656d1fbf2f5",
+          "35ac231554047ce77c0b31cd1c469f1f39ebe23404fa8ff6cc7819ad83e2c029e7",
+          "361f6c588e650323e03afe6460dd89a9c061583e0d62c117ba64729d2c9d79317c",
+          "377606f79f3e08b1ba3759eceada7fde3584f01822467855aa6356652f2499c738",
+          "386722fe270659232c5572ba54ce23b474c85d8b709e7c08e85230afb1c155fe18",
+          "39a9441d668e5e09a5619c365577c8c31365f44a984bde04300d4dbba190330c0b",
+          "3a78a8c288120cbe612c24a33cce2731dd3a8fe6927d9ee25cb2350dba08a541f5",
+          "3bd9b67256e201b5736f6081f39f83bcb917261144384570bdbb8766586c3bb417",
+          "3c3158e5a82a1ac1ed41c4fd78d5be06bf79327f60b094895b886e7aae57cff375",
+          "3de9a4d98c5ae658ffe764fbfa81edfdd4774e01b35ccb42beacb67064a5457863",
+          "3e525e60c0f7eb935125f1156a692eb455ab4038c6b16390ce30937b0d1b314298",
+          "3f1600afe67dec2d21582b8c7b76a15e569371d736d7bfc7a96c0327d280b91dfc"
+        ]
+      },
+      {
+        "left": [
+          "3577673b86ad4d594d86941d731f17d1515f4669483aed091d49f279d677cb19",
+          "75603bfea5b44df4c41fbb99268364641896334f006af3a3f67edaa4b26477ca",
+          "1339d43c526f0f34d8a0f4fb3bb47b716fdfde8d35697be5992e0888e4d794c9"
+        ],
+        "right": [
+          "63c8e574fb2ef52e995427a8acaa72c27073dd8e37736add8dbf36be4f609ecb",
+          "e65353d911d6cc8ead3fad53ab24cab69a1e31df8397517b124f578ba908558d"
+        ]
+      },
+      {
+        "left": [],
+        "right": []
+      }
+    ]
+  }
+}
+
+```
+
+## getTransactionReceiptByHashWithProof
+Returns the information about the receipt and its proof by a transaction hash. Please note that this function is supported since 2.2.0.
+### Parameters 
+- `groupID`: `unsigned int` - group ID           
+- `transactionHash`: `string` - transaction hash          
+### Returns
+- `array` - proof of receipt: 
+   - `left`: `array` - the hash list of left             
+   - `right`: `array` - the hash list of right          
+- `object`: - transaction information:  
+    - `blockHash`: `string` - hash of the block where this transaction was in
+    - `blockNumber`: `string` -  block number where this transaction was in  
+    - `contractAddress`: `string` - contract address, the contract address created, if the transaction was a contract creation, otherwise "0x0000000000000000000000000000000000000000"     
+    - `from`: `string` -  address of the sender                     
+    - `gasUsed`: `string` - The amount of gas used by this specific transaction
+    - `input`: `string` - the data send along with the transaction     
+    - `logs`: `array` - Array of log objects, which this transaction generated   
+    - `logsBloom`: `string` -  Bloom filter for light clients to quickly retrieve related logs      
+    - `output`: `string` - the data result along with the transaction     
+    - `status`: `string` - status value of the transaction     
+    - `to`: `string` - address of the receiver. `0x0000000000000000000000000000000000000000` when its a contract creation.
+    - `transactionHash`: `string` - hash of the transaction          
+    - `transactionIndex`: `string` - integer of the transaction's index position in the block
+- Examples
+```
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceiptByHashWithProof","params":[1,"0xd2c12e211315ef09dbad53407bc820d062780232841534954f9c23ab11d8ab4c"],"id":1}' http://127.0.0.1:8585 |jq
+
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "receiptProof": [
+      {
+        "left": [
+          "3088b5c8f9d92a3411a911f35ff0119a02e8f8f04852cf2fdfaa659843eac6a3ad",
+          "31170ac8fd555dc50e59050841da0d96e4c4bc7e6266e1c6865c08c3b2391801dd"
+        ],
+        "right": [
+          "33c572c8f961e0c56689d641fcf274916857819769a74e6424c58659bf530e90e3",
+          "341233933ea3d357b4fdd6b3d1ed732dcff15cfd54e527c93c15a4e0238585ed11",
+          "351e7ba09965cce1cfb820aced1d37204b06d96a21c5c2cf36850ffc62cf1fc84c",
+          "361f65633d9ae843d4d3679b255fd448546a7b531c0056e8161ea0adbf1af12c0f",
+          "37744f6e0d320314536b230d28b2fd6ac90b0111fb1e3bf4a750689abc282d8589",
+          "386e60d9daa0be9825019fcf3d08cdaf51a90dc62a22a6e11371f94a8e516679cc",
+          "391ef2f2cee81f3561a9900d5333af18f59aa3cd14e70241b5e86305ba697bf5f2",
+          "3ac9999d4f36d76c95c61761879eb9ec60b964a489527f5af844398ffaa8617f0d",
+          "3b0039ce903e275170640f3a464ce2e1adc2a7caee41267c195469365074032401",
+          "3ca53017502028a0cb5bbf6c47c4779f365138da6910ffcfebf9591b45b89abd48",
+          "3de04fc8766a344bb73d3fe6360c61d036e2eeedfd9ecdb86a0498d7849ed591f0",
+          "3e2fc73ee22c4986111423dd20e8db317a313c9df29fa5aa3090f27097ecc4e1a9",
+          "3fa7d31ad5c6e7bba3f99f9efc03ed8dd97cb1504003c34ad6bde5a662481f00a0"
+        ]
+      },
+      {
+        "left": [
+          "cd46118c0e99be585ffcf50423630348dbc486e54e9d9293a6a8754020a68a92",
+          "3be78209b3e3c83af3668ec3192b5bf232531323ef66b66de80a11f386270132",
+          "bd3a11d74a3fd79b1e1ea17e45b76eda4d25f6a5ec7fc5f067ea0d086b1ce70f"
+        ],
+        "right": [
+          "6a6cefef8b48e455287a8c8694b06f4f7cb7950017ab048d6e6bdd8029f9f8c9",
+          "0a27c5ee02e618d919d228e6a754dc201d299c91c9e4420a48783bb6fcd09be5"
+        ]
+      },
+      {
+        "left": [],
+        "right": []
+      }
+    ],
+    "transactionReceipt": {
+      "blockHash": "0xcd31b05e466bce99460b1ed70d6069fdfbb15e6eef84e9b9e4534358edb3899a",
+      "blockNumber": "0x5",
+      "contractAddress": "0x0000000000000000000000000000000000000000",
+      "from": "0x148947262ec5e21739fe3a931c29e8b84ee34a0f",
+      "gasUsed": "0x21dc1b",
+      "input": "0x8a42ebe90000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000003b9aca00000000000000000000000000000000000000000000000000000000000000000a3564646636663863653800000000000000000000000000000000000000000000",
+      "logs": [],
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "output": "0x",
+      "root": "0xc3b4185963c78a4ca8eb90240e5cd95371d7217a9ce2bfa1149d53f79c73afbb",
+      "status": "0x0",
+      "to": "0xd6c8a04b8826b0a37c6d4aa0eaa8644d8e35b79f",
+      "transactionHash": "0xd2c12e211315ef09dbad53407bc820d062780232841534954f9c23ab11d8ab4c",
+      "transactionIndex": "0x32"
+    }
+  }
+}
+
+```
+
+
 
 ## Error codes
 
@@ -925,15 +1102,15 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 |1(0x1)  |Unknown |unknown exception |
 |2(0x2)  |BadRLP|invalid RLP exception |
 |3(0x3)  |InvalidFormat |invalid format exception |
-|4(0x4)  |OutOfGasIntrinsic |not-enough cash exception |
+|4(0x4)  |OutOfGasIntrinsic |contract to deploy is too long / input data is too long |
 |5(0x5)  |InvalidSignature |invalid signature exception |
 |6(0x6)  |InvalidNonce |invalid nonce exception |
 |7(0x7)  |NotEnoughCash |not-enough cash exception |
-|8(0x8)  |OutOfGasBase |not-enough gas exception |
+|8(0x8)  |OutOfGasBase |input data is too long (RC version) |
 |9(0x9)  |BlockGasLimitReached|GasLimit exception |
 |10(0xa)  |BadInstruction |wrong instruction exception |
 |11(0xb)  |BadJumpDestination |wrong jump destination exception |
-|12(0xc)  |OutOfGas |out-of-gas exception |
+|12(0xc)  |OutOfGas |out-of-gas during EVM execution / contract to deploy exceeds max contract length |
 |13(0xd)  |OutOfStack |out-of-stack exception |
 |14(0xe)  |StackUnderflow |Stack under flow exception |
 |15(0xf)  |NonceCheckFail |nonce check fail exception |
@@ -947,7 +1124,7 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 |23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
 |24(0x18)  |AddressAlreadyUsed |address is already used |
 |25(0x19)  |PermissionDenied |no permission |
-|26(0x1a)  |CallAddressError   contract address not exist |
+|26(0x1a)  |CallAddressError   contract address not exist ||
 
 
 ### Precompiled Service API error code
@@ -957,8 +1134,9 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | 0      | success                                         |          |
 | -50000  | permission denied                               |          |
 | -50001  | table name already exist                        |          |
-| -50100  | unknown function call                            |          |
-| -50101  | table does not exist                            |          |
+| -50100  | table does not exist                            |          |
+| -50101  | unknow function call                            |          |
+| -50102  | address invalid                                 |          |
 | -51000  | table name and address already exist            |          |
 | -51001  | table name and address does not exist           |          |
 | -51100  | invalid node ID                                 |SDK Error Code |

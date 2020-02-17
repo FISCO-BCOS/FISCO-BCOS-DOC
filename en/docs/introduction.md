@@ -1,6 +1,6 @@
 # Introduction
 
-FISCO BCOS platform is an open-source platform compatible with the financial industry collaboratively. The FISCO open source working group builds it. Members in the working group include WeBank, Shenzhen Securities Communication, Tencent, Huawei, Digital China, Forms Syntron, Beyondsoft, Yuexiu Financial Holdings (FinTech), YIBI Technology.
+FISCO BCOS, officially launched in December 2017, is the first China-developed open source consortium blockchain platform. It was collaboratively built by the FISCO open source working group, which was formed by Beyondsoft, Huawei, Shenzhen Securities Communications, DCITS, Forms Syntron, Tencent, WeBank, YIBI Technology, Yuexiu Financial Holdings (Fintech) and more.
 
 ## Sublimation of alliance chain: Collaborative Business and Open Consortium Chain
 

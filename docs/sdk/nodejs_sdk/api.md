@@ -27,7 +27,7 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 
 | 接口名        | 描述| 参数 | 返回值 |
 | :--| :--| :-- | :-- |
-| getBlockNumber  | 获取最新块高  | 无 | Object，结果位于result字段 |
+| getBlockNumber  | 获取最新块高  | 无 | Object，结果位于result字段\*\* |
 | getPbftView  | 获取PBFT视图  | 无 | 同上 |
 | getObserverList | 获取观察者节点列表  | 无 | 同上 |
 | getSealerList | 获取共识节点列表  | 无 | 同上 |
@@ -50,9 +50,11 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 | getTransactionReceipt | 根据交易哈希获取交易回执  | 交易哈希 | 同上 |
 | getCode | 根据合约地址查询的合约数据 | 合约地址 | 同上 |
 | getSystemConfigByKey |  获取系统配置 | 系统配置关键字，目前支持<br>：<br> - tx_count_limit <br> - tx_gas_limit| 同上 |
-| sendRawTransaction | 发送交易 | 交易的RLP编码  | 同上 |
+| sendRawTransaction | 发送一个经过签名的交易，该交易随后会被链上节点执行并共识 | 接受数量可变的参数：当参数数量为1时，参数应为交易的RLP编码；当参数数量为3时，参数应为合约地址、方法签名及方法参数  | 同上 |
 | deploy |  部署合约  | 合约路径<br>输出路径| 同上 |
-| call | 调用合约  | 合约地址<br>调用接口的ABI<br>参数列表 | 同上 |
+| call | 调用只读合约  | 合约地址<br>调用接口\*<br>参数列表 | 同上 |
+
+\*调用接口：函数名(参数类型,...)，例如：func(uint256,uint256)，参数类型之间不能有空格
 
 ## PrecompiledService
 

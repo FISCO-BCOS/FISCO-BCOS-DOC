@@ -2,6 +2,11 @@
 
 MPT State是以太坊上级经典的数据存储方式。通过MPT树的方式，将所有合约的数据组织起来，实现了对数据的查找和追溯。
 
+```eval_rst
+.. important::
+   MPT State将会在v2.3.0弃用，请使用 **storage state**
+```
+
 ## MPT树
 
 MPT(Merkle Patricia Trie)，是一种用hash索引数据的前缀树。

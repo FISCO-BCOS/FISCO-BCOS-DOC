@@ -7,10 +7,10 @@ FISCO BCOS Documentation
 FISCO BCOS is a reliable, secure, efficient and portable blockchain platform with proven success from many partners and successful financial-grade applications.
 
 - `Github homepage <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
-- `Insightful articles <http://mp.weixin.qq.com/mp/homepage?__biz=MzU5NTg0MjA4MA==&hid=9&sn=7edf9a62a2f45494671c91f0608db903&scene=18#wechat_redirect>`_
-- `Code contribution <https://mp.weixin.qq.com/s/hEn2rxqnqp0dF6OKH6Ua-A>`_
+- `Insightful articles <http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect>`_
+- `Code contribution <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
 - `Feedback <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
-- `Application cases <https://mp.weixin.qq.com/s/vUSq80LkhF8yCfUF7AILgQ>`_
+- `Application cases <https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA>`_
 
 - `WeChat group <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/WeChatQR%2Ejpg>`_
 - `WeChat official account <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/OfficialAccountsQR%2Ejpg>`_
@@ -23,7 +23,7 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
     - To know more about functions of FISCO BCOS 2.0+, please read `Config files and items <./docs/manual/configuration.html>`_, `Node access <./docs/manual/node_management.html>`_, `Parallel transactions <./docs/manual/transaction_parallel.html>`_, `Distributed storage <./docs/manual/distributed_storage.html>`_, `OSCCA computing <./docs/manual/guomi_crypto.html>`_ in `Operation Tutorial <./docs/manual/index.html>`_
     - `Console <./docs/manual/console.html>`_：**Interactive command tool** to visit blockchain nodes and check status, deploy or call contract, etc.
     - `Deployment tool(Generator) <./docs/enterprise_tools/index.html>`_：to support operations like building blockchain, expansion, etc., **recommended for business level applications**. You can learn the operation methods in `Quick Guide <./docs/enterprise_tools/tutorial_one_click.html>`_
-    - `Web3SDK <./docs/sdk/sdk.html>`_：offer APIs for node status, blockchain system configuration modification and nodes to send transactions.
+    - `SDK <./docs/sdk/index.html>`_：offer APIs for node status, blockchain system configuration modification and nodes to send transactions.
     - The detailed introduction of browser is in `Browser <./docs/browser/browser.html>`_
     - JSON-RPC interface is introduced in `JSON-RPC API <./docs/api.html>`_
     - System design documentation: `System design <./docs/design/index.html>`_
