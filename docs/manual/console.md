@@ -337,6 +337,10 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
+frozenContract                           Frozen the contract.
+unfrozenContract                         Unfrozen the contract.
+killContract                             Kill the contract.
+queryContractStatus                      Query the status of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1436,6 +1440,55 @@ Remove OK, 1 row affected.
 **注意：**
 - 删除记录sql语句的where子句必须提供表的主键字段值。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
+
+### **frozenContract**
+运行frozenContract，对指定合约进行冻结操作。参数：
+
+合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> frozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfrozenContract**
+运行unfrozenContract，对指定合约进行解冻操作。参数：
+
+合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> unfrozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **killContract**
+运行killContract，对指定合约进行销毁操作。参数：
+
+合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> killContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **queryContractStatus**
+运行queryContractStatus，查询指定合约的状态。参数：
+
+合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> queryContractStatus 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+The contract is available.
+```
 
 ## 附录：Java环境配置
 
