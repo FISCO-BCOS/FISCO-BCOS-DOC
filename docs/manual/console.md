@@ -341,6 +341,7 @@ frozenContract                           Frozen the contract.
 unfrozenContract                         Unfrozen the contract.
 killContract                             Kill the contract.
 queryContractStatus                      Query the status of the contract.
+queryAuthority                           Query authority of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1441,6 +1442,11 @@ Remove OK, 1 row affected.
 - 删除记录sql语句的where子句必须提供表的主键字段值。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
+```eval_rst
+.. important::
+   执行`frozenContract`、`unfrozenContract`和`killContract`三个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也许指定私钥启动控制台。
+```
+
 ### **frozenContract**
 运行frozenContract，对指定合约进行冻结操作。参数：
 
@@ -1488,6 +1494,18 @@ Remove OK, 1 row affected.
 ```text
 [group:1]> queryContractStatus 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
 The contract is available.
+```
+
+### **queryAuthority**
+运行queryAuthority，查询能管理指定合约的权限账号列表。参数：
+
+合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> queryAuthority 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[
+    "0xdfade505e286bf33644faa0204cbb0a86fd517ac"
+]
 ```
 
 ## 附录：Java环境配置
