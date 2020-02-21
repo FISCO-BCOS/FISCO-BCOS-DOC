@@ -353,6 +353,7 @@ frozenContract                           Frozen the contract.
 unfrozenContract                         Unfrozen the contract.
 killContract                             Kill the contract.
 queryContractStatus                      Query the status of the contract.
+queryAuthority                           Query authority of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1492,6 +1493,11 @@ Remove OK, 1 row affected.
 - For deleting the where clause of recording sql statement, the primary key field value of the table in the where clause must be provided.
 - The enter values with punctuation, spaces, or strings containing letters starting with a number requires double quotation marks, and no more double quotation marks are allowed inside.
 
+```eval_rst
+.. important::
+   The executing  of the 'frozenContract'/ 'unfrozenContract'/'killContract' commands for contract management should specify the private key to start the console for permission.This private key is also the account private key used to deploy the specified contract. So a private key should be specified to launch the console when deploying the contract.
+```
+
 ### **frozenContract**
 To run frozenContract to freeze contract according contract address.
 Parameter:
@@ -1543,6 +1549,19 @@ The prefix of 0x is not necessary.
 ```text
 [group:1]> queryContractStatus 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
 The contract is available.
+```
+
+### **queryAuthority**
+To run queryAuthority to query a list of authorized accounts that can manage a specified contract.
+Parameter:
+- Contract address: To deploy contract can get contract address.
+The prefix of 0x is not necessary.
+
+```text
+[group:1]> queryAuthority 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[
+    "0xdfade505e286bf33644faa0204cbb0a86fd517ac"
+]
 ```
 
 ## Appendix: Java environment configuration
