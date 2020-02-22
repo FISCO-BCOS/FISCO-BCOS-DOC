@@ -61,5 +61,5 @@ contract Frozen {
 
 ```eval_rst
 .. important::
-   Compatibility description: the operation of freezing/unfreezing/killing/querying contracts can be carried out on version 2.2. However, the authority to freeze/unfreeze/kill contracts can only be checked on version 2.3.
+   Contract management related operations can only be performed on 2.3.
 ```
