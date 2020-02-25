@@ -97,7 +97,7 @@ contract Table {
 
 ```eval_rst
 .. important::
-   v2.2.0及之前版本CRUD接口的表中中主Key下可以有多条记录，v2.3.0将会废弃该特性。在v2.3.0之后的版本中主Key只允许唯一对应一条记录。
+   v2.2.0及之前版本Table中中主Key下可以有多条记录，v2.3.0将会提供一种新的KV模式的KVTable，每个Key对应一条记录，Table将被标记为废弃，未来不会再更新。
 ```
 
 提供一个合约案例`TableTest.sol`，代码如下：
