@@ -989,21 +989,6 @@ transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
 
-# Call the create interface of TableTest to create the user table t_test. The create interface calls the createResult event, and the event log will output.
-
-# Call the create interface of TableTest to create the user table t_test, the create interface calls the createResult event, and the event log will output.
-
-# event log consists of the event name, the event log index number, and the event variable, which is convenient for users to view the status of the variable after sending transaction. createResult event records the value count which is returned by the create interface creation table.
-
-[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 create
-transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612bb5
----------------------------------------------------------------------------------------------
-Event logs
----------------------------------------------------------------------------------------------
-CreateResult index: 0
-count = 0
----------------------------------------------------------------------------------------------
-
 # To call the insert interface of TableTest to insert the record, the fields are name, item_id, item_name
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
 transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1

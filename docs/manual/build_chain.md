@@ -182,13 +182,20 @@ nodes/
 
 ## 使用举例
 
-### 单服务器单群组
+### 无外网条件的单群组
 
-构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`），监听外网`Channel`和`jsonrpc`端口，允许外网通过SDK或API与节点交互。
+**最简单的操作方式是在有外网的Linux机器上使用build_chain建好链，借助-z选项打包，然后拷贝到无外网的机器上运行。**
+
+1. 针对某下场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
+1. 请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新版本的build_chain脚本。
+1. 上传fisco-bcos.tar.gz和build_chain.sh到目标服务器，需要注意目标服务器要求64位，要求安装有openssl 1.0.2以上版本。
+1. 解压fisco-bcos.tar.gz得到fisco-bcos可执行文件，作为-e选项的参数。
+1. 构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`）。
+1. 执行下面的指令，假设最新版本是2.2.0，则将`2.2.0`作为-v选项参数。
 
 ```bash
 # 构建FISCO BCOS联盟链
-$ bash build_chain.sh -l "127.0.0.1:4" -i
+$ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
 # 生成成功后，输出`All completed`提示
 Generating CA key...
 ==============================================================
