@@ -233,12 +233,12 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ge
 # -c specify the path where the certificate and private key are located
 # -o Output to the specified folder, where new certificates and private keys issued by agency agency1 exist in newNode/conf
 
-bash gen_node_cert.sh -c nodes/cert/agency -o newNode
+bash gen_node_cert.sh -c ../cert/agency -o newNode
 ```
 
 If you use guomi version of fisco, please execute below command to generate cert.
 ```bash
-bash gen_node_cert.sh -c nodes/cert/agency -o newNodeGm -g nodes/gmcert/agency/
+bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 ```
 
 #### Preparing configuration files
