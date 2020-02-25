@@ -94,7 +94,7 @@ contract Table {
 
 ```eval_rst
 .. important::
-   There can be multiple records under the primary key in the Table of the current CRUD interface. The feature will be deprecated after v2.3.0. The primary key can only correspond to one record.
+   There can be multiple records under the primary key in the Table of the current CRUD interface. The feature will be deprecated after v2.3.0. We will offer a new KVTable, every key has only one record(Entry).
 ```
 
 To provide a contract case `TableTest.sol`. The code is as follows:
