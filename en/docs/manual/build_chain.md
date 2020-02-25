@@ -254,8 +254,7 @@ cp -r node0/scripts newNode/
 ```
 
 2. Update IP and ports monitored in `newNode/config.ini`, include IP and Port in `[rpc]` and `[p2p]`。
-3. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
-4. Add IP and Port in the new node's P2P configuration to the [p2p] field in the original node's config.ini. Assuming that the new node IP: Port is 127.0.0.1:30304, the modified [P2P] configuration is
+3. Add IP and Port in the new node's P2P configuration to the [p2p] field in the original node's config.ini. Assuming that the new node IP: Port is 127.0.0.1:30304, the modified [P2P] configuration is
 
     ```bash
     [p2p]
@@ -269,6 +268,9 @@ cp -r node0/scripts newNode/
         node.3=127.0.0.1:30303
         node.4=127.0.0.1:30304
     ```
+
+4. Start node, use `newNode/start.sh`
+5. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
 
 #### Start a new node, check links and consensus
 
