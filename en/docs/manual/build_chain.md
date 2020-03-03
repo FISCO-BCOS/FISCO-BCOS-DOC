@@ -126,7 +126,7 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
 ### **`g`option[**Optional**]**
-No parameter option. When setting this option, to build the national cryptography version of FISCO BCOS. **The binary fisoc-bcos is required to be national cryptography version when using the `g` option.**
+No parameter option. When setting this option, to build the national cryptography version of FISCO BCOS. **The binary fisco-bcos is required to be national cryptography version when using the `g` option.**
 
 ### **`z`option[**Optional**]**
 No parameter option. When setting this option, the tar package of node is generated.
