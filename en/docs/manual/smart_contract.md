@@ -124,7 +124,9 @@ Accessing AMDB requires using the AMDB-specific smart contract interface `Table.
 ```eval_rst
 .. note::
 
-    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
+    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain.
+    The CRUD interface of Table contract can have multiple records under a key. When it is used, it will perform batch data operations, including batch writing and range query. For this feature, it is recommended to use MySQL as the back-end database.
+    When using the get/set interface of KVTable, it is recommended to use rocksdb as the back-end database. Because rocksdb is a non relational database stored in key value, the single key operation efficiency is higher when using KVTable interface.
 
 ```
 

@@ -186,7 +186,7 @@ nodes/
 
 ## Example
 
-### Single-server and single-group
+### Four nodes of group 1 on a local server
 
 To build a 4-node FISCO BCOS alliance chain on native machine for using the default start port `30300,20200,8545` (4 nodes will occupy `30300-30303`,`20200-20203`,`8545-8548`) and listening to the external network `Channel` and `jsonrpc` ports while allowing the external network interacts with node through SDK or API.
 
