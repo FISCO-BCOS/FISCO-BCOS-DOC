@@ -200,6 +200,12 @@ contract Table {
 }
 ```
 
+```eval_rst
+.. note::
+    - The type of key in insert, remove, update and select functions of Table contract is string, and the maximum length is 255 characters
+    - The key type of the get/set interface of the Entry is string, with the maximum length of 255 characters. The types supported by value are int256 (int), address and string, of which string cannot exceed 16MB.
+```
+
 To provide a contract case `TableTest.sol`. The code is as follows:
 
 ```js
