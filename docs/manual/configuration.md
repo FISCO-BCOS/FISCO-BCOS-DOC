@@ -235,7 +235,7 @@ id=2
 
 ```eval_rst
 .. important::
-   MPT State将会在v2.3.0弃用，请使用 **storage state**
+   推荐使用 **storage state**
 ```
 
 ```ini
@@ -266,7 +266,7 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 
 ```eval_rst
 .. important::
-   External模式将会在v2.3.0弃用，若要使用Mysql请用直连模式，配置type为MySQL。
+   推荐使用Mysql直连模式，配置type为MySQL。
 ```
 
 - `type`：存储的DB类型，支持`RocksDB`、`MySQL`、`External`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`external`时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`*1000切换实例，实例以存储的起始区块高度命名。

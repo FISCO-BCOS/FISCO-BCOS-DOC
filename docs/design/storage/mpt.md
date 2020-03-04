@@ -4,7 +4,7 @@ MPT State是以太坊上级经典的数据存储方式。通过MPT树的方式�
 
 ```eval_rst
 .. important::
-   MPT State将会在v2.3.0弃用，请使用 **storage state**
+   推荐使用 **storage state**
 ```
 
 ## MPT树
