@@ -5,8 +5,9 @@
 | Environment   | Version                   |
 | ------ | ---------------------- |
 | Java   | jdk1.8.0_121 or above version |
-| python | 2.7                    |
+| python | Python3.4+          |
 | database | mysql-5.6 or above version    |
+| PyMySQL | 使用python3时需安装 |
 
 ## 2. Pull code
 

@@ -7,6 +7,12 @@ LOG_ERROR() {
     echo -e "\033[31m"${content}"\033[0m"
 }
 
+LOG_INFO()
+{
+    local content=${1}
+    echo -e "\033[32m[INFO] ${content}\033[0m"
+}
+
 function check_PR()
 {
     if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
