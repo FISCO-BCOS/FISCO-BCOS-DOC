@@ -126,7 +126,7 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
 ### **`g`option[**Optional**]**
-No parameter option. When setting this option, to build the national cryptography version of FISCO BCOS. **The binary fisoc-bcos is required to be national cryptography version when using the `g` option.**
+No parameter option. When setting this option, to build the national cryptography version of FISCO BCOS. **The binary fisco-bcos is required to be national cryptography version when using the `g` option.**
 
 ### **`z`option[**Optional**]**
 No parameter option. When setting this option, the tar package of node is generated.
@@ -233,12 +233,12 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ge
 # -c specify the path where the certificate and private key are located
 # -o Output to the specified folder, where new certificates and private keys issued by agency agency1 exist in newNode/conf
 
-bash gen_node_cert.sh -c nodes/cert/agency -o newNode
+bash gen_node_cert.sh -c ../cert/agency -o newNode
 ```
 
 If you use guomi version of fisco, please execute below command to generate cert.
 ```bash
-bash gen_node_cert.sh -c nodes/cert/agency -o newNodeGm -g nodes/gmcert/agency/
+bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 ```
 
 #### Preparing configuration files
@@ -254,8 +254,7 @@ cp -r node0/scripts newNode/
 ```
 
 2. Update IP and ports monitored in `newNode/config.ini`, include IP and Port in `[rpc]` and `[p2p]`。
-3. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
-4. Add IP and Port in the new node's P2P configuration to the [p2p] field in the original node's config.ini. Assuming that the new node IP: Port is 127.0.0.1:30304, the modified [P2P] configuration is
+3. Add IP and Port in the new node's P2P configuration to the [p2p] field in the original node's config.ini. Assuming that the new node IP: Port is 127.0.0.1:30304, the modified [P2P] configuration is
 
     ```bash
     [p2p]
@@ -269,6 +268,9 @@ cp -r node0/scripts newNode/
         node.3=127.0.0.1:30303
         node.4=127.0.0.1:30304
     ```
+
+4. Start node, use `newNode/start.sh`
+5. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
 
 #### Start a new node, check links and consensus
 

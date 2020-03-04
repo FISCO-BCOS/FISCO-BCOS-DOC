@@ -1,15 +1,74 @@
 # 一键部署说明
 
+本文档试用于v2.1.0版本一键部署。v2.1.0之前版本一键部署可参考[文档](./deployOld.md)。
+
 ## 1、前提条件
 
-| 环境         | 版本                   |
-| ------------ | ---------------------- |
-| Java         | jdk1.8.0_121或以上版本 |
-| python       | 2.7                    |
-| MySQL-python | 1.2.5                  |
-| 数据库       | mysql-5.6或以上版本    |
+| 环境   | 版本                   |
+| ------ | ---------------------- |
+| Java   | JDK8或以上版本 |
+| MySQL | MySQL-5.6或以上版本 |
+| Python | Python3.4+ |
+| PyMySQL | 使用python3时需安装 |
 
-**备注：** 安装说明请参看 [附录7](./deploy.html#id8)
+### 检查环境
+
+#### 检查Java
+
+JDK8或以上版本：
+
+```
+java -version
+```
+
+- Java推荐使用[OpenJDK](#id10) ，建议从[OpenJDK网站](https://jdk.java.net/java-se-ri/11) 自行下载。
+
+#### 检查mysql
+
+MySQL-5.6或以上版本：
+
+```
+mysql --version
+```
+
+- Mysql安装部署可参考[数据库部署](#id14)
+
+#### 检查Python
+
+Python3.4或以上版本：
+
+```
+python --version
+```
+
+- Python安装部署可参考[Python部署](#id17)
+
+#### PyMySQL部署（Python3.4+）
+
+**备注** 使用python2.7+时，需安装MySQL-python，推荐参考[Mysql-python安装示例](#mysql-python)的python2指南进行安装；
+
+Python3.4及以上版本，需安装PyMysql依赖包：
+
+- CentOS
+
+  ```
+  sudo pip3 install PyMySQL
+  ```
+
+  不支持pip命令的话，可以使用以下方式：
+
+  ```
+  git clone https://github.com/PyMySQL/PyMySQL
+  cd PyMySQL/
+  python3 setup.py install
+  ```
+
+- Ubuntu
+
+  ```
+  sudo apt-get install -y python3-pip
+  sudo pip3 install PyMySQL
+  ```
 
 ## 2、拉取代码
 
@@ -29,7 +88,7 @@ cd fisco-bcos-browser/deploy
 
 ① 可以使用以下命令修改，也可以直接修改文件（vi common.properties）
 
-② 数据库需要提前安装（数据库安装请参看 [附录7.3](./deploy.html#id9)）
+② 数据库需要提前安装（数据库安装请参看 [数据库部署](#id14)）
 
 ③ 服务端口不能小于1024
 
@@ -60,13 +119,19 @@ python deploy.py installAll
 python deploy.py stopAll
 ```
 
+启动所有服务：
+
+```shell
+python deploy.py startAll
+```
+
 单独启停命令和说明可查看帮助：
 
 ```shell
 python deploy.py help
 ```
 
-**备注：** 部署过程出现问题可以查看 [常见问题8](./deploy.html#id10)
+**备注：** 部署过程出现问题可以查看 [常见问题](#id19)
 
 ## 5、访问
 
@@ -87,117 +152,161 @@ http://127.0.0.1:5100/
 
 ### 7.1 Java环境部署
 
-此处给出简单步骤，供快速查阅。更详细的步骤，请参考[官网](http://www.oracle.com/technetwork/java/javase/downloads/index.html)。
+此处给出OpenJDK安装简单步骤，供快速查阅。更详细的步骤，请参考[官网](https://openjdk.java.net/install/index.html)。
 
-（1）从[官网](http://www.oracle.com/technetwork/java/javase/downloads/index.html)下载对应版本的java安装包，并解压到相应目录
+#### ① 安装包下载
+
+从[官网](https://jdk.java.net/java-se-ri/11)下载对应版本的java安装包，并解压到服务器相关目录
 
 ```shell
 mkdir /software
-tar -zxvf jdkXXX.tar.gz /software/
+tar -zxvf openjdkXXX.tar.gz /software/
 ```
 
-（2）配置环境变量
+#### ② 配置环境变量
+
+- 修改/etc/profile
+
+```
+sudo vi /etc/profile
+```
+
+- 在/etc/profile末尾添加以下信息
 
 ```shell
-export JAVA_HOME=/software/jdk1.8.0_121
-export PATH=$JAVA_HOME/bin:$PATH 
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+JAVA_HOME=/software/jdk-11
+PATH=$PATH:$JAVA_HOME/bin
+CLASSPATH==.:$JAVA_HOME/lib
+export JAVA_HOME CLASSPATH PATH
 ```
 
-### 7.2 Python request库安装
+- 重载/etc/profile
+
+```
+source /etc/profile
+```
+
+#### ③ 查看版本
+
+```
+java -version
+```
+
+### 7.2. 数据库部署
+
+此处以Centos安装*MariaDB*为例。*MariaDB*数据库是 MySQL 的一个分支，主要由开源社区在维护，采用 GPL 授权许可。*MariaDB*完全兼容 MySQL，包括API和命令行。其他安装方式请参考[MySQL官网](https://dev.mysql.com/downloads/mysql/)。
+
+#### ① 安装MariaDB
+
+- 安装命令
 
 ```shell
-pip install requests 或 sudo yum install -y requests
+sudo yum install -y mariadb*
 ```
 
-### 7.3 数据库部署
-
-此处以Centos/Fedora为例。
-
-（1）切换到root
+- 启停
 
 ```shell
-sudo -s
+启动：sudo systemctl start mariadb.service
+停止：sudo systemctl stop  mariadb.service
 ```
 
-（2）安装mysql
+- 设置开机启动
+
+```
+sudo systemctl enable mariadb.service
+```
+
+- 初始化
 
 ```shell
-yum install mysql*
-#某些版本的linux，需要安装mariadb，mariadb是mysql的一个分支
-yum install mariadb*
+执行以下命令：
+sudo mysql_secure_installation
+以下根据提示输入：
+Enter current password for root (enter for none):<–初次运行直接回车
+Set root password? [Y/n] <– 是否设置root用户密码，输入y并回车或直接回车
+New password: <– 设置root用户的密码
+Re-enter new password: <– 再输入一次你设置的密码
+Remove anonymous users? [Y/n] <– 是否删除匿名用户，回车
+Disallow root login remotely? [Y/n] <–是否禁止root远程登录，回车
+Remove test database and access to it? [Y/n] <– 是否删除test数据库，回车
+Reload privilege tables now? [Y/n] <– 是否重新加载权限表，回车
 ```
 
-（3）启动mysql
+#### ② 授权访问和添加用户
 
-```shell
-service mysqld start
-#若安装了mariadb，则使用下面的命令启动
-systemctl start mariadb.service
+- 使用root用户登录，密码为初始化设置的密码
+
+```
+mysql -uroot -p -h localhost -P 3306
 ```
 
-（4）初始化数据库用户
-
-初次登录
-
-```shell
-mysql -u root
-```
-
-给root设置密码和授权远程访问
+- 授权root用户远程访问
 
 ```sql
-mysql > SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123456');
 mysql > GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+mysql > flush PRIVILEGES;
+```
+
+- 创建test用户并授权本地访问
+
+```sql
+mysql > GRANT ALL PRIVILEGES ON *.* TO 'test'@localhost IDENTIFIED BY '123456' WITH GRANT OPTION;
+mysql > flush PRIVILEGES;
 ```
 
 **安全温馨提示：**
 
-1. 例子中给出的数据库密码（123456）仅为样例，强烈建议设置成复杂密码
-2. 例子中的远程授权设置会使数据库在所有网络上都可以访问，请按具体的网络拓扑和权限控制情况，设置网络和权限帐号
+- 例子中给出的数据库密码（123456）仅为样例，强烈建议设置成复杂密码
+- 例子中root用户的远程授权设置会使数据库在所有网络上都可以访问，请按具体的网络拓扑和权限控制情况，设置网络和权限帐号
 
-授权test用户本地访问数据库
+#### ③ 测试连接和创建数据库
 
-```sql
-mysql > create user 'test'@'localhost' identified by '123456';
-```
-
-（5）测试连接
-
-另开一个ssh测试本地用户test是否可以登录数据库
+- 登录数据库
 
 ```shell
-mysql -utest -p123456 -h 127.0.0.1 -P 3306
+mysql -utest -p123456 -h localhost -P 3306
 ```
 
-登陆成功后，执行以下sql语句，若出现错误，则用户授权不成功
-
-```sql
-mysql > show databases;
-```
-
-（6）创建数据库
-
-登录数据库
-
-```shell
-mysql -utest -p123456 -h 127.0.0.1 -P 3306
-```
-
-创建数据库
+- 创建数据库
 
 ```sql
 mysql > create database db_browser;
 ```
-### 7.4 MySQL-python部署
 
-* CentOS
+### 7.3. Python部署
+
+- CentOS
+
+  ```
+  sudo yum install -y python-requests
+  ```
+
+- Ubuntu
+
+  ```
+  sudo apt-get install -y python-requests
+  ```
+
+### 7.4. 安装MySql python依赖包
+
+#### 查看python版本
+
+```
+python --version
+```
+
+python3.4+ 安装Mysql依赖包，可参考 [检查环境-PyMysql](#pymysql-python3-4)
+
+#### 4.1 MySQL-python部署（Python2.7）
+
+- CentOS
 
   ```
   sudo yum install -y MySQL-python
   ```
 
-* Ubuntu
+- Ubuntu
 
   ```
   sudo apt-get install -y python-pip
@@ -228,22 +337,40 @@ service mysqld restart
 mysql -uroot -p mysql
 ```
 
-### 8.2 找不到MySQLdb
+### 8.2. 使用Python2时找不到MySQLdb
 
 ```
 Traceback (most recent call last):
-  File "deploy.py", line 4, in <module>
-    import comm.check as commCheck
-  File "/data/temp/browser/fisco-bcos-browser/deploy/comm/check.py", line 7, in <module>
-    from mysql import *
-  File "/data/temp/browser/fisco-bcos-browser/deploy/comm/mysql.py", line 6, in <module>
-    import MySQLdb as mdb
+...
 ImportError: No module named MySQLdb
 ```
 
-答：MySQL-python安装请参看[附录7.4](./deploy.html#mysql-python)
+答：需要安装MySQL-python，安装请参看 [MySQL-python](#mysql-python-python2-7)
 
-### 8.3 部署时编译包下载慢
+### 8.3. 使用Python3时找不到pymysql
+
+```
+Traceback (most recent call last):
+...
+ImportError: No module named 'pymysql'
+```
+
+答：需要安装PyMySQL，安装请参看 [pymysql](#pymysql-python3-4)
+
+### 8.4. 安装MySQL-python遇到问题
+
+```
+Command "python setup.py egg_info" failed with error code 1
+```
+
+答：运行下面两个命令
+
+```
+pip install --upgrade setuptools
+python -m pip install --upgrade pip
+```
+
+### 8.5 部署时编译包下载慢
 
 ```
 ...
@@ -257,7 +384,7 @@ Saving to: ‘fisco-bcos-browser.zip’
 
 答：部署过程会下载工程编译包，可能会因为网络原因导致过慢。此时，可以先手动下载 [编译包](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.0.2/fisco-bcos-browser.zip)，再上传至服务器deploy目录，在部署过程中根据提示不再重新下载编译包。
 
-### 8.4 部署时数据库访问报错
+### 8.6 部署时数据库访问报错
 
 ```
 ...
@@ -274,6 +401,6 @@ OperationalError: (1045, "Access denied for user 'root'@'localhost' (using passw
 
 答：确认数据库用户名和密码
 
-### 8.5 Server启动失败
+### 8.7 Server启动失败
 答：请检查是否设置了JAVA_HOME
 
