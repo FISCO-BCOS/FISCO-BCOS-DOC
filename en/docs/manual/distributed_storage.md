@@ -318,7 +318,7 @@ https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc2/docs/manual/amd
 
 ```eval_rst
 .. important::
-   External will be deprecated in v2.3.0, please use MySQL instead.
+   The type MySQL is recommended.
 ```
 
 ### Logical architecture diagram

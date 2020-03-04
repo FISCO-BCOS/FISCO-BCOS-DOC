@@ -351,7 +351,7 @@ item_name: apple
 
 ```eval_rst
 .. important::
-   External模式将会在v2.3.0弃用，请使用MySQL模式替代。
+   推荐使用MySQL模式。
 ```
 
 ### 逻辑架构图

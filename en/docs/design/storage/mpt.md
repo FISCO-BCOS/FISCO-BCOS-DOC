@@ -4,7 +4,7 @@ MPT State is a classic data storage type in Ethereum. Through MPT tree, all cont
 
 ```eval_rst
 .. important::
-    MPT State will be deprecated in v2.3.0, Please use **storage state**.
+    Recommend to ues **storage state**.
 ```
 
 ## MPT tree
