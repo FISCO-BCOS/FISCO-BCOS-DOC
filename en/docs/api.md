@@ -1,6 +1,6 @@
 # JSON-RPC API
 
-The following examples in this chapter adopt the [curl](https://curl.haxx.se/) command, which is a data transfer tool that runs the command line by the URL language. JSON-RPC API of FISCO BCOS can be accessed by sending HTTP post request through curl commands. The URL address of the curl command is set as `[listen_ip]` and `[jsonrpc listen port]` of `[rpc]` in a node config file. To format the json data, [jq](https://stedolan.github.io/jq/) is used as a formatter. For the error codes, please check the [RPC Design Documentation](design/rpc.html#json-rpc). For the transaction receipt status, please check [here](./api.html#transaction-receipt-status-list).
+The following examples in this chapter adopt the [curl](https://curl.haxx.se/) command, which is a data transfer tool that runs the command line by the URL language. JSON-RPC API of FISCO BCOS can be accessed by sending HTTP post request through curl commands. The URL address of the curl command is set as `[jsonrpc_listen_ip]`(If the node is less than v2.3.0, set as the configuration item `listen_ip`) and `[jsonrpc listen port]` of `[rpc]` in a node config file. To format the json data, [jq](https://stedolan.github.io/jq/) is used as a formatter. For the error codes, please check the [RPC Design Documentation](design/rpc.html#json-rpc). For the transaction receipt status, please check [here](./api.html#transaction-receipt-status-list).
 
 ## getClientVersion
 Returns the current node version.

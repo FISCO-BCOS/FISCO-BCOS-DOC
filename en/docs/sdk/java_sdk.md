@@ -144,11 +144,15 @@ group-channel-connections-config:
   all-channel-connections:
     - group-id: 1 #group ID
       connections-str:
-        - 127.0.0.1:20200 # node listen_ip:channel_listen_port
+        # If the node version is earlier than v2.3.0
+        # check node listen_ip:channel_listen_port
+        - 127.0.0.1:20200 # node channel_listen_ip:channel_listen_port
         - 127.0.0.1:20201
     - group-id: 2
       connections-str:
-        - 127.0.0.1:20202 # node listen_ip:channel_listen_port
+        # If the node version is earlier than v2.3.0
+        # check node listen_ip:channel_listen_port
+        - 127.0.0.1:20202 # node channel_listen_ip:channel_listen_port
         - 127.0.0.1:20203
 
 channel-service:

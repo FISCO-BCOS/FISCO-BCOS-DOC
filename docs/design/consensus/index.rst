@@ -32,3 +32,4 @@ FISCO BCOS基于多群组架构实现了插件化的共识算法，不同群组�
    pbft.md
    pbft_optimize.md
    raft.md
+   rpbft.md

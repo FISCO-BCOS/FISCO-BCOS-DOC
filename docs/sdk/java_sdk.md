@@ -123,7 +123,7 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
   - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi_crypto.md))
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
-  - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`listen_ip`和`channel_listen_port`。
+  - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`channel_listen_ip`(若节点小于v2.3.0版本，查看配置项listen_ip)和`channel_listen_port`。
   - `caCert`用于配置链ca证书路径
   - `sslCert`用于配置SDK所使用的证书路径
   - `sslKey`用于配置SDK所使用的证书对应的私钥路径
@@ -148,13 +148,14 @@ group-channel-connections-config:
   all-channel-connections:
     - group-id: 1 #group ID
       connections-str:
-        - 127.0.0.1:20200 # node listen_ip:channel_listen_port
+        # 若节点小于v2.3.0版本，查看配置项listen_ip:channel_listen_port
+        - 127.0.0.1:20200 # node channel_listen_ip:channel_listen_port
         - 127.0.0.1:20201
     - group-id: 2
       connections-str:
-        - 127.0.0.1:20202 # node listen_ip:channel_listen_port
+        # 若节点小于v2.3.0版本，查看配置项listen_ip:channel_listen_port
+        - 127.0.0.1:20202 # node channel_listen_ip:channel_listen_port
         - 127.0.0.1:20203
-
 channel-service:
   group-id: 1 # sdk实际连接的群组
   agency-name: fisco # 机构名称

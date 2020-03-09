@@ -26,7 +26,7 @@ Usage:
     -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specificd version binary
     -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external / scalable, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
-    -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
+    -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -112,7 +112,11 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 - scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
 
 ### **`c`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
+有参数选项，参数为共识算法类型，目前支持PBFT、Raft、RPBFT。默认共识算法是PBFT。
+
+- `PBFT`：设置节点共识算法为[PBFT](../design/consensus/pbft.md)。
+- `Raft`：设置节点共识算法为[Raft](../design/consensus/raft.md)。
+- `RPBFT`：设置节点共识算法为[RPBFT](../design/consensus/rpbft.md)。
 
 ### **`C`选项[**Optional**]**
 用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
