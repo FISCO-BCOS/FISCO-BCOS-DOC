@@ -274,6 +274,12 @@ console version: 1.0.4
 ./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
 Enter Export Password:
 ```
+**注意：**  
+控制台启动时加载p12文件出现下面报错：
+```shell
+exception unwrapping private key - java.security.InvalidKeyException: Illegal key size
+```
+可能是Java版本的原因，参考解决方案：[https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size](https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size)
 
 ## 控制台命令
 ### **help**
@@ -1578,15 +1584,10 @@ java -version
 ```
 
 ### CentOS环境安装Java
+**注意：CentOS下OpenJDK无法正常工作，需要替换为OracleJDK。**
 ```bash
-# 查询centos原有的Java版本
-$ rpm -qa|grep java
-# 删除查询到的Java版本
-$ rpm -e --nodeps java版本
-# 查询Java版本，没有出现版本号则删除完毕
-$ java -version
 # 创建新的文件夹，安装Java 8或以上的版本，将下载的jdk放在software目录
-# 从openJDK官网(https://jdk.java.net/java-se-ri/8)或Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
+# 从Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
 $ mkdir /software
 # 解压jdk 
 $ tar -zxvf jdk-8u201-linux-x64.tar.gz
