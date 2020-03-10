@@ -142,7 +142,8 @@ $ cp node0/config.ini node0/start.sh node0/stop.sh node2/
 $ vim node2/config.ini
 [rpc]
     ;rpc listen ip
-    listen_ip=127.0.0.1
+    channel_listen_ip=0.0.0.0
+    jsonrpc_listen_ip=127.0.0.1
     ;channelserver listen port
     channel_listen_port=20302
     ;jsonrpc listen port

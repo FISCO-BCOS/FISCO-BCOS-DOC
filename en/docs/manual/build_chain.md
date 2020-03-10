@@ -26,7 +26,7 @@ Usage:
     -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specified version binary
     -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
-    -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
+    -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -114,7 +114,11 @@ There are parameter options. The parameter is the name of db. Currently it suppo
 - scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
 
 ### **`c`option[**Optional**]**
-No parameter option. When setting this option, the consensus algorithm for setting the node is [Raft](../design/consensus/raft.md), and the default setting is [PBFT](../design/consensus/pbft.md).
+There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, RPBFT. The default consensus algorithm is PBFT.
+
+- `PBFT`：Set the node consensus algorithm to [PBFT](../design/consensus/pbft.md).
+- `Raft`：Set the node consensus algorithm to [Raft](../design/consensus/raft.md).
+- `RPBFT`：Set the node consensus algorithm to RPBFT.
 
 ### **`C`option[**Optional**]**
 
