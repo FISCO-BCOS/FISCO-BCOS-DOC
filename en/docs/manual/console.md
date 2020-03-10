@@ -1499,15 +1499,10 @@ java -version
 ```
 
 ### Install Java in CentOS environment
+**Note: the OpenJDK under CentOS does not work properly and needs to be replaced with the OracleJDK.**
 ```bash
-# To inquire the original Java version of centos
-$ rpm -qa|grep java
-# To delete the Java version that is inquired
-$ rpm -e --nodeps java version
-# To inquire Java version. It is deleted finish without version number appears
-$ java -version
 # To create new folder to install Java 8 version or above. To put the downloaded jdk in the software directory
-# Download Java 8 version or above from openJDK official website (https://jdk.java.net/java-se-ri/8) or Oracle official website (https://www.oracle.com/technetwork/java/javase/downloads/index.html). For example, to download jdk-8u201-linux-x64.tar.gz
+# Download Java 8 version or above from Oracle official website (https://www.oracle.com/technetwork/java/javase/downloads/index.html). For example, to download jdk-8u201-linux-x64.tar.gz
 $ mkdir /software
 # To unzip jdk
 $ tar -zxvf jdk-8u201-linux-x64.tar.gz
