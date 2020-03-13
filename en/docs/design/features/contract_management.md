@@ -11,12 +11,12 @@ This document describes the design of the freezing/unfreezing/destroying operati
 
 Contract management related operations include `freezeContract`, `unfreezeContract`, `destroyContract`, `grantContractStatusManager`, `getContractStatus`, `listContractStatusManager`.
 
-- freezeContract : Reversible operation, the interfaces of a frozen contract can not be called
-- unfreezeContract : Undo the `freezeContract` operation, the interfaces of an unfrozen contract can be called
-- destroyContract : Irreversible operation，the interfaces of a frozen contract can not be called and cannot be restored
-- getContractStatus : Query the status of a contract to return the status of available/frozen/destroyed
-- grantContractStatusManager : Grant the account's permission of contract status managememt
-- listContractStatusManager : Query a list of authorized accounts that can manage a specified contract
+- [freezeContract](../../manual/console.html#freezecontract) : Reversible operation, the interfaces of a frozen contract can not be called
+- [unfreezeContract](../../manual/console.html#unfreezecontract) : Undo the `freezeContract` operation, the interfaces of an unfrozen contract can be called
+- [destroyContract](../../manual/console.html#destroycontract) : Irreversible operation，the interfaces of a frozen contract whose codes were deleted can not be called and cannot be restored
+- [getContractStatus](../../manual/console.html#getcontractstatus) : Query the status of a contract to return the status of available/frozen/destroyed
+- [grantContractStatusManager](../../manual/console.html#grantcontractstatusmanager) : Grant the account's permission of contract status managememt
+- [listContractStatusManager](../../manual/console.html#listcontractstatusmanager) : Query a list of authorized accounts that can manage a specified contract
 
 The state transition moments are shown below:
 
@@ -37,7 +37,8 @@ The state transition moments are shown below:
 **Note:**
 
 1. False will be returned when querying the field for the contract table with no field `frozen`;
-2. When a contract is deployed, the authorization for tx.origin and the authorization of parent contract, if any, is written to field `authority` by default.
+2. When a contract is deployed, the tx.origin will be written to field `authority` by default.
+3. When an interface of contract A was called to create contract B, the tx.origin and the authorization of contract A is written to field `authority` of contract B by default.
 
 ### Judgment of contract status
 
@@ -47,7 +48,7 @@ In the Executive module, the values of alive and frozen fields are obtained acco
 
 - The authority to freeze/unfreeze/destroy contract needs to be determined. Only the accounts in authority list can set the contract status;
 - The authority to grant authorization needs to be determined. Only the account in the authority list can grant other accounts the authorization to manage the contract;
-- Any account can query contract status.
+- Any account can query contract status and authorization list.
 
 ### Interfaces of contract management
 
