@@ -349,11 +349,12 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
-frozenContract                           Frozen the contract.
-unfrozenContract                         Unfrozen the contract.
-killContract                             Kill the contract.
-queryContractStatus                      Query the status of the contract.
-queryAuthority                           Query authority of the contract.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
+destroyContract                          Destroy the contract.
+grantContractStatusManager               Grant contract authorization to the user.
+getContractStatus                        Get the status of the contract.
+listContractStatusManager                List the authorization of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1482,72 +1483,82 @@ Remove OK, 1 row affected.
 
 ```eval_rst
 .. important::
-   The executing  of the 'frozenContract'/ 'unfrozenContract'/'killContract' commands for contract management should specify the private key to start the console for permission.This private key is also the account private key used to deploy the specified contract. So a private key should be specified to launch the console when deploying the contract.
+   The executing  of the `freezeContract`/`unfreezeContract`/`destroyContract`/`grantContractStatusManager` commands for contract management should specify the private key to start the console for permission.This private key is also the account private key used to deploy the specified contract. So a private key should be specified to launch the console when deploying the contract.
 ```
 
-### **frozenContract**
-To run frozenContract to freeze contract according contract address.
+### **freezeContract**
+Run freezeContract to freeze contract according contract address.
 Parameter:
-- Contract address: To deploy contract can get contract address.
-The prefix of 0x is not necessary.
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
 
 ```text
-[group:1]> frozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> freezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
 }
 ```
 
-### **unfrozenContract**
-To run unfrozenContract to unfreeze contract according contract address.
+### **unfreezeContract**
+Run unfreezeContract to unfreeze contract according contract address.
 Parameter:
-- Contract address: To deploy contract can get contract address.
-The prefix of 0x is not necessary.
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
 
 ```text
-[group:1]> unfrozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> unfreezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
 }
 ```
 
-### **killContract**
-To run killContract to kill contract according contract address.
+### **destroyContract**
+Run destroyContract to destroy contract according contract address.
 Parameter:
-- Contract address: To deploy contract can get contract address.
-The prefix of 0x is not necessary.
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
 
 ```text
-[group:1]> killContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> destroyContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
 }
 ```
 
-### **queryContractStatus**
-To run queryContractStatus to query contract status according contract address.
+### **grantContractStatusManager**
+Run grantCNSManager to grant the account's permission of contract status managememt.
 Parameter:
-- Contract address: To deploy contract can get contract address.
-The prefix of 0x is not necessary.
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
+- Account address: tx.origin. The prefix of 0x is not necessary.
 
 ```text
-[group:1]> queryContractStatus 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> grantContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getContractStatus**
+To run getContractStatus to query contract status according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
+
+```text
+[group:1]> getContractStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 The contract is available.
 ```
 
-### **queryAuthority**
-To run queryAuthority to query a list of authorized accounts that can manage a specified contract.
+### **listContractStatusManager**
+To run listContractStatusManager to query a list of authorized accounts that can manage a specified contract.
 Parameter:
-- Contract address: To deploy contract can get contract address.
-The prefix of 0x is not necessary.
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
 
 ```text
-[group:1]> queryAuthority 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> listContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1
 [
-    "0xdfade505e286bf33644faa0204cbb0a86fd517ac"
+    "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
+    "0x965ebffc38b309fa706b809017f360d4f6de909a"
 ]
 ```
 
