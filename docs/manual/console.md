@@ -337,11 +337,12 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
-frozenContract                           Frozen the contract.
-unfrozenContract                         Unfrozen the contract.
-killContract                             Kill the contract.
-queryContractStatus                      Query the status of the contract.
-queryAuthority                           Query authority of the contract.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
+destroyContract                          Destroy the contract.
+grantContractStatusManager               Grant contract authorization to the user.
+getContractStatus                        Get the status of the contract.
+listContractStatusManager                List the authorization of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1446,67 +1447,82 @@ Remove OK, 1 row affected.
 
 ```eval_rst
 .. important::
-   执行`frozenContract`、`unfrozenContract`和`killContract`三个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也许指定私钥启动控制台。
+   执行`freezeContract`、`unfreezeContract`、`destroyContract`和`grantContractStatusManager`四个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也许指定私钥启动控制台。
 ```
 
-### **frozenContract**
-运行frozenContract，对指定合约进行冻结操作。参数：
+### **freezeContract**
+运行freezeContract，对指定合约进行冻结操作。参数：
 
-合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
 
 ```text
-[group:1]> frozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> freezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
 }
 ```
 
-### **unfrozenContract**
-运行unfrozenContract，对指定合约进行解冻操作。参数：
+### **unfreezeContract**
+运行unfreezeContract，对指定合约进行解冻操作。参数：
 
-合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
 
 ```text
-[group:1]> unfrozenContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> unfreezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
 }
 ```
 
-### **killContract**
-运行killContract，对指定合约进行销毁操作。参数：
+### **destroyContract**
+运行destroyContract，对指定合约进行销毁操作。参数：
 
-合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
 
 ```text
-[group:1]> killContract 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> destroyContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
 }
 ```
 
-### **queryContractStatus**
-运行queryContractStatus，查询指定合约的状态。参数：
+### **grantContractStatusManager**
+运行grantContractStatusManager，用于已有权限账号给其他账号授予指定合约的合约管理权限。参数：
 
-合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 账号地址：tx.origin，其中0x前缀非必须。
 
 ```text
-[group:1]> queryContractStatus 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> grantContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getContractStatus**
+运行getContractStatus，查询指定合约的状态。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> getContractStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 The contract is available.
 ```
 
-### **queryAuthority**
-运行queryAuthority，查询能管理指定合约的权限账号列表。参数：
+### **listContractStatusManager**
+运行listContractStatusManager，查询能管理指定合约的权限账号列表。参数：
 
-合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
 
 ```text
-[group:1]> queryAuthority 0x7f3c9ede6af9523a78df03b84c75a52561cb013c
+[group:1]> listContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1
 [
-    "0xdfade505e286bf33644faa0204cbb0a86fd517ac"
+    "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
+    "0x965ebffc38b309fa706b809017f360d4f6de909a"
 ]
 ```
 
