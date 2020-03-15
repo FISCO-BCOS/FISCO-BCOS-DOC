@@ -1,10 +1,10 @@
 # 合约管理
 
-本文档描述合约生命周期管理中冻结/解冻/销毁操作及其操作权限的设计方案。
+本文档描述合约生命周期管理中冻结/解冻/销毁操作（以下简称合约状态管理操作）及其操作权限的设计方案。
 
 ```eval_rst
 .. important::
-   合约的冻结/解冻/销毁操作支持storagestate的存储模式，不支持mptstate的存储模式。这里提及的合约目前只限于智能合约，不包括预编译合约、CRUD合约。
+   合约状态管理操作支持storagestate的存储模式，不支持mptstate的存储模式。这里提及的合约目前只限于Solidity合约，不包括预编译合约、CRUD合约。
 ```
 
 ## 名词解释
@@ -32,7 +32,7 @@
 
 - 复用合约表中已有的alive字段，用于记录该合约是否已销毁，该字段默认为true，销毁时该值为false；
 - 新增一字段frozen，用于记录该合约是否已冻结，该字段默认为false，表示可用，冻结时该值为true；
-- 新增一字段authority，用于记录能冻结/解冻/销毁该合约的账号，每个账号对应一行authority记录。
+- 新增一字段authority，用于记录合约管理员账号，每个账号对应一行authority记录。
 
 **注意：**
 
@@ -46,7 +46,7 @@ Executive中根据合约地址获取alive和frozen字段值，进行判断后交
 
 ### 管理权限判断
 
-- 设置（冻结/解冻/销毁）合约状态的操作需进行权限判断，只有authority列表中的账号才能设置该合约的状态；
+- 更新合约状态的操作需进行权限判断，只有authority列表中的账号才能设置该合约的状态；
 - 授予权限的操作也需进行权限判断，只有authority列表中的账号才能授予其他账号管理该合约的权限；
 - 查询合约状态及权限列表不需进行权限判断。
 
@@ -64,6 +64,17 @@ contract ContractStatusPrecompiled {
     function listManager(address addr) public constant returns(uint,address[]);
 }
 ```
+
+### 返回码描述
+
+| code   | message                                                    |
+| ------ | ---------------------------------------------------------- |
+| 0      | success                                                    |
+| -50000 | permission denied                                          |
+| -51900 | the contract has been destroyed                            |
+| -51901 | the contract has been frozen                               |
+| -51902 | the contract is available                                  |
+| -51903 | the contract has been granted authorization with same user |
 
 ```eval_rst
 .. important::
