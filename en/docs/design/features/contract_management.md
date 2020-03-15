@@ -1,10 +1,10 @@
 # Contract Management
 
-This document describes the design of the freezing/unfreezing/destroying operations and their operation permissions in contract life cycle management.
+This document describes the design of the freezing/unfreezing/destroying operations(referred to as contract status management operation on below) and their operation permissions in contract life cycle management.
 
 ```eval_rst
 .. important::
-   The freezing/unfreezing/destroying operation on the contract supports storagestate storage mode, but not mptstate storage mode.The contracts mentioned here are only smart contracts and do not include pre-compiled contracts or CRUD contracts currently.
+   The contract status management operation on the contract supports storagestate storage mode, but not mptstate storage mode.The contracts mentioned here are only Solidity contracts and do not include pre-compiled contracts or CRUD contracts currently.
 ```
 
 ## noun explanation
@@ -32,7 +32,7 @@ The state transition moments are shown below:
 
 - Reuse the existing `alive` field in the contract table to record whether the contract has been destroyed. This field defaults to true, and the value is false when killed.
 - A new field `frozen` is used to record whether the contract has been frozen. The default of this field is false, indicating that it is available. When frozen, the value is true.
-- A new field `authority` is used to record accounts that can freeze/unfreeze/destroy the contract. Each account with permission corresponds to one line of `authority` records.
+- A new field `authority` is used to record accounts that can manage contract status. Each account with permission corresponds to one line of `authority` records.
 
 **Note:**
 
@@ -46,7 +46,7 @@ In the Executive module, the values of alive and frozen fields are obtained acco
 
 ### Judgment of authority
 
-- The authority to freeze/unfreeze/destroy contract needs to be determined. Only the accounts in authority list can set the contract status;
+- The authority to update contract status needs to be determined. Only the accounts in authority list can set the contract status;
 - The authority to grant authorization needs to be determined. Only the account in the authority list can grant other accounts the authorization to manage the contract;
 - Any account can query contract status and authorization list.
 
@@ -64,6 +64,17 @@ contract ContractStatusPrecompiled {
     function listManager(address addr) public constant returns(uint,address[]);
 }
 ```
+
+### Description of return code
+
+| code   | message                                                    |
+| ------ | ---------------------------------------------------------- |
+| 0      | success                                                    |
+| -50000 | permission denied                                          |
+| -51900 | the contract has been destroyed                            |
+| -51901 | the contract has been frozen                               |
+| -51902 | the contract is available                                  |
+| -51903 | the contract has been granted authorization with same user |
 
 ```eval_rst
 .. important::
