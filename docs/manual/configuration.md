@@ -14,13 +14,17 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 .. important::
     - 云主机的公网IP均为虚拟IP，若listen_ip/jsonrpc_listen_ip/channel_listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
     - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
+    - 为便于开发和体验，listen_ip/channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
 ### 配置RPC
 
-- `jsonrpc_listen_ip`：RPC监听IP，安全考虑，默认设置为127.0.0.0，若有外网访问需求，请监听**节点外网IP**或`0.0.0.0`；
 - `channel_listen_ip`: Channel监听IP，为方便节点和SDK跨机器部署，默认设置为`0.0.0.0`；
+
+- `jsonrpc_listen_ip`：RPC监听IP，安全考虑，默认设置为127.0.0.1，若有外网访问需求，请监听**节点外网IP**或`0.0.0.0`；
+
 - `channel_listen_port`: Channel端口，对应到[Web3SDK](../sdk/java_sdk.html#id2)配置中的`channel_listen_port`；
+
 - `jsonrpc_listen_port`: JSON-RPC端口。
 
 ```eval_rst
@@ -44,6 +48,11 @@ RPC配置示例如下：
 ### 配置P2P
 
 当前版本FISCO BCOS必须在`config.ini`配置中配置连接节点的`IP`和`Port`，P2P相关配置包括：
+
+```eval_rst
+.. note::
+    为便于开发和体验，listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
+```
 
 - `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`。
 - `listen_port`：节点P2P监听端口。

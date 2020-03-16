@@ -46,8 +46,11 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 
 ```eval_rst
 .. note::
-    - The -p option specifies the starting ports, which are p2p_port, channel_port, jsonrpc_port. For security reasons, jsonrpc/channel listens to 127.0.0.1 by defaults. **If you require to access external network, please add -i parameter**.
+    - The -p option specifies the starting port, which are p2p_port, channel_port, and jsonrpc_port.
+    
+    - For security and ease of use consideration, the latest configuration of v2.3.0 version splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip. For details, please refer to `here <manual/configuration.html#configure-rpc>`_
 
+    - In order to facilitate development and experience, the reference configuration of channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as: intranet IP or specific external IP
 ```
 
 If the command is executed successfully, `All completed` will be output. If the execution fails, please check the error message in the `nodes/build.log` file.

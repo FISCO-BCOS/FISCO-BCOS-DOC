@@ -60,19 +60,21 @@ cd ~/generator && bash ./scripts/install.sh
 
 每个节点的IP，端口号为如下：
 
-| 机构  | 节点  | 所属群组  | P2P地址           | RPC/channel监听地址       |
-| --- | --- | ----- | --------------- | --------------------- |
-| 机构A | 节点0 | 群组1、2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200 |
-|     | 节点1 | 群组1、2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201 |
-| 机构B | 节点2 | 群组1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202 |
-|     | 节点3 | 群组1   | 127.0.0.1:30303  | 127.0.0.1:8548/:20203 |
-| 机构C | 节点4 | 群组2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204 |
-|     | 节点5 | 群组2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205 |
+| 机构  | 节点  | 所属群组  | P2P地址           | RPC监听地址       | Channel监听地址|
+| --- | --- | ----- | --------------- | --------------------- | -------------------- |
+| 机构A | 节点0 | 群组1、2 | 127.0.0.1:30300 | 127.0.0.1:8545 | 0.0.0.0:20200 | 
+|     | 节点1 | 群组1、2 | 127.0.0.1:30301 | 127.0.0.1:8546 | 0.0.0.0:20201 | 
+| 机构B | 节点2 | 群组1   | 127.0.0.1:30302 | 127.0.0.1:8547 | 0.0.0.0:20202 |
+|     | 节点3 | 群组1   | 127.0.0.1:30303  | 127.0.0.1:8548 | 0.0.0.0:20203 |  
+| 机构C | 节点4 | 群组2   | 127.0.0.1:30304 | 127.0.0.1:8549 | 0.0.0.0:20204 |
+|     | 节点5 | 群组2   | 127.0.0.1:30305 | 127.0.0.1:8550 | 0.0.0.0:20205 |
 
 ```eval_rst
-.. important::
-
-    针对云服务器中的vps服务器，RPC监听地址需要写网卡中的真实地址(如内网地址或127.0.0.1)，可能与用户登录的ssh服务器不一致。
+.. note::
+    - 云主机的公网IP均为虚拟IP，若rpc_ip/p2p_ip/channel_ip填写外网IP，会绑定失败，须填写0.0.0.0
+    - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
+    - 出于安全性和易用性考虑，FISCO BCOS v2.3.0版本最新节点config.ini配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里<../manual/configuration.html#rpc>`_
+    - 为便于开发和体验，channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
 ### 涉及机构
@@ -280,6 +282,7 @@ p2p_ip=127.0.0.1
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30300
 channel_listen_port=20200
 jsonrpc_listen_port=8545
@@ -287,6 +290,7 @@ jsonrpc_listen_port=8545
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
@@ -319,6 +323,7 @@ p2p_ip=127.0.0.1
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30302
 channel_listen_port=20202
 jsonrpc_listen_port=8547
@@ -326,6 +331,7 @@ jsonrpc_listen_port=8547
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
@@ -653,6 +659,7 @@ p2p_ip=127.0.0.1
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30304
 channel_listen_port=20204
 jsonrpc_listen_port=8549
@@ -660,6 +667,7 @@ jsonrpc_listen_port=8549
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30305
 channel_listen_port=20205
 jsonrpc_listen_port=8550
