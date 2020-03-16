@@ -349,6 +349,9 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
+listContractWritePermission              Query the account list which have write permission of the contract.
+grantContractWritePermission             Grant the account the contract write permission.
+revokeContractWritePermission            Revoke the account the contract write permission.
 freezeContract                           Freeze the contract.
 unfreezeContract                         Unfreeze the contract.
 destroyContract                          Destroy the contract.
@@ -1369,6 +1372,52 @@ Run revokeSysConfigManager to revoke the account's permission of modifying syste
 	"msg":"success"
 }
 ```
+
+### **grantContractWritePermission**
+
+Run grantContractWritePermissio to grant the account the contract write permission. parameters:
+
+- contract address
+- account address
+
+```bash
+[group:1]> grantContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+### **listContractWritePermission**
+
+Run listContractWritePermission to query the account list which have write permission of the contract. parameters:
+
+- contract address
+
+```bash
+[group:1]> listContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                     11                      |
+---------------------------------------------------------------------------------------------
+```
+
+### **revokeContractWritePermission**
+
+Run revokeContractWritePermission to Revoke the account the contract write permission. parameters:
+
+- 合约地址
+- account address
+
+```bash
+[group:1]> revokeContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+
 ### **quit**
 To run quit, q or exit to exit the console.
 ```text
