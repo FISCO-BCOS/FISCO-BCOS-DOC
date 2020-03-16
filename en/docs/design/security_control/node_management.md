@@ -149,6 +149,12 @@ The organization rules of config file are: **independent config among groups**;*
 ### Config file example
 
 For **network modifiable config file **`config.ini`, node access management involves **P2P node connection list `[p2p]`**, **node certificate `[secure]`**, **CA blacklist `[certificate_blacklist]`**. `[certificate_blacklist]` is optional. Example of config items:
+
+```eval_rst
+.. note::
+    For the convenience of development and experience, the recommended configuration of listen_ip is `0.0.0.0`. For security considerations, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP
+```
+
 ```
 [p2p]
     ;p2p listen ip

@@ -47,6 +47,7 @@ group_id=1
 [node0]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30300
 channel_listen_port=20200
 jsonrpc_listen_port=8545
@@ -54,6 +55,7 @@ jsonrpc_listen_port=8545
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546

@@ -48,7 +48,9 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 
 ```eval_rst
 .. note::
-    - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port，出于安全考虑jsonrpc/channel默认监听127.0.0.1，**需要外网访问请添加-i参数**。
+    - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+    - 出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里 <manual/configuration.html#rpc>`_
+    - 为便于开发和体验，channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
 命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
@@ -223,7 +225,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 {
     "Build Time":"20190121 06:21:05",
     "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0",
+    "FISCO-BCOS Version":"2.3.0",
     "Git Branch":"master",
     "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
 }

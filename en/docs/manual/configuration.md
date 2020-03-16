@@ -18,13 +18,17 @@ FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers
 
     - RPC/P2P/Channel listening port must be in the range of 1024-65535 and cannot conflict with other application listening ports on the machine.
 
+    - In order to facilitate development and experience, the reference configuration of listen_ip/channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP
 ```
 
 ### Configure RPC
 
-- `jsonrpc_listen_ip`：RPC listening IP, security considerations, the default setting is 127.0.0.0, if there is an external network access requirement, please monitor **node external network IP** or `0.0.0.0`;
 - `channel_listen_ip`: Channel listening IP, to facilitate node and SDK cross-machine deployment, the default setting is `0.0.0.0`;
+
+- `jsonrpc_listen_ip`：RPC listening IP, security considerations, the default setting is 127.0.0.1, if there is an external network access requirement, please monitor **node external network IP** or `0.0.0.0`;
+
 - `channel_listen_port`: Channel port, is corresponding to `channel_listen_port` in [Web3SDK](../sdk/sdk.html#id2) configuration;
+
 - `jsonrpc_listen_port`: JSON-RPC port.
 
 ```eval_rst
@@ -47,6 +51,11 @@ RPC configuration example is as follows:
 ```
 
 ### Configure P2P
+
+```eval_rst
+.. note::
+    In order to facilitate development and experience, the reference configuration of listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP.
+```
 
 The current version of FISCO BCOS must be configured with `IP` and `Port` of the connection node in the `config.ini` configuration. The P2P related configurations include:
 
