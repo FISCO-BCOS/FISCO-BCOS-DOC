@@ -337,6 +337,9 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
+listContractWritePermission              Query the account list which have write permission of the contract.
+grantContractWritePermission             Grant the account the contract write permission.
+revokeContractWritePermission            Revoke the account the contract write permission.
 freezeContract                           Freeze the contract.
 unfreezeContract                         Unfreeze the contract.
 destroyContract                          Destroy the contract.
@@ -1332,6 +1335,7 @@ Hello,CNS2
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **revokeSysConfigManager**
 运行revokeSysConfigManager，撤销账户的修改系统参数权限。参数： 
 - 账户地址
@@ -1342,6 +1346,43 @@ Hello,CNS2
 	"msg":"success"
 }
 ```
+
+### **grantContractWritePermission**
+运行grantContractWritePermission，添加账户对合约写接口的调用权限。参数： 
+- 合约地址
+- 账户地址
+
+```bash
+[group:1]> grantContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+### **listContractWritePermission**
+运行listContractWritePermission，显示对某个合约的写接口有调用权限的账户。参数： 
+- 合约地址
+```bash
+[group:1]> listContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                     11                      |
+---------------------------------------------------------------------------------------------
+```
+
+### **revokeContractWritePermission**
+运行revokeContractWritePermission，撤销账户对合约的写接口调用权限。参数： 
+- 合约地址
+- 账户地址
+```bash
+[group:1]> revokeContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
 ### **quit**
 运行quit、q或exit，退出控制台。
 ```text
