@@ -294,6 +294,12 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 
 存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问mysql，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
 
+```eval_rst
+.. note::
+    - v2.3.0版本开始，为便于链的维护，推荐使用 `MySQL` 存储模式替代 `External` 存储模式
+    - 若要使用 `External`，请将 `supported_version` 配置成v2.2.0或其以下版本
+```
+
 #### 公共配置项
 
 ```eval_rst
@@ -546,6 +552,13 @@ max_request_missedTxs_waitTime=100
 ### 并行交易配置
 
 FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够让区块内的交易被并行的执行，提高吞吐量，**交易并行执行仅在storage state模式下生效**。
+
+```eval_rst
+.. note::
+    为简化系统配置，v2.3.0去除了 `enable_parallel` 配置项，该配置项仅在 `supported_version < v2.3.0` 时生效，v2.3.0版本中：
+     - storageState模式：开启并行交易
+     - mptState模式: 关闭并行交易
+```
 
 ``` ini
 [tx_execute]

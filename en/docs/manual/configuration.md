@@ -319,6 +319,12 @@ For example: `group1` variable configuration is generally named `group.1.ini`. V
 
 Storage currently supports three modes: RocksDB, MySQL, and External. Users can choose the DB to use according to their needs. RocksDB has the highest performance. MySQL supports users to use MySQL database for viewing data. External accesses mysql through data proxy, and users need to start and configure the data proxy. The design documentation can be referenced [AMDB Storage Design](../design/storage/storage.html). Since the RC3 version, we have used RocksDB instead of LevelDB for better performance, but still supports LevelDB.
 
+```eval_rst
+.. note::
+    - Starting from v2.3.0, in order to facilitate chain maintenance, it is recommended to use `MySQL` storage mode instead of` External` storage mode
+    - To use `External`, configure` supported_version` to v2.2.0 or below
+```
+
 #### Public configuration item
 
 ```eval_rst
@@ -586,6 +592,12 @@ The maximum number of nodes for transaction status forwarding is configured as f
 
 FISCO BCOS supports execution of transactions in parallel. Turning on the transaction parallel execution switch to enable for improving throughput. **Execution of the transaction in parallel is only effective in the storage state mode**.
 
+```eval_rst
+.. note::
+    In order to simplify system configuration, v2.3.0 removes the `enable_parallel` configuration item, which only takes effect when `supported_version < v2.3.0` , in v2.3.0
+     - storageState mode: enable parallel transaction
+     - mptState mode: disable parallel transactions
+```
 
 ``` ini
 [tx_execute]
