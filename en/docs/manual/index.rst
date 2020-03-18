@@ -73,6 +73,9 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
         + Deny connection from certain node.
     - `Storage security <./storage_security.html>`_
         + Encrypt data during writing into disk
+    - `Privacy protection <./privacy.html>`_
+        + Integrate homomorphic encryption and group/ring signature algorithms in precompiled contracts
+        
 
 
 .. admonition:: Others
