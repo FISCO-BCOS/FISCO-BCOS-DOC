@@ -15,13 +15,15 @@
 - 同态加密公式描述如下：
 
 $$
-C_1=Encrypt(m_1, pk) \\
+\begin{align}
+&C_1=Encrypt(m_1, pk) \\
 
-C_2=Encrypt(m_2, pk) \\
+&C_2=Encrypt(m_2, pk) \\
 
-C_3=Hom_{f()}(C_1, C_2, pk) \\
+&C_3=Hom_{f()}(C_1, C_2, pk) \\
 
-Decrypt(C_3, sk) = f(m_1, m_2)
+&Decrypt(C_3, sk) = f(m_1, m_2)
+\end{align}
 $$
 
 FISCO BCOS采用的是paillier加密算法，支持加法同态。paillier加解密兼容主流的RSA公钥加密算法，接入门槛低。同时paillier作为一种轻量级的同态加密算法，计算开销小易被业务系统接受。因此经过功能性和可用性的权衡，最终选定了paillier算法。
@@ -33,7 +35,7 @@ FISCO BCOS同态加密模块提供的功能组件包括：
 
 - paillier[同态库](https://github.com/FISCO-BCOS/paillier-lib)，包括java库和c++同态接口。
 
-- paillier[预编译合约](#id17)，供智能合约调用，提供密文同态运算接口。
+- paillier[预编译合约]()，供智能合约调用，提供密文同态运算接口。
 
 ### 使用方式
 
@@ -71,7 +73,7 @@ FISCO BCOS群/环签名模块提供的功能组件包括：
 
 - 群/环[签名库](https://github.com/FISCO-BCOS/group-signature-lib)，提供完整的群/环签名算法c++接口
 
-- 群/环签名[预编译合约](#id17)，供智能合约调用，提供群/环签名验证接口。
+- 群/环签名[预编译合约]()，供智能合约调用，提供群/环签名验证接口。
 
 ### 使用方式
 
