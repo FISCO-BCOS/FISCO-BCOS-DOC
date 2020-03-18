@@ -348,7 +348,6 @@ grantContractWritePermission             Grant the account the contract write pe
 revokeContractWritePermission            Revoke the account the contract write permission.
 freezeContract                           Freeze the contract.
 unfreezeContract                         Unfreeze the contract.
-destroyContract                          Destroy the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
@@ -1494,7 +1493,7 @@ Remove OK, 1 row affected.
 
 ```eval_rst
 .. important::
-   执行`freezeContract`、`unfreezeContract`、`destroyContract`和`grantContractStatusManager`四个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也许指定私钥启动控制台。
+   执行`freezeContract`、`unfreezeContract`和`grantContractStatusManager`四个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也许指定私钥启动控制台。
 ```
 
 ### **freezeContract**
@@ -1517,19 +1516,6 @@ Remove OK, 1 row affected.
 
 ```text
 [group:1]> unfreezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
-{
-    "code":0,
-    "msg":"success"
-}
-```
-
-### **destroyContract**
-运行destroyContract，对指定合约进行销毁操作。参数：
-
-- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
-
-```text
-[group:1]> destroyContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
