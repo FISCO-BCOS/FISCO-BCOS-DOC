@@ -71,12 +71,12 @@ contract ContractLifeCyclePrecompiled {
 | code   | message                                                    |
 | ------ | ---------------------------------------------------------- |
 | 0      | success                                                    |
-| -50000 | permission denied                                          |
-| -50102 | invalid address format                                     |
 | -51900 | the contract has been frozen                               |
 | -51901 | the contract is available                                  |
 | -51902 | the contract has been granted authorization with same user |
 | -51903 | the contract address is invalid                            |
+| -51904 | the address is not exist                                   |
+| -51905 | this operation has no permissions                          |
 
 ```eval_rst
 .. important::
