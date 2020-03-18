@@ -354,7 +354,6 @@ grantContractWritePermission             Grant the account the contract write pe
 revokeContractWritePermission            Revoke the account the contract write permission.
 freezeContract                           Freeze the contract.
 unfreezeContract                         Unfreeze the contract.
-destroyContract                          Destroy the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
@@ -1532,7 +1531,7 @@ Remove OK, 1 row affected.
 
 ```eval_rst
 .. important::
-   The executing  of the `freezeContract`/`unfreezeContract`/`destroyContract`/`grantContractStatusManager` commands for contract management should specify the private key to start the console for permission.This private key is also the account private key used to deploy the specified contract. So a private key should be specified to launch the console when deploying the contract.
+   The executing  of the `freezeContract`/`unfreezeContract`/`grantContractStatusManager` commands for contract management should specify the private key to start the console for permission.This private key is also the account private key used to deploy the specified contract. So a private key should be specified to launch the console when deploying the contract.
 ```
 
 ### **freezeContract**
@@ -1555,19 +1554,6 @@ Parameter:
 
 ```text
 [group:1]> unfreezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
-{
-    "code":0,
-    "msg":"success"
-}
-```
-
-### **destroyContract**
-Run destroyContract to destroy contract according contract address.
-Parameter:
-- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
-
-```text
-[group:1]> destroyContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
     "code":0,
     "msg":"success"
