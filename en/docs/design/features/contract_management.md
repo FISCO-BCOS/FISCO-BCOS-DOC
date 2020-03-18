@@ -1,36 +1,38 @@
 # Contract Management
 
-This document describes the design of the freezing/unfreezing/destroying operations(referred to as contract status management operation on below) and their operation permissions in contract life cycle management.
+This document describes the design of the freezing/unfreezing operations(referred to as contract lift cycle status management operation on below) and their operation permissions in contract life cycle management.
 
 ```eval_rst
 .. important::
-   The contract status management operation on the contract supports storagestate storage mode, but not mptstate storage mode.The contracts mentioned here are only Solidity contracts and do not include pre-compiled contracts or CRUD contracts currently.
+   The contract life cycle management operation on the contract supports storagestate storage mode, but not mptstate storage mode.The contracts mentioned here are only Solidity contracts and do not include pre-compiled contracts currently.
 ```
 
 ## noun explanation
 
-Contract management related operations include `freezeContract`, `unfreezeContract`, `destroyContract`, `grantContractStatusManager`, `getContractStatus`, `listContractStatusManager`.
+Contract management related operations include `freezeContract`, `unfreezeContract`, `grantContractStatusManager`, `getContractStatus`, `listContractStatusManager`.
 
 - [freezeContract](../../manual/console.html#freezecontract) : Reversible operation, the interfaces of a frozen contract can not be called
 - [unfreezeContract](../../manual/console.html#unfreezecontract) : Undo the `freezeContract` operation, the interfaces of an unfrozen contract can be called
-- [destroyContract](../../manual/console.html#destroycontract) : Irreversible operation，the interfaces of a frozen contract whose codes were deleted can not be called and cannot be restored
-- [getContractStatus](../../manual/console.html#getcontractstatus) : Query the status of a contract to return the status of available/frozen/destroyed
+- [getContractStatus](../../manual/console.html#getcontractstatus) : Query the status of a contract to return the status of available/frozen
 - [grantContractStatusManager](../../manual/console.html#grantcontractstatusmanager) : Grant the account's permission of contract status managememt
 - [listContractStatusManager](../../manual/console.html#listcontractstatusmanager) : Query a list of authorized accounts that can manage a specified contract
 
+```eval_rst
+.. important::
+   The operation of freezing a contract will not modify the original contract content, including logic and data, and will only be recorded through a field.
+```
+
 The state transition moments are shown below:
 
-|          | available | frozen  | destroyed |
-| -------- | --------- | ------- | --------- |
-| freeze   | Success   | Fail    | Fail      |
-| unfreeze | Fail      | Success | Fail      |
-| destroy  | Success   | Success | Fail      |
+|          | available | frozen  |
+| -------- | --------- | ------- |
+| freeze   | Success   | Fail    |
+| unfreeze | Fail      | Success |
 
 ## Implementation
 
 ### Record of Contract status
 
-- Reuse the existing `alive` field in the contract table to record whether the contract has been destroyed. This field defaults to true, and the value is false when killed.
 - A new field `frozen` is used to record whether the contract has been frozen. The default of this field is false, indicating that it is available. When frozen, the value is true.
 - A new field `authority` is used to record accounts that can manage contract status. Each account with permission corresponds to one line of `authority` records.
 
@@ -42,7 +44,7 @@ The state transition moments are shown below:
 
 ### Judgment of contract status
 
-In the Executive module, the values of alive and frozen fields are obtained according to the address of a contract, and the transaction will be executed smoothly, or an exception is thrown to indicate that the contract has been frozen or destroyed after judgment.
+In the Executive module, the values of frozen fields are obtained according to the address of a contract, and the transaction will be executed smoothly, or an exception is thrown to indicate that the contract has been frozen after judgment.
 
 ### Judgment of authority
 
@@ -50,13 +52,12 @@ In the Executive module, the values of alive and frozen fields are obtained acco
 - The authority to grant authorization needs to be determined. Only the account in the authority list can grant other accounts the authorization to manage the contract;
 - Any account can query contract status and authorization list.
 
-### Interfaces of contract management
+### Interfaces of contract life cycle management
 
-A contract management precompiled named ContractStatusPrecompiled is added with 0x1007 address, which is used to set and query contract status.
+A contract life cycle management precompiled named ContractLifeCyclePrecompiled is added with 0x1007 address, which is used to set and query contract status.
 
 ```text
-contract ContractStatusPrecompiled {
-    function destroy(address addr) public returns(int);
+contract ContractLifeCyclePrecompiled {
     function freeze(address addr) public returns(int);
     function unfreeze(address addr) public returns(int);
     function grantManager(address contractAddr, address userAddr) public returns(int);
@@ -71,10 +72,11 @@ contract ContractStatusPrecompiled {
 | ------ | ---------------------------------------------------------- |
 | 0      | success                                                    |
 | -50000 | permission denied                                          |
-| -51900 | the contract has been destroyed                            |
-| -51901 | the contract has been frozen                               |
-| -51902 | the contract is available                                  |
-| -51903 | the contract has been granted authorization with same user |
+| -50102 | invalid address format                                     |
+| -51900 | the contract has been frozen                               |
+| -51901 | the contract is available                                  |
+| -51902 | the contract has been granted authorization with same user |
+| -51903 | the contract address is invalid                            |
 
 ```eval_rst
 .. important::
