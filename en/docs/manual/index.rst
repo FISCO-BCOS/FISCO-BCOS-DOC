@@ -58,7 +58,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
 .. admonition:: Write samrt contracts
 
     - `Smart contract development <./smart_contract.html>`_
-        + Solidity smart contract, precompiled contract and CRUD contract
+        + Solidity smart contract and precompiled contract
     - `Parallel contract <./transaction_parallel.html>`_
         + The guide of writing parallel contract 
 

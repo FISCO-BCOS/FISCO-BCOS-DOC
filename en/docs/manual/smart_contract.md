@@ -1,7 +1,7 @@
 # Smart contract development
 
-FISCO BCOS platform currently supports three smart contract forms which are Solidity, CRUD, and pre-compiled.
-- The Solidity contract is the same as Ethereum on supporting the latest version.
+FISCO BCOS platform currently supports two smart contract forms which are Solidity and pre-compiled.
+- The Solidity contract is the same as Ethereum on supporting the latest 0.5.2 version.
 - The KVTable contract get/set interfacr and Table contract CRUD interface supporting the distributed storage pre-compilation contract in the Solidity contract, which can store the data of Solidtiy contract in the AMDB table structure, realizes the separation of contract logic and data.
 - The precompiled (precompiled) contract is developed in C++ and built into the FISCO BCOS platform. It has better performance than the Solidity contract. Its contract interface that needs to be pre-determined when compiling, is suitable for the scenarios with fixed logic but consensus, such as group configuration. The development of precompiled contracts will be introduced in the next section.
 
@@ -349,7 +349,7 @@ For calling a solid contract or pre-compiled contract, you need to distinguish i
 | FISCO BCOS precompiled | 0x1000-0x1006 |
 | FISCO BCOS reserve | 0x1007-0x5000 |
 | user assigned interval | 0x5001 - 0xffff |
-| CRUD temporary contract | 0x10000+ |
+| CRUD reserve | 0x10000+ |
 | solidity | others |
 
 
@@ -362,7 +362,7 @@ List of precompiled contracts and address assignments implemented in FISCO BCOS:
 |--------|--------|---------|
 | 0x1000 | system parameter management | SystemConfigPrecompiled.cpp |
 | 0x1001 | table factory contract | TableFactoryPrecompiled.cpp |
-| 0x1002 | CRUD contract | CRUDPrecompiled.cpp |
+| 0x1002 | CRUD operation implementation | CRUDPrecompiled.cpp |
 | 0x1003 | consensus node management | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS feature | CNSPrecompiled.cpp |
 | 0x1005 | storage table authority management | AuthorityPrecompiled.cpp |

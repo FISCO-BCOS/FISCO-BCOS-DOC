@@ -65,7 +65,7 @@ bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools
 |   -- solidity  # solidity合约存放目录
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
-|       -- Table.sol # CRUD合约需要引入的Table合约接口
+|       -- Table.sol # 提供CRUD操作的接口合约
 |   -- console  # 控制台部署合约时编译的合约abi, bin，java文件目录
 |   -- sdk      # sol2java.sh脚本编译的合约abi, bin，java文件目录
 |-- start.sh # 控制台启动脚本
@@ -183,7 +183,7 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
     |       |-- com
     |           |-- fisco
     |               |-- HelloWorld.java # 编译的HelloWorld Java文件
-    |               |-- Table.java  # 编译的系统CRUD合约接口Java文件
+    |               |-- Table.java  # 编译的CRUD接口合约 Java文件
     |               |-- TableTest.java  # 编译的TableTest Java文件
     ```
     java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。

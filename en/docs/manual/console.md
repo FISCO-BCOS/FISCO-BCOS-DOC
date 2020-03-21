@@ -70,7 +70,7 @@ The directory structure is as follows:
 |   -- solidity  # directory where solidity contract locates
 |       -- HelloWorld.sol # normal contract: HelloWorld contract, is deployable and callable
 |       -- TableTest.sol # the contracts by using CRUD interface: TableTest contract, is deployable and callable
-|       -- Table.sol # Table contract interface required to be introduced by CRUD contract
+|       -- Table.sol # CRUD interfac contract
 |   -- console  # The file directory of contract abi, bin, java compiled when console deploys the contract
 |   -- sdk      # The file directory of contract abi, bin, java compiled by sol2java.sh script
 |-- start.sh # console start script
@@ -189,7 +189,7 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
     |       |-- com
     |           |-- fisco
     |               |-- HelloWorld.java # the target Java file which is compiled successfully
-    |               |-- Table.java  # the system CRUD contract interface Java file which is compiled successfully
+    |               |-- Table.java  # the CRUD interface Java file which is compiled successfully
     |               |-- TableTest.java  # the TableTest Java file which is compiled successfully
     ```
 

@@ -136,7 +136,7 @@ Log in console with account 3 and deploy TableTest contract.
 ```
 Account 3 fails to deploy contract as it has no permission.
 
-- **Note:** deploying contract and creating user table are "2-in-1" control items. When using CRUD contracts, we suggest to create the needed tables (creating tables in building function of contract) when deploying contract, otherwise "table-missing" error may occur when reading or writing table. If it is needed to dynamically create table, the permission should be granted to minority accounts, otherwise there will be many invalid tables on blockchain.
+- **Note:** deploying contract and creating user table are "2-in-1" control items. When using CRUD interface contracts, we suggest to create the needed tables (creating tables in building function of contract) when deploying contract, otherwise "table-missing" error may occur when reading or writing table. If it is needed to dynamically create table, the permission should be granted to minority accounts, otherwise there will be many invalid tables on blockchain.
 
 ### Grant permission to deploy contract using CNS
 Console provides 3 commands involving [CNS](../design/features/CNS_contract_name_service.md):

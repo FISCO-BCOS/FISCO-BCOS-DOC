@@ -268,7 +268,7 @@ After successful operation, the java, abi, and bin directories will be generated
 |   |-- Table.bin
 |-- contracts # The source code file that stores Solidity contract. Copy the contract that needs to be compiled to this directory.
 |   |-- Asset.sol # A copied Asset.sol contract, depends on Table.sol
-|   |-- Table.sol # System CRUD contract interface file provided by default
+|   |-- Table.sol # The contract interface file that implements the CRUD operation
 |-- java  # Storing compiled package path and Java contract file
 |   |-- org
 |        |--fisco
