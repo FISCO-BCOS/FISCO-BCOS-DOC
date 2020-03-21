@@ -151,13 +151,9 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ### 准备依赖
 
-- 安装openjdk
+- Java环境配置
 
-Ubuntu使用下面命令安装Java，CentOS请手动安装，macOS执行`brew cask install java`安装。
-
-```bash
-sudo apt install -y default-jdk
-```
+参考[Java环境要求](sdk/java_sdk.html#id1)。
 
 - 获取控制台并回到fisco目录
 

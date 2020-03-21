@@ -126,13 +126,11 @@ bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools
 ```eval_rst
 .. important::
 
-    控制台配置说明
+    控制台说明
 
-    - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
-    
-      Failed to connect to the node. Please check the node status and the console configruation.
+    - 控制台启动失败
 
-     则是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <./console.html#java>`_ )，安装完毕后再启动控制台。
+      参考，`附录：JavaSDK启动失败场景 <../sdk/java_sdk.html#id22>`_。
 
     - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
 
@@ -1443,6 +1441,7 @@ Remove OK, 1 row affected.
 - 删除记录sql语句的where子句必须提供表的主键字段值。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
+
 ## 附录：Java环境配置
 
 ### Ubuntu环境安装Java
@@ -1454,7 +1453,7 @@ java -version
 ```
 
 ### CentOS环境安装Java
-**注意：CentOS下OpenJDK无法正常工作，需要替换为OracleJDK。**
+**注意：CentOS下OpenJDK无法正常工作，需要安装OracleJDK**[下载链接](https://www.oracle.com/technetwork/java/javase/downloads/index.html)。
 ```bash
 # 创建新的文件夹，安装Java 8或以上的版本，将下载的jdk放在software目录
 # 从Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
@@ -1472,4 +1471,3 @@ $ source /etc/profile
 # 查询Java版本，出现的版本是自己下载的版本，则安装成功。
 java -version 
 ```
-
