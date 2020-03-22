@@ -61,7 +61,7 @@
 .. admonition:: 合约开发
 
     - `智能合约开发 <./smart_contract.html>`_
-        + 普通智能合约开发、预编译合约开发、CRUD合约开发
+        + 普通智能合约开发、预编译合约开发合约开发
     - `并行合约 <./transaction_parallel.html>`_
         + 写并行合约，满足高并发场景
 

@@ -43,7 +43,7 @@ FISCO BCOS提供标准化接口和示例，帮助用户进行二次开发，便�
 
 另外，还有类似CRUD操作等也由预编译合约实现，更多预编译合约的介绍，请参考[预编译设计文档](./design/virtual_machine/precompiled.md)和[预编译合约开发文档](./manual/smart_contract.html#id2)
 
-## CRUD合约
+## CRUD接口
 
 FISCO BCOS 2.0新增符合CRUD接口的合约接口规范，简化了将主流的面向SQL设计的商业应用迁移到区块链上的成本。其好处显而易见：
 

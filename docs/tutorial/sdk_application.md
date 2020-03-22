@@ -263,7 +263,7 @@ $ ./sol2java.sh org.fisco.bcos.asset.contract
 |   |-- Table.bin
 |-- contracts # 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
 |   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖Table.sol
-|   |-- Table.sol # 默认提供的系统CRUD合约接口文件
+|   |-- Table.sol # 实现系统CRUD操作的合约接口文件
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco

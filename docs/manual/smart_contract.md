@@ -1,8 +1,8 @@
 # 智能合约开发
 
-FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形式。
+FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 
-- Solidity合约与以太坊相同，支持最新版本。
+- Solidity合约与以太坊相同，用Solidity语法实现，最高支持0.5.2版本。
 - KVTable合约的读写接口与Table合约的CRUD接口通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
 - 预编译（Precompiled）合约使用C++开发，内置于FISCO BCOS平台，相比于Solidity合约具有更好的性能，其合约接口需要在编译时预先确定，适用于逻辑固定但需要共识的场景，例如群组配置。关于预编译合约的开发将在下一节进行介绍。
 
@@ -348,7 +348,7 @@ contract TableTest {
 | FISCO BCOS precompied | 0x1000-0x1006 |
 | FISCO BCOS预留 | 0x1007-0x5000 |
 | 用户分配区间 | 0x5001 - 0xffff |
-| CRUD临时合约 | 0x10000+ |
+| CRUD预留 | 0x10000+ |
 | solidity | 其他 |
 
  用户分配地址空间为`0x5001`-`0xffff`,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。
@@ -359,7 +359,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 |--------|--------|---------|
 | 0x1000 | 系统参数管理 | SystemConfigPrecompiled.cpp |
 | 0x1001 | 表工厂合约 | TableFactoryPrecompiled.cpp |
-| 0x1002 | CRUD合约 | CRUDPrecompiled.cpp |
+| 0x1002 | CRUD操作实现 | CRUDPrecompiled.cpp |
 | 0x1003 | 共识节点管理 | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS功能  | CNSPrecompiled.cpp |
 | 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |
