@@ -1,6 +1,6 @@
 # Privacy protection
 
-Privacy protection is a major technical challenge for the alliance chain. In order to protect the data, keep the anonymity of alliance members, and ensure the effectiveness of supervision，FISCO BCOS integrates homomorphic encryption and group/ring signature algorithms in [Precompiled Contracts](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html), providing multiple privacy protection methods.
+Privacy protection is a major technical challenge for the alliance chain. In order to protect the data, keep the anonymity of alliance members, and ensure the effectiveness of supervision，FISCO BCOS integrates homomorphic encryption and group/ring signature algorithms in [Precompiled Contracts](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id2), providing multiple privacy protection methods.
 
 
 ## Homomorphic encryption
@@ -108,7 +108,6 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```bash
 cd FISCO-BCOS
-git checkout feature-paillier
 mkdir -p build && cd build
 # use cmake3 if CentOS
 cmake -DCRYPTO_EXTENSION=ON ..
