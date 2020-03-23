@@ -1,8 +1,8 @@
 # 隐私保护
 
-隐私保护是联盟链的一大技术挑战。为了保护链上数据、保障联盟成员隐私，并且保证监管的有效性，FISCO BCOS以[预编译合约](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html)的形式集成了同态加密、群/环签名验证功能，提供了多种隐私保护手段。
+隐私保护是联盟链的一大技术挑战。为了保护链上数据、保障联盟成员隐私，并且保证监管的有效性，FISCO BCOS以[预编译合约](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id2)的形式集成了同态加密、群/环签名验证功能，提供了多种隐私保护手段。
 
-文档一、二章节分别对同态加密和群/环签名算法以及相关应用场景进行了简单介绍，第三、四章节则详细介绍了FISCO BCOS隐私保护模块启用方法以及调用方式。
+文档一、二节分别对同态加密和群/环签名算法以及相关应用场景进行了简单介绍，第三、四节则详细介绍了FISCO BCOS隐私保护模块启用方法以及调用方式。
 
 ## 同态加密
 
@@ -25,7 +25,7 @@ FISCO BCOS同态加密模块提供的功能组件包括：
 
 - paillier[同态库](https://github.com/FISCO-BCOS/paillier-lib)，包括java库和c++同态接口。
 
-- paillier[预编译合约](#id17)，供智能合约调用，提供密文同态运算接口。
+- paillier[预编译合约](#id18)，供智能合约调用，提供密文同态运算接口。
 
 ### 使用方式
 
@@ -63,7 +63,7 @@ FISCO BCOS群/环签名模块提供的功能组件包括：
 
 - 群/环[签名库](https://github.com/FISCO-BCOS/group-signature-lib)，提供完整的群/环签名算法c++接口
 
-- 群/环签名[预编译合约](#id17)，供智能合约调用，提供群/环签名验证接口。
+- 群/环签名[预编译合约](#id18)，供智能合约调用，提供群/环签名验证接口。
 
 ### 使用方式
 
@@ -75,9 +75,21 @@ FISCO BCOS群/环签名模块提供的功能组件包括：
 
 群/环签名由于其天然的匿名性，在需要对参与者身份进行隐匿的场景中有广泛的应用前景，例如匿名投票、匿名竞拍、匿名拍卖等等，甚至在区块链UTXO模型中可用于实现匿名转账。同时，由于群签名具备可追踪性，可以用于需要监管介入的场景，监管方作为群主或者委托群主揭露签名者身份。
 
+### 开发示例
+
+FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
+
+- 群/环签名[服务端](https://github.com/FISCO-BCOS/group-signature-server): 提供完整的群/环签名RPC服务。
+
+- 群/环签名[客户端](https://github.com/FISCO-BCOS/sig-service-client): 调用RPC服务对数据进行签名，并提供签名上链以及链上验证等功能。
+
+示例框架如下图所示，具体操作方法请参阅[客户端指南](https://github.com/FISCO-BCOS/sig-service-client)。
+
+![](../../images/privacy/demo.jpg)
+
 ## 启用方法
 
-隐私模块是通过预编译合约实现，且默认不打开。要启用这些功能需要重新编译源码，并开启`CRYPTO_EXTENSION`编译选项。步骤如下：
+FISCO BCOS隐私保护模块是通过预编译合约实现，且默认不打开。要启用这些功能需要重新编译源码，并开启`CRYPTO_EXTENSION`编译选项。步骤如下：
 
 ### 安装依赖
 
@@ -117,7 +129,6 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```bash
 cd FISCO-BCOS
-git checkout feature-paillier
 mkdir -p build && cd build
 # 开启隐私模块编译选项，CentOS请使用cmake3
 cmake -DCRYPTO_EXTENSION=ON ..
@@ -220,17 +231,3 @@ contract CallPaillier {
 ```
 
 部署`CallPaillier`合约，然后调用`CallPaillier`合约的`add`接口，使用上面的密文作为输入，可以得到相同的结果。
-
-
-
-## 更多功能
-
-FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
-
-- 群/环签名[服务端](https://github.com/FISCO-BCOS/group-signature-server): 提供完整的群/环签名RPC服务。
-
-- 群/环签名[客户端](https://github.com/FISCO-BCOS/sig-service-client): 调用RPC服务对数据进行签名，并提供签名上链以及链上验证等功能。
-
-示例框架如下图所示，具体操作方法请参阅[客户端指南](https://github.com/FISCO-BCOS/sig-service-client)。
-
-![](../../images/privacy/demo.jpg)
