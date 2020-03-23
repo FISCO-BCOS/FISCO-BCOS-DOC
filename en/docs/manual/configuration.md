@@ -242,9 +242,6 @@ id=2
 
 - `node.idx`：consensus node list, has configured with the [Node ID] of the participating consensus nodes. The Node ID can be obtained by the `${data_path}/node.nodeid` file (where `${data_path}` can be obtained by the configuration item `[secure].data_path` of the main configuration `config.ini`)
 
-
-FISCO BCOS v2.3.0引入了RPBFT共识算法，具体可参考[这里](../design/consensus/rpbft.md)，RPBFT相关配置如下：
-
 FISCO BCOS v2.3.0 introduced the RPBFT consensus algorithm, The RPBFT related configuration is as follows:
 
 - `epoch_sealer_num`：The number of nodes participating in the consensus is selected in a consensus period. The default is the total number of all consensus nodes. After the chain is initialized, this parameter can be dynamically adjusted through [Console] (./console.html#setsystemconfigbykey)
@@ -497,7 +494,6 @@ broadcast_prepare_by_tree=true
 ; Only effective when the prepare package tree broadcast is enabled
 ; Each node randomly selects 33% consensus nodes to synchronize the prepare packet status
 prepare_status_broadcast_percent=33
-; prepare包树状广播策略下，缺失prepare包的节点超过100ms没等到父节点转发的prepare包，会向其他节点请求缺失的prepare包
 ; Under the prepare package tree broadcast strategy, 
 ; the node missing the prepare package takes more than 100ms and 
 ; does not wait for the prepare package forwarded by the parent node 
