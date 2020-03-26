@@ -144,13 +144,12 @@ make
 bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
 ```
 
-##  调用方式
 
-### 声明接口
+## 预编译合约接口
 
-隐私模块的代码和用户开发的预编译合约放在一起，位于`FISCO-BCOS/libprecompiled/extension`目录，因此隐私模块的调用方式和用户开发的预编译合约[调用流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id12)一模一样，不过有两点需要注意：
+隐私模块的代码和用户开发的预编译合约都位于`FISCO-BCOS/libprecompiled/extension`目录，因此隐私模块的调用方式和用户开发的预编译合约[调用流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id12)相同，不过有两点需要注意：
 
-1. 已为隐私模块的预编译合约分配了地址，无需另行注册。隐私模块实现的预编译合约列表以及地址分配如下：
+1.已为隐私模块的预编译合约分配了地址，无需另行注册。隐私模块实现的预编译合约列表以及地址分配如下：
 
    | 地址   | 功能       | [源码](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension) |
    | ------ | ---------- | ------------------------------------------------------------ |
@@ -158,7 +157,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
    | 0x5004 | 群签名     | GroupSigPrecompiled.cpp                                      |
    | 0x5005 | 环签名     | RingSigPrecompiled.cpp                                       |
 
-2. 需要通过`solidity`合约方式声明隐私模块预编译合约的接口，合约文件需保存在控制台合约目录`console/contracts/solidity`中，各个隐私功能的合约接口如下，可直接复制使用:
+2.需要通过`solidity`合约方式声明隐私模块预编译合约的接口，合约文件需保存在控制台合约目录`console/contracts/solidity`中，各个隐私功能的合约接口如下，可直接复制使用:
 
 - 同态加密
 
@@ -190,9 +189,7 @@ bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
   }
   ```
 
-### 调用预编译合约
-
-**控制台调用**
+## 控制台调用
 
 使用新编译出的二进制搭建节点后，部署控制台v1.0.2以上版本，将预编译合约接口声明文件拷贝到控制台合约目录。以调用同态加密为例，命令如下:
 
@@ -209,7 +206,7 @@ call PaillierPrecompiled.sol 0x5003 paillierAdd "0100E97E06A781DAAE6DBC9C094FC96
 
 **注：** 控制台输入的密文可通过paillier库中的[java库](https://github.com/FISCO-BCOS/paillier-lib/tree/master/paillierJava)生成。
 
-**solidity合约调用**
+## solidity合约调用
 
 以调用同态加密为例，通过在solidity合约中创建预编译合约对象并调用其接口，在控制台`console/contracts/solidity`创建`CallPaillier.sol`文件，文件内容如下:
 
