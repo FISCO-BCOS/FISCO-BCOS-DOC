@@ -123,9 +123,7 @@ Make sure you are in the `FISCO-BCOS/build` directory, and execute the following
 bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
 ```
 
-## How to use
-
-### Declare Interface
+## Precompiled contract interface
 
 The code of the privacy module is put together with the precompiled contracts developed by the user, located in the `FISCO-BCOS/libprecompiled/extension` directory. The calling method of the privacy module is exactly the same as the [calling method](https://fisco-bcos-documentation.readthedocs.io/en_US/latest/docs/manual/smart_contract.html#id12) of the precompiled contract developed by the user, but there are two points to note:
 
@@ -169,9 +167,7 @@ The code of the privacy module is put together with the precompiled contracts de
   }
   ```
 
-### Call precompiled contract
-
-**Called by console**
+## Called by console
 
 After building the chain by the newly compiled binary, deploy the console (version v1.0.2 or later), and copy the interface declaration files to the console contract directory. Take calling homomorphic encryption as an example:
 
@@ -188,7 +184,7 @@ call PaillierPrecompiled.sol 0x5003 paillierAdd "0100E97E06A781DAAE6DBC9C094FC96
 
 **Note:** The inputted ciphertexts can be generated through the [java library](https://github.com/FISCO-BCOS/paillier-lib/tree/master/paillierJava) in the paillier library.
 
-**Called by solidity console**
+## Called by solidity contract
 
 Take homomorphic encryption as an example. First, create a precompiled contract object in the solidity contract and call its interface, then create a `CallPaillier.sol` file in the console`console/contracts/solidity`. The file content is as follows:
 
