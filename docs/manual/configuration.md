@@ -476,7 +476,7 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 [500]
 
 # 设置交易gas限制为400000000
-[group:1]> getSystemConfigByKey tx_gas_limit 400000000
+[group:1]> setSystemConfigByKey tx_gas_limit 400000000
 [group:1]> getSystemConfigByKey
 [400000000]
 ```
