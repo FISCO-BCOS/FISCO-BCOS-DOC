@@ -14,12 +14,16 @@
 ```eval_rst
 .. important::
 
-    - java版本
-     要求 `JDK8或以上 <https://openjdk.java.net/>`_。由于CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，因此在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。`下载地址 <https://jdk.java.net/java-se-ri/8>`_  `安装指南 <https://openjdk.java.net/install/index.html>`_ 
+    - Java版本
+     JDK1.8 或者以上版本，推荐使用OracleJDK。  
+     
+     **注意**：CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，会导致JavaSDK无法正常连接区块链节点。
+    - Java安装
+     参考 `Java环境配置 <../manual/console.html#java>`_
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS安装教程 <../installation.html>`_
     - 网络连通性
-     检查Web3SDK连接的FISCO BCOS节点channel_listen_port是否能telnet通，若telnet不通，需要检查网络连通性和安全策略。
+     检查Web3SDK连接的FISCO BCOS节点`channel_listen_port`是否能telnet通，若telnet不通，需要检查网络连通性和安全策略。
 
 ```
 
@@ -484,7 +488,7 @@ TransactionDecoder txDecodeSampleDecoder = TransactionDecoderFactory.buildTransa
 ```
 
 #### 解析input
-调用``` function echo(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs)  ``` 接口，输入参数为```[ 111111 -1111111 false 0x692a70d2e424a56d2c6c27aa97d1a86395877b3a abcdefghiabcdefghiabcdefghiabhji 章鱼小丸子ljjkl;adjsfkljlkjl sadfljkjkljkl ]```
+调用``` function echo(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs)  ``` 接口，输入参数为```[ 111111 -1111111 false 0x692a70d2e424a56d2c6c27aa97d1a86395877b3a abcdefghiabcdefghiabcdefghiabhji FISCO-BCOS nice ]```
 ```java
 // function echo(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs) 
 String input = "0x406d373b000000000000000000000000000000000000000000000000000000000001b207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffef0bb90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000692a70d2e424a56d2c6c27aa97d1a86395877b3a6162636465666768696162636465666768696162636465666768696162686a6900000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000000000000000000000000000000021e7aba0e9b1bce5b08fe4b8b8e5ad906c6a6a6b6c3b61646a73666b6c6a6c6b6a6c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d736164666c6a6b6a6b6c6a6b6c00000000000000000000000000000000000000";
@@ -529,12 +533,12 @@ json =>
     {
       "name": "_s",
       "type": "string",
-      "data": "章鱼小丸子ljjkl;adjsfkljlkjl"
+      "data": "FISCO-BCOS"
     },
     {
       "name": "_bs",
       "type": "bytes",
-      "data": "sadfljkjkljkl"
+      "data": "nice"
     }
   ]
 }
@@ -578,18 +582,18 @@ InputAndOutputResult[
     ResultEntity[
       name=_s,
       type=string,
-      data=章鱼小丸子ljjkl;adjsfkljlkjl
+      data=FISCO-BCOS
     ],
     ResultEntity[
       name=_bs,
       type=bytes,
-      data=sadfljkjkljkl
+      data=nice
     ]
   ]
 ]
 ```
 #### 解析output
-调用``` function echo(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs)  ``` 接口，输入参数为```[ 111111 -1111111 false 0x692a70d2e424a56d2c6c27aa97d1a86395877b3a abcdefghiabcdefghiabcdefghiabhji 章鱼小丸子ljjkl;adjsfkljlkjl sadfljkjkljkl ]```，echo接口直接将输入返回，因此返回与输入相同
+调用``` function echo(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs)  ``` 接口，输入参数为```[ 111111 -1111111 false 0x692a70d2e424a56d2c6c27aa97d1a86395877b3a abcdefghiabcdefghiabcdefghiabhji FISCO-BCOS nice ]```，echo接口直接将输入返回，因此返回与输入相同
 
 ```java
 //  function echo(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs)  public constant returns (uint256,int256,bool,address,bytes32,string,bytes)
@@ -638,12 +642,12 @@ json =>
     {
       "name": "",
       "type": "string",
-      "data": "章鱼小丸子ljjkl;adjsfkljlkjl"
+      "data": "FISCO-BCOS"
     },
     {
       "name": "",
       "type": "bytes",
-      "data": "sadfljkjkljkl"
+      "data": "nice"
     }
   ]
 }
@@ -687,12 +691,12 @@ InputAndOutputResult[
     ResultEntity[
       name=,
       type=string,
-      data=章鱼小丸子ljjkl;adjsfkljlkjl
+      data=FISCO-BCOS
     ],
     ResultEntity[
       name=,
       type=bytes,
-      data=sadfljkjkljkl
+      data=nice
     ]
   ]
 ]
@@ -700,7 +704,7 @@ InputAndOutputResult[
 
 #### 解析event logs
 
-调用``` function do_event(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs)  ``` 接口，输入参数为```[ 111111 -1111111 false 0x692a70d2e424a56d2c6c27aa97d1a86395877b3a abcdefghiabcdefghiabcdefghiabhji 章鱼小丸子ljjkl;adjsfkljlkjl sadfljkjkljkl ]```，解析交易中的logs
+调用``` function do_event(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _bs32, string _s,bytes _bs)  ``` 接口，输入参数为```[ 111111 -1111111 false 0x692a70d2e424a56d2c6c27aa97d1a86395877b3a abcdefghiabcdefghiabcdefghiabhji FISCO-BCOS nice ]```，解析交易中的logs
 
 ```java
 // transactionReceipt为调用do_event接口的交易回执
@@ -750,7 +754,7 @@ json =>
       {
         "name": "_s",
         "type": "string",
-        "data": "章鱼小丸子ljjkl;adjsfkljlkjl",
+        "data": "Fisco Bcos",
         "indexed": false
       },
       {
@@ -796,13 +800,13 @@ json =>
       {
         "name": "_s",
         "type": "string",
-        "data": "章鱼小丸子ljjkl;adjsfkljlkjl",
+        "data": "FISCO-BCOS",
         "indexed": false
       },
       {
         "name": "_bs",
         "type": "bytes",
-        "data": "sadfljkjkljkl",
+        "data": "nice",
         "indexed": false
       }
     ]
@@ -847,12 +851,12 @@ map =>
       ResultEntity[
         name=_s,
         type=string,
-        data=章鱼小丸子ljjkl;adjsfkljlkjl
+        data=FISCO-BCOS
       ],
       ResultEntity[
         name=_bs,
         type=bytes,
-        data=sadfljkjkljkl
+        data=nice
       ]
     ]
   ],
@@ -892,12 +896,12 @@ map =>
       ResultEntity[
         name=_s,
         type=string,
-        data=章鱼小丸子ljjkl;adjsfkljlkjl
+        data=FISCO-BCOS
       ],
       ResultEntity[
         name=_bs,
         type=bytes,
-        data=sadfljkjkljkl
+        data=nices
       ]
     ]
   ]
@@ -1338,3 +1342,33 @@ class Asset {
 
         asset.registerRegisterEventEventLogFilter(fromBlock,toBlock,otherTopics,callback);
 ```
+
+## 附录：JavaSDK启动异常场景  
+
+- Failed to connect to the node. Please check the node status and the console configuration.<br>    
+  比较旧的SDK版本的提示，建议将JavaSDK版本升级至**2.2.2**或者以上(修改gradle.build或者maven配置文件中web3sdk的版本号)，可以获取更准确友好的提示，然后参考下面的错误提示解决问题。<br> <br>    
+
+- Failed to initialize the SSLContext: class path resource [ca.crt] cannot be opened because it does not exist. <br>   
+  无法加载到证书文件，证书文件没有正确拷贝至conf目录，可以参考控制台安装流程，拷贝证书文件至conf目录下。<br><br>  
+
+- Failed to initialize the SSLContext: Input stream not contain valid certificates. <br> 
+  加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../manual/console.html#java)章节重新安装OracleJDK。<br><br> 
+
+- Failed to connect to nodes: [connection timed out: /192.0.0.1:20200]<br>  
+  连接超时，节点的网络不可达，请检查提示的IP是否配置错误，或者，当前JavaSDK运行环境与节点的环境网络确实不通，可以咨询运维人员解决网络不通的问题。<br><br> 
+
+- Failed to connect to nodes: [拒绝连接: /127.0.0.1:20200]<br>  
+  拒绝连接，无法连接对端的端口，可以使用telnet命令检查端口是否连通，可能原因：
+  1. 节点未启动，端口处于未监听状态，启动节点即可。
+  2. 节点监听`127.0.0.1`的网段，监听`127.0.0.1`网络只能本机的客户端才可以连接，控制台位于不同服务器时无法连接节点，将节点配置文件`config.ini`中的`channel_listen_ip`修改为控制台连接节点使用的网段IP，或者将其修改为`0.0.0.0`。
+  3. 错误的端口配置，配置的端口并不是节点监听的channel端口，修改连接端口为节点`config.ini`配置的`channel_listen_port`的值。<br>  
+   **注意：控制台（或者JavaSDK）连接节点时使用Channel端口，并不是RPC端口，Channel端口在节点配置文件中通过channel_listen_ip字段配置，RPC端口通过jsonrpc_listen_port字段配置，注意区分，RPC默认从8545开始分配, Channel端口默认从20200开始分配。**  
+
+- Failed to connect to nodes: [ ssl handshake failed:/127.0.0.1:20233]
+  与节点ssl握手失败，可能原因：<br>  
+  1. 拷贝了错误的证书，检查拷贝的证书是否正确。
+  2. 端口配置错误，连接其他服务正在监听的端口，检查连接端口是否为节点`channel_listen_port`端口。
+  3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../manual/console.html#java)章节安装OracleJDK。<br><br> 
+   
+- Failed to connect to [127.0.0.1:20233, 127.0.0.1:20234, 127.0.0.1:20235] ,groupId: 1 ,caCert: classpath:ca.crt ,sslKey: classpath:sdk.key ,sslCrt: classpath:sdk.crt ,java version: 1.8.0_231.<br>
+  其他未知的错误，需要查看日志文件分析具体错误。
