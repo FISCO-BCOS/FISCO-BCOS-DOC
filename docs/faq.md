@@ -139,13 +139,12 @@
 问:
   Web3SDK对Java版本有要求吗？<br>
 答:
-  要求[JDK8或以上](https://openjdk.java.net/)<br>
-  CentOS的yum仓库的OpenJDK由于缺少JCE(Java Cryptography Extension)，导致Web3SDK无法正常连接区块链节点，在使用CentOS操作系统时，推荐从OpenJDK网站自行下载。 [安装指南](https://openjdk.java.net/install/index.html) 
+  参考[Java环境要求](sdk/java_sdk.html#id1)<br>
 
 问:
-  Web3SDK配置完成，发送交易失败的原因是什么？<br>
+  Web3SDK配置完成，启动失败的原因是什么？<br>
 答:
-  applicationContext.xml中的ip、端口、群组号填错或者是缺少节点的ca.crt、sdk.crt和sdk.key文件。
+  参考[JavaSDK异常场景](sdk/java_sdk.html#id22)<br>
 
 
 ## 企业级部署工具

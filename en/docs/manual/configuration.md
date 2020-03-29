@@ -639,7 +639,7 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 [500]
 
 # To set transaction gas limit as  400000000
-> getSystemConfigByKey tx_gas_limit 400000000
+> setSystemConfigByKey tx_gas_limit 400000000
 > getSystemConfigByKey
 [400000000]
 
