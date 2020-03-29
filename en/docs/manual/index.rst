@@ -25,6 +25,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    amop_protocol.md
    storage_security.md
    guomi_crypto.md
+   privacy.md
 
 
 .. admonition:: Setup and deploy blockchain
