@@ -138,11 +138,17 @@ $ cp node0/config.ini node0/start.sh node0/stop.sh node2/
 
 4 . modify `node2/config.ini`. For `[rpc]` model, modify `listen_ip`, `channel_listen_port` and `jsonrpc_listen_port`; for `[p2p]` model, modify `listen_port` and add its node information in `node.`.
 
+```eval_rst
+.. note::
+    For the convenience of development and experience, the recommended configuration of channel_listen_ip/listen_ip is `0.0.0.0`. For security considerations, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP
+```
+
 ```
 $ vim node2/config.ini
 [rpc]
     ;rpc listen ip
-    listen_ip=127.0.0.1
+    channel_listen_ip=0.0.0.0
+    jsonrpc_listen_ip=127.0.0.1
     ;channelserver listen port
     channel_listen_port=20302
     ;jsonrpc listen port

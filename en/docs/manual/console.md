@@ -70,7 +70,7 @@ The directory structure is as follows:
 |   -- solidity  # directory where solidity contract locates
 |       -- HelloWorld.sol # normal contract: HelloWorld contract, is deployable and callable
 |       -- TableTest.sol # the contracts by using CRUD interface: TableTest contract, is deployable and callable
-|       -- Table.sol # Table contract interface required to be introduced by CRUD contract
+|       -- Table.sol # CRUD interfac contract
 |   -- console  # The file directory of contract abi, bin, java compiled when console deploys the contract
 |   -- sdk      # The file directory of contract abi, bin, java compiled by sol2java.sh script
 |-- start.sh # console start script
@@ -82,7 +82,7 @@ The directory structure is as follows:
 ### Configure console
 - Blockchain node and certificate configuration:
    - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
-   - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the listen_ip set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
+   - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -146,7 +146,7 @@ The directory structure is as follows:
 ### Configure OSCCA-approved cryptography console
 - Blockchain node and certificate configuration:
    - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
-   - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the listen_ip set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
+   - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
   
 - Open OSCCA-approved cryptography switch
 ```
@@ -189,7 +189,7 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
     |       |-- com
     |           |-- fisco
     |               |-- HelloWorld.java # the target Java file which is compiled successfully
-    |               |-- Table.java  # the system CRUD contract interface Java file which is compiled successfully
+    |               |-- Table.java  # the CRUD interface Java file which is compiled successfully
     |               |-- TableTest.java  # the TableTest Java file which is compiled successfully
     ```
 
@@ -349,6 +349,14 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
+listContractWritePermission              Query the account list which have write permission of the contract.
+grantContractWritePermission             Grant the account the contract write permission.
+revokeContractWritePermission            Revoke the account the contract write permission.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
+grantContractStatusManager               Grant contract authorization to the user.
+getContractStatus                        Get the status of the contract.
+listContractStatusManager                List the authorization of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -984,21 +992,6 @@ transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
 
-# Call the create interface of TableTest to create the user table t_test. The create interface calls the createResult event, and the event log will output.
-
-# Call the create interface of TableTest to create the user table t_test, the create interface calls the createResult event, and the event log will output.
-
-# event log consists of the event name, the event log index number, and the event variable, which is convenient for users to view the status of the variable after sending transaction. createResult event records the value count which is returned by the create interface creation table.
-
-[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 create
-transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612bb5
----------------------------------------------------------------------------------------------
-Event logs
----------------------------------------------------------------------------------------------
-CreateResult index: 0
-count = 0
----------------------------------------------------------------------------------------------
-
 # To call the insert interface of TableTest to insert the record, the fields are name, item_id, item_name
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
 transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
@@ -1123,10 +1116,12 @@ Parameter:
 }
 ```
 ### **setSystemConfigByKey**
-To run setSystemConfigByKey to set the system configuration in key-value pairs. The currently system configuration supports `tx_count_limit` and `tx_gas_limit`. The key name of these two configuration can be complemented by the tab key:
+To run setSystemConfigByKey to set the system configuration in key-value pairs. The currently system configuration supports `tx_count_limit`, `tx_gas_limit`, `rpbft_epoch_sealer_num` and `rpbft_epoch_block_num`. The key name of these two configuration can be complemented by the tab key:
 
 * tx_count_limit: block maximum number of packaged transactions
 * tx_gas_limit: The maximum number of gas allowed to be consumed
+* rpbft_epoch_sealer_num: RPBFT system configuration, the number of consensus nodes selected in a consensus epoch
+* rpbft_epoch_block_num: RPBFT system configuration, number of blocks generated in one consensus epoch
 
 Parameters:
 
@@ -1376,6 +1371,52 @@ Run revokeSysConfigManager to revoke the account's permission of modifying syste
 	"msg":"success"
 }
 ```
+
+### **grantContractWritePermission**
+
+Run grantContractWritePermissio to grant the account the contract write permission. parameters:
+
+- contract address
+- account address
+
+```bash
+[group:1]> grantContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+### **listContractWritePermission**
+
+Run listContractWritePermission to query the account list which have write permission of the contract. parameters:
+
+- contract address
+
+```bash
+[group:1]> listContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                     11                      |
+---------------------------------------------------------------------------------------------
+```
+
+### **revokeContractWritePermission**
+
+Run revokeContractWritePermission to Revoke the account the contract write permission. parameters:
+
+- 合约地址
+- account address
+
+```bash
+[group:1]> revokeContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+
 ### **quit**
 To run quit, q or exit to exit the console.
 ```text
@@ -1487,6 +1528,74 @@ Remove OK, 1 row affected.
 **Note:**
 - For deleting the where clause of recording sql statement, the primary key field value of the table in the where clause must be provided.
 - The enter values with punctuation, spaces, or strings containing letters starting with a number requires double quotation marks, and no more double quotation marks are allowed inside.
+
+```eval_rst
+.. important::
+   The executing  of the `freezeContract`/`unfreezeContract`/`grantContractStatusManager` commands for contract management should specify the private key to start the console for permission.This private key is also the account private key used to deploy the specified contract. So a private key should be specified to launch the console when deploying the contract.
+```
+
+### **freezeContract**
+Run freezeContract to freeze contract according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
+
+```text
+[group:1]> freezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfreezeContract**
+Run unfreezeContract to unfreeze contract according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
+
+```text
+[group:1]> unfreezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **grantContractStatusManager**
+Run grantCNSManager to grant the account's permission of contract status managememt.
+Parameter:
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
+- Account address: tx.origin. The prefix of 0x is not necessary.
+
+```text
+[group:1]> grantContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getContractStatus**
+To run getContractStatus to query contract status according contract address.
+Parameter:
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
+
+```text
+[group:1]> getContractStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+The contract is available.
+```
+
+### **listContractStatusManager**
+To run listContractStatusManager to query a list of authorized accounts that can manage a specified contract.
+Parameter:
+- Contract address: To deploy contract can get contract address. The prefix of 0x is not necessary.
+
+```text
+[group:1]> listContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1
+[
+    "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
+    "0x965ebffc38b309fa706b809017f360d4f6de909a"
+]
+```
 
 ## Appendix: Java environment configuration
 

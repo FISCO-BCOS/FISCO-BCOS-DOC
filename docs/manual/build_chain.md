@@ -11,7 +11,12 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 
 - `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，支持创建各种复杂业务场景FISCO BCOS链。**`-l`和`-f`选项必须指定一个且不可共存**。
-- 建议测试时使用`-T`和`-i`选项，`-T`开启log级别到DEBUG，`-i`设置RPC和channel监听`0.0.0.0`，p2p模块默认监听`0.0.0.0`。
+- 建议测试时使用`-T`，`-T`开启log级别到DEBUG，**p2p模块默认监听 `0.0.0.0`**。
+
+```eval_rst
+.. note::
+    为便于开发和体验，p2p模块默认监听IP是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如内网IP或特定的外网IP
+```
 
 ## 帮助
 
@@ -22,11 +27,10 @@ Usage:
     -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
-    -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
     -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specificd version binary
     -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external / scalable, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
-    -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
+    -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -58,10 +62,10 @@ e.g
 192.168.0.4:2 agency2 3
 ```
 
-**假设上述文件名为`ipconf`**，则使用下列命令建链，表示使用配置文件，设置日志级别为`DEBUG`，监听`0.0.0.0`。
+**假设上述文件名为`ipconf`**，则使用下列命令建链，表示使用配置文件，设置日志级别为`DEBUG`。
 
 ```bash
-$ bash build_chain.sh -f ipconf -T -i
+$ bash build_chain.sh -f ipconf -T
 ```
 
 ### **`e`选项[**Optional**]**
@@ -84,9 +88,6 @@ $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 # 两个节点分别占用`30300,20200,8545`和`30301,20201,8546`。
 $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 ```
-
-### **`i`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的RPC和channel监听`0.0.0.0`
 
 ### **`v`选项[**Optional**]**
 用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项，则配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
@@ -112,7 +113,11 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 - scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
 
 ### **`c`选项[**Optional**]**
-无参数选项，设置该选项时，设置节点的共识算法为[Raft](../design/consensus/raft.md)，默认设置为[PBFT](../design/consensus/pbft.md)。
+有参数选项，参数为共识算法类型，目前支持PBFT、Raft、RPBFT。默认共识算法是PBFT。
+
+- `PBFT`：设置节点共识算法为[PBFT](../design/consensus/pbft.md)。
+- `Raft`：设置节点共识算法为[Raft](../design/consensus/raft.md)。
+- `RPBFT`：设置节点共识算法为[RPBFT](../design/consensus/rpbft.md)。
 
 ### **`C`选项[**Optional**]**
 用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
@@ -182,13 +187,20 @@ nodes/
 
 ## 使用举例
 
-### 单服务器单群组
+### 无外网条件的单群组
 
-构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`），监听外网`Channel`和`jsonrpc`端口，允许外网通过SDK或API与节点交互。
+**最简单的操作方式是在有外网的Linux机器上使用build_chain建好链，借助-z选项打包，然后拷贝到无外网的机器上运行。**
+
+1. 针对某下场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
+1. 请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新版本的build_chain脚本。
+1. 上传fisco-bcos.tar.gz和build_chain.sh到目标服务器，需要注意目标服务器要求64位，要求安装有openssl 1.0.2以上版本。
+1. 解压fisco-bcos.tar.gz得到fisco-bcos可执行文件，作为-e选项的参数。
+1. 构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`）。
+1. 执行下面的指令，假设最新版本是2.2.0，则将`2.2.0`作为-v选项参数。
 
 ```bash
 # 构建FISCO BCOS联盟链
-$ bash build_chain.sh -l "127.0.0.1:4" -i
+$ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
 # 生成成功后，输出`All completed`提示
 Generating CA key...
 ==============================================================
@@ -202,7 +214,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
-[INFO] RPC listen IP     : 0.0.0.0
+[INFO] RPC listen IP     : 127.0.0.1
 [INFO] Output Dir        : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 [INFO] CA Key Path       : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes/cert/ca.key
 ==============================================================
@@ -250,6 +262,11 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 
 2. 更新`newNode/config.ini`中监听的IP和端口，对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`
 3. 将新节点的P2P配置中的IP和Port加入原有节点的config.ini中的[p2p]字段。假设新节点IP:Port为127.0.0.1:30304则，修改后的[P2P]配置为
+
+```eval_rst
+.. note::
+    为便于开发和体验，p2p模块默认监听IP是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
+```
 
     ```bash
     [p2p]

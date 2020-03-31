@@ -27,6 +27,7 @@
    guomi_crypto.md
    log_description.md
    caliper.md
+   privacy.md
 
 
 .. admonition:: 区块链部署
@@ -60,7 +61,7 @@
 .. admonition:: 合约开发
 
     - `智能合约开发 <./smart_contract.html>`_
-        + 普通智能合约开发、预编译合约开发、CRUD合约开发
+        + 普通智能合约开发、预编译合约开发合约开发
     - `并行合约 <./transaction_parallel.html>`_
         + 写并行合约，满足高并发场景
 
@@ -75,7 +76,8 @@
         + 通过配置拒绝与不安全的节点建立连接
     - `存储安全 <./storage_security.html>`_
         + 落盘加密，对节点存储的数据进行加密
-
+    - `隐私保护 <./privacy.html>`_
+        + 预编译合约支持同态加密、群/环签名验证
 
 .. admonition:: 其它
 

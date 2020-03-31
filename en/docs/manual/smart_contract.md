@@ -1,8 +1,8 @@
 # Smart contract development
 
-FISCO BCOS platform currently supports three smart contract forms which are Solidity, CRUD, and pre-compiled.
-- The Solidity contract is the same as Ethereum on supporting the latest version.
-- The CRUD interface supporting the distributed storage pre-compilation contract in the Solidity contract, which can store the data of Solidtiy contract in the AMDB table structure, realizes the separation of contract logic and data.
+FISCO BCOS platform currently supports two smart contract forms which are Solidity and pre-compiled.
+- The Solidity contract is the same as Ethereum on supporting the latest 0.5.2 version.
+- The KVTable contract get/set interfacr and Table contract CRUD interface supporting the distributed storage pre-compilation contract in the Solidity contract, which can store the data of Solidtiy contract in the AMDB table structure, realizes the separation of contract logic and data.
 - The precompiled (precompiled) contract is developed in C++ and built into the FISCO BCOS platform. It has better performance than the Solidity contract. Its contract interface that needs to be pre-determined when compiling, is suitable for the scenarios with fixed logic but consensus, such as group configuration. The development of precompiled contracts will be introduced in the next section.
 
 
@@ -11,14 +11,122 @@ FISCO BCOS platform currently supports three smart contract forms which are Soli
 - [Solidity official file](https://solidity.readthedocs.io/en/latest/)
 - [Remix online IDE](https://remix.ethereum.org/)
 
-### To use contract CRUD interface
+
+### Use KVTable contract get/set interface
+
+```eval_rst
+.. note::
+
+    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
+
+```
+
+KVTable contract use key/value type to get/set data of table, code is as follows:
+
+```solidity
+pragma solidity ^0.4.24;
+
+contract KVTableFactory {
+    function openTable(string) public view returns (KVTable);
+    function createTable(string, string, string) public returns (int256);
+}
+
+//one record
+contract Entry {
+    function getInt(string) public constant returns (int256);
+    function getUInt(string) public constant returns (int256);
+    function getAddress(string) public constant returns (address);
+    function getBytes64(string) public constant returns (bytes1[64]);
+    function getBytes32(string) public constant returns (bytes32);
+    function getString(string) public constant returns (string);
+
+    function set(string, int256) public;
+    function set(string, uint256) public;
+    function set(string, string) public;
+    function set(string, address) public;
+}
+
+//KVTable per permiary key has only one Entry
+contract KVTable {
+    function get(string) public view returns (bool, Entry);
+    function set(string, Entry) public returns (int256);
+    function newEntry() public view returns (Entry);
+}
+
+```
+
+Offer a use case of `KVTableTest.sol`，code is as follows:
+
+```solidity
+pragma solidity ^0.4.24;
+import "./Table.sol";
+
+contract KVTableTest {
+    event SetResult(int256 count);
+
+    KVTableFactory tableFactory;
+    string constant TABLE_NAME = "t_kvtest";
+
+    constructor() public {
+        //The fixed address is 0x1010 for KVTableFactory
+        tableFactory = KVTableFactory(0x1010);
+        // the parameters of createTable are tableName,keyField,"vlaueFiled1,vlaueFiled2,vlaueFiled3,..."
+        tableFactory.createTable(TABLE_NAME, "id", "item_price,item_name");
+    }
+
+    //get record
+    function get(string id) public view returns (bool, int256, string) {
+        KVTable table = tableFactory.openTable(TABLE_NAME);
+        bool ok = false;
+        Entry entry;
+        (ok, entry) = table.get(id);
+        int256 item_price;
+        string memory item_name;
+        if (ok) {
+            item_price = entry.getInt("item_price");
+            item_name = entry.getString("item_name");
+        }
+        return (ok, item_price, item_name);
+    }
+
+    //set record
+    function set(string id, int256 item_price, string item_name)
+        public
+        returns (int256)
+    {
+        KVTable table = tableFactory.openTable(TABLE_NAME);
+        Entry entry = table.newEntry();
+        // the length of entry's field value should < 16MB
+        entry.set("id", id);
+        entry.set("item_price", item_price);
+        entry.set("item_name", item_name);
+        // the first parameter length of set should <= 255B
+        int256 count = table.set(id, entry);
+        emit SetResult(count);
+        return count;
+    }
+}
+
+
+```
+
+`KVTableTest.sol` calls `KVTable` contract to create a user table `t_kvtest`. The table structure of `t_kvtest`is as follows. This table records the materials in a company's warehouse, takes the unique material id as the key, and saves the name and price of the materials.
+
+|id*|item_name|item_price|
+|:----|:----|:------|
+|100010001001|Laptop|6000|
+
+
+### To use Table contract CRUD interface
 
 Accessing AMDB requires using the AMDB-specific smart contract interface `Table.sol` which is a database contract that can create tables and add, delete, and modify the tables.
 
 ```eval_rst
 .. note::
 
-    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
+    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain.
+    The CRUD interface of Table contract can have multiple records under a key. When it is used, it will perform batch data operations, including batch writing and range query. For this feature, it is recommended to use MySQL as the back-end database.
+    When using the get/set interface of KVTable, it is recommended to use rocksdb as the back-end database. Because rocksdb is a non relational database stored in key value, the single key operation efficiency is higher when using KVTable interface.
 
 ```
 
@@ -241,7 +349,7 @@ For calling a solid contract or pre-compiled contract, you need to distinguish i
 | FISCO BCOS precompiled | 0x1000-0x1006 |
 | FISCO BCOS reserve | 0x1007-0x5000 |
 | user assigned interval | 0x5001 - 0xffff |
-| CRUD temporary contract | 0x10000+ |
+| CRUD reserve | 0x10000+ |
 | solidity | others |
 
 
@@ -254,7 +362,7 @@ List of precompiled contracts and address assignments implemented in FISCO BCOS:
 |--------|--------|---------|
 | 0x1000 | system parameter management | SystemConfigPrecompiled.cpp |
 | 0x1001 | table factory contract | TableFactoryPrecompiled.cpp |
-| 0x1002 | CRUD contract | CRUDPrecompiled.cpp |
+| 0x1002 | CRUD operation implementation | CRUDPrecompiled.cpp |
 | 0x1003 | consensus node management | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS feature | CNSPrecompiled.cpp |
 | 0x1005 | storage table authority management | AuthorityPrecompiled.cpp |

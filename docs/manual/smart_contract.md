@@ -1,11 +1,9 @@
 # 智能合约开发
 
-FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形式。
+FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 
-- Solidity合约与以太坊相同，支持最新版本。
-
-- CRUD接口通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
-
+- Solidity合约与以太坊相同，用Solidity语法实现，最高支持0.5.2版本。
+- KVTable合约的读写接口与Table合约的CRUD接口通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
 - 预编译（Precompiled）合约使用C++开发，内置于FISCO BCOS平台，相比于Solidity合约具有更好的性能，其合约接口需要在编译时预先确定，适用于逻辑固定但需要共识的场景，例如群组配置。关于预编译合约的开发将在下一节进行介绍。
 
 
@@ -14,14 +12,124 @@ FISCO BCOS平台目前支持Solidity、CRUD、Precompiled三种智能合约形�
 - [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
 - [Remix在线IDE](https://remix.ethereum.org/)
 
-### 使用合约CRUD接口
-
-访问 AMDB 需要使用 AMDB 专用的智能合约`Table.sol`接口，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
+### 使用KVTable合约读写接口
 
 ```eval_rst
 .. note::
 
     为实现AMDB创建的表可被多个合约共享访问，其表名是群组内全局可见且唯一的，所以无法在同一条链上的同一个群组中，创建多个表名相同的表
+
+```
+
+KVTable合约实现键值型读写数据的方式，KVTable合约接口声明如下:
+
+```solidity
+pragma solidity ^0.4.24;
+
+contract KVTableFactory {
+    function openTable(string) public view returns (KVTable);
+    // 创建KVTable，参数分别是表名、主键列名、以逗号分割的字段名，字段可以有多个
+    function createTable(string, string, string) public returns (int256);
+}
+
+//一条记录
+contract Entry {
+    function getInt(string) public constant returns (int256);
+    function getUInt(string) public constant returns (int256);
+    function getAddress(string) public constant returns (address);
+    function getBytes64(string) public constant returns (bytes1[64]);
+    function getBytes32(string) public constant returns (bytes32);
+    function getString(string) public constant returns (string);
+
+    function set(string, int256) public;
+    function set(string, uint256) public;
+    function set(string, string) public;
+    function set(string, address) public;
+}
+
+//KVTable 每个键对应一条entry
+contract KVTable {
+    function get(string) public view returns (bool, Entry);
+    function set(string, Entry) public returns (int256);
+    function newEntry() public view returns (Entry);
+}
+
+```
+
+提供一个合约案例`KVTableTest.sol`，代码如下：
+
+```solidity
+pragma solidity ^0.4.24;
+import "./Table.sol";
+
+contract KVTableTest {
+    event SetResult(int256 count);
+
+    KVTableFactory tableFactory;
+    string constant TABLE_NAME = "t_kvtest";
+
+    constructor() public {
+        //The fixed address is 0x1010 for KVTableFactory
+        tableFactory = KVTableFactory(0x1010);
+        tableFactory.createTable(TABLE_NAME, "id", "item_price,item_name");
+    }
+
+    //get record
+    function get(string id) public view returns (bool, int256, string) {
+        KVTable table = tableFactory.openTable(TABLE_NAME);
+        bool ok = false;
+        Entry entry;
+        (ok, entry) = table.get(id);
+        int256 item_price;
+        string memory item_name;
+        if (ok) {
+            item_price = entry.getInt("item_price");
+            item_name = entry.getString("item_name");
+        }
+        return (ok, item_price, item_name);
+    }
+
+    //set record
+    function set(string id, int256 item_price, string item_name)
+        public
+        returns (int256)
+    {
+        KVTable table = tableFactory.openTable(TABLE_NAME);
+        Entry entry = table.newEntry();
+        // the length of entry's field value should < 16MB
+        entry.set("id", id);
+        entry.set("item_price", item_price);
+        entry.set("item_name", item_name);
+        // the first parameter length of set should <= 255B
+        int256 count = table.set(id, entry);
+        emit SetResult(count);
+        return count;
+    }
+}
+
+```
+
+`KVTableTest.sol`调用了`KVTable`合约，实现的是创建用户表`t_kvtest`，并对`t_kvtest`表进行读写的功能。`t_kvtest`表结构如下，该表记录某公司仓库中物资，以唯一的物资编号作为主key，保存物资的名称和价格。
+
+|id*|item_name|item_price|
+|:----|:----|:------|
+|100010001001|Laptop|6000|
+
+```eval_rst
+.. important::
+    客户端需要调用转换为Java文件的合约代码，需要将KVTableTest.sol和Table.sol放入控制台的contracts/solidity目录下，通过控制台的编译脚本sol2java.sh生成SImpleTableTest.java。
+```
+
+### 使用Table合约CRUD接口
+
+访问 AMDB 需要使用Table合约CRUD接口，Table合约声明于`Table.sol`，该接口是数据库合约，可以创建表，并对表进行增删改查操作。
+
+```eval_rst
+.. note::
+
+    为实现AMDB创建的表可被多个合约共享访问，其表名是群组内全局可见且唯一的，所以无法在同一条链上的同一个群组中，创建多个表名相同的表。
+    Table的CRUD接口一个key下可以有多条记录，使用时会进行数据批量操作，包括批量写入和范围查询。对应此特性，推荐使用关系型数据库MySQL作为后端数据库。
+    使用KVTtable的get/set接口时，推荐使用RocksDB作为后端数据库，因RocksDB是Key-Value存储的非关系型数据库，使用KVTable接口时单key操作效率更高。
 
 ```
 
@@ -240,7 +348,7 @@ contract TableTest {
 | FISCO BCOS precompied | 0x1000-0x1006 |
 | FISCO BCOS预留 | 0x1007-0x5000 |
 | 用户分配区间 | 0x5001 - 0xffff |
-| CRUD临时合约 | 0x10000+ |
+| CRUD预留 | 0x10000+ |
 | solidity | 其他 |
 
  用户分配地址空间为`0x5001`-`0xffff`,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。
@@ -251,7 +359,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 |--------|--------|---------|
 | 0x1000 | 系统参数管理 | SystemConfigPrecompiled.cpp |
 | 0x1001 | 表工厂合约 | TableFactoryPrecompiled.cpp |
-| 0x1002 | CRUD合约 | CRUDPrecompiled.cpp |
+| 0x1002 | CRUD操作实现 | CRUDPrecompiled.cpp |
 | 0x1003 | 共识节点管理 | ConsensusPrecompiled.cpp |
 | 0x1004 | CNS功能  | CNSPrecompiled.cpp |
 | 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |

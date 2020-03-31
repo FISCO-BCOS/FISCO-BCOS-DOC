@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### Build a single-group 4-node consortium chain
@@ -46,8 +46,11 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 
 ```eval_rst
 .. note::
-    - The -p option specifies the starting ports, which are p2p_port, channel_port, jsonrpc_port. For security reasons, jsonrpc/channel listens to 127.0.0.1 by defaults. **If you require to access external network, please add -i parameter**.
+    - The -p option specifies the starting port, which are p2p_port, channel_port, and jsonrpc_port.
+    
+    - For security and ease of use consideration, the latest configuration of v2.3.0 version splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip. For details, please refer to `here <manual/configuration.html#configure-rpc>`_
 
+    - In order to facilitate development and experience, the reference configuration of channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as: intranet IP or specific external IP
 ```
 
 If the command is executed successfully, `All completed` will be output. If the execution fails, please check the error message in the `nodes/build.log` file.
@@ -64,18 +67,18 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
-[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
- bash download_console.sh
+[INFO] Execute the download_console.sh script in directory named by IP to get FISCO-BCOS console.
+e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh
 ==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
 [INFO] RPC listen IP     : 127.0.0.1
-[INFO] Output Dir        : /home/ubuntu16/fisco/nodes
-[INFO] CA Key Path       : /home/ubuntu16/fisco/nodes/cert/ca.key
+[INFO] Output Dir        : /home/ubuntu/fisco/nodes
+[INFO] CA Key Path       : /home/ubuntu/fisco/nodes/cert/ca.key
 ==============================================================
-[INFO] All completed. Files in /home/ubuntu16/fisco/nodes
+[INFO] All completed. Files in /home/ubuntu/fisco/nodes
 ```
 
 
@@ -111,10 +114,10 @@ ps -ef | grep -v grep | grep fisco-bcos
 In normal situation, the output will be similar to the following. If the number of processes is not 4, then the reason why the process does not start is that the port is occupied.
 
 ```bash
-fisco       5453     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-fisco       5459     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
-fisco       5464     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco       5459     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
 ### Check log output
@@ -179,17 +182,6 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
-```eval_rst
-.. important::
-
-  - if the console has been configured correctly, but it reports the following exception when starting console in CentOS system:
-
-    Failed to connect to the node. Please check the node status and the console configuration.
-
-   this is caused by the in-built JDK version of CentOS system(who will lead to verification failure of console and nodes). Please download and install Java 8 or above version from `OpenJDK official website <https://jdk.java.net/java-se-ri/8>`_ or `Oracle official website <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ (for detailed installation steps please check `Additional <manual/console.html#java>`_ ), and start console after finishing installation.
-
-```
-
 ### Start console
 
 - Start console
@@ -222,11 +214,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 # acquire client ends version information
 [group:1]> getNodeVersion
 {
-    "Build Time":"20190121 06:21:05",
-    "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0",
-    "Git Branch":"master",
-    "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
+    "Build Time":"20200331 07:12:25",
+    "Build Type":"Linux/clang/Release",
+    "Chain Id":"1",
+    "FISCO-BCOS Version":"2.3.0",
+    "Git Branch":"HEAD",
+    "Git Commit Hash":"b8b62664d1b1f0ad0489bc4b3833bf730deee492",
+    "Supported Version":"2.3.0"
 }
 # acquire node connection information
 [group:1]> getPeers

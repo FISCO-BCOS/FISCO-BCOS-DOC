@@ -60,18 +60,24 @@ A networking model of 6 nodes 3 agencies 2 groups is shown as follows. Agency B 
 
 The IP address of each node and port are as follows:
 
-| Agency  | Node  | Group    | P2P address     | RPC/channel listening address |
-| ------- | ----- | -------- | --------------- | ----------------------------- |
-| agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545/:20200         |
-|         | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546/:20201         |
-| agencyB | node2 | group1   | 127.0.0.1:30302 | 127.0.0.1:8547/:20202         |
-|         | node3 | group1   | 127.0.0.1:30303 | 127.0.0.1:8548/:20203         |
-| agencyC | node4 | group2   | 127.0.0.1:30304 | 127.0.0.1:8549/:20204         |
-|         | node5 | group2   | 127.0.0.1:30305 | 127.0.0.1:8550/:20205         |
+| Agency  | Node  | Group    | P2P address     | RPC listening address | channel listening IP| 
+| ------- | ----- | -------- | --------------- | ----------------------------- | -------------- |
+| agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545        | 0.0.0.0:20200 |
+|         | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546        | 0.0.0.0:20201 |
+| agencyB | node2 | group1   | 127.0.0.1:30302 | 127.0.0.1:8547         | 0.0.0.0:20202 |
+|         | node3 | group1   | 127.0.0.1:30303 | 127.0.0.1:8548       | 0.0.0.0:20203 |
+| agencyC | node4 | group2   | 127.0.0.1:30304 | 127.0.0.1:8549        | 0.0.0.0:20204 |
+|         | node5 | group2   | 127.0.0.1:30305 | 127.0.0.1:8550        | 0.0.0.0:20205 |
 
 ```eval_rst
-.. important::
-    For the VPS in the cloud server, the RPC listening address needs to be the real address in the network interface card (such as the internal network address or 127.0.0.1), which may be inconsistent with the SSH server address where the user logs in.
+.. note::
+    - The public IP of the cloud host is a virtual IP. If you enter the external IP in rpc_ip/p2p_ip/channel_ip, the binding will fail. You must fill in 0.0.0.0
+
+    - The RPC/P2P/Channel listening port must be in the range of 1024-65535, and must not conflict with other application listening ports on the machine
+
+    - For security and ease of use consideration, FISCO BCOS v2.3.0 latest node config.ini configuration splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip, please refer to `here <../manual/configuration.html#configure-rpc>`_
+
+    - In order to facilitate development and experience, the reference configuration of channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as: intranet IP or specific external IP
 ```
 
 ### cooperate agencies
@@ -278,6 +284,7 @@ p2p_ip=127.0.0.1
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30300
 channel_listen_port=20200
 jsonrpc_listen_port=8545
@@ -285,6 +292,7 @@ jsonrpc_listen_port=8545
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30301
 channel_listen_port=20201
 jsonrpc_listen_port=8546
@@ -317,6 +325,7 @@ p2p_ip=127.0.0.1
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30302
 channel_listen_port=20202
 jsonrpc_listen_port=8547
@@ -324,6 +333,7 @@ jsonrpc_listen_port=8547
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30303
 channel_listen_port=20203
 jsonrpc_listen_port=8548
@@ -650,6 +660,7 @@ p2p_ip=127.0.0.1
 ; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
 ; for more instructions.
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30304
 channel_listen_port=20204
 jsonrpc_listen_port=8549
@@ -657,6 +668,7 @@ jsonrpc_listen_port=8549
 [node1]
 p2p_ip=127.0.0.1
 rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
 p2p_listen_port=30305
 channel_listen_port=20205
 jsonrpc_listen_port=8550

@@ -43,7 +43,7 @@ FISCO BCOS provides standardized interfaces and examples to help users with seco
 
 In addition, CRUD and the similar operations are also implemented by precompiled contracts. For more introductions to precompiled contracts, please refer to [Precompiled Design Documentation](./design/virtual_machine/precompiled.md) and [Precompiled Contract Development Documentation](./manual/smart_contract.html#id2).
 
-## CRUD contract
+## CRUD interface
 
 FISCO BCOS 2.0 has added a contractual interface specification that conforms to the CRUD interface for simplifying the cost of migrating mainstream SQL-oriented business applications to the blockchain. The benefits are:
 

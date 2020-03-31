@@ -134,10 +134,16 @@ Python SDK支持使用[Channel协议](../../design/protocol_description.html#cha
 
 **配置Channel信息**
 
+```eval_rst
+.. note::
+    为便于开发和体验，channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
+```
+
 在节点目录下的 config.ini 文件中获取 channel_listen_port, 这里为20200  
 ```bash
 [rpc]
-    listen_ip=0.0.0.0
+    channel_listen_ip=0.0.0.0
+    jsonrpc_listen_ip=127.0.0.1
     channel_listen_port=20200
     jsonrpc_listen_port=8545
 ```

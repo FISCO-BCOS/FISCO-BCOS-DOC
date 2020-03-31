@@ -263,7 +263,7 @@ $ ./sol2java.sh org.fisco.bcos.asset.contract
 |   |-- Table.bin
 |-- contracts # 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
 |   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖Table.sol
-|   |-- Table.sol # 默认提供的系统CRUD合约接口文件
+|   |-- Table.sol # 实现系统CRUD操作的合约接口文件
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
@@ -383,7 +383,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 -   applicationContext.xml  
 
-**注意：** 如果搭链时设置的rpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/java_sdk.html#spring)。
+**注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/java_sdk.html#spring)。
 
 ## 业务开发
 

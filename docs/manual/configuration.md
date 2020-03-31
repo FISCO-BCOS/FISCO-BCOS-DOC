@@ -12,22 +12,35 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 ```eval_rst
 .. important::
-    - 云主机的公网IP均为虚拟IP，若listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
+    - 云主机的公网IP均为虚拟IP，若listen_ip/jsonrpc_listen_ip/channel_listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
     - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
+    - 为便于开发和体验，listen_ip/channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
 ### 配置RPC
 
-- `listen_ip`: 安全考虑，建链脚本默认监听127.0.0.1，如果需要外网访问RPC或外网使用SDK请监听**节点的外网IP**或`0.0.0.0`；
+- `channel_listen_ip`: Channel监听IP，为方便节点和SDK跨机器部署，默认设置为`0.0.0.0`；
+
+- `jsonrpc_listen_ip`：RPC监听IP，安全考虑，默认设置为127.0.0.1，若有外网访问需求，请监听**节点外网IP**或`0.0.0.0`；
+
 - `channel_listen_port`: Channel端口，对应到[Web3SDK](../sdk/java_sdk.html#id2)配置中的`channel_listen_port`；
+
 - `jsonrpc_listen_port`: JSON-RPC端口。
 
+```eval_rst
+.. note::
+    出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能：
+     
+     - 配置中仅包含listen_ip：RPC和Channel的监听IP均为配置的listen_ip
+     - 配置中同时包含listen_ip、channel_listen_ip或jsonrpc_listen_ip：优先解析channel_listen_ip和jsonrpc_listen_ip，没有配置的配置项用listen_ip的值替代
+```
 
 RPC配置示例如下：
 
 ```ini
 [rpc]
-    listen_ip=127.0.0.1
+    channel_listen_ip=0.0.0.0
+    jsonrpc_listen_ip=127.0.0.1
     channel_listen_port=30301
     jsonrpc_listen_port=30302
 ```
@@ -35,6 +48,11 @@ RPC配置示例如下：
 ### 配置P2P
 
 当前版本FISCO BCOS必须在`config.ini`配置中配置连接节点的`IP`和`Port`，P2P相关配置包括：
+
+```eval_rst
+.. note::
+    为便于开发和体验，listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
+```
 
 - `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`。
 - `listen_port`：节点P2P监听端口。
@@ -193,7 +211,6 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
 ### 群组配置
-
 `[group]`配置**群组ID**，节点根据该ID初始化群组。
 
 群组2的群组配置示例如下：
@@ -207,11 +224,22 @@ id=2
 
 `[consensus]`涉及共识相关配置，包括：
 
-- `consensus_type`：共识算法类型，目前支持[PBFT](../design/consensus/pbft.md)和[Raft](../design/consensus/raft.md)，默认使用PBFT共识算法；
+- `consensus_type`：共识算法类型，目前支持[PBFT](../design/consensus/pbft.md)，[Raft](../design/consensus/raft.md)和[RPBFT](../design/consensus/rpbft.md)，默认使用PBFT共识算法；
 
 - `max_trans_num`：一个区块可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
 
 - `node.idx`：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过`${data_path}/node.nodeid`文件获取(其中`${data_path}`可通过主配置`config.ini`的`[network_security].data_path`配置项获取)
+
+FISCO BCOS v2.3.0引入了RPBFT共识算法，具体可参考[这里](../design/consensus/rpbft.md)，RPBFT相关配置如下：
+
+- `epoch_sealer_num`：一个共识周期内选择参与共识的节点数目，默认是所有共识节点总数，链初始化后可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
+- `epoch_block_num`：一个共识周期出块数目，默认为1000，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
+
+```eval_rst
+.. note::
+
+    RPBFT配置对其他共识算法不生效。
+```
 
 ```ini
 ; 共识协议配置
@@ -219,7 +247,11 @@ id=2
     ; 共识算法，目前支持PBFT(consensus_type=pbft)和Raft(consensus_type=raft)
     consensus_type=pbft
     ; 单个块最大交易数
-    max_trans_num=1000
+    max_trans_num=1000 
+    ; 一个共识周期内选取参与共识的节点数，RPBFT配置项，对其他共识算法不生效
+    epoch_sealer_num=4
+    ; 一个共识周期出块数，RPBFT配置项，对其他共识算法不生效
+    epoch_block_num=1000
     ; leader节点的ID列表
     node.0=123d24a998b54b31f7602972b83d899b5176add03369395e53a5f60c303acb719ec0718ef1ed51feb7e9cf4836f266553df44a1cae5651bc6ddf50e01789233a
     node.1=70ee8e4bf85eccda9529a8daf5689410ff771ec72fc4322c431d67689efbd6fbd474cb7dc7435f63fa592b98f22b13b2ad3fb416d136878369eb413494db8776
@@ -261,6 +293,12 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 ### 配置storage
 
 存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问mysql，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
+
+```eval_rst
+.. note::
+    - v2.3.0版本开始，为便于链的维护，推荐使用 `MySQL` 存储模式替代 `External` 存储模式
+    - 若要使用 `External`，请将 `supported_version` 配置成v2.2.0或其以下版本
+```
 
 #### 公共配置项
 
@@ -318,7 +356,17 @@ FISCO BCOS将交易池容量配置开放给用户，用户可根据自己的业�
     limit=150000
 ```
 
-### PBFT共识消息广播配置
+### PBFT共识配置
+
+为提升PBFT算法的性能、可用性、网络效率，FISCO BCOS针对区块打包算法和网络做了一系列优化，包括PBFT区块打包动态调整策略、PBFT消息转发优化、PBFT Prepare包结构优化等。
+
+```eval_rst
+.. note::
+
+    因协议和算法一致性要求，建议保证所有节点PBFT共识配置一致。
+```
+
+#### PBFT共识消息转发配置
 
 PBFT共识算法为了保证共识过程最大网络容错性，每个共识节点收到有效的共识消息后，会向其他节点广播该消息，在网络较好的环境下，共识消息转发机制会造成额外的网络带宽浪费，因此在群组可变配置项中引入了`ttl`来控制消息最大转发次数，消息最大转发次数为`ttl-1`，**该配置项仅对PBFT有效**。
 
@@ -330,7 +378,7 @@ PBFT共识算法为了保证共识过程最大网络容错性，每个共识节�
 ttl=2
 ```
 
-### PBFT共识打包时间配置
+#### PBFT共识打包时间配置
 
 考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS v2.0.0-rc2在群组可变配置`group.group_id.ini`的`[consensus]`下引入`min_block_generation_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_block_generation_time`且打包的交易数大于0才会开始共识流程，处理打包生成的新区块。
 
@@ -348,7 +396,7 @@ ttl=2
 min_block_generation_time=500
 ```
 
-### PBFT交易打包动态调整
+#### PBFT交易打包动态调整
 
 考虑到CPU负载和网络延迟对系统处理能力的影响，PBFT提供了动态调整一个区块内可打包最大交易数的算法，该算法会根据历史交易处理情况动态调整区块内可打包的最大交易数，默认开启，也可通过将可变配置`group.group_id.ini`的`[consensus].enable_dynamic_block_size`配置项修改为`false`来关闭该算法，此时区块内可打包的最大交易数为`group.group_id.genesis`的`[consensus].max_trans_num`。
 
@@ -359,7 +407,7 @@ min_block_generation_time=500
     enable_dynamic_block_size=false
 ```
 
-### PBFT消息转发配置
+#### PBFT消息转发配置
 
 FISCO BCOS v2.2.0优化了PBFT消息转发机制，保证网络断连场景下PBFT消息包能尽量到达每个共识节点的同时，降低网络中冗余的PBFT消息包，PBFT消息转发优化策略请参考[这里](../design/consensus/pbft_optimize.md)。可通过`group.group_id.ini`的`[consensus].enable_ttl_optimization`配置项开启或关闭PBFT消息转发优化策略。
 
@@ -374,7 +422,7 @@ FISCO BCOS v2.2.0优化了PBFT消息转发机制，保证网络断连场景下PB
     enable_ttl_optimization=false
 ```
 
-### PBFT Prepare包结构优化
+#### PBFT Prepare包结构优化
 
 考虑到PBFT算法中，Leader广播的Prepare包内区块的交易有极大概率在其他共识节点的交易池中命中，为了节省网络带宽，FISCO BCOS v2.2.0优化了Prepare包结构：Prepare包内的区块仅包含交易哈希列表，其他共识节点收到Prepare包后，优先从本地交易池获取命中的交易，并向Leader请求缺失的交易，详细设计请参考[这里](../design/consensus/pbft_optimize.md)。可通过`group.group_id.ini`的`[consensus].enable_prepare_with_txsHash`配置项开启或关闭该策略。
 
@@ -382,13 +430,58 @@ FISCO BCOS v2.2.0优化了PBFT消息转发机制，保证网络断连场景下PB
 - `[consensus].enable_prepare_with_txsHash`配置为`false`：关闭Prepare包结构优化，Prepare消息包内区块包含全量的交易
 - `supported_version`不小于v2.2.0时，`[consensus].enable_prepare_with_txsHash`默认为`true`；`supported_version`小于v2.2.0时，`[consensus].enable_prepare_with_txsHash`默认为`false`
 
+```eval_rst
+.. note::
+
+    因协议一致性要求，须保证所有节点 `enable_prepare_with_txsHash` 配置一致
+```
+
 关闭PBFT Prepare包结构优化配置如下：
 ```ini
 [consensus]
     enable_prepare_with_txsHash=false
 ```
 
-### 区块同步优化配置
+### RPBFT共识配置
+
+FISCO BCOS v2.3.0引入RPBFT共识算法，具体可参考[这里](../design/consensus/rpbft.md)，为保证RPBFT算法网络流量负载均衡，引入了Prepare包树状广播策略以及该策略相对应的容错方案。
+
+- `[consensus].broadcast_prepare_by_tree`：Prepare包树状广播策略开启/关闭开关，设置为`true`，开启Prepare包树状广播策略；设置为`false`，关闭Prepare包树状广播策略，默认为`true`
+
+下面为开启Prepare包树状广播策略后的容错配置：
+- `[consensus].prepare_status_broadcast_percent`：Prepare状态包随机广播的节点占共识节点总数的百分比，取值在25到100之间，默认为33
+- `[consensus].max_request_prepare_waitTime`：节点Prepare缓存缺失时，等待父节点发送Prepare包的最长时延，默认为100ms，超过这个时延后，节点会向其他拥有该Prepare包的节点请求
+
+
+下面为RPBFT模式下开启[Prepare包结构优化](./configuration.html#pbft-prepare)后，负载均衡相关配置：
+
+- `[consensus].max_request_missedTxs_waitTime`：节点Prepare包内交易缺失后，等待父节点或其他非leader节点同步Prepare包状态的最长时延，默认为100ms，若在等待时延窗口内同步到父节点或非leader节点Prepare包状态，则会随机选取一个节点请求缺失交易；若等待超时，直接向leader请求缺失交易。
+
+
+RPBFT默认配置如下:
+```ini
+; 默认开启Prepare包树状广播策略
+broadcast_prepare_by_tree=true
+; 仅在开启prepare包树状广播时生效
+; 每个节点随机选取33%共识节点同步prepare包状态
+prepare_status_broadcast_percent=33
+; prepare包树状广播策略下，缺失prepare包的节点超过100ms没等到父节点转发的prepare包，会向其他节点请求缺失的prepare包
+max_request_prepare_waitTime=100
+; 节点等待父节点或其他非leader节点同步prepare包最长时延为100ms
+max_request_missedTxs_waitTime=100
+```
+
+### 同步配置
+
+同步模块是"网络消耗大户"，包括区块同步和交易同步，FISCO BCOS秉着负载均衡的原则优化了共识模块网络使用效率。
+
+```eval_rst
+.. note::
+
+    因协议一致性要求，建议保证所有节点PBFT共识配置一致。
+```
+
+#### 区块同步优化配置
 
 为了增强区块链系统在网络带宽受限情况下的可扩展性，FISCO BCOS v2.2.0对区块同步进行了优化，详细的优化策略请参考[这里](../design/sync/sync_block_optimize.md)。可通过`group.group_id.ini`的`[sync].sync_block_by_tree`开启或关闭区块同步优化策略。
 
@@ -397,42 +490,75 @@ FISCO BCOS v2.2.0优化了PBFT消息转发机制，保证网络断连场景下PB
 -  `supported_version`不小于v2.2.0时，`[sync].sync_block_by_tree`默认为`true`；`supported_version`小于v2.2.0时，`[sync].sync_block_by_tree`默认为`false`
 
 此外，为了保障树状拓扑区块同步的健壮性，FISCO BCOS v2.2.0还引入了gossip协议定期同步区块状态，gossip协议相关配置项均位于`group.group_id.ini`的`[sync]`中，具体如下：
+- `gossip_interval_ms`：gossip协议同步区块状态周期，默认为1000ms
+- `gossip_peers_number`：节点每次同步区块状态时，随机选取的邻居节点数目，默认为3
 
 ```eval_rst
 .. note::
 
-    gossip协议配置项，仅在开启区块树状广播优化时生效
+    1. gossip协议配置项，仅在开启区块树状广播优化时生效
+    2. 必须保证所有节点 `sync_block_by_tree` 配置一致
 ```
-- `gossip_interval_ms`：gossip协议同步区块状态周期，默认为1000ms
-- `gossip_peers_number`：节点每次同步区块状态时，随机选取的邻居节点数目，默认为3
 
 开启区块树状广播优化配置如下：
 
 ```ini
 [sync]
+    ; 默认开启区块树状同步策略
     sync_block_by_tree=true
+    ; 每个节点每隔1000ms同步一次最新区块状态
     gossip_interval_ms=1000
+    ; 每个节点每次随机选择3个邻居节点同步最新区块状态
     gossip_peers_number=3
 ```
 
-### 交易树状广播优化配置
+#### 交易树状广播优化配置
 
-为了降低SDK直连节点的峰值出带宽，提升区块链系统可扩展性，FISCO BCOS v2.2.0引入了交易树状广播优化策略，详细设计请参考[这里](../design/sync/sync_trans_optimize.md)。可通过`group.group_id.ini`的`[sync].send_txs_by_tree`开启或关闭交易树状广播策略。
+为了降低SDK直连节点的峰值出带宽，提升区块链系统可扩展性，FISCO BCOS v2.2.0引入了交易树状广播优化策略，详细设计请参考[这里](../design/sync/sync_trans_optimize.md)。可通过`group.group_id.ini`的`[sync].send_txs_by_tree`开启或关闭交易树状广播策略，详细配置如下：
 
-- `[sync].send_txs_by_tree`设置为`true`：打开交易树状广播策略
-- `[sync].send_txs_by_tree`设置为`false`：关闭交易树状广播优化策略
-- `supported_version`不小于v2.2.0时，默认打开交易树状广播优化策略；`supported_version`小于v2.2.0时，默认关闭交易树状广播策略。
+- `[sync].sync_block_by_tree`：设置为`true`，打开交易树状广播策略；设置为`false`，关闭交易树状广播优化策略
 
 关闭交易树状广播策略的配置如下：
 
 ```ini
 [sync]
+    ; 默认开启交易树状广播策略
     send_txs_by_tree=false
+```
+    
+```eval_rst
+.. note::
+    - 由于协议一致性需求，须保证所有节点交易树状广播开关`send_txs_by_tree`配置一致
+    -  `supported_version` 不小于v2.2.0时，默认打开交易树状广播优化策略； `supported_version` 小于v2.2.0时，默认关闭交易树状广播策略
+```
+
+#### 交易转发优化配置
+
+为降低交易转发导致的流量开销，FISCO BCOS v2.2.0引入基于状态包的交易转发策略，具体设计可参考[这里](../design/sync/sync_trans_optimize.md)。可通过`group.group_id.ini`的`[sync].txs_max_gossip_peers_num`配置交易状态最多转发节点数目，默认为5。
+
+```eval_rst
+.. note::
+    为保障交易到达每个节点的同时，尽量降低交易状态转发引入的流量开销，不建议将 `txs_max_gossip_peers_num` 设置太小或太大，直接使用默认配置即可
+```
+
+交易状态转发最大节点数配置如下：
+
+```ini
+[sync]
+    ; 每个节点每轮最多随机选择5个邻居节点同步最新交易状态
+    txs_max_gossip_peers_num=5
 ```
 
 ### 并行交易配置
 
 FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够让区块内的交易被并行的执行，提高吞吐量，**交易并行执行仅在storage state模式下生效**。
+
+```eval_rst
+.. note::
+    为简化系统配置，v2.3.0去除了 `enable_parallel` 配置项，该配置项仅在 `supported_version < v2.3.0` 时生效，v2.3.0版本中：
+     - storageState模式：开启并行交易
+     - mptState模式: 关闭并行交易
+```
 
 ``` ini
 [tx_execute]
@@ -444,17 +570,13 @@ FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够�
 
 FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统参数)：
 
+|  系统参数    | 默认值  | 含义 |
+|  ----  | ----  | ---- |
+| tx_count_limit  | 1000 | 一个区块中可打包的最大交易数目 |
+| tx_gas_limit  | 300000000 | 一个交易最大gas限制 |
+| rpbft_epoch_sealer_num | 链共识节点总数 | RPBFT系统配置，一个共识周期内选取参与共识的节点数目，RPBFT每个共识周期都会动态切换参与共识的节点数目 |
+| rpbft_epoch_block_num | 1000 | RPBFT系统配置，一个共识周期内出块数目| 
 
-```eval_rst
-+-----------------+-----------+---------------------------------+
-| 系统参数        | 默认值    |             含义                |
-+=================+===========+=================================+
-| tx_count_limit  | 1000      | 一个区块中可打包的最大交易数目  |
-+-----------------+-----------+---------------------------------+
-| tx_gas_limit    | 300000000 | 一个交易最大gas限制             |
-+-----------------+-----------+---------------------------------+
-
-```
 
 控制台提供 **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
 
@@ -466,6 +588,8 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 
     - 机器网络或CPU等硬件性能有限：调小tx_count_limit，或降低业务压力；
     - 业务逻辑太复杂，执行交易时gas不足：调大tx_gas_limit。
+
+    `rpbft_epoch_sealer_num` 和 `rpbft_epoch_block_num` 仅对RPBFT共识算法生效，为了保障共识性能，不建议频繁动态切换共识列表，即不建议 `rpbft_epoch_block_num` 配置值太小
 ```
 
 ```bash
@@ -479,4 +603,28 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 [group:1]> setSystemConfigByKey tx_gas_limit 400000000
 [group:1]> getSystemConfigByKey
 [400000000]
+
+# RPBFT共识算法下，设置一个共识周期选取参与共识的节点数目为4
+[group:1]> setSystemConfigByKey rpbft_epoch_sealer_num 4
+Note: rpbft_epoch_sealer_num only takes effect when RPBFT is used
+{
+    "code":0,
+    "msg":"success"
+}
+# 查询rpbft_epoch_sealer_num
+[group:1]> getSystemConfigByKey rpbft_epoch_sealer_num 
+Note: rpbft_epoch_sealer_num only takes effect when RPBFT is used
+4
+
+# RPBFT共识算法下，设置一个共识周期出块数目为10000
+[group:1]> setSystemConfigByKey rpbft_epoch_block_num 10000
+Note: rpbft_epoch_block_num only takes effect when RPBFT is used
+{
+    "code":0,
+    "msg":"success"
+}
+# 查询rpbft_epoch_block_num
+[group:1]> getSystemConfigByKey rpbft_epoch_block_num
+Note: rpbft_epoch_block_num only takes effect when RPBFT is used
+10000
 ```

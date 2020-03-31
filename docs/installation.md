@@ -34,7 +34,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.2.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 搭建单群组4节点联盟链
@@ -48,7 +48,9 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 
 ```eval_rst
 .. note::
-    - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port，出于安全考虑jsonrpc/channel默认监听127.0.0.1，**需要外网访问请添加-i参数**。
+    - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
+    - 出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里 <manual/configuration.html#rpc>`_
+    - 为便于开发和体验，channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
 命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
@@ -65,13 +67,12 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 Generating configurations...
 Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 ==============================================================
-[INFO] Execute the download_console.sh script to get FISCO-BCOS console, download_console.sh is in directory named by IP.
- bash download_console.sh
+[INFO] Execute the download_console.sh script in directory named by IP to get FISCO-BCOS console.
+e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh
 ==============================================================
 [INFO] FISCO-BCOS Path   : bin/fisco-bcos
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
-[INFO] RPC listen IP     : 127.0.0.1
 [INFO] Output Dir        : /home/ubuntu/fisco/nodes
 [INFO] CA Key Path       : /home/ubuntu/fisco/nodes/cert/ca.key
 ==============================================================
@@ -109,10 +110,10 @@ ps -ef | grep -v grep | grep fisco-bcos
 正常情况会有类似下面的输出；  
 如果进程数不为4，则进程没有启动（一般是端口被占用导致的）
 ```bash
-fisco       5453     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
-fisco       5459     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
-fisco       5464     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
-fisco       5476     1  1 17:11 pts/0    00:00:02 /home/fisco/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco       5459     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
 ### 检查日志输出
@@ -175,17 +176,6 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
-```eval_rst
-.. important::
-
-  - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
-    
-    Failed to connect to the node. Please check the node status and the console configuration.
-
-   是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
-
-```
-
 ### 启动控制台
 
 - 启动
@@ -212,17 +202,21 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
+控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
+
 ### 使用控制台获取信息
 
 ```bash
 # 获取客户端版本
 [group:1]> getNodeVersion
 {
-    "Build Time":"20190121 06:21:05",
-    "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0",
-    "Git Branch":"master",
-    "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
+    "Build Time":"20200331 07:12:25",
+    "Build Type":"Linux/clang/Release",
+    "Chain Id":"1",
+    "FISCO-BCOS Version":"2.3.0",
+    "Git Branch":"HEAD",
+    "Git Commit Hash":"b8b62664d1b1f0ad0489bc4b3833bf730deee492",
+    "Supported Version":"2.3.0"
 }
 # 获取节点链接信息
 [group:1]> getPeers

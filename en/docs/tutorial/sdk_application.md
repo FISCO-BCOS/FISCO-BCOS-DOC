@@ -268,7 +268,7 @@ After successful operation, the java, abi, and bin directories will be generated
 |   |-- Table.bin
 |-- contracts # The source code file that stores Solidity contract. Copy the contract that needs to be compiled to this directory.
 |   |-- Asset.sol # A copied Asset.sol contract, depends on Table.sol
-|   |-- Table.sol # System CRUD contract interface file provided by default
+|   |-- Table.sol # The contract interface file that implements the CRUD operation
 |-- java  # Storing compiled package path and Java contract file
 |   |-- org
 |        |--fisco
@@ -391,7 +391,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 **Note:**
 
-If the rpc_listen_ip set in the chain is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration does not need to be modified. If the configuration of blockchain node is changed, you need to modify `applicationContext.xml`. For details, please refer to [SDK Usage Document](../sdk/sdk.html#spring).
+If the channel_listen_ip (If the node version is less than v2.3.0, check listen_ip) set in the chain is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration does not need to be modified. If the configuration of blockchain node is changed, you need to modify `applicationContext.xml`. For details, please refer to [SDK Usage Document](../sdk/sdk.html#spring).
 
 ## Business development
 

@@ -11,7 +11,12 @@ FISCO BCOS has provided `build_chain` script to help users quickly build FISCO B
 
 - `build_chain.sh` is used to quickly generate configuration files of a chain node. For the script that depends on `openssl`, please according your own operating system to install `openssl 1.0.2` version and above. The source code of script is located at [FISCO-BCOS/tools/build_chain.sh][build_chain].
 - For quick experience can use the `-l` option to specify the node IP and number. `-f` option supports the creation of FISCO BCOS chains for complex business scenarios by using a configuration file in a specified format. **`-l` and `-f` options must be specified uniquely and cannot coexist**.
-- It is recommended to use `-T` and `-i` options for testing. `-T` enables log level to DEBUG. `-i` sets RPC and channel to listen for `0.0.0.0` while p2p module listens for `0.0.0.0` by default.
+- It is recommended to use `-T` option for testing. `-T` enables log level to DEBUG, **p2p module listens for `0.0.0.0` by default**.
+
+```eval_rst
+.. note::
+    In order to facilitate development and experience, the default listening IP of the P2P module is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP.
+```
 
 ## Help
 
@@ -22,11 +27,10 @@ Usage:
     -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
-    -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
     -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specified version binary
     -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
-    -c <Consensus Algorithm>            Default PBFT. If set -c, use Raft
+    -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
@@ -58,10 +62,10 @@ The following is an example of a configuration file. Each configuration item sep
 192.168.0.4:2 agency2 3
 ```
 
-**Suppose the above file is named `ipconf`**, using the following command to build a chain, which indicates to use configuration file, to set the log level to `DEBUG`, and to listen for `0.0.0.0`.
+**Suppose the above file is named `ipconf`**, using the following command to build a chain, which indicates to use configuration file, to set the log level to `DEBUG`.
 
 ```bash
-$ bash build_chain.sh -f ipconf -T -i
+$ bash build_chain.sh -f ipconf -T
 ```
 
 ### **`e`option[**Optional**]**
@@ -84,9 +88,6 @@ specifies the starting port of the node. Each node occupies three ports which ar
 # Two nodes occupies `30300,20200,8545` and `30301,20201,8546` respectively.
 $ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
 ```
-
-### **`i`option[**Optional**]**
-No parameter option. When setting this option, set the node's RPC and channel to listen to `0.0.0.0`.
 
 ### **`v`option[**Optional**]**
 
@@ -114,7 +115,11 @@ There are parameter options. The parameter is the name of db. Currently it suppo
 - scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
 
 ### **`c`option[**Optional**]**
-No parameter option. When setting this option, the consensus algorithm for setting the node is [Raft](../design/consensus/raft.md), and the default setting is [PBFT](../design/consensus/pbft.md).
+There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, RPBFT. The default consensus algorithm is PBFT.
+
+- `PBFT`：Set the node consensus algorithm to [PBFT](../design/consensus/pbft.md).
+- `Raft`：Set the node consensus algorithm to [Raft](../design/consensus/raft.md).
+- `RPBFT`：Set the node consensus algorithm to RPBFT.
 
 ### **`C`option[**Optional**]**
 
@@ -186,13 +191,13 @@ nodes/
 
 ## Example
 
-### Single-server and single-group
+### Four nodes of group 1 on a local server
 
 To build a 4-node FISCO BCOS alliance chain on native machine for using the default start port `30300,20200,8545` (4 nodes will occupy `30300-30303`,`20200-20203`,`8545-8548`) and listening to the external network `Channel` and `jsonrpc` ports while allowing the external network interacts with node through SDK or API.
 
 ```bash
 # to build FISCO BCOS alliance chain
-$ bash build_chain.sh -l "127.0.0.1:4" -i
+$ bash build_chain.sh -l "127.0.0.1:4"
 # after generating successes, to output `All completed` to mention
 Generating CA key...
 ==============================================================
@@ -206,7 +211,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] Start Port        : 30300 20200 8545
 [INFO] Server IP         : 127.0.0.1:4
 [INFO] State Type        : storage
-[INFO] RPC listen IP     : 0.0.0.0
+[INFO] RPC listen IP     : 127.0.0.1
 [INFO] Output Dir        : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes
 [INFO] CA Key Path       : /Users/fisco/WorkSpace/FISCO-BCOS/tools/nodes/cert/ca.key
 ==============================================================

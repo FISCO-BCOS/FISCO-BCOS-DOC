@@ -65,7 +65,7 @@ bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools
 |   -- solidity  # solidity合约存放目录
 |       -- HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 |       -- TableTest.sol # 使用CRUD接口的合约：TableTest合约，可部署和调用
-|       -- Table.sol # CRUD合约需要引入的Table合约接口
+|       -- Table.sol # 提供CRUD操作的接口合约
 |   -- console  # 控制台部署合约时编译的合约abi, bin，java文件目录
 |   -- sdk      # sol2java.sh脚本编译的合约abi, bin，java文件目录
 |-- start.sh # 控制台启动脚本
@@ -77,7 +77,7 @@ bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
-  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -140,7 +140,7 @@ bash <(curl -S https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools
 国密版的控制台配置与非国密版控制台的配置流程有一些区别，流程如下：
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
-  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
+  - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
   
 - 打开国密开关
 ```
@@ -181,7 +181,7 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
     |       |-- com
     |           |-- fisco
     |               |-- HelloWorld.java # 编译的HelloWorld Java文件
-    |               |-- Table.java  # 编译的系统CRUD合约接口Java文件
+    |               |-- Table.java  # 编译的CRUD接口合约 Java文件
     |               |-- TableTest.java  # 编译的TableTest Java文件
     ```
     java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
@@ -341,6 +341,14 @@ revokePermissionManager                  Revoke permission for permission config
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
 setSystemConfigByKey                     Set a system config.
+listContractWritePermission              Query the account list which have write permission of the contract.
+grantContractWritePermission             Grant the account the contract write permission.
+revokeContractWritePermission            Revoke the account the contract write permission.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
+grantContractStatusManager               Grant contract authorization to the user.
+getContractStatus                        Get the status of the contract.
+listContractStatusManager                List the authorization of the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1114,10 +1122,12 @@ Hello,CNS2
 ```
 ### **setSystemConfigByKey**
 
-运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`和`tx_gas_limit`。这个两个系统参数的键名可以通过tab键补全：
+运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`tx_gas_limit`, `rpbft_epoch_sealer_num`和`rpbft_epoch_block_num`。这些系统参数的键名可以通过tab键补全：
 
 * tx_count_limit：区块最大打包交易数
 * tx_gas_limit：交易执行允许消耗的最大gas数
+* rpbft_epoch_sealer_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
+* rpbft_epoch_block_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
 
 参数： 
 
@@ -1328,6 +1338,7 @@ Hello,CNS2
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **revokeSysConfigManager**
 运行revokeSysConfigManager，撤销账户的修改系统参数权限。参数： 
 - 账户地址
@@ -1338,6 +1349,43 @@ Hello,CNS2
 	"msg":"success"
 }
 ```
+
+### **grantContractWritePermission**
+运行grantContractWritePermission，添加账户对合约写接口的调用权限。参数： 
+- 合约地址
+- 账户地址
+
+```bash
+[group:1]> grantContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+### **listContractWritePermission**
+运行listContractWritePermission，显示对某个合约的写接口有调用权限的账户。参数： 
+- 合约地址
+```bash
+[group:1]> listContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                     11                      |
+---------------------------------------------------------------------------------------------
+```
+
+### **revokeContractWritePermission**
+运行revokeContractWritePermission，撤销账户对合约的写接口调用权限。参数： 
+- 合约地址
+- 账户地址
+```bash
+[group:1]> revokeContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
 ### **quit**
 运行quit、q或exit，退出控制台。
 ```text
@@ -1441,6 +1489,73 @@ Remove OK, 1 row affected.
 - 删除记录sql语句的where子句必须提供表的主键字段值。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
+```eval_rst
+.. important::
+   执行`freezeContract`、`unfreezeContract`和`grantContractStatusManager`三个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也许指定私钥启动控制台。
+```
+
+### **freezeContract**
+运行freezeContract，对指定合约进行冻结操作。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> freezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfreezeContract**
+运行unfreezeContract，对指定合约进行解冻操作。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> unfreezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **grantContractStatusManager**
+运行grantContractStatusManager，用于已有权限账号给其他账号授予指定合约的合约管理权限。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 账号地址：tx.origin，其中0x前缀非必须。
+
+```text
+[group:1]> grantContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getContractStatus**
+运行getContractStatus，查询指定合约的状态。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> getContractStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+The contract is available.
+```
+
+### **listContractStatusManager**
+运行listContractStatusManager，查询能管理指定合约的权限账号列表。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```text
+[group:1]> listContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1
+[
+    "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
+    "0x965ebffc38b309fa706b809017f360d4f6de909a"
+]
+```
 
 ## 附录：Java环境配置
 
