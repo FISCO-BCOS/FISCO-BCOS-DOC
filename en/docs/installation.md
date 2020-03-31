@@ -225,11 +225,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 # acquire client ends version information
 [group:1]> getNodeVersion
 {
-    "Build Time":"20190121 06:21:05",
-    "Build Type":"Linux/clang/Debug",
-    "FISCO-BCOS Version":"2.0.0",
-    "Git Branch":"master",
-    "Git Commit Hash":"c213e033328631b1b8c2ee936059d7126fd98d1a"
+    "Build Time":"20200331 07:12:25",
+    "Build Type":"Linux/clang/Release",
+    "Chain Id":"1",
+    "FISCO-BCOS Version":"2.3.0",
+    "Git Branch":"HEAD",
+    "Git Commit Hash":"b8b62664d1b1f0ad0489bc4b3833bf730deee492",
+    "Supported Version":"2.3.0"
 }
 # acquire node connection information
 [group:1]> getPeers
