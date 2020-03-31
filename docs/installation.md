@@ -176,17 +176,6 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
-```eval_rst
-.. important::
-
-  - 如果控制台配置正确，但是在CentOS系统上启动控制台出现如下错误：
-    
-    Failed to connect to the node. Please check the node status and the console configuration.
-
-   是因为使用了CentOS系统自带的JDK版本(会导致控制台与区块链节点认证失败)，请从 `OpenJDK官网 <https://jdk.java.net/java-se-ri/8>`_ 或 `Oracle官网 <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ 下载并安装Java 8或以上版本(具体安装步骤 `参考附录 <manual/console.html#java>`_ )，安装完毕后再启动控制台。
-
-```
-
 ### 启动控制台
 
 - 启动
@@ -212,6 +201,8 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
+
+控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
 
 ### 使用控制台获取信息
 

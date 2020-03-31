@@ -182,17 +182,6 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 
-```eval_rst
-.. important::
-
-  - if the console has been configured correctly, but it reports the following exception when starting console in CentOS system:
-
-    Failed to connect to the node. Please check the node status and the console configuration.
-
-   this is caused by the in-built JDK version of CentOS system(who will lead to verification failure of console and nodes). Please download and install Java 8 or above version from `OpenJDK official website <https://jdk.java.net/java-se-ri/8>`_ or `Oracle official website <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ (for detailed installation steps please check `Additional <manual/console.html#java>`_ ), and start console after finishing installation.
-
-```
-
 ### Start console
 
 - Start console
