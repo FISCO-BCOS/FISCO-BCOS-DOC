@@ -167,7 +167,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco && bash nodes/127.0.0.1/download_console.sh
+cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
