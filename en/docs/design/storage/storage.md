@@ -68,11 +68,11 @@ The default system table is created in the promise of storage drive.
 
 ### User table
 
-Table created when user calls CRUD APIs, `_user_<TableName>` as table name, prefixed with `_user_` in bottom layer.
+Table created when user calls CRUD APIs, from v2.2.0 use `u_<TableName>` as table name, prefixed with `u_` in bottom layer.
 
 ### StorageState account table
 
-`_contract_data_`+`Address`+`_` is table name. The table stores exterior accounts information. Table structure:
+From v2.2.0 `c_`+`Address` is table name. The table stores exterior accounts information. Table structure:
 
 |key*|value|
 |:---|:---|

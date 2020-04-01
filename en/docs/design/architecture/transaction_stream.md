@@ -41,7 +41,7 @@ Executive engine executes single transaction based on Executive Context, which i
 
 ![](../../../images/architecture/EVM_contract_execution.png)
 
-After the EVM contract is created and saved in table _sys_contracts_ of executive context, the address of EVM contract will auto-increment in global state starting from 0x1000001 (customizable). During the execution of EVM contract, Storage variable is saved in table _contract_data_(contract address)_ of executive context.
+After the EVM contract is created and saved in table _sys_contracts_ of executive context, the address of EVM contract will auto-increment in global state starting from 0x1000001 (customizable). During the execution of EVM contract, Storage variable is saved in table c_(contract address) of executive context.
 
 Precompiled contract can be divided into permanent type and temporary type: (1) permanent precompiled contract, integrated in bottom or components with fixed address; (2) temporary precompiled contract, dynamically created during execution of EVM contract and precompiled contract, the address will auto-increment in executive context starting from 0x1000 and ending at 0x1000000. Temporary precompiled contract is only valid in executive context. Precompiled contract has no Storage variable but has to operate table with process like below:
 
