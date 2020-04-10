@@ -71,7 +71,7 @@ CNS information is stored in system tables with independent ledgers. Definition 
   <td><center>Expain</center></td>
 </tr>
 <tr><td>name</td><td>string</td><td>No</td><td>PRI</td><td>contract name, name and version are joint primary key</td></tr>
-<tr><td>version</td><td>string</td><td>No</td><td></td><td>contract name, name and version are joint primary key</td></tr>
+<tr><td>version</td><td>string</td><td>No</td><td></td><td>contract version, name and version are joint primary key</td></tr>
 <tr><td>address</td><td>string</td><td>No</td><td></td><td>contract address</td></tr>
 <tr><td>abi</td><td>string</td><td>YES</td><td></td><td>contract abi</td></tr>
 <tr><td>_status_</td><td>string</td><td>No</td><td></td><td>general fields in distributed storage, “0” means available, “1” means removed</td></tr>

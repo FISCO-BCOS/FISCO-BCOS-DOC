@@ -71,7 +71,7 @@ CNS信息以系统表的方式进行存储，各账本独立。CNS表定义如�
   <td><center>Expain</center></td>
 </tr>
 <tr><td>name</td><td>string</td><td>No</td><td>PRI</td><td>合约名称，name和version为联合主键</td></tr>
-<tr><td>version</td><td>string</td><td>No</td><td></td><td>合约名称，name和version为联合主键</td></tr>
+<tr><td>version</td><td>string</td><td>No</td><td></td><td>合约版本，name和version为联合主键</td></tr>
 <tr><td>address</td><td>string</td><td>No</td><td></td><td>合约地址</td></tr>
 <tr><td>abi</td><td>string</td><td>YES</td><td></td><td>合约abi</td></tr>
 <tr><td>_status_</td><td>string</td><td>No</td><td></td><td>分布式存储通用字段，“0”可用“1”删除</td></tr>
