@@ -21,7 +21,7 @@ FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 
 ```
 
-KVTable合约实现键值型读写数据的方式，KVTable合约接口声明如下:
+KVTable合约实现键值型读写数据的方式，KVTable合约接口声明文件`Table.sol`如下:
 
 ```solidity
 pragma solidity ^0.4.24;
