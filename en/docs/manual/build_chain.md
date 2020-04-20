@@ -23,20 +23,26 @@ FISCO BCOS has provided `build_chain` script to help users quickly build FISCO B
 ```bash
 Usage:
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
-    -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList". eg "127.0.0.1:4 agency1 1,2"
+    -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList p2p_port,channel_port,jsonrpc_port". eg "127.0.0.1:4 agency1 1,2 30300,20200,8545"
     -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
-    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specified version binary
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
+    -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
+    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set use specificd version binary
+    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
+    -k <The path of ca root>            Default auto generate, the ca.crt and ca.key must in the path, if use intermediate the root.crt must in the path
+    -K <The path of sm crypto ca root>  Default auto generate, the gmca.crt and gmca.key must in the path, if use intermediate the gmroot.crt must in the path
+    -X <Certificate expiration time>    Default 36500 days
     -T <Enable debug log>               Default off. If set -T, enable debug log
+    -S <Enable statistics>              Default off. If set -S, enable statistics
     -F <Disable log auto flush>         Default on. If set -F, disable log auto flush
+    -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
     ./tools/build_chain.sh -l "127.0.0.1:4"
@@ -142,6 +148,15 @@ This option is used to specify the certificate configuration file when certifica
 ### **`T`option[**Optional**]**
 
 No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
+
+### **`k`选项[**Optional**]**
+Use the private key specified by the user and the certificate issued the agency and node certification. The parameter is the path of ca.crt/ca.key. If the specified private key and certificate are intermediate Ca, root.crt should also be included in this folder to store the upper certificate chain.
+
+### **`K`选项[**Optional**]**
+Use the private key specified by the user and the certificate issued the agency and node certification in guomi mode. The parameter is the path of gmca.crt/gmca.key. If the specified private key and certificate are intermediate Ca, gmroot.crt should also be included in this folder to store the upper certificate chain.
+
+### **`D`选项[**Optional**]**
+No parameter option. When this option is set, the directory name of the generated node is IP_P2P-port.
 
 ## Node file organization
 
@@ -278,6 +293,28 @@ cp -r node0/scripts newNode/
 5. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
 
 #### Start a new node, check links and consensus
+
+### Generating new agency private key certificates
+
+1. Acquisition agency certificate generation script
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+```
+
+2. Generating new agency private key certificates
+
+```bash
+# -c path must have ca.crt and ca.key， if use intermediate ca，then root.crt is needed
+# -g path must have gmca.crt and gmca.key， if use intermediate ca，then gmroot.crt is needed
+# -a newAgencyName
+bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName
+```
+
+国密版本请执行下面的指令。
+```bash
+bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
+```
 
 ### Multi-server and multi-group
 
