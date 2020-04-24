@@ -870,6 +870,24 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq 
 ```
 
+## sendRawTransactionAndGetProof
+
+执行一个签名的交易，交易上链后，推送交易回执、交易Merkle证明、交易回执Merkle证明，Merkle证明可参考[这里](./design/merkle_proof.md)。
+
+```eval_rst
+.. note::
+    - ``supported_version < 2.2.0``: 调用 ``sendRawTransactionAndGetProof`` 接口，交易上链后仅推送交易回执
+    - ``supported_version >= 2.2.0``: 调用 ``sendRawTransactionAndGetProof`` 接口，交易上链后推送交易回执、交易Merkle证明、交易回执Merkle证明
+```
+
+### 参数          
+- `groupID`: `unsigned int` - 群组ID           
+- `rlp`: `string` - 签名的交易数据
+
+### 返回值          
+- `string` - 交易哈希
+- 示例：同`sendRawTransaction`，参考[这里](./api.html#sendrawtransaction)
+
 
 ## getTransactionByHashWithProof
 返回根据交易哈希查询的带证明的交易信息，本接口仅在兼容性版本为2.2.0及以后的版本有效，证明信息是为了验证交易的存在性，交易存在性证明请参考文档[交易证明](./design/merkle_proof.md) 

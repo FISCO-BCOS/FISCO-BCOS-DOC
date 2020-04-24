@@ -37,4 +37,5 @@ Considering that data is accessible to each agency in consortium chain structure
    storage_security.md
    network_compress.md
    contract_management.md
+   stat.md
    

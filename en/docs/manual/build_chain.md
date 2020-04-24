@@ -149,14 +149,19 @@ This option is used to specify the certificate configuration file when certifica
 
 No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
 
-### **`k`选项[**Optional**]**
+### **`k`option[**Optional**]**
 Use the private key specified by the user and the certificate issued the agency and node certification. The parameter is the path of ca.crt/ca.key. If the specified private key and certificate are intermediate Ca, root.crt should also be included in this folder to store the upper certificate chain.
 
-### **`K`选项[**Optional**]**
+### **`K`option[**Optional**]**
 Use the private key specified by the user and the certificate issued the agency and node certification in guomi mode. The parameter is the path of gmca.crt/gmca.key. If the specified private key and certificate are intermediate Ca, gmroot.crt should also be included in this folder to store the upper certificate chain.
 
-### **`D`选项[**Optional**]**
+### **`D`option[**Optional**]**
 No parameter option. When this option is set, the directory name of the generated node is IP_P2P-port.
+
+
+### **`E`option[**Optional**]**
+
+No parameter option, when setting this option, [Free Storage] (design/virtual_machine/gas.html#evm-gas) Gas mode is enabled, and `Free Storage` Gas mode is disabled by default.
 
 ## Node file organization
 

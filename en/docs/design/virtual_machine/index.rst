@@ -22,7 +22,8 @@ Through the abstraction in EVMC level, FISCO BCOS can adapt to future executors 
    
    evm.md
    precompiled.md
-
+   gas.md
+   
 .. _Executor: ./evm.html
 
 .. _Consensus: ../consensus
