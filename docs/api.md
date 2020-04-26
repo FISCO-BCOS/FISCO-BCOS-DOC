@@ -1044,6 +1044,167 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceiptByHashWithP
 
 ```
 
+## generateGroup
+根据群组ID及创世块参数创建新的群组，本接口仅在兼容性版本为2.2.0及以后的版本有效
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `params`: `object` - 创世块参数，其字段如下：
+    - `timestamp`: `unsigned int` - 创世块时间戳
+    - `sealers`: `array` - 共识节点列表，要求所有所列共识节点间存在有效的P2P连接
+    - `enable_free_storage`: `bool` - 可选，是否启用"free storage"模式，启用后节点将减少STORAGE相关指令的gas耗费
+### 返回值
+- `object`: - 接口调用结果，其字段如下：
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+    - `message`: - 接口消息
+
+- 示例
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"generateGroup","params":[2, '{"timestamp":"1585214879000","sealers":["70f18c055d366615e86df99f91b6d3f16f07d66293b203b73498442c0366d2c8ff7a21bb56923d9d81b1c2916251888e47adf66c350738c898defac50aead5ab","dde37f534885f08db914566efeb03183d59363a4be972bbcdde25c37f0b350e1980a7de4fdc4aaf956b931aab00b739a8af475ed2461b8591d8c734b27285f57","d41672b29b3b1bfe6cad563d0f0b2a2735865b27918307b85085f892043a63f681ac8799243e920f7bb144b111d854d0592ba5f28aa7a4e0f9f533f9fdf76ead","7ba2717f81f38e7371ccdbe173751f051b86819f709e940957664dbde028698fd31ba3042f7dd9accd73741ba42afc35a8ef67fe7abbdeb76344169773aa0eca"],"enable_free_storage":true}'],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 generated successfully"
+  }
+}
+
+```
+
+## startGroup
+根据群组ID启动相应的群组，本接口仅在兼容性版本为2.2.0及以后的版本有效
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `object`: 接口调用结果，其字段如下：
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+    - `message`: - 接口消息
+- 示例
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 started successfully"
+  }
+}
+
+```
+## stopGroup
+根据群组ID停止相应的群组，本接口仅在兼容性版本为2.2.0及以后的版本有效
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `object`: 接口调用结果，其字段如下：
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+    - `message`: - 接口消息
+- 示例
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"stopGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 stopped successfully"
+  }
+}
+
+```
+
+## removeGroup
+根据群组ID删除相应群组，群组数据会被保留以供将来恢复群组，本接口仅在兼容性版本为2.2.0及以后的版本有效
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `object`: 接口调用结果，其字段如下：
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+    - `message`: - 接口消息
+- 示例
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"removeGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 deleted successfully"
+  }
+}
+
+```
+
+## recoverGroup
+根据群组ID恢复相应群组，本接口仅在兼容性版本为2.2.0及以后的版本有效
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `object`: 接口调用结果，其字段如下：
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+    - `message`: - 接口消息
+- 示例
+```
+// Request
+curl -Ss -X POST --data '{"jsonrpc":"2.0","method":"recoverGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 recovered successfully"
+  }
+}
+
+```
+
+## queryGroupStatus
+根据群组ID查询相应群组的状态
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `object`: 接口调用结果，其字段如下：
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+    - `message`: - 接口消息
+    - `status`: - 群组状态标识，为下列值之一：
+        - `INEXISTENT`: 群组不存在
+        - `STOPPING`: 群组正在停止
+        - `RUNNING`: 群组正在运行
+        - `STOPPED`: 群组已停止
+        - `DELETED`: 群组已删除
+- 示例
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"queryGroupStatus","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "",
+    "status": "STOPPED"
+  }
+}
+
+```
+
 ## 错误码描述
 
 ### RPC 错误码
@@ -1143,3 +1304,23 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -51500  | contract name and version already exist         |          |
 | -51501  | condition parse error                           |          |
 | -51502  | condition operation undefined                   |          |
+
+### 动态群组管理 API 状态码
+
+| 状态码 | 消息内容                     | 释义                                        |
+| :-- | :--------------------------- | :------------------------------------------ |
+| 0x0 | SUCCESS                      | 接口调用成功                                  |
+| 0x1 | INTERNAL_ERROR               | 节点内部错误                                  |
+| 0x2 | GROUP_ALREADY_EXISTS         | 调用创建群组接口时，群组已存在                   |
+| 0x3 | GROUP_ALREADY_RUNNING        | 调用启动群组接口时，群组已处于运行状态             |
+| 0x4 | GROUP_ALREADY_STOPPED        | 调用停止群组接口时，群组已处于停止状态             |
+| 0x5 | GROUP_ALREADY_DELETED        | 调用删除群组接口时，群组已处于删除状态             |
+| 0x6 | GROUP_NOT_FOUND              | 调用接口时，对应的群组不存在                     |
+| 0x7 | INVALID_PARAMS               | 调用接口时，参数不合法                          |
+| 0x8 | PEERS_NOT_CONNECTED          | 调用创建群组接口时，与sealer间不存在有效的P2P连接  |
+| 0x9 | GENESIS_CONF_ALREADY_EXISTS  | 调用创建群组接口时，创世块配置文件已存在           |
+| 0xa | GROUP_CONF_ALREADY_EXIST     | 调用创建群组接口时，群组配置文件已存在             |
+| 0xb | GENESIS_CONF_NOT_FOUND       | 调用启动群组接口时，未找到创世块配置文件           |
+| 0xc | GROUP_CONF_NOT_FOUND         | 调用启动群组接口时，未找到群组配置文件             |
+| 0xd | GROUP_IS_STOPPING            | 调用接口时，群组正在释放资源                     |
+| 0xf | GROUP_NOT_DELETED            | 调用恢复接口时，群组并未被删除                   |

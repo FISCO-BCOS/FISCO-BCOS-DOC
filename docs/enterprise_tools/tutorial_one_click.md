@@ -604,30 +604,34 @@ cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_127.0.0.1
 
 ### 加载、启动新群组
 
-节点在运行时，可直接用脚本`load_new_groups.sh`加载新群组
+节点在运行时，可直接用脚本`load_new_groups.sh`加载新群组配置，并调用`startGroup`RPC接口启动新群组：
 
 机构A-节点0（`node0=127.0.0.1:30300`）
 
 ```bash
 bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30300/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8545
 ```
 
 机构A-节点1（`node1=127.0.0.1:30301`）
 
 ```bash
 bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30301/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8546
 ```
 
 机构A-节点4（`node2=127.0.0.1:30304`）
 
 ```bash
 bash ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8549
 ```
 
 机构C-节点5（`node3=127.0.0.1:30305`）
 
 ```bash
 bash ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8550
 ```
 
 ### 查看节点
