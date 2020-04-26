@@ -131,7 +131,11 @@ Blacklist configuration example is as follows:
 
 ### Configure log information
 
-FISCO BCOS supports [boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html). Configurations:
+FISCO BCOS supports [boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html). The log configuration is mainly located in the `[log]` configuration item of `config.ini`.
+
+#### Log common configuration items
+
+FISCO BCOS general log configuration items are as follows:
 
 - `enable`: Enable/disable log. Set to `true` to enable log; set to `false` to disable log. **set to true by default. For performance test, to set this option to `false` to reduce the impact of print log on test results**
 - `log_path`:log file patch.
@@ -150,6 +154,35 @@ boostlog configuration example is as follows:
     ; Maximum size per log file, default is 200MB
     max_log_file_size=200
     flush=true
+```
+
+#### Statistics log configuration items
+
+Considering that the real-time monitoring system resource usage is very important in the actual production system, FISCO BCOS v2.4.0 introduced statistical logs, and the statistical log configuration items are located in `config.ini`.
+
+##### Statistics log enable/disable configuration item
+
+Considering that not all scenarios require network traffic and Gas statistics functions, FISCO BCOS provides the `enable_statistic` option in` config.ini` to turn on and off the function, which is turned off by default.
+
+- `log.enable_statistic` is set to true to enable network traffic and gas statistics
+- `log.enable_statistic` is set to false to disable network traffic and gas statistics
+
+The configuration example is as follows:
+
+```ini
+[log]
+    ; enable/disable the statistics function
+    enable_statistic=false
+```
+
+##### Network statistics log output interval configuration item
+
+Due to the periodic output of network statistics logs, `log.stat_flush_interval` is introduced to control the statistics interval and log output frequency, the unit is seconds, and the default is 60s. The configuration example is as follows:
+
+```ini
+[log]
+    ; network statistics interval, unit is second, default is 60s
+    stat_flush_interval=60
 ```
 
 ### Configure node compatibility
@@ -303,6 +336,28 @@ FISCO BCOS configures maximum gas limit of the transaction through genesis `[tx]
 ```ini
 [tx]
     gas_limit=300000000
+```
+
+### EVM configuration
+
+FISCO BCOS v2.4.0 introduces the `Free Storage` Gas measurement mode to increase the proportion of CPU and memory in Gas consumption. For details, please refer to [here] (../design/virtual_machine/gas.html#evm-gas) The opening and closing of `Free Storage` Gas mode is controlled by the `evm.enable_free_storage` configuration item in the `genesis` file.
+
+```eval_rst
+.. note::
+    - ``evm.enable_free_storage`` is supported in v2.4.0. This feature is not supported when ``supported_version`` is less than v2.4.0, or the old chain directly replaces binary upgrade
+    - When the chain is initialized, ``evm.enable_free_storage`` is written to the genesis block; after the chain is initialized, the node reads the ``evm.enable_free_storage`` configuration item from the genesis block, manually modifying the ``genesis`` configuration item will not take effect
+
+    - ``evm.enable_free_storage`` is set to false by default
+```
+
+- `evm.enable_free_storage` is set to true: enable `Free Storage` Gas mode
+- `evm.enable_free_storage` is set to false: turn off `Free Storage` Gas mode
+
+The configuration example is as follows:
+
+```ini
+[evm]
+    enable_free_storage=false
 ```
 
 

@@ -155,6 +155,10 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ### **`D`选项[**Optional**]**
 无参数选项，设置该选项时，生成节点的目录名为IP_P2P端口，默认为节点从0开始的编号。
 
+### **`E`选项[**Optional**]**
+
+无参数选项，设置该选项时，启用[Free Storage](design/virtual_machine/gas.html#evm-gas) Gas模式，默认关闭`Free Storage` Gas模式
+
 ## 节点文件组织结构
 
 - cert文件夹下存放链的根证书和机构证书。
