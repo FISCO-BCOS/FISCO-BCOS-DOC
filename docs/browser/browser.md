@@ -39,8 +39,8 @@
 
 区块链浏览器展示的数据是从区块链上同步下来的。为了同步数据需要初始化配置（添加群组信息和节点信息），故在同步数据展示前需要用户先搭建好区块链群组。[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS)提供了多种便捷的群组搭建方式。
 
-1. 如果是开发者进行开发调试，建议使用[build_chain](../installation.md)。
-2. 如果是开发企业级应用，建议使用企业部署工具[FISCO BCOS generator](../enterprise_tools/tutorial_one_click.md)。
+1. 如果是开发者进行开发调试，建议使用[开发部署工具 build_chain](../installation.md)。
+2. 如果是开发企业级应用，建议使用企业部署工具[运维部署工具 FISCO BCOS generator](../enterprise_tools/tutorial_one_click.md)。
 
 两者的主要区别在于build_chain为了使体验更好，搭建速度更快，辅助生成了群组内各个节点的私钥；但企业部署工具出于安全的考虑不辅助生成私钥，需要用户自己生成并设置。
 

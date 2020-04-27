@@ -455,7 +455,7 @@ FISCO BCOS generator 的scripts文件夹的`check_certificates.sh`脚本包含�
 
 ### 获取脚本
 
-如果用户需要检测由`buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
+如果用户需要检测由`开发部署工具buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
 
 ```bash
 $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh

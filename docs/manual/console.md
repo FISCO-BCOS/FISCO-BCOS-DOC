@@ -3,10 +3,10 @@
 [控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Web3SDK](../sdk/java_sdk.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
 
 ### 控制台命令
-控制台命令由两部分组成，即指令和指令相关的参数：   
+控制台命令由两部分组成，即指令和指令相关的参数：
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
-  
+
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
 ### 常用命令链接
@@ -35,8 +35,8 @@
 
 ### 控制台响应
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
-- **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。       
-- **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。 
+- **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
+- **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
   - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
   - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。
 
@@ -44,7 +44,7 @@
 
 ```eval_rst
 .. important::
-    前置条件：搭建FISCO BCOS区块链请参考 `建链脚本 <./build_chain.html>`_ 或 `企业工具 <../enterprise_tools/index.html>`_。
+    前置条件：搭建FISCO BCOS区块链请参考 `开发部署工具 <./build_chain.html>`_ 或 `企业工具 <../enterprise_tools/index.html>`_。
 ```
 ### 获取控制台
 
@@ -56,7 +56,7 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download
 目录结构如下：
 ```bash
 |-- apps # 控制台jar包目录
-|   -- console.jar 
+|   -- console.jar
 |-- lib # 相关依赖的jar包目录
 |-- conf
 |   |-- applicationContext-sample.xml # 配置文件
@@ -141,7 +141,7 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
   - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
-  
+
 - 打开国密开关
 ```
 <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
@@ -149,13 +149,13 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download
     <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
 </bean>
 ```
-- 替换国密编译包  
+- 替换国密编译包
 ```bash
 # 下载solcJ-all-0.4.25-gm.jar放在console目录下
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar 
+$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
 # 替换Jar包
 $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-``` 
+```
 
 #### 合约编译工具
 
@@ -219,11 +219,11 @@ $ ./start.sh
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.4)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+ ________ ______  ______   ______   ______       _______   ______   ______   ______
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
@@ -272,7 +272,7 @@ console version: 1.0.4
 ./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
 Enter Export Password:
 ```
-**注意：**  
+**注意：**
 控制台启动时加载p12文件出现下面报错：
 ```shell
 exception unwrapping private key - java.security.InvalidKeyException: Illegal key size
@@ -357,9 +357,9 @@ switch(s)                                Switch to a specific group by group ID.
 [update sql]                             Update records by sql.
 -------------------------------------------------------------------------------------
 ```
-**注：**                                       
-- help显示每条命令的含义是：命令 命令功能描述                   
-- 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：   
+**注：**
+- help显示每条命令的含义是：命令 命令功能描述
+- 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：
 
 ```text
 [group:1]> getBlockByNumber -h
@@ -375,7 +375,7 @@ boolean -- (optional) If true it returns the full transaction objects, if false 
 [group:1]> switch 2
 Switched to group 2.
 
-[group:2]> 
+[group:2]>
 ```
 **注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中配置的节点ip和端口正确，该节点正常运行。
 
@@ -390,7 +390,7 @@ Switched to group 2.
 运行getSealerList，查看共识节点列表。
 
 ```text
-[group:1]> getSealerList 
+[group:1]> getSealerList
 [
     0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801,
     10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34,
@@ -423,7 +423,7 @@ Switched to group 2.
 运行getPbftView，查看pbft视图。
 
 ```text
-[group:1]> getPbftView  
+[group:1]> getPbftView
 2730
 ```
 ### **getConsensusStatus**
@@ -539,21 +539,21 @@ Switched to group 2.
 		"IPAndPort":"127.0.0.1:50723",
 		"nodeId":"8718579e9a6fee647b3d7404d59d66749862aeddef22e6b5abaafe1af6fc128fc33ed5a9a105abddab51e12004c6bfe9083727a1c3a22b067ddbaac3fa349f7f",
 		"Topic":[
-			
+
 		]
 	},
 	{
 		"IPAndPort":"127.0.0.1:50719",
 		"nodeId":"697e81e512cffc55fc9c506104fb888a9ecf4e29eabfef6bb334b0ebb6fc4ef8fab60eb614a0f2be178d0b5993464c7387e2b284235402887cdf640f15cb2b4a",
 		"Topic":[
-			
+
 		]
 	},
 	{
 		"IPAndPort":"127.0.0.1:30304",
 		"nodeId":"8fc9661baa057034f10efacfd8be3b7984e2f2e902f83c5c4e0e8a60804341426ace51492ffae087d96c0b968bd5e92fa53ea094ace8d1ba72de6e4515249011",
 		"Topic":[
-			
+
 		]
 	}
 ]
@@ -576,15 +576,15 @@ Switched to group 2.
 [1]
 ```
 ### **getBlockByHash**
-运行getBlockByHash，根据区块哈希查询区块信息。              
+运行getBlockByHash，根据区块哈希查询区块信息。
 参数：
-- 区块哈希：0x开头的区块哈希值。   
+- 区块哈希：0x开头的区块哈希值。
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 ```text
 [group:1]> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 {
     "extraData":[
-        
+
     ],
     "gasLimit":"0x0",
     "gasUsed":"0x0",
@@ -609,7 +609,7 @@ Switched to group 2.
 [group:1]> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855 true
 {
     "extraData":[
-        
+
     ],
     "gasLimit":"0x0",
     "gasUsed":"0x0",
@@ -645,15 +645,15 @@ Switched to group 2.
 }
 ```
 ### **getBlockByNumber**
-运行getBlockByNumber，根据区块高度查询区块信息。                            
-参数：     
-- 区块高度：十进制整数。    
-- 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。      
+运行getBlockByNumber，根据区块高度查询区块信息。
+参数：
+- 区块高度：十进制整数。
+- 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 ```text
-[group:1]> getBlockByNumber 1  
+[group:1]> getBlockByNumber 1
 {
     "extraData":[
-        
+
     ],
     "gasLimit":"0x0",
     "gasUsed":"0x0",
@@ -678,20 +678,20 @@ Switched to group 2.
 ```
 ### **getBlockHashByNumber**
 
-运行getBlockHashByNumber，通过区块高度获得区块哈希。              
-参数：           
+运行getBlockHashByNumber，通过区块高度获得区块哈希。
+参数：
 - 区块高度：十进制整数。
 ```text
 [group:1]> getBlockHashByNumber 1
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
 ### **getTransactionByHash**
-运行getTransactionByHash，通过交易哈希查询交易信息。                   
-参数：        
+运行getTransactionByHash，通过交易哈希查询交易信息。
+参数：
 - 交易哈希：0x开头的交易哈希值。
 - 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
 ```text
-[group:1]> getTransactionByHash 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5 
+[group:1]> getTransactionByHash 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
 {
     "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
     "blockNumber":"0x8",
@@ -721,16 +721,16 @@ Switched to group 2.
     "value":"0x0"
 }
 ---------------------------------------------------------------------------------------------
-Input 
+Input
 function: insert(string,int256,string)
 input value: (fruit, 1, apple)
 ---------------------------------------------------------------------------------------------
 ```
 ### **getTransactionByBlockHashAndIndex**
-运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。          
-参数：         
-- 区块哈希：0x开头的区块哈希值。       
-- 交易索引：十进制整数。 
+运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。
+参数：
+- 区块哈希：0x开头的区块哈希值。
+- 交易索引：十进制整数。
 - 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
 ```text
 [group:1]> getTransactionByBlockHashAndIndex 0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b 0
@@ -763,14 +763,14 @@ input value: (fruit, 1, apple)
     "value":"0x0"
 }
 ---------------------------------------------------------------------------------------------
-Input 
+Input
 function: insert(string,int256,string)
 input value: (fruit, 1, apple)
 ---------------------------------------------------------------------------------------------
 ```
 ### **getTransactionByBlockNumberAndIndex**
-运行getTransactionByBlockNumberAndIndex，通过区块高度和交易索引查询交易信息。              
-参数：      
+运行getTransactionByBlockNumberAndIndex，通过区块高度和交易索引查询交易信息。
+参数：
 - 区块高度：十进制整数。
 - 交易索引：十进制整数。
 - 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
@@ -805,13 +805,13 @@ input value: (fruit, 1, apple)
     "value":"0x0"
 }
 ---------------------------------------------------------------------------------------------
-Input 
+Input
 function: insert(string,int256,string)
 input value: (fruit, 1, apple)
 ---------------------------------------------------------------------------------------------
 ```
 ### **getTransactionReceipt**
-运行getTransactionReceipt，通过交易哈希查询交易回执。              
+运行getTransactionReceipt，通过交易哈希查询交易回执。
 参数：
 - 交易哈希：0x开头的交易哈希值。
 - 合约名：可选，发送交易产生该交易回执的合约名称，使用该参数可以将交易回执中的input、output和event log解析并输出。（注：input字段在web3sdk 2.0.4版本中新增加的字段，之前版本无该字段则只解析output和event log。）
@@ -866,12 +866,12 @@ input value: (fruit, 1, apple)
     "transactionIndex":"0x0"
 }
 ---------------------------------------------------------------------------------------------
-Input 
+Input
 function: insert(string,int256,string)
 input value: (fruit, 1, apple)
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
-Output 
+Output
 function: insert(string,int256,string)
 return type: (int256)
 return value: (1)
@@ -882,14 +882,14 @@ event value: (1)
 ---------------------------------------------------------------------------------------------
 ```
 ### **getPendingTransactions**
-运行getPendingTransactions，查询等待处理的交易。              
+运行getPendingTransactions，查询等待处理的交易。
 ```text
 [group:1]> getPendingTransactions
 []
 ```
 
 ### **getPendingTxSize**
-运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。              
+运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。
 ```text
 [group:1]> getPendingTxSize
 0
@@ -897,7 +897,7 @@ event value: (1)
 
 ### **getCode**
 
-运行getCode，根据合约地址查询合约二进制代码。                                                   
+运行getCode，根据合约地址查询合约二进制代码。
 参数：
 
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
@@ -908,7 +908,7 @@ event value: (1)
 
 ### **getTotalTransactionCount**
 
-运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。                          
+运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。
 ```text
 [group:1]> getTotalTransactionCount
 {
@@ -922,15 +922,15 @@ event value: (1)
 运行deploy，部署合约。(默认提供HelloWorld合约和TableTest.sol进行示例使用)
 参数：
 
-- 合约名称：部署的合约名称(可以带.sol后缀)，即HelloWorld或者HelloWorld.sol均可。                          
-                           
+- 合约名称：部署的合约名称(可以带.sol后缀)，即HelloWorld或者HelloWorld.sol均可。
+
 ```text
 # 部署HelloWorld合约
-[group:1]> deploy HelloWorld.sol 
+[group:1]> deploy HelloWorld.sol
 contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署TableTest合约
-[group:1]> deploy TableTest.sol 
+[group:1]> deploy TableTest.sol
 contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 **注：**
@@ -943,7 +943,7 @@ contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 运行getDeployLog，查询群组内**由当前控制台**部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
 - 日志行数，可选，根据输入的期望值返回最新的日志信息，当实际条数少于期望值时，按照实际数量返回。当期望值未给出时，默认按照20条返回最新的日志信息。
-                           
+
 ```text
 [group:1]> getDeployLog 2
 
@@ -958,8 +958,8 @@ contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 ### **call**
 
-运行call，调用合约。                                
-参数： 
+运行call，调用合约。
+参数：
 - 合约名称：部署的合约名称(可以带.sol后缀)。
 - 合约地址: 部署合约获取的地址，合约地址可以省略前缀0，例如，0x000ac78可以简写成0xac78。
 - 合约接口名：调用的合约接口名。
@@ -983,7 +983,7 @@ Hello, FISCO BCOS
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 create
 transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612bb5
 ---------------------------------------------------------------------------------------------
-Output 
+Output
 function: create()
 return type: (int256)
 return value: (0)
@@ -997,7 +997,7 @@ event value: (0)
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
 transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
 ---------------------------------------------------------------------------------------------
-Output 
+Output
 function: insert(string,int256,string)
 return type: (int256)
 return value: (1)
@@ -1015,7 +1015,7 @@ event value: (1)
 
 ### **deployByCNS**
 
-运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)部署合约。用CNS部署的合约，可用合约名直接调用。                                 
+运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)部署合约。用CNS部署的合约，可用合约名直接调用。
 参数：
 
 - 合约名称：部署的合约名称。
@@ -1040,13 +1040,13 @@ contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 - **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
 ### **queryCNS**
-运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。                                 
+运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。
 参数：
 
 - 合约名称：部署的合约名称。
 - 合约版本号：(可选)部署的合约版本号。
 ```text
-[group:1]> queryCNS HelloWorld.sol 
+[group:1]> queryCNS HelloWorld.sol
 ---------------------------------------------------------------------------------------------
 |                   version                   |                   address                   |
 |                     1.0                     | 0x3554a56ea2905f366c345bd44fa374757fb4696a  |
@@ -1059,8 +1059,8 @@ contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ---------------------------------------------------------------------------------------------
 ```
 ### **callByCNS**
-运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。                                 
-参数： 
+运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。
+参数：
 
 - 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`或`HelloWorld.sol:1.0`。当省略合约版本号时，例如`HelloWorld`或`HelloWorld.sol`，则调用最新版本的合约。
 - 合约接口名：调用的合约接口名。
@@ -1085,8 +1085,8 @@ Hello,CNS2
 
 ### **addSealer**
 
-运行addSealer，将节点添加为共识节点。                                 
-参数： 
+运行addSealer，将节点添加为共识节点。
+参数：
 
 - 节点nodeId
 ```text
@@ -1098,8 +1098,8 @@ Hello,CNS2
 ```
 
 ### **addObserver**
-运行addObserver，将节点添加为观察节点。                                 
-参数： 
+运行addObserver，将节点添加为观察节点。
+参数：
 - 节点nodeId
 ```text
 [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -1110,8 +1110,8 @@ Hello,CNS2
 ```
 
 ### **removeNode**
-运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。                                  
-参数： 
+运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。
+参数：
 - 节点nodeId
 ```text
 [group:1]> removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -1129,7 +1129,7 @@ Hello,CNS2
 * rpbft_epoch_sealer_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
 * rpbft_epoch_block_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
 
-参数： 
+参数：
 
 - key
 - value
@@ -1142,8 +1142,8 @@ Hello,CNS2
 ```
 ### **getSystemConfigByKey**
 
-运行getSystemConfigByKey，根据键查询系统参数的值。                                  
-参数： 
+运行getSystemConfigByKey，根据键查询系统参数的值。
+参数：
 
 - key
 ```text
@@ -1152,7 +1152,7 @@ Hello,CNS2
 ```
 ### **grantPermissionManager**
 
-运行grantPermissionManager，授权账户的链管理员权限。参数： 
+运行grantPermissionManager，授权账户的链管理员权限。参数：
 - 账户地址
 ```text
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1164,17 +1164,17 @@ Hello,CNS2
 **注：权限控制相关命令的示例使用可以参考[权限控制使用文档](./permission_control.md)。**
 
 ### **listPermissionManager**
-运行listPermissionManager，查询拥有链管理员权限的账户列表。                                  
+运行listPermissionManager，查询拥有链管理员权限的账户列表。
 ```text
-[group:1]> listPermissionManager 
+[group:1]> listPermissionManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokePermissionManager**
-运行revokePermissionManager，撤销账户的链管理员权限。                                                                 
-参数： 
+运行revokePermissionManager，撤销账户的链管理员权限。
+参数：
 - 账户地址
 ```text
 [group:1]> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1185,8 +1185,8 @@ Hello,CNS2
 ```
 ### **grantUserTableManager**
 
-运行grantUserTableManager，授权账户对用户表的写权限。                                  
-参数： 
+运行grantUserTableManager，授权账户对用户表的写权限。
+参数：
 - 表名
 - 账户地址
 ```text
@@ -1198,11 +1198,11 @@ Hello,CNS2
 ```
 ### **listUserTableManager**
 
-运行listUserTableManager，查询拥有对用户表写权限的账号列表。                                  
-参数： 
+运行listUserTableManager，查询拥有对用户表写权限的账号列表。
+参数：
 - 表名
 ```text
-[group:1]> listUserTableManager t_test 
+[group:1]> listUserTableManager t_test
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1210,8 +1210,8 @@ Hello,CNS2
 ```
 ### **revokeUserTableManager**
 
-运行revokeUserTableManager，撤销账户对用户表的写权限。                                                                 
-参数： 
+运行revokeUserTableManager，撤销账户对用户表的写权限。
+参数：
 
 - 表名
 - 账户地址
@@ -1225,7 +1225,7 @@ Hello,CNS2
 ### **grantDeployAndCreateManager**
 运行grantDeployAndCreateManager，授权账户的部署合约和创建用户表权限。
 
-参数： 
+参数：
 - 账户地址
 ```text
 [group:1]> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1235,17 +1235,17 @@ Hello,CNS2
 }
 ```
 ### **listDeployAndCreateManager**
-运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的账户列表。                                  
+运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的账户列表。
 ```text
-[group:1]> listDeployAndCreateManager 
+[group:1]> listDeployAndCreateManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeDeployAndCreateManager**
-运行revokeDeployAndCreateManager，撤销账户的部署合约和创建用户表权限。                                                                 
-参数： 
+运行revokeDeployAndCreateManager，撤销账户的部署合约和创建用户表权限。
+参数：
 - 账户地址
 ```text
 [group:1]> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1256,7 +1256,7 @@ Hello,CNS2
 ```
 ### **grantNodeManager**
 
-运行grantNodeManager，授权账户的节点管理权限。参数： 
+运行grantNodeManager，授权账户的节点管理权限。参数：
 - 账户地址
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1269,7 +1269,7 @@ Hello,CNS2
 运行listNodeManager，查询拥有节点管理的账户列表。
 
 ```text
-[group:1]> listNodeManager 
+[group:1]> listNodeManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1277,8 +1277,8 @@ Hello,CNS2
 ```
 ### **revokeNodeManager**
 
-运行revokeNodeManager，撤销账户的节点管理权限。                                                                 
-参数： 
+运行revokeNodeManager，撤销账户的节点管理权限。
+参数：
 - 账户地址
 ```text
 [group:1]> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1288,7 +1288,7 @@ Hello,CNS2
 }
 ```
 ### **grantCNSManager**
-运行grantCNSManager，授权账户的使用CNS权限。参数： 
+运行grantCNSManager，授权账户的使用CNS权限。参数：
 - 账户地址
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1299,16 +1299,16 @@ Hello,CNS2
 ```
 ### **listCNSManager**
 运行listCNSManager，查询拥有使用CNS的账户列表。
-                                  
+
 ```text
-[group:1]> listCNSManager 
+[group:1]> listCNSManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokeCNSManager**
-运行revokeCNSManager，撤销账户的使用CNS权限。参数： 
+运行revokeCNSManager，撤销账户的使用CNS权限。参数：
 - 账户地址
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1318,7 +1318,7 @@ Hello,CNS2
 }
 ```
 ### **grantSysConfigManager**
-运行grantSysConfigManager，授权账户的修改系统参数权限。参数： 
+运行grantSysConfigManager，授权账户的修改系统参数权限。参数：
 - 账户地址
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1330,9 +1330,9 @@ Hello,CNS2
 ### **listSysConfigManager**
 
 运行listSysConfigManager，查询拥有修改系统参数的账户列表。
-                                  
+
 ```text
-[group:1]> listSysConfigManager 
+[group:1]> listSysConfigManager
 ---------------------------------------------------------------------------------------------
 |                   address                   |                 enable_num                  |
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
@@ -1340,7 +1340,7 @@ Hello,CNS2
 ```
 
 ### **revokeSysConfigManager**
-运行revokeSysConfigManager，撤销账户的修改系统参数权限。参数： 
+运行revokeSysConfigManager，撤销账户的修改系统参数权限。参数：
 - 账户地址
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
@@ -1351,7 +1351,7 @@ Hello,CNS2
 ```
 
 ### **grantContractWritePermission**
-运行grantContractWritePermission，添加账户对合约写接口的调用权限。参数： 
+运行grantContractWritePermission，添加账户对合约写接口的调用权限。参数：
 - 合约地址
 - 账户地址
 
@@ -1364,7 +1364,7 @@ Hello,CNS2
 ```
 
 ### **listContractWritePermission**
-运行listContractWritePermission，显示对某个合约的写接口有调用权限的账户。参数： 
+运行listContractWritePermission，显示对某个合约的写接口有调用权限的账户。参数：
 - 合约地址
 ```bash
 [group:1]> listContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767
@@ -1375,7 +1375,7 @@ Hello,CNS2
 ```
 
 ### **revokeContractWritePermission**
-运行revokeContractWritePermission，撤销账户对合约的写接口调用权限。参数： 
+运行revokeContractWritePermission，撤销账户对合约的写接口调用权限。参数：
 - 合约地址
 - 账户地址
 ```bash
@@ -1564,7 +1564,7 @@ The contract is available.
 # 安装默认Java版本(Java 8或以上)
 sudo apt install -y default-jdk
 # 查询Java版本
-java -version 
+java -version
 ```
 
 ### CentOS环境安装Java
@@ -1573,16 +1573,16 @@ java -version
 # 创建新的文件夹，安装Java 8或以上的版本，将下载的jdk放在software目录
 # 从Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
 $ mkdir /software
-# 解压jdk 
+# 解压jdk
 $ tar -zxvf jdk-8u201-linux-x64.tar.gz
-# 配置Java环境，编辑/etc/profile文件 
-$ vim /etc/profile 
+# 配置Java环境，编辑/etc/profile文件
+$ vim /etc/profile
 # 打开以后将下面三句输入到文件里面并退出
 export JAVA_HOME=/software/jdk-8u201  #这是一个文件目录，非文件
-export PATH=$JAVA_HOME/bin:$PATH 
+export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 # 生效profile
-$ source /etc/profile 
+$ source /etc/profile
 # 查询Java版本，出现的版本是自己下载的版本，则安装成功。
-java -version 
+java -version
 ```
