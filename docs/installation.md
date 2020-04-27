@@ -4,7 +4,7 @@
 
 ## 单群组FISCO BCOS联盟链的搭建
 
-本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
+本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
 
 
 ```eval_rst
@@ -18,7 +18,7 @@
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。  
+`开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。  
 若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可。
 
 ```bash

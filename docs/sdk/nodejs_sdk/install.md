@@ -5,7 +5,7 @@
 - Node.js开发环境
   - Node.js >= 8.10.0
   - npm >= 5.6.0
-  
+
   如果您没有部署过Node.js环境，可以参考下列部署方式：
   - 如果您使用Linux或MacOS：
 
@@ -76,7 +76,7 @@ Node.js SDK内嵌CLI工具，供用户在命令行中方便地与区块链进行
 *若您的系统中已经搭建了FISCO BCOS链，请跳过本节。*
 
 ```bash
-# 获取建链脚本
+# 获取开发部署工具
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 # 在本地建一个4节点的FISCO BCOS链
 bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -i
@@ -88,7 +88,7 @@ bash nodes/127.0.0.1/start_all.sh
 
 - 配置证书
 
-    修改配置文件，证书配置位于`packages/cli/conf/config.json`文件的`authentication`配置项中。你需要根据您实际使用的证书文件的路径修改该配置项的`key`、`cert`及`ca`配置，其中`key`为SDK私钥文件的路径，`cert`为SDK证书文件的路径，`ca`为链根证书文件的路径，这些文件可以由[建链脚本](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)或[企业级部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html)自动生成，具体的生成方式及文件位置请参阅上述工具的说明文档。
+    修改配置文件，证书配置位于`packages/cli/conf/config.json`文件的`authentication`配置项中。你需要根据您实际使用的证书文件的路径修改该配置项的`key`、`cert`及`ca`配置，其中`key`为SDK私钥文件的路径，`cert`为SDK证书文件的路径，`ca`为链根证书文件的路径，这些文件可以由[开发部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)或[运维部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html)自动生成，具体的生成方式及文件位置请参阅上述工具的说明文档。
 
 - 配置Channel端口
 
