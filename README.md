@@ -11,7 +11,7 @@
 - [安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/installation.html)
 - [教程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/tutorial/index.html)
 - [使用手册](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/manual/index.html)
-- [企业级部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/enterprise_tools/index.html)
+- [运维部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/enterprise_tools/index.html)
 - [系统设计](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/design/index.html)
 - [Web3SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/sdk/java_sdk.html)
 - [JSON-RPC API](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/api.html)

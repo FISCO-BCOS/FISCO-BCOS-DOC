@@ -87,14 +87,14 @@ $ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}
 
 搭一个四个节点的链
 
-``` shell
-$ bash build_chain.sh -l "127.0.0.1:4"
+``` bash
+bash build_chain.sh -l "127.0.0.1:4"
 ```
 
 查看四个节点的NodeID
 
 ``` shell
-$ cat node*/conf/node.nodeid 
+$ cat node*/conf/node.nodeid
 219b319ba7b2b3a1ecfa7130ea314410a52c537e6e7dda9da46dec492102aa5a43bad81679b6af0cd5b9feb7cfdc0b395cfb50016f56806a2afc7ee81bbb09bf
 7718df20f0f7e27fdab97b3d69deebb6e289b07eb7799c7ba92fe2f43d2efb4c1250dd1f11fa5b5ce687c8283d65030aae8680093275640861bc274b1b2874cb
 f306eb1066ceb9d46e3b77d2833a1bde2a9899cfc4d0433d64b01d03e79927aa60a40507c5739591b8122ee609cf5636e71b02ce5009f3b8361930ecc3a9abb0
