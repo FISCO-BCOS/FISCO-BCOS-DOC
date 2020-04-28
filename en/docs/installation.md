@@ -35,6 +35,11 @@ cd ~ && mkdir -p fisco && cd fisco
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
+```eval_rst
+.. note::
+    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try downloading the script from `https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh`
+```
+
 ### Build a single-group 4-node consortium chain
 
 Execute the following command in the fisco directory to generate a single group 4-node FISCO chain. It is necessary to ensure that the `30300~30303, 20200~20203, 8545~8548` ports of the machine are not occupied.
@@ -47,7 +52,7 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```eval_rst
 .. note::
     - The -p option specifies the starting port, which are p2p_port, channel_port, and jsonrpc_port.
-    
+
     - For security and ease of use consideration, the latest configuration of v2.3.0 version splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip. For details, please refer to `here <manual/configuration.html#configure-rpc>`_
 
     - In order to facilitate development and experience, the reference configuration of channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as: intranet IP or specific external IP
@@ -168,6 +173,11 @@ sudo apt install -y default-jdk
 
 ```bash
 cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+```
+
+```eval_rst
+.. note::
+    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try downloading the script from `https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
