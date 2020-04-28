@@ -11,8 +11,7 @@
 
 ```eval_rst
 .. important::
-
-    - build_chain.sh适用于开发者和体验者快速搭链使用，不支持扩容操作
+    - build_chain.sh适用于开发者和体验者快速搭链使用
     - 搭建企业级业务链，推荐使用 `企业搭链工具 <../enterprise_tools/index.html>`_
 ```
 
@@ -56,7 +55,7 @@ $ brew install openssl curl
 ```eval_rst
 .. important::
    - 实际应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，请参考 `硬件配置 <../manual/configuration.html>`_
-   - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器** 
+   - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器**
    - **在不同机器操作时，请将生成的对应IP的文件夹拷贝到对应机器启动，建链操作只需要执行一次！**
 ```
 
@@ -197,21 +196,21 @@ ubuntu16      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/ubu
 
 ```bash
 # 查看node0 group1是否正常共识（Ctrl+c退回命令行）
-$ tail -f node0/log/* | grep "g:1.*++" 
+$ tail -f node0/log/* | grep "g:1.*++"
 info|2019-02-11 15:33:09.914042| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=72254a42....
 
 # 查看node0 group2是否正常共识
-$ tail -f node0/log/* | grep "g:2.*++" 
+$ tail -f node0/log/* | grep "g:2.*++"
 info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=ef59cf17...
 
 # ... 查看node1, node2节点每个群组是否正常可参考以上操作方法...
 
 # 查看node3 group1是否正常共识
-$ tail -f node3/log/*| grep "g:1.*++"  
+$ tail -f node3/log/*| grep "g:1.*++"
 info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=5e94bf63...
 
 # 查看node5 group2是否正常共识
-$ tail -f node5/log/* | grep "g:2.*++" 
+$ tail -f node5/log/* | grep "g:2.*++"
 info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=b80a724d...
 
 ```
@@ -223,6 +222,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 ```eval_rst
 .. important::
    控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
+   如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 ```bash
@@ -326,18 +326,18 @@ $ bash start.sh
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+ ________ ______  ______   ______   ______       _______   ______   ______   ______
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =====================================================================================
-[group:1]> 
+[group:1]>
 ```
 
 ### 向群组发交易
@@ -346,7 +346,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```eval_rst
 .. important::
-   
+
    多群组架构中，群组间账本相互独立，向某个群组发交易仅会导致本群组区块高度增加，不会增加其他群组区块高度
 ```
 
@@ -357,7 +357,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 $ [group:1]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 查看group1当前块高，块高增加为1表明出块正常，否则请检查group1是否共识正常
-$ [group:1]> getBlockNumber 
+$ [group:1]> getBlockNumber
 1
 
 # ... 向group2发交易...
@@ -396,7 +396,7 @@ $ [group:3]> exit
 
 ```eval_rst
 .. important::
-    
+
     节点每出一个新块，会打印一条Report日志，Report日志中各字段含义如下：
      - ``g:``：群组ID
      - ``num``：出块高度；
@@ -433,9 +433,9 @@ info|2019-02-11 16:14:33.930978| [g:3][p:776][CONSENSUS][PBFT]^^^^^^^^Report,num
 
 ```eval_rst
 .. important::
-    
+
     新节点加入群组前，请确保：
-    
+
     - 新加入NodeID存在
     - 群组内节点正常共识：正常共识的节点会输出+++日志
 ````
@@ -450,14 +450,14 @@ $ cd ~/fisco/nodes/127.0.0.1
 $ cp node0/conf/group.2.* node2/conf
 
 # ...重启node2(重启后请确定节点正常共识)...
-$ cd node2 && bash stop.sh && bash start.sh 
+$ cd node2 && bash stop.sh && bash start.sh
 ```
 
 **获取node2的节点ID**
 
 ```bash
 # 请记住node2的node ID，将node2加入到group2需用到该node ID
-$ cat conf/node.nodeid 
+$ cat conf/node.nodeid
 6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4
 ```
 
@@ -494,7 +494,7 @@ $ [group:2]> getSealerList
     6dc585319e4cf7d73ede73819c6966ea4bed74aadbbcba1bbb777132f63d355965c3502bed7a04425d99cdcfb7694a1c133079e6d9b0ab080e3b874882b95ff4 # 新加入节点
 ]
 # 获取group2当前块高
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 2
 
 #... 向group2发交易
@@ -503,7 +503,7 @@ $ [group:2] deploy HelloWorld
 contract address:0xdfdd3ada340d7346c40254600ae4bb7a6cd8e660
 
 # 获取group2当前块高，块高增加为3，若块高不变，请检查group2共识情况
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 3
 
 # 退出控制台
@@ -601,15 +601,15 @@ $ tail -f node0/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:52.065958| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=da72649e...
 
 # 查看node1共识情况
-$ tail -f node1/log/* | grep "g:1.*++" 
+$ tail -f node1/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:54.070297| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=11c9354d...
 
 # 查看node2共识情况
-$ tail -f node2/log/* | grep "g:1.*++" 
+$ tail -f node2/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:55.073124| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=b65cbac8...
 
 # 查看node3共识情况
-$ tail -f node3/log/* | grep "g:1.*++" 
+$ tail -f node3/log/* | grep "g:1.*++"
 info|2019-02-11 20:59:53.067702| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=0467e5c4...
 
 ```
@@ -645,7 +645,7 @@ $ bash start_all.sh
 
 ```bash
 # 查看node0 group2共识情况（Ctrl+c退回命令行）
-$ tail -f node0/log/* | grep "g:2.*++" 
+$ tail -f node0/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:28.541596| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=f3562664...
 
 # 查看node1 group2共识情况
@@ -653,11 +653,11 @@ $ tail -f node1/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:30.546011| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=0,hash=4b17e74f...
 
 # 查看node2 group2共识情况
-$ tail -f node2/log/* | grep "g:2.*++" 
+$ tail -f node2/log/* | grep "g:2.*++"
 info|2019-02-11 21:13:59.653615| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=90cbd225...
 
 # 查看node3 group2共识情况
-$ tail -f node3/log/* | grep "g:2.*++" 
+$ tail -f node3/log/* | grep "g:2.*++"
 info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=d7dcb462...
 
 ```
@@ -677,7 +677,7 @@ $ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/downlo
 
 ```bash
 # 获取channel_port
-$ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini 
+$ grep "channel_listen_port" multi_nodes/127.0.0.1/node0/config.ini
 multi_nodes/127.0.0.1/node0/config.ini:    channel_listen_port=20100
 
 # 进入控制台目录
@@ -751,11 +751,11 @@ $ bash start.sh
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________ ______  ______   ______   ______       _______   ______   ______   ______  
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \ 
+ ________ ______  ______   ______   ______       _______   ______   ______   ______
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \ 
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
 | $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
 | $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
@@ -764,13 +764,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =====================================================================================
 # ... 向group1发交易...
 # 获取当前块高
-$ [group:1]> getBlockNumber 
+$ [group:1]> getBlockNumber
 0
 # 向group1部署HelloWorld合约，若部署失败，请检查group1共识是否正常
 $ [group:1]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 获取当前块高，若块高没有增加，请检查group1共识是否正常
-$ [group:1]> getBlockNumber 
+$ [group:1]> getBlockNumber
 1
 
 # ... 向group2发交易...
@@ -778,13 +778,13 @@ $ [group:1]> getBlockNumber
 $ [group:1]> switch 2
 Switched to group 2.
 # 获取当前块高
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 0
 # 向group2部署HelloWorld合约
 $ [group:2]> deploy HelloWorld
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 获取当前块高，若块高没有增加，请检查group2共识是否正常
-$ [group:2]> getBlockNumber 
+$ [group:2]> getBlockNumber
 1
 # 退出控制台
 $[group:2]> exit

@@ -39,7 +39,7 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试从 `https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh` 获取脚本
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ### 搭建单群组4节点联盟链
@@ -164,12 +164,12 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试从 `https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh` 获取
+    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 - 拷贝控制台配置文件

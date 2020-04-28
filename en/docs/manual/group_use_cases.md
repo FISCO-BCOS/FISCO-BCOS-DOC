@@ -11,9 +11,9 @@ This chapter takes the star networking and parallel multi-group networking as an
 
 ```eval_rst
 .. important::
-    - ``build_chain.sh`` is suitable for developers and users to use quickly, does not support expansion operations
+    - ``build_chain.sh`` is suitable for developers and users to use quickly
 
-    - Build an enterprise-level business chain, recommend to use `generator <../enterprise_tools/index.html>`_   
+    - Build an enterprise-level business chain, recommend to use `generator <../enterprise_tools/index.html>`_
 ```
 
 ## Introduction of star networking topology and parallel multi-group networking topology
@@ -211,7 +211,7 @@ info|2019-02-11 15:33:31.021697| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # ... To check node1, node2 node for each group is normal or not, refer to the above operation method...
 
 # Check if node3 group1 is normal
-$ tail -f node3/log/*| grep "g:1.*++"  
+$ tail -f node3/log/*| grep "g:1.*++"
 info|2019-02-11 15:39:43.927167| [g:1][p:264][CONSENSUS][SEALER]++++++++Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=5e94bf63...
 
 # Check if node5 group2 is normal
@@ -228,6 +228,7 @@ The console connects to the FISCO BCOS node through the Web3SDK, it is used to q
 ```eval_rst
 .. important::
    The console relies on Java 8 and above, and Ubuntu 16.04 system needs be installed with openjdk 8. Please install Oracle Java 8 or above for CentOS.
+   If the script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 ```bash
@@ -331,7 +332,7 @@ $ bash start.sh
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________ ______  ______   ______   ______       _______   ______   ______   ______  
+ ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
@@ -760,7 +761,7 @@ $ bash start.sh
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________ ______  ______   ______   ______       _______   ______   ______   ______  
+ ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$

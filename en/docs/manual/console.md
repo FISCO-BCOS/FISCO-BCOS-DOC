@@ -58,6 +58,12 @@ $ cd ~ && mkdir fisco && cd fisco
 # get console
 $ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
 ```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+```
+
 The directory structure is as follows:
 ```bash
 |-- apps # console jar package directory
@@ -147,7 +153,7 @@ The directory structure is as follows:
 - Blockchain node and certificate configuration:
    - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
    - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
-  
+
 - Open OSCCA-approved cryptography switch
 ```
 <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
@@ -161,7 +167,12 @@ The directory structure is as follows:
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
 # Replace Jar package.
 $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-``` 
+```
+
+```eval_rst
+.. note::
+    - If the package cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar`
+```
 
 #### Contract compilation tool
 
@@ -230,7 +241,7 @@ $ ./start.sh
 =====================================================================================
 Welcome to FISCO BCOS console(1.0.3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________ ______  ______   ______   ______       _______   ______   ______   ______  
+ ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
 | $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
 | $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
@@ -365,8 +376,8 @@ switch(s)                                Switch to a specific group by group ID.
 [update sql]                             Update records by sql.
 -------------------------------------------------------------------------------------
 ```
-**Note: **                                       
-- help shows the meaning of each command: command and command description                  
+**Note: **
+- help shows the meaning of each command: command and command description
 - for instructions on how to use specific commands, enter the command -h or \--help to view them. E.g:
 
 ```text
@@ -433,7 +444,7 @@ To run getNodeIDList to view the nodes and the list of nodeIds connected to p2p 
 To run getPbftView to view the pbft viewgraph.
 
 ```text
-[group:1]> getPbftView  
+[group:1]> getPbftView
 2730
 ```
 ### **getConsensusStatus**
@@ -661,11 +672,11 @@ Parameter:
 ### **getBlockByNumber**
 To run getBlockByNumber to view block information according to the block number.
 Parameter:
-- Block number: decimal integer.    
+- Block number: decimal integer.
 - Transaction sign: to set it false by default, the transaction in the block only displays the hash. To set it true, it displays the transaction specific information.
 
 ```text
-[group:1]> getBlockByNumber 1  
+[group:1]> getBlockByNumber 1
 {
     "extraData":[
 
@@ -1137,7 +1148,7 @@ Parameters:
 ### **getSystemConfigByKey**
 
 To run getSystemConfigByKe to inquire the value of the system configuration according to the key.
-Parameter:  
+Parameter:
 
 - key
 ```text

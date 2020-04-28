@@ -107,10 +107,10 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 ```
 
 ### **`s`option[**Optional**]**
-There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, external and scalable. RocksDB is used by default. 
+There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, external and scalable. RocksDB is used by default.
 
 - rocksdb use RocksDB as backend database.
-- mysql needs to configure the information relates to mysql in the group ini file. 
+- mysql needs to configure the information relates to mysql in the group ini file.
 - external needs to configure topic information and start amdb-proxy.
 - scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
 
@@ -230,6 +230,11 @@ The next operation is done under the `nodes/127.0.0.1` directory generated in th
 
 ```bash
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
 ```
 
 2. Generating new node private key certificates

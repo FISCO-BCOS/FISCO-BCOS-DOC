@@ -82,6 +82,11 @@ $ cmake ..
 $ make
 ```
 
+```eval_rst
+.. note::
+    - If dependency libs cannot be downloaded for a long time due to network problems, try `https://gitee.com/FISCO-BCOS/LargeFiles/tree/master/libs` , and put in FISCO-BCOS/deps/src/
+```
+
 ### Compile options
 
 - BUILD_GM，off by default, national cryptography compilation flag. To enable it, use `cmake -DBUILD_GM=on ..`
