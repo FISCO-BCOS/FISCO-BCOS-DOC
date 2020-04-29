@@ -51,7 +51,7 @@ FISCO BCOS提供[合约CRUD接口](../manual/smart_contract.html#crud)开发模�
 
 ```js
 // 查询资产金额
-function select(string account) public constant returns(int256, uint256) 
+function select(string account) public constant returns(int256, uint256)
 // 资产注册
 function register(string account, uint256 amount) public returns(int256)
 // 资产转移
@@ -69,18 +69,18 @@ contract Asset {
     // event
     event RegisterEvent(int256 ret, string account, uint256 asset_value);
     event TransferEvent(int256 ret, string from_account, string to_account, uint256 amount);
-    
+
     constructor() public {
         // 构造函数中创建t_asset表
         createTable();
     }
 
     function createTable() private {
-        TableFactory tf = TableFactory(0x1001); 
+        TableFactory tf = TableFactory(0x1001);
         // 资产管理表, key : account, field : asset_value
         // |  资产账户(主键)      |     资产金额       |
         // |-------------------- |-------------------|
-        // |        account      |    asset_value    |     
+        // |        account      |    asset_value    |
         // |---------------------|-------------------|
         //
         // 创建表
@@ -95,7 +95,7 @@ contract Asset {
 
     /*
     描述 : 根据资产账户查询资产金额
-    参数 ： 
+    参数 ：
             account : 资产账户
 
     返回值：
@@ -118,7 +118,7 @@ contract Asset {
 
     /*
     描述 : 资产注册
-    参数 ： 
+    参数 ：
             account : 资产账户
             amount  : 资产金额
     返回值：
@@ -134,7 +134,7 @@ contract Asset {
         (ret, temp_asset_value) = select(account);
         if(ret != 0) {
             Table table = openTable();
-            
+
             Entry entry = table.newEntry();
             entry.set("account", account);
             entry.set("asset_value", int256(asset_value));
@@ -159,7 +159,7 @@ contract Asset {
 
     /*
     描述 : 资产转移
-    参数 ： 
+    参数 ：
             from_account : 转移资产账户
             to_account ： 接收资产账户
             amount ： 转移金额
@@ -177,7 +177,7 @@ contract Asset {
         int256 ret = 0;
         uint256 from_asset_value = 0;
         uint256 to_asset_value = 0;
-        
+
         // 转移账户是否存在?
         (ret, from_asset_value) = select(from_account);
         if(ret != 0) {
@@ -202,7 +202,7 @@ contract Asset {
             // 转移资产的账户金额不足
             emit TransferEvent(ret_code, from_account, to_account, amount);
             return ret_code;
-        } 
+        }
 
         if (to_asset_value + amount < to_asset_value) {
             ret_code = -4;
@@ -312,6 +312,11 @@ public class Asset extends Contract {
     $ tar -zxf asset-app.tar.gz
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz`
+```
+
 asset-app项目的目录结构如下：
 
 ```bash
@@ -333,7 +338,7 @@ asset-app项目的目录结构如下：
 |   |                                      |-- AssetClient.java
 |   |                               |-- contract // 放置Java合约类
 |   |                                      |-- Asset.java
-|   |-- test 
+|   |-- test
 |       |-- resources // 存放代码资源文件
 |           |-- applicationContext.xml // 项目配置文件
 |           |-- contract.properties // 存储部署合约地址的文件
@@ -372,7 +377,7 @@ compile ('org.fisco-bcos：web3sdk：2.1.0')
 
 -   区块链节点证书配置
 
-拷贝区块链节点对应的SDK证书 
+拷贝区块链节点对应的SDK证书
 
 ```bash
 # 进入~目录
@@ -381,7 +386,7 @@ $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
 
--   applicationContext.xml  
+-   applicationContext.xml
 
 **注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/java_sdk.html#spring)。
 
@@ -391,7 +396,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 `AssetClient.java`: 通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`，初始化以及调用流程都在该类中进行。
 
--   初始化  
+-   初始化
 
 初始化代码的主要功能为构造Web3j与Credentials对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 
@@ -409,7 +414,7 @@ Web3j web3j = Web3j.build(channelEthereumService, 1);
 Credentials credentials = Credentials.create(Keys.createEcKeyPair());
 ```
 
--   构造合约类对象  
+-   构造合约类对象
 
 可以使用deploy或者load函数初始化合约对象，两者使用场景不同，前者适用于初次部署合约，后者在合约已经部署并且已知合约地址时使用。
 
@@ -420,7 +425,7 @@ Asset asset = Asset.deploy(web3j, credentials, new StaticGasProvider(gasPrice, g
 Asset asset = Asset.load(contractAddress, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
 ```
 
--   接口调用  
+-   接口调用
 
 使用合约对象调用对应的接口，处理返回结果。
 
@@ -454,36 +459,36 @@ $ ./gradlew build
 # 进入dist目录
 $ cd dist
 $ bash asset_run.sh deploy
-Deploy Asset succesfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
+Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
 ```
 
 -   注册资产
 
 ```bash
 $ bash asset_run.sh register Alice 100000
-Register account succesfully => account: Alice, value: 100000 
+Register account successfully => account: Alice, value: 100000
 $ bash asset_run.sh register Bob 100000
-Register account succesfully => account: Bob, value: 100000 
+Register account successfully => account: Bob, value: 100000
 ```
 
 -   查询资产
 
 ```bash
-$ bash asset_run.sh query Alice              
-account Alice, value 100000 
-$ bash asset_run.sh query Bob              
-account Bob, value 100000 
+$ bash asset_run.sh query Alice
+account Alice, value 100000
+$ bash asset_run.sh query Bob
+account Bob, value 100000
 ```
 
 -   资产转移
 
 ```bash
 $ bash asset_run.sh transfer Alice Bob  50000
-Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000 
-$ bash asset_run.sh query Alice 
-account Alice, value 50000 
+Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000
+$ bash asset_run.sh query Alice
+account Alice, value 50000
 $ bash asset_run.sh query Bob
-account Bob, value 150000 
+account Bob, value 150000
 ```
 
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。

@@ -19,8 +19,8 @@
   FISCO BCOS 2.0版本如何搭建？<br>
 答:
   FISCO BCOS支持多种搭建方式，常用方式有：
-  - build_chain.sh：适合开发者体验、测试FISCO BCOS联盟链，具体请 [参考这里](./manual/build_chain.md)。
-  - FISCO-Generator：使用企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise_tools/index.md)。
+  - 开发部署工具 build_chain.sh：适合开发者体验、测试FISCO BCOS联盟链，具体请 [参考这里](./manual/build_chain.md)。
+  - 运维部署工具 generator：适用于企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise_tools/index.md)。
 
 问:
   FISCO BCOS 2.0版本的智能合约与之前版本合约有什么不同，兼容性如何？<br>
@@ -84,17 +84,17 @@
 
 问:
   群组配置都是可改的吗？<br>
-答: 
+答:
   从配置项是否可改的维度，分为
 
   - 节点首次启动生成创世块后不能再修改。这类配置放置于group.x.genesis文件，其中x表示组编号，全链唯一。
   - 通过发交易修改配置项实现账本内一致。
-  - 修改自身配置文件后，节点重启生效。这类配置放置于`group.x.ini`文件。群组配置改后重启可改项就是本地配置，nodeX/conf下的`group.*.ini`文件，更改重启生效。涉及配置项为[tx_pool].limit（交易池容量），[consensus].ttl(节点转发数)。  
+  - 修改自身配置文件后，节点重启生效。这类配置放置于`group.x.ini`文件。群组配置改后重启可改项就是本地配置，nodeX/conf下的`group.*.ini`文件，更改重启生效。涉及配置项为[tx_pool].limit（交易池容量），[consensus].ttl(节点转发数)。
 
 
 问:
   群组配置用户可以改的涉及哪些配置？<br>
-答: 
+答:
   群组可修改配置分为共识可改配置和手工可改配置
 
   - 共识可改配置：全组所有节点相同，共识后生效。[consensus].max_trans_num,[consensus].node.X,[tx].gas_limit。
@@ -102,7 +102,7 @@
 
 问:
   群组共识可改配置如何更改、查询？<br>
-答: 
+答:
   共识可改配置可以通过控制台修改。共识可改配置项查询除了控制台外，还可以通过RPC接口查询，具体请 [参考这里](./design/rpc.md)。
 
   - [consensus].max_trans_num，[tx].gas_limit使用接口setSystemConfigByKey更改，对于的配置项为tx_count_limit，tx_gas_limit。具体参见setSystemConfigByKey -h 。
@@ -147,18 +147,18 @@
   参考[JavaSDK异常场景](sdk/java_sdk.html#id22)<br>
 
 
-## 企业级部署工具
+## 运维部署工具
 问：
-  企业级部署工具使用时出现找不到pip
+  运维部署工具使用时出现找不到pip
 
 答：
-  企业级部署工具依赖python pip，使用以下命令安装：
+  运维部署工具依赖python pip，使用以下命令安装：
 ```
 $ bash ./scripts/install.sh
 ```
 
 问:
-  企业级部署工具使用时出现
+  运维部署工具使用时出现
 ```
 Traceback (most recent call last):
    File "./generator", line 19, in <module>

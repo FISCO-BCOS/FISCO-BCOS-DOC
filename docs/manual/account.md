@@ -14,14 +14,27 @@ FISCO BCOS提供了脚本和Web3SDK用以创建账户，同时也提供了Web3SD
 ## 账户的创建
 
 ### 使用脚本创建账户
+
 #### 1. 获取脚本
+
 ```bash
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
 ```
 
 国密版本请使用下面的指令获取脚本
 ```bash
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
+    - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
 ```
 
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。
@@ -80,13 +93,13 @@ MAC verified OK
 //创建普通账户
 EncryptType.encryptType = 0;
 //创建国密账户，向国密区块链节点发送交易需要使用国密账户
-// EncryptType.encryptType = 1; 
+// EncryptType.encryptType = 1;
 Credentials credentials = GenCredential.create();
 //账户地址
 String address = credentials.getAddress();
-//账户私钥 
+//账户私钥
 String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
-//账户公钥 
+//账户公钥
 String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ```
 
@@ -151,7 +164,7 @@ ApplicationContext context = new ClassPathXmlApplicationContext("classpath:appli
 P12Manager p12 = context.getBean(P12Manager.class);
 //提供密码获取ECKeyPair，密码在生产p12账户文件时指定
 ECKeyPair p12KeyPair = p12.getECKeyPair(p12.getPassword());
-			
+
 //以十六进制串输出私钥和公钥
 System.out.println("p12 privateKey: " + p12KeyPair.getPrivateKey().toString(16));
 System.out.println("p12 publicKey: " + p12KeyPair.getPublicKey().toString(16));

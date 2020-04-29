@@ -4,7 +4,7 @@
 
 ## 单群组FISCO BCOS联盟链的搭建
 
-本节以搭建单群组FISCO BCOS链为例操作。使用`build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
+本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
 
 
 ```eval_rst
@@ -18,7 +18,7 @@
 
 - 安装依赖
 
-`build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。  
+`开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
 若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可。
 
 ```bash
@@ -37,9 +37,14 @@ cd ~ && mkdir -p fisco && cd fisco
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
 ### 搭建单群组4节点联盟链
 
-在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。  
+在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。
 请确保机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
 
 ```bash
@@ -107,7 +112,7 @@ try to start node3
 ps -ef | grep -v grep | grep fisco-bcos
 ```
 
-正常情况会有类似下面的输出；  
+正常情况会有类似下面的输出；
 如果进程数不为4，则进程没有启动（一般是端口被占用导致的）
 ```bash
 fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
@@ -147,7 +152,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 配置及使用控制台
 
-在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。  
+在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。
 控制台指令详细介绍[参考这里](manual/console.md)。
 
 ### 准备依赖
@@ -159,7 +164,12 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 - 拷贝控制台配置文件
@@ -182,7 +192,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 ```bash
 cd ~/fisco/console && bash start.sh
 ```
-  
+
 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
 
 ```bash
@@ -281,34 +291,34 @@ contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 # 查看当前块高
 [group:1]> getBlockNumber
 1
-  
+
 # 调用get接口获取name变量 此处的合约地址是deploy指令返回的地址
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, World!
-  
+
 # 查看当前块高，块高不变，因为get接口不更改账本状态
 [group:1]> getBlockNumber
 1
-  
+
 # 调用set设置name
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
 0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
-  
+
 # 再次查看当前块高，块高增加表示已出块，账本状态已更改
 [group:1]> getBlockNumber
 2
-  
+
 # 调用get接口获取name变量，检查设置是否生效
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
 Hello, FISCO BCOS
-  
+
 # 退出控制台
 [group:1]> quit
 ```
-  
-**注：**  
-1. 部署合约还可以通过`deployByCNS`命令，可以指定部署的合约版本号，使用方式[参考这里](manual/console.html#deploybycns)。  
-2. 调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。  
+
+**注：**
+1. 部署合约还可以通过`deployByCNS`命令，可以指定部署的合约版本号，使用方式[参考这里](manual/console.html#deploybycns)。
+2. 调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。
 
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

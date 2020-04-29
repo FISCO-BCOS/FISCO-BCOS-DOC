@@ -182,7 +182,7 @@ Options:
 
 其中，
 
-**--caliper-bind-sut** ：用于指定需要测试的区块链平台，即受测系统（***S***ystem ***u***nder ***T***est）；  
+**--caliper-bind-sut** ：用于指定需要测试的区块链平台，即受测系统（***S***ystem ***u***nder ***T***est）；
 **--caliper-bind-sdk**：用于指定适配器版本；
 **--caliper-bind-cwd**：用于绑定`caliper-cli`的工作目录，`caliper-cli`在加载配置文件等场合时均是使用相对于工作目录的相对路径；
 **caliper-bind-args**：用于指定`caliper-cli`在安装依赖项时传递给`npm`的参数，如用于全局安装的`-g`。
@@ -241,8 +241,8 @@ Options:
 
 其中，
 
-**--caliper-workspace**：用于指定`caliper-cli`的工作目录，如果没有绑定工作目录，可以通过该选项动态指定工作目录；  
-**--caliper-benchconfig**：用于指定测试配置文件，测试配置文件中包含测试的具体参数，如交易的发送方式、发送速率控制器类型、性能监视器类型等；  
+**--caliper-workspace**：用于指定`caliper-cli`的工作目录，如果没有绑定工作目录，可以通过该选项动态指定工作目录；
+**--caliper-benchconfig**：用于指定测试配置文件，测试配置文件中包含测试的具体参数，如交易的发送方式、发送速率控制器类型、性能监视器类型等；
 **--caliper-networkconfig**：用于指定网络配置文件，网络配置文件中会指定Caliper与受测系统的连接方式及要部署测试的合约等。
 
 三、自定义测试用例
@@ -273,7 +273,7 @@ sudo service docker stop
 }
 ```
 
-**"unix:///var/run/docker.sock"**：UNIX套接字，本地客户端将通过这个来连接Docker Daemon；  
+**"unix:///var/run/docker.sock"**：UNIX套接字，本地客户端将通过这个来连接Docker Daemon；
 **tcp://0.0.0.0:2375**，TCP套接字，表示允许任何远程客户端通过2375端口连接Docker Daemon.
 
 使用`sudo systemctl edit docker`新建或修改`/etc/systemd/system/docker.service.d/override.conf`，其内容如下：
@@ -315,7 +315,7 @@ docker -H 192.168.1.1:2375 images
 
 #### 3.1.2 建链
 
-使用[build_chain.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
+使用[开发部署工具 build_chain.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
 
 创建生成节点的配置文件（如一个名为`ipconf`的文件），文件内容如下：
 
@@ -329,7 +329,7 @@ docker -H 192.168.1.1:2375 images
 生成链中节点的配置文件：
 
 ```bash
-bash  build_chain.sh -f ipconf -i -p 30914,20914,8914
+bash build_chain.sh -f ipconf -i -p 30914,20914,8914
 ```
 
 将产生的节点配置文件夹分别拷贝至对应的服务器上：
@@ -439,7 +439,7 @@ docker -H 192.168.1.4:2375 stop $(docker -H 192.168.1.3:2375 ps -a | grep node3 
 
 - **network.authentication**
 
-适配器向节点的Channel端口发起请求时需要使用CA根证书等文件，这些文件已在3.1.2节中调用build_chain.sh脚本时已经生成好，使用任一节点配置下的sdk文件夹中的相应文件即可，需要在该配置中写上所有文件的路径（使用相对路径时需要以`caliper-cli`工作目录为起始目录）。
+适配器向节点的Channel端口发起请求时需要使用CA根证书等文件，这些文件已在3.1.2节中调用`build_chain.sh`脚本时已经生成好，使用任一节点配置下的sdk文件夹中的相应文件即可，需要在该配置中写上所有文件的路径（使用相对路径时需要以`caliper-cli`工作目录为起始目录）。
 
 - **network.smartContracts**
 

@@ -30,7 +30,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 ```eval_rst
 .. note::
     出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能：
-     
+
      - 配置中仅包含listen_ip：RPC和Channel的监听IP均为配置的listen_ip
      - 配置中同时包含listen_ip、channel_listen_ip或jsonrpc_listen_ip：优先解析channel_listen_ip和jsonrpc_listen_ip，没有配置的配置项用listen_ip的值替代
 ```
@@ -240,7 +240,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
     - **配置群组内一致** ：群组系统配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
     - **节点启动后不可更改** ：系统配置已经作为创世块写入了系统表，链初始化后不可更改
     - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
-    - 由于genesis配置要求群组内所有节点一致，建议使用 `build_chain <build_chain.html>`_ 生成该配置
+    - 由于genesis配置要求群组内所有节点一致，建议使用 `开发部署工具 build_chain <build_chain.html>`_ 生成该配置
 ```
 
 ### 群组配置
@@ -280,7 +280,7 @@ FISCO BCOS v2.3.0引入了RPBFT共识算法，具体可参考[这里](../design/
     ; 共识算法，目前支持PBFT(consensus_type=pbft)和Raft(consensus_type=raft)
     consensus_type=pbft
     ; 单个块最大交易数
-    max_trans_num=1000 
+    max_trans_num=1000
     ; 一个共识周期内选取参与共识的节点数，RPBFT配置项，对其他共识算法不生效
     epoch_sealer_num=4
     ; 一个共识周期出块数，RPBFT配置项，对其他共识算法不生效
@@ -372,7 +372,7 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 #### 数据库相关配置项
 
 - `topic`：当type为`External`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./distributed_storage.html#id3)。
-- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./distributed_storage.html#id3)。 
+- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./distributed_storage.html#id3)。
 - `scroll_threshold_multiple`：当type为`Scalable`时，此配置项用于配置区块数据库的切换阈值，按`scroll_threshold_multiple*1000`。默认为2，区块数据按每2000块存储在不同的RocksDB实例中。
 - `db_ip`：当type为`MySQL`时，需要配置该字段，表示MySQL的IP地址。
 - `db_port`：当type为`MySQL`时，需要配置该字段，表示MySQL的端口号。
@@ -581,7 +581,7 @@ max_request_missedTxs_waitTime=100
     ; 默认开启交易树状广播策略
     send_txs_by_tree=false
 ```
-    
+
 ```eval_rst
 .. note::
     - 由于协议一致性需求，须保证所有节点交易树状广播开关`send_txs_by_tree`配置一致
@@ -631,7 +631,7 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 | tx_count_limit  | 1000 | 一个区块中可打包的最大交易数目 |
 | tx_gas_limit  | 300000000 | 一个交易最大gas限制 |
 | rpbft_epoch_sealer_num | 链共识节点总数 | RPBFT系统配置，一个共识周期内选取参与共识的节点数目，RPBFT每个共识周期都会动态切换参与共识的节点数目 |
-| rpbft_epoch_block_num | 1000 | RPBFT系统配置，一个共识周期内出块数目| 
+| rpbft_epoch_block_num | 1000 | RPBFT系统配置，一个共识周期内出块数目|
 
 
 控制台提供 **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
@@ -668,7 +668,7 @@ Note: rpbft_epoch_sealer_num only takes effect when RPBFT is used
     "msg":"success"
 }
 # 查询rpbft_epoch_sealer_num
-[group:1]> getSystemConfigByKey rpbft_epoch_sealer_num 
+[group:1]> getSystemConfigByKey rpbft_epoch_sealer_num
 Note: rpbft_epoch_sealer_num only takes effect when RPBFT is used
 4
 

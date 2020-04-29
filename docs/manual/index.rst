@@ -13,7 +13,7 @@
    build_chain.md
    certificates.md
    configuration.md
-   group_use_cases.md 
+   group_use_cases.md
    distributed_storage.md
    console.md
    account.md
@@ -34,7 +34,7 @@
 
     - `获取可执行程序 <./get_executable.html>`_
         + 下载二进制、docker镜像或手动编译
-    - `建链脚本 <./build_chain.html>`_
+    - `开发部署工具 <./build_chain.html>`_
         + 脚本选项、生成的节点目录结构
     - `证书说明 <./certificates.html>`_
         + 证书格式、证书对应角色、证书生成流程
@@ -86,9 +86,9 @@
     - `日志说明 <./log_description.html>`_
         + 节点日志格式和说明
     - `Caliper压力测试指南 <./caliper.html>`_
-        + Caliper压力测试指南 
+        + Caliper压力测试指南
 
-.. important:: 
+.. important::
 
     * 核心特性
         + `多群组部署 <./group_use_cases.html>`_

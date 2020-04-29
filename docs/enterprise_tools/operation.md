@@ -383,7 +383,7 @@ $ cd ./data/monitor
 1. 监控节点是否存活, 并且可以重新启动挂掉的节点.
 2. 获取节点的块高和view信息, 判断节点共识是否正常.
 3. 分析最近一分钟的节点日志打印, 收集日志关键错误打印信息, 准实时判断节点的状态.
-4. 指定日志文件或者指定时间段, 分析节点的共识消息处理, 出块, 交易数量等信息, 判断节点的健康度. 
+4. 指定日志文件或者指定时间段, 分析节点的共识消息处理, 出块, 交易数量等信息, 判断节点的健康度.
 
 ### 配置告警服务
 
@@ -392,7 +392,7 @@ $ cd ./data/monitor
 绑定自己的github账号，以及微信后，可以使用本脚本向微信发送告警信息，使用本脚本的-s命令 可以向指定微信发送告警信息
 
 如果用户希望使用其他服务，可以修改monitor.sh中的alarm() {
-    # change http server  
+    # change http server
 }函数，个性化配置为自己需要的服务
 
 ### help命令
@@ -455,10 +455,15 @@ FISCO BCOS generator 的scripts文件夹的`check_certificates.sh`脚本包含�
 
 ### 获取脚本
 
-如果用户需要检测由`buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
+如果用户需要检测由`开发部署工具buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
 
 ```bash
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/generator/raw/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh`
 ```
 
 使用generator部署节点的用户可以从generator的根目录下，从scripts/check_certificates.sh获取脚本。
@@ -491,6 +496,11 @@ $ ./check_certificates.sh -v ~/ca.crt ~/node.crt
 
 ```bash
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/check_node_config.sh && chmod u+x check_node_config.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/check_node_config.sh`
 ```
 
 ### 使用

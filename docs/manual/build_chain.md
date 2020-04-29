@@ -1,8 +1,8 @@
-# 建链脚本
+# 开发部署工具
 
 ```eval_rst
 .. important::
-    build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `企业级部署工具 <../enterprise_tools/index.html>`_ 。
+    开发部署工具 build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `运维部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
 FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
@@ -50,10 +50,10 @@ e.g
 
 ## 选项介绍
 
-### **`l`选项:** 
+### **`l`选项:**
 用于指定要生成的链的IP列表以及每个IP下的节点数，以逗号分隔。脚本根据输入的参数生成对应的节点配置文件，其中每个节点的端口号默认从30300开始递增，所有节点属于同一个机构和群组。
 
-### **`f`选项** 
+### **`f`选项**
     + 用于根据配置文件生成节点，相比于`l`选项支持更多的定制。
     + 按行分割，每一行表示一个服务器，格式为`IP:NUM AgencyName GroupList`，每行内的项使用空格分割，**不可有空行**。
     + `IP:NUM`表示机器的IP地址以及该机器上的节点数。`AgencyName`表示机构名，用于指定使用的机构证书。`GroupList`表示该行生成的节点所属的组，以`,`分割。例如`192.168.0.1:2 agency1 1,2`表示`ip`为`192.168.0.1`的机器上有两个节点，这两个节点属于机构`agency1`，属于group1和group2。
@@ -82,7 +82,7 @@ bash build_chain.sh -f ipconf -T
 # 从GitHub下载下载最新release二进制，生成本机4节点
 $ bash build_chain.sh -l "127.0.0.1:4"
 # 使用 bin/fisco-bcos 二进制，生成本机4节点
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
+$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 ```
 
 ### **`o`选项[**Optional**]**
@@ -255,6 +255,11 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
 2. 生成新节点私钥证书
 
 ```bash
@@ -328,6 +333,6 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 
 ### 多服务器多群组
 
-使用build_chain脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../manual/group_use_cases.md)。
+使用`build_chain`脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../manual/group_use_cases.md)。
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

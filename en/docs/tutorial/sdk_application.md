@@ -3,7 +3,7 @@
 
 This chapter will introduce a whole process of business application scenario development based on FISCO BCOS blockchain. The introduce includes business scenario analysis, contract design implementation, contract compilation, and blockchain development. Finally, we introduce an application module implementation which is to implement calling access to the contract on blockchain through the Web3SDK we provide.
 
-This tutorial requires user to be familiar with the Linux operating environment, has the basic skills of Java development, is able to use the Gradle tool, and is familiar with [Solidity syntax](https://solidity.readthedocs.io/en/latest/). 
+This tutorial requires user to be familiar with the Linux operating environment, has the basic skills of Java development, is able to use the Gradle tool, and is familiar with [Solidity syntax](https://solidity.readthedocs.io/en/latest/).
 
 **Through the tutorial, you will learn the following:**
 
@@ -82,7 +82,7 @@ contract Asset {
         // asset management table, key : account, field : asset_value
         // |  account(primary key)   |  amount       |
         // |-------------------- |-------------------|
-        // |        account      |    asset_value    |     
+        // |        account      |    asset_value    |
         // |---------------------|-------------------|
         //
         // create table
@@ -318,6 +318,11 @@ We provide a Java engineering project for development. First, get the Java engin
     $ tar -zxf asset-app.tar.gz
 ```
 
+```eval_rst
+.. note::
+    - If the asset-app.tar.gz cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz`
+```
+
 The directory structure of the asset-app project is as follows:
 
 ```bash
@@ -387,7 +392,7 @@ $ cd ~
 $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 ```
 
--   applicationContext.xml  
+-   applicationContext.xml
 
 **Note:**
 
@@ -400,7 +405,7 @@ We've covered how to introduce and configure the Web3SDK in your own project. Th
 `AssetClient.java`: The deployment and invocation of the contract is implemented by calling `Asset.java`, The path `/src/main/java/org/fisco/bcos/asset/client`, the initialization and the calling process are all in this class.
 
 
--   initialization  
+-   initialization
 
 The main function of the initialization code is to construct the Web3j and Credentials' objects, which are needed to be used when creating the corresponding contract class object (calling the contract class's deploy or load function).
 
@@ -479,9 +484,9 @@ Register account successfully => account: Bob, value: 100000
 -   query asset
 
 ```bash
-$ bash asset_run.sh query Alice              
+$ bash asset_run.sh query Alice
 account Alice, value 100000
-$ bash asset_run.sh query Bob              
+$ bash asset_run.sh query Bob
 account Bob, value 100000
 ```
 
