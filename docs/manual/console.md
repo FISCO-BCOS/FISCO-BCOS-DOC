@@ -46,6 +46,7 @@
 .. important::
     前置条件：搭建FISCO BCOS区块链请参考 `开发部署工具 <./build_chain.html>`_ 或 `企业工具 <../enterprise_tools/index.html>`_。
 ```
+
 ### 获取控制台
 
 ```bash
@@ -53,6 +54,12 @@ cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
 curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
 ```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+```
+
 目录结构如下：
 ```bash
 |-- apps # 控制台jar包目录
@@ -157,6 +164,11 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar`
+```
+
 #### 合约编译工具
 
 **控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
@@ -209,6 +221,7 @@ $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ
 ```bash
 $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
 ```
+
 ### 启动控制台
 
 在节点正在运行的情况下，启动控制台：

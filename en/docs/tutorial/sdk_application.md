@@ -320,7 +320,7 @@ We provide a Java engineering project for development. First, get the Java engin
 
 ```eval_rst
 .. note::
-    - If the asset-app.tar.gz script cannot be downloaded for a long time due to network problems, try downloading the script from `https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz`
+    - If the asset-app.tar.gz cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz`
 ```
 
 The directory structure of the asset-app project is as follows:

@@ -24,7 +24,7 @@ build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，�
 
 ```eval_rst
 .. note::
-    
+
     源码编译适合于有丰富开发经验的用户，编译过程中需要下载依赖库，请保持网络畅通。受网络和机器配置影响，编译用时5-20分钟不等。
 ```
 
@@ -78,6 +78,11 @@ $ mkdir -p build && cd build
 $ cmake ..
 # 高性能机器可添加-j4使用4核加速编译
 $ make
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载依赖库，请尝试从 `https://gitee.com/FISCO-BCOS/LargeFiles/tree/master/libs` 下载，放在FISCO-BCOS/deps/src/
 ```
 
 ### 编译选项介绍

@@ -314,7 +314,7 @@ public class Asset extends Contract {
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试从 `https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz` 获取
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz`
 ```
 
 asset-app项目的目录结构如下：
