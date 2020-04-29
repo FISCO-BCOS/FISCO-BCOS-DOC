@@ -634,11 +634,11 @@ The `genesis` configuration files in each group of parallel multi-group networki
 $ cd ~/fisco/multi_nodes/127.0.0.1
 
 # Copy the configuration of group 1
-$ cp node0/conf/group.1.genesis group.2.genesis
+$ cp node0/conf/group.1.genesis node0/conf/group.2.genesis
 
 # Modify group ID
-$ sed -i "s/id=1/id=2/g" group.2.genesis
-$ cat group.2.genesis | grep "id"
+$ sed -i "s/id=1/id=2/g" node0/conf/group.2.genesis
+$ cat node0/conf/group.2.genesis | grep "id"
 # Have modified to    id=2
 
 # Copy the configuration to each node
