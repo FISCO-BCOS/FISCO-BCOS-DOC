@@ -875,6 +875,24 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq
 ```
 
+## sendRawTransactionAndGetProof
+
+To execute a signed transaction, after the transaction is chained, push the transaction receipt, transaction Merkle certificate, and transaction receipt Merkle certificate. For the Merkle certificate, please refer to [here] (./design/merkle_proof.md).
+
+```eval_rst
+.. note::
+    - ``supported_version < 2.2.0``: Call the ``sendRawTransactionAndGetProof`` interface, only push the transaction receipt after the transaction is chained
+    - ``supported_version >= 2.2.0``: Call the ``sendRawTransactionAndGetProof`` interface to push the transaction receipt, transaction Merkle certificate, and transaction receipt Merkle certificate after the transaction is chained
+```
+
+### Parameters
+- `groupID`: `unsigned int` - group ID           
+- `rlp`: `string` - transaction data of signing
+
+### Returns          
+- `string` - Transaction hash
+- Example: Same as `sendRawTransaction`, refer to [here](./api.html#sendrawtransaction)
+
 
 ## getTransactionByHashWithProof
 Returns the information about the transaction and its proof by a transaction hash. Please note that this function is supported since 2.2.0.
@@ -1050,7 +1068,164 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceiptByHashWithP
 
 ```
 
+## generateGroup
+Generate new group with group ID and parameters of genesis block. Please note that this function is supported since 2.2.0
+### Parameters
+- `groupID`: `unsigned int` - ID of the group
+- `params`: `object` - parameters of genesis block
+    - `timestamp`: `unsigned int` - timestamp of genesis block
+    - `sealers`: `array` - node ID of sealers, sealers should have valid P2P connection to each other
+    - `enable_free_storage`: `bool` - optional，whether to enable "free storage" mode, after activation, the gas usage of storage instructions will be decreased
+### Returns
+- `object`: - result of calling
+    - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+    - `message`: - message
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"generateGroup","params":[2, '{"timestamp":"1585214879000","sealers":["70f18c055d366615e86df99f91b6d3f16f07d66293b203b73498442c0366d2c8ff7a21bb56923d9d81b1c2916251888e47adf66c350738c898defac50aead5ab","dde37f534885f08db914566efeb03183d59363a4be972bbcdde25c37f0b350e1980a7de4fdc4aaf956b931aab00b739a8af475ed2461b8591d8c734b27285f57","d41672b29b3b1bfe6cad563d0f0b2a2735865b27918307b85085f892043a63f681ac8799243e920f7bb144b111d854d0592ba5f28aa7a4e0f9f533f9fdf76ead","7ba2717f81f38e7371ccdbe173751f051b86819f709e940957664dbde028698fd31ba3042f7dd9accd73741ba42afc35a8ef67fe7abbdeb76344169773aa0eca"],"enable_free_storage":true}'],"id":1}' http://127.0.0.1:8545 | jq
 
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 generated successfully"
+  }
+}
+
+```
+
+## startGroup
+Starts group. Please note that this function is supported since 2.2.0
+### Parameters
+- `groupID`: `unsigned int` - ID of the group
+### Returns
+- `object`: - result of calling
+    - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+    - `message`: - message
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 started successfully"
+  }
+}
+
+```
+## stopGroup
+Stops group. Please note that this function is supported since 2.2.0
+### Parameters
+- `groupID`: `unsigned int` - ID of the group
+### Returns
+- `object`: - result of calling
+    - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+    - `message`: - message
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"stopGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 stopped successfully"
+  }
+}
+
+```
+
+## removeGroup
+Deletes group, but the data of group will be reserved for future recover. Please note that this function is supported since 2.2.0
+### Parameters
+- `groupID`: `unsigned int` - ID of the group
+### Returns
+- `object`: - result of calling
+    - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+    - `message`: - message
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"removeGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 deleted successfully"
+  }
+}
+
+```
+## recoverGroup
+Recovers group. Please note that this function is supported since 2.2.0
+### Parameters
+- `groupID`: `unsigned int` - ID of the group
+### Returns
+- `object`: - result of calling
+    - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+    - `message`: - message
+- Example
+```
+// Request
+curl -Ss -X POST --data '{"jsonrpc":"2.0","method":"recoverGroup","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "Group 2 recovered successfully"
+  }
+}
+
+```
+
+## queryGroupStatus
+Queries status of group. Please note that this function is supported since 2.2.0
+### Parameters
+- `groupID`: `unsigned int` - ID of the group
+### Returns
+- `object`: - result of calling
+    - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+    - `message`: - message
+    - `status`: - status of the group:
+        - `INEXISTENT`: the group is inexistent
+        - `STOPPING`: the group is stopping
+        - `RUNNING`: the group is running
+        - `STOPPED`: the group is stopped
+        - `DELETED`: the group is deleted
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"queryGroupStatus","params":[2],"id":1}' http://127.0.0.1:8545 | jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": "",
+    "status": "STOPPED"
+  }
+}
+
+```
 
 ## Error codes
 
@@ -1151,3 +1326,23 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -51500  | contract name and version already exist         |          |
 | -51501  | condition parse error                           |          |
 | -51502  | condition operation undefined                   |          |
+
+### Dynamice group management API status code
+
+| status code | message                      | definition                                           |
+| :---------- | :--------------------------- | :--------------------------------------------------- |
+| 0x0         | SUCCESS                      | Success                                              |
+| 0x1         | INTERNAL_ERROR               | Internal error                                       |
+| 0x2         | GROUP_ALREADY_EXISTS         | The group already existed when calling generateGroup |
+| 0x3         | GROUP_ALREADY_RUNNING        | The group already run when calling startGroup        |
+| 0x4         | GROUP_ALREADY_STOPPED        | The group already stopppd when calling stopGroup     |
+| 0x5         | GROUP_ALREADY_DELETED        | The group already deleted when calling removeGroup   |
+| 0x6         | GROUP_NOT_FOUND              | The group not exists                                 |
+| 0x7         | INVALID_PARAMS               | Parameters are illegal                               |
+| 0x8         | PEERS_NOT_CONNECTED          | No valid P2P connections between sealers             |
+| 0x9         | GENESIS_CONF_ALREADY_EXISTS  | Configuration of genesis block already existed       |
+| 0xa         | GROUP_CONF_ALREADY_EXIST     | Configuration of group already existed               |
+| 0xb         | GENESIS_CONF_NOT_FOUND       | Configuration of genesis block not found             |
+| 0xc         | GROUP_CONF_NOT_FOUND         | Configuration of group not found                     |
+| 0xd         | GROUP_IS_STOPPING            | The group is stopping                                |
+| 0xf         | GROUP_NOT_DELETED            | The group hasn't been deleted when call recoverGroup |

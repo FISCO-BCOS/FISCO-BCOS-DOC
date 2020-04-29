@@ -127,7 +127,11 @@ P2P配置示例如下：
 
 ### 配置日志信息
 
-FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，主要配置项如下：
+FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，日志配置主要位于`config.ini`的`[log]`配置项中。
+
+#### 日志通用配置
+
+FISCO BCOS通用日志配置项如下：
 
 - `enable`: 启用/禁用日志，设置为`true`表示启用日志；设置为`false`表示禁用日志，**默认设置为true，性能测试可将该选项设置为`false`，降低打印日志对测试结果的影响**
 - `log_path`:日志文件路径。
@@ -146,6 +150,35 @@ boostlog示例配置如下：
     ; 每个日志文件最大容量，默认为200MB
     max_log_file_size=200
     flush=true
+```
+
+#### 统计日志配置
+
+考虑到实时监控系统资源使用情况在实际生产系统中非常重要，FISCO BCOS v2.4.0引入了统计日志，统计日志配置项位于`config.ini`中。
+
+##### 配置统计日志开关
+
+考虑到并非所有场景都需要网络流量和Gas统计功能，FISCO BCOS在`config.ini`中提供了`enable_statistic`选项来开启和关闭该功能，默认关闭该功能。
+
+- `log.enable_statistic`配置成true，开启网络流量和Gas统计功能
+- `log.enable_statistic`配置成false，关闭网络流量和Gas统计功能
+
+配置示例如下：
+
+```ini
+[log]
+    ; enable/disable the statistics function
+    enable_statistic=false
+```
+
+##### 配置网络统计日志输出间隔
+
+由于网络统计日志周期性输出，引入了`log.stat_flush_interval`来控制统计间隔和日志输出频率，单位是秒，默认为60s，配置示例如下：
+
+```ini
+[log]
+    ; network statistics interval, unit is second, default is 60s
+    stat_flush_interval=60
 ```
 
 ### 配置节点兼容性
@@ -283,6 +316,29 @@ FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，�
 [tx]
     gas_limit=300000000
 ```
+
+### EVM配置
+
+FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas消耗中的占比，详细可参考[这里](../design/virtual_machine/gas.html#evm-gas)。`Free Storage` Gas模式的开启和关闭通过`genesis`文件的`evm.enable_free_storage`配置项控制。
+
+```eval_rst
+.. note::
+    - ``evm.enable_free_storage`` v2.4.0开始支持，当 ``supported_version`` 小于v2.4.0，或者旧链直接替换二进制升级时，不支持该特性
+    - 链初始化时，``evm.enable_free_storage`` 写入创世块中；链初始化后，节点从创世块中读取 ``evm.enable_free_storage`` 配置项，手动修改 ``genesis`` 配置项不会生效
+    - ``evm.enable_free_storage`` 默认设置为false
+```
+
+- `evm.enable_free_storage`设置为true：开启`Free Storage` Gas模式
+- `evm.enable_free_storage`设置为false：关闭`Free Storage` Gas模式
+
+
+配置示例如下：
+
+```ini
+[evm]
+    enable_free_storage=false
+```
+
 
 ## 账本可变配置说明
 
