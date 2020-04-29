@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_a
 
 ```eval_rst
 .. note::
-    - If the get_account.sh script cannot be downloaded for a long time due to network problems, try downloading the script from `https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh`
+    - If the get_account.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
 ```
 
 If you use guomi version fisco, please execute below command to get `get_gm_account.sh`
@@ -34,7 +34,7 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_g
 
 ```eval_rst
 .. note::
-    - If the get_gm_account.sh script cannot be downloaded for a long time due to network problems, try downloading the script from `https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh`
+    - If the get_gm_account.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
 ```
 
 execute the above command and if you see the following output, you are downloading the correct script, otherwise please try again.
