@@ -37,7 +37,6 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
 .. important::
 
    - This technical documentation is only adaptable for FISCO BCOS 2.0+. For FISCO BCOS 1.3.x users, please check `Ver.1.3 Documentation <http://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/>`_
-   - The new features of FISCO BCOS 2.0+ are introduced `here <./docs/what_is_new.html>`_
    - FISCO BCOS 2.0+ and its adaptability are illustrated `here <./docs/change_log/index.html>`_
 
 .. toctree::
@@ -45,7 +44,6 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
    :maxdepth: 1
 
    docs/introduction.md
-   docs/what_is_new.md
    docs/change_log/index.rst
    docs/installation.md
    docs/tutorial/index.rst

@@ -77,7 +77,7 @@ FISO BCOS引入开发部署工具、交互式控制台、区块链浏览器等�
 - <font color=blue>**[区块链浏览器](./browser/browser.md)**</font>
 - <font color=blue>**[可视化的区块链管理平台WeBASE](https://webase-web.readthedocs.io/en/latest/)**</font>
 
-为了便于不同语言开发者快速开发应用，FISCO BCOS同时支持[Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md)和[Go SDK](https://github.com/FISCO-BCOS/go-sdk)
+为了便于不同语言开发者快速开发应用，FISCO BCOS同时支持[Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md)和[Go SDK](https://github.com/FISCO-BCOS/go-sdk)
 
 
 ## 可扩展性
