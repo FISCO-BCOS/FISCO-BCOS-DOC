@@ -465,7 +465,7 @@ git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 
 #### 源码编译
 ```bash
-cd AMDB;gradle build
+cd amdb-proxy;gradle build
 ```
 编译完成之后，会生成一个dist目录，文件结构如下：
 ```bash
@@ -521,7 +521,7 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 
 ##### DB创建
 ```bash
-	MySQL -uroot -p123456
+	mysql -uroot -p123456
 	CREATE DATABASE `bcos_Group1_A`;
 	CREATE DATABASE `bcos_Group1_B`;
 	CREATE DATABASE `bcos_Group2_B`;
