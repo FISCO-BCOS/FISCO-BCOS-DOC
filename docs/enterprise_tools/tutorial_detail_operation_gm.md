@@ -1,10 +1,8 @@
-# 使用运维部署工具
+# 使用运维部署工具部署国密区块链
 
-FISCO BCOS运维部署工具面向于真实的多机构生产环境。为了保证机构的密钥安全，运维部署工具提供了一种机构间相互合作部署联盟链方式。
+此文档为[使用运维部署工具部署](./tutorial_detail_operation.md)的国密部署版本
 
 本章以部署**6节点3机构2群组**的组网模式，演示运维部署工具的使用方法。更多参数选项说明请参考[这里](./operation.md)。
-
-国密部署教程说明请参考[使用运维部署工具部署国密区块链](./tutorial_detail_operation_gm.md)。
 
 本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS运维部署工具一键部署](./tutorial_one_click.md)。
 
@@ -30,17 +28,17 @@ cd ~/generator && bash ./scripts/install.sh
 ./generator -h
 ```
 
-**获取节点二进制**
+**获取国密节点二进制**
 
 拉取最新fisco-bcos二进制文件到meta中
 
 ```bash
-./generator --download_fisco ./meta
+./generator --download_fisco ./meta -g
 ```
 
 **检查二进制版本**
 
-若成功，输出 FISCO-BCOS Version : x.x.x-x
+若成功，输出 FISCO-BCOS gm Version : x.x.x-x
 
 ```bash
 ./meta/fisco-bcos -v
@@ -168,7 +166,9 @@ cp -r ~/generator ~/generator-B
 
 ### 初始化链证书
 
-在证书颁发机构上进行操作，一条联盟链拥有唯一的链证书ca.crt
+**由于FISCO BCOS节点与SDK通信时采用非国密方式，因此节点需要生成非国密版本的证书**
+
+在证书颁发机构上进行操作，一条联盟链拥有唯一的链证书`ca.crt`和`gmca.crt`
 
 用 [`--generate_chain_certificate`](./operation.html#generate-chain-certificate) 命令生成链证书
 
@@ -178,14 +178,33 @@ cp -r ~/generator ~/generator-B
 cd ~/generator
 ```
 
+
+生成国密证书
+
 ```bash
-./generator --generate_chain_certificate ./dir_chain_ca
+./generator --generate_chain_certificate ./dir_chain_ca -g
+```
+
+生成普通证书
+
+```bash
+./generator --generate_chain_certificate ./dir_chain_ca_normal -g
 ```
 
 查看链证书及私钥:
 
 ```bash
 ls ./dir_chain_ca
+```
+
+```bash
+# 上述命令解释
+# 从左至右分别为链证书、链私钥
+gmca.crt  gmca.key
+```
+
+```bash
+ls ./dir_chain_ca_normal
 ```
 
 ```bash
@@ -198,7 +217,7 @@ ca.crt  ca.key
 
 ### 初始化机构A
 
-教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥`agency.key`，再生成证书请求文件，向证书签发机构获取机构证书`agency.crt`。
+教程中为了简化操作直接生成了机构证书和私钥，实际应用时应该由机构本地生成私钥`agency.key和gmagency.key`，再生成证书请求文件，向证书签发机构获取机构证书`agency.crt和gmagency.crt`。
 
 在证书生成机构目录下操作:
 
@@ -209,7 +228,11 @@ cd ~/generator
 生成机构A证书：
 
 ```bash
-./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
+./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA -g
+```
+
+```bash
+./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca_normal agencyA
 ```
 
 查看机构证书及私钥:
@@ -221,7 +244,14 @@ ls dir_agency_ca/agencyA/
 ```bash
 # 上述命令解释
 # 从左至右分别为机构证书、机构私钥、链证书
+gmagency.crt  gmagency.key  gmca.crt
 agency.crt  agency.key  ca.crt
+```
+
+```bash
+# 上述命令解释
+# 从左至右分别为机构证书、机构私钥、链证书
+
 ```
 
 发送链证书、机构证书、机构私钥至机构A，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
@@ -241,7 +271,11 @@ cd ~/generator
 生成机构B证书：
 
 ```bash
-./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
+./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agency_B -g
+```
+
+```bash
+./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca_normal agency_B
 ```
 
 发送链证书、机构证书、机构私钥至机构B，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
@@ -351,7 +385,7 @@ cd ~/generator-A
 机构A生成节点证书及P2P连接信息文件，此步需要用到上述配置的`node_deployment.ini`，及机构meta文件夹下的机构证书与私钥，机构A生成节点证书及P2P连接信息文件
 
 ```bash
-./generator --generate_all_certificates ./agencyA_node_info
+./generator --generate_all_certificates ./agencyA_node_info -g
 ```
 
 查看生成文件:
@@ -363,7 +397,7 @@ ls ./agencyA_node_info
 ```bash
 # 上述命令解释
 # 从左至右分别为需要交互给机构A的节点证书，节点P2P连接地址文件(根据node_deployment.ini生成的本机构节点信息)
-cert_127.0.0.1_30300.crt cert_127.0.0.1_30301.crt peers.txt
+gmcert_127.0.0.1_30300.crt gmcert_127.0.0.1_30301.crt peers.txt
 ```
 
 机构生成节点时需要指定其他节点的节点P2P连接地址，因此，A机构需将节点P2P连接地址文件发送至机构B
@@ -383,7 +417,7 @@ cd ~/generator-B
 机构B生成节点证书及P2P连接信息文件：
 
 ```bash
-./generator --generate_all_certificates ./agencyB_node_info
+./generator --generate_all_certificates ./agencyB_node_info -g
 ```
 
 生成创世区块的机构需要节点证书，示例中由A机构生成创世区块，因此B机构除了发送节点P2P连接地址文件外，还需发送节点证书至机构A
@@ -391,7 +425,7 @@ cd ~/generator-B
 发送证书
 
 ```bash
-cp ./agencyB_node_info/cert*.crt ~/generator-A/meta/
+cp ./agencyB_node_info/gmcert*.crt ~/generator-A/meta/
 ```
 
 发送节点P2P连接地址文件
@@ -444,10 +478,10 @@ node3=127.0.0.1:30303
 
 教程中选择机构A生成群组创世区块，实际生产中可以通过联盟链委员会协商选择。
 
-此步会根据机构A的meta文件夹下配置的节点证书，生成group_genesis.ini配置的群组创世区块，教程中需要机构A的meta下有名为`cert_127.0.0.1_30300.crt`，`cert_127.0.0.1_30301.crt`，`cert_127.0.0.1_30302.crt`，`cert_127.0.0.1_30303.crt`的节点证书，此步需要用到机构B的节点证书。
+此步会根据机构A的meta文件夹下配置的节点证书，生成group_genesis.ini配置的群组创世区块，教程中需要机构A的meta下有名为`gmcert_127.0.0.1_30300.crt`，`gmcert_127.0.0.1_30301.crt`，`gmcert_127.0.0.1_30302.crt`，`gmcert_127.0.0.1_30303.crt`的节点证书，此步需要用到机构B的节点证书。
 
 ```bash
-./generator --create_group_genesis ./group
+./generator --create_group_genesis ./group -g
 ```
 
 分发群组1创世区块至机构B：
@@ -469,7 +503,7 @@ cd ~/generator-A
 注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的链接信息，多个机构组网的情况下需要将其合并。
 
 ```bash
-./generator --build_install_package ./meta/peersB.txt ./nodeA
+./generator --build_install_package ./meta/peersB.txt ./nodeA -g
 ```
 
 查看生成节点配置文件夹：
@@ -519,7 +553,7 @@ cd ~/generator-B
 生成机构B所属节点，此命令会根据用户配置的`node_deployment.ini`文件生成相应的节点配置文件夹:
 
 ```bash
-./generator --build_install_package ./meta/peersA.txt ./nodeB
+./generator --build_install_package ./meta/peersA.txt ./nodeB -g
 ```
 
 机构B启动节点：
@@ -586,7 +620,11 @@ cp -r ~/generator ~/generator-C
 生成机构C证书：
 
 ```bash
-./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC
+./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyC -g
+```
+
+```bash
+./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca_normal agencyC
 ```
 
 查看机构证书及私钥:
@@ -598,6 +636,7 @@ ls dir_agency_ca/agencyC/
 ```bash
 # 上述命令解释
 # 从左至右分别为机构证书、机构私钥、链证书
+gmagency.crt  gmagency.key  gmca.crt
 agency.crt  agency.key  ca.crt
 ```
 
@@ -626,7 +665,7 @@ cd ~/generator-A
 发送证书
 
 ```bash
-cp ./agencyA_node_info/cert*.crt ~/generator-C/meta/
+cp ./agencyA_node_info/gmcert*.crt ~/generator-C/meta/
 ```
 
 发送节点P2P连接地址文件
@@ -687,7 +726,7 @@ cd ~/generator-C
 机构C生成节点证书及P2P连接信息文件：
 
 ```bash
-./generator --generate_all_certificates ./agencyC_node_info
+./generator --generate_all_certificates ./agencyC_node_info -g
 ```
 
 查看生成文件:
@@ -699,7 +738,7 @@ ls ./agencyC_node_info
 ```bash
 # 上述命令解释
 # 从左至右分别为需要交互给机构A的节点证书，节点P2P连接地址文件(根据node_deployment.ini生成的本机构节点信息)
-cert_127.0.0.1_30304.crt cert_127.0.0.1_30305.crt peers.txt
+gmcert_127.0.0.1_30304.crt gmcert_127.0.0.1_30305.crt peers.txt
 ```
 
 机构生成节点时需要指定其他节点的节点P2P连接地址，因此，C机构需将节点P2P连接地址文件发送至机构A
@@ -754,7 +793,7 @@ node3=127.0.0.1:30305
 此步会根据机构C的meta文件夹下配置的节点证书，生成group_genesis.ini配置的群组创世区块。
 
 ```bash
-./generator --create_group_genesis ./group
+./generator --create_group_genesis ./group -g
 ```
 
 分发群组2创世区块至机构A：
@@ -772,7 +811,7 @@ cd ~/generator-C
 ```
 
 ```bash
-./generator --build_install_package ./meta/peersA.txt ./nodeC
+./generator --build_install_package ./meta/peersA.txt ./nodeC -g
 ```
 
 机构C启动节点：
@@ -905,7 +944,7 @@ bash ~/generator-C/nodeC/start_all.sh
 
 机构A配置控制台或sdk，教程中以控制台为例：
 
-注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，用户可以直接启动控制台，启动前请确保已经安装java
+注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，启动前请确保已经安装java
 
 国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
 
@@ -913,14 +952,35 @@ bash ~/generator-C/nodeC/start_all.sh
 ./generator --download_console ./ --cdn
 ```
 
+**修改国密配置**
+
+```bash
+vi ./console/conf/applicationContext.xml
+```
+
+进行如下修改
+
+```xml
+<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
+    <!-- encryptType值设置为1，打开国密开关 -->
+    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
+</bean>
+```
+
+**替换国密jar包**
+
+```bash
+curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar && bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
+```
+
 ### 查看机构C节点4信息
 
-机构A使用控制台加入机构C节点4为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
+机构A使用控制台加入机构C节点4为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`gmnode.nodeid`文件
 
 查看机构C节点nodeid：
 
 ```bash
-cat ~/generator-C/nodeC/node_127.0.0.1_30304/conf/node.nodeid
+cat ~/generator-C/nodeC/node_127.0.0.1_30304/conf/gmnode.nodeid
 ```
 
 ```bash
@@ -937,7 +997,7 @@ ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51
 cd ~/generator-A/console && bash ./start.sh 1
 ```
 
-使用控制台`addObserver`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+使用控制台`addObserver`命令将节点注册为观察节点，此步需要用到`cat`命令查看得到机构C节点的`gmnode.nodeid`：
 
 ```bash
 addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
@@ -966,7 +1026,7 @@ exit
 查看机构C节点nodeid：
 
 ```bash
-cat ~/generator-C/nodeC/node_127.0.0.1_30305/conf/node.nodeid
+cat ~/generator-C/nodeC/node_127.0.0.1_30305/conf/gmnode.nodeid
 ```
 
 ```bash
@@ -983,7 +1043,7 @@ cat ~/generator-C/nodeC/node_127.0.0.1_30305/conf/node.nodeid
 cd ~/generator-A/console && bash ./start.sh 1
 ```
 
-使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`node.nodeid`：
+使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构C节点的`gmnode.nodeid`：
 
 ```bash
 addSealer 5d70e046047e15a68aff8e32f2d68d1f8d4471953496fd97b26f1fbdc18a76720613a34e3743194bd78aa7acb59b9fa9aec9ec668fa78c54c15031c9e16c9e8d
