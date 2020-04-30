@@ -259,8 +259,8 @@ call the create interface in the console
 
 ```bash
 #create table
-call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
-0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
+call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create u_t_test
+The method create with 1 parameter is undefined of the contract.
 ```
 
 view the table in the database
@@ -290,7 +290,7 @@ Inserting a record to the database
 ```bash
 #insert data into the table
 call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
-0x082ca6a5a292f1f7b20abeb3fb03f45e0c6f48b5a79cc65d1246bfe57be358d1
+transaction hash: 0x221967636846acecfad3cb9cbdeb83ba4c7a3a22adc39042519e0eb8ec2c4711
 ```
 
 open the MySQL client and query the u_t_test table data
