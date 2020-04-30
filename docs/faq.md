@@ -178,3 +178,13 @@ Traceback (most recent call last):
 
 答:
   证书续期操作可以参考[证书续期操作](./manual/certificates.md#id9)
+
+问：
+  使用下载命令提示certificate verify failed
+答：
+  在 ./pys/tool/utils.py 这个文件的开头中加入如下两行
+
+```python
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+```
