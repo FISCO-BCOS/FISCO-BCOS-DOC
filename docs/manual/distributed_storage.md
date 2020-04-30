@@ -28,8 +28,8 @@ yum install mariadb*
 service mysqld start
 #若安装了mariadb，则使用下面的命令启动
 service mariadb start
-mysql -uroot -p
-mysql> set password for root@localhost = password('123456');
+mysql -uroot 
+MariaDB [(none)]> set password for root@localhost = password('123456');
 ```
 
 ## 配置MySQL参数
