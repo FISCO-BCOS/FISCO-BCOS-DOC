@@ -223,7 +223,7 @@ info|2019-05-28 16:29:37.268467|[P2P][Service] heartBeat,connected count=2
 ```
 执行下面指令，检查是否在共识
 ```
-tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
+tail -f node0/log/log*  | grep +++
 ```
 正常情况会不停输出++++Generating seal表示共识正常。
 ```
