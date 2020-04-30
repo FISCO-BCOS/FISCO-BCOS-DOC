@@ -2,6 +2,11 @@
 Compatibility
 ##############################################################
 
+.. admonition:: `FISCO BCOS 2.4.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.4.0>`_
+
+     **Change description, compatibility and upgrade instructions**
+      - `FISCO BCOS v2.3.0 <./2_4_0.html>`_
+
 .. admonition:: `FISCO BCOS 2.3.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.3.0>`_
 
      **Change description, compatibility and upgrade instructions**
@@ -91,6 +96,7 @@ Compatibility
 .. toctree::
    :hidden:
    
+   2_4_0.md
    2_3_0.md
    2_2_0.md
    2_1_0.md

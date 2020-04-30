@@ -37,7 +37,6 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 .. important::
 
    - 本技术文档只适用FISCO BCOS 2.0+，FISCO BCOS 1.3.x版本的技术文档请查看 `1.3系列技术文档 <http://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/>`_
-   - FISCO BCOS 2.0+新特性请参考 `这里 <./docs/what_is_new.html>`_
    - FISCO BCOS 2.0+版本及兼容性说明 `这里 <./docs/change_log/index.html>`_
 
 .. toctree::
@@ -45,7 +44,6 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :maxdepth: 1
 
    docs/introduction.md
-   docs/what_is_new.md
    docs/change_log/index.rst
    docs/installation.md
    docs/tutorial/index.rst

@@ -144,7 +144,7 @@ npm init
 3. 安装`caliper-cli`
 
 ```bash
-npm install --only=prod @hyperledger/caliper-cli
+npm install --only=prod @hyperledger/caliper-cli@0.2.0
 ```
 
 由于Caliper所有依赖项的安装较为耗时，因此使用`--only=prod`选项用于指定NPM只安装Caliper的核心组件，而不安装其他的依赖项（如各个区块链平台针对Caliper的适配器）。在部署完成后，可以通过`caliper-cli`显式绑定需要测试的区块链平台及相应的适配器。
@@ -193,7 +193,7 @@ Options:
 npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 ```
 
-命令中各项参数的含义可以通过如下命令获取：
+由于FISCO BCOS对于caliper 0.2.0版本的适配存在部分不兼容情况，需要手动按照[https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248](https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248)中的步骤修改代码后方可正常运行。
 
 ### 2.3 快速体验FISCO BCOS基准测试
 
@@ -202,7 +202,7 @@ npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 1. 在工作目录下下载预定义测试用例：
 
 ```bash
-git clone https://github.com/hyperledger/caliper-benchmarks.git
+git clone https://github.com/vita-dounai/caliper-benchmarks.git
 ```
 
 2. 执行HelloWorld合约测试

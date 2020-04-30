@@ -1,59 +1,89 @@
 # Introduction
 
-FISCO BCOS, officially launched in December 2017, is the first China-developed open source consortium blockchain platform. It was collaboratively built by the FISCO open source working group, which was formed by Beyondsoft, Huawei, Shenzhen Securities Communications, DCITS, Forms Syntron, Tencent, WeBank, YIBI Technology, Yuexiu Financial Holdings (Fintech) and more.
+FISCO BCOS is the first safe and controllable enterprise-level financial consortium blockchain platform open source by domestic enterprises. It is jointly created by the FISCO open source working group and officially launched in December 2017.
 
-## Sublimation of alliance chain: Collaborative Business and Open Consortium Chain
+The community links multiple parties with open source. At present, more than 500 enterprises and institutions and more than 10,000 community members have joined to build and co-governance, and developed into the largest and most active domestic consortium blockchain platform ecosystem. The underlying platform is highly available and easy to use after extensive application and practice. Hundreds of application projects are developed based on the FISCO BCOS underlying platform, and over 60 have been steadily operating in the production environment, covering cultural copyright, judicial services, government services, Internet of Things, finance, smart communities and other fields.
 
-Business is competitive and free economic activity. It is naturally easy to result in survival of the fittest, monopoly, and even rent-seeking. Especially after the global financial crisis in 2008, the appeared malady of “Too Big to Fail” led to a series of technological and business revolution, and started an era of changing from centralized to distributed.
 
-In this context, blockchain was sprouted in 2008 and gradually became matured. Through the consensus mechanism, distributed ledger, encryption algorithm, smart contract, peer-to-peer communication, distributed computing architecture, distributed storage, privacy protection algorithm, cross-chain protocol and other technology modules, blockchain  can help the participating parties in business model to achieve the cooperation of reciprocity and mutual trust so that to promote the progress from “information Internet” to “trusted Internet”, and also to make business model moving toward “Collaborative” possible.
+```eval_rst
+.. note::
+    FISCO BCOS takes the actual needs of the consortium blockchain as a starting point, taking into account performance, security, maintainability, ease of use, and scalability, and supports multiple SDK, and provides visual middleware tools, greatly reducing the time to build chains, develop and deploy applications. In addition, FISCO BCOS passed the two evaluations of the Trusted Blockchain evaluation function and performance of the Information Communication Institute, and the single-chain TPS can reach 20,000.
+```
 
-“Collaborative Business” model defined by WeBank is a new type of production relationship established by several peer-to-peer commercial communities. It is a new economic activity to implement organization management, functional division, value exchange, joint provision of products and services, and benefit share through pre-set transparent rules. The main features of Collaborative Business are multi-participation, resources share, intelligent collaboration, value integration, mode transparentizing, cross boundaries, etc. A mature scenario of Collaborative Business has multiple requirements. Various parties hold production materials,  build the product, and service capabilities. The relationship in business is mutual, and the rules of product and profit-sharing are transparent.
+## Architecture
 
-There’re so many differences between Collaborative Business and the business models of chain and franchise store and shared business, which are prevailing previously. The most significant one is not the person, the product, or the information platform but the objective technology to be the bridge to connect each other. It is true that if not to encourage open source technology, it may evolve into another kind of monopoly. Therefore, for developing Collaborative Business, we must always maintain the attitude of open source technology. All the participants cooperating through open source community can eliminate the monopoly. The collaborative business helps small and micro-enterprises to achieve business value, thereby stimulating economic growth, employment and innovation, and realizing anti-monopoly.
+FISCO BCOS 2.0 adopts an integrated two-wing multi-engine architecture to achieve the horizontal expansion of system throughput, supports the rapid formation of consortium blockchain, and allows enterprises to build blockchains as conveniently as the WeChat group. Performance, security, operability, ease of use, and scalability have great advantages.
 
-To develop open-source blockchain is significant, but the choice of technology is crucial. The first blockchain originates from crypto-currency and permissionless blockchain projects. However, the permissionless blockchain projects always make for financing, their users target on the profit from trading. So everyone pays more attention to the coin price but not the blockchain application ability.
+![](../images/architecture/plane.jpg)
 
-Since the tokens of the public chain are necessary class currency and class security, they have been severely suspended by regulatory. After they are washed out, alliance chain technology has shouldered the responsibility of pushing the blockchain technology to move forward.
 
-In 2018, “Open Consortium Chain” was announced in the industry.  They called on the consortium chain to actively open up open source, move from the relatively closed alliance or the company to the public. The general public can feel the benefits brought by the blockchain and realize the vision of collaborative business in that way.  The benefits include increased efficiency, cost reduction, trust enhancement, data interchange, and traceability of responsibility.
+## Core module
 
-A new generation of Open Consortium Chain proposes some unique requirements on blockchain underlying technology. Except for the standard blockchain characteristics, there is still a need to strengthen several aspects:
+FISCO BCOS adopts high-throughput scalable [multi-group architecture](./design/architecture/group.md), which can dynamically manage multiple chains and groups to meet the expansion and isolation requirements of multiple business scenarios. Modules include:
 
-First, Open Consortium Chain is not a single chain, and it requires the technology to support multi-chain parallel computing and cross-chain communication.  It needs the ability to support the massive transaction request from the Internet.
+- <font color=blue>**[Consensus mechanism](./design/consensus/index.md)**</font>: Pluggable consensus mechanism, supporting PBFT, Raft and RPBFT consensus algorithms, low transaction confirmation delay, high throughput, and ultimate consistency. Among them, PBFT and RPBFT can solve Byzantine problems and have higher security.
 
-Second, it needs the ability to form alliances and build chains quickly and at low cost. So that each demand party can efficiently establish an alliance chain network to make the cooperation of chain building among enterprises becomes simple as building a “chat group”.
+- <font color=blue>**[Storage](./design/storage/index.md)**</font>: The storage of the world state is changed from the original MPT storage structure to [distributed storage](./design/storage/storage.md), avoids the problem of performance degradation caused by the rapid expansion of the world state. Introduces a pluggable storage engine, supports LevelDB, RocksDB, MySQL and other back-end storage, supports data expansion quickly and easily, and isolates calculation from data, reducing the impact of node failure on node data.
 
-Finally, it needs to be opened to achieve full trust among alliance members.
+- <font color=blue>**[Network](./design/p2p/p2p.md)**</font>: Support network compression, and implement a good distributed network distribution mechanism based on the idea of load balancing to minimize bandwidth overhead.
 
-Open Consortium Chain is not only conducive to reduce the cost on trial and error for enterprise, but also promoting the development of the industrial society in the direction of credibility and transparency. Moreover, it comprehensively reduces the risks of the operation, moral hazard, credit, information protection.
+## Performance
 
-Adhere to our above goals and vision, we officially release the FISCO BCOS 2.0 version based on the “Open Consortium Chain” technology route.
+In order to improve system performance, FISCO BCOS optimizes transaction execution in terms of improving transaction execution efficiency and concurrency, so that transaction processing performance can reach more than 10,000 levels.
 
-## FISCO BCOS 2.0
-FISCO BCOS 2.0 version has been upgraded and optimized based on the 1.0, and has made significant breakthroughs in scalability, performance, and ease for use, including:
+- <font color=blue>**[Precompiled contract based on C++](./design/virtual_machine/precompiled.md)**</font>: The Precompiled contract written in C++ language is built into the blockchain platform, and the execution efficiency is higher.
 
-- Implement **group architecture**. In a global network of multiple nodes, there may be much sub-networks which are made up of numerous subsets of nodes to maintain a separate ledger. The consensus and storage among these ledgers are independent of each other and have good scalability and security. In group architecture, parallel expansion can be better achieved to meet the needs of high-frequency transaction scenario for the financial industry. Meanwhile, group architecture can quickly support the requirements of chain building. It dramatically reduces the difficulty of operation and maintenance, and truly enables the chain building among enterprises is as easy as building a “chat group”.
+- <font color=blue>**[Transaction execution in parallel](./design/parallel/dag.md)**</font>: Based on the DAG algorithm to build a transaction execution flow within a block based on the mutually exclusive relationship between transactions, maximizing parallel execution of transactions within a block.
 
-- Support **Distributed Storage** to enable storage to break through the limitation of a single machine and support lateral spreading. Separating between calculation and storage can improve the system’s robustness to prevent data from being affected even if the node server fails. Distributed storage defines a standard interface named CRUD  which can adapt to both SQL and NoSQL database system.  CRUD support multiple business scenarios.
 
-- Implement **a pre-compiled contract framework** to break the EVM performance bottleneck. It supports concurrent transaction processing to increase the transaction processing throughput greatly. Precompiled contract is implemented in C++ and built into the underlying system. The framework can automatically recognize a transaction’s conflict information, construct a DAG dependency, and plan an efficient parallel transaction execution path. In the best case, the performance can increase by N times (N = CPU cores).
+## Safety
 
-- Besides, FISCO BCOS 2.0 version continues to optimize network transmission models, computing storage processes, and so on for significantly improving performance. Also, we continue to upgrade the core modules, such as storage, network, and computing model,  ensure the system’s robustness, availability, and performance.
+Considering the high security requirements of the consortium blockchain platform, in addition to the TLS security protocol used for communication between nodes and between nodes and clients, FISCO BCOS also implements a complete set of security solutions:
 
-More 2.0 version features will be introduced in depth in the following sections. Please see [2.0 New Release] (./ what_is_new.md).
+- <font color=blue>**[Network access mechanism](./design/security_control/node_management.md)**</font>: Restrict nodes from joining and exiting the alliance chain, and delete the malicious nodes of the specified group from the group, ensuring system security
 
-## FISCO BCOS 1.0
-Looking back at the evolution of FISCO BCOS, we have been working on the trade-off of performance, security, availability, and compliance.
+- <font color=blue>**[Black and white list mechanism](./design/security_control/certificate_list.md)**</font>: Each group can only receive messages from the corresponding group to ensure the isolation of network communication between the groups; the CA blacklist mechanism can disconnect the network connection from the malicious node in time, ensuring the security of the system
 
-- In terms of performance, FISCO BCOS has made many optimizations on overall architecture and transaction processing.  1.0 version uses efficient consensus algorithms, parallelizing computing. Furthermore, the core breakthrough of its performance is not only in single-chain, but also in optimizing architecture design based on single-chain performance and achieving the flexible, efficient, reliable, and secure parallel computing and parallel scalability capability. It can help developers to meet the performance they need for their business scenarios by simply adding machines. In general, the FISCO BCOS platform optimizes the network communication model, adopts the Byzantine Fault Tolerance(BFT) consensus mechanism, and combines with the multi-chain architecture and cross-chain interaction scheme to solve the performance problems of concurrent access and hotspot accounts so that to meet the need of high-frequency transaction scenario for the financial industry.
+- <font color=blue>**[Authority management mechanism](./design/security_control/permission_control.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables
 
-- In terms of security, the FISCO BCOS platform achieves comprehensive protection in the application, storage, network, and host layers through node admission control, reliable key management, and flexible access control. In the design of privacy protection, FISCO BCOS platform supports permission management, physical isolation, and national cryptography algorithm (standard algorithm certified by national cryptographic bureau). Meanwhile, it implements multiple privacy protection algorithms including homomorphic encryption, zero-knowledge proof, group signature, ring signature as open projects to the public.
+- <font color=blue>**[Support OSCCA-approved algorithm](./manual/guomi_crypto.md)**</font>: Support OSCCA-approved encryption, signature algorithm and OSCCA-approved SSL communication protocol
 
-- In terms of usability, FISCO BCOS is designed to run at 7 * 24 hours to achieve a high availability needed for the commercial grade. In terms of regulatory, it supports regulatory, and auditing agencies can join as observation nodes to obtain real-time data for regulating and auditing. Also, it provides multiple development interfaces to make it easier for developers to compile and call smart contract.
+- <font color=blue>**[Disk encryption algorithm](./design/features/storage_security.md)**</font>: Support the disk encryption algorithm to ensure the confidentiality of the data on the chain
 
-## Summary
+- <font color=blue>**[Key management scheme](./design/features/storage_security.md)**</font>: Based on the disk encryption algorithm, the KeyManager service is used to manage the node key, which is more secure
 
-In practice, FISCO BCOS has grown into a stable, efficient, and secure blockchain underlying platform through testing in many external agencies, multiple applications, and longstanding running in production environments.
+- <font color=blue>**[Homomorphic encryption](./manual/privacy.md)、[Group/Ring signature](./manual/privacy.md)**</font>: Homomorphic encryption and group ring signature interfaces are provided on the chain to meet more business needs
 
-The following content of this document details the tutorial of construction, installation, smart contract deployment and calling of FISCO BCOS 2.0 version, as well as an in-depth introduction to the overall architecture of FISCO BCOS 2.0 and the design of each module.
+
+## Operability
+
+In the consortium blockchain platform, the operation and maintenance of the blockchain is crucial. FISCO BCOS provides a complete set of operation and maintenance deployment tools, and introduces **contract naming service**, **data archiving and migration**, **contract lifecycle management** to improve Operation and Management efficiency.
+
+- <font color=blue>**[Operation and Management deployment tool](./enterprise_tools/index.md)**</font>: Convenient tool for deploying, managing and monitoring multi-institution multi-group consortium blockchain, supporting multiple operations such as expanding nodes and expanding new groups
+
+- <font color=blue>**[Contract naming service](./design/features/cns_contract_name_service.md)**</font>: Establish a mapping relationship between the contract address to the contract name and the contract version, so that the caller can easily call the contract on the chain by remembering the simple contract name
+
+- **Data archiving, migration and export functions**: Provide data export components, support on-chain data archiving, migration and export, increase the maintainability of on-chain data, and reduce the complexity of operation
+
+- <font color=blue>**[Contract lifecycle management](./design/features/contract_management.md)**</font>: Provide contract life cycle management function on the chain, which is convenient for the chain administrator to manage the contract on the chain
+
+
+## Ease of use
+
+FISO BCOS introduces tools such as development and deployment tools, interactive console, blockchain browsers, etc. to improve the ease of use of the system and greatly reduce the time to build chains and deploy applications。
+
+- <font color=blue>**[Development and deployment tools](./manual/build_chain.md)**</font>
+- <font color=blue>**[Interactive command line tool console](./manual/console.md)**</font>
+- <font color=blue>**[Blockchain browser](./browser/browser.md)**</font>
+- <font color=blue>**[Visualized blockchain management platform WeBASE](https://webase-web.readthedocs.io/en/latest/)**</font>
+
+In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)
+
+
+## Scalability
+
+In order to improve the scalability of FISCO BCOS, the FISCO BCOS team proposed the cross-chain collaboration solution **WeCross** and privacy protection solution **WeDPR**.
+
+- <font color=blue>**[Cross-chain collaboration solution WeCross](https://fintech.webank.com/wecross/)**</font>: Support cross-chain transaction transactions, meet the atomicity of cross-chain transactions, manage cross-chain transactions, support multi-party collaborative management, and avoid single-point risks.
+
+- <font color=blue>**[Scene-based privacy protection solution WeDPR](https://fintech.webank.com/wedpr/)**</font>: Provide anonymous payment, anonymous voting, anonymous auction and selective disclosure.
