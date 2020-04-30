@@ -197,7 +197,7 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 ```
 ### 启动节点
 ```bash
-cd ~/fisco/nodes/127.0.0.1;sh start_all.sh
+cd ~/fisco/nodes/127.0.0.1;sh stop_all.sh;sh start_all.sh
 ```
 ### 检查进程
 ```bash
@@ -211,7 +211,7 @@ fisco   122910      1  1 16:22 pts/0    00:00:02 /data/home/fisco/nodes/127.0.0.
 ### 检查日志输出
 执行下面指令，查看节点node0链接的节点数（其他节点类似）
 ```
-tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+tail -f node0/log/log*  | grep connected
 ```
 正常情况会看到类似下面的输出，从输出可以看出node0与另外2个节点有连接。
 ```
