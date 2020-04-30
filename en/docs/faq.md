@@ -45,7 +45,7 @@ Q:
 A:
   It is case-sensitive. The command will match exactly, and `tab` can be used to complete your command.
 
-Q:  
+Q:
   When adding to the Sealer list or the Observer list, it will report error as nodeID is not in network, why? <br>
 A:
   The nodes that adds to the Sealer list and the Observer list must be a member of the nodeID list that connects to the peer.
@@ -172,6 +172,16 @@ A:
 
 ```bash
   $ pip install configparser
+```
+
+Q：
+  downloading occurred certificate verify failed
+答：
+  vim ./pys/tool/utils.py, add this code in first line.
+
+```python
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 ```
 
 <!-- // TODO: -->
