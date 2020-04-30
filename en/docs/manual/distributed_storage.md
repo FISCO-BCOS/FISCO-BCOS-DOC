@@ -29,7 +29,7 @@ service mysqld start
 #If mariadb is installed, to use the following command to start
 service mariadb start
 mysql -uroot
-mysql> set password for root@localhost = password('123456');
+MariaDB [(none)]> set password for root@localhost = password('123456');
 ```
 
 ## Node directly connected to MySQL
