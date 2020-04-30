@@ -166,7 +166,7 @@ group.[群组].ini配置文件中，和本特性相关的是MySQL的配置信息
 
 ### 修改node1下的group.1.ini配置
 
-修改~/fisco/nodes/127.0.0.1/node0/conf/group.1.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
+修改~/fisco/nodes/127.0.0.1/node1/conf/group.1.ini[storage]段的内容，新增如下内容。db_passwd为对应的密码。
 ```bash
     	db_ip=127.0.0.1
     	db_port=3306
