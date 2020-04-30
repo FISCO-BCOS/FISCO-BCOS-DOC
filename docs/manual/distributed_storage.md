@@ -295,8 +295,8 @@ show tables;
 在控制台中调用create接口。
 ```bash
 #创建表
-call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
-0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
+call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create u_t_test
+The method create with 1 parameter is undefined of the contract.
 ```
 
 查看数据库中的表情况
@@ -325,13 +325,23 @@ show tables;
 ```bash
 #往表里插入数据
 call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 insert "fruit" 100 "apple"
-0x082ca6a5a292f1f7b20abeb3fb03f45e0c6f48b5a79cc65d1246bfe57be358d1
+transaction hash: 0x221967636846acecfad3cb9cbdeb83ba4c7a3a22adc39042519e0eb8ec2c4711
+---------------------------------------------------------------------------------------------
+Output 
+function: insert(string,int256,string)
+return type: (int256)
+return value: (1)
+---------------------------------------------------------------------------------------------
+Event logs
+event signature: InsertResult(int256) index: 0
+event value: (1)
+---------------------------------------------------------------------------------------------
 ```
 
 打开MySQL客户端，查询u_t_test表数据
 ```bash
 #查看用户表中的数据
-select * from u_t_test\G;
+select * from u_t_test\G
 *************************** 1. row ***************************
      _id_: 31
    _hash_: 0a0ed3b2b0a227a6276114863ef3e8aa34f44e31567a5909d1da0aece31e575e
