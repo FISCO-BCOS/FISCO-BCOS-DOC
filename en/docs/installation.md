@@ -45,6 +45,11 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build
     - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
+```eval_rst
+.. note::
+    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
 ### Build a single-group 4-node consortium chain
 
 Execute the following command in the fisco directory to generate a single group 4-node FISCO chain. It is necessary to ensure that the `30300~30303, 20200~20203, 8545~8548` ports of the machine are not occupied.
