@@ -153,7 +153,7 @@ Modify the content in the section ~/fisco/nodes/127.0.0.1/node2/conf/group.2.ini
 
 ### Start node
 ```bash
-cd ~/fisco/nodes/127.0.0.1;sh start_all.sh
+cd ~/fisco/nodes/127.0.0.1;sh stop_all.sh;sh start_all.sh
 ```
 ### Check process
 ```bash
@@ -168,7 +168,7 @@ If it starts successfully, you can see there are 3 fisco-bcos processes. If it f
 Execute the following command to view the number of nodes connected to node0 (similar to other nodes)
 
 ```
-tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+tail -f node0/log/log*  | grep connected
 ```
 Normally, you will see an output similar to the following, and you can see that node0 is connecting to the other two nodes from it.
 
@@ -182,7 +182,7 @@ info|2019-05-28 16:29:37.268467|[P2P][Service] heartBeat,connected count=2
 Execute the following command to check if it is in consensus
 
 ```
-tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
+tail -f node0/log/log*  | grep +++
 ```
 
 Normally, the output will continue to output ++++Generating seal to indicate that the consensus is normal.
