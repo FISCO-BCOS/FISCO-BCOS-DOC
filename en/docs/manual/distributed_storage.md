@@ -444,7 +444,7 @@ git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 
 #### Compile source code
 ```bash
-cd AMDB;gradle build
+cd amdb-proxy;gradle build
 ```
 
 After the compilation is completed, a dist directory is generated, and the file structure is as follows:
@@ -504,7 +504,7 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 
 ##### DB creation
 ```bash
-	MySQL -uroot -p123456
+	mysql -uroot -p123456
 	CREATE DATABASE `bcos_Group1_A`;
 	CREATE DATABASE `bcos_Group1_B`;
 	CREATE DATABASE `bcos_Group2_B`;
