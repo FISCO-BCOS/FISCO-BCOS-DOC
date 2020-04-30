@@ -1220,12 +1220,12 @@ INFO >> getTransactionByBlockNumberAndIndex
 # 获取区块可打包最大交易数目
 $ ./console.py getSystemConfigByKey tx_count_limit
 INFO >> user input : ['getSystemConfigByKey', 'tx_count_limit']
-INFO >> getSystemConfigByKey
+INFO >> getSystemConfigByKey tx_count_limit
      >> 500
 # 获取系统gas限制
 $ ./console.py getSystemConfigByKey  tx_gas_limit
 INFO >> user input : ['getSystemConfigByKey', 'tx_gas_limit']
-INFO >> getSystemConfigByKey
+INFO >> getSystemConfigByKey tx_gas_limit
      >> 400000000
 ```
    

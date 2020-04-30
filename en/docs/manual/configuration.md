@@ -695,7 +695,7 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 
 # To set transaction gas limit as  400000000
 > setSystemConfigByKey tx_gas_limit 400000000
-> getSystemConfigByKey
+> getSystemConfigByKey tx_gas_limit
 [400000000]
 
 # Under the RPBFT consensus algorithm, set a consensus period to select the number of nodes participating in the consensus to 4

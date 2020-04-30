@@ -42,16 +42,6 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build
     - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
-```eval_rst
-.. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
-```
-
-```eval_rst
-.. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
-```
-
 ### 搭建单群组4节点联盟链
 
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。

@@ -18,7 +18,7 @@ FISCO BCOS 2.0采用一体两翼多引擎架构，实现系统吞吐能力的横
 
 ## 核心模块
 
-FISCO BCOS采用高通量可扩展的[多群组架构](./design/architecture/group.md)，可以动态管理多链、多群组，满足满足多业务场景的扩展需求和隔离需求，核心模块包括：
+FISCO BCOS采用高通量可扩展的[多群组架构](./design/architecture/group.md)，可以动态管理多链、多群组，满足多业务场景的扩展需求和隔离需求，核心模块包括：
 
 - <font color=blue>**[共识机制](./design/consensus/index.md)**</font>：可插拔的共识机制，支持PBFT、Raft和RPBFT共识算法，交易确认时延低、吞吐量高，并具有最终一致性。其中PBFT和RPBFT可解决拜占庭问题，安全性更高
 
