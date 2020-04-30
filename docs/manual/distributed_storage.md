@@ -270,7 +270,7 @@ contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 
 查看数据库中的表情况
 ```bash
-MySQL -uroot -p123456 -A db_Group1_A
+mysql -uroot -p123456 -A db_Group1_A
 use db_Group1_A;
 show tables;
 ----------------------------------------------------------+
