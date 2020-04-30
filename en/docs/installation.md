@@ -146,9 +146,9 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 In normal situation, the connecting messages will be output continuously. From the output messages, we can see that node0 has links with the other three nodes.
 
 ```bash
-info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
-info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
-info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
+info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat,connected count=3
 ```
 
 - Execute the following command to check whether it is in consensus
@@ -234,13 +234,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 # acquire client ends version information
 [group:1]> getNodeVersion
 {
-    "Build Time":"20200331 07:12:25",
+    "Build Time":"20200430 03:22:53",
     "Build Type":"Linux/clang/Release",
     "Chain Id":"1",
-    "FISCO-BCOS Version":"2.3.0",
+    "FISCO-BCOS Version":"2.4.0",
     "Git Branch":"HEAD",
-    "Git Commit Hash":"b8b62664d1b1f0ad0489bc4b3833bf730deee492",
-    "Supported Version":"2.3.0"
+    "Git Commit Hash":"0d94de1e0f2dc7ce7d226dbd68001a4b43029cf6",
+    "Supported Version":"2.4.0"
 }
 # acquire node connection information
 [group:1]> getPeers
