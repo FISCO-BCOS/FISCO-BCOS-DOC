@@ -465,7 +465,8 @@ git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 
 #### 源码编译
 ```bash
-cd amdb-proxy;gradle build
+mv amdb-proxy AMDB
+cd AMDB;gradle build
 ```
 编译完成之后，会生成一个dist目录，文件结构如下：
 ```bash
