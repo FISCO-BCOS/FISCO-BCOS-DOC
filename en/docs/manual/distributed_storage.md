@@ -444,7 +444,8 @@ git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 
 #### Compile source code
 ```bash
-cd amdb-proxy;gradle build
+mv amdb-proxy AMDB
+cd AMDB;gradle build
 ```
 
 After the compilation is completed, a dist directory is generated, and the file structure is as follows:
