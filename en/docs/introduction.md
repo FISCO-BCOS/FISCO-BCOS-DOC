@@ -78,12 +78,3 @@ FISO BCOS introduces tools such as development and deployment tools, interactive
 - <font color=blue>**[Visualized blockchain management platform WeBASE](https://webase-web.readthedocs.io/en/latest/)**</font>
 
 In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)
-
-
-## Scalability
-
-In order to improve the scalability of FISCO BCOS, the FISCO BCOS team proposed the cross-chain collaboration solution **WeCross** and privacy protection solution **WeDPR**.
-
-- <font color=blue>**[Cross-chain collaboration solution WeCross](https://fintech.webank.com/wecross/)**</font>: Support cross-chain transaction transactions, meet the atomicity of cross-chain transactions, manage cross-chain transactions, support multi-party collaborative management, and avoid single-point risks.
-
-- <font color=blue>**[Scene-based privacy protection solution WeDPR](https://fintech.webank.com/wedpr/)**</font>: Provide anonymous payment, anonymous voting, anonymous auction and selective disclosure.
