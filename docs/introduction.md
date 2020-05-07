@@ -11,7 +11,7 @@ FISCO BCOS是首个由国内企业主导研发、对外开源、安全可控的�
 
 ## 架构
 
-FISCO BCOS 2.0采用一体两翼多引擎架构，实现系统吞吐能力的横向扩展，支持快速组建联盟和建链，让企业建链像建微信群一样便利，性能、安全性、可运维性、易用性、可扩展性均有很大优势。
+FISCO BCOS 2.0采用一体两翼多引擎架构，实现系统吞吐能力的横向扩展，支持快速组建联盟和建链，让企业建链像建聊天群一样便利，性能、安全性、可运维性、易用性、可扩展性均有很大优势。
 
 ![](../images/architecture/plane.jpg)
 
@@ -33,7 +33,7 @@ FISCO BCOS采用高通量可扩展的[多群组架构](./design/architecture/gro
 
 - <font color=blue>**[基于C++的Precompiled合约](./design/virtual_machine/precompiled.md)**</font>：区块链底层内置C++语言编写的Precompiled合约，执行效率更高。
 - <font color=blue>**[交易并行执行](./design/parallel/dag.md)**</font>：基于DAG算法根据交易间互斥关系构建区块内交易执行流，最大化并行执行区块内的交易。
-
+- <font color=blue>**交易生命周期的异步并行处理**</font>：共识、同步、落盘等各个环节的异步化以及并行处理
 
 ## 安全性
 
@@ -78,12 +78,3 @@ FISO BCOS引入开发部署工具、交互式控制台、区块链浏览器等�
 - <font color=blue>**[可视化的区块链管理平台WeBASE](https://webase-web.readthedocs.io/en/latest/)**</font>
 
 为了便于不同语言开发者快速开发应用，FISCO BCOS同时支持[Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md)和[Go SDK](https://github.com/FISCO-BCOS/go-sdk)
-
-
-## 可扩展性
-
-为提升FISCO BCOS的可扩展性，FISCO BCOS团队提出跨链协作方案WeCross和隐私保护解决方案WeDPR。
-
-- <font color=blue>**[跨链协作方案WeCross](https://fintech.webank.com/wecross/)**</font>：支持跨链事务交易，满足跨链交易的原子性，对跨链进行治理，可支持多方协作管理，避免单点风险。
-
-- <font color=blue>**[场景化的隐私保护解决方案WeDPR](https://fintech.webank.com/wedpr/)**</font>：提供匿支付、匿名投票、匿名竞拍和选择性披露等方案
