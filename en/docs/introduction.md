@@ -12,10 +12,18 @@ The community links multiple parties with open source. At present, more than 500
 
 ## Architecture
 
-FISCO BCOS 2.0 adopts an integrated two-wing multi-engine architecture to achieve the horizontal expansion of system throughput, supports the rapid formation of consortium blockchain, and allows enterprises to build blockchains as conveniently as the WeChat group. Performance, security, operability, ease of use, and scalability have great advantages.
+In 2.0, FISCO BCOS innovatively proposed a "one-body, two-wing, multi-engine" architecture to achieve horizontal expansion of system throughput and greatly improve performance. It has industry in terms of security, operation and maintenance, ease of use, and scalability, and leading edge.
 
 ![](../images/architecture/plane.jpg)
 
+The 'One-body' refers to the group structure, supports the rapid formation of consortium blockchain, and allows companies to build chains as easily as chat groups. According to business scenarios and business relationships, enterprises can choose different groups to form data sharing and consensus of multiple different ledgers, thereby quickly enriching business scenarios, expanding business scale, and greatly simplifying the deployment and operation and maintenance costs of the chain.
+
+The 'two wings' refer to supporting parallel computing models and distributed storage, both of which bring better scalability to the group architecture. The former changes the method of serial execution in the order of transactions in the block, and executes transactions in parallel based on DAG (directed acyclic graph), which greatly improves performance. The latter supports enterprises (nodes) to store data in remote distributed systems, overcoming many limitations of localized data storage.
+
+
+'Multi-engine' is a summary of a series of functional features. For example, pre-compiled contracts can break through the performance bottleneck of EVM and achieve high-performance contracts; the console allows users to quickly master blockchain usage skills.
+
+The above features all focus on solving the pain points of technology and experience, provide more tool support for development, operation and maintenance, governance and supervision, make the system process faster and have higher capacity, and make the application operating environment safer and more stable.
 
 ## Core module
 
@@ -40,41 +48,56 @@ In order to improve system performance, FISCO BCOS optimizes transaction executi
 
 Considering the high security requirements of the consortium blockchain platform, in addition to the TLS security protocol used for communication between nodes and between nodes and clients, FISCO BCOS also implements a complete set of security solutions:
 
-- <font color=blue>**[Network access mechanism](./design/security_control/node_management.md)**</font>: Restrict nodes from joining and exiting the alliance chain, and delete the malicious nodes of the specified group from the group, ensuring system security
+- <font color=blue>**[Network access mechanism](./design/security_control/node_management.md)**</font>: Restrict nodes from joining and exiting the alliance chain, and delete the malicious nodes of the specified group from the group, ensuring system security.
 
-- <font color=blue>**[Black and white list mechanism](./design/security_control/certificate_list.md)**</font>: Each group can only receive messages from the corresponding group to ensure the isolation of network communication between the groups; the CA blacklist mechanism can disconnect the network connection from the malicious node in time, ensuring the security of the system
+- <font color=blue>**[Black and white list mechanism](./design/security_control/certificate_list.md)**</font>: Each group can only receive messages from the corresponding group to ensure the isolation of network communication between the groups; the CA blacklist mechanism can disconnect the network connection from the malicious node in time, ensuring the security of the system.
 
-- <font color=blue>**[Authority management mechanism](./design/security_control/permission_control.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables
+- <font color=blue>**[Authority management mechanism](./design/security_control/permission_control.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables.
 
-- <font color=blue>**[Support OSCCA-approved algorithm](./manual/guomi_crypto.md)**</font>: Support OSCCA-approved encryption, signature algorithm and OSCCA-approved SSL communication protocol
+- <font color=blue>**[Support OSCCA-approved algorithm](./manual/guomi_crypto.md)**</font>: Support OSCCA-approved encryption, signature algorithm and OSCCA-approved SSL communication protocol.
 
-- <font color=blue>**[Disk encryption algorithm](./design/features/storage_security.md)**</font>: Support the disk encryption algorithm to ensure the confidentiality of the data on the chain
+- <font color=blue>**[Disk encryption algorithm](./design/features/storage_security.md)**</font>: Support the disk encryption algorithm to ensure the confidentiality of the data on the chain.
 
-- <font color=blue>**[Key management scheme](./design/features/storage_security.md)**</font>: Based on the disk encryption algorithm, the KeyManager service is used to manage the node key, which is more secure
+- <font color=blue>**[Key management scheme](./design/features/storage_security.md)**</font>: Based on the disk encryption algorithm, the KeyManager service is used to manage the node key, which is more secure.
 
-- <font color=blue>**[Homomorphic encryption](./manual/privacy.md)、[Group/Ring signature](./manual/privacy.md)**</font>: Homomorphic encryption and group ring signature interfaces are provided on the chain to meet more business needs
+- <font color=blue>**[Homomorphic encryption](./manual/privacy.md)、[Group/Ring signature](./manual/privacy.md)**</font>: Homomorphic encryption and group ring signature interfaces are provided on the chain to meet more business needs.
 
 
 ## Operability
 
 In the consortium blockchain platform, the operation and maintenance of the blockchain is crucial. FISCO BCOS provides a complete set of operation and maintenance deployment tools, and introduces **contract naming service**, **data archiving and migration**, **contract lifecycle management** to improve Operation and Management efficiency.
 
-- <font color=blue>**[Operation and Management deployment tool](./enterprise_tools/index.md)**</font>: Convenient tool for deploying, managing and monitoring multi-institution multi-group consortium blockchain, supporting multiple operations such as expanding nodes and expanding new groups
+- <font color=blue>**[Operation and Management deployment tool](./enterprise_tools/index.md)**</font>: Convenient tool for deploying, managing and monitoring multi-institution multi-group consortium blockchain, supporting multiple operations such as expanding nodes and expanding new groups.
 
-- <font color=blue>**[Contract naming service](./design/features/cns_contract_name_service.md)**</font>: Establish a mapping relationship between the contract address to the contract name and the contract version, so that the caller can easily call the contract on the chain by remembering the simple contract name
+- <font color=blue>**[Contract naming service](./design/features/cns_contract_name_service.md)**</font>: Establish a mapping relationship between the contract address to the contract name and the contract version, so that the caller can easily call the contract on the chain by remembering the simple contract name.
 
-- **Data archiving, migration and export functions**: Provide data export components, support on-chain data archiving, migration and export, increase the maintainability of on-chain data, and reduce the complexity of operation
+- **Data archiving, migration and export functions**: Provide data export components, support on-chain data archiving, migration and export, increase the maintainability of on-chain data, and reduce the complexity of operation.
 
-- <font color=blue>**[Contract lifecycle management](./design/features/contract_management.md)**</font>: Provide contract life cycle management function on the chain, which is convenient for the chain administrator to manage the contract on the chain
+- <font color=blue>**[Contract lifecycle management](./design/features/contract_management.md)**</font>: Provide contract life cycle management function on the chain, which is convenient for the chain administrator to manage the contract on the chain.
 
 
 ## Ease of use
 
-FISO BCOS introduces tools such as development and deployment tools, interactive console, blockchain browsers, etc. to improve the ease of use of the system and greatly reduce the time to build chains and deploy applications。
+FISCO BCOS introduces tools such as development and deployment tools, interactive console, blockchain browsers, etc. to improve the ease of use of the system and greatly reduce the time to build chains and deploy applications.
 
 - <font color=blue>**[Development and deployment tools](./manual/build_chain.md)**</font>
 - <font color=blue>**[Interactive command line tool console](./manual/console.md)**</font>
 - <font color=blue>**[Blockchain browser](./browser/browser.md)**</font>
-- <font color=blue>**[Visualized blockchain management platform WeBASE](https://webase-web.readthedocs.io/en/latest/)**</font>
 
 In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)
+
+## Community development tools
+
+Relying on the huge open source ecosystem, all partners in the community uphold the co-construction concept of "from developers, for developers", On the bottom platform of FISCO BCOS, independently develop multiple development tools at hand and give back to the community to reduce the difficulty and cost of blockchain application development from different business levels. The following is a partial list, and more institutions or developers are welcome to feedback more useful tools to the community.
+
+- <font color=blue>**[Blockchain middleware platform WeBASE](https://github.com/WeBankFinTech/WeBASE)**</font>: For a variety of roles, such as developers and operators, and according to different scenarios, including development, debugging, deployment, audit, etc., to create a wealth of functional components and practical tools, providing a friendly and visual operating environment.
+
+- <font color=blue>**[Distributed identity solution WeIdentity](https://github.com/webankfintech/weidentity)**</font>: A distributed multi-center technology solution based on blockchain, providing a series of basic layer and application interfaces such as distributed entity identity identification and management, trusted data exchange protocol, etc., which can realize the data of entity objects (people or things) Security authorization and exchange.
+
+- <font color=blue>**[Distributed event-driven architecture WeEvent](https://github.com/webankfintech/weevent)**</font>: Implemented a credible, reliable, and efficient cross-institutional and cross-platform event notification mechanism. Without changing the development language and access protocol of existing commercial systems, realize cross-institution and cross-platform event notification and processing.
+
+- <font color=blue>**[Cross-chain collaboration solution WeCross](https://github.com/WeBankFinTech/WeCross)**</font>: Support cross-chain transaction transactions, meet the atomicity of cross-chain transactions, manage cross-chain transactions, support multi-party collaborative management, and avoid single-point risks.
+
+- <font color=blue>**[Scene-style privacy protection solution WeDPR](https://fintech.webank.com/wedpr)**</font>: For hidden payment, anonymous voting, anonymous bidding and selective disclosure and other application solutions, provide an immediately available scenario-based privacy protection and efficient solutions to help various industries to explore data-related businesses legally and compliantly.
+
+- <font color=blue>**[ChainIDE](https://fiscoide.com/)**</font>: Provide smart contract cloud development tools to help developers save marginal costs and accelerate the launch of blockchain applications.
