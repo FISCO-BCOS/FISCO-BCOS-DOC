@@ -27,7 +27,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    guomi_crypto.md
    log_description.md
    privacy.md
-
+   cdn.md
 
 .. admonition:: Setup and deploy blockchain
 
@@ -62,7 +62,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
     - `Smart contract development <./smart_contract.html>`_
         + Solidity smart contract and precompiled contract
     - `Parallel contract <./transaction_parallel.html>`_
-        + The guide of writing parallel contract 
+        + The guide of writing parallel contract
 
 
 .. admonition:: Management and Security
@@ -77,7 +77,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
         + Encrypt data during writing into disk
     - `Privacy protection <./privacy.html>`_
         + Integrate homomorphic encryption and group/ring signature algorithms in precompiled contracts
-        
+
 
 
 .. admonition:: Others
@@ -85,7 +85,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
     - `OSCCA-approved cryptography <./guomi_crypto.html>`_
         + OSCCA-approved cryptography node and SDK
 
-.. important:: 
+.. important::
 
     * Important features
         + `Deploy Multi-Group Blockchain System <./group_use_cases.html>`_
