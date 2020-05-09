@@ -72,6 +72,7 @@ Users agree to generate the Genesis Block and node configuration file folder and
 
    tutorial_one_click.md
    tutorial_detail_operation.md
+   <!-- tutorial_detail_operation_gm.md -->
    installation.md
    config.md
    operation.md

@@ -16,7 +16,7 @@ info|2019-06-26 16:37:08.253147|[g:3][CONSENSUS][PBFT]^^^^^^^^Report,num=0,seale
 
 各字段含义如下：
 
-- `log_level`: 日志级别，目前主要包括`trace`, `debug`, `warning`, `error`和`fatal`，其中在发生极其严重错误时会输出`fatal`
+- `log_level`: 日志级别，目前主要包括`trace`, `debug`, `info`, `warning`, `error`和`fatal`，其中在发生极其严重错误时会输出`fatal`
 
 - `time`: 日志输出时间，精确到纳秒
 
@@ -98,7 +98,7 @@ info|2019-06-26 18:00:07.802027|[g:1][CONSENSUS][PBFT]^^^^^^^^Report,num=716,sea
 ```eval_rst
 .. note::
 
-    节点目录下可通过命令 ``tail -f log/* | grep "connected count"`` 若日志输出的网络连接数目不符合预期，请通过 ``netstat -anp | grep fisco-bcos`` 命令检查节点连接
+    节点目录下可通过命令 ``tail -f log/* | grep "connected count"`` 检查网络状态，若日志输出的网络连接数目不符合预期，请通过 ``netstat -anp | grep fisco-bcos`` 命令检查节点连接
 ```
 
 日志示例如下：
@@ -133,5 +133,5 @@ FISCO BCOS日志中核心模块关键字如下：
 | 区块执行模块 | EXECUTIVECONTEXT|
 | Precompile合约 |PRECOMPILED|
 | 存储中间件模块 |STORAGE|
-| external存储引擎 |SQLConnectionPool|
-| mysql存储引擎  |ZdbStorage|
+| External存储引擎 |SQLConnectionPool|
+| MySQL存储引擎  |ZdbStorage|
