@@ -631,7 +631,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}
 
 ### Check node
 
-View the group1 information in the node log:
+View the group2 information in the node log:
 
 ```bash
 tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log* | grep g:2 | grep +++
