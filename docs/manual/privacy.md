@@ -16,7 +16,7 @@
 
 ![](../../images/privacy/formula.jpg)
 
-FISCO BCOS采用的是paillier加密算法，支持加法同态。paillier加解密兼容主流的RSA公钥加密算法，接入门槛低。同时paillier作为一种轻量级的同态加密算法，计算开销小易被业务系统接受。因此经过功能性和可用性的权衡，最终选定了paillier算法。
+FISCO BCOS采用的是paillier加密算法，支持加法同态。paillier的公私钥兼容主流的RSA加密算法，接入门槛低。同时paillier作为一种轻量级的同态加密算法，计算开销小易被业务系统接受。因此经过功能性和可用性的权衡，最终选定了paillier算法。
 
 
 ### 功能组件
