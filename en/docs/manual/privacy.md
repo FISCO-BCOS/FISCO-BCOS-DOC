@@ -15,7 +15,7 @@ Homomorphic Encryption is one of the jewels in the field of public key cryptosys
 
 ![](../../images/privacy/formula.jpg)
 
-FISCO BCOS uses the paillier encryption algorithm which supports addition homomorphism. Paillier is compatible with mainstream RSA public key encryption algorithms, and the use costs is low. At the same time, paillier, as a lightweight homomorphic encryption algorithm, has low calculation overhead and is easily accepted by business systems. Therefore, after balancing the trade-off between functionality and usability, the paillier algorithm was finally selected.
+FISCO BCOS uses the paillier encryption algorithm which supports addition homomorphism. Paillier key pairs are compatible with mainstream RSA public key encryption algorithms, and the use costs is low. At the same time, paillier, as a lightweight homomorphic encryption algorithm, has low calculation overhead and is easily accepted by business systems. Therefore, after balancing the trade-off between functionality and usability, the paillier algorithm was finally selected.
 
 
 ### Components
