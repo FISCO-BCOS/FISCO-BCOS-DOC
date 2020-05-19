@@ -82,7 +82,7 @@ FISCO BCOS的证书生成流程如下，用户也可以使用[企业部署工具
 
 ## 节点证书续期操作
 
-完成证书续期前推荐使用[证书检测脚本](../enterprise_tools/operation.md#handshake-failed)对证书进行检测。
+完成证书续期前推荐使用[证书检测脚本](../enterprise_tools/operation#handshake-failed)对证书进行检测。
 
 当证书过期时，需要用户使用对当前节点私钥重新签发证书，操作如下：
 
@@ -105,7 +105,7 @@ mynode
 └── stop.sh
 ```
 
-设用户机构证书目录为`~/myagency`，目录入下：
+设用户机构证书目录为`~/myagency`，目录如下：
 
 ```bash
 agency
