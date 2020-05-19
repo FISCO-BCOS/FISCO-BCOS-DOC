@@ -1248,7 +1248,7 @@ Standard error codes and their corresponding meanings are as follows:
 | -32600 | INVALID_JSON_REQUEST | send invalid request object         |
 | -32601 | METHOD_NOT_FOUND     | method not exist or valid         |
 | -32602 | INVALID_PARAMS       | invalid method parameter             |
-| -32603 | INTERNAL ERROR       | internal call error               |
+| -32603 | INTERNAL_ERROR       | internal call error               |
 | -32604 | PROCEDURE_IS_METHOD  | internal error; ID field not provided in the request |
 | -32700 | JSON_PARSE_ERROR     | json received by server fails to be parsed |
 
@@ -1323,7 +1323,7 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -51200  | contract name and version already exist         |SDK Error Code |
 | -51201  | version string length exceeds the maximum limit |SDK Error Code |
 | -51300  | invalid configuration entry                     |          |
-| -51500  | contract name and version already exist         |          |
+| -51500  | entry parse error                               |          |
 | -51501  | condition parse error                           |          |
 | -51502  | condition operation undefined                   |          |
 
