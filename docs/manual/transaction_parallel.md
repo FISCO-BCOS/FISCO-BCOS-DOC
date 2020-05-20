@@ -168,7 +168,7 @@ function enableParallel() public
 {
     // 函数定义字符串（注意","后不能有空格）,参数的前几个是互斥参数
     registerParallelFunction("transfer(string,string,uint256)", 2); // transfer接口，前2个是互斥参数
-    registerParallelFunction("set(string,uint256)", 1); // transfer接口，前1个四互斥参数
+    registerParallelFunction("set(string,uint256)", 1); // set接口，前1个是互斥参数
 }  
 
 // 注销并行合约接口
