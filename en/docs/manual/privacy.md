@@ -78,43 +78,6 @@ Due to its natural anonymity, group/ring signature has broad application prospec
 
 The privacy module is implemented through precompiled contracts, and is not turned on by default. To enable these features, you need to recompile the source code and enable the `CRYPTO_EXTENSION` compilation option. The steps are as follows:
 
-### Install dependencies
-
-- Ubuntu
-
-```bash
-$ sudo apt install -y flex patch bison libgmp-dev byacc
-```
-
-- CentOS
-
-```bash
-$ sudo yum install -y flex patch bison gmp-static byacc
-```
-
-- macOS
-
-```bash
-$ brew install flex bison gmp byacc
-```
-
-### Clone code
-
-```bash
-git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
-```
-
-### Compile
-
-```bash
-cd FISCO-BCOS
-mkdir -p build && cd build
-# use cmake3 if CentOS
-cmake -DCRYPTO_EXTENSION=ON ..
-# -j4 to speed up
-make 
-```
-
 ### Build chain 
 
 Make sure you are in the `FISCO-BCOS/build` directory, and execute the following command to build a local 4-node chain. [Refer to here](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html) to get more build options.
