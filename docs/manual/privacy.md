@@ -89,52 +89,7 @@ FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
 
 ## 启用方法
 
-FISCO BCOS隐私保护模块是通过预编译合约实现，且默认不打开。要启用这些功能需要重新编译源码，并开启`CRYPTO_EXTENSION`编译选项。步骤如下：
-
-### 安装依赖
-
-启用隐私模块需要额外安装相关依赖，具体如下：
-
-- Ubuntu
-
-推荐Ubuntu 16.04以上版本，16.04以下的版本没有经过测试。
-
-```bash
-$ sudo apt install -y flex patch bison libgmp-dev byacc
-```
-
-- CentOS
-
-推荐使用CentOS7以上版本。
-
-```bash
-$ sudo yum install -y flex patch bison gmp-static byacc
-```
-
-- macOS
-
-推荐xcode10以上版本。macOS依赖包安装依赖于[Homebrew](https://brew.sh/)。
-
-```bash
-$ brew install flex bison gmp byacc
-```
-
-### 克隆代码
-
-```bash
-git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
-```
-
-### 源码编译
-
-```bash
-cd FISCO-BCOS
-mkdir -p build && cd build
-# 开启隐私模块编译选项，CentOS请使用cmake3
-cmake -DCRYPTO_EXTENSION=ON ..
-# 高性能机器可添加-j4使用4核加速编译
-make 
-```
+The FISCO BCOS privacy protection module is implemented through a precompiled contract and is enabled by default. For source code compilation FISCO BCOS, please refer to [here](./get_executable.md).
 
 ### 搭建联盟链 
 
