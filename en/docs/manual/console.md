@@ -368,6 +368,9 @@ unfreezeContract                         Unfreeze the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
+freezeAccount                            Freeze the account.
+unfreezeAccount                          Unfreeze the account.
+getAccountStatus                         Get status of the account.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1607,6 +1610,42 @@ Parameter:
     "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
     "0x965ebffc38b309fa706b809017f360d4f6de909a"
 ]
+```
+
+### **freezeAccount**
+Run freezeAccount to freeze account according account address.
+Parameter:
+- account address: tx.origin. The prefix of 0x is necessary.
+
+```text
+[group:1]> freezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfreezeAccount**
+Run unfreezeAccount to unfreeze account according account address.
+Parameter:
+- account address: tx.origin. The prefix of 0x is necessary.
+
+```text
+[group:1]> unfreezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getAccountStatus**
+Run getAccountStatus to get status of the account according account address.
+Parameter:
+- account address: tx.origin. The prefix of 0x is necessary.
+
+```text
+[group:1]> getAccountStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+The account is available.
 ```
 
 ## Appendix: Java environment configuration
