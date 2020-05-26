@@ -362,6 +362,9 @@ unfreezeContract                         Unfreeze the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
+freezeAccount                            Freeze the account.
+unfreezeAccount                          Unfreeze the account.
+getAccountStatus                         Get status of the account.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1568,6 +1571,42 @@ The contract is available.
     "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
     "0x965ebffc38b309fa706b809017f360d4f6de909a"
 ]
+```
+
+### **freezeAccount**
+运行freezeAccount，对指定账号进行冻结操作。对没有发送过交易的账号，冻结操作将提示该账号地址不存在。参数：
+
+- 账号地址：tx.origin，其中0x前缀必须。
+
+```text
+[group:1]> freezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfreezeAccount**
+运行unfreezeAccount，对指定账号进行解冻操作。对没有发送过交易的账号，解冻操作将提示该账号地址不存在。参数：
+
+- 账号地址：tx.origin，其中0x前缀必须。
+
+```text
+[group:1]> unfreezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getAccountStatus**
+运行getAccountStatus，查询指定账号的状态。对没有发送过交易的账号，查询操作将提示该账号地址不存在。参数：
+
+- 账号地址：tx.origin，其中0x前缀必须。
+
+```text
+[group:1]> getAccountStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+The account is available.
 ```
 
 ## 附录：Java环境配置
