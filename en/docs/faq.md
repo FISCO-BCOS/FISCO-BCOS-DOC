@@ -135,6 +135,12 @@ A:
   2. Check the console provided by the cloud manufacturer of the cloud server, check whether the security group is configured, and open the channel port used by FISCO BCOS nodes in the security group.
   3. Check that the generated certificate is correct, [refer to here](./enterprise_tools/operation.md#node-configuration-error-checking)
 
+Q:
+  Why connection to other peer nodes can not be established after launching the node, and the log report there are network exceptions?
+答:
+  1. Please check that certificate files of the node are correct
+  2. Please check that type (SM_CRYPTO or not) of the node is consistent with other peer nodes
+
 ## Web3SDK
 
 Q:
