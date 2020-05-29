@@ -189,15 +189,14 @@ FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibi
 
 ```eval_rst
 .. important::
-    - 可通过 ``./fisco-bcos --version | grep "Version" `` 命令查看FISCO BCOS的当前支持的最高版本
+    - 可通过 `./fisco-bcos --version | grep "Version" ` 命令查看FISCO BCOS的当前支持的最高版本
     - build_chain.sh生成的区块链节点配置中，supported_version配置为FISCO BCOS当前的最高版本
-    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，
+    - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，千万不可修改supported_version
 ```
 
 `FISCO BCOS 2.2.0`节点的`[compatibility]`配置如下：
 
 ```ini
-
 [compatibility]
     supported_version=2.2.0
 ```
@@ -224,6 +223,36 @@ enable=true
 key_manager_ip=127.0.0.1
 key_manager_port=31443
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
+```
+
+
+### 可选配置：流量控制
+
+为实现区块链系统柔性服务，防止多群组间资源相互影响，FISCO BCOS v2.5.0引入了流量控制功能，主要包括SDK到节点请求速率的限制以及节点间流量限制，配置项位于`config.ini`的`[flow_control]`，默认关闭，流控的详细设计请参考[这里](../design/features/flow_control.md)。
+
+#### SDK请求速率限制配置
+
+SDK请求速率限制位于配置项`[flow_control].limit_req`中，用于限制SDK每秒到节点的最大请求数目，当每秒到节点的请求超过配置项的值时，请求会被拒绝，**SDK请求速率限制默认关闭，若要开启该功能，需要将`limit_req`配置项前面的`;`去掉**，打开SDK请求速率限制并设计节点每秒可接受2000个SDK请求的示例如下：
+
+```ini
+[flow_control]
+    ; restrict QPS of the node
+    limit_req=2000
+```
+
+#### 节点间流量限制配置
+
+为了防止区块同步、AMOP消息传输占用过多的网络流量，并影响共识模块的消息包传输，FISCO BCOS v2.5.0引入了节点间流量限制的功能，该配置项用于配置节点平均出带宽的上限，但不限制区块共识、交易同步的流量，当节点平均出带宽超过配置值时，会暂缓区块发送、AMOP消息传输。
+
+- `[flow_control].outgoing_bandwidth_limit`：节点出带宽限制，单位为`Mbit/s`，当节点出带宽超过该值时，会暂缓区块发送，也会拒绝客户端发送的[AMOP](./amop_protocol.md)请求，但不会限制区块共识和交易广播的流量，**该配置项默认关闭，若要打开流量限制功能，请将`outgoing_bandwidth_limit`配置项前面的`;`去掉**。
+
+打开节点出带宽流量限制，并将其设置为`5MBit/s`的配置示例如下：
+
+```ini
+[flow_control]
+    ; Mb, can be a decimal
+    ; when the outgoing bandwidth exceeds the limit, the block synchronization operation will not proceed
+    outgoing_bandwidth_limit=5
 ```
 
 ## 群组系统配置说明
@@ -384,7 +413,7 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
    推荐使用Mysql直连模式，配置type为MySQL。
 ```
 
-- `type`：存储的DB类型，支持`RocksDB`、`MySQL`、`External`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`external`时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`*1000切换实例，实例以存储的起始区块高度命名。
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`、`External`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`external`时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`\*1000切换实例，实例以存储的起始区块高度命名。
 - `max_capacity`：配置允许节点用于内存缓存的空间大小。
 - `max_forward_block`：配置允许节点用于内存区块的大小，当节点出的区块超出该数值时，节点停止共识等待区块写入数据库。
 - `binary_log`：当设置为`true`时打开binary_log，此时关闭RocksDB的WAL。
@@ -424,13 +453,38 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 
 ### 交易池配置
 
-FISCO BCOS将交易池容量配置开放给用户，用户可根据自己的业务规模需求、稳定性需求以及节点的硬件配置动态调整交易池大小。
+FISCO BCOS将交易池容量配置开放给用户，用户可根据自己的业务规模需求、稳定性需求以及节点的硬件配置动态调整交易池配置。
 
-交易池配置示例如下：
+#### 交易池容量限制
+
+为防止过多交易堆积在交易池内占用太多内存，FISCO BCOS提供了`[tx_pool].limit`和`[tx_pool].memory_limit`两个配置项来限制交易池容量：
+
+- `[tx_pool].limit`: 限制交易池内可以容纳的最大交易数目，默认为`150000`，超过该限制后，客户端发到节点的交易会被拒绝。
+- `[tx_pool].memory_limit`: 交易池内交易占用的内存大小限制，默认为`512MB`，超过该限制后，客户端发到节点的交易会被拒绝。
+
+交易池容量配置如下：
 
 ```ini
 [tx_pool]
     limit=150000
+    ; transaction pool memory size limit, MB
+    memory_limit=512
+```
+
+#### 交易池推送线程数配置
+
+
+为提升区块链系统性能，FISCO BCOS采用了交易回执异步推送逻辑，当交易上链后，交易池内的推送线程会把交易上链的回执异步推送给客户端，为防止推送线程过多占用较多的系统资源，也为了防止推送线程过少影响交易推送的时效性，FISCO BCOS提供了`[tx_pool].notify_worker_num`配置项来配置异步推送线程数目：
+
+- `[tx_pool].notify_worker_num`：异步推送线程数目，默认为2，建议该值不超过8
+
+交易池推送线程数配置如下：
+
+```ini
+[tx_pool]
+    ; number of threads responsible for transaction notification,
+    ; default is 2, not recommended for more than 8
+    notify_worker_num=2
 ```
 
 ### PBFT共识配置
@@ -642,6 +696,34 @@ FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够�
     enable_parallel=true
 ```
 
+### 可选配置：群组流量控制
+
+为了防止多群组间资源相互影响，FISCO BCOS v2.5.0引入了流量控制功能，支持群组级别的SDK请求速率限制以及流量限制，配置位于`group.{group_id}.ini`的`[flow_control]`，默认关闭，流控的详细设计请参考[这里](../design/features/flow_control.md)。
+
+#### SDK到群组的请求速率限制配置
+
+群组内的SDK请求速率限制位于配置项`[flow_control].limit_req`中，用于限制SDK每秒到群组的最大请求数目，当每秒到节点的请求超过配置项的值时，请求会被拒绝，**SDK到群组请求速率限制默认关闭，若要开启该功能，需要将`limit_req`配置项前面的`;`去掉**，打开SDK请求速率限制并配置群组每秒可接受1000个SDK请求的示例如下：
+
+```ini
+[flow_control]
+    ; restrict QPS of the group
+    limit_req=1000
+```
+
+#### 群组间流量限制配置
+
+为了防止区块同步占用过多的网络流量影响到共识模块的消息包传输，FISCO BCOS v2.5.0引入了群组级流量限制的功能，其配置了群组平均出带宽的上限，但不限制区块共识、交易同步的流量，当群组平均出带宽超过配置值时，会暂缓区块发送。
+
+- `[flow_control].outgoing_bandwidth_limit`：群组出带宽限制，单位为`Mbit/s`，当群组出带宽超过该值时，会暂缓发送区块，但不会限制区块共识和交易广播的流量，**该配置项默认关闭，若要打开流量限制功能，请将`outgoing_bandwidth_limit`配置项前面的`;`去掉**。
+
+打开群组出带宽流量限制，并将其设置为`2MBit/s`的配置示例如下：
+
+```ini
+[flow_control]
+    ; Mb, can be a decimal
+    ; when the outgoing bandwidth exceeds the limit, the block synchronization operation will not proceed
+    outgoing_bandwidth_limit=2
+```
 
 ## 动态配置系统参数
 
