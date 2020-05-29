@@ -1263,8 +1263,10 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -40007 | Only pbft consensus supports the view property                              | getPbftView接口，只有pbft共识机制有view属性 |
 | -40008 | Invalid System Config                                                       | getSystemConfigByKey接口，查询无效的key     |
 | -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
-| -400010 | RPC module initialization is incomplete                                    | RPC模块初始化尚未完成     |
+| -40010 | RPC module initialization is incomplete                                    | RPC模块初始化尚未完成     |
+| -40011 | Over QPS limit                                   | SDK到节点的请求速率超过节点的请求速率限制     |
 
+   
 
 ### 交易回执状态
 
