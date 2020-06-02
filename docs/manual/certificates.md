@@ -105,7 +105,7 @@ mynode
 └── stop.sh
 ```
 
-设用户机构证书目录为`~/myagency`，目录入下：
+设用户机构证书目录为`~/myagency`，目录如下：
 
 ```bash
 agency
@@ -118,7 +118,7 @@ agency
 
 续期操作如下：
 
-- 使用节点私钥生成证书请求文件 请将`~/mynode/node/conf/node.key`修改为你自己的节点私钥，将`~/myagency/cert.cnf`替换为自己的证书配置文件
+- 使用节点私钥生成证书请求文件，请将`~/mynode/node/conf/node.key`修改为你自己的节点私钥，将`~/myagency/cert.cnf`替换为自己的证书配置文件
 
 ```bash
 openssl req -new -sha256 -subj "/CN=RenewalNode/O=fisco-bcos/OU=node" -key ~/mynode/node/conf/node.key -config ~/myagency/cert.cnf -out node.csr
