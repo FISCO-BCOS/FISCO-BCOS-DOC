@@ -78,7 +78,7 @@ FISCO BCOS的证书生成流程如下，用户也可以使用[企业部署工具
 
 ### 生成节点/SDK证书
 
-* 节点生成私钥`node.key`和证书请求文件`node.csr`，机构管理员使用私钥`agency.key`和证书请求文件`node.csr`为节点/SDK颁发证书
+* 节点生成私钥`node.key`和证书请求文件`node.csr`，机构管理员使用私钥`agency.key`和证书请求文件`node.csr`为节点颁发证书。同理，可用相同的方式为SDK生成证书。
 
 ## 节点证书续期操作
 
@@ -262,14 +262,15 @@ tail -f ~/mynode/log/log*  | grep +++
 
 通过上述操作，完成了证书续期的操作。
 
-## 机构证书/链证书续期
+## 四类证书续期简易流程
 
 当整条链的证书均已过期时，需要重新对整条链的证书进行续期操作，续期证书的OpenSSL命令与节点续期操作基本相同，或查阅`build_chain.sh`脚本签发证书的操作，简要步骤如下：
 
 - 使用链私钥`ca.key`重新签发链证书`ca.crt`
-- 使用机构证书`agency.key`生成证书请求文件`agency.csr`
-- 使用链私钥`ca.key`对证书请求文件`agency.csr`签发得到机构证书`agency.crt`
-- 使用节点`node.key`生成证书请求文件`node.csr`
-- 使用机构私钥`agency.key`对证书请求文件`node.csr`签发得到节点证书`node.crt`
+- 使用机构私钥`agency.key`生成证书请求文件`agency.csr`
+- 使用链私钥`ca.key`和链证书`ca.crt`对证书请求文件`agency.csr`签发得到机构证书`agency.crt`
+- 使用节点私钥`node.key`生成证书请求文件`node.csr`
+- 使用机构私钥`agency.key`和机构证书`agency.crt`对证书请求文件`node.csr`签发得到节点证书`node.crt`
 - 将节点证书和机构证书拼接得到`node.crt`，拼接操作可以参考`节点证书续期操作`
+- sdk证书`sdk.crt`签发步骤同节点证书签发
 - 使用新生成的链证书`ca.crt`，节点证书`node.crt`替换所有节点conf目录下的证书
