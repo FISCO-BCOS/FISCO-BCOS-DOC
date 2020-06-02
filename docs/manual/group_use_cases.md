@@ -73,7 +73,7 @@ mkdir -p ~/fisco && cd ~/fisco
 
 - 获取build_chain.sh脚本
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
@@ -555,7 +555,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.1/build_chain.sh && chmod u+x build_chain.sh
 # 构建本机单群组四节点区块链(生产环境中，建议每个节点部署在不同物理机上)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
