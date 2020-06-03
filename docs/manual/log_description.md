@@ -1,6 +1,6 @@
 # 日志说明
 
-FISCO BCOS的所有群组日志都输出log目录下到`log_%YYYY%mm%dd%HH.%MM`的文件中，且定制了日志格式，方便用户通过日志查看各群组状态。日志配置说明请参考[日志配置说明](./configuration.html#id6)
+FISCO BCOS的所有群组日志都输出到log目录下`log_%YYYY%mm%dd%HH.%MM`的文件中，且定制了日志格式，方便用户通过日志查看各群组状态。日志配置说明请参考[日志配置说明](./configuration.html#id6)
 
 ## 日志格式
 
