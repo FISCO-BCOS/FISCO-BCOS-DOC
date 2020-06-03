@@ -32,9 +32,6 @@ FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/sec
 ```
 
 ```bash
-# 设节点位于~/fisco/nodes/192.168.0.1/node0目录下
-$ mkdir -p ~/fisco && cd ~/fisco
-
 # 获取节点Node ID（设节点目录为~/nodes/192.168.0.1/node0/）
 $ cat ~/fisco/nodes/192.168.0.1/node0/conf/node.nodeid
 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
@@ -131,7 +128,7 @@ $ cd nodes/127.0.0.1/
 $ cp node0/config.ini node0/start.sh node0/stop.sh node2/
 ```
 
-4 . 修改`node2/config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
+4 . 修改`node2/config.ini`。对于`[rpc]`模块，修改`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
 
 ```
 $ vim node2/config.ini

@@ -33,9 +33,6 @@ For example, to convert the specified nodes to Sealer, Observer, and RemoveNode,
 ```
 
 ```bash
-# to set the node in the ~/fisco/nodes/192.168.0.1/node0 directory
-$ mkdir -p ~/fisco && cd ~/fisco
-
 # to get Node ID (to set the directory as ~/nodes/192.168.0.1/node0/）
 $ cat ~/fisco/nodes/192.168.0.1/node0/conf/node.nodeid
 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
@@ -136,7 +133,7 @@ $ cd nodes/127.0.0.1/
 $ cp node0/config.ini node0/start.sh node0/stop.sh node2/
 ```
 
-4 . modify `node2/config.ini`. For `[rpc]` model, modify `listen_ip`, `channel_listen_port` and `jsonrpc_listen_port`; for `[p2p]` model, modify `listen_port` and add its node information in `node.`.
+4 . modify `node2/config.ini`. For `[rpc]` model, modify `channel_listen_port` and `jsonrpc_listen_port`; for `[p2p]` model, modify `listen_port` and add its node information in `node.`.
 
 ```eval_rst
 .. note::
