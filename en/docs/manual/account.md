@@ -25,6 +25,7 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_a
 ```eval_rst
 .. note::
     - If the get_account.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
+    - Please use `curl -LO https://www.fisco.com.cn/cdn/deps/tools/tassl.tar.gz`, and place in `~/.fisco/tassl`
 ```
 
 If you use guomi version fisco, please execute below command to get `get_gm_account.sh`

@@ -171,7 +171,7 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
 
 ```eval_rst
 .. note::
-    - If the package cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar`
+    - If the package cannot be downloaded for a long time due to network problems, try `curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar`
 ```
 
 #### Contract compilation tool

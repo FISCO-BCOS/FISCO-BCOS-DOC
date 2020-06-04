@@ -973,7 +973,7 @@ vi ./console/conf/applicationContext.xml
 **替换国密jar包**
 
 ```bash
-cd console && curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar && bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
+cd console && curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar && bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
 ```
 
 ### 查看机构C节点4信息
