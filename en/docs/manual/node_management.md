@@ -121,6 +121,11 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
+```eval_rst
+.. note::
+    - If download failed, please try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
 2 . copy node 2 under `nodes/127.0.0.1/`, parallel with other node folder (`node0`, `node1`);
 ```
 $ cp -r ./node2/ nodes/127.0.0.1/
