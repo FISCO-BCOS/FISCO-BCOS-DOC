@@ -1,6 +1,6 @@
 # Tutorial of one_click_generator.sh
 
-<!-- TODO: add console details -->
+<!-- TODO: add console details fix type-->
 
 The `one_click_generator.sh` script is a script that deploys a federated chain with one click based on the node configuration filled out by the user. The script will generate the corresponding node under the folder according to the `node_deployment.ini` configured under the user-specified folder.
 
