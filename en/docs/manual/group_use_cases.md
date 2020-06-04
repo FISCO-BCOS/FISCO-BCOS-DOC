@@ -635,16 +635,22 @@ $ cd ~/fisco/multi_nodes/127.0.0.1
 
 # Copy the configuration of group 1
 $ cp node0/conf/group.1.genesis node0/conf/group.2.genesis
+$ cp node0/conf/group.1.ini node0/conf/group.2.ini
 
 # Modify group ID
 $ sed -i "s/id=1/id=2/g" node0/conf/group.2.genesis
 $ cat node0/conf/group.2.genesis | grep "id"
 # Have modified to    id=2
 
+# Update the list of consensus nodes in the "group.2.genesis" to remove obsolete consensus nodes
+
 # Copy the configuration to each node
 $ cp node0/conf/group.2.genesis node1/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node2/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node3/conf/group.2.genesis
+$ cp node0/conf/group.2.ini node1/conf/group.2.ini
+$ cp node0/conf/group.2.ini node2/conf/group.2.ini
+$ cp node0/conf/group.2.ini node3/conf/group.2.ini
 
 # Restart node
 $ bash stop_all.sh
