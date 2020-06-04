@@ -1,3 +1,3 @@
 # WIP
 
-TODO add console details
+<!-- TODO add console details fix type -->
