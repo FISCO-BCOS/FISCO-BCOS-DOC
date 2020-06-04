@@ -625,16 +625,22 @@ $ cd ~/fisco/multi_nodes/127.0.0.1
 
 # 拷贝group1的配置
 $ cp node0/conf/group.1.genesis node0/conf/group.2.genesis
+$ cp node0/conf/group.1.ini node0/conf/group.2.ini
 
 # 修改群组ID
 $ sed -i "s/id=1/id=2/g"  node0/conf/group.2.genesis
 $ cat node0/conf/group.2.genesis | grep "id"
 # 已修改到    id=2
 
+# 更新group.2.genesis文件中的共识节点列表，剔除已废弃的共识节点。
+
 # 将配置拷贝到各个节点
 $ cp node0/conf/group.2.genesis node1/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node2/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node3/conf/group.2.genesis
+$ cp node0/conf/group.2.ini node1/conf/group.2.ini
+$ cp node0/conf/group.2.ini node2/conf/group.2.ini
+$ cp node0/conf/group.2.ini node3/conf/group.2.ini
 
 # 重启各个节点
 $ bash stop_all.sh
