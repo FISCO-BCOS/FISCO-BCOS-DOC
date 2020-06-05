@@ -38,6 +38,8 @@ Usage:
     -t <Cert config file>               Default auto generate
     -k <The path of ca root>            Default auto generate, the ca.crt and ca.key must in the path, if use intermediate the root.crt must in the path
     -K <The path of sm crypto ca root>  Default auto generate, the gmca.crt and gmca.key must in the path, if use intermediate the gmroot.crt must in the path
+    -D <Use Deployment mode>            Default false, If set -D, use deploy mode directory struct and make tar
+    -G <channel use sm crypto ssl>      Default false, only works for guomi mode
     -X <Certificate expiration time>    Default 36500 days
     -T <Enable debug log>               Default off. If set -T, enable debug log
     -S <Enable statistics>              Default off. If set -S, enable statistics
@@ -151,6 +153,9 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 
 ### **`K`选项[**Optional**]**
 国密模式使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括gmca.crt/gmca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括gmroot.crt，用于存放上级证书链。
+
+### **`G`选项[**Optional**]**
+从2.5.0开始，国密模式下，用户可以配置节点与SDK连接是否使用国密SSL，设置此选项则`chain.sm_crypto_channel=true`。默认节点与SDK的channel连接使用secp256k1的证书。
 
 ### **`D`选项[**Optional**]**
 无参数选项，设置该选项时，生成节点的目录名为IP_P2P端口，默认为节点从0开始的编号。
@@ -320,8 +325,8 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/ge
 2. 生成新机构私钥和证书
 
 ```bash
-# -c 指定链证书及私钥所在路径，目录下必须有ca.crt 和 ca.key， 如果ca.crt是二级CA，则还需要root.crt(根证书) 
-# -g 指定国密链证书及私钥所在路径，目录下必须有gmca.crt 和 gmca.key，如果gmca.crt是二级CA，则还需要gmroot.crt(根证书) 
+# -c 指定链证书及私钥所在路径，目录下必须有ca.crt 和 ca.key， 如果ca.crt是二级CA，则还需要root.crt(根证书)
+# -g 指定国密链证书及私钥所在路径，目录下必须有gmca.crt 和 gmca.key，如果gmca.crt是二级CA，则还需要gmroot.crt(根证书)
 # -a 新机构的机构名
 bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName
 ```
