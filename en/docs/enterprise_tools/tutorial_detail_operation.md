@@ -4,7 +4,7 @@ FISCO BCOS enterprise deployment tools are designed for multi-agency production 
 
 This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](./operation.md).
 
-<!-- TODO: ADD gm operation -->
+<!-- TODO: ADD gm operation add console details fix type-->
 
 This chapter is a process that multi-agency peer-to-peer deployment and a situation that the private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through a single agency's click start can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](./tutorial_one_click.md).
 

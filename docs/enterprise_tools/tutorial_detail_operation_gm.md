@@ -947,7 +947,11 @@ bash ~/generator-C/nodeC/start_all.sh
 
 机构A配置控制台或sdk，教程中以控制台为例：
 
-注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，启动前请确保已经安装java
+```eval_rst
+.. note::
+
+    企业部署工具会根据generator/meta文件夹下的机构证书及私钥生成sdk相应证书，如需手动生成可以参考操作手册中的generate_sdk_certificate命令
+```
 
 国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
 
@@ -973,7 +977,13 @@ vi ./console/conf/applicationContext.xml
 **替换国密jar包**
 
 ```bash
-cd console && curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar && bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
+cd console && curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar && bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
+```
+
+```eval_rst
+.. note::
+
+    建议用户下载完jar包后，手动检查jar包完整性。可以尝试手动解压观察是否完整
 ```
 
 ### 查看机构C节点4信息

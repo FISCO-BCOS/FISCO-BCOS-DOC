@@ -168,7 +168,7 @@ function enableParallel() public
 {
     // function defined character string (no blank space behind ","), the parameter starts with exclusive parameters
     registerParallelFunction("transfer(string,string,uint256)", 2); // transfer interface, the former 2 is exclusive parameter
-    registerParallelFunction("set(string,uint256)", 1); // transfer interface, the first 1 is exclusive parameter
+    registerParallelFunction("set(string,uint256)", 1); // set interface, the first 1 is exclusive parameter
 }  
 
 // revoke parallel contract interface

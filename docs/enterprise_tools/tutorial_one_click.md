@@ -403,6 +403,12 @@ fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/a
 
 由于控制台体积较大，一键部署中没有直接集成，用户可以使用以下命令获取控制台
 
+```eval_rst
+.. note::
+
+    企业部署工具会根据generator/meta文件夹下的机构证书及私钥生成sdk相应证书，如需手动生成可以参考操作手册中的generate_sdk_certificate命令
+```
+
 获取控制台，可能需要较长时间，国内用户可以使用`--cdn`命令：
 
 以机构A使用控制台为例，此步需要切换到机构A对应的`generator-agency`文件夹

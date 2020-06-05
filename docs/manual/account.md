@@ -34,7 +34,7 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_g
 ```eval_rst
 .. note::
     - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
-    - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
+    - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -LO https://www.fisco.com.cn/cdn/deps/tools/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
 ```
 
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。

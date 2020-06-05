@@ -1244,7 +1244,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"queryGroupStatus","params":[2],"
 | -32600 | INVALID_JSON_REQUEST | 发送无效的请求对象         |
 | -32601 | METHOD_NOT_FOUND     | 该方法不存在或无效         |
 | -32602 | INVALID_PARAMS       | 无效的方法参数             |
-| -32603 | INTERNAL ERROR       | 内部调用错误               |
+| -32603 | INTERNAL_ERROR       | 内部调用错误               |
 | -32604 | PROCEDURE_IS_METHOD  | 内部错误，请求未提供id字段 |
 | -32700 | JSON_PARSE_ERROR     | 服务端接收到的json无法解析 |
 
@@ -1319,7 +1319,7 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -51200  | contract name and version already exist         | SDK错误码 |
 | -51201  | version string length exceeds the maximum limit | SDK错误码 |
 | -51300  | invalid configuration entry                     |          |
-| -51500  | contract name and version already exist         |          |
+| -51500  | entry parse error                               |          |
 | -51501  | condition parse error                           |          |
 | -51502  | condition operation undefined                   |          |
 
