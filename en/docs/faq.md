@@ -137,9 +137,18 @@ A:
 
 Q:
   Why connection to other peer nodes can not be established after launching the node, and the log report there are network exceptions?
-答:
+A:
   1. Please check that certificate files of the node are correct
   2. Please check that type (SM_CRYPTO or not) of the node is consistent with other peer nodes
+
+Q：
+  Why "invalid group status" error information appears in the log of node?
+
+A：Due to possible fault of file system, group status recorded by node on local disk may be invalid. Users can check `.group_status` file in group's data folder, and change the content to the one of following items:
+
+- STOPPED
+- DELETED
+- RUNNING
 
 ## Web3SDK
 
