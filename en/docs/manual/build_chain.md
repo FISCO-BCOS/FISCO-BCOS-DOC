@@ -38,6 +38,8 @@ Usage:
     -t <Cert config file>               Default auto generate
     -k <The path of ca root>            Default auto generate, the ca.crt and ca.key must in the path, if use intermediate the root.crt must in the path
     -K <The path of sm crypto ca root>  Default auto generate, the gmca.crt and gmca.key must in the path, if use intermediate the gmroot.crt must in the path
+    -D <Use Deployment mode>            Default false, If set -D, use deploy mode directory struct and make tar
+    -G <channel use sm crypto ssl>      Default false, only works for guomi mode
     -X <Certificate expiration time>    Default 36500 days
     -T <Enable debug log>               Default off. If set -T, enable debug log
     -S <Enable statistics>              Default off. If set -S, enable statistics
@@ -154,6 +156,9 @@ Use the private key specified by the user and the certificate issued the agency 
 
 ### **`K`option[**Optional**]**
 Use the private key specified by the user and the certificate issued the agency and node certification in guomi mode. The parameter is the path of gmca.crt/gmca.key. If the specified private key and certificate are intermediate Ca, gmroot.crt should also be included in this folder to store the upper certificate chain.
+
+### **`G`选项[**Optional**]**
+From 2.5.0, when use smcrypto mode, user can config to use GM SSL between node and sdk, the option set `chain.sm_crypto_channel=true`.
 
 ### **`D`option[**Optional**]**
 No parameter option. When this option is set, the directory name of the generated node is IP_P2P-port.
