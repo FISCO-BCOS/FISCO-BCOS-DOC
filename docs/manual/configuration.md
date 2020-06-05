@@ -181,6 +181,14 @@ boostlog示例配置如下：
     stat_flush_interval=60
 ```
 
+### 配置链属性
+
+可通过`config.ini`中的`[chain]`配置节点的链属性。此配置项建链时工具会自动生成，用户不需修改。
+
+- `id`，链ID，默认为1；
+- `sm_crypto`，2.5.0版本以后，节点支持以国密模式或非国密模式启动，`true`表示节点使用国密模式，`false`表示节点使用非国密模式，默认为`false`；
+- `sm_crypto_channel`，2.5.0版本以后，节点支持与SDK连接使用国密SSL，此选项用于配置是否使用国密SSL与SDK连接，默认为false。
+
 ### 配置节点兼容性
 
 FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibility]`配置节点的兼容性，此配置项建链时工具会自动生成，用户不需修改。
