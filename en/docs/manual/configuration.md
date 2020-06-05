@@ -185,6 +185,14 @@ Due to the periodic output of network statistics logs, `log.stat_flush_interval`
     stat_flush_interval=60
 ```
 
+### Configure chain attributes
+
+Users can configure attributes of chain through `[chain]` in `config.ini`. The tool will be automatically generated when changing the configuration item to build chain, so users do not need to change it.
+
+- `id`, the ID of chain, 1 by default;
+- `sm_crypto`，in 2.5.0 and follow-up versions of FISCO BCOS, node can be launched in SM-Crypto mode or not through this configuration. `true` means SM-Crypto mode will be used and `false` means opposite, `false` by default；
+- `sm_crypto_channel`，in 2.5.0 and follow-up versions of FISCO BCOS, connection between SDK and node can be established via SM-SSL. This configuration is used to indicate wheather to use this feature, `false` by default。
+
 ### Configure node compatibility
 
 All versions of FISCO BCOS 2.0+ are forward compatible. You can configure the compatibility of node through `[compatibility]` in `config.ini`. The tool will be automatically generated when changing the configuration item to build chain, so users do not need to change it.
