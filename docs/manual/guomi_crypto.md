@@ -15,16 +15,6 @@ $ cd ~ && mkdir -p fisco && cd fisco
 $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-执行完上述步骤后，fisco目录下结构如下：
-
-```bash
-fisco
-├── bin
-│   └── fisco-bcos
-└── build_chain.sh
-```
-
-
 - 搭建4节点FISCO BCOS链
 
 ```bash

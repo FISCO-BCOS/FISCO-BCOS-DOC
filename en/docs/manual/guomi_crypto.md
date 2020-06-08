@@ -15,15 +15,6 @@ $ cd ~ && mkdir -p fisco && cd fisco
 $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-After performing the above steps, the structure in the fisco directory is as follows:
-
-```bash
-fisco
-├── bin
-│   └── fisco-bcos
-└── build_chain.sh
-```
-
 - build a 4-nodes FISCO BCOS chain
 
 ```bash
