@@ -24,7 +24,7 @@ FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/sec
 
 ```eval_rst
 .. important::
-    
+
     节点准入操作前，请确保：
 
      - 操作节点Node ID存在，节点Node ID可在节点目录下执行 cat conf/node.nodeid获取
@@ -116,6 +116,11 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
 2 . 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（`node0`、`node1`）同级；
 ```
 $ cp -r ./node2/ nodes/127.0.0.1/
@@ -152,8 +157,8 @@ $ vim node2/config.ini
 
 5 . 节点3拷贝节点1的`node1/conf/group.3.genesis`（内含**群组节点初始列表**）和`node1/conf/group.3.ini`到`node2/conf`目录下，不需改动；
 ```
-$ cp node1/conf/group.3.genesis node2/conf/ 
-$ cp node1/conf/group.3.ini node2/conf/ 
+$ cp node1/conf/group.3.genesis node2/conf/
+$ cp node1/conf/group.3.ini node2/conf/
 ```
 
 6 . 执行`node2/start.sh`启动节点3；
