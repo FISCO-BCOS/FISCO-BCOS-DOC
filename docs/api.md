@@ -1299,6 +1299,9 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | 24(0x18)                | AddressAlreadyUsed         | 地址占用异常                                          |
 | 25(0x19)                | PermissionDenied           | 无权限异常                                            |
 | 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在                                |
+| 30(0x1e)                | ContractFrozen             | 合约被冻结                                           |
+| 31(0x1f)                | AccountFrozen              | 账号被冻结                                           |
+
 
 ### Precompiled Service API 错误码
 

@@ -1301,6 +1301,8 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 |24(0x18)  |AddressAlreadyUsed |address is already used |
 |25(0x19)  |PermissionDenied |no permission |
 |26(0x1a)  |CallAddressError   contract address not exist ||
+|30(0x1e)  |ContractFrozen             | contract has been frozen |
+|31(0x1f)  |AccountFrozen              | account has been frozen |
 
 
 ### Precompiled Service API error code
