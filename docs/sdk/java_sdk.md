@@ -40,7 +40,7 @@ compile ('org.fisco-bcos:web3sdk:2.1.0')
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.1.0</version>
+    <version>2.4.0</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
