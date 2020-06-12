@@ -990,22 +990,6 @@ transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
 
-# 调用TableTest的create接口创建用户表t_test，该接口返回了值并调用了CreateResult event，交易执行成功后通过解析output输出返回值，通过解析log输出event log信息。
-# Output: 包含调用的接口签名，返回类型，返回值。
-# Event logs: 包含由event 签名，event调用顺序号和event的变量值。CreateResult event记录的是create接口创建表返回的值count。
-[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 create
-transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612bb5
----------------------------------------------------------------------------------------------
-Output
-function: create()
-return type: (int256)
-return value: (0)
----------------------------------------------------------------------------------------------
-Event logs
-event signature: CreateResult(int256) index: 0
-event value: (0)
----------------------------------------------------------------------------------------------
-
 # 调用TableTest的insert接口插入记录，字段为name, item_id, item_name
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
 transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
