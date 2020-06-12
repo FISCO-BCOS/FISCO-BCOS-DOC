@@ -14,6 +14,12 @@
 cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
 
+如果无法下载，或速度较慢，请使用国内镜像下载：
+
+```bash
+cd ~/ && git clone https://gitee.com/FISCO-BCOS/generator.git
+```
+
 **安装**
 
 此操作要求用户具有sudo权限。
@@ -34,6 +40,12 @@ cd ~/generator && bash ./scripts/install.sh
 
 ```bash
 ./generator --download_fisco ./meta -g
+```
+
+如果无法下载，请使用以下国内cdn加速操作：
+
+```bash
+./generator --download_fisco ./meta -g --cdn
 ```
 
 **检查二进制版本**
