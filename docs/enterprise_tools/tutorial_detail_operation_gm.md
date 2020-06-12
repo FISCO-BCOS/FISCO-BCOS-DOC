@@ -276,6 +276,12 @@ cp ./dir_agency_ca/agencyA_normal/* ~/generator-A/meta/
 cd ~/generator
 ```
 
+```eval_rst
+.. note:：
+    - 在生产环境多机部署中，请一定要将dir_chain_ca、dir_chain_ca_normal 两个文件夹复制到 机构B的generator目录下，否则 直接使用"generate_agency_certificate"相关命令无法正常生成对应的机构证书。
+   
+```
+
 生成机构B证书：
 
 ```bash
@@ -285,6 +291,8 @@ cd ~/generator
 ```bash
 ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca_normal agencyB_normal
 ```
+
+备注：
 
 发送链证书、机构证书、机构私钥至机构B，示例是通过文件拷贝的方式，从证书授权机构将机构证书发送给对应的机构，放到机构的工作目录的meta子目录下
 
