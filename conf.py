@@ -168,7 +168,7 @@ html_context = {
     "display_github": True, # Integrate GitHub
     "github_repo": "FISCO-BCOS-DOC", # Repo name
     "github_user": "FISCO-BCOS",
-    "github_version": "master", # Version
+    "github_version": "release-2", # Version
     "conf_py_path": "/", # Path in the checkout to the docs root
 }
 
