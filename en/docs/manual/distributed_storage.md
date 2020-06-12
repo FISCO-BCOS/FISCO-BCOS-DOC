@@ -255,14 +255,6 @@ show tables;
 12 rows in set (0.02 sec)
 ```
 
-call the create interface in the console
-
-```bash
-#create table
-call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
-0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
-```
-
 view the table in the database
 
 ```bash
@@ -627,7 +619,7 @@ modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 		<!-- communication topic configuration of the node -->
 		<property name="topics">
 			<list>
@@ -671,7 +663,7 @@ modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 	<!-- communication topic configuration of the node -->
 	<property name="topics">
 			<list>

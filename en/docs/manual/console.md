@@ -1443,6 +1443,7 @@ Run create sql statement to create a user table in mysql statement form.
 [group:1]> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
 Create 't_demo' Ok.
 ```
+
 **Note:**
 - The field types for creating table are all string types. Even if other field types of the database are provided, the field types have to be set according to the string type.
 - The primary key field must be specified. For example, to create a t_demo table with the primary key field as name.
