@@ -172,7 +172,7 @@ contract Entry {
     function getBytes64(string) public constant returns(byte[64]);
     function getBytes32(string) public constant returns(bytes32);
     function getString(string) public constant returns(string);
-    
+
     function set(string, int) public;
     function set(string, string) public;
     function set(string, address) public;
@@ -337,7 +337,7 @@ The process of implementing a pre-compiled contract:
         d-->e(register contract)
 ```
 
-- **assign contract address**  
+- **assign contract address**
 
 For calling a solid contract or pre-compiled contract, you need to distinguish it by the contract address and address space.
 
@@ -368,7 +368,7 @@ List of precompiled contracts and address assignments implemented in FISCO BCOS:
 | 0x1005 | storage table authority management | AuthorityPrecompiled.cpp |
 | 0x1006 | parallel contract configuration | ParallelConfigPrecompiled.cpp |
 
-- **define contract interface**  
+- **define contract interface**
 
 It is similar to solidity contract. When designing a contract, you need to determine the ABI interface of the contract first. The ABI interface rules of the precompiled contract are exactly the same as the solidity. [solidity ABI link](https://solidity.readthedocs.io/en/latest/abi-spec.html).
 
@@ -384,7 +384,7 @@ It is similar to solidity contract. When designing a contract, you need to deter
     }
 ```
 
-- **design storage structure**  
+- **design storage structure**
 
 When a precompiled contract involves a storage operation, it needs to determine the stored table information (table name and table structure. The stored data will be uniformly abstracted into a table structure in FISCO BCOS)[storage structure](../design/storage/storage.md).
 
@@ -393,12 +393,12 @@ When a precompiled contract involves a storage operation, it needs to determine 
     This process can be omitted without involving a storage operation.
 ```
 
-- **implement contract logic**  
+- **implement contract logic**
 
-For implementing the calling logic of the new contract, you need to implement a new C++ class that needs to inherit [precompiled] (https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libblockverifier/Precompiled.h) #L37 ) to overload the call function for achieving the calling behaviour of each interface.
+For implementing the calling logic of the new contract, you need to implement a new C++ class that needs to inherit [precompiled] (https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/Precompiled.h) #L37 ) to overload the call function for achieving the calling behaviour of each interface.
 
 ```cpp
-    // libblockverifier/Precompiled.h
+    // libprecompiled/Precompiled.h
     class Precompiled
     {
         virtual bytes call(std::shared_ptr<ExecutiveContext> _context, bytesConstRef _param,
@@ -415,7 +415,7 @@ The call function has three parameters:
 
 How to implement a Precompiled class will be detailed in the sample below.
 
-- **register contract**  
+- **register contract**
 
 Finally, the contract address and the corresponding class need to be registered to the execution context of the contract, so that the execution logic of the contract can be correctly recognized when the precompiled contract is called by the address. To view the registered [pre-compiled contract list](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libblockverifier/ExecutiveContextFactory.cpp#L36).
 
@@ -423,7 +423,7 @@ Registration path:
 
 ```
     file        libblockverifier/ExecutiveContextFactory.cpp
-    function    initExecutiveContext  
+    function    initExecutiveContext
 ```
 
 #### 2.2 sample contract development
@@ -515,7 +515,7 @@ HelloWorldPrecompiled::HelloWorldPrecompiled()
 }
 ```
 
-- table creation  
+- table creation
 
 define the table's name and field structure
 ```c++
@@ -552,15 +552,15 @@ Parsing _param with getParamFunc can distinguish the call interface.
 ```c++
 uint32_t func = getParamFunc(_param);
 if (func == name2Selector[HELLO_WORLD_METHOD_GET])
-{  
+{
     // get() call interface logic
 }
 else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
-{  
+{
     // set(string) call interface logic
 }
 else
-{  
+{
     // unknown interface, call error, return error
 }
 ```
@@ -731,7 +731,7 @@ contract HelloWorldPrecompiled{
 After the nodes are built by compiled binaries, deploy console v1.0.2 and above version and execute the following statement to call contract:
 ![](../../images/precompiled/call_helloworld.png)
 
-#### 3.2 Call solidity   
+#### 3.2 Call solidity
 
 Now, we try to create precompiled contract object and call its interface in Solidity contract. Create HelloWorldHelper.sol file in console contracts/solidity with the following content:
 
