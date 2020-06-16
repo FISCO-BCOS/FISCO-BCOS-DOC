@@ -36,7 +36,7 @@ The structure of Precompiled is as below:
 
 ### API definition
 
-Every Precompiled contract has to realize its own `call` API, which accepts 3 parameters: `ExecutiveContext` executive context, abi code of `bytesConstRef` and exterior account address to judge whether it has write permission.[`Precompiled` source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/04db9d5e9d7a9d321d90cef8dc5e2010a53ed8d3/libblockverifier/Precompiled.h#L37).
+Every Precompiled contract has to realize its own `call` API, which accepts 3 parameters: `ExecutiveContext` executive context, abi code of `bytesConstRef` and exterior account address to judge whether it has write permission.[`Precompiled` source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/04db9d5e9d7a9d321d90cef8dc5e2010a53ed8d3/libprecompiled/Precompiled.h#L37).
 
 |API|Parameter description|Api description|
 |:----|:------|:------|
