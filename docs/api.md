@@ -4,19 +4,19 @@
 
 ## getClientVersion
 返回节点的版本信息
-### 参数        
-无          
-### 返回值          
+### 参数
+无
+### 返回值
 - `object` - 版本信息，字段如下：
-    - `Build Time`: `string` - 编译时间            
+    - `Build Time`: `string` - 编译时间
     - `Build Type`: `string` - 编译机器环境
-    - `Chain Id`: `string` - 链ID             
-    - `FISCO-BCOS Version`: `string` - 节点版本            
-    - `Git Branch`: `string` - 版本分支            
-    - `Git Commit Hash`: `string` - 版本最新commit哈希  
-    - `Supported Version`: `string` - 节点支持的版本          
+    - `Chain Id`: `string` - 链ID
+    - `FISCO-BCOS Version`: `string` - 节点版本
+    - `Git Branch`: `string` - 版本分支
+    - `Git Commit Hash`: `string` - 版本最新commit哈希
+    - `Supported Version`: `string` - 节点支持的版本
 
-- 示例          
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"id":1}' http://127.0.0.1:8545 |jq
@@ -37,10 +37,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
 
 ## getBlockNumber
 返回节点指定群组内的最新区块高度
-### 参数  
-- `groupID`: `unsigned int` - 群组ID                 
-### 返回值               
-- `string` - 最新区块高度(0x开头的十六进制字符串)             
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `string` - 最新区块高度(0x开头的十六进制字符串)
 - 示例
 ```
 // Request
@@ -56,11 +56,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 
 ## getPbftView
 返回节点所在指定群组内的最新[PBFT视图](design/consensus/pbft.html#view)
-### 参数         
-- `groupID`: `unsigned int` - 群组ID         
-### 返回值         
-- `string` - 最新的PBFT视图   
-- 示例          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `string` - 最新的PBFT视图
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1}' http://127.0.0.1:8545 |jq
@@ -87,22 +87,22 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
 
 ## getSealerList
 返回指定群组内的共识节点列表
-### 参数          
-- `groupID`: `unsigned int` - 群组ID         
-### 返回值          
-- `array` - 共识节点ID列表         
-- 示例          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `array` - 共识节点ID列表
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
-        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772", 
-        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801", 
+        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772",
+        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801",
         "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73"
     ]
 }
@@ -110,19 +110,19 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[1],"id"
 
 ## getObserverList
 返回指定群组内的观察节点列表
-### 参数          
-- `groupID`: `unsigned int` - 群组ID         
-### 返回值          
-- `array` - 观察节点ID列表       
-- 示例          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `array` - 观察节点ID列表
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
         "10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34"
     ]
@@ -130,49 +130,49 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 ```
 
 ## getConsensusStatus
-返回指定群组内的共识状态信息          
-### 参数          
-- `groupID`: `unsigned int` - 群组ID          
-### 返回值          
+返回指定群组内的共识状态信息
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
 - `object` - 共识状态信息。
-- 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](design/consensus/pbft.md)），字段如下：            
+- 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](design/consensus/pbft.md)），字段如下：
    -  `accountType`: `unsigned int` - 节点类型，0表示观察节点，1表示共识节点
    -  `allowFutureBlocks`: `bool` - 允许未来块标志，当前为true
    -  `cfgErr`: `bool` - 表明节点是否出错，true表示节点已经异常
-   -  `connectedNodes`: `unsigned int` - 连接的节点数            
+   -  `connectedNodes`: `unsigned int` - 连接的节点数
    -  `consensusedBlockNumber`: `unsigned int` - 当前正在共识的区块高度
-   -  `currentView`: `unsigned int` - 当前视图            
-   -  `groupId`: `unsigned int` - 群组ID            
-   -  `highestblockHash`: `string` - 最新块哈希            
-   -  `highestblockNumber`: `unsigned int` - 最新区块高度            
-   -  `leaderFailed`: `bool` - leader失败标志，若为false，节点可能正在处理超时            
-   -  `max_faulty_leader`: `unsigned int` - 最大容错节点数            
+   -  `currentView`: `unsigned int` - 当前视图
+   -  `groupId`: `unsigned int` - 群组ID
+   -  `highestblockHash`: `string` - 最新块哈希
+   -  `highestblockNumber`: `unsigned int` - 最新区块高度
+   -  `leaderFailed`: `bool` - leader失败标志，若为false，节点可能正在处理超时
+   -  `max_faulty_leader`: `unsigned int` - 最大容错节点数
    -  `nodeNum`: `unsigned int` - 节点的数
    -  `node_index`: `unsigned int` - 共识节点索引
-   -  `nodeId`: `string` - 节点的ID            
-   -  `omitEmptyBlock`: `bool` - 忽略空块标志位，为true            
-   -  `protocolId`: `unsigned int` - 协议ID号            
+   -  `nodeId`: `string` - 节点的ID
+   -  `omitEmptyBlock`: `bool` - 忽略空块标志位，为true
+   -  `protocolId`: `unsigned int` - 协议ID号
    -  `sealer.index`: `string` - 指定索引`index`对应的共识节点nodeID
-   -  `toView`: `unsigned int` - 目前到达的view值        
+   -  `toView`: `unsigned int` - 目前到达的view值
    -  与本节点相连的所有共识节点nodeID和视图view信息
 
-- 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](design/consensus/raft.md)），字段如下：     
-    - `accountType`: `unsigned int` - 账户类型            
-    - `allowFutureBlocks`: `bool` - 允许未来块标志            
-    - `cfgErr`: `bool` - 配置错误标志                        
-    - `consensusedBlockNumber`: `unsigned int` - 下一个共识的最新块高            
-    - `groupId`: `unsigned int` - 群组ID            
-    - `highestblockHash`: `string` - 最新块哈希            
-    - `highestblockNumber`: `unsigned int` - 最新区块高度            
-    - `leaderId`: `string` - leader的nodeId            
-    - `leaderIdx`: `unsigned int` - leader的序号            
-    - `max_faulty_leader`: `unsigned int` - 最大容错节点数            
-    - `sealer.index`: `string` - 节点序号为index的nodeId            
-    - `node index`: `unsigned int` - 节点的index            
-    - `nodeId`: `string` - 节点的ID            
-    - `nodeNum`: `unsigned int` - 节点的数            
-    - `omitEmptyBlock`: `bool` - 忽略空块标志位            
-    - `protocolId`: `unsigned int` - 协议ID号            
+- 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](design/consensus/raft.md)），字段如下：
+    - `accountType`: `unsigned int` - 账户类型
+    - `allowFutureBlocks`: `bool` - 允许未来块标志
+    - `cfgErr`: `bool` - 配置错误标志
+    - `consensusedBlockNumber`: `unsigned int` - 下一个共识的最新块高
+    - `groupId`: `unsigned int` - 群组ID
+    - `highestblockHash`: `string` - 最新块哈希
+    - `highestblockNumber`: `unsigned int` - 最新区块高度
+    - `leaderId`: `string` - leader的nodeId
+    - `leaderIdx`: `unsigned int` - leader的序号
+    - `max_faulty_leader`: `unsigned int` - 最大容错节点数
+    - `sealer.index`: `string` - 节点序号为index的nodeId
+    - `node index`: `unsigned int` - 节点的index
+    - `nodeId`: `string` - 节点的ID
+    - `nodeNum`: `unsigned int` - 节点的数
+    - `omitEmptyBlock`: `bool` - 忽略空块标志位
+    - `protocolId`: `unsigned int` - 协议ID号
 
 - 示例
 ```
@@ -263,25 +263,25 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":[1]
 ```
 ## getSyncStatus
 返回指定群组内的同步状态信息
-### 参数        
-- `groupID`: `unsigned int` - 群组ID          
-### 返回值          
-- `object` - 同步状态信息，字段如下：            
-    - `blockNumber`: `unsigned int` - 最新区块高度            
-    - `genesisHash`: `string` - 创世块哈希            
-    - `isSyncing`: `bool` - 正在同步标志         
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `object` - 同步状态信息，字段如下：
+    - `blockNumber`: `unsigned int` - 最新区块高度
+    - `genesisHash`: `string` - 创世块哈希
+    - `isSyncing`: `bool` - 正在同步标志
     - `knownHighestNumber`: `unsigned int` - 此节点已知的当前区块链最高块高
-    - `knownLatestHash`: `string` - 此节点已知的当前区块链最高块哈希 
-    - `latestHash`: `string` - 最新区块哈希            
-    - `nodeId`: `string` - 节点的ID            
-    - `protocolId`: `unsigned int` - 协议ID号            
-    - `txPoolSize`: `string` - 交易池中交易的数量            
-    - `peers`: `array` - 已连接的指定群组内p2p节点，节点信息字段如下: 
-        - `blockNumber`: `unsigned int` - 最新区块高度            
-        - `genesisHash`: `string` - 创始区块哈希            
-        - `latestHash`: `string` - 最新块哈希            
-        - `nodeId`: `string` - 节点的ID            
-    
+    - `knownLatestHash`: `string` - 此节点已知的当前区块链最高块哈希
+    - `latestHash`: `string` - 最新区块哈希
+    - `nodeId`: `string` - 节点的ID
+    - `protocolId`: `unsigned int` - 协议ID号
+    - `txPoolSize`: `string` - 交易池中交易的数量
+    - `peers`: `array` - 已连接的指定群组内p2p节点，节点信息字段如下:
+        - `blockNumber`: `unsigned int` - 最新区块高度
+        - `genesisHash`: `string` - 创始区块哈希
+        - `latestHash`: `string` - 最新块哈希
+        - `nodeId`: `string` - 节点的ID
+
 - 示例
 ```
 // Request
@@ -325,16 +325,16 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":[1],"id"
 }
 ```
 ## getPeers
-返回已连接的p2p节点信息         
-### 参数          
-- `groupID`: `unsigned int` - 群组ID            
-### 返回值          
+返回已连接的p2p节点信息
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
 - `array` - 已连接的p2p节点信息，字段如下：
-    - `IPAndPort`: `string` - 节点连接的ip和端口            
-    - `nodeId`: `string` - 节点的ID            
-    - `Topic`: `array` - 节点关注的topic信息            
-    
-- 示例          
+    - `IPAndPort`: `string` - 节点连接的ip和端口
+    - `nodeId`: `string` - 节点的ID
+    - `Topic`: `array` - 节点关注的topic信息
+
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
@@ -363,61 +363,61 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' 
 }
 ```
 ## getGroupPeers
-返回指定群组内的共识节点和观察节点列表         
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-### 返回值          
-- `array` - 共识节点和观察节点的ID列表     
-  
-- 示例          
+返回指定群组内的共识节点和观察节点列表
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `array` - 共识节点和观察节点的ID列表
+
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
-        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801", 
-        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772", 
-        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73", 
+        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801",
+        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772",
+        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73",
         "10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34"
     ]
 }
 ```
 ## getNodeIDList
 返回节点本身和已连接的p2p节点列表
-### 参数          
-- `groupID`: `unsigned int` - 群组ID         
-### 返回值          
-- `array` - 节点本身和已连接p2p节点的ID列表 
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `array` - 节点本身和已连接p2p节点的ID列表
 
-- 示例          
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeIDList","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": [
-        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801", 
-        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772", 
-        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73", 
+        "0c0bbd25152d40969d3d3cee3431fa28287e07cff2330df3258782d3008b876d146ddab97eab42796495bfbb281591febc2a0069dcc7dfe88c8831801c5b5801",
+        "037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772",
+        "622af37b2bd29c60ae8f15d467b67c0a7fe5eb3e5c63fdc27a0ee8066707a25afa3aa0eb5a3b802d3a8e5e26de9d5af33806664554241a3de9385d3b448bcd73",
         "10b3a2d4b775ec7f3c2c9e8dc97fa52beb8caab9c34d026db9b95a72ac1d1c1ad551c67c2b7fdc34177857eada75836e69016d1f356c676a6e8b15c45fc9bc34"
     ]
 }
 ```
 ## getGroupList
 返回节点所属群组的群组ID列表
-### 参数          
-无       
-### 返回值          
-- `array` - 节点所属群组的群组ID列表 
+### 参数
+无
+### 返回值
+- `array` - 节点所属群组的群组ID列表
 
-- 示例          
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1}' http://127.0.0.1:8545 |jq
@@ -431,25 +431,25 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
 ```
 ## getBlockByHash
 返回根据区块哈希查询的区块信息
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `blockHash`: `string` - 区块哈希       
-- `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)          
-### 返回值          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `blockHash`: `string` - 区块哈希
+- `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)
+### 返回值
 - `object` - 区块信息，字段如下：
-    - `extraData`: `array` - 附加数据      
-    - `gasLimit`: `string` - 区块中允许的gas最大值     
-    - `gasUsed`: `string` - 区块中所有交易消耗的gas                
-    - `hash`: `string` - 区块哈希      
-    - `logsBloom`: `string` - log的布隆过滤器值     
-    - `number`: `string` - 区块高度               
-    - `parentHash`: `string` - 父区块哈希      
+    - `extraData`: `array` - 附加数据
+    - `gasLimit`: `string` - 区块中允许的gas最大值
+    - `gasUsed`: `string` - 区块中所有交易消耗的gas
+    - `hash`: `string` - 区块哈希
+    - `logsBloom`: `string` - log的布隆过滤器值
+    - `number`: `string` - 区块高度
+    - `parentHash`: `string` - 父区块哈希
     - `sealer`: `string` - 共识节点序号
-    - `sealerList`: `array` - 共识节点列表      
-    - `stateRoot`: `string` - 状态根哈希              
-    - `timestamp`: `string` - 时间戳      
+    - `sealerList`: `array` - 共识节点列表
+    - `stateRoot`: `string` - 状态根哈希
+    - `timestamp`: `string` - 时间戳
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html#gettransactionbyhash)）
-    
+
 - 示例
 ```
 // Request
@@ -516,7 +516,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
     "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
     "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
     "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
-    ],    
+    ],
     "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
     "timestamp": "0x1687e801d99",
     "transactions": [
@@ -526,30 +526,30 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x9
   }
 }
 ```
-## getBlockByNumber     
-返回根据区块高度查询的区块信息     
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)       
-- `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)         
-### 返回值          
-见[getBlockByHash](./api.html#getblockbyhash)  
+## getBlockByNumber
+返回根据区块高度查询的区块信息
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)
+- `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)
+### 返回值
+见[getBlockByHash](./api.html#getblockbyhash)
 
-- 示例          
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":[1,"0x0",true],"id":1}' http://127.0.0.1:8545 |jq
 ```
-Result见[getBlockByHash](./api.html#getblockbyhash)  
+Result见[getBlockByHash](./api.html#getblockbyhash)
 
 ## getBlockHashByNumber
-返回根据区块高度查询的区块哈希          
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)                  
-### 返回值          
-- `blockHash`: `string` - 区块哈希         
-- 示例          
+返回根据区块高度查询的区块哈希
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)
+### 返回值
+- `blockHash`: `string` - 区块哈希
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[1,"0x1"],"id":1}' http://127.0.0.1:8545 |jq
@@ -563,23 +563,23 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 ```
 ## getTransactionByHash
 返回根据交易哈希查询的交易信息
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `transactionHash`: `string` - 交易哈希        
-### 返回值          
-- `object`: - 交易信息，其字段如下：  
-    - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块高度     
-    - `from`: `string` - 发送者的地址                
-    - `gas`: `string` - 发送者提供的gas     
-    - `gasPrice`: `string` - 发送者提供的gas的价格     
-    - `hash`: `string` - 交易哈希               
-    - `input`: `string` - 交易的输入      
-    - `nonce`: `string` - 交易的nonce值     
-    - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`         
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `transactionHash`: `string` - 交易哈希
+### 返回值
+- `object`: - 交易信息，其字段如下：
+    - `blockHash`: `string` - 包含该交易的区块哈希
+    - `blockNumber`: `string` - 包含该交易的区块高度
+    - `from`: `string` - 发送者的地址
+    - `gas`: `string` - 发送者提供的gas
+    - `gasPrice`: `string` - 发送者提供的gas的价格
+    - `hash`: `string` - 交易哈希
+    - `input`: `string` - 交易的输入
+    - `nonce`: `string` - 交易的nonce值
+    - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`
     - `transactionIndex`: `string` - 交易的序号
-    - `value`: `string` - 转移的值           
-- 示例          
+    - `value`: `string` - 转移的值
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:8545 |jq
@@ -605,28 +605,28 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[
 ```
 ## getTransactionByBlockHashAndIndex
 返回根据区块哈希和交易序号查询的交易信息
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `blockHash`: `string` - 区块哈希          
-- `transactionIndex`: `string` - 交易序号          
-### 返回值          
-见[getTransactionByHash](./api.html#gettransactionbyhash)       
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `blockHash`: `string` - 区块哈希
+- `transactionIndex`: `string` - 交易序号
+### 返回值
+见[getTransactionByHash](./api.html#gettransactionbyhash)
 - 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockHashAndIndex","params":[1,"0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa","0x0"],"id":1}' http://127.0.0.1:8545 |jq
 ```
-Result见[getTransactionByHash](./api.html#gettransactionbyhash) 
+Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionByBlockNumberAndIndex
 返回根据区块高度和交易序号查询的交易信息
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)          
-- `transactionIndex`: `string` - 交易序号          
-### 返回值          
-见[getTransactionByHash](./api.html#gettransactionbyhash)            
-- 示例          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `blockNumber`: `string` - 区块高度(十进制字符串或0x开头的十六进制字符串)
+- `transactionIndex`: `string` - 交易序号
+### 返回值
+见[getTransactionByHash](./api.html#gettransactionbyhash)
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByBlockNumberAndIndex","params":[1,"0x1","0x0"],"id":1}' http://127.0.0.1:8545 |jq
@@ -635,68 +635,68 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
 
 ## getTransactionReceipt
 返回根据交易哈希查询的交易回执信息
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `transactionHash`: `string` - 交易哈希          
-### 返回值          
-- `object`: - 交易信息，其字段如下：  
-    - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块高度 
-    - `contractAddress`: `string` - 合约地址，如果创建合约交易，则为合约部署地址，如果是调用合约，则为"0x0000000000000000000000000000000000000000"     
-    - `from`: `string` - 发送者的地址                
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `transactionHash`: `string` - 交易哈希
+### 返回值
+- `object`: - 交易信息，其字段如下：
+    - `blockHash`: `string` - 包含该交易的区块哈希
+    - `blockNumber`: `string` - 包含该交易的区块高度
+    - `contractAddress`: `string` - 合约地址，如果创建合约交易，则为合约部署地址，如果是调用合约，则为"0x0000000000000000000000000000000000000000"
+    - `from`: `string` - 发送者的地址
     - `gasUsed`: `string` - 交易消耗的gas
-    - `input`: `string` - 交易的输入     
-    - `logs`: `array` - 交易产生的log               
-    - `logsBloom`: `string` - log的布隆过滤器值      
-    - `output`: `string` - 交易的输出     
+    - `input`: `string` - 交易的输入
+    - `logs`: `array` - 交易产生的log
+    - `logsBloom`: `string` - log的布隆过滤器值
+    - `output`: `string` - 交易的输出
     - `root`: `string` - 状态根（state root）
-    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)    
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
-    - `transactionHash`: `string` - 交易哈希          
+    - `transactionHash`: `string` - 交易哈希
     - `transactionIndex`: `string` - 交易序号
-    
-- 示例          
+
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":[1,"0x708b5781b62166bd86e543217be6cd954fd815fd192b9a124ee9327580df8f3f"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": {
-        "blockHash": "0x977efec48c248ea4be87016446b40d7785d7b71b7d4e3aa0b103b9cf0f5fe19e", 
-        "blockNumber": "0xa", 
-        "contractAddress": "0x0000000000000000000000000000000000000000", 
-        "from": "0xcdcce60801c0a2e6bb534322c32ae528b9dec8d2", 
-        "gasUsed": "0x1fb8d", 
-        "input": "0xb602109a000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000000203078313030303030303030303030303030303030303030303030303030303030000000000000000000000000000000000000000000000000000000000000000832303139303733300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002616100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000026262000000000000000000000000000000000000000000000000000000000000", 
-        "logs": [ ], 
-        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", 
+        "blockHash": "0x977efec48c248ea4be87016446b40d7785d7b71b7d4e3aa0b103b9cf0f5fe19e",
+        "blockNumber": "0xa",
+        "contractAddress": "0x0000000000000000000000000000000000000000",
+        "from": "0xcdcce60801c0a2e6bb534322c32ae528b9dec8d2",
+        "gasUsed": "0x1fb8d",
+        "input": "0xb602109a000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000000203078313030303030303030303030303030303030303030303030303030303030000000000000000000000000000000000000000000000000000000000000000832303139303733300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002616100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000026262000000000000000000000000000000000000000000000000000000000000",
+        "logs": [ ],
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "output": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "root":"0x38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
-        "status": "0x0", 
-        "to": "0x15538acd403ac1b2ff09083c70d04856b8c0bdfd", 
-        "transactionHash": "0x708b5781b62166bd86e543217be6cd954fd815fd192b9a124ee9327580df8f3f", 
+        "status": "0x0",
+        "to": "0x15538acd403ac1b2ff09083c70d04856b8c0bdfd",
+        "transactionHash": "0x708b5781b62166bd86e543217be6cd954fd815fd192b9a124ee9327580df8f3f",
         "transactionIndex": "0x0"
     }
 }
 ```
 ## getPendingTransactions
 返回待打包的交易信息
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-### 返回值          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
 - `object`: - 带打包的交易信息，其字段如下：
-    - `from`: `string` - 发送者的地址                     
-    - `gas`: `string` - 发送者提供的gas     
-    - `gasPrice`: `string` - 发送者提供的gas的价格               
-    - `hash`: `string` - 交易哈希      
-    - `input`: `string` - 交易的输入     
+    - `from`: `string` - 发送者的地址
+    - `gas`: `string` - 发送者提供的gas
+    - `gasPrice`: `string` - 发送者提供的gas的价格
+    - `hash`: `string` - 交易哈希
+    - `input`: `string` - 交易的输入
     - `nonce`: `string` - 交易的nonce值
-    - `to`: `string` - 接收者的地址，创建合约交易的该值为null        
-    - `value`: `string` - 转移的值         
-- 示例          
+    - `to`: `string` - 接收者的地址，创建合约交易的该值为null
+    - `value`: `string` - 转移的值
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params":[1],"id":1}' http://127.0.0.1:8545 |jq
@@ -724,11 +724,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTransactions","params"
 
 ## getPendingTxSize
 返回待打包的交易数量
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-### 返回值          
-- `string`: - 待打包的交易数量         
-- 示例          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
+- `string`: - 待打包的交易数量
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":[1],"id":1}' http://127.0.0.1:8545 |jq
@@ -742,12 +742,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":[1],"
 ```
 ## getCode
 返回根据合约地址查询的合约数据
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
+### 参数
+- `groupID`: `unsigned int` - 群组ID
 - `address`: `string` - 合约地址
-### 返回值          
-- `string`: - 合约数据         
-- 示例          
+### 返回值
+- `string`: - 合约数据
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b"],"id":1}' http://127.0.0.1:8545 |jq
@@ -761,14 +761,14 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":[1,"0xa94f5374
 ```
 ## getTotalTransactionCount
 返回当前交易总数和区块高度
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-### 返回值          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+### 返回值
 - `object`: - 当前交易总数和区块高度信息，其字段如下：
-    - `blockNumber`: `string` - 区块高度          
-    - `failedTxSum`: `string` - 失败的交易总数      
-    - `txSum`: `string` - 交易总数      
-- 示例          
+    - `blockNumber`: `string` - 区块高度
+    - `failedTxSum`: `string` - 失败的交易总数
+    - `txSum`: `string` - 交易总数
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","params":[1],"id":1}' http://127.0.0.1:8545 |jq
@@ -786,12 +786,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 ```
 ## getSystemConfigByKey
 返回根据key值查询的value值
-### 参数          
-- `groupID`: `unsigned int` - 群组ID       
-- `key`: `string` - 支持tx_count_limit和tx_gas_limit     
-### 返回值          
-- `string` - value值     
-- 示例          
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `key`: `string` - 支持tx_count_limit和tx_gas_limit
+### 返回值
+- `string` - value值
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[1,"tx_count_limit"],"id":1}' http://127.0.0.1:8545 |jq
@@ -804,43 +804,43 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 }
 ```
 ## call
-执行一个可以立即获得结果的请求，无需区块链共识        
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
+执行一个可以立即获得结果的请求，无需区块链共识
+### 参数
+- `groupID`: `unsigned int` - 群组ID
 - `object`: - 请求信息，其字段如下：
-    - `from`: `string` - 发送者的地址  
-    - `to`: `string` - 接收者的地址 
-    - `value`: `string` - (可选)转移的值 
-    - `data`: `string` - (可选)编码的参数，编码规范参考[Ethereum Contract ABI](https://solidity.readthedocs.io/en/develop/abi-spec.html) 
+    - `from`: `string` - 发送者的地址
+    - `to`: `string` - 接收者的地址
+    - `value`: `string` - (可选)转移的值
+    - `data`: `string` - (可选)编码的参数，编码规范参考[Ethereum Contract ABI](https://solidity.readthedocs.io/en/develop/abi-spec.html)
 
-### 返回值          
+### 返回值
 - `object`: - 执行的结果
-    - `currentBlockNumber`: `string` - 当前区块高度  
-    - `output`: `string` - 请求结果           
-    - `status`: `string` - 请求状态（与交易状态码一致）           
-- 示例          
+    - `currentBlockNumber`: `string` - 当前区块高度
+    - `output`: `string` - 请求结果
+    - `status`: `string` - 请求状态（与交易状态码一致）
+- 示例
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":[1,{"from":"0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102","to":"0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d","value":"0x1","data":"0x3"}],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
-    "id": 1, 
-    "jsonrpc": "2.0", 
+    "id": 1,
+    "jsonrpc": "2.0",
     "result": {
-        "currentBlockNumber": "0xb", 
-        "output": "0x", 
+        "currentBlockNumber": "0xb",
+        "output": "0x",
         "status": "0x0"
     }
 }
 ```
 ## sendRawTransaction
-执行一个签名的交易，需要区块链共识          
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
+执行一个签名的交易，需要区块链共识
+### 参数
+- `groupID`: `unsigned int` - 群组ID
 - `rlp`: `string` - 签名的交易数据
-### 返回值          
-- `string` - 交易哈希          
+### 返回值
+- `string` - 交易哈希
 - 示例
 ```
 // RC1 Request
@@ -854,7 +854,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 }
 
 // RC2 Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8d3a003922ee720bb7445e3a914d8ab8f507d1a647296d563100e49548d83fd98865c8411e1a3008411e1a3008201f894d6c8a04b8826b0a37c6d4aa0eaa8644d8e35b79f80a466c9913900000000000000000000000000000000000000000000000000000000000000040101a466c9913900000000000000000000000000000000000000000000000000000000000000041ba08e0d3fae10412c584c977721aeda88df932b2a019f084feda1e0a42d199ea979a016c387f79eb85078be5db40abe1670b8b480a12c7eab719bedee212b7972f775"],"id":1}' http://127.0.0.1:8545 |jq 
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8d3a003922ee720bb7445e3a914d8ab8f507d1a647296d563100e49548d83fd98865c8411e1a3008411e1a3008201f894d6c8a04b8826b0a37c6d4aa0eaa8644d8e35b79f80a466c9913900000000000000000000000000000000000000000000000000000000000000040101a466c9913900000000000000000000000000000000000000000000000000000000000000041ba08e0d3fae10412c584c977721aeda88df932b2a019f084feda1e0a42d199ea979a016c387f79eb85078be5db40abe1670b8b480a12c7eab719bedee212b7972f775"],"id":1}' http://127.0.0.1:8545 |jq
 
 // RC2 Result
 {
@@ -867,7 +867,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
 // RC1 Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f8ef9f65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f85174876e7ff8609184e729fff82020394d6f1a71052366dbae2f7ab2d5d5845e77965cf0d80b86448f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a371ca00b2b3fabd8598fefdda4efdb54f626367fc68e1735a8047f0f1c4f840255ca1ea0512500bc29f4cfe18ee1c88683006d73e56c934100b8abf4d2334560e1d2f75e"],"id":1}' http://127.0.0.1:8545 |jq
 // RC2 Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq 
+curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,"f90114a003eebc46c9c0e3b84799097c5a6ccd6657a9295c11270407707366d0750fcd598411e1a30084b2d05e008201f594bab78cea98af2320ad4ee81bba8a7473e0c8c48d80a48fff0fc400000000000000000000000000000000000000000000000000000000000000040101a48fff0fc40000000000000000000000000000000000000000000000000000000000000004b8408234c544a9f3ce3b401a92cc7175602ce2a1e29b1ec135381c7d2a9e8f78f3edc9c06ee55252857c9a4560cb39e9d70d40f4331cace4d2b3121b967fa7a829f0a00f16d87c5065ad5c3b110ef0b97fe9a67b62443cb8ddde60d4e001a64429dc6ea03d2569e0449e9a900c236541afb9d8a8d5e1a36844439c7076f6e75ed624256f"],"id":1}' http://127.0.0.1:8545 |jq
 ```
 
 ## sendRawTransactionAndGetProof
@@ -880,36 +880,36 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendRawTransaction","params":[1,
     - ``supported_version >= 2.2.0``: 调用 ``sendRawTransactionAndGetProof`` 接口，交易上链后推送交易回执、交易Merkle证明、交易回执Merkle证明
 ```
 
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
+### 参数
+- `groupID`: `unsigned int` - 群组ID
 - `rlp`: `string` - 签名的交易数据
 
-### 返回值          
+### 返回值
 - `string` - 交易哈希
 - 示例：同`sendRawTransaction`，参考[这里](./api.html#sendrawtransaction)
 
 
 ## getTransactionByHashWithProof
-返回根据交易哈希查询的带证明的交易信息，本接口仅在兼容性版本为2.2.0及以后的版本有效，证明信息是为了验证交易的存在性，交易存在性证明请参考文档[交易证明](./design/merkle_proof.md) 
-### 参数          
-- `groupID`: `unsigned int` - 群组ID           
-- `transactionHash`: `string` - 交易哈希        
-### 返回值          
-- `object`: - 交易信息，其字段如下：  
-    - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块高度     
-    - `from`: `string` - 发送者的地址                
-    - `gas`: `string` - 发送者提供的gas     
-    - `gasPrice`: `string` - 发送者提供的gas的价格     
-    - `hash`: `string` - 交易哈希               
-    - `input`: `string` - 交易的输入      
-    - `nonce`: `string` - 交易的nonce值     
-    - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`         
+返回根据交易哈希查询的带证明的交易信息，本接口仅在兼容性版本为2.2.0及以后的版本有效，证明信息是为了验证交易的存在性，交易存在性证明请参考文档[交易证明](./design/merkle_proof.md)
+### 参数
+- `groupID`: `unsigned int` - 群组ID
+- `transactionHash`: `string` - 交易哈希
+### 返回值
+- `object`: - 交易信息，其字段如下：
+    - `blockHash`: `string` - 包含该交易的区块哈希
+    - `blockNumber`: `string` - 包含该交易的区块高度
+    - `from`: `string` - 发送者的地址
+    - `gas`: `string` - 发送者提供的gas
+    - `gasPrice`: `string` - 发送者提供的gas的价格
+    - `hash`: `string` - 交易哈希
+    - `input`: `string` - 交易的输入
+    - `nonce`: `string` - 交易的nonce值
+    - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`
     - `transactionIndex`: `string` - 交易的序号
-    - `value`: `string` - 转移的值 
-- `array` - 交易证明，字段如下: 
-   - `left`: `array` - 左边的哈希列表            
-   - `right`: `array` - 右边的哈希列表    
+    - `value`: `string` - 转移的值
+- `array` - 交易证明，字段如下:
+   - `left`: `array` - 左边的哈希列表
+   - `right`: `array` - 右边的哈希列表
 - 示例
 ```
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHashWithProof","params":[1,"0xd2c12e211315ef09dbad53407bc820d062780232841534954f9c23ab11d8ab4c"],"id":1}' http://127.0.0.1:8585 |jq
@@ -974,26 +974,26 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHashWithProof","
 ```
 
 ## getTransactionReceiptByHashWithProof
-返回根据交易哈希查询的带证明的交易回执信息，本接口仅在兼容性版本为2.2.0及以后的版本有效，证明信息是为了验证回执的存在性，回执存在性证明请参考文档[交易证明](./design/merkle_proof.md) 
-- `groupID`: `unsigned int` - 群组ID           
-- `transactionHash`: `string` - 交易哈希          
+返回根据交易哈希查询的带证明的交易回执信息，本接口仅在兼容性版本为2.2.0及以后的版本有效，证明信息是为了验证回执的存在性，回执存在性证明请参考文档[交易证明](./design/merkle_proof.md)
+- `groupID`: `unsigned int` - 群组ID
+- `transactionHash`: `string` - 交易哈希
 ### 返回值
-- `array` - 回执证明，字段如下: 
-   - `left`: `array` - 左边的哈希列表            
-   - `right`: `array` - 右边的哈希列表         
-- `object`: - 交易信息，其字段如下：  
-    - `blockHash`: `string` - 包含该交易的区块哈希      
-    - `blockNumber`: `string` - 包含该交易的区块高度 
-    - `contractAddress`: `string` - 合约地址，如果创建合约交易，则为合约部署地址，如果是调用合约，则为"0x0000000000000000000000000000000000000000"     
-    - `from`: `string` - 发送者的地址                
+- `array` - 回执证明，字段如下:
+   - `left`: `array` - 左边的哈希列表
+   - `right`: `array` - 右边的哈希列表
+- `object`: - 交易信息，其字段如下：
+    - `blockHash`: `string` - 包含该交易的区块哈希
+    - `blockNumber`: `string` - 包含该交易的区块高度
+    - `contractAddress`: `string` - 合约地址，如果创建合约交易，则为合约部署地址，如果是调用合约，则为"0x0000000000000000000000000000000000000000"
+    - `from`: `string` - 发送者的地址
     - `gasUsed`: `string` - 交易消耗的gas
-    - `input`: `string` - 交易的输入     
-    - `logs`: `array` - 交易产生的log               
-    - `logsBloom`: `string` - log的布隆过滤器值      
-    - `output`: `string` - 交易的输出     
-    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)    
+    - `input`: `string` - 交易的输入
+    - `logs`: `array` - 交易产生的log
+    - `logsBloom`: `string` - log的布隆过滤器值
+    - `output`: `string` - 交易的输出
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
-    - `transactionHash`: `string` - 交易哈希          
+    - `transactionHash`: `string` - 交易哈希
     - `transactionIndex`: `string` - 交易序号
 - 示例
 ```
@@ -1229,15 +1229,15 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"queryGroupStatus","params":[2],"
 
 当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
 
-- code: 使用数值表示该异常的错误类型，必须为整数。          
-- message: 对该错误的简单描述字符串。   
-- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。        
+- code: 使用数值表示该异常的错误类型，必须为整数。
+- message: 对该错误的简单描述字符串。
+- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。
 
 错误对象包含两类错误码，分别是JSON-RPC标准错误码和FISCO BCOS RPC错误码。
 
 #### JSON-RPC标准错误码
 
-标准错误码及其对应的含义如下：  
+标准错误码及其对应的含义如下：
 
 | code   | message              | 含义                       |
 | :----- | :------------------- | :------------------------- |
@@ -1266,7 +1266,7 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -40010 | RPC module initialization is incomplete                                    | RPC模块初始化尚未完成     |
 | -40011 | Over QPS limit                                   | SDK到节点的请求速率超过节点的请求速率限制     |
 
-   
+
 
 ### 交易回执状态
 
@@ -1312,6 +1312,9 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -50102  | address invalid                                 |          |
 | -51000  | table name and address already exist            |          |
 | -51001  | table name and address does not exist           |          |
+| -51002  | table name overflow                             |          |
+| -51003  | contract not exist                              |          |
+| -51004  | committee member permission managed by ChainGoverance           |          |
 | -51100  | invalid node ID                                 | SDK错误码 |
 | -51101  | the last sealer cannot be removed               |           |
 | -51102  | the node is not reachable                       | SDK错误码 |
@@ -1319,11 +1322,33 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -51104  | the node is already in the sealer list          | SDK错误码 |
 | -51105  | the node is already in the observer list        | SDK错误码 |
 | -51200  | contract name and version already exist         | SDK错误码 |
-| -51201  | version string length exceeds the maximum limit | SDK错误码 |
+| -51201  | version length exceeds the maximum limit | SDK错误码 |
 | -51300  | invalid configuration entry                     |          |
 | -51500  | entry parse error                               |          |
 | -51501  | condition parse error                           |          |
 | -51502  | condition operation undefined                   |          |
+| -51600  | invalid ciphers                                 |          |
+| -51700  | group sig failed                                |          |
+| -51800  | ring sig failed                                 |          |
+| -51900  | contract frozen                              |          |
+| -51901  | contract available                              |          |
+| -51902  | CONTRACT_REPEAT_AUTHORIZATIO                    |          |
+| -51903  | INVALID_CONTRACT_ADDRESS                    |          |
+| -51904  | TABLE_NOT_EXIST                    |          |
+| -51905  | NO_AUTHORIZED                    |          |
+| -52000  | COMMITTEE_MEMBER_EXIST                    |          |
+| -52001  | COMMITTEE_MEMBER_NOT_EXIST                |          |
+| -52002  | INVALID_REQUEST_PERMISSION_DENIED         |          |
+| -52003  | INVALID_THRESHOLD                    |          |
+| -52004  | OPERATOR_CANNOT_BE_COMMITTEE_MEMBER                    |          |
+| -52005  | COMMITTEE_MEMBER_CANNOT_BE_OPERATOR                    |          |
+| -52006  | OPERATOR_EXIST                    |          |
+| -52007  | OPERATOR_NOT_EXIST                    |          |
+| -52008  | ACCOUNT_NOT_EXIST                    |          |
+| -52009  | INVALID_ACCOUNT_ADDRESS                    |          |
+| -52010  | ACCOUNT_ALREADY_AVAILABLE                    |          |
+| -52011  | ACCOUNT_FROZEN                    |          |
+| -52012  | CURRENT_VALUE_IS_EXPECTED_VALUE              |          |
 
 ### 动态群组管理 API 状态码
 
