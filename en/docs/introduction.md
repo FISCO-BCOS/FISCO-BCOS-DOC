@@ -29,7 +29,7 @@ The above features all focus on solving the pain points of technology and experi
 
 FISCO BCOS adopts high-throughput scalable [multi-group architecture](./design/architecture/group.md), which can dynamically manage multiple chains and groups to meet the expansion and isolation requirements of multiple business scenarios. Modules include:
 
-- <font color=blue>**[Consensus mechanism](./design/consensus/index.md)**</font>: Pluggable consensus mechanism, supporting PBFT, Raft and RPBFT consensus algorithms, low transaction confirmation delay, high throughput, and ultimate consistency. Among them, PBFT and RPBFT can solve Byzantine problems and have higher security.
+- <font color=blue>**[Consensus mechanism](./design/consensus/index.md)**</font>: Pluggable consensus mechanism, supporting PBFT, Raft and rPBFT consensus algorithms, low transaction confirmation delay, high throughput, and ultimate consistency. Among them, PBFT and rPBFT can solve Byzantine problems and have higher security.
 
 - <font color=blue>**[Storage](./design/storage/index.md)**</font>: The storage of the world state is changed from the original MPT storage structure to [distributed storage](./design/storage/storage.md), avoids the problem of performance degradation caused by the rapid expansion of the world state. Introduces a pluggable storage engine, supports LevelDB, RocksDB, MySQL and other back-end storage, supports data expansion quickly and easily, and isolates calculation from data, reducing the impact of node failure on node data.
 

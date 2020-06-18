@@ -121,11 +121,11 @@ There are parameter options. The parameter is the name of db. Currently it suppo
 - scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
 
 ### **`c`option[**Optional**]**
-There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, RPBFT. The default consensus algorithm is PBFT.
+There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, rPBFT. The default consensus algorithm is PBFT.
 
 - `PBFT`：Set the node consensus algorithm to [PBFT](../design/consensus/pbft.md).
 - `Raft`：Set the node consensus algorithm to [Raft](../design/consensus/raft.md).
-- `RPBFT`：Set the node consensus algorithm to RPBFT.
+- `rPBFT`：Set the node consensus algorithm to rPBFT.
 
 ### **`C`option[**Optional**]**
 

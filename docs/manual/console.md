@@ -1123,8 +1123,8 @@ Hello,CNS2
 
 * tx_count_limit：区块最大打包交易数
 * tx_gas_limit：交易执行允许消耗的最大gas数
-* rpbft_epoch_sealer_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
-* rpbft_epoch_block_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
+* rpbft_epoch_sealer_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
+* rpbft_epoch_block_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
 
 参数：
 

@@ -120,11 +120,11 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 - scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
 
 ### **`c`选项[**Optional**]**
-有参数选项，参数为共识算法类型，目前支持PBFT、Raft、RPBFT。默认共识算法是PBFT。
+有参数选项，参数为共识算法类型，目前支持PBFT、Raft、rPBFT。默认共识算法是PBFT。
 
 - `PBFT`：设置节点共识算法为[PBFT](../design/consensus/pbft.md)。
 - `Raft`：设置节点共识算法为[Raft](../design/consensus/raft.md)。
-- `RPBFT`：设置节点共识算法为[RPBFT](../design/consensus/rpbft.md)。
+- `rPBFT`：设置节点共识算法为[rPBFT](../design/consensus/rpbft.md)。
 
 ### **`C`选项[**Optional**]**
 用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
