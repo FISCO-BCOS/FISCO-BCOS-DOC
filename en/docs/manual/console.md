@@ -1131,8 +1131,8 @@ To run setSystemConfigByKey to set the system configuration in key-value pairs. 
 
 * tx_count_limit: block maximum number of packaged transactions
 * tx_gas_limit: The maximum number of gas allowed to be consumed
-* rpbft_epoch_sealer_num: RPBFT system configuration, the number of consensus nodes selected in a consensus epoch
-* rpbft_epoch_block_num: RPBFT system configuration, number of blocks generated in one consensus epoch
+* rpbft_epoch_sealer_num: rPBFT system configuration, the number of consensus nodes selected in a consensus epoch
+* rpbft_epoch_block_num: rPBFT system configuration, number of blocks generated in one consensus epoch
 
 Parameters:
 

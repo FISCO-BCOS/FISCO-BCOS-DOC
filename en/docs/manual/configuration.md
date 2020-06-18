@@ -269,13 +269,13 @@ id=2
 
 `[consensus]` involves consensus-related configuration, including:
 
-- `consensus_type`：consensus algorithm type, currently supports [PBFT](../design/consensus/pbft.md), [Raft](../design/consensus/raft.md) and RPBFT. To use PBFT by default;
+- `consensus_type`：consensus algorithm type, currently supports [PBFT](../design/consensus/pbft.md), [Raft](../design/consensus/raft.md) and rPBFT. To use PBFT by default;
 
 - `max_trans_num`：a maximum number of transactions that can be packed in a block. The default is 1000. After the chain is initialized, the parameter can be dynamically adjusted through [Console](./console.html#setsystemconfigbykey);
 
 - `node.idx`：consensus node list, has configured with the [Node ID] of the participating consensus nodes. The Node ID can be obtained by the `${data_path}/node.nodeid` file (where `${data_path}` can be obtained by the configuration item `[secure].data_path` of the main configuration `config.ini`)
 
-FISCO BCOS v2.3.0 introduced the RPBFT consensus algorithm, The RPBFT related configuration is as follows:
+FISCO BCOS v2.3.0 introduced the rPBFT consensus algorithm, The rPBFT related configuration is as follows:
 
 - `epoch_sealer_num`：The number of nodes participating in the consensus is selected in a consensus period. The default is the total number of all consensus nodes. After the chain is initialized, this parameter can be dynamically adjusted through [Console] (./console.html#setsystemconfigbykey)
 - `epoch_block_num`：The number of blocks generated in a consensus period, the default is 1000, which can be dynamically adjusted through [Console] (./console.html#setsystemconfigbykey)
@@ -283,7 +283,7 @@ FISCO BCOS v2.3.0 introduced the RPBFT consensus algorithm, The RPBFT related co
 ```eval_rst
 .. note::
 
-    RPBFT configuration does not take effect on other consensus algorithms
+    rPBFT configuration does not take effect on other consensus algorithms
 ```
 
 ```ini
@@ -525,9 +525,9 @@ Disable the PBFT Prepare package structure optimization configuration as follows
     enable_prepare_with_txsHash=false
 ```
 
-### RPBFT consensus configurations
+### rPBFT consensus configurations
 
-FISCO BCOS v2.3.0 introduces the RPBFT consensus algorithm. In order to ensure the load balance of the network traffic of the RPBFT algorithm, the tree broadcast policy of the Prepare packet is introduced, Corresponding fault tolerance scheme.
+FISCO BCOS v2.3.0 introduces the rPBFT consensus algorithm. In order to ensure the load balance of the network traffic of the rPBFT algorithm, the tree broadcast policy of the Prepare packet is introduced, Corresponding fault tolerance scheme.
 
 - `[consensus].broadcast_prepare_by_tree`: Enable/disable switch for Prepare tree broadcast policy. Set to `true` to enable the tree broadcast policy for Prepare packets. Set to` false` to disable the tree broadcast policy for Prepare packets. Default is `true`.
 
@@ -537,11 +537,11 @@ The following is the fault-tolerant configuration after the Prepare packet tree 
 
 - `[consensus].max_request_prepare_waitTime`：When the node's Prepare cache is missing, the longest delay for waiting for the parent node to send a Prepare packet is 100ms by default. After this delay, the node will request from other nodes that own the Prepare packet.
 
-The following is the configuration of load balancing after enabling Prepare package structure optimization in RPBFT mode:
+The following is the configuration of load balancing after enabling Prepare package structure optimization in rPBFT mode:
 
 - `[consensus].max_request_missedTxs_waitTime`: After the transaction in the node's Prepare packet is missing, the longest delay for waiting for the parent node or other non-leader node to synchronize the Prepare packet status is 100ms by default, if the packet status is synchronized to the parent node or non-leader node within the waiting delay window, a random node will be selected to request the missing transaction, otherwise, directly request the missing transaction from the leader.
 
-RPBFT default configuration is as follows:
+rPBFT default configuration is as follows:
 
 ```ini
 ; Tree broadcast policy for Prepare packets is enabled by default
@@ -664,8 +664,8 @@ FISCO BCOS system currently includes the following system parameters (other syst
 |  ----  | ----  | ---- |
 | tx_count_limit  | 1000 | Maximum number of transactions that can be packed in a block |
 | tx_gas_limit  | 300000000 | Maximum gas limit for one transaction |
-| rpbft_epoch_sealer_num | Total number of chain consensus nodes | RPBFT system configuration, the number of nodes participating in consensus is selected in a consensus period, and the number of nodes participating in consensus is dynamically switched in each consensus period of RPBFT |
-| rpbft_epoch_block_num | 1000 | RPBFT system configuration, the number of blocks produced in a consensus period| 
+| rpbft_epoch_sealer_num | Total number of chain consensus nodes | rPBFT system configuration, the number of nodes participating in consensus is selected in a consensus period, and the number of nodes participating in consensus is dynamically switched in each consensus period of rPBFT |
+| rpbft_epoch_block_num | 1000 | rPBFT system configuration, the number of blocks produced in a consensus period| 
 
 Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** command to modify these system parameters.
 **[getSystemConfigByKey](./console.html#getsystemconfigbykey)** command can view the current value of the system parameter:
@@ -680,7 +680,7 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 
     - gas is insufficient when executing transactions for comlicated business logic: increase tx_gas_limit.
 
-    `rpbft_epoch_sealer_num` and `rpbft_epoch_block_num` are only valid for the RPBFT consensus algorithm. In order to ensure the performance of the consensus, it is not recommended to frequently switch the consensus list dynamically, that is, it is not recommended that the `rpbft_epoch_block_num` configuration value is too small
+    `rpbft_epoch_sealer_num` and `rpbft_epoch_block_num` are only valid for the rPBFT consensus algorithm. In order to ensure the performance of the consensus, it is not recommended to frequently switch the consensus list dynamically, that is, it is not recommended that the `rpbft_epoch_block_num` configuration value is too small
 
 ```
 
@@ -698,27 +698,27 @@ Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)**
 > getSystemConfigByKey tx_gas_limit
 [400000000]
 
-# Under the RPBFT consensus algorithm, set a consensus period to select the number of nodes participating in the consensus to 4
+# Under the rPBFT consensus algorithm, set a consensus period to select the number of nodes participating in the consensus to 4
 [group:1]> setSystemConfigByKey rpbft_epoch_sealer_num 4
-Note: rpbft_epoch_sealer_num only takes effect when RPBFT is used
+Note: rpbft_epoch_sealer_num only takes effect when rPBFT is used
 {
     "code":0,
     "msg":"success"
 }
 # query rpbft_epoch_sealer_num
 [group:1]> getSystemConfigByKey rpbft_epoch_sealer_num 
-Note: rpbft_epoch_sealer_num only takes effect when RPBFT is used
+Note: rpbft_epoch_sealer_num only takes effect when rPBFT is used
 4
 
-# Under the RPBFT consensus algorithm, set a consensus period to produce 10,000 blocks
+# Under the rPBFT consensus algorithm, set a consensus period to produce 10,000 blocks
 [group:1]> setSystemConfigByKey rpbft_epoch_block_num 10000
-Note: rpbft_epoch_block_num only takes effect when RPBFT is used
+Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 {
     "code":0,
     "msg":"success"
 }
 # query rpbft_epoch_block_num
 [group:1]> getSystemConfigByKey rpbft_epoch_block_num
-Note: rpbft_epoch_block_num only takes effect when RPBFT is used
+Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 10000
 ```
