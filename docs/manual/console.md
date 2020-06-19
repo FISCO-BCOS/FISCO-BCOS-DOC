@@ -326,22 +326,23 @@ getPendingTxSize                         Query pending transactions size.
 getSealerList                            Query nodeId list for sealer nodes.
 getSyncStatus                            Query sync status.
 getSystemConfigByKey                     Query a system config value by key.
+setSystemConfigByKey                     Set a system config value by key.
 getTotalTransactionCount                 Query total transaction count.
 getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
 getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
 getTransactionByHash                     Query information about a transaction requested by transaction hash.
 getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
+getTransactionByHashWithProof            Query the transaction and transaction proof by transaction hash.
+getTransactionReceiptByHashWithProof     Query the receipt and transaction receipt proof by transaction hash.
 grantCNSManager                          Grant permission for CNS by address.
 grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
 grantNodeManager                         Grant permission for node configuration by address.
-grantPermissionManager                   Grant permission for permission configuration by address.
 grantSysConfigManager                    Grant permission for system configuration by address.
 grantUserTableManager                    Grant permission for user table by table name and address.
 help(h)                                  Provide help information.
 listCNSManager                           Query permission information for CNS.
 listDeployAndCreateManager               Query permission information for deploy contract and create user table.
 listNodeManager                          Query permission information for node configuration.
-listPermissionManager                    Query permission information for permission configuration.
 listSysConfigManager                     Query permission information for system configuration.
 listUserTableManager                     Query permission for user table information.
 queryCNS                                 Query CNS information by contract name and contract version.
@@ -350,21 +351,29 @@ removeNode                               Remove a node.
 revokeCNSManager                         Revoke permission for CNS by address.
 revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
 revokeNodeManager                        Revoke permission for node configuration by address.
-revokePermissionManager                  Revoke permission for permission configuration by address.
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
-setSystemConfigByKey                     Set a system config.
 listContractWritePermission              Query the account list which have write permission of the contract.
 grantContractWritePermission             Grant the account the contract write permission.
 revokeContractWritePermission            Revoke the account the contract write permission.
-freezeContract                           Freeze the contract.
-unfreezeContract                         Unfreeze the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
+grantCommitteeMember                     Grant the account committee member
+revokeCommitteeMember                    Revoke the account from committee member
+listCommitteeMembers                     List all committee members
+grantOperator                            Grant the account operator
+revokeOperator                           Revoke the operator
+listOperators                            List all operators
+updateThreshold                          Update the threshold
+queryThreshold                           Query the threshold
+updateCommitteeMemberWeight              Update the committee member weight
+queryCommitteeMemberWeight               Query the committee member weight
 freezeAccount                            Freeze the account.
 unfreezeAccount                          Unfreeze the account.
-getAccountStatus                         Get status of the account.
+getAccountStatus                         GetAccountStatus of the account.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1555,6 +1564,135 @@ The contract is available.
     "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
     "0x965ebffc38b309fa706b809017f360d4f6de909a"
 ]
+```
+
+### grantCommitteeMember
+
+添加治理委员会委员，如果当前没有委员，则直接添加成功，否则判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。委员账号可以添加运维、管理链系统配置、节点增删等，详情[参考这里](../permission_control.md)。参数：
+
+- 账号地址：投票添加该账号为委员
+
+```bash
+[group:1]> grantCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeCommitteeMember
+
+撤销治理委员会委员判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。参数：
+
+- 账号地址：投票撤销该账号的委员权限
+
+```bash
+[group:1]> revokeCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listCommitteeMembers
+
+查询所有治理委员会委员。
+
+```bash
+[group:1]> listCommitteeMembers
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a  |                      1                      |
+| 0x85961172229aec21694d742a5bd577bedffcfec3  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+
+### updateThreshold
+
+投票更新生效阈值，判断投票账号是否是委员，是则计票并判断是否生效。参数：
+
+- 生效阈值：取值范围[0,99]
+
+```bash
+[group:1]> updateThreshold 75
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### queryThreshold
+
+查询生效阈值。
+
+```bash
+[group:1]> queryThreshold
+Effective threshold : 50%
+```
+
+### queryCommitteeMemberWeight
+
+查询治理委员会委员的票数。
+
+```bash
+[group:1]> queryCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
+```
+
+### updateCommitteeMemberWeight
+
+投票更新委员账号的票数，检查投票账号是否有权限，有则计票并检查是否生效，生效后该委员账号投票操作相当于设置的票数。参数：
+
+- 委员账号：被投票修改票数的委员账号
+- 投票权重：希望修改的权重
+
+```bash
+[group:1]> updateCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a 2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+
+### grantOperator
+
+添加运维账号，运维角色拥有部署合约、创建用户表和管理CNS的权限，治理委员会委员可以添加运维，如果当前没有委员，则不限制。参数：
+
+- 账号地址：添加该账号为运维
+
+```bash
+[group:1]> grantOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeOperator
+
+撤销账号的运维权限，委员可以操作，如果当前没有委员，则不限制。参数：
+
+- 账号地址：撤销该账号的运维权限
+
+```bash
+[group:1]> revokeOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listOperators
+
+查询有运维权限的账号。
+
+```bash
+[group:1]> listOperators
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2  |                      1                      |
+---------------------------------------------------------------------------------------------
 ```
 
 ### **freezeAccount**
