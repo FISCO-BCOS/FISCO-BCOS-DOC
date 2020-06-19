@@ -307,8 +307,8 @@ Enter help or h to see all the commands on the console.
 -------------------------------------------------------------------------------------
 addObserver                              Add an observer node.
 addSealer                                Add a sealer node.
-call                                     Call a contract by a function and parameters.
-callByCNS                                Call a contract by a function and parameters by CNS.
+call                                     Call a contract by a function and Parameters.
+callByCNS                                Call a contract by a function and Parameters by CNS.
 deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
 desc                                     Description table information.
@@ -332,22 +332,23 @@ getPendingTxSize                         Query pending transactions size.
 getSealerList                            Query nodeId list for sealer nodes.
 getSyncStatus                            Query sync status.
 getSystemConfigByKey                     Query a system config value by key.
+setSystemConfigByKey                     Set a system config value by key.
 getTotalTransactionCount                 Query total transaction count.
 getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
 getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
 getTransactionByHash                     Query information about a transaction requested by transaction hash.
 getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
+getTransactionByHashWithProof            Query the transaction and transaction proof by transaction hash.
+getTransactionReceiptByHashWithProof     Query the receipt and transaction receipt proof by transaction hash.
 grantCNSManager                          Grant permission for CNS by address.
 grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
 grantNodeManager                         Grant permission for node configuration by address.
-grantPermissionManager                   Grant permission for permission configuration by address.
 grantSysConfigManager                    Grant permission for system configuration by address.
 grantUserTableManager                    Grant permission for user table by table name and address.
 help(h)                                  Provide help information.
 listCNSManager                           Query permission information for CNS.
 listDeployAndCreateManager               Query permission information for deploy contract and create user table.
 listNodeManager                          Query permission information for node configuration.
-listPermissionManager                    Query permission information for permission configuration.
 listSysConfigManager                     Query permission information for system configuration.
 listUserTableManager                     Query permission for user table information.
 queryCNS                                 Query CNS information by contract name and contract version.
@@ -356,21 +357,29 @@ removeNode                               Remove a node.
 revokeCNSManager                         Revoke permission for CNS by address.
 revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
 revokeNodeManager                        Revoke permission for node configuration by address.
-revokePermissionManager                  Revoke permission for permission configuration by address.
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
-setSystemConfigByKey                     Set a system config.
 listContractWritePermission              Query the account list which have write permission of the contract.
 grantContractWritePermission             Grant the account the contract write permission.
 revokeContractWritePermission            Revoke the account the contract write permission.
-freezeContract                           Freeze the contract.
-unfreezeContract                         Unfreeze the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
+grantCommitteeMember                     Grant the account committee member
+revokeCommitteeMember                    Revoke the account from committee member
+listCommitteeMembers                     List all committee members
+grantOperator                            Grant the account operator
+revokeOperator                           Revoke the operator
+listOperators                            List all operators
+updateThreshold                          Update the threshold
+queryThreshold                           Query the threshold
+updateCommitteeMemberWeight              Update the committee member weight
+queryCommitteeMemberWeight               Query the committee member weight
 freezeAccount                            Freeze the account.
 unfreezeAccount                          Unfreeze the account.
-getAccountStatus                         Get status of the account.
+getAccountStatus                         GetAccountStatus of the account.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1612,6 +1621,131 @@ Parameter:
     "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
     "0x965ebffc38b309fa706b809017f360d4f6de909a"
 ]
+```
+
+### grantCommitteeMember
+
+grant account with Committee Member permission. Parameters:
+
+- account address
+
+```bash
+[group:1]> grantCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeCommitteeMember
+
+revoke account's Committee Member permission, parameters:
+
+- account address
+
+```bash
+[group:1]> revokeCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listCommitteeMembers
+
+```bash
+[group:1]> listCommitteeMembers
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a  |                      1                      |
+| 0x85961172229aec21694d742a5bd577bedffcfec3  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+
+### updateThreshold
+
+vote to modify the votes threshold, Parameters:
+
+- threshold:[0,99]
+
+```bash
+[group:1]> updateThreshold 75
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### queryThreshold
+
+query votes threshold
+
+```bash
+[group:1]> queryThreshold
+Effective threshold : 50%
+```
+
+### queryCommitteeMemberWeight
+
+```bash
+[group:1]> queryCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
+```
+
+### updateCommitteeMemberWeight
+
+update Committee Member's votes. Parameters：
+
+- account address
+- votes
+
+```bash
+[group:1]> updateCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a 2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+
+### grantOperator
+
+grantOperator, committee member's permission, parameters:
+
+- account address
+
+```bash
+[group:1]> grantOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeOperator
+
+revokeOperator, committee member's permission, parameters:
+
+- account address
+
+```bash
+[group:1]> revokeOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listOperators
+
+list address who has operator permission。
+
+```bash
+[group:1]> listOperators
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2  |                      1                      |
+---------------------------------------------------------------------------------------------
 ```
 
 ### **freezeAccount**
