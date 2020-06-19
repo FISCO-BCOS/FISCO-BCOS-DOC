@@ -28,4 +28,5 @@ The permission control mechanism based on distributed storage controls access in
 
    node_management.md
    certificate_list.md
+   chain_governance.md
    permission_control.md

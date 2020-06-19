@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.1/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
