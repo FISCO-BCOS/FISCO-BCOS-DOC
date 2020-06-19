@@ -12,7 +12,7 @@ $ sudo apt install -y openssl curl
 # prepare environment
 $ cd ~ && mkdir -p fisco && cd fisco
 # download build_chain.sh script
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.1/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - build a 4-nodes FISCO BCOS chain
@@ -111,7 +111,7 @@ FISCO BCOS OSCCA-approved cryptography version adopts dual certificate mode, so 
 ``` shell
 cd key-manager/scripts
 #encrypt conf/gmnode.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
 #encrypt conf/origin_cert/node.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```

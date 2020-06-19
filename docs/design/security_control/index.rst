@@ -25,7 +25,8 @@
 
 .. toctree::
    :maxdepth: 1
-   
+
    node_management.md
    certificate_list.md
+   chain_governance.md
    permission_control.md
