@@ -548,11 +548,13 @@ To run getNodeVersion to view the node version.
 ```text
 [group:1]> getNodeVersion
 {
-	"Build Time":"20190107 10:15:23",
-	"Build Type":"Linux/g++/RelWithDebInfo",
-	"FISCO-BCOS Version":"2.0.0-rc1",
-	"Git Branch":"master",
-	"Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
+    "Build Time":"20200619 06:32:10",
+    "Build Type":"Linux/clang/Release",
+    "Chain Id":"1",
+    "FISCO-BCOS Version":"2.5.0",
+    "Git Branch":"HEAD",
+    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
+    "Supported Version":"2.5.0"
 }
 ```
 ### **getPeers**
