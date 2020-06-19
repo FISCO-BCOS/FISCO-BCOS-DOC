@@ -192,10 +192,16 @@ nodes/
 │   │.....
 │   ├── node3 # 节点3文件夹
 │   │.....
-│   ├── sdk # SDK需要用到的
-│   │   ├── ca.crt # 链根证书
-│   │   ├── sdk.crt # SKD所需的证书文件，建立连接时使用
-│   │   └── sdk.key # SDK所需的私钥文件，建立连接时使用
+│   ├── sdk # SDK与节点SSL连接配置
+│   │   ├── ca.crt # SSL连接根证书
+│   │   ├── sdk.crt # SSL连接证书
+│   │   └── sdk.key # SSL连接证书私钥
+|   |   ├── gm # SDK与节点国密SSL连接配置，注意：生成国密区块链环境时才会生成该目录，用于节点与SDK的国密SSL连接
+|   |   │   ├── gmca.crt # 国密SSL连接根证书
+|   |   │   ├── gmensdk.crt # 国密SSL连接加密证书
+|   |   │   ├── gmensdk.key # 国密SSL连接加密证书私钥
+|   |   │   ├── gmsdk.crt # 国密SSL连接签名证书
+|   |   │   └── gmsdk.key # 国密SSL连接签名证书私钥
 ├── cert # 证书文件夹
 │   ├── agency # 机构证书文件夹
 │   │   ├── agency.crt # 机构证书

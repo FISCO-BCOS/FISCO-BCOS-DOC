@@ -54,7 +54,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 
 ## 国密配置信息
 
-国密版本FISCO BCOS节点之间采用SSL安全通道发送和接收消息，证书主要配置项集中在如下配置项中：
+国密版本FISCO BCOS节点之间采用SSL安全通道发送和接收消息，证书主要配置如下：
 
 ```ini
 [network_security]
@@ -76,13 +76,22 @@ ca_cert: gmca证书路径
     ca_cert=gmca.crt
 ```
 
+FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信，也可以以国密SSL连接进行通信，相关配置如下：
+```ini
+[chain]
+    ; use SM crypto or not, should nerver be changed
+    sm_crypto=true
+    ; use SM SSL connection with SDK
+    sm_crypto_channel=true
+```
+
 ## 国密版SDK使用
 
 详细操作参考[SDK文档](../sdk/java_sdk.html#id10)。
 
 ## 国密版控制台配置
 
-详情操作参考[控制台操作手册](../manual/console.md)`配置国密版控制台`小节。
+详情操作参考[配置国密版控制台](../manual/console.html#id11)。
 
 ## 国密控制台使用
 

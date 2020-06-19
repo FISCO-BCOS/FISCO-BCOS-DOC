@@ -4,10 +4,11 @@
 
 2.0+版本主要特性包括：
 
-- 提供调用FISCO BCOS JSON-RPC的Java API
+- 提供调用FISCO BCOS 2.0 JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
 - 支持[链上信使协议](../manual/amop_protocol.md)为联盟链提供安全高效的消息信道
 - 支持使用国密算法发送交易
+- 支持通过国密SSL与节点通信
 
 ## 环境要求
 
@@ -33,14 +34,14 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.1.0')
+compile ('org.fisco-bcos:web3sdk:2.5.0')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.1.0</version>
+    <version>2.5.0</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
@@ -55,9 +56,14 @@ repositories {
 
 ## 配置SDK
 
-### FISCO BCOS节点证书配置
+### 证书配置
+FISCO BCOS作为联盟链，SDK连接区块链节点时通过SSL进行双向认证。JavaSDK支持SSL与国密SSL的认证方式。
 
-FISCO BCOS作为联盟链，其SDK连接区块链节点需要通过证书(ca.crt、sdk.crt)和私钥(sdk.key)进行双向认证。因此需要将节点所在目录`nodes/${ip}/sdk`下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录，供SDK与节点建立连接时使用。（低于2.1版本的FISCO BCOS节点目录下只有`node.crt`和`node.key`，需将其重命名为`sdk.crt`和`sdk.key`以兼容最新的SDK）
+#### SSL连接配置
+在国密区块链或者非国密区块链环境时，节点与SDK之间可以建立SSL的连接，将节点所在目录`nodes/${ip}/sdk/`目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录。（低于2.1版本的FISCO BCOS节点目录下只有`node.crt`和`node.key`，需将其重命名为`sdk.crt`和`sdk.key`以兼容最新的SDK）
+
+#### 国密SSL连接配置
+FISCO-BCOS 2.5及之后的版本，在国密区块链环境下支持节点与SDK建立国密SSL连接，将节点所在目录`nodes/${ip}/sdk/gm/`目录下的`gmca.crt`、`gmensdk.crt`、`gmensdk.key`、`gmsdk.crt`、`gmsdk.key`文件拷贝到项目的资源目录。
 
 ### 配置文件设置
 
@@ -86,9 +92,16 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
         </bean>
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <!-- SSL certificate configuration -->
                 <property name="caCert" value="ca.crt" />
                 <property name="sslCert" value="sdk.crt" />
                 <property name="sslKey" value="sdk.key" />
+                <!-- GM SSL certificate configuration -->
+                <property name="gmCaCert" value="gmca.crt" />
+                <property name="gmEnSslCert" value="gmensdk.crt" />
+                <property name="gmEnSslKey" value="gmensdk.key" />
+                <property name="gmSslCert" value="gmsdk.crt" />
+                <property name="gmSslKey" value="gmsdk.key" />
                 <property name="allChannelConnections">
                         <list>  <!-- 每个群组需要配置一个bean，每个群组可以配置多个节点 -->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
@@ -128,9 +141,16 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
   - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`channel_listen_ip`(若节点小于v2.3.0版本，查看配置项listen_ip)和`channel_listen_port`。
-  - `caCert`用于配置链ca证书路径
-  - `sslCert`用于配置SDK所使用的证书路径
-  - `sslKey`用于配置SDK所使用的证书对应的私钥路径
+  - SSL配置: SDK与节点通过SSL通信时使用
+    - `caCert`用于配置链ca证书路径
+    - `sslCert`用于配置SDK所使用的证书路径
+    - `sslKey`用于配置SDK所使用的证书对应的私钥路径
+  - 国密SSL配置: SDK与节点通过国密SSL通信时使用
+    - `gmCaCert`用于配置国密SSL连接ca证书路径，国密环境下，SDK与节点建立国密SSL连接时使用
+    - `gmEnSslCert`用于配置国密SSL连接加密证书路径，国密环境下，SDK与节点建立国密SSL连接时使用
+    - `gmEnSslKey`用于配置国密SSL连接加密证书私钥路径，国密环境下，SDK与节点建立国密SSL连接时使用
+    - `gmSslCert`用于国密SSL连接签名证书的路径，国密环境下，SDK与节点建立国密SSL连接时使用
+    - `gmSslKey`用于国密SSL连接签名证书私钥的路径，国密环境下，SDK与节点建立国密SSL连接时使用
   
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
@@ -1355,10 +1375,10 @@ class Asset {
 - Failed to initialize the SSLContext: Input stream not contain valid certificates. <br> 
   加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../manual/console.html#java)章节重新安装OracleJDK。<br><br> 
 
-- Failed to connect to nodes: [connection timed out: /192.0.0.1:20200]<br>  
+- Failed to connect to nodes: [connection timed out: /127.0.0.1:20200]<br>  
   连接超时，节点的网络不可达，请检查提示的IP是否配置错误，或者，当前JavaSDK运行环境与节点的环境网络确实不通，可以咨询运维人员解决网络不通的问题。<br><br> 
 
-- Failed to connect to nodes: [拒绝连接: /127.0.0.1:20200]<br>  
+- Failed to connect to nodes: [Connection refused: /127.0.0.1:20200]<br>  
   拒绝连接，无法连接对端的端口，可以使用telnet命令检查端口是否连通，可能原因：
   1. 节点未启动，端口处于未监听状态，启动节点即可。
   2. 节点监听`127.0.0.1`的网段，监听`127.0.0.1`网络只能本机的客户端才可以连接，控制台位于不同服务器时无法连接节点，将节点配置文件`config.ini`中的`channel_listen_ip`修改为控制台连接节点使用的网段IP，或者将其修改为`0.0.0.0`。
