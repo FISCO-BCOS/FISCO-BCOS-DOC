@@ -102,6 +102,7 @@ For security reasons, communication among FISCO BCOS nodes uses SSL encrypted co
 - `cert`: The `data_path` path that certificate `node.crt` relative to.
 - `ca_cert`: ca certificate file path.
 - `ca_path`: ca certificate folder, required for multiple ca.
+- `check_cert_issuer`：sets whether the SDK can only connect the nodes with same organization, which is turned on by default（check_cert_issuer=true）.
 
 ```ini
 [network_security]
