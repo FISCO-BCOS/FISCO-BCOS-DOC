@@ -46,7 +46,7 @@ Execute the following command in the fisco directory to generate a single group 
 
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -v 2.5.0
 ```
 
 ```eval_rst
@@ -224,13 +224,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 # acquire client ends version information
 [group:1]> getNodeVersion
 {
-    "Build Time":"20200430 03:22:53",
+    "Build Time":"20200619 06:32:10",
     "Build Type":"Linux/clang/Release",
     "Chain Id":"1",
-    "FISCO-BCOS Version":"2.4.0",
+    "FISCO-BCOS Version":"2.5.0",
     "Git Branch":"HEAD",
-    "Git Commit Hash":"0d94de1e0f2dc7ce7d226dbd68001a4b43029cf6",
-    "Supported Version":"2.4.0"
+    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
+    "Supported Version":"2.5.0"
 }
 # acquire node connection information
 [group:1]> getPeers
