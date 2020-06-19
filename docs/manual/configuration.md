@@ -98,6 +98,7 @@ P2P配置示例如下：
 - `cert`: 证书`node.crt`相对于`data_path`的路径。
 - `ca_cert`: ca证书文件路径。
 - `ca_path`: ca证书文件夹，多ca时需要。
+- `check_cert_issuer`：设置SDK是否只能连本机构节点，默认为开启（check_cert_issuer=true）。
 
 ```ini
 [network_security]
