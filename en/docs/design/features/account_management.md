@@ -15,7 +15,7 @@ Account management related operations include `freezeAccount`, `unfreezeAccount`
 - [unfreezeAccount](../../manual/console.html#unfreezeaccount) : Undo the `freezeAccount` operation, the interfaces of an unfrozen account can deploy or execute transaction
 - [getAccountStatus](../../manual/console.html#getaccountstatus) : Query the status of a account to return the status of available/frozen
 
-The authority management related operations please refer to [ChainGovernance.md](../security_control/ChainGovernance.md).
+The authority management related operations please refer to [ChainGovernance](../security_control/chain_governance.md).
 
 ```eval_rst
 .. important::

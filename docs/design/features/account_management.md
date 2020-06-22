@@ -15,7 +15,7 @@
 - [解冻账号](../../manual/console.html#unfreezeaccount)：撤销冻结的操作，一账号解冻后可部署及调用合约
 - [查询账号状态](../../manual/console.html#getaccountstatus)：查询账号状态，返回该账号可用/已冻结的状态
 
-账号的冻结/解冻操作只能由链的委员进行。权限相关操作请参考[基于角色的权限控制](../security_control/ChainGovernance.md)。
+账号的冻结/解冻操作只能由链的委员进行。权限相关操作请参考[基于角色的权限控制](../security_control/chain_governance.md)。
 
 ```eval_rst
 .. important::
