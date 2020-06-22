@@ -2,13 +2,89 @@
 
 FISCO BCOS is the first safe and controllable enterprise-level financial consortium blockchain platform open source by domestic enterprises. It is jointly created by the FISCO open source working group and officially launched in December 2017.
 
-The community links multiple parties with open source. At present, more than 500 enterprises and institutions and more than 10,000 community members have joined to build and co-governance, and developed into the largest and most active domestic consortium blockchain platform ecosystem. The underlying platform is highly available and easy to use after extensive application and practice. Hundreds of application projects are developed based on the FISCO BCOS underlying platform, and over 60 have been steadily operating in the production environment, covering cultural copyright, judicial services, government services, Internet of Things, finance, smart communities and other fields.
+The community links multiple parties with open source. As of May 2020, more than 1000 enterprises and institutions and more than 10,000 community members have joined to build and co-governance, and developed into the largest and most active domestic consortium blockchain platform ecosystem. The underlying platform is highly available and easy to use after extensive application and practice. Hundreds of application projects are developed based on the FISCO BCOS underlying platform, and over 80 have been steadily operating in the production environment, covering cultural copyright, judicial services, government services, Internet of Things, finance, smart communities and other fields.
 
 
 ```eval_rst
 .. note::
     FISCO BCOS takes the actual needs of the consortium blockchain as a starting point, taking into account performance, security, maintainability, ease of use, and scalability, and supports multiple SDK, and provides visual middleware tools, greatly reducing the time to build chains, develop and deploy applications. In addition, FISCO BCOS passed the two evaluations of the Trusted Blockchain evaluation function and performance of the Information Communication Institute, and the single-chain TPS can reach 20,000.
 ```
+
+## Key Features
+
+<font color=Blue>**Architecture**</font> | |
+| - | - | 
+| Architectural model | one-body, two-wing, multi-engine|
+| Group architecture | Support dynamic expansion of multiple groups in the chain|
+| AMDB | Support massive data storage|
+| Parallel transaction processing | Support parallel execution of intra-block transactions |
+| Node type | Consensus node, observation node |
+| Execution model | sort-execute-verify |
+| <font color=Blue>**System performance**</font> |
+| Peak TPS | 20,000+ TPS (PBFT）|
+| Transaction confirmation delay | Confirm in seconds|
+| <font color=Blue>**Recommended hardware configuration**</font> |
+| CPU | 2.4GHz * 8|
+| Memory | 8GB |
+| Storage | 4TB |
+| Network bandwidth| 10Mb |
+| <font color=Blue>**Ledger model**</font> |
+| Data structure | Chain structure, blocks are connected by hash|
+| Whether to fork| No fork |
+| Bookkeeping type | Account model (non-UTXO)|
+| <font color=Blue>**Consensus algorithm**</font>  |
+| Consensus framework | Pluggable design |
+| Consensus algorithm | PBFT、Raft、rPBFT|
+| <font color=Blue>**Storage engine**</font>  |
+| Storage design | Support KV and SQL |
+| Storage engine type | Support leveldb, rocksdb, mysql|
+| CRUD interface | Provide CRUD interface to access data on the chain |
+| <font color=Blue>**Network protocol**</font>  |
+| Node communication | P2P protocol |
+| Client and node communication | JsonRPC, Channel protocol |
+| Message subscription service | AMOP protocol |
+| <font color=Blue>**Smart contract**|
+|Contract engine| Support Solidity and precompiled contracts |
+|Contract engine features| Turing complete, sandbox running |
+|Version control| Support multi-version contracts based on CNS |
+| Grayscale upgrade | Support multi-version contract coexistence, grayscale upgrade|
+| Life cycle management |Support contract and account freezing and unfreezing|
+| <font color=Blue>**Cryptographic algorithms and protocols**</font>  |
+| OSCCA algorithm | Support feature |
+| OSCCA SSL | Support feature |
+| Hash algorithm | Keccek256、SM3 |
+| Symmetric encryption algorithm | AES、SM4 |
+| Asymmetric encryption algorithm |ECDSA、SM2|
+| Asymmetric encryption elliptic curve |secp256k1、sm2p256v1|
+| <font color=Blue>**safety control**</font>  |
+|Storage security| Support encrypted data storage |
+|Communication security| Support SSL |
+|Access security| PKI-based identity authentication system |
+|Certificate management| Support certificate issuance, revocation and renewal |
+|Access control| Support fine-grained permission control|
+| <font color=Blue>**privacy protection**</font> |
+| Physical isolation| Data isolation among groups |
+| Privacy Protection Agreement| Support group signature, ring signature, homomorphic encryption |
+|Scene privacy protection mechanism |Based on [WeDPR](https://fintech.webank.com/wedpr), it supports scenarios such as hidden payment, anonymous voting, anonymous bidding, selective disclosure, etc.|
+| <font color=Blue>**Cross-chain protocol**</font> |
+|SPV|Provide an interface to obtain SPV proof|
+|Cross-chain protocol|Based on [WeCross](https://github.com/WeBankFinTech/WeCross) supports homogeneous and heterogeneous cross-chain |
+| <font color=Blue>**Development support**</font> |
+|Contract development tools|[WeBASE-IDE](https://github.com/WeBankFinTech/WeBASE)，[ChainIDE](https://fiscoide.com/)|
+|Development of chain building tools | [build_chain](./manual/build_chain.html)|
+|Contract deployment and testing tools| [Console](./manual/console.html)|
+|SDK|[Java](https://github.com/FISCO-BCOS/web3sdk)、[nodejs](https://github.com/FISCO-BCOS/nodejs-sdk)、[go](https://github.com/FISCO-BCOS/go-sdk)、[python](https://github.com/FISCO-BCOS/python-sdk)|
+|Rapid component development| [Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
+|Performance measuring tool|SDK embedded performance testing tool, supports Caliper|
+| <font color=Blue>**Operation and maintenance support**</font> |
+|Operation and maintenance chain building tools| Provide [enterprise level consortium chain deployment tool](./enterprise_tools/index.html)|
+|Visual data display|[Blockchain browser](./browser/browser.html)|
+|Visual node management| Provide node manager based on [WeBASE](https://github.com/WeBankFinTech/WeBASE) |
+|Dynamic management node | Supports dynamically adding, removing, and changing nodes|
+|Dynamic configuration changes | Support dynamic change of system configuration|
+|Data backup and recovery | Provide data export and recovery service components|
+|Monitoring statistics | Output statistical logs and provide monitoring tools|
+|Regulatory audit| Based on [WeBASE](https://github.com/WeBankFinTech/WeBASE), providing regulatory audit entrance|
 
 ## Architecture
 
