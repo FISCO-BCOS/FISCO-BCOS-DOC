@@ -200,6 +200,12 @@ nodes/
 │   │   ├── ca.crt # chain root certificate
 │   │   ├── sdk.crt # The certificate file required by SKD, to use when establishing a connection
 │   │   └── sdk.key # The private key file required by SKD, to use when establishing a connection
+|   |   ├── gm # SDK sm ssl connection with nodes configuration，note：this directory is only generated when sm blockchain environment is generated for the node to make SSL connection with the SDK
+|   |   │   ├── gmca.crt # sm ssl connection root certificate
+|   |   │   ├── gmensdk.crt # sm ssl connection encrypt certificate
+|   |   │   ├── gmensdk.key # sm ssl connection encrypt certificate key
+|   |   │   ├── gmsdk.crt # sm ssl connection sign certificate
+|   |   │   └── gmsdk.key # sm ssl connection sign certificate key
 ├── cert # certificate folder
 │   ├── agency # agency certificate folder
 │   │   ├── agency.crt # agency certificate

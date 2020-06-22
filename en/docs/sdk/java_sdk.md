@@ -28,14 +28,14 @@ Main features of version 2.0+ includes:
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.1.0')
+compile ('org.fisco-bcos:web3sdk:2.5.0')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.1.0</version>
+    <version>2.5.0</version>
 </dependency>
 ```
 Because the relative jar archive of the solidity compiler of Ethereum is imported, we need to add a remote repository of Ethereum in the gradle configuration file build.gradle of the java application.
@@ -78,9 +78,16 @@ The following picture shows how `applicationContext.xml` is configured in Spring
         </bean>
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <!-- SSL certificate configuration -->
                 <property name="caCert" value="ca.crt" />
                 <property name="sslCert" value="sdk.crt" />
                 <property name="sslKey" value="sdk.key" />
+                <!-- GM SSL certificate configuration -->
+                <property name="gmCaCert" value="gmca.crt" />
+                <property name="gmEnSslCert" value="gmensdk.crt" />
+                <property name="gmEnSslKey" value="gmensdk.key" />
+                <property name="gmSslCert" value="gmsdk.crt" />
+                <property name="gmSslKey" value="gmsdk.key" />
                 <property name="allChannelConnections">
                         <list>  <!-- each group needs to configure a beam, each group can configure multiple nodes-->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
@@ -926,5 +933,4 @@ map =>
 ```
 
 ## Contract Event Push
-
 Waiting for add...

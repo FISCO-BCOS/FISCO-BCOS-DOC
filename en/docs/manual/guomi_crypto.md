@@ -76,6 +76,15 @@ ca_cert: the path of certificate gmca
     ca_cert=gmca.crt
 ```
 
+After Fisco-BCOS version 2.5.0, nodes and SDKS can communicate using either SSL or national secret SSL connections. The configuration is as follows:
+```ini
+[chain]
+    ; use SM crypto or not, should nerver be changed
+    sm_crypto=true
+    ; use SM SSL connection with SDK
+    sm_crypto_channel=true
+```
+
 ## using OSCCA-approved cryptography SDK
 
 For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
@@ -87,6 +96,7 @@ See [Console Operations Manual] (../manual/console.md) `Configure OSCCA-approved
 ## using OSCCA-approved cryptography console
 
 The function of OSCCA-approved cryptography console is used in the same way as the standard console. See [Console Operations Manual] (../manual/console.md).
+
 
 ## OSCCA-approved cryptography configuration
 

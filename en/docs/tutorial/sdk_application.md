@@ -376,7 +376,7 @@ repositories {
 -   introduce the Web3SDK jar package
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.1.0')
+compile ('org.fisco-bcos：web3sdk：2.5.0')
 ```
 
 ### Certificate and configuration file
