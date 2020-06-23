@@ -57,13 +57,22 @@ repositories {
 ## 配置SDK
 
 ### 证书配置
-FISCO BCOS作为联盟链，SDK连接区块链节点时通过SSL进行双向认证。JavaSDK支持SSL与国密SSL的认证方式。
+FISCO BCOS作为联盟链，SDK连接区块链节点时通过SSL进行双向认证。JavaSDK支持SSL与国密SSL两种认证方式。
 
 #### SSL连接配置
-在国密区块链或者非国密区块链环境时，节点与SDK之间可以建立SSL的连接，将节点所在目录`nodes/${ip}/sdk/`目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录。（低于2.1版本的FISCO BCOS节点目录下只有`node.crt`和`node.key`，需将其重命名为`sdk.crt`和`sdk.key`以兼容最新的SDK）
+国密区块链和非国密区块链环境下，节点与SDK之间均可以建立SSL的连接，将节点所在目录`nodes/${ip}/sdk/`目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到项目的资源目录。（低于2.1版本的FISCO BCOS节点目录下只有`node.crt`和`node.key`，需将其重命名为`sdk.crt`和`sdk.key`以兼容最新的SDK）
 
 #### 国密SSL连接配置
 FISCO-BCOS 2.5及之后的版本，在国密区块链环境下支持节点与SDK建立国密SSL连接，将节点所在目录`nodes/${ip}/sdk/gm/`目录下的`gmca.crt`、`gmensdk.crt`、`gmensdk.key`、`gmsdk.crt`、`gmsdk.key`文件拷贝到项目的资源目录。
+
+```eval_rst
+.. important::
+
+    - 国密SSL连接只有在国密区块链环境下才可以使用。
+
+    - 是否选择国密SSL连接，SDK与区块链节点的配置要保持一致，节点配置参考 `配置链属性 <../manual/configuration.html?highlight=sm_crypto_channel#id10>`_
+
+```
 
 ### 配置文件设置
 
@@ -135,22 +144,24 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 </beans>
 ```
 `applicationContext.xml`配置项详细说明:
-- encryptType: 国密算法开关(默认为0)                              
-  - 0: 不使用国密算法发交易                              
-  - 1: 使用国密算法发交易(开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi_crypto.md))
+- encryptType: 国密开关(默认为0，关闭)                              
+  - 0: 不使用国密                              
+  - 1: 使用国密
+    - 开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi_crypto.md))
+    - 使用国密SSL，在国密区块链环境基础上，SDK需要打开encryptType开关，然后配置国密SSL证书
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
   - 每个群组可以配置一个或多个节点，设置群组节点的配置文件**config.ini**中`[rpc]`部分的`channel_listen_ip`(若节点小于v2.3.0版本，查看配置项listen_ip)和`channel_listen_port`。
-  - SSL配置: SDK与节点通过SSL通信时使用
-    - `caCert`用于配置链ca证书路径
-    - `sslCert`用于配置SDK所使用的证书路径
-    - `sslKey`用于配置SDK所使用的证书对应的私钥路径
-  - 国密SSL配置: SDK与节点通过国密SSL通信时使用
-    - `gmCaCert`用于配置国密SSL连接ca证书路径，国密环境下，SDK与节点建立国密SSL连接时使用
-    - `gmEnSslCert`用于配置国密SSL连接加密证书路径，国密环境下，SDK与节点建立国密SSL连接时使用
-    - `gmEnSslKey`用于配置国密SSL连接加密证书私钥路径，国密环境下，SDK与节点建立国密SSL连接时使用
-    - `gmSslCert`用于国密SSL连接签名证书的路径，国密环境下，SDK与节点建立国密SSL连接时使用
-    - `gmSslKey`用于国密SSL连接签名证书私钥的路径，国密环境下，SDK与节点建立国密SSL连接时使用
+  - SSL配置项: SDK与节点SSL连接时使用
+    - `caCert`SL连接根证书路径
+    - `sslCert`SDK证书路径
+    - `sslKey`SDK证书私钥路径
+  - 国密SSL配置项: SDK与节点国密SSL连接时使用
+    - `gmCaCert`国密SSL连接根证书路径
+    - `gmEnSslCert`国密SSL连接加密证书路径
+    - `gmEnSslKey`国密SSL连接加密证书私钥路径
+    - `gmSslCert`SSL连接签名证书路径
+    - `gmSslKey`SSL连接签名证书私钥路径
   
 - channelService: 通过指定群组ID配置SDK实际连接的群组，指定的群组ID是groupChannelConnectionsConfig配置中的群组ID。SDK会与群组中配置的节点均建立连接，然后随机选择一个节点发送请求。
 
@@ -233,7 +244,7 @@ channelEthereumService.setTimeout(100000);
     System.out.println(value);
 ```
 ##### 创建并使用指定外部账户
-sdk发送交易需要一个外部账户，下面是随机创建一个外部账户的方法。
+SDK发送交易需要一个外部账户，下面是随机创建一个外部账户的方法。
 ```java
 //创建普通外部账户
 EncryptType.encryptType = 0;
@@ -276,7 +287,7 @@ ECKeyPair p12KeyPair = p12.getECKeyPair(p12.getPassword());
 System.out.println("p12 privateKey: " + p12KeyPair.getPrivateKey().toString(16));
 System.out.println("p12 publicKey: " + p12KeyPair.getPublicKey().toString(16));
 
-//生成web3sdk使用的Credentials
+//生成Web3SDK使用的Credentials
 Credentials credentials = GenCredential.create(p12KeyPair.getPrivateKey().toString(16));
 System.out.println("p12 Address: " + credentials.getAddress());
 ```
@@ -300,7 +311,7 @@ ECKeyPair pemKeyPair = pem.getECKeyPair();
 System.out.println("PEM privateKey: " + pemKeyPair.getPrivateKey().toString(16));
 System.out.println("PEM publicKey: " + pemKeyPair.getPublicKey().toString(16));
 
-//生成web3sdk使用的Credentials
+//生成Web3SDK使用的Credentials
 Credentials credentialsPEM = GenCredential.create(pemKeyPair.getPrivateKey().toString(16));
 System.out.println("PEM Address: " + credentialsPEM.getAddress());
 ```
@@ -312,7 +323,7 @@ System.out.println("PEM Address: " + credentialsPEM.getAddress());
 ##### 部署并调用合约
 SDK的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用Java合约类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址以及调用该合约的其他方法实现业务功能。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
 ```java
-    //读取配置文件，sdk与区块链节点建立连接，获取web3j对象
+    //读取配置文件，SDK与区块链节点建立连接，获取web3j对象
     ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
     Service service = context.getBean(Service.class);
     service.run(); 

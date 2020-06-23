@@ -50,6 +50,7 @@ repositories {
 
 ## Configuration of SDK
 
+
 ### FISCO BCOS node certificate configuration
 FISCO BCOS requires SDK to pass two-way authentication on certificate(ca.crt、sdk.crt) and private key(sdk.key) when connecting with nodes. Therefore, we need to copy `ca.crt`, `sdk.crt` and `sdk.key` under `nodes/${ip}/sdk` folder of node to the resource folder of the project for SDK to connect with nodes.(There are only `node.crt` and `node.key` before FISCO BCOS version 2.1. Rename them to `sdk.crt` and `sdk.key` to compatible with latest SDK version)
 
