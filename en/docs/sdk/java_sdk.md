@@ -28,14 +28,14 @@ Main features of version 2.0+ includes:
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.1.0')
+compile ('org.fisco-bcos:web3sdk:2.5.0')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.1.0</version>
+    <version>2.5.0</version>
 </dependency>
 ```
 Because the relative jar archive of the solidity compiler of Ethereum is imported, we need to add a remote repository of Ethereum in the gradle configuration file build.gradle of the java application.
@@ -49,6 +49,7 @@ repositories {
 **Note:** if the downloading of the dependent `solcJ-all-0.4.25.jar` is too slow, you can check [here](../manual/console.html#jar) for help.
 
 ## Configuration of SDK
+
 
 ### FISCO BCOS node certificate configuration
 FISCO BCOS requires SDK to pass two-way authentication on certificate(ca.crt、sdk.crt) and private key(sdk.key) when connecting with nodes. Therefore, we need to copy `ca.crt`, `sdk.crt` and `sdk.key` under `nodes/${ip}/sdk` folder of node to the resource folder of the project for SDK to connect with nodes.(There are only `node.crt` and `node.key` before FISCO BCOS version 2.1. Rename them to `sdk.crt` and `sdk.key` to compatible with latest SDK version)
@@ -78,9 +79,16 @@ The following picture shows how `applicationContext.xml` is configured in Spring
         </bean>
 
         <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
+                <!-- SSL certificate configuration -->
                 <property name="caCert" value="ca.crt" />
                 <property name="sslCert" value="sdk.crt" />
                 <property name="sslKey" value="sdk.key" />
+                <!-- GM SSL certificate configuration -->
+                <property name="gmCaCert" value="gmca.crt" />
+                <property name="gmEnSslCert" value="gmensdk.crt" />
+                <property name="gmEnSslKey" value="gmensdk.key" />
+                <property name="gmSslCert" value="gmsdk.crt" />
+                <property name="gmSslKey" value="gmsdk.key" />
                 <property name="allChannelConnections">
                         <list>  <!-- each group needs to configure a beam, each group can configure multiple nodes-->
                                 <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
@@ -926,5 +934,4 @@ map =>
 ```
 
 ## Contract Event Push
-
 Waiting for add...
