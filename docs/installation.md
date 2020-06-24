@@ -164,7 +164,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

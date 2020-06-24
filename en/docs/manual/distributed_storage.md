@@ -198,7 +198,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### Prepare dependence
 ```bash
 cd ~/fisco;
-curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
