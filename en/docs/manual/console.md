@@ -1813,3 +1813,4 @@ $ source /etc/profile
 # To inquire the Java version. If the result shows the version you just downloaded, the installation is successful.
 java -version
 ```
+

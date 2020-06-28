@@ -89,7 +89,6 @@ $ make
 
 ### Compile options
 
-- BUILD_GM，off by default, national cryptography compilation flag. To enable it, use `cmake -DBUILD_GM=on ..`
 - TESTS, off by default, unit test compilation flag. To enable it, use `cmake -DTESTS=on ..`
 - DEMO, off by default, test program compilation switch. To open it through `cmake -DDEMO=on ..`.
 - TOOL, off by default, tools program compilation switch. To open it through`cmake -DTOOL=on ..`.

@@ -81,7 +81,7 @@ bash build_chain.sh -f ipconf -T
 用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
 
 ```bash
-# 从GitHub下载下载最新release二进制，生成本机4节点
+# 从GitHub下载最新release二进制，生成本机4节点
 $ bash build_chain.sh -l "127.0.0.1:4"
 # 使用 bin/fisco-bcos 二进制，生成本机4节点
 $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos

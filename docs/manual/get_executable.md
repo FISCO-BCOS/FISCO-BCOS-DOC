@@ -87,7 +87,6 @@ $ make
 
 ### 编译选项介绍
 
-- BUILD_GM，默认off，国密编译开关。通过`cmake -DBUILD_GM=on ..`打开国密开关。
 - TESTS，默认off，单元测试编译开关。通过`cmake -DTESTS=on ..`打开单元测试开关。
 - DEMO，默认off，测试程序编译开关。通过`cmake -DDEMO=on ..`打开单元测试开关。
 - TOOL，默认off，工具程序编译开关。通过`cmake -DTOOL=on ..`打开工具开关，提供FISCO节点的rocksdb读取工具。

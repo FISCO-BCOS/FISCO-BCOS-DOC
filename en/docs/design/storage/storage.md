@@ -92,3 +92,4 @@ StorageState is a method to store account status by AMDB. It has following diffe
 |historical status|not support/maintain historical status|support|
 
 Every account in MPTState uses MPT tree to store data. As historical data increases, it will lead to low performance due to storage method and disk IO. Every account in StorageState is related to one table and stores its data, including `nonce`, `code`, `balance` of the account. AMDB can improve performance by supporting different databases through their storage drives. We have found in RocksDB test that StorageState is twice as much as MPTState in performance.
+
