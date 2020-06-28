@@ -38,3 +38,4 @@ State root is a field of block. Each block has different state. Operation of tra
 MPT State is imported to retrieve data, The historical information of account can be retrieved according to the state root of block. However, it also brings out massive hash computings and breaks the consecutiveness of bottom data storage. MPT state is born with disadvantages in performance. We can say that MPT State has extremely good traceability at the cost of performance.
 
 In transactional cases of FISCO BCOS, performance matters more than traceability. Therefore, FISCO BCOS has re-designed the bottom storage and implemented [Storage State](storage.md). Storage State has better performance regardless of losing part of traceability.
+

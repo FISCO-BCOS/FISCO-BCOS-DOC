@@ -342,3 +342,4 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+
