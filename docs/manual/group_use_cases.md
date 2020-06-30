@@ -235,7 +235,7 @@ $ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/downlo
 # 进入控制台操作目录
 $ cd console
 
-# 拷贝group2节点证书到控制台配置目录
+# 拷贝sdk证书到控制台配置目录
 $ cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
 
 # 获取node0的channel_listen_port
