@@ -1,6 +1,6 @@
 # Permission control
 
-## TODO: add ChainGovernance
+## TODO: add Role Based Access control
 
 ## Permission conrtol based on Table permission
 
