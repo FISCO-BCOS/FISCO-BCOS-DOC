@@ -402,5 +402,10 @@ OperationalError: (1045, "Access denied for user 'root'@'localhost' (using passw
 答：确认数据库用户名和密码
 
 ### 8.7 Server启动失败
-答：请检查是否设置了JAVA_HOME
+答：1: 请检查是否设置了JAVA_HOME。
+    2: 检查gradle版本是否在5.0以上。
+    3: 检查jdk版本，如果使用的是jdk9或者更高版本，需要在项目启动时加入 --add-modules java.xml.bind 后缀，但是这种方法只能在JDK9或者10去使用。修改位置：server/start.sh文件，start()函数，nohub $JAVA_HOME/bin/java 语句之后加上 --add-modules java.xml.bind
+    
+### 8.8 server启动成功，但提示启动失败
+答：将openjdk换成oracle jdk，因为openjdk中缺少一些组件。
 
