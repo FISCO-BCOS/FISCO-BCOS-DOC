@@ -1312,8 +1312,8 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -50100  | table does not exist                            |          |
 | -50101  | unknow function call                            |          |
 | -50102  | address invalid                                 |          |
-| -51000  | table name and address already exist            |          |
-| -51001  | table name and address does not exist           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
 | -51100  | invalid node ID                                 |SDK Error Code |
 | -51101  | the last sealer cannot be removed               |          |
 | -51102  | the node is not reachable                       |SDK Error Code |
