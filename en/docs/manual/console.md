@@ -56,7 +56,7 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -171,7 +171,7 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
 
 ```eval_rst
 .. note::
-    - If the package cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar`
+    - If the package cannot be downloaded for a long time due to network problems, try `curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar`
 ```
 
 #### Contract compilation tool
@@ -307,8 +307,8 @@ Enter help or h to see all the commands on the console.
 -------------------------------------------------------------------------------------
 addObserver                              Add an observer node.
 addSealer                                Add a sealer node.
-call                                     Call a contract by a function and parameters.
-callByCNS                                Call a contract by a function and parameters by CNS.
+call                                     Call a contract by a function and Parameters.
+callByCNS                                Call a contract by a function and Parameters by CNS.
 deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
 desc                                     Description table information.
@@ -332,22 +332,23 @@ getPendingTxSize                         Query pending transactions size.
 getSealerList                            Query nodeId list for sealer nodes.
 getSyncStatus                            Query sync status.
 getSystemConfigByKey                     Query a system config value by key.
+setSystemConfigByKey                     Set a system config value by key.
 getTotalTransactionCount                 Query total transaction count.
 getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
 getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
 getTransactionByHash                     Query information about a transaction requested by transaction hash.
 getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
+getTransactionByHashWithProof            Query the transaction and transaction proof by transaction hash.
+getTransactionReceiptByHashWithProof     Query the receipt and transaction receipt proof by transaction hash.
 grantCNSManager                          Grant permission for CNS by address.
 grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
 grantNodeManager                         Grant permission for node configuration by address.
-grantPermissionManager                   Grant permission for permission configuration by address.
 grantSysConfigManager                    Grant permission for system configuration by address.
 grantUserTableManager                    Grant permission for user table by table name and address.
 help(h)                                  Provide help information.
 listCNSManager                           Query permission information for CNS.
 listDeployAndCreateManager               Query permission information for deploy contract and create user table.
 listNodeManager                          Query permission information for node configuration.
-listPermissionManager                    Query permission information for permission configuration.
 listSysConfigManager                     Query permission information for system configuration.
 listUserTableManager                     Query permission for user table information.
 queryCNS                                 Query CNS information by contract name and contract version.
@@ -356,18 +357,29 @@ removeNode                               Remove a node.
 revokeCNSManager                         Revoke permission for CNS by address.
 revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
 revokeNodeManager                        Revoke permission for node configuration by address.
-revokePermissionManager                  Revoke permission for permission configuration by address.
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
-setSystemConfigByKey                     Set a system config.
 listContractWritePermission              Query the account list which have write permission of the contract.
 grantContractWritePermission             Grant the account the contract write permission.
 revokeContractWritePermission            Revoke the account the contract write permission.
-freezeContract                           Freeze the contract.
-unfreezeContract                         Unfreeze the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
+grantCommitteeMember                     Grant the account committee member
+revokeCommitteeMember                    Revoke the account from committee member
+listCommitteeMembers                     List all committee members
+grantOperator                            Grant the account operator
+revokeOperator                           Revoke the operator
+listOperators                            List all operators
+updateThreshold                          Update the threshold
+queryThreshold                           Query the threshold
+updateCommitteeMemberWeight              Update the committee member weight
+queryCommitteeMemberWeight               Query the committee member weight
+freezeAccount                            Freeze the account.
+unfreezeAccount                          Unfreeze the account.
+getAccountStatus                         GetAccountStatus of the account.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -545,11 +557,13 @@ To run getNodeVersion to view the node version.
 ```text
 [group:1]> getNodeVersion
 {
-	"Build Time":"20190107 10:15:23",
-	"Build Type":"Linux/g++/RelWithDebInfo",
-	"FISCO-BCOS Version":"2.0.0-rc1",
-	"Git Branch":"master",
-	"Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
+    "Build Time":"20200619 06:32:10",
+    "Build Type":"Linux/clang/Release",
+    "Chain Id":"1",
+    "FISCO-BCOS Version":"2.5.0",
+    "Git Branch":"HEAD",
+    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
+    "Supported Version":"2.5.0"
 }
 ```
 ### **getPeers**
@@ -1131,8 +1145,8 @@ To run setSystemConfigByKey to set the system configuration in key-value pairs. 
 
 * tx_count_limit: block maximum number of packaged transactions
 * tx_gas_limit: The maximum number of gas allowed to be consumed
-* rpbft_epoch_sealer_num: RPBFT system configuration, the number of consensus nodes selected in a consensus epoch
-* rpbft_epoch_block_num: RPBFT system configuration, number of blocks generated in one consensus epoch
+* rpbft_epoch_sealer_num: rPBFT system configuration, the number of consensus nodes selected in a consensus epoch
+* rpbft_epoch_block_num: rPBFT system configuration, number of blocks generated in one consensus epoch
 
 Parameters:
 
@@ -1443,6 +1457,7 @@ Run create sql statement to create a user table in mysql statement form.
 [group:1]> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
 Create 't_demo' Ok.
 ```
+
 **Note:**
 - The field types for creating table are all string types. Even if other field types of the database are provided, the field types have to be set according to the string type.
 - The primary key field must be specified. For example, to create a t_demo table with the primary key field as name.
@@ -1608,6 +1623,167 @@ Parameter:
 ]
 ```
 
+### grantCommitteeMember
+
+grant account with Committee Member permission. Parameters:
+
+- account address
+
+```bash
+[group:1]> grantCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeCommitteeMember
+
+revoke account's Committee Member permission, parameters:
+
+- account address
+
+```bash
+[group:1]> revokeCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listCommitteeMembers
+
+```bash
+[group:1]> listCommitteeMembers
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a  |                      1                      |
+| 0x85961172229aec21694d742a5bd577bedffcfec3  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+
+### updateThreshold
+
+vote to modify the votes threshold, Parameters:
+
+- threshold:[0,99]
+
+```bash
+[group:1]> updateThreshold 75
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### queryThreshold
+
+query votes threshold
+
+```bash
+[group:1]> queryThreshold
+Effective threshold : 50%
+```
+
+### queryCommitteeMemberWeight
+
+```bash
+[group:1]> queryCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
+```
+
+### updateCommitteeMemberWeight
+
+update Committee Member's votes. Parameters：
+
+- account address
+- votes
+
+```bash
+[group:1]> updateCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a 2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+
+### grantOperator
+
+grantOperator, committee member's permission, parameters:
+
+- account address
+
+```bash
+[group:1]> grantOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeOperator
+
+revokeOperator, committee member's permission, parameters:
+
+- account address
+
+```bash
+[group:1]> revokeOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listOperators
+
+list address who has operator permission。
+
+```bash
+[group:1]> listOperators
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2  |                      1                      |
+---------------------------------------------------------------------------------------------
+```
+
+### **freezeAccount**
+Run freezeAccount to freeze account according account address.
+Parameter:
+- account address: tx.origin. The prefix of 0x is necessary.
+
+```text
+[group:1]> freezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfreezeAccount**
+Run unfreezeAccount to unfreeze account according account address.
+Parameter:
+- account address: tx.origin. The prefix of 0x is necessary.
+
+```text
+[group:1]> unfreezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getAccountStatus**
+Run getAccountStatus to get status of the account according account address.
+Parameter:
+- account address: tx.origin. The prefix of 0x is necessary.
+
+```text
+[group:1]> getAccountStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+The account is available.
+```
+
 ## Appendix: Java environment configuration
 
 ### Install Java in ubuntu environment
@@ -1637,3 +1813,4 @@ $ source /etc/profile
 # To inquire the Java version. If the result shows the version you just downloaded, the installation is successful.
 java -version
 ```
+

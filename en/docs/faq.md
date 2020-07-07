@@ -45,7 +45,7 @@ Q:
 A:
   It is case-sensitive. The command will match exactly, and `tab` can be used to complete your command.
 
-Q:  
+Q:
   When adding to the Sealer list or the Observer list, it will report error as nodeID is not in network, why? <br>
 A:
   The nodes that adds to the Sealer list and the Observer list must be a member of the nodeID list that connects to the peer.
@@ -135,6 +135,21 @@ A:
   2. Check the console provided by the cloud manufacturer of the cloud server, check whether the security group is configured, and open the channel port used by FISCO BCOS nodes in the security group.
   3. Check that the generated certificate is correct, [refer to here](./enterprise_tools/operation.md#node-configuration-error-checking)
 
+Q:
+  Why connection to other peer nodes can not be established after launching the node, and the log report there are network exceptions?
+A:
+  1. Please check that certificate files of the node are correct
+  2. Please check that type (SM_CRYPTO or not) of the node is consistent with other peer nodes
+
+Q：
+  Why "invalid group status" error information appears in the log of node?
+
+A：Due to possible fault of file system, group status recorded by node on local disk may be invalid. Users can check `.group_status` file in group's data folder, and change the content to the one of following items:
+
+- STOPPED
+- DELETED
+- RUNNING
+
 ## Web3SDK
 
 Q:
@@ -172,6 +187,16 @@ A:
 
 ```bash
   $ pip install configparser
+```
+
+Q：
+  downloading occurred certificate verify failed
+答：
+  vim ./pys/tool/utils.py, add this code in first line.
+
+```python
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 ```
 
 <!-- // TODO: -->

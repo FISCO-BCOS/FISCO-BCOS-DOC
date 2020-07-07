@@ -28,6 +28,7 @@
    log_description.md
    caliper.md
    privacy.md
+   cdn.md
 
 
 .. admonition:: 区块链部署

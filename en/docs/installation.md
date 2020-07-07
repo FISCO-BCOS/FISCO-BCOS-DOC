@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -46,7 +46,7 @@ Execute the following command in the fisco directory to generate a single group 
 
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -v 2.5.0
 ```
 
 ```eval_rst
@@ -136,9 +136,9 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 In normal situation, the connecting messages will be output continuously. From the output messages, we can see that node0 has links with the other three nodes.
 
 ```bash
-info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
-info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
-info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
+info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat,connected count=3
 ```
 
 - Execute the following command to check whether it is in consensus
@@ -172,7 +172,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -224,13 +224,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 # acquire client ends version information
 [group:1]> getNodeVersion
 {
-    "Build Time":"20200331 07:12:25",
+    "Build Time":"20200619 06:32:10",
     "Build Type":"Linux/clang/Release",
     "Chain Id":"1",
-    "FISCO-BCOS Version":"2.3.0",
+    "FISCO-BCOS Version":"2.5.0",
     "Git Branch":"HEAD",
-    "Git Commit Hash":"b8b62664d1b1f0ad0489bc4b3833bf730deee492",
-    "Supported Version":"2.3.0"
+    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
+    "Supported Version":"2.5.0"
 }
 # acquire node connection information
 [group:1]> getPeers

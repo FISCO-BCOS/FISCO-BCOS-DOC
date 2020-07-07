@@ -1,5 +1,9 @@
 # Permission control
 
+## TODO: add Role Based Access control
+
+## Permission conrtol based on Table permission
+
 This section will introduce the operations concerning permission control, for details please check [Design of Permission Control](../design/security_control/permission_control.md).
 
 ```eval_rst
@@ -8,7 +12,7 @@ For the system is defaulted with no permission setting record, any account can p
 
 ```
 
-## Operations
+### Operations
 
 The operations concerning permission control of following functions are introduced in this section:
 - [Permission of chain manager](./permission_control.html#id6)
@@ -19,10 +23,10 @@ The operations concerning permission control of following functions are introduc
 - [Permission to modify system parameter](./permission_control.html#id10)
 - [Permission to write user table](./permission_control.html#id11)
 
-## Environment configuration  
+### Environment configuration
 Configure and start the nodes and console of FISCO BCOS 2.0+. For reference please check [Installation](../installation.md).
 
-## Tools for permission control
+### Tools for permission control
 FISCO BCOS offers permission control of console commands (developers can call PermissionService API of [SDK API](../sdk/sdk.html#permissionservice) for permission control). The involved permission control commands are:
 
 |Command|Parameter|Function|
@@ -46,7 +50,7 @@ FISCO BCOS offers permission control of console commands (developers can call Pe
 |revokeUserTableManager             |table_name address    |Revoke permission to write user table        |
 |listUserTableManager              |table_name            |Inquire list of accounts with permission to write user table            |
 
-## Permission control example
+### Permission control example
 Console provides script `get_account.sh` to generate accounts. The account files will be stored in `accounts` folder. Console can set active accounts. The operation method is introduced in [Console tutorial](./console.html#id11). Therefore, through console we can set account to experience permission control. For account safety, we will generate 3 PKCS12 account files under the root folder of console by `get_account.sh` script. Please remember the password during generation. The 3 PKCS12 account files are:
 ```bash
 # account 1
@@ -54,7 +58,7 @@ Console provides script `get_account.sh` to generate accounts. The account files
 # account 2
 0x7fc8335fec9da5f84e60236029bb4a64a469a021.p12
 # account 3
-0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12    
+0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12
 ```
 Now we can open 3 Linux terminal and log in console with the 3 accounts separately.
 
@@ -71,7 +75,7 @@ Log in with account 3：
 $ ./start.sh 1 -p12 accounts/0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12
 ```
 
-## Grant permission of chain manager
+### Grant permission of chain manager
 
 The 3 accounts play 3 kinds of roles. Account 1 performs chain manager, account 2 performs system manager and account 3 the regular account. Chain manager has permission for access control, namely granting permissions. System manager can manager permissions related to system functions, each of which should be granted independently, including deploying contract, creating user table, managing nodes and deploying contract with CNS and modifying system parameter. Chain manager can grant other accounts to be chain manager or system manager, or grant regular accounts to write table list.
 
@@ -91,9 +95,9 @@ Initial status of chain contains no permission records. Now, we can enter the co
 ```
 Account 1 is set as the chain manager.
 
-## Grant permission of system manager  
+### Grant permission of system manager
 
-### Grant permission to deploy contract and create user table
+#### Grant permission to deploy contract and create user table
 Account 1 grants permission of system manager to account 2. At first, grant account 2 with permission to deploy contract and create user table.
 ```
 [group:1]> grantDeployAndCreateManager 0x7fc8335fec9da5f84e60236029bb4a64a469a021
@@ -138,7 +142,7 @@ Account 3 fails to deploy contract as it has no permission.
 
 - **Note:** deploying contract and creating user table are "2-in-1" control items. When using CRUD interface contracts, we suggest to create the needed tables (creating tables in building function of contract) when deploying contract, otherwise "table-missing" error may occur when reading or writing table. If it is needed to dynamically create table, the permission should be granted to minority accounts, otherwise there will be many invalid tables on blockchain.
 
-### Grant permission to deploy contract using CNS
+#### Grant permission to deploy contract using CNS
 Console provides 3 commands involving [CNS](../design/features/CNS_contract_name_service.md):
 
 |command name|parameter|function|
@@ -190,7 +194,7 @@ Log in console with account 3, deploy contract using CNS
 ```
 Account 3 fails to deploy contract by CNS due to lack of permission
 
-### Grant permission to manage nodes
+#### Grant permission to manage nodes
 
 Console provides 5 commands related to node type management:
 
@@ -275,7 +279,7 @@ Log in console with account 3, add observer node to consensus node list.
 ```
 Account 3 fails to add consensus node for lack of permission to manage nodes. Now only account 2 has permission to add observer node to consensus node list.
 
-### Grant permission to modify system parameter
+#### Grant permission to modify system parameter
 Console provides 2 commands about system parameter modification:
 
 |Command name|parameter|function|
@@ -326,7 +330,7 @@ Log in console with account 3, modify value of parameter tx_count_limit to 3000.
 ```
 Account 3 fails to set parameter due to no permission.
 
-## Grant permission to write user table
+### Grant permission to write user table
 Account 1 can grant account 3 with permission to write user table t_test.
 ```
 [group:1]> grantUserTableManager t_test 0xd86572ad4c92d4598852e2f34720a865dd4fc3dd

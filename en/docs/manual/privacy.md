@@ -15,7 +15,7 @@ Homomorphic Encryption is one of the jewels in the field of public key cryptosys
 
 ![](../../images/privacy/formula.jpg)
 
-FISCO BCOS uses the paillier encryption algorithm which supports addition homomorphism. Paillier is compatible with mainstream RSA public key encryption algorithms, and the use costs is low. At the same time, paillier, as a lightweight homomorphic encryption algorithm, has low calculation overhead and is easily accepted by business systems. Therefore, after balancing the trade-off between functionality and usability, the paillier algorithm was finally selected.
+FISCO BCOS uses the paillier encryption algorithm which supports addition homomorphism. Paillier key pairs are compatible with mainstream RSA public key encryption algorithms, and the use costs is low. At the same time, paillier, as a lightweight homomorphic encryption algorithm, has low calculation overhead and is easily accepted by business systems. Therefore, after balancing the trade-off between functionality and usability, the paillier algorithm was finally selected.
 
 
 ### Components
@@ -77,43 +77,6 @@ Due to its natural anonymity, group/ring signature has broad application prospec
 ## How to start
 
 The privacy module is implemented through precompiled contracts, and is not turned on by default. To enable these features, you need to recompile the source code and enable the `CRYPTO_EXTENSION` compilation option. The steps are as follows:
-
-### Install dependencies
-
-- Ubuntu
-
-```bash
-$ sudo apt install -y flex patch bison libgmp-dev byacc
-```
-
-- CentOS
-
-```bash
-$ sudo yum install -y flex patch bison gmp-static byacc
-```
-
-- macOS
-
-```bash
-$ brew install flex bison gmp byacc
-```
-
-### Clone code
-
-```bash
-git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
-```
-
-### Compile
-
-```bash
-cd FISCO-BCOS
-mkdir -p build && cd build
-# use cmake3 if CentOS
-cmake -DCRYPTO_EXTENSION=ON ..
-# -j4 to speed up
-make 
-```
 
 ### Build chain 
 

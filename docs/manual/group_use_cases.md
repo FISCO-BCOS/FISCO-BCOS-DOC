@@ -73,7 +73,7 @@ mkdir -p ~/fisco && cd ~/fisco
 
 - 获取build_chain.sh脚本
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成星形区块链系统配置文件**
@@ -230,7 +230,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 $ cd ~/fisco
 
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 
 # 进入控制台操作目录
 $ cd console
@@ -555,7 +555,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 # 构建本机单群组四节点区块链(生产环境中，建议每个节点部署在不同物理机上)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
@@ -625,16 +625,22 @@ $ cd ~/fisco/multi_nodes/127.0.0.1
 
 # 拷贝group1的配置
 $ cp node0/conf/group.1.genesis node0/conf/group.2.genesis
+$ cp node0/conf/group.1.ini node0/conf/group.2.ini
 
 # 修改群组ID
 $ sed -i "s/id=1/id=2/g"  node0/conf/group.2.genesis
 $ cat node0/conf/group.2.genesis | grep "id"
 # 已修改到    id=2
 
+# 更新group.2.genesis文件中的共识节点列表，剔除已废弃的共识节点。
+
 # 将配置拷贝到各个节点
 $ cp node0/conf/group.2.genesis node1/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node2/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node3/conf/group.2.genesis
+$ cp node0/conf/group.2.ini node1/conf/group.2.ini
+$ cp node0/conf/group.2.ini node2/conf/group.2.ini
+$ cp node0/conf/group.2.ini node3/conf/group.2.ini
 
 # 重启各个节点
 $ bash stop_all.sh
@@ -670,7 +676,7 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # 若从未下载控制台，请进行下面操作下载控制台，否则将控制台拷贝到~/fisco目录：
 $ cd ~/fisco
 # 获取控制台
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 ```
 
 **配置控制台**

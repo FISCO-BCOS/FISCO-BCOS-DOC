@@ -2,6 +2,16 @@
 版本及兼容
 ##############################################################
 
+.. admonition:: `FISCO BCOS 2.5.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.5.0>`_
+
+     **变更描述、兼容及升级说明**
+      - `FISCO BCOS v2.5.0 <./2_5_0.html>`_
+
+.. admonition:: `FISCO BCOS 2.4.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.4.0>`_
+
+     **变更描述、兼容及升级说明**
+      - `FISCO BCOS v2.4.0 <./2_4_0.html>`_
+
 .. admonition:: `FISCO BCOS 2.3.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.3.0>`_
 
      **变更描述、兼容及升级说明**
@@ -47,7 +57,7 @@
      **新增特性**
       - `群组架构 <../what_is_new.html#id2>`_ (`操作教程 <../manual/group_use_cases.html>`_) (`设计文档 <../design/architecture/group.html>`_)
       - `控制台 <../what_is_new.html#id6>`_ (`安装 <../installation.html#id7>`_) (`操作手册 <../manual/console.html>`_)
-      - `虚拟机 <../what_is_new.html#id7>`_ 
+      - `虚拟机 <../what_is_new.html#id7>`_
       - `编译合约 <../what_is_new.html#id5>`_ (`合约开发 <../manual/smart_contract.html>`_)
       - `实现CRUD操作的合约 <../what_is_new.html#crud>`_ (`操作教程 <../tutorial/sdk_application.html>`_)
       - `密钥管理服务 <../what_is_new.html#id8>`_ (`使用手册 <../manual/storage_security.html>`_)
@@ -56,9 +66,9 @@
      **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc1 <./2_0_0_rc1.html>`_
 
-    
+
 .. admonition:: FISCO BCOS 1.x Releases
-    
+
     **FISCO BCOS 1.3 正式版:**
      - `FISCO BCOS 1.3.8 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.8>`_
      - `FISCO BCOS 1.3.7 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.7>`_
@@ -72,7 +82,7 @@
 
     **FISCO BCOS 1.2 正式版:**
      - `FISCO BCOS 1.2.0 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.2.0>`_
-    
+
     **FISCO BCOS 1.1 正式版:**
      - `FISCO BCOS 1.1.0 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.1.0>`_
 
@@ -91,7 +101,9 @@
 
 .. toctree::
    :hidden:
-   
+
+   2_5_0.md
+   2_4_0.md
    2_3_0.md
    2_2_0.md
    2_1_0.md

@@ -24,7 +24,7 @@ FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/sec
 
 ```eval_rst
 .. important::
-    
+
     节点准入操作前，请确保：
 
      - 操作节点Node ID存在，节点Node ID可在节点目录下执行 cat conf/node.nodeid获取
@@ -32,9 +32,6 @@ FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/sec
 ```
 
 ```bash
-# 设节点位于~/fisco/nodes/192.168.0.1/node0目录下
-$ mkdir -p ~/fisco && cd ~/fisco
-
 # 获取节点Node ID（设节点目录为~/nodes/192.168.0.1/node0/）
 $ cat ~/fisco/nodes/192.168.0.1/node0/conf/node.nodeid
 7a056eb611a43bae685efd86d4841bc65aefafbf20d8c8f6028031d67af27c36c5767c9c79cff201769ed80ff220b96953da63f92ae83554962dc2922aa0ef50
@@ -119,6 +116,11 @@ $ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
 2 . 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（`node0`、`node1`）同级；
 ```
 $ cp -r ./node2/ nodes/127.0.0.1/
@@ -131,7 +133,7 @@ $ cd nodes/127.0.0.1/
 $ cp node0/config.ini node0/start.sh node0/stop.sh node2/
 ```
 
-4 . 修改`node2/config.ini`。对于`[rpc]`模块，修改`listen_ip`、`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
+4 . 修改`node2/config.ini`。对于`[rpc]`模块，修改`channel_listen_port`和`jsonrpc_listen_port`；对于`[p2p]`模块，修改`listen_port`并在`node.`中增加自身节点信息；
 
 ```
 $ vim node2/config.ini
@@ -155,8 +157,8 @@ $ vim node2/config.ini
 
 5 . 节点3拷贝节点1的`node1/conf/group.3.genesis`（内含**群组节点初始列表**）和`node1/conf/group.3.ini`到`node2/conf`目录下，不需改动；
 ```
-$ cp node1/conf/group.3.genesis node2/conf/ 
-$ cp node1/conf/group.3.ini node2/conf/ 
+$ cp node1/conf/group.3.genesis node2/conf/
+$ cp node1/conf/group.3.ini node2/conf/
 ```
 
 6 . 执行`node2/start.sh`启动节点3；

@@ -314,7 +314,7 @@ public class Asset extends Contract {
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://www.fisco.com.cn/cdn/deps/tools/asset-app.tar.gz`
 ```
 
 asset-app项目的目录结构如下：
@@ -370,7 +370,7 @@ repositories {
 -   引入Web3SDK jar包
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.1.0')
+compile ('org.fisco-bcos：web3sdk：2.5.0')
 ```
 
 ### 证书与配置文件

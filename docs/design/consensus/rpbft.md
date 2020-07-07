@@ -1,4 +1,4 @@
-# RPBFT
+# rPBFT
 
 ## 区块链共识困境
 
@@ -15,9 +15,9 @@ POW算法因如下特点，不适用于交易吞吐量大、交易时延要求�
 
 但这类算法复杂度均与节点规模有关，可支撑的网络规模有限，极大限制了联盟链节点规模。
 
-综上所述，FISCO BCOS v2.3.0提出了RPBFT共识算法，旨在保留BFT类共识算法高性能、高吞吐量、高一致性、安全性的同时，尽量减少节点规模对共识算法的影响。
+综上所述，FISCO BCOS v2.3.0提出了rPBFT共识算法，旨在保留BFT类共识算法高性能、高吞吐量、高一致性、安全性的同时，尽量减少节点规模对共识算法的影响。
 
-## RPBFT共识算法
+## rPBFT共识算法
 
 ### 节点类型
 
@@ -28,10 +28,10 @@ POW算法因如下特点，不适用于交易吞吐量大、交易时延要求�
 
 ![](../../../images/consensus/rpbft.png)
 
-RPBFT算法每轮共识流程仅选取若干个共识节点出块，并根据区块高度周期性地替换共识节点，保障系统安全，主要包括2个系统参数：
+rPBFT算法每轮共识流程仅选取若干个共识节点出块，并根据区块高度周期性地替换共识节点，保障系统安全，主要包括2个系统参数：
 
 - `epoch_sealer_num`：每轮共识过程中参与共识的节点数目，可通过控制台发交易方式动态配置该参数
-- `epoch_block_num`: 共识节点替换周期，为防止选取的共识节点联合作恶，RPBFT每出epoch_block_num个区块，会替换一个共识节点，可通过控制台发交易的方式动态配置该参数
+- `epoch_block_num`: 共识节点替换周期，为防止选取的共识节点联合作恶，rPBFT每出epoch_block_num个区块，会替换一个共识节点，可通过控制台发交易的方式动态配置该参数
 
 这两个配置项记录在系统配置表中，配置表主要包括配置关键字、配置对应的值、生效块高三个字段，其中生效块高记录了配置最新值最新生效块高，例：在100块发交易将`epoch_sealer_num`和`epoch_block_num`分别设置为4和10000，此时系统配置表如下：
 
@@ -51,7 +51,7 @@ epoch_block_num | 10000| 101 |
 
 #### **链初始化**
 
-链初始化时，RPBFT需要选取`epoch_sealer_num`个共识节点到共识委员中参与共识，目前初步实现是选取索引为0到`epoch_sealer_num-1`的节点参与前`epoch_block_num`个区块共识。
+链初始化时，rPBFT需要选取`epoch_sealer_num`个共识节点到共识委员中参与共识，目前初步实现是选取索引为0到`epoch_sealer_num-1`的节点参与前`epoch_block_num`个区块共识。
 
 
 #### **共识委员节点运行PBFT共识算法**
@@ -63,16 +63,16 @@ epoch_block_num | 10000| 101 |
 
 #### **动态替换共识委员列表**
 
-为保障系统安全性，RPBFT算法每出`epoch_block_num`个区块后，会从共识委员列表中剔除一个节点作为验证节点，并加入一个验证节点到共识委员列表中，如下图所示：
+为保障系统安全性，rPBFT算法每出`epoch_block_num`个区块后，会从共识委员列表中剔除一个节点作为验证节点，并加入一个验证节点到共识委员列表中，如下图所示：
 
 ![](../../../images/consensus/epoch_rotating.png)
 
-RPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节点，设当前有序的共识委员会节点列表为`CommitteeSealersList`，共识节点总数为`N`，则共识`epoch_block_num`个区块后，会将`CommitteeSealersList[0]`剔除共识委员列表，并加入索引为`(CommitteeSealersList[0].IDX + epoch_sealer_num) % N`的验证节点到共识委员列表中。第`i`轮替换周期，将`CommitteeSealersList[i % epoch_sealer_num]`剔除共识委员列表，加入索引为`(CommitteeSealersList[i%epoch_sealer_num].IDX + epoch_sealer_num) % N`的验证节点到共识委员列表中。
+rPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节点，设当前有序的共识委员会节点列表为`CommitteeSealersList`，共识节点总数为`N`，则共识`epoch_block_num`个区块后，会将`CommitteeSealersList[0]`剔除共识委员列表，并加入索引为`(CommitteeSealersList[0].IDX + epoch_sealer_num) % N`的验证节点到共识委员列表中。第`i`轮替换周期，将`CommitteeSealersList[i % epoch_sealer_num]`剔除共识委员列表，加入索引为`(CommitteeSealersList[i%epoch_sealer_num].IDX + epoch_sealer_num) % N`的验证节点到共识委员列表中。
 
 
 #### **节点重启**
 
-节点重启后，RPBFT算法需要快速确定共识委员列表，由于`epoch_block_num`可通过控制台动态更新，需要结合`epoch_block_num`最新配置生效块高获取共识委员列表，主要步骤如下：
+节点重启后，rPBFT算法需要快速确定共识委员列表，由于`epoch_block_num`可通过控制台动态更新，需要结合`epoch_block_num`最新配置生效块高获取共识委员列表，主要步骤如下：
 
 **计算共识周期rotatingRound**
   
@@ -81,7 +81,7 @@ RPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节
 
 **确定共识委员起始节点索引**: `N`为共识节点总数，索引从`(rotatingRound * epoch_block_num) % N`到`(rotatingRound * epoch_block_num + epoch_sealer_num) % N`之间的节点均属于共识委员节点
 
-### RPBFT算法分析
+### rPBFT算法分析
 
 - 网络复杂度：O(epoch_sealer_num * epoch_sealer_num)，与节点规模无关，可扩展性强于PBFT共识算法
 - 性能：可秒级确认，且由于算法复杂度与节点数无关，性能衰减远小于PBFT
@@ -89,11 +89,11 @@ RPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节
 - 安全性：未来将引入VRF算法，随机、私密地替换共识委员，增强共识算法安全性
 
 
-## RPBFT网络优化
+## rPBFT网络优化
 
 ### Prepare包广播优化
 
-为进一步提升Prepare包在带宽有限场景下广播效率，FISCO BCOS v2.3.0在RPBFT的基础上实现了Prepare包树状广播，如下图所示：
+为进一步提升Prepare包在带宽有限场景下广播效率，FISCO BCOS v2.3.0在rPBFT的基础上实现了Prepare包树状广播，如下图所示：
 
 ![](../../../images/consensus/broadcast_prepare_by_tree.png)
 
@@ -116,7 +116,7 @@ RPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节
     基于状态包的容错策略仅在开启Prepare包树状广播时生效
 ```
 
-为保证节点断连情况下，开启树状广播时，Prepare包能到达每个节点，RPBFT引入了基于状态包的容错机制，如下图所示：
+为保证节点断连情况下，开启树状广播时，Prepare包能到达每个节点，rPBFT引入了基于状态包的容错机制，如下图所示：
 
 ![](../../../images/consensus/prepare_tree_broadcast_fault_tolerant.png)
 
@@ -148,7 +148,7 @@ RPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节
     流量负载均衡策略仅在开启Prepare包树状广播时生效
 ```
 
-RPBFT开启Prepare包结构优化后，其他共识节点交易缺失后，向leader请求交易，导致leader出带宽成为瓶颈，FISCO BCOS v2.3.0结合Prepare包状态，设计并实现了负载均衡策略，该策略时序图如下：
+rPBFT开启Prepare包结构优化后，其他共识节点交易缺失后，向leader请求交易，导致leader出带宽成为瓶颈，FISCO BCOS v2.3.0结合Prepare包状态，设计并实现了负载均衡策略，该策略时序图如下：
 
 ```eval_rst
 .. mermaid::

@@ -53,7 +53,7 @@ Before using distributed storage, you need to complete the establishment of the 
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### Generate configuration file
 ```bash
@@ -198,7 +198,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### Prepare dependence
 ```bash
 cd ~/fisco;
-curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
@@ -253,14 +253,6 @@ show tables;
 | _sys_tx_hash_2_block_                                    |
 +----------------------------------------------------------+
 12 rows in set (0.02 sec)
-```
-
-call the create interface in the console
-
-```bash
-#create table
-call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
-0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
 ```
 
 view the table in the database
@@ -347,7 +339,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - get `build_chain` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### Generate configuration file
@@ -627,7 +619,7 @@ modify ~/fisco/dist_Group2_B/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 		<!-- communication topic configuration of the node -->
 		<property name="topics">
 			<list>
@@ -671,7 +663,7 @@ modify ~/fisco/dist_Group2_C/conf/applicationContext.xml to the following config
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 	<!-- communication topic configuration of the node -->
 	<property name="topics">
 			<list>

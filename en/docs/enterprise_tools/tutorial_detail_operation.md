@@ -4,6 +4,8 @@ FISCO BCOS enterprise deployment tools are designed for multi-agency production 
 
 This chapter will demonstrate how to use enterprise deployment tools by deploying a **6 nodes 3 agencies 2 groups** alliance chain. For more parameter options, please [refer to here](./operation.md).
 
+<!-- TODO: ADD gm operation add console details fix type-->
+
 This chapter is a process that multi-agency peer-to-peer deployment and a situation that the private key of the agency does not come out of intranet. The tutorial for generating configuration files of all agency nodes through a single agency's click start can refer to [FISCO BCOS Enterprise Deployment Tool ClickStart deployment](./tutorial_one_click.md).
 
 ## Download and install
@@ -60,7 +62,7 @@ A networking model of 6 nodes 3 agencies 2 groups is shown as follows. Agency B 
 
 The IP address of each node and port are as follows:
 
-| Agency  | Node  | Group    | P2P address     | RPC listening address | channel listening IP| 
+| Agency  | Node  | Group    | P2P address     | RPC listening address | channel listening IP|
 | ------- | ----- | -------- | --------------- | ----------------------------- | -------------- |
 | agencyA | node0 | group1,2 | 127.0.0.1:30300 | 127.0.0.1:8545        | 0.0.0.0:20200 |
 |         | node1 | group1,2 | 127.0.0.1:30301 | 127.0.0.1:8546        | 0.0.0.0:20201 |
@@ -103,7 +105,7 @@ In this section, we briefly provide How **Certificate authority agency** and **a
     -   send the certificate to agencies
 2.  Operation between agencies
     -   modify the configuration file `node_deployment.ini`
-    -   generate node certificate and node P2P port address file `peers.txt`  
+    -   generate node certificate and node P2P port address file `peers.txt`
 3.  Select one of the agencies to create `group.genesis`
     -   collect all node certificates in the group
     -   modify configuration file `group_genesis.ini`

@@ -4,6 +4,8 @@ FISCO BCOS运维部署工具面向于真实的多机构生产环境。为了保�
 
 本章以部署**6节点3机构2群组**的组网模式，演示运维部署工具的使用方法。更多参数选项说明请参考[这里](./operation.md)。
 
+国密部署教程说明请参考[使用运维部署工具部署国密区块链](./tutorial_detail_operation_gm.md)。
+
 本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS运维部署工具一键部署](./tutorial_one_click.md)。
 
 ## 下载安装
@@ -73,7 +75,7 @@ cd ~/generator && bash ./scripts/install.sh
 .. note::
     - 云主机的公网IP均为虚拟IP，若rpc_ip/p2p_ip/channel_ip填写外网IP，会绑定失败，须填写0.0.0.0
     - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
-    - 出于安全性和易用性考虑，FISCO BCOS v2.3.0版本最新节点config.ini配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 ` 这里 <../manual/configuration.html#configure-rpc>`_
+    - 出于安全性和易用性考虑，FISCO BCOS v2.3.0版本最新节点config.ini配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里 <../manual/configuration.html#configure-rpc>`_
     - 为便于开发和体验，channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
@@ -870,6 +872,12 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 ## 扩展教程--机构C节点加入群组1
 
 将节点加入已有群组需要用户使用控制台发送指令，将节点加入群组，示例如下：
+
+```eval_rst
+.. note::
+
+    企业部署工具会根据generator/meta文件夹下的机构证书及私钥生成sdk相应证书，如需手动生成可以参考操作手册中的generate_sdk_certificate命令
+```
 
 此时群组1内有机构A、B的节点，机构C节点加入群组1需要经过群组内节点的准入，示例以机构A节点为例：
 

@@ -403,6 +403,12 @@ fisco  15466     1  0 17:22 pts/2    00:00:00 ~/generator/tmp_one_click_expand/a
 
 由于控制台体积较大，一键部署中没有直接集成，用户可以使用以下命令获取控制台
 
+```eval_rst
+.. note::
+
+    企业部署工具会根据generator/meta文件夹下的机构证书及私钥生成sdk相应证书，如需手动生成可以参考操作手册中的generate_sdk_certificate命令
+```
+
 获取控制台，可能需要较长时间，国内用户可以使用`--cdn`命令：
 
 以机构A使用控制台为例，此步需要切换到机构A对应的`generator-agency`文件夹
@@ -604,30 +610,34 @@ cp ~/generator/tmp_one_click_expand/agencyC/generator-agency/meta/cert_127.0.0.1
 
 ### 加载、启动新群组
 
-节点在运行时，可直接用脚本`load_new_groups.sh`加载新群组
+节点在运行时，可直接用脚本`load_new_groups.sh`加载新群组配置，并调用`startGroup`RPC接口启动新群组：
 
 机构A-节点0（`node0=127.0.0.1:30300`）
 
 ```bash
 bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30300/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8545
 ```
 
 机构A-节点1（`node1=127.0.0.1:30301`）
 
 ```bash
 bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30301/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8546
 ```
 
 机构A-节点4（`node2=127.0.0.1:30304`）
 
 ```bash
 bash ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8549
 ```
 
 机构C-节点5（`node3=127.0.0.1:30305`）
 
 ```bash
 bash ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8550
 ```
 
 ### 查看节点

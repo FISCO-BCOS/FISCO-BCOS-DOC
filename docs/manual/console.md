@@ -52,7 +52,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -166,7 +166,7 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar`
 ```
 
 #### 合约编译工具
@@ -326,22 +326,23 @@ getPendingTxSize                         Query pending transactions size.
 getSealerList                            Query nodeId list for sealer nodes.
 getSyncStatus                            Query sync status.
 getSystemConfigByKey                     Query a system config value by key.
+setSystemConfigByKey                     Set a system config value by key.
 getTotalTransactionCount                 Query total transaction count.
 getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
 getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
 getTransactionByHash                     Query information about a transaction requested by transaction hash.
 getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
+getTransactionByHashWithProof            Query the transaction and transaction proof by transaction hash.
+getTransactionReceiptByHashWithProof     Query the receipt and transaction receipt proof by transaction hash.
 grantCNSManager                          Grant permission for CNS by address.
 grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
 grantNodeManager                         Grant permission for node configuration by address.
-grantPermissionManager                   Grant permission for permission configuration by address.
 grantSysConfigManager                    Grant permission for system configuration by address.
 grantUserTableManager                    Grant permission for user table by table name and address.
 help(h)                                  Provide help information.
 listCNSManager                           Query permission information for CNS.
 listDeployAndCreateManager               Query permission information for deploy contract and create user table.
 listNodeManager                          Query permission information for node configuration.
-listPermissionManager                    Query permission information for permission configuration.
 listSysConfigManager                     Query permission information for system configuration.
 listUserTableManager                     Query permission for user table information.
 queryCNS                                 Query CNS information by contract name and contract version.
@@ -350,18 +351,29 @@ removeNode                               Remove a node.
 revokeCNSManager                         Revoke permission for CNS by address.
 revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
 revokeNodeManager                        Revoke permission for node configuration by address.
-revokePermissionManager                  Revoke permission for permission configuration by address.
 revokeSysConfigManager                   Revoke permission for system configuration by address.
 revokeUserTableManager                   Revoke permission for user table by table name and address.
-setSystemConfigByKey                     Set a system config.
 listContractWritePermission              Query the account list which have write permission of the contract.
 grantContractWritePermission             Grant the account the contract write permission.
 revokeContractWritePermission            Revoke the account the contract write permission.
-freezeContract                           Freeze the contract.
-unfreezeContract                         Unfreeze the contract.
 grantContractStatusManager               Grant contract authorization to the user.
 getContractStatus                        Get the status of the contract.
 listContractStatusManager                List the authorization of the contract.
+grantCommitteeMember                     Grant the account committee member
+revokeCommitteeMember                    Revoke the account from committee member
+listCommitteeMembers                     List all committee members
+grantOperator                            Grant the account operator
+revokeOperator                           Revoke the operator
+listOperators                            List all operators
+updateThreshold                          Update the threshold
+queryThreshold                           Query the threshold
+updateCommitteeMemberWeight              Update the committee member weight
+queryCommitteeMemberWeight               Query the committee member weight
+freezeAccount                            Freeze the account.
+unfreezeAccount                          Unfreeze the account.
+getAccountStatus                         GetAccountStatus of the account.
+freezeContract                           Freeze the contract.
+unfreezeContract                         Unfreeze the contract.
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -948,7 +960,7 @@ contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 **注：**
 - 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
-- 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
+- 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 - **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
@@ -989,22 +1001,6 @@ transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, FISCO BCOS
-
-# 调用TableTest的create接口创建用户表t_test，该接口返回了值并调用了CreateResult event，交易执行成功后通过解析output输出返回值，通过解析log输出event log信息。
-# Output: 包含调用的接口签名，返回类型，返回值。
-# Event logs: 包含由event 签名，event调用顺序号和event的变量值。CreateResult event记录的是create接口创建表返回的值count。
-[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 create
-transaction hash:0x895980dd6ef37004bb32a7f417daa3b5d0bdb1f16e8a62cc9251e5948c612bb5
----------------------------------------------------------------------------------------------
-Output
-function: create()
-return type: (int256)
-return value: (0)
----------------------------------------------------------------------------------------------
-Event logs
-event signature: CreateResult(int256) index: 0
-event value: (0)
----------------------------------------------------------------------------------------------
 
 # 调用TableTest的insert接口插入记录，字段为name, item_id, item_name
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
@@ -1048,7 +1044,7 @@ contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
 **注：**
 - 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
-- 若需要部署的合约引用了其他其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
+- 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 - **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
@@ -1139,8 +1135,8 @@ Hello,CNS2
 
 * tx_count_limit：区块最大打包交易数
 * tx_gas_limit：交易执行允许消耗的最大gas数
-* rpbft_epoch_sealer_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
-* rpbft_epoch_block_num: [RPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
+* rpbft_epoch_sealer_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
+* rpbft_epoch_block_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
 
 参数：
 
@@ -1568,6 +1564,171 @@ The contract is available.
     "0x0cc9b73b960323816ac5f52806257184c08b5ac0",
     "0x965ebffc38b309fa706b809017f360d4f6de909a"
 ]
+```
+
+### grantCommitteeMember
+
+添加治理委员会委员，如果当前没有委员，则直接添加成功，否则判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。委员账号可以添加运维、管理链系统配置、节点增删等，详情[参考这里](../permission_control.md)。参数：
+
+- 账号地址：投票添加该账号为委员
+
+```bash
+[group:1]> grantCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeCommitteeMember
+
+撤销治理委员会委员判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。参数：
+
+- 账号地址：投票撤销该账号的委员权限
+
+```bash
+[group:1]> revokeCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listCommitteeMembers
+
+查询所有治理委员会委员。
+
+```bash
+[group:1]> listCommitteeMembers
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a  |                      1                      |
+| 0x85961172229aec21694d742a5bd577bedffcfec3  |                      2                      |
+---------------------------------------------------------------------------------------------
+```
+
+### updateThreshold
+
+投票更新生效阈值，判断投票账号是否是委员，是则计票并判断是否生效。参数：
+
+- 生效阈值：取值范围[0,99]
+
+```bash
+[group:1]> updateThreshold 75
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### queryThreshold
+
+查询生效阈值。
+
+```bash
+[group:1]> queryThreshold
+Effective threshold : 50%
+```
+
+### queryCommitteeMemberWeight
+
+查询治理委员会委员的票数。
+
+```bash
+[group:1]> queryCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
+Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
+```
+
+### updateCommitteeMemberWeight
+
+投票更新委员账号的票数，检查投票账号是否有权限，有则计票并检查是否生效，生效后该委员账号投票操作相当于设置的票数。参数：
+
+- 委员账号：被投票修改票数的委员账号
+- 投票权重：希望修改的权重
+
+```bash
+[group:1]> updateCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a 2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+
+### grantOperator
+
+添加运维账号，运维角色拥有部署合约、创建用户表和管理CNS的权限，治理委员会委员可以添加运维，如果当前没有委员，则不限制。参数：
+
+- 账号地址：添加该账号为运维
+
+```bash
+[group:1]> grantOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### revokeOperator
+
+撤销账号的运维权限，委员可以操作，如果当前没有委员，则不限制。参数：
+
+- 账号地址：撤销该账号的运维权限
+
+```bash
+[group:1]> revokeOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### listOperators
+
+查询有运维权限的账号。
+
+```bash
+[group:1]> listOperators
+---------------------------------------------------------------------------------------------
+|                   address                   |                 enable_num                  |
+| 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2  |                      1                      |
+---------------------------------------------------------------------------------------------
+```
+
+### **freezeAccount**
+运行freezeAccount，对指定账号进行冻结操作。对没有发送过交易的账号，冻结操作将提示该账号地址不存在。参数：
+
+- 账号地址：tx.origin，其中0x前缀必须。
+
+```text
+[group:1]> freezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **unfreezeAccount**
+运行unfreezeAccount，对指定账号进行解冻操作。对没有发送过交易的账号，解冻操作将提示该账号地址不存在。参数：
+
+- 账号地址：tx.origin，其中0x前缀必须。
+
+```text
+[group:1]> unfreezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+{
+    "code":0,
+    "msg":"success"
+}
+```
+
+### **getAccountStatus**
+运行getAccountStatus，查询指定账号的状态。对没有发送过交易的账号，查询操作将提示该账号地址不存在。参数：
+
+- 账号地址：tx.origin，其中0x前缀必须。
+
+```text
+[group:1]> getAccountStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
+The account is available.
 ```
 
 ## 附录：Java环境配置

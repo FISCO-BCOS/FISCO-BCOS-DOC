@@ -41,7 +41,7 @@ mysql --help | grep 'Default options' -A 1
 
 ```
 Default options are read from the following files in the given order:
-/etc/mysql/my.cnf /etc/my.cnf ~/.my.cnf 
+/etc/mysql/my.cnf /etc/my.cnf ~/.my.cnf
 ```
 ### 配置my.cnf
 mysql依次从/etc/mysql/my.cnf，/etc/my.cnf，~/.my.cnf中加载配置。依次查找这几个文件，找到第一个存在的文件，在[mysqld]段中新增如下内容（如果存在则修改值）。
@@ -104,7 +104,7 @@ FISCO BCOS在2.0.0-rc3之后，支持节点通过连接池直连MySQL，相对�
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### 生成配置文件
 ```bash
@@ -116,7 +116,7 @@ cat > ipconf << EOF
 EOF
 
 # 查看配置文件
-cat ipconf 
+cat ipconf
 127.0.0.1:1 agencyA 1
 127.0.0.1:1 agencyB 1,2
 127.0.0.1:1 agencyC 2
@@ -237,7 +237,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### 准备依赖
 ```bash
 cd ~/fisco;
-curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
@@ -290,13 +290,6 @@ show tables;
 | _sys_tx_hash_2_block_                                    |
 +----------------------------------------------------------+
 12 rows in set (0.02 sec)
-```
-
-在控制台中调用create接口。
-```bash
-#创建表
-call TableTest 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744 create
-0xab1160f0c8db2742f8bdb41d1d76d7c4e2caf63b6fdcc1bbfc69540a38794429
 ```
 
 查看数据库中的表情况
@@ -376,7 +369,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - 获取`build_chain`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### 生成配置文件
@@ -390,7 +383,7 @@ cat > ipconf << EOF
 EOF
 
 # 查看配置文件
-cat ipconf 
+cat ipconf
 127.0.0.1:1 agencyA 1
 127.0.0.1:1 agencyB 1,2
 127.0.0.1:1 agencyC 2
@@ -418,7 +411,7 @@ Group:2 has 2 nodes
 ```
 
 
-#### 修改节点ini文件 
+#### 修改节点ini文件
 ##### 修改node0下的group.1.ini配置
 
 修改~/fisco/nodes/127.0.0.1/node0/conf/group.1.ini文件中[storage]段的内容，设置为如下内容
@@ -459,7 +452,7 @@ Group:2 has 2 nodes
 ### 准备amdb代理
 #### 源码获取
 ```bash
-cd ~/fisco; 
+cd ~/fisco;
 git clone https://github.com/FISCO-BCOS/amdb-proxy.git
 ```
 
@@ -639,7 +632,7 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 		<!-- communication topic configuration of the node -->
 		<property name="topics">
 			<list>
@@ -681,7 +674,7 @@ drwxrwxr-x 4 fisco fisco  4096 May  7 15:08 nodes
 		<property name="groupId" value="2" />
 		<property name="orgID" value="fisco" />
 		<property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-		
+
 	<!-- communication topic configuration of the node -->
 	<property name="topics">
 			<list>

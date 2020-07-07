@@ -1,14 +1,16 @@
 # Tutorial of one_click_generator.sh
 
+<!-- TODO: add console details fix type-->
+
 The `one_click_generator.sh` script is a script that deploys a federated chain with one click based on the node configuration filled out by the user. The script will generate the corresponding node under the folder according to the `node_deployment.ini` configured under the user-specified folder.
 
 This chapter mainly uses the networking mode of deploying **3 organizations 2 groups 6 nodes** to explain the use of enterprise-level deployment tools for single-button one-button deployment.
 
 This tutorial is suitable for single-node deployment of all nodes. The enterprise-level deployment tool multi-agent deployment tutorial can refer to [Using Enterprise Deployment Tools](./tutorial_one_click.md).
 
-```eval_rst	
-.. important::	
-      When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can clean the meta folder. 
+```eval_rst
+.. important::
+      When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can clean the meta folder.
 ```
 
 ## Download and install
@@ -81,7 +83,7 @@ The IP of each node, the port number is as follows:
     - The RPC/P2P/Channel listening port must be in the range of 1024-65535, and must not conflict with other application listening ports on the machine
 
     - For security and ease of use consideration, FISCO BCOS v2.3.0 latest node config.ini configuration splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip, please refer to `here <../manual/configuration.html#configure-rpc>`_
-    
+
     - In order to facilitate development and experience, the reference configuration of channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as: intranet IP or specific external IP
 ```
 
@@ -260,9 +262,9 @@ Next, we add new nodes for agency A and agency C, and complete the networking sh
 
 ### Initialize the expansion configuration
 
-```eval_rst	
-.. important::	
-      When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can clean the meta folder. 
+```eval_rst
+.. important::
+      When using the one-click deployment script, you need to ensure that the current meta folder does not contain node certificate information. You can clean the meta folder.
 ```
 
 **Create an expansion folder, don't use the same foler**
@@ -599,30 +601,34 @@ AgencyC-Node5（`node3=127.0.0.1:30305`）
 
 ### Load and start new group
 
-Use `load_new_groups.sh` to load and start new group
+Use `load_new_groups.sh` to load configuration of new group, and call `startGroup` RPC interface to start new group
 
 AgencyA-Node0（`node0=127.0.0.1:30300`）
 
 ```bash
 bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30300/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8545
 ```
 
 AgencyA-Node1（`node1=127.0.0.1:30301`）
 
 ```bash
 bash ./tmp_one_click/agencyA/node/node_127.0.0.1_30301/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8546
 ```
 
 AgencyA-Node4（`node2=127.0.0.1:30304`）
 
 ```bash
 bash ./tmp_one_click_expand/agencyA/node/node_127.0.0.1_30304/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8549
 ```
 
 AgencyA-Node5（`node3=127.0.0.1:30305`）
 
 ```bash
 bash ./tmp_one_click_expand/agencyC/node/node_127.0.0.1_30305/scripts/load_new_groups.sh
+curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}' http://127.0.0.1:8550
 ```
 
 ### Check node

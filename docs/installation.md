@@ -34,7 +34,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -48,7 +48,7 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build
 请确保机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -v 2.5.0
 ```
 
 ```eval_rst
@@ -131,9 +131,9 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 
 正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接。
 ```bash
-info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat connected count,size=3
-info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat connected count,size=3
-info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat connected count,size=3
+info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat,connected count=3
 ```
 
 - 执行下面指令，检查是否在共识
@@ -164,7 +164,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -220,13 +220,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 # 获取客户端版本
 [group:1]> getNodeVersion
 {
-    "Build Time":"20200331 07:12:25",
+    "Build Time":"20200619 06:32:10",
     "Build Type":"Linux/clang/Release",
     "Chain Id":"1",
-    "FISCO-BCOS Version":"2.3.0",
+    "FISCO-BCOS Version":"2.5.0",
     "Git Branch":"HEAD",
-    "Git Commit Hash":"b8b62664d1b1f0ad0489bc4b3833bf730deee492",
-    "Supported Version":"2.3.0"
+    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
+    "Supported Version":"2.5.0"
 }
 # 获取节点链接信息
 [group:1]> getPeers

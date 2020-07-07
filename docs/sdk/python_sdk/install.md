@@ -6,7 +6,7 @@
 
 - **Ubuntu**: `sudo apt install -y zlib1g-dev libffi6 libffi-dev wget git`
 - **CentOS**：`sudo yum install -y zlib-devel libffi-devel wget git`
-- **MacOs**: `brew install wget npm git`
+- **MacOs**: `brew install wget git`
 
 **Python环境要求**
 
@@ -112,15 +112,8 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 ```bash
 # 该脚本执行操作如下：
 # 1. 拷贝client_config.py.template->client_config.py
-# 2. 安装solc编译器
+# 2. 下载solc编译器
 bash init_env.sh -i
-```
-
-**若MacOS环境solc安装较慢，可在python-sdk目录下执行如下命令安装solcjs**，python-sdk自动从该路径加载nodejs编译器：
-
-```bash
-# 安装编译器
-npm install solc@v0.4.25
 ```
 
 若没有执行以上初始化步骤，需要将`contracts/`目录下的`sol`代码手动编译成`bin`和`abi`文件并放置于`contracts`目录，才可以部署和调用相应合约。合约编译可以使用[remix](https://remix.ethereum.org)

@@ -23,23 +23,31 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 ```bash
 Usage:
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
-    -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList". eg "127.0.0.1:4 agency1 1,2"
+    -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList p2p_port,channel_port,jsonrpc_port". eg "127.0.0.1:4 agency1 1,2 30300,20200,8545"
     -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
-    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specificd version binary
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external / scalable, rocksdb is recommended
+    -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
+    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set use specificd version binary
+    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
+    -k <The path of ca root>            Default auto generate, the ca.crt and ca.key must in the path, if use intermediate the root.crt must in the path
+    -K <The path of sm crypto ca root>  Default auto generate, the gmca.crt and gmca.key must in the path, if use intermediate the gmroot.crt must in the path
+    -D <Use Deployment mode>            Default false, If set -D, use deploy mode directory struct and make tar
+    -G <channel use sm crypto ssl>      Default false, only works for guomi mode
+    -X <Certificate expiration time>    Default 36500 days
     -T <Enable debug log>               Default off. If set -T, enable debug log
+    -S <Enable statistics>              Default off. If set -S, enable statistics
     -F <Disable log auto flush>         Default on. If set -F, disable log auto flush
+    -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
-    ./tools/build_chain.sh -l "127.0.0.1:4"
+    ./build_chain.sh -l "127.0.0.1:4"
 ```
 
 ## 选项介绍
@@ -55,24 +63,25 @@ e.g
 下面是一个配置文件的例子，每个配置项以空格分隔。
 
 ```bash
-192.168.0.1:2 agency1 1,2
-192.168.0.1:2 agency1 1,3
-192.168.0.2:3 agency2 1
-192.168.0.3:5 agency3 2,3
-192.168.0.4:2 agency2 3
+192.168.0.1:1 agency1 1,2 30300,20200,8545
+192.168.0.2:1 agency1 1,2 30300,20200,8545
+192.168.0.3:2 agency1 1,3 30300,20200,8545
+192.168.0.4:1 agency2 1   30300,20200,8545
+192.168.0.5:1 agency3 2,3 30300,20200,8545
+192.168.0.6:1 agency2 3   30300,20200,8545
 ```
 
 **假设上述文件名为`ipconf`**，则使用下列命令建链，表示使用配置文件，设置日志级别为`DEBUG`。
 
 ```bash
-$ bash build_chain.sh -f ipconf -T
+bash build_chain.sh -f ipconf -T
 ```
 
 ### **`e`选项[**Optional**]**
 用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
 
 ```bash
-# 从GitHub下载下载最新release二进制，生成本机4节点
+# 从GitHub下载最新release二进制，生成本机4节点
 $ bash build_chain.sh -l "127.0.0.1:4"
 # 使用 bin/fisco-bcos 二进制，生成本机4节点
 $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
@@ -113,11 +122,11 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 - scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
 
 ### **`c`选项[**Optional**]**
-有参数选项，参数为共识算法类型，目前支持PBFT、Raft、RPBFT。默认共识算法是PBFT。
+有参数选项，参数为共识算法类型，目前支持PBFT、Raft、rPBFT。默认共识算法是PBFT。
 
 - `PBFT`：设置节点共识算法为[PBFT](../design/consensus/pbft.md)。
 - `Raft`：设置节点共识算法为[Raft](../design/consensus/raft.md)。
-- `RPBFT`：设置节点共识算法为[RPBFT](../design/consensus/rpbft.md)。
+- `rPBFT`：设置节点共识算法为[rPBFT](../design/consensus/rpbft.md)。
 
 ### **`C`选项[**Optional**]**
 用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
@@ -138,6 +147,22 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 
 ### **`T`选项[**Optional**]**
 无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](./configuration.html#id6)。
+
+### **`k`选项[**Optional**]**
+使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括ca.crt/ca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括root.crt，用于存放上级证书链。
+
+### **`K`选项[**Optional**]**
+国密模式使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括gmca.crt/gmca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括gmroot.crt，用于存放上级证书链。
+
+### **`G`选项[**Optional**]**
+从2.5.0开始，国密模式下，用户可以配置节点与SDK连接是否使用国密SSL，设置此选项则`chain.sm_crypto_channel=true`。默认节点与SDK的channel连接使用secp256k1的证书。
+
+### **`D`选项[**Optional**]**
+无参数选项，设置该选项时，生成节点的目录名为IP_P2P端口，默认为节点从0开始的编号。
+
+### **`E`选项[**Optional**]**
+
+无参数选项，设置该选项时，启用[Free Storage](design/virtual_machine/gas.html#evm-gas) Gas模式，默认关闭`Free Storage` Gas模式
 
 ## 节点文件组织结构
 
@@ -167,10 +192,16 @@ nodes/
 │   │.....
 │   ├── node3 # 节点3文件夹
 │   │.....
-│   ├── sdk # SDK需要用到的
-│   │   ├── ca.crt # 链根证书
-│   │   ├── sdk.crt # SKD所需的证书文件，建立连接时使用
-│   │   └── sdk.key # SDK所需的私钥文件，建立连接时使用
+│   ├── sdk # SDK与节点SSL连接配置
+│   │   ├── ca.crt # SSL连接根证书
+│   │   ├── sdk.crt # SSL连接证书
+│   │   └── sdk.key # SSL连接证书私钥
+|   |   ├── gm # SDK与节点国密SSL连接配置，注意：生成国密区块链环境时才会生成该目录，用于节点与SDK的国密SSL连接
+|   |   │   ├── gmca.crt # 国密SSL连接根证书
+|   |   │   ├── gmensdk.crt # 国密SSL连接加密证书
+|   |   │   ├── gmensdk.key # 国密SSL连接加密证书私钥
+|   |   │   ├── gmsdk.crt # 国密SSL连接签名证书
+|   |   │   └── gmsdk.key # 国密SSL连接签名证书私钥
 ├── cert # 证书文件夹
 │   ├── agency # 机构证书文件夹
 │   │   ├── agency.crt # 机构证书
@@ -288,6 +319,28 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 4. 启动新节点，执行`newNode/start.sh`
 5. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
+
+### 生成新机构证书
+
+1. 获取机构证书生成脚本
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+```
+
+2. 生成新机构私钥和证书
+
+```bash
+# -c 指定链证书及私钥所在路径，目录下必须有ca.crt 和 ca.key， 如果ca.crt是二级CA，则还需要root.crt(根证书)
+# -g 指定国密链证书及私钥所在路径，目录下必须有gmca.crt 和 gmca.key，如果gmca.crt是二级CA，则还需要gmroot.crt(根证书)
+# -a 新机构的机构名
+bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName
+```
+
+国密版本请执行下面的指令。
+```bash
+bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
+```
 
 ### 多服务器多群组
 

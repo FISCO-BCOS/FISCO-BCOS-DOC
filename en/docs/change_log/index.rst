@@ -2,6 +2,16 @@
 Compatibility
 ##############################################################
 
+.. admonition:: `FISCO BCOS 2.5.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.5.0>`_
+
+     **Change description, compatibility and upgrade instructions**
+      - `FISCO BCOS v2.5.0 <./2_5_0.html>`_
+
+.. admonition:: `FISCO BCOS 2.4.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.4.0>`_
+
+     **Change description, compatibility and upgrade instructions**
+      - `FISCO BCOS v2.4.0 <./2_4_0.html>`_
+
 .. admonition:: `FISCO BCOS 2.3.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.3.0>`_
 
      **Change description, compatibility and upgrade instructions**
@@ -46,7 +56,7 @@ Compatibility
      **New features**
       - `Group architecture <../what_is_new.html#id2>`_ (`Operation Tutorial <../manual/group_use_cases.html>`_) (`Design Document <../design/architecture/group.html>`_)
       - `Console <../what_is_new.html#id6>`_ (`Installation <../installation.html#id7>`_) (`Operation Manual <../manual/console.html>`_)
-      - `Virtual machine <../what_is_new.html#id7>`_ 
+      - `Virtual machine <../what_is_new.html#id7>`_
       - `Compile contract <../what_is_new.html#id5>`_ (`Operation Manual <../manual/smart_contract.html>`_)
       - `CRUD interface contract <../what_is_new.html#crud>`_ (`Operation Tutorial <../tutorial/sdk_application.html>`_)
       - `Key management service <../what_is_new.html#id8>`_ (`Operation Manual <../manual/storage_security.html>`_)
@@ -55,9 +65,9 @@ Compatibility
      **Change description, compatibility and upgrade instructions**
       - `FISCO BCOS v2.0.0-rc1 <./2_0_0_rc1.html>`_
 
-    
+
 .. admonition:: FISCO BCOS 1.x Releases
-    
+
     **FISCO BCOS 1.3 version:**
      - `FISCO BCOS 1.3.8 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.8>`_
      - `FISCO BCOS 1.3.7 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.3.7>`_
@@ -71,7 +81,7 @@ Compatibility
 
     **FISCO BCOS 1.2 version:**
      - `FISCO BCOS 1.2.0 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.2.0>`_
-    
+
     **FISCO BCOS 1.1 version:**
      - `FISCO BCOS 1.1.0 Release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v1.1.0>`_
 
@@ -90,7 +100,9 @@ Compatibility
 
 .. toctree::
    :hidden:
-   
+
+   2_5_0.md
+   2_4_0.md
    2_3_0.md
    2_2_0.md
    2_1_0.md

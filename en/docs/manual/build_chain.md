@@ -23,20 +23,28 @@ FISCO BCOS has provided `build_chain` script to help users quickly build FISCO B
 ```bash
 Usage:
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
-    -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList". eg "127.0.0.1:4 agency1 1,2"
+    -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList p2p_port,channel_port,jsonrpc_port". eg "127.0.0.1:4 agency1 1,2 30300,20200,8545"
     -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
-    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set, use specified version binary
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / external, rocksdb is recommended
+    -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
+    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set use specificd version binary
+    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
+    -k <The path of ca root>            Default auto generate, the ca.crt and ca.key must in the path, if use intermediate the root.crt must in the path
+    -K <The path of sm crypto ca root>  Default auto generate, the gmca.crt and gmca.key must in the path, if use intermediate the gmroot.crt must in the path
+    -D <Use Deployment mode>            Default false, If set -D, use deploy mode directory struct and make tar
+    -G <channel use sm crypto ssl>      Default false, only works for guomi mode
+    -X <Certificate expiration time>    Default 36500 days
     -T <Enable debug log>               Default off. If set -T, enable debug log
+    -S <Enable statistics>              Default off. If set -S, enable statistics
     -F <Disable log auto flush>         Default on. If set -F, disable log auto flush
+    -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
     ./tools/build_chain.sh -l "127.0.0.1:4"
@@ -115,11 +123,11 @@ There are parameter options. The parameter is the name of db. Currently it suppo
 - scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
 
 ### **`c`option[**Optional**]**
-There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, RPBFT. The default consensus algorithm is PBFT.
+There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, rPBFT. The default consensus algorithm is PBFT.
 
 - `PBFT`：Set the node consensus algorithm to [PBFT](../design/consensus/pbft.md).
 - `Raft`：Set the node consensus algorithm to [Raft](../design/consensus/raft.md).
-- `RPBFT`：Set the node consensus algorithm to RPBFT.
+- `rPBFT`：Set the node consensus algorithm to rPBFT.
 
 ### **`C`option[**Optional**]**
 
@@ -142,6 +150,23 @@ This option is used to specify the certificate configuration file when certifica
 ### **`T`option[**Optional**]**
 
 No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
+
+### **`k`option[**Optional**]**
+Use the private key specified by the user and the certificate issued the agency and node certification. The parameter is the path of ca.crt/ca.key. If the specified private key and certificate are intermediate Ca, root.crt should also be included in this folder to store the upper certificate chain.
+
+### **`K`option[**Optional**]**
+Use the private key specified by the user and the certificate issued the agency and node certification in guomi mode. The parameter is the path of gmca.crt/gmca.key. If the specified private key and certificate are intermediate Ca, gmroot.crt should also be included in this folder to store the upper certificate chain.
+
+### **`G`选项[**Optional**]**
+From 2.5.0, when use smcrypto mode, user can config to use GM SSL between node and sdk, the option set `chain.sm_crypto_channel=true`.
+
+### **`D`option[**Optional**]**
+No parameter option. When this option is set, the directory name of the generated node is IP_P2P-port.
+
+
+### **`E`option[**Optional**]**
+
+No parameter option, when setting this option, [Free Storage] (design/virtual_machine/gas.html#evm-gas) Gas mode is enabled, and `Free Storage` Gas mode is disabled by default.
 
 ## Node file organization
 
@@ -175,6 +200,12 @@ nodes/
 │   │   ├── ca.crt # chain root certificate
 │   │   ├── sdk.crt # The certificate file required by SKD, to use when establishing a connection
 │   │   └── sdk.key # The private key file required by SKD, to use when establishing a connection
+|   |   ├── gm # SDK sm ssl connection with nodes configuration，note：this directory is only generated when sm blockchain environment is generated for the node to make SSL connection with the SDK
+|   |   │   ├── gmca.crt # sm ssl connection root certificate
+|   |   │   ├── gmensdk.crt # sm ssl connection encrypt certificate
+|   |   │   ├── gmensdk.key # sm ssl connection encrypt certificate key
+|   |   │   ├── gmsdk.crt # sm ssl connection sign certificate
+|   |   │   └── gmsdk.key # sm ssl connection sign certificate key
 ├── cert # certificate folder
 │   ├── agency # agency certificate folder
 │   │   ├── agency.crt # agency certificate
@@ -284,8 +315,31 @@ cp -r node0/scripts newNode/
 
 #### Start a new node, check links and consensus
 
+### Generating new agency private key certificates
+
+1. Acquisition agency certificate generation script
+
+```bash
+curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+```
+
+2. Generating new agency private key certificates
+
+```bash
+# -c path must have ca.crt and ca.key， if use intermediate ca，then root.crt is needed
+# -g path must have gmca.crt and gmca.key， if use intermediate ca，then gmroot.crt is needed
+# -a newAgencyName
+bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName
+```
+
+国密版本请执行下面的指令。
+```bash
+bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
+```
+
 ### Multi-server and multi-group
 
 Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+

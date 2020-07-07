@@ -8,7 +8,7 @@
     - **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Web3SDK <../java_sdk.html>`_
     - 安装Java版本控制台可参考 `这里 <../../installation.html>`_
     - windows环境下执行console.py请使用 ``.\console.py`` 或者 ``python console.py``
-    
+
 ```
 
 
@@ -25,7 +25,7 @@
 - save：若设置了save参数，表明会将合约地址写入历史记录文件
 
 ```bash
-$ ./console.py deploy HelloWorld save 
+$ ./console.py deploy HelloWorld save
 
 INFO >> user input : ['deploy', 'HelloWorld', 'save']
 
@@ -48,7 +48,7 @@ deploy result  for [HelloWorld] is:
     "transactionHash": "0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91",
     "transactionIndex": "0x0"
 }
-on block : 1,address: 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce 
+on block : 1,address: 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce
 address save to file:  bin/contract.ini
 ```
 
@@ -68,7 +68,7 @@ address save to file:  bin/contract.ini
 ```bash
 # 合约地址：0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce
 # 调用接口：get
-$./console.py  call HelloWorld 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce get 
+$./console.py  call HelloWorld 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce get
 
 INFO >> user input : ['call', 'HelloWorld', '0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce', 'get']
 INFO >> call HelloWorld , address: 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce, func: get, args:[]
@@ -99,7 +99,7 @@ INFO >> user input : ['sendtx', 'HelloWorld', '0x2d1c577e41809453c50e7e5c3f57d06
 
 INFO >> sendtx HelloWorld , address: 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce, func: set, args:['Hello, FISCO']
 
-INFO >>  receipt logs : 
+INFO >>  receipt logs :
 INFO >> transaction hash :  0xc20cbc6b0f28ad8fe1c560c8ce28c0e7eb7719a4a618a81604ac87ac46cc60f0
 tx input data detail:
  {'name': 'set', 'args': ('Hello, FISCO',), 'signature': 'set(string)'}
@@ -121,7 +121,7 @@ receipt output : ()
 
 ```eval_rst
 .. note::
-    
+
     - 采用创建帐号的命令创建帐号后，若需作为默认帐号使用，注意修改client_config.py的 ``account_keyfile`` 和 ``account_password`` 配置项
     - 账户名不可超过240个字符
     - 若 ``account_password`` 中包含特殊字符，请在 ``account_password`` 周围加上单引号，否则无法解析
@@ -132,7 +132,7 @@ $ ./console.py newaccount test_account "123456"
 
 >> user input : ['newaccount', 'test_account', '123456']
 
-starting : test_account 123456 
+starting : test_account 123456
 new address :    0x247e7AE892a94c9e089D61A7DB08af23CEDBec16
 new privkey :    0xe2cf070a7c1da05577841b54b4f8ca7d9f7eb52e688bb7e61a2c6ada8a4c5c77
 new pubkey :     0x71317d52a7f8b5bb3fa882b9936d7d31a04e6a122e6fdf790d39aeee8ed2883d3c0b90f644cab0b30153d700d93da4c4ea4aef07a7eca2a5e62c8d0f058b3533
@@ -168,7 +168,7 @@ $ ./console.py showaccount test_account "123456"
 
 >> user input : ['showaccount', 'test_account', '123456']
 
-show account : test_account, keyfile:bin/accounts/test_account.keystore ,password 123456  
+show account : test_account, keyfile:bin/accounts/test_account.keystore ,password 123456
 decrypt use time : 1.467 s
 address:         0x247e7AE892a94c9e089D61A7DB08af23CEDBec16
 privkey:         0xe2cf070a7c1da05577841b54b4f8ca7d9f7eb52e688bb7e61a2c6ada8a4c5c77
@@ -263,7 +263,7 @@ INFO >> registerCNS
 ```bash
 查询HelloWorld合约名对应的CNS信息
 $ ./console.py queryCNSByName HelloWorld
- 
+
 INFO >> user input : ['queryCNSByName', 'HelloWorld']
 
      >> ('[{"abi":"\\"\\"","address":"0x2d1c577e41809453C50e7E5C3F57D06f3CDD90Ce","name":"HelloWorld","version":"v_1.0"}]\n',)
@@ -286,7 +286,7 @@ CNS ITEM 0 >>
 
 ```bash
 # 查询合约名为HelloWorld，版本为v_1.0的CNS信息
-$ ./console.py queryCNSByNameAndVersion HelloWorld v_1.0  
+$ ./console.py queryCNSByNameAndVersion HelloWorld v_1.0
 
 INFO >> user input : ['queryCNSByNameAndVersion', 'HelloWorld', 'v_1.0']
 
@@ -296,7 +296,7 @@ CNS ITEM 0 >>
         ContractName: HelloWorld
         ContractVersion: v_1.0
         ContractAddress: 0x2d1c577e41809453C50e7E5C3F57D06f3CDD90Ce
-```       
+```
 
 ## 节点管理
 
@@ -313,10 +313,10 @@ Python SDK提供了节点管理命令，包括添加共识节点、添加观察�
 
 ```bash
 # 设节点位于~/fisco/nodes目录，查询node1的nodeID
-$ cat ~/fisco/nodes/127.0.0.1/node1/conf/node.nodeid 
+$ cat ~/fisco/nodes/127.0.0.1/node1/conf/node.nodeid
 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4
 # 将节点1从群组中删除node1
-./console.py removeNode 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4 
+./console.py removeNode 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4
 
 INFO >> user input : ['removeNode', '12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4']
 
@@ -338,12 +338,12 @@ INFO >> removeNode
 
 ```bash
 # 设节点位于~/fisco/nodes目录，查询node1的nodeID
-$ cat ~/fisco/nodes/127.0.0.1/node1/conf/node.nodeid 
+$ cat ~/fisco/nodes/127.0.0.1/node1/conf/node.nodeid
 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4
 
 # 将节点node1加入为共识节点
 $./console.py addSealer 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4
- 
+
 INFO >> user input : ['addSealer', '12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4']
 
 INFO >> addSealer
@@ -364,11 +364,11 @@ INFO >> addSealer
 
 ```bash
 # 设节点位于~/fisco/nodes目录，查询node1的nodeID
-$ cat ~/fisco/nodes/127.0.0.1/node1/conf/node.nodeid 
+$ cat ~/fisco/nodes/127.0.0.1/node1/conf/node.nodeid
 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4
 
 # 将节点node1加入为观察节点
-$ ./console.py addObserver 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4 
+$ ./console.py addObserver 12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4
 
 INFO >> user input : ['addObserver', '12ce3fc76bc3253ba9be25dc3adb8b75df392583b8f2813f4c623cff258980c8c2c73f384ce6f37dca7261ea0a9fb24ff59fa3c58ee8f278be009827114500e4']
 
@@ -428,7 +428,7 @@ Python SDK提供了权限管理功能，包括授权、撤销权限和列出权�
 # 获取默认账户地址
 ./console.py showaccount pyaccount "123456"
 INFO >> user input : ['showaccount', 'pyaccount', '123456']
-show account : pyaccount, keyfile:bin/accounts/pyaccount.keystore ,password 123456  
+show account : pyaccount, keyfile:bin/accounts/pyaccount.keystore ,password 123456
 decrypt use time : 1.450 s
 address:         0x95198B93705e394a916579e048c8A32DdFB900f7
 privkey:         0x48140af2cf0879631d558833aa48b7bb4b37091dbfe902a573886538041b69c0
@@ -475,7 +475,7 @@ INFO >> user input : ['listPermissionManager']
 
 ```bash
 # 创建用户表t_test
-$./console.py createTable t_test "key" "value1, value2, value3"   
+$./console.py createTable t_test "key" "value1, value2, value3"
 INFO >> user input : ['createTable', 't_test', 'key', 'value1, value2, value3']
 INFO >> createTable
      >> status: 0x0
@@ -529,7 +529,7 @@ INFO >> grantNodeManager
      >> status: 0x0
      >> transactionHash: 0x3a8839bfdfefcd3fff2678f91f231d44d8d442e40fc7f3af726daec624ba80c8
      >> gasUsed: 0x65d8
-     >> grantNodeManager succ, output: 1 
+     >> grantNodeManager succ, output: 1
 
 ```
 
@@ -772,13 +772,13 @@ INFO >> user input : ['getNodeVersion']
 
 INFO >> getNodeVersion
      >> {
-    "Build Time": "20190705 13:17:29",
-    "Build Type": "Linux/clang/Release",
-    "Chain Id": "1",
-    "FISCO-BCOS Version": "2.0.0",
-    "Git Branch": "HEAD",
-    "Git Commit Hash": "d8605a73e30148cfb9b63807fb85fa211d365014",
-    "Supported Version": "2.0.0"
+    "Build Time":"20200619 06:32:10",
+    "Build Type":"Linux/clang/Release",
+    "Chain Id":"1",
+    "FISCO-BCOS Version":"2.5.0",
+    "Git Branch":"HEAD",
+    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
+    "Supported Version":"2.5.0"
 }
 ```
 
@@ -1035,7 +1035,7 @@ INFO >> getBlockByNumber
     "transactionsRoot": "0x0000000000000000000000000000000000000000000000000000000000000000"
 }
 ```
-    
+
 ### getBlockHashByNumber
 
 根据块高查询区块哈希：
@@ -1103,7 +1103,7 @@ INFO >> getCode
 
 
 ```bash
-$ ./console.py getTransactionByHash 0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91                     
+$ ./console.py getTransactionByHash 0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91
 INFO >> user input : ['getTransactionByHash', '0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91']
 INFO >> getTransactionByHash
      >> {
@@ -1180,7 +1180,7 @@ INFO >> getTransactionByBlockHashAndIndex
     "to": "0x0000000000000000000000000000000000000000",
     "transactionIndex": "0x0",
     "value": "0x0"
-} 
+}
 ```
 
 ### getTransactionByBlockNumberAndIndex
@@ -1220,12 +1220,11 @@ INFO >> getTransactionByBlockNumberAndIndex
 # 获取区块可打包最大交易数目
 $ ./console.py getSystemConfigByKey tx_count_limit
 INFO >> user input : ['getSystemConfigByKey', 'tx_count_limit']
-INFO >> getSystemConfigByKey
+INFO >> getSystemConfigByKey tx_count_limit
      >> 500
 # 获取系统gas限制
 $ ./console.py getSystemConfigByKey  tx_gas_limit
 INFO >> user input : ['getSystemConfigByKey', 'tx_gas_limit']
-INFO >> getSystemConfigByKey
+INFO >> getSystemConfigByKey tx_gas_limit
      >> 400000000
 ```
-   

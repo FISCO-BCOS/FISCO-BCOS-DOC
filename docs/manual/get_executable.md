@@ -40,7 +40,7 @@ FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台�
 推荐Ubuntu 16.04以上版本，16.04以下的版本没有经过测试，源码编译时依赖于编译工具和`libssl`。
 
 ```bash
-$ sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo
+sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev
 ```
 
 - CentOS
@@ -49,7 +49,7 @@ $ sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf 
 
 ```bash
 $ sudo yum install -y epel-release
-$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git
+$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static
 ```
 
 - macOS
@@ -57,13 +57,13 @@ $ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git
 推荐xcode10以上版本。macOS依赖包安装依赖于[Homebrew](https://brew.sh/)。
 
 ```bash
-$ brew install openssl git
+brew install openssl git flex patch bison gmp
 ```
 
 ### 克隆代码
 
 ```bash
-$ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
+git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 ```
 
 ### 编译
@@ -87,7 +87,6 @@ $ make
 
 ### 编译选项介绍
 
-- BUILD_GM，默认off，国密编译开关。通过`cmake -DBUILD_GM=on ..`打开国密开关。
 - TESTS，默认off，单元测试编译开关。通过`cmake -DTESTS=on ..`打开单元测试开关。
 - DEMO，默认off，测试程序编译开关。通过`cmake -DDEMO=on ..`打开单元测试开关。
 - TOOL，默认off，工具程序编译开关。通过`cmake -DTOOL=on ..`打开工具开关，提供FISCO节点的rocksdb读取工具。

@@ -133,6 +133,21 @@
   2. 检查通过云服务器提厂商提供的控制台，检查是否配置了安全组，需要在安全组中开放FISCO BCOS节点所使用的channel端口。
   3. 检查生成的证书是否正确，[参考这里](./enterprise_tools/operation.md#节点配置错误检查)
 
+问:
+  节点启动后，为什么无法连接其他节点且节点日志中出现『错误的文件描述符』等网络异常信息？<br>
+答:
+  1. 请检查节点证书配置是否正确
+  2. 请检查节点类型（国密、非国密）是否与链中其他节点一致
+
+问：
+  日志中为何出现形如"invalid group status"的错误提示？
+
+答：可能由于文件系统错误等原因导致节点在本地记录的群组状态不合法，可以检查群组数据目录下的`.group_status`文件，将其内容改为下列值之一：
+
+- STOPPED
+- DELETED
+- RUNNING
+
 
 ## Web3SDK
 
@@ -178,3 +193,13 @@ Traceback (most recent call last):
 
 答:
   证书续期操作可以参考[证书续期操作](./manual/certificates.md#id9)
+
+问：
+  使用下载命令提示certificate verify failed
+答：
+  在 ./pys/tool/utils.py 这个文件的开头中加入如下两行
+
+```python
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+```

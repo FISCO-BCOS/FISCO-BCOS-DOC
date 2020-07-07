@@ -79,7 +79,7 @@ mkdir -p ~/fisco && cd ~/fisco
 
 - Download the build_chain.sh script
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **Generate configuration for star networking blockchain system**
@@ -236,7 +236,7 @@ The console connects to the FISCO BCOS node through the Web3SDK, it is used to q
 $ cd ~/fisco
 
 # Download console
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 
 # Switch to console directory
 $ cd console
@@ -565,7 +565,7 @@ In a parallel multi-group scenario, node join and exit group operations are simi
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 #Build a local single-group four-node blockchain (in a production environment, it is recommended that each node be deployed on a different physical machine)
 $ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
 Generating CA key...
@@ -635,16 +635,22 @@ $ cd ~/fisco/multi_nodes/127.0.0.1
 
 # Copy the configuration of group 1
 $ cp node0/conf/group.1.genesis node0/conf/group.2.genesis
+$ cp node0/conf/group.1.ini node0/conf/group.2.ini
 
 # Modify group ID
 $ sed -i "s/id=1/id=2/g" node0/conf/group.2.genesis
 $ cat node0/conf/group.2.genesis | grep "id"
 # Have modified to    id=2
 
+# Update the list of consensus nodes in the "group.2.genesis" to remove obsolete consensus nodes
+
 # Copy the configuration to each node
 $ cp node0/conf/group.2.genesis node1/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node2/conf/group.2.genesis
 $ cp node0/conf/group.2.genesis node3/conf/group.2.genesis
+$ cp node0/conf/group.2.ini node1/conf/group.2.ini
+$ cp node0/conf/group.2.ini node2/conf/group.2.ini
+$ cp node0/conf/group.2.ini node3/conf/group.2.ini
 
 # Restart node
 $ bash stop_all.sh
@@ -680,7 +686,7 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # If you have never downloaded the console, please do the following to download the console, otherwise copy the console to the ~/fisco directory:
 $ cd ~/fisco
 # Download console
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
 ```
 
 **Configuration console**

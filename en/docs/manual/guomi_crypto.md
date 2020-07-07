@@ -12,16 +12,7 @@ $ sudo apt install -y openssl curl
 # prepare environment
 $ cd ~ && mkdir -p fisco && cd fisco
 # download build_chain.sh script
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.3.0/build_chain.sh && chmod u+x build_chain.sh
-```
-
-After performing the above steps, the structure in the fisco directory is as follows:
-
-```bash
-fisco
-├── bin
-│   └── fisco-bcos
-└── build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - build a 4-nodes FISCO BCOS chain
@@ -85,6 +76,15 @@ ca_cert: the path of certificate gmca
     ca_cert=gmca.crt
 ```
 
+After Fisco-BCOS version 2.5.0, nodes and SDKS can communicate using either SSL or national secret SSL connections. The configuration is as follows:
+```ini
+[chain]
+    ; use SM crypto or not, should nerver be changed
+    sm_crypto=true
+    ; use SM SSL connection with SDK
+    sm_crypto_channel=true
+```
+
 ## using OSCCA-approved cryptography SDK
 
 For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
@@ -96,6 +96,7 @@ See [Console Operations Manual] (../manual/console.md) `Configure OSCCA-approved
 ## using OSCCA-approved cryptography console
 
 The function of OSCCA-approved cryptography console is used in the same way as the standard console. See [Console Operations Manual] (../manual/console.md).
+
 
 ## OSCCA-approved cryptography configuration
 
@@ -120,7 +121,7 @@ FISCO BCOS OSCCA-approved cryptography version adopts dual certificate mode, so 
 ``` shell
 cd key-manager/scripts
 #encrypt conf/gmnode.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
 #encrypt conf/origin_cert/node.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```
