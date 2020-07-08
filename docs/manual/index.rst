@@ -12,6 +12,7 @@
    hardware_requirements.md
    build_chain.md
    certificates.md
+   cfca.md
    configuration.md
    group_use_cases.md
    distributed_storage.md
