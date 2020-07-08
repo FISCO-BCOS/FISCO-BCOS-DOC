@@ -16,6 +16,7 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    group_use_cases.md
    console.md
    account.md
+   cfca.md
    smart_contract.md
    transaction_parallel.md
    distributed_storage.md
