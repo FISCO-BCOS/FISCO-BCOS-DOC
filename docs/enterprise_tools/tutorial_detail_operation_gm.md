@@ -909,8 +909,7 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ###配置控制台
 
-新加入一个群，需要配置 /generator/console/conf/applicationContext.xml文件
-[配置applicationContext.xml]（../manual/group_use_cases.html?highlight=applicationContext.xml%20#id13）
+新加入一个群，需要配置 /generator/console/conf/applicationContext.xml文件 [配置applicationContext.xml](../manual/group_use_cases.html?highlight=applicationContext.xml%20#id13)
 
 
 至此，我们完成了如图所示的机构A、C搭建群组2构建：
