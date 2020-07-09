@@ -2,6 +2,8 @@
 
 ## TODO: add Role Based Access control
 
+### Roles and Permissions
+
 ## Permission conrtol based on Table permission
 
 This section will introduce the operations concerning permission control, for details please check [Design of Permission Control](../design/security_control/permission_control.md).
@@ -15,8 +17,8 @@ For the system is defaulted with no permission setting record, any account can p
 ### Operations
 
 The operations concerning permission control of following functions are introduced in this section:
-- [Permission of chain manager](./permission_control.html#id6)
-- [Permission of system manager](./permission_control.html#id7)
+- [Permission of chain manager](./permission_control.html#grant-permission-of-chain-manager)
+- [Permission of system manager](./permission_control.html#grant-permission-of-system-manager)
 - [Permission of contract deployment and user table creation](./permission_control.html#id8)
 - [Permission of Contract deployment using CNS](./permission_control.html#cns)
 - [Permission of node management](./permission_control.html#id9)

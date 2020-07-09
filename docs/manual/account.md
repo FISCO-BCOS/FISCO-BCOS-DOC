@@ -15,6 +15,8 @@ FISCO BCOS提供了脚本和Web3SDK用以创建账户，同时也提供了Web3SD
 
 ### 使用脚本创建账户
 
+国密生成账户脚本`get_gm_account.sh`与非国密`get_account.sh`选项和使用方式一致，请参考操作即可，不再赘述。
+
 #### 1. 获取脚本
 
 ```bash
@@ -27,6 +29,7 @@ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_a
 ```
 
 国密版本请使用下面的指令获取脚本
+
 ```bash
 curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
 ```
@@ -48,6 +51,7 @@ Usage: ./get_account.sh
 ```
 
 #### 2. 使用脚本生成PEM格式私钥
+
 - 生成私钥与地址
 ```bash
 bash get_account.sh

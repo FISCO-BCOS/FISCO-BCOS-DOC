@@ -303,13 +303,13 @@ Empty set.
 ### 操作内容
 
 本文档分别对以下功能进行权限控制的操作介绍：
-- [授权账户为链管理员](./permission_control.html#id6)
-- [授权账户为系统管理员](./permission_control.html#id7)
-- [授权部署合约和创建用户表](./permission_control.html#id8)
+- [授权账户为链管理员](./permission_control.html#id20)
+- [授权账户为系统管理员](./permission_control.html#id21)
+- [授权部署合约和创建用户表](./permission_control.html#id22)
 - [授权利用CNS部署合约](./permission_control.html#cns)
-- [授权管理节点](./permission_control.html#id9)
-- [授权修改系统参数](./permission_control.html#id10)
-- [授权账户写用户表](./permission_control.html#id11)
+- [授权管理节点](./permission_control.html#id23)
+- [授权修改系统参数](./permission_control.html#id24)
+- [授权账户写用户表](./permission_control.html#id25)
 
 ### 环境配置
 配置并启动FISCO BCOS 2.0区块链节点和控制台，请参考[安装文档](../installation.md)。
