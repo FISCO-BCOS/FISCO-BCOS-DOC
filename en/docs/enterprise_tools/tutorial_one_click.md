@@ -99,7 +99,7 @@ View the one-click deployment template folder:
 
 ```bash
 cd ~/generator
-ls ./tmp_one_click
+tree -L 2 ./tmp_one_click
 ```
 
 ```bash
@@ -189,7 +189,7 @@ After the execution is completed, the ./tmp_one_click folder structure is as fol
 View the one-click deployment template folder after execution:
 
 ```bash
-ls ./tmp_one_click
+tree -L 2 ./tmp_one_click
 ```
 
 ```bash

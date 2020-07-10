@@ -94,7 +94,7 @@ cd ~/generator && bash ./scripts/install.sh
 
 ```bash
 cd ~/generator
-ls ./tmp_one_click
+tree -L 2 ./tmp_one_click
 ```
 
 ```bash
@@ -184,7 +184,7 @@ bash ./one_click_generator.sh -b ./tmp_one_click
 查看执行后的一键部署模板文件夹：
 
 ```bash
-ls ./tmp_one_click
+tree -L 2 ./tmp_one_click
 ```
 
 ```bash
