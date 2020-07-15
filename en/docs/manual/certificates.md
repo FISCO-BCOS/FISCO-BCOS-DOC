@@ -35,7 +35,6 @@ ca.key chain private key
 
 When FISCO BCOS performs SSL encrypted communication, only the node with the same chain certificate `ca.crt` can establish a connection.
 
-
 ### Agency
 
 *	Agency has an agency private key that can issue node certificate and SDK certificate.
