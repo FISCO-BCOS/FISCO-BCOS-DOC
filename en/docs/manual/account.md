@@ -16,6 +16,8 @@ FISCO BCOS provides the get_account script and Web3SDK to create accounts, as we
 
 ### Use script to create account
 
+The usage of `get_gm_account.sh` is the same as `get_account.sh`.
+
 #### 1. get script
 
 ```bash
