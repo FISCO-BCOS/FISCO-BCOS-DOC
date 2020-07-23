@@ -1037,10 +1037,251 @@ info|2019-02-26 16:01:40.121075| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,n
 info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=2,sealerIdx=2,hash=fb982013...,next=3,tx=1,nodeIdx=4
 ```
 
-至此 我们完成了所示构建教程中的所有操作。
-
 ![](../../images/enterprise/tutorial_step_3.png)
 
 通过本节教程，我们在本机生成一个网络拓扑结构为3机构2群组6节点的多群组架构联盟链。
+
+如果使用该教程遇到问题，请查看[FAQ](../faq.md)
+
+## 扩展教程2--机构A扩容节点加入群组1
+
+本节中，我们将会为机构A新增节点6，IP、端口号如下：
+
+| 机构  | 节点  | 所属群组  | P2P地址           | RPC监听地址       | Channel监听地址|
+| --- | --- | ----- | --------------- | --------------------- | -------------------- |
+| 机构A | 节点6 | 群组1 | 127.0.0.1:30306 | 127.0.0.1:8551 | 0.0.0.0:20206 |
+
+在上述过程中，机构A已经生成了自己所属的机构证书及私钥，并且拥有了群组1的创世区块，扩容节点需要进行的操作如下。
+
+将节点加入已有群组需要用户使用控制台发送指令，将节点加入群组，示例如下：
+
+### 机构A修改配置文件
+
+[node_deployment.ini](./config.md#node-deployment-ini)为节点配置文件，运维部署工具会根据`node_deployment.ini`下的配置生成相关节点证书，及生成节点配置文件夹等。
+
+机构A修改conf文件夹下的`node_deployment.ini`如下图所示:
+
+在~/generator-A目录下执行下述命令
+
+```bash
+cd ~/generator-A
+```
+
+```bash
+cat > ./conf/node_deployment.ini << EOF
+[group]
+group_id=1
+
+[node0]
+; host ip for the communication among peers.
+; Please use your ssh login ip.
+p2p_ip=127.0.0.1
+; listen ip for the communication between sdk clients.
+; This ip is the same as p2p_ip for physical host.
+; But for virtual host e.g. vps servers, it is usually different from p2p_ip.
+; You can check accessible addresses of your network card.
+; Please see https://tecadmin.net/check-ip-address-ubuntu-18-04-desktop/
+; for more instructions.
+rpc_ip=127.0.0.1
+channel_ip=0.0.0.0
+p2p_listen_port=30306
+channel_listen_port=20206
+jsonrpc_listen_port=8551
+EOF
+```
+
+### 机构A生成节点证书
+
+在~/generator-A目录下执行下述命令
+
+```bash
+cd ~/generator-A
+```
+
+机构A生成节点证书及P2P连接信息文件，此步需要用到上述配置的`node_deployment.ini`，及机构meta文件夹下的机构证书与私钥，机构A生成节点证书及P2P连接信息文件
+
+```bash
+./generator --generate_all_certificates ./agencyA_node_info_new
+```
+
+查看生成文件:
+
+```bash
+ls ./agencyA_node_info_new
+```
+
+```bash
+# 上述命令解释
+# 从左至右分别为需要交互给机构A的节点证书，节点P2P连接地址文件(根据node_deployment.ini生成的本机构节点信息)
+cert_127.0.0.1_30306.crt peers.txt
+```
+
+### 机构A生成新增节点
+
+在~/generator-A目录下执行下述命令
+
+```bash
+cd ~/generator-A
+```
+
+生成机构A所属节点，此命令会根据用户配置的`node_deployment.ini`文件生成相应的节点配置文件夹:
+
+注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的链接信息，多个机构组网的情况下需要将其合并。
+
+合并当前节点的peers.txt
+
+```bash
+cat ./agencyA_node_info/peers.txt >> ./meta/peersB.txt
+```
+
+生成新增节点：
+
+```bash
+./generator --build_install_package ./meta/peersB.txt ./nodeA_new
+```
+
+查看生成节点配置文件夹：
+
+```bash
+ls ./nodeA_new
+```
+
+```bash
+# 命令解释 此处采用tree风格显示
+# 生成的文件夹nodeA信息如下所示，
+├── monitor # monitor脚本
+├── node_127.0.0.1_30306 # 127.0.0.1服务器 端口号30306的节点配置文件夹
+├── scripts # 节点的相关工具脚本
+├── start_all.sh # 节点批量启动脚本
+└── stop_all.sh # 节点批量停止脚本
+```
+
+机构A启动节点：
+
+```bash
+bash ./nodeA_new/start_all.sh
+```
+
+查看节点进程:
+
+```bash
+ps -ef | grep fisco
+```
+
+```bash
+# 命令解释
+# 可以看到如下进程
+fisco  15347     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA/node_127.0.0.1_30300/fisco-bcos -c config.ini
+fisco  15402     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA/node_127.0.0.1_30301/fisco-bcos -c config.ini
+fisco  15457     1  0 17:22 pts/2    00:00:00 ~/generator-B/nodeB/node_127.0.0.1_30302/fisco-bcos -c config.ini
+fisco  15498     1  0 17:22 pts/2    00:00:00 ~/generator-B/nodeB/node_127.0.0.1_30303/fisco-bcos -c config.ini
+fisco  15550     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1_30304/fisco-bcos -c config.ini
+fisco  15589     1  0 17:22 pts/2    00:00:00 ~/generator-C/nodeC/node_127.0.0.1_30305/fisco-bcos -c config.ini
+fisco  15673     1  0 17:22 pts/2    00:00:00 ~/generator-A/nodeA_new/node_127.0.0.1_30306/fisco-bcos -c config.ini
+```
+
+```eval_rst
+.. note::
+
+    企业部署工具会根据generator/meta文件夹下的机构证书及私钥生成sdk相应证书，如需手动生成可以参考操作手册中的generate_sdk_certificate命令
+```
+
+此时群组1内有机构A、B的节点，机构C节点加入群组1需要经过群组内节点的准入，示例以机构A节点为例：
+
+在~/generator-A目录下执行下述命令
+
+```bash
+cd ~/generator-A
+```
+
+### 配置控制台
+
+机构A配置控制台或sdk，教程中以控制台为例：
+
+注意：此命令会根据用户配置的`node_deployment.ini`中节点及群组完成了控制台的配置，用户可以直接启动控制台，启动前请确保已经安装java
+
+国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
+
+**如果已经配置过控制台，请忽略此步**
+
+```bash
+./generator --download_console ./ --cdn
+```
+
+### 查看机构A节点6信息
+
+机构A使用控制台加入节点6为共识节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`node.nodeid`文件
+
+查看机构A节点nodeid：
+
+```bash
+cat ~/generator-A/nodeA_new/node_127.0.0.1_30306/conf/node.nodeid
+```
+
+```bash
+# 命令解释
+# 可以看到类似于如下nodeid，控制台使用时需要传入该参数
+degca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+### 使用控制台注册观察节点
+
+启动控制台：
+
+```bash
+cd ~/generator-A/console && bash ./start.sh 1
+```
+
+使用控制台`addSealer`命令将节点注册为共识节点，此步需要用到`cat`命令查看得到机构A节点的`node.nodeid`：
+
+**添加共识节点的过程类似，参考addObserver命令**
+
+```bash
+addSealer degca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+```
+
+```bash
+# 命令解释
+# 执行成功会提示success
+$ [group:1]> addSealer degca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+{
+	"code":0,
+	"msg":"success"
+}
+```
+
+退出控制台：
+
+```bash
+exit
+```
+
+### 查看机构A新增节点
+
+在~/generator-A目录下执行下述命令
+
+```bash
+cd ~/generator-A
+```
+
+查看节点log内group1信息:
+
+```bash
+cat nodeA_new/node_127.0.0.1_30306/log/log* | grep g:1  | grep Report
+```
+
+```bash
+# 命令解释
+# 观察节点只会同步交易数据，不会同步非交易状态的共识信息
+# log中的^^^即为节点的交易信息，g:1为群组1打印的信息
+info|2019-02-26 16:01:39.914367| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=0,sealerIdx=0,hash=9b76de5d...,next=1,tx=0,nodeIdx=65535
+info|2019-02-26 16:01:40.121075| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=3,hash=46b7f17c...,next=2,tx=1,nodeIdx=65535
+info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=2,sealerIdx=2,hash=fb982013...,next=3,tx=1,nodeIdx=65535
+info|2019-02-26 16:01:39.914367| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=0,sealerIdx=0,hash=9b76de5d...,next=1,tx=0,nodeIdx=4
+info|2019-02-26 16:01:40.121075| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=1,sealerIdx=3,hash=46b7f17c...,next=2,tx=1,nodeIdx=4
+info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,num=2,sealerIdx=2,hash=fb982013...,next=3,tx=1,nodeIdx=4
+```
+
+至此 我们完成了所示构建教程中的所有操作。
 
 如果使用该教程遇到问题，请查看[FAQ](../faq.md)
