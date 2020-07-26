@@ -50,8 +50,8 @@ sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf te
 CentOS7 version or later is recommended.
 
 ```bash
-$ sudo yum install -y epel-release
-$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static
+$ sudo yum install -y epel-release centos-release-scl
+$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
 ```
 
 - macOS
@@ -76,6 +76,7 @@ After compilation, binary files are located at `FISCO-BCOS/build/bin/fisco-bcos`
 $ cd FISCO-BCOS
 $ git checkout master
 $ mkdir -p build && cd build
+$ source /opt/rh/devtoolset-7/enable  # CentOS Please execute
 # please use cmake3 for CentOS
 $ cmake ..
 #To add -j4 to accelerate compilation by 4 compilation processes
