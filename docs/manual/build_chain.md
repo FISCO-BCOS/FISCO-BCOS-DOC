@@ -130,7 +130,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ### **`s`选项[**Optional**]**
 
-有参数选项，参数为db名，目前支持RocksDB、mysql、Scalable。默认使用rocks。
+有参数选项，参数为db名，目前支持rocksdb、mysql、external、scalable。默认使用RocksDB。
 
 - RocksDB模式，使用RocksDB作为后端数据库。
 - MySQL模式，使用MySQL作为后端数据库，节点直连MySQL，需要在群组ini文件中配置数据库相关信息。
