@@ -48,8 +48,8 @@ sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf te
 推荐使用CentOS7以上版本。
 
 ```bash
-$ sudo yum install -y epel-release
-$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static
+$ sudo yum install -y epel-release centos-release-scl
+$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
 ```
 
 - macOS
@@ -74,6 +74,7 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 $ cd FISCO-BCOS
 $ git checkout master
 $ mkdir -p build && cd build
+$ source /opt/rh/devtoolset-7/enable  # CentOS请执行此命令，其他系统不需要
 # CentOS请使用cmake3
 $ cmake ..
 # 高性能机器可添加-j4使用4核加速编译
