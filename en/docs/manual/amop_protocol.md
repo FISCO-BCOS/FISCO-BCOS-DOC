@@ -327,3 +327,4 @@ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.channel.test.amop.Channel2ClientMul
 - 101：message failed to be sent. After AMOP attempts to send message by all the links, the message is not sent to the sdk from node. It is recommended to use `seq` that is generated during the transmission to check the processing status of each node on the link.
 - 102: message times out. It is recommended to check whether the server has processed the message correctly and the bandwidth is sufficient.
 - 103: Due to the bandwidth limitation of the node, the AMOP request from the SDK to the node was rejected.
+

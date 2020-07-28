@@ -163,3 +163,4 @@ Enumeration values of packet types and their corresponding meanings are as follo
 | 100  | node unreachable |
 | 101  | SDK unreachable |
 | 102  | time out       |
+

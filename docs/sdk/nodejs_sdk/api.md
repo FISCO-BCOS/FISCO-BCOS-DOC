@@ -78,12 +78,12 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 | grantNodeManager | 增加外部账户地址的节点管理权限 | 外部账户地址 | Number，表示成功改写权限表的行数 |
 | revokeNodeManager |  移除外部账户地址的节点管理权限 | 外部账户地址 | Number，表示成功改写权限表的行数 |
 | listNodeManager | 查询拥有节点管理的权限记录列表 | 无 | Array，查询到的记录 |
-| grantCNSManager | 增加外部账户地址的使用CNS权限 | 外部账户 | Number，表示成功改写权限表的行数 |
-| revokeCNSManager | 移除外部账户地址的使用CNS权限 | 外部账户 | Number，表示成功改写权限表的行数 |
+| grantCNSManager | 增加外部账户地址的使用CNS权限 | 外部账户地址 | Number，表示成功改写权限表的行数 |
+| revokeCNSManager | 移除外部账户地址的使用CNS权限 | 外部账户地址 | Number，表示成功改写权限表的行数 |
 | listCNSManager | 查询拥有使用CNS的权限记录列表 | 无 | Array，查询到的记录 |
-| grantSysConfigManager | 增加外部账户地址的系统参数管理权限 | 外部账户 | Number，表示成功改写权限表的行数 |
-| revokeSysConfigManager | 移除外部账户地址的系统参数管理权限 | 外部账户 | Number，表示成功改写权限表的行数 |
-| listSysConfigManager | 查询拥有系统参数管理的权限记录列表 | 外部账户 | Array，查询到的记录 |
+| grantSysConfigManager | 增加外部账户地址的系统参数管理权限 | 外部账户地址 | Number，表示成功改写权限表的行数 |
+| revokeSysConfigManager | 移除外部账户地址的系统参数管理权限 | 外部账户地址 | Number，表示成功改写权限表的行数 |
+| listSysConfigManager | 查询拥有系统参数管理的权限记录列表 | 无 | Array，查询到的记录 |
 
 ### CNSService
 
@@ -96,7 +96,7 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 | registerCns | 根据合约名、合约版本号、合约地址和合约abi注册CNS信息 | 合约名<br>合约版本号<br>合约地址<br>合约abi |  Number，表示成功增加的CNS条目记录数 |
 | getAddressByContractNameAndVersion | 根据合约名和合约版本号(合约名和合约版本号用英文冒号连接)查询合约地址。若缺失合约版本号，默认使用合约最新版本 | 合约名 + ':' + 版本号 | Object，查询到的CNS信息 |
 | queryCnsByName | 根据合约名查询CNS信息 | 合约名 | Array，查询到的CNS信息 |
-| queryCnsByNameAndVersion | 合约名<br>版本号 | 根据合约名和合约版本号查询CNS信息 | 同上 |
+| queryCnsByNameAndVersion | 根据合约名和合约版本号查询CNS信息 | 合约名<br>版本号 | 同上 |
 
 ### SystemConfigService
 
@@ -117,7 +117,7 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 | 接口名        | 描述| 参数 | 返回值 |
 | :--| :--| :-- | :-- |
 | addSealer | 根据节点NodeID设置对应节点为共识节点 | 节点ID | Number，表示成功增加的共识节点数目 |
-| addObserver | 根据节点NodeID设置对应节点为共识节点 | 节点ID | Number，表示成功增加的观察数目 |
+| addObserver | 根据节点NodeID设置对应节点为观察者节点| 节点ID | Number，表示成功增加的观察数目 |
 | removeNode |  根据节点NodeID设置对应节点为游离节点 | 节点ID | Number，表示成功增加的游离数目 |
 
 ### CRUDService
@@ -132,4 +132,5 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 | insert |  插入记录 | 表对象 Entry对象<br>表对象需要设置表名和主键字段名；Entry是map对象，提供插入的字段名和字段值，注意必须设置主键字段 | Number，表示插入的记录数
 | update | 更新记录 | 表对象 Entry对象 Condtion对象<br>表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置查询的匹配条件 | Array，查询到的记录
 | remove | 移除记录 | 表对象 条件对象<br>| 表对象需要设置表名和主键字段名；Condition对象是条件对象，可以设置移除的匹配条件 | Number，成功移除的记录数 |
+| Select      | 查询记录             | 表对象：表对象需要设置表名和主键字段值<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件 | Number，成功查询的记录数 |
 | desc | 根据表名查询表的信息 | 表名 | Object，主要包含表的主键字段名和其他属性字段 |

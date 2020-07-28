@@ -17,8 +17,8 @@ FISCO BCOS platform currently supports two smart contract forms which are Solidi
 ```eval_rst
 .. note::
 
-    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
-    KVTable added in v2.3.0, the version of chain >= v2.3.0 can use this function.
+    - To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
+    - KVTable added in v2.3.0, the version of chain >= v2.3.0 can use this function.
 ```
 
 KVTable contract use key/value type to get/set data of table, code is as follows:

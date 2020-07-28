@@ -160,3 +160,4 @@ Raft protocol strongly depends on the usability of Leader to ensure consistency 
 ```
 
 The conditions of RaftSealer to verify whether the transaction can be sealed include: (1) Leader node; (2) there is non-syncing peer; (3) uncommitBlock field is empty. Only when 3 of them are met can the transaction be sealed.
+
