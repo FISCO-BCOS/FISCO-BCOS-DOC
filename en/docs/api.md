@@ -1317,7 +1317,7 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -51001  | table name and address does not exist           |          |
 | -51002  | table name overflow                             |          |
 | -51003  | contract not exist                              |          |
-| -51004  | committee member permission managed by ChainGoverance           |          |
+| -51004  | committee member permission managed by ChainGovernance           |          |
 | -51100  | invalid node ID                                 |SDK Error Code |
 | -51101  | the last sealer cannot be removed               |          |
 | -51102  | the node is not reachable                       |SDK Error Code |

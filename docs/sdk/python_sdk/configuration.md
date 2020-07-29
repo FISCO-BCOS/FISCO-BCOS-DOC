@@ -5,9 +5,9 @@
 ```eval_rst
 .. note::
 
-     - 确保连接端口开放：推荐使用 ``telnet ip port`` 确认客户端与节点网络是否连通
-	 - 使用RPC通信协议，不需设置证书
-	 - 日志配置参见 ``client/clientlogger.py`` ，默认在 ``bin/logs`` 目录下生成日志，默认级别为DEBUG
+    - 确保连接端口开放：推荐使用 ``telnet ip port`` 确认客户端与节点网络是否连通
+    - 使用RPC通信协议，不需设置证书
+    - 日志配置参见 ``client/clientlogger.py`` ，默认在 ``bin/logs`` 目录下生成日志，默认级别为DEBUG
 ```
 
 ## SDK算法类型配置

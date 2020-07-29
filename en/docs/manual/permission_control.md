@@ -387,3 +387,4 @@ Empty set.
 Revoked successfully.
 
 - **Note:** now there is no account with permission to write user table t_test, so it is back to initial status, that is, all accounts have permission to write table. Therefore, account 1 can grant another account, like account 2, with permission to write this table.
+
