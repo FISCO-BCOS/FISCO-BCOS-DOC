@@ -299,6 +299,8 @@ id=2
 
 - `max_trans_num`：一个区块可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
 
+- `consensus_timeout`：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
+
 - `node.idx`：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过`${data_path}/node.nodeid`文件获取(其中`${data_path}`可通过主配置`config.ini`的`[network_security].data_path`配置项获取)
 
 FISCO BCOS v2.3.0引入了rPBFT共识算法，具体可参考[这里](../design/consensus/rpbft.md)，rPBFT相关配置如下：
@@ -321,6 +323,8 @@ FISCO BCOS v2.3.0引入了rPBFT共识算法，具体可参考[这里](../design/
     consensus_type=pbft
     ; 单个块最大交易数
     max_trans_num=1000
+    ;共识过程中区块最长执行时间，默认为3秒
+    consensus_timeout=3
     ; 一个共识周期内选取参与共识的节点数，rPBFT配置项，对其他共识算法不生效
     epoch_sealer_num=4
     ; 一个共识周期出块数，rPBFT配置项，对其他共识算法不生效
@@ -734,6 +738,26 @@ FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够�
     outgoing_bandwidth_limit=2
 ```
 
+### 可选配置：SDK白名单配置
+
+为了实现sdk到群组的访问控制，FISCO BCOS v2.6.0引入了群组级的SDK白名单访问控制机制，配置位于`group.{group_id}.ini`的`[sdk_allowlist]`，默认关闭，群组级别SDK白名单机制请参考[这里](./sdk_allowlist.md)。
+
+```eval_rst
+.. important::
+    FISCO BCOS v2.6.0默认关闭SDK到群组的白名单访问控制功能，即默认情况下sdk与所有群组均可通信，若要开启sdk与群组间基于白名单的访问控制功能，需要将 `;public_key.0` 等配置项前面的分号去掉
+```
+- `public_key.0`、`public_key.1`、...、`public_key.i`：配置允许与该群组进行通信的SDK公钥公钥列表。
+
+**SDK白名单配置示例如下：**
+
+```ini
+[sdk_allowlist]
+; When sdk_allowlist is empty, all SDKs can connect to this node
+; when sdk_allowlist is not empty, only the SDK in the allowlist can connect to this node
+; public_key.0 should be nodeid, nodeid's length is 128
+public_key.0=b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f3
+```
+
 ## 动态配置系统参数
 
 FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统参数)：
@@ -744,6 +768,7 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 | tx_gas_limit  | 300000000 | 一个交易最大gas限制 |
 | rpbft_epoch_sealer_num | 链共识节点总数 | rPBFT系统配置，一个共识周期内选取参与共识的节点数目，rPBFT每个共识周期都会动态切换参与共识的节点数目 |
 | rpbft_epoch_block_num | 1000 | rPBFT系统配置，一个共识周期内出块数目|
+| consensus_timeout | 3 | PBFT共识过程中，区块执行的超时时间，最少为3s, supported_version>=v2.6.0时，配置项生效 | 
 
 
 控制台提供 **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
@@ -795,4 +820,14 @@ Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 [group:1]> getSystemConfigByKey rpbft_epoch_block_num
 Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 10000
+# 获取区块执行超时时间
+[group:1]> getSystemConfigByKey consensus_timeout
+3
+
+# 设置区块执行超时时间为5s
+[group:1]> setSystemConfigByKey consensus_timeout 5
+{
+    "code":0,
+    "msg":"success"
+}
 ```
