@@ -310,6 +310,8 @@ id=2
 
 - `max_trans_num`：a maximum number of transactions that can be packed in a block. The default is 1000. After the chain is initialized, the parameter can be dynamically adjusted through [Console](./console.html#setsystemconfigbykey);
 
+- `consensus_timeout`: In the PBFT consensus process, the timeout period of each block execution, the default is 3s, the unit is seconds, the parameter can be dynamically adjusted through [Console](./console.html#setsystemconfigbykey);
+
 - `node.idx`：consensus node list, has configured with the [Node ID] of the participating consensus nodes. The Node ID can be obtained by the `${data_path}/node.nodeid` file (where `${data_path}` can be obtained by the configuration item `[secure].data_path` of the main configuration `config.ini`)
 
 FISCO BCOS v2.3.0 introduced the rPBFT consensus algorithm, The rPBFT related configuration is as follows:
@@ -746,6 +748,26 @@ The configuration example of enable the group outbound traffic limit and setting
     outgoing_bandwidth_limit=2
 ```
 
+### Optional configuration: SDK allowlist configuration
+
+In order to achieve access control from SDK to group, FISCO BCOS v2.6.0 introduced a group-level SDK allowlist access control mechanism. The configuration of `[sdk_allowlist]` located in `group.{group_id}.ini` is disabled by default. Please refer to [here](./sdk_allowlist.md) for the group-level SDK allowlist mechanism.
+
+```eval_rst
+.. important::
+    FISCO BCOS v2.6.0 disables the allowlist access control from SDK to group by default, that is, the SDK can communicate with all groups by default. To enable the allowlist-based access control function between SDK and group, you need to change the `;public_key.0` and other configuration items before the semicolon removed
+```
+- `public_key.0`、`public_key.1`、...、`public_key.i`: Configure the SDK public key public key list allowed to communicate with the group.
+
+**SDK allowlist configuration example is as follows：**
+
+```ini
+[sdk_allowlist]
+; When sdk_allowlist is empty, all SDKs can connect to this node
+; when sdk_allowlist is not empty, only the SDK in the allowlist can connect to this node
+; public_key.0 should be nodeid, nodeid's length is 128
+public_key.0=b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f3
+```
+
 ## Dynamically configure system parameters
 
 FISCO BCOS system currently includes the following system parameters (other system parameters will be extended in the future):
@@ -756,6 +778,7 @@ FISCO BCOS system currently includes the following system parameters (other syst
 | tx_gas_limit  | 300000000 | Maximum gas limit for one transaction |
 | rpbft_epoch_sealer_num | Total number of chain consensus nodes | rPBFT system configuration, the number of nodes participating in consensus is selected in a consensus period, and the number of nodes participating in consensus is dynamically switched in each consensus period of rPBFT |
 | rpbft_epoch_block_num | 1000 | rPBFT system configuration, the number of blocks produced in a consensus period| 
+| consensus_timeout | 3 | During the PBFT consensus process, the block execution timeout time is at least 3s, When supported_version>=v2.6.0, the configuration item takes effect| 
 
 Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** command to modify these system parameters.
 **[getSystemConfigByKey](./console.html#getsystemconfigbykey)** command can view the current value of the system parameter:
@@ -811,4 +834,15 @@ Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 [group:1]> getSystemConfigByKey rpbft_epoch_block_num
 Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 10000
+
+# get consensus_timeout
+[group:1]> getSystemConfigByKey consensus_timeout
+3
+
+# set consensus_timeout to 5s
+[group:1]> setSystemConfigByKey consensus_timeout 5
+{
+    "code":0,
+    "msg":"success"
+}
 ```

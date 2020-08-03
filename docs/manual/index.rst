@@ -30,6 +30,7 @@
    caliper.md
    privacy.md
    cdn.md
+   sdk_allowlist.md
 
 
 .. admonition:: 区块链部署
