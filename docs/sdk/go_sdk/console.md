@@ -19,6 +19,8 @@ go build cmd/console.go
 
 - config.toml 配置文件默认使用 channel 连接模式，请拷贝对应的 ca.crt、sdk.crt 和 sdk.key 证书至 go-sdk 目录
 
+- FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错
+
 - 开启命令行支持：
 
 ```eval_rst
