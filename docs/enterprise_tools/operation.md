@@ -126,6 +126,8 @@ $ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca
 
 执行完成后可以在./dir_sdk_ca路径下生成名为SDK的文件夹，包含相应的SDK证书`node.crt` 和私钥`node.key`。
 
+FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
+
 ## generate_all_certificates
 
 |  |  |
