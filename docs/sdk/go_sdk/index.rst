@@ -24,4 +24,5 @@ Go SDK
    env_conf.md
    api.md
    console.md
-   examples.md
+   contractExamples.md
+   amopExamples.md

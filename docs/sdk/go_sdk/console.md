@@ -35,9 +35,7 @@ go build cmd/console.go
 ./console completion zsh > ~/.go-sdk-completion.sh && echo 'source ~/.go-sdk-completion.sh' >> ~/.zshrc
 ```
 
-## 常用命令
-
-### getBlockByHash
+## getBlockByHash
 
 根据区块哈希获取区块信息：
 
@@ -46,6 +44,7 @@ go build cmd/console.go
 ```
 
 参数包括：
+
 - blockHash：区块 hash 值；
 - true/false：true 会返回区块中所有交易的详细内容，false 只会返回区块中所有交易的 hash 值，默认为 true。
 
@@ -117,7 +116,7 @@ Block:
 }
 ```
 
-### getBlockByNumber
+## getBlockByNumber
 
 根据区块高度获取区块信息：
 
@@ -126,6 +125,7 @@ Block:
 ```
 
 参数包括：
+
 - blockNumber：区块高度；
 - true/false：true 会返回区块中所有交易的详细内容，false 只会返回区块中所有交易的 hash 值，默认为 true。
 
@@ -199,7 +199,7 @@ Block:
 }
 ```
 
-### getBlockHashByNumber
+## getBlockHashByNumber
 
 根据区块高度获取区块哈希：
 
@@ -208,6 +208,7 @@ Block:
 ```
 
 参数包括：
+
 - blockNumber：区块高度。
 
 ```shell
@@ -217,7 +218,7 @@ Block Hash:
 "0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848"
 ```
 
-### getBlockNumber
+## getBlockNumber
 
 获取最新块高：
 
@@ -229,7 +230,7 @@ blocknumber:
 decimal:  3
 ```
 
-### getClientVersion
+## getClientVersion
 
 获取区块链节点版本信息：
 
@@ -248,7 +249,7 @@ Client Version:
 }
 ```
 
-### getCode
+## getCode
 
 根据合约地址查询合约数据：
 
@@ -257,6 +258,7 @@ Client Version:
 ```
 
 参数包括：
+
 - contract address：合约地址。
 
 ```shell
@@ -266,7 +268,7 @@ Contract Code:
 "0x60806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ed3885e146100515780636d4ce63c146100ba575b600080fd5b34801561005d57600080fd5b506100b8600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061014a565b005b3480156100c657600080fd5b506100cf610164565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561010f5780820151818401526020810190506100f4565b50505050905090810190601f16801561013c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b8060009080519060200190610160929190610206565b5050565b606060008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101fc5780601f106101d1576101008083540402835291602001916101fc565b820191906000526020600020905b8154815290600101906020018083116101df57829003601f168201915b5050505050905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061024757805160ff1916838001178555610275565b82800160010185558215610275579182015b82811115610274578251825591602001919060010190610259565b5b5090506102829190610286565b5090565b6102a891905b808211156102a457600081600090555060010161028c565b5090565b905600a165627a7a72305820d0c58adfbd1215902f16e710a4e52b14e5c9ad7f0f3363c86d2b3156894bd0610029"
 ```
 
-### getConsensusStatus
+## getConsensusStatus
 
 获取区块链节点共识状态
 
@@ -314,7 +316,7 @@ Consensus Status:
 ]
 ```
 
-### getGroupID
+## getGroupID
 
 获取配置文件中指定的连接节点群组ID：
 
@@ -325,7 +327,7 @@ Group ID:
 1
 ```
 
-### getGroupList
+## getGroupList
 
 获取节点所属群组的群组ID列表：
 
@@ -338,7 +340,7 @@ Group ID List:
 ]
 ```
 
-### getGroupPeers
+## getGroupPeers
 
 获取指定群组的共识节点和观察节点列表：
 
@@ -354,7 +356,7 @@ Peers:
 ]
 ```
 
-### getNodeIDList
+## getNodeIDList
 
 获取节点及其连接节点的列表：
 
@@ -370,7 +372,7 @@ Node ID list:
 ]
 ```
 
-### getObserverList
+## getObserverList
 
   获取观察者节点列表：
 
@@ -383,7 +385,7 @@ Observer List:
 ]
 ```
 
-### getPbftView
+## getPbftView
 
 获取PBFT视图：
 
@@ -394,7 +396,7 @@ PBFT view:
 "0x30"
 ```
 
-### getPeers
+## getPeers
 
 获取区块链节点的连接信息：
 
@@ -427,7 +429,7 @@ Peers:
 ]
 ```
 
-### getPendingTransactions
+## getPendingTransactions
 
 获取交易池内所有未上链的交易：
 
@@ -438,7 +440,7 @@ Pending Transactions:
 []
 ```
 
-### getPendingTxSize
+## getPendingTxSize
 
 获取交易池内未上链的交易数目：
 
@@ -450,7 +452,7 @@ Pending Transactions Count:
 decimal:  0
 ```
 
-### getSealerList
+## getSealerList
 
 获取共识节点列表：
 
@@ -465,7 +467,7 @@ Sealer List:
 ]
 ```
 
-### getSyncStatus
+## getSyncStatus
 
 获取区块链节点同步状态：
 
@@ -506,7 +508,7 @@ Synchronization Status:
 }
 ```
 
-### getSystemConfigByKey
+## getSystemConfigByKey
 
 根据关键字获取区块链系统配置：
 
@@ -515,6 +517,7 @@ Synchronization Status:
 ```
 
 参数包括：
+
 - tx_count_limit/tx_gas_limit：单个区块中交易数量限制/单笔交易中可消耗的 gas 限制
 
 ```shell
@@ -527,7 +530,7 @@ Result:
 "300000000"
 ```
 
-### getTotalTransactionCount
+## getTotalTransactionCount
 
 获取指定群组的上链交易数目：
 
@@ -542,7 +545,7 @@ Latest Statistics on Transaction and Block Height:
 }
 ```
 
-### getTransactionByBlockHashAndIndex
+## getTransactionByBlockHashAndIndex
 
 根据交易所属的区块哈希、 交易索引获取交易信息：
 
@@ -551,6 +554,7 @@ Latest Statistics on Transaction and Block Height:
 ```
 
 参数包括：
+
 - blockHash：区块 hash 值；
 - transactionIndex：交易索引值，注意需要转换为16进制。
 
@@ -573,7 +577,7 @@ Transaction:
 }
 ```
 
-### getTransactionByBlockNumberAndIndex
+## getTransactionByBlockNumberAndIndex
 
 根据交易所属的区块高度、 交易索引获取交易信息：
 
@@ -582,6 +586,7 @@ Transaction:
 ```
 
 参数包括：
+
 - blockNumber：区块高度；
 - transactionIndex：交易索引值，注意需要转换为16进制。
 
@@ -604,7 +609,7 @@ Transaction:
 }
 ```
 
-### getTransactionByHash
+## getTransactionByHash
 
 根据交易哈希获取交易信息：
 
@@ -613,6 +618,7 @@ Transaction:
 ```
 
 参数包括：
+
 - transactionHash：交易 hash 值。
 
 ```shell
@@ -634,7 +640,7 @@ Transaction:
 }
 ```
 
-### getTransactionReceipt
+## getTransactionReceipt
 
 根据交易哈希获取交易回执：
 
@@ -643,6 +649,7 @@ Transaction:
 ```
 
 参数包括：
+
 - transactionHash：交易 hash 值。
 
 ```shell
@@ -667,24 +674,671 @@ Transaction Receipt:
 }
 ```
 
-### setSystemConfigByKey
+## setSystemConfigByKey
 
 根据关键字设置区块链系统配置：
 
 ```shell
-./console setSystemConfigByKey [tx_count_limit/tx_gas_limit]
+./console setSystemConfigByKey [tx_count_limit/tx_gas_limit/rpbft_epoch_sealer_num/rpbft_epoch_block_num]
 ```
 
 参数包括：
-- tx_count_limit/tx_gas_limit：单个区块中交易数量限制/单笔交易中可消耗的 gas 限制
+
+- tx_count_limit/tx_gas_limit/rpbft_epoch_sealer_num/rpbft_epoch_block_num：单个区块中交易数量限制/单笔交易中可消耗的 gas 限制
 
 ```shell
 > ./console setSystemConfigByKey tx_count_limit 999
-Result: 
-999
+success
 
 > ./console setSystemConfigByKey tx_gas_limit 30000000 
-Result: 
-30000000
+success
+
+> ./console setSystemConfigByKey rpbft_epoch_sealer_num 20
+success
+
+> ./console setSystemConfigByKey rpbft_epoch_block_num 30
+success
 ```
 
+## grantUserTableManager
+
+根据用户表名和外部账户地址设置权限信息
+
+```shell
+> ./console grantUserTableManager [tableName] [accountAddress]
+```
+
+参数包括：
+
+- tableName：表名
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantUserTableManager t_test 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064d
+success
+```
+
+## revokeUserTableManager
+
+根据用户表名和外部账户地址撤销权限信息
+
+```shell
+> ./console revokeUserTableManager [tableName] [accountAddress]
+```
+
+参数包括：
+
+- tableName：表名
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokeUserTableManager t_test 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064d
+success
+```
+
+## listUserTableManager
+
+根据用户表名查询设置的权限记录列表
+
+```shell
+./console listUserTableManager [tableName]
+```
+
+参数包括：
+
+- tableName：表名
+
+```shell
+> ./console listUserTableManager t_test
+{"user table managers":[{"address":"0xfbb18d54e9ee57529cda8c7c52242efe879f064d","enable_num":"11","table_name":"u_t_test"}]}
+```
+
+## grantDeployAndCreateManager
+
+增加外部账户地址部署合约和创建用户表的权限
+
+```shell
+./console grantDeployAndCreateManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantDeployAndCreateManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## revokeDeployAndCreateManager
+
+移除外部账户地址部署合约和创建用户表的权限
+
+```shell
+./console revokeDeployAndCreateManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokeDeployAndCreateManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## listDeployAndCreateManager
+
+查询拥有部署合约和创建用户表权限的记录列表
+
+```shell
+> ./console listDeployAndCreateManager
+{"managers":[{"address":"0xfbb18d54e9ee57529cda8c7c52242efe879f064f","enable_num":"15","table_name":"_sys_tables_"}]}
+```
+
+## grantPermissionManager
+
+授予外部账户地址链管理员权限，链管理员可以使用权限分配功能。该命令只支持 FISCO BCOS 2.4.0 和以下版本。
+
+```shell
+./console grantPermissionManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantPermissionManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## revokePermissionManager
+
+撤销链外部账户地址链管理员权限
+
+```shell
+./console revokePermissionManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokePermissionManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F 
+success
+```
+
+## listPermissionManager
+
+查询拥有链管理权限的记录列表
+
+```shell
+> ./console listPermissionManager
+{"managers":[{"address":"0x83309d045a19c44dc3722d15a6abd472f95866ac","enable_num":"24","table_name":"_sys_table_access_"}]}
+```
+
+## grantNodeManager
+
+增加外部账户地址的节点管理权限
+
+```shell
+./console grantNodeManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantNodeManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## revokeNodeManager
+
+移除外部账户地址的节点管理权限
+
+```shell
+./console revokeNodeManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokeNodeManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## listNodeManager
+
+查询拥有节点管理的权限记录列表
+
+```shell
+> ./console listNodeManager
+{"managers":[{"address":"0xfbb18d54e9ee57529cda8c7c52242efe879f064f","enable_num":"18","table_name":"_sys_consensus_"}]}
+```
+
+## grantCNSManager
+
+增加外部账户地址使用CNS的权限
+
+```shell
+./console grantCNSManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantCNSManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## revokeCNSManager
+
+移除外部账户地址使用CNS的权限
+
+```shell
+./console revokeCNSManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokeCNSManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## listCNSManager
+
+查询拥有使用CNS权限的记录列表
+
+```shell
+> ./console listCNSManager
+{"managers":[{"address":"0xfbb18d54e9ee57529cda8c7c52242efe879f064f","enable_num":"19","table_name":"_sys_cns_"}]}
+```
+
+## grantSysConfigManager
+
+ 增加外部账户地址的系统参数管理权限
+
+```shell
+./console grantSysConfigManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantSysConfigManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## revokeSysConfigManager
+
+ 移除外部账户地址的系统参数管理权限
+
+```shell
+./console revokeSysConfigManager [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokeSysConfigManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
+success
+```
+
+## listSysConfigManager
+
+ 查询拥有系统参数管理的权限记录列表
+
+```shell
+> ./console listSysConfigManager
+{"managers":[{"address":"0xfbb18d54e9ee57529cda8c7c52242efe879f064f","enable_num":"21","table_name":"_sys_config_"}]}
+```
+
+## queryCNS
+
+根据合约名和版本号查询CNS信息
+
+```shell
+./console queryCNS [name] [version]
+```
+
+参数包括：
+
+- name：合约名（必须）
+- version：版本号（可选）
+
+```shell
+> ./console queryCNS store 5.0
+name: store, version: 5.0, address: 0x0626918C51A1F36c7ad4354BB1197460A533a2B9
+
+> ./console queryCNS store
+name: store, version: 5.0, address: 0x0626918C51A1F36c7ad4354BB1197460A533a2B9
+```
+
+## getAddressByContractNameAndVersion
+
+根据合约名和合约版本号查询合约地址
+
+```shell
+./console getAddressByContractNameAndVersion [name] [version]
+```
+
+参数包括：
+
+- name：合约名
+- version：版本号
+
+```shell
+> ./console getAddressByContractNameAndVersion store 5.0
+0626918c51a1f36c7ad4354bb1197460a533a2b9
+```
+
+## addObserver
+
+根据节点NodeID设置对应节点为观察者节点
+
+```shell
+./console addObserver [Node ID]
+```
+
+参数包括：
+
+- Node ID：节点 ID。
+
+```shell
+> ./console addObserver 58108297d9b545dc6e9a7ee4fea539c7886ced0c4cfeb33acd16ad23158247901d7d45dfbacc2fe97e38afaf163a4608f2fc2338d3ca37245d44e983adbde202
+success
+```
+
+## addSealer
+
+根据节点NodeID设置对应节点为共识节点
+
+```shell
+./console addSealer [Node ID]
+```
+
+参数包括：
+
+- Node ID：节点 ID。
+
+```shell
+> ./console addSealer 58108297d9b545dc6e9a7ee4fea539c7886ced0c4cfeb33acd16ad23158247901d7d45dfbacc2fe97e38afaf163a4608f2fc2338d3ca37245d44e983adbde202
+success
+```
+
+## removeNode
+
+ 根据节点NodeID设置对应节点为游离节点
+
+```shell
+./console removeNode [Node ID]
+```
+
+参数包括：
+
+- Node ID：节点 ID。
+
+```shell
+> ./console removeNode 58108297d9b545dc6e9a7ee4fea539c7886ced0c4cfeb33acd16ad23158247901d7d45dfbacc2fe97e38afaf163a4608f2fc2338d3ca37245d44e983adbde202
+success
+```
+
+## grantCommitteeMember
+
+根据外部账户地址新增委员会成员
+
+```shell
+./console grantCommitteeMember [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址。
+
+```shell
+> ./console grantCommitteeMember 0x83309d045a19c44dc3722d15a6abd472f95866ac
+success
+```
+
+## revokeCommitteeMember
+
+ 根据外部账户地址撤销委员会成员
+
+```shell
+./console revokeCommitteeMember [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址。
+
+```shell
+> ./console revokeCommitteeMember 0x83309d045a19c44dc3722d15a6abd472f95866ac
+success
+```
+
+## listCommitteeMembers
+
+查询委员会成员列表
+
+```shell
+> ./console listCommitteeMembers
+{"committee_members":[{"address":"0x83309d045a19c44dc3722d15a6abd472f95866ac","enable_num":"24"}]}
+```
+
+## queryCommitteeMemberWeight
+
+ 根据外部账户地址查询委员会成员投票权值
+
+```shell
+./console queryCommitteeMemberWeight [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址。
+
+```shell
+> ./console queryCommitteeMemberWeight 0x83309d045a19c44dc3722d15a6abd472f95866ac
+success, the weight 0x83309d045a19c44dc3722d15a6abd472f95866ac is 1
+```
+
+## updateCommitteeMemberWeight
+
+  根据外部账户地址更新委员会成员投票权值
+
+```shell
+./console updateCommitteeMemberWeight [accountAddress] [weight]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+- weight：权值，大于 0 的整数
+
+```shell
+> ./console updateCommitteeMemberWeight 0x83309d045a19c44dc3722d15a6abd472f95866ac 2
+success
+```
+
+## queryThreshold
+
+ 查询委员会全体委员投票时总票数生效的阈值
+
+```shell
+> ./console queryThreshold
+success, the effective threshold of voting is 50
+```
+
+## updateThreshold
+
+更新委员会全体委员投票时票数占比生效的阈值
+
+```shell
+./console updateThreshold [threshold]
+```
+
+参数包括：
+
+- threshold：阈值，支持范围 [0, 99)。
+
+```shell
+> ./console updateThreshold 60
+success
+```
+
+## grantOperator
+
+根据外部账户地址新增运维权限
+
+```shell
+./console grantOperator [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址。
+
+```shell
+> ./console grantOperator 0x112fb844934c794a9e425dd6b4e57eff1b519f17
+success
+```
+
+## revokeOperator
+
+ 根据外部账户地址撤销运维权限
+
+```shell
+./console revokeOperator [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokeOperator 0x112fb844934c794a9e425dd6b4e57eff1b519f17
+success
+```
+
+## listOperators
+
+查询全体运维成员列表
+
+```shell
+> ./console listOperators
+{"operators":[{"address":"0x112fb844934c794a9e425dd6b4e57eff1b519f17","enable_num":"32"}]}
+```
+
+## freezeAccount
+
+根据外部账户地址冻结账户，该外部账号需要是部署过合约的账号
+
+```shell
+./console freezeAccount [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址。
+
+```shell
+> ./console freezeAccount 0x112fb844934c794a9e425dd6b4e57eff1b519f17
+success
+```
+
+## unfreezeAccount
+
+ 根据外部账户地址解冻合账户
+
+```shell
+./console unfreezeAccount [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console unfreezeAccount 0x112fb844934c794a9e425dd6b4e57eff1b519f17
+success
+```
+
+## getAccountStatus
+
+ 根据外部账户地址查询账户状态
+
+```shell
+./console getAccountStatus [accountAddress]
+```
+
+参数包括：
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console getAccountStatus 0x112fb844934c794a9e425dd6b4e57eff1b519f17
+The account has been frozen. You can use this account after unfreezing it.
+```
+
+## freezeContract
+
+根据合约地址冻结合约
+
+```shell
+./console freezeContract [contract address]
+```
+
+参数包括：
+
+- contract address：合约地址
+
+```shell
+> ./console freezeContract 0x54Fb7aAAF3D2d6663E3472d641b7fB54cB246Ff0
+success
+```
+
+## unfreezeContract
+
+根据合约地址解冻合约
+
+```shell
+./console unfreezeContract [contract address]
+```
+
+参数包括：
+
+- contract address：合约地址
+
+```shell
+> ./console unfreezeContract 0x54Fb7aAAF3D2d6663E3472d641b7fB54cB246Ff0
+success
+```
+
+## grantContractStatusManager
+
+ 根据合约地址和外部账户地址授予账户合约管理权限
+
+```shell
+./console grantContractStatusManager [contract address] [accountAddress]
+```
+
+参数包括：
+
+- contract address：合约地址
+
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantContractStatusManager 0x54Fb7aAAF3D2d6663E3472d641b7fB54cB246Ff0 0xae66fbe9ee2b5007e245d98bf7cf9904cc61e394
+success
+```
+
+## getContractStatus
+
+根据合约地址查询合约状态
+
+```shell
+./console getContractStatus [contract address]
+```
+
+参数包括：
+
+- contract address：合约地址
+
+```shell
+> ./console getContractStatus 0x54Fb7aAAF3D2d6663E3472d641b7fB54cB246Ff0
+The contract is available.
+```
+
+## ListManager
+
+ 查询拥有合约地址管理权限的外部账号
+
+```shell
+./console ListManager [contract address]
+```
+
+参数包括：
+
+- contract address：合约地址
+
+```shell
+> ./console ListManager 0x54Fb7aAAF3D2d6663E3472d641b7fB54cB246Ff0
+{"managers":["0x112fb844934c794a9e425dd6b4e57eff1b519f17","0x83309d045a19c44dc3722d15a6abd472f95866ac","0xae66fbe9ee2b5007e245d98bf7cf9904cc61e394"]}
+```
