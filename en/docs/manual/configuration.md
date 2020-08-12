@@ -37,15 +37,24 @@ FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers
 
      - Include only listen_ip in the configuration: The listening IPs of both RPC and Channel are configured listen_ip
      - The configuration also contains listen_ip, channel_listen_ip, or jsonrpc_listen_ip: Priority is given to channel_listen_ip and jsonrpc_listen_ip. Configuration items that are not configured are replaced with the value of listen_ip
+     - Starting from v2.6.0, RPC module support IPV6.
 ```
 
 
 RPC configuration example is as follows:
 
 ```ini
+# ipv4
 [rpc]
     channel_listen_ip=0.0.0.0
     jsonrpc_listen_ip=127.0.0.1
+    channel_listen_port=30301
+    jsonrpc_listen_port=30302
+
+# ipv6
+[rpc]
+    channel_listen_ip=::1
+    jsonrpc_listen_ip=::1
     channel_listen_port=30301
     jsonrpc_listen_port=30302
 ```
@@ -54,7 +63,8 @@ RPC configuration example is as follows:
 
 ```eval_rst
 .. note::
-    In order to facilitate development and experience, the reference configuration of listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP.
+    - In order to facilitate development and experience, the reference configuration of listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP.
+    - Starting from v2.6.0, P2P module support IPV6.
 ```
 
 The current version of FISCO BCOS must be configured with `IP` and `Port` of the connection node in the `config.ini` configuration. The P2P related configurations include:
@@ -67,6 +77,7 @@ The current version of FISCO BCOS must be configured with `IP` and `Port` of the
 P2P configuration example is as follows:
 
 ```ini
+# ipv4
 [p2p]
     listen_ip=0.0.0.0
     listen_port=30300
@@ -74,6 +85,15 @@ P2P configuration example is as follows:
     node.1=127.0.0.1:30304
     node.2=127.0.0.1:30308
     node.3=127.0.0.1:30312
+
+# ipv6
+[p2p]
+    listen_ip=::1
+    listen_port=30300
+    node.0=[::1]:30300
+    node.1=[::1]:30304
+    node.2=[::1]:30308
+    node.3=[::1]:30312
 ```
 
 ### Configure ledger file path
