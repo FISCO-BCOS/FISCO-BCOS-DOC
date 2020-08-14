@@ -30,7 +30,7 @@ Usage:
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -q <List FISCO-BCOS releases>       List FISCO-BCOS released versions
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
+    -s <DB type>                        Default RocksDB. Options can be RocksDB / mysql / Scalable, RocksDB is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
@@ -123,11 +123,11 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 ```
 
 ### **`s`option[**Optional**]**
-There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql and scalable. RocksDB is used by default.
+There are parameter options. The parameter is the name of db. Currently it supports three modes: RocksDB, mysql and Scalable. RocksDB is used by default.
 
-- rocksdb use RocksDB as backend database.
+- RocksDB use RocksDB as backend database.
 - mysql needs to configure the information relates to mysql in the group ini file.
-- scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
+- Scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in RocksDB instance named after block height. The RocksDB instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the Scalable mode must be used.
 
 ### **`c`option[**Optional**]**
 There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, rPBFT. The default consensus algorithm is PBFT.
