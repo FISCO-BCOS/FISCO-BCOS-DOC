@@ -29,6 +29,9 @@ This chapter provides an operation tutorial of FISCO BCOS platform to introduce 
    log_description.md
    privacy.md
    cdn.md
+   sdk_allowlist.md
+   consensus_recover.md
+
 
 .. admonition:: Setup and deploy blockchain
 

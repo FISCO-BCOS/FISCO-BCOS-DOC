@@ -162,6 +162,7 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* bin/
 .. note::
     - ``client_config.py`` 的 ``channel_node_cert`` 和 ``channel_node_key`` 选项分别用于配置SDK证书和私钥
     - ``release-2.1.0`` 版本开始，SDK证书和私钥更新为 ``sdk.crt`` 和 ``sdk.key`` ，配置证书路径前，请先检查上步拷贝的证书名和私钥名，并将 ``channel_node_cert`` 配置为SDK证书路径，将 ``channel_node_key`` 配置为SDK私钥路径
+    - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错
 ```
 
 检查从节点拷贝的sdk证书路径，若sdk证书和私钥路径分别为`bin/sdk.crt`和`bin/sdk.key`，则`client_config.py`中相关配置项如下：

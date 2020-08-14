@@ -30,7 +30,8 @@
    caliper.md
    privacy.md
    cdn.md
-
+   sdk_allowlist.md
+   consensus_recover.md
 
 .. admonition:: 区块链部署
 
@@ -89,6 +90,8 @@
         + 节点日志格式和说明
     - `Caliper压力测试指南 <./caliper.html>`_
         + Caliper压力测试指南
+    - `极端异常下的共识恢复应急方案 <./consensus_recover.html>`_
+        + 极端异常下的共识恢复应急方案
 
 .. important::
 
