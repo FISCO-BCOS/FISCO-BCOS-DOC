@@ -158,17 +158,21 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download
     <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
 </bean>
 ```
-- 替换国密编译包
-```bash
-# 下载solcJ-all-0.4.25-gm.jar放在console目录下
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-# 替换Jar包
-$ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-```
 
 ```eval_rst
-.. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar`
+.. important::
+
+    控制台编译工具重要说明
+
+    - 控制台自1.1.0版本起，移除对solcJ-all-0.x.x.jar、solcJ-all-0.x.x-gm.jar的依赖
+
+    - 新编译工具支持0.4.25、0.5.2、0.6.10三个版本，与同版本的solidity编译器对应
+    
+    - 新的编译上传至maven仓库进行管理，不再需要替换文件的操作
+
+    - 控制台默认配置0.4.25版本编译工具，用户可以修改build.gradle配置的版本号重新编译，也可以通过download_console.sh脚本指定-v参数，下载配置对应编译器版本的控制台
+     
+    - 新的编译工具同时支持国密、非国密编译功能，控制台国密或者非国密环境运行时，不再需要solcJ国密与非国密版本的替换
 ```
 
 #### 合约编译工具
@@ -200,28 +204,12 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
     ```
     java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
 
-**注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。可以通过`./replace_solc_jar.sh`脚本进行替换，指定下载的编译器jar包路径，命令如下：
-```bash
-# 下载solcJ-all-0.5.2.jar放在console目录下，示例用法如下
-$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
-```
+```eval_rst
+.. important::
 
-#### 下载合约编译jar包
-0.4版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
-```
-0.5版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
-```
-国密0.4版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-国密0.5版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
+    Java合约文件说明
+
+    - 控制台自1.1.0版本起，生成的Java合约文件国密、非国密环境均可以运行，国密与非国密环境生成一份合约代码即可
 ```
 
 ### 启动控制台
