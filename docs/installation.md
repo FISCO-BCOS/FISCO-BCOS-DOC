@@ -12,6 +12,7 @@
     - 若需在已有区块链上进行升级，请转至 `版本及兼容 <change_log/index.html>`_ 章节。
     - 搭建多群组的链操作类似， `参考这里 <manual/group_use_cases.html>`_ 。
     - 本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04 64bit上经过测试。
+    - `使用docker模式搭建 <manual/build_chain.html#d-optional>`_ ，供有丰富docker经验和容器化部署需求的用户参考。
 ```
 
 ### 准备环境
@@ -48,7 +49,7 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build
 请确保机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -v 2.5.0
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
 ```eval_rst
