@@ -433,7 +433,7 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 
 ### 配置storage
 
-存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问mysql，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
+存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问MySQL，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
 
 ```eval_rst
 .. note::
@@ -447,7 +447,7 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
    推荐使用Mysql直连模式，配置type为MySQL。
 ```
 
-- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`\*1000切换实例，实例以存储的起始区块高度命名。
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`Scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问MySQL数据库；type为`Scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`\*1000切换实例，实例以存储的起始区块高度命名。
 - `max_capacity`：配置允许节点用于内存缓存的空间大小。
 - `max_forward_block`：配置允许节点用于内存区块的大小，当节点出的区块超出该数值时，节点停止共识等待区块写入数据库。
 - `binary_log`：当设置为`true`时打开binary_log，此时关闭RocksDB的WAL。
@@ -470,14 +470,14 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 
 ```ini
 [storage]
-    ; storage db type, rocksdb / mysql / external, rocksdb is recommended
+    ; storage db type, RocksDB / MySQL / Scalable, RocksDB is recommended
     type=RocksDB
     max_capacity=256
     max_forward_block=10
     ; only for external
     max_retry=100
     topic=DB
-    ; only for mysql
+    ; only for MySQL
     db_ip=127.0.0.1
     db_port=3306
     db_username=

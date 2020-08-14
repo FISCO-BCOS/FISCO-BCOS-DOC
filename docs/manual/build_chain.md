@@ -30,7 +30,7 @@ Usage:
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -q <List FISCO-BCOS releases>       List FISCO-BCOS released versions
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
+    -s <DB type>                        Default RocksDB. Options can be RocksDB / MySQL / Scalable, RocksDB is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
@@ -130,11 +130,11 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ### **`s`选项[**Optional**]**
 
-有参数选项，参数为db名，目前支持rocksdb、mysql、scalable。默认使用RocksDB。
+有参数选项，参数为db名，目前支持RocksDB、mysql、Scalable。默认使用rocks。
 
 - RocksDB模式，使用RocksDB作为后端数据库。
 - MySQL模式，使用MySQL作为后端数据库，节点直连MySQL，需要在群组ini文件中配置数据库相关信息。
-- scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
+- Scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用Scalable模式。
 
 ### **`c`选项[**Optional**]**
 
