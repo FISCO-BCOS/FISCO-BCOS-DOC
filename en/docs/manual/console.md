@@ -1231,6 +1231,7 @@ To run setSystemConfigByKey to set the system configuration in key-value pairs. 
 * tx_gas_limit: The maximum number of gas allowed to be consumed
 * rpbft_epoch_sealer_num: rPBFT system configuration, the number of consensus nodes selected in a consensus epoch
 * rpbft_epoch_block_num: rPBFT system configuration, number of blocks generated in one consensus epoch
+* consensus_timeout: During the PBFT consensus process, the timeout period for each block execution, the default is 3s, the unit is seconds
 
 Parameters:
 
