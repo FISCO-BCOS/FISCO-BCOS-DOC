@@ -438,7 +438,6 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 ```eval_rst
 .. note::
     - v2.3.0版本开始，为便于链的维护，推荐使用 `MySQL` 存储模式替代 `External` 存储模式
-    - 若要使用 `External`，请将 `supported_version` 配置成v2.2.0或其以下版本
 ```
 
 #### 公共配置项
@@ -448,7 +447,7 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
    推荐使用Mysql直连模式，配置type为MySQL。
 ```
 
-- `type`：存储的DB类型，支持`RocksDB`、`MySQL`、`External`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`external`时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`\*1000切换实例，实例以存储的起始区块高度命名。
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`\*1000切换实例，实例以存储的起始区块高度命名。
 - `max_capacity`：配置允许节点用于内存缓存的空间大小。
 - `max_forward_block`：配置允许节点用于内存区块的大小，当节点出的区块超出该数值时，节点停止共识等待区块写入数据库。
 - `binary_log`：当设置为`true`时打开binary_log，此时关闭RocksDB的WAL。
@@ -790,7 +789,7 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 | tx_gas_limit  | 300000000 | 一个交易最大gas限制 |
 | rpbft_epoch_sealer_num | 链共识节点总数 | rPBFT系统配置，一个共识周期内选取参与共识的节点数目，rPBFT每个共识周期都会动态切换参与共识的节点数目 |
 | rpbft_epoch_block_num | 1000 | rPBFT系统配置，一个共识周期内出块数目|
-| consensus_timeout | 3 | PBFT共识过程中，区块执行的超时时间，最少为3s, supported_version>=v2.6.0时，配置项生效 | 
+| consensus_timeout | 3 | PBFT共识过程中，区块执行的超时时间，最少为3s, supported_version>=v2.6.0时，配置项生效 |
 
 
 控制台提供 **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
