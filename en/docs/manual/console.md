@@ -154,26 +154,6 @@ The directory structure is as follows:
    - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
    - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
 
-- Open OSCCA-approved cryptography switch
-```
-<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-    <!-- set encryptType value to 1 -->
-    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
-</bean>
-```
-- Replace compile Jar package
-```bash
-# Download solcJ-all-0.4.25-gm.jar package, and put it console dictionary
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-# Replace Jar package.
-$ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-```
-
-```eval_rst
-.. note::
-    - If the package cannot be downloaded for a long time due to network problems, try `curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar`
-```
-
 #### Contract compilation tool
 
 **Console provides a special compilation contract tool that allows developers to compile Solidity contract files into Java contract files.** Two steps for using the tool:
@@ -206,31 +186,6 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
 
 In the java directory, `org/com/fisco/` package path directory is generated. In the package path directory, the java contract files `HelloWorld.java`, `TableTest.java` and `Table.java` will be generated. `HelloWorld.java` and `TableTest.java` are the java contract files required by the java application.
 
-**Note: ** The downloaded console contains `solcJ-all-0.4.25.jar` in the `console/lib` directory, so it supports the 0.4 version of the contract compilation. If you are using a 0.5 version contract compiler or a national cryptography contract compiler, please download the relevant contract compiler jar package, and replace `solcJ-all-0.4.25.jar` in the `console/lib` directory. It can be replaced by the `./replace_solc_jar.sh` script. To specify the jar package path, the command is as follows:
-
-```bash
-# To download solcJ-all-0.5.2.jar and to place in console directory, the example usage is as follows
-
-$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
-```
-
-#### Download contract compilation jar package
-0.4 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
-```
-0.5 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
-```
-National cryptography 0.4 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-National cryptography 0.5 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
-```
 ### Launch console
 
 Start the console while the node is running:
