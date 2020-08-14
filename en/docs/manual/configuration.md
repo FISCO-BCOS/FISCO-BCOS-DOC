@@ -69,9 +69,9 @@ RPC configuration example is as follows:
 
 The current version of FISCO BCOS must be configured with `IP` and `Port` of the connection node in the `config.ini` configuration. The P2P related configurations include:
 
-- `listen_ip`: P2P listens for IP, to set `0.0.0.0` by default. 
-- `listen_port`: Node P2P listening port.  
-- `node.*`: All nodes' `IP:Port` or `DomainName:Port` which need to be connected to node. This option supports domain names, but suggests users who need to use it [manually compile source code](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2).  
+- `listen_ip`: P2P listens for IP, to set `0.0.0.0` by default.
+- `listen_port`: Node P2P listening port.
+- `node.*`: All nodes' `IP:Port` or `DomainName:Port` which need to be connected to node. This option supports domain names, but suggests users who need to use it [manually compile source code](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2).
 - `enable_compress`: Enable network compression configuration option. Configuring to true, indicates that network compression is enabled. Configuring to false, indicates that network compression is disabled. For details on network compression, please refer to [here](../design/features/network_compress .md).
 
 P2P configuration example is as follows:
@@ -428,12 +428,11 @@ For example: `group1` variable configuration is generally named `group.1.ini`. V
 
 ### Configure storage
 
-Storage currently supports three modes: RocksDB, MySQL, and External. Users can choose the DB to use according to their needs. RocksDB has the highest performance. MySQL supports users to use MySQL database for viewing data. External accesses mysql through data proxy, and users need to start and configure the data proxy. The design documentation can be referenced [AMDB Storage Design](../design/storage/storage.html). Since the RC3 version, we have used RocksDB instead of LevelDB for better performance, but still supports LevelDB.
+Storage currently supports three modes: RocksDB, MySQL, and Scalable. Users can choose the DB to use according to their needs. RocksDB has the highest performance. MySQL supports users to use MySQL database for viewing data. Since the RC3 version, we have used RocksDB instead of LevelDB for better performance, but still supports LevelDB.
 
 ```eval_rst
 .. note::
-    - Starting from v2.3.0, in order to facilitate chain maintenance, it is recommended to use `MySQL` storage mode instead of` External` storage mode
-    - To use `External`, configure` supported_version` to v2.2.0 or below
+    - Starting from v2.3.0, in order to facilitate chain maintenance, it is recommended to use `MySQL` storage mode instead of `External` storage mode
 ```
 
 #### Public configuration item
@@ -443,7 +442,7 @@ Storage currently supports three modes: RocksDB, MySQL, and External. Users can 
    If you want to use MySQL, please set type to MySQL.
 ```
 
-- `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL` or `External`, the node accesses mysql database according to the configuration. All data of blockchain system is stored in mysql database. For accessing mysql database, to configure the amdb-proxy. Please refer to [here](./distributed_storage.html#amdb) for the amdb-proxy configuration.
+- `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL`, the node accesses mysql database according to the configuration. All data of blockchain system is stored in mysql database. For accessing mysql database, to configure the amdb-proxy. Please refer to [here](./distributed_storage.html#amdb) for the amdb-proxy configuration.
 - `max_capacity`: configures the space size of the node that is allowed to use for memory caching.
 - `max_forward_block`: configures the space size of the node that allowed to use for memory block. When the blocks exceeds this value, the node stops the consensus and waits for the blocks to be written to database.
 - `binary_log`: default is false. when set to `true`, enable binary log, and then disable the wal of rocksdb.
@@ -633,12 +632,12 @@ broadcast_prepare_by_tree=true
 ; Only effective when the prepare package tree broadcast is enabled
 ; Each node randomly selects 33% consensus nodes to synchronize the prepare packet status
 prepare_status_broadcast_percent=33
-; Under the prepare package tree broadcast strategy, 
-; the node missing the prepare package takes more than 100ms and 
-; does not wait for the prepare package forwarded by the parent node 
+; Under the prepare package tree broadcast strategy,
+; the node missing the prepare package takes more than 100ms and
+; does not wait for the prepare package forwarded by the parent node
 ; to request the missing prepare package from other nodes.
 max_request_prepare_waitTime=100
-; The maximum delay for a node to wait for a parent node 
+; The maximum delay for a node to wait for a parent node
 ;or other non-leader node to synchronize a prepare packet is 100ms
 max_request_missedTxs_waitTime=100
 ```
@@ -698,7 +697,7 @@ The configuration of the disabled transaction tree broadcast policy is as follow
     ; Transaction tree broadcast strategy is enabled by default
     send_txs_by_tree=false
 ```
-    
+
 ```eval_rst
 .. note::
     - Due to protocol consistency requirements, all nodes must ensure that the tree broadcast switch `send_txs_by_tree` is configured consistently
@@ -797,8 +796,8 @@ FISCO BCOS system currently includes the following system parameters (other syst
 | tx_count_limit  | 1000 | Maximum number of transactions that can be packed in a block |
 | tx_gas_limit  | 300000000 | Maximum gas limit for one transaction |
 | rpbft_epoch_sealer_num | Total number of chain consensus nodes | rPBFT system configuration, the number of nodes participating in consensus is selected in a consensus period, and the number of nodes participating in consensus is dynamically switched in each consensus period of rPBFT |
-| rpbft_epoch_block_num | 1000 | rPBFT system configuration, the number of blocks produced in a consensus period| 
-| consensus_timeout | 3 | During the PBFT consensus process, the block execution timeout time is at least 3s, When supported_version>=v2.6.0, the configuration item takes effect| 
+| rpbft_epoch_block_num | 1000 | rPBFT system configuration, the number of blocks produced in a consensus period|
+| consensus_timeout | 3 | During the PBFT consensus process, the block execution timeout time is at least 3s, When supported_version>=v2.6.0, the configuration item takes effect|
 
 Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** command to modify these system parameters.
 **[getSystemConfigByKey](./console.html#getsystemconfigbykey)** command can view the current value of the system parameter:
@@ -839,7 +838,7 @@ Note: rpbft_epoch_sealer_num only takes effect when rPBFT is used
     "msg":"success"
 }
 # query rpbft_epoch_sealer_num
-[group:1]> getSystemConfigByKey rpbft_epoch_sealer_num 
+[group:1]> getSystemConfigByKey rpbft_epoch_sealer_num
 Note: rpbft_epoch_sealer_num only takes effect when rPBFT is used
 4
 

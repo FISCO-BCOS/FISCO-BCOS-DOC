@@ -86,8 +86,8 @@ The IP address of each node and port are as follows:
 
 Building chain involves the cooperation between multiple agencies, including:
 
--   Certificate authority agency
--   alliance chain member agency(next named "agency")
+- Certificate authority agency
+- alliance chain member agency(next named "agency")
 
 ### Key process
 

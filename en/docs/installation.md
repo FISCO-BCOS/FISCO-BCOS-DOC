@@ -32,7 +32,7 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -172,7 +172,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

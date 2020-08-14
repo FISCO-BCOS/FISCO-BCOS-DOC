@@ -28,12 +28,12 @@ cd ~/generator && bash ./scripts/install.sh
 ./generator -h
 ```
 
-**获取国密节点二进制**
+**获取节点二进制**
 
 拉取最新fisco-bcos二进制文件到meta中
 
 ```bash
-./generator --download_fisco ./meta -g
+./generator --download_fisco ./meta
 ```
 
 **检查二进制版本**
