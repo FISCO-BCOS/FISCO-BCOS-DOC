@@ -2,6 +2,11 @@
 
 本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](./manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
 
+```eval_rst
+.. note::
+    - 搭建全链路国密版本的链，`请参考这里 <manual/guomi_crypto.html>`_ 。
+```
+
 ## 单群组FISCO BCOS联盟链的搭建
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
@@ -10,7 +15,6 @@
 ```eval_rst
 .. note::
     - 若需在已有区块链上进行升级，请转至 `版本及兼容 <change_log/index.html>`_ 章节。
-    - 搭建国密版本的链， `参考这里 <manual/guomi_crypto.html>`_ 。
     - 搭建多群组的链操作类似， `参考这里 <manual/group_use_cases.html>`_ 。
     - 本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04 64bit上经过测试。
     - `使用docker模式搭建 <manual/build_chain.html#d-optional>`_ ，供有丰富docker经验和容器化部署需求的用户参考。
@@ -36,18 +40,25 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ### 搭建单群组4节点联盟链
 
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。
 请确保机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
+
+```eval_rst
+.. note::
+    - 国密版本请执行``bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g -G``
+    - 其中-g表示生成国密配置，-G表示使用国密SSL连接
+    - web3sdk已经支持国密SSL，如果使用web3sdk建议带上-G选项使用国密SSL
+```
 
 ```bash
 bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
@@ -166,12 +177,12 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 - 拷贝控制台配置文件
@@ -183,6 +194,11 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 ```
 
 - 配置控制台证书
+
+```eval_rst
+.. note::
+    - 搭建国密版时，如果使用国密SSL请执行``cp nodes/127.0.0.1/sdk/gm/* console/conf/``
+```
 
 ```bash
 cp nodes/127.0.0.1/sdk/* console/conf/

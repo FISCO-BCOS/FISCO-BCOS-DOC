@@ -104,7 +104,7 @@ FISCO BCOS在2.0.0-rc3之后，支持节点通过连接池直连MySQL，相对�
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### 生成配置文件
 ```bash
@@ -237,7 +237,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### 准备依赖
 ```bash
 cd ~/fisco;
-curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```

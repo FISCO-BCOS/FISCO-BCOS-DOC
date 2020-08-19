@@ -37,7 +37,7 @@ FISCO BCOS控制台是一个交互式命令行工具，使用Java开发，代码
 控制台每个版本发布会提供编译好的包，用户下载后配置后即可使用，为了下载控制台用户需要获取download_console.sh脚本。此脚本会从GitHub下载最新版本console.tar.gz，如果下载失败则尝试从官网CDN下载。下面的指令从国内镜像获取download_console.sh脚本并执行。
 
 ```bash
-curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
+curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
 ```
 
 ### TASSL
@@ -59,10 +59,10 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 ### 下载开发部署工具
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
 
 ### 下载二进制程序
 

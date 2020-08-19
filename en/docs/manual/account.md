@@ -21,23 +21,23 @@ The usage of `get_gm_account.sh` is the same as `get_account.sh`.
 #### 1. get script
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
 
 ```eval_rst
 .. note::
-    - If the get_account.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
-    - Please use `curl -LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/tassl-1.0.2/tassl.tar.gz`, and place in `~/.fisco/tassl`
+    - If the get_account.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
+    - Please use `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/tassl-1.0.2/tassl.tar.gz`, and place in `~/.fisco/tassl`
 ```
 
 If you use guomi version fisco, please execute below command to get `get_gm_account.sh`
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
 ```
 
 ```eval_rst
 .. note::
-    - If the get_gm_account.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
+    - If the get_gm_account.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
 ```
 
 execute the above command and if you see the following output, you are downloading the correct script, otherwise please try again.

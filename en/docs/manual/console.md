@@ -56,12 +56,12 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 The directory structure is as follows:

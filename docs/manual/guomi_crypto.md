@@ -8,11 +8,11 @@
 
 ```bash
 # Ubuntu16安装依赖
-$ sudo apt install -y openssl curl
+sudo apt install -y openssl curl
 # 准备环境
-$ cd ~ && mkdir -p fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链
@@ -78,6 +78,7 @@ ca_cert: gmca证书路径
 ```
 
 FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信，也支持国密SSL连接进行通信，相关配置如下：
+
 ```ini
 [chain]
     ; use SM crypto or not, should nerver be changed
