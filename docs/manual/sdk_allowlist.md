@@ -66,7 +66,7 @@ $ cat dist/conf/gmsdk.publickey
 
 ```eval_rst
 .. note::
-    旧链节点无 `reload_sdk_allowlist.sh` 脚本，可通过命令 `curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/reload_sdk_allowlist.sh` 下载该脚本。
+    旧链节点无 `reload_sdk_allowlist.sh` 脚本，可通过命令 `curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/reload_sdk_allowlist.sh` 下载该脚本。
 ```
 
 
@@ -112,7 +112,7 @@ parseSDKAllowList,sdkAllowList=[b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3d
 
 ```eval_rst
 .. note::
-    由于SDK白名单是节点级别的访问控制机制，为了展示 `node0` 对SDK的访问控制功能，控制台仅连接 `node0` 
+    由于SDK白名单是节点级别的访问控制机制，为了展示 `node0` 对SDK的访问控制功能，控制台仅连接 `node0`
 ```
 由于`node0`没有配置控制台对群组的访问权限，部署合约的返回结果如下：
 

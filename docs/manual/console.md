@@ -52,12 +52,12 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 目录结构如下：
@@ -167,11 +167,11 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download
     - 控制台自1.1.0版本起，移除对solcJ-all-0.x.x.jar、solcJ-all-0.x.x-gm.jar的依赖
 
     - 新编译工具支持0.4.25、0.5.2、0.6.10三个版本，与同版本的solidity编译器对应
-    
+
     - 新的编译上传至maven仓库进行管理，不再需要替换文件的操作
 
     - 控制台默认配置0.4.25版本编译工具，用户可以修改build.gradle配置的版本号重新编译，也可以通过download_console.sh脚本指定-v参数，下载配置对应编译器版本的控制台
-     
+
     - 新的编译工具同时支持国密、非国密编译功能，控制台国密或者非国密环境运行时，不再需要solcJ国密与非国密版本的替换
 ```
 

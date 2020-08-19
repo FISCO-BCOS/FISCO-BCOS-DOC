@@ -34,12 +34,12 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ### Build a single-group 4-node consortium chain
@@ -174,12 +174,12 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.

@@ -460,12 +460,12 @@ FISCO BCOS generator 的scripts文件夹的`check_certificates.sh`脚本包含�
 如果用户需要检测由`开发部署工具buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/generator/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/generator/raw/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/generator/raw/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh`
 ```
 
 使用generator部署节点的用户可以从generator的根目录下，从scripts/check_certificates.sh获取脚本。
@@ -497,12 +497,12 @@ $ ./check_certificates.sh -v ~/ca.crt ~/node.crt
 ### 获取脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/check_node_config.sh && chmod u+x check_node_config.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/check_node_config.sh && chmod u+x check_node_config.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/check_node_config.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/check_node_config.sh`
 ```
 
 ### 使用
