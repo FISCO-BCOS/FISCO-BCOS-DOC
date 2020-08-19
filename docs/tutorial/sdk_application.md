@@ -314,7 +314,7 @@ public class Asset extends Contract {
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://www.fisco.com.cn/cdn/deps/tools/asset-app.tar.gz`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
 ```
 
 asset-app项目的目录结构如下：

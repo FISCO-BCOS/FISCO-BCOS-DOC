@@ -41,34 +41,6 @@ FISCO BCOS控制台是一个交互式命令行工具，使用Java开发，代码
 curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
 ```
 
-### 国密jar包官网CDN下载
-
-控制台可以通过替换solcJ包，实现对solidity 0.4/0.5的国密和非国密版本支持。参考这里[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#jar](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#jar)，下面提供官网CDN下载地址。
-
-* 0.4版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25.jar
-```
-
-* 0.5版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.5.2.jar
-```
-
-* 国密0.4版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-
-* 国密0.5版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.5.2-gm.jar
-```
-
 ### TASSL
 
 FISCO BCOS国密版本需要使用TASSL生成国密版本的证书，部署工具会自动从GitHub下载，解压后放置于~/.fisco/tassl，如果碰到下载失败，请尝试从[https://gitee.com/FISCO-BCOS/LargeFiles/blob/master/tools/tassl.tar.gz](https://gitee.com/FISCO-BCOS/LargeFiles/blob/master/tools/tassl.tar.gz)下载并解压后，放置于~/.fisco/tassl
