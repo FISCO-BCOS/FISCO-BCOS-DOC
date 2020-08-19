@@ -974,18 +974,6 @@ vi ./console/conf/applicationContext.xml
 </bean>
 ```
 
-**替换国密jar包**
-
-```bash
-cd console && curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar && bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-```
-
-```eval_rst
-.. note::
-
-    建议用户下载完jar包后，手动检查jar包完整性。可以尝试手动解压观察是否完整
-```
-
 ### 查看机构C节点4信息
 
 机构A使用控制台加入机构C节点4为观察节点，其中参数第二项需要替换为加入节点的nodeid，nodeid在节点文件夹的conf的`gmnode.nodeid`文件
