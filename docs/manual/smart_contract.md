@@ -35,7 +35,7 @@ contract KVTableFactory {
 //一条记录
 contract Entry {
     function getInt(string) public constant returns (int256);
-    function getUInt(string) public constant returns (int256);
+    function getUInt(string) public constant returns (uint256);
     function getAddress(string) public constant returns (address);
     function getBytes64(string) public constant returns (bytes1[64]);
     function getBytes32(string) public constant returns (bytes32);
