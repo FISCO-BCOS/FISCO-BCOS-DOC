@@ -92,7 +92,7 @@ ebf5535c92f7116310ed9e0f9fc9bfc66a607415d4fa444d91f528485eff61b15e40a70bc5d73f04
 
 **Enable the SDK allowlist mechanism**
 
-Add the public key of a console to the allowlist of `node0`:
+Add the public key of a console to the allowlist of the group.[group_id].ini configuration file of `node0`:
 
 ```ini
 [sdk_allowlist]
