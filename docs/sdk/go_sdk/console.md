@@ -21,22 +21,6 @@ go build cmd/console.go
 
 - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错
 
-- 开启命令行支持：
-
-```eval_rst
-.. note::
-
-    - 此步骤只需设置一次，设置之后重启终端即可使用
-
-```
-
-```shell
-# bash 命令行自动补全，请在 bash 环境下执行此步骤
-./console completion bash > go_sdk_completion && sudo mv go_sdk_completion /etc/bash_completion.d/
-# zsh 命令行自动补全，请在 zsh 环境下执行此步骤
-./console completion zsh > ~/.go-sdk-completion.sh && echo 'source ~/.go-sdk-completion.sh' >> ~/.zshrc
-```
-
 ## getBlockByHash
 
 根据区块哈希获取区块信息：
@@ -753,6 +737,59 @@ success
 ```shell
 > ./console listUserTableManager t_test
 {"user table managers":[{"address":"0xfbb18d54e9ee57529cda8c7c52242efe879f064d","enable_num":"11","table_name":"u_t_test"}]}
+```
+
+## grantContractWritePermission
+
+根据合约地址和外部账户地址设置合约写权限信息
+
+```shell
+> ./console grantContractWritePermission [contractAddress] [accountAddress]
+```
+
+参数包括：
+
+- contractAddress：合约地址
+- accountAddress：外部账户地址
+
+```shell
+> ./console grantContractWritePermission 0x0a68F060B46e0d8f969383D260c34105EA13a9dd 0xFbb18d54e9Ee57579cda8c7c52242EFE879f064a
+success
+```
+
+## revokeContractWritePermission
+
+根据合约地址和外部账户地址去除合约写权限信息
+
+```shell
+> ./console revokeContractWritePermission [contractAddress] [accountAddress]
+```
+
+参数包括：
+
+- contractAddress：合约地址
+- accountAddress：外部账户地址
+
+```shell
+> ./console revokeContractWritePermission 0x0a68F060B46e0d8f969383D260c34105EA13a9dd 0xFbb18d54e9Ee57579cda8c7c52242EFE879f064a              
+success
+```
+
+## listSysConfigManager
+
+根据合约地址查询拥有合约写权限的记录列表
+
+```shell
+./console listSysConfigManager [contractAddress]
+```
+
+参数包括：
+
+- contractAddress：合约地址
+
+```shell
+> ./console listContractWritePermission 0x0a68F060B46e0d8f969383D260c34105EA13a9dd
+{"managers":[{"address":"0xfbb18d54e9ee57529cda8c7c52242efe879f064f","enable_num":"32","table_name":"c_0a68f060b46e0d8f969383d260c34105ea13a9dd"},{"address":"0xfbb18d54e9ee57579cda8c7c52242efe879f064a","enable_num":"38","table_name":"c_0a68f060b46e0d8f969383d260c34105ea13a9dd"}]}
 ```
 
 ## grantDeployAndCreateManager
