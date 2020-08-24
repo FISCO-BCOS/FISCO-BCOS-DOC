@@ -4,6 +4,6 @@
 .. toctree::
    :maxdepth: 1
 
-   4301.md
+   console_details.md
 ```
    

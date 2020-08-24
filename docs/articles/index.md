@@ -12,15 +12,15 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
 .. toctree::
    :maxdepth: 1
 
-   1_conception/1001.md
-   1_conception/1002.md
-   1_conception/1003.md
-   1_conception/1004.md
-   1_conception/1005.md
-   1_conception/1006.md
-   1_conception/1007.md
-   1_conception/1008.md
-   1_conception/1009.md
+   1_conception/understandable_blockchain.md
+   1_conception/distributed_system.md
+   1_conception/what_to_trust.md
+   1_conception/what_should_not_trust.md
+   1_conception/why_blockchain_slow.md
+   1_conception/point_to_point.md
+   1_conception/safe_and_controllable.md
+   1_conception/on_and_off_the_blockchain.md
+   1_conception/the_truth_of_tampering.md
 ```
 
 ## 区块链学习必读
@@ -29,9 +29,9 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
 .. toctree::
    :maxdepth: 1
 
-   2_required/2001.md
-   2_required/2002.md
-   2_required/2003.md
+   2_required/practical_skill_tree.md
+   2_required/entry_to_master.md
+   2_required/go_through_sourcecode.md
 ```
 
 ## FISCO BCOS的原理和特性
@@ -75,7 +75,7 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
 .. toctree::
    :maxdepth: 1
 
-   5_corporation/5001.md
+   5_corporation/how_to_submit_pr.md
    5_corporation/5002.md
 ```
 
@@ -85,8 +85,7 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
 .. toctree::
    :maxdepth: 1
 
-   6_application/6001.md
-   6_application/6002.md
+   6_application/industry_application_case.md
    6_application/6003.md
    6_application/6004.md
    6_application/6005.md

@@ -8,7 +8,7 @@
 .. toctree::
    :maxdepth: 1
 
-   3801.md
+   privacy_protection_group_and_ring_signature.md
    3802.md
    3803.md
 ```

@@ -8,7 +8,7 @@
 .. toctree::
    :maxdepth: 1
 
-   3201.md
+   consensus_optimization.md
    3202.md
    3203.md
 ```
