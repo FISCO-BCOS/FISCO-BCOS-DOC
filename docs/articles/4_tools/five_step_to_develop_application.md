@@ -22,7 +22,7 @@ $ bash nodes/127.0.0.1/start_all.sh
 
 你可以通过执行`*ps -ef | grep -v grep | grep fisco-bcos*`查看到四个节点已经在运行。
 
-![](../../../../images/articles/five_step_to_develop_applicationIMG_4947.JPG)
+![](../../../images/articles/five_step_to_develop_application/IMG_4947.JPG)
 
 当然，如果你还是需要阅读详细文档，请参考【安装】：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos
 
@@ -41,7 +41,7 @@ $ cd console && ./start.sh
 
 同时，控制台内置了一个HelloWorld合约，可以直接调用deploy HelloWorld进行部署，然后调用call HelloWorld进行访问。
 
-![](../../../../images/articles/five_step_to_develop_application/IMG_4948.PNG)
+![](../../../images/articles/five_step_to_develop_application/IMG_4948.PNG)
 
 ## 第三步：编写一个Solidity合约
 
@@ -89,7 +89,7 @@ Solidity合约需要通过编译器转换成机器（虚拟机）可执行的二
 
 将Assert.sol放置在console/solidity/contract目录，在控制台执行deploy Assert.sol即可完成合约的编译以及部署。    
 
-![](../../../../images/articles/five_step_to_develop_application/IMG_4949.PNG)
+![](../../../images/articles/five_step_to_develop_application/IMG_4949.PNG)
 
 ## 第五步：开发业务
 

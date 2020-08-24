@@ -59,7 +59,7 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
 .. toctree::
    :maxdepth: 1
 
-   4_tools/40_fivesteps/index.md
+   4_tools/five_step_to_develop_application.md
    4_tools/41_webase/index.md
    4_tools/42_buildchain/index.md
    4_tools/43_console/index.md
