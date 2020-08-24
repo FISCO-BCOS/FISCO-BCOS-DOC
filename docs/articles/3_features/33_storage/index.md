@@ -8,7 +8,7 @@ CRUD接口：提供CRUD接口访问链上数据
 .. toctree::
    :maxdepth: 1
 
-   3301.md
+   storage_by_table_structure.md
    3302.md
    3303.md
    3304.md

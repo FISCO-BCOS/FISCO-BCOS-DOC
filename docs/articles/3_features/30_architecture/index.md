@@ -9,8 +9,8 @@
 .. toctree::
    :maxdepth: 1
 
-   3001.md
-   3002.md
+   group_architecture_design.md
+   group_architecture_practice.md
 ```
 
 分布式存储：支持海量数据存储
@@ -19,8 +19,8 @@
 .. toctree::
    :maxdepth: 1
 
-   3003.md
-   3004.md
+   distributed_storage_design.md
+   distributed_storage_experience.md
 ``` 
 
 并行计算：支持块内交易并行执行
