@@ -91,7 +91,6 @@ FISCO BCOS自带快速搭建特性，五分钟一键搭链后，开发者只需�
 #### 4.更多
 
 针对FISCO BCOS的全局系统配置、节点管理、CNS、权限等系统级功能的API，其原理是读写链上的系统合约，详细指令列表见文末。
-
 开发者可以参考控制台和client/bcosclient.py等代码，进行二次开发，实现更多更酷炫的功能。另外，SDK里内置了一系列的开发库和小工具，帮助管理帐户、输出日志、统一异常处理、简单的性能和耗时统计等。
 
 ## 合约开发相关
@@ -184,59 +183,44 @@ Channel协议是FISCO BCOS独有的协议，Channel协议的特点是安全高�
 
 **Channel长连接通信和数据收发的要点如下：**
 
-1. 采用TLSv1.2安全传输，SDK和节点之间需要加载证书，用证书握手、验证后才能建立长连接。
+- 1. 采用TLSv1.2安全传输，SDK和节点之间需要加载证书，用证书握手、验证后才能建立长连接。
 
-2. 长连接用心跳包维护，需要定期发起心跳包。
+- 2. 长连接用心跳包维护，需要定期发起心跳包。
 
-3. 数据按包为单位，编码成流数据传输，那么在收发数据时，需要持续从socket流里获取数据，按照数据包的格式，判断长度是否合法，数据是否收全，是否能正确的解析，对“部分收取”的数据，要保留在接受缓冲区里，待收取完成后再进行解析，不能丢弃，否则可能导致解析错误。
+- 3. 数据按包为单位，编码成流数据传输，那么在收发数据时，需要持续从socket流里获取数据，按照数据包的格式，判断长度是否合法，数据是否收全，是否能正确的解析，对“部分收取”的数据，要保留在接受缓冲区里，待收取完成后再进行解析，不能丢弃，否则可能导致解析错误。
 
 ![](../../../../images/articles/multilingual_sdk/IMG_4962.JPG)
 
-4. Channel协议支持双向通信，SDK可以主动请求节点，节点也可能往SDK推送消息，如区块链系统通知、数据更新通知、AMOP跨机构消息等。
+- 4. Channel协议支持双向通信，SDK可以主动请求节点，节点也可能往SDK推送消息，如区块链系统通知、数据更新通知、AMOP跨机构消息等。
 
-5.  设计异步的、队列化、回调式消息处理机制，根据消息的序列号、指令类型、状态码等维度，正确处理消息。Python-SDK用了多线程以及Promise库，以尽量高速优雅地处理各种消息。
+- 5.  设计异步的、队列化、回调式消息处理机制，根据消息的序列号、指令类型、状态码等维度，正确处理消息。Python-SDK用了多线程以及Promise库，以尽量高速优雅地处理各种消息。
 
 对socke流数据编程有一定经验的开发者，理解这个协议和实现它并不会很难。对Channel协议实现，数据包解析参见client/channelpack.py，通信和数据收发参见client/channelhandler.py。
 
 ## 总结
 
 Python-SDK的开发始于今年6月中旬，写出第一个可用版本只花了一个星期，然后雕琢用户交互细节，以及进行代码优化、文档完善，并进行多轮测试保证质量，团队其他同学实现Nodejs版本SDK的用时也差不多。
-
 总的来说，在有一些基础代码参考的前提下，开发一个FISCO BCOS 特定语言版本SDK，还是挺敏捷写意的事情，一点儿也不难，Just for fun。
-
 在各语言版本SDK开发和迭代过程中，FISCO BCOS团队和社区开发者一直保持沟通交流，纳入优质pull request，在体验中持续优化。
 
 欢迎社区开发者根据自身使用场景的实际情况，继续完善现有SDK，或贡献更多语言类型的FISCO BCOS SDK，帮助更多开发者顺畅地走在区块链之路上。
-
 最后，感谢杰哥、安总、小白、wheat等同学，以及多位社区开发者对Python-SDK的重要贡献。
 
 ------
 
 #### 参考资料
 
-[FISCO BCOS官方控制台](https://github.com/FISCO-BCOS/console)
-
-[Python-SDK](https://github.com/FISCO-BCOS/python-sdk)
-
-[Nodejs-SDK](https://github.com/FISCO-BCOS/nodejs-sdk)
-
-[FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
-
-[合约开发教程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html)
-
-[WeBASE](https://fintech.webank.com/webase)
-
-[ABI](https://solidity.readthedocs.io/en/latest/abi-spec.html)
-
-[RLP](https://github.com/ethereum/wiki/wiki/RLP)
-
-[交易数据结构](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/protocol_description.html)
-
-[RPC原理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/rpc.html)
-
-[Channel协议定义](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/protocol_description.html#channelmessage-v1)
-
-[SDK证书](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/certificates.html)
-
-[AMOP跨机构](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/amop_protocol.html)
+- [FISCO BCOS官方控制台](https://github.com/FISCO-BCOS/console)
+- [Python-SDK](https://github.com/FISCO-BCOS/python-sdk)
+- [Nodejs-SDK](https://github.com/FISCO-BCOS/nodejs-sdk)
+- [FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
+- [合约开发教程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html)
+- [WeBASE](https://fintech.webank.com/webase)
+- [ABI](https://solidity.readthedocs.io/en/latest/abi-spec.html)
+- [RLP](https://github.com/ethereum/wiki/wiki/RLP)
+- [交易数据结构](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/protocol_description.html)
+- [RPC原理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/rpc.html)
+- [Channel协议定义](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/protocol_description.html#channelmessage-v1)
+- [SDK证书](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/certificates.html)
+- [AMOP跨机构](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/amop_protocol.html)
 
