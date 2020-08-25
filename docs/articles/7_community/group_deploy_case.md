@@ -8,7 +8,7 @@
 
 这样就不能使用官方的一键螺旋快乐飞天脚本了：
 
-![](/images/articles/group_deploy_case/2.png)
+![](../../../images/articles/group_deploy_case/2.png)
 
 使用generator运维部署工具，
 
@@ -24,14 +24,12 @@
 
 ```shell
 cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
-Copy to clipboard
 ```
 
 安装(此操作要求用户具有sudo权限)
 
 ```bash
 cd ~/generator && bash ./scripts/install.sh
-Copy to clipboard
 ```
 
 检查是否安装成功，若成功，输出 usage: generator xxx
@@ -58,7 +56,7 @@ Copy to clipboard
 这里遇到的问题是，二进制文件拉取贼慢。
 然后我再本机把generator克隆下来，发现是:
 
-![](https://img-blog.csdnimg.cn/20200721230416252.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpYW95dWUyMDE5,size_16,color_FFFFFF,t_70)
+![](../../../images/articles/group_deploy_case/3.png)
 
 工具类的download_fisco函数这里卡主了。没有cdn的朋友可以vim修改下这个url为：
 
@@ -70,7 +68,7 @@ https://xiaoyue-blog.oss-cn-hangzhou.aliyuncs.com/fisco-bcos.tar.gz
 
 一秒不到就下完了。然后这个就是装好了：
 
-![](/images/articles/group_deploy_case/4.png)
+![](../../../images/articles/group_deploy_case/4.png)
 
 ---
 
@@ -78,7 +76,7 @@ https://xiaoyue-blog.oss-cn-hangzhou.aliyuncs.com/fisco-bcos.tar.gz
 
 来康康拓扑图：
 
-![](/images/articles/group_deploy_case/1.png)
+![](../../../images/articles/group_deploy_case/1.png)
 
 因为官方教程是在一个机子上配的，是节点1,2。分起来的话实际上没有1,2之分的。因为是在两台机子上，也不会存在端口冲突的情况。如果端口没有打开可能会报错，这边建议把两台机子添加白名单就行了。详情可参考：[FSICO BCOS多机部署之端口开放](https://blog.csdn.net/xiaoyue2019/article/details/107401334)
 
@@ -265,10 +263,10 @@ bash ./nodeA/start_all.sh
 ```
 
 上面有两个需要注意的地方：
-1.在生产节点配置文件和创世区块配置文件时端口一致是没问题的，因为我不在一台机子上做测试，不会存在端口冲突的情况。但这样在复制B机构到B机子上的时候跑不起来就很尴尬。
-2.rpc的ip默认是127.0.0.1，如果硬要开启的话会报警告：
+1. 在生产节点配置文件和创世区块配置文件时端口一致是没问题的，因为我不在一台机子上做测试，不会存在端口冲突的情况。但这样在复制B机构到B机子上的时候跑不起来就很尴尬。
+2. rpc的ip默认是127.0.0.1，如果硬要开启的话会报警告：
 
-![](/images/articles/group_deploy_case/6.png)
+![](../../../images/articles/group_deploy_case/6.png)
 
 如果非要开启rpc测试的话，也可以参照上面说的开启防火墙ip白名单。
 
@@ -284,7 +282,6 @@ bash ./nodeA/start_all.sh
 
 ```bash
 ./generator --build_install_package ./meta/peersA.txt ./nodeB
-Copy to clipboard
 ```
 
 机构B启动节点：
@@ -303,7 +300,7 @@ tail -f ./node*/node*/log/log*  | grep +++
 
 正确回显如下：
 
-![](/images/articles/group_deploy_case/5.png)
+![](../../../images/articles/group_deploy_case/5.png)
 
 这里还有一个问题。就是上面说的对自己自信不进行测试，导致ip输错了导致共识失败，这时候是没有回显的。把后面的正则删掉就行了。能看到日志报错，通过报错去找不能共识的原因。
 
