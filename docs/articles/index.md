@@ -91,3 +91,10 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
    6_application/6005.md
 ```
 ## 社区开发实践
+
+```eval_rst
+.. toctree::
+   :maxdepth: 1
+
+   7_community/group_deploy_case.md
+```
