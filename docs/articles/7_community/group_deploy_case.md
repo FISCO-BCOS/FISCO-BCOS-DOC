@@ -61,10 +61,13 @@ cd ~/generator && bash ./scripts/install.sh
 工具类的download_fisco函数这里卡主了。没有cdn的朋友可以vim修改下这个url为：
 
 ```bash
+fisco官方cdn：
+https://www.fisco.com.cn/cdn/fisco-bcos/releases/download/
+or直接下载：
 https://xiaoyue-blog.oss-cn-hangzhou.aliyuncs.com/fisco-bcos.tar.gz
 ```
 
-这是我的OSS，开放给大家使用轻点敲啊。
+这是俺的OSS，开放使用师傅们轻点敲啊。
 
 一秒不到就下完了。然后这个就是装好了：
 
