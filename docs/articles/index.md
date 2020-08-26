@@ -86,8 +86,18 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
    :maxdepth: 1
 
    6_application/industry_application_case.md
-   6_application/6003.md
-   6_application/6004.md
-   6_application/6005.md
+   6_application/application_online_lending_platforms.md
+   6_application/application_people_copyright.md
+   6_application/application_bsn_officially_designated.md
+   6_application/application_manufacturing_changhong.md
+   6_application/application_on-chain_collaboration_multiple_enterprises_jianxinzhuhe.md
+   6_application/application_construction_industry_digitalization_jianxinzhuhe.md
 ```
 ## 社区开发实践
+
+```eval_rst
+.. toctree::
+   :maxdepth: 1
+
+   7_practice/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0.md
+```
