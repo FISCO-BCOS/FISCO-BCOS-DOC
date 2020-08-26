@@ -52,7 +52,6 @@ repositories {
         maven { url "https://dl.bintray.com/ethereum/maven/" }
     }
 ```
-**注：** 如果下载Web3SDK的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
 
 ## 配置SDK
 
@@ -743,7 +742,7 @@ InputAndOutputResult[
 ```java
 // transactionReceipt为调用do_event接口的交易回执
 String jsonResult = txDecodeSampleDecoder.decodeEventReturnJson(transactionReceipt.getLogs());
-String mapResult = txDecodeSampleDecoder.decodeEventReturnJson(transactionReceipt.getLogs());
+Map<String, List<List<ResultEntity>>> mapResult = txDecodeSampleDecoder.decodeEventReturnObject(transactionReceipt.getLogs());
 
 System.out.println("json => \n" + jsonResult);
 System.out.println("map => \n" + mapResult);
