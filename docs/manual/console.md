@@ -81,6 +81,15 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 |-- replace_solc_jar.sh # 编译jar包替换脚本
 ```
 
+**注意：默认下载控制台的版本内置`0.4.25`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**
+```bash
+# 0.5
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh -v 0.5
+
+# 0.6
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh -v 0.6
+```
+
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
