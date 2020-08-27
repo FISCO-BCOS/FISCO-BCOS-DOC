@@ -29,9 +29,9 @@
 .. toctree::
    :maxdepth: 1
 
-   3005.md
-   3006.md
-   3007.md
-   3008.md
-   3009.md
+   dag-based_parallel_transaction_execution_engine.md
+   parallel_transformation.md
+   parallel_contract_development_framework_with_tutorials.md
+   transaction_lifetime.md
+   transaction_pool_optimization_strategy.md
 ```

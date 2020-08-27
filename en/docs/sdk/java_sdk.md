@@ -720,7 +720,7 @@ Call ``` function do_event(uint256 _u,int256 _i,bool _b,address _addr,bytes32 _b
 ```java
 // transactionReceipt is the transaction receipt of calling do_event API
 String jsonResult = txDecodeSampleDecoder.decodeEventReturnJson(transactionReceipt.getLogs());
-Map<String, List<List<EventResultEntity>>> mapResult = txDecodeSampleDecoder.decodeEventReturnObject(transactionReceipt.getLogs());
+String mapResult = txDecodeSampleDecoder.decodeEventReturnJson(transactionReceipt.getLogs());
 
 System.out.println("json => \n" + jsonResult);
 System.out.println("map => \n" + mapResult);
