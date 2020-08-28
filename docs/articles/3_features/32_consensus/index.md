@@ -9,7 +9,7 @@
    :maxdepth: 1
 
    consensus_optimization.md
-   3202.md
-   3203.md
+   pbft_empty_block_processing.md
+   rpbft_design_analysis.md
 ```
    

@@ -15,9 +15,9 @@
    :maxdepth: 1
 
    entry_quick_guide.md
-   3502.md
-   3503.md
-   3504.md
+   smart_contract_practice.md
+   16skills_to_high-level_smart_contracts.md
+   contract_design_practice_deposit&points_scene.md
 ```
 
 预编译合约
