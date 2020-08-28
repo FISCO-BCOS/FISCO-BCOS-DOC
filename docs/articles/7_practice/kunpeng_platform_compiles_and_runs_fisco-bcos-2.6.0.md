@@ -1,18 +1,18 @@
 # 鲲鹏平台编译并运行FISCO-BCOS 2.6.0
-一：申请鲲鹏服务器（已经有鲲鹏服务器略过此步）
-1.1：打开https://dw.pcl.ac.cn/#/home/index鹏城实验室官网进行账户注册，注册过程中需要填写真实名称、工作单位、邮箱，收到激活邮件后需要手动点击激活连接地址激活账户。
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/1.png)
-1.2 登录注册的账户以后点击“开发者云”按钮
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/2.png)
-1.3 在打开的页面中自己填写“需求申请”订单，按照自己实际项目需求规划硬件配置、系统版本、使用多长时间。
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/3.png)
-1.4 需求订单填写无误提交以后，等待官方批准，批准完成以后会收到批准结果邮件通知。
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/4.png)
-1.5 登录鲲鹏服务器查看服务器信息，
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/5.png)
+### 一：申请鲲鹏服务器（已经有鲲鹏服务器略过此步）
+1. 打开 https://dw.pcl.ac.cn/#/home/index 鹏城实验室官网进行账户注册，注册过程中需要填写真实名称、工作单位、邮箱，收到激活邮件后需要手动点击激活连接地址激活账户 
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/1.png)     
+2. 登录注册的账户以后点击 "开发者云" 按钮 
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/2.png)  
+3. 在打开的页面中自己填写“需求申请”订单，按照自己实际项目需求规划硬件配置、系统版本、使用多长时间  
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/3.png)   
+4. 需求订单填写无误提交以后，等待官方批准，批准完成以后会收到批准结果邮件通知  
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/4.png)  
+5. 登录鲲鹏服务器查看服务器信息  
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/5.png)  
 至此，鲲鹏服务器准备完成。
 
-二：在鲲鹏服务器安装基础软件
+### 二：在鲲鹏服务器安装基础软件
 2.1 更新软件
 yum update （此过程会下载更新包，请保持网络畅通并耐心等待）
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/6.png)
@@ -42,16 +42,20 @@ mkdir build && cd build
 ../configure --prefix=/usr/local/gcc-9.3.0 --enable-bootstrap --enable-checking=release --enable-languages=c,c++ --disable-multilib 
 
 2.4.9编译并安装
-#编译生成makefile文件
+# 编译生成makefile文件
  Make && make install
 
  2.5.0安装GCC 
 sudo 6)安装后的设置
-#设置环境变量 touch /etc/profile.d/gcc.sh sudo chmod 777 /etc/profile.d/gcc.sh 
+# 设置环境变量 
+touch /etc/profile.d/gcc.sh sudo chmod 777 /etc/profile.d/gcc.sh 
 sudo echo -e '\nexport PATH=/usr/local/gcc-9.3.0/bin:$PATH\n' >> /etc/profile.d/gcc.sh && source /etc/profile.d/gcc.sh
- #设置头文件 sudo ln -sv /usr/local/gcc/include/ /usr/include/gcc 
-#设置库文件 touch /etc/ld.so.conf.d/gcc.conf sudo chmod 777 /etc/ld.so.conf.d/gcc.conf sudo echo -e "/usr/local/gcc/lib64" >> /etc/ld.so.conf.d/gcc.conf 
-#加载动态连接库 sudo ldconfig -v ldconfig -p |grep gcc 
+# 设置头文件 
+sudo ln -sv /usr/local/gcc/include/ /usr/include/gcc 
+# 设置库文件 
+touch /etc/ld.so.conf.d/gcc.conf sudo chmod 777 /etc/ld.so.conf.d/gcc.conf sudo echo -e "/usr/local/gcc/lib64" >> /etc/ld.so.conf.d/gcc.conf 
+# 加载动态连接库 
+sudo ldconfig -v ldconfig -p |grep gcc 
 
 2.5.1测试版本号
 #测试 gcc -v
