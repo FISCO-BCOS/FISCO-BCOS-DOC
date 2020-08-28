@@ -1,47 +1,76 @@
 # 鲲鹏平台编译并运行FISCO-BCOS 2.6.0
 ### 一：申请鲲鹏服务器（已经有鲲鹏服务器略过此步）
-1. 打开 https://dw.pcl.ac.cn/#/home/index 鹏城实验室官网进行账户注册，注册过程中需要填写真实名称、工作单位、邮箱，收到激活邮件后需要手动点击激活连接地址激活账户 
+1. 打开 [鹏城实验室官网](https://dw.pcl.ac.cn/#/home/index) 进行账户注册，注册过程中需要填写真实名称、工作单位、邮箱，收到激活邮件后需要手动点击激活连接地址激活账户 
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/1.png)     
+
 2. 登录注册的账户以后点击 "开发者云" 按钮 
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/2.png)  
-3. 在打开的页面中自己填写“需求申请”订单，按照自己实际项目需求规划硬件配置、系统版本、使用多长时间  
+
+3. 在打开的页面中自己填写 "需求申请" 订单，按照自己实际项目需求规划硬件配置、系统版本、使用多长时间  
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/3.png)   
+
 4. 需求订单填写无误提交以后，等待官方批准，批准完成以后会收到批准结果邮件通知  
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/4.png)  
-5. 登录鲲鹏服务器查看服务器信息  
+
+5. 登录鲲鹏服务器查看服务器信息，至此鲲鹏服务器准备完成  
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/5.png)  
-至此，鲲鹏服务器准备完成。
 
 ### 二：在鲲鹏服务器安装基础软件
-2.1 更新软件
-yum update （此过程会下载更新包，请保持网络畅通并耐心等待）
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/6.png)
-2.2 查看基础工具版本
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/7.png)
-2.3 安装基础依赖
-yum install flex patch bison gmp-static
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/8.png)
-2.4 升级gcc 到9.3
-2.4.1下载gcc-9.3.0.tar.gz
+1. 更新软件 （此过程会下载更新包，请保持网络畅通并耐心等待）
+```
+yum update 
+```
+
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/6.png) 
+
+2. 查看基础工具版本 
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/7.png) 
+
+3. 安装基础依赖 
+```
+yum install flex patch bison gmp-static 
+```
+
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/8.png) 
+
+4. 升级gcc 到9.3  
+
+ * 下载gcc-9.3.0.tar.gz 
+ ```
+ wget http://mirror.hust.edu.cn/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz
+ ```
+ 
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/9.png)
-wget http://mirror.hust.edu.cn/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz
 
-2.4.2 解压文件
-tar -xf gcc-9.3.0.tar.gz
+ * 解压文件 
+```
+tar -xf gcc-9.3.0.tar.gz 
+```
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/10.png)
-2.4.5 安装gcc 依赖
+
+ * 安装gcc 依赖
+```
 ./contrib/download_prerequisites
+```
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/11.png)
-2.4.6加--noverify选项禁止边下边验证
+
+ * 加--noverify选项禁止边下边验证
+```
 ./contrib/download_prerequisites --no-verify
+```
 
-2.4.7 创建预编译目录
+
+ * 创建预编译目录
+```
 mkdir build && cd build
+```
 
-2.4.8 设置编译选项并编译
+ * 设置编译选项并编译
+```
 ../configure --prefix=/usr/local/gcc-9.3.0 --enable-bootstrap --enable-checking=release --enable-languages=c,c++ --disable-multilib 
+```
 
-2.4.9编译并安装
+ * 编译并安装
 # 编译生成makefile文件
  Make && make install
 
