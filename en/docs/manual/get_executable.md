@@ -95,6 +95,7 @@ $ make
 - TOOL, off by default, tools program compilation switch. To open it through`cmake -DTOOL=on ..`.
 - ARCH_NATIVE, off by default, optimize code according to local CPU architecture if on.
 - BUILD_STATIC，off by default, static compilation switch, only supports Ubuntu. To open it through `cmake -DBUILD_STATIC=on ..`.
+
 - Generate source documentation.
 
     ```bash
