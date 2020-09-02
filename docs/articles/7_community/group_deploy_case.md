@@ -14,8 +14,6 @@
 
 于是就出现了问题（基地爆炸，问题不大）。
 
----
-
 ## 1.下载安装运维部署工具
 
 > *这里假设机子上什么都没有，因为使用源码编译客户端的用户不用最后一步*
@@ -27,7 +25,6 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
 
 安装(此操作要求用户具有sudo权限)
-
 ``` bash
 cd ~/generator && bash ./scripts/install.sh
 ```
@@ -60,7 +57,7 @@ cd ~/generator && bash ./scripts/install.sh
 
 工具类的download_fisco函数这里卡主了。没有cdn的朋友可以vim修改下这个url为：
 
-```shell
+```bash
 fisco官方cdn：
 https://www.fisco.com.cn/cdn/fisco-bcos/releases/download/
 or直接下载：
