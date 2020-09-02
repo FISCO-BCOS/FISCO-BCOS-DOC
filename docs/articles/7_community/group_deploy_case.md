@@ -13,8 +13,6 @@
 使用generator运维部署工具，
 
 于是就出现了问题（基地爆炸，问题不大）。
- 
----
 
 ## 1.下载安装运维部署工具
 
@@ -22,19 +20,18 @@
 
 下载
 
-```shell
+``` bash
 cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
 
 安装(此操作要求用户具有sudo权限)
-
-```bash
+``` bash
 cd ~/generator && bash ./scripts/install.sh
 ```
 
 检查是否安装成功，若成功，输出 usage: generator xxx
 
-```bash
+``` bash
 ./generator -h
 ```
 
@@ -83,10 +80,10 @@ https://xiaoyue-blog.oss-cn-hangzhou.aliyuncs.com/fisco-bcos.tar.gz
 
 因为官方教程是在一个机子上配的，是节点1,2。分起来的话实际上没有1,2之分的。因为是在两台机子上，也不会存在端口冲突的情况。如果端口没有打开可能会报错，这边建议把两台机子添加白名单就行了。详情可参考：[FSICO BCOS多机部署之端口开放](https://blog.csdn.net/xiaoyue2019/article/details/107401334)
 
-机构|节点|rpc端口|channel端口|p2p端口
----|---|---|---|---|
-机构A|节点1|8545|20200|30300
-机构B|节点2|8545|20200|30300
+|机构|节点|rpc端口|channel端口|p2p端口|
+|---|---|---|---|---|
+|机构A|节点1|8545|20200|30300|
+|机构B|节点2|8545|20200|30300|
 
 ### 2.1 机构初始化
 
@@ -316,5 +313,9 @@ tail -f ./node*/node*/log/log*  | grep +++
 🥈**GitHub:** [https://github.com/xiaoyue2019](https://github.com/xiaoyue2019)
 
 🥉**CSDN:** [https://blog.csdn.net/xiaoyue2019](https://blog.csdn.net/xiaoyue2019)
+
+欢迎来俺们社区吹水鸭：
+
+![](../../../images/articles/group_deploy_case/7.bmp)
 
 *参考：<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/tutorial_detail_operation.html>*
