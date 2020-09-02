@@ -238,7 +238,7 @@ disk encryption configuration example is as follows:
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=31443
+key_manager_port=8006
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 

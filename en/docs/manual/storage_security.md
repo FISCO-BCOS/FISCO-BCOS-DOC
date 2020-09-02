@@ -34,12 +34,12 @@ To launch `key-manager` directly. If `key-manager` is not deployed, refer to [Ke
 
 ```shell
 # parameter: port，superkey
-./key-manager 31443 123xyz
+./key-manager 8006 123xyz
 ```
 launch successfully and print the log.
 
 ```log
-[1546501342949][TRACE][Load]key-manager started,port=31443
+[1546501342949][TRACE][Load]key-manager started,port=8006
 ```
 
 ## DataKey configuration
@@ -53,14 +53,14 @@ To execute the script, define `dataKey`, and get `cipherDataKey`
 
 ```shell
 cd key-manager/scripts
-bash gen_data_secure_key.sh 127.0.0.1 31443 123456
+bash gen_data_secure_key.sh 127.0.0.1 8006 123456
 
 CiherDataKey generated: ed157f4588b86d61a2e1745efe71e6ea
 Append these into config.ini to enable disk encryption:
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=31443
+key_manager_port=8006
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -78,7 +78,7 @@ To put it at last like this.
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=31443
+key_manager_port=8006
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -89,7 +89,7 @@ To execute script and encrypt node private key
 ```shell
 cd key-manager/scripts
 # parameter:ip port node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 8006 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
 ```
 
 The node private key is automatically encrypted after execution, and the files before encryption is backed up to the file ``` node.key.bak.xxxxxx ```. **Please take care of the backup private key and delete the backup private key generated on the node**

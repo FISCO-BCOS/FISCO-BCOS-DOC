@@ -36,13 +36,13 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 
 ```shell
 # 参数：端口，superkey
-./key-manager 31443 123xyz
+./key-manager 8006 123xyz
 ```
 
 启动成功，打印日志
 
 ```log
-[1546501342949][TRACE][Load]key-manager started,port=31443
+[1546501342949][TRACE][Load]key-manager started,port=8006
 ```
 
 ## 配置dataKey
@@ -56,14 +56,14 @@ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 
 ```shell
 cd key-manager/scripts
-bash gen_data_secure_key.sh 127.0.0.1 31443 123456
+bash gen_data_secure_key.sh 127.0.0.1 8006 123456
 
 CiherDataKey generated: ed157f4588b86d61a2e1745efe71e6ea
 Append these into config.ini to enable disk encryption:
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=31443
+key_manager_port=8006
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -80,7 +80,7 @@ vim nodes/127.0.0.1/node0/config.ini
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=31443
+key_manager_port=8006
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -91,7 +91,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```shell
 cd key-manager/scripts
 # 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 8006 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
 ```
 
 执行后，节点私钥自动被加密，加密前的文件备份到了文件``` node.key.bak.xxxxxx ```中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**
