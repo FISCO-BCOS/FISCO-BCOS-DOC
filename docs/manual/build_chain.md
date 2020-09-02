@@ -388,7 +388,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 5. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
 
-### 为结构生成新的SDK证书
+### 为机构生成新的SDK证书
 
 接下来的操作，都在上一节生成的`nodes/127.0.0.1`目录下进行
 

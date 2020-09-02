@@ -331,13 +331,13 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 
 1. Copy Node 0 Profile and Tool Script in Group 1
 
-```bash
-cp node0/config.ini newNode/config.ini
-cp node0/conf/group.1.genesis newNode/conf/group.1.genesis
-cp node0/conf/group.1.ini newNode/conf/group.1.ini
-cp node0/*.sh newNode/
-cp -r node0/scripts newNode/
-```
+    ```bash
+    cp node0/config.ini newNode/config.ini
+    cp node0/conf/group.1.genesis newNode/conf/group.1.genesis
+    cp node0/conf/group.1.ini newNode/conf/group.1.ini
+    cp node0/*.sh newNode/
+    cp -r node0/scripts newNode/
+    ```
 
 2. Update IP and ports monitored in `newNode/config.ini`, include IP and Port in `[rpc]` and `[p2p]`。
 3. Add IP and Port in the new node's P2P configuration to the [p2p] field in the original node's config.ini. Assuming that the new node IP: Port is 127.0.0.1:30304, the modified [P2P] configuration is
