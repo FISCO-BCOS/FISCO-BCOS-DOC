@@ -117,7 +117,7 @@ Operation steps:
 ```
 # acquire script
 $ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
-# execute, -c is the ca route given when the node was generated, agency is the agency name, -o is the name of the node folder to be generated
+# execute, -c is the ca route given when the node was generated, agency is the agency name, -o is the name of the node folder to be generated ( use -g when the node type is GM )
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
