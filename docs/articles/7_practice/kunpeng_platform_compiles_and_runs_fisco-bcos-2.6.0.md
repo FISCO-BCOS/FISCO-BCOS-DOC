@@ -1,5 +1,6 @@
 # 鲲鹏平台编译并运行FISCO-BCOS 2.6.0
-## 一：申请鲲鹏服务器（已经有鲲鹏服务器略过此步）
+## 一：申请鲲鹏服务器（已经有鲲鹏服务器略过此步）  
+
 ### 1. 注册
 打开 [鹏城实验室官网](https://dw.pcl.ac.cn/#/home/index) 进行账户注册，注册过程中需要填写真实名称、工作单位、邮箱，收到激活邮件后需要手动点击激活连接地址激活账户 
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/1.png)   
@@ -20,7 +21,8 @@
 登录鲲鹏服务器查看服务器信息，至此鲲鹏服务器准备完成  
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/5.png)  
 
-## 二：在鲲鹏服务器安装基础软件
+## 二：在鲲鹏服务器安装基础软件  
+
 ### 1. 更新软件 
 以 Centos 为例，使用 yum 进行更新（此过程会下载更新包，请保持网络畅通并耐心等待）
 ```.
@@ -133,7 +135,8 @@ source /etc/profile
 ```
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/15.png)
 
-## 三：编译FISCO-BCOS 2.6.0源码
+## 三：编译FISCO-BCOS 2.6.0源码  
+
 本文中用码云仓库映射到GitHub 仓库来同步代码，加快下载速度
 ### 1. 下载源码
  * 克隆 FISCO BCOS 代码
@@ -178,7 +181,8 @@ cp/usr/share/automake-1.13/config.guess /home/FISCO-BCOS-2.6/deps/src/GroupSigLi
  * 查看二进制可执行文件类型
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/22.png)
 
-## 四 : 鲲鹏平台运行2群组3机构6节点底层FISCO-BCOS联盟链服务
+## 四 : 鲲鹏平台运行2群组3机构6节点底层FISCO-BCOS联盟链服务  
+
 ### 1. 创建联盟链底层二进制可执行文件存放目录
 ```
 mkdir -p /home/soft/fisco-bcos-bin/
@@ -202,7 +206,8 @@ ps -aux |grep bcos
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/27.png)
 ### 6. 查看共识状态
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/28.png)
-## 五 : 鲲鹏平台安装FISCO-BCOS 控制台
+## 五 : 鲲鹏平台安装FISCO-BCOS 控制台  
+
 说明：控制台程序依赖 java-1.8 需要提前安装好鲲鹏版本（arrch64）的java-1.8
 
 ### 1. 下载控制台程序
