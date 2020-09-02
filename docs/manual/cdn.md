@@ -38,35 +38,7 @@ FISCO BCOS控制台是一个交互式命令行工具，使用Java开发，代码
 控制台每个版本发布会提供编译好的包，用户下载后配置后即可使用，为了下载控制台用户需要获取download_console.sh脚本。此脚本会从GitHub下载最新版本console.tar.gz，如果下载失败则尝试从官网CDN下载。下面的指令从国内镜像获取download_console.sh脚本并执行。
 
 ```bash
-curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
-```
-
-### 国密jar包官网CDN下载
-
-控制台可以通过替换solcJ包，实现对solidity 0.4/0.5的国密和非国密版本支持。参考这里[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#jar](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#jar)，下面提供官网CDN下载地址。
-
-* 0.4版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25.jar
-```
-
-* 0.5版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.5.2.jar
-```
-
-* 国密0.4版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-
-* 国密0.5版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.5.2-gm.jar
+curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
 ```
 
 ### TASSL
@@ -88,10 +60,10 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 ### 下载开发部署工具
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
 
 ### 下载二进制程序
 

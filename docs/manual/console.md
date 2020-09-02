@@ -52,12 +52,12 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 目录结构如下：
@@ -85,6 +85,7 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/downloa
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
   - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
+  - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -148,6 +149,7 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/downloa
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
   - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
+  - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
 
 - 打开国密开关
 ```
@@ -156,17 +158,21 @@ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/downloa
     <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
 </bean>
 ```
-- 替换国密编译包
-```bash
-# 下载solcJ-all-0.4.25-gm.jar放在console目录下
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-# 替换Jar包
-$ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-```
 
 ```eval_rst
-.. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar`
+.. important::
+
+    控制台编译工具重要说明
+
+    - 控制台自1.1.0版本起，移除对solcJ-all-0.x.x.jar、solcJ-all-0.x.x-gm.jar的依赖
+
+    - 新编译工具支持0.4.25、0.5.2、0.6.10三个版本，与同版本的solidity编译器对应
+
+    - 新的编译上传至maven仓库进行管理，不再需要替换文件的操作
+
+    - 控制台默认配置0.4.25版本编译工具，用户可以修改build.gradle配置的版本号重新编译，也可以通过download_console.sh脚本指定-v参数，下载配置对应编译器版本的控制台
+
+    - 新的编译工具同时支持国密、非国密编译功能，控制台国密或者非国密环境运行时，不再需要solcJ国密与非国密版本的替换
 ```
 
 #### 合约编译工具
@@ -198,28 +204,12 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
     ```
     java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
 
-**注：** 下载的控制台其`console/lib`目录下包含`solcJ-all-0.4.25.jar`，因此支持0.4版本的合约编译。如果使用0.5版本合约编译器或国密合约编译器，请下载相关合约编译器jar包，然后替换`console/lib`目录下的`solcJ-all-0.4.25.jar`。可以通过`./replace_solc_jar.sh`脚本进行替换，指定下载的编译器jar包路径，命令如下：
-```bash
-# 下载solcJ-all-0.5.2.jar放在console目录下，示例用法如下
-$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
-```
+```eval_rst
+.. important::
 
-#### 下载合约编译jar包
-0.4版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
-```
-0.5版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
-```
-国密0.4版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-国密0.5版本合约编译jar包
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
+    Java合约文件说明
+
+    - 控制台自1.1.0版本起，生成的Java合约文件国密、非国密环境均可以运行，国密与非国密环境生成一份合约代码即可
 ```
 
 ### 启动控制台
@@ -307,6 +297,8 @@ deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
 desc                                     Description table information.
 exit                                     Quit console.
+getBlockHeaderByHash                     Query information about a block header by hash.
+getBlockHeaderByNumber                   Query information about a block header by block number.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
 getBlockHashByNumber                     Query block hash by block number.
@@ -600,6 +592,87 @@ Switched to group 2.
 [group:1]> getGroupList
 [1]
 ```
+
+### **getBlockHeaderByHash**
+运行getBlockHeaderByHash，根据区块哈希查询区块头信息。
+参数：
+- 区块哈希：0x开头的区块哈希值
+- 签名列表标志：默认为false，即：区块头信息中不显示区块签名列表信息，设置为true，则显示区块签名列表。
+
+```text
+[group:1]> getBlockHeaderByHash 0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d
+{
+    "dbHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "extraData":[
+
+    ],
+    "gasLimit":"0x0",
+    "gasUsed":"0x0",
+    "hash":"0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "number":1,
+    "parentHash":"0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
+    "receiptsRoot":"0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer":"0x2",
+    "sealerList":[
+        "11e1be251ca08bb44f36fdeedfaeca40894ff80dfd80084607a75509edeaf2a9c6fee914f1e9efda571611cf4575a1577957edfd2baa9386bd63eb034868625f",
+        "78a313b426c3de3267d72b53c044fa9fe70c2a27a00af7fea4a549a7d65210ed90512fc92b6194c14766366d434235c794289d66deff0796f15228e0e14a9191",
+        "95b7ff064f91de76598f90bc059bec1834f0d9eeb0d05e1086d49af1f9c2f321062d011ee8b0df7644bd54c4f9ca3d8515a3129bbb9d0df8287c9fa69552887e",
+        "b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36"
+    ],
+    "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp":"0x173ad8703d6",
+    "transactionsRoot":"0xb563f70188512a085b5607cac0c35480336a566de736c83410a062c9acc785ad"
+}
+```
+
+### **getBlockHeaderByNumber**
+运行getBlockHeaderByNumber，根据区块高度查询区块头信息。
+参数：
+- 区块高度
+- 签名列表标志：默认为false，即：区块头信息中不显示区块签名列表信息，设置为true，则显示区块签名列表。
+
+```text
+[group:1]> getBlockHeaderByNumber 1 true
+{
+    "dbHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "extraData":[
+
+    ],
+    "gasLimit":"0x0",
+    "gasUsed":"0x0",
+    "hash":"0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "number":1,
+    "parentHash":"0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
+    "receiptsRoot":"0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer":"0x2",
+    "sealerList":[
+        "11e1be251ca08bb44f36fdeedfaeca40894ff80dfd80084607a75509edeaf2a9c6fee914f1e9efda571611cf4575a1577957edfd2baa9386bd63eb034868625f",
+        "78a313b426c3de3267d72b53c044fa9fe70c2a27a00af7fea4a549a7d65210ed90512fc92b6194c14766366d434235c794289d66deff0796f15228e0e14a9191",
+        "95b7ff064f91de76598f90bc059bec1834f0d9eeb0d05e1086d49af1f9c2f321062d011ee8b0df7644bd54c4f9ca3d8515a3129bbb9d0df8287c9fa69552887e",
+        "b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36"
+    ],
+    "signatureList":[
+        {
+            "index":"0x3",
+            "signature":"0xb5b41e49c0b2bf758322ecb5c86dc3a3a0f9b98891b5bbf50c8613a241f05f595ce40d0bb212b6faa32e98546754835b057b9be0b29b9d0c8ae8b38f7487b8d001"
+        },
+        {
+            "index":"0x0",
+            "signature":"0x411cb93f816549eba82c3bf8c03fa637036dcdee65667b541d0da06a6eaea80d16e6ca52bf1b08f77b59a834bffbc124c492ea7a1601d0c4fb257d97dc97cea600"
+        },
+        {
+            "index":"0x1",
+            "signature":"0xea3c27c2a1486c7942c41c4dc8f15fbf9a668aff2ca40f00701d73fa659a14317d45d74372d69d43ced8e81f789e48140e7fa0c61997fa7cde514c654ef9f26d00"
+        }
+    ],
+    "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp":"0x173ad8703d6",
+    "transactionsRoot":"0xb563f70188512a085b5607cac0c35480336a566de736c83410a062c9acc785ad"
+}
+```
+
 ### **getBlockByHash**
 运行getBlockByHash，根据区块哈希查询区块信息。
 参数：
@@ -1137,6 +1210,7 @@ Hello,CNS2
 * tx_gas_limit：交易执行允许消耗的最大gas数
 * rpbft_epoch_sealer_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
 * rpbft_epoch_block_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
+* consensus_timeout：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒
 
 参数：
 

@@ -17,7 +17,7 @@ Use the script [```build_chain.sh```] (../installation.md) to build a node with 
 
 
 ``` shell
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 
 bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
@@ -89,7 +89,7 @@ To execute script and encrypt node private key
 ```shell
 cd key-manager/scripts
 # parameter:ip port node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 8006 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 8006 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```
 
 The node private key is automatically encrypted after execution, and the files before encryption is backed up to the file ``` node.key.bak.xxxxxx ```. **Please take care of the backup private key and delete the backup private key generated on the node**

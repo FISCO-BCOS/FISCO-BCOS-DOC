@@ -126,6 +126,8 @@ $ ./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca
 
 执行完成后可以在./dir_sdk_ca路径下生成名为SDK的文件夹，包含相应的SDK证书`node.crt` 和私钥`node.key`。
 
+FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
+
 ## generate_all_certificates
 
 |  |  |
@@ -458,12 +460,12 @@ FISCO BCOS generator 的scripts文件夹的`check_certificates.sh`脚本包含�
 如果用户需要检测由`开发部署工具buildchain.sh`生成的节点时，可以采用以下命令获取检测脚本：
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/generator/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/generator/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/generator/raw/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/generator/raw/master/scripts/check_certificates.sh && chmod u+x check_certificates.sh`
 ```
 
 使用generator部署节点的用户可以从generator的根目录下，从scripts/check_certificates.sh获取脚本。
@@ -495,12 +497,12 @@ $ ./check_certificates.sh -v ~/ca.crt ~/node.crt
 ### 获取脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/check_node_config.sh && chmod u+x check_node_config.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/check_node_config.sh && chmod u+x check_node_config.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/check_node_config.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/check_node_config.sh`
 ```
 
 ### 使用

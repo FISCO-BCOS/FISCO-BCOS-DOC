@@ -34,14 +34,14 @@
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.5.0')
+compile ('org.fisco-bcos:web3sdk:2.6.1')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.5.0</version>
+    <version>2.6.1</version>
 </dependency>
 ```
 由于引入了以太坊的solidity编译器相关jar包，需要在Java应用的gradle配置文件build.gradle中添加以太坊的远程仓库。
@@ -71,6 +71,8 @@ FISCO-BCOS 2.5及之后的版本，在国密区块链环境下支持节点与SDK
     - 国密SSL连接只有在国密区块链环境下才可以使用。
 
     - 是否选择国密SSL连接，SDK与区块链节点的配置要保持一致，节点配置参考 `配置链属性 <../manual/configuration.html?highlight=sm_crypto_channel#id10>`_
+
+    - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
 
 ```
 

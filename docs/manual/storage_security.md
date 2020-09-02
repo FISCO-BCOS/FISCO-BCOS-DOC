@@ -20,7 +20,7 @@
 用[```build_chain.sh```](../installation.md)脚本，用普通的操作方法，先生成节点。
 
 ``` shell
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
 
 bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
@@ -91,7 +91,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```shell
 cd key-manager/scripts
 # 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 8006 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea 
+bash encrypt_node_key.sh 127.0.0.1 8006 ../../nodes/127.0.0.1/node0/conf/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```
 
 执行后，节点私钥自动被加密，加密前的文件备份到了文件``` node.key.bak.xxxxxx ```中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**

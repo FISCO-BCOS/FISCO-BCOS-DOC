@@ -30,7 +30,7 @@ Usage:
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
     -q <List FISCO-BCOS releases>       List FISCO-BCOS released versions
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
+    -s <DB type>                        Default RocksDB. Options can be RocksDB / MySQL / Scalable, RocksDB is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
@@ -82,7 +82,8 @@ bash build_chain.sh -f ipconf -T
 ```
 
 ### **`e`选项[**Optional**]**
-用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
+
+用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载最新的二进制程序。
 
 ```bash
 # 从GitHub下载最新release二进制，生成本机4节点
@@ -92,9 +93,11 @@ $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 ```
 
 ### **`o`选项[**Optional**]**
+
 指定生成的配置所在的目录。
 
 ### **`p`选项[**Optional**]**
+
 指定节点的起始端口，每个节点占用三个端口，分别是p2p,channel,jsonrpc使用`,`分割端口，必须指定三个端口。同一个IP下的不同节点所使用端口从起始端口递增。
 
 ```bash
@@ -116,22 +119,22 @@ $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 在节点目录下执行如下命令启动节点
 
 ```bash
-$ ./start.sh
+./start.sh
 ```
 
 该模式下 start.sh 脚本启动节点的命令如下
+
 ```bash
-$ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
 ### **`s`选项[**Optional**]**
 
-有参数选项，参数为db名，目前支持rocksdb、mysql、external、scalable。默认使用RocksDB。
+有参数选项，参数为db名，目前支持RocksDB、mysql、Scalable。默认使用rocks。
 
 - RocksDB模式，使用RocksDB作为后端数据库。
 - MySQL模式，使用MySQL作为后端数据库，节点直连MySQL，需要在群组ini文件中配置数据库相关信息。
-- External模式，使用MySQL作为后端数据库，节点使用[`amdb-proxy`](./distributed_storage.md)连接数据库，代理和节点通过amop协议通信，需要在群组ini文件中配置topic信息。
-- scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
+- Scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用Scalable模式。
 
 ### **`c`选项[**Optional**]**
 
@@ -146,12 +149,16 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 
 ```bash
 # 该链标识为2。
-$ bash build_chain.sh -l 127.0.0.1:2 -C 2
+bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
 ### **`g`选项[**Optional**]**
 
-无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**使用`g`选项时要求二进制fisco-bcos为国密版本**。
+无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-g -G参数，连接也使用国密SSL**，`-G`设置`chain.sm_crypto_channel=true`
+
+```bash
+bash build_chain.sh -l 127.0.0.1:2 -g -G
+```
 
 ### **`z`选项[**Optional**]**
 
@@ -170,15 +177,19 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](./configuration.html#id6)。
 
 ### **`k`选项[**Optional**]**
+
 使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括ca.crt/ca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括root.crt，用于存放上级证书链。
 
 ### **`K`选项[**Optional**]**
+
 国密模式使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括gmca.crt/gmca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括gmroot.crt，用于存放上级证书链。
 
 ### **`G`选项[**Optional**]**
-从2.5.0开始，国密模式下，用户可以配置节点与SDK连接是否使用国密SSL，设置此选项则`chain.sm_crypto_channel=true`。默认节点与SDK的channel连接使用secp256k1的证书。
+
+从2.5.0开始，国密模式下，用户可以配置节点与SDK连接是否使用国密SSL，设置此选项则`chain.sm_crypto_channel=true`。默认节点与SDK的channel连接使用secp256k1的证书。**确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-g -G参数，连接也使用国密SSL**
 
 ### **`D`选项[**Optional**]**
+
 无参数选项，设置该选项时，生成节点的目录名为IP_P2P端口，默认为节点从0开始的编号。
 
 ### **`E`选项[**Optional**]**
@@ -213,7 +224,7 @@ nodes/
 │   │.....
 │   ├── node3 # 节点3文件夹
 │   │.....
-│   ├── sdk # SDK与节点SSL连接配置
+│   ├── sdk # SDK与节点SSL连接配置，FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错
 │   │   ├── ca.crt # SSL连接根证书
 │   │   ├── sdk.crt # SSL连接证书
 │   │   └── sdk.key # SSL连接证书私钥
@@ -320,12 +331,12 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 1. 获取证书生成脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
 ```
 
 2. 生成新节点私钥证书
@@ -377,19 +388,19 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 5. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
 
-### 为结构生成新的SDK证书
+### 为机构生成新的SDK证书
 
 接下来的操作，都在上一节生成的`nodes/127.0.0.1`目录下进行
 
 1. 获取证书生成脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
 ```
 
 2. 生成新节点私钥证书
@@ -410,7 +421,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newSDK -g ../gmcert/agency/ -s
 1. 获取机构证书生成脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
 ```
 
 2. 生成新机构私钥和证书
