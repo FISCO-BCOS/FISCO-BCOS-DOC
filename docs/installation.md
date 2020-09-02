@@ -198,6 +198,7 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 ```eval_rst
 .. note::
     - 搭建国密版时，如果使用国密SSL请执行``cp nodes/127.0.0.1/sdk/gm/* console/conf/``
+    - 搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1
 ```
 
 ```bash

@@ -179,7 +179,7 @@ cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download
 
 ```eval_rst
 .. note::
-    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`, and modify encryptType to 1 in applicationContext.xml.
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
