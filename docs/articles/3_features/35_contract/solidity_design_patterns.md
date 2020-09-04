@@ -13,7 +13,7 @@
 | 类型               | 模式                                                         |
 | ------------------ | ------------------------------------------------------------ |
 | Security           | 1. Checks-Effects-Interaction<br/>2. Emergency Stop<br/>3. Speed Bump<br/>4. Rate Limit<br/>5. Mutex<br/>6. Balance Limit |
-| Maintaince         | 7. Data Segregation<br/>8. Satellite<br/>9. Contract Register<br/>10. Contract Relay |
+| Maintenance         | 7. Data Segregation<br/>8. Satellite<br/>9. Contract Register<br/>10. Contract Relay |
 | Lifecycle          | 11. Mortal<br/>12. Automatic Deprecation                     |
 | Authorization      | 13. Ownership<br/>14. Access Restriction                     |
 | Action And Control | 15. Pull Payment<br/>16. Commit And Reveal<br/>17. State Machine<br/>18. Oracle |
@@ -142,7 +142,7 @@ contract Mutex {
 
 在这个例子中，调用some函数前会先运行noReentrancy修饰符，将locked变量赋值为true。如果此时又递归地调用了some，修饰符的逻辑会再次激活，由于此时的locked属性已为true，修饰符的第一行代码会抛出错误。
 
-## **可维护性（Maintaince）**
+## **可维护性（Maintenance）**
 
 在区块链中，合约一旦部署，就无法更改。当合约出现了bug，通常要面对以下问题：
 
@@ -456,7 +456,7 @@ contract CommitReveal {
     function commit(bytes32 commit) public {
         Commit storage userCommit = userCommits[msg.sender][commit];
         require(userCommit.status == 0);
-        userCommit.status = 1; // comitted
+        userCommit.status = 1; // committed
         emit LogCommit(commit, msg.sender);
     }
 
@@ -535,4 +535,4 @@ contract BizContract {
 
 ## 总结
 
-本文的介绍涵盖了安全性、可维护性等多种设计模式，其中，有些偏原则性，如Security和Maintaince设计模式；有些是偏实践，例如Authrization，Action And Control。这些设计模式，尤其实践类，并不能涵盖所有场景。随着对实际业务的深入探索，会遇到越来越多的特定场景与问题，开发者可对这些模式提炼、升华，以沉淀出针对某类问题的设计模式。上述设计模式是程序员的有力武器，掌握它们可应对许多已知场景，但更应掌握提炼设计模式的方法，这样才能从容应对未知领域，这个过程离不开对业务的深入探索，对软件工程原则的深入理解。
+本文的介绍涵盖了安全性、可维护性等多种设计模式，其中，有些偏原则性，如Security和Maintenance设计模式；有些是偏实践，例如Authrization，Action And Control。这些设计模式，尤其实践类，并不能涵盖所有场景。随着对实际业务的深入探索，会遇到越来越多的特定场景与问题，开发者可对这些模式提炼、升华，以沉淀出针对某类问题的设计模式。上述设计模式是程序员的有力武器，掌握它们可应对许多已知场景，但更应掌握提炼设计模式的方法，这样才能从容应对未知领域，这个过程离不开对业务的深入探索，对软件工程原则的深入理解。

@@ -291,7 +291,7 @@ contract CommonLib {
 
 contract StudentController is CommonLib {
   /** student status */
-    bytes32 constant private STUDENT_REGISTED = "A";
+    bytes32 constant private STUDENT_REGISTERED = "A";
     bytes32 constant private STUDENT_CANCELED = "C";
     
     //other code
