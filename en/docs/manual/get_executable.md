@@ -42,7 +42,7 @@ FISCO BCOS is using generic [CMake](https://cmake.org) to generate platform-spec
 Ubuntu 16.04 or later is recommended. The versions below 16.04 have not been tested. You will require to have the build tools build tools and `libssl` for compiling the source code.
 
 ```bash
-sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev
+sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev zlib1g-dev
 ```
 
 - CentOS
