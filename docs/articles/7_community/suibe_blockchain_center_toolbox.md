@@ -1,4 +1,4 @@
-# 开发者如何善用小工具提速应用开发效率
+开发者如何善用小工具提速应用开发效率
 
 作者：上海对外经贸大学区块链技术与应用研究中心
 
@@ -41,7 +41,11 @@ github地址：<https://github.com/WeBankFinTech/WeIdentity>
 
 
 
-![img](https://qqadapt.qpic.cn/txdocpic/0/6d4402833c4aad665760f9f8d854533f/0?w=1498&h=845)
+![](../../../images/articles/suibe_blockchain_center_toolbox/0.jpg)
+
+
+
+
 
 
 
@@ -79,7 +83,7 @@ github地址：<https://github.com/WeBankFinTech/WeIdentity>
 
 开发完成后，通过工具箱＞性能测试工具，测试代码性能并进行调优。
 
-![区块链开发工具箱](https://qqadapt.qpic.cn/txdocpic/0/f495c6fd94f39163d4ef911acb712d39/0?w=1920&h=937)
+![](../../../images/articles/suibe_blockchain_center_toolbox/1.png)
 
 目前工具箱已实现或规划实现如下功能：地址生成、模拟数据生成、数据转换、签名验证、配置文件智能生成、区块链网络情况监测、合约案例库、区块链网络管理、性能测试工具等。
 
@@ -93,9 +97,9 @@ github地址：<https://github.com/WeBankFinTech/WeIdentity>
 
 对团队而言，团队可共同运维一个内部共享的图书馆，所有成员可以在该图书馆上共享书籍、文章等，激活群体学习效能，解决孤立学习效率低下、新人培训成本高等问题。
 
+![](../../../images/articles/suibe_blockchain_center_toolbox/2.png)
 
 
-![多用户可运行图书馆](https://qqadapt.qpic.cn/txdocpic/0/5f9f7ff87747b864ebdd6ae8de613100/0?w=1920&h=937)
 
 - **多链虚拟控制台**
 
@@ -105,7 +109,7 @@ github地址：<https://github.com/WeBankFinTech/WeIdentity>
 
 目前已支持通过web访问FISCO BCOS控制台。
 
-![img](https://qqadapt.qpic.cn/txdocpic/0/d596efa960353f0481851395d6d15676/0?w=1275&h=939)
+![](../../../images/articles/suibe_blockchain_center_toolbox/3.png)
 
 - **CA系统**
 
