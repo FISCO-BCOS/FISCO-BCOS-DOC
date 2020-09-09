@@ -17,6 +17,11 @@
 
 #### 准备HelloWorld.sol合约文件
 
+```shell
+# 该指令在go-sdk目录中执行
+mkdir helloworld && cd helloworld
+```
+
 在 go-sdk 主目录中新建 helloworld 文件夹，在该文件夹中创建 HelloWorld.sol 合约。该合约提供两个接口，分别是get()和set()，用于获取/设置合约变量name。合约内容如下
 
 ```solidity
@@ -79,7 +84,7 @@ helloworld目录下会生成HelloWorld.bin和HelloWorld.abi。此时利用abigen
 最后helloworld文件夹下面存在以下6个文件：
 
 ```shell
-HelloWorld.abi 、HelloWorld.bin、HelloWorld.go、HelloWorld.sol、solc-0.4.25、abigen
+HelloWorld.abi、HelloWorld.bin、HelloWorld.go、HelloWorld.sol、solc-0.4.25、abigen
 ```
 
 #### 准备建立ssl连接需要的证书
@@ -126,7 +131,7 @@ func main(){
 
 ```
 
-#### 调用合约get接口
+#### 调用合约get/set接口
 
 在contract文件夹中创建helloworld_get.go文件，调用合约get接口，获取智能合约中name变量存储的值
 
@@ -164,45 +169,9 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println("value :", value)
-}
-```
 
-#### 调用合约set接口
-
-在contract文件夹中创建helloworld_set.go文件，调用合约set接口，设置智能合约中name变量的值
-
-```go
-package main
-
-import (
-	"fmt"
-	"log"
-
-	"github.com/FISCO-BCOS/go-sdk/client"
-	"github.com/FISCO-BCOS/go-sdk/conf"
-	"github.com/FISCO-BCOS/go-sdk/helloworld"
-	"github.com/ethereum/go-ethereum/common"
-)
-
-func main() {
-	config := &conf.ParseConfig("config.toml")[0]
-	client, err := client.Dial(config)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// load the contract
-	contractAddress := common.HexToAddress("contract addree in hex") // 0x481D3A1dcD72cD618Ea768b3FbF69D78B46995b0
-	instance, err := helloworld.NewHelloWorld(contractAddress, client)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	helloworldSession := &helloworld.HelloWorldSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
-
-	var value = "Hello, FISCO BCOS"
-
-	tx, err := helloworldSession.Set(value)  // call set API
+	value = "Hello, FISCO BCOS"
+	tx, err = helloworldSession.Set(value)  // call set API
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -325,7 +294,7 @@ kvtabletest 目录下会生成 KVTableTest.bin、KVTableTest.abi和其它一些�
 最后 kvtabletest 文件夹下面存在以下6个文件和其它若干文件：
 
 ```shell
-KVTableTest.abi 、KVTableTest.bin、KVTableTest.go、KVTableTest.sol、solc-0.4.25、abigen
+KVTableTest.abi、KVTableTest.bin、KVTableTest.go、KVTableTest.sol、solc-0.4.25、abigen
 ```
 
 #### 准备建立ssl连接需要的证书
@@ -632,7 +601,7 @@ tabletest 目录下会生成 TableTest.bin、TableTest.abi和其它一些文件�
 最后 tabletest 文件夹下面存在以下6个文件和其它若干文件：
 
 ```shell
-TableTest.abi 、TableTest.bin、TableTest.go、TableTest.sol、solc-0.4.25、abigen
+TableTest.abi、TableTest.bin、TableTest.go、TableTest.sol、solc-0.4.25、abigen
 ```
 
 #### 准备建立ssl连接需要的证书
