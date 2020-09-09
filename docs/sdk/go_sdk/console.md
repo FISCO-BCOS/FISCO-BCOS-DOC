@@ -2,13 +2,13 @@
 
    [Go SDK](https://github.com/FISCO-BCOS/go-sdk) 通过 `console.go` 实现了一个简单的控制台，支持区块链和节点信息查询。
 
-**使用**:
+## 使用
 
 - 拉取代码并编译
 
 ```shell
 # 拉取代码
-git clone https://github.com/FISCO-BCOSgo-sdk.git
+git clone https://github.com/FISCO-BCOS/go-sdk.git
 # 切换目录
 cd go-sdk
 # 编译 cmd/console.go
@@ -53,7 +53,7 @@ go build cmd/console.go
 ```shell
 > ./console getBlockByHash 0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848 true
 
-Block: 
+Block:
 {
   "extraData": [],
   "gasLimit": "0x0",
@@ -92,7 +92,7 @@ Block:
 
 > ./console getBlockByHash 0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848 false
 
-Block: 
+Block:
 {
   "extraData": [],
   "gasLimit": "0x0",
@@ -134,7 +134,7 @@ Block:
 ```shell
 > ./console getBlockByNumber 3 true
 
-Block: 
+Block:
 {
   "dbHash": "0x2d23b1248fe53a1769db06af5c0e99261678643f405f058cfa89193592d13fa7",
   "extraData": [],
@@ -174,7 +174,7 @@ Block:
 
 > ./console getBlockByNumber 3 false
 
-Block: 
+Block:
 {
   "dbHash": "0x2d23b1248fe53a1769db06af5c0e99261678643f405f058cfa89193592d13fa7",
   "extraData": [],
@@ -216,7 +216,7 @@ Block:
 ```shell
 > ./console getBlockHashByNumber 3
 
-Block Hash: 
+Block Hash:
 "0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848"
 ```
 
@@ -227,7 +227,7 @@ Block Hash:
 ```shell
 > ./console getBlockNumber
 
-blocknumber: 
+blocknumber:
     hex: "0x3"
 decimal:  3
 ```
@@ -239,7 +239,7 @@ decimal:  3
 ```shell
 > ./console getClientVersion
 
-Client Version: 
+Client Version:
 {
   "Build Time": "20200610 15:42:05",
   "Build Type": "Linux/g++/RelWithDebInfo",
@@ -266,7 +266,7 @@ Client Version:
 ```shell
 > ./console getCode 0x65474dbd4f08170bc2dc30f9ae32f8e2206b15a6
 
-Contract Code: 
+Contract Code:
 "0x60806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ed3885e146100515780636d4ce63c146100ba575b600080fd5b34801561005d57600080fd5b506100b8600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061014a565b005b3480156100c657600080fd5b506100cf610164565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561010f5780820151818401526020810190506100f4565b50505050905090810190601f16801561013c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b8060009080519060200190610160929190610206565b5050565b606060008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101fc5780601f106101d1576101008083540402835291602001916101fc565b820191906000526020600020905b8154815290600101906020018083116101df57829003601f168201915b5050505050905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061024757805160ff1916838001178555610275565b82800160010185558215610275579182015b82811115610274578251825591602001919060010190610259565b5b5090506102829190610286565b5090565b6102a891905b808211156102a457600081600090555060010161028c565b5090565b905600a165627a7a72305820d0c58adfbd1215902f16e710a4e52b14e5c9ad7f0f3363c86d2b3156894bd0610029"
 ```
 
@@ -277,7 +277,7 @@ Contract Code:
 ```shell
 > ./console getConsensusStatus
 
-Consensus Status: 
+Consensus Status:
 [
   {
     "accountType": 1,
@@ -325,7 +325,7 @@ Consensus Status:
 ```shell
 > ./console getGroupID
 
-Group ID: 
+Group ID:
 1
 ```
 
@@ -336,7 +336,7 @@ Group ID:
 ```shell
 > ./console getGroupList
 
-Group ID List: 
+Group ID List:
 [
   1
 ]
@@ -349,7 +349,7 @@ Group ID List:
 ```shell
 > ./console getGroupPeers
 
-Peers: 
+Peers:
 [
   "42ae2ae3950a2933b6f576dc946b90b242b7f9a2a8d45aae53c1a1664cd582bd759fa69e4b52f7a453dce702878b9ef11fd34fce1bd15c9bdcabcbbee43e1302",
   "8b5e90815966004e807803aba5f003bc271d0b0aa82805c85764b21187bd504f79ec46eaf1e60752956af174a927d7b16c072c0bca1601968b29342521639c14",
@@ -365,7 +365,7 @@ Peers:
 ```shell
 > ./console getNodeIDList
 
-Node ID list: 
+Node ID list:
 [
   "955ab783c6adc7a5f817773a5fbe32ecd9310f9392406eb1f9fa3d2b21539577a70c933158c1bd3a0bf183d5498bf57202b88401e1cb20e8972aab43ba3354f0",
   "8b5e90815966004e807803aba5f003bc271d0b0aa82805c85764b21187bd504f79ec46eaf1e60752956af174a927d7b16c072c0bca1601968b29342521639c14",
@@ -381,7 +381,7 @@ Node ID list:
 ```shell
 > ./console getObserverList
 
-Observer List: 
+Observer List:
 [
   "42ae2ae3950a2933b6f576dc946b90b242b7f9a2a8d45aae53c1a1664cd582bd759fa69e4b52f7a453dce702878b9ef11fd34fce1bd15c9bdcabcbbee43e1302"
 ]
@@ -392,9 +392,9 @@ Observer List:
 获取PBFT视图：
 
 ```shell
-> ./console getPbftView 
+> ./console getPbftView
 
-PBFT view: 
+PBFT view:
 "0x30"
 ```
 
@@ -405,7 +405,7 @@ PBFT view:
 ```shell
 > ./console getPeers
 
-Peers: 
+Peers:
 [
   {
     "Agency": "agency",
@@ -438,7 +438,7 @@ Peers:
 ```shell
 > ./console getPendingTransactions
 
-Pending Transactions: 
+Pending Transactions:
 []
 ```
 
@@ -449,7 +449,7 @@ Pending Transactions:
 ```shell
 > ./console getPendingTxSize
 
-Pending Transactions Count: 
+Pending Transactions Count:
     hex: "0x0"
 decimal:  0
 ```
@@ -461,7 +461,7 @@ decimal:  0
 ```shell
 >  ./console getSealerList
 
-Sealer List: 
+Sealer List:
 [
   "8b5e90815966004e807803aba5f003bc271d0b0aa82805c85764b21187bd504f79ec46eaf1e60752956af174a927d7b16c072c0bca1601968b29342521639c14",
   "95381c1d22d10ad73171f0d34ec1f2e5809f47ee76264aeed4bb0daaf594bfb5da89f6a65ff4a056952f66a6a99fc927320d002191cecc7a48905edd61ad84b7",
@@ -476,7 +476,7 @@ Sealer List:
 ```shell
 > ./console getSyncStatus
 
-Synchronization Status: 
+Synchronization Status:
 {
   "blockNumber": 3,
   "genesisHash": "65e9c13da61b1f47564ccc6498260d739ce3dfd3366accc539a64412c1ef8e88",
@@ -524,11 +524,11 @@ Synchronization Status:
 
 ```shell
 > ./console getSystemConfigByKey tx_count_limit
-Result: 
+Result:
 "1000"
 
-> ./console getSystemConfigByKey tx_gas_limit  
-Result: 
+> ./console getSystemConfigByKey tx_gas_limit
+Result:
 "300000000"
 ```
 
@@ -539,7 +539,7 @@ Result:
 ```shell
 > ./console getTotalTransactionCount
 
-Latest Statistics on Transaction and Block Height: 
+Latest Statistics on Transaction and Block Height:
 {
   "blockNumber": "0x5",
   "failedTxSum": "0x0",
@@ -563,7 +563,7 @@ Latest Statistics on Transaction and Block Height:
 ```shell
 > ./console getTransactionByBlockHashAndIndex 0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848 0x0
 
-Transaction: 
+Transaction:
 {
   "blockHash": "0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848",
   "blockNumber": "0x3",
@@ -595,7 +595,7 @@ Transaction:
 ```shell
 > ./console getTransactionByBlockNumberAndIndex 3 0x0
 
-Transaction: 
+Transaction:
 {
   "blockHash": "0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848",
   "blockNumber": "0x3",
@@ -626,7 +626,7 @@ Transaction:
 ```shell
 > ./console getTransactionByHash 0x5518df7c2063efeb6481c35c4c58f378fac5f476c023c2019b9b01d221478434
 
-Transaction: 
+Transaction:
 {
   "blockHash": "0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848",
   "blockNumber": "0x3",
@@ -657,7 +657,7 @@ Transaction:
 ```shell
 > ./console getTransactionReceipt 0x5518df7c2063efeb6481c35c4c58f378fac5f476c023c2019b9b01d221478434
 
-Transaction Receipt: 
+Transaction Receipt:
 {
         "transactionHash": "0x5518df7c2063efeb6481c35c4c58f378fac5f476c023c2019b9b01d221478434",
         "transactionIndex": "0x0",
@@ -692,7 +692,7 @@ Transaction Receipt:
 > ./console setSystemConfigByKey tx_count_limit 999
 success
 
-> ./console setSystemConfigByKey tx_gas_limit 30000000 
+> ./console setSystemConfigByKey tx_gas_limit 30000000
 success
 
 > ./console setSystemConfigByKey rpbft_epoch_sealer_num 20
@@ -828,7 +828,7 @@ success
 - accountAddress：外部账户地址
 
 ```shell
-> ./console revokePermissionManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F 
+> ./console revokePermissionManager 0xFbb18d54e9Ee57529cda8c7c52242EFE879f064F
 success
 ```
 

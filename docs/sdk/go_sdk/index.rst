@@ -20,6 +20,7 @@ Go SDK
 
 .. toctree::
    :hidden:
+   :maxdepth: 3
 
    env_conf.md
    api.md
