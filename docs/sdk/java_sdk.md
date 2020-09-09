@@ -1,4 +1,4 @@
-# Java SDK
+#  Java SDK (web3SDK） 
 
 [Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以支持访问节点、查询节点状态、修改系统设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
 
@@ -1034,7 +1034,7 @@ public class EventLogUserParams {
 public abstract class EventLogPushCallback {
     public void onPushEventLog(int status, List<LogResult> logs);
 }
-``` 
+```
 
 - `status` 回调返回状态：  
 ```Java
@@ -1076,6 +1076,7 @@ public abstract class EventLogPushCallback {
 
 - 实现回调对象  
   
+
 Java SDK默认实现的回调类`ServiceEventLogPushCallback`，将`status`与`logs`在日志中打印，用户可以通过继承`ServiceEventLogPushCallback`类，重写`onPushEventLog`接口，实现自己的回调逻辑处理。 
 ```Java
 class MyEventLogPushCallBack extends ServiceEventLogPushCallback {
@@ -1136,7 +1137,7 @@ class Asset {
     public void registerTransferEventEventLogFilter(EventLogPushWithDecodeCallback callback);
     public void registerTransferEventEventLogFilter(String fromBlock, String toBlock, List<String> otherTopics, EventLogPushWithDecodeCallback callback);
 }
-``` 
+```
 
 ##### registerTransferEventEventLogFilter  
   这两个接口对`org.fisco.bcos.channel.client.Service.registerEventLogFilter`进行了封装，调用等价于将`registerEventLogFilter`的`params`参数设置为：
@@ -1403,6 +1404,6 @@ class Asset {
   1. 拷贝了错误的证书，检查拷贝的证书是否正确。
   2. 端口配置错误，连接其他服务正在监听的端口，检查连接端口是否为节点`channel_listen_port`端口。
   3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../manual/console.html#java)章节安装OracleJDK。<br><br> 
-   
+  
 - Failed to connect to [127.0.0.1:20233, 127.0.0.1:20234, 127.0.0.1:20235] ,groupId: 1 ,caCert: classpath:ca.crt ,sslKey: classpath:sdk.key ,sslCrt: classpath:sdk.crt ,java version: 1.8.0_231.<br>
   其他未知的错误，需要查看日志文件分析具体错误。
