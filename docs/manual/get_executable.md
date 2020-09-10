@@ -77,6 +77,7 @@ $ mkdir -p build && cd build
 # CentOS请使用cmake3
 $ cmake ..
 # 高性能机器可添加-j4使用4核加速编译
+# macOS 编译出现 "ld: warning: direct access" 提示时，可以忽略
 $ make
 ```
 
