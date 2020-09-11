@@ -2,7 +2,7 @@
 
 Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供外部调用。按照功能，Go API可以分为如下几类：
 
-- **ApiHandler**：提供访问FISCO BCOS 2.0+节点[JSON-RPC](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html)接口支持、提供部署及调用合约的支持；
+- **client**：提供访问FISCO BCOS 2.0+节点[JSON-RPC](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html)接口支持、提供部署及调用合约的支持；
 - **PrecompiledService**：Precompiled合约（预编译合约）是一种FISCO BCOS底层内嵌的、通过C++实现的高效智能合约，提供包括 [基于表的权限控制](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/manual/permission_control.html#id15)、[CNS](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/features/cns_contract_name_service.html)、系统属性配置、节点类型配置、用户表 CRUD、[基于角色的权限控制](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/manual/permission_control.html#id2)、合约生命周期权限控制等功能。PrecompiledService是调用这类功能的API的统称，分为：
   - **PermissionService**：提供对分布式权限控制的支持；
   - **CNSService**：提供对CNS的支持；
@@ -14,7 +14,7 @@ Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供�
 
 ## Client
 
-**位置**：go-sdk/client/goclient.go
+**位置**：go-sdk/client/go_client.go
 
 **功能**：访问FISCO BCOS 2.0+节点[JSON-RPC](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html)
 
@@ -51,7 +51,7 @@ Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供�
 ```eval_rst
 .. note::
 
-    - 如果用户试图尝试使用一个 sdk 连接多个群组，可以利用 APIHandler 中暴露的接口，详细内容可阅读源码 [go-sdk](https://github.com/FISCO-BCOS/go-sdk)
+    - 如果用户试图尝试使用一个 sdk 连接多个群组，可以利用 APIHandler 中暴露的接口，详细内容可阅读源码 `go-sdk <https://github.com/FISCO-BCOS/go-sdk>`_
 
 ```
 
@@ -66,6 +66,9 @@ Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供�
 | GrantUserTableManager        | 根据用户表名和外部账户地址设置权限信息                       | 表名 & 外部账户地址 |
 | RevokeUserTableManager       | 根据用户表名和外部账户地址去除权限信息                       | 表名 & 外部账户地址 |
 | ListUserTableManager         | 根据用户表名查询设置的权限记录列表(每条记录包含外部账户地址和生效块高) | 表名                |
+| GrantContractWritePermission        | 根据合约地址和外部账户地址设置合约写权限信息                       | 合约地址 & 外部账户地址 |
+| RevokeContractWritePermission       | 根据合约地址和外部账户地址去除合约写权限信息                       | 合约地址 & 外部账户地址 |
+| ListContractWritePermission         | 根据合约地址查询拥有合约写权限的记录列表| 合约地址                |
 | GrantDeployAndCreateManager  | 增加外部账户地址部署合约和创建用户表的权限                   | 外部账户地址        |
 | RevokeDeployAndCreateManager | 移除外部账户地址部署合约和创建用户表的权限                   | 外部账户地址        |
 | ListDeployAndCreateManager   | 查询拥有部署合约和创建用户表权限的记录列表               | 无                  |
@@ -125,11 +128,15 @@ Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供�
 
 | 接口名      | 描述                 | 参数                                                         |
 | ----------- | -------------------- | ------------------------------------------------------------ |
-| CreateTable | 创建表               | 表对象：表对象需要设置其表名，主键字段名和其他字段名。其中，其他字段名是以英文逗号分隔拼接的字符串 |
-| Insert      | 插入记录             | 表对象：表对象需要设置表名和主键字段值 <br/>Entry对象：Entry是map对象，提供插入的字段名和字段值 |
-| Select      | 查询记录             | 表对象：表对象需要设置表名和主键字段值<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件 |
-| Update      | 更新记录             | 表对象：表对象需要设置表名和主键字段值<br/>Entry对象：Entry是map对象，提供待更新的字段名和字段值<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件 |
-| Remove      | 移除记录             | 表对象 & 条件对象                                            |
+| CreateTable | 创建表               | 表名 & 主键字段名 & 其它字段名 |
+| AsyncCreateTable | 异步创建表               | 表名 & 主键字段名 & 其它字段名<br/>handler：处理交易回执和 error 的函数 |
+| Insert      | 插入记录             | 表名 & 主键字段名 <br/>Entry对象：Entry是map对象，提供插入的字段名和字段值 |
+| AsyncInsert      | 异步插入记录             | 表名 & 主键字段名 <br/>Entry对象：Entry是map对象，提供插入的字段名和字段值<br/>handler：处理交易回执和 error 的函数 |
+| Select      | 查询记录             | 表名 & 主键字段名<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件 |
+| Update      | 更新记录             | 表名 & 主键字段名<br/>Entry对象：Entry是map对象，提供待更新的字段名和字段值<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件 |
+| AsyncUpdate      | 异步更新记录             | 表名 & 主键字段名<br/>Entry对象：Entry是map对象，提供待更新的字段名和字段值<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件<br/>handler：处理交易回执和 error 的函数 |
+| Remove      | 移除记录             | 表名 & 主键字段名<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件  |
+| AsyncRemove      | 异步移除记录             | 表名 & 主键字段名<br/>Condtion对象：Condition对象是条件对象，可以设置查询的匹配条件<br/>handler：处理交易回执和 error 的函数  |
 | Desc        | 根据表名查询表的信息 | 表名                                                         |
 
 ## ChainGovernanceService

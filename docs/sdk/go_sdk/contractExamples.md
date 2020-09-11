@@ -17,6 +17,11 @@
 
 #### 准备HelloWorld.sol合约文件
 
+```shell
+# 该指令在go-sdk目录中执行
+mkdir helloworld && cd helloworld
+```
+
 在 go-sdk 主目录中新建 helloworld 文件夹，在该文件夹中创建 HelloWorld.sol 合约。该合约提供两个接口，分别是get()和set()，用于获取/设置合约变量name。合约内容如下
 
 ```solidity
@@ -79,7 +84,7 @@ helloworld目录下会生成HelloWorld.bin和HelloWorld.abi。此时利用abigen
 最后helloworld文件夹下面存在以下6个文件：
 
 ```shell
-HelloWorld.abi 、HelloWorld.bin、HelloWorld.go、HelloWorld.sol、solc-0.4.25、abigen
+HelloWorld.abi、HelloWorld.bin、HelloWorld.go、HelloWorld.sol、solc-0.4.25、abigen
 ```
 
 #### 准备建立ssl连接需要的证书
@@ -103,7 +108,11 @@ import (
 )
 
 func main(){
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
 
 	client, err := client.Dial(config)
 	if err != nil {
@@ -126,7 +135,7 @@ func main(){
 
 ```
 
-#### 调用合约get接口
+#### 调用合约get/set接口
 
 在contract文件夹中创建helloworld_get.go文件，调用合约get接口，获取智能合约中name变量存储的值
 
@@ -144,7 +153,11 @@ import (
 )
 
 func main() {
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
 	client, err := client.Dial(config)
 	if err != nil {
 		log.Fatal(err)
@@ -164,56 +177,14 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println("value :", value)
-}
-```
 
-#### 调用合约set接口
-
-在contract文件夹中创建helloworld_set.go文件，调用合约set接口，设置智能合约中name变量的值
-
-```go
-package main
-
-import (
-	"fmt"
-	"log"
-
-	"github.com/FISCO-BCOS/go-sdk/client"
-	"github.com/FISCO-BCOS/go-sdk/conf"
-	"github.com/FISCO-BCOS/go-sdk/helloworld"
-	"github.com/ethereum/go-ethereum/common"
-)
-
-func main() {
-	config := &conf.ParseConfig("config.toml")[0]
-	client, err := client.Dial(config)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// load the contract
-	contractAddress := common.HexToAddress("contract addree in hex") // 0x481D3A1dcD72cD618Ea768b3FbF69D78B46995b0
-	instance, err := helloworld.NewHelloWorld(contractAddress, client)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	helloworldSession := &helloworld.HelloWorldSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
-
-	var value = "Hello, FISCO BCOS"
-
-	tx, err := helloworldSession.Set(value)  // call set API
+	value = "Hello, FISCO BCOS"
+	tx, err = helloworldSession.Set(value)  // call set API
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
-
-	// wait for the mining
-	receipt, err := client.WaitMined(tx)
-	if err != nil {
-		log.Fatalf("tx mining error:%v\n", err)
-	}
 	fmt.Printf("transaction hash of receipt: %s\n", receipt.GetTransactionHash())
 }
 ```
@@ -325,7 +296,7 @@ kvtabletest 目录下会生成 KVTableTest.bin、KVTableTest.abi和其它一些�
 最后 kvtabletest 文件夹下面存在以下6个文件和其它若干文件：
 
 ```shell
-KVTableTest.abi 、KVTableTest.bin、KVTableTest.go、KVTableTest.sol、solc-0.4.25、abigen
+KVTableTest.abi、KVTableTest.bin、KVTableTest.go、KVTableTest.sol、solc-0.4.25、abigen
 ```
 
 #### 准备建立ssl连接需要的证书
@@ -349,7 +320,11 @@ import (
 )
 
 func main(){
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
 
 	client, err := client.Dial(config)
 	if err != nil {
@@ -392,7 +367,12 @@ import (
 )
 
 func main() {
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
+
 	client, err := client.Dial(config)
 	if err != nil {
 		log.Fatal(err)
@@ -410,18 +390,11 @@ func main() {
 	id := "100010001001"
 	item_name := "Laptop"
 	item_price := big.NewInt(6000)
-	tx, err := kvtabletestSession.Set(id,item_price,item_name)    // call set API
+	tx, receipt, err := kvtabletestSession.Set(id,item_price,item_name)    // call set API
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
-
-	// wait for the mining
-	receipt, err := client.WaitMined(tx)
-	if err != nil {
-		log.Fatalf("tx mining error:%v\n", err)
-	}
-	fmt.Printf("transaction hash of receipt: %s\n", receipt.GetTransactionHash())
 	setedLines, err := strconv.Atoi(receipt.Output[2:])
 	if err != nil {
 		log.Fatalf("error when transfer string to int: %v\n", err)
@@ -448,7 +421,12 @@ import (
 )
 
 func main() {
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
+
 	client, err := client.Dial(config)
 	if err != nil {
 		log.Fatal(err)
@@ -632,7 +610,7 @@ tabletest 目录下会生成 TableTest.bin、TableTest.abi和其它一些文件�
 最后 tabletest 文件夹下面存在以下6个文件和其它若干文件：
 
 ```shell
-TableTest.abi 、TableTest.bin、TableTest.go、TableTest.sol、solc-0.4.25、abigen
+TableTest.abi、TableTest.bin、TableTest.go、TableTest.sol、solc-0.4.25、abigen
 ```
 
 #### 准备建立ssl连接需要的证书
@@ -656,7 +634,11 @@ import (
 )
 
 func main(){
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
 
 	client, err := client.Dial(config)
 	if err != nil {
@@ -699,7 +681,12 @@ import (
 )
 
 func main() {
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
+
 	client, err := client.Dial(config)
 	if err != nil {
 		log.Fatal(err)
@@ -717,18 +704,11 @@ func main() {
 	name := "Bob"
 	item_id := big.NewInt(100010001001)
 	item_name := "Laptop"
-	tx, err := tabletestSession.Insert(name,item_id,item_name)    // call Insert API
+	tx, receipt, err := tabletestSession.Insert(name, item_id, item_name) // call Insert API
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
-
-	// wait for the mining
-	receipt, err := client.WaitMined(tx)
-	if err != nil {
-		log.Fatalf("tx mining error:%v\n", err)
-	}
-	fmt.Printf("transaction hash of receipt: %s\n", receipt.GetTransactionHash())
 	insertedLines, err := strconv.Atoi(receipt.Output[2:])
 	if err != nil {
 		log.Fatalf("error when transfer string to int: %v\n", err)
@@ -755,7 +735,12 @@ import (
 )
 
 func main() {
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
+
 	client, err := client.Dial(config)
 	if err != nil {
 		log.Fatal(err)
@@ -803,7 +788,12 @@ import (
 )
 
 func main() {
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
+
 	client, err := client.Dial(config)
 	if err != nil {
 		log.Fatal(err)
@@ -821,18 +811,11 @@ func main() {
 	name := "Bob"
 	item_id := big.NewInt(100010001001)
 	item_name := "Macbook Pro"
-	tx, err := tabletestSession.Update(name,item_id,item_name)    // call Update API
+	tx, receipt, err := tabletestSession.Update(name, item_id, item_name) // call Update API
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
-
-	// wait for the mining
-	receipt, err := client.WaitMined(tx)
-	if err != nil {
-		log.Fatalf("tx mining error:%v\n", err)
-	}
-	fmt.Printf("transaction hash of receipt: %s\n", receipt.GetTransactionHash())
 	updatedLines, err := strconv.Atoi(receipt.Output[2:])
 	if err != nil {
 		log.Fatalf("error when transfer string to int: %v\n", err)
@@ -861,7 +844,12 @@ import (
 )
 
 func main() {
-	config := &conf.ParseConfig("config.toml")[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
+
 	client, err := client.Dial(config)
 	if err != nil {
 		log.Fatal(err)
@@ -878,18 +866,11 @@ func main() {
 
 	name := "Bob"
 	item_id := big.NewInt(100010001001)
-	tx, err := tabletestSession.Remove(name,item_id)    // call Remove API
+	tx, receipt, err := tabletestSession.Remove(name, item_id) // call Remove API
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
-
-	// wait for the mining
-	receipt, err := client.WaitMined(tx)
-	if err != nil {
-		log.Fatalf("tx mining error:%v\n", err)
-	}
-	fmt.Printf("transaction hash of receipt: %s\n", receipt.GetTransactionHash())
 	removedLines, err := strconv.Atoi(receipt.Output[2:])
 	if err != nil {
 		log.Fatalf("error when transfer string to int: %v\n", err)
@@ -969,3 +950,125 @@ helloworld目录下会生成HelloWorld.bin和HelloWorld.abi。此时利用abigen
 ```
 
 - 接下来的步骤同非国密，不占用多余篇幅
+
+## 异步合约开发样例
+
+异步合约开发指的是调用编译生成的 go 文件中提供的异步接口部署合约、修改数据，可以极大提高交易并发量。以 KVTableTest 为例，`编译生成 go 文件` 的步骤 [同上](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/go_sdk/contractExamples.html#kvtabletest)
+
+### 部署、调用合约
+
+利用生成的异步接口部署和调用合约。通过注入 handler 函数，处理交易回执，获取交易回执中的 output。
+
+```go
+package main
+
+import (
+	"encoding/hex"
+	"fmt"
+	"log"
+	"math/big"
+	"strings"
+
+	"github.com/ethereum/go-ethereum/common"
+
+	"github.com/FISCO-BCOS/go-sdk/abi"
+	"github.com/FISCO-BCOS/go-sdk/client"
+	"github.com/FISCO-BCOS/go-sdk/conf"
+	"github.com/FISCO-BCOS/go-sdk/core/types"
+	kvtable "github.com/FISCO-BCOS/go-sdk/examples" // import kvtabletest
+)
+
+var (
+	channel         = make(chan int, 0)
+	contractAddress common.Address
+)
+
+func deployContractHandler(receipt *types.Receipt, err error) {
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	fmt.Println("contract address: ", receipt.ContractAddress.Hex()) // the address should be saved
+	contractAddress = receipt.ContractAddress
+	channel <- 0
+}
+
+func invokeSetHandler(receipt *types.Receipt, err error) {
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	setedLines, err := parseOutput(kvtable.KVTableTestABI, "set", receipt)
+	if err != nil {
+		log.Fatalf("error when transfer string to int: %v\n", err)
+	}
+	fmt.Printf("seted lines: %v\n", setedLines.Int64())
+	channel <- 0
+}
+
+func main() {
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
+
+	// deploy Asynccontract
+	fmt.Println("-------------------starting deploy contract-----------------------")
+	client, err := client.Dial(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tx, err := kvtable.AsyncDeployKVTableTest(client.GetTransactOpts(), deployContractHandler, client)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("transaction hash: ", tx.Hash().Hex())
+	<-channel
+
+	// invoke AsyncSet to insert info
+	fmt.Println("\n-------------------starting invoke Set to insert info-----------------------")
+	instance, err := kvtable.NewKVTableTest(contractAddress, client)
+	if err != nil {
+		log.Fatal(err)
+	}
+	kvtabletestSession := &kvtable.KVTableTestSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
+	id := "100010001001"
+	item_name := "Laptop"
+	item_price := big.NewInt(6000)
+	tx, err = kvtabletestSession.AsyncSet(invokeSetHandler, id, item_price, item_name) // call set API
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
+	<-channel
+
+	// invoke Get to query info
+	fmt.Println("\n-------------------starting invoke Get to query info-----------------------")
+	bool, item_price, item_name, err := kvtabletestSession.Get(id) // call get API
+	if err != nil {
+		log.Fatal(err)
+	}
+	if !bool {
+		log.Fatalf("id：%v is not found \n", id)
+	}
+	fmt.Printf("id: %v, item_price: %v, item_name: %v \n", id, item_price, item_name)
+}
+
+func parseOutput(abiStr, name string, receipt *types.Receipt) (*big.Int, error) {
+	parsed, err := abi.JSON(strings.NewReader(abiStr))
+	if err != nil {
+		fmt.Printf("parse ABI failed, err: %v", err)
+	}
+	var ret *big.Int
+	b, err := hex.DecodeString(receipt.Output[2:])
+	if err != nil {
+		return nil, fmt.Errorf("decode receipt.Output[2:] failed, err: %v", err)
+	}
+	err = parsed.Unpack(&ret, name, b)
+	if err != nil {
+		return nil, fmt.Errorf("unpack %v failed, err: %v", name, err)
+	}
+	return ret, nil
+}
+```

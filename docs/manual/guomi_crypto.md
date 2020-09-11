@@ -121,7 +121,7 @@ FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两�
 ``` shell
 cd key-manager/scripts
 #加密 conf/gmnode.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8006 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
 #加密 conf/origin_cert/node.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8006 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```
