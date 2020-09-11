@@ -42,9 +42,9 @@ Solidity合约
    solidity_basic_features.md
    solidity_advanced_features.md
    solidity_design_patterns.md
-   3513.md
-   3514.md
-   3515.md
+   solidity_design_programming_strategy.md
+   solidity_operation_principle.md
+   smart_contract_test_practice.md
    3516.md
    3517.md
 ```
@@ -55,7 +55,7 @@ Solidity合约
 .. toctree::
    :maxdepth: 1
 
-   3518.md
-   3519.md
-   3520.md
+   contract_name_service.md
+   outside_account_generation.md
+   abi_of_contract.md
 ```
