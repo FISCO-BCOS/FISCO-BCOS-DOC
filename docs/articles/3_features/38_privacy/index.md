@@ -10,5 +10,6 @@
 
    privacy_protection_group_and_ring_signature.md
    privacy_protection_homomorphic_encryption.md
-    `隐私保护专题 <http://mp.weixin.qq.com/mp/homepage?__biz=MzU0MDY4MDMzOA==&hid=5&sn=d9ae81771056e6fa4e196baefec33ada&scene=18#wechat_redirect>`_
+   
 ```
+- [隐私保护专题](http://mp.weixin.qq.com/mp/homepage?__biz=MzU0MDY4MDMzOA==&hid=5&sn=d9ae81771056e6fa4e196baefec33ada&scene=18#wechat_redirect)
