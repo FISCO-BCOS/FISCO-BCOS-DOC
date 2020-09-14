@@ -46,7 +46,7 @@ FISCO BCOS通过集成同态加密，为用户提供一种支持密文处理的�
 
 ## 如何在FISCO BCOS中使用同态加密
 
-FISCO BCOS 2.3版本以预编译合约的形式集成了Paillier方案的密文同态加法接口。要启用同态加密功能需要打开CRYPTO_EXTENSION编译选项，并重新编译源码。同态加密预编译合约地址分配如下：
+FISCO BCOS 2.3版本以预编译合约的形式集成了Paillier方案的密文同态加法接口。要启用同态加密功能需要打开CRYPTO_EXTENSION编译选项，并重新编译源码（**2.5及以上版本默认开启，不再需要用户编译源码**）。同态加密预编译合约地址分配如下：
 
 ![](../../../../images/articles/privacy_protection_homomorphic_encryption/IMG_5566.PNG)
 
@@ -66,16 +66,16 @@ contract PaillierPrecompiled{
 // CallPaillier.sol
 pragma solidity ^0.4.24;
 import "./PaillierPrecompiled.sol";
- 
+
 contract CallPaillier {
     PaillierPrecompiled paillier;
     constructor() public
     {
         // 实例化PaillierPrecompiled合约
-        paillier = PaillierPrecompiled(0x5003); 
+        paillier = PaillierPrecompiled(0x5003);
     }
     function add(string cipher1, string cipher2) public constant
-    returns(string) 
+    returns(string)
     {
         return paillier.paillierAdd(cipher1, cipher2);
     }
