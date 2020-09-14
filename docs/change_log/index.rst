@@ -107,6 +107,7 @@
 .. toctree::
    :hidden:
 
+   2_6_0.md
    2_5_0.md
    2_4_0.md
    2_3_0.md
