@@ -65,7 +65,8 @@ p {
 }
 
 .wy-nav-content {
-    background-color: #fff max-width: 1000px;
+    background-color: #fff max-width: 1200px;
+    max-width: 1200px !important;
 }
 
 .wy-nav-side {
