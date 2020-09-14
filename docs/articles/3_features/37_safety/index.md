@@ -16,7 +16,7 @@
 .. toctree::
    :maxdepth: 1
 
-   3702.md
+   tsl1.2_establish_process.md
 ```
    
 
@@ -26,8 +26,8 @@
 .. toctree::
    :maxdepth: 1
 
-   3703.md
-   3704.md
+   certificate_description.md
+   third-party-CA_node_deployment.md
 ```
    
 
@@ -37,8 +37,8 @@
 .. toctree::
    :maxdepth: 1
 
-   3705.md
-   3706.md
+   access_control_glance.md
+   role_authority_model_realization.md
 ```
    
 

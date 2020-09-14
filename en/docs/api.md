@@ -1376,8 +1376,19 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 |23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
 |24(0x18)  |AddressAlreadyUsed |address is already used |
 |25(0x19)  |PermissionDenied |no permission |
-|26(0x1a)  |CallAddressError   contract address not exist ||
-
+|26(0x1a)  |CallAddressError | contract address not exist |
+|27(0x1b)  |GasOverflow | gas overflowed error  |
+|28(0x1c)  |TxPoolIsFull | transaction is full |
+|29(0x1d)  |TransactionRefused | transaction is refused |
+|30(0x1e)  |ContractFrozen | frozen contract exception |
+|31(0x1f)  |AccountFrozen | frozen account exception |
+|10000(0x2710)  |AlreadyKnown | transaction is already known |
+|10001(0x2711)  |AlreadyInChain | transaction is already in chain |
+|10002(0x2712)  |InvalidChainId | invalid chain id exception |
+|10003(0x2713)  |InvalidGroupId  | invalid group id exception |
+|10004(0x2714)  |RequestNotBelongToTheGroup | request doesn't belong to the group exception |
+|10005(0x2715)  |MalformedTx | malformed transaction error |
+|10006(0x2716)  |OverGroupMemoryLimit | memory is over group memory limit exception |
 
 ### Precompiled Service API error code
 
@@ -1386,8 +1397,15 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | 0      | success                                         |          |
 | -50000  | permission denied                               |          |
 | -50001  | table name already exist                        |          |
+| -50002  | table name length is overflowed                 |          |
+| -50003  | table name field length is overflowed           |          |
+| -50004  | table name field total length is overflowed     |          |
+| -50005  | table key value length is overflowed            |          |
+| -50006  | table field value length is overflowed          |          |
+| -50007  | table field is duplicated                       |          |
+| -50008  | table field is invalidate                       |          |
 | -50100  | table does not exist                            |          |
-| -50101  | unknow function call                            |          |
+| -50101  | unknown function call                            |          |
 | -50102  | address invalid                                 |          |
 | -51000  | table name and address already exist            |          |
 | -51001  | table name and address does not exist           |          |

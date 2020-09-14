@@ -26,8 +26,8 @@
 .. toctree::
    :maxdepth: 1
 
-   3505.md
-   3506.md
+   pre-compiled_contract_architecture_design.md
+   pre-compiled_contract_rapid_development.md
 ```
 
 Solidity合约
@@ -36,15 +36,15 @@ Solidity合约
 .. toctree::
    :maxdepth: 1
 
-   3507.md
-   3508.md
-   3509.md
-   3510.md
-   3511.md
-   3512.md
-   3513.md
-   3514.md
-   3515.md
+   smart_contract_concept_and_evolution.md
+   smart_contract_write_elegantly.md
+   solidity_presensation.md
+   solidity_basic_features.md
+   solidity_advanced_features.md
+   solidity_design_patterns.md
+   solidity_design_programming_strategy.md
+   solidity_operation_principle.md
+   smart_contract_test_practice.md
    3516.md
    3517.md
 ```
@@ -55,7 +55,7 @@ Solidity合约
 .. toctree::
    :maxdepth: 1
 
-   3518.md
-   3519.md
-   3520.md
+   contract_name_service.md
+   outside_account_generation.md
+   abi_of_contract.md
 ```
