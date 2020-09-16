@@ -1429,23 +1429,23 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -51800  | ring sig failed                                 |          |
 | -51900  | contract frozen                              |          |
 | -51901  | contract available                              |          |
-| -51902  | CONTRACT_REPEAT_AUTHORIZATIO                    |          |
-| -51903  | INVALID_CONTRACT_ADDRESS                    |          |
-| -51904  | TABLE_NOT_EXIST                    |          |
-| -51905  | NO_AUTHORIZED                    |          |
-| -52000  | COMMITTEE_MEMBER_EXIST                    |          |
-| -52001  | COMMITTEE_MEMBER_NOT_EXIST                |          |
-| -52002  | INVALID_REQUEST_PERMISSION_DENIED         |          |
-| -52003  | INVALID_THRESHOLD                    |          |
-| -52004  | OPERATOR_CANNOT_BE_COMMITTEE_MEMBER                    |          |
-| -52005  | COMMITTEE_MEMBER_CANNOT_BE_OPERATOR                    |          |
-| -52006  | OPERATOR_EXIST                    |          |
-| -52007  | OPERATOR_NOT_EXIST                    |          |
-| -52008  | ACCOUNT_NOT_EXIST                    |          |
-| -52009  | INVALID_ACCOUNT_ADDRESS                    |          |
-| -52010  | ACCOUNT_ALREADY_AVAILABLE                    |          |
-| -52011  | ACCOUNT_FROZEN                    |          |
-| -52012  | CURRENT_VALUE_IS_EXPECTED_VALUE              |          |
+| -51902  | contract repeat authorization                   |          |
+| -51903  | invalid contract address                    |          |
+| -51904  | table not exist                    |          |
+| -51905  | no authorized                  |          |
+| -52000  | committee member exist                    |          |
+| -52001  | committee member not exist                |          |
+| -52002  | invalid request permission denied         |          |
+| -52003  | invalid threshold                    |          |
+| -52004  | operator can't be committee member                    |          |
+| -52005  | committee member can't be operator                    |          |
+| -52006  | operator exist                    |          |
+| -52007  | operator not exist                    |          |
+| -52008  | account not exist                    |          |
+| -52009  | invalid account address                    |          |
+| -52010  | account already available                   |          |
+| -52011  | account frozen                    |          |
+| -52012  | current value is expected value              |          |
 
 ### Dynamice group management API status code
 
