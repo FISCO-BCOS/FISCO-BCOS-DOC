@@ -2,7 +2,6 @@
 
 [Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/java_sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
 
-
 ### Console command
 
 Console command consists of two parts, the instructions and the parameters related to the instruction:
