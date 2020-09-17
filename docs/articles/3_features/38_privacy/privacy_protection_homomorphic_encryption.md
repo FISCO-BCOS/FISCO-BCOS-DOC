@@ -66,7 +66,6 @@ contract PaillierPrecompiled{
 // CallPaillier.sol
 pragma solidity ^0.4.24;
 import "./PaillierPrecompiled.sol";
-
 contract CallPaillier {
     PaillierPrecompiled paillier;
     constructor() public
