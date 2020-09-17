@@ -9,8 +9,10 @@ This section takes the construction of single group FISCO BCOS chain as an examp
 ```eval_rst
 .. note::
     - To update an existing chain, please refer to `compatibility <change_log/index.html>`_ chapter.
+    - To build OSCCA chain, please refer to ` <manual/guomi_crypto.html>`_ 。
     - It is similar to build a multi-group chain, interested can be referred to `here <manual/group_use_cases.html>`_ .
     - This section uses pre-compiled static `fisco-bcos` binaries which tested on CentOS 7 and Ubuntu 16.04 64bit.
+    - `build_chain use docker <manual/build_chain.html#d-optional>`_
 ```
 
 ### Prepare environment
@@ -32,12 +34,12 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ### Build a single-group 4-node consortium chain
@@ -46,7 +48,7 @@ Execute the following command in the fisco directory to generate a single group 
 
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -v 2.5.0
+bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
 ```
 
 ```eval_rst
@@ -172,12 +174,12 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.10/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`, and modify encryptType to 1 in applicationContext.xml.
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.

@@ -40,7 +40,7 @@ FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台�
 推荐Ubuntu 16.04以上版本，16.04以下的版本没有经过测试，源码编译时依赖于编译工具和`libssl`。
 
 ```bash
-sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev
+sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev zlib1g-dev
 ```
 
 - CentOS
@@ -48,8 +48,8 @@ sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf te
 推荐使用CentOS7以上版本。
 
 ```bash
-$ sudo yum install -y epel-release
-$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static
+$ sudo yum install -y epel-release centos-release-scl
+$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
 ```
 
 - macOS
@@ -74,6 +74,7 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 $ cd FISCO-BCOS
 $ git checkout master
 $ mkdir -p build && cd build
+$ source /opt/rh/devtoolset-7/enable  # CentOS请执行此命令，其他系统不需要
 # CentOS请使用cmake3
 $ cmake ..
 # 高性能机器可添加-j4使用4核加速编译
@@ -90,7 +91,10 @@ $ make
 - TESTS，默认off，单元测试编译开关。通过`cmake -DTESTS=on ..`打开单元测试开关。
 - DEMO，默认off，测试程序编译开关。通过`cmake -DDEMO=on ..`打开单元测试开关。
 - TOOL，默认off，工具程序编译开关。通过`cmake -DTOOL=on ..`打开工具开关，提供FISCO节点的rocksdb读取工具。
+- ARCH_NATIVE，默认off，编译时根据本地CPU指令优化以获得更好的性能，在ARM架构上编译可以使用此选项。GCC9以上版本编译暂未适配完成，可以通过打开此编译选项避过问题，完成编译。
 - BUILD_STATIC，默认off，静态编译开关，只支持Ubuntu。通过`cmake -DBUILD_STATIC=on ..`打开静态编译开关。
+- CMAKE_BUILD_TYPE，默认RelWithDebInfo，编译类型，如要编译Release版本，通过`cmake -DCMAKE_BUILD_TYPE=Release ..`设置
+- DEBUG，默认off，调试模式，编译后会打印将要提交的数据，性能大幅降低，仅用于开发查问题。
 
 - 生成源码文档。
     ```bash

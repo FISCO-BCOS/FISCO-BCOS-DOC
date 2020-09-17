@@ -1,7 +1,7 @@
 # Smart contract development
 
 FISCO BCOS platform currently supports two smart contract forms which are Solidity and pre-compiled.
-- The Solidity contract is the same as Ethereum on supporting the latest 0.5.2 version.
+- The Solidity contract is the same as Ethereum.
 - The KVTable contract get/set interfacr and Table contract CRUD interface supporting the distributed storage pre-compilation contract in the Solidity contract, which can store the data of Solidtiy contract in the AMDB table structure, realizes the separation of contract logic and data.
 - The precompiled (precompiled) contract is developed in C++ and built into the FISCO BCOS platform. It has better performance than the Solidity contract. Its contract interface that needs to be pre-determined when compiling, is suitable for the scenarios with fixed logic but consensus, such as group configuration. The development of precompiled contracts will be introduced in the next section.
 
@@ -17,8 +17,8 @@ FISCO BCOS platform currently supports two smart contract forms which are Solidi
 ```eval_rst
 .. note::
 
-    To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
-    KVTable added in v2.3.0, the version of chain >= v2.3.0 can use this function.
+    - To make the table created by AMDB accessible to multiple contracts, it should have a unique name that acknowledged globally. So it is unable to create tables with same name within one group on the same chain
+    - KVTable added in v2.3.0, the version of chain >= v2.3.0 can use this function.
 ```
 
 KVTable contract use key/value type to get/set data of table, code is as follows:
@@ -34,7 +34,7 @@ contract KVTableFactory {
 //one record
 contract Entry {
     function getInt(string) public constant returns (int256);
-    function getUInt(string) public constant returns (int256);
+    function getUInt(string) public constant returns (uint256);
     function getAddress(string) public constant returns (address);
     function getBytes64(string) public constant returns (bytes1[64]);
     function getBytes32(string) public constant returns (bytes32);
@@ -112,9 +112,9 @@ contract KVTableTest {
 
 `KVTableTest.sol` calls `KVTable` contract to create a user table `t_kvtest`. The table structure of `t_kvtest`is as follows. This table records the materials in a company's warehouse, takes the unique material id as the key, and saves the name and price of the materials.
 
-|id*|item_name|item_price|
-|:----|:----|:------|
-|100010001001|Laptop|6000|
+| id*          | item_name | item_price |
+| :----------- | :-------- | :--------- |
+| 100010001001 | Laptop    | 6000       |
 
 
 ### To use Table contract CRUD interface
@@ -304,9 +304,9 @@ contract TableTest {
 
 `TableTest.sol` has called the intelligent contract `Table.sol` of AMDB, which implements creating the user table `t_test` and the functions of adding, deleting and changing `t_test`. The `t_test` table is structured as follows. This table records the item and item's numbers used by a employees.
 
-|name*|item_name|item_id|
-|:----|:----|:------|
-|Bob|Laptop|100010001001|
+| name* | item_name | item_id      |
+| :---- | :-------- | :----------- |
+| Bob   | Laptop    | 100010001001 |
 
 ```eval_rst
 .. important::
@@ -342,15 +342,15 @@ The process of implementing a pre-compiled contract:
 For calling a solid contract or pre-compiled contract, you need to distinguish it by the contract address and address space.
 
 
-| address use | address range |
-| --------- | --------- |
-| ethereum precompiled | 0x0001-0x0008 |
-| reserve | 0x0008-0x0fff |
-| FISCO BCOS precompiled | 0x1000-0x1006 |
-| FISCO BCOS reserve | 0x1007-0x5000 |
+| address use            | address range   |
+| ---------------------- | --------------- |
+| ethereum precompiled   | 0x0001-0x0008   |
+| reserve                | 0x0008-0x0fff   |
+| FISCO BCOS precompiled | 0x1000-0x1006   |
+| FISCO BCOS reserve     | 0x1007-0x5000   |
 | user assigned interval | 0x5001 - 0xffff |
-| CRUD reserve | 0x10000+ |
-| solidity | others |
+| CRUD reserve           | 0x10000+        |
+| solidity               | others          |
 
 
 The address range of user assigned interval is `0x5001`-`0xffff`. Users needs to assign an unused address to the new precompiled contract. **The precompiled contract addresses must be unique and not conflicting**.
@@ -358,15 +358,15 @@ The address range of user assigned interval is `0x5001`-`0xffff`. Users needs to
 
 List of precompiled contracts and address assignments implemented in FISCO BCOS:
 
-| address   | feature   | source code ([libprecompiled directory](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled)) |
-|--------|--------|---------|
-| 0x1000 | system parameter management | SystemConfigPrecompiled.cpp |
-| 0x1001 | table factory contract | TableFactoryPrecompiled.cpp |
-| 0x1002 | CRUD operation implementation | CRUDPrecompiled.cpp |
-| 0x1003 | consensus node management | ConsensusPrecompiled.cpp |
-| 0x1004 | CNS feature | CNSPrecompiled.cpp |
-| 0x1005 | storage table authority management | AuthorityPrecompiled.cpp |
-| 0x1006 | parallel contract configuration | ParallelConfigPrecompiled.cpp |
+| address | feature                            | source code ([libprecompiled directory](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled)) |
+| ------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| 0x1000  | system parameter management        | SystemConfigPrecompiled.cpp                                                                                   |
+| 0x1001  | table factory contract             | TableFactoryPrecompiled.cpp                                                                                   |
+| 0x1002  | CRUD operation implementation      | CRUDPrecompiled.cpp                                                                                           |
+| 0x1003  | consensus node management          | ConsensusPrecompiled.cpp                                                                                      |
+| 0x1004  | CNS feature                        | CNSPrecompiled.cpp                                                                                            |
+| 0x1005  | storage table authority management | AuthorityPrecompiled.cpp                                                                                      |
+| 0x1006  | parallel contract configuration    | ParallelConfigPrecompiled.cpp                                                                                 |
 
 - **define contract interface**
 
@@ -485,9 +485,9 @@ table name: ```_ext_hello_world_```
 
 table structure:
 
-|key       | value
-----------|------------
-|hello_key | hello_value
+| key       | value       |
+| --------- | ----------- |
+| hello_key | hello_value |
 
 
 The table stores only a pair of key-value pairs. The key field is hello_key and the value field is hello_value. For storing the corresponding string value, it can be modified by the set(string) interface and obtained by the get() interface.

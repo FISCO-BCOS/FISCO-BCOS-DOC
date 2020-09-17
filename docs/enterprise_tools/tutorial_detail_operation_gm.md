@@ -28,12 +28,12 @@ cd ~/generator && bash ./scripts/install.sh
 ./generator -h
 ```
 
-**获取国密节点二进制**
+**获取节点二进制**
 
 拉取最新fisco-bcos二进制文件到meta中
 
 ```bash
-./generator --download_fisco ./meta -g
+./generator --download_fisco ./meta
 ```
 
 **检查二进制版本**
@@ -972,18 +972,6 @@ vi ./console/conf/applicationContext.xml
     <!-- encryptType值设置为1，打开国密开关 -->
     <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
 </bean>
-```
-
-**替换国密jar包**
-
-```bash
-cd console && curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar && bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-```
-
-```eval_rst
-.. note::
-
-    建议用户下载完jar包后，手动检查jar包完整性。可以尝试手动解压观察是否完整
 ```
 
 ### 查看机构C节点4信息

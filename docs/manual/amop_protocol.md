@@ -264,6 +264,11 @@ public class Channel2Client {
 }
 ```
 
+```eval_rst
+.. note::
+    - 如果使用 2.5.0 版本的 FISCO BCOS，那么服务端和客户端需要连接不同的节点
+```
+
 ## Topic认证功能
 
 在普通的配置下，任何一个监听了某topic的接收者都能接受到发送者推送的消息。但在某些场景下，发送者只希望特定的接收者能接收到消息，不希望无关的接收者能任意的监听此topic。在此场景下，需要使用Topic认证功能。
@@ -335,7 +340,7 @@ public class Channel2Client {
       <property name="orgID" value="fisco" />
       <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
         <!--  topic认证功能的配置项 -->
-      <property name="topic2KeyInfo" ref="amopVerifyTopicToKeyInfo"></property>> 
+      <property name="topic2KeyInfo" ref="amopVerifyTopicToKeyInfo"></property>
     </bean>
 
   <!--  这里配置的是topic到公私钥配置信息的映射关系，这里只配置了一个topic，可以通过新增entry的方式来新增映射关系。-->

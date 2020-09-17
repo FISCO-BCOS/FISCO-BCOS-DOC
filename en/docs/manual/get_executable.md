@@ -42,7 +42,7 @@ FISCO BCOS is using generic [CMake](https://cmake.org) to generate platform-spec
 Ubuntu 16.04 or later is recommended. The versions below 16.04 have not been tested. You will require to have the build tools build tools and `libssl` for compiling the source code.
 
 ```bash
-sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev
+sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev zlib1g-dev
 ```
 
 - CentOS
@@ -50,8 +50,8 @@ sudo apt install -y g++ libssl-dev openssl cmake git build-essential autoconf te
 CentOS7 version or later is recommended.
 
 ```bash
-$ sudo yum install -y epel-release
-$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static
+$ sudo yum install -y epel-release centos-release-scl
+$ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
 ```
 
 - macOS
@@ -76,6 +76,7 @@ After compilation, binary files are located at `FISCO-BCOS/build/bin/fisco-bcos`
 $ cd FISCO-BCOS
 $ git checkout master
 $ mkdir -p build && cd build
+$ source /opt/rh/devtoolset-7/enable  # CentOS Please execute
 # please use cmake3 for CentOS
 $ cmake ..
 #To add -j4 to accelerate compilation by 4 compilation processes
@@ -92,8 +93,9 @@ $ make
 - TESTS, off by default, unit test compilation flag. To enable it, use `cmake -DTESTS=on ..`
 - DEMO, off by default, test program compilation switch. To open it through `cmake -DDEMO=on ..`.
 - TOOL, off by default, tools program compilation switch. To open it through`cmake -DTOOL=on ..`.
-
+- ARCH_NATIVE, off by default, optimize code according to local CPU architecture if on.
 - BUILD_STATIC，off by default, static compilation switch, only supports Ubuntu. To open it through `cmake -DBUILD_STATIC=on ..`.
+
 - Generate source documentation.
 
     ```bash

@@ -77,7 +77,7 @@ rPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节
 **计算共识周期rotatingRound**
   
   设当前块高为`blockNum`，`epoch_block_num`生效块高为`enableNum`，则共识周期为:
-  `rotatingRound = (blockNumber - enableNum) % epoch_block_num`
+  `rotatingRound = (blockNumber - enableNum) / epoch_block_num`
 
 **确定共识委员起始节点索引**: `N`为共识节点总数，索引从`(rotatingRound * epoch_block_num) % N`到`(rotatingRound * epoch_block_num + epoch_sealer_num) % N`之间的节点均属于共识委员节点
 

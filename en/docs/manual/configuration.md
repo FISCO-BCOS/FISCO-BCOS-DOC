@@ -37,15 +37,24 @@ FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers
 
      - Include only listen_ip in the configuration: The listening IPs of both RPC and Channel are configured listen_ip
      - The configuration also contains listen_ip, channel_listen_ip, or jsonrpc_listen_ip: Priority is given to channel_listen_ip and jsonrpc_listen_ip. Configuration items that are not configured are replaced with the value of listen_ip
+     - Starting from v2.6.0, RPC module support IPV6.
 ```
 
 
 RPC configuration example is as follows:
 
 ```ini
+# ipv4
 [rpc]
     channel_listen_ip=0.0.0.0
     jsonrpc_listen_ip=127.0.0.1
+    channel_listen_port=30301
+    jsonrpc_listen_port=30302
+
+# ipv6
+[rpc]
+    channel_listen_ip=::1
+    jsonrpc_listen_ip=::1
     channel_listen_port=30301
     jsonrpc_listen_port=30302
 ```
@@ -54,19 +63,21 @@ RPC configuration example is as follows:
 
 ```eval_rst
 .. note::
-    In order to facilitate development and experience, the reference configuration of listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP.
+    - In order to facilitate development and experience, the reference configuration of listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as the internal IP or a specific external IP.
+    - Starting from v2.6.0, P2P module support IPV6.
 ```
 
 The current version of FISCO BCOS must be configured with `IP` and `Port` of the connection node in the `config.ini` configuration. The P2P related configurations include:
 
-- `listen_ip`: P2P listens for IP, to set `0.0.0.0` by default. 
-- `listen_port`: Node P2P listening port.  
-- `node.*`: All nodes' `IP:Port` or `DomainName:Port` which need to be connected to node. This option supports domain names, but suggests users who need to use it [manually compile source code](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2).  
+- `listen_ip`: P2P listens for IP, to set `0.0.0.0` by default.
+- `listen_port`: Node P2P listening port.
+- `node.*`: All nodes' `IP:Port` or `DomainName:Port` which need to be connected to node. This option supports domain names, but suggests users who need to use it [manually compile source code](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2).
 - `enable_compress`: Enable network compression configuration option. Configuring to true, indicates that network compression is enabled. Configuring to false, indicates that network compression is disabled. For details on network compression, please refer to [here](../design/features/network_compress .md).
 
 P2P configuration example is as follows:
 
 ```ini
+# ipv4
 [p2p]
     listen_ip=0.0.0.0
     listen_port=30300
@@ -74,6 +85,15 @@ P2P configuration example is as follows:
     node.1=127.0.0.1:30304
     node.2=127.0.0.1:30308
     node.3=127.0.0.1:30312
+
+# ipv6
+[p2p]
+    listen_ip=::1
+    listen_port=30300
+    node.0=[::1]:30300
+    node.1=[::1]:30304
+    node.2=[::1]:30308
+    node.3=[::1]:30312
 ```
 
 ### Configure ledger file path
@@ -238,7 +258,7 @@ disk encryption configuration example is as follows:
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=31443
+key_manager_port=8006
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -309,6 +329,8 @@ id=2
 - `consensus_type`：consensus algorithm type, currently supports [PBFT](../design/consensus/pbft.md), [Raft](../design/consensus/raft.md) and rPBFT. To use PBFT by default;
 
 - `max_trans_num`：a maximum number of transactions that can be packed in a block. The default is 1000. After the chain is initialized, the parameter can be dynamically adjusted through [Console](./console.html#setsystemconfigbykey);
+
+- `consensus_timeout`: In the PBFT consensus process, the timeout period of each block execution, the default is 3s, the unit is seconds, the parameter can be dynamically adjusted through [Console](./console.html#setsystemconfigbykey);
 
 - `node.idx`：consensus node list, has configured with the [Node ID] of the participating consensus nodes. The Node ID can be obtained by the `${data_path}/node.nodeid` file (where `${data_path}` can be obtained by the configuration item `[secure].data_path` of the main configuration `config.ini`)
 
@@ -406,12 +428,11 @@ For example: `group1` variable configuration is generally named `group.1.ini`. V
 
 ### Configure storage
 
-Storage currently supports three modes: RocksDB, MySQL, and External. Users can choose the DB to use according to their needs. RocksDB has the highest performance. MySQL supports users to use MySQL database for viewing data. External accesses mysql through data proxy, and users need to start and configure the data proxy. The design documentation can be referenced [AMDB Storage Design](../design/storage/storage.html). Since the RC3 version, we have used RocksDB instead of LevelDB for better performance, but still supports LevelDB.
+Storage currently supports three modes: RocksDB, MySQL, and Scalable. Users can choose the DB to use according to their needs. RocksDB has the highest performance. MySQL supports users to use MySQL database for viewing data. Since the RC3 version, we have used RocksDB instead of LevelDB for better performance, but still supports LevelDB.
 
 ```eval_rst
 .. note::
-    - Starting from v2.3.0, in order to facilitate chain maintenance, it is recommended to use `MySQL` storage mode instead of` External` storage mode
-    - To use `External`, configure` supported_version` to v2.2.0 or below
+    - Starting from v2.3.0, in order to facilitate chain maintenance, it is recommended to use `MySQL` storage mode instead of `External` storage mode
 ```
 
 #### Public configuration item
@@ -421,17 +442,17 @@ Storage currently supports three modes: RocksDB, MySQL, and External. Users can 
    If you want to use MySQL, please set type to MySQL.
 ```
 
-- `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL` or `External`, the node accesses mysql database according to the configuration. All data of blockchain system is stored in mysql database. For accessing mysql database, to configure the amdb-proxy. Please refer to [here](./distributed_storage.html#amdb) for the amdb-proxy configuration.
+- `type`: The stored DB type, which supports `RocksDB`, `MySQL` and `External`. When the DB type is RocksDB, all the data of blockchain system is stored in the RocksDB local database; when the type is `MySQL`, the node accesses MySQL database according to the configuration. All data of blockchain system is stored in MySQL database. For accessing MySQL database, to configure the amdb-proxy. Please refer to [here](./distributed_storage.html#amdb) for the amdb-proxy configuration.
 - `max_capacity`: configures the space size of the node that is allowed to use for memory caching.
 - `max_forward_block`: configures the space size of the node that allowed to use for memory block. When the blocks exceeds this value, the node stops the consensus and waits for the blocks to be written to database.
-- `binary_log`: default is false. when set to `true`, enable binary log, and then disable the wal of rocksdb.
+- `binary_log`: default is false. when set to `true`, enable binary log, and then disable the wal of RocksDB.
 - `cached_storage`: controls whether to use the cache. The default is `true`.
 
 #### Database related configuration item
 
 - `topic`: When the type is `External`, you need to configure this field to indicate the amdb-proxy topic that blockchain system is interested in. For details, please refer to [here](./distributed_storage.html#id3).
 - `max_retry`: When the type is `External`, you need to configure this field to indicate the number of retries when writing fails. For details, please refer to [here](./distributed_storage.html#id3).
-- `scroll_threshold_multiple`： when the type is `scalable`, this configuration item is used to configure the handover threshold of the block database. The default value is 2, so Block data is stored in different rocksdb instances every 2000 blocks.
+- `scroll_threshold_multiple`： when the type is `Scalable`, this configuration item is used to configure the handover threshold of the block database. The default value is 2, so Block data is stored in different RocksDB instances every 2000 blocks.
 - `db_ip`: When the type is `MySQL`, you need to configure this field to indicate the IP address of MySQL.
 - `db_port`: When the type is `MySQL`, you need to configure this field to indicate the port number of MySQL.
 - `db_username`: When the type is `MySQL`, you need to configure this field to indicate the MySQL username.
@@ -445,14 +466,14 @@ Storage currently supports three modes: RocksDB, MySQL, and External. Users can 
 
 ```ini
 [storage]
-    ; storage db type, rocksdb / mysql / external, rocksdb is recommended
+    ; storage db type, RocksDB / MySQL / external, RocksDB is recommended
     type=RocksDB
     max_capacity=256
     max_forward_block=10
     ; only for external
     max_retry=100
     topic=DB
-    ; only for mysql
+    ; only for MySQL
     db_ip=127.0.0.1
     db_port=3306
     db_username=
@@ -611,12 +632,12 @@ broadcast_prepare_by_tree=true
 ; Only effective when the prepare package tree broadcast is enabled
 ; Each node randomly selects 33% consensus nodes to synchronize the prepare packet status
 prepare_status_broadcast_percent=33
-; Under the prepare package tree broadcast strategy, 
-; the node missing the prepare package takes more than 100ms and 
-; does not wait for the prepare package forwarded by the parent node 
+; Under the prepare package tree broadcast strategy,
+; the node missing the prepare package takes more than 100ms and
+; does not wait for the prepare package forwarded by the parent node
 ; to request the missing prepare package from other nodes.
 max_request_prepare_waitTime=100
-; The maximum delay for a node to wait for a parent node 
+; The maximum delay for a node to wait for a parent node
 ;or other non-leader node to synchronize a prepare packet is 100ms
 max_request_missedTxs_waitTime=100
 ```
@@ -676,7 +697,7 @@ The configuration of the disabled transaction tree broadcast policy is as follow
     ; Transaction tree broadcast strategy is enabled by default
     send_txs_by_tree=false
 ```
-    
+
 ```eval_rst
 .. note::
     - Due to protocol consistency requirements, all nodes must ensure that the tree broadcast switch `send_txs_by_tree` is configured consistently
@@ -746,6 +767,26 @@ The configuration example of enable the group outbound traffic limit and setting
     outgoing_bandwidth_limit=2
 ```
 
+### Optional configuration: SDK allowlist configuration
+
+In order to achieve access control from SDK to group, FISCO BCOS v2.6.0 introduced a group-level SDK allowlist access control mechanism. The configuration of `[sdk_allowlist]` located in `group.{group_id}.ini` is disabled by default. Please refer to [here](./sdk_allowlist.md) for the group-level SDK allowlist mechanism.
+
+```eval_rst
+.. important::
+    FISCO BCOS v2.6.0 disables the allowlist access control from SDK to group by default, that is, the SDK can communicate with all groups by default. To enable the allowlist-based access control function between SDK and group, you need to change the `;public_key.0` and other configuration items before the semicolon removed
+```
+- `public_key.0`、`public_key.1`、...、`public_key.i`: Configure the SDK public key public key list allowed to communicate with the group.
+
+**SDK allowlist configuration example is as follows：**
+
+```ini
+[sdk_allowlist]
+; When sdk_allowlist is empty, all SDKs can connect to this node
+; when sdk_allowlist is not empty, only the SDK in the allowlist can connect to this node
+; public_key.0 should be nodeid, nodeid's length is 128
+public_key.0=b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f3
+```
+
 ## Dynamically configure system parameters
 
 FISCO BCOS system currently includes the following system parameters (other system parameters will be extended in the future):
@@ -755,7 +796,8 @@ FISCO BCOS system currently includes the following system parameters (other syst
 | tx_count_limit  | 1000 | Maximum number of transactions that can be packed in a block |
 | tx_gas_limit  | 300000000 | Maximum gas limit for one transaction |
 | rpbft_epoch_sealer_num | Total number of chain consensus nodes | rPBFT system configuration, the number of nodes participating in consensus is selected in a consensus period, and the number of nodes participating in consensus is dynamically switched in each consensus period of rPBFT |
-| rpbft_epoch_block_num | 1000 | rPBFT system configuration, the number of blocks produced in a consensus period| 
+| rpbft_epoch_block_num | 1000 | rPBFT system configuration, the number of blocks produced in a consensus period|
+| consensus_timeout | 3 | During the PBFT consensus process, the block execution timeout time is at least 3s, When supported_version>=v2.6.0, the configuration item takes effect|
 
 Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** command to modify these system parameters.
 **[getSystemConfigByKey](./console.html#getsystemconfigbykey)** command can view the current value of the system parameter:
@@ -796,7 +838,7 @@ Note: rpbft_epoch_sealer_num only takes effect when rPBFT is used
     "msg":"success"
 }
 # query rpbft_epoch_sealer_num
-[group:1]> getSystemConfigByKey rpbft_epoch_sealer_num 
+[group:1]> getSystemConfigByKey rpbft_epoch_sealer_num
 Note: rpbft_epoch_sealer_num only takes effect when rPBFT is used
 4
 
@@ -811,4 +853,15 @@ Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 [group:1]> getSystemConfigByKey rpbft_epoch_block_num
 Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 10000
+
+# get consensus_timeout
+[group:1]> getSystemConfigByKey consensus_timeout
+3
+
+# set consensus_timeout to 5s
+[group:1]> setSystemConfigByKey consensus_timeout 5
+{
+    "code":0,
+    "msg":"success"
+}
 ```

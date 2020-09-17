@@ -130,7 +130,7 @@ v2.0.0-rc2以前的P2PMessage定义请[参考这里](https://fisco-bcos-document
 
 #### AMOP消息包
 
-AMOP消息包继承ChannelMessage包机构，在data字段添加了自定义内容。包括`0x30,0x31,0x35,0x1001`
+AMOP消息包继承ChannelMessage包结构，在data字段添加了自定义内容。包括`0x30,0x31,0x35,0x1001`
 
 ||长度Byte|说明|
 |:--|:--|:--|

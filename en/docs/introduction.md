@@ -13,7 +13,7 @@ The community links multiple parties with open source. As of May 2020, more than
 ## Key Features
 
 <font color=Blue>**Architecture**</font> | |
-| - | - | 
+| - | - |
 | Architectural model | one-body, two-wing, multi-engine|
 | Group architecture | Support dynamic expansion of multiple groups in the chain|
 | AMDB | Support massive data storage|
@@ -52,7 +52,7 @@ The community links multiple parties with open source. As of May 2020, more than
 | <font color=Blue>**Cryptographic algorithms and protocols**</font>  |
 | OSCCA algorithm | Support feature |
 | OSCCA SSL | Support feature |
-| Hash algorithm | Keccek256、SM3 |
+| Hash algorithm | Keccak256、SM3 |
 | Symmetric encryption algorithm | AES、SM4 |
 | Asymmetric encryption algorithm |ECDSA、SM2|
 | Asymmetric encryption elliptic curve |secp256k1、sm2p256v1|
