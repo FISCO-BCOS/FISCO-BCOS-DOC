@@ -144,6 +144,14 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 
 ```
 
+**注意：默认下载的控制台内置`0.4.25`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**	
+```bash	
+# 0.5	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh -v 0.5	
+# 0.6	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh -v 0.6	
+```
+
 ### 配置国密版控制台
 国密版的控制台配置与非国密版控制台的配置流程有一些区别，流程如下：
 - 区块链节点和证书的配置：
@@ -164,11 +172,9 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 
     控制台编译工具重要说明
 
-    - 控制台自1.1.0版本起，移除对solcJ-all-0.x.x.jar、solcJ-all-0.x.x-gm.jar的依赖
+    - 控制台自1.1.0版本起，移除对solcJ-all-0.x.x.jar、solcJ-all-0.x.x-gm.jar的依赖，控制台使用新的合约编译工具，新编译工具上传至maven仓库进行管理，不再需要进行替换文件操作
 
     - 新编译工具支持0.4.25、0.5.2、0.6.10三个版本，与同版本的solidity编译器对应
-
-    - 新的编译上传至maven仓库进行管理，不再需要替换文件的操作
 
     - 控制台默认配置0.4.25版本编译工具，用户可以修改build.gradle配置的版本号重新编译，也可以通过download_console.sh脚本指定-v参数，下载配置对应编译器版本的控制台
 
