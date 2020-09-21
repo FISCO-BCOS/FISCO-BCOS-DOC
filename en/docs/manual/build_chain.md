@@ -345,7 +345,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
     ```bash
     [p2p]
         listen_ip=0.0.0.0
-        listen_port=30300
+        listen_port=30304
         ;enable_compress=true
         ; nodes to connect
         node.0=127.0.0.1:30300

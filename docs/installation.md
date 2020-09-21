@@ -25,7 +25,7 @@
 - 安装依赖
 
 `开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
-若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可。
+若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可（macOS自带的openssl指令选项不同，请执行安装标准openssl）。
 
 ```bash
 sudo apt install -y openssl curl
