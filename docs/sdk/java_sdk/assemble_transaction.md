@@ -53,6 +53,7 @@ TransactionResponse的数据结构如下：
 例如，部署HelloWorld合约的返回结果：
 
 ```
+{
   "returnCode": 0,
   "returnMessage": "Success",
   "transactionReceipt": {
@@ -162,27 +163,23 @@ TransactionResponse的数据结构如下：
 ```
 
 ## AssembleTransactionManager 的详细API功能介绍
-AssembleTransactionManager支持自定义参数发送交易，详细的API功能如下：
-- public void deployOnly(String abi, String bin, List<Object> params)： 传入合约abi、bin和构造函数参数来部署合约，不接收回执结果。
-- public TransactionResponse deployAndGetResponse(String abi, String bin, List<Object> params) 传入合约abi、bin和构造函数参数来部署合约，接收回执结果
-- public TransactionResponse deployAndGetResponseWithStringParams(String abi, String bin, List<String> params)：传入合约abi和List<String>类型的构造函数参数来部署合约，接收TransactionResponse结果。
-- public void deployAsync(String abi, String bin, List<Object> params, TransactionCallback callback)：传入合约abi、构造好的合约构造函数和callback来异步部署合约
-- public CompletableFuture<TransactionReceipt> deployAsync(String abi, String bin, List<Object> params)： 传入合约abi、bin和构造函数参数来部署合约，接收CompletableFuture封装的回执结果
-- public TransactionResponse deployByContractLoader(String contractName, List<Object> params)： 传入合约名和构造好的合约构造函数，接收TransactionResponse结果。
-- public void deployByContractLoaderAsync(String contractName, List<Object> args, TransactionCallback callback)：传入合约名和构造好的合约构造函数以及callback，来异步部署合约
-- public TransactionReceipt sendTransactionAndGetReceiptByContractLoader(String contractName, String contractAddress, String functionName, List<Object> params)： 传入调用合约名称、合约地址、函数名和函数参数，接收交易回执
-- public TransactionResponse sendTransactionAndGetResponse(String to, String abi, String functionName, List<Object> params)：传入调用合约地址、合约abi、函数名和函数参数，接收TransactionResponse结果
-- public TransactionResponse sendTransactionWithStringParamsAndGetResponse(String to, String abi, String functionName, List<String> params)：传入调用合约地址、合约abi、函数名和List<String>类型的函数参数，接收TransactionResponse结果
-- public void sendTransactionAsync(String to, String abi, String functionName, List<Object> params, TransactionCallback callback)：传入调用合约地址、合约abi、函数名、函数参数、callback，异步发送交易。
-- public void sendTransactionAndGetReceiptByContractLoaderAsync(String contractName,String contractAddress, String functionName, List<Object> args, TransactionCallback callback)：传入调用合约名、合约地址、函数名、函数参数、callback，异步发送交易。
-- public TransactionResponse sendTransactionAndGetResponseByContractLoader(String contractName, String contractAddress, String functionName, List<Object> funcParams)：传入调用合约名、合约地址、函数名、函数参数，并接收TransactionResponse结果。
-- public CallResponse sendCallByContractLoader(String contractName, String contractAddress, String functionName, List<Object> params)：传入调用合约名、合约地址、函数名、函数参数，并接收CallResponse结果。
-- public CallResponse sendCall(String from, String to, String abi, String functionName, List<Object> args)：传入调用者地址、合约地址、合约abi、函数名、函数参数，并接收CallResponse结果。
-- public CallResponse sendCall(CallRequest callRequest)：传入CallRequest，并接收CallResponse结果。
-- public CallResponse sendCallWithStringParams(String from, String to, String abi, String functionName, List<String> paramsList):传入调用者地址、合约地址、合约abi、函数名、List<String>类型的函数参数，并接收CallResponse结果。
+AssembleTransactionManager支持自定义参数发送交易，详细的API功能如下。
 
-
-
-
-
+- **public void deployOnly(String abi, String bin, List\<Object\> params)：** 传入合约abi、bin和构造函数参数来部署合约，不接收回执结果。
+- **public TransactionResponse deployAndGetResponse(String abi, String bin, List\<Object\> params) ：** 传入合约abi、bin和构造函数参数来部署合约，接收回执结果
+- **public TransactionResponse deployAndGetResponseWithStringParams(String abi, String bin, List\<String\> params)：** 传入合约abi和String类型的List作为构造函数参数来部署合约，接收TransactionResponse结果。
+- **public void deployAsync(String abi, String bin, List\<Object\> params, TransactionCallback callback)：** 传入合约abi、构造好的合约构造函数和callback来异步部署合约
+- **public CompletableFuture\<TransactionReceipt\> deployAsync(String abi, String bin, List\<Object\> params)：** 传入合约abi、bin和构造函数参数来部署合约，接收CompletableFuture封装的回执结果
+- **public TransactionResponse deployByContractLoader(String contractName, List\<Object\> params)：** 传入合约名和构造好的合约构造函数，接收TransactionResponse结果。
+- **public void deployByContractLoaderAsync(String contractName, List\<Object\> args, TransactionCallback callback)：** 传入合约名和构造好的合约构造函数以及callback，来异步部署合约
+- **public TransactionReceipt sendTransactionAndGetReceiptByContractLoader(String contractName, String contractAddress, String functionName, List\<Object\> params)：** 传入调用合约名称、合约地址、函数名和函数参数，接收交易回执
+- **public TransactionResponse sendTransactionAndGetResponse(String to, String abi, String functionName, List\<Object\> params)：** 传入调用合约地址、合约abi、函数名和函数参数，接收TransactionResponse结果
+- **public TransactionResponse sendTransactionWithStringParamsAndGetResponse(String to, String abi, String functionName, List\<String\> params)：** 传入调用合约地址、合约abi、函数名和String类型List的函数参数，接收TransactionResponse结果
+- **public void sendTransactionAsync(String to, String abi, String functionName, List\<Object\> params, TransactionCallback callback)：** 传入调用合约地址、合约abi、函数名、函数参数、callback，异步发送交易。
+- **public void sendTransactionAndGetReceiptByContractLoaderAsync(String contractName,String contractAddress, String functionName, List\<Object\> args, TransactionCallback callback)：** 传入调用合约名、合约地址、函数名、函数参数、callback，异步发送交易。
+- **public TransactionResponse sendTransactionAndGetResponseByContractLoader(String contractName, String contractAddress, String functionName, List\<Object\> funcParams)：** 传入调用合约名、合约地址、函数名、函数参数，并接收TransactionResponse结果。
+- **public CallResponse sendCallByContractLoader(String contractName, String contractAddress, String functionName, List\<Object\> params)：** 传入调用合约名、合约地址、函数名、函数参数，并接收CallResponse结果。
+- **public CallResponse sendCall(String from, String to, String abi, String functionName, List\<Object\> args)：** 传入调用者地址、合约地址、合约abi、函数名、函数参数，并接收CallResponse结果。
+- **public CallResponse sendCall(CallRequest callRequest)：** 传入CallRequest，并接收CallResponse结果。
+- **public CallResponse sendCallWithStringParams(String from, String to, String abi, String functionName, List\<String\> paramsList):** 传入调用者地址、合约地址、合约abi、函数名、String类型List的函数参数，并接收CallResponse结果。
 
