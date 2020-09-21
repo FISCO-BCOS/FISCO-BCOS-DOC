@@ -17,18 +17,18 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 创建一个TransactionDecoderService对象。
 
 ```
-    // 初始化SDK
-    BcosSDK sdk =  BcosSDK.build(configFile);
-    // 发送群组ID1
-    Client client = sdk.getClient(Integer.valueOf(1));
-    // 构造TransactionDecoderService实例，传入是否密钥类型参数。
-    TransactionDecoderInterface decoder = new TransactionDecoderService(client.getCryptoInterface());
+// 初始化SDK
+BcosSDK sdk =  BcosSDK.build(configFile);
+// 发送群组ID1
+Client client = sdk.getClient(Integer.valueOf(1));
+// 构造TransactionDecoderService实例，传入是否密钥类型参数。
+TransactionDecoderInterface decoder = new TransactionDecoderService(client.getCryptoInterface());
 ```
 
 TransactionDecoderInterface 主要包括以下功能：
 - public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：解析不带函数返回值的交易回执。
 - public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：解析带函数返回值的交易回执。
-- public Map<String, List<Object>> decodeEvents(String abi, List<Logs> logs)：解析交易日志。
+- public Map\<String, List\<Object\>\> decodeEvents(String abi, List\<Logs\> logs)：解析交易日志。
 - public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)： 解析回执的状态和报错信息等。
 
 
@@ -38,7 +38,7 @@ TransactionDecoderInterface 主要包括以下功能：
 传入合约的abi文件，调用函数的名称，以及交易回执，解析交易结果。
 
 ```
-	TransactionResponse transactionResponse = decoder.decodeReceiptWithValues(abi, "incrementUint256", transactionReceipt);
+TransactionResponse transactionResponse = decoder.decodeReceiptWithValues(abi, "incrementUint256", transactionReceipt);
 
 ```
 
@@ -46,11 +46,11 @@ TransactionDecoderInterface 主要包括以下功能：
 
 对应的solidity代码：
 ```
-    function incrementUint256(uint256 v) public returns(uint256){
-        _uint256V = v + 1 ;
-        emit LogIncrement(msg.sender, v);
-        return _uint256V;
-    }
+function incrementUint256(uint256 v) public returns(uint256){
+    _uint256V = v + 1 ;
+    emit LogIncrement(msg.sender, v);
+    return _uint256V;
+}
 ```
 
 以上函数定义中，有函数返回值，也触发了event调用。我们的传入值v为1. 解析交易执行返回的TransactionReceipt以后，对应的结果如下：
@@ -111,7 +111,7 @@ TransactionDecoderInterface 主要包括以下功能：
 传入合约的abi文件和交易回执，解析交易结果。
 
 ```
-	TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWithoutValues(abi, transactionReceipt);
+TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWithoutValues(abi, transactionReceipt);
 ```
 
 ### 解析结果示例：
@@ -172,7 +172,7 @@ TransactionDecoderInterface 主要包括以下功能：
 只解析调用函数过程中触发的日志。传入合约的abi文件和交易回执的logs，解析交易结果；返回事件名和事件List的Map。
 
 ```
-	Map<String, List<Object>> events = decoder.decodeEvents(abi, transactionReceipt.getLogs());
+Map<String, List<Object>> events = decoder.decodeEvents(abi, transactionReceipt.getLogs());
 ```
 
 ### 解析结果示例：
@@ -193,18 +193,18 @@ TransactionDecoderInterface 主要包括以下功能：
 传入交易回执，解析返回数据，并解析为TransactionResponse对象。
 
 ```
-	TransactionResponse transactionResponse = decoder.decodeReceiptStatus(transactionReceipt);
+TransactionResponse transactionResponse = decoder.decodeReceiptStatus(transactionReceipt);
 ```
 
 ### 解析结果示例：
 
 对应的solidity代码：
 ```
-    function setBytesMapping(bytes[] bytesArray) public returns (bool) {
-    	require(bytesArray.length>1, "Bytes array is less than 2");
-    	_bytesMapping[bytesArray[0]] = bytesArray;
-    	return true;
-    }
+function setBytesMapping(bytes[] bytesArray) public returns (bool) {
+    require(bytesArray.length>1, "Bytes array is less than 2");
+    _bytesMapping[bytesArray[0]] = bytesArray;
+    return true;
+}
 ```
 
 
