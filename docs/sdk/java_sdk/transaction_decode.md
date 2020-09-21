@@ -26,12 +26,11 @@ TransactionDecoderInterface decoder = new TransactionDecoderService(client.getCr
 ```
 
 TransactionDecoderInterface 主要包括以下功能：
-- public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：解析不带函数返回值的交易回执。
-- public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：解析带函数返回值的交易回执。
-- public Map\<String, List\<Object\>\> decodeEvents(String abi, List\<Logs\> logs)：解析交易日志。
-- public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)： 解析回执的状态和报错信息等。
 
-
+- **public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：** 解析不带函数返回值的交易回执。
+- **public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：** 解析带函数返回值的交易回执。
+- **public Map\<String, List\<Object\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易日志。
+- **public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)：** 解析回执的状态和报错信息等。
 
 ## 解析带返回值的交易
 
