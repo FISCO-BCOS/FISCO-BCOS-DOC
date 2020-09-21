@@ -19,7 +19,7 @@ This section takes the construction of single group FISCO BCOS chain as an examp
 
 - Install dependence
 
-`build_chain.sh` script depends on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, to executes `brew install openssl curl`.
+`build_chain.sh` script depends on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, execute `brew install openssl curl`.
 
 ```bash
 sudo apt install -y openssl curl
