@@ -603,7 +603,7 @@ Switched to group 2.
 运行getBlockHeaderByHash，根据区块哈希查询区块头信息。
 参数：
 - 区块哈希：0x开头的区块哈希值
-- 签名列表标志：默认为false，即：区块头信息中不显示区块签名列表信息，设置为true，则显示区块签名列表。
+- 公钥列表标志：默认为false，即：区块头信息中不显示公钥签名列表信息，设置为true，则显示公钥签名列表。
 
 ```text
 [group:1]> getBlockHeaderByHash 0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d
