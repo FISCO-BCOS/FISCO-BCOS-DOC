@@ -15,7 +15,7 @@ contract Proxy {
     direction= a;
   }
   
-function() external {
+  function() external {
     address destination = direction;
     assembly {
          calldatacopy(0, 0, calldatasize())
@@ -25,7 +25,7 @@ function() external {
          case 0 {revert(0, returndatasize())}
          default {return (0, returndatasize())}
      }
- }
+  }
 }
 ```
 
