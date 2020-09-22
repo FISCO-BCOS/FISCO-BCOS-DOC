@@ -57,15 +57,16 @@ Fallback函数的定义如下：
 
 - **calldatasize**：获取调用数据的字节数大小；
 - **calldatacopy**：拷贝指定字节数到指定内存位置；
-- **call**：调用操作，以指定内存处的数据作为输入调用destination地址，返回调用结果（发生错误时返回 0，正确结束返回 1）；
+- **call**：调用操作，以指定内存处的数据作为输入调用destination地址，返回调用结果；
 - **returndatasize**：获取返回数据的字节数
 - **returndatacopy**：拷贝返回数据到指定内存位置；
-- **switch**：调用失败则回滚；
-- **revert**：调用成功返回结果数据。
+- **switch**：判断调用是否成功，发生错误时返回 0，正确结束返回 1；
+- **revert**：调用失败则回滚；
+- **return**：调用成功返回结果数据
 
 ## 三、代理合约的调用方式
 
-我们需要首选部署被代理合约，然后在Proxy.sol中以被代理合约地址作为入参调用“update”方法，这样就可以实现代理调用了。
+我们需要首选部署被代理合约，然后在Proxy.sol中以被代理合约部署后的地址作为入参调用“update”方法，这样就可以实现代理调用了。
 
 这里提供一个简单的合约作为被代理合约，Test.sol代码如下：
 
@@ -84,9 +85,11 @@ contract Test {
 }
 ```
 
-以下步骤假设已经安装了FISCO节点以及console控制台。
+
 
 #### 3.1 部署合约
+
+以下步骤假设已经安装了FISCO节点以及console控制台；控制台“console/contracts/solidity/”目录下包含上述Proxy.sol、Test.sol合约文件。
 
 ###### 3.1.1 启动控制台
 ```$bash console/start.sh```
@@ -144,17 +147,17 @@ contract Test {
 加载Test.java合约文件，以“Proxy.sol”合约地址作为地址参数；
 
 ```
-String address = “0xc84f5c9fde0821fe4c3f8b878a78c086efe21a2f”
+String address = “0xc84f5c9fde0821fe4c3f8b878a78c086efe21a2f”//Proxy.sol合约部署后的地址
 Test contract = Test.load(address , web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
 ```
 
 ###### 3.2.2 在JavaSDK端发起调用请求
-调用请求会发送到“Proxy.sol”合约，但输入数据是按照“Test.sol”进行编码的；
+调用请求会发送到“Proxy.sol”合约，但输入数据是按照“Test.sol”的ABI进行编码的；
 
 ```TransactionReceipt receipt = contract.set(“invoke success”).send();```
 
 ###### 3.2.3 “Proxy.sol”合约接受调用请求
-如果不是访问“update”方法，“fallback”方法会接受调用请求；
+如果不是访问“update”方法，合约中的“fallback”方法会接受调用请求；
 
 ```let result := call(gas,destination,0, 0, calldatasize(), 0, 0)```
 
