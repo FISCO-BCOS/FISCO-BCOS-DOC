@@ -199,9 +199,6 @@ contract Asset {
         // 全部Event fromBlock设置为"1" 
         params.setFromBlock("1");
 
-        // 最新Event fromBlock设置为"latest"
-        // params.setFromBlock("latest");
-
         // toBlock设置为"latest"，处理至最新区块继续等待新的区块
         params.setToBlock("latest");
 
