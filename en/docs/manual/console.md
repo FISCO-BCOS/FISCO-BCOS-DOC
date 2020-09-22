@@ -608,7 +608,7 @@ parameter:
 Run getBlockHeaderByNumber to query the block header information according to the block height.
 parameter:
 - Block height
-- Signature list flag: The default is false, that is, the block signature list information is not displayed in the block header information, and if set to true, the block signature list is displayed.
+- Public key list flag: The default is false, that is, the block public key list information is not displayed in the block header information, and if set to true, the block public key list is displayed.
 
 ```text
 [group:1]> getBlockHeaderByNumber 1 true
