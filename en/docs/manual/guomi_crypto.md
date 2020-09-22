@@ -121,7 +121,7 @@ FISCO BCOS OSCCA-approved cryptography version adopts dual certificate mode, so 
 ``` shell
 cd key-manager/scripts
 #encrypt conf/gmnode.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 8006 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
 #encrypt conf/origin_cert/node.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 8006 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```
