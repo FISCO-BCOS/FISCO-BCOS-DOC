@@ -30,7 +30,7 @@ contract Add {
 }
 ```
 
-调用`add(uint256)`接口的交易回执内容如下，重点关注`input`、`output`和`input`字段：
+调用`add(uint256)`接口的交易回执内容如下，重点关注`input`、`output`和`logs`字段：
 
 ```Java
 {
