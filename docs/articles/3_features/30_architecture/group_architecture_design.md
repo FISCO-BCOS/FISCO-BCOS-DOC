@@ -95,8 +95,9 @@ node1接收到node0 group1的数据包{groupID(1) + packetA}后：
 共识模块主要负责执行客户端提交的交易，并对交易执行结果达成共识。
 
 如下图，共识模块包括打包(Sealer)线程和共识(Engine)线程，Sealer线程负责从交易池获取未执行交易，并将交易打包成区块；Engine线程负责对区块执行结果进行共识，目前主要支持PBFT和Raft共识算法。
+![](../../../../images/articles/group_architecture_design/IMG_4894.PNG)
 
-![](../../../../images/articles/group_architecture_design/IMG_4893.PNG)
+
 
 
 共识模块主要流程包括：
@@ -119,11 +120,12 @@ node1接收到node0 group1的数据包{groupID(1) + packetA}后：
 
 ##### 交易同步
 
-客户端通过RPC向指定群组交易池提交新交易时，会唤醒相应群组同步模块的交易同步线程，该线程将所有新收到的交易广播到其他群组节点，其他群组节点将最新交易插入到交易池，保证每个群组节点拥有全量的交易。
+客户端通过RPC向指定群组交易池提交新交易时，会唤醒相应群组同步模块的交易同步线程，该线程将所有新收到的交易广播到其他同群组节点，其他同群组节点将最新交易插入到交易池，保证每个群组节点拥有全量的交易。
 
 如下图，客户端将交易tx_j发送到group1, tx_i发送到group2后，交易同步线程会将tx_i广播到所有群组节点的group1，将tx_j广播到所有群组节点的group2。
 
 ![](../../../../images/articles/group_architecture_design/IMG_4894.PNG)
+【此图错误，没有】
 
 #### 区块同步
 
