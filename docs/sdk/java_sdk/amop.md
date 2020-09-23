@@ -78,9 +78,10 @@ Amop amop = sdk.getAmop();
 // 定义一个Callback，重写receiveAmopMsg方法，定义收到消息后的处理流程。
 AmopCallback cb = new AmopCallback() {
   @Override
-  public void receiveAmopMsg(AmopMsgIn msg) {
+  public byte[] receiveAmopMsg(AmopMsgIn msg) {
+    // 你可以在这里写收到消息后的处理逻辑。
     System.out.println("Received msg, content:" + new String(msg.getContent()));
-    msg.sendResponse("Yes, I received.".getBytes());
+    return "Yes, I received.".getBytes();
   }
 };
 // 订阅话题
@@ -109,10 +110,10 @@ Amop amop = sdk.getAmop();
 // 定义一个Callback，重写receiveAmopMsg方法，定义收到消息后的处理流程。
 AmopCallback cb = new AmopCallback() {
   @Override
-  public void receiveAmopMsg(AmopMsgIn msg) {
+  public byte[] receiveAmopMsg(AmopMsgIn msg) {
     // 你可以在这里写收到消息后的处理逻辑。
     System.out.println("Received msg, content:" + new String(msg.getContent()));
-    msg.sendResponse("Yes, I received.".getBytes());
+    return "Yes, I received.".getBytes();
   }
 };
 
