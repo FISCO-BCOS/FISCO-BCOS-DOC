@@ -22,7 +22,7 @@ $ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/bu
 # -p specifies the starting ports which are p2p_port, channel_port, jsonrpc_port
 # According to the following instructions, it needs to ensure that the 30300~30303, 20200~20203, 8545~8548 ports of the machine are not occupied.
 # -g It will generate a chain of OSCCA-approved cryptography.
-$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g
+$ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g
 ```
 
 For the `build_chain.sh` script option, please [refer to here] (build_chain.md). The command that execute normally will output `All completed`. (If there is no output, refer to `nodes/build.log` for checking).

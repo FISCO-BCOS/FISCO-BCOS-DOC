@@ -23,7 +23,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/buil
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
 # -g 搭建国密版本的链
 # -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
-$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g -G
+$ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G
 ```
 
 关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。

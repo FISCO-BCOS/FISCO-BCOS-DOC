@@ -547,7 +547,7 @@ Result见[getBlockByHash](./api.html#getblockbyhash)
 ### 参数
 - `groupID`: `unsigned int` - 群组ID
 - `blockHash`: `string` - 区块哈希
-- `includeSignatures`: `bool` - 包含签名列表标志(true显示签名列表)
+- `includeSignatures`: `bool` - 包含签名列表标志(true显示签名列表)，如果为true，则会带上下面例子中的`signatureList`字段。
 
 ### 返回值
 
