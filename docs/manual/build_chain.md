@@ -49,7 +49,7 @@ Usage:
     -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
-    ./build_chain.sh -l "127.0.0.1:4"
+    ./build_chain.sh -l 127.0.0.1:4
 ```
 
 ## 选项介绍
@@ -87,9 +87,9 @@ bash build_chain.sh -f ipconf -T
 
 ```bash
 # 从GitHub下载最新release二进制，生成本机4节点
-$ bash build_chain.sh -l "127.0.0.1:4"
+$ bash build_chain.sh -l 127.0.0.1:4
 # 使用 bin/fisco-bcos 二进制，生成本机4节点
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+$ bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### **`o`选项[**Optional**]**
@@ -299,7 +299,7 @@ e.g
 
 ```bash
 # 构建FISCO BCOS联盟链
-$ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
+$ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
 # 生成成功后，输出`All completed`提示
 Generating CA key...
 ==============================================================

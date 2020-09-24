@@ -48,7 +48,7 @@ Execute the following command in the fisco directory to generate a single group 
 
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
 
 ```eval_rst

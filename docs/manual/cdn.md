@@ -74,7 +74,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/buil
 搭建国密版本时，开发部署工具还依赖tassl，工具会自动下载，如果失败请用户参考TASSL手动下载方法，下载解压后放置于~/.fisco/tassl。执行下面的指令，输出All completed即表示执行成功。
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g -v 2.4.0
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -v 2.4.0
 ```
 
 ## 举例：使用国内源码镜像编译
