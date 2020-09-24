@@ -695,7 +695,7 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下。更多选项[参考这里](build_chain.md)。
 
 ```bash
-bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### 三 调用

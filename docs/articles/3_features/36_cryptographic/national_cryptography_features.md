@@ -75,7 +75,7 @@ buildchain.sh脚本的-g为国密编译选项，使用成功后会生成国密�
 
 ```
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
-./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g
+./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g
 ```
 
 执行成功后，会搭建本地四节点的国密版FISCO BCOS联盟链。
