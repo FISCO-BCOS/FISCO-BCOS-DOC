@@ -117,7 +117,7 @@ String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ## 账户的使用
 
 ### 控制台加载私钥文件
-控制台提供账户生成脚本get_account.sh，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台提供账户生成脚本get_account.sh，生成的的账户私钥文件在accounts目录下，控制台加载私钥时需要指定私钥文件。
 控制台启动方式有如下几种：
 ```
 ./start.sh
@@ -125,6 +125,7 @@ String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ./start.sh groupID -pem pemName
 ./start.sh groupID -p12 p12Name
 ```
+
 ##### 默认启动
 控制台随机生成一个账户，使用控制台配置文件指定的群组号启动。
 ```bash

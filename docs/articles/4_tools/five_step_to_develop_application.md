@@ -15,7 +15,7 @@
 
 ```
 $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
-$ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+$ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 $ bash nodes/127.0.0.1/start_all.sh
 ```
 
@@ -86,7 +86,7 @@ Solidity合约需要通过编译器转换成机器（虚拟机）可执行的二
 
 参考说明文档【控制台】的deploy命令：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html
 
-将Assert.sol放置在console/solidity/contract目录，在控制台执行deploy Assert.sol即可完成合约的编译以及部署。    
+将Assert.sol放置在console/solidity/contract目录，在控制台执行deploy Assert.sol即可完成合约的编译以及部署。
 
 ![](../../../images/articles/five_step_to_develop_application/IMG_4949.PNG)
 

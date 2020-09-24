@@ -709,7 +709,7 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 Given that it is stored under `FISCO-BCOS/build` directory, use the following instruction to build chain for node 4. For more options please [read here](build_chain.md).
 
 ```bash
-bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### 3 Calling
