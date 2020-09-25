@@ -40,7 +40,7 @@ In the alliance chain, different business scenarios need to be equipped with dif
 
 ### Introduction
 
-**Group signature** 
+**Group signature**
 
 Group signature is a digital signature scheme that can protect the identity of the signer. Users can sign messages instead of the group they belong to, and the verifier can verify whether the signature is valid. In this case, the verifier could not know which group member the signature belongs to. However, users cannot abuse this anonymous behavior, because the group administrator can open the signature through the group owner's private key, exposing the attribution information of the signature. Group signature features include:
 
@@ -49,7 +49,7 @@ Group signature is a digital signature scheme that can protect the identity of t
 - Unlinkability: given two signatures, it is impossible to determine whether they are from the same signer;
 - Traceability: the group owner can obtain the signer identity through signature.
 
-**Ring signature**  
+**Ring signature**
 
 Ring signature is a special group signature scheme, but has complete anonymity, that is, there is no administrator, users can actively join the ring, and the signature cannot be opened. Ring signature features include:
 
@@ -76,14 +76,12 @@ Due to its natural anonymity, group/ring signature has broad application prospec
 
 ## How to start
 
-The privacy module is implemented through precompiled contracts, and is not turned on by default. To enable these features, you need to recompile the source code and enable the `CRYPTO_EXTENSION` compilation option. The steps are as follows:
-
-### Build chain 
+### Build chain
 
 Make sure you are in the `FISCO-BCOS/build` directory, and execute the following command to build a local 4-node chain. [Refer to here](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html) to get more build options.
 
 ```bash
-bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
+bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ## Precompiled contract interface
@@ -161,7 +159,7 @@ contract CallPaillier {
     function CallPaillier() {
 
         // call PaillierPrecompiled contract
-        paillier = PaillierPrecompiled(0x5003); 
+        paillier = PaillierPrecompiled(0x5003);
     }
     function add(string cipher1, string cipher2) public constant returns(string) {
         return paillier.paillierAdd(cipher1, cipher2);

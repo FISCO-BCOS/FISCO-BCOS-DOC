@@ -74,7 +74,7 @@ LSAG方案中，不同环大小的环签名存储和计算开销如下：
 
 ## 如何在FISCO BCOS中使用群/环签名
 
-FISCO BCOS 2.3版本以预编译合约的形式集成了BBSO4方案和LSAG方案的签名验证算法。由于这些隐私保护特性默认不开启，要启用这些功能需要打开CRYPTO_EXTENSION编译选项，并重新编译源码。
+FISCO BCOS 2.3版本开始以预编译合约的形式集成了BBSO4方案和LSAG方案的签名验证算法。由于这些隐私保护特性默认不开启，要启用这些功能需要打开CRYPTO_EXTENSION编译选项，并重新编译源码。**2.5及以上版本默认开启，不再需要用户编译源码**。
 
 群/环签名预编译合约地址分配如下：
 
@@ -111,12 +111,12 @@ import "./RingSigPrecompiled.sol";
 
 contract TestRingSig {
     RingSigPrecompiled ringSig;
-    function TestRingSig() 
+    function TestRingSig()
     {
         // 实例化RingSigPrecompiled合约
-        ringSig = RingSigPrecompiled(0x5005); 
+        ringSig = RingSigPrecompiled(0x5005);
     }
-    function verify(string signature, string message, string paramInfo) public constant returns(bool) 
+    function verify(string signature, string message, string paramInfo) public constant returns(bool)
     {
         return ringSig.ringSigVerify(signature, message, paramInfo);
     }

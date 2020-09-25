@@ -30,7 +30,7 @@ cd ~/generator && bash ./scripts/install.sh
 
 **获取节点二进制**
 
-拉取最新fisco-bcos二进制文件到meta中
+拉取最新fisco-bcos二进制文件到meta中，如果网络较差，可以尝试通过其他方式下载`fisco-bcos`，或使用`--cdn`选项，并将下载好的二进制放置于`meta`文件夹下
 
 ```bash
 ./generator --download_fisco ./meta
