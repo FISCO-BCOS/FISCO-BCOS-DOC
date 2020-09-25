@@ -92,13 +92,17 @@ contract Test {
 以下步骤假设已经安装了FISCO节点以及console控制台；控制台“console/contracts/solidity/”目录下包含上述Proxy.sol、Test.sol合约文件。
 
 ###### 3.1.1 启动控制台
-```$bash console/start.sh```
+```
+$bash console/start.sh
+```
 
 ###### 3.1.2 在控制台下部署被调用合约
 
 记录合约地址；
 
-```[group:1]> deploy Test ```
+```
+[group:1]> deploy Test 
+```
 
 >contract address: 0x30e8f90c33f22a4cf928988ee715417e51c52030
 
@@ -107,7 +111,9 @@ contract Test {
 
 记录合约地址；
 
-```[group:1]> deploy Proxy ```
+```
+[group:1]> deploy Proxy 
+```
 
 >contract address: 0xc84f5c9fde0821fe4c3f8b878a78c086efe21a2f
 
@@ -117,7 +123,9 @@ contract Test {
 
 请根据实际部署的合约地址更新参数；
 
-```[group:1]> call Proxy 0xc84f5c9fde0821fe4c3f8b878a78c086efe21a2f update "0x30e8f90c33f22a4cf928988ee715417e51c52030"```
+```
+[group:1]> call Proxy 0xc84f5c9fde0821fe4c3f8b878a78c086efe21a2f update "0x30e8f90c33f22a4cf928988ee715417e51c52030"
+```
 
 >transaction hash: 0xde69dd546313d0a9361ad0b960417857f3b037b5910a5fcc53328ae346184668
 
@@ -128,7 +136,9 @@ contract Test {
 
 回顾Fallback方法内联汇编中有一行关键代码：
 
-```let result := call(gas,destination,0, 0, calldatasize(), 0, 0)```
+```
+let result := call(gas,destination,0, 0, calldatasize(), 0, 0)
+```
 
 这是实现代理调用的关键逻辑。
 
@@ -154,12 +164,16 @@ Test contract = Test.load(address , web3j, credentials, new StaticGasProvider(ga
 ###### 3.2.2 在JavaSDK端发起调用请求
 调用请求会发送到“Proxy.sol”合约，但输入数据是按照“Test.sol”的ABI进行编码的；
 
-```TransactionReceipt receipt = contract.set(“invoke success”).send();```
+```
+TransactionReceipt receipt = contract.set(“invoke success”).send();
+```
 
 ###### 3.2.3 “Proxy.sol”合约接受调用请求
 如果不是访问“update”方法，合约中的“fallback”方法会接受调用请求；
 
-```let result := call(gas,destination,0, 0, calldatasize(), 0, 0)```
+```
+let result := call(gas,destination,0, 0, calldatasize(), 0, 0)
+```
 
 这一步，将输入数据代理到“destination”地址上，即“Test.sol”的合约地址；
 注意：输入数据是按照“Test.java”文件编码的，将符合“Test.sol”的函数签名。
