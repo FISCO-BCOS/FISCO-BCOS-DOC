@@ -49,7 +49,7 @@ Usage:
     -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
-    ./tools/build_chain.sh -l "127.0.0.1:4"
+    ./tools/build_chain.sh -l 127.0.0.1:4
 ```
 
 ## Option introduction
@@ -84,9 +84,9 @@ is used to specify **full path** where `fisco-bcos` binary is located.Script wil
 
 ```bash
 # download the latest release binary from GitHub to generate native 4 nodes
-$ bash build_chain.sh -l "127.0.0.1:4"
+$ bash build_chain.sh -l 127.0.0.1:4
 # use bin/fisco-bcos binary to generate native 4 nodes
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+$ bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### **`o`option[**Optional**]**
@@ -273,7 +273,7 @@ To build a 4-node FISCO BCOS alliance chain on native machine for using the defa
 
 ```bash
 # to build FISCO BCOS alliance chain
-$ bash build_chain.sh -l "127.0.0.1:4"
+$ bash build_chain.sh -l 127.0.0.1:4
 # after generating successes, to output `All completed` to mention
 Generating CA key...
 ==============================================================
@@ -345,7 +345,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
     ```bash
     [p2p]
         listen_ip=0.0.0.0
-        listen_port=30300
+        listen_port=30304
         ;enable_compress=true
         ; nodes to connect
         node.0=127.0.0.1:30300

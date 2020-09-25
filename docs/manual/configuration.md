@@ -252,7 +252,7 @@ FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibi
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=8006
+key_manager_port=8150
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 

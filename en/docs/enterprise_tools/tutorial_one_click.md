@@ -37,7 +37,7 @@ Check if the installation is successful. If successful, output usage: generator 
 
 **Get node binary**
 
-Pull the latest fisco-bcos binary to the meta
+Pull the latest fisco-bcos binary to the meta, you can try `--cdn` to improve your download speed.
 
 ```bash
 ./generator --download_fisco ./meta

@@ -23,7 +23,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/buil
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
 # -g 搭建国密版本的链
 # -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
-$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g -G
+$ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G
 ```
 
 关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
@@ -121,7 +121,7 @@ FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两�
 ``` shell
 cd key-manager/scripts
 #加密 conf/gmnode.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 8006 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
 #加密 conf/origin_cert/node.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 8006 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```

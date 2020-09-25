@@ -25,7 +25,7 @@
 - 安装依赖
 
 `开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
-若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可。
+若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可（macOS自带的openssl指令选项不同，请执行安装标准openssl）。
 
 ```bash
 sudo apt install -y openssl curl
@@ -55,13 +55,13 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/buil
 
 ```eval_rst
 .. note::
-    - 国密版本请执行``bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g -G``
+    - 国密版本请执行``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
     - 其中-g表示生成国密配置，-G表示使用国密SSL连接
     - web3sdk已经支持国密SSL，如果使用web3sdk建议带上-G选项使用国密SSL
 ```
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
 
 ```eval_rst

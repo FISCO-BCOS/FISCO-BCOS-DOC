@@ -31,6 +31,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 ```
 
 If you use guomi version fisco, please execute below command to get `get_gm_account.sh`
+
 ```bash
 curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
 ```
