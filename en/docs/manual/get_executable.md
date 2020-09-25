@@ -80,6 +80,7 @@ $ source /opt/rh/devtoolset-7/enable  # CentOS Please execute
 # please use cmake3 for CentOS
 $ cmake ..
 #To add -j4 to accelerate compilation by 4 compilation processes
+# In macOS, if it raises "ld: warning: direct access" when execute make command, please ignore it
 $ make
 ```
 
