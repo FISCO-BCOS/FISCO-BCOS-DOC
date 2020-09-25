@@ -27,6 +27,82 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 #### **返回值**
 - 无
 
+### sendRawTransactionAndGetProof
+
+向区块链节点发送交易，且声明在交易推送时交易回执中包含交易Merkle证明和交易回执Merkle证明。
+
+#### **参数**
+
+- signedTransactionData: 签名后的交易。
+
+#### **返回值**
+
+- SendTransaction: 节点收到交易后，回复给SDK的回包，包括交易哈希信息。
+
+### sendRawTransactionAndGetProofAsync
+
+`sendRawTransactionAndGetProof`异步接口，向节点发送交易，并在收到节点回报时，调用回调函数。
+
+#### **参数**
+
+- signedTransactionData: SDK发送到节点的签名后交易；
+- callback: SDK收到节点回包后，调用的回调函数。
+
+#### **返回值**
+
+- 无
+
+### sendRawTransactionAndGetReceipt
+
+交易发送同步接口，发送交易并获取交易回执。
+
+#### **参数**
+
+- signedTransactionData: 组装好的交易字符串，包含签名信息。
+
+#### **返回值**
+
+- TransactionReceipt: 交易回执。
+
+### sendRawTransactionAndGetReceiptAsync
+
+交易发送异步接口，发送交易，并在收到交易回执时调用指定的回调函数。
+
+#### **参数**
+
+- signedTransactionData: 组装好的交易字符串，包含签名信息；
+- callback: 收到交易回执后调用的回调函数。
+
+#### **返回值**
+
+- 无。
+
+
+### sendRawTransactionAndGetReceiptWithProof
+
+交易发送同步接口，发送交易，并获取带有交易Merkle证明和交易回执Merkle证明的交易回执。
+
+#### **参数**
+
+- signedTransactionData: 组装好的交易字符串，包含签名信息；
+
+#### **返回值**
+
+- TransactionReceipt: 带有交易Merkle证明和交易回执Merkle证明的交易回执。
+
+### sendRawTransactionAndGetReceiptWithProofAsync
+
+交易发送异步接口，发送交易，并在收到交易回执时，调用指定的回调函数(交易回执中包含交易Merkle证明和交易回执的Merkle证明)。
+
+#### **参数**
+
+- signedTransactionData: 组装好的交易字符串，包含签名信息；
+- callback: 收到交易回执后调用的回调函数。
+
+#### **返回值**
+
+- 无。
+
 ### call
 向节点发送请求，调用合约常量接口。
 #### **参数**
@@ -39,24 +115,6 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 #### **参数**
 - transaction: 合约调用信息，包含合约地址、合约调用者以及调用的接口和参数信息；
 - callback: 回调函数。
-
-#### **返回值**
-- 无
-
-### sendRawTransactionAndGetProof
-向区块链节点发送交易，且在获取的交易回执中包含交易Merkle证明和交易回执Merkle证明。
-
-#### **参数**
-- signedTransactionData: 签名后的交易。
-
-#### **返回值**
-- SendTransaction: 节点收到交易后，回复给SDK的回包，包括交易哈希信息。
-
-### sendRawTransactionAndGetProofAsync
-`sendRawTransactionAndGetProof`异步接口，向节点发送交易，并在收到节点回报时，调用回调函数。
-#### **参数**
-- signedTransactionData: SDK发送到节点的签名后交易；
-- callback: SDK收到节点回包后，调用的回调函数。
 
 #### **返回值**
 - 无
@@ -237,7 +295,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 #### **返回值**
 - GenerateGroup: 群组创建结果。
-   
+  
 ### startGroup
 启动指定节点的指定群组。
 
@@ -297,7 +355,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - peerIpPort: 被查询的节点的`IP:Port`。
 #### **返回值**
 - GroupPeers: 指定群组连接的节点列表。
-   
+  
 ### getPeers
 获取指定节点的网络连接信息。
 #### **参数**
@@ -363,40 +421,6 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 #### **返回值**
 - SyncStatus: 区块链节点同步状态。
-
-### sendRawTransactionAndGetReceipt
-交易发送同步接口，发送交易并获取交易回执。
-#### **参数**
-- signedTransactionData: 组装好的交易字符串，包含签名信息。
-
-#### **返回值**
-- TransactionReceipt: 交易回执。
-
-### asyncSendRawTransaction
-交易发送异步接口，发送交易，并在收到交易回执时调用指定的回调函数。
-
-#### **参数**
-- signedTransactionData: 组装好的交易字符串，包含签名信息；
-- callback: 收到交易回执后调用的回调函数。
-
-#### **返回值**
-- 无。
-
-### asyncSendRawTransactionAndGetProof
-交易发送异步接口，发送交易，并在收到交易回执时，调用指定的回调函数(交易回执中包含交易Merkle证明和交易回执的Merkle证明)。
-#### **参数**
-- signedTransactionData: 组装好的交易字符串，包含签名信息；
-- callback: 收到交易回执后调用的回调函数。
-#### **返回值**
-- 无。
-
-
-### sendRawTransactionAndGetReceiptWithProof
-交易发送同步接口，发送交易，并获取带有交易Merkle证明和交易回执Merkle证明的交易回执。
-#### **参数**
-- signedTransactionData: 组装好的交易字符串，包含签名信息；
-#### **返回值**
-- TransactionReceipt: 带有交易Merkle证明和交易回执Merkle证明的交易回执。
 
 
 ### ConsensusService
@@ -478,7 +502,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 **返回值**
 
 - List<PermissionInfo>: 拥有对指定合约写权限的账户信息列表。
- 
+
 #### grantWrite
 授权指定用户对指定合约的写权限。
 
@@ -488,7 +512,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 授权结果。
-   
+  
 #### revokeWrite
 撤销指定用户对指定合约的写访问权限。
 
@@ -498,7 +522,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 合约写访问权限撤销结果。
-   
+  
 #### queryPermissionByTableName
 查询对指定表有写权限的账户地址信息。
 
@@ -507,7 +531,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - List<PermissionInfo>: 拥有对指定表写访问权限的账户信息列表。
-    
+  
 #### grantDeployAndCreateManager
 授权指定用户部署和调用合约的权限。
 
@@ -516,7 +540,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 授权结果。
-   
+  
 #### revokeDeployAndCreateManager
 撤销指定账户部署和调用合约的权限。
 
@@ -570,7 +594,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 授权结果。
-    
+  
 #### revokeNodeManager
 撤销指定用户对系统共识表的写访问权限，撤销权限的账户无法进行增加共识节点、增加观察者节点、删除节点等操作。
 
@@ -579,7 +603,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 系统够共识表写访问权限撤销结果。
-    
+  
 #### listNodeManager
 列出拥有增加共识节点、增加观察者节点、删除节点等操作权限的账户信息。
 
@@ -606,7 +630,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 撤销结果。
-   
+  
 #### listCNSManager
 列出对CNS表有写权限的账户信息。
 
@@ -624,7 +648,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 授权结果。
-   
+  
 #### revokeSysConfigManager
 撤销指定用户设置系统配置项的权限。
 
@@ -633,7 +657,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 权限撤销结果。
-   
+  
 #### listSysConfigManager
 列出有修改系统配置项权限的账户信息。
 
@@ -663,7 +687,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 撤销结果。
-    
+  
 #### listCommitteeMembers
 列出当前链管理员信息。
 
@@ -700,7 +724,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - BigInteger: 当前投票生效阈值。
-   
+  
 
 #### queryCommitteeMemberWeight
 查询指定链管理员的投票权重。
@@ -710,7 +734,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - BigInteger: 查询到的指定链管理员投票权重。
-   
+  
 #### grantOperator
 将指定账户授权为运维管理员。
 
@@ -719,7 +743,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 授权结果。
-    
+  
 #### revokeOperator
 撤销指定运维管理员的运维权限。
 
@@ -728,7 +752,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 运维权限撤销结果。
-    
+  
 #### listOperators
 列出当前群组的运维管理员信息。
 
@@ -746,7 +770,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 账户冻结结果。
-   
+  
 #### unfreezeAccount
 解冻被冻结的账户，解冻后的账户可以部署和调用合约。
 
@@ -755,7 +779,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 账户解冻结果。
-   
+  
 #### getAccountStatus
 获取指定账户的状态。
 
@@ -764,7 +788,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - String: 指定账户的状态。
-    
+  
 
 ### TableCRUDService
 
@@ -802,7 +826,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 记录是否更新成功。
-    
+  
 
 #### remove
 删除用户表指定记录。
@@ -888,7 +912,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: 合约冻结结果。
-   
+  
 #### unfreeze
 解冻指定合约。
 
@@ -941,7 +965,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - RetCode: CNS注册结果。
-    
+  
 #### selectByName
 根据合约名查询合约CNS信息。
 
@@ -950,7 +974,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - List<CnsInfo>: 查询到的CNS信息列表。
-    
+  
 #### selectByNameAndVersion
 根据合约名和合约版本查询CNS信息。
 
@@ -960,7 +984,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - List<CnsInfo>: 查询到的CNS信息。
-    
+  
 #### getContractAddress
 根据合约名和合约版本获取合约地址。
 
