@@ -78,11 +78,12 @@ Amop amop = sdk.getAmop();
 // 定义一个Callback，重写receiveAmopMsg方法，定义收到消息后的处理流程。
 AmopCallback cb = new AmopCallback() {
   @Override
-  public void receiveAmopMsg(AmopMsgIn msg) {
+  public byte[] receiveAmopMsg(AmopMsgIn msg) {
+    // 你可以在这里写收到消息后的处理逻辑。
     System.out.println("Received msg, content:" + new String(msg.getContent()));
-    msg.sendResponse("Yes, I received.");
+    return "Yes, I received.".getBytes();
   }
-}
+};
 // 订阅话题
 amop.subscribeTopic("MyTopic", cb);
 ```
@@ -109,12 +110,12 @@ Amop amop = sdk.getAmop();
 // 定义一个Callback，重写receiveAmopMsg方法，定义收到消息后的处理流程。
 AmopCallback cb = new AmopCallback() {
   @Override
-  public void receiveAmopMsg(AmopMsgIn msg) {
+  public byte[] receiveAmopMsg(AmopMsgIn msg) {
     // 你可以在这里写收到消息后的处理逻辑。
     System.out.println("Received msg, content:" + new String(msg.getContent()));
-    msg.sendResponse("Yes, I received.");
+    return "Yes, I received.".getBytes();
   }
-}
+};
 
 // 加载私钥
 KeyManager km = new P12Manager("private_key.p12", "12s230");
@@ -197,7 +198,7 @@ Amop amop = sdk.getAmop();
 AmopMsgOut out = new AmopMsgOut();
 out.setTopic("MyTopic");
 out.setType(TopicType.NORMAL_TOPIC);
-out.setContent(content.getBytes());
+out.setContent("some content here".getBytes());
 out.setTimeout(6000);
 
 // 构造Callback
