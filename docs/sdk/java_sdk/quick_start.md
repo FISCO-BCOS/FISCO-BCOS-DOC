@@ -10,7 +10,7 @@
 ### 使用gradle引入SDK
 
 ```bash
-compile ('org.fisco-bcos:java-sdk:1.0.0')
+compile ('org.fisco-bcos:java-sdk:2.6.1-rc1')
 ```
 
 ### 使用maven引入SDK
@@ -19,7 +19,7 @@ compile ('org.fisco-bcos:java-sdk:1.0.0')
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>1.0.0</version>
+    <version>2.6.1-rc1</version>
 </dependency>
 ```
 
@@ -43,22 +43,7 @@ compile ('org.fisco-bcos:java-sdk:1.0.0')
 
 ### `solidity`代码转`java`代码
 
-java sdk和控制台`console`均提供了将`solidity`代码转换为`java`代码的工具。
-
-**使用java-sdk提供的工具**
-```bash
-$ mkdir ~/fisco && cd ~/fisco
-# 获取java-sdk代码
-$ git clone https://github.com/FISCO-BCOS/java-sdk
-# 编译
-$ ./gradlew clean build -x test
-# 进入dist目录，创建合约存放目录
-$ cd dist && mkdir -p contracts/solidity
-# 将需要转换为java代码的sol文件拷贝到~/fisco/java-sdk/dist/contracts/solidity路径下
-# 转换sol, 其中${packageName}是生成的java代码包路径
-# 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
-java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${packageName}
-```
+控制台`console`均提供了将`solidity`代码转换为`java`代码的工具。
 
 **使用控制台提供的工具**
 
@@ -67,7 +52,7 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${p
 ```bash
 $ mkdir ~/fisco && cd ~/fisco
 # 获取控制台
-$ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.3.0/download_console.sh && bash download_console.sh
+$ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
 # 将需要转换为java代码的sol文件拷贝到~/fisco/console/contracts/solidity路径下
 # 使用脚本sol2java.sh转换solidity代码, 其中${packageName}是生成的java代码包路径
 # 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
@@ -173,6 +158,45 @@ public class BcosSDKTest
         
         // 调用HelloWorld合约的set接口
         TransactionReceipt receipt = helloWorld.set("Hello, fisco");
+     }
+}
+```
+
+异步发送交易并在收到交易回执后调用指定回调函数的示例如
+java sdk支持异步发送交易，并在收到交易回执后调用指定回调函数，异步回调函数必须继承TransactionCallback类，定义异步回调示例如下：
+
+```java
+// 定义异步回调
+public class TransactionCallbackSample implements TransactionCallback
+{
+    public TransactionReceipt receipt;
+    @Override
+    public void onResponse(TransactionReceipt receipt) {
+        this.receipt = receipt;
+    }
+}
+```
+
+异步调用`HelloWorld`的`set`接口如下(更详细的示例可参考`PerformanceOk`)：
+
+```java
+public class BcosSDKTest
+{
+    // 获取配置文件路径
+    public final String configFile = BcosSDKTest.class.getClassLoader().getResource("config-example.toml").getPath();
+     public void testClient() throws ConfigException {
+         // 初始化BcosSDK
+        BcosSDK sdk =  BcosSDK.build(configFile);
+        // 为群组1初始化client
+        Client client = sdk.getClient(Integer.valueOf(1));
+        // 创建发送交易的公私钥
+        CryptoKeyPair cryptoKeyPair = client.getCryptoSuite().createKeyPair();
+        // 向群组1部署HelloWorld合约
+        HelloWorld helloWorld = HelloWorld.deploy(client, cryptoKeyPair);
+        
+        // 异步调用HelloWorld合约的set接口，节点返回交易回执时，会调用到callback的onResponse接口
+        TransactionCallbackSample callback = new TransactionCallbackSample();
+        TransactionReceipt receipt = helloWorld.set("Hello, fisco", callback);
      }
 }
 ```
