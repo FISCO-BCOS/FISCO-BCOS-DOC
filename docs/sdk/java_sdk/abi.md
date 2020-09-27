@@ -77,7 +77,7 @@ contract Add {
   argsObjects.add(new BigInteger("60"));
   BcosSDK sdk =  BcosSDK.build(configFile);
   Client client = sdk.getClient(Integer.valueOf(1));
-  ABICodec abiCodec = new ABICodec(client.getCryptoInterface());
+  ABICodec abiCodec = new ABICodec(client.getCryptoSuite());
   String abi = ""; // 合约ABI编码，省略
   try {
     String encoded = abiCodec.encodeMethod(abi, "add", argsObjects));
@@ -136,7 +136,7 @@ class SubscribeCallback implements EventCallback {
   if (logs != null) {
     String abi = ""; // 合约ABI编码，省略
     for (EventLog log : logs) {
-      ABICodec abiCodec = new ABICodec(client.getCryptoInterface()); // client初始化，省略
+      ABICodec abiCodec = new ABICodec(client.getCryptoSuite()); // client初始化，省略
       try {
         List<Object> list = abiCodec.decodeEvent(abi, "LogAdd", log.getData());
         logger.debug("decode event log content, " + list);

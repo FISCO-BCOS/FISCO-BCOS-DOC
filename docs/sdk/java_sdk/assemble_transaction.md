@@ -23,7 +23,7 @@ contract HelloWorld{
 
 
 ## 部署并调用合约
-Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。可以使用AssembleTransactionManager来完成合约操作。
+Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。可以使用AssembleTransactionProcessor来完成合约操作。
 
 ### 部署合约
 
@@ -34,10 +34,11 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
     BcosSDK sdk = new BcosSDK(configFile);
     // 获取Client对象，此处传入的群组ID为1
     Client client = sdk.getClient(Integer.valueOf(1));
-    // 构造AssembleTransactionManager对象，需要传入client对象，cryptoInterface对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
-    AssembleTransactionManager manager = TransactionManagerFactory.createAssembleTransactionManager(client, client.getCryptoInterface(), "src/main/resources/abi/", "src/main/resources/bin/");
+    // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
+    CryptoKeyPair keyPair = client.getCryptoSuite().createKeyPair();
+    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
     // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
-    TransactionResponse response = manager.deployByContractLoader("HelloWorld", new ArrayList<>());
+    TransactionResponse response = transactionProcessor.deployByContractLoader("HelloWorld", new ArrayList<>());
 
 ```
 
@@ -107,7 +108,7 @@ TransactionResponse的数据结构如下：
     List<Object> params = new ArrayList<>();
     params.add("test");
     // 调用HelloWorld合约，合约地址为helloWorldAddress， 调用函数名为『set』，函数参数类型为params
-    TransactionResponse transactionResponse = manager.sendTransactionAndGetResponseByContractLoader("HelloWorld", helloWorldAddrss, "set", params);
+    TransactionResponse transactionResponse = transactionProcessor.sendTransactionAndGetResponseByContractLoader("HelloWorld", helloWorldAddrss, "set", params);
 ```
 
 例如，调用HelloWorld合约的返回如下：
@@ -149,7 +150,7 @@ TransactionResponse的数据结构如下：
 
 ```
     // 查询HelloWorld合约的『name』函数，合约地址为helloWorldAddress，参数为空
-    CallResponse callResponse = manager.sendCallByContractLoader("HelloWorld", helloWorldAddrss, "name", new ArrayList<>());
+    CallResponse callResponse = transactionProcessor.sendCallByContractLoader("HelloWorld", helloWorldAddrss, "name", new ArrayList<>());
 ```
 
 查询函数返回如下：
@@ -162,8 +163,8 @@ TransactionResponse的数据结构如下：
 }
 ```
 
-## AssembleTransactionManager 的详细API功能介绍
-AssembleTransactionManager支持自定义参数发送交易，详细的API功能如下。
+## AssembleTransactionProcessor 的详细API功能介绍
+AssembleTransactionProcessor支持自定义参数发送交易，详细的API功能如下。
 
 - **public void deployOnly(String abi, String bin, List\<Object\> params)：** 传入合约abi、bin和构造函数参数来部署合约，不接收回执结果。
 - **public TransactionResponse deployAndGetResponse(String abi, String bin, List\<Object\> params) ：** 传入合约abi、bin和构造函数参数来部署合约，接收回执结果

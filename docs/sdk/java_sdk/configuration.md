@@ -39,13 +39,21 @@ SDK证书配置示例如下：
 
 certPath = "conf"                           # The certification path  
 
-# The following configurations take the certPath by default:
+# The following configurations take the certPath by default if commented
+# caCert = "conf/ca.crt"                    # CA cert file path
+                                            # If connect to the GM node, default CA cert path is ${certPath}/gm/gmca.crt
 
-# caCert = "conf/ca.crt"                    # CA cert file path    
 # sslCert = "conf/sdk.crt"                  # SSL cert file path
+                                            # If connect to the GM node, the default SDK cert path is ${certPath}/gm/gmsdk.crt
+
 # sslKey = "conf/sdk.key"                   # SSL key file path
+                                            # If connect to the GM node, the default SDK privateKey path is ${certPath}/gm/gmsdk.key
+
 # enSslCert = "conf/gm/gmensdk.crt"         # GM encryption cert file path
+                                            # default load the GM SSL encryption cert from ${certPath}/gm/gmensdk.crt
+
 # enSslKey = "conf/gm/gmensdk.key"          # GM ssl cert file path
+                                            # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
 ```
 
 ## 网络连接配置

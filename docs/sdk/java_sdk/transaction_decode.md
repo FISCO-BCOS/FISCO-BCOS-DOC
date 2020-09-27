@@ -21,8 +21,10 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 BcosSDK sdk =  BcosSDK.build(configFile);
 // 发送群组ID1
 Client client = sdk.getClient(Integer.valueOf(1));
+// 获取当前群组对应的密码学接口
+CryptoSuite cryptoSuite = client.getCryptoSuite();
 // 构造TransactionDecoderService实例，传入是否密钥类型参数。
-TransactionDecoderInterface decoder = new TransactionDecoderService(client.getCryptoInterface());
+TransactionDecoderInterface decoder = new TransactionDecoderService(cryptoSuite);
 ```
 
 TransactionDecoderInterface 主要包括以下功能：
