@@ -163,8 +163,10 @@ public class BcosSDKTest
         // 获取群组1的块高
         BlockNumber blockNumber = client.getBlockNumber();
 
+        // 创建发送交易的公私钥
+        CryptoKeyPair cryptoKeyPair = client.getCryptoSuite().createKeyPair();
         // 向群组1部署HelloWorld合约
-        HelloWorld helloWorld = HelloWorld.deploy(client, client.getCryptoInterface());
+        HelloWorld helloWorld = HelloWorld.deploy(client, cryptoKeyPair);
 
         // 调用HelloWorld合约的get接口
         String getValue = helloWorld.get();
