@@ -25,7 +25,7 @@ FISCO BCOS区块链向外部暴露了接口，外部业务程序能够通过FISC
 目前，FISCO BCOS提供的SDK包括：
 
 * [Java SDK](./java_sdk/index.md) （稳定、功能强大、无内置控制台）
-* [Java SDK（web3sdk）](./java_sdk.md) （旧版SDK，不推荐使用）
+* [Web3SDK](./java_sdk.md) （旧版Java SDK，不推荐使用）
 * [Python SDK](./python_sdk/index.html) （简单轻便、有内置控制台）
 * [Node-js SDK](./nodejs_sdk/index.html)（简单轻便、有内置控制台）
 * [Go SDK](./go_sdk/index.html)（简单轻便、有内置控制台）
