@@ -4,11 +4,6 @@ Go SDK
 
 `Go SDK <https://github.com/FISCO-BCOS/go-sdk>`_ 提供了访问 `FISCO BCOS <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ 节点的Go API，支持节点状态查询、部署和调用合约等功能，基于Go SDK可快速开发区块链应用，目前支持 `FISCO BCOS 2.2.0+  <../../../>`_
 
-.. admonition:: **注意**
-    :class: red
-
-     - **Go SDK目前处于个人开发者体验阶段，开发企业级应用请参考** `Web3SDK <../java_sdk.html>`_
-
 .. admonition:: **主要特性**
 
     - 提供调用FISCO BCOS `JSON-RPC <../../api.html>`_ 的Go API
@@ -20,6 +15,7 @@ Go SDK
 
 .. toctree::
    :hidden:
+   :maxdepth: 3
 
    env_conf.md
    api.md

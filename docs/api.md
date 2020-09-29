@@ -547,7 +547,7 @@ Result见[getBlockByHash](./api.html#getblockbyhash)
 ### 参数
 - `groupID`: `unsigned int` - 群组ID
 - `blockHash`: `string` - 区块哈希
-- `includeSignatures`: `bool` - 包含签名列表标志(true显示签名列表)
+- `includeSignatures`: `bool` - 包含签名列表标志(true显示签名列表)，如果为true，则会带上下面例子中的`signatureList`字段。
 
 ### 返回值
 
@@ -1372,6 +1372,18 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | 24(0x18)                | AddressAlreadyUsed         | 地址占用异常                                          |
 | 25(0x19)                | PermissionDenied           | 无权限异常                                            |
 | 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在                                |
+| 27(0x1b)                | GasOverflow                | Gas溢出错误                                          |
+| 28(0x1c)                | TxPoolIsFull               | 交易池已满异常                                       |
+| 29(0x1d)                | TransactionRefused         | 交易被拒绝异常                                       |
+| 30(0x1e)                | ContractFrozen             | 合约被冻结异常                                       |
+| 31(0x1f)                | AccountFrozen              | 账户被冻结异常                                       |
+| 10000(0x2710)           | AlreadyKnown               | 交易已经在交易池中                                     |
+| 10001(0x2711)           | AlreadyInChain             | 交易已经上链异常                                       |
+| 10002(0x2712)           | InvalidChainId             | 无效的链ID异常                                       |
+| 10003(0x2713)           | InvalidGroupId             | 无效的群组ID异常                                       |
+| 10004(0x2714)           | RequestNotBelongToTheGroup | 请求不属于群组异常                                       |
+| 10005(0x2715)           | MalformedTx                | 交易格式错误                                          |
+| 10006(0x2716)           | OverGroupMemoryLimit       | 超出群组内存限制异常                                   |
 
 ### Precompiled Service API 错误码
 
@@ -1380,14 +1392,21 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | 0      | success                                          |          |
 | -50000  | permission denied                               |          |
 | -50001  | table name already exist                        |          |
+| -50002  | table name length is overflowed                 |          |
+| -50003  | table name field length is overflowed           |          |
+| -50004  | table name field total length is overflowed     |          |
+| -50005  | table key value length is overflowed            |          |
+| -50006  | table field value length is overflowed          |          |
+| -50007  | table field is duplicated                       |          |
+| -50008  | table field is invalidate                       |          |
 | -50100  | table does not exist                            |          |
-| -50101  | unknow function call                            |          |
+| -50101  | unknown function call                            |          |
 | -50102  | address invalid                                 |          |
-| -51000  | table name and address already exist            |          |
-| -51001  | table name and address does not exist           |          |
 | -51002  | table name overflow                             |          |
 | -51003  | contract not exist                              |          |
 | -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
 | -51100  | invalid node ID                                 | SDK错误码 |
 | -51101  | the last sealer cannot be removed               |           |
 | -51102  | the node is not reachable                       | SDK错误码 |
@@ -1395,7 +1414,7 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -51104  | the node is already in the sealer list          | SDK错误码 |
 | -51105  | the node is already in the observer list        | SDK错误码 |
 | -51200  | contract name and version already exist         | SDK错误码 |
-| -51201  | version length exceeds the maximum limit | SDK错误码 |
+| -51201  | version length exceeds the maximum limit        | SDK错误码 |
 | -51300  | invalid configuration entry                     |          |
 | -51500  | entry parse error                               |          |
 | -51501  | condition parse error                           |          |
@@ -1405,23 +1424,23 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -51800  | ring sig failed                                 |          |
 | -51900  | contract frozen                              |          |
 | -51901  | contract available                              |          |
-| -51902  | CONTRACT_REPEAT_AUTHORIZATIO                    |          |
-| -51903  | INVALID_CONTRACT_ADDRESS                    |          |
-| -51904  | TABLE_NOT_EXIST                    |          |
-| -51905  | NO_AUTHORIZED                    |          |
-| -52000  | COMMITTEE_MEMBER_EXIST                    |          |
-| -52001  | COMMITTEE_MEMBER_NOT_EXIST                |          |
-| -52002  | INVALID_REQUEST_PERMISSION_DENIED         |          |
-| -52003  | INVALID_THRESHOLD                    |          |
-| -52004  | OPERATOR_CANNOT_BE_COMMITTEE_MEMBER                    |          |
-| -52005  | COMMITTEE_MEMBER_CANNOT_BE_OPERATOR                    |          |
-| -52006  | OPERATOR_EXIST                    |          |
-| -52007  | OPERATOR_NOT_EXIST                    |          |
-| -52008  | ACCOUNT_NOT_EXIST                    |          |
-| -52009  | INVALID_ACCOUNT_ADDRESS                    |          |
-| -52010  | ACCOUNT_ALREADY_AVAILABLE                    |          |
-| -52011  | ACCOUNT_FROZEN                    |          |
-| -52012  | CURRENT_VALUE_IS_EXPECTED_VALUE              |          |
+| -51902  | contract repeat authorization                    |          |
+| -51903  | invalid contract address                    |          |
+| -51904  | table not exist                    |          |
+| -51905  | no authorized                  |          |
+| -52000  | committee member exist                    |          |
+| -52001  | committee member not exist                |          |
+| -52002  | invalid request permission denied         |          |
+| -52003  | invalid threshold                    |          |
+| -52004  | operator can't be committee member                    |          |
+| -52005  | committee member can't be operator                    |          |
+| -52006  | operator exist                    |          |
+| -52007  | operator not exist                    |          |
+| -52008  | account not exist                    |          |
+| -52009  | invalid account address                    |          |
+| -52010  | account already available                   |          |
+| -52011  | account frozen                    |          |
+| -52012  | current value is expected value              |          |
 
 ### 动态群组管理 API 状态码
 

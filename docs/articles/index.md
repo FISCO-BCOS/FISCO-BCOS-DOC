@@ -21,6 +21,7 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
    1_conception/safe_and_controllable.md
    1_conception/on_and_off_the_blockchain.md
    1_conception/the_truth_of_tampering.md
+   1_conception/simplify_blockchain.md
 ```
 
 ## 区块链学习必读
@@ -101,4 +102,6 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
 
    7_practice/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0.md
    7_community/group_deploy_case.md
+   7_community/suibe_blockchain_center_toolbox.md
+   7_practice/analysis_solidity_proxy_contract.md
 ```

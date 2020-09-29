@@ -1274,6 +1274,7 @@ curl -Ss -X POST --data '{"jsonrpc":"2.0","method":"recoverGroup","params":[2],"
 Queries status of group. Please note that this function is supported since 2.2.0
 ### Parameters
 - `groupID`: `unsigned int` - ID of the group
+
 ### Returns
 - `object`: - result of calling
     - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
@@ -1376,8 +1377,19 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 |23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
 |24(0x18)  |AddressAlreadyUsed |address is already used |
 |25(0x19)  |PermissionDenied |no permission |
-|26(0x1a)  |CallAddressError   contract address not exist ||
-
+|26(0x1a)  |CallAddressError | contract address not exist |
+|27(0x1b)  |GasOverflow | gas overflowed error  |
+|28(0x1c)  |TxPoolIsFull | transaction is full |
+|29(0x1d)  |TransactionRefused | transaction is refused |
+|30(0x1e)  |ContractFrozen | frozen contract exception |
+|31(0x1f)  |AccountFrozen | frozen account exception |
+|10000(0x2710)  |AlreadyKnown | transaction is already known |
+|10001(0x2711)  |AlreadyInChain | transaction is already in chain |
+|10002(0x2712)  |InvalidChainId | invalid chain id exception |
+|10003(0x2713)  |InvalidGroupId  | invalid group id exception |
+|10004(0x2714)  |RequestNotBelongToTheGroup | request doesn't belong to the group exception |
+|10005(0x2715)  |MalformedTx | malformed transaction error |
+|10006(0x2716)  |OverGroupMemoryLimit | memory is over group memory limit exception |
 
 ### Precompiled Service API error code
 
@@ -1386,14 +1398,21 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | 0      | success                                         |          |
 | -50000  | permission denied                               |          |
 | -50001  | table name already exist                        |          |
+| -50002  | table name length is overflowed                 |          |
+| -50003  | table name field length is overflowed           |          |
+| -50004  | table name field total length is overflowed     |          |
+| -50005  | table key value length is overflowed            |          |
+| -50006  | table field value length is overflowed          |          |
+| -50007  | table field is duplicated                       |          |
+| -50008  | table field is invalidate                       |          |
 | -50100  | table does not exist                            |          |
-| -50101  | unknow function call                            |          |
+| -50101  | unknown function call                            |          |
 | -50102  | address invalid                                 |          |
-| -51000  | table name and address already exist            |          |
-| -51001  | table name and address does not exist           |          |
 | -51002  | table name overflow                             |          |
 | -51003  | contract not exist                              |          |
 | -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
 | -51100  | invalid node ID                                 |SDK Error Code |
 | -51101  | the last sealer cannot be removed               |          |
 | -51102  | the node is not reachable                       |SDK Error Code |
@@ -1411,23 +1430,23 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -51800  | ring sig failed                                 |          |
 | -51900  | contract frozen                              |          |
 | -51901  | contract available                              |          |
-| -51902  | CONTRACT_REPEAT_AUTHORIZATIO                    |          |
-| -51903  | INVALID_CONTRACT_ADDRESS                    |          |
-| -51904  | TABLE_NOT_EXIST                    |          |
-| -51905  | NO_AUTHORIZED                    |          |
-| -52000  | COMMITTEE_MEMBER_EXIST                    |          |
-| -52001  | COMMITTEE_MEMBER_NOT_EXIST                |          |
-| -52002  | INVALID_REQUEST_PERMISSION_DENIED         |          |
-| -52003  | INVALID_THRESHOLD                    |          |
-| -52004  | OPERATOR_CANNOT_BE_COMMITTEE_MEMBER                    |          |
-| -52005  | COMMITTEE_MEMBER_CANNOT_BE_OPERATOR                    |          |
-| -52006  | OPERATOR_EXIST                    |          |
-| -52007  | OPERATOR_NOT_EXIST                    |          |
-| -52008  | ACCOUNT_NOT_EXIST                    |          |
-| -52009  | INVALID_ACCOUNT_ADDRESS                    |          |
-| -52010  | ACCOUNT_ALREADY_AVAILABLE                    |          |
-| -52011  | ACCOUNT_FROZEN                    |          |
-| -52012  | CURRENT_VALUE_IS_EXPECTED_VALUE              |          |
+| -51902  | contract repeat authorization                   |          |
+| -51903  | invalid contract address                    |          |
+| -51904  | table not exist                    |          |
+| -51905  | no authorized                  |          |
+| -52000  | committee member exist                    |          |
+| -52001  | committee member not exist                |          |
+| -52002  | invalid request permission denied         |          |
+| -52003  | invalid threshold                    |          |
+| -52004  | operator can't be committee member                    |          |
+| -52005  | committee member can't be operator                    |          |
+| -52006  | operator exist                    |          |
+| -52007  | operator not exist                    |          |
+| -52008  | account not exist                    |          |
+| -52009  | invalid account address                    |          |
+| -52010  | account already available                   |          |
+| -52011  | account frozen                    |          |
+| -52012  | current value is expected value              |          |
 
 ### Dynamice group management API status code
 

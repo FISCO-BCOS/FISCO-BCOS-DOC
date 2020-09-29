@@ -32,7 +32,7 @@ Check whether the installation is successful. If it is, output usage: generator 
 
 **download fisco-bcos binary**
 
-download the latest fisco-bcos binary to `./meta`
+download the latest fisco-bcos binary to `./meta`, you can try `--cdn` to improve your download speed.
 
 ```bash
 ./generator --download_fisco ./meta
