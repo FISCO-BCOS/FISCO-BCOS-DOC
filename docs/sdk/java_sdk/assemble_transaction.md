@@ -1,6 +1,6 @@
 # 交易构造与发送
 
-## 准备abi和binary文件
+## 1. 准备abi和binary文件
 控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../manual/console.html#id10)。
 
 通过运行sol2java.sh脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
@@ -22,7 +22,9 @@ contract HelloWorld{
 ```
 
 
-## 部署并调用合约
+
+## 2. 部署并调用合约
+
 Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。可以使用AssembleTransactionProcessor来完成合约操作。
 
 ### 部署合约
@@ -89,15 +91,15 @@ TransactionResponse的数据结构如下：
 
 合约调用又可以被区分为『交易』和『查询』。被view修饰符修饰的方法一般称为“交易”，而未被修饰的才会称为“查询”。以下是“交易”和“查询”更详细的区别。
 
- | 内容 | 查询 | 交易 |
- | ---- | ---- | ----|
- | 合约表现 | view修饰 | 无view修饰符 | 
- | ABI表现 | "constant":true | "constant":false |
- | 是否需要签名 | 否  | 是 |
- | rpc类型  | call | sendTransaction |
- | 执行节点 | 所有共识节点 | 执行层面 |
- | 是否消耗gas | 否 | 是 |
- | 是否变更存储状态 | 否 | 是 |
+| 内容 | 查询 | 交易 |
+| ---- | ---- | ----|
+| 合约表现 | view修饰 | 无view修饰符 |
+| ABI表现 | "constant":true | "constant":false |
+| 是否需要签名 | 否  | 是 |
+| rpc类型  | call | sendTransaction |
+| 执行节点 | 所有共识节点 | 执行层面 |
+| 是否消耗gas | 否 | 是 |
+| 是否变更存储状态 | 否 | 是 |
 
 #### 交易
 
@@ -163,7 +165,10 @@ TransactionResponse的数据结构如下：
 }
 ```
 
-## AssembleTransactionProcessor 的详细API功能介绍
+
+
+## 2. AssembleTransactionProcessor 的详细API功能介绍
+
 AssembleTransactionProcessor支持自定义参数发送交易，详细的API功能如下。
 
 - **public void deployOnly(String abi, String bin, List\<Object\> params)：** 传入合约abi、bin和构造函数参数来部署合约，不接收回执结果。

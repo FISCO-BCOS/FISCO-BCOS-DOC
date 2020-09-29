@@ -1,10 +1,12 @@
 # 合约事件推送
 
-## 功能简介
+## 1. 功能简介
 
 合约事件推送功能提供了合约事件的异步推送机制，客户端向节点发送注册请求，在请求中携带客户端关注的合约事件的参数，节点根据请求参数对请求区块范围的`Event Log`进行过滤，将结果分次推送给客户端。
 
-## 交互协议
+
+
+## 2. 交互协议
 
 客户端与节点的交互基于[`Channel`](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html#id4)协议。交互分为三个阶段：注册请求，节点回复，`Event Log`数据推送。
 
@@ -69,7 +71,9 @@
 - result：整形 0：`Event Log`数据推送 1：推送完成。客户端一次注册请求对应节点的数据推送会有多次（请求区块范围比较大或者等待新的区块），`result`字段为1时说明节点推送已经结束  
 - logs：Log对象数组，result为0时有效  
 
-## Java SDK教程
+
+
+## 3. Java SDK教程
 
 ### 注册接口  
 
@@ -168,7 +172,9 @@ class SubscribeCallback implements EventCallback {
 }
 ```
 
-## 示例
+
+
+## 4. 示例
 
 这里以[`Asset`](https://github.com/FISCO-BCOS/LargeFiles/blob/master/tools/asset-app.tar.gz)合约的`TransferEvent`为例说明，给出合约事件推送的一些场景供用户参考。
 

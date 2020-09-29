@@ -12,7 +12,7 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 
 交易解析功能帮助用户把交易回执解析为json数据。
 
-## 构造TransactionDecoderInterface
+## 1. 构造TransactionDecoderInterface
 
 创建一个TransactionDecoderService对象。
 
@@ -34,7 +34,7 @@ TransactionDecoderInterface 主要包括以下功能：
 - **public Map\<String, List\<Object\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易日志。
 - **public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)：** 解析回执的状态和报错信息等。
 
-## 解析带返回值的交易
+## 2. 解析带返回值的交易
 
 传入合约的abi文件，调用函数的名称，以及交易回执，解析交易结果。
 
@@ -108,7 +108,7 @@ function incrementUint256(uint256 v) public returns(uint256){
 
 
 
-## 解析无返回值的交易
+## 3. 解析无返回值的交易
 传入合约的abi文件和交易回执，解析交易结果。
 
 ```
@@ -168,7 +168,7 @@ TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWith
 
 
 
-## 解析日志
+## 4. 解析日志
 
 只解析调用函数过程中触发的日志。传入合约的abi文件和交易回执的logs，解析交易结果；返回事件名和事件List的Map。
 
