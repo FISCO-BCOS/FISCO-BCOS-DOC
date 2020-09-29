@@ -15,7 +15,9 @@ java sdk提供账户管理接口，支持以下功能：
     java sdk提供了接口级别的账户生成方法，工具级别的账户生成脚本请参考 `get_account.sh脚本 <../../manual/account.html>`_ .
 ```
 
-## 账户加载
+
+
+## 1. 账户加载
 
 java sdk的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./configuration.html#id6).
 
@@ -45,7 +47,9 @@ public void loadP12Account(Client client, String p12AccountFilePath, String pass
 }
 ```
 
-## 账户生成
+
+
+## 2. 账户生成
 
 java sdk的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供了账户生成功能。
 
@@ -71,7 +75,9 @@ CryptoKeyPair cryptoKeyPair = cryptoSuite.createKeyPair();
 String accountAddress = cryptoKeyPair.getAddress();
 ```
 
-## 账户保存
+
+
+## 3. 账户保存
 
 当没有自定义加载账户，也没有通过配置文件配置账户信息时(账户配置请参考[这里](./configuration.html#id6))，java sdk会随机生成账户发送交易，java sdk的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户保存功能，可将随机生成的账户保存在指定路径。
 
@@ -104,7 +110,9 @@ public CryptoKeyPair getCreatedCryptoKeyPair(Client client)
 }
 ```
 
-## `p12`和`pem`文件解析接口
+
+
+## 4. `p12`和`pem`文件解析接口
 
 java sdk的`org.fisco.bcos.sdk.crypto.keystore.KeyManager`提供`p12`和`pem`文件解析接口。
 

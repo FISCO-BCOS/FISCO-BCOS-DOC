@@ -1,14 +1,57 @@
 # 配置说明
 
-Java sdk主要包括五个配置选项，分别是证书配置、网络连接配置、AMOP配置、账户配置以及线程池配置。
+Java sdk主要包括五个配置选项，分别是
 
-```eval_rst
-.. note::
-    - 证书配置和网络连接是必配项，配置证书信息以及SDK连接的节点信息
-    - AMOP配置、账户配置和线程池配置是可选配置项，不配置时使用默认配置值
-```
+* 证书配置（必须）
+* 网络连接配置 （必须）
+* AMOP配置（非必须）
+* 账户配置（非必须，不配置则使用默认配置值）
+* 线程池配置（非必须，不配置则使用默认配置值）
 
-## 证书配置
+
+
+## 1. 快速配置
+
+#### 配置步骤：
+
+1. 在您的应用的主目录下新建一个`conf`目录。
+
+2. 从节点`nodes/${ip}/sdk/` 目录下的证书拷贝到新建的`conf`目录。
+
+3. 将配置文件config-example.toml, 存放在应用的主目录下。
+
+   * config-example.toml可以在java-sdk的源文件以下位置找到：`src/test/resources/config-example.toml`
+   * 本文的“3. 配置示例” 部分也可以看到``config-example.toml``的内容。
+
+4. 修改config-example.toml中节点的IP和端口，与您要连接的节点所匹配。
+
+   ```toml
+   [network]
+   peers=["127.0.0.1:20200", "127.0.0.1:20201"] 
+   ```
+
+5. 在您的应用中使用该配置文件初始化Java SDK，您就可以开发区块链应用了。
+
+   ```java
+   String configFile = "config-example.toml";
+   BcosSDK sdk =  BcosSDK.build(configFile);
+   ```
+
+
+
+## 2. 配置解读
+
+Java sdk主要包括五个配置选项，分别是
+
+* 证书配置（必须）
+* 网络连接配置 （必须）
+* AMOP配置（非必须）
+* 账户配置（非必须，不配置则使用默认配置值）
+* 线程池配置（非必须，不配置则使用默认配置值）
+
+
+
+### 证书配置
 
 基于安全考虑，java sdk与节点间采用SSL加密通信，目前同时支持非国密SSL连接以及国密SSL连接，`[cryptoMaterial]`配置SSL连接的证书信息，具体包括如下配置项：
 
@@ -56,7 +99,9 @@ certPath = "conf"                           # The certification path
                                             # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
 ```
 
-## 网络连接配置
+
+
+### 网络连接配置
 
 SDK与FISCO BCOS节点通信，必须配置SDK连接的节点的`IP`和`Port`，`[network]`配置了java sdk连接的节点信息，具体包括如下配置项：
 
@@ -75,11 +120,13 @@ SDK与节点间的网络配置示例如下：
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
 ```
 
-## AMOP配置
+
+
+### AMOP配置
 
 [AMOP](./amop.md)支持私有话题的功能，配置文件中提供了`AMOP`相关配置项于 `[[amop]]`中。
 
-### 私有话题订阅配置
+#### 私有话题订阅配置
 
 AMOP私有话题订阅者需要配置私钥用于进行私有话题认证，具体配置项包括：
 
@@ -97,7 +144,7 @@ AMOP订阅私有话题的配置项示例如下：
 # password = "123456"
 ```
 
-### 私有话题消息发布配置
+#### 私有话题消息发布配置
 
 AMOP私有话题认证成功后，消息发布方可向订阅方发送私有话题消息，发布私有话题消息的配置包括：
 
@@ -113,7 +160,9 @@ AMOP发布私有话题消息的配置示例如下：
 # publicKeys = [ "conf/amop/consumer_public_key_1.pem" ]    # Public keys of the nodes that you want to send AMOP message of this topic to.
 ```
 
-## 账户配置
+
+
+### 账户配置
 
 账户配置主要用于设置SDK向节点发交易的账户信息，SDK初始化[client](./api.md)时，默认读取`[account]`配置项加载账户信息，具体如下：
 
@@ -147,7 +196,9 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 # password = ""                 # The password used to load the account file
 ```
 
-## 线程池配置
+
+
+### 线程池配置
 
 为了方便业务根据机器实际负载调整SDK的处理线程，java sdk将其线程配置项暴露在配置中，`[threadPool]`是线程池相关配置，具体包括：
 
@@ -174,3 +225,64 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 
 maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
 ```
+
+
+
+## 3. 配置示例
+
+```toml
+[cryptoMaterial]
+
+certPath = "conf"                           # The certification path  
+
+# The following configurations take the certPath by default if commented
+# caCert = "conf/ca.crt"                    # CA cert file path
+                                            # If connect to the GM node, default CA cert path is ${certPath}/gm/gmca.crt
+
+# sslCert = "conf/sdk.crt"                  # SSL cert file path
+                                            # If connect to the GM node, the default SDK cert path is ${certPath}/gm/gmsdk.crt
+
+# sslKey = "conf/sdk.key"                   # SSL key file path
+                                            # If connect to the GM node, the default SDK privateKey path is ${certPath}/gm/gmsdk.key
+
+# enSslCert = "conf/gm/gmensdk.crt"         # GM encryption cert file path
+                                            # default load the GM SSL encryption cert from ${certPath}/gm/gmensdk.crt
+
+# enSslKey = "conf/gm/gmensdk.key"          # GM ssl cert file path
+                                            # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
+
+[network]
+peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
+
+# Configure a private topic as a topic message sender.
+# [[amop]]
+# topicName = "PrivateTopic1"
+# publicKeys = [ "conf/amop/consumer_public_key_1.pem" ]    # Public keys of the nodes that you want to send AMOP message of this topic to.
+
+# Configure a private topic as a topic subscriber.
+# [[amop]]
+# topicName = "PrivateTopic2"
+# privateKey = "conf/amop/consumer_private_key.p12"         # Your private key that used to subscriber verification.
+# password = "123456"
+
+[account]
+keyStoreDir = "account"         # The directory to load/store the account file, default is "account"
+# accountFilePath = ""          # The account file path (default load from the path specified by the keyStoreDir)
+accountFileFormat = "pem"       # The storage format of account file (Default is "pem", "p12" as an option)
+
+# accountAddress = ""           # The transactions sending account address
+                                # Default is a randomly generated account
+                                # The randomly generated account is stored in the path specified by the keyStoreDir
+
+# password = ""                 # The password used to load the account file
+
+[threadPool]
+# channelProcessorThreadSize = "16"         # The size of the thread pool to process channel callback
+                                            # Default is the number of cpu cores
+
+# receiptProcessorThreadSize = "16"         # The size of the thread pool to process transaction receipt notification
+                                            # Default is the number of cpu cores
+
+maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
+```
+
