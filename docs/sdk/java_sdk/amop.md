@@ -314,3 +314,39 @@ Amop amop = sdk.getAmop();
 amop.stop()
 ```
 
+
+
+## 3. 示例
+
+更多的示例请看源码``sdk-demo/src/main/java/org/fisco/bcos/sdk/demo/amop/tool``下的代码示范。
+
+* 普通话题代码示例：
+
+  * AmopPublisher
+    输入： 话题名（TopicName），是否多播（isBroadcast, true 为多播，false为单拨），内容（Content），发送的数量（Count）
+    功能：发送普通话题消息、广播普通话题消息
+  * AmopPublisherFile
+    输入： 话题名（TopicName），是否多播（isBroadcast），文件名（FileName），发送的数量（Count）
+    功能：发送普通话题文件、广播普通话题文件
+  * AmopSubscribe
+    输入：话题名（TopicName）
+    默认：订阅了一个名为“Test”的普通话题
+    功能：订阅一个普通话题
+
+* 私有话题代码示例：
+
+  * AmopSubscribePrivateTopic
+
+    输入：话题名（TopicName），私钥文件名（Filename），密码（password）
+    默认：订阅了一个名为“PrivTest”的私有话题
+    功能：订阅一个私有话题
+
+  * AmopPublisherPrivate
+
+    输入： 话题名（TopicName），公钥文件名1（Filename），公钥文件名2（Filename），是否多播（isBroadcast），内容（Content），发送的数量（Count）
+    功能：配置私有话题发送，发送私有话题消息，广播私有话题消息
+
+  * AmopPublisherPrivateFile
+
+    输入：话题名（TopicName），公钥文件名1（Filename），公钥文件名2（Filename，如无则输入null），是否多播（isBroadcast），文件名（FileName），发送的数量（Count）
+    测试功能：发送私有话题文件、广播普通话题文件
