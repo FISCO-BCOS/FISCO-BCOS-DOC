@@ -230,6 +230,8 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 
 ## 3. 配置示例
 
+config-example.toml
+
 ```toml
 [cryptoMaterial]
 
