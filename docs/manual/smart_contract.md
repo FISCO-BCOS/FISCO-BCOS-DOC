@@ -9,6 +9,7 @@ FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 
 ### [Solidity合约开发](https://solidity.readthedocs.io/en/latest/)
 
+- [WeBASE合约IDE](https://webasedoc.readthedocs.io/zh_CN/latest/)
 - [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
 - [Remix在线IDE](https://remix.ethereum.org/)
 
