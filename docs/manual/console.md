@@ -77,8 +77,8 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 |   -- sdk      # sol2java.sh脚本编译的合约abi, bin，java文件目录
 |-- start.sh # 控制台启动脚本
 |-- get_account.sh # 账户生成脚本
+|-- get_gm_account.sh # 账户生成脚本，国密版
 |-- sol2java.sh # solidity合约文件编译为java合约文件的开发工具脚本
-|-- replace_solc_jar.sh # 编译jar包替换脚本
 ```
 
 **注意：默认下载的控制台内置`0.4.25`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**	
@@ -183,32 +183,47 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 
 #### 合约编译工具
 
-**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 使用该工具，分为两步：
-  - 将solidity合约文件放在`contracts/solidity`目录下。
-  - 通过运行`sol2java.sh`脚本(**需要指定一个java的包名**)完成编译合约任务。例如，`contracts/solidity`目录下已有`HelloWorld.sol`、`TableTest.sol`、`Table.sol`合约，指定包名为`org.com.fisco`，命令如下：
-    ```bash
-    $ cd ~/fisco/console
-    $ ./sol2java.sh org.com.fisco
-    ```
-    运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
-    ```bash
-    |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
-    |   |-- HelloWorld.abi
-    |   |-- Table.abi
-    |   |-- TableTest.abi
-    |-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
-    |   |-- HelloWorld.bin
-    |   |-- Table.bin
-    |   |-- TableTest.bin
-    |-- java  # 存放编译的包路径及Java合约文件
-    |   |-- org
-    |       |-- com
-    |           |-- fisco
-    |               |-- HelloWorld.java # 编译的HelloWorld Java文件
-    |               |-- Table.java  # 编译的CRUD接口合约 Java文件
-    |               |-- TableTest.java  # 编译的TableTest Java文件
-    ```
-    java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
+**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 
+```shell
+$ bash sol2java.sh -h
+# Compile Solidity Tool
+./sol2java.sh [packageName] [solidityFilePath] [javaCodeOutputDir]
+ 	 packageName:
+ 		 the package name of the generated Java class file
+ 	 solidityFilePath:
+ 		 (optional) the solidity file path or the directory where solidity files located, default: contracts/solidity
+ 	 javaCodeOutputDir:
+ 		 (optional) the directory where the generated Java files located, default: contracts/sdk/java
+```
+参数
+- `packageName`: 生成`Java`文件的包名
+- `solidityFilePath`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
+- `javaCodeOutputDir`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
+
+使用
+```bash
+$ cd ~/fisco/console
+$ ./sol2java.sh org.com.fisco # 指定java包名
+```
+运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
+```bash
+|-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
+|   |-- HelloWorld.abi
+|   |-- Table.abi
+|   |-- TableTest.abi
+|-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
+|   |-- HelloWorld.bin
+|   |-- Table.bin
+|   |-- TableTest.bin
+|-- java  # 存放编译的包路径及Java合约文件
+|   |-- org
+|       |-- com
+|           |-- fisco
+|               |-- HelloWorld.java # 编译的HelloWorld Java文件
+|               |-- Table.java  # 编译的CRUD接口合约 Java文件
+|               |-- TableTest.java  # 编译的TableTest Java文件
+```
+java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
 
 ```eval_rst
 .. important::
@@ -245,7 +260,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 #### 查看当前控制台版本：
 ```bash
 ./start.sh --version
-console version: 1.0.4
+console version: 1.2.0
 ```
 #### 账户使用方式
 
@@ -259,12 +274,15 @@ console version: 1.0.4
 ./start.sh groupID -p12 p12Name
 ```
 ##### 默认启动
-控制台随机生成一个账户，使用控制台配置文件指定的群组号启动。
+使用控制台配置文件指定的默认群组号启动。
 ```bash
 ./start.sh
 ```
+
+**注意**: 控制台启动未指定私钥账户时，会尝试从`accounts`目录下加载一个可用的私钥账户用于发送交易，加载失败则会创建一个新的`PEM`格式的账户文件，将其保存在`accounts`目录下。
+
 ##### 指定群组号启动
-控制台随机生成一个账户，使用命令行指定的群组号启动。
+使用命令行指定的群组号启动。
 ```bash
 ./start.sh 2
 ```
@@ -401,6 +419,53 @@ Switched to group 2.
 [group:2]>
 ```
 **注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中配置的节点ip和端口正确，该节点正常运行。
+
+### **newAccount**
+创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`accounts`目录下。
+
+```text
+[group:1]> newAccount
+ new account successfully, account address:0x4cb7d6c013d9c7fa4ec75a3df3d0fddf39674c14
+
+# 私钥文件自动保存在accounts目录下
+$ ls -al accounts/0x4cb7d6c013d9c7fa4ec75a3df3d0fddf39674c14.pem
+$ -rw-r--r--  1 octopus  staff  258  9 30 16:34 accounts/0x4cb7d6c013d9c7fa4ec75a3df3d0fddf39674c14.pem
+```
+
+### **loadAccount**
+加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
+参数：
+
+- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户输入文件名时，会从默认目录获取文件，默认目录为: `accounts`。
+- 账户密码: (可选)`P12`私钥文件的密码。
+
+```text
+[group:1]> loadAccount 0xa0f749a6eb735d578b81239c1661c726c4f05d0e.pem
+ load 0xa0f749a6eb735d578b81239c1661c726c4f05d0e.pem successfully, account address: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e
+```
+**注意：加载的私钥需要使用`switchAccount`才可以用与发送交易，也可以使用`listAccount`查看当前加载的所有私钥**
+
+### **switchAccount**
+切换发送交易的私钥账户。
+参数：
+
+- 账户地址
+```text
+[group:1]> switchAccount 0xa0f749a6eb735d578b81239c1661c726c4f05d0e
+switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
+```
+
+### **listAccount**
+查看当前加载的所有账户信息
+
+```text
+[group:1]> listAccount
+ account list:
+	 0xa0f749a6eb735d578b81239c1661c726c4f05d0e <=
+	 0x4cb7d6c013d9c7fa4ec75a3df3d0fddf39674c14
+```
+
+**注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`switchAccount`进行切换**
 
 ### **getBlockNumber**
 运行getBlockNumber，查看区块高度。
@@ -1023,25 +1088,55 @@ event value: (1)
 ```
 ### **deploy**
 
-运行deploy，部署合约。(默认提供HelloWorld合约和TableTest.sol进行示例使用)
+部署合约。(默认提供HelloWorld合约和TableTest.sol进行示例使用)
 参数：
 
-- 合约名称：部署的合约名称(可以带.sol后缀)，即HelloWorld或者HelloWorld.sol均可。
+- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：HelloWorld。
 
 ```text
-# 部署HelloWorld合约
+# 部署HelloWorld合约，默认路径
 [group:1]> deploy HelloWorld.sol
 contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
-# 部署TableTest合约
-[group:1]> deploy TableTest.sol
+# 部署HelloWorld合约，相对路径
+[group:1]> deploy contracts/solidityHelloWorld.sol
 contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
+
+# 部署HelloWorld合约，绝对路径
+[group:1]> deploy /root/fisco/console/contracts/solidityHelloWorld.sol
+contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 ```
+
 **注：**
-- 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
+- 部署用户编写的合约，可以将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
 - 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
-- **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
+
+### **listAbi**
+显示合约接口和Event列表
+参数：
+
+- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：HellWorld。
+- 合约名：(可选)合约名称，默认情况下使用合约文件名作为合约名参数
+
+```text
+[group:1]> listAbi TableTest
+Method list:
+ name                |    constant  |    methodId    |    signature
+  --------------------------------------------------------------
+ remove              |    false     |    0x0fe1160f  |    remove(string,int256)
+ update              |    false     |    0x49cc36b5  |    update(string,int256,string)
+ select              |    true      |    0x5b325d78  |    select(string)
+ insert              |    false     |    0xe020d464  |    insert(string,int256,string)
+
+Event list:
+ name                |   topic                                                                   signature
+  --------------------------------------------------------------
+ remove              |   0x0fe1160f9655e87c29e76aca1cab34fb2a644d375da7a900c7076bad17cad26b  |   remove(string,int256)
+ update              |   0x49cc36b56a9320d20b2d9a1938a972c849191bceb97500bfd38fa8a590dac73a  |   update(string,int256,string)
+ select              |   0x5b325d7821528d3b52d0cc7a83e1ecef0438f763796770201020ac8b8813ac0a  |   select(string)
+ insert              |   0xe020d464e502c11b54a7e37e568c78f0fcd360213eb5f4ac0a25a17733fc19f7  |   insert(string,int256,string)
+```
 
 ### **getDeployLog**
 
@@ -1064,7 +1159,7 @@ contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 运行call，调用合约。
 参数：
-- 合约名称：部署的合约名称(可以带.sol后缀)。
+- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
 - 合约地址: 部署合约获取的地址，合约地址可以省略前缀0，例如，0x000ac78可以简写成0xac78。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]，注意数组参数中不要有空格；布尔类型为true或者false。**
@@ -1076,6 +1171,9 @@ Hello, World!
 # 调用HelloWorld的set接口设置name字符串
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 set "Hello, FISCO BCOS"
 transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1e70
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
 
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
@@ -1085,6 +1183,10 @@ Hello, FISCO BCOS
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
 transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
 ---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+
 Output
 function: insert(string,int256,string)
 return type: (int256)
@@ -1106,26 +1208,41 @@ event value: (1)
 运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)部署合约。用CNS部署的合约，可用合约名直接调用。
 参数：
 
-- 合约名称：部署的合约名称。
+- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
 ```text
 # 部署HelloWorld合约1.0版
 [group:1]> deployByCNS HelloWorld.sol 1.0
 contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
-
+---------------------------------------------------------------------------------------------
+register contract to cns:
+{
+    "code":0,
+    "msg":"success"
+}
 # 部署HelloWorld合约2.0版
 [group:1]> deployByCNS HelloWorld.sol 2.0
 contract address:0x07625453fb4a6459cbf14f5aa4d574cae0f17d92
-
+---------------------------------------------------------------------------------------------
+register contract to cns:
+{
+    "code":0,
+    "msg":"success"
+}
 # 部署TableTest合约
 [group:1]> deployByCNS TableTest.sol 1.0
 contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
+---------------------------------------------------------------------------------------------
+register contract to cns:
+{
+    "code":0,
+    "msg":"success"
+}
 ```
 **注：**
-- 部署用户编写的合约，只需要将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
+- 部署用户编写的合约，可以将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
 - 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
-- **由于FISCO BCOS已去除以太币的转账支付逻辑，因此solidity合约的方法不支持使用`payable`关键字，该关键字会导致solidity合约转换成的java合约文件在编译时失败。**
 
 ### **queryCNS**
 运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。
@@ -1150,17 +1267,23 @@ contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。
 参数：
 
-- 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`或`HelloWorld.sol:1.0`。当省略合约版本号时，例如`HelloWorld`或`HelloWorld.sol`，则调用最新版本的合约。
+- 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`。当省略合约版本号时，例如`HelloWorld`，则调用最新版本的合约。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
 ```text
 # 调用HelloWorld合约1.0版，通过set接口设置name字符串
 [group:1]> callByCNS HelloWorld:1.0 set "Hello,CNS"
 transaction hash:0x80bb37cc8de2e25f6a1cdcb6b4a01ab5b5628082f8da4c48ef1bbc1fb1d28b2d
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
 
 # 调用HelloWorld合约2.0版，通过set接口设置name字符串
 [group:1]> callByCNS HelloWorld:2.0 set "Hello,CNS2"
 transaction hash:0x43000d14040f0c67ac080d0179b9499b6885d4a1495d3cfd1a79ffb5f2945f64
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
 
 # 调用HelloWorld合约1.0版，通过get接口获取name字符串
 [group:1]> callByCNS HelloWorld:1.0 get
@@ -1169,6 +1292,22 @@ Hello,CNS
 # 调用HelloWorld合约最新版(即2.0版)，通过get接口获取name字符串
 [group:1]> callByCNS HelloWorld get
 Hello,CNS2
+```
+
+### **registerCNS**
+注册合约至CNS。
+
+参数：
+- 合约路径: 合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
+- 合约地址: 注册合约地址
+- 合约版本号: 注册合约版本号(长度不能超过40)
+
+```text
+[group:1]> registerCNS HelloWorld 0xf19a7ec01f0b1adb16a033f0a30fb321ec6edcbf v1.0.0
+{
+    "code":0,
+    "msg":"success"
+}
 ```
 
 ### **addSealer**
