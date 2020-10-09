@@ -73,7 +73,11 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${p
 ```bash
 $ mkdir ~/fisco && cd ~/fisco
 # 获取控制台
-$ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.3.0/download_console.sh && bash download_console.sh
+$ git clone https://github.com/FISCO-BCOS/console
+$ git checkout feature-java-sdk
+$ cd console
+# 编译源码
+$ ./gradlew build -x test
 # 将需要转换为java代码的sol文件拷贝到~/fisco/console/contracts/solidity路径下
 # 使用脚本sol2java.sh转换solidity代码, 其中${packageName}是生成的java代码包路径
 # 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
