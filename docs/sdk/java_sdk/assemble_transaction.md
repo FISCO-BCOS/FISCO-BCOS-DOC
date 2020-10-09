@@ -167,7 +167,7 @@ TransactionResponse的数据结构如下：
 
 
 
-## 2. AssembleTransactionProcessor 的详细API功能介绍
+## 3. AssembleTransactionProcessor 的详细API功能介绍
 
 AssembleTransactionProcessor支持自定义参数发送交易，详细的API功能如下。
 
