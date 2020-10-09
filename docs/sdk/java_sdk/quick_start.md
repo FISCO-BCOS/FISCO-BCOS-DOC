@@ -12,16 +12,16 @@
 ### 使用gradle引入SDK
 
 ```bash
-compile ('org.fisco-bcos:java-sdk:1.0.0')
+compile ('org.fisco-bcos.java-sdk:java-sdk:2.6.1-rc1')
 ```
 
 ### 使用maven引入SDK
 
 ``` xml
 <dependency>
-    <groupId>org.fisco-bcos</groupId>
+    <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>1.0.0</version>
+    <version>2.6.1-rc1</version>
 </dependency>
 ```
 
