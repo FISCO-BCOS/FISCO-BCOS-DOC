@@ -181,7 +181,7 @@ function disableParallel() public
 
 **（4）Deploy/execute parallel contract**
 
-Compile and deploy contract through [Console](console.md) or [Web3SDK](../sdk/java_sdk.md). Here we use console as an example.
+Please refer to [here](./console_of_java_sdk.md) for the console manual for version 2.0 and above, and [here](./console.md) for the console manual for version 1.x. Here we use console as an example.
 
 deploy contract
 
