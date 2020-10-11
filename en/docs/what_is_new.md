@@ -59,7 +59,7 @@ FISCO BCOS 2.0 has added console as an interactive client tool in FISCO BCOS 2.0
 
 The console installation is convenient and straightforward. After simple configuration, the console can communicate with the chain node. The console has rich commands and good interactive experience. Users can query the blockchain status, read and modify the configuration, manage blockchain nodes, deploy and call contract through the console. The console helps users to manage, develop, operate, and maintain the blockchain, and to reduce the complicated operation and the threshold of use.
 
-Compare to traditional scripting tools such as node-js, and the console is simple to install and has a better experience. For details, please refer to [Console Manual](./manual/console.md).
+Compare to traditional scripting tools such as node-js, and the console is simple to install and has a better experience. For details, please refer to [Web3SDK-based console manual](./manual/console.md) and [Java SDK-based console manual](./manual/console_with_java_sdk.md).
 
 ## Virtual machine
 

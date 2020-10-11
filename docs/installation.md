@@ -55,7 +55,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/buil
 
 ```eval_rst
 .. note::
-    - 国密版本请执行``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
+    - 国密版本请执行 ``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
     - 其中-g表示生成国密配置，-G表示使用国密SSL连接
     - web3sdk已经支持国密SSL，如果使用web3sdk建议带上-G选项使用国密SSL
 ```
@@ -165,8 +165,14 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 配置及使用控制台
 
-在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。
-控制台指令详细介绍[参考这里](manual/console.md)。
+```eval_rst
+.. important::
+    - ``控制台1.x`` 系列基于 `Web3SDK <./sdk/java_sdk.html>`_ 实现，``控制台2.0之后`` 基于 `Java SDK <./sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
+    - 1.x版本控制台使用文档请 `参考这里 <./manual/console.html>`_ , 2.0及其以上版本控制台使用文档请 `参考这里 <./manual/console_with_java_sdk.html>`_
+    - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
+```
+
+在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。1.x版本控制台指令详细介绍[参考这里](manual/console.md), 2.0版本控制台指令详细介绍[参考这里](manual/console_with_java_sdk.md)。
 
 ### 准备依赖
 
@@ -177,7 +183,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -187,9 +193,13 @@ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/
 
 - 拷贝控制台配置文件
 
-若节点未采用默认端口，请将文件中的20200替换成节点对应的channle端口。
+若节点未采用默认端口，请将文件中的20200替换成节点对应的channel端口。
 
 ```bash
+# 最新版本控制台使用如下命令拷贝配置文件
+cp -n console/conf/config-example.toml console/conf/config.toml
+
+# 1.x版本控制台使用如下命令拷贝配置文件(可通过./start.sh --version获取控制台版本)
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 ```
 
@@ -197,12 +207,13 @@ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext
 
 ```eval_rst
 .. note::
-    - 搭建国密版时，如果使用国密SSL请执行``cp nodes/127.0.0.1/sdk/gm/* console/conf/``
-    - 搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1
+    使用1.x版本控制台时：
+     - 搭建国密版时，如果使用国密SSL请执行 ``cp nodes/127.0.0.1/sdk/gm/* console/conf/``
+     - 搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1
 ```
 
 ```bash
-cp nodes/127.0.0.1/sdk/* console/conf/
+cp -r nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 ### 启动控制台
@@ -231,7 +242,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
+若1.x控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
 
 ### 使用控制台获取信息
 
@@ -313,7 +324,16 @@ contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # 调用get接口获取name变量 此处的合约地址是deploy指令返回的地址
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, World!
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,World!"
+]
+---------------------------------------------------------------------------------------------
 
 # 查看当前块高，块高不变，因为get接口不更改账本状态
 [group:1]> getBlockNumber
@@ -321,7 +341,17 @@ Hello, World!
 
 # 调用set设置name
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+transaction hash: 0x7e742c44091e0d6e4e1df666d957d123116622ab90b718699ce50f54ed791f6e
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Output
+Receipt message: Success
+Return message: Success
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
 
 # 再次查看当前块高，块高增加表示已出块，账本状态已更改
 [group:1]> getBlockNumber
@@ -329,16 +359,20 @@ Hello, World!
 
 # 调用get接口获取name变量，检查设置是否生效
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, FISCO BCOS
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,FISCO BCOS"
+]
+---------------------------------------------------------------------------------------------
 
 # 退出控制台
 [group:1]> quit
 ```
-
-**注：**
-1. 部署合约还可以通过`deployByCNS`命令，可以指定部署的合约版本号，使用方式[参考这里](manual/console.html#deploybycns)。
-2. 调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。
-
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 

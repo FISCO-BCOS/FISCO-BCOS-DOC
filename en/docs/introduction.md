@@ -157,7 +157,8 @@ In the consortium blockchain platform, the operation and maintenance of the bloc
 FISCO BCOS introduces tools such as development and deployment tools, interactive console, blockchain browsers, etc. to improve the ease of use of the system and greatly reduce the time to build chains and deploy applications.
 
 - <font color=blue>**[Development and deployment tools](./manual/build_chain.md)**</font>
-- <font color=blue>**[Interactive command line tool console](./manual/console.md)**</font>
+- <font color=blue>**[Interactive command line tool console based on Web3SDK](./manual/console.md)**</font>
+- <font color=blue>**[nteractive command line tool console based on Web3SDK](./manual/console_with_java_sdk.md)**</font>
 - <font color=blue>**[Blockchain browser](./browser/browser.md)**</font>
 
 In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)

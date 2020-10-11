@@ -71,7 +71,7 @@ FISCO BCOS是由国内企业主导研发、对外开源、安全可控的企业�
 | <font color=Blue>**开发支持**</font> |
 |合约开发工具|[WeBASE-IDE](https://github.com/WeBankFinTech/WeBASE)，[ChainIDE](https://fiscoide.com/)|
 |开发建链工具|提供[一键搭链脚本工具](./manual/build_chain.html)|
-|合约部署与测试工具|交互式控制台[Console](./manual/console.html)|
+|合约部署与测试工具|交互式控制台[基于Web3SDK的Console](./manual/console.html)与 [基于Java SDK的Console](./manual/console_with_java_sdk.html)|
 |SDK语言|[Java](./sdk/java_sdk.html)、[nodejs](./sdk/nodejs_sdk/index.html)、[go](https://github.com/FISCO-BCOS/go-sdk)、[python](./sdk/python_sdk/index.html)|
 |快速开发组件|提供[Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
 |压测工具|SDK内嵌压测工具，支持Caliper|
@@ -158,7 +158,8 @@ FISCO BCOS采用高通量可扩展的[多群组架构](./design/architecture/gro
 FISCO BCOS引入开发部署工具、交互式控制台、区块链浏览器等工具来提升系统的易用性，大幅缩短建链、部署应用的时间。
 
 - <font color=blue>**[开发部署工具](./manual/build_chain.md)**</font>
-- <font color=blue>**[交互式的命令行工具console](./manual/console.md)**</font>
+- <font color=blue>**[基于Web3SDK的交互式的命令行工具console](./manual/console.md)**</font>
+- <font color=blue>**[Interactive command line tool console based on Java SDK](./manual/console_with_java_sdk.md)**</font>
 - <font color=blue>**[区块链浏览器](./browser/browser.md)**</font>
 
 为了便于不同语言开发者快速开发应用，FISCO BCOS同时支持[Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md)和[Go SDK](https://github.com/FISCO-BCOS/go-sdk)

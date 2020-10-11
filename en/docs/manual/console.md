@@ -1,5 +1,11 @@
 # Console
 
+```eval_rst
+.. important::
+    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``Console 2.0`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **1.x version console**, for 2.0 and above version console usage documentation please refer to `here <./console_with_java_sdk.md>`_ 
+    - You can view the current console version through the command ``./start.sh --version``
+```
+
 [Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/java_sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
 
 ### Console command
