@@ -159,7 +159,15 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## Using console
 
-Console links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status query, call and deploy contracts. The instructions of console are introduced [here](manual/console.md).
+```eval_rst
+.. important::
+    - ``console 1.x`` series is based on `Web3SDK <./sdk/java_sdk.html>`_ implementation, ``Console 2.0 after`` is based on `Java SDK <./sdk/java_sdk/index.html >`_ implementation, the latest version of the console is based on the ``Java SDK`` implementation
+    - For 2.0 and above version console documentation please refer to `here <./manual/console_of_java_sdk.html>`_
+    - For 1.x version console documentation, please refer to `here <./manual/console.html>`_ 
+    - You can view the current console version through the command ``./start.sh --version``
+```
+
+Console links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status query, call and deploy contracts. 2.0 version console command detailed introduction [refer here](manual/console_of_java_sdk.md), 1.x version console command detailed introduction [refer here](manual/console.md).
 
 ### Prepare environment
 
@@ -174,7 +182,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -185,6 +193,10 @@ cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
 
 ```bash
+# The latest version of the console uses the following command to copy the configuration file
+cp -n console/conf/config-example.toml console/conf/config.toml
+
+# 1.x version console use the following command to copy the configuration file (you can get the console version through ./start.sh --version)
 cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 ```
 
@@ -300,7 +312,16 @@ contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # call get interface to acquire name variety, the contract address here is the returned address of deploy instruction
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, World!
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,World!"
+]
+---------------------------------------------------------------------------------------------
 
 # check the current block number, it remains the same, because get interface will not change the ledger status
 [group:1]> getBlockNumber
@@ -308,7 +329,17 @@ Hello, World!
 
 # call set to set name
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+transaction hash: 0x7e742c44091e0d6e4e1df666d957d123116622ab90b718699ce50f54ed791f6e
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Output
+Receipt message: Success
+Return message: Success
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
 
 # check the current block number again, if it increased, then it has generated block and the ledger status is changed
 [group:1]> getBlockNumber
@@ -316,12 +347,19 @@ Hello, World!
 
 # call get interface to acquire name variety, check if the setting is valid
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, FISCO BCOS
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,FISCO BCOS"
+]
+---------------------------------------------------------------------------------------------
 
 # log out console
 [group:1]> quit
 ```
-
-**Note:** To deploy contract can also specify the contract version number of the deployment through the `deployByCNS` command, using method [reference here](manual/console.html#deploybycns). To call contract via the `callByCNS` command, using the method [reference here](manual/console.html#callbycns).
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

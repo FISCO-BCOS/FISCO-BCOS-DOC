@@ -29,7 +29,7 @@ compile ('org.fisco-bcos.java-sdk:java-sdk:2.6.1-rc1')
 
 ## 3. SDK证书配置
 
-参考[java sdk证书配置](./configuration.html#id2)。
+参考[java sdk证书配置](./configuration.html#id5)。
 
 ```eval_rst
 .. note::
