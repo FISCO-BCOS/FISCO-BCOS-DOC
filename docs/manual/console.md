@@ -1386,6 +1386,11 @@ Hello,CNS2
 ```
 ### **grantPermissionManager**
 
+```eval_rst	
+.. note::	
+    从 ``v1.0.9`` 开始，控制台不再支持 ``grantPermissionManager`` 命令，请使用 ``grantCommitteeMembers`` 和 ``grantOperator`` 等区块链委员权限管理相关的命令替代该命令。	
+```
+
 运行grantPermissionManager，授权账户的链管理员权限。参数：
 - 账户地址
 ```text
@@ -1398,6 +1403,12 @@ Hello,CNS2
 **注：权限控制相关命令的示例使用可以参考[权限控制使用文档](./permission_control.md)。**
 
 ### **listPermissionManager**
+
+```eval_rst	
+.. note::	
+    从``v1.0.9``开始，控制台不再支持 ``listPermissionManager`` 命令，请使用 ``listCommitteeMembers`` 和 ``listOperator`` 等区块链委员权限查询相关的命令替代该命令。	
+```
+
 运行listPermissionManager，查询拥有链管理员权限的账户列表。
 ```text
 [group:1]> listPermissionManager
@@ -1407,6 +1418,12 @@ Hello,CNS2
 ---------------------------------------------------------------------------------------------
 ```
 ### **revokePermissionManager**
+
+```eval_rst	
+.. note::	
+    从``v1.0.9``开始，控制台不再支持 ``revokePermissionManager`` 命令，请使用 ``revokeCommitteeMembers`` 和 ``revokeOperator`` 等区块链委员权限管理相关的命令替代该命令。	
+```
+
 运行revokePermissionManager，撤销账户的链管理员权限。
 参数：
 - 账户地址

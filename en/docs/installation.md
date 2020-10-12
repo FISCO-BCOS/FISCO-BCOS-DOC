@@ -195,9 +195,6 @@ cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download
 ```bash
 # The latest version of the console uses the following command to copy the configuration file
 cp -n console/conf/config-example.toml console/conf/config.toml
-
-# 1.x version console use the following command to copy the configuration file (you can get the console version through ./start.sh --version)
-cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 ```
 
 - Configure the console certificate
