@@ -176,10 +176,6 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ### 准备依赖
 
-- Java环境配置
-
-参考[Java环境要求](sdk/java_sdk.html#id1)。
-
 - 获取控制台并回到fisco目录
 
 ```bash
@@ -198,9 +194,6 @@ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/
 ```bash
 # 最新版本控制台使用如下命令拷贝配置文件
 cp -n console/conf/config-example.toml console/conf/config.toml
-
-# 1.x版本控制台使用如下命令拷贝配置文件(可通过./start.sh --version获取控制台版本)
-cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 ```
 
 - 配置控制台证书
