@@ -58,8 +58,8 @@ $ mkdir ~/fisco && cd ~/fisco
 $ git clone https://github.com/FISCO-BCOS/java-sdk
 # 编译
 $ ./gradlew clean build -x test
-# 进入dist目录，创建合约存放目录
-$ cd dist && mkdir -p contracts/solidity
+# 进入sdk-demo/dist目录，创建合约存放目录
+$ cd sdk-demo/dist && mkdir -p contracts/solidity
 # 将需要转换为java代码的sol文件拷贝到~/fisco/java-sdk/dist/contracts/solidity路径下
 # 转换sol, 其中${packageName}是生成的java代码包路径
 # 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
@@ -78,10 +78,12 @@ $ git checkout feature-java-sdk
 $ cd console
 # 编译源码
 $ ./gradlew build -x test
-# 将需要转换为java代码的sol文件拷贝到~/fisco/console/contracts/solidity路径下
+# 切换到dist目录
+$ cd dist
+# 将需要转换为java代码的sol文件拷贝到~/fisco/console/dist/contracts/solidity路径下
 # 使用脚本sol2java.sh转换solidity代码, 其中${packageName}是生成的java代码包路径
-# 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
-bash sol2java.sh ${packageName}
+# 生成的java代码位于 ~/fisco/java-sdk/dist/contracts/sdk/java目录下
+$ bash sol2java.sh ${packageName}
 ```
 
 使用java-sdk或控制台将`solidity`代码转换为`java`代码后，即可将生成的`java`代码拷贝到规划的包路径，通过调用该`java`代码部署和调用合约。
