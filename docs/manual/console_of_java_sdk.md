@@ -2,8 +2,9 @@
 
 ```eval_rst
 .. important::
-    - ``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，``控制台2.0之后`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现，本教程针对 **2.0及其以上版本控制台**，1.x及其以上版本控制台使用文档请 `参考这里 <./console.md>`_ 
+    - ``控制台2.0+`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现, ``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，本教程针对 **2.0及其以上版本控制台**，1.x及其以上版本控制台使用文档请 `参考这里 <./console.md>`_ 
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
+    - 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 开发应用过程中将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``2.0+`` 版本控制台，具体请参考  `这里 <../tutorial/download_console.html>`_ 
 ```
 
 [控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
@@ -360,7 +361,7 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 * grantSysConfigManager                     Grant permission for system configuration by address
 * grantUserTableManager                     Grant permission for user table by table name and address
 * insert                                    Insert records by sql
-* listAbi                                   List the current saved account list
+* listAbi                                   List functions and events info of the contract.
 * listAccount                               List the current saved account list
 * listCNSManager                            Query permission information for CNS
 * listCommitteeMembers                      List all committee members
@@ -1003,11 +1004,11 @@ ConsensusInfo{
 contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署HelloWorld合约，相对路径
-[group:1]> deploy contracts/solidityHelloWorld.sol
+[group:1]> deploy contracts/solidity/HelloWorld.sol
 contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 # 部署HelloWorld合约，绝对路径
-[group:1]> deploy /root/fisco/console/contracts/solidityHelloWorld.sol
+[group:1]> deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
 contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 ```
 
@@ -1020,7 +1021,7 @@ contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 显示合约接口和Event列表
 参数：
 
-- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：HellWorld。
+- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：TableTest。
 - 合约名：(可选)合约名称，默认情况下使用合约文件名作为合约名参数
 
 ```text
@@ -1294,7 +1295,7 @@ Return values:
 ```text
 [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1306,7 +1307,7 @@ Return values:
 ```text
 [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1318,13 +1319,13 @@ Return values:
 ```text
 [group:1]> removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
 ### **setSystemConfigByKey**
 
-运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`tx_gas_limit`, `rpbft_epoch_sealer_num`和`rpbft_epoch_block_num`。这些系统参数的键名可以通过tab键补全：
+运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`tx_gas_limit`, `rpbft_epoch_sealer_num`、`rpbft_epoch_block_num`和`consensus_timeout`。这些系统参数的键名可以通过tab键补全：
 
 * tx_count_limit：区块最大打包交易数
 * tx_gas_limit：交易执行允许消耗的最大gas数
@@ -1339,7 +1340,7 @@ Return values:
 ```text
 [group:1]> setSystemConfigByKey tx_count_limit 100
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1389,7 +1390,7 @@ Return values:
 ```text
 [group:1]> revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1401,7 +1402,7 @@ Return values:
 ```text
 [group:1]> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1421,7 +1422,7 @@ Return values:
 ```text
 [group:1]> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1432,7 +1433,7 @@ Return values:
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1454,7 +1455,7 @@ Return values:
 ```text
 [group:1]> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1464,7 +1465,7 @@ Return values:
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1484,7 +1485,7 @@ Return values:
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1494,7 +1495,7 @@ Return values:
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1516,7 +1517,7 @@ Return values:
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1529,7 +1530,7 @@ Return values:
 ```bash
 [group:1]> grantContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1552,7 +1553,7 @@ Return values:
 ```bash
 [group:1]> revokeContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
+	"code":1,
 	"msg":"success"
 }
 ```
@@ -1673,7 +1674,7 @@ Remove OK, 1 row affected.
 ```text
 [group:1]> freezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1686,7 +1687,7 @@ Remove OK, 1 row affected.
 ```text
 [group:1]> unfreezeContract 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1700,7 +1701,7 @@ Remove OK, 1 row affected.
 ```text
 [group:1]> grantContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1737,7 +1738,7 @@ The contract is available.
 ```bash
 [group:1]> grantCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1751,7 +1752,7 @@ The contract is available.
 ```bash
 [group:1]> revokeCommitteeMember 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1778,7 +1779,7 @@ The contract is available.
 ```bash
 [group:1]> updateThreshold 75
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1811,7 +1812,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```bash
 [group:1]> updateCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a 2
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1826,7 +1827,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```bash
 [group:1]> grantOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1840,7 +1841,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```bash
 [group:1]> revokeOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1865,7 +1866,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```text
 [group:1]> freezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1879,7 +1880,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```text
 [group:1]> unfreezeAccount 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 {
-    "code":0,
+    "code":1,
     "msg":"success"
 }
 ```
@@ -1893,6 +1894,37 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```text
 [group:1]> getAccountStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 The account is available.
+```
+
+### listDeployContractAddress
+
+列出指定合约名部署的所有合约地址，
+列出部署指定合约产生的合约地址列表，参数：
+
+- contractNameOrPath: 合约名或合约绝对路径，用于指定合约;
+- recordNumber: 显示的合约地址列表长度，默认为20
+
+
+```bash
+# 获取部署HelloWorld合约产生的合约地址列表
+[group:1]> listDeployContractAddress HelloWorld
+0xe157185434183b276b9e5af7d0315a9829171281  2020-10-13 15:35:29
+0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
+0xd7d0b221bc984a20aa6b0fc098dad89888378e3a  2020-10-13 15:34:14
+0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63  2020-10-13 15:16:20
+0x5f248ad7e917cddc5a4d408cf18169d19c0990e5  2020-10-13 12:28:23
+0xf027fd91a51bd4844f17600c01e943058fc27482  2020-10-12 18:28:50
+0x682b51f3c7f9a605fa2026b09fd2635a6fa562d9  2020-10-11 23:22:28
+0xf68a1aabfad336847e109c33ca471b192c93c0a9  2020-10-11 22:53:07
+0xf485b9ccfffa668f4d7fac37c81c0cd63408188c  2020-10-11 22:52:26
+0x175b16a1299c7af3e2e49b97e68a44734257a35e  2020-10-11 22:49:25
+0x7c6dc94e4e146cb13eb03dc98d2b96ac79ef5e67  2020-10-11 22:46:35
+
+
+# 限制显示的合约地址列表长度为2
+[group:1]> listDeployContractAddress HelloWorld 2
+0xe157185434183b276b9e5af7d0315a9829171281  2020-10-13 15:35:29
+0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
 ```
 
 ### getCurrentAccount
@@ -1965,7 +1997,7 @@ $ echo $(($(date '+%s')*1000))
 ```bash
 [group:1]> generateGroup  127.0.0.1:20200 2 1590586645000 b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36
 GroupStatus{
-    code='0x0',
+    code='0x1',
     message='Group 2 generated successfully',
     status='null'
 }

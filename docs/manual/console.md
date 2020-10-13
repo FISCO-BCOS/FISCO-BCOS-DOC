@@ -2,11 +2,13 @@
 
 ```eval_rst
 .. important::
-    - ``控制台2.0`` 之后基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现，``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，本教程针对 **1.x版本控制台**，2.0及其以上版本控制台使用文档请 `参考这里 <./console_of_java_sdk.md>`_ 
+    - ``控制台2.0+`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现，``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，本教程针对 **1.x版本控制台**，2.0及其以上版本控制台使用文档请 `参考这里 <./console_of_java_sdk.md>`_ 
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
+    - 基于 `Web3SDK <../sdk/java_sdk.html>`_ 开发应用过程中将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <../tutorial/download_console.html>`_ 
 ```
 
 [控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Web3SDK](../sdk/java_sdk.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
+
 
 ### 控制台命令
 控制台命令由两部分组成，即指令和指令相关的参数：
@@ -1105,11 +1107,11 @@ event value: (1)
 contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署HelloWorld合约，相对路径
-[group:1]> deploy contracts/solidityHelloWorld.sol
+[group:1]> deploy contracts/solidity/HelloWorld.sol
 contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 # 部署HelloWorld合约，绝对路径
-[group:1]> deploy /root/fisco/console/contracts/solidityHelloWorld.sol
+[group:1]> deploy /root/fisco/console/contracts/solidity/HelloWorld.sol
 contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 ```
 
@@ -1122,7 +1124,7 @@ contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 显示合约接口和Event列表
 参数：
 
-- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：HellWorld。
+- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：TableTest。
 - 合约名：(可选)合约名称，默认情况下使用合约文件名作为合约名参数
 
 ```text
@@ -1355,7 +1357,7 @@ Hello,CNS2
 ```
 ### **setSystemConfigByKey**
 
-运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`tx_gas_limit`, `rpbft_epoch_sealer_num`和`rpbft_epoch_block_num`。这些系统参数的键名可以通过tab键补全：
+运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`tx_gas_limit`, `rpbft_epoch_sealer_num`, `rpbft_epoch_block_num`和`consensus_timeout`。这些系统参数的键名可以通过tab键补全：
 
 * tx_count_limit：区块最大打包交易数
 * tx_gas_limit：交易执行允许消耗的最大gas数

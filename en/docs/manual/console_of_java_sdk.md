@@ -327,7 +327,7 @@ Enter help or h to see all the commands on the console.
 * grantSysConfigManager                     Grant permission for system configuration by address
 * grantUserTableManager                     Grant permission for user table by table name and address
 * insert                                    Insert records by sql
-* listAbi                                   List the current saved account list
+* listAbi                                   List functions and events info of the contract.
 * listAccount                               List the current saved account list
 * listCNSManager                            Query permission information for CNS
 * listCommitteeMembers                      List all committee members
