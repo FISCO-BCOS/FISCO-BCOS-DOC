@@ -10,3 +10,4 @@
 
    key_concepts.md
    sdk_application.md
+   download_console.md

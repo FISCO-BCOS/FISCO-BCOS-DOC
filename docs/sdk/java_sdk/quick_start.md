@@ -68,22 +68,33 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${p
 
 **使用控制台提供的工具**
 
-控制台提供了`sol2java.sh`脚本可将`solidity`转换为`java`代码。
+控制台提供了`sol2java.sh`脚本可将`solidity`转换为`java`代码, `sol2java.sh`使用方法如下：
 
+```shell
+$ bash sol2java.sh -h
+# Compile Solidity Tool
+./sol2java.sh [packageName] [solidityFilePath] [javaCodeOutputDir]
+ 	 packageName:
+ 		 the package name of the generated Java class file
+ 	 solidityFilePath:
+ 		 (optional) the solidity file path or the directory where solidity files located, default: contracts/solidity
+ 	 javaCodeOutputDir:
+ 		 (optional) the directory where the generated Java files located, default: contracts/sdk/java
+```
+参数
+- `packageName`: 生成`Java`文件的包名
+- `solidityFilePath`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
+- `javaCodeOutputDir`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
+
+将`~/fisco/console/contracts/solidity`路径下的`sol`文件转为`java`代码的示例如下：
 ```bash
 $ mkdir ~/fisco && cd ~/fisco
 # 获取控制台
-$ git clone https://github.com/FISCO-BCOS/console
-$ git checkout feature-java-sdk
-$ cd console
-# 编译源码
-$ ./gradlew build -x test
-# 将需要转换为java代码的sol文件拷贝到~/fisco/console/contracts/solidity路径下
-# 使用脚本sol2java.sh转换solidity代码, 其中${packageName}是生成的java代码包路径
-# 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
-bash sol2java.sh ${packageName}
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
+$ cd ~/fisco/console
+# 将sol转为java代码，指定java包名为org.com.fisco
+$ bash sol2java.sh org.com.fisco
 ```
-
 使用java-sdk或控制台将`solidity`代码转换为`java`代码后，即可将生成的`java`代码拷贝到规划的包路径，通过调用该`java`代码部署和调用合约。
 
 
