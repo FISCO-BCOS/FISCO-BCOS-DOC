@@ -20,7 +20,7 @@ Java sdk主要包括五个配置选项，分别是
 
 3. 将配置文件config-example.toml, 存放在应用的主目录下。
 
-   * config-example.toml可以在java-sdk的源文件以下位置找到：`src/test/resources/config-example.toml`
+   * config-example.toml可以在[java-sdk](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)的源文件以下位置找到：`src/test/resources/config-example.toml`
    * 本文的“3. 配置示例” 部分也可以看到``config-example.toml``的内容。
 
 4. 修改config-example.toml中节点的IP和端口，与您要连接的节点所匹配。
