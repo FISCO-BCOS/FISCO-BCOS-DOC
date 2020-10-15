@@ -96,7 +96,7 @@ node1接收到node0 group1的数据包{groupID(1) + packetA}后：
 
 如下图，共识模块包括打包(Sealer)线程和共识(Engine)线程，Sealer线程负责从交易池获取未执行交易，并将交易打包成区块；Engine线程负责对区块执行结果进行共识，目前主要支持PBFT和Raft共识算法。
 
-![](../../../../images/articles/group_architecture_design/IMG_4893.PNG)
+![](../../../../images/articles/group_architecture_design/IMG_4894.PNG)
 
 
 共识模块主要流程包括：
@@ -123,7 +123,7 @@ node1接收到node0 group1的数据包{groupID(1) + packetA}后：
 
 如下图，客户端将交易tx_j发送到group1, tx_i发送到group2后，交易同步线程会将tx_i广播到所有群组节点的group1，将tx_j广播到所有群组节点的group2。
 
-![](../../../../images/articles/group_architecture_design/IMG_4894.PNG)
+![](../../../../images/articles/group_architecture_design/IMG_4895.PNG)
 
 #### 区块同步
 
@@ -132,7 +132,7 @@ node1接收到node0 group1的数据包{groupID(1) + packetA}后：
 以三节点区块链系统为例，区块同步流程如下图：
 
 
-![](../../../../images/articles/group_architecture_design/IMG_4895.PNG)
+![](../../../../images/articles/group_architecture_design/IMG_4896.PNG)
 
 
 (1) Node0, Node1和Node2的区块同步线程定期广播最新区块高度信息；
