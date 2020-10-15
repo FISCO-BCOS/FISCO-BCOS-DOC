@@ -217,7 +217,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ### 配置控制台
 
-控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。2.0及其以上版本控制台使用手册请参考[这里](../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../manual/console.md)。
+控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。2.6及其以上版本控制台使用手册请参考[这里](../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../manual/console.md)。
 
 ```eval_rst
 .. important::
@@ -256,7 +256,7 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
     使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
 ```
 
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台从node0(`127.0.0.1:20200`)分别接入三个group中，2.0版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
+**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台从node0(`127.0.0.1:20200`)分别接入三个group中，2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
 
 ```xml
 cat > ./conf/applicationContext.xml << EOF

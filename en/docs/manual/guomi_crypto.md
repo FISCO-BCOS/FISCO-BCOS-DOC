@@ -93,7 +93,7 @@ For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
 
 ## using OSCCA-approved cryptography console
 
-The function of OSCCA-approved cryptography console is used in the same way as the standard console. Console version 2.0 and above does not require additional configuration. For the configuration method of console version 1.x, please refer to [Console Operation Manual](../manual/console.md).
+The function of OSCCA-approved cryptography console is used in the same way as the standard console. Console version 2.6 and above does not require additional configuration. For the configuration method of console version 1.x, please refer to [Console Operation Manual](../manual/console.md).
 
 
 ## OSCCA-approved cryptography configuration

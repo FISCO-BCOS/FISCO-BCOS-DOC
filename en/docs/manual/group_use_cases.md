@@ -222,7 +222,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ### Configuration console
 
-The console connects to the FISCO BCOS node through the Web3SDK, it is used to query the blockchain status and deploy the calling contract, etc. Please refer to [here](../manual/console_with_of_sdk.md) for the console manual for version 2.0 and above, and [here](../manual/console.md) for the console manual for version 1.x.
+The console connects to the FISCO BCOS node through the Web3SDK, it is used to query the blockchain status and deploy the calling contract, etc. Please refer to [here](../manual/console_with_of_sdk.md) for the console manual for version 2.6 and above, and [here](../manual/console.md) for the console manual for version 1.x.
 
 
 ```eval_rst

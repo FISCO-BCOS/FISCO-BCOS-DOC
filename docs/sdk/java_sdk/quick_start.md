@@ -90,7 +90,7 @@ $ bash sol2java.sh -h
 ```bash
 $ mkdir ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
 $ cd ~/fisco/console
 # 将sol转为java代码，指定java包名为org.com.fisco
 $ bash sol2java.sh org.com.fisco

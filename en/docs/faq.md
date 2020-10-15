@@ -13,7 +13,7 @@ A:
   FISCO BCOS provides multiple ways for developers to interact with the platform. Please refer as follows:
   - FISCO BCOS 2.0 version provides JSON-RPC interface. For the detail, please refer to [here](./api.md).
   - FISCO BCOS 2.0 version provides Web3SDK to help developers quickly implement applications. For the detail, please refer to [here](./sdk/java_sdk.md).
-  - FISCO BCOS version 2.0 provides a console to help users quickly understand how to use FISCO BCOS. For the detail, Please refer to [here](./manual/console_of_java_sdk.md) for the console user manual of version 2.0 and above, and [here](./manual/console.md) for the console user manual of version 1.x
+  - FISCO BCOS version 2.0 provides a console to help users quickly understand how to use FISCO BCOS. For the detail, Please refer to [here](./manual/console_of_java_sdk.md) for the console user manual of version 2.6 and above, and [here](./manual/console.md) for the console user manual of version 1.x
 
 Q:
   How to build FISCO BCOS 2.0 version? <br>

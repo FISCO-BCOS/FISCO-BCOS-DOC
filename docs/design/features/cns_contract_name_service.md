@@ -147,7 +147,7 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 
 ## 操作工具
 
-控制台可提供部署合约、调用合约、基于合约名查询链上已有合约的功能，2.0及其以上版本控制台使用手册请参考[这里](../../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../../manual/console.md)。
+控制台可提供部署合约、调用合约、基于合约名查询链上已有合约的功能，2.6及其以上版本控制台使用手册请参考[这里](../../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../../manual/console.md)。
 
 控制台提供的命令包括：
 

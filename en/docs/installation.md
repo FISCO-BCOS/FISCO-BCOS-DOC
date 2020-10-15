@@ -161,8 +161,8 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ```eval_rst
 .. important::
-    - ``console 1.x`` series is based on `Web3SDK <./sdk/java_sdk.html>`_ implementation, ``Console 2.0 after`` is based on `Java SDK <./sdk/java_sdk/index.html >`_ implementation, the latest version of the console is based on the ``Java SDK`` implementation
-    - For 2.0 and above version console documentation please refer to `here <./manual/console_of_java_sdk.html>`_
+    - ``console 1.x`` series is based on `Web3SDK <./sdk/java_sdk.html>`_ implementation, ``Console 2.6 after`` is based on `Java SDK <./sdk/java_sdk/index.html >`_ implementation, the latest version of the console is based on the ``Java SDK`` implementation
+    - For 2.6 and above version console documentation please refer to `here <./manual/console_of_java_sdk.html>`_
     - For 1.x version console documentation, please refer to `here <./manual/console.html>`_ 
     - You can view the current console version through the command ``./start.sh --version``
 ```
@@ -182,7 +182,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

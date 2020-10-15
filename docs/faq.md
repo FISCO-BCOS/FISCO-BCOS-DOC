@@ -13,7 +13,7 @@
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
   - FISCO BCOS 2.0版本提供JSON-RPC接口，具体请 [参考这里](./api.md)。
   - FISCO BCOS 2.0版本提供Web3SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/java_sdk.md)。
-  - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，[2.0及其以上版本控制台使用文档参考这里](./manual/console_of_java_sdk.md)，[1.x版本控制台使用文档参考这里](./manual/console.md)。
+  - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，[2.6及其以上版本控制台使用文档参考这里](./manual/console_of_java_sdk.md)，[1.x版本控制台使用文档参考这里](./manual/console.md)。
 
 问:
   FISCO BCOS 2.0版本如何搭建？<br>

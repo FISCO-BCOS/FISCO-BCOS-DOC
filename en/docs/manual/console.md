@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``Console 2.0`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **1.x version console**, for 2.0 and above version console usage documentation please refer to `here <./console_of_java_sdk.md>`_ 
+    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``Console 2.6`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **1.x version console**, for 2.6 and above version console usage documentation please refer to `here <./console_of_java_sdk.md>`_ 
     - You can view the current console version through the command ``./start.sh --version``
 ```
 

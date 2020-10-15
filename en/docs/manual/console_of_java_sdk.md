@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``Console 2.0`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **2.0 and above version console**, for 1.x version console usage documentation please refer to `here <./console.md>`_ 
+    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``console 2.6+`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **2.6 and above version console**, for 1.x version console usage documentation please refer to `here <./console.md>`_ 
     - You can view the current console version through the command ``./start.sh --version``
 ```
 
@@ -61,7 +61,7 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

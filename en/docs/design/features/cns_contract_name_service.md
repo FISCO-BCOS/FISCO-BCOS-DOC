@@ -147,7 +147,7 @@ Note：
 
 ## Operation tool
 
-Console offers functions to deploy, call contract and inquire on-chain contract based on name. For the detail operations please refer to [here](../../manual/console_of_java_sdk.md) for the console user manual of version 2.0 and above, and [here](../../manual/console.md) for the console user manual of version 1.x
+Console offers functions to deploy, call contract and inquire on-chain contract based on name. For the detail operations please refer to [here](../../manual/console_of_java_sdk.md) for the console user manual of version 2.6 and above, and [here](../../manual/console.md) for the console user manual of version 1.x
 
 Commands of console:
 

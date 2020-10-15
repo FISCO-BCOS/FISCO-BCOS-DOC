@@ -181,7 +181,7 @@ function disableParallel() public
 
 **（4）Deploy/execute parallel contract**
 
-Please refer to [here](./console_of_java_sdk.md) for the console manual for version 2.0 and above, and [here](./console.md) for the console manual for version 1.x. Here we use console as an example.
+Please refer to [here](./console_of_java_sdk.md) for the console manual for version 2.6 and above, and [here](./console.md) for the console manual for version 1.x. Here we use console as an example.
 
 deploy contract
 

@@ -181,7 +181,7 @@ function disableParallel() public
 
 **（4）部署/执行并行合约**
 
-用控制台(2.0及其以上版本控制台使用手册请参考[这里](./console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](./console.md))或[Web3SDK](../sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
+用控制台(2.6及其以上版本控制台使用手册请参考[这里](./console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](./console.md))或[Web3SDK](../sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
 
 部署合约
 

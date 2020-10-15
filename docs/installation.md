@@ -167,19 +167,19 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ```eval_rst
 .. important::
-    - ``控制台1.x`` 系列基于 `Web3SDK <./sdk/java_sdk.html>`_ 实现，``控制台2.0之后`` 基于 `Java SDK <./sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
-    - 2.0及其以上版本控制台使用文档请 `参考这里 <./manual/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <./manual/console.html>`_ 
+    - ``控制台1.x`` 系列基于 `Web3SDK <./sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <./sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
+    - 2.6及其以上版本控制台使用文档请 `参考这里 <./manual/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <./manual/console.html>`_ 
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 
-在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.0版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
+在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
 
 ### 准备依赖
 
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.0.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

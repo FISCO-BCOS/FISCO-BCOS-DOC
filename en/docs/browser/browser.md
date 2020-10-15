@@ -75,7 +75,7 @@ Once it is set up, users can access the front-end by typing IP and its port conf
 
 - [acquire rpc interface](../api.html#getgrouplist). 
 - [console command](../manual/console.md).
-- console commands: Please refer to [here](../manual/console_of_java_sdk.md) for the console user manual of version 2.0 and above, and [here](../manual/console.md) for the console user manual of version 1.x
+- console commands: Please refer to [here](../manual/console_of_java_sdk.md) for the console user manual of version 2.6 and above, and [here](../manual/console.md) for the console user manual of version 1.x
 
 Group name should be meaningful and better understandable as a explanation of group ID.
 

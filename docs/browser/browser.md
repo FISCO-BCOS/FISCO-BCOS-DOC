@@ -74,7 +74,7 @@
 
 **群组ID需要和区块链群组ID保持一致。** 群组ID有多种查看方式:
 - [rpc接口获取](../api.html#getgrouplist)
-- 控制台命令: 2.0及其以上版本控制台使用手册请参考[这里](../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../manual/console.md)。
+- 控制台命令: 2.6及其以上版本控制台使用手册请参考[这里](../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../manual/console.md)。
 
 群组名称是为群组ID取的一个有意义，便于理解的名字。
 

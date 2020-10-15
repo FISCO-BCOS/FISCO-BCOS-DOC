@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    - ``控制台2.0+`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现，``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，本教程针对 **1.x版本控制台**，2.0及其以上版本控制台使用文档请 `参考这里 <./console_of_java_sdk.md>`_ 
+    - ``控制台2.6+`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现，``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，本教程针对 **1.x版本控制台**，2.6及其以上版本控制台使用文档请 `参考这里 <./console_of_java_sdk.md>`_ 
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
     - 基于 `Web3SDK <../sdk/java_sdk.html>`_ 开发应用过程中将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <../tutorial/download_console.html>`_ 
 ```
