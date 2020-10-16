@@ -1,4 +1,11 @@
+
+
 # 交易构造与发送
+
+```eval_rst
+.. note::
+    java sdk同时支持将 `solidity` 转换为 `java` 文件后，调用相应的 `java` 方法部署和调用合约，也支持构造交易的方式部署和调用合约，这里主要展示交易构造与发送，前者的使用方法请参考 `这里 <./quick_start.html#solidityjava>`_ 
+```
 
 ## 1. 准备abi和binary文件
 控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../manual/console.html#id10)。

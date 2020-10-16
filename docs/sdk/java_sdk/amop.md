@@ -356,7 +356,7 @@ amop.stop()
 **第一步：下载项目**
 
 ```bash
-mkdir ~/fisco && cd ~/fisco
+mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
 git clone https://github.com/FISCO-BCOS/java-sdk
 cd java-sdk

@@ -2,11 +2,11 @@
 
 ```eval_rst
 .. important::
-    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``Console 2.6`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **1.x version console**, for 2.6 and above version console usage documentation please refer to `here <./console_of_java_sdk.md>`_ 
+    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``console 2.6+`` is based on `Java SDK <./sdk/java_sdk/index.html>`_ implementation, this tutorial is aimed at **2.6 and above version console**, for 1.x version console usage documentation please refer to `here <./console.md>`_ 
     - You can view the current console version through the command ``./start.sh --version``
 ```
 
-[Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/java_sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
+[console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Java SDK](../sdk/java_sdk/index.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
 
 ### Console command
 
@@ -61,7 +61,7 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -75,8 +75,9 @@ The directory structure is as follows:
 |   -- console.jar
 |-- lib # related dependent jar package directory
 |-- conf
-|   |-- applicationContext-sample.xml # configuration file
-|   |-- log4j.properties  # log configuration file
+│   ├── config-example.toml # configuration file
+│   ├── group-generate-config.toml # group generation configuration file, please refer to command genrateGroupFromFile for details
+│   └── log4j.properties # log configuration file
 |-- contracts # directory where contract locates
 |   -- solidity  # directory where solidity contract locates
 |       -- HelloWorld.sol # normal contract: HelloWorld contract, is deployable and callable
@@ -93,71 +94,73 @@ The directory structure is as follows:
 ### Configure console
 - Blockchain node and certificate configuration:
    - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
-   - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
+   - To rename the `config-example.toml` file in the `conf` directory to the `config.toml` file. To configure the `config.toml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `config.toml` configuration is not modified. **
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" ?>
+[cryptoMaterial]
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-         http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-         http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+certPath = "conf"                           # The certification path  
 
+# The following configurations take the certPath by default if commented
+# caCert = "conf/ca.crt"                    # CA cert file path
+                                            # If connect to the GM node, default CA cert path is ${certPath}/gm/gmca.crt
 
-        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
-        </bean>
+# sslCert = "conf/sdk.crt"                  # SSL cert file path
+                                            # If connect to the GM node, the default SDK cert path is ${certPath}/gm/gmsdk.crt
 
-        <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-                <property name="allChannelConnections">
-                        <list>  <!-- each group need to configure a bean -->
-                                <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                                        <property name="groupId" value="1" /> <!-- groupID -->
-                                        <property name="connectionsStr">
-                                                <list>
-                                                        <value>127.0.0.1:20200</value>  <!-- IP:channel_port -->
-                                                </list>
-                                        </property>
-                                </bean>
-                        </list>
-                </property>
-        </bean>
+# sslKey = "conf/sdk.key"                   # SSL key file path
+                                            # If connect to the GM node, the default SDK privateKey path is ${certPath}/gm/gmsdk.key
 
-        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-                <property name="groupId" value="1" /> <!-- to connect to the group with ID 1 -->
-                <property name="orgID" value="fisco" />
-                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-        </bean>
+# enSslCert = "conf/gm/gmensdk.crt"         # GM encryption cert file path
+                                            # default load the GM SSL encryption cert from ${certPath}/gm/gmensdk.crt
 
-</beans>
+# enSslKey = "conf/gm/gmensdk.key"          # GM ssl cert file path
+                                            # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
+
+[network]
+peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
+
+# Configure a private topic as a topic message sender.
+# [[amop]]
+# topicName = "PrivateTopic1"
+# publicKeys = [ "conf/amop/consumer_public_key_1.pem" ]    # Public keys of the nodes that you want to send AMOP message of this topic to.
+
+# Configure a private topic as a topic subscriber.
+# [[amop]]
+# topicName = "PrivateTopic2"
+# privateKey = "conf/amop/consumer_private_key.p12"         # Your private key that used to subscriber verification.
+# password = "123456"
+
+[account]
+keyStoreDir = "account"         # The directory to load/store the account file, default is "account"
+# accountFilePath = ""          # The account file path (default load from the path specified by the keyStoreDir)
+accountFileFormat = "pem"       # The storage format of account file (Default is "pem", "p12" as an option)
+
+# accountAddress = ""           # The transactions sending account address
+                                # Default is a randomly generated account
+                                # The randomly generated account is stored in the path specified by the keyStoreDir
+
+# password = ""                 # The password used to load the account file
+
+[threadPool]
+# channelProcessorThreadSize = "16"         # The size of the thread pool to process channel callback
+                                            # Default is the number of cpu cores
+
+# receiptProcessorThreadSize = "16"         # The size of the thread pool to process transaction receipt notification
+                                            # Default is the number of cpu cores
+
+maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
 ```
-  Configuration detail [reference here](../sdk/sdk.html#spring).
+  Configuration detail [reference here](../sdk/java_sdk/configuration.md).
 
 ```eval_rst
 .. important::
 
     Console configuration instructions
 
-    - If the console is configured correctly, but when it is launched on Cent0S system, the following error occurs:
-
-      Failed to connect to the node. Please check the node status and the console configuration.
-
-      It is because the JDK version that comes with the CentOS system is used (it will cause the console and blockchain node's authentication to fail). Please download Java 8 version or above from `OpenJDK official website <https://jdk.java.net/java-se-ri/8>`_ or `Oracle official website <https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ and install (specific installation steps `refer to Appendix <./console.html#java>`_). To launch the console after installation.
-
-    - When the console configuration file configures multiple node connections in a group, some nodes in the group may leave the group during operation. Therefore, it shows a norm which is when the console is polling, the return information may be inconsistent. It is recommended to configure a node or ensure that the configured nodes are always in the group when using the console, so that the inquired information in the group will keep consistent during the synchronization time.
+     When the console configuration file configures multiple node connections in a group, some nodes in the group may leave the group during operation. Therefore, it shows a norm which is when the console is polling, the return information may be inconsistent. It is recommended to configure a node or ensure that the configured nodes are always in the group when using the console, so that the inquired information in the group will keep consistent during the synchronization time.
 
 ```
-
-### Configure OSCCA-approved cryptography console
-- Blockchain node and certificate configuration:
-   - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
-   - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
 
 #### Contract compilation tool
 
@@ -199,7 +202,7 @@ Start the console while the node is running:
 $ ./start.sh
 # To output the following information to indicate successful launch
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.3)!
+Welcome to FISCO BCOS console(2.0.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -218,7 +221,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 #### To view the current console version:
 ```bash
 ./start.sh --version
-console version: 1.0.3
+console version: 2.0.0
 ```
 #### Account using method
 
@@ -264,91 +267,107 @@ Enter help or h to see all the commands on the console.
 
 ```text
 [group:1]> help
--------------------------------------------------------------------------------------
-addObserver                              Add an observer node.
-addSealer                                Add a sealer node.
-call                                     Call a contract by a function and Parameters.
-callByCNS                                Call a contract by a function and Parameters by CNS.
-deploy                                   Deploy a contract on blockchain.
-deployByCNS                              Deploy a contract on blockchain by CNS.
-desc                                     Description table information.
-exit                                     Quit console.
-getBlockHeaderByHash                     Query information about a block header by hash.
-getBlockHeaderByNumber                   Query information about a block header by block number.
-getBlockByHash                           Query information about a block by hash.
-getBlockByNumber                         Query information about a block by block number.
-getBlockHashByNumber                     Query block hash by block number.
-getBlockNumber                           Query the number of most recent block.
-getCode                                  Query code at a given address.
-getConsensusStatus                       Query consensus status.
-getDeployLog                             Query the log of deployed contracts.
-getGroupList                             Query group list.
-getGroupPeers                            Query nodeId list for sealer and observer nodes.
-getNodeIDList                            Query nodeId list for all connected nodes.
-getNodeVersion                           Query the current node version.
-getObserverList                          Query nodeId list for observer nodes.
-getPbftView                              Query the pbft view of node.
-getPeers                                 Query peers currently connected to the client.
-getPendingTransactions                   Query pending transactions.
-getPendingTxSize                         Query pending transactions size.
-getSealerList                            Query nodeId list for sealer nodes.
-getSyncStatus                            Query sync status.
-getSystemConfigByKey                     Query a system config value by key.
-setSystemConfigByKey                     Set a system config value by key.
-getTotalTransactionCount                 Query total transaction count.
-getTransactionByBlockHashAndIndex        Query information about a transaction by block hash and transaction index position.
-getTransactionByBlockNumberAndIndex      Query information about a transaction by block number and transaction index position.
-getTransactionByHash                     Query information about a transaction requested by transaction hash.
-getTransactionReceipt                    Query the receipt of a transaction by transaction hash.
-getTransactionByHashWithProof            Query the transaction and transaction proof by transaction hash.
-getTransactionReceiptByHashWithProof     Query the receipt and transaction receipt proof by transaction hash.
-grantCNSManager                          Grant permission for CNS by address.
-grantDeployAndCreateManager              Grant permission for deploy contract and create user table by address.
-grantNodeManager                         Grant permission for node configuration by address.
-grantSysConfigManager                    Grant permission for system configuration by address.
-grantUserTableManager                    Grant permission for user table by table name and address.
-help(h)                                  Provide help information.
-listCNSManager                           Query permission information for CNS.
-listDeployAndCreateManager               Query permission information for deploy contract and create user table.
-listNodeManager                          Query permission information for node configuration.
-listSysConfigManager                     Query permission information for system configuration.
-listUserTableManager                     Query permission for user table information.
-queryCNS                                 Query CNS information by contract name and contract version.
-quit(q)                                  Quit console.
-removeNode                               Remove a node.
-revokeCNSManager                         Revoke permission for CNS by address.
-revokeDeployAndCreateManager             Revoke permission for deploy contract and create user table by address.
-revokeNodeManager                        Revoke permission for node configuration by address.
-revokeSysConfigManager                   Revoke permission for system configuration by address.
-revokeUserTableManager                   Revoke permission for user table by table name and address.
-listContractWritePermission              Query the account list which have write permission of the contract.
-grantContractWritePermission             Grant the account the contract write permission.
-revokeContractWritePermission            Revoke the account the contract write permission.
-grantContractStatusManager               Grant contract authorization to the user.
-getContractStatus                        Get the status of the contract.
-listContractStatusManager                List the authorization of the contract.
-grantCommitteeMember                     Grant the account committee member
-revokeCommitteeMember                    Revoke the account from committee member
-listCommitteeMembers                     List all committee members
-grantOperator                            Grant the account operator
-revokeOperator                           Revoke the operator
-listOperators                            List all operators
-updateThreshold                          Update the threshold
-queryThreshold                           Query the threshold
-updateCommitteeMemberWeight              Update the committee member weight
-queryCommitteeMemberWeight               Query the committee member weight
-freezeAccount                            Freeze the account.
-unfreezeAccount                          Unfreeze the account.
-getAccountStatus                         GetAccountStatus of the account.
-freezeContract                           Freeze the contract.
-unfreezeContract                         Unfreeze the contract.
-switch(s)                                Switch to a specific group by group ID.
-[create sql]                             Create table by sql.
-[delete sql]                             Remove records by sql.
-[insert sql]                             Insert records by sql.
-[select sql]                             Select records by sql.
-[update sql]                             Update records by sql.
--------------------------------------------------------------------------------------
+[group:1]> help
+* help([-h, -help, --h, --H, --help, -H, h])  Provide help information
+* addObserver                               Add an observer node
+* addSealer                                 Add a sealer node
+* call                                      Call a contract by a function and parameters
+* callByCNS                                 Call a contract by a function and parameters by CNS
+* create                                    Create table by sql
+* delete                                    Remove records by sql
+* deploy                                    Deploy a contract on blockchain
+* deployByCNS                               Deploy a contract on blockchain by CNS
+* desc                                      Description table information
+* quit([quit, q, exit])                     Quit console
+* freezeAccount                             Freeze the account
+* freezeContract                            Freeze the contract
+* generateGroup                             Generate a group for the specified node
+* generateGroupFromFile                     Generate group according to the specified file
+* getAccountStatus                          GetAccountStatus of the account
+* getAvailableConnections                   Get the connection information of the nodes connected with the sdk
+* getBlockByHash                            Query information about a block by hash
+* getBlockByNumber                          Query information about a block by number
+* getBlockHashByNumber                      Query block hash by block number
+* getBlockHeaderByHash                      Query information about a block header by hash
+* getBlockHeaderByNumber                    Query information about a block header by block number
+* getBlockNumber                            Query the number of most recent block
+* getCode                                   Query code at a given address
+* getConsensusStatus                        Query consensus status
+* getContractStatus                         Get the status of the contract
+* getCryptoType                             Get the current crypto type
+* getCurrentAccount                         Get the current account info
+* getDeployLog                              Query the log of deployed contracts
+* getGroupConnections                       Get the node information of the group connected to the SDK
+* getGroupList                              Query group list
+* getGroupPeers                             Query nodeId list for sealer and observer nodes
+* getNodeIDList                             Query nodeId list for all connected nodes
+* getNodeVersion                            Query the current node version
+* getObserverList                           Query nodeId list for observer nodes.
+* getPbftView                               Query the pbft view of node
+* getPeers                                  Query peers currently connected to the client
+* getPendingTransactions                    Query pending transactions
+* getPendingTxSize                          Query pending transactions size
+* getSealerList                             Query nodeId list for sealer nodes
+* getSyncStatus                             Query sync status
+* getSystemConfigByKey                      Query a system config value by key
+* getTotalTransactionCount                  Query total transaction count
+* getTransactionByBlockHashAndIndex         Query information about a transaction by block hash and transaction index position
+* getTransactionByBlockNumberAndIndex       Query information about a transaction by block number and transaction index position
+* getTransactionByHash                      Query information about a transaction requested by transaction hash
+* getTransactionByHashWithProof             Query the transaction and transaction proof by transaction hash
+* getTransactionReceipt                     Query the receipt of a transaction by transaction hash
+* getTransactionReceiptByHashWithProof      Query the receipt and transaction receipt proof by transaction hash
+* grantCNSManager                           Grant permission for CNS by address
+* grantCommitteeMember                      Grant the account committee member
+* grantContractStatusManager                Grant contract authorization to the user
+* grantContractWritePermission              Grant the account the contract write permission.
+* grantDeployAndCreateManager               Grant permission for deploy contract and create user table by address
+* grantNodeManager                          Grant permission for node configuration by address
+* grantOperator                             Grant the account operator
+* grantSysConfigManager                     Grant permission for system configuration by address
+* grantUserTableManager                     Grant permission for user table by table name and address
+* insert                                    Insert records by sql
+* listAbi                                   List functions and events info of the contract.
+* listAccount                               List the current saved account list
+* listCNSManager                            Query permission information for CNS
+* listCommitteeMembers                      List all committee members
+* listContractStatusManager                 List the authorization of the contract
+* listContractWritePermission               Query the account list which have write permission of the contract.
+* listDeployAndCreateManager                Query permission information for deploy contract and create user table
+* listDeployContractAddress                 List the contractAddress for the specified contract
+* listNodeManager                           Query permission information for node configuration
+* listOperators                             List all operators
+* listSysConfigManager                      Query permission information for system configuration
+* listUserTableManager                      Query permission for user table information
+* loadAccount                               Load account for the transaction signature
+* newAccount                                Create account
+* queryCNS                                  Query CNS information by contract name and contract version
+* queryCommitteeMemberWeight                Query the committee member weight
+* queryGroupStatus                          Query the status of the specified group of the specified node
+* queryThreshold                            Query the threshold
+* recoverGroup                              Recover the specified group of the specified node
+* registerCNS                               RegisterCNS information for the given contract
+* removeGroup                               Remove the specified group of the specified node
+* removeNode                                Remove a node
+* revokeCNSManager                          Revoke permission for CNS by address
+* revokeCommitteeMember                     Revoke the account from committee member
+* revokeContractWritePermission             Revoke the account the contract write permission
+* revokeDeployAndCreateManager              Revoke permission for deploy contract and create user table by address
+* revokeNodeManager                         Revoke permission for node configuration by address
+* revokeOperator                            Revoke the operator
+* revokeSysConfigManager                    Revoke permission for system configuration by address
+* revokeUserTableManager                    Revoke permission for user table by table name and address
+* switch([s])                               Switch to a specific group by group ID
+* select                                    Select records by sql
+* setSystemConfigByKey                      Set a system config value by key
+* startGroup                                Start the specified group of the specified node
+* stopGroup                                 Stop the specified group of the specified node
+* unfreezeAccount                           Unfreeze the account
+* unfreezeContract                          Unfreeze the contract
+* update                                    Update records by sql
+* updateCommitteeMemberWeight               Update the committee member weight
+* updateThreshold                           Update the threshold
+---------------------------------------------------------------------------------------------
 ```
 **Note: **
 - help shows the meaning of each command: command and command description
@@ -426,55 +445,51 @@ To run getConsensusStatus to view the consensus status.
 
 ```text
 [group:1]> getConsensusStatus
-[
-    {
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": [
-    {
-      "accountType": 1,
-      "allowFutureBlocks": true,
-      "cfgErr": false,
-      "connectedNodes": 3,
-      "consensusedBlockNumber": 38207,
-      "currentView": 54477,
-      "groupId": 1,
-      "highestblockHash": "0x19a16e8833e671aa11431de589c866a6442ca6c8548ba40a44f50889cd785069",
-      "highestblockNumber": 38206,
-      "leaderFailed": false,
-      "max_faulty_leader": 1,
-      "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
-      "nodeNum": 4,
-      "node_index": 3,
-      "omitEmptyBlock": true,
-      "protocolId": 65544,
-      "sealer.0": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
-      "sealer.1": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
-      "sealer.2": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
-      "sealer.3": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
-      "toView": 54477
+ConsensusInfo{
+    baseConsensusInfo=BasicConsensusInfo{
+        nodeNum='4',
+        nodeIndex='3',
+        maxFaultyNodeNum='1',
+        sealerList=[
+            11e1be251ca08bb44f36fdeedfaeca40894ff80dfd80084607a75509edeaf2a9c6fee914f1e9efda571611cf4575a1577957edfd2baa9386bd63eb034868625f,
+            78a313b426c3de3267d72b53c044fa9fe70c2a27a00af7fea4a549a7d65210ed90512fc92b6194c14766366d434235c794289d66deff0796f15228e0e14a9191,
+            95b7ff064f91de76598f90bc059bec1834f0d9eeb0d05e1086d49af1f9c2f321062d011ee8b0df7644bd54c4f9ca3d8515a3129bbb9d0df8287c9fa69552887e,
+            b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36
+        ],
+        consensusedBlockNumber='1',
+        highestblockNumber='0',
+        groupId='1',
+        protocolId='65544',
+        accountType='1',
+        cfgErr='false',
+        omitEmptyBlock='true',
+        nodeId='b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36',
+        allowFutureBlocks='true',
+        connectedNodes='3',
+        currentView='1735',
+        toView='1735',
+        leaderFailed='false',
+        highestblockHash='0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b'
     },
-    [
-      {
-        "nodeId": "6a99f357ecf8a001e03b68aba66f68398ee08f3ce0f0147e777ec77995369aac470b8c9f0f85f91ebb58a98475764b7ca1be8e37637dd6cb80b3355749636a3d",
-        "view": 54474
-      },
-      {
-        "nodeId": "8a453f1328c80b908b2d02ba25adca6341b16b16846d84f903c4f4912728c6aae1050ce4f24cd9c13e010ce922d3393b846f6f5c42f6af59c65a814de733afe4",
-        "view": 54475
-      },
-      {
-        "nodeId": "ed483837e73ee1b56073b178f5ac0896fa328fc0ed418ae3e268d9e9109721421ec48d68f28d6525642868b40dd26555c9148dbb8f4334ca071115925132889c",
-        "view": 54476
-      },
-      {
-        "nodeId": "f72648fe165da17a889bece08ca0e57862cb979c4e3661d6a77bcc2de85cb766af5d299fec8a4337eedd142dca026abc2def632f6e456f80230902f93e2bea13",
-        "view": 54477
-      }
+    viewInfos=[
+        ViewInfo{
+            nodeId='11e1be251ca08bb44f36fdeedfaeca40894ff80dfd80084607a75509edeaf2a9c6fee914f1e9efda571611cf4575a1577957edfd2baa9386bd63eb034868625f',
+            view='1732'
+        },
+        ViewInfo{
+            nodeId='78a313b426c3de3267d72b53c044fa9fe70c2a27a00af7fea4a549a7d65210ed90512fc92b6194c14766366d434235c794289d66deff0796f15228e0e14a9191',
+            view='1733'
+        },
+        ViewInfo{
+            nodeId='95b7ff064f91de76598f90bc059bec1834f0d9eeb0d05e1086d49af1f9c2f321062d011ee8b0df7644bd54c4f9ca3d8515a3129bbb9d0df8287c9fa69552887e',
+            view='1734'
+        },
+        ViewInfo{
+            nodeId='b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36',
+            view='1735'
+        }
     ]
-  ]
 }
-]
 ```
 
 ### **getSyncStatus**
@@ -839,9 +854,6 @@ Parameter:
 To run getTransactionReceipt to inquire transaction receipt through transaction hash.
 Parameter:
 - Transaction hash: the transaction hash starting with 0x.
-- contract name: Optional. The contract name generated by transaction receipt. To use this parameter can parse and output the event log in the transaction receipt.
-- event name: optional. Event Name. To specify this parameter to output the specified event log information.
-- event index number: optional. Event index. To specify this parameter to output the event log information of the specified event index location.
 
 ```text
 [group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
@@ -867,96 +879,6 @@ Parameter:
     "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
     "transactionIndex":"0x0"
 }
-
-[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest
-{
-    "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
-    "blockNumber":"0x5",
-    "contractAddress":"0x0000000000000000000000000000000000000000",
-    "from":"0xc44e7a8a4ae20d6afaa43221c6120b5e1e9f9a72",
-    "gasUsed":"0x8be5",
-    "logs":[
-        {
-            "address":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
-            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
-            "topics":[
-                "0x66f7705280112a4d1145399e0414adc43a2d6974b487710f417edcf7d4a39d71"
-            ]
-        }
-    ],
-    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000",
-    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
-    "status":"0x0",
-    "to":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
-    "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
-    "transactionIndex":"0x0"
-}
----------------------------------------------------------------------------------------------
-Event logs
----------------------------------------------------------------------------------------------
-InsertResult index: 0
-count = 1
----------------------------------------------------------------------------------------------
-
-[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest InsertResult
-{
-    "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
-    "blockNumber":"0x5",
-    "contractAddress":"0x0000000000000000000000000000000000000000",
-    "from":"0xc44e7a8a4ae20d6afaa43221c6120b5e1e9f9a72",
-    "gasUsed":"0x8be5",
-    "logs":[
-        {
-            "address":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
-            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
-            "topics":[
-                "0x66f7705280112a4d1145399e0414adc43a2d6974b487710f417edcf7d4a39d71"
-            ]
-        }
-    ],
-    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000",
-    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
-    "status":"0x0",
-    "to":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
-    "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
-    "transactionIndex":"0x0"
-}
----------------------------------------------------------------------------------------------
-Event logs
----------------------------------------------------------------------------------------------
-InsertResult index: 0
-count = 1
----------------------------------------------------------------------------------------------
-
-[group:1]> getTransactionReceipt 0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1 TableTest InsertResult 0
-{
-    "blockHash":"0x68a1f47ca465acc89edbc24115d1b435cb39fa0def53e8d0ad8090cf1827cafd",
-    "blockNumber":"0x5",
-    "contractAddress":"0x0000000000000000000000000000000000000000",
-    "from":"0xc44e7a8a4ae20d6afaa43221c6120b5e1e9f9a72",
-    "gasUsed":"0x8be5",
-    "logs":[
-        {
-            "address":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
-            "data":"0x0000000000000000000000000000000000000000000000000000000000000001",
-            "topics":[
-                "0x66f7705280112a4d1145399e0414adc43a2d6974b487710f417edcf7d4a39d71"
-            ]
-        }
-    ],
-    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000",
-    "output":"0x0000000000000000000000000000000000000000000000000000000000000001",
-    "status":"0x0",
-    "to":"0xd653139b9abffc3fe07573e7bacdfd35210b5576",
-    "transactionHash":"0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1",
-    "transactionIndex":"0x0"
-}
----------------------------------------------------------------------------------------------
-Event logs
----------------------------------------------------------------------------------------------
-InsertResult index: 0
-count = 1
----------------------------------------------------------------------------------------------
 ```
 ### **getPendingTransactions**
 To run getPendingTransactions to inquire the transactions waiting to be processed.
@@ -1002,11 +924,11 @@ Parameter:
 
 ```text
 # To deploy HelloWorld contract
-[group:1]> deploy HelloWorld.sol
+[group:1]> deploy HelloWorld
 contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # To deploy TableTest contract
-[group:1]> deploy TableTest.sol
+[group:1]> deploy TableTest
 contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 ```
 
@@ -1050,30 +972,80 @@ Parameter:
 ```text
 ```text
 # To call the get interface of HelloWorld to get the name string
-[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
-Hello, World!
+[group:1]> call HelloWorld 0x175b16a1299c7af3e2e49b97e68a44734257a35e get
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,World!"
+]
+---------------------------------------------------------------------------------------------
 
 # To call the set interface of HelloWorld to set the name string
-[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 set "Hello, FISCO BCOS"
-transaction hash:0xa7c7d5ef8d9205ce1b228be1fe90f8ad70eeb6a5d93d3f526f30d8f431cb1e70
-
-# To call the get interface of HelloWorld to get the name string for checking whether the settings take effect
-[group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
-Hello, FISCO BCOS
-
-# To call the insert interface of TableTest to insert the record, the fields are name, item_id, item_name
-[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 insert "fruit" 1 "apple"
-transaction hash:0x6393c74681f14ca3972575188c2d2c60d7f3fb08623315dbf6820fc9dcc119c1
+[group:1]> call HelloWorld 0x175b16a1299c7af3e2e49b97e68a44734257a35e set "Hello, FISCO BCOS"
+transaction hash: 0x54b7bc73e3b57f684a6b49d2fad41bd8decac55ce021d24a1f298269e56f1ce1
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Output
+Receipt message: Success
+Return message: Success
 ---------------------------------------------------------------------------------------------
 Event logs
+Event: {}
+
+# To call the get interface of HelloWorld to get the name string for checking whether the settings take effect
+[group:1]> call HelloWorld 0x175b16a1299c7af3e2e49b97e68a44734257a35e get
 ---------------------------------------------------------------------------------------------
-InsertResult index: 0
-count = 1
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,FISCO BCOS"
+]
 ---------------------------------------------------------------------------------------------
 
+
+# To call the insert interface of TableTest to insert the record, the fields are name, item_id, item_name
+[group:1]> call TableTest 0x5f248ad7e917cddc5a4d408cf18169d19c0990e5 insert "fruit" 1 "apple"
+transaction hash: 0x64bfab495dc1f50c58d219b331df5a47577aa8afc16be926260238a9b0ec0fbb
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Output
+Receipt message: Success
+Return message: Success
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {"InsertResult":[1]}
+
 # To call TableTest's select interface to inquiry records
-[group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 select "fruit"
-[[fruit], [1], [apple]]
+[group:1]> [group:1]> call TableTest 0x5f248ad7e917cddc5a4d408cf18169d19c0990e5 select "fruit"
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    [
+        "fruit"
+    ],
+    [
+        1
+    ],
+    [
+        "apple"
+    ]
+]
+---------------------------------------------------------------------------------------------
 ```
 **Note:** TableTest.sol contract code[Reference here](smart_contract.html#solidity)。
 
@@ -1086,16 +1058,16 @@ Parameter:
 - Contract name: deployable contract name.
 - Contract version number: deployable contract version number(the length cannot exceed 40).
 ```text
-# To deploy HellowWorld contract 1.0 version
-[group:1]> deployByCNS HelloWorld.sol 1.0
+# To deploy HelloWorld contract 1.0 version
+[group:1]> deployByCNS HelloWorld 1.0
 contract address:0x3554a56ea2905f366c345bd44fa374757fb4696a
 
-# To deploy HellowWorld contract 2.0 version
-[group:1]> deployByCNS HelloWorld.sol 2.0
+# To deploy HelloWorld contract 2.0 version
+[group:1]> deployByCNS HelloWorld 2.0
 contract address:0x07625453fb4a6459cbf14f5aa4d574cae0f17d92
 
 # To deploy TableTest contract
-[group:1]> deployByCNS TableTest.sol 1.0
+[group:1]> deployByCNS TableTest 1.0
 contract address:0x0b33d383e8e93c7c8083963a4ac4a58b214684a8
 ```
 
@@ -1214,41 +1186,7 @@ Parameter:
 [group:1]> getSystemConfigByKey tx_count_limit
 100
 ```
-### **grantPermissionManager**
 
-Run grantPermissionManager to grant the account's chain administrator privileges. parameter:
-
-- account address
-```text
-[group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-{
-	"code":0,
-	"msg":"success"
-}
-```
-
-**Note: For an example of the using permission control related commands, refer to [Permission Control Manual Document](./permission_control.md). **
-
-### **listPermissionManager**
-To run listPermissionManager to inquire the list of permission records with administrative privileges.
-```text
-[group:1]> listPermissionManager
----------------------------------------------------------------------------------------------
-|                   address                   |                 enable_num                  |
-| 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
----------------------------------------------------------------------------------------------
-```
-### **revokePermissionManager**
-To run revokePermissionManager to revoke the permission management of the external account address.
-parameter:
-- account address
-```text
-[group:1]> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
-{
-	"code":0,
-	"msg":"success"
-}
-```
 ### **grantUserTableManager**
 
 Run grantUserTableManager to grant the account to write to the user table.
@@ -1829,33 +1767,228 @@ Parameter:
 The account is available.
 ```
 
-## Appendix: Java environment configuration
+### getCurrentAccount
 
-### Install Java in ubuntu environment
+Get the current account address.
+
 ```bash
-# Install the default Java version (Java 8 version or above)
-sudo apt install -y default-jdk
-# query Java version
-java -version
+[group:1]> getCurrentAccount
+0x6fad87071f790c3234108f41b76bb99874a6d813
 ```
 
-### Install Java in CentOS environment
-**Note: the OpenJDK under CentOS does not work properly and needs to be replaced with the OracleJDK.**
-```bash
-# To create new folder to install Java 8 version or above. To put the downloaded jdk in the software directory
-# Download Java 8 version or above from Oracle official website (https://www.oracle.com/technetwork/java/javase/downloads/index.html). For example, to download jdk-8u201-linux-x64.tar.gz
-$ mkdir /software
-# To unzip jdk
-$ tar -zxvf jdk-8u201-linux-x64.tar.gz
-# To configure the Java environment and edit the /etc/profile file.
-$ vim /etc/profile
-# After opening the file, to enter the following three sentences into the file and exit
-export JAVA_HOME=/software/jdk-8u201-linux-x64.tar.gz
-export PATH=$JAVA_HOME/bin:$PATH
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-# profile takes effect
-$ source /etc/profile
-# To inquire the Java version. If the result shows the version you just downloaded, the installation is successful.
-java -version
+### getCryptoType
+
+Get the type of the node ledger and SSL protocol that the current console is connected to.
+
+```eval_rst
+.. note::
+    - The OSCCA-approved cryptography ledger type is ``ECDSA``, the OSCCA-approved cryptography ledger type is ``SM``
+    - The OpenSSL protocol type is ``ECDSA``, and the OSCCA-approved cryptography SSL protocol type is ``SM``
 ```
+
+```bash
+[group:1]> getCryptoType
+ledger crypto type: ECDSA
+ssl crypto type: ECDSA
+
+```
+
+### getAvailableConnections
+
+Get the node connection information of the SDK connection.
+
+```bash
+[group:1]> getAvailableConnections
+[
+    127.0.0.1:20200,
+    127.0.0.1:20201
+]
+```
+
+### getGroupConnections
+
+From the list of nodes connected to the SDK, filter out the node list information that starts the console currently logged in to the group.
+
+```bash
+[group:1]> getGroupConnections
+[
+    127.0.0.1:20200,
+    127.0.0.1:20201
+]
+```
+
+### generateGroup
+
+Dynamically create a new group for the specified node, parameters:
+
+- `endPoint`: The `IP:Port` of the blockchain node receiving the request for creating a new group. The information of all the nodes `IP:Port` connected by the SDK can be obtained through the command `getAvailableConnections`;
+- `groupId`: The newly created group ID;
+- `timestamp`: The timestamp of the genesis block of the newly created group, can be obtained by the command `echo $(($(date'+%s')*1000))`;
+- `sealerList`: The consensus node list of the newly created group, separated by spaces between multiple consensus node IDs。
+
+An example of creating a new group 2 for the blockchain nodes listening on the port `20200` of this machine is as follows:
+
+```bash
+# Get timestamp
+$ echo $(($(date '+%s')*1000))
+1590586645000 
+```
+
+```bash
+[group:1]> generateGroup  127.0.0.1:20200 2 1590586645000 b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36
+GroupStatus{
+    code='0x0',
+    message='Group 2 generated successfully',
+    status='null'
+}
+```
+
+### generateGroupFromFile
+
+Create a new group for the specified node list through the new group configuration file. The configuration file specifies the need to create the group node list, the consensus list of the new group, and the creation block timestamp. The group configuration example is `group-generate-config. toml` is as follows:
+
+```ini
+# The peers to generate the group
+[groupPeers]
+peers=["127.0.0.1:20200", "127.0.0.1:20201"]
+
+# The consensus configuration of the generated group
+[consensus]
+# The sealerList
+sealerList=["b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36","11e1be251ca08bb44f36fdeedfaeca40894ff80dfd80084607a75509edeaf2a9c6fee914f1e9efda571611cf4575a1577957edfd2baa9386bd63eb034868625f"]
+
+[genesis]
+# The genesis timestamp, It is recommended to set to the current utcTime, which must be greater than 0
+timestamp = "1590586645000"
+```
+
+The parameters of the `generateGroupFromFile` command include:
+
+-`groupConfigFilePath`: group configuration file path, console `conf/group-generate-config.toml` is the provided group configuration file template, users can copy and modify the configuration template according to the actual scene, and load the modified Group configuration file;
+
+-`groupId`: The newly created group ID.
+
+```
+[group:1]> generateGroupFromFile conf/group-generate-config.toml 3
+* Result of 127.0.0.1:20200:
+GroupStatus{
+    code='0x0',
+    message='Group 3 generated successfully',
+    status='null'
+}
+* Result of 127.0.0.1:20201:
+GroupStatus{
+    code='0x0',
+    message='Group 3 generated successfully',
+    status='null'
+}
+```
+
+### startGroup
+
+Start the group for the specified node, parameters:
+
+- `endPoint`: The `IP:Port` of the blockchain node receiving the request for start a new group. The information of all the nodes `IP:Port` connected by the SDK can be obtained through the command `getAvailableConnections`;
+- `groupId`: The ID of the group to start.
+
+An example of the console command to start group 2 is as follows:
+
+```bash
+# Get 127.0.0.1:20200 current group list
+[group:1]> getGroupList 127.0.0.1:20200
+[1]
+[group:1]> startGroup 127.0.0.1:20200 2
+GroupStatus{
+    code='0x0',
+    message='Group 2 started successfully',
+    status='null'
+}
+# 127.0.0.1: After group 2 of 20200 is successfully started, group 2 is added to the group list
+[group:1]> getGroupList 127.0.0.1:20200
+[1, 2]
+```
+
+### stopGroup
+
+Stop the group for the specified node, parameters:
+
+- `endPoint`: The `IP:Port` of the blockchain node receiving the request for stop a new group. The information of all the nodes `IP:Port` connected by the SDK can be obtained through the command `getAvailableConnections`;
+- `groupId`: The ID of the group to stop.
+
+An example of the console command to stop group 2 is as follows:
+
+```bash
+# Get 127.0.0.1:20200 current group list
+[group:1]> getGroupList 127.0.0.1:20200
+[1, 2]
+[group:1]> stopGroup 127.0.0.1:20200 2
+GroupStatus{
+    code='0x0',
+    message='Group 2 stopped successfully',
+    status='null'
+}
+# 127.0.0.1: After group 2 of 20200 stops successfully, group 2 is removed from the group list
+[group:1]> getGroupList 127.0.0.1:20200
+[1]
+
+```
+
+### removeGroup
+
+Remove the group for the specified node, parameters:
+
+- `endPoint`: The `IP:Port` of the blockchain node receiving the request for remove a new group. The information of all the nodes `IP:Port` connected by the SDK can be obtained through the command `getAvailableConnections`;
+- `groupId`: The ID of the group to remove.
+
+An example of the console command to delete group 2 is as follows:
+
+```bash
+# Delete group 2 of 127.0.0.1:20200
+[group:1]> removeGroup 127.0.0.1:20200 2
+GroupStatus{
+    code='0x0',
+    message='Group 2 deleted successfully',
+    status='null'
+}
+# After deleting group 2 of 127.0.0.1:20200, try to activate the deleted group, but the activation fails
+[group:1]> startGroup 127.0.0.1:20200 2
+GroupStatus{
+    code='0x5',
+    message='Group 2 has been deleted',
+    status='null'
+}
+[group:1]> getGroupList 127.0.0.1:20200
+[1]
+```
+
+### recoverGroup
+
+Recover the group for the specified node, parameters:
+
+- `endPoint`: The `IP:Port` of the blockchain node receiving the request for recover a new group. The information of all the nodes `IP:Port` connected by the SDK can be obtained through the command `getAvailableConnections`;
+- `groupId`: The ID of the group to recover.
+
+```bash
+# Get the current group list of 127.0.0.1:20200
+[group:1]> getGroupList 127.0.0.1:20200
+[1]
+# Recover group 2 at 127.0.0.1:20200
+[group:1]> recoverGroup 127.0.0.1:20200 2
+GroupStatus{
+    code='0x0',
+    message='Group 2 recovered successfully',
+    status='null'
+}
+# Start group 2 at 127.0.0.1:20200
+[group:1]> startGroup 127.0.0.1:20200 2
+GroupStatus{
+    code='0x0',
+    message='Group 2 started successfully',
+    status='null'
+}
+# Get the current group list of 127.0.0.1:20200, add group 2
+[group:1]> getGroupList 127.0.0.1:20200
+[1, 2]
+```
+
 

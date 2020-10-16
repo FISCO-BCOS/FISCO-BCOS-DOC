@@ -16,6 +16,7 @@
    configuration.md
    group_use_cases.md
    distributed_storage.md
+   console_of_java_sdk.md
    console.md
    account.md
    amop_protocol.md
