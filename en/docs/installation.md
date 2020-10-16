@@ -214,7 +214,7 @@ If it outputs following information, then the console has been started successfu
 
 ```bash
 =============================================================================================
-Welcome to FISCO BCOS console(1.0.3)！
+Welcome to FISCO BCOS console(2.6.0)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________  ______   ______    ______    ______         _______    ______    ______    ______
 |        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \
@@ -234,7 +234,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```bash
 # acquire client ends version information
 [group:1]> getNodeVersion
-{
+ClientVersion{
     "Build Time":"20200619 06:32:10",
     "Build Type":"Linux/clang/Release",
     "Chain Id":"1",
@@ -297,6 +297,7 @@ For quick experience, the console comes with HelloWorld contract and is placed u
 ```bash
 # input the following instruction in console, if it is deployed successfully, the contract address will be returned
 [group:1]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
