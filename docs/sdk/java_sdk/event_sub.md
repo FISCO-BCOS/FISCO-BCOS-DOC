@@ -4,8 +4,6 @@
 
 合约事件推送功能提供了合约事件的异步推送机制，客户端向节点发送注册请求，在请求中携带客户端关注的合约事件的参数，节点根据请求参数对请求区块范围的`Event Log`进行过滤，将结果分次推送给客户端。
 
-
-
 ## 2. 交互协议
 
 客户端与节点的交互基于[`Channel`](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html#id4)协议。交互分为三个阶段：注册请求，节点回复，`Event Log`数据推送。
@@ -70,8 +68,6 @@
 - filterID：字符串类型，每次请求唯一，标记一次注册任务  
 - result：整形 0：`Event Log`数据推送 1：推送完成。客户端一次注册请求对应节点的数据推送会有多次（请求区块范围比较大或者等待新的区块），`result`字段为1时说明节点推送已经结束  
 - logs：Log对象数组，result为0时有效  
-
-
 
 ## 3. Java SDK教程
 
@@ -172,15 +168,14 @@ class SubscribeCallback implements EventCallback {
 }
 ```
 
-
-
 ## 4. 示例
 
 这里以[`Asset`](https://github.com/FISCO-BCOS/LargeFiles/blob/master/tools/asset-app.tar.gz)合约的`TransferEvent`为例说明，给出合约事件推送的一些场景供用户参考。
 
 ```solidity
 contract Asset {
-    event TransferEvent(int256 ret, string indexed from_account, string indexed to_account, uint256 indexed amount)
+    event TransferEvent(int256 ret, string indexed from_account, string indexed to_account, uint256 indexed amount);
+    event TransferAccountEvent(string,string);
 
     function transfer(string from_account, string to_account, uint256 amount) public returns(int256) {
         // 结果
@@ -190,6 +185,9 @@ contract Asset {
 
         // TransferEvent 保存结果以及接口参数
         TransferEvent(result, from_account, to_account, amount);
+
+        // TransferAccountEvent 保存账号
+        TransferAccountEvent(from_account, to_account);
     }
 }
 ```
@@ -343,4 +341,112 @@ contract Asset {
         // 注册事件
         EventCallback callback = new EventCallback();
         String registerId = eventSubscribe.subscribeEvent(params, callback);
+```
+
+## 4. 解析例子
+
+以`Asset`合约为例，描述合约部署、调用、注册事件及解析节点推送事件内容的实现。注意：对增加了indexed属性的事件参数，均不进行解码，在相应位置上直接记录，其余非indexed属性的事件参数将进行解码。
+
+```Java
+        String contractAddress = "";
+        try {
+            AssembleTransactionProcessor manager =
+                    TransactionProcessorFactory.createAssembleTransactionProcessor(
+                            client, client.getCryptoSuite().createKeyPair(), abiFile, binFile);
+            // deploy
+            TransactionResponse response = manager.deployByContractLoader("Asset", Lists.newArrayList());
+            if (!response.getTransactionReceipt().getStatus().equals("0x0")) {
+                return;
+            }
+            contractAddress = response.getContractAddress();
+            // call function with event
+            List<Object> paramsSetValues = new ArrayList<Object>();
+            paramsSetValues.add("Alice");
+            paramsSetValues.add("Bob");
+            paramsSetValues.add(new BigInteger("100"));
+            TransactionResponse transactionResponse =
+                    manager.sendTransactionAndGetResponse(
+                            contractAddress, abi, "transfer", paramsSetValues);
+            logger.info("transaction response : " + JsonUtils.toJson(transactionResponse));
+        } catch (Exception e) {
+            logger.error("exception:", e);
+        }
+        
+        // subscribe event
+        EventLogParams eventLogParams = new EventLogParams();
+        eventLogParams.setFromBlock("latest");
+        eventLogParams.setToBlock("latest");
+        eventLogParams.setAddresses(new ArrayList<>());
+        ArrayList<Object> topics = new ArrayList<>();
+        ArrayList<Object> topicIdx0 = new ArrayList<>();
+        CryptoSuite invalidCryptoSuite =
+                new CryptoSuite(client.getCryptoSuite().getCryptoTypeConfig());
+        TopicTools topicTools = new TopicTools(invalidCryptoSuite);
+        topicIdx0.add(topicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
+        topicIdx0.add(topicTools.stringToTopic("TransferAccountEvent(string,string)"));
+        eventLogParams.setTopics(topics);
+
+        class SubscribeCallback implements EventCallback {
+            public transient Semaphore semaphore = new Semaphore(1, true);
+
+            SubscribeCallback() {
+                try {
+                    semaphore.acquire(1);
+                } catch (InterruptedException e) {
+                    logger.error("error :", e);
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+            @Override
+            public void onReceiveLog(int status, List<EventLog> logs) {
+                Assert.assertEquals(status, 0);
+                String str = "status in onReceiveLog : " + status;
+                logger.debug(str);
+                semaphore.release();
+                
+                // decode event
+                if (logs != null) {
+                    for (EventLog log : logs) {
+                        logger.debug(
+                                " blockNumber:"
+                                        + log.getBlockNumber()
+                                        + ",txIndex:"
+                                        + log.getTransactionIndex()
+                                        + " data:"
+                                        + log.getData());
+                        ABICodec abiCodec = new ABICodec(client.getCryptoSuite());
+                        try {
+                            List<Object> list = abiCodec.decodeEvent(abi, "TransferEvent", log);
+                            logger.debug("decode event log content, " + list);
+                            // list = [0, 0x81376b9868b292a46a1c486d344e427a3088657fda629b5f4a647822d329cd6a, 0x28cac318a86c8a0a6a9156c2dba2c8c2363677ba0514ef616592d81557e679b6, 0x0000000000000000000000000000000000000000000000000000000000000064]
+                            // 后三个事件参数均为indexed属性
+                            Assert.assertEquals(4, list.size());
+                        } catch (ABICodecException e) {
+                            logger.error("decode event log error, " + e.getMessage());
+                        }
+                        try {
+                            List<Object> list = abiCodec.decodeEvent(abi, "TransferAccountEvent", log);
+                            logger.debug("decode event log content, " + list);
+                            // list = [Alice, Bob]
+                            Assert.assertEquals(2, list.size());
+                        } catch (ABICodecException e) {
+                            logger.error("decode event log error, " + e.getMessage());
+                        }
+                    }
+                }
+            }
+        }
+
+        SubscribeCallback subscribeEventCallback1 = new SubscribeCallback();
+        String registerId =
+                eventSubscribe.subscribeEvent(eventLogParams, subscribeEventCallback1);
+        try {
+            subscribeEventCallback1.semaphore.acquire(1);
+            subscribeEventCallback1.semaphore.release();
+            logger.info("subscribe successful, registerId is " + registerId);
+        } catch (InterruptedException e) {
+            logger.error("system error:", e);
+            Thread.currentThread().interrupt();
+        }
 ```

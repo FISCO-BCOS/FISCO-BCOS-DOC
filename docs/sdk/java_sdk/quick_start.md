@@ -58,8 +58,8 @@ $ mkdir ~/fisco && cd ~/fisco
 $ git clone https://github.com/FISCO-BCOS/java-sdk
 # 编译
 $ ./gradlew clean build -x test
-# 进入dist目录，创建合约存放目录
-$ cd dist && mkdir -p contracts/solidity
+# 进入sdk-demo/dist目录，创建合约存放目录
+$ cd sdk-demo/dist && mkdir -p contracts/solidity
 # 将需要转换为java代码的sol文件拷贝到~/fisco/java-sdk/dist/contracts/solidity路径下
 # 转换sol, 其中${packageName}是生成的java代码包路径
 # 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
