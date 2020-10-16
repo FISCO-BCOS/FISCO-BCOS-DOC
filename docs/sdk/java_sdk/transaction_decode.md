@@ -189,7 +189,7 @@ Map<String, List<Object>> events = decoder.decodeEvents(abi, transactionReceipt.
 ```
 
 
-## 4. 解析回执的错误信息
+## 5. 解析回执的错误信息
 
 传入交易回执，解析返回数据，并解析为TransactionResponse对象。
 
