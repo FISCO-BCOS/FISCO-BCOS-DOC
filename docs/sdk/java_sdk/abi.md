@@ -52,7 +52,7 @@ contract Add {
 
 ## 1. 构造交易input
 
-交易的input由两部分组成，函数选择器及调用该函数所需参数的编码。其中input的前四个字节数据（如0x1003e2d2）指定了要调用的函数选择器，函数选择器的计算方式为函数声明（去除空格，即`add(uint256)`）的哈希，取前4个字节。input的剩余部分为输入参数根据ABI编码之后的结果。
+交易的input由两部分组成，函数选择器及调用该函数所需参数的编码。其中input的前四个字节数据（如"0x1003e2d2"）指定了要调用的函数选择器，函数选择器的计算方式为函数声明（去除空格，即`add(uint256)`）的哈希，取前4个字节。input的剩余部分为输入参数根据ABI编码之后的结果（如"000000000000000000000000000000000000000000000000000000000000003c"为参数"60"编码之后的结果）。
 
 根据函数指定方式及参数输入格式的不同，`ABICodec`分别提供了以下接口计算交易的`data`。
 
@@ -60,13 +60,13 @@ contract Add {
   // 函数名 + Object格式的参数列表
   String encodeMethod(String ABI, String methodName, List<Object> params);
   // 函数声明 + Object格式的参数列表
-  String encodeMethodByInterface(String ABI, String methodInterface, List<Object> params)
+  String encodeMethodByInterface(String methodInterface, List<Object> params)
   // 函数签名 + Object格式的参数列表
   String encodeMethodById(String ABI, String methodId, List<Object> params);
   // 函数名 + String格式的参数列表
   String encodeMethodFromString(String ABI, String methodName, List<String> params);
   // 函数声明 + String格式的参数列表
-  String encodeMethodByInterfaceFromString(String ABI, String methodInterface, List<String> params);
+  String encodeMethodByInterfaceFromString(String methodInterface, List<String> params);
   // 函数签名 + String格式的参数列表
   String encodeMethodByIdFromString(String ABI, String methodId, List<String> params);
 ```
@@ -84,7 +84,7 @@ contract Add {
   try {
     String encoded = abiCodec.encodeMethod(abi, "add", argsObjects));
     logger.info("encode method result, " + encoded);
-    // encode="0x1003e2d2000000000000000000000000000000000000000000000000000000000000003c"
+    // encoded = "0x1003e2d2000000000000000000000000000000000000000000000000000000000000003c"
   } catch (ABICodecException e) {
     logger.info("encode method error, " + e.getMessage());
   }
@@ -146,7 +146,7 @@ class SubscribeCallback implements EventCallback {
       try {
         List<Object> list = abiCodec.decodeEvent(abi, "LogAdd", log.getData());
         logger.debug("decode event log content, " + list);
-        // list.size()=2
+        // list.size() = 2
       } catch (ABICodecException e) {
         logger.error("decode event log error, " + e.getMessage());
       }

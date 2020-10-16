@@ -328,7 +328,7 @@ amop.stop()
   * AmopPublisherFile
     输入： 话题名（TopicName），是否多播（isBroadcast），文件名（FileName），发送的数量（Count）
     功能：发送普通话题文件、广播普通话题文件
-  * AmopSubscribe
+  * AmopSubscriber
     输入：话题名（TopicName）
     默认：订阅了一个名为“Test”的普通话题
     功能：订阅一个普通话题
@@ -350,3 +350,148 @@ amop.stop()
 
     输入：话题名（TopicName），公钥文件名1（Filename），公钥文件名2（Filename，如无则输入null），是否多播（isBroadcast），文件名（FileName），发送的数量（Count）
     测试功能：发送私有话题文件、广播普通话题文件
+
+## 4. 快速试用AMOP
+
+**第一步：下载项目**
+
+```bash
+mkdir ~/fisco && cd ~/fisco
+# 获取java-sdk代码
+git clone https://github.com/FISCO-BCOS/java-sdk
+cd java-sdk
+```
+
+**第二步：搭建FISCO BCOS区块链网络**
+
+方法一：如果您使用的操作系统为Linux或Darwin，可以用将以下脚本保存到java-sdk的目录下，命名为initEnv.sh，并运行该脚本。
+
+initEnv.sh
+
+```bash
+#!/bin/bash
+download_tassl()
+{
+  mkdir -p ~/.fisco/
+  if [ "$(uname)" == "Darwin" ];then
+    curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/tassl_mac.tar.gz
+    mv tassl_mac.tar.gz ~/.fisco/tassl.tar.gz
+  else
+    curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/tassl.tar.gz
+    mv tassl.tar.gz ~/.fisco/tassl.tar.gz
+  fi
+  tar -xvf ~/.fisco/tassl.tar.gz
+}
+
+build_node()
+{
+  local node_type="${1}"
+  if [ "${node_type}" == "sm" ];then
+      ./build_chain.sh -l 127.0.0.1:4 -g
+      sed_cmd=$(get_sed_cmd)
+      $sed_cmd 's/sm_crypto_channel=false/sm_crypto_channel=true/g' nodes/127.0.0.1/node*/config.ini
+  else
+      ./build_chain.sh -l 127.0.0.1:4
+  fi
+  ./nodes/127.0.0.1/fisco-bcos -v
+  ./nodes/127.0.0.1/start_all.sh
+}
+download_build_chain()
+{
+  tag=$(curl -sS "https://gitee.com/api/v5/repos/FISCO-BCOS/FISCO-BCOS/tags" | grep -oe "\"name\":\"v[2-9]*\.[0-9]*\.[0-9]*\"" | cut -d \" -f 4 | sort -V | tail -n 1)
+  LOG_INFO "--- current tag: $tag"
+  curl -LO "https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/${tag}/build_chain.sh" && chmod u+x build_chain.sh
+}
+prepare_environment()
+{
+  ## prepare resources for amop demo
+  bash gradlew build -x test
+  cp -r nodes/127.0.0.1/sdk/* sdk-demo/dist/conf
+}
+
+download_tassl
+./gradlew build -x test
+download_build_chain
+build_node
+prepare_environment
+```
+
+运行该文件：
+
+```bash
+# 更改文件权限
+chmod 777 intEnv.sh     
+# 运行initEnv.sh文件
+./initEnv.sh
+```
+
+运行完成后demo环境就已经准备好了。
+
+方法二：如果您使用Windows，请根据[指引](../../installation.html#fisco-bcos)搭建FISCO BCOS区块链网络。然后进行以下操作
+
+```cmd
+# 当前目录为java-sdk,构建项目
+gradlew.bat build -x test
+```
+
+将你搭建FISCO BCOS网络节点``nodes/${ip}/sdk/`` 目录下的证书复制到``java-sdk/sdk-demo/dist/config``目录下。
+
+**第三步：运行订阅者Demo**
+
+```bash
+# 进入sdk-demo/dist目录
+cd sdk-demo/dist 
+# 使用第三节中所描述的工具
+# 我们订阅名为”testTopic“的话题
+java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopSubscriber testTopic
+```
+
+订阅方的控制台输出
+
+```bash
+Start test
+
+```
+
+
+
+第四步：运行消息发布者Demo
+
+新打开一个控制台
+
+```bash
+# 进入sdk-demo/dist目录$ 
+cd sdk-demo/dist 
+# 调用AmopPublisher发送AMOP消息
+# 话题名：testTopic，是否广播：false(即使用单播)，内容：Tell you something， 发送次数：2次
+java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopPublisher testTopic false "Tell you something" 2
+```
+
+得到控制台的回复
+
+```bash
+3s ...
+2s ...
+1s ...
+start test
+===================================================================
+Step 1: Send out msg, topic:testTopic content:Tell you something
+Step 3:Get response, { errorCode:0 error:null seq:b6ca68689b304d5abf0093269a9936cf content:
+testTopicYes, I received! }
+Step 1: Send out msg, topic:testTopic content:Tell you something
+Step 3:Get response, { errorCode:0 error:null seq:aa9a461456d24902a391299b91d0a707 content:
+testTopicYes, I received! }
+```
+
+回到订阅者的控制台，看到订阅者的控制台有新的输出
+
+```bash
+Start test
+Step 2:Receive msg, topic:testTopic content:Tell you something
+|---response:Yes, I received!
+Step 2:Receive msg, topic:testTopic content:Tell you something
+|---response:Yes, I received!
+```
+
+一个AMOP消息的发送Demo就完成了。
+
