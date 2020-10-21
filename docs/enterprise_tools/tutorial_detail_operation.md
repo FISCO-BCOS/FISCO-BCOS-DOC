@@ -1131,7 +1131,7 @@ cd ~/generator-A
 合并当前节点的peers.txt
 
 ```bash
-cat ./agencyA_node_info/peers.txt >> ./meta/peersB.txt
+cat ./agencyA_node_info_new/peers.txt >> ./meta/peersB.txt
 ```
 
 生成新增节点：
