@@ -219,7 +219,7 @@ AssembleTransactionProcessor支持自定义参数发送交易，详细的API功�
 TransactionProcessor同样可使用TransactionProcessorFactory来构造。
 ```java
     // ……
-    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
+    TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
 ```
 
 ### 发送交易
