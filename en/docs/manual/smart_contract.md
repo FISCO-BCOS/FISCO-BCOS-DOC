@@ -209,69 +209,77 @@ contract Table {
 To provide a contract case `TableTest.sol`. The code is as follows:
 
 ```js
-pragma solidity ^0.4.24;
+pragma solidity>=0.4.24 <0.6.11;
+pragma experimental ABIEncoderV2;
 
 import "./Table.sol";
 
 contract TableTest {
-    event CreateResult(int count);
-    event InsertResult(int count);
-    event UpdateResult(int count);
-    event RemoveResult(int count);
+    event CreateResult(int256 count);
+    event InsertResult(int256 count);
+    event UpdateResult(int256 count);
+    event RemoveResult(int256 count);
 
-    // create table
-    function create() public returns(int){
-        TableFactory tf = TableFactory(0x1001);  // TableFactory's address is fixed at 0x1001
-        // To create a table t_test. Table's key_field as name. Table's value_field as item_id and item_name.
-        // key_field indicates the row that AMDB's primary key value_field represents in the table. The row can be multiple and spearated by commas.
-        int count = tf.createTable("t_test", "name", "item_id,item_name");
-        emit CreateResult(count);
-
-        return count;
+    TableFactory tableFactory;
+    string constant TABLE_NAME = "t_test";
+    constructor() public {
+        tableFactory = TableFactory(0x1001); //The fixed address is 0x1001 for TableFactory
+        // the parameters of createTable are tableName,keyField,"vlaueFiled1,vlaueFiled2,vlaueFiled3,..."
+        tableFactory.createTable(TABLE_NAME, "name", "item_id,item_name");
     }
 
-    // inquiry data
-    function select(string name) public constant returns(bytes32[], int[], bytes32[]){
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //select records
+    function select(string memory name)
+    public
+    view
+    returns (string[] memory, int256[] memory, string[] memory)
+    {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
-        // If the condition is empty, it means no filtering. You can use conditional filtering as needed.
         Condition condition = table.newCondition();
 
         Entries entries = table.select(name, condition);
-        bytes32[] memory user_name_bytes_list = new bytes32[](uint256(entries.size()));
-        int[] memory item_id_list = new int[](uint256(entries.size()));
-        bytes32[] memory item_name_bytes_list = new bytes32[](uint256(entries.size()));
+        string[] memory user_name_bytes_list = new string[](
+            uint256(entries.size())
+        );
+        int256[] memory item_id_list = new int256[](uint256(entries.size()));
+        string[] memory item_name_bytes_list = new string[](
+            uint256(entries.size())
+        );
 
-        for(int i=0; i<entries.size(); ++i) {
+        for (int256 i = 0; i < entries.size(); ++i) {
             Entry entry = entries.get(i);
 
-            user_name_bytes_list[uint256(i)] = entry.getBytes32("name");
+            user_name_bytes_list[uint256(i)] = entry.getString("name");
             item_id_list[uint256(i)] = entry.getInt("item_id");
-            item_name_bytes_list[uint256(i)] = entry.getBytes32("item_name");
+            item_name_bytes_list[uint256(i)] = entry.getString("item_name");
         }
 
         return (user_name_bytes_list, item_id_list, item_name_bytes_list);
     }
-    // insert data
-    function insert(string name, int item_id, string item_name) public returns(int) {
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //insert records
+    function insert(string memory name, int256 item_id, string memory item_name)
+    public
+    returns (int256)
+    {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
         Entry entry = table.newEntry();
         entry.set("name", name);
         entry.set("item_id", item_id);
         entry.set("item_name", item_name);
 
-        int count = table.insert(name, entry);
+        int256 count = table.insert(name, entry);
         emit InsertResult(count);
 
         return count;
     }
-    // update data
-    function update(string name, int item_id, string item_name) public returns(int) {
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //update records
+    function update(string memory name, int256 item_id, string memory item_name)
+    public
+    returns (int256)
+    {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
         Entry entry = table.newEntry();
         entry.set("item_name", item_name);
@@ -280,21 +288,20 @@ contract TableTest {
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
 
-        int count = table.update(name, entry, condition);
+        int256 count = table.update(name, entry, condition);
         emit UpdateResult(count);
 
         return count;
     }
-    // remove data
-    function remove(string name, int item_id) public returns(int){
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //remove records
+    function remove(string memory name, int256 item_id) public returns (int256) {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
         Condition condition = table.newCondition();
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
 
-        int count = table.remove(name, condition);
+        int256 count = table.remove(name, condition);
         emit RemoveResult(count);
 
         return count;
