@@ -191,7 +191,8 @@ public class BcosSDKTest
         BlockNumber blockNumber = client.getBlockNumber();
 
         // 向群组1部署HelloWorld合约
-        HelloWorld helloWorld = HelloWorld.deploy(client, client.getCryptoInterface());
+        CryptoKeyPair cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
+        HelloWorld helloWorld = HelloWorld.deploy(client, cryptoKeyPair);
 
         // 调用HelloWorld合约的get接口
         String getValue = helloWorld.get();
