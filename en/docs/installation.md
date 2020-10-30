@@ -182,7 +182,7 @@ sudo apt install -y default-jdk
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
