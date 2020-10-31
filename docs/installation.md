@@ -217,7 +217,7 @@ cp -r nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
 ```
 
-输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
 ```bash
 =============================================================================================

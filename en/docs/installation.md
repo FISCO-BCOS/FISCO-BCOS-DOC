@@ -210,7 +210,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
 ```
 
-If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/applicationContext.xml are configured correctly.
+If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/config.toml are configured correctly.
 
 ```bash
 =============================================================================================
