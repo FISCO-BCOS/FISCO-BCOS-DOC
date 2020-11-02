@@ -93,10 +93,10 @@ TransactionResponse的数据结构如下：
 
 
 ### 调用合约
-假如只调用合约，而不部署合约，那么就不需要复制binary文件，且在构造时无需传入binary文件的路径，例如构造方法的最后一个参数可传入空字符串。
+假如只调用合约，而不部署合约，那么就不需要复制binary文件，且在构造时传入binary文件的路径src/main/resources/bin/。
 
 ```java
-    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
+    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
 ```
 
 合约调用又可以被区分为『交易』和『查询』。被view修饰符修饰的方法一般称为“查询”，而未被修饰的才会称为“交易”。以下是“交易”和“查询”更详细的区别。
