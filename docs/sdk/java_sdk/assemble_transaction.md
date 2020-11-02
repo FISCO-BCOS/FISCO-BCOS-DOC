@@ -99,7 +99,7 @@ TransactionResponse的数据结构如下：
     AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
 ```
 
-合约调用又可以被区分为『交易』和『查询』。被view修饰符修饰的方法一般称为“交易”，而未被修饰的才会称为“查询”。以下是“交易”和“查询”更详细的区别。
+合约调用又可以被区分为『交易』和『查询』。被view修饰符修饰的方法一般称为“查询”，而未被修饰的才会称为“交易”。以下是“交易”和“查询”更详细的区别。
 
 | 内容 | 查询 | 交易 |
 | ---- | ---- | ----|
