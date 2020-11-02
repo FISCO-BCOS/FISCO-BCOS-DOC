@@ -283,7 +283,7 @@ $./generator --download_console ./meta --cdn
 
 ## get_sdk_file
 
-使用--get_sdk_file可以指定的目录下下获取控制台和sdk配置所需要的`node.crt`、`node.key`、`ca.crt`及`applicationContext.xml`。
+使用--get_sdk_file可以指定的目录下下获取控制台和sdk配置所需要的`node.crt`、`node.key`、`ca.crt`。
 
 使用示例:
 
