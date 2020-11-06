@@ -20,7 +20,7 @@ FISCO BCOS开源社区已沉淀120+篇技术文章，这些文章涉猎理论、
 
 如果你已经是社区贡献者，可直接按照如下操作完成文章PR提交；如果你初次尝试PR贡献，请点击了解[提PR基本操作指引](https://mp.weixin.qq.com/s/Uq5r1IaZfelWnhCThHSKXw)。以下为PR贡献流程图。
 
-![](../../images/articles/index/index1.PNG)
+![](../images/articles/index/index1.PNG)
 
 
 #### 1、提PR的预置条件：Fork FISCO-BCOS-DOC到个人github仓库
@@ -74,7 +74,7 @@ git add, git commit, git push等，[点击参考](https://www.jianshu.com/p/2e1d
 
 点击参考[readthedocs构建方法](https://www.jianshu.com/p/d1d59d0cd58c)， FISCO-BCOS-DOC的readthedocs配置选项参考下图：
 
-![](../../images/articles/index/index2.PNG)
+![](../images/articles/index/index2.PNG)
 
 #### 6、Reviewer反馈和合入
 
