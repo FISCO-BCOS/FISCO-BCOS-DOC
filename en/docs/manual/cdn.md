@@ -12,12 +12,11 @@ FISCO BCOS当前所有仓库源码位于[https://github.com/FISCO-BCOS/FISCO-BCO
 
 ### 二进制程序
 
-FISCO BCOS每个新版本发布会在GitHub的tag中提供对应的二进制程序和部署工具，同时在官网[https://www.fisco.com.cn](https://www.fisco.com.cn/cdn/fisco-bcos/releases/download)也会提供同样的二进制程序，官网通过CDN加速下载。当前所提供的二进制程序包括：
+FISCO BCOS每个新版本发布会在GitHub的tag中提供对应的二进制程序和部署工具，当前所提供的二进制程序包括：
 
 1. fisco-bcos.tar.gz ：静态二进制程序，支持CentOS 7 和Ubuntu 16.04以上版本
-1. fisco-bcos-gm.tar.gz ：国密版本的静态二进制程序，支持CentOS 7 和Ubuntu 16.04以上版本
-1. build_chain.sh ：对应版本的开发部署工具，依赖openssl和curl，支持CentOS 7/Ubuntu 16.04以上/macOS 10.15以上版本
 1. fisco-bcos-macOS.tar.gz ：对应macOS系统的二进制程序
+1. build_chain.sh ：对应版本的开发部署工具，依赖openssl和curl，支持CentOS 7/Ubuntu 16.04以上/macOS 10.15以上版本
 
 用户使用开发部署工具(build_chain)，工具先尝试从GitHub下载所需要的二进制程序，如果下载失败则尝试从官网下载。
 
@@ -38,35 +37,7 @@ FISCO BCOS控制台是一个交互式命令行工具，使用Java开发，代码
 控制台每个版本发布会提供编译好的包，用户下载后配置后即可使用，为了下载控制台用户需要获取download_console.sh脚本。此脚本会从GitHub下载最新版本console.tar.gz，如果下载失败则尝试从官网CDN下载。下面的指令从国内镜像获取download_console.sh脚本并执行。
 
 ```bash
-curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
-```
-
-### 国密jar包官网CDN下载
-
-控制台可以通过替换solcJ包，实现对solidity 0.4/0.5的国密和非国密版本支持。参考这里[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#jar](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#jar)，下面提供官网CDN下载地址。
-
-* 0.4版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25.jar
-```
-
-* 0.5版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.5.2.jar
-```
-
-* 国密0.4版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-
-* 国密0.5版本合约编译jar包
-
-```bash
-curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.5.2-gm.jar
+curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
 ```
 
 ### TASSL
@@ -88,10 +59,10 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 ### 下载开发部署工具
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
 
 ### 下载二进制程序
 
@@ -102,7 +73,7 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build
 搭建国密版本时，开发部署工具还依赖tassl，工具会自动下载，如果失败请用户参考TASSL手动下载方法，下载解压后放置于~/.fisco/tassl。执行下面的指令，输出All completed即表示执行成功。
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g -v 2.4.0
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -v 2.4.0
 ```
 
 ## 举例：使用国内源码镜像编译

@@ -1,7 +1,12 @@
 # Console
 
-[Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/java_sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
+```eval_rst
+.. important::
+    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``Console 2.6`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **1.x version console**, for 2.6 and above version console usage documentation please refer to `here <./console_of_java_sdk.md>`_ 
+    - You can view the current console version through the command ``./start.sh --version``
+```
 
+[Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/java_sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
 
 ### Console command
 
@@ -56,12 +61,12 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh -c 1.2.0`
 ```
 
 The directory structure is as follows:
@@ -154,26 +159,6 @@ The directory structure is as follows:
    - To copy the `ca.crt`, `sdk.crt`, and `sdk.key` files in the sdk node directory to the `conf` directory.
    - To rename the `applicationContext-sample.xml` file in the `conf` directory to the `applicationContext.xml` file. To configure the `applicationContext.xml` file, where the remark content is modified according to the blockchain node configuration. **Hint: If the channel_listen_ip(If the node version is earlier than v2.3.0, check the configuration item listen_ip) set through chain building is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration is not modified. **
 
-- Open OSCCA-approved cryptography switch
-```
-<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-    <!-- set encryptType value to 1 -->
-    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
-</bean>
-```
-- Replace compile Jar package
-```bash
-# Download solcJ-all-0.4.25-gm.jar package, and put it console dictionary
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-# Replace Jar package.
-$ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
-```
-
-```eval_rst
-.. note::
-    - If the package cannot be downloaded for a long time due to network problems, try `curl -LO https://www.fisco.com.cn/cdn/deps/tools/solcj/solcJ-all-0.4.25-gm.jar`
-```
-
 #### Contract compilation tool
 
 **Console provides a special compilation contract tool that allows developers to compile Solidity contract files into Java contract files.** Two steps for using the tool:
@@ -206,31 +191,6 @@ $ bash replace_solc_jar.sh solcJ-all-0.4.25-gm.jar
 
 In the java directory, `org/com/fisco/` package path directory is generated. In the package path directory, the java contract files `HelloWorld.java`, `TableTest.java` and `Table.java` will be generated. `HelloWorld.java` and `TableTest.java` are the java contract files required by the java application.
 
-**Note: ** The downloaded console contains `solcJ-all-0.4.25.jar` in the `console/lib` directory, so it supports the 0.4 version of the contract compilation. If you are using a 0.5 version contract compiler or a national cryptography contract compiler, please download the relevant contract compiler jar package, and replace `solcJ-all-0.4.25.jar` in the `console/lib` directory. It can be replaced by the `./replace_solc_jar.sh` script. To specify the jar package path, the command is as follows:
-
-```bash
-# To download solcJ-all-0.5.2.jar and to place in console directory, the example usage is as follows
-
-$ ./replace_solc_jar.sh solcJ-all-0.5.2.jar
-```
-
-#### Download contract compilation jar package
-0.4 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25.jar
-```
-0.5 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2.jar
-```
-National cryptography 0.4 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
-```
-National cryptography 0.5 version contract compilation jar package
-```bash
-$ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.5.2-gm.jar
-```
 ### Launch console
 
 Start the console while the node is running:
@@ -313,6 +273,8 @@ deploy                                   Deploy a contract on blockchain.
 deployByCNS                              Deploy a contract on blockchain by CNS.
 desc                                     Description table information.
 exit                                     Quit console.
+getBlockHeaderByHash                     Query information about a block header by hash.
+getBlockHeaderByNumber                   Query information about a block header by block number.
 getBlockByHash                           Query information about a block by hash.
 getBlockByNumber                         Query information about a block by block number.
 getBlockHashByNumber                     Query block hash by block number.
@@ -613,6 +575,88 @@ To run getGroupList to view the list of group:
 [group:1]> getGroupList
 [1]
 ```
+
+### **getBlockHeaderByHash**
+Run getBlockHeaderByHash to query the block header information based on the block hash.
+
+parameter:
+- Block hash: the hash value of the block starting with 0x
+- Signature list flag: The default is false, that is, the block signature list information is not displayed in the block header information, and if set to true, the block signature list is displayed.
+
+```text
+[group:1]> getBlockHeaderByHash 0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d
+{
+    "dbHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "extraData":[
+
+    ],
+    "gasLimit":"0x0",
+    "gasUsed":"0x0",
+    "hash":"0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "number":1,
+    "parentHash":"0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
+    "receiptsRoot":"0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer":"0x2",
+    "sealerList":[
+        "11e1be251ca08bb44f36fdeedfaeca40894ff80dfd80084607a75509edeaf2a9c6fee914f1e9efda571611cf4575a1577957edfd2baa9386bd63eb034868625f",
+        "78a313b426c3de3267d72b53c044fa9fe70c2a27a00af7fea4a549a7d65210ed90512fc92b6194c14766366d434235c794289d66deff0796f15228e0e14a9191",
+        "95b7ff064f91de76598f90bc059bec1834f0d9eeb0d05e1086d49af1f9c2f321062d011ee8b0df7644bd54c4f9ca3d8515a3129bbb9d0df8287c9fa69552887e",
+        "b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36"
+    ],
+    "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp":"0x173ad8703d6",
+    "transactionsRoot":"0xb563f70188512a085b5607cac0c35480336a566de736c83410a062c9acc785ad"
+}
+```
+
+### **getBlockHeaderByNumber**
+Run getBlockHeaderByNumber to query the block header information according to the block height.
+parameter:
+- Block height
+- Signature list flag: The default is false, that is, the block signature list information is not displayed in the block header information, and if set to true, the block signature list is displayed.
+
+```text
+[group:1]> getBlockHeaderByNumber 1 true
+{
+    "dbHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "extraData":[
+
+    ],
+    "gasLimit":"0x0",
+    "gasUsed":"0x0",
+    "hash":"0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
+    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "number":1,
+    "parentHash":"0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
+    "receiptsRoot":"0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer":"0x2",
+    "sealerList":[
+        "11e1be251ca08bb44f36fdeedfaeca40894ff80dfd80084607a75509edeaf2a9c6fee914f1e9efda571611cf4575a1577957edfd2baa9386bd63eb034868625f",
+        "78a313b426c3de3267d72b53c044fa9fe70c2a27a00af7fea4a549a7d65210ed90512fc92b6194c14766366d434235c794289d66deff0796f15228e0e14a9191",
+        "95b7ff064f91de76598f90bc059bec1834f0d9eeb0d05e1086d49af1f9c2f321062d011ee8b0df7644bd54c4f9ca3d8515a3129bbb9d0df8287c9fa69552887e",
+        "b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f37e1131f36"
+    ],
+    "signatureList":[
+        {
+            "index":"0x3",
+            "signature":"0xb5b41e49c0b2bf758322ecb5c86dc3a3a0f9b98891b5bbf50c8613a241f05f595ce40d0bb212b6faa32e98546754835b057b9be0b29b9d0c8ae8b38f7487b8d001"
+        },
+        {
+            "index":"0x0",
+            "signature":"0x411cb93f816549eba82c3bf8c03fa637036dcdee65667b541d0da06a6eaea80d16e6ca52bf1b08f77b59a834bffbc124c492ea7a1601d0c4fb257d97dc97cea600"
+        },
+        {
+            "index":"0x1",
+            "signature":"0xea3c27c2a1486c7942c41c4dc8f15fbf9a668aff2ca40f00701d73fa659a14317d45d74372d69d43ced8e81f789e48140e7fa0c61997fa7cde514c654ef9f26d00"
+        }
+    ],
+    "stateRoot":"0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp":"0x173ad8703d6",
+    "transactionsRoot":"0xb563f70188512a085b5607cac0c35480336a566de736c83410a062c9acc785ad"
+}
+```
+
 ### **getBlockByHash**
 To run getBlockByHash to view block information according to the block hash.
 Parameter:
@@ -1147,6 +1191,7 @@ To run setSystemConfigByKey to set the system configuration in key-value pairs. 
 * tx_gas_limit: The maximum number of gas allowed to be consumed
 * rpbft_epoch_sealer_num: rPBFT system configuration, the number of consensus nodes selected in a consensus epoch
 * rpbft_epoch_block_num: rPBFT system configuration, number of blocks generated in one consensus epoch
+* consensus_timeout: During the PBFT consensus process, the timeout period for each block execution, the default is 3s, the unit is seconds
 
 Parameters:
 
@@ -1813,3 +1858,4 @@ $ source /etc/profile
 # To inquire the Java version. If the result shows the version you just downloaded, the installation is successful.
 java -version
 ```
+

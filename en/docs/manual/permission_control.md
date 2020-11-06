@@ -1,6 +1,8 @@
 # Permission control
 
-## TODO: add ChainGovernance
+## TODO: add Role Based Access control
+
+### Roles and Permissions
 
 ## Permission conrtol based on Table permission
 
@@ -15,8 +17,8 @@ For the system is defaulted with no permission setting record, any account can p
 ### Operations
 
 The operations concerning permission control of following functions are introduced in this section:
-- [Permission of chain manager](./permission_control.html#id6)
-- [Permission of system manager](./permission_control.html#id7)
+- [Permission of chain manager](./permission_control.html#grant-permission-of-chain-manager)
+- [Permission of system manager](./permission_control.html#grant-permission-of-system-manager)
 - [Permission of contract deployment and user table creation](./permission_control.html#id8)
 - [Permission of Contract deployment using CNS](./permission_control.html#cns)
 - [Permission of node management](./permission_control.html#id9)
@@ -385,3 +387,4 @@ Empty set.
 Revoked successfully.
 
 - **Note:** now there is no account with permission to write user table t_test, so it is back to initial status, that is, all accounts have permission to write table. Therefore, account 1 can grant another account, like account 2, with permission to write this table.
+

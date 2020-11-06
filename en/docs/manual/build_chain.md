@@ -24,18 +24,20 @@ FISCO BCOS has provided `build_chain` script to help users quickly build FISCO B
 Usage:
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList p2p_port,channel_port,jsonrpc_port". eg "127.0.0.1:4 agency1 1,2 30300,20200,8545"
+    -v <FISCO-BCOS binary version>      Default is the latest v${default_version}
     -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
+    -q <List FISCO-BCOS releases>       List FISCO-BCOS released versions
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set use specificd version binary
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
+    -s <DB type>                        Default RocksDB. Options can be RocksDB / mysql / Scalable, RocksDB is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
+    -6 <Use ipv6>                       Default no. If set -6, treat IP as IPv6
     -k <The path of ca root>            Default auto generate, the ca.crt and ca.key must in the path, if use intermediate the root.crt must in the path
     -K <The path of sm crypto ca root>  Default auto generate, the gmca.crt and gmca.key must in the path, if use intermediate the gmroot.crt must in the path
     -D <Use Deployment mode>            Default false, If set -D, use deploy mode directory struct and make tar
@@ -47,7 +49,7 @@ Usage:
     -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
-    ./tools/build_chain.sh -l "127.0.0.1:4"
+    ./tools/build_chain.sh -l 127.0.0.1:4
 ```
 
 ## Option introduction
@@ -77,16 +79,18 @@ $ bash build_chain.sh -f ipconf -T
 ```
 
 ### **`e`option[**Optional**]**
+
 is used to specify **full path** where `fisco-bcos` binary is located.Script will cope `fisco-bcos` to the directory named by IP number. If no path to be specified, the latest binary program of `master` branch is downloaded from GitHub by default.
 
 ```bash
 # download the latest release binary from GitHub to generate native 4 nodes
-$ bash build_chain.sh -l "127.0.0.1:4"
+$ bash build_chain.sh -l 127.0.0.1:4
 # use bin/fisco-bcos binary to generate native 4 nodes
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+$ bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### **`o`option[**Optional**]**
+
 specifies the directory where the generated configuration is located.
 
 ### **`p`option[**Optional**]**
@@ -96,6 +100,10 @@ specifies the starting port of the node. Each node occupies three ports which ar
 # Two nodes occupies `30300,20200,8545` and `30301,20201,8546` respectively.
 $ bash build_chain -l 127.0.0.1:2 -p 30300,20200,8545
 ```
+
+### **`q`选项[**Optional**]**
+
+List FISCO BCOS released version numbers.
 
 ### **`v`option[**Optional**]**
 
@@ -115,12 +123,11 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 ```
 
 ### **`s`option[**Optional**]**
-There are parameter options. The parameter is the name of db. Currently it supports three modes: rocksdb, mysql, external and scalable. RocksDB is used by default.
+There are parameter options. The parameter is the name of db. Currently it supports three modes: RocksDB, mysql and Scalable. RocksDB is used by default.
 
-- rocksdb use RocksDB as backend database.
+- RocksDB use RocksDB as backend database.
 - mysql needs to configure the information relates to mysql in the group ini file.
-- external needs to configure topic information and start amdb-proxy.
-- scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in rocksdb instance named after block height. The rocksdb instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the scalable mode must be used.
+- Scalable mode, block data and state data are stored in different RocksDB databases, and block data is stored in RocksDB instance named after block height. The RocksDB instance used to store block data is scroll according to the configuration `scroll_threshold_multiple`*1000 and block height. If chain data need to be tailored, the Scalable mode must be used.
 
 ### **`c`option[**Optional**]**
 There are parameter options. The parameter is the consensus algorithm type, and currently supports PBFT, Raft, rPBFT. The default consensus algorithm is PBFT.
@@ -139,13 +146,17 @@ $ bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
 ### **`g`option[**Optional**]**
-No parameter option. When setting this option, to build the national cryptography version of FISCO BCOS. **The binary fisco-bcos is required to be national cryptography version when using the `g` option.**
+No parameter option. When setting this option, to build the national cryptography version of FISCO BCOS.
 
 ### **`z`option[**Optional**]**
 No parameter option. When setting this option, the tar package of node is generated.
 
 ### **`t`option[**Optional**]**
 This option is used to specify the certificate configuration file when certificate is generated.
+
+### **`6`选项[**Optional**]**
+
+Use IPv6 mode, listen `::`
 
 ### **`T`option[**Optional**]**
 
@@ -220,6 +231,40 @@ nodes/
 │   └── cert.cnf
 ```
 
+## Scripts generated by build_chain
+
+### start_all.sh
+
+start all nodes in current directory
+
+### stop_all.sh
+
+stop all nodes in current directory
+
+### download_console.sh
+
+download console
+
+- `v` specific version of console
+- `f` automatically configure console
+
+### download_bin.sh
+
+download fisco-bcos precompiled binary
+
+```bash
+Usage:
+    -v <Version>           Download binary of spectfic version, default latest
+    -b <Branch>            Download binary of spectfic branch
+    -o <Output Dir>        Default ./bin
+    -l                     List FISCO-BCOS released versions
+    -m                     Download mini binary, only works with -b option
+    -h Help
+e.g
+    ./download_bin.sh -v 2.6.0
+```
+
+
 ## Example
 
 ### Four nodes of group 1 on a local server
@@ -228,7 +273,7 @@ To build a 4-node FISCO BCOS alliance chain on native machine for using the defa
 
 ```bash
 # to build FISCO BCOS alliance chain
-$ bash build_chain.sh -l "127.0.0.1:4"
+$ bash build_chain.sh -l 127.0.0.1:4
 # after generating successes, to output `All completed` to mention
 Generating CA key...
 ==============================================================
@@ -260,12 +305,12 @@ The next operation is done under the `nodes/127.0.0.1` directory generated in th
 1. Acquisition certificate generation script
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
 ```
 
 2. Generating new node private key certificates
@@ -286,13 +331,13 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 
 1. Copy Node 0 Profile and Tool Script in Group 1
 
-```bash
-cp node0/config.ini newNode/config.ini
-cp node0/conf/group.1.genesis newNode/conf/group.1.genesis
-cp node0/conf/group.1.ini newNode/conf/group.1.ini
-cp node0/*.sh newNode/
-cp -r node0/scripts newNode/
-```
+    ```bash
+    cp node0/config.ini newNode/config.ini
+    cp node0/conf/group.1.genesis newNode/conf/group.1.genesis
+    cp node0/conf/group.1.ini newNode/conf/group.1.ini
+    cp node0/*.sh newNode/
+    cp -r node0/scripts newNode/
+    ```
 
 2. Update IP and ports monitored in `newNode/config.ini`, include IP and Port in `[rpc]` and `[p2p]`。
 3. Add IP and Port in the new node's P2P configuration to the [p2p] field in the original node's config.ini. Assuming that the new node IP: Port is 127.0.0.1:30304, the modified [P2P] configuration is
@@ -300,7 +345,7 @@ cp -r node0/scripts newNode/
     ```bash
     [p2p]
         listen_ip=0.0.0.0
-        listen_port=30300
+        listen_port=30304
         ;enable_compress=true
         ; nodes to connect
         node.0=127.0.0.1:30300
@@ -315,12 +360,42 @@ cp -r node0/scripts newNode/
 
 #### Start a new node, check links and consensus
 
+### generate new SDK certificate of agency
+
+The next operation is done under the `nodes/127.0.0.1` directory generated in the previous section.
+
+1. Acquisition certificate generation script
+
+```bash
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
+2. Generating new node private key certificates
+
+```bash
+# -c specify the path where the certificate and private key are located
+# -o Output to the specified folder, where new certificates and private keys issued by agency exist in newSDK
+
+bash gen_node_cert.sh -c ../cert/agency -o newSDK -s
+```
+
+If you use guomi version of fisco, please execute below command to generate cert.
+```bash
+bash gen_node_cert.sh -c ../cert/agency -o newSDK -g ../gmcert/agency/ -s
+```
+
+
 ### Generating new agency private key certificates
 
 1. Acquisition agency certificate generation script
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
 ```
 
 2. Generating new agency private key certificates
@@ -337,8 +412,10 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName
 bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 ```
 
+
 ### Multi-server and multi-group
 
 Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+

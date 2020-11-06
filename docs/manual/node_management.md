@@ -111,14 +111,14 @@ Group3的相关节点信息举例为：
 
 ```
 # 获取脚本
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
-# 执行，-c为生成节点所提供的ca路径，agency为机构名，-o为将生成的节点目录名
+$ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
+# 执行，-c为生成节点所提供的ca路径，agency为机构名，-o为将生成的节点目录名（如果是国密节点，使用 -g 参数）
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
 ```
 
 2 . 拷贝node2到`nodes/127.0.0.1/`下，与其他节点目录（`node0`、`node1`）同级；

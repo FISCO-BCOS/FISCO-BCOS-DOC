@@ -12,7 +12,7 @@ $ sudo apt install -y openssl curl
 # prepare environment
 $ cd ~ && mkdir -p fisco && cd fisco
 # download build_chain.sh script
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - build a 4-nodes FISCO BCOS chain
@@ -21,8 +21,8 @@ $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/bui
 # Generate a 4-nodes FISCO chain. All nodes belong to group1. The following instructions are executed in the fisco directory.
 # -p specifies the starting ports which are p2p_port, channel_port, jsonrpc_port
 # According to the following instructions, it needs to ensure that the 30300~30303, 20200~20203, 8545~8548 ports of the machine are not occupied.
-# -g The OSCCA-approved cryptography compilation option. It will generate a node of OSCCA-approved cryptography after using successfully. Download the latest version from GitHub by default.
-$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g
+# -g It will generate a chain of OSCCA-approved cryptography.
+$ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g
 ```
 
 For the `build_chain.sh` script option, please [refer to here] (build_chain.md). The command that execute normally will output `All completed`. (If there is no output, refer to `nodes/build.log` for checking).
@@ -91,11 +91,9 @@ For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
 
 ## OSCCA-approved cryptography console configuration
 
-See [Console Operations Manual] (../manual/console.md) `Configure OSCCA-approved cryptography console` chapter。
-
 ## using OSCCA-approved cryptography console
 
-The function of OSCCA-approved cryptography console is used in the same way as the standard console. See [Console Operations Manual] (../manual/console.md).
+The function of OSCCA-approved cryptography console is used in the same way as the standard console. Console version 2.6 and above does not require additional configuration. For the configuration method of console version 1.x, please refer to [Console Operation Manual](../manual/console.md).
 
 
 ## OSCCA-approved cryptography configuration
@@ -121,7 +119,7 @@ FISCO BCOS OSCCA-approved cryptography version adopts dual certificate mode, so 
 ``` shell
 cd key-manager/scripts
 #encrypt conf/gmnode.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
 #encrypt conf/origin_cert/node.key parameter: ip port  Node private key file cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```

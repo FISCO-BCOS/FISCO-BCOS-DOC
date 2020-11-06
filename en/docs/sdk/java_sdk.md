@@ -28,14 +28,14 @@ Main features of version 2.0+ includes:
 
    gradle:
 ```bash
-compile ('org.fisco-bcos:web3sdk:2.5.0')
+compile ('org.fisco-bcos:web3sdk:2.6.1')
 ```
    maven:
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos</groupId>
     <artifactId>web3sdk</artifactId>
-    <version>2.5.0</version>
+    <version>2.6.1</version>
 </dependency>
 ```
 Because the relative jar archive of the solidity compiler of Ethereum is imported, we need to add a remote repository of Ethereum in the gradle configuration file build.gradle of the java application.

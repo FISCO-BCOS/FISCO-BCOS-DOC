@@ -2,6 +2,11 @@
 
 本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](./manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
 
+```eval_rst
+.. note::
+    - 搭建全链路国密版本的链，`请参考这里 <manual/guomi_crypto.html>`_ 。
+```
+
 ## 单群组FISCO BCOS联盟链的搭建
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
@@ -12,6 +17,7 @@
     - 若需在已有区块链上进行升级，请转至 `版本及兼容 <change_log/index.html>`_ 章节。
     - 搭建多群组的链操作类似， `参考这里 <manual/group_use_cases.html>`_ 。
     - 本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04 64bit上经过测试。
+    - `使用docker模式搭建 <manual/build_chain.html#d-optional>`_ ，供有丰富docker经验和容器化部署需求的用户参考。
 ```
 
 ### 准备环境
@@ -19,10 +25,18 @@
 - 安装依赖
 
 `开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
-若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可。
+若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可（macOS自带的openssl指令选项不同，请执行安装标准openssl）。
+
+**安装ubuntu依赖**
 
 ```bash
 sudo apt install -y openssl curl
+```
+
+**安装centos依赖**
+
+```bash
+sudo yum install -y openssl openssl-devel
 ```
 
 - 创建操作目录
@@ -34,12 +48,12 @@ cd ~ && mkdir -p fisco && cd fisco
 - 下载`build_chain.sh`脚本
 
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ### 搭建单群组4节点联盟链
@@ -47,8 +61,15 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。
 请确保机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
 
+```eval_rst
+.. note::
+    - 国密版本请执行 ``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
+    - 其中-g表示生成国密配置，-G表示使用国密SSL连接
+    - web3sdk已经支持国密SSL，如果使用web3sdk建议带上-G选项使用国密SSL
+```
+
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -v 2.5.0
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
 
 ```eval_rst
@@ -152,38 +173,59 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ## 配置及使用控制台
 
-在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。
-控制台指令详细介绍[参考这里](manual/console.md)。
+```eval_rst
+.. important::
+    - ``控制台1.x`` 系列基于 `Web3SDK <./sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <./sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
+    - 2.6及其以上版本控制台使用文档请 `参考这里 <./manual/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <./manual/console.html>`_ 
+    - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
+    - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <tutorial/download_console.html>`_ 
+```
+
+在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
 
 ### 准备依赖
 
-- Java环境配置
+- 安装java
 
-参考[Java环境要求](sdk/java_sdk.html#id1)。
+```bash
+# ubuntu系统安装java
+sudo apt install -y default-jdk
+
+#centos系统安装java
+sudo yum install -y java java-devel
+```
 
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 - 拷贝控制台配置文件
 
-若节点未采用默认端口，请将文件中的20200替换成节点对应的channle端口。
+若节点未采用默认端口，请将文件中的20200替换成节点对应的channel端口。
 
 ```bash
-cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+# 最新版本控制台使用如下命令拷贝配置文件
+cp -n console/conf/config-example.toml console/conf/config.toml
 ```
 
 - 配置控制台证书
 
+```eval_rst
+.. note::
+    使用1.x版本控制台时：
+     - 搭建国密版时，如果使用国密SSL请执行 ``cp nodes/127.0.0.1/sdk/gm/* console/conf/``
+     - 搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1
+```
+
 ```bash
-cp nodes/127.0.0.1/sdk/* console/conf/
+cp -r nodes/127.0.0.1/sdk/* console/conf/
 ```
 
 ### 启动控制台
@@ -193,11 +235,11 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
 ```
 
-输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
 ```bash
 =============================================================================================
-Welcome to FISCO BCOS console(1.0.3)！
+Welcome to FISCO BCOS console(2.6.0)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________  ______   ______    ______    ______         _______    ______    ______    ______
 |        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \
@@ -212,14 +254,14 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
+若1.x控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
 
 ### 使用控制台获取信息
 
 ```bash
 # 获取客户端版本
 [group:1]> getNodeVersion
-{
+ClientVersion{
     "Build Time":"20200619 06:32:10",
     "Build Type":"Linux/clang/Release",
     "Chain Id":"1",
@@ -282,6 +324,7 @@ contract HelloWorld {
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
 [group:1]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
@@ -294,7 +337,16 @@ contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # 调用get接口获取name变量 此处的合约地址是deploy指令返回的地址
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, World!
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,World!"
+]
+---------------------------------------------------------------------------------------------
 
 # 查看当前块高，块高不变，因为get接口不更改账本状态
 [group:1]> getBlockNumber
@@ -302,7 +354,17 @@ Hello, World!
 
 # 调用set设置name
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+transaction hash: 0x7e742c44091e0d6e4e1df666d957d123116622ab90b718699ce50f54ed791f6e
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Output
+Receipt message: Success
+Return message: Success
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
 
 # 再次查看当前块高，块高增加表示已出块，账本状态已更改
 [group:1]> getBlockNumber
@@ -310,16 +372,20 @@ Hello, World!
 
 # 调用get接口获取name变量，检查设置是否生效
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, FISCO BCOS
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,FISCO BCOS"
+]
+---------------------------------------------------------------------------------------------
 
 # 退出控制台
 [group:1]> quit
 ```
-
-**注：**
-1. 部署合约还可以通过`deployByCNS`命令，可以指定部署的合约版本号，使用方式[参考这里](manual/console.html#deploybycns)。
-2. 调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。
-
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 

@@ -8,11 +8,11 @@
 
 ```bash
 # Ubuntu16安装依赖
-$ sudo apt install -y openssl curl
+sudo apt install -y openssl curl
 # 准备环境
-$ cd ~ && mkdir -p fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链
@@ -21,8 +21,9 @@ $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/bui
 # 生成一条4节点的FISCO链 4个节点都属于group1 下面指令在fisco目录下执行
 # -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
-# -g 国密编译选项，使用成功后会生成国密版的节点。默认从GitHub下载最新稳定版本可执行程序
-$ ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g
+# -g 搭建国密版本的链
+# -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
+$ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G
 ```
 
 关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
@@ -76,7 +77,8 @@ ca_cert: gmca证书路径
     ca_cert=gmca.crt
 ```
 
-FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信，也可以以国密SSL连接进行通信，相关配置如下：
+FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信，也支持国密SSL连接进行通信，相关配置如下：
+
 ```ini
 [chain]
     ; use SM crypto or not, should nerver be changed
@@ -91,11 +93,11 @@ FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信�
 
 ## 国密版控制台配置
 
-详情操作参考[配置国密版控制台](../manual/console.html#id11)。
+1.x版本控制台需要配置国密选项，详情操作参考[配置国密版控制台](../manual/console.html#id11)。
 
 ## 国密控制台使用
 
-国密版控制台功能与标准版控制台使用方式相同，见[控制台操作手册](../manual/console.md)。
+国密版控制台功能与标准版控制台使用方式相同，2.6及其以上版本控制台不需要额外配置国密选项，1.x版本控制台的配置方法请参考[控制台操作手册](../manual/console.html#id11)。
 
 ## 国密落盘加密配置
 
@@ -119,7 +121,7 @@ FISCO BCOS国密版采用双证书模式，因此落盘加密需要加密的两�
 ``` shell
 cd key-manager/scripts
 #加密 conf/gmnode.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/gmnode.key ed157f4588b86d61a2e1745efe71e6ea
 #加密 conf/origin_cert/node.key 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 31443 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
+bash encrypt_node_key.sh 127.0.0.1 8150 nodes/127.0.0.1/node0/conf/origin_cert/node.key ed157f4588b86d61a2e1745efe71e6ea
 ```

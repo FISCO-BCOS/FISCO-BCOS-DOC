@@ -15,26 +15,29 @@ FISCO BCOS提供了脚本和Web3SDK用以创建账户，同时也提供了Web3SD
 
 ### 使用脚本创建账户
 
+国密生成账户脚本`get_gm_account.sh`与非国密`get_account.sh`选项和使用方式一致，请参考操作即可，不再赘述。
+
 #### 1. 获取脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
 ```
 
 国密版本请使用下面的指令获取脚本
+
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
-    - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -LO https://www.fisco.com.cn/cdn/deps/tools/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
+    - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/tassl-1.0.2/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
 ```
 
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。
@@ -48,6 +51,7 @@ Usage: ./get_account.sh
 ```
 
 #### 2. 使用脚本生成PEM格式私钥
+
 - 生成私钥与地址
 ```bash
 bash get_account.sh
@@ -113,7 +117,7 @@ String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ## 账户的使用
 
 ### 控制台加载私钥文件
-控制台提供账户生成脚本get_account.sh，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台提供账户生成脚本get_account.sh，生成的的账户私钥文件在accounts目录下，控制台加载私钥时需要指定私钥文件。
 控制台启动方式有如下几种：
 ```
 ./start.sh
@@ -121,6 +125,7 @@ String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
 ./start.sh groupID -pem pemName
 ./start.sh groupID -p12 p12Name
 ```
+
 ##### 默认启动
 控制台随机生成一个账户，使用控制台配置文件指定的群组号启动。
 ```bash

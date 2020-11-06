@@ -33,14 +33,23 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
      - 配置中仅包含listen_ip：RPC和Channel的监听IP均为配置的listen_ip
      - 配置中同时包含listen_ip、channel_listen_ip或jsonrpc_listen_ip：优先解析channel_listen_ip和jsonrpc_listen_ip，没有配置的配置项用listen_ip的值替代
+     - v2.6.0 版本开始，RPC 支持 ipv4 和 ipv6
 ```
 
 RPC配置示例如下：
 
 ```ini
+# ipv4
 [rpc]
     channel_listen_ip=0.0.0.0
     jsonrpc_listen_ip=127.0.0.1
+    channel_listen_port=30301
+    jsonrpc_listen_port=30302
+
+# ipv6
+[rpc]
+    channel_listen_ip=::1
+    jsonrpc_listen_ip=::1
     channel_listen_port=30301
     jsonrpc_listen_port=30302
 ```
@@ -51,7 +60,8 @@ RPC配置示例如下：
 
 ```eval_rst
 .. note::
-    为便于开发和体验，listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
+    - 为便于开发和体验，listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
+    - v2.6.0 版本开始，P2P 支持 ipv4 和 ipv6
 ```
 
 - `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`。
@@ -59,9 +69,12 @@ RPC配置示例如下：
 - `node.*`: 节点需连接的所有节点`IP:Port`或`DomainName:Port`。该选项支持域名，但建议需要使用的用户[手动**编译源码**](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2)。
 - `enable_compress`：开启网络压缩的配置选项，配置为true，表明开启网络压缩功能，配置为false，表明关闭网络压缩功能，网络压缩详细介绍请参考[这里](../design/features/network_compress.md)。
 
+- v2.6.0 版本开始，P2P 支持 ipv4 和 ipv6
+
 P2P配置示例如下：
 
 ```ini
+# ipv4
 [p2p]
     listen_ip=0.0.0.0
     listen_port=30300
@@ -69,6 +82,15 @@ P2P配置示例如下：
     node.1=127.0.0.1:30304
     node.2=127.0.0.1:30308
     node.3=127.0.0.1:30312
+
+# ipv6
+[p2p]
+    listen_ip=::1
+    listen_port=30300
+    node.0=[::1]:30300
+    node.1=[::1]:30304
+    node.2=[::1]:30308
+    node.3=[::1]:30312
 ```
 
 ### 配置账本文件路径
@@ -230,7 +252,7 @@ FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibi
 [storage_security]
 enable=true
 key_manager_ip=127.0.0.1
-key_manager_port=31443
+key_manager_port=8150
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -299,6 +321,8 @@ id=2
 
 - `max_trans_num`：一个区块可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
 
+- `consensus_timeout`：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
+
 - `node.idx`：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过`${data_path}/node.nodeid`文件获取(其中`${data_path}`可通过主配置`config.ini`的`[network_security].data_path`配置项获取)
 
 FISCO BCOS v2.3.0引入了rPBFT共识算法，具体可参考[这里](../design/consensus/rpbft.md)，rPBFT相关配置如下：
@@ -321,6 +345,8 @@ FISCO BCOS v2.3.0引入了rPBFT共识算法，具体可参考[这里](../design/
     consensus_type=pbft
     ; 单个块最大交易数
     max_trans_num=1000
+    ;共识过程中区块最长执行时间，默认为3秒
+    consensus_timeout=3
     ; 一个共识周期内选取参与共识的节点数，rPBFT配置项，对其他共识算法不生效
     epoch_sealer_num=4
     ; 一个共识周期出块数，rPBFT配置项，对其他共识算法不生效
@@ -407,12 +433,11 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 
 ### 配置storage
 
-存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问mysql，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
+存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问MySQL，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
 
 ```eval_rst
 .. note::
     - v2.3.0版本开始，为便于链的维护，推荐使用 `MySQL` 存储模式替代 `External` 存储模式
-    - 若要使用 `External`，请将 `supported_version` 配置成v2.2.0或其以下版本
 ```
 
 #### 公共配置项
@@ -422,7 +447,7 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
    推荐使用Mysql直连模式，配置type为MySQL。
 ```
 
-- `type`：存储的DB类型，支持`RocksDB`、`MySQL`、`External`和`scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问mysql数据库；type为`external`时，节点通过数据代理访问mysql数据库，AMDB代理配置请参考[这里](./distributed_storage.html#id14)；type为`scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`\*1000切换实例，实例以存储的起始区块高度命名。
+- `type`：存储的DB类型，支持`RocksDB`、`MySQL`和`Scalable`，不区分大小写。DB类型为RocksDB时，区块链系统所有数据存储于RocksDB本地数据库中；type为`MySQL`时，节点根据配置访问MySQL数据库；type为`Scalable`时，需要设置`binary_log=true`，此时状态数据和区块数据分别存储在不同的RocksDB实例中，存储区块数据的RocksDB实例根据配置项`scroll_threshold_multiple`\*1000切换实例，实例以存储的起始区块高度命名。
 - `max_capacity`：配置允许节点用于内存缓存的空间大小。
 - `max_forward_block`：配置允许节点用于内存区块的大小，当节点出的区块超出该数值时，节点停止共识等待区块写入数据库。
 - `binary_log`：当设置为`true`时打开binary_log，此时关闭RocksDB的WAL。
@@ -445,14 +470,14 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 
 ```ini
 [storage]
-    ; storage db type, rocksdb / mysql / external, rocksdb is recommended
+    ; storage db type, RocksDB / MySQL / Scalable, RocksDB is recommended
     type=RocksDB
     max_capacity=256
     max_forward_block=10
     ; only for external
     max_retry=100
     topic=DB
-    ; only for mysql
+    ; only for MySQL
     db_ip=127.0.0.1
     db_port=3306
     db_username=
@@ -734,6 +759,26 @@ FISCO BCOS支持交易的并行执行。开启交易并行执行开关，能够�
     outgoing_bandwidth_limit=2
 ```
 
+### 可选配置：SDK白名单配置
+
+为了实现sdk到群组的访问控制，FISCO BCOS v2.6.0引入了群组级的SDK白名单访问控制机制，配置位于`group.{group_id}.ini`的`[sdk_allowlist]`，默认关闭，群组级别SDK白名单机制请参考[这里](./sdk_allowlist.md)。
+
+```eval_rst
+.. important::
+    FISCO BCOS v2.6.0默认关闭SDK到群组的白名单访问控制功能，即默认情况下sdk与所有群组均可通信，若要开启sdk与群组间基于白名单的访问控制功能，需要将 `;public_key.0` 等配置项前面的分号去掉
+```
+- `public_key.0`、`public_key.1`、...、`public_key.i`：配置允许与该群组进行通信的SDK公钥公钥列表。
+
+**SDK白名单配置示例如下：**
+
+```ini
+[sdk_allowlist]
+; When sdk_allowlist is empty, all SDKs can connect to this node
+; when sdk_allowlist is not empty, only the SDK in the allowlist can connect to this node
+; public_key.0 should be nodeid, nodeid's length is 128
+public_key.0=b8acb51b9fe84f88d670646be36f31c52e67544ce56faf3dc8ea4cf1b0ebff0864c6b218fdcd9cf9891ebd414a995847911bd26a770f429300085f3
+```
+
 ## 动态配置系统参数
 
 FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统参数)：
@@ -744,6 +789,7 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 | tx_gas_limit  | 300000000 | 一个交易最大gas限制 |
 | rpbft_epoch_sealer_num | 链共识节点总数 | rPBFT系统配置，一个共识周期内选取参与共识的节点数目，rPBFT每个共识周期都会动态切换参与共识的节点数目 |
 | rpbft_epoch_block_num | 1000 | rPBFT系统配置，一个共识周期内出块数目|
+| consensus_timeout | 3 | PBFT共识过程中，区块执行的超时时间，最少为3s, supported_version>=v2.6.0时，配置项生效 |
 
 
 控制台提供 **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
@@ -795,4 +841,14 @@ Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 [group:1]> getSystemConfigByKey rpbft_epoch_block_num
 Note: rpbft_epoch_block_num only takes effect when rPBFT is used
 10000
+# 获取区块执行超时时间
+[group:1]> getSystemConfigByKey consensus_timeout
+3
+
+# 设置区块执行超时时间为5s
+[group:1]> setSystemConfigByKey consensus_timeout 5
+{
+    "code":0,
+    "msg":"success"
+}
 ```

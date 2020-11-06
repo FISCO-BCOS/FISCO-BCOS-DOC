@@ -24,18 +24,20 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 Usage:
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -f <IP list file>                   [Optional] split by line, every line should be "ip:nodeNum agencyName groupList p2p_port,channel_port,jsonrpc_port". eg "127.0.0.1:4 agency1 1,2 30300,20200,8545"
+    -v <FISCO-BCOS binary version>      Default is the latest v${default_version}
     -e <FISCO-BCOS binary path>         Default download fisco-bcos from GitHub. If set -e, use the binary at the specified location
     -o <Output Dir>                     Default ./nodes/
     -p <Start Port>                     Default 30300,20200,8545 means p2p_port start from 30300, channel_port from 20200, jsonrpc_port from 8545
+    -q <List FISCO-BCOS releases>       List FISCO-BCOS released versions
     -i <Host ip>                        Default 127.0.0.1. If set -i, listen 0.0.0.0
-    -v <FISCO-BCOS binary version>      Default get version from https://github.com/FISCO-BCOS/FISCO-BCOS/releases. If set use specificd version binary
-    -s <DB type>                        Default rocksdb. Options can be rocksdb / mysql / scalable, rocksdb is recommended
+    -s <DB type>                        Default RocksDB. Options can be RocksDB / MySQL / Scalable, RocksDB is recommended
     -d <docker mode>                    Default off. If set -d, build with docker
     -c <Consensus Algorithm>            Default PBFT. Options can be pbft / raft /rpbft, pbft is recommended
     -C <Chain id>                       Default 1. Can set uint.
     -g <Generate guomi nodes>           Default no
     -z <Generate tar packet>            Default no
     -t <Cert config file>               Default auto generate
+    -6 <Use ipv6>                       Default no. If set -6, treat IP as IPv6
     -k <The path of ca root>            Default auto generate, the ca.crt and ca.key must in the path, if use intermediate the root.crt must in the path
     -K <The path of sm crypto ca root>  Default auto generate, the gmca.crt and gmca.key must in the path, if use intermediate the gmroot.crt must in the path
     -D <Use Deployment mode>            Default false, If set -D, use deploy mode directory struct and make tar
@@ -47,15 +49,17 @@ Usage:
     -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
-    ./build_chain.sh -l "127.0.0.1:4"
+    ./build_chain.sh -l 127.0.0.1:4
 ```
 
 ## 选项介绍
 
 ### **`l`选项:**
+
 用于指定要生成的链的IP列表以及每个IP下的节点数，以逗号分隔。脚本根据输入的参数生成对应的节点配置文件，其中每个节点的端口号默认从30300开始递增，所有节点属于同一个机构和群组。
 
 ### **`f`选项**
+
     + 用于根据配置文件生成节点，相比于`l`选项支持更多的定制。
     + 按行分割，每一行表示一个服务器，格式为`IP:NUM AgencyName GroupList`，每行内的项使用空格分割，**不可有空行**。
     + `IP:NUM`表示机器的IP地址以及该机器上的节点数。`AgencyName`表示机构名，用于指定使用的机构证书。`GroupList`表示该行生成的节点所属的组，以`,`分割。例如`192.168.0.1:2 agency1 1,2`表示`ip`为`192.168.0.1`的机器上有两个节点，这两个节点属于机构`agency1`，属于group1和group2。
@@ -78,19 +82,22 @@ bash build_chain.sh -f ipconf -T
 ```
 
 ### **`e`选项[**Optional**]**
-用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载`master`分支最新的二进制程序。
+
+用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载最新的二进制程序。
 
 ```bash
-# 从GitHub下载下载最新release二进制，生成本机4节点
-$ bash build_chain.sh -l "127.0.0.1:4"
+# 从GitHub下载最新release二进制，生成本机4节点
+$ bash build_chain.sh -l 127.0.0.1:4
 # 使用 bin/fisco-bcos 二进制，生成本机4节点
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+$ bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### **`o`选项[**Optional**]**
+
 指定生成的配置所在的目录。
 
 ### **`p`选项[**Optional**]**
+
 指定节点的起始端口，每个节点占用三个端口，分别是p2p,channel,jsonrpc使用`,`分割端口，必须指定三个端口。同一个IP下的不同节点所使用端口从起始端口递增。
 
 ```bash
@@ -98,30 +105,39 @@ $ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
 $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 ```
 
+### **`q`选项[**Optional**]**
+
+列出FISCO BCOS已经发布的所有版本号。
+
 ### **`v`选项[**Optional**]**
+
 用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项，则配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
 
 ### **`d`选项[**Optional**]**
+
 使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限，即用户加入docker群组。
 在节点目录下执行如下命令启动节点
+
 ```bash
-$ ./start.sh
+./start.sh
 ```
 
 该模式下 start.sh 脚本启动节点的命令如下
+
 ```bash
-$ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
 ### **`s`选项[**Optional**]**
-有参数选项，参数为db名，目前支持rocksdb、mysql、external、scalable。默认使用RocksDB。
+
+有参数选项，参数为db名，目前支持RocksDB、mysql、Scalable。默认使用rocks。
 
 - RocksDB模式，使用RocksDB作为后端数据库。
 - MySQL模式，使用MySQL作为后端数据库，节点直连MySQL，需要在群组ini文件中配置数据库相关信息。
-- External模式，使用MySQL作为后端数据库，节点使用[`amdb-proxy`](./distributed_storage.md)连接数据库，代理和节点通过amop协议通信，需要在群组ini文件中配置topic信息。
-- scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用scalable模式。
+- Scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用Scalable模式。
 
 ### **`c`选项[**Optional**]**
+
 有参数选项，参数为共识算法类型，目前支持PBFT、Raft、rPBFT。默认共识算法是PBFT。
 
 - `PBFT`：设置节点共识算法为[PBFT](../design/consensus/pbft.md)。
@@ -133,31 +149,47 @@ $ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/
 
 ```bash
 # 该链标识为2。
-$ bash build_chain.sh -l 127.0.0.1:2 -C 2
+bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
 ### **`g`选项[**Optional**]**
-无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**使用`g`选项时要求二进制fisco-bcos为国密版本**。
+
+无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-g -G参数，连接也使用国密SSL**，`-G`设置`chain.sm_crypto_channel=true`
+
+```bash
+bash build_chain.sh -l 127.0.0.1:2 -g -G
+```
 
 ### **`z`选项[**Optional**]**
+
 无参数选项，设置该选项时，生成节点的tar包。
 
 ### **`t`选项[**Optional**]**
+
 该选项用于指定生成证书时的证书配置文件。
 
+### **`6`选项[**Optional**]**
+
+该选项表示使用IPv6模式，监听`::`
+
 ### **`T`选项[**Optional**]**
+
 无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](./configuration.html#id6)。
 
 ### **`k`选项[**Optional**]**
+
 使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括ca.crt/ca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括root.crt，用于存放上级证书链。
 
 ### **`K`选项[**Optional**]**
+
 国密模式使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括gmca.crt/gmca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括gmroot.crt，用于存放上级证书链。
 
 ### **`G`选项[**Optional**]**
-从2.5.0开始，国密模式下，用户可以配置节点与SDK连接是否使用国密SSL，设置此选项则`chain.sm_crypto_channel=true`。默认节点与SDK的channel连接使用secp256k1的证书。
+
+从2.5.0开始，国密模式下，用户可以配置节点与SDK连接是否使用国密SSL，设置此选项则`chain.sm_crypto_channel=true`。默认节点与SDK的channel连接使用secp256k1的证书。**确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-g -G参数，连接也使用国密SSL**
 
 ### **`D`选项[**Optional**]**
+
 无参数选项，设置该选项时，生成节点的目录名为IP_P2P端口，默认为节点从0开始的编号。
 
 ### **`E`选项[**Optional**]**
@@ -192,7 +224,7 @@ nodes/
 │   │.....
 │   ├── node3 # 节点3文件夹
 │   │.....
-│   ├── sdk # SDK与节点SSL连接配置
+│   ├── sdk # SDK与节点SSL连接配置，FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错
 │   │   ├── ca.crt # SSL连接根证书
 │   │   ├── sdk.crt # SSL连接证书
 │   │   └── sdk.key # SSL连接证书私钥
@@ -216,13 +248,49 @@ nodes/
 │   └── cert.cnf
 ```
 
+## 工具脚本
+
+介绍由build_chain.sh生成的脚本。
+
+### start_all.sh
+
+启动当前目录下的所有节点。
+
+### stop_all.sh
+
+停止当前目录下的所有节点。
+
+### download_console.sh
+
+下载console的脚本。
+
+- `v`选项支持下载指定版本的console
+- `f`选项自动配置下载的console的证书和端口
+
+### download_bin.sh
+
+用于下载fisco-bcos二进制程序，选项如下。
+
+```bash
+Usage:
+    -v <Version>           Download binary of spectfic version, default latest
+    -b <Branch>            Download binary of spectfic branch
+    -o <Output Dir>        Default ./bin
+    -l                     List FISCO-BCOS released versions
+    -m                     Download mini binary, only works with -b option
+    -h Help
+e.g
+    ./download_bin.sh -v 2.6.0
+```
+
+
 ## 使用举例
 
 ### 无外网条件的单群组
 
 **最简单的操作方式是在有外网的Linux机器上使用build_chain建好链，借助-z选项打包，然后拷贝到无外网的机器上运行。**
 
-1. 针对某下场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
+1. 针对某些场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
 1. 请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新版本的build_chain脚本。
 1. 上传fisco-bcos.tar.gz和build_chain.sh到目标服务器，需要注意目标服务器要求64位，要求安装有openssl 1.0.2以上版本。
 1. 解压fisco-bcos.tar.gz得到fisco-bcos可执行文件，作为-e选项的参数。
@@ -231,7 +299,7 @@ nodes/
 
 ```bash
 # 构建FISCO BCOS联盟链
-$ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
+$ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
 # 生成成功后，输出`All completed`提示
 Generating CA key...
 ==============================================================
@@ -263,12 +331,12 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 1. 获取证书生成脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
 ```
 
 2. 生成新节点私钥证书
@@ -307,7 +375,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
     ```bash
     [p2p]
         listen_ip=0.0.0.0
-        listen_port=30300
+        listen_port=30304
         ;enable_compress=true
         ; nodes to connect
         node.0=127.0.0.1:30300
@@ -317,15 +385,43 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
         node.4=127.0.0.1:30304
     ```
 4. 启动新节点，执行`newNode/start.sh`
-5. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
+5. 通过console将新节点加入群组1，2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
+
+### 为机构生成新的SDK证书
+
+接下来的操作，都在上一节生成的`nodes/127.0.0.1`目录下进行
+
+1. 获取证书生成脚本
+
+```bash
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
+2. 生成新节点私钥证书
+
+```bash
+# -c指定机构证书及私钥所在路径
+# -o输出到指定文件夹，其中newSDK中会存在机构agency新签发的证书和私钥
+bash gen_node_cert.sh -c ../cert/agency -o newSDK -s
+```
+
+国密版本请执行下面的指令生成证书。
+```bash
+bash gen_node_cert.sh -c ../cert/agency -o newSDK -g ../gmcert/agency/ -s
+```
 
 ### 生成新机构证书
 
 1. 获取机构证书生成脚本
 
 ```bash
-curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
 ```
 
 2. 生成新机构私钥和证书

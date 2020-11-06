@@ -3,7 +3,7 @@
 
 ## 基于角色的权限控制
 
-本节描述角色权限控制的操作，使用前请先阅读设计文档[角色权限控制设计文档](../design/security_control/ChainGovernance.md)。2.5.0版本开始，提供一种基于角色的权限控制模型，原来的链管理员相当于当前的治理委员会委员角色，拥有链治理相关的操作权限。用户不需要去具体关注底层系统表对应的权限，只需要关注角色的权限即可。
+本节描述角色权限控制的操作，使用前请先阅读设计文档[角色权限控制设计文档](../design/security_control/chain_governance.md)。2.5.0版本开始，提供一种基于角色的权限控制模型，原来的链管理员相当于当前的治理委员会委员角色，拥有链治理相关的操作权限。用户不需要去具体关注底层系统表对应的权限，只需要关注角色的权限即可。
 
 ### 权限与角色
 
@@ -110,7 +110,7 @@
 注意这里使用账户1对应的控制台操作。
 
 #### 验证账号3无权限执行委员操作
-在账号3的控制台种操作，此处以链配置操作为例。
+在账号3的控制台中操作，此处以链配置操作为例。
 
 ```
 [group:1]> setSystemConfigByKey tx_count_limit 100
@@ -124,7 +124,7 @@
 #### 撤销账号2的委员权限
 此时系统中有两个委员，默认投票生效阈值50%，所以需要两个委员都投票撤销账号2的委员权限，`有效票/总票数=2/2=1>0.5`才满足条件。
 
-1. 账号1投票撤销账号2的委员权限
+- 账号1投票撤销账号2的委员权限
 ```bash
 [group:1]> revokeCommitteeMember 0x85961172229aec21694d742a5bd577bedffcfec3
 {
@@ -141,7 +141,7 @@
 
 ```
 
-2. 账号2投票撤销账号2的委员权限
+- 账号2投票撤销账号2的委员权限
 ```bash
 [group:1]> revokeCommitteeMember 0x85961172229aec21694d742a5bd577bedffcfec3
 {
@@ -160,7 +160,7 @@
 先添加账户1、账户3为委员。然后更新委员1的票数为2。
 
 
-1. 使用账号1的控制台添加账号3为委员
+- 使用账号1的控制台添加账号3为委员
 ```bash
 [group:1]> grantCommitteeMember 0x0b6f526d797425540ea70becd7adac7d50f4a7c0
 {
@@ -177,7 +177,7 @@
 
 ```
 
-2. 使用账号1的控制台投票更新账号1的票数为2
+- 使用账号1的控制台投票更新账号1的票数为2
 ```bash
 [group:1]> updateCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a 2
 {
@@ -189,7 +189,7 @@
 Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```
 
-3. 使用账号3的控制台投票更新账号1的票数为2
+- 使用账号3的控制台投票更新账号1的票数为2
 ```bash
 [group:1]> updateCommitteeMemberWeight 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a 2
 {
@@ -204,7 +204,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 2
 ### 委员投票生效阈值修改
 账户1和账户3为委员，账号1有2票，账号3有1票，使用账号1添加账号2为委员，由于2/3>0.5所以直接生效。使用账号1和账号2，更新生效阈值为75%。
 
-1. 账户1添加账户2为委员
+- 账户1添加账户2为委员
 ```bash
 [group:1]> grantCommitteeMember 0x85961172229aec21694d742a5bd577bedffcfec3
 {
@@ -221,7 +221,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 2
 ---------------------------------------------------------------------------------------------
 ```
 
-2. 使用账户1控制台投票更新生效阈值为75%
+- 使用账户1控制台投票更新生效阈值为75%
 ```bash
 [group:1]> updateThreshold 75
 {
@@ -234,7 +234,7 @@ Effective threshold : 50%
 
 ```
 
-3. 使用账户2控制台投票更新生效阈值为75%
+- 使用账户2控制台投票更新生效阈值为75%
 ```bash
 [group:1]> updateThreshold 75
 {
@@ -252,7 +252,7 @@ Effective threshold : 75%
 
 基于职责权限分离的设计，委员角色不能兼有运维的权限，生成一个新的账号4`0x283f5b859e34f7fd2cf136c07579dcc72423b1b2.pem`。
 
-1. 添加账号4为运维角色
+- 添加账号4为运维角色
 ```bash
 [group:1]> grantOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
 {
@@ -267,20 +267,20 @@ Effective threshold : 75%
 ---------------------------------------------------------------------------------------------
 ```
 
-2. 使用运维账号部署HelloWorld
+- 使用运维账号部署HelloWorld
 ```bash
 [group:1]> deploy HelloWorld
 contract address: 0xac1e28ad93e0b7f9108fa1167a8a06585f663726
 ```
 
-3. 使用账号1部署HelloWorld失败
+- 使用账号1部署HelloWorld失败
 ```bash
 
 [group:1]> deploy HelloWorld
 permission denied
 ```
 
-4. 使用账号1控制台撤销账号4的运维权限
+- 使用账号1控制台撤销账号4的运维权限
 ```bash
 [group:1]> revokeOperator 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2
 {
@@ -303,13 +303,13 @@ Empty set.
 ### 操作内容
 
 本文档分别对以下功能进行权限控制的操作介绍：
-- [授权账户为链管理员](./permission_control.html#id6)
-- [授权账户为系统管理员](./permission_control.html#id7)
-- [授权部署合约和创建用户表](./permission_control.html#id8)
+- [授权账户为链管理员](./permission_control.html#id20)
+- [授权账户为系统管理员](./permission_control.html#id21)
+- [授权部署合约和创建用户表](./permission_control.html#id22)
 - [授权利用CNS部署合约](./permission_control.html#cns)
-- [授权管理节点](./permission_control.html#id9)
-- [授权修改系统参数](./permission_control.html#id10)
-- [授权账户写用户表](./permission_control.html#id11)
+- [授权管理节点](./permission_control.html#id23)
+- [授权修改系统参数](./permission_control.html#id24)
+- [授权账户写用户表](./permission_control.html#id25)
 
 ### 环境配置
 配置并启动FISCO BCOS 2.0区块链节点和控制台，请参考[安装文档](../installation.md)。

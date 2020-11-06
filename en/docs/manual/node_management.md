@@ -116,14 +116,14 @@ Operation steps:
 
 ```
 # acquire script
-$ curl -LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
-# execute, -c is the ca route given when the node was generated, agency is the agency name, -o is the name of the node folder to be generated
+$ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh && chmod u+x gen_node_cert.sh
+# execute, -c is the ca route given when the node was generated, agency is the agency name, -o is the name of the node folder to be generated ( use -g when the node type is GM )
 $ ./gen_node_cert.sh -c nodes/cert/agency -o node2
 ```
 
 ```eval_rst
 .. note::
-    - If download failed, please try `curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - If download failed, please try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
 ```
 
 2 . copy node 2 under `nodes/127.0.0.1/`, parallel with other node folder (`node0`, `node1`);

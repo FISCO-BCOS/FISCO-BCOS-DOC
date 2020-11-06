@@ -2,13 +2,14 @@
 
 FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 
-- Solidity合约与以太坊相同，用Solidity语法实现，最高支持0.5.2版本。
+- Solidity合约与以太坊相同，用Solidity语法实现。
 - KVTable合约的读写接口与Table合约的CRUD接口通过在Solidity合约中支持分布式存储预编译合约，可以实现将Solidity合约中数据存储在FISCO BCOS平台AMDB的表结构中，实现合约逻辑与数据的分离。
 - 预编译（Precompiled）合约使用C++开发，内置于FISCO BCOS平台，相比于Solidity合约具有更好的性能，其合约接口需要在编译时预先确定，适用于逻辑固定但需要共识的场景，例如群组配置。关于预编译合约的开发将在下一节进行介绍。
 
 
 ### [Solidity合约开发](https://solidity.readthedocs.io/en/latest/)
 
+- [WeBASE合约IDE](https://webasedoc.readthedocs.io/zh_CN/latest/)
 - [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
 - [Remix在线IDE](https://remix.ethereum.org/)
 
@@ -17,8 +18,8 @@ FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 ```eval_rst
 .. note::
 
-    为实现AMDB创建的表可被多个合约共享访问，其表名是群组内全局可见且唯一的，所以无法在同一条链上的同一个群组中，创建多个表名相同的表
-    KVTable功能在2.3.0版本添加，2.3.0以上版本的链可以使用此功能。
+    - 为实现AMDB创建的表可被多个合约共享访问，其表名是群组内全局可见且唯一的，所以无法在同一条链上的同一个群组中，创建多个表名相同的表
+    - KVTable功能在2.3.0版本添加，2.3.0以上版本的链可以使用此功能。
 ```
 
 KVTable合约实现键值型读写数据的方式，KVTable合约接口声明如下:
@@ -35,7 +36,7 @@ contract KVTableFactory {
 //一条记录
 contract Entry {
     function getInt(string) public constant returns (int256);
-    function getUInt(string) public constant returns (int256);
+    function getUInt(string) public constant returns (uint256);
     function getAddress(string) public constant returns (address);
     function getBytes64(string) public constant returns (bytes1[64]);
     function getBytes32(string) public constant returns (bytes32);
@@ -111,9 +112,9 @@ contract KVTableTest {
 
 `KVTableTest.sol`调用了`KVTable`合约，实现的是创建用户表`t_kvtest`，并对`t_kvtest`表进行读写的功能。`t_kvtest`表结构如下，该表记录某公司仓库中物资，以唯一的物资编号作为主key，保存物资的名称和价格。
 
-|id*|item_name|item_price|
-|:----|:----|:------|
-|100010001001|Laptop|6000|
+| id*          | item_name | item_price |
+| :----------- | :-------- | :--------- |
+| 100010001001 | Laptop    | 6000       |
 
 ```eval_rst
 .. important::
@@ -212,69 +213,77 @@ contract Table {
 提供一个合约案例`TableTest.sol`，代码如下：
 
 ```js
-pragma solidity ^0.4.24;
+pragma solidity>=0.4.24 <0.6.11;
+pragma experimental ABIEncoderV2;
 
 import "./Table.sol";
 
 contract TableTest {
-    event CreateResult(int count);
-    event InsertResult(int count);
-    event UpdateResult(int count);
-    event RemoveResult(int count);
+    event CreateResult(int256 count);
+    event InsertResult(int256 count);
+    event UpdateResult(int256 count);
+    event RemoveResult(int256 count);
 
-    // 创建表
-    function create() public returns(int){
-        TableFactory tf = TableFactory(0x1001);  // TableFactory的地址固定为0x1001
-        // 创建t_test表，表的key_field为name，value_field为item_id,item_name
-        // key_field表示AMDB主key value_field表示表中的列，可以有多列，以逗号分隔
-        int count = tf.createTable("t_test", "name", "item_id,item_name");
-        emit CreateResult(count);
-
-        return count;
+    TableFactory tableFactory;
+    string constant TABLE_NAME = "t_test";
+    constructor() public {
+        tableFactory = TableFactory(0x1001); //The fixed address is 0x1001 for TableFactory
+        // the parameters of createTable are tableName,keyField,"vlaueFiled1,vlaueFiled2,vlaueFiled3,..."
+        tableFactory.createTable(TABLE_NAME, "name", "item_id,item_name");
     }
 
-    // 查询数据
-    function select(string name) public constant returns(bytes32[], int[], bytes32[]){
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //select records
+    function select(string memory name)
+    public
+    view
+    returns (string[] memory, int256[] memory, string[] memory)
+    {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
-        // 条件为空表示不筛选 也可以根据需要使用条件筛选
         Condition condition = table.newCondition();
 
         Entries entries = table.select(name, condition);
-        bytes32[] memory user_name_bytes_list = new bytes32[](uint256(entries.size()));
-        int[] memory item_id_list = new int[](uint256(entries.size()));
-        bytes32[] memory item_name_bytes_list = new bytes32[](uint256(entries.size()));
+        string[] memory user_name_bytes_list = new string[](
+            uint256(entries.size())
+        );
+        int256[] memory item_id_list = new int256[](uint256(entries.size()));
+        string[] memory item_name_bytes_list = new string[](
+            uint256(entries.size())
+        );
 
-        for(int i=0; i<entries.size(); ++i) {
+        for (int256 i = 0; i < entries.size(); ++i) {
             Entry entry = entries.get(i);
 
-            user_name_bytes_list[uint256(i)] = entry.getBytes32("name");
+            user_name_bytes_list[uint256(i)] = entry.getString("name");
             item_id_list[uint256(i)] = entry.getInt("item_id");
-            item_name_bytes_list[uint256(i)] = entry.getBytes32("item_name");
+            item_name_bytes_list[uint256(i)] = entry.getString("item_name");
         }
 
         return (user_name_bytes_list, item_id_list, item_name_bytes_list);
     }
-    // 插入数据
-    function insert(string name, int item_id, string item_name) public returns(int) {
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //insert records
+    function insert(string memory name, int256 item_id, string memory item_name)
+    public
+    returns (int256)
+    {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
         Entry entry = table.newEntry();
         entry.set("name", name);
         entry.set("item_id", item_id);
         entry.set("item_name", item_name);
 
-        int count = table.insert(name, entry);
+        int256 count = table.insert(name, entry);
         emit InsertResult(count);
 
         return count;
     }
-    // 更新数据
-    function update(string name, int item_id, string item_name) public returns(int) {
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //update records
+    function update(string memory name, int256 item_id, string memory item_name)
+    public
+    returns (int256)
+    {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
         Entry entry = table.newEntry();
         entry.set("item_name", item_name);
@@ -283,21 +292,20 @@ contract TableTest {
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
 
-        int count = table.update(name, entry, condition);
+        int256 count = table.update(name, entry, condition);
         emit UpdateResult(count);
 
         return count;
     }
-    // 删除数据
-    function remove(string name, int item_id) public returns(int){
-        TableFactory tf = TableFactory(0x1001);
-        Table table = tf.openTable("t_test");
+    //remove records
+    function remove(string memory name, int256 item_id) public returns (int256) {
+        Table table = tableFactory.openTable(TABLE_NAME);
 
         Condition condition = table.newCondition();
         condition.EQ("name", name);
         condition.EQ("item_id", item_id);
 
-        int count = table.remove(name, condition);
+        int256 count = table.remove(name, condition);
         emit RemoveResult(count);
 
         return count;
@@ -307,9 +315,9 @@ contract TableTest {
 
 `TableTest.sol`调用了 AMDB 专用的智能合约`Table.sol`，实现的是创建用户表`t_test`，并对`t_test`表进行增删改查的功能。`t_test`表结构如下，该表记录某公司员工领用物资和编号。
 
-|name*|item_name|item_id|
-|:----|:----|:------|
-|Bob|Laptop|100010001001|
+| name* | item_name | item_id      |
+| :---- | :-------- | :----------- |
+| Bob   | Laptop    | 100010001001 |
 
 ```eval_rst
 .. important::
@@ -341,29 +349,29 @@ contract TableTest {
 
 调用solidity合约或者预编译合约需要根据合约地址来区分，地址空间划分：
 
-| 地址用途 | 地址范围 |
-| --------- | --------- |
-| 以太坊precompiled | 0x0001-0x0008 |
-| 保留 | 0x0008-0x0fff |
-| FISCO BCOS precompied | 0x1000-0x1006 |
-| FISCO BCOS预留 | 0x1007-0x5000 |
-| 用户分配区间 | 0x5001 - 0xffff |
-| CRUD预留 | 0x10000+ |
-| solidity | 其他 |
+| 地址用途              | 地址范围        |
+| --------------------- | --------------- |
+| 以太坊precompiled     | 0x0001-0x0008   |
+| 保留                  | 0x0008-0x0fff   |
+| FISCO BCOS precompied | 0x1000-0x1006   |
+| FISCO BCOS预留        | 0x1007-0x5000   |
+| 用户分配区间          | 0x5001 - 0xffff |
+| CRUD预留              | 0x10000+        |
+| solidity              | 其他            |
 
  用户分配地址空间为`0x5001`-`0xffff`,用户需要为新添加的预编译合约分配一个未使用的地址，**预编译合约地址必须唯一， 不可冲突**。
 
 FISCO BCOS中实现的precompild合约列表以及地址分配：
 
-| 地址   | 功能   | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled)) |
-|--------|--------|---------|
-| 0x1000 | 系统参数管理 | SystemConfigPrecompiled.cpp |
-| 0x1001 | 表工厂合约 | TableFactoryPrecompiled.cpp |
-| 0x1002 | CRUD操作实现 | CRUDPrecompiled.cpp |
-| 0x1003 | 共识节点管理 | ConsensusPrecompiled.cpp |
-| 0x1004 | CNS功能  | CNSPrecompiled.cpp |
-| 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp |
-| 0x1006 | 并行合约配置 | ParallelConfigPrecompiled.cpp |
+| 地址   | 功能           | 源码([libprecompiled目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled)) |
+| ------ | -------------- | ----------------------------------------------------------------------------------------------- |
+| 0x1000 | 系统参数管理   | SystemConfigPrecompiled.cpp                                                                     |
+| 0x1001 | 表工厂合约     | TableFactoryPrecompiled.cpp                                                                     |
+| 0x1002 | CRUD操作实现   | CRUDPrecompiled.cpp                                                                             |
+| 0x1003 | 共识节点管理   | ConsensusPrecompiled.cpp                                                                        |
+| 0x1004 | CNS功能        | CNSPrecompiled.cpp                                                                              |
+| 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp                                                                        |
+| 0x1006 | 并行合约配置   | ParallelConfigPrecompiled.cpp                                                                   |
 
 - **定义合约接口**
 
@@ -478,9 +486,9 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 
 表结构：
 
-|key       | value
-----------|------------
-|hello_key | hello_value
+| key       | value       |
+| --------- | ----------- |
+| hello_key | hello_value |
 
 
 
@@ -695,7 +703,7 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下。更多选项[参考这里](build_chain.md)。
 
 ```bash
-bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### 三 调用

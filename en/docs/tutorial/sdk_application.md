@@ -313,14 +313,14 @@ We provide a Java engineering project for development. First, get the Java engin
 ```bash
     # get the Java project project archive
     $ cd ~
-    $ curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
+    $ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
     # extract the Java project project asset-app directory
     $ tar -zxf asset-app.tar.gz
 ```
 
 ```eval_rst
 .. note::
-    - If the asset-app.tar.gz cannot be downloaded for a long time due to network problems, try `curl -LO https://www.fisco.com.cn/cdn/deps/tools/asset-app.tar.gz`
+    - If the asset-app.tar.gz cannot be downloaded for a long time due to network problems, try `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
 ```
 
 The directory structure of the asset-app project is as follows:

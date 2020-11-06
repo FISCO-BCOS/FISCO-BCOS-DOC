@@ -79,7 +79,7 @@ mkdir -p ~/fisco && cd ~/fisco
 
 - Download the build_chain.sh script
 ```bash
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **Generate configuration for star networking blockchain system**
@@ -222,13 +222,12 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ### Configuration console
 
-The console connects to the FISCO BCOS node through the Web3SDK, it is used to query the blockchain status and deploy the calling contract, etc. Detailed instructions of console is [here](../manual/console.md).
+The console connects to the FISCO BCOS node, it is used to query the blockchain status and deploy the calling contract, etc. Please refer to [here](../manual/console_with_of_sdk.md) for the console manual for version 2.6 and above, and [here](../manual/console.md) for the console manual for version 1.x.
 
 
 ```eval_rst
 .. important::
    The console relies on Java 8 and above, and Ubuntu 16.04 system needs be installed with openjdk 8. Please install Oracle Java 8 or above for CentOS.
-   If the script cannot be downloaded for a long time due to network problems, try `curl -LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 ```bash
@@ -236,7 +235,7 @@ The console connects to the FISCO BCOS node through the Web3SDK, it is used to q
 $ cd ~/fisco
 
 # Download console
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 
 # Switch to console directory
 $ cd console
@@ -255,6 +254,9 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/config.ini:    channel_listen_port=20206
 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/config.ini:    channel_listen_port=20207
 
+# configure the console
+$ cp ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
+
 ```
 
 ```eval_rst
@@ -262,75 +264,13 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
     When connecting node with the console, we should make sure that the connected nodes are in the group configured by the console
 ```
 
-**The configuration of the console configuration file `conf/applicationContext.xml` is as follows.**. The console is connected to three groups from node0 (`127.0.0.1:20200`), to get more information of console configuration, please refer to [here](../manual/console.html#id7).
-
-```xml
-cat > ./conf/applicationContext.xml << EOF
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-         http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-         http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-
-
-        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
-        </bean>
-
-      <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-        <property name="allChannelConnections">
-        <list>
-            <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="1" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20200</value>
-                    </list>
-                    </property>
-            </bean>
-            <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="2" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20200</value>
-                    </list>
-                    </property>
-            </bean>
-            <bean id="group3"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="3" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20200</value>
-                    </list>
-                    </property>
-            </bean>
-        </list>
-        </property>
-        </bean>
-
-        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-                <property name="groupId" value="1" />
-                <property name="orgID" value="fisco" />
-                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-        </bean>
-</beans>
-EOF
-```
-
 **Start the console**
 
 ```bash
 $ bash start.sh
-# The following outputted information means the console has been successfully started. Otherwise, please check if the port configuration of the nodes in conf/applicationContext.xml is correct.
+# The following information output indicates that the console is successfully started. If the startup fails, check whether the certificate configuration and the channel listen port configuration are correct.
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.3)!
+Welcome to FISCO BCOS console(2.6.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -361,6 +301,7 @@ In the above section, we learned how to configure the console, this section will
 ```bash
 # ... Send HelloWorld transaction to group1...
 $ [group:1]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # Check the current block number of group1, if the block number is increased to 1,  it indicates that the blockchain is normal. Otherwise, please check if group1 is abnormal.
 $ [group:1]> getBlockNumber
@@ -372,6 +313,7 @@ $ [group:1]> switch 2
 Switched to group 2.
 # Send transaction to group2, return a transaction hash indicates that the transaction is deployed successfully, otherwise, please check if the group2 works normally.
 $ [group:2]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # Check the current block number of group2, if the block number is increased to 1,  it indicates that the blockchain is normal. Otherwise, please check if group1 is abnormal
 $ [group:2]> getBlockNumber
@@ -565,9 +507,9 @@ In a parallel multi-group scenario, node join and exit group operations are simi
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.5.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 #Build a local single-group four-node blockchain (in a production environment, it is recommended that each node be deployed on a different physical machine)
-$ bash build_chain.sh -l "127.0.0.1:4" -o multi_nodes -p 20000,20100,7545
+$ bash build_chain.sh -l 127.0.0.1:4 -o multi_nodes -p 20000,20100,7545
 Generating CA key...
 ==============================================================
 Generating keys ...
@@ -686,7 +628,7 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # If you have never downloaded the console, please do the following to download the console, otherwise copy the console to the ~/fisco directory:
 $ cd ~/fisco
 # Download console
-$ curl -LO https://github.com/FISCO-BCOS/console/releases/download/v1.0.9/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 ```
 
 **Configuration console**
@@ -701,62 +643,19 @@ $ cd console
 # Copy node certificate
 $ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
 
+# Copy the console configuration
+$ cp ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
+
+# Modify the node port of the console connection to 20100 and 20101
+# The linux system uses the following commands:
+$ sed -i 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
+$ sed -i 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
+
+# The mac system uses the following commands:
+$ sed -i .bkp 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
+$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
+
 ```
-
-**The configuration of the console configuration file `conf/applicationContext.xml` is created as follows. Two groups (group1 and group2) are configured on node0 (127.0.0.1:20100):**
-
-```xml
-cat > ./conf/applicationContext.xml << EOF
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-         http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-         http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-
-
-        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
-        </bean>
-
-      <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-        <property name="allChannelConnections">
-        <list>
-            <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="1" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20100</value>
-                    </list>
-                    </property>
-            </bean>
-            <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="2" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20100</value>
-                    </list>
-                    </property>
-            </bean>
-        </list>
-        </property>
-        </bean>
-
-        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-                <property name="groupId" value="1" />
-                <property name="orgID" value="fisco" />
-                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-        </bean>
-</beans>
-EOF
-```
-
 
 **Send transactions to groups via console**
 
@@ -765,7 +664,7 @@ EOF
 $ bash start.sh
 # The following information output indicates that the console is successfully started. If the startup fails, check whether the certificate configuration and the channel listen port configuration are correct.
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.3)!
+Welcome to FISCO BCOS console(2.6.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -784,6 +683,7 @@ $ [group:1]> getBlockNumber
 0
 # Deploy the HelloWorld contract to group1. If the deployment fails, check whether the consensus status of group1 is normal
 $ [group:1]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # Get the current block number. If the block number is not increased, please check if the group1 is normal
 $ [group:1]> getBlockNumber
@@ -798,6 +698,7 @@ $ [group:2]> getBlockNumber
 0
 # Deploy HelloWorld contract to group2
 $ [group:2]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # Get the current block number. If the block number is not increased, please check if the group1 is normal
 $ [group:2]> getBlockNumber
