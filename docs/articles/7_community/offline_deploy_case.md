@@ -77,8 +77,10 @@ cd ~/generator && bash ./scripts/install.sh
 ## 3.在虚拟机(有网络)上使用一键生成工具生成链
 **在如下图所示的路径中删除agencyB文件夹**
 ![](../../../images/articles/offline_deploy_case/20201104150353676.png)
+
 **进入agencyA文件夹，编辑node_deployment.ini文件**
 ![](../../../images/articles/offline_deploy_case/20201104150558644.png)
+
 **编辑后的node_deployment.ini文件内容如下：**
 ```xml
 [group]
