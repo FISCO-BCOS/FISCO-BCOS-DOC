@@ -301,6 +301,7 @@ Enter help or h to see all the commands on the console.
 * getGroupList                              Query group list
 * getGroupPeers                             Query nodeId list for sealer and observer nodes
 * getNodeIDList                             Query nodeId list for all connected nodes
+* getNodeInfo                              Query the specified node information.
 * getNodeVersion                            Query the current node version
 * getObserverList                           Query nodeId list for observer nodes.
 * getPbftView                               Query the pbft view of node
@@ -970,7 +971,7 @@ Parameter:
 
 
 ```text
-```text
+​```text
 # To call the get interface of HelloWorld to get the name string
 [group:1]> call HelloWorld 0x175b16a1299c7af3e2e49b97e68a44734257a35e get
 ---------------------------------------------------------------------------------------------
