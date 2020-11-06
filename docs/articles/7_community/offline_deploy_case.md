@@ -19,7 +19,7 @@
 ![](../../../images/articles/offline_deploy_case/20201104145229903.png)
 服务器：
 10.21.36.165-10.21.36.168 （无网络）
-![](../../../images/articles/offline_deploy_case/20201104155851638.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104155851638.png)
 
 
 我们准备安装**1群组1机构4节点**的链架构来举例，如下表：
@@ -40,7 +40,7 @@
 ```bash
 cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```
-![](../../../images/articles/offline_deploy_case/2020110414560467.png#pic_center)
+![](../../../images/articles/offline_deploy_case/2020110414560467.png)
 
 
 **安装**
@@ -50,7 +50,7 @@ cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
 ```bash
 cd ~/generator && bash ./scripts/install.sh
 ```
-![](../../../images/articles/offline_deploy_case/20201104145643136.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzMzI3NDQzNzUy,size_16,color_FFFFFF,t_70#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104145643136.png)
 
 
 检查是否安装成功，若成功，输出 usage: generator xxx
@@ -58,7 +58,7 @@ cd ~/generator && bash ./scripts/install.sh
 ```bash
 ./generator -h
 ```
-![](../../../images/articles/offline_deploy_case/20201104145717306.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzMzI3NDQzNzUy,size_16,color_FFFFFF,t_70#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104145717306.png)
 
 **获取节点二进制**
 
@@ -67,7 +67,7 @@ cd ~/generator && bash ./scripts/install.sh
 ```bash
 ./generator --download_fisco ./meta --cdn
 ```
-![](../../../images/articles/offline_deploy_case/20201104150048852.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104150048852.png)
 **检查二进制版本**
 
 若成功，输出 FISCO-BCOS Version : x.x.x-x
@@ -75,15 +75,15 @@ cd ~/generator && bash ./scripts/install.sh
 ```bash
 ./meta/fisco-bcos -v
 ```
-![](../../../images/articles/offline_deploy_case/20201104150132541.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104150132541.png)
 
 **PS**：[源码编译]节点二进制的用户，只需要用编译出来的二进制替换掉`meta`文件夹下的二进制即可。
 
 ## 3.在虚拟机(有网络)上使用一键生成工具生成链
 **在如下图所示的路径中删除agencyB文件夹**
-![](../../../images/articles/offline_deploy_case/20201104150353676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzMzI3NDQzNzUy,size_16,color_FFFFFF,t_70#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104150353676.png)
 **进入agencyA文件夹，编辑node_deployment.ini文件**
-![](../../../images/articles/offline_deploy_case/20201104150558644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzMzI3NDQzNzUy,size_16,color_FFFFFF,t_70#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104150558644.png)
 **编辑后的node_deployment.ini文件内容如下：**
 ```xml
 [group]
@@ -129,26 +129,26 @@ jsonrpc_listen_port=8545
 ```bash
 bash ./one_click_generator.sh -b ./tmp_one_click
 ```
-![](../../../images/articles/offline_deploy_case/202011041519003.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzMzI3NDQzNzUy,size_16,color_FFFFFF,t_70#pic_center)
+![](../../../images/articles/offline_deploy_case/202011041519003.png)
 
 ## 4.把在虚拟机(有网络)上使用一键生成工具生成的链节点文件上传到服务器
 **进入/root/generator/tmp_one_click/agencyA/node 目录下**
-![](../../../images/articles/offline_deploy_case/20201104152109155.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzMzI3NDQzNzUy,size_16,color_FFFFFF,t_70#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104152109155.png)
 **把/root/generator/tmp_one_click/agencyA/node 目录下node_10.21.36.165-168_30300的文件夹下载下来**
-![](../../../images/articles/offline_deploy_case/20201104152405602.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzMzI3NDQzNzUy,size_16,color_FFFFFF,t_70#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104152405602.png)
 
 
-**分别上传到对应ip的服务器上**![](../../../images/articles/offline_deploy_case/20201104152510398.png#pic_center)
+**分别上传到对应ip的服务器上**![](../../../images/articles/offline_deploy_case/20201104152510398.png)
 
 **给相关的运行权限**
 10.21.36.167:
-![](../../../images/articles/offline_deploy_case/20201104154512595.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104154512595.png)
 10.21.36.168:
-![](../../../images/articles/offline_deploy_case/20201104154629219.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104154629219.png)
 10.21.36.165:
-![](../../../images/articles/offline_deploy_case/2020110415483531.png#pic_center)
+![](../../../images/articles/offline_deploy_case/2020110415483531.png)
 10.21.36.166:
-![](../../../images/articles/offline_deploy_case/20201104155200120.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104155200120.png)
 
 
 
@@ -156,13 +156,13 @@ bash ./one_click_generator.sh -b ./tmp_one_click
 **运行**
 
 10.21.36.167:
-![](../../../images/articles/offline_deploy_case/20201104154529697.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104154529697.png)
 10.21.36.168:
-![](../../../images/articles/offline_deploy_case/20201104154659455.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104154659455.png)
 10.21.36.165:
-![](../../../images/articles/offline_deploy_case/20201104154840698.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104154840698.png)
 10.21.36.166:
-![](../../../images/articles/offline_deploy_case/20201104155237937.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104155237937.png)
 
 
 **检查节点运行状态**
@@ -170,7 +170,7 @@ bash ./one_click_generator.sh -b ./tmp_one_click
 tail -f  log/log*  | grep +++
 ```
 如下图所示表示节点运行正常：
-![](../../../images/articles/offline_deploy_case/20201104155448701.png#pic_center)
+![](../../../images/articles/offline_deploy_case/20201104155448701.png)
 
 
 
