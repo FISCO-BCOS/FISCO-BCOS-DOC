@@ -187,4 +187,5 @@ git add, git commit, git push等，[点击参考](https://www.jianshu.com/p/2e1d
    7_practice/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0.md
    7_community/group_deploy_case.md
    7_community/suibe_blockchain_center_toolbox.md
+   7_community/offline_deploy_case.md
 ```
