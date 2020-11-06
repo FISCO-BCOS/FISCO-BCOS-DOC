@@ -336,6 +336,7 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 * getGroupPeers                             Query nodeId list for sealer and observer nodes
 * getNodeIDList                             Query nodeId list for all connected nodes
 * getNodeVersion                            Query the current node version
+* getNodeInfo																Query the specified node information.
 * getObserverList                           Query nodeId list for observer nodes.
 * getPbftView                               Query the pbft view of node
 * getPeers                                  Query peers currently connected to the client

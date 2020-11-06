@@ -398,6 +398,18 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 #### **返回值**
 - NodeVersion: 查询获取的节点版本信息。
 
+### getNodeInfo
+
+获取节点的NodeID，Topic等信息。
+
+#### **参数**
+
+- ipAndPort: 请求发送的目标节点，包括`IP:Port`信息。
+
+#### **返回值**
+
+- NodeInfo: 查询获取的节点版本信息。
+
 
 ### getConsensusStatus
 获取节点共识状态。

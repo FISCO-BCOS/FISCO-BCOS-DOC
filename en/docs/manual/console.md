@@ -286,6 +286,7 @@ getGroupList                             Query group list.
 getGroupPeers                            Query nodeId list for sealer and observer nodes.
 getNodeIDList                            Query nodeId list for all connected nodes.
 getNodeVersion                           Query the current node version.
+getNodeInfo                              Query the specified node information.
 getObserverList                          Query nodeId list for observer nodes.
 getPbftView                              Query the pbft view of node.
 getPeers                                 Query peers currently connected to the client.
@@ -1048,7 +1049,7 @@ Parameter:
 
 
 ```text
-```text
+​```text
 # To call the get interface of HelloWorld to get the name string
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, World!
