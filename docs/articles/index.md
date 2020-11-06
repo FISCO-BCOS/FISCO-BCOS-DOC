@@ -117,9 +117,7 @@ FISCO BCOS开源社区已沉淀120+篇技术文章，这些文章涉猎理论、
 
 ### 文章贡献PR操作指引
 
-如果你已经是社区贡献者，可直接按照如下操作完成文章PR提交；如果你初次尝试PR贡献，请点击了解[提PR基本操作指引](https://mp.weixin.qq.com/s/Uq5r1IaZfelWnhCThHSKXw)。以下为PR贡献流程图。
-
-![](../../images/articles/index/index1.PNG)
+如果你已经是社区贡献者，可直接按照如下操作完成文章PR提交；如果你初次尝试PR贡献，请点击了解[提PR基本操作指引](https://mp.weixin.qq.com/s/Uq5r1IaZfelWnhCThHSKXw)。
 
 
 #### 1、提PR的预置条件：Fork FISCO-BCOS-DOC到个人github仓库
@@ -158,28 +156,29 @@ PR须提到FISCO-BCOS-DOC的dev分支
 
 3. 将同步后的文档推到个人的git仓库：git push origin -f
 
-
-
 **提交个人文档的主要命令**
 
 git add, git commit, git push等，[点击参考](https://www.jianshu.com/p/2e1d551b8261)。
-
-
 
 #### 5、文档格式说明
 
 1. 须采用markdown的格式编辑文章内容，[点击参考markdown语法](https://www.runoob.com/markdown/md-tutorial.html)。
 2. (本步骤不强制) 提交PR之前，建议先基于个人仓库的文档构建readthedocs，检查构建出来的文档显示是否符合预期，并在提交PR的时候，附带说明个人构建的readthedocs链接。
 
-点击参考[readthedocs构建方法](https://www.jianshu.com/p/d1d59d0cd58c)， FISCO-BCOS-DOC的readthedocs配置选项参考下图：
+点击参考[readthedocs构建方法](https://www.jianshu.com/p/d1d59d0cd58c)， FISCO-BCOS-DOC的readthedocs配置选项参考下表：
 
-![](../../images/articles/index/index2.PNG)
+| **设置字段**   | **设置结果**     |
+| - | - |
+| 默认分支       | release          |
+| 文档类型       | Sphinx           |
+| 所需的文件     | repuirements.txt |
+| Python解释器   | CPython          |
+| 使用系统包     | 是               |
+| Python配置文件 | conf.py         |
 
 #### 6、Reviewer反馈和合入
 
 提交PR后，Reviewer会将修改意见直接在GitHub上进行反馈，你也可以添加小助手微信FISCOBCOS010进行直接沟通；最后当Reviewer合入PR时，你的文章就被录入啦！
-
-
 
 ### 文章PR贡献写作规范
 
