@@ -104,4 +104,5 @@ FISCO BCOS开源社区已沉淀系列技术文章，为了方便大家了解熟�
    7_community/group_deploy_case.md
    7_community/suibe_blockchain_center_toolbox.md
    7_practice/analysis_solidity_proxy_contract.md
+    7_community/offline_deploy_case.md
 ```
