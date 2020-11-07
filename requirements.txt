@@ -1,12 +1,12 @@
 docutils == 0.12
 sphinx == 1.7.9
 sphinx-rtd-theme
-sphinx-copybutton
+sphinx-copybutton == 0.2.6
 sphinx-version-warning
 sphinx-markdown-tables
 sphinxcontrib-mermaid > 0.3
 recommonmark > 0.4.0
 sphinx-notfound-page == 0.1
-commonmarkextensions == 0.0.4
-commonmark == 0.8.0
+commonmarkextensions == 0.0.5
+commonmark == 0.8.1
 git-lfs
