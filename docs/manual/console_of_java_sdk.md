@@ -319,6 +319,8 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 * generateGroupFromFile                     Generate group according to the specified file
 * getAccountStatus                          GetAccountStatus of the account
 * getAvailableConnections                   Get the connection information of the nodes connected with the sdk
+* getBatchReceiptsByBlockHashAndRange       Get batched transaction receipts according to block hash and the transaction range
+* getBatchReceiptsByBlockNumberAndRange     Get batched transaction receipts according to block number and the transaction range
 * getBlockByHash                            Query information about a block by hash
 * getBlockByNumber                          Query information about a block by number
 * getBlockHashByNumber                      Query block hash by block number
@@ -335,8 +337,8 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 * getGroupList                              Query group list
 * getGroupPeers                             Query nodeId list for sealer and observer nodes
 * getNodeIDList                             Query nodeId list for all connected nodes
+* getNodeInfo                               Query the specified node information.
 * getNodeVersion                            Query the current node version
-* getNodeInfo																Query the specified node information.
 * getObserverList                           Query nodeId list for observer nodes.
 * getPbftView                               Query the pbft view of node
 * getPeers                                  Query peers currently connected to the client
@@ -380,12 +382,15 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 * queryCommitteeMemberWeight                Query the committee member weight
 * queryGroupStatus                          Query the status of the specified group of the specified node
 * queryThreshold                            Query the threshold
+* queryVotesOfMember                        Query votes of a committee member.
+* queryVotesOfThreshold                     Query votes of updateThreshold operation
 * recoverGroup                              Recover the specified group of the specified node
 * registerCNS                               RegisterCNS information for the given contract
 * removeGroup                               Remove the specified group of the specified node
 * removeNode                                Remove a node
 * revokeCNSManager                          Revoke permission for CNS by address
 * revokeCommitteeMember                     Revoke the account from committee member
+* revokeContractStatusManager               Revoke contract authorization to the user
 * revokeContractWritePermission             Revoke the account the contract write permission
 * revokeDeployAndCreateManager              Revoke permission for deploy contract and create user table by address
 * revokeNodeManager                         Revoke permission for node configuration by address
@@ -1818,7 +1823,6 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 }
 ```
 
-
 ### grantOperator
 
 添加运维账号，运维角色拥有部署合约、创建用户表和管理CNS的权限，治理委员会委员可以添加运维，如果当前没有委员，则不限制。参数：
@@ -1857,6 +1861,26 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 |                   address                   |                 enable_num                  |
 | 0x283f5b859e34f7fd2cf136c07579dcc72423b1b2  |                      1                      |
 ---------------------------------------------------------------------------------------------
+```
+
+### queryVotesOfThreshold
+
+查询updateThreshold的投票情况: 
+
+```bash
+[group:1]> queryVotesOfThreshold
+The votes of the updateThreshold operation : {"0.100000":[{"block_limit":"10002","origin":"0x2eb1be0f52c0d00f9594a021240ea7fb027d7485"}]}
+```
+### queryVotesOfMember 
+
+查询指定账户被选举为委员的投票情况，若没有任何委员投票，则返回`null`:
+
+- 账户地址: 被查询的账户地址
+
+```bash
+[group:1]> queryVotesOfMember 0xc398d318662aa19487c405a45267ecd60115adec
+queried account: 0xc398d318662aa19487c405a45267ecd60115adec
+votes:{"grant":[{"block_limit":"10003","origin":"0x2eb1be0f52c0d00f9594a021240ea7fb027d7485"}]}
 ```
 
 ### **freezeAccount**
@@ -2144,4 +2168,90 @@ GroupStatus{
 # 获取127.0.0.1:20200的当前群组列表, 新增了群组2
 [group:1]> getGroupList 127.0.0.1:20200
 [1, 2]
+```
+
+### getBatchReceiptsByBlockNumberAndRange
+
+指定块高和交易回执范围，获取指定区块高度、指定范围的交易回执:
+
+- `blockNumber`: 请求获取的交易回执所在的区块高度
+- `from`: 请求的批量回执的起始索引，可不填，默认值为0
+- `count`: 请求的批量回执数目，可不填，默认值为-1，设置为-1时，返回区块内所有交易回执
+
+```bash
+[group:1]> getBatchReceiptsByBlockNumberAndRange 1
+TransactionReceiptsInfo{
+    blockInfo=BlockInfo{
+        receiptRoot='0x67182babfe1500a8ec442a8b9548e7d0d912af4943c3d549bdf9ed0c76fe8c11',
+        blockNumber='0x1',
+        blockHash='0x5eb495f6fa457dbcaf6323630a257a65a7085e01087421b7191d8efec69da0c0',
+        receiptsCount='0x1'
+    },
+    transactionReceipts=[
+        TransactionReceipt{
+            transactionHash='0xa3ce50e3f03d3282e21248172efd1345b9eb15b281791b499f2e6c7bbe464667',
+            transactionIndex='0x0',
+            root='null',
+            blockNumber='null',
+            blockHash='null',
+            from='0x2eb1be0f52c0d00f9594a021240ea7fb027d7485',
+            to='0x0000000000000000000000000000000000001008',
+            gasUsed='0x589b',
+            contractAddress='0x0000000000000000000000000000000000000000',
+            logs=[
+
+            ],
+            logsBloom='null',
+            status='0x0',
+            statusMsg='null',
+            input='null',
+            output='0x0000000000000000000000000000000000000000000000000000000000000001',
+            txProof=null,
+            receiptProof=null
+        }
+    ]
+}
+```
+
+### getBatchReceiptsByBlockHashAndRange
+
+指定区块哈希和交易回执范围，获取指定区块哈希、指定范围的交易回执:
+
+- `blockHash`: 请求获取的交易回执所在的区块哈希
+- `from`: 请求的批量回执的起始索引，可不填，默认值为0
+- `count`: 请求的批量回执数目，可不填，默认值为-1，设置为-1时，返回区块内所有交易回执
+
+```bash
+[group:1]> getBatchReceiptsByBlockHashAndRange 0x5eb495f6fa457dbcaf6323630a257a65a7085e01087421b7191d8efec69da0c0
+TransactionReceiptsInfo{
+    blockInfo=BlockInfo{
+        receiptRoot='0x67182babfe1500a8ec442a8b9548e7d0d912af4943c3d549bdf9ed0c76fe8c11',
+        blockNumber='0x1',
+        blockHash='0x5eb495f6fa457dbcaf6323630a257a65a7085e01087421b7191d8efec69da0c0',
+        receiptsCount='0x1'
+    },
+    transactionReceipts=[
+        TransactionReceipt{
+            transactionHash='0xa3ce50e3f03d3282e21248172efd1345b9eb15b281791b499f2e6c7bbe464667',
+            transactionIndex='0x0',
+            root='null',
+            blockNumber='null',
+            blockHash='null',
+            from='0x2eb1be0f52c0d00f9594a021240ea7fb027d7485',
+            to='0x0000000000000000000000000000000000001008',
+            gasUsed='0x589b',
+            contractAddress='0x0000000000000000000000000000000000000000',
+            logs=[
+
+            ],
+            logsBloom='null',
+            status='0x0',
+            statusMsg='null',
+            input='null',
+            output='0x0000000000000000000000000000000000000000000000000000000000000001',
+            txProof=null,
+            receiptProof=null
+        }
+    ]
+}
 ```

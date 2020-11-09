@@ -12,7 +12,7 @@
 ### 2.1 使用gradle引入SDK
 
 ```bash
-compile ('org.fisco-bcos.java-sdk:java-sdk:2.6.1-rc1')
+compile ('org.fisco-bcos.java-sdk:java-sdk:2.7.0')
 ```
 
 ### 2.2 使用maven引入SDK
@@ -21,7 +21,7 @@ compile ('org.fisco-bcos.java-sdk:java-sdk:2.6.1-rc1')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>2.6.1-rc1</version>
+    <version>2.7.0</version>
 </dependency>
 ```
 
@@ -75,7 +75,7 @@ $ bash sol2java.sh -h
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
 $ cd ~/fisco/console
 # 将sol转为java代码，指定java包名为org.com.fisco
 $ bash sol2java.sh org.com.fisco
@@ -86,11 +86,11 @@ $ bash sol2java.sh org.com.fisco
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
-$ git clone https://github.com/FISCO-BCOS/java-sdk
+$ git clone https://github.com/FISCO-BCOS/java-sdk-demo && cd java-sdk-demo
 # 编译
 $ ./gradlew clean build -x test
 # 进入sdk-demo/dist目录，创建合约存放目录
-$ cd sdk-demo/dist && mkdir -p contracts/solidity
+$ cd dist && mkdir -p contracts/solidity
 # 将需要转换为java代码的sol文件拷贝到~/fisco/java-sdk/dist/contracts/solidity路径下
 # 转换sol, 其中${packageName}是生成的java代码包路径
 # 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下

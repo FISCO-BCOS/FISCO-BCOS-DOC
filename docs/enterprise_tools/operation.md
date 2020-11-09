@@ -265,7 +265,7 @@ $./generator --download_fisco ./meta --cdn
 
 ## download_console
 
-使用--download_console可以指定的目录下下载并配置控制台，国内用户可以使用`--cdn`命令从cdn下载。。
+使用--download_console可以指定的目录下下载并配置控制台，其支持`--console_version`选项指定下载的控制台版本，默认下载最新版本控制台; 也支持`--cdn`命令从cdn下载控制台，推荐国内用户使用`--cdn`命令从cdn下载。
 
 使用示例:
 
@@ -278,6 +278,13 @@ $./generator --download_console ./meta
 ```bash
 $./generator --download_console ./meta --cdn
 ```
+
+指定下载`1.2.0`版本控制台的使用示例如下:
+
+```bash
+$./generator --download_console ./meta --console_version 1.2.0 --cdn
+```
+
 
 执行完成后会在./meta文件夹下根据`node_deployment.ini`完成对控制台的配置
 

@@ -437,6 +437,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)
 ### 返回值
 - `object` - 区块信息，字段如下：
+    - `dbHash`: `string` - 记录交易数据变更的哈希
     - `extraData`: `array` - 附加数据
     - `gasLimit`: `string` - 区块中允许的gas最大值
     - `gasUsed`: `string` - 区块中所有交易消耗的gas
@@ -444,85 +445,102 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `logsBloom`: `string` - log的布隆过滤器值
     - `number`: `string` - 区块高度
     - `parentHash`: `string` - 父区块哈希
+    - `receiptsRoot`: `string` - 区块内所有交易回执的merkle根
     - `sealer`: `string` - 共识节点序号
     - `sealerList`: `array` - 共识节点列表
+    - `signatureList`: `string` - PBFT共识的签名列表
     - `stateRoot`: `string` - 状态根哈希
-    - `timestamp`: `string` - 时间戳
+    - `timestamp`: `string` - 时间戳，单位毫秒
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html#gettransactionbyhash)）
+    - `transactionsRoot`: `string` - 区块内所有交易的merkle根
 
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",true],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",true],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
   "id": 1,
   "jsonrpc": "2.0",
   "result": {
+    "dbHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": [],
     "gasLimit": "0x0",
     "gasUsed": "0x0",
-    "hash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+    "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": "0x1",
-    "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-    "sealer": "0x3",
-    "sealerList":[
-    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    "number": 1,
+    "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
+    "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer": "0x0",
+    "sealerList": [
+      "4ca3a91a4937355dba6a2e5fe76141479a1fc44e9caa86750092dab64e0b8382f6b8476749c2d2de414350a54491620d38813d2a1442f524e36e3d9946109c4d"
     ],
-    "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
-    "timestamp": "0x1687e801d99",
+    "signatureList": [
+      {
+        "index": "0x0",
+        "signature": "0x4602135870d9a4846e2536d4a48e831825a5d95768dd0d4f08544a0bd4c2af41242dec1751a05c07d7572027f8d6ac1625c48145beb004e2dce8b7ce9e2bb73d00"
+      }
+    ],
+    "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x175ac38cf10",
     "transactions": [
       {
-        "blockHash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+        "blockHash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
+        "blockLimit": "0x100",
         "blockNumber": "0x1",
-        "from": "0xadf06b974703a1c25c621ce53676826198d4b046",
-        "gas": "0x1c9c380",
-        "gasPrice": "0x1",
-        "hash": "0x022dcb1ad2d940ce7b2131750f7458eb8ace879d129ee5b650b84467cb2184d7",
-        "input": "0x608060405234801561001057600080fd5b5060016000800160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506402540be40060006001018190555060028060000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060006002600101819055506103bf806100c26000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100515780636d4ce63c1461007e575b600080fd5b34801561005d57600080fd5b5061007c600480360381019080803590602001909291905050506100a9565b005b34801561008a57600080fd5b506100936102e1565b6040518082815260200191505060405180910390f35b8060006001015410806100c757506002600101548160026001015401105b156100d1576102de565b8060006001015403600060010181905550806002600101600082825401925050819055507fc77b710b83d1dc3f3fafeccd08a6c469beb873b2f0975b50d1698e46b3ee5b4c816040518082815260200191505060405180910390a160046080604051908101604052806040805190810160405280600881526020017f323031373034313300000000000000000000000000000000000000000000000081525081526020016000800160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001838152509080600181540180825580915050906001820390600052602060002090600402016000909192909190915060008201518160000190805190602001906102419291906102ee565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b6000600260010154905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061032f57805160ff191683800117855561035d565b8280016001018555821561035d579182015b8281111561035c578251825591602001919060010190610341565b5b50905061036a919061036e565b5090565b61039091905b8082111561038c576000816000905550600101610374565b5090565b905600a165627a7a72305820fb983c66bee66788f407721b23b10a8aae3dc9ef8f1b09e08ec6a6c0b0ec70100029",
-        "nonce": "0x1a9d06264238ea69c1bca2a74cfced979d6b6a66ce8ad6f5a30e8017b5a98d8",
-        "to": null,
+        "chainId": "0x1",
+        "extraData": "0x",
+        "from": "0x57c7be32cbfb3bfed4fddc87efcc735b4e945fb3",
+        "gas": "0x2faf080",
+        "gasPrice": "0xa",
+        "groupId": "0x1",
+        "hash": "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d",
+        "input": "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a464953434f2042434f5300000000000000000000000000000000000000000000",
+        "nonce": "0x3eb675ec791c2d19858c91d0046821c27d815e2e9c151604912205000002968",
+        "signature": {
+          "r": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd",
+          "s": "0x2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf",
+          "signature": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf00",
+          "v": "0x0"
+        },
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
         "transactionIndex": "0x0",
         "value": "0x0"
       }
     ],
-    "transactionsRoot": "0x07506c27626365c4f0db788619a96df1e6f8f62c583f158192700e08c10fec6a"
+    "transactionsRoot": "0xb880b08df3b43a9ffc334d7a526522b33e004ef95403d61d76454b6085b9b2f1"
   }
 }
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",false],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",false],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
   "id": 1,
   "jsonrpc": "2.0",
   "result": {
+    "dbHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": [],
     "gasLimit": "0x0",
     "gasUsed": "0x0",
-    "hash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+    "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": "0x1",
-    "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-    "sealer": "0x3",
-    "sealerList":[
-    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    "number": 1,
+    "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
+    "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer": "0x0",
+    "sealerList": [
+      "4ca3a91a4937355dba6a2e5fe76141479a1fc44e9caa86750092dab64e0b8382f6b8476749c2d2de414350a54491620d38813d2a1442f524e36e3d9946109c4d"
     ],
-    "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
-    "timestamp": "0x1687e801d99",
+    "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x175ac38cf10",
     "transactions": [
-      "0x022dcb1ad2d940ce7b2131750f7458eb8ace879d129ee5b650b84467cb2184d7"
+      "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d"
     ],
-    "transactionsRoot": "0x07506c27626365c4f0db788619a96df1e6f8f62c583f158192700e08c10fec6a"
+    "transactionsRoot": "0xb880b08df3b43a9ffc334d7a526522b33e004ef95403d61d76454b6085b9b2f1"
   }
 }
 ```
@@ -641,6 +659,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 ### 返回值
 - `object`: - 交易信息，其字段如下：
     - `blockHash`: `string` - 包含该交易的区块哈希
+    - `blockLimit`: `string` - 交易的`blockLimit`，用于交易防重
+    - `chainId`:  `string` - 交易所在的链ID
+    - `extraData`: `string` - 交易内的extraData
+    - `groupId`:  `string` - 交易所在的群组ID
     - `blockNumber`: `string` - 包含该交易的区块高度
     - `from`: `string` - 发送者的地址
     - `gas`: `string` - 发送者提供的gas
@@ -648,31 +670,42 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
     - `hash`: `string` - 交易哈希
     - `input`: `string` - 交易的输入
     - `nonce`: `string` - 交易的nonce值
+    - `signature`: 交易签名，包含`r`, `s`, `v`以及序列化的交易签名`signature`
     - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`
     - `transactionIndex`: `string` - 交易的序号
     - `value`: `string` - 转移的值
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
-{
-    "id": 1,
-    "jsonrpc": "2.0",
-    "result": {
-        "blockHash": "0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa",
-        "blockNumber": "0x1",
-        "from": "0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102",
-        "gas": "0x9184e729fff",
-        "gasPrice": "0x174876e7ff",
-        "hash": "0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f",
-        "input": "0x48f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a37",
-        "nonce": "0x65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f",
-        "to": "0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d",
-        "transactionIndex": "0x0",
-        "value": "0x0"
-    }
+ {
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockHash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
+    "blockLimit": "0x100",
+    "blockNumber": "0x1",
+    "chainId": "0x1",
+    "extraData": "0x",
+    "from": "0x57c7be32cbfb3bfed4fddc87efcc735b4e945fb3",
+    "gas": "0x2faf080",
+    "gasPrice": "0xa",
+    "groupId": "0x1",
+    "hash": "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d",
+    "input": "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a464953434f2042434f5300000000000000000000000000000000000000000000",
+    "nonce": "0x3eb675ec791c2d19858c91d0046821c27d815e2e9c151604912205000002968",
+    "signature": {
+      "r": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd",
+      "s": "0x2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf",
+      "signature": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf00",
+      "v": "0x0"
+    },
+    "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+    "transactionIndex": "0x0",
+    "value": "0x0"
+  }
 }
 ```
 ## getTransactionByBlockHashAndIndex
@@ -1293,6 +1326,181 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"queryGroupStatus","params":[2],"
   }
 }
 
+```
+
+## getNodeInfo
+
+获取请求节点的NodeID，Topic等信息。
+
+#### **参数**
+
+- 无
+
+#### **返回值**
+
+- NodeInfo: 获取节点信息，包括节点所在的机构、节点名、节点NodeID以及节点订阅的Topic
+
+- 示例: 
+
+```shell
+curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeInfo","params":[],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "Agency": "agency",
+    "IPAndPort": "0.0.0.0:30300",
+    "Node": "node1",
+    "NodeID": "2263a586cba1c1b8419f0dd9e623c7db79b2ba9127367aa854b1493e218efaa2ef58b08de1b36defdeb1d407449014e29cf8b4f457c7f7be7331d381362eb74e",
+    "Topic": []
+  }
+}
+```
+
+## getBatchReceiptsByBlockNumberAndRange
+
+根据区块高度和交易范围，批量返回指定群组的交易回执信息。
+
+#### **参数**
+
+- `groupID`: 群组ID;
+- `blockNumber`: 请求获取的回执信息所在的区块高度;
+- `from`: 需要获取的回执起始索引;
+- `count`: 需要批量获取的回执数目，当设置为-1时，返回区块内所有回执信息;
+- `compressFlag`: 压缩标志，当设置为false时，以明文的形式返回批量交易回执信息; 当设置为true时, 以zlib格式压缩批量交易回执，并将压缩后的回执信息以Base64编码的格式返回。
+
+#### **返回值**
+
+当`compressFlag`为true，返回明文形式的批量交易回执信息; 当`compressFlag`为false时，返回zlib压缩后的Base64编码的批量回执信息，返回的具体字段如下:
+
+- `blockHash`: 回执所在的区块哈希
+- `blockNumber`: 回执所在的区块高度
+- `receiptRoot`: 回执所在的区块的receiptRoot
+- `receiptsCount`: 区块中包含的回执数目
+
+每条回执信息包含的字段如下:
+
+- contractAddress: 回执对应的合约地址
+- from: 交易回执对应的外部账户信息
+- gasUsed: gas信息
+- logs: 回执中包含的event log信息
+- output: 交易执行结果
+- status: 回执状态
+- to: 目标账户地址
+- transactionHash: 产生回执的交易哈希
+- transactionIndex: 产生回执的交易在区块中的索引
+
+**示例:** 
+
+```shell
+# 获取块高为1的区块所有回执明文信息
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockNumberAndRange","params":[1,"0x1","0","-1",false],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockInfo": {
+      "blockHash": "0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2",
+      "blockNumber": "0x1",
+      "receiptRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+      "receiptsCount": "0x1"
+    },
+    "transactionReceipts": [
+      {
+        "contractAddress": "0x0000000000000000000000000000000000000000",
+        "from": "0xb8e3901e6f5f842499fd537a7ac7151e546863ad",
+        "gasUsed": "0x5798",
+        "logs": [],
+        "output": "0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000364572726f7220616464726573733a3863313763663331366331303633616236633839646638373565393663396630663562326637343400000000000000000000",
+        "status": "0x1a",
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+        "transactionHash": "0xc6ec15fd1e4d696e66d7fbef6064bda3ed012bcb7744d09903ee289df65f7d53",
+        "transactionIndex": "0x0"
+      }
+    ]
+  }
+}
+
+# 获取区块高度为1的压缩编码后的所有回执信息
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockNumberAndRange","params":[1,"0x1","0","-1",true],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
+}
+```
+
+## getBatchReceiptsByBlockHashAndRange
+
+根据区块哈希和交易范围，批量返回指定群组的交易回执信息。
+
+#### **参数**
+
+- `groupID`: 群组ID;
+- `blockHash`: 包含需要获取的回执信息的区块的哈希;
+- `from`: 需要获取的回执起始索引;
+- `count`: 需要批量获取的回执数目，当设置为-1时，返回区块内所有回执信息;
+- `compressFlag`: 压缩标志，当设置为false时，以明文的形式返回批量交易回执信息; 当设置为true时, 以zlib格式压缩批量交易回执，并将压缩后的回执信息以Base64编码的格式返回。
+
+#### **返回值**
+
+当`compressFlag`为true，返回明文形式的批量交易回执信息; 当`compressFlag`为false时，返回zlib压缩后的Base64编码的批量回执信息，返回的具体字段如下:
+
+- `blockHash`: 回执所在的区块哈希
+- `blockNumber`: 回执所在的区块高度
+- `receiptRoot`: 回执所在的区块的receiptRoot
+- `receiptsCount`: 区块中包含的回执数目
+
+每条回执信息包含的字段如下:
+
+- contractAddress: 回执对应的合约地址
+- from: 交易回执对应的外部账户信息
+- gasUsed: gas信息
+- logs: 回执中包含的event log信息
+- output: 交易执行结果
+- status: 回执状态
+- to: 目标账户地址
+- transactionHash: 产生回执的交易哈希
+- transactionIndex: 产生回执的交易在区块中的索引
+
+**示例:** 
+
+```shell
+# 获取区块哈希为0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2的区块所有回执明文信息
+ curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRange","params":[1,"0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2","0","1",false],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockInfo": {
+      "blockHash": "0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2",
+      "blockNumber": "0x1",
+      "receiptRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+      "receiptsCount": "0x1"
+    },
+    "transactionReceipts": [
+      {
+        "contractAddress": "0x0000000000000000000000000000000000000000",
+        "from": "0xb8e3901e6f5f842499fd537a7ac7151e546863ad",
+        "gasUsed": "0x5798",
+        "logs": [],
+        "output": "0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000364572726f7220616464726573733a3863313763663331366331303633616236633839646638373565393663396630663562326637343400000000000000000000",
+        "status": "0x1a",
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+        "transactionHash": "0xc6ec15fd1e4d696e66d7fbef6064bda3ed012bcb7744d09903ee289df65f7d53",
+        "transactionIndex": "0x0"
+      }
+    ]
+  }
+}
+
+# 获取区块哈希为0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2的压缩编码后的所有回执信息
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRange","params":[1,"0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2","0","1",true],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
+}
 ```
 
 ## 错误码描述
