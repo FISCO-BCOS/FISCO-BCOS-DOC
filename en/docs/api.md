@@ -1274,6 +1274,7 @@ curl -Ss -X POST --data '{"jsonrpc":"2.0","method":"recoverGroup","params":[2],"
 Queries status of group. Please note that this function is supported since 2.2.0
 ### Parameters
 - `groupID`: `unsigned int` - ID of the group
+
 ### Returns
 - `object`: - result of calling
     - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
@@ -1407,11 +1408,11 @@ FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
 | -50100  | table does not exist                            |          |
 | -50101  | unknown function call                            |          |
 | -50102  | address invalid                                 |          |
-| -51000  | table name and address already exist            |          |
-| -51001  | table name and address does not exist           |          |
 | -51002  | table name overflow                             |          |
 | -51003  | contract not exist                              |          |
 | -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
 | -51100  | invalid node ID                                 |SDK Error Code |
 | -51101  | the last sealer cannot be removed               |          |
 | -51102  | the node is not reachable                       |SDK Error Code |

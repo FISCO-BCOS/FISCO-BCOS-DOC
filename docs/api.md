@@ -547,7 +547,7 @@ Result见[getBlockByHash](./api.html#getblockbyhash)
 ### 参数
 - `groupID`: `unsigned int` - 群组ID
 - `blockHash`: `string` - 区块哈希
-- `includeSignatures`: `bool` - 包含签名列表标志(true显示签名列表)
+- `includeSignatures`: `bool` - 包含签名列表标志(true显示签名列表)，如果为true，则会带上下面例子中的`signatureList`字段。
 
 ### 返回值
 
@@ -1402,11 +1402,11 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -50100  | table does not exist                            |          |
 | -50101  | unknown function call                            |          |
 | -50102  | address invalid                                 |          |
-| -51000  | table name and address already exist            |          |
-| -51001  | table name and address does not exist           |          |
 | -51002  | table name overflow                             |          |
 | -51003  | contract not exist                              |          |
 | -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
 | -51100  | invalid node ID                                 | SDK错误码 |
 | -51101  | the last sealer cannot be removed               |           |
 | -51102  | the node is not reachable                       | SDK错误码 |

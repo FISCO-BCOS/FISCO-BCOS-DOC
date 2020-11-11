@@ -4,42 +4,42 @@
 
 ### 1. 注册
 
-打开 [鹏城实验室官网](https://dw.pcl.ac.cn/#/home/index) 进行账户注册，注册过程中需要填写真实名称、工作单位、邮箱，收到激活邮件后需要手动点击激活连接地址激活账户 
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/1.png)   
+打开 [鹏城实验室官网](https://dw.pcl.ac.cn/#/home/index) 进行账户注册，注册过程中需要填写真实名称、工作单位、邮箱，收到激活邮件后需要手动点击激活连接地址激活账户
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/1.png)
 
 ### 2. 登录
 
-登陆注册的账户以后点击 "开发者云" 按钮 
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/2.png)  
+登陆注册的账户以后点击 "开发者云" 按钮
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/2.png)
 
 ### 3. 填写申请订单
 
-在打开的页面中自己填写 "需求申请" 订单，按照自己实际项目需求规划硬件配置、系统版本、使用多长时间 
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/3.png)   
+在打开的页面中自己填写 "需求申请" 订单，按照自己实际项目需求规划硬件配置、系统版本、使用多长时间
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/3.png)
 
 ### 4. 等待通知
 
-需求订单填写无误提交以后，等待官方批准，批准完成以后会收到批准结果邮件通知  
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/4.png)  
+需求订单填写无误提交以后，等待官方批准，批准完成以后会收到批准结果邮件通知
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/4.png)
 
 ### 5. 通过申请
 
-登录鲲鹏服务器查看服务器信息，至此鲲鹏服务器准备完成  
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/5.png)  
+登录鲲鹏服务器查看服务器信息，至此鲲鹏服务器准备完成
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/5.png)
 
 ## 二：在鲲鹏服务器安装基础软件
 
-### 1. 更新软件 
+### 1. 更新软件
 
 以 Centos 为例，使用 yum 进行更新（此过程会下载更新包，请保持网络畅通并耐心等待）
 ```.
-yum update 
+yum update
 ```
 
-![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/6.png) 
+![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/6.png)
 
 
-### 2. 安装基础依赖 
+### 2. 安装基础依赖
 
 ```
 yum install -y epel-release centos-release-scl
@@ -97,7 +97,7 @@ git checkout master
 mkdir -p build && cd build
 
 // CentOS请执行此命令，其他系统不需要
-source /opt/rh/devtoolset-7/enable  
+source /opt/rh/devtoolset-7/enable
 
 cmake3 .. -DARCH_NATIVE=on
 ```
@@ -126,15 +126,15 @@ Scanning dependencies of target jsoncpp
 
 ```
 //如果提示是否覆盖，输入 y
-cp ${HOME}/LargeFiles/libs/* ${HOME}/FISCO-BCOS/deps/src  
+cp ${HOME}/LargeFiles/libs/* ${HOME}/FISCO-BCOS/deps/src
 ```
 
 ### 6. 继续执行编译
 
- * 首次编译速度比较慢，需要耐心等待 
+ * 首次编译速度比较慢，需要耐心等待
 ```
 cd ${HOME}/FISCO-BCOS/build
-make  
+make
 ```
 
 ### 7 解决编译GroupSigLib 报错
@@ -202,13 +202,13 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s htt
 ### 4. 运行一键搭建2群组3机构6节点底层FISCO-BCOS联盟链服务脚本
 
 ```
-#  ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -e bin/fisco-bcos
+#  ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -e bin/fisco-bcos
 ```
 
 ### 5. 脚本运行完成效果
 
 ```
-# ./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -e bin/fisco-bcos
+# ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -e bin/fisco-bcos
 Checking fisco-bcos binary...
 Binary check passed.
 ==============================================================
@@ -265,56 +265,25 @@ info|2020-09-04 17:34:22.459794|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 
 说明：控制台程序依赖 java-1.8 需要提前安装好鲲鹏版本（arrch64）的java-1.8
 
-### 1. 下载控制台程序
+```bash
+# 下载控制台
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
+$ cd console
 
-```
-cd
-git clone https://github.com/FISCO-BCOS/console.git
-```
+# 拷贝证书
+cp ~/nodes/127.0.0.1/sdk/* conf
 
-### 2. 进行编译
-
-```
-# cd console
-# git checkout release-1.1.1
-# ./gradlew build -x test
-
-> Task :compileJava
-注: /root/console/src/main/java/console/web3j/Web3jImpl.java使用或覆盖了已过时的 API。
-注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
-注: /root/console/src/main/java/console/common/ContractClassFactory.java使用了未经检查或不安全的操作。
-注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
-
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
-Use '--warning-mode all' to show the individual deprecation warnings.
-See https://docs.gradle.org/5.6.2/userguide/command_line_interface.html#sec:command_line_warnings
-
-BUILD SUCCESSFUL in 24s
-3 actionable tasks: 3 executed
+# 修改配置文件
+# 如果端口没有冲突，直接复制配置文件即可，否则复制之后，修改 config.toml中的network.peers配置项为相应的 channel 端口
+$ cp conf/config-example.toml conf/config.toml
 ```
 
-### 3. 修改配置文件
+**启动控制台**
 
 ```
-#cd dist/conf
-
-//如果端口没有冲突，直接复制配置文件即可，否则复制之后，修改 applicationContext.xml 中的 20200 为相应的 channel 端口
-#cp applicationContext-sample.xml applicationContext.xml
-```
-
-### 4. 拷贝证书
-
-```
-cp ${HOME}/nodes/127.0.0.1/sdk/* .
-```
-
-### 5. 启动控制台
-
-```
-# cd /${HOME}/console/dist/
-# ./start.sh
+# cd ~/console/ && bash start.sh
 =============================================================================================
-Welcome to FISCO BCOS console(1.1.0)!
+Welcome to FISCO BCOS console(2.6.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -350,6 +319,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  * 部署并调用合约
 ```
 [group:1]> deploy HelloWorld
+transaction hash: 0xa71f136107389348d5a092a345aa6bc72770d98805a7dbab0dbf8fe569ff3f37
 contract address: 0xd22aa109bc0708ad016391fa5188e18d35b16434
 
 [group:1]> call HelloWorld 0xd22aa109bc0708ad016391fa5188e18d35b16434 set "asfdas"

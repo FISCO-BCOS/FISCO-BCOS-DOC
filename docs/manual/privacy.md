@@ -41,7 +41,7 @@ FISCO BCOS同态加密模块提供的功能组件包括：
 
 ### 算法简介
 
-**群签名** 
+**群签名**
 
 群签名(Group Signature)是一种能保护签名者身份的具有相对匿名性的数字签名方案，用户可以代替自己所在的群对消息进行签名，而验证者可以验证该签名是否有效，但是并不知道签名属于哪一个群成员。同时，用户无法滥用这种匿名行为，因为群管理员可以通过群主私钥打开签名，暴露签名的归属信息。群签名的特性包括：
 
@@ -50,7 +50,7 @@ FISCO BCOS同态加密模块提供的功能组件包括：
 - 不可链接性：给定两个签名，无法判断它们是否来自同一个签名者；
 - 可追踪性：在监管介入的场景中，群主可通过签名获取签名者身份。
 
-**环签名**  
+**环签名**
 
 环签名(Ring Signature)是一种特殊的群签名方案，但具备完全匿名性，即不存在管理员这个角色，所有成员可主动加入环，且签名无法被打开。环签名的特性包括：
 
@@ -91,12 +91,12 @@ FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
 
 The FISCO BCOS privacy protection module is implemented through a precompiled contract and is enabled by default. For source code compilation FISCO BCOS, please refer to [here](./get_executable.md).
 
-### 搭建联盟链 
+### 搭建联盟链
 
 假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下，更多选项[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)。
 
 ```bash
-bash ../tools/build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos 
+bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 
@@ -174,7 +174,7 @@ contract CallPaillier {
     PaillierPrecompiled paillier;
     function CallPaillier() {
         // 调用PaillierPrecompiled预编译合约
-        paillier = PaillierPrecompiled(0x5003); 
+        paillier = PaillierPrecompiled(0x5003);
     }
     function add(string cipher1, string cipher2) public constant returns(string) {
         return paillier.paillierAdd(cipher1, cipher2);

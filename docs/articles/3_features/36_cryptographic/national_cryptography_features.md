@@ -75,7 +75,7 @@ buildchain.sh脚本的-g为国密编译选项，使用成功后会生成国密�
 
 ```
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
-./build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g
+./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g
 ```
 
 执行成功后，会搭建本地四节点的国密版FISCO BCOS联盟链。
@@ -101,11 +101,17 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s htt
 
 ### 2. 使用国密版sdk/控制台
 
-国密版sdk和控制台的操作命令与普通版相同，在启用国密特性时需要做如下操作：
+
+国密版sdk和控制台的操作命令与普通版相同，Web3SDK和1.x版本控制台在启用国密特性时需要做如下操作：
 
 - (1). 将applicationContext.xml中的encryptType设置为1；
 - (2). 加载私钥时需要加载国密版的私钥；
 - (3). 控制台还需要获取国密版jar包。
+
+```eval_rst
+.. note::
+    java sdk和2.6.0+版本的控制台启用国密算法时不需要额外配置
+```
 
 ### 3. 开启国密版落盘加密功能
 

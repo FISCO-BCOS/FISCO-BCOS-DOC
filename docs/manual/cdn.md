@@ -12,12 +12,11 @@ FISCO BCOS当前所有仓库源码位于[https://github.com/FISCO-BCOS/FISCO-BCO
 
 ### 二进制程序
 
-FISCO BCOS每个新版本发布会在GitHub的tag中提供对应的二进制程序和部署工具，同时在官网[https://www.fisco.com.cn](https://www.fisco.com.cn/cdn/fisco-bcos/releases/download)也会提供同样的二进制程序，官网通过CDN加速下载。当前所提供的二进制程序包括：
+FISCO BCOS每个新版本发布会在GitHub的tag中提供对应的二进制程序和部署工具，同时在CDN也会提供同样的二进制程序。当前所提供的二进制程序包括：
 
 1. fisco-bcos.tar.gz ：静态二进制程序，支持CentOS 7 和Ubuntu 16.04以上版本
-1. fisco-bcos-gm.tar.gz ：国密版本的静态二进制程序，支持CentOS 7 和Ubuntu 16.04以上版本
-1. build_chain.sh ：对应版本的开发部署工具，依赖openssl和curl，支持CentOS 7/Ubuntu 16.04以上/macOS 10.15以上版本
 1. fisco-bcos-macOS.tar.gz ：对应macOS系统的二进制程序
+1. build_chain.sh ：对应版本的开发部署工具，依赖openssl和curl，支持CentOS 7/Ubuntu 16.04以上/macOS 10.15以上版本
 
 用户使用开发部署工具(build_chain)，工具先尝试从GitHub下载所需要的二进制程序，如果下载失败则尝试从官网下载。
 
@@ -74,7 +73,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/buil
 搭建国密版本时，开发部署工具还依赖tassl，工具会自动下载，如果失败请用户参考TASSL手动下载方法，下载解压后放置于~/.fisco/tassl。执行下面的指令，输出All completed即表示执行成功。
 
 ```bash
-bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -g -v 2.4.0
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -v 2.4.0
 ```
 
 ## 举例：使用国内源码镜像编译

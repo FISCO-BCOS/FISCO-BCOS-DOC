@@ -78,6 +78,7 @@ $ source /opt/rh/devtoolset-7/enable  # CentOS请执行此命令，其他系统�
 # CentOS请使用cmake3
 $ cmake ..
 # 高性能机器可添加-j4使用4核加速编译
+# macOS 编译出现 "ld: warning: direct access" 提示时，可以忽略
 $ make
 ```
 

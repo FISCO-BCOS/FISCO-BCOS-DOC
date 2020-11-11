@@ -49,7 +49,7 @@ Usage:
     -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
-    ./build_chain.sh -l "127.0.0.1:4"
+    ./build_chain.sh -l 127.0.0.1:4
 ```
 
 ## 选项介绍
@@ -87,9 +87,9 @@ bash build_chain.sh -f ipconf -T
 
 ```bash
 # 从GitHub下载最新release二进制，生成本机4节点
-$ bash build_chain.sh -l "127.0.0.1:4"
+$ bash build_chain.sh -l 127.0.0.1:4
 # 使用 bin/fisco-bcos 二进制，生成本机4节点
-$ bash build_chain.sh -l "127.0.0.1:4" -e bin/fisco-bcos
+$ bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ### **`o`选项[**Optional**]**
@@ -299,7 +299,7 @@ e.g
 
 ```bash
 # 构建FISCO BCOS联盟链
-$ bash build_chain.sh -l "127.0.0.1:4" -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
+$ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -e ./fisco-bcos -v 2.2.0
 # 生成成功后，输出`All completed`提示
 Generating CA key...
 ==============================================================
@@ -385,7 +385,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
         node.4=127.0.0.1:30304
     ```
 4. 启动新节点，执行`newNode/start.sh`
-5. 通过console将新节点加入群组1，请参考[这里](./console.html#addsealer)和[这里](./node_management.html#id7)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
+5. 通过console将新节点加入群组1，2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
 
 ### 为机构生成新的SDK证书
