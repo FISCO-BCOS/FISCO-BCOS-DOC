@@ -27,8 +27,16 @@
 `开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
 若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可（macOS自带的openssl指令选项不同，请执行安装标准openssl）。
 
+**安装ubuntu依赖**
+
 ```bash
 sudo apt install -y openssl curl
+```
+
+**安装centos依赖**
+
+```bash
+sudo yum install -y openssl openssl-devel
 ```
 
 - 创建操作目录
@@ -173,14 +181,24 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
     - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <tutorial/download_console.html>`_ 
 ```
 
-在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
+在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
 
 ### 准备依赖
+
+- 安装java
+
+```bash
+# ubuntu系统安装java
+sudo apt install -y default-jdk
+
+#centos系统安装java
+sudo yum install -y java java-devel
+```
 
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -217,7 +235,7 @@ cp -r nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
 ```
 
-输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
 ```bash
 =============================================================================================
