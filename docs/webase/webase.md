@@ -16,7 +16,7 @@ WeBASE管理平台是由四个WeBASE子系统组成的一套管理FISCO-BCOS联�
 9. 账号管理
 10. 群组管理
 
-## WeBASE管理平台搭建
+### WeBASE管理平台搭建
 搭建可参考[《WeBASE一键部署文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)。
 
 ![](../../images/webase/webase-web.png)
