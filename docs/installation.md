@@ -395,7 +395,7 @@ Return values:
 ### [WeBASE管理台](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)
 通过WeBASE一键脚本，可以搭建一个WeBASE的基础环境，可以方便用户体验WeBASE核心功能如：区块浏览，节点查看，合约IDE，系统管理，节点监控，交易审计，私钥管理。搭建可参考[《WeBASE一键部署文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)。![](../images/webase/webase-web.png)
 ### [WeBASE其他](https://webasedoc.readthedocs.io/zh_CN/latest)
-WeBASE其他组件可以参考[WeBASE文档》](https://webasedoc.readthedocs.io/zh_CN/latest)
+WeBASE其他组件可以参考[《WeBASE文档》](https://webasedoc.readthedocs.io/zh_CN/latest)
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 
