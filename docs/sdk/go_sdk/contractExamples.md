@@ -524,7 +524,7 @@ helloworld目录下会生成HelloWorld.bin和HelloWorld.abi。此时利用abigen
 
 异步合约开发指的是调用编译生成的 go 文件中提供的异步接口部署合约、修改数据，可以极大提高交易并发量。以 KVTableTest 为例，`编译生成 go 文件` 的步骤 [同上](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/go_sdk/contractExamples.html#kvtabletest)
 
-### 部署、调用合约
+### 异步部署、调用KVTableTest合约
 
 利用生成的异步接口部署和调用合约。通过注入 handler 函数，处理交易回执，获取交易回执中的 output。
 
@@ -640,4 +640,66 @@ func parseOutput(abiStr, name string, receipt *types.Receipt) (*big.Int, error) 
     }
     return ret, nil
 }
+```
+
+### 异步部署、调用HelloWorld合约
+
+```golang
+func main() {
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatalf("ParseConfigFile failed, err: %v", err)
+	}
+	client, err := client.Dial(&configs[0])
+	if err != nil {
+		fmt.Printf("Dial Client failed, err:%v", err)
+		return
+	}
+	var contractAddress common.Address
+	var channel = make(chan int, 0)
+	tx, err := AsyncDeployHelloWorld(client.GetTransactOpts(), func(receipt *types.Receipt, err error) {
+		if err != nil {
+			fmt.Printf("%v\n", err)
+			return
+		}
+		fmt.Println("contract address: ", receipt.ContractAddress.Hex()) // the address should be saved
+		contractAddress = receipt.ContractAddress
+		channel <- 0
+	}, client)
+	fmt.Println("transaction hash: ", tx.Hash().Hex())
+	<-channel
+	instance, err := NewHelloWorld(contractAddress, client)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err != nil {
+		fmt.Printf("Deploy failed, err:%v", err)
+		return
+	}
+	hello := &HelloWorldSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
+	ret, err := hello.Get()
+	if err != nil {
+		fmt.Printf("hello.Get() failed: %v", err)
+		return
+	}
+	fmt.Printf("Get: %s\n", ret)
+	tx, err = hello.AsyncSet(func(receipt *types.Receipt, err error) {
+		if err != nil {
+			fmt.Printf("hello.AsyncSet failed: %v\n", err)
+			return
+		}
+		if receipt.Status != 0 {
+			fmt.Printf("hello.AsyncSet failed: %v\n", receipt.GetErrorMessage())
+		}
+		channel <- 0
+	}, "fisco")
+	<-channel
+	ret, err = hello.Get()
+	if err != nil {
+		fmt.Printf("hello.Get() failed: %v", err)
+		return
+	}
+	fmt.Printf("Get: %s\n", ret)
+}
+
 ```

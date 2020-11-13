@@ -1402,11 +1402,11 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | -50100  | table does not exist                            |          |
 | -50101  | unknown function call                            |          |
 | -50102  | address invalid                                 |          |
-| -51000  | table name and address already exist            |          |
-| -51001  | table name and address does not exist           |          |
 | -51002  | table name overflow                             |          |
 | -51003  | contract not exist                              |          |
 | -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
 | -51100  | invalid node ID                                 | SDK错误码 |
 | -51101  | the last sealer cannot be removed               |           |
 | -51102  | the node is not reachable                       | SDK错误码 |
