@@ -183,7 +183,7 @@ func main() {
     fmt.Println("value :", value)
 
     value = "Hello, FISCO BCOS"
-    tx, err = helloworldSession.Set(value)  // call set API
+    tx, receipt, err = helloworldSession.Set(value)  // call set API
     if err != nil {
         log.Fatal(err)
     }
