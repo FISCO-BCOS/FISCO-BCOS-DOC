@@ -339,7 +339,7 @@ amop.stop()
 
 * 私有话题代码示例：
 
-  * AmopSubscribePrivate
+  * AmopSubscriberPrivate
 
     输入：话题名（TopicName），私钥文件名（Filename），密码（password）
     默认：订阅了一个名为“PrivTest”的私有话题

@@ -1,27 +1,46 @@
 # 快速入门
 
-## 1 环境要求
+## 1. 安装环境
 
-- Java开发环境：JDK1.8 或者以上版本
-- FISCO BCOS节点：请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建
+- Java：JDK 14 （JDK1.8 至JDK 14都支持）
+
+  ![](./../../../images/java-sdk/install_java.gif)
+
+- IDE：IntelliJ IDE. 
+
+  进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
+
+  
+
+## 2. 搭建一条FISCO BCOS链
+
+请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。
 
 
 
-## 2 Java应用引入SDK
+## 3. Gradle应用
 
-### 2.1 使用gradle引入SDK
+#### 第一步：创建一个Gradle应用
 
-```bash
-compile ('org.fisco-bcos.java-sdk:java-sdk:2.7.0')
+在IntelliJ IDE中创建一个gradle项目。勾选Gradle和Java
+
+![](./../../../images/java-sdk/create.gif)
+
+#### 第二步：引入Java SDK
+
+在build.gradle中引入Java SDK
+
+```
+compile ('org.fisco-bcos.java-sdk:java-sdk:2.6.1')
 ```
 
-### 2.2 使用maven引入SDK
+如果您使用maven 通过以下方法引入Java SDK
 
 ``` xml
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>2.7.0</version>
+    <version>2.6.1</version>
 </dependency>
 ```
 
@@ -75,7 +94,7 @@ $ bash sol2java.sh -h
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 $ cd ~/fisco/console
 # 将sol转为java代码，指定java包名为org.com.fisco
 $ bash sol2java.sh org.com.fisco
@@ -86,11 +105,11 @@ $ bash sol2java.sh org.com.fisco
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
-$ git clone https://github.com/FISCO-BCOS/java-sdk-demo && cd java-sdk-demo
+$ git clone https://github.com/FISCO-BCOS/java-sdk
 # 编译
 $ ./gradlew clean build -x test
 # 进入sdk-demo/dist目录，创建合约存放目录
-$ cd dist && mkdir -p contracts/solidity
+$ cd sdk-demo/dist && mkdir -p contracts/solidity
 # 将需要转换为java代码的sol文件拷贝到~/fisco/java-sdk/dist/contracts/solidity路径下
 # 转换sol, 其中${packageName}是生成的java代码包路径
 # 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
