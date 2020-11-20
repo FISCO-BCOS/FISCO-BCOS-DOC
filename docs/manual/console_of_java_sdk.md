@@ -59,7 +59,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -92,9 +92,9 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/downloa
 **注意：默认下载的控制台内置`0.4.25`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**	
 ```bash	
 # 0.5	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh -v 0.5	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh -v 0.5	
 # 0.6	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh -v 0.6	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh -v 0.6	
 ```
 
 ### 配置控制台
@@ -1706,6 +1706,21 @@ Remove OK, 1 row affected.
 
 ```text
 [group:1]> grantContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
+{
+    "code":1,
+    "msg":"success"
+}
+```
+
+### **revokeContractStatusManager**
+
+运行revokeContractStatusManager，用于撤销指定权限账号对指定合约的合约管理权限。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 账号地址：tx.origin，其中0x前缀非必须。
+
+```text
+[group:1]> revokeContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
 {
     "code":1,
     "msg":"success"
