@@ -2,6 +2,12 @@
 
 Privacy protection is a major technical challenge for the alliance chain. In order to protect the data, keep the anonymity of alliance members, and ensure the effectiveness of supervision，FISCO BCOS integrates homomorphic encryption and group/ring signature algorithms in [Precompiled Contracts](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id2), providing multiple privacy protection methods.
 
+```eval_rst
+.. note::
+    1. FISCO BCOS 2.3.0+ supports homomorphic encryption, group signature and ring signature
+    2. FISCO BCOS 2.3.0, 2.4.0 and 2.4.1, you need to manually compile the binary to enable the privacy protection module
+    3. FISCO BCOS 2.5.0+ enables privacy protection module by default
+```
 
 ## Homomorphic encryption
 
