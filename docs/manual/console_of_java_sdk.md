@@ -1712,6 +1712,21 @@ Remove OK, 1 row affected.
 }
 ```
 
+### **revokeContractStatusManager**
+
+运行revokeContractStatusManager，用于撤销指定权限账号对指定合约的合约管理权限。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+- 账号地址：tx.origin，其中0x前缀非必须。
+
+```text
+[group:1]> revokeContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
+{
+    "code":1,
+    "msg":"success"
+}
+```
+
 ### **getContractStatus**
 运行getContractStatus，查询指定合约的状态。参数：
 

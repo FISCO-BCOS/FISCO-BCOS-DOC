@@ -1587,6 +1587,20 @@ Parameter:
     "msg":"success"
 }
 ```
+### **revokeContractStatusManager**
+
+Run revokeContractStatusManager to revoke the contract management authority of the specified authority account for the specified contract. parameter:
+
+- Contract address: The contract address can be obtained by deploying the contract, and the 0x prefix is not required.
+- Account address: tx.origin, where 0x prefix is optional.
+
+```text
+[group:1]> revokeContractStatusManager 0x30d2a17b6819f0d77f26dd3a9711ae75c291f7f1 0x965ebffc38b309fa706b809017f360d4f6de909a
+{
+    "code":1,
+    "msg":"success"
+}
+```
 
 ### **getContractStatus**
 To run getContractStatus to query contract status according contract address.
