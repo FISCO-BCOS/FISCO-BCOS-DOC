@@ -170,14 +170,9 @@ FISCO BCOS引入开发部署工具、交互式控制台、区块链浏览器等�
 依托庞大的开源生态，社区内众伙伴秉承“来自开发者，用于开发者”的共建理念，在FISCO BCOS底层平台之上，自主研发多个趁手开发工具并回馈给社区，从不同业务层面需求上降低区块链应用开发难度和成本。以下作部分列举，欢迎更多机构或开发者向社区反馈更多好用的工具。
 
 - <font color=blue>**[区块链中间件平台WeBASE](https://github.com/WeBankFinTech/WeBASE)**</font>：面向多种对象，如开发者、运营者，并根据不同的场景，包括开发、调试、部署、审计等，打造丰富的功能组件和实用工具，提供友好的、可视化的操作环境。
-
 - <font color=blue>**[分布式身份解决方案WeIdentity](https://github.com/webankfintech/weidentity)**</font>：基于区块链的分布式多中心的技术解决方案，提供分布式实体身份标识及管理、可信数据交换协议等一系列的基础层与应用接口，可实现实体对象（人或物）数据的安全授权与交换。
-
 - <font color=blue>**[分布式事件驱动架构WeEvent](https://github.com/webankfintech/weevent)**</font>：实现了可信、可靠、高效的跨机构、跨平台事件通知机制。在不改变已有商业系统的开发语言、接入协议的情况下，实现跨机构、跨平台的事件通知与处理。
-
 - <font color=blue>**[跨链协作方案WeCross](https://github.com/WeBankFinTech/WeCross)**</font>：支持跨链事务交易，满足跨链交易的原子性，对跨链进行治理，可支持多方协作管理，避免单点风险。
-
 - <font color=blue>**[场景式隐私保护解决方案WeDPR](https://fintech.webank.com/wedpr)**</font>：针对隐匿支付、匿名投票、匿名竞拍和选择性披露等应用方案，提供即时可用场景式隐私保护高效解决方案，助力各行业合法合规地探索数据相关业务。
-
 - <font color=blue>**[ChainIDE](https://fiscoide.com/)**</font>：提供智能合约云端开发工具，帮助开发者节约边际成本，加速推送区块链应用落地。
-
+- <font color=blue>**[FISCO BCOS区块链工具箱](https://github.com/SUIBE-Blockchain/FISCO_BCOS_Toolbox)**</font>：与WeBase/Remix/VSCode/ChainIDE等IDE协同工作，提升开发体验与开发效率。
