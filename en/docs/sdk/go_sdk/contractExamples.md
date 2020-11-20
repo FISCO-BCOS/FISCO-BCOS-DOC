@@ -1,9 +1,10 @@
 # Examples
 
-## Sync Interface
+## Sync Interface Demos
 
 ### HelloWorld
 
-## Async Interface
+## Async Interface Demos
 
 ### HelloWorld
+
