@@ -54,12 +54,12 @@ cd ~ && mkdir -p fisco && cd fisco
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-![](./../images/installation/download_build_chain.gif)
-
 ```eval_rst
 .. note::
     - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
+
+![](./../images/installation/download_build_chain.gif)
 
 ### 第三步. 搭建单群组4节点联盟链
 
@@ -76,8 +76,6 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/buil
 ```bash
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
-
-
 
 ```eval_rst
 .. note::
