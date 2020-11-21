@@ -84,21 +84,35 @@ String accountAddress = cryptoKeyPair.getAddress();
 以`pem`的格式保存账户文件到指定路径的示例如下：
 
 ```java
-// 将随机生成的账户信息保存在pemFileDir指定的目录
-public void saveAccountWithPem(CryptoKeyPair cryptoKeyPair, String pemFileDir)
+// 将随机生成的账户信息保存在pemFilePath指定的路径
+public void saveAccountWithPem(CryptoKeyPair cryptoKeyPair, String pemFilePath)
 {
-    // 以pem的格式保存账户文件到pemFileDir路径，账户文件名为${accountAddress}.pem
-    cryptoKeyPair.storeKeyPairWithPemFormat(pemFileDir);
+    // 以pem的格式保存账户文件到pemFilePath路径
+    cryptoKeyPair.storeKeyPairWithPem(pemFilePath);
+}
+
+// 将随机生成的账户信息保存在账户配置${keyStoreDir}指定的目录下
+public void saveAccountWithPemToKeyStoreDir(CryptoKeyPair cryptoKeyPair)
+{
+    // 账户文件名为${accountAddress}.pem
+    cryptoKeyPair.storeKeyPairWithPemFormat();
 }
 ```
 
 以`p12`的格式保存账户文件到指定路径的示例如下：
 
 ```java
-public void saveAccountWithP12(CryptoKeyPair cryptoKeyPair, String p12FileDir, String password)
+public void saveAccountWithP12(CryptoKeyPair cryptoKeyPair, String p12FilePath, String password)
 {
-    // 以p12的格式将账户文件保存到p12FileDir路径，账户文件名为${accountAddress}.p12
-    cryptoKeyPair.storeKeyPairWithP12(p12FileDir, password);
+    // 以p12的格式将账户文件保存到p12FilePath路径
+    cryptoKeyPair.storeKeyPairWithP12(p12FilePath, password);
+}
+
+// 将随机生成的账户信息保存在账户配置${keyStoreDir}指定的目录下
+public void saveAccountWithP12ToKeyStoreDir(CryptoKeyPair cryptoKeyPair, String password)
+{
+    // 账户文件名为${accountAddress}.p12
+    cryptoKeyPair.storeKeyPairWithP12Format(password);
 }
 ```
 java sdk随机生成的账户信息可通过如下方法获取：

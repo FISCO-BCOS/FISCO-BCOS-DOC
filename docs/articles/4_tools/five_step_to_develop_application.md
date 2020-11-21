@@ -30,7 +30,7 @@ $ bash nodes/127.0.0.1/start_all.sh
 控制台是一个可以交互式访问区块链，进行区块链数据读写请求的工具。无需太多解释，**四步完成控制台安装：**
 
 ```
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh -c 1.2.0
 $ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 $ cd console && ./start.sh

@@ -27,8 +27,16 @@
 `开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
 若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可（macOS自带的openssl指令选项不同，请执行安装标准openssl）。
 
+**安装ubuntu依赖**
+
 ```bash
 sudo apt install -y openssl curl
+```
+
+**安装centos依赖**
+
+```bash
+sudo yum install -y openssl openssl-devel
 ```
 
 - 创建操作目录
@@ -173,14 +181,24 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
     - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <tutorial/download_console.html>`_ 
 ```
 
-在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
+在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
 
 ### 准备依赖
+
+- 安装java
+
+```bash
+# ubuntu系统安装java
+sudo apt install -y default-jdk
+
+#centos系统安装java
+sudo yum install -y java java-devel
+```
 
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -217,7 +235,7 @@ cp -r nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
 ```
 
-输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
 ```bash
 =============================================================================================
@@ -368,6 +386,16 @@ Return values:
 # 退出控制台
 [group:1]> quit
 ```
+
+## WeBASE搭建
+微众银行开源的自研区块链中间件平台——[WeBASE(WeBank Blockchain Application Software Extension)](https://webasedoc.readthedocs.io/zh_CN/latest/) 是区块链应用和FISCO BCOS节点之间搭建的中间件平台。WeBASE屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。用户可以根据业务所需，选择子系统进行部署，可以进一步体验丰富交互的体验、可视化智能合约开发环境IDE。
+### [WeBASE快速入门](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)
+开发者只需要搭建节点和节点前置服务(WeBASE-Front)，就可通过WeBASE-Front的合约编辑器进行合约的编辑，编译，部署，调试。搭建可参考[《WeBASE快速入门文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)。
+![](../images/webase/webase-front.png)
+### [WeBASE管理台](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)
+通过WeBASE一键脚本，可以搭建一个WeBASE的基础环境，可以方便用户体验WeBASE核心功能如：区块浏览，节点查看，合约IDE，系统管理，节点监控，交易审计，私钥管理。搭建可参考[《WeBASE一键部署文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)。![](../images/webase/webase-web.png)
+### [WeBASE其他](https://webasedoc.readthedocs.io/zh_CN/latest)
+WeBASE其他组件可以参考[《WeBASE文档》](https://webasedoc.readthedocs.io/zh_CN/latest)
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 

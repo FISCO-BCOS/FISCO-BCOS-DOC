@@ -217,20 +217,14 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ### 配置控制台
 
-控制台通过Web3SDK链接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。2.6及其以上版本控制台使用手册请参考[这里](../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../manual/console.md)。
-
-```eval_rst
-.. important::
-   控制台依赖于Java 8以上版本，Ubuntu 16.04系统安装openjdk 8即可。CentOS请安装Oracle Java 8以上版本。
-   如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
-```
+控制台通过Java SDK连接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。2.6及其以上版本控制台使用手册请参考[这里](../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../manual/console.md)。
 
 ```bash
 #回到fisco目录
 $ cd ~/fisco
 
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 
 # 进入控制台操作目录
 $ cd console
@@ -249,82 +243,17 @@ $ grep "channel_listen_port" ~/fisco/nodes/127.0.0.1/node*/config.ini
 /home/ubuntu16/fisco/nodes/127.0.0.1/node6/config.ini:    channel_listen_port=20206
 /home/ubuntu16/fisco/nodes/127.0.0.1/node7/config.ini:    channel_listen_port=20207
 
-```
-
-```eval_rst
-.. important::
-    使用控制台连接节点时，控制台连接的节点必须在控制台配置的组中
-```
-
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下**，控制台从node0(`127.0.0.1:20200`)分别接入三个group中，2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
-
-```xml
-cat > ./conf/applicationContext.xml << EOF
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-         http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-         http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-
-
-        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
-        </bean>
-
-      <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-        <property name="allChannelConnections">
-        <list>
-            <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="1" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20200</value>
-                    </list>
-                    </property>
-            </bean>
-            <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="2" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20200</value>
-                    </list>
-                    </property>
-            </bean>
-            <bean id="group3"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="3" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20200</value>
-                    </list>
-                    </property>
-            </bean>
-        </list>
-        </property>
-        </bean>
-
-        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-                <property name="groupId" value="1" />
-                <property name="orgID" value="fisco" />
-                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-        </bean>
-</beans>
-EOF
+# 拷贝控制台配置
+$ cp ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
 ```
 
 **启动控制台**
 
 ```bash
 $ bash start.sh
-# 输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+# 输出如下信息表明控制台启动成功，若启动失败，请检查是否配置证书、channel listen port配置是否正确
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.3)!
+Welcome to FISCO BCOS console(2.6.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -366,6 +295,7 @@ $ [group:1]> switch 2
 Switched to group 2.
 # 向group2发交易，返回交易哈希表明交易部署成功，否则请检查group2是否共识正常
 $ [group:2]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 查看group2当前块高，块高增加为1表明出块正常，否则请检查group2是否共识正常
 $ [group:2]> getBlockNumber
@@ -377,6 +307,7 @@ $ [group:2]> switch 3
 Switched to group 3.
 # 向group3发交易，返回交易哈希表明交易部署成功
 $ [group:3]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 查看group3当前块高，块高为1表明出块正常，否则请检查group3是否共识正常
 $ [group:3]> getBlockNumber
@@ -676,7 +607,7 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # 若从未下载控制台，请进行下面操作下载控制台，否则将控制台拷贝到~/fisco目录：
 $ cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 ```
 
 **配置控制台**
@@ -691,62 +622,18 @@ $ cd console
 # 拷贝节点证书
 $ cp ~/fisco/multi_nodes/127.0.0.1/sdk/* conf
 
+# 拷贝控制台配置
+$ cp ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
+
+# 修改控制台连接节点的端口为20100和20101
+# linux系统使用如下命令:
+$ sed -i 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
+$ sed -i 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
+
+# mac系统使用如下命令:
+$ sed -i .bkp 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
+$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
 ```
-
-**创建控制台配置文件`conf/applicationContext.xml`的配置如下，在node0（`127.0.0.1:20100`）上配置了两个group（group1和group2）：**
-
-```xml
-cat > ./conf/applicationContext.xml << EOF
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-           xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-         http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-         http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
-
-
-        <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-                <constructor-arg value="0"/> <!-- 0:standard 1:guomi -->
-        </bean>
-
-      <bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-        <property name="allChannelConnections">
-        <list>
-            <bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="1" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20100</value>
-                    </list>
-                    </property>
-            </bean>
-            <bean id="group2"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-                <property name="groupId" value="2" />
-                    <property name="connectionsStr">
-                    <list>
-                    <value>127.0.0.1:20100</value>
-                    </list>
-                    </property>
-            </bean>
-        </list>
-        </property>
-        </bean>
-
-        <bean id="channelService" class="org.fisco.bcos.channel.client.Service" depends-on="groupChannelConnectionsConfig">
-                <property name="groupId" value="1" />
-                <property name="orgID" value="fisco" />
-                <property name="allChannelConnections" ref="groupChannelConnectionsConfig"></property>
-        </bean>
-</beans>
-EOF
-```
-
 
 **通过控制台向群组发交易**
 
@@ -755,7 +642,7 @@ EOF
 $ bash start.sh
 # 输出如下信息表明控制台启动成功，若启动失败，请检查是否配置证书、channel listen port配置是否正确
 =====================================================================================
-Welcome to FISCO BCOS console(1.0.3)!
+Welcome to FISCO BCOS console(2.6.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -774,6 +661,7 @@ $ [group:1]> getBlockNumber
 0
 # 向group1部署HelloWorld合约，若部署失败，请检查group1共识是否正常
 $ [group:1]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 获取当前块高，若块高没有增加，请检查group1共识是否正常
 $ [group:1]> getBlockNumber
@@ -788,6 +676,7 @@ $ [group:2]> getBlockNumber
 0
 # 向group2部署HelloWorld合约
 $ [group:2]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 # 获取当前块高，若块高没有增加，请检查group2共识是否正常
 $ [group:2]> getBlockNumber

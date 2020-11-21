@@ -22,7 +22,11 @@ This section takes the construction of single group FISCO BCOS chain as an examp
 `build_chain.sh` script depends on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, execute `brew install openssl curl`.
 
 ```bash
+# ubuntu
 sudo apt install -y openssl curl
+
+# centos
+sudo yum install -y openssl openssl-devel
 ```
 
 - Create operation directory
@@ -167,7 +171,7 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
     - You can view the current console version through the command ``./start.sh --version``
 ```
 
-Console links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status query, call and deploy contracts. 2.0 version console command detailed introduction [refer here](manual/console_of_java_sdk.md), 1.x version console command detailed introduction [refer here](manual/console.md).
+Console links nodes of FISCO BCOS so as to realize functions like blockchain status query, call and deploy contracts. 2.0 version console command detailed introduction [refer here](manual/console_of_java_sdk.md), 1.x version console command detailed introduction [refer here](manual/console.md).
 
 ### Prepare environment
 
@@ -176,13 +180,17 @@ Console links nodes of FISCO BCOS through Web3SDK so as to realize functions lik
 In macOS, execute `brew cask install java` to install java
 
 ```bash
+# ubuntu
 sudo apt install -y default-jdk
+
+# centos
+sudo yum install -y java java-devel
 ```
 
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -210,7 +218,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
 ```
 
-If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/applicationContext.xml are configured correctly.
+If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/config.toml are configured correctly.
 
 ```bash
 =============================================================================================
