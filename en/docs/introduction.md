@@ -178,3 +178,5 @@ Relying on the huge open source ecosystem, all partners in the community uphold 
 - <font color=blue>**[Scene-style privacy protection solution WeDPR](https://fintech.webank.com/wedpr)**</font>: For hidden payment, anonymous voting, anonymous bidding and selective disclosure and other application solutions, provide an immediately available scenario-based privacy protection and efficient solutions to help various industries to explore data-related businesses legally and compliantly.
 
 - <font color=blue>**[ChainIDE](https://fiscoide.com/)**</font>: Provide smart contract cloud development tools to help developers save marginal costs and accelerate the launch of blockchain applications.
+
+- <font color=blue>**[FISCO BCOS Blockchain Toolbox](https://github.com/SUIBE-Blockchain/FISCO_BCOS_Toolbox/)**</font>: Work with IDEs such as WeBase/Remix/VSCode/ChainIDE to improve development experience and efficiency.
