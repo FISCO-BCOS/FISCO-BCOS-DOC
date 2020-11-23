@@ -336,9 +336,9 @@ go run kvtabletest/cmd/kvtabletest_main.go
 
 ```
 
-#### 调用合约set接口
+#### 调用合约set/get接口
 
-在 contract 文件夹中新建 kvtabletest_set.go 文件，该文件调用合约 set 接口，向 t_kvtest 表中插入一条数据：id="100010001001"、item_name="Laptop"、item_price=6000。
+在 contract 文件夹中新建 kvtabletest_set.go 文件，该文件调用合约 set 接口，向 t_kvtest 表中插入一条数据：id="100010001001"、item_name="Laptop"、item_price=6000。然后调用get接口查询数据。
 
 ```go
 package main
@@ -399,134 +399,19 @@ func main() {
 		return
 	}
 
-	fmt.Printf("seted lines: %v\n", ret.String())
-}
+    fmt.Printf("seted lines: %v\n", ret.String())
 
-```
-
-#### 调用合约get接口
-
-在 contract 文件夹中新建 kvtabletest_get.go 文件，该文件调用合约 get 接口，查看id="100010001001" 在表 t_kvtest 中的数据。
-
-```go
-package main
-
-import (
-	"fmt"
-	"log"
-
-	"github.com/FISCO-BCOS/go-sdk/client"
-	"github.com/FISCO-BCOS/go-sdk/conf"
-	kvtable "github.com/FISCO-BCOS/go-sdk/kvtabletest"
-	"github.com/ethereum/go-ethereum/common"
-)
-
-func main() {
-	configs, err := conf.ParseConfigFile("config.toml")
+	success, item_price, item_name, err := kvtabletestSession.Get(id) // call get API
 	if err != nil {
 		log.Fatal(err)
 	}
-	config := &configs[0]
-
-	client, err := client.Dial(config)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// load the contract
-	contractAddress := common.HexToAddress(contract address in hex string) // deploy contract to get address
-	instance, err := kvtable.NewKVTableTest(contractAddress, client)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	kvtabletestSession := &kvtable.KVTableTestSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
-
-	id := "100010001001"
-
-	bool, item_price, item_name, err := kvtabletestSession.Get(id) // call get API
-	if err != nil {
-		log.Fatal(err)
-	}
-	if !bool {
+	if !success {
 		log.Fatalf("id：%v is not found \n", id)
 	}
 	fmt.Printf("id: %v, item_price: %v, item_name: %v \n", id, item_price, item_name)
 }
 
 ```
-
-## 国密样例
-
-使用国密特性的开发流程和非国密大致相同，不同点在于以下几部分：
-
-- 搭建的 FISCO BCOS 区块链网络需要开启国密特性，可参考：[国密支持](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/guomi_crypto.html)
-- go-sdk 的 config.toml 配置文件中 KeyFile 配置项，需要将非国密私钥替换为国密私钥
-- go-sdk 的 config.toml 配置文件中 SMCrypto 配置项，需要修改为 true
-- 安装 solc 编译器时需要添加 **-g** 选项，替换为国密版本
-- 使用 abigen 工具将 bin 和 abi 转换为 go 文件时，需要添加参数 **--smcrypto=true**
-
-### HelloWorld样例
-
-#### 准备HelloWorld.sol合约文件
-
-在 go-sdk 主目录中新建 helloworld 文件夹，在该文件夹中创建 HelloWorld.sol 合约。该合约提供两个接口，分别是get()和set()，用于获取/设置合约变量name。合约内容如下
-
-```solidity
-pragma solidity>=0.4.24 <0.6.11;
-
-contract HelloWorld {
-    string name;
-
-    constructor() public {
-        name = "Hello, World!";
-    }
-
-    function get() public view returns (string memory) {
-        return name;
-    }
-
-    function set(string memory n) public {
-        name = n;
-    }
-}
-```
-
-#### 安装国密solc编译器
-
-该编译器用于将 sol 合约文件编译成 abi 和 bin 文件
-
-```bash
-# 该指令在helloworld文件夹中执行
-bash ../tools/download_solc.sh -v 0.4.25 -g
-```
-
-#### 构建go-sdk的代码生成工具abigen
-
-该工具用于将 abi 和 bin 文件转换为 go 文件
-
-```bash
-# 该指令在helloworld文件夹中执行，编译生成abigen工具
-go build ../cmd/abigen
-```
-
-#### 编译生成go文件
-
-先利用solc编译合约文件HelloWorld.sol，生成abi和bin文件
-
-```bash
-# 该指令在helloworld文件夹中执行
-./solc-0.4.25-gm --bin --abi -o ./ ./HelloWorld.sol
-```
-
-helloworld目录下会生成HelloWorld.bin和HelloWorld.abi。此时利用abigen工具将HelloWorld.bin和HelloWorld.abi转换成HelloWorld.go：
-
-```bash
-# 该指令在helloworld文件夹中执行
-./abigen --bin ./HelloWorld.bin --abi ./HelloWorld.abi --pkg helloworld --type HelloWorld --out ./HelloWorld.go --smcrypto=true
-```
-
-- 接下来的步骤同非国密，不占用多余篇幅
 
 ## 异步接口使用样例
 
@@ -653,6 +538,18 @@ func parseOutput(abiStr, name string, receipt *types.Receipt) (*big.Int, error) 
 ### 异步部署、调用HelloWorld合约
 
 ```golang
+package main
+
+import (
+    "fmt"
+    "log"
+
+    "github.com/FISCO-BCOS/go-sdk/client"
+    "github.com/FISCO-BCOS/go-sdk/conf"
+    "github.com/FISCO-BCOS/go-sdk/helloworld"
+    "github.com/ethereum/go-ethereum/common"
+)
+
 func main() {
 	configs, err := conf.ParseConfigFile("config.toml")
 	if err != nil {
@@ -711,3 +608,76 @@ func main() {
 }
 
 ```
+
+## 国密样例
+
+使用国密特性的开发流程和非国密大致相同，不同点在于以下几部分：
+
+- 搭建的 FISCO BCOS 区块链网络需要开启国密特性，可参考：[国密支持](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/guomi_crypto.html)
+- go-sdk 的 config.toml 配置文件中 KeyFile 配置项，需要将非国密私钥替换为国密私钥
+- go-sdk 的 config.toml 配置文件中 SMCrypto 配置项，需要修改为 true
+- 安装 solc 编译器时需要添加 **-g** 选项，替换为国密版本
+- 使用 abigen 工具将 bin 和 abi 转换为 go 文件时，需要添加参数 **--smcrypto=true**
+
+### HelloWorld样例
+
+#### 准备HelloWorld.sol合约文件
+
+在 go-sdk 主目录中新建 helloworld 文件夹，在该文件夹中创建 HelloWorld.sol 合约。该合约提供两个接口，分别是get()和set()，用于获取/设置合约变量name。合约内容如下
+
+```solidity
+pragma solidity>=0.4.24 <0.6.11;
+
+contract HelloWorld {
+    string name;
+
+    constructor() public {
+        name = "Hello, World!";
+    }
+
+    function get() public view returns (string memory) {
+        return name;
+    }
+
+    function set(string memory n) public {
+        name = n;
+    }
+}
+```
+
+#### 安装国密solc编译器
+
+该编译器用于将 sol 合约文件编译成 abi 和 bin 文件
+
+```bash
+# 该指令在helloworld文件夹中执行
+bash ../tools/download_solc.sh -v 0.4.25 -g
+```
+
+#### 构建go-sdk的代码生成工具abigen
+
+该工具用于将 abi 和 bin 文件转换为 go 文件
+
+```bash
+# 该指令在helloworld文件夹中执行，编译生成abigen工具
+go build ../cmd/abigen
+```
+
+#### 编译生成go文件
+
+先利用solc编译合约文件HelloWorld.sol，生成abi和bin文件
+
+```bash
+# 该指令在helloworld文件夹中执行
+./solc-0.4.25-gm --bin --abi -o ./ ./HelloWorld.sol
+```
+
+helloworld目录下会生成HelloWorld.bin和HelloWorld.abi。此时利用abigen工具将HelloWorld.bin和HelloWorld.abi转换成HelloWorld.go：
+
+```bash
+# 该指令在helloworld文件夹中执行
+./abigen --bin ./HelloWorld.bin --abi ./HelloWorld.abi --pkg helloworld --type HelloWorld --out ./HelloWorld.go --smcrypto=true
+```
+
+- 接下来的步骤同非国密，不占用多余篇幅
+
