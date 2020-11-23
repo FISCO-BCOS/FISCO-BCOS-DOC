@@ -31,7 +31,7 @@ TransactionDecoderInterface 主要包括以下功能：
 // abi在合约生成的java客户端文件夹下,以HelloWorld.sol为例,为HelloWorld.abi中的json字符串。
 - **public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：**   解析不带函数返回值的交易回执。
 - **public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：** 解析带函数返回值的交易回执。
-- **public Map\<String, List\<Object\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易日志。
+- **public Map\<String, List\<List\<Object\>\>\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易日志。
 - **public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)：** 解析回执的状态和报错信息等。
 
 ## 2. 解析带返回值的交易
@@ -98,8 +98,10 @@ function incrementUint256(uint256 v) public returns(uint256){
   ],
   "eventResultMap": {
     "LogIncrement": [
-      "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
-      1
+      [
+        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
+        1
+      ]
     ]
   }
 }
@@ -159,8 +161,10 @@ TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWith
   "valuesList": null,
   "eventResultMap": {
     "LogIncrement": [
-      "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
-      1
+      [
+        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
+        1
+      ]
     ]
   }
 }
@@ -173,7 +177,7 @@ TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWith
 只解析调用函数过程中触发的日志。传入合约的abi文件和交易回执的logs，解析交易结果；返回事件名和事件List的Map。
 
 ```
-Map<String, List<Object>> events = decoder.decodeEvents(abi, transactionReceipt.getLogs());
+Map<String, List<List<Object>>>> events = decoder.decodeEvents(abi, transactionReceipt.getLogs());
 ```
 
 ### 解析结果示例：
@@ -182,8 +186,10 @@ Map<String, List<Object>> events = decoder.decodeEvents(abi, transactionReceipt.
 ```
 {
   "LogIncrement": [
-    "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
-    1
+    [
+      "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
+      1
+    ]
   ]
 }
 ```
