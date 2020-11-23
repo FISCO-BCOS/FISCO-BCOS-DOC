@@ -183,7 +183,7 @@ func main() {
     fmt.Println("value :", value)
 
     value = "Hello, FISCO BCOS"
-    tx, err = helloworldSession.Set(value)  // call set API
+    tx, receipt, err := helloworldSession.Set(value)  // call set API
     if err != nil {
         log.Fatal(err)
     }
@@ -289,7 +289,7 @@ KVTableTest.abi、KVTableTest.bin、KVTableTest.go、KVTableTest.sol、solc-0.5.
 
 #### 部署合约
 
-在 kvtabletest 文件夹中创建 contract 文件夹，在 contract 文件夹中创建 kvtabletest_main.go 文件，调用 KVTableTest.go 部署智能合约。合约将创建 t_kvtest 表，该表用于记录某公司仓库中物资，以唯一的物资编号作为主key，保存物资的名称和价格。使用build_chain.sh脚本搭建区块链时会在./nodes/127.0.0.1/sdk文件夹中生成sdk证书、私钥以及ca证书，需要将这三个文件拷贝至`config.toml`中配置的位置。
+在 kvtabletest 文件夹中创建 cmd 文件夹，在 cmd 文件夹中创建 kvtabletest_main.go 文件，调用 KVTableTest.go 部署智能合约。合约将创建 t_kvtest 表，该表用于记录某公司仓库中物资，以唯一的物资编号作为主key，保存物资的名称和价格。使用build_chain.sh脚本搭建区块链时会在./nodes/127.0.0.1/sdk文件夹中生成sdk证书、私钥以及ca证书，需要将这三个文件拷贝至`config.toml`中配置的位置。
 
 ```go
 package main
@@ -324,6 +324,11 @@ func main(){
 }
 ```
 
+```bash
+# 该指令在go-sdk目录中执行
+go run kvtabletest/cmd/kvtabletest_main.go
+```
+
 ```eval_rst
 .. note::
 
@@ -339,62 +344,64 @@ func main(){
 package main
 
 import (
-    "fmt"
-    "log"
-    "math/big"
-    "strconv"
+	"fmt"
+	"log"
+	"math/big"
+	"strings"
 
-    "github.com/FISCO-BCOS/go-sdk/client"
-    "github.com/FISCO-BCOS/go-sdk/conf"
-    kvtable "github.com/FISCO-BCOS/go-sdk/kvtabletest"
-    "github.com/ethereum/go-ethereum/common"
+	"github.com/FISCO-BCOS/go-sdk/abi"
+	"github.com/FISCO-BCOS/go-sdk/client"
+	"github.com/FISCO-BCOS/go-sdk/conf"
+	kvtable "github.com/FISCO-BCOS/go-sdk/kvtabletest"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 func main() {
-    configs, err := conf.ParseConfigFile("config.toml")
-    if err != nil {
-        log.Fatal(err)
-    }
-    config := &configs[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
 
-    client, err := client.Dial(config)
-    if err != nil {
-        log.Fatal(err)
-    }
+	client, err := client.Dial(config)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    // load the contract
-    contractAddress := common.HexToAddress("contract address in hex") // 0x9526BDd51d7F346ec2B48192f25a800825A8dBF3
-    instance, err := kvtable.NewKVTableTest(contractAddress, client)
-    if err != nil {
-        log.Fatal(err)
-    }
+	// load the contract
+	contractAddress := common.HexToAddress(contract address in hex string) // deploy contract to get address
+	instance, err := kvtable.NewKVTableTest(contractAddress, client)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    kvtabletestSession := &kvtable.KVTableTestSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
+	kvtabletestSession := &kvtable.KVTableTestSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
 
-    id := "100010001001"
-    item_name := "Laptop"
-    item_price := big.NewInt(6000)
-    tx, receipt, err := kvtabletestSession.Set(id,item_price,item_name)    // call set API
-    if err != nil {
-        log.Fatal(err)
-    }
-    fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
-    // 解析abi
-    kvtableTestABI, err := abi.JSON(strings.NewReader(kvtable.KVTableTestABI))
-    if err != nil {
-        fmt.Printf("parse abi failed, err: %v\n", err)
-        return
-    }
-    // kvtableTestABI 解析返回值
-    ret := big.NewInt(0)
-    err = kvtableTestABI.Unpack(ret, "set", common.FromHex(receipt.Output))
-    if err != nil {
-        fmt.Printf("parse return value failed, err: %v\n", err)
-        return
-    }
+	id := "100010001001"
+	item_name := "Laptop"
+	item_price := big.NewInt(6000)
+	tx, receipt, err := kvtabletestSession.Set(id, item_price, item_name) // call set API
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("tx sent: %s\n", tx.Hash().Hex())
+	// 解析abi
+	kvtableTestABI, err := abi.JSON(strings.NewReader(kvtable.KVTableTestABI))
+	if err != nil {
+		fmt.Printf("parse abi failed, err: %v\n", err)
+		return
+	}
+	// kvtableTestABI 解析返回值
+	ret := big.NewInt(0)
+	err = kvtableTestABI.Unpack(&ret, "set", common.FromHex(receipt.Output))
+	if err != nil {
+		fmt.Printf("parse return value failed, err: %v\n", err)
+		return
+	}
 
-    fmt.Printf("seted lines: %v\n", ret.String())
+	fmt.Printf("seted lines: %v\n", ret.String())
 }
+
 ```
 
 #### 调用合约get接口
@@ -405,47 +412,48 @@ func main() {
 package main
 
 import (
-    "fmt"
-    "log"
+	"fmt"
+	"log"
 
-    "github.com/FISCO-BCOS/go-sdk/client"
-    "github.com/FISCO-BCOS/go-sdk/conf"
-    kvtable "github.com/FISCO-BCOS/go-sdk/kvtabletest"
-    "github.com/ethereum/go-ethereum/common"
+	"github.com/FISCO-BCOS/go-sdk/client"
+	"github.com/FISCO-BCOS/go-sdk/conf"
+	kvtable "github.com/FISCO-BCOS/go-sdk/kvtabletest"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 func main() {
-    configs, err := conf.ParseConfigFile("config.toml")
-    if err != nil {
-        log.Fatal(err)
-    }
-    config := &configs[0]
+	configs, err := conf.ParseConfigFile("config.toml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	config := &configs[0]
 
-    client, err := client.Dial(config)
-    if err != nil {
-        log.Fatal(err)
-    }
+	client, err := client.Dial(config)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    // load the contract
-    contractAddress := common.HexToAddress("contract address in hex") // 0x481D3A1dcD72cD618Ea768b3FbF69D78B46995b0
-    instance, err := kvtable.NewKVTableTest(contractAddress, client)
-    if err != nil {
-        log.Fatal(err)
-    }
+	// load the contract
+	contractAddress := common.HexToAddress(contract address in hex string) // deploy contract to get address
+	instance, err := kvtable.NewKVTableTest(contractAddress, client)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    kvtabletestSession := &kvtable.KVTableTestSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
+	kvtabletestSession := &kvtable.KVTableTestSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
 
-    id := "100010001001"
+	id := "100010001001"
 
-    bool, item_price, item_name, err := kvtabletestSession.Get(id)  // call get API
-    if err != nil {
-        log.Fatal(err)
-    }
-    if !bool {
-        log.Fatalf("id：%v is not found \n", id)
-    }
-    fmt.Printf("id: %v, item_price: %v, item_name: %v \n", id, item_price, item_name)
+	bool, item_price, item_name, err := kvtabletestSession.Get(id) // call get API
+	if err != nil {
+		log.Fatal(err)
+	}
+	if !bool {
+		log.Fatalf("id：%v is not found \n", id)
+	}
+	fmt.Printf("id: %v, item_price: %v, item_name: %v \n", id, item_price, item_name)
 }
+
 ```
 
 ## 国密样例

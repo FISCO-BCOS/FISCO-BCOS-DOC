@@ -181,3 +181,5 @@ FISCO BCOS引入开发部署工具、交互式控制台、区块链浏览器等�
 
 - <font color=blue>**[ChainIDE](https://fiscoide.com/)**</font>：提供智能合约云端开发工具，帮助开发者节约边际成本，加速推送区块链应用落地。
 
+- <font color=blue>**[FISCO BCOS区块链工具箱](https://github.com/SUIBE-Blockchain/FISCO_BCOS_Toolbox/)**</font>：与WeBase/Remix/VSCode/ChainIDE等IDE协同工作，提升开发体验与开发效率。
+

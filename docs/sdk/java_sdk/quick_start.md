@@ -34,7 +34,7 @@ compile ('org.fisco-bcos.java-sdk:java-sdk:2.6.1-rc1')
 ```eval_rst
 .. note::
     - 大部分场景仅需要配置 `certPath` 配置项即可，其他配置项不需额外配置；
-    - SDK证书获取：若参考 `安装 <../../installation.html>`_ 搭建区块链，则参考 `这里 <../../installation.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../installation.html>`_ 搭建，则参考 `这里 <../../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath` 指定路径，`certPath`默认为`conf`目录；
+    - SDK证书获取：若参考 `安装 <../../installation.html>`_ 搭建区块链，则参考 `这里 <../../installation.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../installation.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath` 指定路径，`certPath`默认为`conf`目录；
     - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .
 ```
 
@@ -75,7 +75,7 @@ $ bash sol2java.sh -h
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
 $ cd ~/fisco/console
 # 将sol转为java代码，指定java包名为org.com.fisco
 $ bash sol2java.sh org.com.fisco
@@ -191,7 +191,8 @@ public class BcosSDKTest
         BlockNumber blockNumber = client.getBlockNumber();
 
         // 向群组1部署HelloWorld合约
-        HelloWorld helloWorld = HelloWorld.deploy(client, client.getCryptoInterface());
+        CryptoKeyPair cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
+        HelloWorld helloWorld = HelloWorld.deploy(client, cryptoKeyPair);
 
         // 调用HelloWorld合约的get接口
         String getValue = helloWorld.get();
