@@ -22,7 +22,7 @@
 ![](../../../images/articles/offline_deploy_case/20201104155851638.png)
 
 
-我们准备安装**1群组1机构4节点**的链架构来举例，如下表：
+我们准备安装**1群组1机构4节点**的链架构来举例，如下表(无网络)：
 
 ![](../../../images/articles/offline_deploy_case/202011041500488510.png)
 
@@ -135,7 +135,7 @@ bash ./one_click_generator.sh -b ./tmp_one_click
 ![](../../../images/articles/offline_deploy_case/20201104152405602.png)
 
 
-**分别上传到对应ip的服务器上**![](../../../images/articles/offline_deploy_case/20201104152510398.png)
+**分别上传到对应ip的服务器(无网络)上**![](../../../images/articles/offline_deploy_case/20201104152510398.png)
 
 **给相关的运行权限**
 10.21.36.167:
@@ -152,13 +152,13 @@ bash ./one_click_generator.sh -b ./tmp_one_click
 
 **运行**
 
-10.21.36.167:
+10.21.36.167(无网络):
 ![](../../../images/articles/offline_deploy_case/20201104154529697.png)
-10.21.36.168:
+10.21.36.168(无网络):
 ![](../../../images/articles/offline_deploy_case/20201104154659455.png)
-10.21.36.165:
+10.21.36.165(无网络):
 ![](../../../images/articles/offline_deploy_case/20201104154840698.png)
-10.21.36.166:
+10.21.36.166(无网络):
 ![](../../../images/articles/offline_deploy_case/20201104155237937.png)
 
 
