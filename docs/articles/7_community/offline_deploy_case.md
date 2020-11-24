@@ -136,15 +136,16 @@ bash ./one_click_generator.sh -b ./tmp_one_click
 
 
 **分别上传到对应ip的服务器(无网络)上**![](../../../images/articles/offline_deploy_case/20201104152510398.png)
+PS:这步如果是有的环境中没有上传的入口，可以使用U盘拷贝至相关的服务器中。
 
 **给相关的运行权限**
-10.21.36.167:
+10.21.36.167(无网络):
 ![](../../../images/articles/offline_deploy_case/20201104154512595.png)
-10.21.36.168:
+10.21.36.168(无网络):
 ![](../../../images/articles/offline_deploy_case/20201104154629219.png)
-10.21.36.165:
+10.21.36.165(无网络):
 ![](../../../images/articles/offline_deploy_case/2020110415483531.png)
-10.21.36.166:
+10.21.36.166(无网络):
 ![](../../../images/articles/offline_deploy_case/20201104155200120.png)
 
 
