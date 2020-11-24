@@ -19,7 +19,7 @@ FISCO BCOS 2.0受以太坊内置合约启发，实现了一套预编译合约框
 
 以太坊通过内置合约来避免EVM中复杂计算的代价，以太坊当前使用内置合约实现了8个函数（如下表所示）。可以看到，以太坊内置合约占用了0x1-0x8这8个地址，每个内置合约实际上就是一个本地函数的调用，只能用于状态无关的计算使用。
 
-![](../../../../images/articles/pre-compiled_contract_architecture_design/IMG_5428.PNG)
+![](../../images/articles/pre-compiled_contract_architecture_design/IMG_5428.PNG)
 
 用户在Solidity中使用内置合约，需要借助call这个操作，依次输入下列参数
 
