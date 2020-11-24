@@ -21,6 +21,7 @@
    account.md
    amop_protocol.md
    smart_contract.md
+   precompiled_contract.md
    transaction_parallel.md
    node_management.md
    permission_control.md
