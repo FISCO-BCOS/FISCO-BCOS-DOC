@@ -959,7 +959,7 @@ bash ~/generator-C/nodeC/start_all.sh
 ./generator --download_console ./ --cdn
 ```
 
-**修改国密配置**
+使用`1.x`版本控制台，需要配置国密选项如下(**使用2.6.0+版本控制台不需要额外配置**)：
 
 ```bash
 vi ./console/conf/applicationContext.xml
@@ -973,6 +973,7 @@ vi ./console/conf/applicationContext.xml
     <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
 </bean>
 ```
+
 
 ### 查看机构C节点4信息
 

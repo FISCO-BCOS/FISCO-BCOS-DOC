@@ -28,5 +28,6 @@ Java SDK 提供了访问 FISCO BCOS 节点的Java API，支持节点状态查询
    abi.md
    api.md
    key_tool.md
+   crypto.md
    faq.md
 ```

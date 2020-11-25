@@ -60,7 +60,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh -c 1.2.0
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst
@@ -342,6 +342,7 @@ getGroupList                             Query group list.
 getGroupPeers                            Query nodeId list for sealer and observer nodes.
 getNodeIDList                            Query nodeId list for all connected nodes.
 getNodeVersion                           Query the current node version.
+getNodeInfo                              Query the specified node information.
 getObserverList                          Query nodeId list for observer nodes.
 getPbftView                              Query the pbft view of node.
 getPeers                                 Query peers currently connected to the client.

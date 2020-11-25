@@ -7,7 +7,7 @@
     - 搭建全链路国密版本的链，`请参考这里 <manual/guomi_crypto.html>`_ 。
 ```
 
-## 单群组FISCO BCOS联盟链的搭建
+## 1. 单群组FISCO BCOS联盟链的搭建
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
 
@@ -20,12 +20,17 @@
     - `使用docker模式搭建 <manual/build_chain.html#d-optional>`_ ，供有丰富docker经验和容器化部署需求的用户参考。
 ```
 
-### 准备环境
+### 第一步. 安装依赖
 
-- 安装依赖
+`开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，根据您使用的操作系统，使用以下命令安装依赖。
 
-`开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
-若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可（macOS自带的openssl指令选项不同，请执行安装标准openssl）。
+![](./../images/installation/install.gif)
+
+**安装macOS依赖**
+
+```bash
+brew install openssl curl
+```
 
 **安装ubuntu依赖**
 
@@ -39,16 +44,14 @@ sudo apt install -y openssl curl
 sudo yum install -y openssl openssl-devel
 ```
 
-- 创建操作目录
+### 第二步. 创建操作目录, 下载安装脚本
 
 ```bash
+## 创建操作目录
 cd ~ && mkdir -p fisco && cd fisco
-```
 
-- 下载`build_chain.sh`脚本
-
-```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+## 下载脚本
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -56,7 +59,9 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/buil
     - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
-### 搭建单群组4节点联盟链
+![](./../images/installation/download_build_chain.gif)
+
+### 第三步. 搭建单群组4节点联盟链
 
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。
 请确保机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
@@ -105,7 +110,9 @@ e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh
 [INFO] All completed. Files in /home/ubuntu/fisco/nodes
 ```
 
-### 启动FISCO BCOS链
+![](./../images/installation/build_nodes.gif)
+
+### 第四步. 启动FISCO BCOS链
 
 - 启动所有节点
 
@@ -114,6 +121,7 @@ bash nodes/127.0.0.1/start_all.sh
 ```
 
 启动成功会输出类似下面内容的响应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
+
 ```bash
 try to start node0
 try to start node1
@@ -125,7 +133,9 @@ try to start node3
  node3 start successfully
 ```
 
-### 检查进程
+![](./../images/installation/start.gif)
+
+### 第五步. 检查进程
 
 - 检查进程是否启动
 
@@ -135,6 +145,7 @@ ps -ef | grep -v grep | grep fisco-bcos
 
 正常情况会有类似下面的输出；
 如果进程数不为4，则进程没有启动（一般是端口被占用导致的）
+
 ```bash
 fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
 fisco       5459     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
@@ -142,7 +153,9 @@ fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0
 fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
-### 检查日志输出
+<img src="./../images/installation/check_result.gif" />
+
+### 第六步. 检查日志输出
 
 - 如下，查看节点node0链接的节点数
 
@@ -171,7 +184,9 @@ info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
 ```
 
-## 配置及使用控制台
+![](./../images/installation/show_log.gif)
+
+## 2. 配置及使用控制台
 
 ```eval_rst
 .. important::
@@ -183,9 +198,9 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
 
-### 准备依赖
+### 第一步. 准备依赖
 
-- 安装java
+- 安装java （推荐使用java 14）.
 
 ```bash
 # ubuntu系统安装java
@@ -198,7 +213,7 @@ sudo yum install -y java java-devel
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -228,7 +243,9 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 cp -r nodes/127.0.0.1/sdk/* console/conf/
 ```
 
-### 启动控制台
+![](./../images/installation/get_console.gif)
+
+### 第二步. 启动并使用控制台
 
 - 启动
 ```bash
@@ -256,44 +273,62 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 若1.x控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
 
-### 使用控制台获取信息
+* 用控制台获取信息
 
 ```bash
 # 获取客户端版本
 [group:1]> getNodeVersion
 ClientVersion{
-    "Build Time":"20200619 06:32:10",
-    "Build Type":"Linux/clang/Release",
-    "Chain Id":"1",
-    "FISCO-BCOS Version":"2.5.0",
-    "Git Branch":"HEAD",
-    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
-    "Supported Version":"2.5.0"
+    version='2.6.0',
+    supportedVersion='2.6.0',
+    chainId='1',
+    buildTime='20200819 15:47:59',
+    buildType='Darwin/appleclang/RelWithDebInfo',
+    gitBranch='HEAD',
+    gitCommitHash='e4a5ef2ef64d1943fccc4ebc61467a91779fb1c0'
 }
-# 获取节点链接信息
+# 获取节点信息
 [group:1]> getPeers
 [
-    {
-        "IPAndPort":"127.0.0.1:49948",
-        "NodeID":"b5872eff0569903d71330ab7bc85c5a8be03e80b70746ec33cafe27cc4f6f8a71f8c84fd8af9d7912cb5ba068901fe4131ef69b74cc773cdfb318ab11968e41f",
-        "Topic":[]
+    PeerInfo{
+        nodeID='c1bd77e188cd0783256ee06838020f24a697f9af785438403d3620967a4a3612e3abc4bbe986d1e9dddf62d4236bff0b7d19a935a3cd44889f681409d5bf8692',
+        ipAndPort='127.0.0.1:30302',
+        agency='agency',
+        topic=[
+            
+        ],
+        node='node2'
     },
-    {
-        "IPAndPort":"127.0.0.1:49940",
-        "NodeID":"912126291183b673c537153cf19bf5512d5355d8edea7864496c257630d01103d89ae26d17740daebdd20cbc645c9a96d23c9fd4c31d16bccf1037313f74bb1d",
-        "Topic":[]
+    PeerInfo{
+        nodeID='7f27f5d67f104eacf689790f09313e4343e7887a1a7b79c31cd151be33c7c8dd57c895a66086c3c8e0b54d2fa493407e0d9646b2bd9fc29a94fd3663a5332e6a',
+        ipAndPort='127.0.0.1:57266',
+        agency='agency',
+        topic=[
+            _block_notify_1
+        ],
+        node='node1'
     },
-    {
-        "IPAndPort":"127.0.0.1:49932",
-        "NodeID":"db75ab16ed7afa966447c403ca2587853237b0d9f942ba6fa551dc67ed6822d88da01a1e4da9b51aedafb8c64e9d208d9d3e271f8421f4813dcbc96a07d6a603",
-        "Topic":[]
+    PeerInfo{
+        nodeID='862f26d9681ed4c12681bf81a50d0b8c66dd5b6ee7b0b42a4af12bb37b1ad2442f7dcfe8dac4e737ce9fa46aa94d904e8c474659eabf575d6715995553245be5',
+        ipAndPort='127.0.0.1:30303',
+        agency='agency',
+        topic=[
+            
+        ],
+        node='node3'
     }
 ]
+
+[group:1]> 
 ```
 
-## 部署及调用HelloWorld合约
+![](./../images/installation/use_console.gif)
 
-### HelloWorld合约
+
+
+## 3. 部署及调用HelloWorld合约
+
+### 第一步. 编写HelloWorld合约
 
 HelloWorld合约提供两个接口，分别是`get()`和`set()`，用于获取/设置合约变量`name`。合约内容如下:
 
@@ -317,7 +352,7 @@ contract HelloWorld {
 }
 ```
 
-### 部署HelloWorld合约
+### 第二步. 部署HelloWorld合约
 
 为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`contracts/solidity/HelloWorld.sol`，参考下面命令部署即可。
 
@@ -328,7 +363,7 @@ transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb
 contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
-### 调用HelloWorld合约
+### 第三步. 调用HelloWorld合约
 
 ```bash
 # 查看当前块高
@@ -399,3 +434,4 @@ WeBASE其他组件可以参考[《WeBASE文档》](https://webasedoc.readthedocs
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 
+![](./../images/installation/hello_world.gif)
