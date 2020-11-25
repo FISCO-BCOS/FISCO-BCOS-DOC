@@ -108,12 +108,15 @@ contract SystemConfigPrecompiled
 - [Nodejs SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/nodejs_sdk/api.html#systemconfigservice)
 - [Python SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/python_sdk/api.html#id3)
 - [Go SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/go_sdk/api.html#systemconfigservice)
+
 ### TableFactoryPrecompiled-0x1001
 
 #### 接口声明
 
+完整solidity请[参考这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/solidity/Table.sol)
+
 ```solidity
-pragma solidity ^0.4.24;
+pragma solidity>=0.4.24 <0.6.11;
 
 contract TableFactory {
     function openTable(string tableName) public view returns (Table); //open table
@@ -377,16 +380,32 @@ contract ChainGovernancePrecompiled {
 #### 接口声明
 
 ```solidity
+pragma solidity>=0.4.24 <0.6.11;
+//one record
+contract Entry {
+    function getInt(string memory) public view returns (int256) {}
+    function getUInt(string memory) public view returns (uint256) {}
+    function getAddress(string memory) public view returns (address) {}
+    function getBytes64(string memory) public view returns (bytes1[64] memory) {}
+    function getBytes32(string memory) public view returns (bytes32) {}
+    function getString(string memory) public view returns (string memory) {}
+
+    function set(string memory, int256) public {}
+    function set(string memory, uint256) public {}
+    function set(string memory, string memory) public {}
+    function set(string memory, address) public {}
+}
+
 contract KVTableFactory {
-    function openTable(string) public view returns (KVTable);
-    function createTable(string, string, string) public returns (int256);
+    function openTable(string memory) public view returns (KVTable) {}
+    function createTable(string memory, string memory, string memory) public returns (int256) {}
 }
 
 //KVTable per permiary key has only one Entry
 contract KVTable {
-    function get(string) public view returns (bool, Entry);
-    function set(string, Entry) public returns (int256);
-    function newEntry() public view returns (Entry);
+    function get(string memory) public view returns (bool, Entry) {}
+    function set(string memory, Entry) public returns (int256) {}
+    function newEntry() public view returns (Entry) {}
 }
 ```
 
