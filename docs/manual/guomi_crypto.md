@@ -87,6 +87,12 @@ FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信�
     sm_crypto_channel=true
 ```
 
+
+```eval_rst
+.. important::
+    国密环境下统一使用了国密商用密码相关算法，在solidity中使用keccak256/sha3指令，虚拟机中实际执行sm3算法！
+```
+
 ## 国密版SDK使用
 
 详细操作参考[SDK文档](../sdk/java_sdk.html#id10)。
