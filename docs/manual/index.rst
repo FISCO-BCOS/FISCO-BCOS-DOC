@@ -34,6 +34,7 @@
    cdn.md
    sdk_allowlist.md
    consensus_recover.md
+   data_governance.md
 
 .. admonition:: 区块链部署
 
