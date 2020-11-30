@@ -235,8 +235,8 @@ $ ./gradlew clean build -x test
 $ cd dist && mkdir -p contracts/solidity
 # 将需要转换为java代码的sol文件拷贝到~/fisco/java-sdk/dist/contracts/solidity路径下
 # 转换sol, 其中${packageName}是生成的java代码包路径
-# 生成的java代码位于 ~/fisco/java-sdk/dist.contracts/sdk/java目录下
-$ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${packageName}
+# 生成的java代码位于 ~/fisco/java-sdk/dist/contracts/sdk/java目录下
+java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${packageName}
 ```
 
 
