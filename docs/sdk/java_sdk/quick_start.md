@@ -4,15 +4,45 @@
 
 - Java：JDK 14 （JDK1.8 至JDK 14都支持）
 
-  ![](./../../../images/java-sdk/install_java.gif)
+  首先，在官网上下载JDK14并安装
+
+  然后，修改环境变量
+
+  ```bash
+  # 确认您当前的java版本
+  $ java -version
+  # 确认您的java路径
+  $ ls Library/Java/JavaVirtualMachines
+  # 返回
+  # jdk-14.0.2.jdk
+  
+  # 如果使用的是bash
+  $ vim .bash_profile 
+  # 在文件中加入JAVA_HOME的路径
+  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
+  $ source .bash_profile
+  
+  # 如果使用的是zash
+  $ vim .zashrc
+  # 在文件中加入JAVA_HOME的路径
+  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
+  $ source .zashrc
+  
+  # 确认您的java版本
+  $ java -version
+  # 返回
+  # java version "14.0.2" 2020-07-14
+  # Java(TM) SE Runtime Environment (build 14.0.2+12-46)
+  # Java HotSpot(TM) 64-Bit Server VM (build 14.0.2+12-46, mixed mode, sharing)
+  ```
 
 - IDE：IntelliJ IDE. 
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
 
-  ![](./../../../images/java-sdk/install_intellij.gif)
-  
-  
+![](./../../../images/java-sdk/install_java_intellij.gif)
+
+
 
 ## 2. 搭建一条FISCO BCOS链
 
