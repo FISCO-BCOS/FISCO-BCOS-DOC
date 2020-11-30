@@ -162,6 +162,7 @@ html_theme_options = {'navigation_depth': 4,}
 using_rtd_theme = True
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 todo_include_todos = True
+html_extra_path = ['_static', './docs/sdk/java_sdk/javadoc']
 
 # VCS options: https://docs.readthedocs.io/en/latest/vcs.html#github
 html_context = {
