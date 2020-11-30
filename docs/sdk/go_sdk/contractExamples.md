@@ -548,6 +548,7 @@ import (
     "github.com/FISCO-BCOS/go-sdk/conf"
     "github.com/FISCO-BCOS/go-sdk/helloworld"
     "github.com/ethereum/go-ethereum/common"
+    "github.com/FISCO-BCOS/go-sdk/core/types"
 )
 
 func main() {
@@ -562,7 +563,7 @@ func main() {
 	}
 	var contractAddress common.Address
 	var channel = make(chan int, 0)
-	tx, err := AsyncDeployHelloWorld(client.GetTransactOpts(), func(receipt *types.Receipt, err error) {
+	tx, err := helloworld.AsyncDeployHelloWorld(client.GetTransactOpts(), func(receipt *types.Receipt, err error) {
 		if err != nil {
 			fmt.Printf("%v\n", err)
 			return
@@ -573,7 +574,7 @@ func main() {
 	}, client)
 	fmt.Println("transaction hash: ", tx.Hash().Hex())
 	<-channel
-	instance, err := NewHelloWorld(contractAddress, client)
+	instance, err := helloworld.NewHelloWorld(contractAddress, client)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -581,7 +582,7 @@ func main() {
 		fmt.Printf("Deploy failed, err:%v", err)
 		return
 	}
-	hello := &HelloWorldSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
+	hello := &helloworld.HelloWorldSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
 	ret, err := hello.Get()
 	if err != nil {
 		fmt.Printf("hello.Get() failed: %v", err)
