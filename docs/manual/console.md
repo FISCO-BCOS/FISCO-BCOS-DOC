@@ -60,7 +60,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh -c 1.2.0
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst
@@ -101,7 +101,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
   - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
-  - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
+  - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建链报错。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -165,7 +165,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
   - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
-  - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
+  - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建链报错。
 
 - 打开国密开关
 ```
@@ -342,6 +342,7 @@ getGroupList                             Query group list.
 getGroupPeers                            Query nodeId list for sealer and observer nodes.
 getNodeIDList                            Query nodeId list for all connected nodes.
 getNodeVersion                           Query the current node version.
+getNodeInfo                              Query the specified node information.
 getObserverList                          Query nodeId list for observer nodes.
 getPbftView                              Query the pbft view of node.
 getPeers                                 Query peers currently connected to the client.

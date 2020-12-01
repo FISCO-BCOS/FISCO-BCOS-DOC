@@ -263,7 +263,7 @@ This command will configure the console under ./meta folder according to `node_d
 
 ## get_sdk_file
 
-\--get_sdk_file command can acquire `sdk.crt`, `sdk.key`, `ca.crt` and `applicationContext.xml` that are needed in configuration of console and sdk under assigned section.
+\--get_sdk_file command can acquire `sdk.crt`, `sdk.key`, `ca.crt` that are needed in configuration of console and sdk under assigned section.
 
 For example:
 

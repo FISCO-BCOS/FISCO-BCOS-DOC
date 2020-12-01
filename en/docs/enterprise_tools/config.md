@@ -68,7 +68,7 @@ Read the node config command. To generate node certificate and node config file 
 The template folder of the generator is as below:
 
 ```bash
-├── applicationContext.xml # sdk config file
+├── config.toml # sdk config file
 ├── config.ini # node config file template
 ├── config.ini.gm # OSCCA node config file template
 ├── group.i.genesis # group genesis block template

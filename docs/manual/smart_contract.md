@@ -13,6 +13,11 @@ FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 - [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
 - [Remix在线IDE](https://remix.ethereum.org/)
 
+```eval_rst
+.. important::
+    国密环境下统一使用了国密商用密码相关算法，在solidity中使用keccak256/sha3指令，虚拟机中实际执行sm3算法！
+```
+
 ### 使用KVTable合约读写接口
 
 ```eval_rst

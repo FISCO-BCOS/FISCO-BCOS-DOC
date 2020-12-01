@@ -68,7 +68,7 @@ jsonrpc_listen_port=8546
 generator的模板文件夹如下图所示：
 
 ```bash
-├── applicationContext.xml # sdk配置文件模板
+├── config.toml # sdk配置文件模板
 ├── config.ini # 节点配置文件模板
 ├── config.ini.gm # 国密节点配置文件模板
 ├── group.i.genesis # 群组创世区块模板

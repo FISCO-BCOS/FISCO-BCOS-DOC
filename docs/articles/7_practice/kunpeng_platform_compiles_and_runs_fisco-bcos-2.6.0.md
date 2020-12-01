@@ -267,7 +267,7 @@ info|2020-09-04 17:34:22.459794|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 
 ```bash
 # 下载控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
 $ cd console
 
 # 拷贝证书
