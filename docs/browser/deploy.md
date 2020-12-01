@@ -238,7 +238,7 @@ Reload privilege tables now? [Y/n] <– 是否重新加载权限表，回车
 - 使用root用户登录，密码为初始化设置的密码
 
 ```
-mysql -uroot -p -h localhost -P 3306
+mysql -uroot -p -h localhost -P 3306;
 ```
 
 - 授权root用户远程访问
