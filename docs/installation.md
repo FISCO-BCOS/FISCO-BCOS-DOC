@@ -7,7 +7,7 @@
     - 搭建全链路国密版本的链，`请参考这里 <manual/guomi_crypto.html>`_ 。
 ```
 
-## 单群组FISCO BCOS联盟链的搭建
+## 1. 单群组FISCO BCOS联盟链的搭建
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
 
@@ -20,27 +20,38 @@
     - `使用docker模式搭建 <manual/build_chain.html#d-optional>`_ ，供有丰富docker经验和容器化部署需求的用户参考。
 ```
 
-### 准备环境
+### 第一步. 安装依赖
 
-- 安装依赖
+`开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，根据您使用的操作系统，使用以下命令安装依赖。
 
-`开发部署工具 build_chain.sh`脚本依赖于`openssl, curl`，使用下面的指令安装。
-若为CentOS，将下面命令中的`apt`替换为`yum`执行即可。macOS执行`brew install openssl curl`即可（macOS自带的openssl指令选项不同，请执行安装标准openssl）。
+![](./../images/installation/install.gif)
+
+**安装macOS依赖**
+
+```bash
+brew install openssl curl
+```
+
+**安装ubuntu依赖**
 
 ```bash
 sudo apt install -y openssl curl
 ```
 
-- 创建操作目录
+**安装centos依赖**
 
 ```bash
-cd ~ && mkdir -p fisco && cd fisco
+sudo yum install -y openssl openssl-devel
 ```
 
-- 下载`build_chain.sh`脚本
+### 第二步. 创建操作目录, 下载安装脚本
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+## 创建操作目录
+cd ~ && mkdir -p fisco && cd fisco
+
+## 下载脚本
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -48,14 +59,16 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/buil
     - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
-### 搭建单群组4节点联盟链
+![](./../images/installation/download_build_chain.gif)
+
+### 第三步. 搭建单群组4节点联盟链
 
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。
 请确保机器的`30300~30303，20200~20203，8545~8548`端口没有被占用。
 
 ```eval_rst
 .. note::
-    - 国密版本请执行``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
+    - 国密版本请执行 ``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
     - 其中-g表示生成国密配置，-G表示使用国密SSL连接
     - web3sdk已经支持国密SSL，如果使用web3sdk建议带上-G选项使用国密SSL
 ```
@@ -97,7 +110,9 @@ e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh
 [INFO] All completed. Files in /home/ubuntu/fisco/nodes
 ```
 
-### 启动FISCO BCOS链
+![](./../images/installation/build_nodes.gif)
+
+### 第四步. 启动FISCO BCOS链
 
 - 启动所有节点
 
@@ -106,6 +121,7 @@ bash nodes/127.0.0.1/start_all.sh
 ```
 
 启动成功会输出类似下面内容的响应。否则请使用`netstat -an | grep tcp`检查机器的`30300~30303，20200~20203，8545~8548`端口是否被占用。
+
 ```bash
 try to start node0
 try to start node1
@@ -117,7 +133,9 @@ try to start node3
  node3 start successfully
 ```
 
-### 检查进程
+![](./../images/installation/start.gif)
+
+### 第五步. 检查进程
 
 - 检查进程是否启动
 
@@ -127,6 +145,7 @@ ps -ef | grep -v grep | grep fisco-bcos
 
 正常情况会有类似下面的输出；
 如果进程数不为4，则进程没有启动（一般是端口被占用导致的）
+
 ```bash
 fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
 fisco       5459     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
@@ -134,7 +153,9 @@ fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0
 fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
-### 检查日志输出
+![](./../images/installation/start.gif)
+
+### 第六步. 检查日志输出
 
 - 如下，查看节点node0链接的节点数
 
@@ -163,21 +184,36 @@ info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
 ```
 
-## 配置及使用控制台
+![](./../images/installation/show_log.gif)
 
-在控制台通过Web3SDK链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。
-控制台指令详细介绍[参考这里](manual/console.md)。
+## 2. 配置及使用控制台
 
-### 准备依赖
+```eval_rst
+.. important::
+    - ``控制台1.x`` 系列基于 `Web3SDK <./sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <./sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
+    - 2.6及其以上版本控制台使用文档请 `参考这里 <./manual/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <./manual/console.html>`_ 
+    - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
+    - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <tutorial/download_console.html>`_ 
+```
 
-- Java环境配置
+在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
 
-参考[Java环境要求](sdk/java_sdk.html#id1)。
+### 第一步. 准备依赖
+
+- 安装java （推荐使用java 14）.
+
+```bash
+# ubuntu系统安装java
+sudo apt install -y default-jdk
+
+#centos系统安装java
+sudo yum install -y java java-devel
+```
 
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -187,36 +223,40 @@ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/
 
 - 拷贝控制台配置文件
 
-若节点未采用默认端口，请将文件中的20200替换成节点对应的channle端口。
+若节点未采用默认端口，请将文件中的20200替换成节点对应的channel端口。
 
 ```bash
-cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+# 最新版本控制台使用如下命令拷贝配置文件
+cp -n console/conf/config-example.toml console/conf/config.toml
 ```
 
 - 配置控制台证书
 
 ```eval_rst
 .. note::
-    - 搭建国密版时，如果使用国密SSL请执行``cp nodes/127.0.0.1/sdk/gm/* console/conf/``
-    - 搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1
+    使用1.x版本控制台时：
+     - 搭建国密版时，如果使用国密SSL请执行 ``cp nodes/127.0.0.1/sdk/gm/* console/conf/``
+     - 搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1
 ```
 
 ```bash
-cp nodes/127.0.0.1/sdk/* console/conf/
+cp -r nodes/127.0.0.1/sdk/* console/conf/
 ```
 
-### 启动控制台
+![](./../images/installation/get_console.gif)
+
+### 第二步. 启动并使用控制台
 
 - 启动
 ```bash
 cd ~/fisco/console && bash start.sh
 ```
 
-输出下述信息表明启动成功 否则请检查conf/applicationContext.xml中节点端口配置是否正确
+输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
 ```bash
 =============================================================================================
-Welcome to FISCO BCOS console(1.0.3)！
+Welcome to FISCO BCOS console(2.6.0)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________  ______   ______    ______    ______         _______    ______    ______    ______
 |        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \
@@ -231,46 +271,64 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
+若1.x控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
 
-### 使用控制台获取信息
+* 用控制台获取信息
 
 ```bash
 # 获取客户端版本
 [group:1]> getNodeVersion
-{
-    "Build Time":"20200619 06:32:10",
-    "Build Type":"Linux/clang/Release",
-    "Chain Id":"1",
-    "FISCO-BCOS Version":"2.5.0",
-    "Git Branch":"HEAD",
-    "Git Commit Hash":"72c6d770e5cf0f4197162d0e26005ec03d30fcfe",
-    "Supported Version":"2.5.0"
+ClientVersion{
+    version='2.6.0',
+    supportedVersion='2.6.0',
+    chainId='1',
+    buildTime='20200819 15:47:59',
+    buildType='Darwin/appleclang/RelWithDebInfo',
+    gitBranch='HEAD',
+    gitCommitHash='e4a5ef2ef64d1943fccc4ebc61467a91779fb1c0'
 }
-# 获取节点链接信息
+# 获取节点信息
 [group:1]> getPeers
 [
-    {
-        "IPAndPort":"127.0.0.1:49948",
-        "NodeID":"b5872eff0569903d71330ab7bc85c5a8be03e80b70746ec33cafe27cc4f6f8a71f8c84fd8af9d7912cb5ba068901fe4131ef69b74cc773cdfb318ab11968e41f",
-        "Topic":[]
+    PeerInfo{
+        nodeID='c1bd77e188cd0783256ee06838020f24a697f9af785438403d3620967a4a3612e3abc4bbe986d1e9dddf62d4236bff0b7d19a935a3cd44889f681409d5bf8692',
+        ipAndPort='127.0.0.1:30302',
+        agency='agency',
+        topic=[
+            
+        ],
+        node='node2'
     },
-    {
-        "IPAndPort":"127.0.0.1:49940",
-        "NodeID":"912126291183b673c537153cf19bf5512d5355d8edea7864496c257630d01103d89ae26d17740daebdd20cbc645c9a96d23c9fd4c31d16bccf1037313f74bb1d",
-        "Topic":[]
+    PeerInfo{
+        nodeID='7f27f5d67f104eacf689790f09313e4343e7887a1a7b79c31cd151be33c7c8dd57c895a66086c3c8e0b54d2fa493407e0d9646b2bd9fc29a94fd3663a5332e6a',
+        ipAndPort='127.0.0.1:57266',
+        agency='agency',
+        topic=[
+            _block_notify_1
+        ],
+        node='node1'
     },
-    {
-        "IPAndPort":"127.0.0.1:49932",
-        "NodeID":"db75ab16ed7afa966447c403ca2587853237b0d9f942ba6fa551dc67ed6822d88da01a1e4da9b51aedafb8c64e9d208d9d3e271f8421f4813dcbc96a07d6a603",
-        "Topic":[]
+    PeerInfo{
+        nodeID='862f26d9681ed4c12681bf81a50d0b8c66dd5b6ee7b0b42a4af12bb37b1ad2442f7dcfe8dac4e737ce9fa46aa94d904e8c474659eabf575d6715995553245be5',
+        ipAndPort='127.0.0.1:30303',
+        agency='agency',
+        topic=[
+            
+        ],
+        node='node3'
     }
 ]
+
+[group:1]> 
 ```
 
-## 部署及调用HelloWorld合约
+![](./../images/installation/use_console.gif)
 
-### HelloWorld合约
+
+
+## 3. 部署及调用HelloWorld合约
+
+### 第一步. 编写HelloWorld合约
 
 HelloWorld合约提供两个接口，分别是`get()`和`set()`，用于获取/设置合约变量`name`。合约内容如下:
 
@@ -294,17 +352,18 @@ contract HelloWorld {
 }
 ```
 
-### 部署HelloWorld合约
+### 第二步. 部署HelloWorld合约
 
 为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下`contracts/solidity/HelloWorld.sol`，参考下面命令部署即可。
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
 [group:1]> deploy HelloWorld
+transaction hash: 0xd0305411e36d2ca9c1a4df93e761c820f0a464367b8feb9e3fa40b0f68eb23fa
 contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 ```
 
-### 调用HelloWorld合约
+### 第三步. 调用HelloWorld合约
 
 ```bash
 # 查看当前块高
@@ -313,7 +372,16 @@ contract address:0xb3c223fc0bf6646959f254ac4e4a7e355b50a344
 
 # 调用get接口获取name变量 此处的合约地址是deploy指令返回的地址
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, World!
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,World!"
+]
+---------------------------------------------------------------------------------------------
 
 # 查看当前块高，块高不变，因为get接口不更改账本状态
 [group:1]> getBlockNumber
@@ -321,7 +389,17 @@ Hello, World!
 
 # 调用set设置name
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 set "Hello, FISCO BCOS"
-0x21dca087cb3e44f44f9b882071ec6ecfcb500361cad36a52d39900ea359d0895
+transaction hash: 0x7e742c44091e0d6e4e1df666d957d123116622ab90b718699ce50f54ed791f6e
+---------------------------------------------------------------------------------------------
+transaction status: 0x0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Output
+Receipt message: Success
+Return message: Success
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
 
 # 再次查看当前块高，块高增加表示已出块，账本状态已更改
 [group:1]> getBlockNumber
@@ -329,16 +407,33 @@ Hello, World!
 
 # 调用get接口获取name变量，检查设置是否生效
 [group:1]> call HelloWorld 0xb3c223fc0bf6646959f254ac4e4a7e355b50a344 get
-Hello, FISCO BCOS
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return values:
+[
+    "Hello,FISCO BCOS"
+]
+---------------------------------------------------------------------------------------------
 
 # 退出控制台
 [group:1]> quit
 ```
 
-**注：**
-1. 部署合约还可以通过`deployByCNS`命令，可以指定部署的合约版本号，使用方式[参考这里](manual/console.html#deploybycns)。
-2. 调用合约通过`callByCNS`命令，使用方式[参考这里](manual/console.html#callbycns)。
+![](./../images/installation/hello_world.gif)
 
+## WeBASE搭建
+
+微众银行开源的自研区块链中间件平台——[WeBASE(WeBank Blockchain Application Software Extension)](https://webasedoc.readthedocs.io/zh_CN/latest/) 是区块链应用和FISCO BCOS节点之间搭建的中间件平台。WeBASE屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。用户可以根据业务所需，选择子系统进行部署，可以进一步体验丰富交互的体验、可视化智能合约开发环境IDE。
+### [WeBASE快速入门](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)
+开发者只需要搭建节点和节点前置服务(WeBASE-Front)，就可通过WeBASE-Front的合约编辑器进行合约的编辑，编译，部署，调试。搭建可参考[《WeBASE快速入门文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)。
+![](../images/webase/webase-front.png)
+### [WeBASE管理台](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)
+通过WeBASE一键脚本，可以搭建一个WeBASE的基础环境，可以方便用户体验WeBASE核心功能如：区块浏览，节点查看，合约IDE，系统管理，节点监控，交易审计，私钥管理。搭建可参考[《WeBASE一键部署文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)。![](../images/webase/webase-web.png)
+### [WeBASE其他](https://webasedoc.readthedocs.io/zh_CN/latest)
+WeBASE其他组件可以参考[《WeBASE文档》](https://webasedoc.readthedocs.io/zh_CN/latest)
 
 [build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 

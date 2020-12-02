@@ -12,7 +12,7 @@ sudo apt install -y openssl curl
 # 准备环境
 cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链
@@ -87,17 +87,23 @@ FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信�
     sm_crypto_channel=true
 ```
 
+
+```eval_rst
+.. important::
+    国密环境下统一使用了国密商用密码相关算法，在solidity中使用keccak256/sha3指令，虚拟机中实际执行sm3算法！
+```
+
 ## 国密版SDK使用
 
 详细操作参考[SDK文档](../sdk/java_sdk.html#id10)。
 
 ## 国密版控制台配置
 
-详情操作参考[配置国密版控制台](../manual/console.html#id11)。
+1.x版本控制台需要配置国密选项，详情操作参考[配置国密版控制台](../manual/console.html#id11)。
 
 ## 国密控制台使用
 
-国密版控制台功能与标准版控制台使用方式相同，见[控制台操作手册](../manual/console.md)。
+国密版控制台功能与标准版控制台使用方式相同，2.6及其以上版本控制台不需要额外配置国密选项，1.x版本控制台的配置方法请参考[控制台操作手册](../manual/console.html#id11)。
 
 ## 国密落盘加密配置
 

@@ -1,5 +1,11 @@
 # Console
 
+```eval_rst
+.. important::
+    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``Console 2.6`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, this tutorial is aimed at **1.x version console**, for 2.6 and above version console usage documentation please refer to `here <./console_of_java_sdk.md>`_ 
+    - You can view the current console version through the command ``./start.sh --version``
+```
+
 [Console](https://github.com/FISCO-BCOS/console) is an important interactive client tool of FISCO BCOS 2.0. It establishes a connection with blockchain node through [Web3SDK](../sdk/java_sdk.md) to request read and write access for blockchain node data. Console has a wealth of commands, including blockchain status inquiry, blockchain nodes management, contracts deployment and calling. In addition, console provides a contract compilation tool that allows users to easily and quickly compile Solidity contract files into Java contract files.
 
 ### Console command
@@ -55,12 +61,12 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh -c 1.2.0`
 ```
 
 The directory structure is as follows:
@@ -280,6 +286,7 @@ getGroupList                             Query group list.
 getGroupPeers                            Query nodeId list for sealer and observer nodes.
 getNodeIDList                            Query nodeId list for all connected nodes.
 getNodeVersion                           Query the current node version.
+getNodeInfo                              Query the specified node information.
 getObserverList                          Query nodeId list for observer nodes.
 getPbftView                              Query the pbft view of node.
 getPeers                                 Query peers currently connected to the client.
@@ -1042,7 +1049,7 @@ Parameter:
 
 
 ```text
-```text
+​```text
 # To call the get interface of HelloWorld to get the name string
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
 Hello, World!

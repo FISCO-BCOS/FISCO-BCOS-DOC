@@ -16,10 +16,12 @@
    configuration.md
    group_use_cases.md
    distributed_storage.md
+   console_of_java_sdk.md
    console.md
    account.md
    amop_protocol.md
    smart_contract.md
+   precompiled_contract.md
    transaction_parallel.md
    node_management.md
    permission_control.md

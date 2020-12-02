@@ -48,6 +48,8 @@ mysql依次从/etc/mysql/my.cnf，/etc/my.cnf，~/.my.cnf中加载配置。依�
 ```
 max_allowed_packet = 1024M
 sql_mode =STRICT_TRANS_TABLES
+ssl=0
+default_authentication_plugin = mysql_native_password
 ```
 
 ### 重启mysql-sever，验证参数。
@@ -104,7 +106,7 @@ FISCO BCOS在2.0.0-rc3之后，支持节点通过连接池直连MySQL，相对�
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 #### 生成配置文件
 ```bash
@@ -237,27 +239,15 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### 准备依赖
 ```bash
 cd ~/fisco;
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
-cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+cp -n console/conf/config-example.toml console/conf/config-example.toml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 #### 修改配置文件
-将~/fisco/console/conf/applicationContext.xml修改为如下配置(部分信息)
+将~/fisco/console/conf/config.toml修改为如下配置(部分信息)
 ```bash
-<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-	<property name="allChannelConnections">
-		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
-					<property name="connectionsStr">
-					<list>
-						<value>127.0.0.1:20200</value>
-					</list>
-				</property>
-			</bean>
-		</list>
-	</property>
-</bean>
+[network]
+peers=["127.0.0.1:20300", "127.0.0.1:20301"]    # The peer list to connect
 ```
 #### 启用控制台
 ```bash
