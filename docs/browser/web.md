@@ -53,8 +53,12 @@ cd fisco-bcos-browser
 然后修改nginx.conf；
 
 1. 修改前端服务的ip地址和端口。
-2. 修改前端文件的路径,直接指向已拉取代码的dist目录。
+2. 修改前端文件的路径,直接指向已拉取代码的dist目录。并且如果有需要请修改nginx的user配置，换成对应的user用户（有dist目录访问权限的用户）
 3. 修改后端服务(fisco-bcos-browser)的ip和端口，注意'/api'不要修改。
+
+```Nginx
+#user nobody
+```
 
 ```Nginx
     server {

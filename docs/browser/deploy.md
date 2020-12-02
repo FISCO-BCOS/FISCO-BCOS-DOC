@@ -1,6 +1,6 @@
 # 一键部署说明
 
-本文档试用于v2.1.0版本一键部署。v2.1.0之前版本一键部署可参考[文档](./deployOld.md)。
+本文档试用于v2.1.0及之后版本一键部署。v2.1.0之前版本一键部署可参考[文档](./deployOld.md)。
 
 ## 1、前提条件
 
@@ -8,20 +8,28 @@
 | ------ | ---------------------- |
 | Java   | JDK8或以上版本 |
 | MySQL | MySQL-5.6或以上版本 |
-| Python | Python3.4+ |
+| Python | Python3.5+ |
 | PyMySQL | 使用python3时需安装 |
 
 ### 检查环境
 
+#### 平台要求
+
+推荐使用CentOS 7.2+, Ubuntu 16.04及以上版本, 一键部署脚本将自动安装`openssl, curl, wget, git, nginx`相关依赖项。
+
+其余系统可能导致安装依赖失败，可自行安装`openssl, curl, wget, git, nginx`依赖项后重试
+
 #### 检查Java
 
-JDK8或以上版本：
+推荐JDK8-JDK13版本：
 
 ```
 java -version
 ```
 
 - Java推荐使用[OpenJDK](#id10) ，建议从[OpenJDK网站](https://jdk.java.net/java-se-ri/11) 自行下载。
+
+- **注意：需要配置root用户的java_home**
 
 #### 检查mysql
 
@@ -35,32 +43,25 @@ mysql --version
 
 #### 检查Python
 
-Python3.4或以上版本：
+<span id="checkpy"></span>
+
+使用Python3.5或以上版本：
 
 ```
-python --version
+python3 --version
 ```
 
-- Python安装部署可参考[Python部署](#id17)
+- Python3安装部署可参考[Python部署](#python3)
 
-#### PyMySQL部署（Python3.4+）
+#### PyMySQL部署（Python3.5+）
 
-**备注** 使用python2.7+时，需安装MySQL-python，推荐参考[Mysql-python安装示例](#mysql-python)的python2指南进行安装；
-
-Python3.4及以上版本，需安装PyMysql依赖包：
+Python3.5及以上版本，需安装PyMysql依赖包：
 
 - CentOS
 
   ```
+  sudo yum -y install python36-pip
   sudo pip3 install PyMySQL
-  ```
-
-  不支持pip命令的话，可以使用以下方式：
-
-  ```
-  git clone https://github.com/PyMySQL/PyMySQL
-  cd PyMySQL/
-  python3 setup.py install
   ```
 
 - Ubuntu
@@ -69,6 +70,14 @@ Python3.4及以上版本，需安装PyMysql依赖包：
   sudo apt-get install -y python3-pip
   sudo pip3 install PyMySQL
   ```
+
+ CentOS或Ubuntu不支持pip命令的话，可以使用以下方式：
+
+```
+  git clone https://github.com/PyMySQL/PyMySQL
+  cd PyMySQL/
+  python3 setup.py install
+```
 
 ## 2、拉取代码
 
@@ -276,41 +285,25 @@ mysql > create database db_browser;
 
 ### 7.3. Python部署
 
+<span id="python3"></span>
+
+python版本要求使用python3.x, 推荐使用python3.5及以上版本
+
 - CentOS
 
   ```
-  sudo yum install -y python-requests
+  sudo yum install -y python36
+  sudo yum install -y python36-pip
   ```
 
 - Ubuntu
 
   ```
-  sudo apt-get install -y python-requests
-  ```
-
-### 7.4. 安装MySql python依赖包
-
-#### 查看python版本
-
-```
-python --version
-```
-
-python3.4+ 安装Mysql依赖包，可参考 [检查环境-PyMysql](#pymysql-python3-4)
-
-#### 4.1 MySQL-python部署（Python2.7）
-
-- CentOS
-
-  ```
-  sudo yum install -y MySQL-python
-  ```
-
-- Ubuntu
-
-  ```
-  sudo apt-get install -y python-pip
-  sudo pip install MySQL-python
+  // 添加仓库，回车继续
+  sudo add-apt-repository ppa:deadsnakes/ppa
+  // 安装python 3.6
+  sudo apt-get install -y python3.6
+  sudo apt-get install -y python3-pip
   ```
 
 ## 8、常见问题
@@ -337,17 +330,28 @@ service mysqld restart
 mysql -uroot -p mysql
 ```
 
-### 8.2. 使用Python2时找不到MySQLdb
+### 8.2. Python命令出错
+
+- SyntaxError报错
 
 ```
-Traceback (most recent call last):
-...
-ImportError: No module named MySQLdb
+  File "deploy.py", line 62
+    print helpMsg
+                ^
+SyntaxError: Missing parentheses in call to "print". Did you mean print(helpMsg)?
 ```
 
-答：需要安装MySQL-python，安装请参看 [MySQL-python](#mysql-python-python2-7)
+- 找不到fallback关键字
 
-### 8.3. 使用Python3时找不到pymysql
+```
+File "/home/ubuntu/webase-deploy/comm/utils.py", line 127, in getCommProperties
+    value = cf.get('common', paramsKey,fallback=None)
+TypeError: get() got an unexpected keyword argument 'fallback'
+```
+
+答：检查[Python版本](#checkpy)，推荐使用python3.5及以上版本
+
+### 8.3 使用Python3时找不到pymysql
 
 ```
 Traceback (most recent call last):
@@ -355,36 +359,9 @@ Traceback (most recent call last):
 ImportError: No module named 'pymysql'
 ```
 
-答：需要安装PyMySQL，安装请参看 [pymysql](#pymysql-python3-4)
+答：需要安装PyMySQL，安装请参看 [pymysql](#pymysql-python3-5)
 
-### 8.4. 安装MySQL-python遇到问题
-
-```
-Command "python setup.py egg_info" failed with error code 1
-```
-
-答：运行下面两个命令
-
-```
-pip install --upgrade setuptools
-python -m pip install --upgrade pip
-```
-
-### 8.5 部署时编译包下载慢
-
-```
-...
-Connecting to github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)|52.216.112.19|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 22793550 (22M) [application/octet-stream]
-Saving to: ‘fisco-bcos-browser.zip’
-
- 0% [                                                                                                                                ] 77,974      37.8KB/s    
-```
-
-答：部署过程会下载工程编译包，可能会因为网络原因导致过慢。此时，可以先手动下载 [编译包](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.0.2/fisco-bcos-browser.zip)，再上传至服务器deploy目录，在部署过程中根据提示不再重新下载编译包。
-
-### 8.6 部署时数据库访问报错
+### 8.4 部署时数据库访问报错
 
 ```
 ...
@@ -392,20 +369,15 @@ checking database connection
 Traceback (most recent call last):
   File "/data/temp/browser/fisco-bcos-browser/deploy/comm/mysql.py", line 21, in dbConnect
     conn = mdb.connect(host=mysql_ip, port=mysql_port, user=mysql_user, passwd=mysql_password, charset='utf8')
-  File "/usr/lib64/python2.7/site-packages/MySQLdb/__init__.py", line 81, in Connect
-    return Connection(*args, **kwargs)
-  File "/usr/lib64/python2.7/site-packages/MySQLdb/connections.py", line 193, in __init__
-    super(Connection, self).__init__(*args, **kwargs2)
 OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
 ```
 
 答：确认数据库用户名和密码
 
-### 8.7 Server启动失败
-答：1: 请检查是否设置了JAVA_HOME。
-    2: 检查gradle版本是否在5.0以上。
-    3: 检查jdk版本，如果使用的是jdk9或者更高版本，需要在项目启动时加入 --add-modules java.xml.bind 后缀，但是这种方法只能在JDK9或者10去使用。修改位置：server/start.sh文件，start()函数，nohub $JAVA_HOME/bin/java 语句之后加上 --add-modules java.xml.bind
-    
-### 8.8 server启动成功，但提示启动失败
+### 8.5 Server启动失败
+答：1: 请检查是否设置了JAVA_HOME。 2: 检查gradle版本是否在5.0以上。 3: 检查jdk版本，如果使用的是jdk9或者更高版本，需要在项目启动时加入 –add-modules java.xml.bind 后缀，但是这种方法只能在JDK9或者10去使用。修改位置：server/start.sh文件，start()函数，nohub $JAVA_HOME/bin/java 语句之后加上 –add-modules java.xml.bind
+
+### 8.6 server启动成功，但提示启动失败
+
 答：将openjdk换成oracle jdk，因为openjdk中缺少一些组件。
 
