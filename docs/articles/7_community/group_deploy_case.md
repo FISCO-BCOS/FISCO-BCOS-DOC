@@ -308,11 +308,11 @@ tail -f ./node*/node*/log/log*  | grep +++
 
 你可以从以下方式联系到我：
 
-🥇**Blog:** [https://cnmf.net.cn/](https://cnmf.net.cn/)
+**Blog:** [https://cnmf.net.cn/](https://cnmf.net.cn/)
 
-🥈**GitHub:** [https://github.com/xiaoyue2019](https://github.com/xiaoyue2019)
+**GitHub:** [https://github.com/xiaoyue2019](https://github.com/xiaoyue2019)
 
-🥉**CSDN:** [https://blog.csdn.net/xiaoyue2019](https://blog.csdn.net/xiaoyue2019)
+**CSDN:** [https://blog.csdn.net/xiaoyue2019](https://blog.csdn.net/xiaoyue2019)
 
 欢迎来俺们社区吹水鸭：
 
