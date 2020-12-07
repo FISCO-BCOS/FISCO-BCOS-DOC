@@ -79,18 +79,19 @@ Python3.5及以上版本，需安装PyMysql依赖包：
   python3 setup.py install
 ```
 
-## 2、拉取代码
+## 2、拉取安装脚本
 
-执行命令：
-
+获取部署安装包：
 ```shell
-git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
+wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.2/browser-deploy.zip
 ```
-
-进入目录：
-
+解压安装包：
 ```shell
-cd fisco-bcos-browser/deploy
+unzip browser-deploy.zip
+```
+进入目录：
+```shell
+cd browser-deploy
 ```
 
 ## 3、修改配置（没有变化的可以不修改）
