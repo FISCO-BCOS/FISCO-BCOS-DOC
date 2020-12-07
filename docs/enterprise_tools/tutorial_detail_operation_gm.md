@@ -38,7 +38,8 @@ cd ~/generator && bash ./scripts/install.sh
 
 **检查二进制版本**
 
-若成功，输出 FISCO-BCOS gm Version : x.x.x-x
+2.5 及以前版本，若成功，输出 FISCO-BCOS gm Version : x.x.x-x
+2.6 版本之后，直接输出 FISCO-BCOS Version : x.x.x-x
 
 ```bash
 ./meta/fisco-bcos -v
@@ -953,26 +954,12 @@ bash ~/generator-C/nodeC/start_all.sh
     企业部署工具会根据generator/meta文件夹下的机构证书及私钥生成sdk相应证书，如需手动生成可以参考操作手册中的generate_sdk_certificate命令
 ```
 
-国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
+国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项 (**默认下载2.6.0+版本控制台不需要额外配**)：
 
 ```bash
 ./generator --download_console ./ --cdn
 ```
 
-使用`1.x`版本控制台，需要配置国密选项如下(**使用2.6.0+版本控制台不需要额外配置**)：
-
-```bash
-vi ./console/conf/applicationContext.xml
-```
-
-进行如下修改
-
-```xml
-<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-    <!-- encryptType值设置为1，打开国密开关 -->
-    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
-</bean>
-```
 
 
 ### 查看机构C节点4信息
