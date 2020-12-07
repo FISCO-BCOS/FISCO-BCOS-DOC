@@ -79,7 +79,6 @@ Python3.5及以上版本，需安装PyMysql依赖包：
   python3 setup.py install
 ```
 
-
 ## 2、拉取安装脚本
 
 获取部署安装包：
