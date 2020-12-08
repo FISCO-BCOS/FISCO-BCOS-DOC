@@ -1,4 +1,5 @@
 # 开发第一个区块链应用
+关键词：``开发第一个应用``、``合约开发``
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Web3SDK实现对区块链上合约的调用访问。
 
@@ -19,7 +20,7 @@
     请参考 `安装文档 <../installation.html>`_ 完成FISCO BCOS区块链的搭建和控制台的下载工作，本教程中的操作假设在该文档搭建的环境下进行。
 ```
 
-## 示例应用需求
+## 1.了解应用需求
 
 区块链天然具有防篡改，可追溯等特性，这些特性决定其更容易受金融领域的青睐，本文将会提供一个简易的资产管理的开发示例，并最终实现以下功能：
 
@@ -27,11 +28,11 @@
 -   能够实现不同账户的转账
 -   可以查询账户的资产金额
 
-## 合约设计与实现
+## 2.设计和开发智能合约
 
 在区块链上进行应用开发时，结合业务需求，首先需要设计对应的智能合约，确定合约需要储存的数据，在此基础上确定智能合约对外提供的接口，最后给出各个接口的具体实现。
 
-### 存储设计
+### 第一步. 存储设计
 
 FISCO BCOS提供[合约CRUD接口](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
@@ -45,7 +46,7 @@ FISCO BCOS提供[合约CRUD接口](../manual/smart_contract.html#crud)开发模�
 | Alice   | 10000       |
 | Bob     | 20000       |
 
-### 接口设计
+### 第二步.接口设计
 
  按照业务的设计目标，需要实现资产注册，转账，查询功能，对应功能的接口如下：
 
@@ -58,7 +59,7 @@ function register(string account, uint256 amount) public returns(int256)
 function transfer(string from_asset_account, string to_asset_account, uint256 amount) public returns(int256)
 ```
 
-### 完整源码
+### 第三步.编写智能合约
 
 ```js
 pragma solidity ^0.4.24;
@@ -240,7 +241,7 @@ contract Asset {
 
  **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-## 合约编译
+### 第四步.编译合约
 
 上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件编译为Java文件。
 
@@ -300,7 +301,7 @@ public class Asset extends Contract {
 
 其中load与deploy函数用于构造Asset对象，其他接口分别用来调用对应的solidity合约的接口，详细使用在下文会有介绍。
 
-## SDK配置
+## 3.创建区块链应用
 
 我们提供了一个Java工程项目供开发使用，首先获取Java工程项目：
 
@@ -351,7 +352,7 @@ asset-app项目的目录结构如下：
     |-- asset_run.sh // 项目运行脚本
 ```
 
-### 项目引入Web3SDK
+### 第一步.在项目中引入Web3SDK
 
 **项目的`build.gradle`文件已引入Web3SDK，不需修改**。其引入方法介绍如下：
 
@@ -373,7 +374,7 @@ repositories {
 compile ('org.fisco-bcos：web3sdk：2.5.0')
 ```
 
-### 证书与配置文件
+### 第二步.导入证书并编写配置文件
 
 -   区块链节点证书配置
 
@@ -390,7 +391,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 **注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/java_sdk.html#spring)。
 
-## 业务开发
+### 第三步.进行业务开发
 
 我们已经介绍了如何在自己的项目中引入以及配置Web3SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。asset-app项目已经包含示例的完整源码，用户可以直接使用，现在介绍核心类`AssetClient`的设计与实现。
 
@@ -438,7 +439,7 @@ TransactionReceipt receipt = asset.register(assetAccount, amount).send();
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount).send();
 ```
 
-## 运行
+## 4.运行应用
 
 至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
 
