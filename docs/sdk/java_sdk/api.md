@@ -1,4 +1,4 @@
-# Java SDK API
+# 远程调用接口
 
 Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java API可分为如下几类：
 
