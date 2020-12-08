@@ -26,7 +26,7 @@ FISCO BCOS基于多群组架构实现了强扩展性的群组多账本，基于�
 
 
 .. toctree::
-   :maxdepth: 1
+   :hidden:
    
    group.md
    transaction_stream.md   

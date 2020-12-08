@@ -40,17 +40,50 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
    - FISCO BCOS 2.0+ and its adaptability are illustrated `here <./docs/change_log/index.html>`_
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
+   :caption: Introduction
 
-   docs/introduction.md
+   docs/introduction/introduction.md
    docs/change_log/index.rst
-   docs/installation.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tutorials
+
+   docs/tutorial/installation.md
+   docs/tutorial/sdk_application.md
    docs/tutorial/index.rst
-   docs/manual/index.rst
-   docs/enterprise_tools/index.md
-   docs/sdk/java_sdk.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Development
+
+   docs/blockchain_dev/index.rst
+   docs/app_dev/index.rst
+   docs/faq/faq.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tools
+
+   docs/tools/build_chain.md
+   docs/console/index.rst
+   docs/webase/webase.md
    docs/browser/browser.md
-   docs/api.md
-   docs/faq.md
-   docs/community.md
+   docs/enterprise_tools/index.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: System Design
+   
+   ./design/architecture/index.rst
+   ./design/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference
+
+   docs/reference/api.md
+   Java SDK JavaDoc <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/javadoc/index.html>
+   docs/articles/index.rst
+   docs/reference/community.md

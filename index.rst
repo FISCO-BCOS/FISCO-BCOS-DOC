@@ -11,7 +11,6 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 - `贡献代码 <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
 - `反馈问题 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
 - `应用案例集 <https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA>`_
-
 - `微信群 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/WeChatQR%2Ejpg>`_
 - `公众号 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/OfficialAccountsQR%2Ejpg>`_
 
@@ -39,21 +38,52 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    - 本技术文档只适用FISCO BCOS 2.0+，FISCO BCOS 1.3.x版本的技术文档请查看 `1.3系列技术文档 <http://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/>`_
    - FISCO BCOS 2.0+版本及兼容性说明 `这里 <./docs/change_log/index.html>`_
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
 
-   docs/introduction.md
+.. toctree::
+   :maxdepth: 1
+   :caption: 平台介绍
+
+   docs/introduction/introduction.md
    docs/change_log/index.rst
-   docs/installation.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 教程
+
+   docs/tutorial/installation.md
+   docs/tutorial/sdk_application.md
    docs/tutorial/index.rst
-   docs/manual/index.rst
-   docs/enterprise_tools/index.md
-   docs/sdk/index.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 开发手册
+
+   docs/blockchain_dev/index.rst
+   docs/app_dev/index.rst
+   docs/faq/faq.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 工具
+
+   docs/tools/build_chain.md
+   docs/console/index.rst
    docs/webase/webase.md
    docs/browser/browser.md
-   docs/design/index.rst
-   docs/api.md
-   docs/faq.md
-   docs/articles/index.md
-   docs/community.md
+   docs/enterprise_tools/index.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 系统设计
+   
+   ./design/architecture/index.rst
+   ./design/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 参考
+
+   docs/reference/api.md
+   Java SDK JavaDoc <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/javadoc/index.html>
+   docs/articles/index.rst
+   docs/reference/community.md
