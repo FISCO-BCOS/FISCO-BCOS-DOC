@@ -12,7 +12,7 @@ sudo apt install -y openssl curl
 # 准备环境
 cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链

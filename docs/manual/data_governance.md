@@ -70,7 +70,6 @@ fisco-sync工具需拉取FISCO-BCOS源码，打开编译开关后自行编译。
 ```
 $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 $ cd FISCO-BCOS
-$ git checkout release-2.7.1
 $ mkdir -p build && cd build
 # CentOS请使用cmake3
 $ cmake -DTOOL=ON ..

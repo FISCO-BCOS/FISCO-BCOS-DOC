@@ -95,6 +95,8 @@
         + Caliper压力测试指南
     - `极端异常下的共识恢复应急方案 <./consensus_recover.html>`_
         + 极端异常下的共识恢复应急方案
+    - `海量数据治理 <./data_governance.html>`_
+        + 海量数据治理使用说明
 
 .. important::
 
