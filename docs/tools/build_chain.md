@@ -1,4 +1,4 @@
-# 部署工具(build_chain.sh)
+# 开发部署工具(build_chain.sh)
 
 ```eval_rst
 .. important::
@@ -7,7 +7,7 @@
 
 FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
 
-## 脚本功能简介
+## 功能介绍
 
 - `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，支持创建各种复杂业务场景FISCO BCOS链。**`-l`和`-f`选项必须指定一个且不可共存**。
@@ -18,7 +18,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
     为便于开发和体验，p2p模块默认监听IP是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如内网IP或特定的外网IP
 ```
 
-## 帮助
+## 使用方法
 
 ```bash
 Usage:
@@ -51,8 +51,6 @@ Usage:
 e.g
     ./build_chain.sh -l 127.0.0.1:4
 ```
-
-## 选项介绍
 
 ### **`l`选项:**
 
@@ -248,7 +246,7 @@ nodes/
 │   └── cert.cnf
 ```
 
-## 工具脚本
+## 使用工具脚本
 
 介绍由build_chain.sh生成的脚本。
 
@@ -284,9 +282,9 @@ e.g
 ```
 
 
-## 使用举例
+## 使用教程
 
-### 无外网条件的单群组
+### 无外网条件的搭建单群组区块链网络
 
 **最简单的操作方式是在有外网的Linux机器上使用build_chain建好链，借助-z选项打包，然后拷贝到无外网的机器上运行。**
 
