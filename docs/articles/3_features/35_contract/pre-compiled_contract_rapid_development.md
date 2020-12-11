@@ -127,7 +127,7 @@ dev::eth::ContractABI类中我们需要使用abiIn/abiOut两个接口，前者�
 
 ##### HelloWorldPrecompiled实现：
 
-考虑手机上的阅读体验，我们分块介绍call接口内部实现并省略部分错误处理逻辑，详细代码实现可以参考FISCO BCOS 2.0文档使用手册->智能合约开发->[预编译合约开发](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id2)。
+考虑手机上的阅读体验，我们分块介绍call接口内部实现并省略部分错误处理逻辑，详细代码实现可以参考FISCO BCOS 2.0文档使用手册->智能合约开发->[预编译合约开发](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html#id2)。
 
 ```
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,

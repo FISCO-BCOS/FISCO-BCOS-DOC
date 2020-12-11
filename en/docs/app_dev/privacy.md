@@ -1,6 +1,6 @@
 # Privacy protection
 
-Privacy protection is a major technical challenge for the alliance chain. In order to protect the data, keep the anonymity of alliance members, and ensure the effectiveness of supervision，FISCO BCOS integrates homomorphic encryption and group/ring signature algorithms in [Precompiled Contracts](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id2), providing multiple privacy protection methods.
+Privacy protection is a major technical challenge for the alliance chain. In order to protect the data, keep the anonymity of alliance members, and ensure the effectiveness of supervision，FISCO BCOS integrates homomorphic encryption and group/ring signature algorithms in [Precompiled Contracts](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html#id2), providing multiple privacy protection methods.
 
 ```eval_rst
 .. note::
@@ -92,7 +92,7 @@ bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 
 ## Precompiled contract interface
 
-The code of the privacy module is put together with the precompiled contracts developed by the user, located in the `FISCO-BCOS/libprecompiled/extension` directory. The calling method of the privacy module is exactly the same as the [calling method](https://fisco-bcos-documentation.readthedocs.io/en_US/latest/docs/manual/smart_contract.html#id12) of the precompiled contract developed by the user, but there are two points to note:
+The code of the privacy module is put together with the precompiled contracts developed by the user, located in the `FISCO-BCOS/libprecompiled/extension` directory. The calling method of the privacy module is exactly the same as the [calling method](https://fisco-bcos-documentation.readthedocs.io/en_US/latest/docs/app_dev/smart_contract.html#id12) of the precompiled contract developed by the user, but there are two points to note:
 
 1. Addresses have been assigned to the precompiled contracts for the privacy module and no additional registration is required. The precompiled contract list and address allocation of the privacy module are as follows:
 
