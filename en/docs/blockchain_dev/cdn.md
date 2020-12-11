@@ -54,7 +54,7 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 
 ## 举例：使用国内镜像建链
 
-本节以搭建2.4.0国密版本为例，使用国内镜像建链，非国密版本的操作类似，参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)
+本节以搭建2.4.0国密版本为例，使用国内镜像建链，非国密版本的操作类似，参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)
 
 ### 下载开发部署工具
 

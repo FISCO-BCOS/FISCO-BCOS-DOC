@@ -12,7 +12,7 @@ AMOP（Advanced Messages Onchain Protocol）即链上信使协议，旨在为联
 
 **初始化**：
 
--   搭建单群组四节点区块链网络，可参考：[安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)。
+-   搭建单群组四节点区块链网络，可参考：[安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)。
 
 ## 单播案例
 

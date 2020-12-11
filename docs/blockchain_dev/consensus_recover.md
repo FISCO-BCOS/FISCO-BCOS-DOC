@@ -141,7 +141,7 @@ bash ./node3/start.sh
 
 ### 添加共识节点
 
-现在节点C和节点D是观察者节点，只能同步区块却无法参与区块共识。为此，可通过在控制台执行 addSealer 命令将节点C和节点D转换为共识节点。关于节点角色转换可参考：[组员管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/node_management.html)。
+现在节点C和节点D是观察者节点，只能同步区块却无法参与区块共识。为此，可通过在控制台执行 addSealer 命令将节点C和节点D转换为共识节点。关于节点角色转换可参考：[组员管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/node_management.html)。
 
 ```shell
 # 转换节点C为共识节点
@@ -296,7 +296,7 @@ bash ./node3/start.sh
 
 ### 添加共识节点
 
-现在节点C和节点D是观察者节点，只能同步区块却无法参与区块共识。为此，可通过在控制台执行 addSealer 命令将节点C和节点D转换为共识节点。关于节点角色转换可参考：[组员管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/node_management.html)。
+现在节点C和节点D是观察者节点，只能同步区块却无法参与区块共识。为此，可通过在控制台执行 addSealer 命令将节点C和节点D转换为共识节点。关于节点角色转换可参考：[组员管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/node_management.html)。
 
 ```shell
 # 转换节点C为共识节点
@@ -409,7 +409,7 @@ e.g
     使用 rocksdb-storage 工具操作网络中开启落盘加密节点的数据库时，需要额外指定 `-e` 选项，同时建议将 -e 选项放置在命令行最后。
 ```
 
-1. 搭建单群组四节点区块链网络，可参考：[安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)。搭建完之后需要将所有节点关闭，rocksdb 数据库无法同时被打开两次。
+1. 搭建单群组四节点区块链网络，可参考：[安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)。搭建完之后需要将所有节点关闭，rocksdb 数据库无法同时被打开两次。
 
 2. 编译 FISCO BCOS 源码，获取 rocksdb-storage 工具，移动工具至 `~/fisco/` 文件夹目录
 

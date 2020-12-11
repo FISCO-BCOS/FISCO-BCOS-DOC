@@ -213,7 +213,7 @@ Python-SDK的开发始于今年6月中旬，写出第一个可用版本只花了
 - [FISCO BCOS官方控制台](https://github.com/FISCO-BCOS/console)
 - [Python-SDK](https://github.com/FISCO-BCOS/python-sdk)
 - [Nodejs-SDK](https://github.com/FISCO-BCOS/nodejs-sdk)
-- [FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)
+- [FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html#fisco-bcos)
 - [合约开发教程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html)
 - [WeBASE](https://fintech.webank.com/webase)
 - [ABI](https://solidity.readthedocs.io/en/latest/abi-spec.html)

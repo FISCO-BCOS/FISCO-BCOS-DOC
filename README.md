@@ -8,7 +8,7 @@
 
 - [平台介绍](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/introduction.html)
 - [2.0版本新特性](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/what_is_new.html)
-- [安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/installation.html)
+- [安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/tutorial/installation.html)
 - [教程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/tutorial/index.html)
 - [使用手册](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/manual/index.html)
 - [运维部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/enterprise_tools/index.html)

@@ -23,7 +23,7 @@ $ bash nodes/127.0.0.1/start_all.sh
 
 ![](../../../images/articles/five_step_to_develop_application/IMG_4947.JPG)
 
-当然，如果你还是需要阅读详细文档，请参考【安装】：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos
+当然，如果你还是需要阅读详细文档，请参考【安装】：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html#fisco-bcos
 
 ## 第二步：安装一个交互式控制台
 
