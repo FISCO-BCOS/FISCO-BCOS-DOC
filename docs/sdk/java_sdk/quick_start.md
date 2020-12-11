@@ -52,7 +52,7 @@
 
 ## 3. 开发智能合约应用
 
-#### 第一步. 创建一个Gradle应用
+### 第一步. 创建一个Gradle应用
 
 在IntelliJ IDE中创建一个gradle项目。勾选Gradle和Java
 
@@ -60,7 +60,7 @@
 
 
 
-#### 第二步. 引入Java SDK
+### 第二步. 引入Java SDK
 
 在build.gradle中引入Java SDK
 
@@ -80,7 +80,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.0')
 
 
 
-#### 第三步. 配置SDK证书
+### 第三步. 配置SDK证书
 
 参考[java sdk证书配置](./configuration.html#id5)。
 
@@ -102,7 +102,7 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 
 
 
-#### 第四步. 准备智能合约
+### 第四步. 准备智能合约
 
 控制台`console`和``java-sdk-demo``均提供了工具，可以将`solidity`合约生成出调用该合约`java`工具类。本例中使用``console``做为例子，使用``java-sdk-demo``的例子请看第6章“附录一. 使用``java-sdk-demo``给智能合约生成调用它的Java工具类”
 **首先，下载控制台。**
@@ -179,7 +179,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 
 
-#### 第五步. 创建配置文件
+### 第五步. 创建配置文件
 
 在项目中创建配置文件``config.toml``, 可参照[配置向导](./configuration.html)进行配置，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml), 
 
@@ -187,7 +187,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 
 
-#### 第六步. 使用Java SDK部署和调用智能合约
+### 第六步. 使用Java SDK部署和调用智能合约
 
 以使用java sdk调用群组1的`getBlockNumber`接口获取群组1最新块高，并向群组1部署和调用`HelloWorld`合约为例，对应的示例代码如下：
 
@@ -222,7 +222,7 @@ public class BcosSDKTest
 
 ## 4. 附录
 
-#### 附录一. 使用``java-sdk-demo``给智能合约生成调用它的Java工具类
+### 附录一. 使用``java-sdk-demo``给智能合约生成调用它的Java工具类
 
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
@@ -241,7 +241,7 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${p
 
 
 
-#### 附录二. ``sol2java.sh``脚本的使用方法
+### 附录二. ``sol2java.sh``脚本的使用方法
 
 控制台`v2.6+`提供了`sol2java.sh`脚本可将`solidity`转换为`java`代码, `sol2java.sh`使用方法如下：
 
@@ -265,7 +265,7 @@ $ bash sol2java.sh -h
 
 
 
-#### 附录三. 使用xml配置进行配置
+### 附录三. 使用xml配置进行配置
 
 为了适配更多场景，java sdk支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考java sdk源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
 
@@ -308,10 +308,9 @@ compile spring
 
 **使用`applicationContext-sample`初始化`BcosSDK`如下**：
 
+
 ```java
 ApplicationContext context =
     new ClassPathXmlApplicationContext("classpath:applicationContext-sample.xml");
 BcosSDK sdk = context.getBean(BcosSDK.class);
 ```
-
-### 
