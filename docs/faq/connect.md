@@ -39,11 +39,11 @@ FISCO BCOS v2.5.0版本起，限制SDK只能连接本机构的节点，请确保
 
 **第三步.检查JDK版本**
 
-请确认JDK版本不小于JDK 1.8且不大于JDK 14，具体可参考[这里](./java_sdk.html#java)
+请确认JDK版本不小于JDK 1.8且不大于JDK 14。
 
 **第四步.检查证书配置是否正确**
 
-检查证书是否拷贝到默认的配置路径，请参考[这里](./java_sdk.html#id1).
+检查证书是否拷贝到默认的配置路径，请参考[这里](./certificate.html#id1).
 
 **第五步.检查是否Jar包冲突**
 
@@ -88,7 +88,8 @@ FISCO BCOS v2.5.0版本起，限制SDK只能连接本机构的节点，请确保
 
 **第三步.检查JDK版本**
 
-Web3SDK的java版本要求请参考[这里](./sdk.html#java)
+Web3SDK要求JDK版本大于等于1.8，推荐使用OracleJDK。
+注：CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，会导致JavaSDK无法正常连接区块链节点，Java环境安装请参考[Java环境配置](../console/console.html#java)
 
 **第四步.针对Web3SDK常见的异常启动问题进行排查**
 - Failed to connect to the node. Please check the node status and the console configuration.<br>    

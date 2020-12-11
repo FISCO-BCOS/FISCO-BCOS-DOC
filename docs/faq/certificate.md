@@ -32,7 +32,7 @@ Java SDK默认的证书配置路径是`conf`，将证书放置与`resources`目�
 
 **解决方法:**
 
-证书续期操作可以参考[证书续期操作](../blockchain_dev/certificates.md#id9)
+证书续期操作可以参考[证书续期操作](../blockchain_dev/certificates.html#id9)
 <hr>
 
 ## 证书验证失败（运维部署工具）
