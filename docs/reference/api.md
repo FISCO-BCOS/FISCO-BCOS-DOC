@@ -1,6 +1,6 @@
 # JSON-RPC API
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[jsonrpc_listen_ip]`(若节点小于v2.3.0版本，查看配置项`listen_ip`)和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id51)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[jsonrpc_listen_ip]`(若节点小于v2.3.0版本，查看配置项`listen_ip`)和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](../design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id51)。
 
 ## getClientVersion
 返回节点的版本信息
@@ -55,7 +55,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[1],"id
 ```
 
 ## getPbftView
-返回节点所在指定群组内的最新[PBFT视图](design/consensus/pbft.html#view)
+返回节点所在指定群组内的最新[PBFT视图](../design/consensus/pbft.html#view)
 ### 参数
 - `groupID`: `unsigned int` - 群组ID
 ### 返回值
@@ -72,7 +72,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":[1],"id":1
     "result": "0x1a0"
 }
 ```
-**注：** FISCO BCOS支持[PBFT共识](design/consensus/pbft.md)和[Raft共识](design/consensus/raft.md)，当访问的区块链采用Raft共识时，该接口返回FISCO BCOS自定义错误响应如下:
+**注：** FISCO BCOS支持[PBFT共识](../design/consensus/pbft.md)和[Raft共识](../design/consensus/raft.md)，当访问的区块链采用Raft共识时，该接口返回FISCO BCOS自定义错误响应如下:
 ```
 {
   "error": {
@@ -135,7 +135,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
 - `groupID`: `unsigned int` - 群组ID
 ### 返回值
 - `object` - 共识状态信息。
-- 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](design/consensus/pbft.md)），字段如下：
+- 当共识机制为PBFT时（PBFT详细设计参考[PBFT设计文档](../design/consensus/pbft.md)），字段如下：
    -  `accountType`: `unsigned int` - 节点类型，0表示观察节点，1表示共识节点
    -  `allowFutureBlocks`: `bool` - 允许未来块标志，当前为true
    -  `cfgErr`: `bool` - 表明节点是否出错，true表示节点已经异常
@@ -156,7 +156,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[1],"i
    -  `toView`: `unsigned int` - 目前到达的view值
    -  与本节点相连的所有共识节点nodeID和视图view信息
 
-- 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](design/consensus/raft.md)），字段如下：
+- 当共识机制为Raft时（Raft详细设计参考[Raft设计文档](../design/consensus/raft.md)），字段如下：
     - `accountType`: `unsigned int` - 账户类型
     - `allowFutureBlocks`: `bool` - 允许未来块标志
     - `cfgErr`: `bool` - 配置错误标志
