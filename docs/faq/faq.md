@@ -1,5 +1,8 @@
 # 问题排查
 
+标签： ``问题排查`` ``连接问题`` ``控制台问题`` ``SDK问题``
+
+----
 ## 版本相关
 
 问:
@@ -25,7 +28,7 @@
 问:
   FISCO BCOS 2.0版本的智能合约与之前版本合约有什么不同，兼容性如何？<br>
 答:
-  FISCO BCOS 2.0版本支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](./manual/smart_contract.md)。
+  FISCO BCOS 2.0版本支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](../app_dev/smart_contract.md)。
 
 问:
   国密和普通版本的区别有哪些？<br>
@@ -192,7 +195,7 @@ Traceback (most recent call last):
   节点或SDK使用的OpenSSL证书过期了，如何续期？
 
 答:
-  证书续期操作可以参考[证书续期操作](../blockchain_dev/certificates.md#id9)
+  证书续期操作可以参考[证书续期操作](./manual/certificates.md#id9)
 
 问：
   使用下载命令提示certificate verify failed

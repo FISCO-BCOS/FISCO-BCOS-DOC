@@ -25,7 +25,7 @@ A:
 Q:
   What is the difference on the smart contract between FISCO BCOS 2.0 version and the previous version? And how is the compatibility? <br>
 A:
-  FISCO BCOS version 2.0 supports the latest Solidity contract and precompile contract. For the detail, please [refer to here] (./manual/smart_contract.md).
+  FISCO BCOS version 2.0 supports the latest Solidity contract and precompile contract. For the detail, please [refer to here] (../app_dev/smart_contract.md).
 
 Q:
   What is the difference between the national cryptographic version and the normal version? <br>

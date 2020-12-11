@@ -1,5 +1,8 @@
 # 连接失败
-<hr>
+
+标签：``连接失败`` ``问题排查`` ``Failed to connect to nodes`` ``握手失败``
+
+----
 
 ## Failed to connect to nodes
 

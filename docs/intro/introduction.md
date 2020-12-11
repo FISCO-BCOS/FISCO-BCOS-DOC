@@ -121,7 +121,7 @@ FISCO BCOS采用高通量可扩展的[多群组架构](../design/architecture/gr
 为提升系统性能，FISCO BCOS从提升交易执行效率和并发两个方面优化了交易执行，使得交易处理性能达到万级以上。
 
 - <font color=blue>**[基于C++的Precompiled合约](../design/virtual_machine/precompiled.md)**</font>：区块链底层内置C++语言编写的Precompiled合约，执行效率更高。
-- <font color=blue>**[交易并行执行](../design/parallel/dag.md)**</font>：基于DAG算法根据交易间互斥关系构建区块内交易执行流，最大化并行执行区块内的交易。
+- <font color=blue>**[交易并行执行](.../design/parallel/dag.md)**</font>：基于DAG算法根据交易间互斥关系构建区块内交易执行流，最大化并行执行区块内的交易。
 - 交易生命周期的异步并行处理：共识、同步、落盘等各个环节的异步化以及并行处理。
 
 ## 安全性

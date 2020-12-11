@@ -1,5 +1,8 @@
 # 版本问题
-<hr>
+
+标签： ``问题排查`` ``版本问题`` ``版本不正确`` ``Java版本`` ``版本兼容性``
+
+----
 
 ## FISCO BCOS版本疑问
 **问题:FISCO BCOS 2.0版本与之前版本有哪些变化？**<br>
@@ -20,4 +23,4 @@ FISCO BCOS 2.0版本支持最新的Solidity合约，同时增加了precompile合
 
 ## Java版本不正确（Java SDK）
 
-Java SDK要求JDK版本大于等于1.8，推荐使用OpenJDK/OracleJDK 15以下版本的JDK，不同系统的Java安装请参考[这里](../installation.html#id9)
+Java SDK要求JDK版本大于等于1.8，推荐使用OpenJDK/OracleJDK 15以下版本的JDK，不同系统的Java安装请参考[这里](../tutorial/installation.html#id9)

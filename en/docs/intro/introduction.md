@@ -103,7 +103,7 @@ The above features all focus on solving the pain points of technology and experi
 
 ## Core module
 
-FISCO BCOS adopts high-throughput scalable [multi-group architecture](./design/architecture/group.md), which can dynamically manage multiple chains and groups to meet the expansion and isolation requirements of multiple business scenarios. Modules include:
+FISCO BCOS adopts high-throughput scalable [multi-group architecture](../design/architecture/group.md), which can dynamically manage multiple chains and groups to meet the expansion and isolation requirements of multiple business scenarios. Modules include:
 
 - <font color=blue>**[Consensus mechanism](./design/consensus/index.md)**</font>: Pluggable consensus mechanism, supporting PBFT, Raft and rPBFT consensus algorithms, low transaction confirmation delay, high throughput, and ultimate consistency. Among them, PBFT and rPBFT can solve Byzantine problems and have higher security.
 
@@ -115,20 +115,20 @@ FISCO BCOS adopts high-throughput scalable [multi-group architecture](./design/a
 
 In order to improve system performance, FISCO BCOS optimizes transaction execution in terms of improving transaction execution efficiency and concurrency, so that transaction processing performance can reach more than 10,000 levels.
 
-- <font color=blue>**[Precompiled contract based on C++](./design/virtual_machine/precompiled.md)**</font>: The Precompiled contract written in C++ language is built into the blockchain platform, and the execution efficiency is higher.
+- <font color=blue>**[Precompiled contract based on C++](../design/virtual_machine/precompiled.md)**</font>: The Precompiled contract written in C++ language is built into the blockchain platform, and the execution efficiency is higher.
 
-- <font color=blue>**[Transaction execution in parallel](./design/parallel/dag.md)**</font>: Based on the DAG algorithm to build a transaction execution flow within a block based on the mutually exclusive relationship between transactions, maximizing parallel execution of transactions within a block.
+- <font color=blue>**[Transaction execution in parallel](../design/parallel/dag.md)**</font>: Based on the DAG algorithm to build a transaction execution flow within a block based on the mutually exclusive relationship between transactions, maximizing parallel execution of transactions within a block.
 
 
 ## Safety
 
 Considering the high security requirements of the consortium blockchain platform, in addition to the TLS security protocol used for communication between nodes and between nodes and clients, FISCO BCOS also implements a complete set of security solutions:
 
-- <font color=blue>**[Network access mechanism](./design/security_control/node_management.md)**</font>: Restrict nodes from joining and exiting the alliance chain, and delete the malicious nodes of the specified group from the group, ensuring system security.
+- <font color=blue>**[Network access mechanism](../design/security_control/node_management.md)**</font>: Restrict nodes from joining and exiting the alliance chain, and delete the malicious nodes of the specified group from the group, ensuring system security.
 
-- <font color=blue>**[Black and white list mechanism](./design/security_control/certificate_list.md)**</font>: Each group can only receive messages from the corresponding group to ensure the isolation of network communication between the groups; the CA blacklist mechanism can disconnect the network connection from the malicious node in time, ensuring the security of the system.
+- <font color=blue>**[Black and white list mechanism](../design/security_control/certificate_list.md)**</font>: Each group can only receive messages from the corresponding group to ensure the isolation of network communication between the groups; the CA blacklist mechanism can disconnect the network connection from the malicious node in time, ensuring the security of the system.
 
-- <font color=blue>**[Authority management mechanism](./design/security_control/permission_control.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables.
+- <font color=blue>**[Authority management mechanism](../design/security_control/permission_control.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables.
 
 - <font color=blue>**[Support OSCCA-approved algorithm](./../blockchain_dev/guomi_crypto.md)**</font>: Support OSCCA-approved encryption, signature algorithm and OSCCA-approved SSL communication protocol.
 
