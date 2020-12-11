@@ -12,7 +12,7 @@ Eclipse是当前主流的Java IDE之一，本文将进行上手实操，指导�
 
 ##### 前置条件：
 
-参考[安装文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)：完成FISCO BCOS区块链的搭建，功能测试需要与区块链节点进行交互。
+参考[安装文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)：完成FISCO BCOS区块链的搭建，功能测试需要与区块链节点进行交互。
 
 ## **Eclipse 创建新工程**
 

@@ -3,7 +3,7 @@
 Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供外部调用。按照功能，Go API可以分为如下几类：
 
 - **client**：提供访问FISCO BCOS 2.0+节点[JSON-RPC](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html)接口支持、提供部署及调用合约的支持；
-- **PrecompiledService**：Precompiled合约（预编译合约）是一种FISCO BCOS底层内嵌的、通过C++实现的高效智能合约，提供包括 [基于表的权限控制](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/manual/permission_control.html#id15)、[CNS](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/features/cns_contract_name_service.html)、系统属性配置、节点类型配置、用户表 CRUD、[基于角色的权限控制](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/manual/permission_control.html#id2)、合约生命周期权限控制等功能。PrecompiledService是调用这类功能的API的统称，分为：
+- **PrecompiledService**：Precompiled合约（预编译合约）是一种FISCO BCOS底层内嵌的、通过C++实现的高效智能合约，提供包括 [基于表的权限控制](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/blockchain_dev/permission_control.html#id15)、[CNS](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/features/cns_contract_name_service.html)、系统属性配置、节点类型配置、用户表 CRUD、[基于角色的权限控制](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/blockchain_dev/permission_control.html#id2)、合约生命周期权限控制等功能。PrecompiledService是调用这类功能的API的统称，分为：
   - **PermissionService**：提供对分布式权限控制的支持；
   - **CNSService**：提供对CNS的支持；
   - **SystemConfigService**：提供对系统配置的支持；

@@ -34,7 +34,7 @@
   - Git bash（仅Windows需要）
   - MSBuild构建环境（仅Windows需要）
 
-- FISCO BCOS节点：请参考[FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)搭建
+- FISCO BCOS节点：请参考[FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html#fisco-bcos)搭建
 
 ## 部署Node.js SDK
 

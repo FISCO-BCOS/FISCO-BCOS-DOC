@@ -3,7 +3,7 @@
 标签：``隐私合约`` ``隐私保护`` ``合约开发`` ``同态加密`` ``环签名``
 
 ----
-隐私保护是联盟链的一大技术挑战。为了保护链上数据、保障联盟成员隐私，并且保证监管的有效性，FISCO BCOS以[预编译合约](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id2)的形式集成了同态加密、群/环签名验证功能，提供了多种隐私保护手段。
+隐私保护是联盟链的一大技术挑战。为了保护链上数据、保障联盟成员隐私，并且保证监管的有效性，FISCO BCOS以[预编译合约](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html#id2)的形式集成了同态加密、群/环签名验证功能，提供了多种隐私保护手段。
 
 文档一、二节分别对同态加密和群/环签名算法以及相关应用场景进行了简单介绍，第三、四节则详细介绍了FISCO BCOS隐私保护模块启用方法以及调用方式。
 
@@ -113,7 +113,7 @@ bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 
 ## 预编译合约接口
 
-隐私模块的代码和用户开发的预编译合约都位于`FISCO-BCOS/libprecompiled/extension`目录，因此隐私模块的调用方式和用户开发的预编译合约[调用流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id12)相同，不过有两点需要注意：
+隐私模块的代码和用户开发的预编译合约都位于`FISCO-BCOS/libprecompiled/extension`目录，因此隐私模块的调用方式和用户开发的预编译合约[调用流程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html#id12)相同，不过有两点需要注意：
 
 1.已为隐私模块的预编译合约分配了地址，无需另行注册。隐私模块实现的预编译合约列表以及地址分配如下：
 

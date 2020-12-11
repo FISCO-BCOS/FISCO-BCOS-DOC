@@ -15,7 +15,7 @@ cd go-sdk
 go build cmd/console.go
 ```
 
-- 搭建FISCO BCOS 2.2以上版本节点，请 [参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)
+- 搭建FISCO BCOS 2.2以上版本节点，请 [参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)
 
 - config.toml 配置文件默认使用 channel 连接模式，请拷贝对应的 ca.crt、sdk.crt 和 sdk.key 证书至 go-sdk 目录
 
