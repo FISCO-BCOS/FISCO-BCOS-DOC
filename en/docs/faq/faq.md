@@ -107,7 +107,7 @@ A:
 Q:
   How to change and inquire the consensus changeable configuration? <br>
 A:
-  Consensus changeable configuration can be changed through console. It can be inquired through console and RPC interface. For detail, please [refer to here] (./design/rpc.md).
+  Consensus changeable configuration can be changed through console. It can be inquired through console and RPC interface. For detail, please [refer to here] (../design/rpc.md).
 
   - [consensus].max_trans_num,[tx].gas_limit is changed by using the interface setSystemConfigByKey, and the corresponding configuration items are tx_count_limit, tx_gas_limit. See setSystemConfigByKey -h for details.
 

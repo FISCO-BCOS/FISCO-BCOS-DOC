@@ -76,7 +76,7 @@ In the 2.0 version, we upgrade disk encryption and release KeyManager service fo
 
 The interaction protocol between the node and the KeyManager is open. It supports agency to design the KeyManager service that conforms to its keys management specification, such as hardware encryption technology. 
 
-For more details, please refer to [Manual Document](../blockchain_dev/storage_security.md) and [Design Document](./design/features/storage_security.md).
+For more details, please refer to [Manual Document](../blockchain_dev/storage_security.md) and [Design Document](../design/features/storage_security.md).
 
 ## Admission control
 

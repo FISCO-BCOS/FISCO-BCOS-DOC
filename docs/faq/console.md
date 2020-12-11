@@ -41,7 +41,7 @@ The execution of the contract rolled back.
 
 **解决方案**
 
-**方法一:** 升级到最新版本控制台，可参考[配置和使用控制台](../installation.html#id8)
+**方法一:** 升级到最新版本控制台，可参考[配置和使用控制台](../tutorial/installation.html#id8)
 **方法二：**
 将`console/lib`目录下的`solcJ-all-0.4.25.jar`替换为国密版本的`solc`，具体操作步骤如下：
 
