@@ -462,10 +462,10 @@ hello_world_set_method显示了历史调用的所有函数信息。
 
 #### 参考资料
 
-- [Spring Boot项目配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#spring-boot)
+- [Spring Boot项目配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/web3sdk/java_sdk.html#spring-boot)
 - [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)
 - [HelloWorld合约](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/resources/contract/HelloWorld.sol)
-- [转为Java文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id12)
+- [转为Java文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id12)
 - [HelloWorld.java](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/java/org/fisco/bcos/solidity/HelloWorld.java)
 - [ContractTest](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/java/org/fisco/bcos/ContractTest.java)
 - [WeBASE-Collect-Bee快速部署](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Codegen-Monkey/install.html#)

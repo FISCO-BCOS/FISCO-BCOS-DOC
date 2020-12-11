@@ -1,5 +1,9 @@
 # 获取FISCO BCOS可执行程序
 
+标签：``可执行程序`` ``开发手册`` ``预编译程序`` ``源码编译`` ``编译教程``
+
+----
+
 用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
 - 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行。
 - 官方提供docker镜像，欢迎使用。[docker-hub地址](https://hub.docker.com/r/fiscoorg/fiscobcos)
@@ -13,7 +17,7 @@
 
 从v2.0.0版本开始，我们提供对应版本tag的docker镜像。对应于master分支，我们提供`lastest`标签的镜像，更多的docker标签[请参考这里](https://hub.docker.com/r/fiscoorg/fiscobcos/tags)。
 
-build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，方便开发者部署。详情请[参考这里](build_chain.html#id4)。
+build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，方便开发者部署。详情请[参考这里](../tools/build_chain.html#id4)。
 
 ```eval_rst
 .. note::

@@ -12,14 +12,14 @@
 答:
   FISCO BCOS提供多种开发者与平台交互的方式，参考如下：
   - FISCO BCOS 2.0版本提供JSON-RPC接口，具体请 [参考这里](./api.md)。
-  - FISCO BCOS 2.0版本提供Web3SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/java_sdk.md)。
-  - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，[2.6及其以上版本控制台使用文档参考这里](./manual/console_of_java_sdk.md)，[1.x版本控制台使用文档参考这里](./manual/console.md)。
+  - FISCO BCOS 2.0版本提供Web3SDK帮助开发者快速实现应用，具体请 [参考这里](./sdk/web3sdk/java_sdk.md)。
+  - FISCO BCOS 2.0版本提供控制台帮助用户快速了解使用FISCO BCOS，[2.6及其以上版本控制台使用文档参考这里](../console/console_of_java_sdk.md)，[1.x版本控制台使用文档参考这里](../console/console.md)。
 
 问:
   FISCO BCOS 2.0版本如何搭建？<br>
 答:
   FISCO BCOS支持多种搭建方式，常用方式有：
-  - 开发部署工具 build_chain.sh：适合开发者体验、测试FISCO BCOS联盟链，具体请 [参考这里](./manual/build_chain.md)。
+  - 开发部署工具 build_chain.sh：适合开发者体验、测试FISCO BCOS联盟链，具体请 [参考这里](./tools/build_chain.md)。
   - 运维部署工具 generator：适用于企业用户部署、维护FISCO BCOS联盟链，具体请 [参考这里](./enterprise_tools/index.md)。
 
 问:
@@ -70,7 +70,7 @@
 问:
   2.0版本证书在哪里使用?<br>
 答:
-  请参考[证书说明文档](manual/certificates.md)
+  请参考[证书说明文档](../blockchain_dev/certificates.md)
 
 问:
   2.0版本交易结构包括哪些字段?<br>
@@ -192,7 +192,7 @@ Traceback (most recent call last):
   节点或SDK使用的OpenSSL证书过期了，如何续期？
 
 答:
-  证书续期操作可以参考[证书续期操作](./manual/certificates.md#id9)
+  证书续期操作可以参考[证书续期操作](../blockchain_dev/certificates.md#id9)
 
 问：
   使用下载命令提示certificate verify failed

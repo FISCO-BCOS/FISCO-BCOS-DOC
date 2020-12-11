@@ -14,7 +14,7 @@ The statically linked precompiled executable provided has been tested on Ubuntu 
 
 From v2.0.0 version, we provide the docker image for the tag version. Corresponding to the master branch, we provide image of `latest` tag. For more docker tags please refer to[here](https://hub.docker.com/r/fiscoorg/fiscobcos/tags).
 
-build_chain.sh script adds the `-d` option to provide docker mode building for developers to deploy. For details, please refer to [here](build_chain.html#id4).
+build_chain.sh script adds the `-d` option to provide docker mode building for developers to deploy. For details, please refer to [here](../tools/build_chain.html#id4).
 
 ```eval_rst
 .. note::

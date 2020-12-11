@@ -71,8 +71,8 @@ The community links multiple parties with open source. As of May 2020, more than
 |Cross-chain protocol|Based on [WeCross](https://github.com/WeBankFinTech/WeCross) supports homogeneous and heterogeneous cross-chain |
 | <font color=Blue>**Development support**</font> |
 |Contract development tools|[WeBASE-IDE](https://github.com/WeBankFinTech/WeBASE)，[ChainIDE](https://fiscoide.com/)|
-|Development of chain building tools | [build_chain](./manual/build_chain.html)|
-|Contract deployment and testing tools| [Console](./manual/console.html)|
+|Development of chain building tools | [build_chain](../tutorial/build_chain.html)|
+|Contract deployment and testing tools| [Console](../console/console.html)|
 |SDK|[Java](https://github.com/FISCO-BCOS/web3sdk)、[nodejs](https://github.com/FISCO-BCOS/nodejs-sdk)、[go](https://github.com/FISCO-BCOS/go-sdk)、[python](https://github.com/FISCO-BCOS/python-sdk)|
 |Rapid component development| [Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
 |Performance measuring tool|SDK embedded performance testing tool, supports Caliper|
@@ -130,13 +130,13 @@ Considering the high security requirements of the consortium blockchain platform
 
 - <font color=blue>**[Authority management mechanism](./design/security_control/permission_control.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables.
 
-- <font color=blue>**[Support OSCCA-approved algorithm](./manual/guomi_crypto.md)**</font>: Support OSCCA-approved encryption, signature algorithm and OSCCA-approved SSL communication protocol.
+- <font color=blue>**[Support OSCCA-approved algorithm](./../blockchain_dev/guomi_crypto.md)**</font>: Support OSCCA-approved encryption, signature algorithm and OSCCA-approved SSL communication protocol.
 
 - <font color=blue>**[Disk encryption algorithm](./design/features/storage_security.md)**</font>: Support the disk encryption algorithm to ensure the confidentiality of the data on the chain.
 
 - <font color=blue>**[Key management scheme](./design/features/storage_security.md)**</font>: Based on the disk encryption algorithm, the KeyManager service is used to manage the node key, which is more secure.
 
-- <font color=blue>**[Homomorphic encryption](./manual/privacy.md)、[Group/Ring signature](./manual/privacy.md)**</font>: Homomorphic encryption and group ring signature interfaces are provided on the chain to meet more business needs.
+- <font color=blue>**[Homomorphic encryption](./app_dev/privacy.md)、[Group/Ring signature](./app_dev/privacy.md)**</font>: Homomorphic encryption and group ring signature interfaces are provided on the chain to meet more business needs.
 
 
 ## Operability
@@ -156,12 +156,12 @@ In the consortium blockchain platform, the operation and maintenance of the bloc
 
 FISCO BCOS introduces tools such as development and deployment tools, interactive console, blockchain browsers, etc. to improve the ease of use of the system and greatly reduce the time to build chains and deploy applications.
 
-- <font color=blue>**[Development and deployment tools](./manual/build_chain.md)**</font>
-- <font color=blue>**[Interactive command line tool console based on Web3SDK](./manual/console.md)**</font>
-- <font color=blue>**[nteractive command line tool console based on Web3SDK](./manual/console_of_java_sdk.md)**</font>
+- <font color=blue>**[Development and deployment tools](../tools/build_chain.md)**</font>
+- <font color=blue>**[Interactive command line tool console based on Web3SDK](../console/console.md)**</font>
+- <font color=blue>**[nteractive command line tool console based on Web3SDK](../console/console_of_java_sdk.md)**</font>
 - <font color=blue>**[Blockchain browser](./browser/browser.md)**</font>
 
-In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](./sdk/java_sdk.md)、[Node.js SDK](./sdk/nodejs_sdk/index.md)、[Python SDK](./sdk/python_sdk/index.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)
+In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](./sdk/java_sdk/index.html)、[Node.js SDK](../sdk/nodejs_sdk/index.md)、[Python SDK](../sdk/python_sdk/index.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)
 
 ## Community development tools
 

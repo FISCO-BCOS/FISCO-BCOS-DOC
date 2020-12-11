@@ -1,5 +1,9 @@
 # 极端异常下的共识恢复应急方案
 
+标签：``共识恢复`` ``存活性`` 
+
+----
+
 ```eval_rst
 .. important::
    - 使用此方案之前，请确保您对区块链共识、存储、以及区块链无法篡改特性有深刻理解。该方案所涉及的操作都是高危操作，仅用于发生极端异常情况导致区块链网络无法正常运行时的紧急修复。切勿在其它场合使用，使用不当可能导致数据异常甚至系统异常，请明确知悉，谨慎使用。确定使用该恢复方案之前，建议先对已有数据进行备份。
@@ -174,7 +178,7 @@ bash ./node3/start.sh
 
 ### 获取rocksdb-storage工具
 
-FISCO BCOS 提供查询、修改 rocksdb 数据库信息的 rocksdb-storage 工具。该工具需要手动编译 [FISCO BCOS源码](https://github.com/FISCO-BCOS/FISCO-BCOS) 获取，编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
+FISCO BCOS 提供查询、修改 rocksdb 数据库信息的 rocksdb-storage 工具。该工具需要手动编译 [FISCO BCOS源码](https://github.com/FISCO-BCOS/FISCO-BCOS) 获取，编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/get_executable.html#id5)。
 
 ```shell
 #  编译成功后将 rocksdb-storage 工具移动到节点主目录，如 ~/fisco/nodes/127.0.0.1/
@@ -314,7 +318,7 @@ bash ./node3/start.sh
 
 FISCO BCOS 提供 rocksdb-storage 工具帮助用户对 rocksdb 数据库进行常规 CRUD 操作，此外 rocksdb-storage 工具也支持手动创建数据表。
 
-**获取途径**：手动编译 [FISCO BCOS源码](https://github.com/FISCO-BCOS/FISCO-BCOS)。编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
+**获取途径**：手动编译 [FISCO BCOS源码](https://github.com/FISCO-BCOS/FISCO-BCOS)。编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/get_executable.html#id5)。
 
 ### 帮助
 

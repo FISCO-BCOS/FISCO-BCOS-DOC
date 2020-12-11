@@ -1,5 +1,8 @@
 # 开发并行合约
 
+标签：``并行合约`` ``合约开发`` ``智能合约``
+
+----
 FISCO BCOS提供了可并行合约开发框架，开发者按照框架规范编写的合约，能够被FISCO BCOS节点并行地执行。并行合约的优势有：
 
 - 高吞吐：多笔独立交易同时被执行，能最大限度利用机器的CPU资源，从而拥有较高的TPS
@@ -181,7 +184,7 @@ function disableParallel() public
 
 **（4）部署/执行并行合约**
 
-用控制台(2.6及其以上版本控制台使用手册请参考[这里](./console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](./console.md))或[Web3SDK](../sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
+用控制台(2.6及其以上版本控制台使用手册请参考[这里](./console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](./console.md))或[Web3SDK](../sdk/web3sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
 
 部署合约
 
@@ -262,7 +265,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 **（3）编译，重启节点**
 
-手动编译节点的方法，参考：[这里](./get_executable.md)
+手动编译节点的方法，参考：[这里](../blockchain_dev/get_executable.md)
 
 编译之后，关闭节点，替换掉原来的节点二进制文件，再重启节点即可。
 
@@ -279,8 +282,8 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 Web3SDK用来发送并行交易，FISCO BCOS链用来执行并行交易。相关配置，可参考：
 
-- [Web3SDK的配置](../sdk/java_sdk.md)
-- [搭链](./build_chain.md)
+- [Web3SDK的配置](../sdk/web3sdk/java_sdk.md)
+- [搭链](../tools/build_chain.md)
 
 若需要压测最大的性能，至少需要：
 

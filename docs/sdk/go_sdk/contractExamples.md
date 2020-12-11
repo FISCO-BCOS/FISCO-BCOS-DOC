@@ -614,7 +614,7 @@ func main() {
 
 使用国密特性的开发流程和非国密大致相同，不同点在于以下几部分：
 
-- 搭建的 FISCO BCOS 区块链网络需要开启国密特性，可参考：[国密支持](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/guomi_crypto.html)
+- 搭建的 FISCO BCOS 区块链网络需要开启国密特性，可参考：[国密支持](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/guomi_crypto.html)
 - go-sdk 的 config.toml 配置文件中 KeyFile 配置项，需要将非国密私钥替换为国密私钥
 - go-sdk 的 config.toml 配置文件中 SMCrypto 配置项，需要修改为 true
 - 安装 solc 编译器时需要添加 **-g** 选项，替换为国密版本

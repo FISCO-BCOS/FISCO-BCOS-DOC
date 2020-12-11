@@ -80,7 +80,7 @@ dependencies {
 
 ### 证书与配置文件
 
-JavaSDK服务运行需要依赖applicationContext.xml配置文件以及证书。查看[配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#fisco-bcos)。将配置文件applicationContext.xml，证书文件ca.crt sdk.crt sdk.key拷贝到项目src/main/resources目录下。
+JavaSDK服务运行需要依赖applicationContext.xml配置文件以及证书。查看[配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/web3sdk/java_sdk.html#fisco-bcos)。将配置文件applicationContext.xml，证书文件ca.crt sdk.crt sdk.key拷贝到项目src/main/resources目录下。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5637.PNG)
 

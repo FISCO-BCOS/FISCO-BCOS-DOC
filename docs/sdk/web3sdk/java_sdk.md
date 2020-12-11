@@ -6,7 +6,7 @@
 
 - 提供调用FISCO BCOS 2.0 JSON-RPC的Java API
 - 支持预编译（Precompiled）合约管理区块链
-- 支持[链上信使协议](../manual/amop_protocol.md)为联盟链提供安全高效的消息信道
+- 支持[链上信使协议](../app_dev/amop_protocol.md)为联盟链提供安全高效的消息信道
 - 支持使用国密算法发送交易
 - 支持通过国密SSL与节点通信
 
@@ -20,7 +20,7 @@
      
      **注意**：CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，会导致JavaSDK无法正常连接区块链节点。
     - Java安装
-     参考 `Java环境配置 <../manual/console.html#java>`_
+     参考 `Java环境配置 <../console/console.html#java>`_
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS安装教程 <../installation.html>`_
     - 网络连通性
@@ -52,7 +52,7 @@ repositories {
         maven { url "https://dl.bintray.com/ethereum/maven/" }
     }
 ```
-**注：** 如果下载Web3SDK的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
+**注：** 如果下载Web3SDK的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../console/console.html#jar)进行下载。
 
 ## 配置SDK
 
@@ -70,7 +70,7 @@ FISCO-BCOS 2.5及之后的版本，在国密区块链环境下支持节点与SDK
 
     - 国密SSL连接只有在国密区块链环境下才可以使用。
 
-    - 是否选择国密SSL连接，SDK与区块链节点的配置要保持一致，节点配置参考 `配置链属性 <../manual/configuration.html?highlight=sm_crypto_channel#id10>`_
+    - 是否选择国密SSL连接，SDK与区块链节点的配置要保持一致，节点配置参考 `配置链属性 <../blockchain_dev/configuration.html?highlight=sm_crypto_channel#id10>`_
 
     - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
 
@@ -149,7 +149,7 @@ Java应用的配置文件需要做相关配置。值得关注的是，FISCO BCOS
 - encryptType: 国密开关(默认为0，关闭)                              
   - 0: 不使用国密                              
   - 1: 使用国密
-    - 开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../manual/guomi_crypto.md))
+    - 开启国密功能，需要连接的区块链节点是国密节点，搭建国密版FISCO BCOS区块链[参考这里](../blockchain_dev/guomi_crypto.md))
     - 使用国密SSL，在国密区块链环境基础上，SDK需要打开encryptType开关，然后配置国密SSL证书
 - groupChannelConnectionsConfig: 
   - 配置待连接的群组，可以配置一个或多个群组，每个群组需要配置群组ID 
@@ -267,7 +267,7 @@ Credentials credentials = GenCredential.create(privateKey);
 ```
 
 ##### 加载账户私钥文件
-如果通过账户生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账户私钥文件(账户生成脚本的用法参考[账户管理文档](../manual/account.md))，则可以通过加载PEM或PKCS12账户私钥文件使用账户。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
+如果通过账户生成脚本`get_accounts.sh`生成了PEM或PKCS12格式的账户私钥文件(账户生成脚本的用法参考[账户管理文档](../app_dev/account.md))，则可以通过加载PEM或PKCS12账户私钥文件使用账户。加载私钥有两个类：P12Manager和PEMManager，其中，P12Manager用于加载PKCS12格式的私钥文件，PEMManager用于加载PEM格式的私钥文件。
 
 * P12Manager用法举例：
 在applicationContext.xml中配置PKCS12账户的私钥文件路径和密码
@@ -320,7 +320,7 @@ System.out.println("PEM Address: " + credentialsPEM.getAddress());
 
 #### 通过SDK部署并调用合约
 ##### 准备Java合约文件
-控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件，具体使用方式[参考这里](../manual/console.html#id10)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件，具体使用方式[参考这里](../console/console.html#id10)。
 
 ##### 部署并调用合约
 SDK的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用Java合约类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址以及调用该合约的其他方法实现业务功能。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
@@ -352,24 +352,24 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
 提供[spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)示例项目供参考。Spring Boot项目开发与Spring项目开发类似，其主要区别在于配置文件方式的差异。该示例项目提供相关的测试案例，具体描述参考示例项目的README文档。
 
 ### SDK国密功能使用
-- 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi_crypto.md)。
+- 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../blockchain_dev/guomi_crypto.md)。
 - 启用国密功能：`applicationContext.xml`/`application.yml`配置文件中将`encryptType`属性设置为1。
 - 加载私钥使用`GenCredential`类(适用于国密和非国密)，`Credential`类只适用于加载非国密私钥。
 
-国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。编译国密版的Java合约文件[参考这里](../manual/console.html#id10)。
+国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。编译国密版的Java合约文件[参考这里](../console/console.html#id10)。
 
 ## Web3SDK API
 
 Web3SDK API主要分为Web3j API和Precompiled Service API。其中Web3j API可以查询区块链相关的状态，发送和查询交易信息；Precompiled Service API可以管理区块链相关配置以及实现特定功能。
 
 ### Web3j API
-Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API相同，参考[RPC API文档](../api.md)。
+Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API相同，参考[RPC API文档](../reference/api.md)。
 
 ### Precompiled Service API
-预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](../manual/console.md)。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的PermissionService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。相关错误码请参考：[Precompiled Service API 错误码](../api.html#precompiled-service-api)
+预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](../console/console.md)。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的PermissionService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。相关错误码请参考：[Precompiled Service API 错误码](../reference/api.html#precompiled-service-api)
 
 #### PermissionService
-SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，PermissionService可以配置权限信息，其API如下：
+SDK提供对[分布式控制权限](../blockchain_dev/distributed_storage.md)的支持，PermissionService可以配置权限信息，其API如下：
 - **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址设置权限信息。
 - **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址去除权限信息。
 - **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账户地址和生效块高)。
@@ -1072,7 +1072,7 @@ public abstract class EventLogPushCallback {
 
 `Log log`：Log对象  
 
-`List<EventResultEntity> logParams`：默认值`null`，可以在子类中解析Log的`data`字段，将结果保存入`logParams`   [[参考交易解析]](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id11) 
+`List<EventResultEntity> logParams`：默认值`null`，可以在子类中解析Log的`data`字段，将结果保存入`logParams`   [[参考交易解析]](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/web3sdk/java_sdk.html#id11) 
 
 - 实现回调对象  
   
@@ -1129,7 +1129,7 @@ contract Asset {
 }
 ```
 
-将`Asset.sol`生成对应`Java`合约文件[[将solidity合约生成对应的Java调用文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id10)]
+将`Asset.sol`生成对应`Java`合约文件[[将solidity合约生成对应的Java调用文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id10)]
 ```Java
 class Asset {
     // 其他生成代码 省略
@@ -1387,7 +1387,7 @@ class Asset {
   无法加载到证书文件，证书文件没有正确拷贝至conf目录，可以参考控制台安装流程，拷贝证书文件至conf目录下。<br><br>  
 
 - Failed to initialize the SSLContext: Input stream not contain valid certificates. <br> 
-  加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../manual/console.html#java)章节重新安装OracleJDK。<br><br> 
+  加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../console/console.html#java)章节重新安装OracleJDK。<br><br> 
 
 - Failed to connect to nodes: [connection timed out: /127.0.0.1:20200]<br>  
   连接超时，节点的网络不可达，请检查提示的IP是否配置错误，或者，当前JavaSDK运行环境与节点的环境网络确实不通，可以咨询运维人员解决网络不通的问题。<br><br> 
@@ -1403,7 +1403,7 @@ class Asset {
   与节点ssl握手失败，可能原因：<br>  
   1. 拷贝了错误的证书，检查拷贝的证书是否正确。
   2. 端口配置错误，连接其他服务正在监听的端口，检查连接端口是否为节点`channel_listen_port`端口。
-  3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../manual/console.html#java)章节安装OracleJDK。<br><br> 
+  3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../console/console.html#java)章节安装OracleJDK。<br><br> 
   
 - Failed to connect to [127.0.0.1:20233, 127.0.0.1:20234, 127.0.0.1:20235] ,groupId: 1 ,caCert: classpath:ca.crt ,sslKey: classpath:sdk.key ,sslCrt: classpath:sdk.crt ,java version: 1.8.0_231.<br>
   其他未知的错误，需要查看日志文件分析具体错误。

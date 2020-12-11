@@ -48,4 +48,4 @@ $ ./meta/fisco-bcos -v
 # if succeed, output FISCO-BCOS Version : x.x.x-x
 ```
 
-**PS**：[Source code compilation](../manual/get_executable.md) node binaries user need only to put the compiled binaries to `meta` directory.
+**PS**：[Source code compilation](../blockchain_dev/get_executable.md) node binaries user need only to put the compiled binaries to `meta` directory.

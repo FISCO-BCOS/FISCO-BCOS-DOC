@@ -2,7 +2,7 @@
 
 Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的形式供外部调用。按照功能，Node.js API可以分为如下几类：
 
-- **Web3jService**：提供访问FISCO BCOS 2.0+节点[JSON-RPC](../../api.md)接口支持；提供部署及调用合约的支持。
+- **Web3jService**：提供访问FISCO BCOS 2.0+节点[JSON-RPC](../../reference/api.md)接口支持；提供部署及调用合约的支持。
 - **PrecompiledService**：
 
     Precompiled合约（预编译合约）是一种FISCO BCOS底层内嵌的、通过C++实现的高效智能合约，提供包括[分布式权限控制](../../design/security_control/permission_control.md)、[CNS](../../design/features/cns_contract_name_service.md)、系统属性配置、节点类型配置等功能。PrecompiledService是调用这类功能的API的统称，分为：
@@ -23,7 +23,7 @@ Node.js SDK为区块链应用开发者提供了Node.js API接口，以服务的�
 
 **位置**：`nodejs-sdk/packages/api/web3j`
 
-**功能**：访问FISCO BCOS 2.0+节点[JSON-RPC](../../api.md)；部署合约；调用合约
+**功能**：访问FISCO BCOS 2.0+节点[JSON-RPC](../../reference/api.md)；部署合约；调用合约
 
 | 接口名        | 描述| 参数 | 返回值 |
 | :--| :--| :-- | :-- |

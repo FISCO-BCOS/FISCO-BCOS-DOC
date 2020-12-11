@@ -1,5 +1,9 @@
 # 多群组部署
 
+标签：``多群组`` ``加入群组`` 
+
+----
+
 本章主要以星形组网和并行多组组网拓扑为例，指导您了解如下内容：
 
 - 了解如何使用`build_chain.sh`创建多群组区块链安装包；
@@ -54,14 +58,14 @@ $ brew install openssl curl
 
 ```eval_rst
 .. important::
-   - 实际应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，请参考 `硬件配置 <../manual/configuration.html>`_
+   - 实际应用场景中，**不建议将多个节点部署在同一台机器**，建议根据 **机器负载** 选择部署节点数目，请参考 `硬件配置 <../blockchain_dev/configuration.html>`_
    - **星形网络拓扑** 中，核心节点(本例中agencyA节点)属于所有群组，负载较高，**建议单独部署于性能较好的机器**
    - **在不同机器操作时，请将生成的对应IP的文件夹拷贝到对应机器启动，建链操作只需要执行一次！**
 ```
 
 ### 构建星形区块链节点配置文件夹
 
-[build_chain.sh](../manual/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链节点配置文件夹：
+[build_chain.sh](../tools/build_chain.md)支持任意拓扑多群组区块链构建，可使用该脚本构建星形拓扑区块链节点配置文件夹：
 
 **准备依赖**
 
@@ -101,7 +105,7 @@ $ cat ipconf
 
 **使用build_chain脚本构建星形区块链节点配置文件夹**
 
-`build_chain`更多参数说明请参考[这里](../manual/build_chain.md)。
+`build_chain`更多参数说明请参考[这里](../tools/build_chain.md)。
 
 ```bash
 # 根据配置生成星形区块链 需要保证机器的30300~30301，20200~20201，8545~8546端口没有被占用
@@ -217,7 +221,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ### 配置控制台
 
-控制台通过Java SDK连接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。2.6及其以上版本控制台使用手册请参考[这里](../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../manual/console.md)。
+控制台通过Java SDK连接FISCO BCOS节点，实现查询区块链状态、部署调用合约等功能，能够快速获取到所需要的信息。2.6及其以上版本控制台使用手册请参考[这里](../console/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../console/console.md)。
 
 ```bash
 #回到fisco目录
@@ -358,7 +362,7 @@ info|2019-02-11 16:14:33.930978| [g:3][p:776][CONSENSUS][PBFT]^^^^^^^^Report,num
 
 ### 节点加入群组
 
-通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](../manual/node_management.md)，控制台配置参考[控制台操作手册](../manual/console.html#id7)。
+通过控制台，FISCO BCOS可将指定节点加入到指定群组，也可将节点从指定群组删除，详细介绍请参考[节点准入管理手册](../blockchain_dev/node_management.md)，控制台配置参考[控制台操作手册](../console/console.html#id7)。
 
 本章以将node2加入group2为例，介绍如何在已有的群组中，加入新节点。
 

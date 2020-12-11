@@ -77,7 +77,7 @@ This section takes adding and modifying the console to the whitelist as an examp
 
 **Build a blockchain and copy the certificate to the console**
 
-Please refer to [Installation](../installation.md).
+Please refer to [Installation](../tutorial/installation.md).
 
 **Get console public key information**
 

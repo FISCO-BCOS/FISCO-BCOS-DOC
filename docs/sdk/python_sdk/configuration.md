@@ -37,13 +37,13 @@
 群组配置主要包括链ID和群组ID：
 
 - **fiscoChainId**：链ID，必须与通信节点的一致，默认为1
-- **groupid**：群组ID，必须与通信的节点一致，获取节点群组ID请参考[这里](../../manual/configuration.html#id10)，默认为1
+- **groupid**：群组ID，必须与通信的节点一致，获取节点群组ID请参考[这里](../../blockchain_dev/configuration.html#id10)，默认为1
 
 ## 通信配置
 
 - **client_protocol**：Python SDK与节点通信协议，包括`rpc`和`channel`选项，前者使用JSON-RPC接口访问节点，后者使用Channel访问节点，需要配置证书，默认为`channel`
-- **remote_rpcurl**：采用**rpc**通信协议时，节点的rpc IP和端口，参考[这里](../../manual/configuration.html#rpc)获取节点RPC信息，默认为`http://127.0.0.1:8545`，**如采用channel协议，可以留空**
-- **channel_host**：采用channel协议时，节点的channel IP地址，参考[这里](../../manual/configuration.html#rpc)获取节点Channel信息，默认为`127.0.0.1`，**如采用rpc协议通信，可以留空**
+- **remote_rpcurl**：采用**rpc**通信协议时，节点的rpc IP和端口，参考[这里](../../blockchain_dev/configuration.html#rpc)获取节点RPC信息，默认为`http://127.0.0.1:8545`，**如采用channel协议，可以留空**
+- **channel_host**：采用channel协议时，节点的channel IP地址，参考[这里](../../blockchain_dev/configuration.html#rpc)获取节点Channel信息，默认为`127.0.0.1`，**如采用rpc协议通信，可以留空**
 - **channel_port**：节点的channel 端口，默认为`20200`，**如采用rpc协议通信，可以留空**
 
 ## 证书配置

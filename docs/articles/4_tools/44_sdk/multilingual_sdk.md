@@ -221,6 +221,6 @@ Python-SDK的开发始于今年6月中旬，写出第一个可用版本只花了
 - [交易数据结构](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/protocol_description.html)
 - [RPC原理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/rpc.html)
 - [Channel协议定义](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/protocol_description.html#channelmessage-v1)
-- [SDK证书](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/certificates.html)
+- [SDK证书](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/blockchain_dev/certificates.html)
 - [AMOP跨机构](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/amop_protocol.html)
 

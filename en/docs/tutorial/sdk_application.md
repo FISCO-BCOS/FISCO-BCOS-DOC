@@ -35,7 +35,7 @@ When developing an application on blockchain, for combining with business requir
 
 ### Storage design
 
-FISCO BCOS provides a [contract CRUD interface](../manual/smart_contract.html#crud) development model, which can create table through contracts, and add, delete, and modify the created table. For this application, we need to design a table `t_asset` for storage asset management. The table's fields are as follows:
+FISCO BCOS provides a [contract CRUD interface](../app_dev/smart_contract.html#crud) development model, which can create table through contracts, and add, delete, and modify the created table. For this application, we need to design a table `t_asset` for storage asset management. The table's fields are as follows:
 
 -   account: primary key, asset account (string type)
 -   asset_value: asset amount (uint256 type)
@@ -242,7 +242,7 @@ contract Asset {
 ```
 
 
-**Note:**  The implementation of the `Asset.sol` contract requires to introduce a system contract interface file `Table.sol` provided by FISCO BCOS. The system contract file’s interface is implemented by the underlying FISCO BCOS. When a business contract needs to operate CRUD interface, it is necessary to introduce the interface contract file. `Table.sol` contract detailed interface [reference here](../manual/smart_contract.html#crud).
+**Note:**  The implementation of the `Asset.sol` contract requires to introduce a system contract interface file `Table.sol` provided by FISCO BCOS. The system contract file’s interface is implemented by the underlying FISCO BCOS. When a business contract needs to operate CRUD interface, it is necessary to introduce the interface contract file. `Table.sol` contract detailed interface [reference here](../app_dev/smart_contract.html#crud).
 
 
 ## Contract compiling

@@ -1,5 +1,9 @@
 # 开发部署工具(build_chain.sh)
 
+标签：``build_chain`` ``搭建区块链网络``
+
+----
+
 ```eval_rst
 .. important::
     部署工具 build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `运维部署工具 <../enterprise_tools/index.html>`_ 。
@@ -52,11 +56,11 @@ e.g
     ./build_chain.sh -l 127.0.0.1:4
 ```
 
-### **`l`选项:**
+**`l`选项:**
 
 用于指定要生成的链的IP列表以及每个IP下的节点数，以逗号分隔。脚本根据输入的参数生成对应的节点配置文件，其中每个节点的端口号默认从30300开始递增，所有节点属于同一个机构和群组。
 
-### **`f`选项**
+**`f`选项**
 
     + 用于根据配置文件生成节点，相比于`l`选项支持更多的定制。
     + 按行分割，每一行表示一个服务器，格式为`IP:NUM AgencyName GroupList`，每行内的项使用空格分割，**不可有空行**。
@@ -79,7 +83,7 @@ e.g
 bash build_chain.sh -f ipconf -T
 ```
 
-### **`e`选项[**Optional**]**
+**`e`选项[**Optional**]**
 
 用于指定`fisco-bcos`二进制所在的**完整路径**，脚本会将`fisco-bcos`拷贝以IP为名的目录下。不指定时，默认从GitHub下载最新的二进制程序。
 
@@ -90,11 +94,11 @@ $ bash build_chain.sh -l 127.0.0.1:4
 $ bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
-### **`o`选项[**Optional**]**
+**`o`选项[**Optional**]**
 
 指定生成的配置所在的目录。
 
-### **`p`选项[**Optional**]**
+**`p`选项[**Optional**]**
 
 指定节点的起始端口，每个节点占用三个端口，分别是p2p,channel,jsonrpc使用`,`分割端口，必须指定三个端口。同一个IP下的不同节点所使用端口从起始端口递增。
 
@@ -103,15 +107,15 @@ $ bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 ```
 
-### **`q`选项[**Optional**]**
+**`q`选项[**Optional**]**
 
 列出FISCO BCOS已经发布的所有版本号。
 
-### **`v`选项[**Optional**]**
+**`v`选项[**Optional**]**
 
 用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本，设置该选项时下载参数指定`version`版本并设置`config.ini`配置文件中的`[compatibility].supported_version=${version}`。如果同时使用`-e`选项，则配置`[compatibility].supported_version=${version}`为[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本号。
 
-### **`d`选项[**Optional**]**
+**`d`选项[**Optional**]**
 
 使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限，即用户加入docker群组。
 在节点目录下执行如下命令启动节点
@@ -126,7 +130,7 @@ $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
-### **`s`选项[**Optional**]**
+**`s`选项[**Optional**]**
 
 有参数选项，参数为db名，目前支持RocksDB、mysql、Scalable。默认使用rocks。
 
@@ -134,7 +138,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 - MySQL模式，使用MySQL作为后端数据库，节点直连MySQL，需要在群组ini文件中配置数据库相关信息。
 - Scalable模式，区块数据和状态数据存储在不同的数据库中，区块数据根据配置存储在以块高命名的RocksDB实例中。如需使用裁剪数据的功能，必须使用Scalable模式。
 
-### **`c`选项[**Optional**]**
+**`c`选项[**Optional**]**
 
 有参数选项，参数为共识算法类型，目前支持PBFT、Raft、rPBFT。默认共识算法是PBFT。
 
@@ -142,7 +146,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 - `Raft`：设置节点共识算法为[Raft](../design/consensus/raft.md)。
 - `rPBFT`：设置节点共识算法为[rPBFT](../design/consensus/rpbft.md)。
 
-### **`C`选项[**Optional**]**
+**`C`选项[**Optional**]**
 用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
 
 ```bash
@@ -150,7 +154,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 bash build_chain.sh -l 127.0.0.1:2 -C 2
 ```
 
-### **`g`选项[**Optional**]**
+**`g`选项[**Optional**]**
 
 无参数选项，设置该选项时，搭建国密版本的FISCO BCOS。**确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-g -G参数，连接也使用国密SSL**，`-G`设置`chain.sm_crypto_channel=true`
 
@@ -158,47 +162,47 @@ bash build_chain.sh -l 127.0.0.1:2 -C 2
 bash build_chain.sh -l 127.0.0.1:2 -g -G
 ```
 
-### **`z`选项[**Optional**]**
+**`z`选项[**Optional**]**
 
 无参数选项，设置该选项时，生成节点的tar包。
 
-### **`t`选项[**Optional**]**
+**`t`选项[**Optional**]**
 
 该选项用于指定生成证书时的证书配置文件。
 
-### **`6`选项[**Optional**]**
+**`6`选项[**Optional**]**
 
 该选项表示使用IPv6模式，监听`::`
 
-### **`T`选项[**Optional**]**
+**`T`选项[**Optional**]**
 
-无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](./configuration.html#id6)。
+无参数选项，设置该选项时，设置节点的log级别为DEBUG。log相关配置[参考这里](../blockchain_dev/configuration.html#id6)。
 
-### **`k`选项[**Optional**]**
+**`k`选项[**Optional**]**
 
 使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括ca.crt/ca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括root.crt，用于存放上级证书链。
 
-### **`K`选项[**Optional**]**
+**`K`选项[**Optional**]**
 
 国密模式使用用户指定的链证书和私钥签发机构和节点的证书，参数指定路径，路径下必须包括gmca.crt/gmca.key，如果所指定的私钥和证书是中间ca，那么此文件夹下还需要包括gmroot.crt，用于存放上级证书链。
 
-### **`G`选项[**Optional**]**
+**`G`选项[**Optional**]**
 
 从2.5.0开始，国密模式下，用户可以配置节点与SDK连接是否使用国密SSL，设置此选项则`chain.sm_crypto_channel=true`。默认节点与SDK的channel连接使用secp256k1的证书。**确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-g -G参数，连接也使用国密SSL**
 
-### **`D`选项[**Optional**]**
+**`D`选项[**Optional**]**
 
 无参数选项，设置该选项时，生成节点的目录名为IP_P2P端口，默认为节点从0开始的编号。
 
-### **`E`选项[**Optional**]**
+**`E`选项[**Optional**]**
 
-无参数选项，设置该选项时，启用[Free Storage](design/virtual_machine/gas.html#evm-gas) Gas模式，默认关闭`Free Storage` Gas模式
+无参数选项，设置该选项时，启用[Free Storage](../design/virtual_machine/gas.html#evm-gas) Gas模式，默认关闭`Free Storage` Gas模式
 
 ## 节点文件组织结构
 
 - cert文件夹下存放链的根证书和机构证书。
 - 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行程序、SDK所需的证书文件。
-- 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](configuration.md)。每个节点中还提供`start.sh`和`stop.sh`脚本，用于启动和停止节点。
+- 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](../blockchain_dev/configuration.md)。每个节点中还提供`start.sh`和`stop.sh`脚本，用于启动和停止节点。
 - 每个IP文件夹下的提供`start_all.sh`和`stop_all.sh`两个脚本用于启动和停止所有节点。
 
 ```bash
@@ -383,7 +387,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
         node.4=127.0.0.1:30304
     ```
 4. 启动新节点，执行`newNode/start.sh`
-5. 通过console将新节点加入群组1，2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
+5. 通过console将新节点加入群组1，2.6版本控制台指令详细介绍[参考这里](../console/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](../console/console.md)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
 
 ### 为机构生成新的SDK证书
@@ -438,6 +442,6 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 
 ### 多服务器多群组
 
-使用`build_chain`脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../manual/group_use_cases.md)。
+使用`build_chain`脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../blockchain_dev/group_use_cases.md)。
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh

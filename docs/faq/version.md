@@ -7,11 +7,11 @@
 
 **问题：国密和普通版本的区别有哪些？**<br>
 **答案：**
-国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，Web3SDK使用国密版本和普通版本都有区别，具体请[参考这里](../manual/guomi_crypto.md)。
+国密版FISCO BCOS将交易签名验签、p2p网络连接、节点连接、数据落盘加密等底层模块的密码学算法均替换为国密算法。同时在编译版本，证书，落盘加密，solidity编译java，Web3SDK使用国密版本和普通版本都有区别，具体请[参考这里](../blockchain_dev/guomi_crypto.md)。
 
 **问题：FISCO BCOS 2.0版本的智能合约与之前版本合约有什么不同，兼容性如何？**<br>
 **答案：**
-FISCO BCOS 2.0版本支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](../manual/smart_contract.md)。
+FISCO BCOS 2.0版本支持最新的Solidity合约，同时增加了precompile合约，具体请 [参考这里](../app_dev/smart_contract.md)。
 
 **问题：是否支持从1.3或1.5升级到2.0版本？**<br>
 **答案：** 不支持。

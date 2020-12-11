@@ -1,10 +1,15 @@
 # 搭建第一个区块链网络
 
-本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](./manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
+
+标签：``搭建区块链网络`` ``区块链教程`` ``HelloWorld`` ``控制台调用合约``
+
+----
+
+本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](../blockchain_dev/hardware_requirements.md)使用支持的**硬件和平台**操作。
 
 ```eval_rst
 .. note::
-    - 搭建全链路国密版本的链，`请参考这里 <manual/guomi_crypto.html>`_ 。
+    - 搭建全链路国密版本的链，`请参考这里 <../blockchain_dev/guomi_crypto.html>`_ 。
 ```
 
 ## 1. 搭建单群组FISCO BCOS联盟链
@@ -14,10 +19,10 @@
 
 ```eval_rst
 .. note::
-    - 若需在已有区块链上进行升级，请转至 `版本及兼容 <change_log/index.html>`_ 章节。
-    - 搭建多群组的链操作类似， `参考这里 <manual/group_use_cases.html>`_ 。
+    - 若需在已有区块链上进行升级，请转至 `版本及兼容 <../change_log/index.html>`_ 章节。
+    - 搭建多群组的链操作类似， `参考这里 <../blockchain_dev/group_use_cases.html>`_ 。
     - 本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04 64bit上经过测试。
-    - `使用docker模式搭建 <manual/build_chain.html#d-optional>`_ ，供有丰富docker经验和容器化部署需求的用户参考。
+    - `使用docker模式搭建 <../tools/build_chain.html#d-optional>`_ ，供有丰富docker经验和容器化部署需求的用户参考。
 ```
 
 ### 第一步. 安装依赖
@@ -80,7 +85,7 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```eval_rst
 .. note::
     - 其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
-    - 出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里 <manual/configuration.html#rpc>`_
+    - 出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里 <../blockchain_dev/configuration.html#rpc>`_
     - 为便于开发和体验，channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
@@ -190,13 +195,13 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ```eval_rst
 .. important::
-    - ``控制台1.x`` 系列基于 `Web3SDK <./sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <./sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
-    - 2.6及其以上版本控制台使用文档请 `参考这里 <./manual/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <./manual/console.html>`_ 
+    - ``控制台1.x`` 系列基于 `Web3SDK <../sdk/web3sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
+    - 2.6及其以上版本控制台使用文档请 `参考这里 <../console/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <../console/console.html>`_ 
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
-    - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <tutorial/download_console.html>`_ 
+    - 基于 `Web3SDK <../sdk/web3sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <../console/download_console.html>`_ 
 ```
 
-在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
+在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](../console/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](../console/console.md)。
 
 ### 第一步. 准备依赖
 
@@ -271,7 +276,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-若1.x控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
+若1.x控制台启动失败，参考 [Web3SDK启动失败场景](../faq/connect.html)
 
 * 用控制台获取信息
 

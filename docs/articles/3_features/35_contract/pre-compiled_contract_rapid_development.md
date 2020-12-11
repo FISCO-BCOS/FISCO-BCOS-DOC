@@ -219,7 +219,7 @@ void ExecutiveContextFactory::registerUserPrecompiled(ExecutiveContext::Ptr cont
 
 ### step5 编译源码
 
-参考FISCO BCOS 2.0使用手册->获取可执行程序->[源码编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html)。需要注意的是，实现的HelloWorldPrecompiled.cpp和HelloWorldPrecompiled.h需要放置于FISCO-BCOS/libprecompiled/extension目录下。
+参考FISCO BCOS 2.0使用手册->获取可执行程序->[源码编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/get_executable.html)。需要注意的是，实现的HelloWorldPrecompiled.cpp和HelloWorldPrecompiled.h需要放置于FISCO-BCOS/libprecompiled/extension目录下。
 
 ## HelloWorld预编译合约调用
 

@@ -1,6 +1,9 @@
-# 下载控制台
+# 下载和使用控制台
 
-`download_console.sh`脚本提供获取所有版本的控制台的功能，默认获取[2.6+版本的控制台](../manual/console_of_java_sdk.md)，可通过如下命令获取最新的`download_console.sh`脚本：
+标签：``下载控制台``
+
+----
+`download_console.sh`脚本提供获取所有版本的控制台的功能，默认获取[2.6+版本的控制台](../console/console_of_java_sdk.md)，可通过如下命令获取最新的`download_console.sh`脚本：
 
 ```bash
 mkdir -p ~/fisco && cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh
@@ -32,7 +35,7 @@ e.g
 
 ### `-c`选项
 
-指定下载的控制台版本号，默认拉取最新版本控制台(`2.6+`版本)，若基于[Web3SDK](../sdk/java_sdk.md)开发应用，需下载`1.x`版本的控制台将`solidity`代码转换为`java`代码，可通过该选项指定下载的控制台版本，下载`1.2.0`版本控制台的示例如下：
+指定下载的控制台版本号，默认拉取最新版本控制台(`2.6+`版本)，若基于[Web3SDK](../sdk/web3sdk/java_sdk.md)开发应用，需下载`1.x`版本的控制台将`solidity`代码转换为`java`代码，可通过该选项指定下载的控制台版本，下载`1.2.0`版本控制台的示例如下：
 
 ```bash
 # 下载1.2.0版本的控制台

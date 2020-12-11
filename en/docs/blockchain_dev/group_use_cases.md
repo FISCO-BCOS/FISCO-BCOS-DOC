@@ -58,7 +58,7 @@ In a star network topology, the core node (in this case, the agencyA node) belon
 
 ```eval_rst
 .. important::
-   - In the actual application scenario, it is **not recommended to deploy multiple nodes on the same machine**. It is recommended to select the number of deployed nodes in one machine according to the **machine loading**. Please refer to the `hardware configuration <../manual/configuration.html>`_
+   - In the actual application scenario, it is **not recommended to deploy multiple nodes on the same machine**. It is recommended to select the number of deployed nodes in one machine according to the **machine loading**. Please refer to the `hardware configuration <../blockchain_dev/configuration.html>`_
 
    - **In a star network topology**, the core node (in this case, the agencyA node) belongs to all groups and has a high load. It is recommended to deploy it separately on a machine with better performance.
 
@@ -106,7 +106,7 @@ $ cat ipconf
 
 **Create node configuration folder for star networking blockchain using build_chain script**
 
-Please refer to the [build_chain](../manual/build_chain.md) for more parameter descriptions of `build_chain.sh`.
+Please refer to the [build_chain](../tools/build_chain.md) for more parameter descriptions of `build_chain.sh`.
 
 ```bash
 # Generate a blockchain of star networking and make sure ports 30300~30301, 20200~20201, 8545~8546 of the local machine are not occupied
@@ -222,7 +222,7 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 
 ### Configuration console
 
-The console connects to the FISCO BCOS node, it is used to query the blockchain status and deploy the calling contract, etc. Please refer to [here](../manual/console_with_of_sdk.md) for the console manual for version 2.6 and above, and [here](../manual/console.md) for the console manual for version 1.x.
+The console connects to the FISCO BCOS node, it is used to query the blockchain status and deploy the calling contract, etc. Please refer to [here](../console/console_with_of_sdk.md) for the console manual for version 2.6 and above, and [here](../console/console.md) for the console manual for version 1.x.
 
 
 ```eval_rst
@@ -374,7 +374,7 @@ info|2019-02-11 16:14:33.930978| [g:3][p:776][CONSENSUS][PBFT]^^^^^^^^Report,num
 ```
 
 ### Node joins the group
-Through the console, FISCO BCOS can add the specified node to the specified group, or delete the node from the specified group. For details, please refer to the [node admission management manual](../manual/node_management.md), for console configuration, please reference [console operation manual](../manual/console.html#id7).
+Through the console, FISCO BCOS can add the specified node to the specified group, or delete the node from the specified group. For details, please refer to the [node admission management manual](../blockchain_dev/node_management.md), for console configuration, please reference [console operation manual](../console/console.html#id7).
 
 Taking how to join node2 to group2 as an example, this chapter introduces how to add a new node to an existing group.
 

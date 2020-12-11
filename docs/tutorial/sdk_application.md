@@ -1,5 +1,7 @@
 # 开发第一个区块链应用
-关键词：``开发第一个应用``、``合约开发``
+标签：``开发第一个应用`` ``合约开发`` ``区块链应用`` ``教程``
+
+---
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Web3SDK实现对区块链上合约的调用访问。
 
@@ -34,7 +36,7 @@
 
 ### 第一步. 存储设计
 
-FISCO BCOS提供[合约CRUD接口](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[合约CRUD接口](../app_dev/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
 -   asset_value: 资产金额(uint256类型)
@@ -239,7 +241,7 @@ contract Asset {
 }
 ```
 
- **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
+ **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../app_dev/smart_contract.html#crud)。
 
 ### 第四步.编译合约
 
@@ -389,7 +391,7 @@ $ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
 
 -   applicationContext.xml
 
-**注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/java_sdk.html#spring)。
+**注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/web3sdk/java_sdk.html#spring)。
 
 ### 第三步.进行业务开发
 

@@ -249,7 +249,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 #### step3 编译，重启节点
 
-手动编译节点的方法，[参考FISCO BCOS技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2)。编译之后，关闭节点，替换掉原来的节点二进制文件，再重启节点即可。
+手动编译节点的方法，[参考FISCO BCOS技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/get_executable.html#id2)。编译之后，关闭节点，替换掉原来的节点二进制文件，再重启节点即可。
 
 ## 举例：并行转账
 

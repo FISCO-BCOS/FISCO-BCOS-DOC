@@ -10,7 +10,7 @@ In a network with group architecture, depending on different service scenario, t
 
 - The agency's nodes need to be deployed only once and can participate in different multi-party collaboration services through group settings. They also can divide one service into groups according to the user, time, and other dimensions. The group architecture can expand rapidly in parallel. While expanding the scale of business, it dramatically simplifies the complexity of the operation and reduces the management cost.
 
-For more group introductions, please refer to [Group Architecture Design Document](./design/architecture/group.md) and [Group Usage Tutorial](./manual/group_use_cases.md)
+For more group introductions, please refer to [Group Architecture Design Document](./design/architecture/group.md) and [Group Usage Tutorial](./blockchain_dev/group_use_cases.md)
 
 ## Distributed storage
 
@@ -59,7 +59,7 @@ FISCO BCOS 2.0 has added console as an interactive client tool in FISCO BCOS 2.0
 
 The console installation is convenient and straightforward. After simple configuration, the console can communicate with the chain node. The console has rich commands and good interactive experience. Users can query the blockchain status, read and modify the configuration, manage blockchain nodes, deploy and call contract through the console. The console helps users to manage, develop, operate, and maintain the blockchain, and to reduce the complicated operation and the threshold of use.
 
-Compare to traditional scripting tools such as node-js, and the console is simple to install and has a better experience. For details, please refer to [Java SDK-based console manual](./manual/console_of_java_sdk.md) and [Web3SDK-based console manual](./manual/console.md).
+Compare to traditional scripting tools such as node-js, and the console is simple to install and has a better experience. For details, please refer to [Java SDK-based console manual](../console/console_of_java_sdk.md) and [Web3SDK-based console manual](../console/console.md).
 
 ## Virtual machine
 

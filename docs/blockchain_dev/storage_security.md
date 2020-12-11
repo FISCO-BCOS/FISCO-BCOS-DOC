@@ -1,5 +1,9 @@
 # 存储加密
 
+标签：``存储安全`` ``存储加密`` ``落盘加密`` 
+
+----
+
 联盟链的数据，只对联盟内部成员可见。落盘加密，保证了运行联盟链的数据，在硬盘上的安全性。一旦硬盘被带出联盟链自己的内网环境，数据将无法被解密。
 
 落盘加密是对节点存储在硬盘上的内容进行加密，加密的内容包括：合约的数据、节点的私钥。
@@ -17,7 +21,7 @@
 
 ## 生成节点
 
-用[```build_chain.sh```](../installation.md)脚本，用普通的操作方法，先生成节点。
+用[```build_chain.sh```](../tutorial/installation.md)脚本，用普通的操作方法，先生成节点。
 
 ``` shell
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh

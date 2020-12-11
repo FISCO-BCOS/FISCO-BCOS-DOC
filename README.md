@@ -13,7 +13,7 @@
 - [使用手册](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/manual/index.html)
 - [运维部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/enterprise_tools/index.html)
 - [系统设计](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/design/index.html)
-- [Web3SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/sdk/java_sdk.html)
+- [Web3SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/sdk/web3sdk/java_sdk.html)
 - [JSON-RPC API](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/api.html)
 - [常见问题解答](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/faq.html)
 - [社区](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2/docs/community.html)

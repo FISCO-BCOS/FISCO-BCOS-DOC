@@ -10,7 +10,7 @@
 
 - 机构的节点只需部署一次，通过群组设置即可参与到不同的多方协作业务中，或将一个业务按用户、时间等维度分到各群组，群组架构可快速地平行扩展，在扩大了业务规模同时，极大简化了运维复杂度，降低管理成本。
 
-更多的群组介绍，请参考[群组架构设计文档](./design/architecture/group.md)和[群组使用教程](./manual/group_use_cases.md)
+更多的群组介绍，请参考[群组架构设计文档](./design/architecture/group.md)和[群组使用教程](./blockchain_dev/group_use_cases.md)
 
 ## 分布式存储
 
@@ -59,7 +59,7 @@ FISCO BCOS 2.0新增控制台，作为FISCO BCOS 2.0的交互式客户端工具�
 
 控制台安装简单便捷，简单配置后即可和链节点进行通信，拥有丰富的命令和良好的交互体验，用户可以通过控制台查询区块链状态、读取和修改配置、管理区块链节点、部署并调用合约。控制台给用户管理、开发、运维区块链带来了巨大的便利，降低了操作繁琐性和使用门槛。
 
-相比于传统的nodejs等脚本工具，控制台安装简单、使用体验更好。详细请查看[基于Java SDK的控制台使用手册](./manual/console_of_java_sdk.md)和[基于Web3SDK的控制台使用手册](./manual/console.md)。
+相比于传统的nodejs等脚本工具，控制台安装简单、使用体验更好。详细请查看[基于Java SDK的控制台使用手册](../console/console_of_java_sdk.md)和[基于Web3SDK的控制台使用手册](../console/console.md)。
 
 ## 虚拟机
 

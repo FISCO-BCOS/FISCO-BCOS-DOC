@@ -1,5 +1,8 @@
 # Caliper压力测试
 
+标签：``压测`` ``Caliper`` 
+
+----
 ## 一、环境要求
 
 ### 1.1 硬件
@@ -315,7 +318,7 @@ docker -H 192.168.1.1:2375 images
 
 #### 3.1.2 建链
 
-使用[开发部署工具 build_chain.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
+使用[开发部署工具 build_chain.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
 
 创建生成节点的配置文件（如一个名为`ipconf`的文件），文件内容如下：
 

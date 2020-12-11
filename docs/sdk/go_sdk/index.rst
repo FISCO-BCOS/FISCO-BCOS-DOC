@@ -6,7 +6,7 @@ Go SDK
 
 .. admonition:: **主要特性**
 
-    - 提供调用FISCO BCOS `JSON-RPC <../../api.html>`_ 的Go API
+    - 提供调用FISCO BCOS `JSON-RPC <../../reference/api.html>`_ 的Go API
     - 提供合约编译，将Solidity合约文件编译成abi和bin文件，然后再转换成Go合约文件
     - 提供部署及调用go合约文件的GO API
     - 提供调用预编译（Precompiled）合约的Go API

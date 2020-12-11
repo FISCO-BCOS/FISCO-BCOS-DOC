@@ -13,7 +13,7 @@ Each agency has a Key Manager. For specific deployment steps, please refer to [K
 
 ## Node building
 
-Use the script [```build_chain.sh```] (../installation.md) to build a node with normal operations.
+Use the script [```build_chain.sh```] (../tutorial/installation.md) to build a node with normal operations.
 
 
 ``` shell

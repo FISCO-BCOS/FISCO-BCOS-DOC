@@ -1,10 +1,14 @@
 # 使用国密算法
 
+标签：``国密算法`` ``国密证书`` ``国密版FISCO BCOS`` ``国密配置``
+
+----
+
 为了充分支持国产密码学算法，金链盟基于国产密码学标准，在FISCO BCOS平台中集成了国密加解密、签名、验签、哈希算法、国密SSL通信协议，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)。
 
 ## 初次部署国密版FISCO BCOS
 
-本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
+本节使用[`build_chain`](../tools/build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 
 ```bash
 # Ubuntu16安装依赖
@@ -26,7 +30,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/buil
 $ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G
 ```
 
-关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
+关于`build_chain.sh`脚本选项，请[参考这里](../tools/build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
 
 ```bash
 [INFO] Downloading tassl binary ...
@@ -51,7 +55,7 @@ Processing IP:127.0.0.1 Total:4 Agency:agency Groups:1
 [INFO] All completed. Files in /mnt/c/Users/asherli/Desktop/key-manager/build/nodes
 ```
 
-当国密联盟链部署完成之后，其余操作与[安装](../installation.md)的操作相同。
+当国密联盟链部署完成之后，其余操作与[安装](../tutorial/installation.md)的操作相同。
 
 ## 国密配置信息
 
@@ -95,15 +99,15 @@ FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信�
 
 ## 国密版SDK使用
 
-详细操作参考[SDK文档](../sdk/java_sdk.html#id10)。
+详细操作参考[SDK文档](../sdk/web3sdk/java_sdk.html#id10)。
 
 ## 国密版控制台配置
 
-1.x版本控制台需要配置国密选项，详情操作参考[配置国密版控制台](../manual/console.html#id11)。
+1.x版本控制台需要配置国密选项，详情操作参考[配置国密版控制台](../console/console.html#id11)。
 
 ## 国密控制台使用
 
-国密版控制台功能与标准版控制台使用方式相同，2.6及其以上版本控制台不需要额外配置国密选项，1.x版本控制台的配置方法请参考[控制台操作手册](../manual/console.html#id11)。
+国密版控制台功能与标准版控制台使用方式相同，2.6及其以上版本控制台不需要额外配置国密选项，1.x版本控制台的配置方法请参考[控制台操作手册](../console/console.html#id11)。
 
 ## 国密落盘加密配置
 

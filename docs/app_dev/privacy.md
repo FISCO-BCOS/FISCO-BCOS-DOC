@@ -1,5 +1,8 @@
 # 合约隐私保护
 
+标签：``隐私合约`` ``隐私保护`` ``合约开发`` ``同态加密`` ``环签名``
+
+----
 隐私保护是联盟链的一大技术挑战。为了保护链上数据、保障联盟成员隐私，并且保证监管的有效性，FISCO BCOS以[预编译合约](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#id2)的形式集成了同态加密、群/环签名验证功能，提供了多种隐私保护手段。
 
 文档一、二节分别对同态加密和群/环签名算法以及相关应用场景进行了简单介绍，第三、四节则详细介绍了FISCO BCOS隐私保护模块启用方法以及调用方式。
@@ -97,11 +100,11 @@ FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
 
 ## 启用方法
 
-The FISCO BCOS privacy protection module is implemented through a precompiled contract and is enabled by default. For source code compilation FISCO BCOS, please refer to [here](./get_executable.md).
+FISCO BCOS隐私保护模块是通过预编译合约实现的，默认被启用。使用源码编译请参考[这里](../blockchain_dev/get_executable.md).
 
 ### 搭建联盟链
 
-假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下，更多选项[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)。
+假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下，更多选项[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html)。
 
 ```bash
 bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos

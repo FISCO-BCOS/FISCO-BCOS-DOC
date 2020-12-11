@@ -129,7 +129,7 @@ msg.sender是当前合约调用者的地址，可以是用户也可以是另一�
 
 - [权限控制设计](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/security_control/permission_control.html)
 
-- [控制台的文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/console.html)
+- [控制台的文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/console/console.html)
 
 - [权限控制实操介绍](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/permission_control.html)
 

@@ -1,6 +1,10 @@
 # 使用CFCA证书部署节点
 
-使用前建议阅读[证书说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificates.html)
+标签：``CFCA证书`` ``获取证书`` ``开发手册``
+
+----
+
+使用前建议阅读[证书说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/certificates.html)
 
 ## 购买前注意事项
 

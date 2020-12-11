@@ -10,7 +10,7 @@
 **问题：控制台是否支持群组切换功能**
 
 **答案：** 可以切换群组。
-- **通过switch命令切换群组:** 控制台提供了`switch`命令支持群组切换，可通过`switch [groupID]`(`[groupID]`是切换到的群组ID)，详细请参考[这里](../manual/console_of_java_sdk.html#switch)
+- **通过switch命令切换群组:** 控制台提供了`switch`命令支持群组切换，可通过`switch [groupID]`(`[groupID]`是切换到的群组ID)，详细请参考[这里](../console/console_of_java_sdk.html#switch)
 - **启动控制台指定需要访问的群组ID:** 使用`./start [groupID]`(`[groupID]`是切换到的群组ID)启动控制台
 
 **问题：游离节点是否可以同步group数据**
@@ -65,7 +65,7 @@ bash start.sh
 
 **解决方案**
 
-参考[这里](../manual/configuration.html#p2p)，为新加入节点配置所有其他共识节点的连接信息，启动新加入节点，重新通过控制台发送`addSealer`命令，将新节点加入到共识节点列表。
+参考[这里](../blockchain_dev/configuration.html#p2p)，为新加入节点配置所有其他共识节点的连接信息，启动新加入节点，重新通过控制台发送`addSealer`命令，将新节点加入到共识节点列表。
 <hr>
 
 ## 删除节点报错
@@ -76,4 +76,4 @@ bash start.sh
 
 **问题分析**
 
-正常报错，当被删除的节点不属于群组时，会报出该错误，可通过[getGroupPeers](..//manual/console_of_java_sdk.html#getgrouppeers)命令确定群组是否在该群组中.
+正常报错，当被删除的节点不属于群组时，会报出该错误，可通过[getGroupPeers](../console/console_of_java_sdk.html#getgrouppeers)命令确定群组是否在该群组中.

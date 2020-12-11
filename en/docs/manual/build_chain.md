@@ -160,7 +160,7 @@ Use IPv6 mode, listen `::`
 
 ### **`T`option[**Optional**]**
 
-No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
+No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](../blockchain_dev/configuration.html#id6).
 
 ### **`k`option[**Optional**]**
 Use the private key specified by the user and the certificate issued the agency and node certification. The parameter is the path of ca.crt/ca.key. If the specified private key and certificate are intermediate Ca, root.crt should also be included in this folder to store the upper certificate chain.
@@ -177,13 +177,13 @@ No parameter option. When this option is set, the directory name of the generate
 
 ### **`E`option[**Optional**]**
 
-No parameter option, when setting this option, [Free Storage] (design/virtual_machine/gas.html#evm-gas) Gas mode is enabled, and `Free Storage` Gas mode is disabled by default.
+No parameter option, when setting this option, [Free Storage] (../design/virtual_machine/gas.html#evm-gas) Gas mode is enabled, and `Free Storage` Gas mode is disabled by default.
 
 ## Node file organization
 
 - cert folder stores root certificate and organization certificate of the chain.
 - The folder named by IP address stores the certificate configuration file required by related configuration of all nodes , `fisco-bcos` executable program, and SDK in the server.
-- The `node*` folder under each IP folder stores configuration file required by the node. `config.ini` is the main configuration of node. In `conf` directory, to store certificate files and group related configurations. For the configuration detail, please refer to [here](configuration.md). Each node provides two scripts which are used to start and stop the node.
+- The `node*` folder under each IP folder stores configuration file required by the node. `config.ini` is the main configuration of node. In `conf` directory, to store certificate files and group related configurations. For the configuration detail, please refer to [here](../blockchain_dev/configuration.md). Each node provides two scripts which are used to start and stop the node.
 - Under each IP folder, two scripts providing `start_all.sh` and `stop_all.sh` are used to start and stop all nodes.
 
 ```bash
@@ -356,7 +356,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
     ```
 
 4. Start node, use `newNode/start.sh`
-5. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
+5. Add new nodes to group 1 through console, refer to [here](../console/console.html#addsealer) and [here](./node_management.html#id7)
 
 #### Start a new node, check links and consensus
 
@@ -415,7 +415,7 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 
 ### Multi-server and multi-group
 
-Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
+Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../blockchain_dev/group_use_cases.md).
 
 [build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
 

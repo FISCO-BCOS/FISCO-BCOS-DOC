@@ -12,7 +12,7 @@ java sdk提供账户管理接口，支持以下功能：
 
 ```eval_rst
 .. note::
-    java sdk提供了接口级别的账户生成方法，工具级别的账户生成脚本请参考 `get_account.sh脚本 <../../manual/account.html>`_ .
+    java sdk提供了接口级别的账户生成方法，工具级别的账户生成脚本请参考 `get_account.sh脚本 <../../app_dev/account.html>`_ .
 ```
 
 

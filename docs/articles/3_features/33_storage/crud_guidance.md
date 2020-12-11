@@ -221,7 +221,7 @@ FISCO BCOS SDK提供CRUD Service数据上链接口，这些接口实现的原理
 
 以上接口覆盖了表的创建、查看和增删改查操作。用户只需要调用SDK的接口就能完成相关操作，[具体示例以下地址查看](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/integration-test/java/org/fisco/bcos/precompile/CRUDServiceTest.java)。
 
-其中调用写接口会产生与调用CRUD合约接口等效的交易，需要共识节点共识一致后才会落盘存储。值得关注的是，利用CRUD Service接口，FISCO BCOS控制台针对每个接口实现了易用的sql语句命令，[欢迎访问以下地址体验](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html)。
+其中调用写接口会产生与调用CRUD合约接口等效的交易，需要共识节点共识一致后才会落盘存储。值得关注的是，利用CRUD Service接口，FISCO BCOS控制台针对每个接口实现了易用的sql语句命令，[欢迎访问以下地址体验](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html)。
 
 ### 两种CRUD使用方式的比较
 

@@ -1,16 +1,15 @@
 ##############################################################
-控制台
+区块链浏览器
 ##############################################################
 
-标签：``控制台``
+标签：``区块链浏览器``
 
 ----
 
 .. toctree::
    :maxdepth: 1
 
-   download_console.md
-   console_of_java_sdk.md
-   console.md
-
-   
+   browser.md
+   deploy.md
+   server.md
+   web.md

@@ -1,5 +1,8 @@
 # 智能合约开发
 
+标签：``Solidity`` ``智能合约`` ``合约开发`` ``预编译合约``
+
+----
 FISCO BCOS平台目前支持Solidity及Precompiled两类合约形式。
 
 - Solidity合约与以太坊相同，用Solidity语法实现。
@@ -705,7 +708,7 @@ void dev::blockverifier::ExecutiveContextFactory::registerUserPrecompiled(dev::b
 **注意**：实现的HelloWorldPrecompiled.cpp和头文件需要放置于FISCO-BCOS/libprecompiled/extension目录下。
 
 - 搭建FISCO BCOS联盟链。
-假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下。更多选项[参考这里](build_chain.md)。
+假设当前位于`FISCO-BCOS/build`目录下，则使用下面的指令搭建本机4节点的链指令如下。更多选项[参考这里](../tools/build_chain.md)。
 
 ```bash
 bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
