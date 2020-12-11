@@ -38,7 +38,7 @@ cd ~/generator && bash ./scripts/install.sh
 
 **检查二进制版本**
 
-2.5 及以前版本，若成功，输出 FISCO-BCOS gm Version : x.x.x-x
+2.5 及以前版本，若成功，输出 FISCO-BCOS Version : x.x.x-x
 
 2.6 版本之后，直接输出 FISCO-BCOS Version : x.x.x-x
 
