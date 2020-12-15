@@ -49,7 +49,7 @@
 
    account.md
    smart_contract.md
-   precompile_contract
+   precompile_contract.md
    ../sdk/java_sdk/index.md
    ../sdk/web3sdk/java_sdk.md
    ../sdk/nodejs_sdk/index.rst

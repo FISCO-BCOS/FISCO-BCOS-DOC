@@ -15,7 +15,7 @@ FISCO BCOS, officially launched in December 2017, is the first China-developed o
 ## Join FISCO BCOS community
 
 <a name="QR"></a>
-![](../images/community/qr_code1.png)
+![](../../images/community/qr_code1.png)
 ![](../../images/community/qr_code2.1.png)
-![](../images/community/changeable_body.png)
-![](../images/community/tailer.png)
+![](../../images/community/changeable_body.png)
+![](../../images/community/tailer.png)

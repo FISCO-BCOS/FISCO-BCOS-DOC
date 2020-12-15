@@ -1,9 +1,10 @@
 # 开发第一个区块链应用
+
 标签：``开发第一个应用`` ``合约开发`` ``区块链应用`` ``教程``
 
 ---
 
-本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的Web3SDK实现对区块链上合约的调用访问。
+本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的[Java SDK](../sdk/java_sdk/index.md)实现对区块链上合约的调用访问。
 
 本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉[Solidity语法](https://solidity.readthedocs.io/en/latest/)。
 
@@ -11,9 +12,9 @@
 
 1. 如何将一个业务场景的逻辑用合约的形式表达
 2. 如何将Solidity合约转化成Java类
-3. 如何配置Web3SDK
-4. 如何构建一个应用，并集成Web3SDK到应用工程
-5. 如何通过Web3SDK调用合约接口，了解Web3SDK调用合约接口的原理
+3. 如何配置Java SDK
+4. 如何构建一个应用，并集成Java SDK到应用工程
+5. 如何通过Java SDK调用合约接口，了解Java SDK调用合约接口的原理
 
 教程中会提供示例的完整项目源码，用户可以在此基础上快速开发自己的应用。
 
@@ -22,7 +23,7 @@
     请参考 `安装文档 <../installation.html>`_ 完成FISCO BCOS区块链的搭建和控制台的下载工作，本教程中的操作假设在该文档搭建的环境下进行。
 ```
 
-## 1.了解应用需求
+## 示例应用需求
 
 区块链天然具有防篡改，可追溯等特性，这些特性决定其更容易受金融领域的青睐，本文将会提供一个简易的资产管理的开发示例，并最终实现以下功能：
 
@@ -30,13 +31,13 @@
 -   能够实现不同账户的转账
 -   可以查询账户的资产金额
 
-## 2.设计和开发智能合约
+## 合约设计与实现
 
 在区块链上进行应用开发时，结合业务需求，首先需要设计对应的智能合约，确定合约需要储存的数据，在此基础上确定智能合约对外提供的接口，最后给出各个接口的具体实现。
 
-### 第一步. 存储设计
+### 存储设计
 
-FISCO BCOS提供[合约CRUD接口](../app_dev/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[合约CRUD接口](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
 -   asset_value: 资产金额(uint256类型)
@@ -48,7 +49,7 @@ FISCO BCOS提供[合约CRUD接口](../app_dev/smart_contract.html#crud)开发模
 | Alice   | 10000       |
 | Bob     | 20000       |
 
-### 第二步.接口设计
+### 接口设计
 
  按照业务的设计目标，需要实现资产注册，转账，查询功能，对应功能的接口如下：
 
@@ -61,7 +62,7 @@ function register(string account, uint256 amount) public returns(int256)
 function transfer(string from_asset_account, string to_asset_account, uint256 amount) public returns(int256)
 ```
 
-### 第三步.编写智能合约
+### 完整源码
 
 ```js
 pragma solidity ^0.4.24;
@@ -241,18 +242,25 @@ contract Asset {
 }
 ```
 
- **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../app_dev/smart_contract.html#crud)。
+ **注：** `Asset.sol`合约的实现需要引入FISCO BCOS提供的一个系统合约接口文件 `Table.sol` ，该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。`Table.sol` 合约详细接口[参考这里](../manual/smart_contract.html#crud)。
 
-### 第四步.编译合约
+## 合约编译
 
 上一小节，我们根据业务需求设计了合约`Asset.sol`的存储与接口，给出了完整实现，但是Java程序无法直接调用Solidity合约，需要先将Solidity合约文件编译为Java文件。
 
 控制台提供了编译工具，可以将`Asset.sol`合约文件存放在`console/contracts/solidity`目录。利用console目录下提供的`sol2java.sh`脚本进行编译，操作如下：
+
 ```bash
+# 创建工作目录~/fisco
+mkdir -p ~/fisco
+# 下载控制台
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+
 # 切换到fisco/console/目录
-$ cd ~/fisco/console/
+cd ~/fisco/console/
+
 # 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
-$ ./sol2java.sh org.fisco.bcos.asset.contract
+./sol2java.sh org.fisco.bcos.asset.contract
 ```
 
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
@@ -287,37 +295,38 @@ package org.fisco.bcos.asset.contract;
 
 public class Asset extends Contract {
     // Asset.sol合约 transfer接口生成
-    public RemoteCall<TransactionReceipt> transfer(String from_account, String to_account, BigInteger amount);
+    public TransactionReceipt transfer(String from_account, String to_account, BigInteger amount);
     // Asset.sol合约 register接口生成
-    public RemoteCall<TransactionReceipt> register(String account, BigInteger asset_value);
+    public TransactionReceipt register(String account, BigInteger asset_value);
     // Asset.sol合约 select接口生成
-    public RemoteCall<Tuple2<BigInteger, BigInteger>> select(String account);
+    public Tuple2<BigInteger, BigInteger> select(String account) throws ContractException;
 
     // 加载Asset合约地址，生成Asset对象
-    public static Asset load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
+    public static Asset load(String contractAddress, Client client, CryptoKeyPair credential);
 
     // 部署Assert.sol合约，生成Asset对象
-    public static RemoteCall<Asset> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
+    public static Asset deploy(Client client, CryptoKeyPair credential) throws ContractException;
 }
 ```
 
 其中load与deploy函数用于构造Asset对象，其他接口分别用来调用对应的solidity合约的接口，详细使用在下文会有介绍。
 
-## 3.创建区块链应用
+## SDK配置
 
 我们提供了一个Java工程项目供开发使用，首先获取Java工程项目：
 
 ```bash
-    # 获取Java工程项目压缩包
-    $ cd ~
-    $ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
-    # 解压得到Java工程项目asset-app目录
-    $ tar -zxf asset-app.tar.gz
+$ mkdir -p ~/fisco
+# 获取Java工程项目压缩包
+$ cd ~/fisco
+$ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
+# 解压得到Java工程项目asset-app目录
+$ tar -zxf asset-app.tar.gz
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
+    - 如果因为网络问题导致长时间无法下载，请尝试将`199.232.28.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
 ```
 
 asset-app项目的目录结构如下：
@@ -354,67 +363,73 @@ asset-app项目的目录结构如下：
     |-- asset_run.sh // 项目运行脚本
 ```
 
-### 第一步.在项目中引入Web3SDK
+### 项目引入Java SDK
 
-**项目的`build.gradle`文件已引入Web3SDK，不需修改**。其引入方法介绍如下：
+**项目的`build.gradle`文件已引入Java SDK，不需修改**。其引入方法介绍如下：
 
--   Web3SDK引入了以太坊的solidity编译器相关jar包，因此在`build.gradle`文件需要添加以太坊的远程仓库：
+- 引入maven源
 
 ```java
 repositories {
-    maven {
-        url "http：//maven.aliyun.com/nexus/content/groups/public/"
-    }
-    maven { url "https：//dl.bintray.com/ethereum/maven/" }
     mavenCentral()
+    maven {
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 ```
 
--   引入Web3SDK jar包
+-   引入Java SDK jar包
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.5.0')
+compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT")
 ```
 
-### 第二步.导入证书并编写配置文件
+### 证书与配置文件
 
 -   区块链节点证书配置
 
 拷贝区块链节点对应的SDK证书
 
 ```bash
-# 进入~目录
+# 进入~/fisco目录
+$ cd ~/fisco
+# 创建放置证书的文件夹
+$ mkdir -p asset-app/src/test/resources/conf
 # 拷贝节点证书到项目的资源目录
-$ cd ~
-$ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
+$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/test/resources/conf
+# 若在IDE直接运行，拷贝证书到resources路径
+$ mkdir -p asset-app/src/main/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
 ```
 
 -   applicationContext.xml
 
-**注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`，具体请参考[SDK使用文档](../sdk/web3sdk/java_sdk.html#spring)。
+**注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的`IP:channel_listen_port`。
 
-### 第三步.进行业务开发
+## 业务开发
 
-我们已经介绍了如何在自己的项目中引入以及配置Web3SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。asset-app项目已经包含示例的完整源码，用户可以直接使用，现在介绍核心类`AssetClient`的设计与实现。
+我们已经介绍了如何在自己的项目中引入以及配置Java SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。asset-app项目已经包含示例的完整源码，用户可以直接使用，现在介绍核心类`AssetClient`的设计与实现。
 
 `AssetClient.java`: 通过调用`Asset.java`实现对合约的部署与调用，路径`/src/main/java/org/fisco/bcos/asset/client`，初始化以及调用流程都在该类中进行。
 
 -   初始化
 
-初始化代码的主要功能为构造Web3j与Credentials对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
+初始化代码的主要功能为构造Client与CryptoKeyPair对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 
 ```java
-// 函数initialize中进行初始化
-ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-Service service = context.getBean(Service.class);
-service.run();
-
-ChannelEthereumService channelEthereumService = new ChannelEthereumService();
-channelEthereumService.setChannelService(service);
-// 初始化Web3j对象
-Web3j web3j = Web3j.build(channelEthereumService, 1);
-// 初始化Credentials对象
-Credentials credentials = Credentials.create(Keys.createEcKeyPair());
+// 函数initialize中进行初始化 
+// 初始化BcosSDK
+@SuppressWarnings("resource")
+ApplicationContext context =
+        new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+bcosSDK = context.getBean(BcosSDK.class);
+// 初始化可向群组1发交易的Client
+client = bcosSDK.getClient(1);
+// 随机生成发送交易的公私钥对
+cryptoKeyPair = client.getCryptoSuite().createKeyPair();
+client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
+logger.debug("create client for group1, account address is " + cryptoKeyPair.getAddress());
 ```
 
 -   构造合约类对象
@@ -423,9 +438,9 @@ Credentials credentials = Credentials.create(Keys.createEcKeyPair());
 
 ```java
 // 部署合约
-Asset asset = Asset.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
+Asset asset = Asset.deploy(client, cryptoKeyPair);
 // 加载合约地址
-Asset asset = Asset.load(contractAddress, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
+Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 ```
 
 -   接口调用
@@ -434,14 +449,14 @@ Asset asset = Asset.load(contractAddress, web3j, credentials, new StaticGasProvi
 
 ```java
 // select接口调用
-Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount).send();
+ Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount);
 // register接口调用
-TransactionReceipt receipt = asset.register(assetAccount, amount).send();
+TransactionReceipt receipt = asset.register(assetAccount, amount);
 // transfer接口
-TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount).send();
+TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-## 4.运行应用
+## 运行
 
 至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
 
@@ -449,7 +464,7 @@ TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, am
 
 ```bash
 # 切换到项目目录
-$ cd ~/asset-app
+$ cd ~/fisco/asset-app
 # 编译项目
 $ ./gradlew build
 ```

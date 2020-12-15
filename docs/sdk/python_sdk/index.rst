@@ -2,6 +2,10 @@
 Python SDK
 ##############################################################
 
+标签：``Python API``
+
+----
+
 `Python SDK <https://github.com/FISCO-BCOS/python-sdk>`_ 提供了访问 `FISCO BCOS <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ 节点的Python API，支持节点状态查询、部署和调用合约等功能，基于Python SDK可快速开发区块链应用，目前支持 `FISCO BCOS 2.0+  <../../../>`_ 
 
 
