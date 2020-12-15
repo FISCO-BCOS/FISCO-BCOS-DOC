@@ -1,5 +1,8 @@
 # 合约开发样例
 
+标签：``go-sdk`` ``合约开发``
+
+----
 ## 非国密样例
 
 本开发样例使用标准单群组四节点区块链网络结构，搭建请参考：[安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)。

@@ -1,5 +1,9 @@
 # 密码学模块
 
+标签：``java-sdk`` ``Crypto``
+
+----
+
 java sdk提供了可访问所有密码学相关接口的`CryptoSuite`，`CryptoSuite`会根据传入的`cryptoType`(目前支持`CryptoType.ECDSA_TYPE`和`CryptoType.SM_TYPE`，前者用在非国密链中，后者用于国密链中)初始化密码学相关的套件。
 
 java sdk目前支持以下功能:

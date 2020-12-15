@@ -1,5 +1,9 @@
 # Go API
 
+标签：``go-sdk`` ``AMOP``
+
+----
+
 Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供外部调用。按照功能，Go API可以分为如下几类：
 
 - **client**：提供访问FISCO BCOS 2.0+节点[JSON-RPC](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html)接口支持、提供部署及调用合约的支持；

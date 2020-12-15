@@ -1,5 +1,9 @@
 # 控制台
 
+标签：``go-sdk`` ``Go SDK控制台``
+
+----
+
    [Go SDK](https://github.com/FISCO-BCOS/go-sdk) 通过 `console.go` 实现了一个简单的控制台，支持区块链和节点信息查询。
 
 ## 使用

@@ -1,5 +1,9 @@
 # 控制台
 
+标签：``Python SDK`` ``PythonSDK控制台``
+
+----
+
 [Python SDK](https://github.com/FISCO-BCOS/python-sdk)通过`console.py`实现了一个简单的控制台，支持合约操作、账户管理操作等。
 
 ```eval_rst
