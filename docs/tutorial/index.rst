@@ -11,18 +11,23 @@
 
    multihost.md
    enter_group.md
+   compile.md
    caliper.md
    enc.md
    cfca.md
+   mysql_node.md
+   cdn.md
 
 **教程**
 
 - `搭建多主机的联盟链网络 <./multihost.html>`_
 - `节点加入网络、加入群组 <./enter_group.html>`_
+- `源码编译 <./compile.html>`_
 - `压力测试 <./caliper.html>`_
-- `配置落盘加密 <./caliper.html>`_
+- `配置落盘加密 <./enc.html>`_
 - `使用CFCA证书部署节点 <./cfca.html>`_
 - `使用MySQL分布式存储的节点搭建 <./mysql_node.html>`_
+- `国内镜像和CDN加速 <./cdn.html>`_
 
 
 **博客**
