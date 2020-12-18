@@ -20,7 +20,9 @@
 
 **教程**
 
-- `搭建多主机的联盟链网络 <./multihost.html>`_
+（以下图文教程很快将为大家提供，敬请期待）
+
+- `搭建多主机的联盟链网络 <./multihost.html>`_ 
 - `节点加入网络、加入群组 <./enter_group.html>`_
 - `源码编译 <./compile.html>`_
 - `压力测试 <./caliper.html>`_
