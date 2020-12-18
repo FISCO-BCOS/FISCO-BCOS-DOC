@@ -18,19 +18,6 @@
    mysql_node.md
    cdn.md
 
-**教程**
-
-（以下图文教程很快将为大家提供，敬请期待）
-
-- `搭建多主机的联盟链网络 <./multihost.html>`_ 
-- `节点加入网络、加入群组 <./enter_group.html>`_
-- `源码编译 <./compile.html>`_
-- `压力测试 <./caliper.html>`_
-- `配置落盘加密 <./enc.html>`_
-- `使用CFCA证书部署节点 <./cfca.html>`_
-- `使用MySQL分布式存储的节点搭建 <./mysql_node.html>`_
-- `国内镜像和CDN加速 <./cdn.html>`_
-
 
 **博客**
 
