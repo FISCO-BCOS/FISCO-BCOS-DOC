@@ -930,7 +930,7 @@ gradlew.bat build -x test
 
 ### 第三步：配置
 
-* 复制证书：将你搭建FISCO BCOS网络节点``nodes/${ip}/sdk/`` 目录下的证书复制到``java-sdk-demo/dist/config``目录下。
+* 复制证书：将你搭建FISCO BCOS网络节点``nodes/${ip}/sdk/`` 目录下的证书复制到``java-sdk-demo/dist/conf``目录下。
 
 * 修改配置：如果您采用的是方法一搭建的网络，则无需修改配置。如果您采用方法二搭建区块链，需要修改订阅者配置文件``java-sdk-demo/dist/conf/amop/config-subscriber-for-test.toml``，和发送者配置文件``java-sdk-demo/dist/conf/amop/config-publisher-for-test.toml``，修改配置文件中的节点信息。 注意：订阅者和发送者最好不连相同节点，如果连接了相同节点，则会被认为是同一个组织下的成员，私有话题无需认证即可通讯。
 
