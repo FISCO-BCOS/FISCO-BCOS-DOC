@@ -191,7 +191,7 @@ function f() public {
 
 这样，当函数体被执行的时候，会触发执行LogCallTrace。
 
-最后，在FISCO BCOS的Java SDK中，合约事件推送功能提供了合约事件的异步推送机制，客户端向节点发送注册请求，在请求中携带客户端关注的合约事件参数，节点根据请求参数对请求区块范围的Event Log进行过滤，将结果分次推送给客户端。更多细节可以参考合约事件推送功能文档。在SDK中，可以根据事件的indexed属性，根据特定值进行搜索。[合约事件推送功能文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id14)：
+最后，在FISCO BCOS的Java SDK中，合约事件推送功能提供了合约事件的异步推送机制，客户端向节点发送注册请求，在请求中携带客户端关注的合约事件参数，节点根据请求参数对请求区块范围的Event Log进行过滤，将结果分次推送给客户端。更多细节可以参考合约事件推送功能文档。在SDK中，可以根据事件的indexed属性，根据特定值进行搜索。[合约事件推送功能文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/web3sdk/java_sdk.html#id14)：
 
 不过，日志和事件无法被直接访问，甚至在创建的合约中也无法被直接访问。但好消息是日志的定义和声明非常利于在『事后』进行追溯和导出。例如，我们可以在合约的编写中，定义和埋入足够的事件，通过WeBASE的数据导出子系统我们可以将所有日志导出到MySQL等数据库中。这特别适用于生成对账文件、生成报表、复杂业务的OLTP查询等场景。此外，WeBASE提供了一个专用的代码生成子系统帮助分析具体的业务合约，自动生成相应的代码。
 

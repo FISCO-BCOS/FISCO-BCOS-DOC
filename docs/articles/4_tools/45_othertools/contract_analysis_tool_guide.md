@@ -14,7 +14,7 @@
 
 ![](../../../../images/articles/contract_analysis_tool_guide/IMG_4963.PNG)
 
-图中为了突出重点，只显示TableTest.sol合约中涉及到交易解析字段的关键代码（TableTest.sol合约是控制台提供的示例合约，用于创建示例表t_test，并提供增删改查方法。完整合约代码可以到控制台目录contracts/solidity/下查阅，或直接通过文档查阅，请参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#crud）。
+图中为了突出重点，只显示TableTest.sol合约中涉及到交易解析字段的关键代码（TableTest.sol合约是控制台提供的示例合约，用于创建示例表t_test，并提供增删改查方法。完整合约代码可以到控制台目录contracts/solidity/下查阅，或直接通过文档查阅，请参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html#crud）。
 
 交易和交易回执字段，同样只突出要解析的input、output和logs字段，其他字段省略。其中交易信息包含input字段，交易回执信息包含input、output和logs字段**（注：**FISCO BCOS 2.0.0及以上版本返回的交易回执包含input字段**）。
 
@@ -113,7 +113,7 @@ public class EventResultEntity extends ResultEntity {
 
 是英雄，一定有用武之地！交易解析工具入场的地方包括如下场景：
 
-- **控制台**：控制台1.0.4版本已使用交易解析工具解析查询的交易、交易回执以及调用合约时的相关字段。[具体用法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#call)
+- **控制台**：控制台1.0.4版本已使用交易解析工具解析查询的交易、交易回执以及调用合约时的相关字段。[具体用法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#call)
 - **区块链浏览器、WeBASE管理平台**：用于解码交易和交易回执中的字段，便于交易详情展示。
 - **基于web3sdk的区块链应用**：比较重要的意义是用于获取合约方法的返回值，以往一般对于发送交易的方法，习惯用event记录数据，而方法的返回值处于闲置状态。现在可以使用返回值，并利用交易解析工具解析返回值，助力业务开发。
 

@@ -46,7 +46,7 @@ Similar to the SDK request rate limit, the network flow limit also includes node
 
 ```eval_rst
 .. note::
-    - The node-level flow control configuration options are located in `` config.ini``, please refer to `here <../../manual/configuration.html#configuration.html#optional-configuration-flow-control>`_
+    - The node-level flow control configuration options are located in `` config.ini``, please refer to `here <../../blockchain_dev/configuration.html#configuration.html#optional-configuration-flow-control>`_
     
-    - The group-level flow control options are located in `` group. {Group_id} .ini``, for details, please refer to `here <./../manual/configuration.html#optional-configuration-group-flow-control>`_
+    - The group-level flow control options are located in `` group. {Group_id} .ini``, for details, please refer to `here <./../blockchain_dev/configuration.html#optional-configuration-group-flow-control>`_
 ```

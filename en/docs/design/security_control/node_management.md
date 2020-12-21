@@ -1,6 +1,6 @@
 # Node access management
 
-This chapter will give a brief introduction on node access management. For implementation methods please read [Node access management](../../manual/node_management.md)。
+This chapter will give a brief introduction on node access management. For implementation methods please read [Node access management](../../blockchain_dev/node_management.md)。
 
 ## Introduction
 

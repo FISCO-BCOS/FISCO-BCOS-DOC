@@ -1,5 +1,8 @@
 # 快速入门
 
+标签：``java-sdk`` ``引入Java SDK``
+
+----
 ## 1. 安装环境
 
 - Java：JDK 14 （JDK1.8 至JDK 14都支持）

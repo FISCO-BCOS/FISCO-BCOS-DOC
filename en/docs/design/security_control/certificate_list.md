@@ -1,6 +1,6 @@
 # CA blacklist and whitelist
 
-This section contains the brief introduction of blacklist and whitelist, for the implementation please check [CA blacklist and whitelist operation tutorial](../../manual/certificate_list.md). 
+This section contains the brief introduction of blacklist and whitelist, for the implementation please check [CA blacklist and whitelist operation tutorial](../../blockchain_dev/certificate_list.md). 
 
 ## Terms definition
 

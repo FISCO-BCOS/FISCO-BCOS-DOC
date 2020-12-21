@@ -92,7 +92,7 @@ openssl x509 -req -days 3650 -sha256 -CA ./ca.crt -CAkey ./ca.key -CAcreateseria
 
 #### 参考资料
 
-- [证书说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificates.html)
-- [权限控制](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/permission_control.html)
-- [节点准入](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/node_management.html)
+- [证书说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/certificates.html)
+- [权限控制](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/permission_control.html)
+- [节点准入](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/node_management.html)
 

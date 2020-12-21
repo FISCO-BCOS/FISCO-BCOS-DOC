@@ -2,6 +2,9 @@
 Node.js SDK
 ##############################################################
 
+标签：``Node.JS SDK`` 
+
+----
 `Node.js SDK <https://github.com/FISCO-BCOS/nodejs-sdk>`_ 提供了访问 `FISCO BCOS <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ 节点的Node.js API，支持节点状态查询、部署和调用合约等功能，基于Node.js SDK可快速开发区块链应用，目前支持 `FISCO BCOS 2.0+  <../../../>`_ 
 
 
@@ -14,7 +17,7 @@ Node.js SDK
 
 .. admonition:: **主要特性**
 
-    - 提供调用FISCO BCOS `JSON-RPC <../../api.html>`_ 的Node.js API
+    - 提供调用FISCO BCOS `JSON-RPC <../../reference/api.html>`_ 的Node.js API
     - 提供部署及调用Solidity合约（支持Solidity 0.4.x 及Solidity 0.5.x）的Node.js API
     - 提供调用预编译（Precompiled）合约的Node.js API
     - 使用 `Channel协议 <../../design/protocol_description.html#channelmessage>`_ 与FISCO BCOS节点通信，双向认证更安全

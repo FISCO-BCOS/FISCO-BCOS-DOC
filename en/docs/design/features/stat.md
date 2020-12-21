@@ -145,7 +145,7 @@ gasUsed | Gas consumed by transaction |
 
 ```eval_rst
 .. note::
-    Statistics log configuration options are located in ``config.ini``, for details, please refer to  `here <../../manual/configuration.html#statistics-log-configuration-items>`_ 
+    Statistics log configuration options are located in ``config.ini``, for details, please refer to  `here <../../blockchain_dev/configuration.html#statistics-log-configuration-items>`_ 
 ```
 
 

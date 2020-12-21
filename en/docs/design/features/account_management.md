@@ -11,9 +11,9 @@ This document describes the design of the freezing/unfreezing account operations
 
 Account management related operations include `freezeAccount`, `unfreezeAccount`, `getAccountStatus` and authority management related operations.
 
-- [freezeAccount](../../manual/console.html#freezeaccount) : Reversible operation, the interfaces of a frozen account can not deploy or execute transaction
-- [unfreezeAccount](../../manual/console.html#unfreezeaccount) : Undo the `freezeAccount` operation, the interfaces of an unfrozen account can deploy or execute transaction
-- [getAccountStatus](../../manual/console.html#getaccountstatus) : Query the status of a account to return the status of available/frozen
+- [freezeAccount](../../console/console.html#freezeaccount) : Reversible operation, the interfaces of a frozen account can not deploy or execute transaction
+- [unfreezeAccount](../../console/console.html#unfreezeaccount) : Undo the `freezeAccount` operation, the interfaces of an unfrozen account can deploy or execute transaction
+- [getAccountStatus](../../console/console.html#getaccountstatus) : Query the status of a account to return the status of available/frozen
 
 The authority management related operations please refer to [ChainGovernance](../security_control/chain_governance.md).
 

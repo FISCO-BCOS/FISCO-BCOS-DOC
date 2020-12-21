@@ -13,11 +13,11 @@
 
 ### 场景1：修改已有文档内容
 
-以修改[使用手册/节点准入](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/node_management.html)文档为例，对提pr步骤进行说明。修改内容如下：
+以修改[使用手册/节点准入](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/node_management.html)文档为例，对提pr步骤进行说明。修改内容如下：
 
 ![](images/pr/example.png)
 
-1.在浏览器打开[使用手册/节点准入](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/node_management.html)文档页面，点击下图红框处的`Edit on GitHub`链接；
+1.在浏览器打开[使用手册/节点准入](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/node_management.html)文档页面，点击下图红框处的`Edit on GitHub`链接；
 
 ![](images/pr/edit_on_github.png)
 
@@ -68,3 +68,14 @@
 ![](images/pr/commit_change.png)
 
 5.如选择将本次修改内容新建pr，点击第二项后将跳转页面，参照场景1的步骤6继续操作。
+
+## 文档模板
+
+指引类文档
+```
+# 文档标题（注意，文档标题要与同类文档保持句式一直）
+关键词：``文档指引``
+
+## 1. 第一部分
+第一步：
+```

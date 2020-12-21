@@ -1,5 +1,8 @@
 # 使用运维部署工具
 
+标签：``运维部署工具``
+
+----
 FISCO BCOS运维部署工具面向于真实的多机构生产环境。为了保证机构的密钥安全，运维部署工具提供了一种机构间相互合作部署联盟链方式。
 
 本章以部署**6节点3机构2群组**的组网模式，演示运维部署工具的使用方法。更多参数选项说明请参考[这里](./operation.md)。
@@ -48,7 +51,7 @@ cd ~/generator && bash ./scripts/install.sh
 ./meta/fisco-bcos -v
 ```
 
-**PS**：[源码编译](../manual/get_executable.md)节点二进制的用户，只需要用编译出来的二进制替换掉`meta`文件夹下的二进制即可。
+**PS**：[源码编译](../blockchain_dev/get_executable.md)节点二进制的用户，只需要用编译出来的二进制替换掉`meta`文件夹下的二进制即可。
 
 ## 典型示例
 
@@ -77,7 +80,7 @@ cd ~/generator && bash ./scripts/install.sh
 .. note::
     - 云主机的公网IP均为虚拟IP，若rpc_ip/p2p_ip/channel_ip填写外网IP，会绑定失败，须填写0.0.0.0
     - RPC/P2P/Channel监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
-    - 出于安全性和易用性考虑，FISCO BCOS v2.3.0版本最新节点config.ini配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里 <../manual/configuration.html#configure-rpc>`_
+    - 出于安全性和易用性考虑，FISCO BCOS v2.3.0版本最新节点config.ini配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 `这里 <../blockchain_dev/configuration.html#configure-rpc>`_
     - 为便于开发和体验，channel_listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
