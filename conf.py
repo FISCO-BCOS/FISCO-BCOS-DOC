@@ -158,7 +158,7 @@ pygments_style = 'sphinx'
 html_theme = 'sphinx_rtd_theme'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme_options = {'navigation_depth': 4,}
+html_theme_options = {'navigation_depth': 3,}
 using_rtd_theme = True
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 todo_include_todos = True
@@ -183,14 +183,15 @@ html_context = {
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+# html_title = None
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-#html_short_title = None
+# html_short_title = None
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = None
+# html_logo = None
+# html_logo = '_static/images/FISCO_BCOS_Logo.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32

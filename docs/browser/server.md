@@ -1,17 +1,14 @@
-# 区块链浏览器服务说明
+# 浏览器后端服务
 
-# 目录
-> * [功能说明](#chapter-1)
-> * [前提条件](#chapter-2)
-> * [部署说明](#chapter-3)
-> * [问题排查](#chapter-4)
-> * [附录](#chapter-5)
+标签：``后端服务`` ``区块链浏览器`` 
 
-# 1. <a id="chapter-1"></a>功能说明
+----
+
+## 1.功能说明
 
 本工程是区块链浏览器的后端服务，功能是解析节点数据储存数据库，向前端提供数据接口，页面展示。
 
-# 2. <a id="chapter-2"></a>前提条件
+## 2.前提条件
 
 | 环境     | 版本              |
 | ------ | --------------- |
@@ -20,9 +17,9 @@
 | 数据库    | mysql-5.6或以上版本  |
 备注：安装说明请参看附录。
 
-# 3. <a id="chapter-3"></a>部署说明
+## 3.部署说明
 
-## 3.1 拉取代码
+### 3.1 拉取代码
 执行命令：
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
@@ -32,7 +29,7 @@ git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
 cd fisco-bcos-browser
 ```
 
-## 3.2 编译代码
+### 3.2 编译代码
 
 （1）进入目录：
 ```shell
@@ -45,7 +42,7 @@ gradle build
 ```
 构建完成后，会在目录中生成已编译的代码目录dist。
 
-## 3.3 修改配置
+### 3.3 修改配置
 
 （1）dist目录中提供了一份配置模板dist/conf_template，**供拷贝参考**：
 
@@ -75,7 +72,7 @@ cd dist/conf
 
 1. 实际生产中建议将编译后的安装包（dist目录）放到服务部署目录。例如/data/app/fisco-bcos-browser
 
-## 3.4 服务启停
+### 3.4 服务启停
 
 进入到已编译的代码根目录：
 ```shell
@@ -87,7 +84,7 @@ cd dist
 检查：sh status.sh
 ```
 
-## 3.5 查看日志
+### 3.5 查看日志
 
 进入到已编译的代码根目录：
 ```shell
@@ -99,14 +96,14 @@ cd dist
 tail -f log/fisco-bcos-browser.log
 ```
 
-# 4. <a id="chapter-4"></a>问题排查
+## 4.问题排查
 
-## 4.1 启停失败
+### 4.1 启停失败
 如果脚本执行出现问题，尝试以下操作：
 ```shell
 chmod +x *.sh
 ```
-## 4.2 gradle build失败
+### 4.2 gradle build失败
 
 ```shell
 gradle build
@@ -117,9 +114,9 @@ gradle build
 Could not find method annotationProcessor() for arguments [org.projectlombok:lombok:1.18.2] on object of type org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler.
 ```
 
-# 5. <a id="chapter-5"></a>附录
+## 5.附录
 
-## 5.1 Java环境部署
+### 5.1 Java环境部署
 
 此处给出简单步骤，供快速查阅。更详细的步骤，请参考[官网](http://www.oracle.com/technetwork/java/javase/downloads/index.html)。
 
@@ -138,7 +135,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ```
 
-## 5.2 gradle环境部署
+### 5.2 gradle环境部署
 
 此处给出简单步骤，供快速查阅。更详细的步骤，请参考[官网](http://www.gradle.org/downloads)。
 
@@ -156,7 +153,7 @@ export GRADLE_HOME=/software/gradle-XXX
 export PATH=$GRADLE_HOME/bin:$PATH
 ```
 
-## 5.3 数据库部署
+### 5.3 数据库部署
 
 此处以Centos/Fedora为例。
 
@@ -234,8 +231,8 @@ mysql -utest -p123456 -h 127.0.0.1 -P 3306
 mysql > create database db_browser;
 ```
 
-### 5.3.1 常见错误 
-#### 5.3.1.1 腾讯云centos mysql安装完成后，登陆报错：Access denied for user 'root'@'localhost'
+#### 5.3.1 常见错误 
+##### 5.3.1.1 腾讯云centos mysql安装完成后，登陆报错：Access denied for user 'root'@'localhost'
 
 1. 编辑 /etc/my.cnf ，在[mysqld] 部分最后添加一行
 ```

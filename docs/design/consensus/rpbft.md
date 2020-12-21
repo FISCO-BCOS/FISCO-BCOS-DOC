@@ -1,5 +1,8 @@
 # rPBFT
 
+标签：``rPBFT`` ``共识算法``
+
+----
 ## 区块链共识困境
 
 ### POW类算法
@@ -134,7 +137,7 @@ rPBFT算法目前实现中，轮流将共识委员列表节点替换为验证节
 
 (3) 若节点B的状态落后于节点A，且节点B与其父节点断连，则节点B向节点A发出prepareRequest请求，请求相应的Prepare包
 
-(4) 若节点B的状态落后于节点A，但节点B与其父节点相连，若节点B最多等待[100ms(可配)](../../manual/configuration.html#rpbft)后，状态仍然落后于节点A，则节点B向节点A发出prepareRequest请求，请求相应的Prepare包
+(4) 若节点B的状态落后于节点A，但节点B与其父节点相连，若节点B最多等待[100ms(可配)](../../blockchain_dev/configuration.html#rpbft)后，状态仍然落后于节点A，则节点B向节点A发出prepareRequest请求，请求相应的Prepare包
 
 (5) 节点B收到节点A的prepareRequest请求后，向其回复相应的Prepare消息包
 
@@ -190,8 +193,8 @@ rPBFT开启Prepare包结构优化后，其他共识节点交易缺失后，向le
 (2) sealerB开始处理Prepare包，首先从交易池中获取命中的交易，填充到Prepare包的区块中，并选取节点获取缺失的交易：
   - 若sealerB缓存来自节点sealerA的prepareStatus.blockHash等于Prepare.blockHash，则直接向父节点sealerA请求缺失交易
   - 若sealerB缓存的sealerA状态包哈希不等于Prepare.blockHash，但存在来自其他节点C的prepareStatus.blockHash等于prepare.blockHash，则向C请求缺失交易
-  - 若sealerB缓存的任何节点prepareStatus的哈希均不但等于prepare.blockHash，最多等待[100ms(可配)](../../manual/configuration.html#rpbft)后，向Leader请求缺失的交易
+  - 若sealerB缓存的任何节点prepareStatus的哈希均不但等于prepare.blockHash，最多等待[100ms(可配)](../../blockchain_dev/configuration.html#rpbft)后，向Leader请求缺失的交易
 
-(3) sealerB收到被请求节点回复的交易后，填充Prepare包内区块，并随机选取[33%(可配)](../../manual/configuration.html#rpbft)节点广播Prepare包状态
+(3) sealerB收到被请求节点回复的交易后，填充Prepare包内区块，并随机选取[33%(可配)](../../blockchain_dev/configuration.html#rpbft)节点广播Prepare包状态
 
 (4) 其他节点收到sealerB的状态包后，将其sealerB的最新状态包更新到缓存中

@@ -1,5 +1,9 @@
 # 控制台
 
+标签：``Python SDK`` ``PythonSDK控制台``
+
+----
+
 [Python SDK](https://github.com/FISCO-BCOS/python-sdk)通过`console.py`实现了一个简单的控制台，支持合约操作、账户管理操作等。
 
 ```eval_rst
@@ -300,7 +304,7 @@ CNS ITEM 0 >>
 
 ## 节点管理
 
-Python SDK提供了节点管理命令，包括添加共识节点、添加观察者节点、将节点从群组中删除，节点管理的详细资料可参考[这里](../../manual/node_management.md)。
+Python SDK提供了节点管理命令，包括添加共识节点、添加观察者节点、将节点从群组中删除，节点管理的详细资料可参考[这里](../../blockchain_dev/node_management.md)。
 
 ### removeNode
 
@@ -334,7 +338,7 @@ INFO >> removeNode
 ./console.py addSealer [nodeId]
 ```
 参数包括：
-- nodeId: 加入的共识节点nodeID，获取节点nodeID可参考[这里](../../manual/configuration.html#id11)
+- nodeId: 加入的共识节点nodeID，获取节点nodeID可参考[这里](../../blockchain_dev/configuration.html#id11)
 
 ```bash
 # 设节点位于~/fisco/nodes目录，查询node1的nodeID
@@ -360,7 +364,7 @@ INFO >> addSealer
 ./console.py addObserver [nodeId]
 ```
 参数包括：
-- nodeId: 加入的观察者节点nodeID，获取节点nodeID可参考[这里](../../manual/configuration.html#id11)
+- nodeId: 加入的观察者节点nodeID，获取节点nodeID可参考[这里](../../blockchain_dev/configuration.html#id11)
 
 ```bash
 # 设节点位于~/fisco/nodes目录，查询node1的nodeID
@@ -380,7 +384,7 @@ INFO >> addObserver
 ```
 
 ### 系统配置
-Python SDK提供了系统配置修改命令，FISCO BCOS目前支持的系统配置参考[这里](../../manual/configuration.html#id21)。
+Python SDK提供了系统配置修改命令，FISCO BCOS目前支持的系统配置参考[这里](../../blockchain_dev/configuration.html#id21)。
 ```
 ./console.py setSystemConfigByKey [key(tx_count_limit/tx_gas_limit)] [value]
 ```
@@ -414,7 +418,7 @@ INFO >> setSystemConfigByKey
 
 ## 权限管理
 
-Python SDK提供了权限管理功能，包括授权、撤销权限和列出权限列表等，权限控制的详细内容可参考[这里](../../manual/permission_control.md)。
+Python SDK提供了权限管理功能，包括授权、撤销权限和列出权限列表等，权限控制的详细内容可参考[这里](../../blockchain_dev/distributed_storage.md)。
 
 ### grantPermissionManager
 将控制权限的功能授权给指定账户：

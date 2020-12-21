@@ -1,4 +1,4 @@
-# 《深入浅出FISCO BCOS》
+# 深入浅出FISCO BCOS
 
 ## 介绍
 

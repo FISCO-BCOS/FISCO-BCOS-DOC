@@ -23,7 +23,7 @@ $ bash nodes/127.0.0.1/start_all.sh
 
 ![](../../../images/articles/five_step_to_develop_application/IMG_4947.JPG)
 
-当然，如果你还是需要阅读详细文档，请参考【安装】：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos
+当然，如果你还是需要阅读详细文档，请参考【安装】：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html#fisco-bcos
 
 ## 第二步：安装一个交互式控制台
 
@@ -84,7 +84,7 @@ Solidity合约需要通过编译器转换成机器（虚拟机）可执行的二
 
 额，老毛病犯了，又唠唠叨叨讲原理，还是讲讲**如何无脑一键完成合约编译与部署吧：**
 
-参考说明文档【控制台】的deploy命令：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html
+参考说明文档【控制台】的deploy命令：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html
 
 将Assert.sol放置在console/solidity/contract目录，在控制台执行deploy Assert.sol即可完成合约的编译以及部署。
 

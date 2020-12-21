@@ -1,5 +1,9 @@
 ## 框架
 
+标签：``共识算法`` ``设计方案``
+
+----
+
 FISCO BCOS实现了一套可扩展的共识框架，可插件化扩展不同的共识算法，目前支持 **PBFT(Practical Byzantine Fault Tolerance)** 和 **Raft(Replication and Fault Tolerant)** 共识算法，共识模块框架如下图：
 
 ![](../../../images/consensus/architecture.png)

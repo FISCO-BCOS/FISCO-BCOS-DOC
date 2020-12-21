@@ -105,7 +105,7 @@ Solidity合约完整代码如下所示。基于Solidity语言的合约开发，�
 
 CRUD合约是CRUD功能的核心，用户可以直接在合约中引用CRUD接口文件Table.sol，并在Solidity合约中调用CRUD接口。CRUD合约的开发完全遵从数据库的操作习惯，更容易理解和上手。
 
-CRUD合约更多开发细节可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#crud
+CRUD合约更多开发细节可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html#crud
 
 #### 创建合约
 
@@ -169,7 +169,7 @@ createTable接口返回值为0时，说明创建成功。需要注意的是，�
 ## 合约部署及调用
 
 开发完智能合约后，需要对合约进行编译和部署，然后才能调用。FISCO BCOS平台提供了交互式控制台工具（Console）,可以非常方便地与链进行交互。下面将以上述智能合约为例，采用控制台工具进行部署和调用。
-控制台安装及使用可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html
+控制台安装及使用可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html
 
 ### 准备工作
 

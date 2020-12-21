@@ -1,5 +1,8 @@
 # 环境和配置文件
 
+标签：``go-sdk`` ``环境配置``
+
+----
 ## 环境
 
 - Go开发环境
@@ -55,7 +58,7 @@ SMCrypto=false
 
 ### 账户配置
 
-- `KeyFile`：外部账户的私钥文件路径，目前只支持pem格式的私钥文件。国密和非国密账户脚本可从[get_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_account.sh)和[get_gm_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_gm_account.sh)下载，使用方式可参考[账户管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)。此外，Go SDK代码也支持生成账号，[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)了解更多。
+- `KeyFile`：外部账户的私钥文件路径，目前只支持pem格式的私钥文件。国密和非国密账户脚本可从[get_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_account.sh)和[get_gm_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_gm_account.sh)下载，使用方式可参考[账户管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/account.html)。此外，Go SDK代码也支持生成账号，[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/account.html)了解更多。
 
 ### 链配置
 

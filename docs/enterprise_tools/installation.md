@@ -1,5 +1,8 @@
 # 下载安装
 
+标签：``运维部署工具`` ``下载安装`` 
+
+----
 ## 环境依赖
 
 FISCO BCOS generator依赖如下：
@@ -48,4 +51,4 @@ $ ./meta/fisco-bcos -v
 # 若成功，输出 FISCO-BCOS Version : x.x.x-x
 ```
 
-**PS**：[源码编译](../manual/get_executable.md)节点二进制的用户，只需要把编译出来的二进制放到``` meta ```文件夹下即可。
+**PS**：[源码编译](../blockchain_dev/get_executable.md)节点二进制的用户，只需要把编译出来的二进制放到``` meta ```文件夹下即可。

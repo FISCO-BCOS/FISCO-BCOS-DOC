@@ -18,21 +18,21 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
 
 .. admonition:: Overview
 
-    - To fast build a blockchain system based on FISCO BCOS 2.0+, please read `Installation <./docs/installation.html>`_
+    - To fast build a blockchain system based on FISCO BCOS 2.0+, please read `Installation <./docs/tutorial/installation.html>`_
     - To deploy multi-group blockchain and the first blockchain application based on FISCO BCOS 2.0+, please read `Quick Guide <./docs/tutorial/index.html>`_
-    - To know more about functions of FISCO BCOS 2.0+, please read `Config files and items <./docs/manual/configuration.html>`_, `Node access <./docs/manual/node_management.html>`_, `Parallel transactions <./docs/manual/transaction_parallel.html>`_, `Distributed storage <./docs/manual/distributed_storage.html>`_, `OSCCA computing <./docs/manual/guomi_crypto.html>`_ in `Operation Tutorial <./docs/manual/index.html>`_
-    - `Console <./docs/manual/console.html>`_：**Interactive command tool** to visit blockchain nodes and check status, deploy or call contract, etc.
+    - To know more about functions of FISCO BCOS 2.0+, please read `Config files and items <./docs/blockchain_dev/configuration.html>`_, `Node access <./docs/blockchain_dev/node_management.html>`_, `Parallel transactions <./docs/app_dev/transaction_parallel.html>`_, `Distributed storage <./docs/blockchain_dev/distributed_storage.html>`_, `OSCCA computing <./docs/blockchain_dev/guomi_crypto.html>`_ in `Operation Tutorial <./docs/blockchain_dev/index.html>`_
+    - `Console <./docs/console/console.html>`_：**Interactive command tool** to visit blockchain nodes and check status, deploy or call contract, etc.
     - `Deployment tool(Generator) <./docs/enterprise_tools/index.html>`_：to support operations like building blockchain, expansion, etc., **recommended for business level applications**. You can learn the operation methods in `Quick Guide <./docs/enterprise_tools/tutorial_one_click.html>`_
     - `SDK <./docs/sdk/index.html>`_：offer APIs for node status, blockchain system configuration modification and nodes to send transactions.
     - The detailed introduction of browser is in `Browser <./docs/browser/browser.html>`_
-    - JSON-RPC interface is introduced in `JSON-RPC API <./docs/api.html>`_
+    - JSON-RPC interface is introduced in `JSON-RPC API <./docs/reference/api.html>`_
     - System design documentation: `System design <./docs/design/index.html>`_
 
 .. admonition:: Key features
 
-    - Multi-group: `Quick Guide <./docs/manual/group_use_cases.html>`_  `Operation Tutorial <./docs/manual/configuration.html>`_  `Design Documentation <./docs/design/architecture/group.html>`_
-    - Parallel computing: `Operation Tutorial <./docs/manual/transaction_parallel.html>`_  `Design documentation <./docs/design/parallel/dag.html>`_
-    - Distributed storage: `Operation Tutorial <./docs/manual/distributed_storage.html>`_  `Design documentation <./docs/design/storage/index.html>`_
+    - Multi-group: `Quick Guide <./docs/blockchain_dev/group_use_cases.html>`_  `Operation Tutorial <./docs/blockchain_dev/configuration.html>`_  `Design Documentation <./docs/design/architecture/group.html>`_
+    - Parallel computing: `Operation Tutorial <./docs/app_dev/transaction_parallel.html>`_  `Design documentation <./docs/design/parallel/dag.html>`_
+    - Distributed storage: `Operation Tutorial <./docs/blockchain_dev/distributed_storage.html>`_  `Design documentation <./docs/design/storage/index.html>`_
 
 .. important::
 
@@ -40,17 +40,50 @@ FISCO BCOS is a reliable, secure, efficient and portable blockchain platform wit
    - FISCO BCOS 2.0+ and its adaptability are illustrated `here <./docs/change_log/index.html>`_
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
+   :caption: Introduction
 
-   docs/introduction.md
+   docs/introduction/introduction.md
    docs/change_log/index.rst
-   docs/installation.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tutorials
+
+   docs/tutorial/installation.md
+   docs/tutorial/sdk_application.md
    docs/tutorial/index.rst
-   docs/manual/index.rst
-   docs/enterprise_tools/index.md
-   docs/sdk/java_sdk.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Development
+
+   docs/blockchain_dev/index.rst
+   docs/app_dev/index.rst
+   docs/faq/faq.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tools
+
+   docs/tools/build_chain.md
+   docs/console/index.rst
+   docs/webase/webase.md
    docs/browser/browser.md
-   docs/api.md
-   docs/faq.md
-   docs/community.md
+   docs/enterprise_tools/index.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: System Design
+   
+   ./design/architecture/index.rst
+   ./design/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference
+
+   docs/reference/api.md
+   Java SDK JavaDoc <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/javadoc/index.html>
+   docs/articles/index.rst
+   docs/reference/community.md

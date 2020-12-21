@@ -1,4 +1,8 @@
-# 配置文件
+# 配置方法
+
+标签：``运维部署工具`` ``配置``
+
+----
 
 FISCO BCOS generator的配置文件在./conf文件夹下，配置文件为：群组创世区块配置文件`group_genesis.ini`和生成节点配置文件`node_deployment.ini`。
 
@@ -81,7 +85,7 @@ generator的模板文件夹如下图所示：
 
 generator在进行如生成节点或群组配置的相关操作时，会根据模板文件夹下的配置文件生成相应的节点配置文件夹/群组配置，用户可以修改模板文件夹下的相关文件，再运行部署相关命令，即可生成自定义节点。
 
-FISCO BCOS配置的相关解释可以参考[FISCO BCOS配置文件](../manual/configuration.md)
+FISCO BCOS配置的相关解释可以参考[FISCO BCOS配置文件](../blockchain_dev/configuration.md)
 
 ## 节点p2p连接文件peers.txt
 

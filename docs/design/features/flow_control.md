@@ -1,5 +1,9 @@
 # 流量控制
 
+标签：``流量控制`` ``速率限制``
+
+----
+
 为实现区块链系统柔性服务，并防止多群组架构下，多个群组运行在相同进程中，某些群组占用资源过多干扰到其他群组，FISCO BCOS v2.5.0引入了流量控制功能。
 
 ## 模块架构
@@ -44,6 +48,6 @@ SDK请求速率限制包括节点级别的请求速率限制和群组级别的�
 
 ```eval_rst
 .. note::
-    - 节点级别的流量控制配置选项位于 ``config.ini`` ，具体可参考 `这里 <../../manual/configuration.html#id12>`_ 
-    - 群组级别的流量控制选项位于 ``group.{group_id}.ini`` ，具体可参考 `这里 <../../manual/configuration.html#id34>`_ 
+    - 节点级别的流量控制配置选项位于 ``config.ini`` ，具体可参考 `这里 <../../blockchain_dev/configuration.html#id12>`_ 
+    - 群组级别的流量控制选项位于 ``group.{group_id}.ini`` ，具体可参考 `这里 <../../blockchain_dev/configuration.html#id34>`_ 
 ```

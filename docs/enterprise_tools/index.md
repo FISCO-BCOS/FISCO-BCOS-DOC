@@ -1,5 +1,9 @@
 # 运维部署工具
 
+标签：``运维部署工具`` ``管理工具`` ``监控工具``
+
+----
+
 **基本介绍**
 
 [FISCO BCOS generator](https://github.com/FISCO-BCOS/generator)为企业用户提供了部署、管理和监控多机构多群组联盟链的便捷工具。

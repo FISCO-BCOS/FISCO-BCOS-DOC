@@ -49,7 +49,7 @@ The example format of RPC response package:
 The server response must contain a member result or error, but not both of them.
 
 ### 3.3 Error object
-When an RPC calling encounters error, the returned response object must contain an error result field. For relative description and error codes, please check [RPC error codes](../api.html#rpc)
+When an RPC calling encounters error, the returned response object must contain an error result field. For relative description and error codes, please check [RPC error codes](../reference/api.html#rpc)
 
 ## 4 RPC interface design
 
@@ -60,4 +60,4 @@ FISCO BCOS provides the rich RPC interfaces for client calling. They are divided
 
 
 ## 5 RPC interface list
-Refer to [RPC API Documentation](../api.md)
+Refer to [RPC API Documentation](../reference/api.md)

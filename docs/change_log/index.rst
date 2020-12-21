@@ -1,6 +1,10 @@
 ##############################################################
-版本及兼容
+版本信息
 ##############################################################
+
+标签：``版本特性`` ``Release Note`` 
+
+------------
 
 .. admonition:: `FISCO BCOS 2.7.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.7.0>`_
 
@@ -46,8 +50,8 @@
 .. admonition:: `FISCO BCOS 2.0.0-rc3 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc3>`_
 
      **新增特性**
-      - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/distributed_storage.html>`_)
-      - `CRUD操作的SDK接口 <../sdk/java_sdk.html#crudservice>`_ (`操作手册 <../manual/console.html#create-sql>`_)
+      - `分布式存储 <../faq/what_is_new.html#id3>`_ (`操作手册 <../blockchain_dev/distributed_storage.html>`_)
+      - `CRUD操作的SDK接口 <../sdk/java_sdk/index.html#crudservice>`_ (`操作手册 <../console/console.html#create-sql>`_)
 
      **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc3 <./2_0_0_rc3.html>`_
@@ -55,8 +59,8 @@
 .. admonition:: `FISCO BCOS 2.0.0-rc2 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2>`_
 
      **新增特性**
-      - `并行计算模型 <../what_is_new.html#id4>`_ (`操作手册 <../manual/transaction_parallel.html>`_) (`设计文档 <../manual/group_use_cases.html>`_)
-      - `分布式存储 <../what_is_new.html#id3>`_ (`操作手册 <../manual/distributed_storage.html>`_)
+      - `并行计算模型 <../faq/what_is_new.html#id4>`_ (`操作手册 <../app_dev/transaction_parallel.html>`_) (`设计文档 <../blockchain_dev/group_use_cases.html>`_)
+      - `分布式存储 <../faq/what_is_new.html#id3>`_ (`操作手册 <../blockchain_dev/distributed_storage.html>`_)
 
      **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc2 <./2_0_0_rc2.html>`_
@@ -65,13 +69,13 @@
 .. admonition:: `FISCO BCOS 2.0.0-rc1 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1>`_
 
      **新增特性**
-      - `群组架构 <../what_is_new.html#id2>`_ (`操作教程 <../manual/group_use_cases.html>`_) (`设计文档 <../design/architecture/group.html>`_)
-      - `控制台 <../what_is_new.html#id6>`_ (`安装 <../installation.html#id7>`_) (`操作手册 <../manual/console.html>`_)
-      - `虚拟机 <../what_is_new.html#id7>`_
-      - `编译合约 <../what_is_new.html#id5>`_ (`合约开发 <../manual/smart_contract.html>`_)
-      - `实现CRUD操作的合约 <../what_is_new.html#crud>`_ (`操作教程 <../tutorial/sdk_application.html>`_)
-      - `密钥管理服务 <../what_is_new.html#id8>`_ (`使用手册 <../manual/storage_security.html>`_)
-      - `准入控制 <../what_is_new.html#id9>`_ (`设计文档 <../manual/node_management.html>`_)
+      - `群组架构 <../faq/what_is_new.html#id2>`_ (`操作教程 <../blockchain_dev/group_use_cases.html>`_) (`设计文档 <../design/architecture/group.html>`_)
+      - `控制台 <../faq/what_is_new.html#id6>`_ (`安装 <../tutorial/installation.html#id7>`_) (`操作手册 <../console/console.html>`_)
+      - `虚拟机 <../faq/what_is_new.html#id7>`_
+      - `编译合约 <../faq/what_is_new.html#id5>`_ (`合约开发 <../app_dev/smart_contract.html>`_)
+      - `实现CRUD操作的合约 <../faq/what_is_new.html#crud>`_ (`操作教程 <../tutorial/sdk_application.html>`_)
+      - `密钥管理服务 <../faq/what_is_new.html#id8>`_ (`使用手册 <../blockchain_dev/storage_security.html>`_)
+      - `准入控制 <../faq/what_is_new.html#id9>`_ (`设计文档 <../blockchain_dev/node_management.html>`_)
 
      **变更描述、兼容及升级说明**
       - `FISCO BCOS v2.0.0-rc1 <./2_0_0_rc1.html>`_
@@ -106,7 +110,7 @@
 .. admonition:: 查看节点和数据版本
 
     - 查看节点二进制版本：``./fisco-bcos --version``
-    - 数据格式和通信协议的版本：通过配置文件 `config.ini的supported_version配置项 <../manual/configuration.html#id7>`_ 获取
+    - 数据格式和通信协议的版本：通过配置文件 `config.ini的supported_version配置项 <../blockchain_dev/configuration.html#id7>`_ 获取
 
 
 .. toctree::
