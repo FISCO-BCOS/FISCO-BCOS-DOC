@@ -182,6 +182,8 @@ FISCO BCOS引入开发部署工具、交互式控制台、区块链浏览器等�
 - <font color=blue>**[跨链协作方案WeCross](https://github.com/WeBankFinTech/WeCross)**</font>：支持跨链事务交易，满足跨链交易的原子性，对跨链进行治理，可支持多方协作管理，避免单点风险。
 
 - <font color=blue>**[场景式隐私保护解决方案WeDPR](https://fintech.webank.com/wedpr)**</font>：针对隐匿支付、匿名投票、匿名竞拍和选择性披露等应用方案，提供即时可用场景式隐私保护高效解决方案，助力各行业合法合规地探索数据相关业务。
+  
+- <font color=blue>**[区块链数据治理组件解决方案](https://data-doc.readthedocs.io/zh_CN/latest/)**</font>：稳定、高效、安全的区块链数据治理组件解决方案，分别从底层数据存储层、智能合约数据解析层和应用层三个方面，提供了区块链数据挖掘、裁剪、扩容、可信存储、抽取、分析、审计、对账、监管等数据治理方面的关键能力。
 
 - <font color=blue>**[ChainIDE](https://fiscoide.com/)**</font>：提供智能合约云端开发工具，帮助开发者节约边际成本，加速推送区块链应用落地。
 
