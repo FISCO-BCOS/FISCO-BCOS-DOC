@@ -79,12 +79,6 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    
    docs/design/architecture/index.rst
    docs/design/index.rst
-<<<<<<< HEAD
-   docs/api.md
-   docs/faq/index.md
-   docs/articles/index.md
-   docs/community.md
-=======
 
 .. toctree::
    :maxdepth: 1
@@ -94,4 +88,3 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    Java SDK JavaDoc <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/javadoc/index.html>
    docs/articles/index.rst
    docs/reference/community.md
->>>>>>> release-2-dev
