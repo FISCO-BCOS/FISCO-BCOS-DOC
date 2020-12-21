@@ -261,7 +261,7 @@ Usage:
     -m                     Download mini binary, only works with -b option
     -h Help
 e.g
-    ./download_bin.sh -v 2.7.0
+    ./download_bin.sh -v 2.7.1
 ```
 
 

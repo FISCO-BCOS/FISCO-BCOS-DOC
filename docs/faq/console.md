@@ -58,6 +58,7 @@ cp solcJ-all-0.4.25-gm.jar lib/ && rm -rf lib/solcJ-all-0.4.25.jar
 # 重新启动控制台，部署并调用合约
 bash start.sh
 ```
+
 <hr>
 
 ## 节点加入共识列表报错
@@ -80,3 +81,4 @@ bash start.sh
 **问题分析**
 
 正常报错，当被删除的节点不属于群组时，会报出该错误，可通过[getGroupPeers](../console/console_of_java_sdk.html#getgrouppeers)命令确定群组是否在该群组中.
+
