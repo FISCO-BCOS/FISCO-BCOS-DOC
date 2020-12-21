@@ -674,4 +674,4 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](./tutorial_detail_operation.md)。
 
-如果使用该教程遇到问题，请查看[FAQ](../faq.md)
+如果使用该教程遇到问题，请查看[FAQ](../faq/index.md)

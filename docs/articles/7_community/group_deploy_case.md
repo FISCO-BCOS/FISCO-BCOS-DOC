@@ -4,15 +4,7 @@
 
 ## 0.需求分析
 
-有两台服务器，那么每台机子下一个机构生成一个节点，两个连一块，即：双机构双节点单群组。  
-
-这样就不能使用官方的一键螺旋快乐飞天脚本了：
-
-![](../../../images/articles/group_deploy_case/2.png)
-
-使用generator运维部署工具，
-
-于是就出现了问题（基地爆炸，问题不大）。
+有两台服务器，那么每台机子下一个机构生成一个节点，两个连一块，即：双机构双节点单群组。
 
 ## 1.下载安装运维部署工具
 
@@ -232,7 +224,7 @@ cat > ./conf/group_genesis.ini<< EOF
 [group]
 group_id=1
 ;i am xiaoyue
-;my blog-s cnmf.net.cn 
+;my blog-s cnmf.net.cn
 ;yea i love you~
 [nodes]
 node0=you_ip:30300

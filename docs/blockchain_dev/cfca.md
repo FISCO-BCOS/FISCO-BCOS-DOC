@@ -40,6 +40,11 @@ E9mB8iTehZ++qd4b6YWXZoAizCgjvXIRIPEXOSkNaVSzJG7whmgb
 
 **注意，节点私钥需要私密存储，部署区块链网络时需要用到私钥，每个节点都需要独立的私钥**
 
+根据CFCA的要求，使用节点私钥`node.key`填写信息模板，采用如下方式生成证书请求文件
+
+```bash
+openssl req -new -key node.key -out node.csr
+```
 
 **将此步生成的证书请求文件`node.csr`发送给CFCA，得到PEM格式的证书node.crt**，同时，CFCA会给你返回一个验证的根证书`ca.crt`
 
@@ -249,3 +254,7 @@ ps -ef | grep fisco
 ```
 
 后续操作与[使用企业级部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/tutorial_detail_operation.html)相同
+
+## 如何使用国密CFCA证书
+
+国密CFCA证书申请和使用流程与上述过程类似，需额外向CFCA申请证书生成小工具，或使用FISCO BCOS的tassl小工具生成对应的证书请求文件，可以参考开发部署工具，国密节点生成过程使用tassl小工具[build_chain.sh](../manual/build_chain.md)
