@@ -256,7 +256,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
-正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接。
+正常情况会不停地输出连接信息，从输出可以看出node0与另外3个节点有连接。
 ```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat,connected count=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat,connected count=3
@@ -271,9 +271,8 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 
 正常情况会不停输出`++++Generating seal`，表示共识正常。
 ```bash
-info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
-info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
-info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
+info|2020-12-22 17:24:43.729402|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=2e133146...
+info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=eb199760...
 ```
 
 至此，已经搭建好一个基于MySQL的分布式存储区块链网络。

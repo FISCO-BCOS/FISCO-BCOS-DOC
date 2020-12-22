@@ -518,7 +518,7 @@ cd ~/generator-A
 
 生成机构A所属节点，此命令会根据用户配置的`node_deployment.ini`文件生成相应的节点配置文件夹:
 
-注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的链接信息，多个机构组网的情况下需要将其合并。
+注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的连接信息，多个机构组网的情况下需要将其合并。
 
 ```bash
 ./generator --build_install_package ./meta/peersB.txt ./nodeA -g
