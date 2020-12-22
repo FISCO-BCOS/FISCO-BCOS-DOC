@@ -64,12 +64,12 @@ Build Blockchain Network
         + `Deploy Multi-Group Blockchain System <./group_use_cases.html>`_
         + `Parallel contract <../app_dev/transaction_parallel.html>`_
         + `Distributed storage <./distributed_storage.html>`_
-        
+
 
 .. toctree::
    :hidden:
 
-   
+
    hardware_requirements.md
    get_executable.md
    certificates.md
@@ -87,7 +87,7 @@ Build Blockchain Network
    cdn.md
    caliper.md
    log_description.md
-   
-   
 
-   
+
+
+
