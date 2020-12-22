@@ -6,40 +6,153 @@ FISCO BCOS 技术文档
 
 FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多家机构、多个应用，长时间在生产环境运行的实际检验。
 
-- `Github主页 <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
-- `深度解析系列文章 <http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect>`_
-- `贡献代码 <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
-- `反馈问题 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
-- `应用案例集 <https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA>`_
-- `微信群 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/WeChatQR%2Ejpg>`_
-- `公众号 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/OfficialAccountsQR%2Ejpg>`_
+.. container:: row 
+   
+   .. container:: card-holder
+      
+      .. container:: card rocket
 
+         .. raw:: html
 
-.. admonition:: 概览
+            <br>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速开始</h>
+            <br><br>
+         
+         - `了解FISCO BCOS区块链 <./docs/intro/introduction.html>`_
+         - `FISCO BCOS 2.X新特性 <./docs/change_log/index.html#fisco-bcos-2-x>`_
+         - `搭建第一个区块链网络 <./docs/tutorial/installation.html>`_
+         - `构建第一个区块链应用 <./docs/tutorial/sdk_appliation.html>`_
+         - `更多教程 <./docs/tutorial/index.html>`_
+         - `更多FISCO BCOS版本 <./docs/change_log/index.html#id24>`_
 
-    - 基于FISCO BCOS 2.0+快速构建区块链系统，请参考 `安装 <./docs/tutorial/installation.html>`_
-    - 基于FISCO BCOS 2.0+部署多群组区块链、开发第一个区块链应用，请参考 `教程 <./docs/tutorial/sdk_application.html>`_
-    - 深入了解FISCO BCOS 2.0+功能请看 `配置文件和配置项 <./docs/blockchain_dev/configuration.html>`_、`节点准入 <./docs/blockchain_dev/node_management.html>`_、`并行交易 <./docs/app_dev/transaction_parallel.html>`_、`分布式存储 <./docs/blockchain_dev/distributed_storage.html>`_、`国密 <./docs/blockchain_dev/guomi_crypto.html>`_ 等请参考 `开发手册 <./docs/blockchain_dev/index.html>`_
-    - `控制台 <./docs/console/console.html>`_：**交互式命令行工具**，可访问区块链节点，查询区块链状态，部署并调用合约等。
-    - `运维部署工具(Generator) <./docs/enterprise_tools/index.html>`_：支持建链、扩容等操作，**推荐构建企业级区块链时使用**，快速使用方法可参考 `教程 <./docs/enterprise_tools/tutorial_one_click.html>`_
-    - `SDK <./docs/sdk/index.html>`_：提供访问节点状态、修改区块链系统配置以及节点发送交易等接口。
-    - 浏览器详细介绍请参考 `浏览器 <./docs/browser/browser.html>`_
-    - JSON-RPC接口可参考 `JSON-RPC API <./docs/reference/api.html>`_
-    - 系统设计文档请参考 `系统设计 <./docs/design/index.html>`_
+   .. container:: card-holder
+      
+      .. container:: card manuals
 
-.. admonition:: 关键特性
+         .. raw:: html
 
-    - 多群组: `教程 <./docs/blockchain_dev/group_use_cases.html>`_  `使用手册 <./docs/blockchain_dev/configuration.html>`_  `设计文档 <./docs/design/architecture/group.html>`_
-    - 并行计算: `使用手册 <./docs/app_dev/transaction_parallel.html>`_  `设计文档 <./docs/design/parallel/dag.html>`_
-    - 分布式存储: `使用手册 <./docs/blockchain_dev/distributed_storage.html>`_  `设计文档 <./docs/design/storage/index.html>`_
+            <br>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开发手册</h>
+            <br><br>
+         
+         - `关键概念 <./docs/tutorial/key_concepts.html>`_
+         - `区块链网络搭建 <./docs/blockchain_dev/index.html>`_
+         - `区块链应用开发 <./docs/app_dev/index.html>`_
+         - `FISCO BCOS Java SDK <./docs/sdk/java_sdk/index.html>`_
+         - `问题排查 <./docs/faq/index.html>`_
 
-.. important::
+   .. container:: card-holder-bigger
+      
+      .. container:: card-bigger rocket
 
-   - 本技术文档只适用FISCO BCOS 2.0+，FISCO BCOS 1.3.x版本的技术文档请查看 `1.3系列技术文档 <http://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/>`_
-   - FISCO BCOS 2.0+版本及兼容性说明 `这里 <./docs/change_log/index.html>`_
+         .. raw:: html
+
+            <br>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用工具</h>
+            <br><br>
+
+         .. container:: tools 
+         
+            .. raw:: html
+         
+               <img src="_images/build_chain.png" class="card-holder" style="min-width: 320px;">
+               <div class="tools-holder">
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="./docs/tools/build_chain.html">开发部署工具：区块链网络快速部署工具</a></b></h>
+                  <br><br>
+                  <p>开发部署工具是提供给开发者快速搭建FISCO BCOS区块链网络的脚本工具。</p>
+               </div>
+               <div style="clear:both"></div>
+
+         .. container:: tools 
+
+            .. raw:: html
+         
+               <div class="tools-holder">
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="./docs/console/index.html">控制台：节点查询与管理工具</a></b></h>
+                  <br><br>
+                  <p>控制台是提供给开发者使用的节点查询与管理的工具。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。</p>
+               </div>
+               <img src="_images/console.png" class="card-holder" style="min-width: 320px;">
+               <div style="clear:both"></div>
+
+         .. container:: tools 
+         
+            .. raw:: html
+         
+               <img src="_images/webase-web.png" class="card-holder">
+               <div class="tools-holder">
+                  <h style="font-size: 18px;"><b><a href="./docs/webase/webase.html">WeBase：图形化的区块链管理工具</a></b></h>
+                  <br><br>
+                  <p>WeBASE(WeBank Blockchain Application Software Extension) 是一套管理FISCO-BCOS联盟链的工具集。WeBASE提供了图形化的管理界面，屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。</p>
+               </div>
+               <div style="clear:both"></div>
+               <br><br>
+
+         .. container:: tools 
+
+            .. raw:: html
+         
+               <div class="tools-holder">
+                  <h style="font-size: 18px;"><b><a href="./docs/browser/index.html">区块链浏览器：区块链数据浏览工具</a></b></h>
+                  <br><br>
+                  <p>区块链浏览器将区块链中的数据可视化，并进行实时展示。方便用户以Web页面的方式，浏览当前区块链中的信息。本浏览器版本适配FISCO BCOS 2.0+，关于2.0+版本的特性可以参考此链接。在使用本浏览器之前需要先理解2.0+版本的群组特性，详情可以参考此链接。</p>
+               </div>
+               <img src="_images/overview.png" class="card-holder" style="min-width: 320px;">
+               <div style="clear:both"></div>
+               <br><br>
+               
+         .. container:: tools 
+
+            .. raw:: html
+
+               <img src="_images/toolshow.png" class="card-holder" style="min-width: 320px;">
+               <div class="tools-holder">
+                  <h style="font-size: 18px;"><b><a href="./docs/enterprise_tools/index.html">运维部署工具：企业级用户的区块链管理工具</a></b></h>
+                  <br><br>
+                  <p>运维部署工具是为企业用户提供的部署、管理和监控多机构多群组联盟链的便捷工具。它面向于真实的多机构生产环境，为了保证机构的密钥安全，运维部署工具提供了一种机构间相互合作部署联盟链方式。</p>
+               </div>
+               <div style="clear:both"></div>
+
+   .. container:: card-holder
+      
+      .. container:: card ref
+
+         .. raw:: html
+
+            <br>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统设计</h>
+            <br><br>
+         
+         - `整体架构 <./docs/design/architecture/index.html>`_
+         - `共识算法 <./docs/design/consensus/index.html>`_
+         - `交易并行 <./docs/design/parallel/dag.html>`_
+         - `分布式存储 <./docs/design/storage/index.html>`_
+         - `预编译合约 <./docs/design/virtual_machine/precompiled.html>`_
+         - `更多设计文档 <./docs/design/index.html>`_
+
+   .. container:: card-holder
+      
+      .. container:: card rocket
+
+         .. raw:: html
+
+            <br>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多资源</h>
+            <br><br>
+         
+         - `Github主页 <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
+         - `深度解析系列文章 <http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect>`_
+         - `贡献代码 <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
+         - `反馈问题 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
+         - `应用案例集 <https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA>`_
+         - `微信群 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/WeChatQR%2Ejpg>`_ 、`公众号 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/OfficialAccountsQR%2Ejpg>`_
+
 
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    :caption: 平台介绍
 
@@ -47,6 +160,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/change_log/index.rst
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    :caption: 教程
 
@@ -55,6 +169,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/tutorial/index.rst
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    :caption: 开发手册
 
@@ -64,6 +179,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/faq/index.rst
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    :caption: 工具
 
@@ -74,6 +190,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/enterprise_tools/index.md
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    :caption: 系统设计
    
@@ -81,6 +198,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/design/index.rst
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    :caption: 参考
 
