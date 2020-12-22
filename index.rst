@@ -21,9 +21,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
          - `了解FISCO BCOS区块链 <./docs/intro/introduction.html>`_
          - `FISCO BCOS 2.X新特性 <./docs/change_log/index.html#fisco-bcos-2-x>`_
          - `搭建第一个区块链网络 <./docs/tutorial/installation.html>`_
-         - `构建第一个区块链应用 <./docs/tutorial/sdk_appliation.html>`_
-         - `更多教程 <./docs/tutorial/index.html>`_
-         - `更多FISCO BCOS版本 <./docs/change_log/index.html#id24>`_
+         - `开发第一个区块链应用 <./docs/tutorial/sdk_appliation.html>`_
 
    .. container:: card-holder
       
@@ -64,6 +62,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                </div>
                <div style="clear:both"></div>
 
+         .. raw:: html
+
+            <hr>
+
          .. container:: tools 
 
             .. raw:: html
@@ -76,6 +78,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                </div>
                <img src="_images/console.png" class="card-holder" style="min-width: 320px;">
                <div style="clear:both"></div>
+
+         .. raw:: html
+
+            <hr>
 
          .. container:: tools 
          
@@ -90,6 +96,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <div style="clear:both"></div>
                <br><br>
 
+         .. raw:: html
+
+            <hr>
+
          .. container:: tools 
 
             .. raw:: html
@@ -102,7 +112,11 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <img src="_images/overview.png" class="card-holder" style="min-width: 320px;">
                <div style="clear:both"></div>
                <br><br>
-               
+
+         .. raw:: html
+            
+            <hr>
+
          .. container:: tools 
 
             .. raw:: html
@@ -188,6 +202,8 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/webase/webase.md
    docs/browser/index.rst
    docs/enterprise_tools/index.md
+
+   
 
 .. toctree::
    :hidden:
