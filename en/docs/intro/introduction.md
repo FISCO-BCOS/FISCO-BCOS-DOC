@@ -158,7 +158,7 @@ FISCO BCOS introduces tools such as development and deployment tools, interactiv
 
 - <font color=blue>**[Development and deployment tools](../tools/build_chain.md)**</font>
 - <font color=blue>**[Interactive command line tool console based on Web3SDK](../console/console.md)**</font>
-- <font color=blue>**[nteractive command line tool console based on Web3SDK](../console/console_of_java_sdk.md)**</font>
+- <font color=blue>**[Interactive command line tool console based on JavaSDK](../console/console_of_java_sdk.md)**</font>
 - <font color=blue>**[Blockchain browser](../browser/browser.md)**</font>
 
 In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](../sdk/java_sdk/index.md)、[Node.js SDK](../sdk/nodejs_sdk/install.md)、[Python SDK](../sdk/python_sdk/configuration.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)

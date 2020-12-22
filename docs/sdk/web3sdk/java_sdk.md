@@ -370,7 +370,7 @@ Web3SDK API主要分为Web3j API和Precompiled Service API。其中Web3j API可�
 Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API相同，参考[RPC API文档](../reference/api.md)。
 
 ### Precompiled Service API
-预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](../console/console.md)。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的PermissionService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。相关错误码请参考：[Precompiled Service API 错误码](../reference/api.html#precompiled-service-api)
+预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](2.6版本控制台[参考这里](../../console/console_of_java_sdk.md)，1.x版本控制台[参考这里](../../console/console.md))。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的PermissionService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。相关错误码请参考：[Precompiled Service API 错误码](../reference/api.html#precompiled-service-api)
 
 #### PermissionService
 SDK提供对[分布式控制权限](../blockchain_dev/distributed_storage.md)的支持，PermissionService可以配置权限信息，其API如下：
