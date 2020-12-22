@@ -40,6 +40,26 @@ Java sdk主要包括五个配置选项，分别是
    BcosSDK sdk =  BcosSDK.build(configFile);
    ```
 
+关于如何在业务项目中引入以及配置Java SDK的进一步详细说明，可参考[例子](../../tutorial/sdk_application.html#java-sdk)。对一项目，完成Java SDK引入、配置文件及证书放置、编译后，项目的dist目录结构如下：
+
+```
+├── lib
+│   ├── fisco-bcos-java-sdk-2.7.0.jar
+│   └── XXXXX.jar
+├── conf
+│   ├── applicationContext.xml
+│   ├── conf
+|   |   ├── node.crt
+|   |   ├── ca.crt
+|   |   ├── sdk.publickey
+|   |   ├── sdk.key
+|   |   ├── node.key
+|   |   └── sdk.crt
+│   └── log4j.properties
+├── apps
+│   └── XXXX.jar
+└── other folders
+```
 
 
 ## 2. 配置解读

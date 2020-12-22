@@ -74,7 +74,6 @@ Once it is set up, users can access the front-end by typing IP and its port conf
 **Group ID should be consistent with the specific blockchain.** There are many methods to check group ID: 
 
 - [acquire rpc interface](../reference/api.html#getgrouplist). 
-- [console command](../console/console.md).
 - console commands: Please refer to [here](../console/console_of_java_sdk.md) for the console user manual of version 2.6 and above, and [here](../console/console.md) for the console user manual of version 1.x
 
 Group name should be meaningful and better understandable as a explanation of group ID.
