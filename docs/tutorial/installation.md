@@ -326,7 +326,7 @@ ClientVersion{
 [group:1]> 
 ```
 
-![](./../../images/installation/use_console.gif)
+![](./../../images/installation/console.png)
 
 
 
