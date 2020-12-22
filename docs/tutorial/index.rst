@@ -40,8 +40,7 @@
    - `智能合约编写之Solidity的设计模式 <../articles/3_features/35_contract/solidity_design_patterns.html>`_
    - `智能合约编写之Solidity的编程攻略 <../articles/3_features/35_contract/solidity_design_programming_strategy.html>`_
    - `Meetup回顾|16大技巧快速实现高水准智能合约 <../articles/3_features/35_contract/16skills_to_high-level_smart_contracts.html>`_
-   
-
+   - `Meetup回顾|存证&积分场景合约设计技巧与实例代码解析 <https://mp.weixin.qq.com/s/ER9cv-YeS5jCc9kCbUi2pw>`_
 
 
    
