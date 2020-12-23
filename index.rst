@@ -53,7 +53,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
          
             .. raw:: html
          
-               <img src="_images/build_chain.png" class="card-holder" style="min-width: 320px;">
+               <img src="_images/build_chain.png" class="card-holder" >
                <div class="tools-holder">
                   <br>
                   <h style="font-size: 18px;"><b><a href="./docs/tools/build_chain.html">开发部署工具：区块链网络快速部署工具</a></b></h>
@@ -72,11 +72,11 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
          
                <div class="tools-holder">
                   <br>
-                  <h style="font-size: 18px;"><b><a href="./docs/console/index.html">控制台：节点查询与管理工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/console/index.html">命令行交互控制台：节点查询与管理工具</a></b></h>
                   <br><br>
-                  <p>控制台是提供给开发者使用的节点查询与管理的工具。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。</p>
+                  <p>命令行交互控制台是提供给开发者使用的节点查询与管理的工具。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。</p>
                </div>
-               <img src="_images/console.png" class="card-holder" style="min-width: 320px;">
+               <img src="_images/console.png" class="card-holder" >
                <div style="clear:both"></div>
 
          .. raw:: html
@@ -89,7 +89,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
          
                <img src="_images/webase-web.png" class="card-holder">
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/webase/webase.html">WeBase：图形化的区块链管理工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/webase/webase.html">WeBASE：图形化的区块链管理工具</a></b></h>
                   <br><br>
                   <p>WeBASE(WeBank Blockchain Application Software Extension) 是一套管理FISCO-BCOS联盟链的工具集。WeBASE提供了图形化的管理界面，屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。</p>
                </div>
@@ -109,7 +109,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                   <br><br>
                   <p>区块链浏览器将区块链中的数据可视化，并进行实时展示。方便用户以Web页面的方式，浏览当前区块链中的信息。本浏览器版本适配FISCO BCOS 2.0+，关于2.0+版本的特性可以参考此链接。在使用本浏览器之前需要先理解2.0+版本的群组特性，详情可以参考此链接。</p>
                </div>
-               <img src="_images/overview.png" class="card-holder" style="min-width: 320px;">
+               <img src="_images/overview.png" class="card-holder" >
                <div style="clear:both"></div>
                <br><br>
 
@@ -121,7 +121,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
             .. raw:: html
 
-               <img src="_images/toolshow.png" class="card-holder" style="min-width: 320px;">
+               <img src="_images/toolshow.png" class="card-holder">
                <div class="tools-holder">
                   <h style="font-size: 18px;"><b><a href="./docs/enterprise_tools/index.html">运维部署工具：企业级用户的区块链管理工具</a></b></h>
                   <br><br>
@@ -203,7 +203,14 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/browser/index.rst
    docs/enterprise_tools/index.md
 
-   
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: 专栏
+
+   docs/special_column/guomi.md
+   docs/special_column/certificate.md
+   docs/special_column/jdk_version.md
 
 .. toctree::
    :hidden:
