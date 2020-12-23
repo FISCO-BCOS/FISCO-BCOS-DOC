@@ -38,6 +38,8 @@
         + 简单轻便、有内置控制台
     - `FISCO BCOS Go SDK <../sdk/go_sdk/index.html>`_
         + 简单轻便、有内置控制台
+    - `FISCO BCOS CSharp SDK <../sdk/csharp_sdk/index.html>`_
+        + 支持JSON RPC API 功能体系，配套完整单元测试
 
 .. important::
 
