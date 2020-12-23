@@ -1,10 +1,10 @@
-# 搭建第一个分布式存储区块链网络
+# 使用MySQL存储引擎
 
 标签：``分布式存储`` ``MySQL`` ``CRUD``
 
 ----
 
-本章介绍使用FISCO BCOS搭建基于MySQL的分布式存储区块链网络，通过在单机上部署一条基于MySQL分布式存储的4节点FISCO BCOS联盟链，帮助用户掌握FISCO BCOS分布式存储区块链网络的部署流程，请参考[这里](../blockchain_dev/hardware_requirements.md)获取**系统和硬件要求**信息。
+本章介绍使用FISCO BCOS搭建基于MySQL存储引擎的分布式存储区块链网络，通过在单机上部署一条基于MySQL分布式存储的4节点FISCO BCOS联盟链，帮助用户掌握FISCO BCOS分布式存储区块链网络的部署流程，请参考[这里](../blockchain_dev/hardware_requirements.md)获取**系统和硬件要求**信息。
 
 
 ## 1. 安装和配置MySQL

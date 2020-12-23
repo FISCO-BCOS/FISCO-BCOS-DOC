@@ -11,7 +11,7 @@
 
 本节详细介绍如何基于[开发部署工具build_chain](../tools/build_chain.md)搭建多机4节点区块链系统，生产环境建议使用[运维部署工具](../enterprise_tools/index.html)进行区块链搭建和部署操作。
 
-本教程，假设四台物理机器的IP分别为`12.0.0.136`, `12.0.0.138`, `12.0.0.139`和`12.0.0.137`，每台机器部署一个区块链节点。
+本教程，假设四台物理机器的IP分别为`196.168.0.1`, `196.168.0.3`, `196.168.0.4`和`196.168.0.2`，每台机器部署一个区块链节点。
 
 ```eval_rst
 .. note::
@@ -22,7 +22,7 @@
 
 ### 第一步. 生成区块链节点配置
 
-类似于[单机区块链节点的部署](./installation.md)，部署多机区块链系统之前，首先要生成节点配置，这里假设统一在IP为`12.0.0.136`机器上生成节点配置，具体操作流程如下：
+类似于[单机区块链节点的部署](./installation.md)，部署多机区块链系统之前，首先要生成节点配置，这里假设统一在IP为`196.168.0.1`机器上生成节点配置，具体操作流程如下：
 
 **创建操作路径，下载开发部署工具build_chain**
 
@@ -40,10 +40,10 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/buil
 # 这里所有区块链节点均属于agencyA，并仅启动了群组1
 # (注: 下面的ip信息需要根据真实的机器IP填写)
 cat >> ipconf << EOF
-12.0.0.136 agencyA 1 
-12.0.0.138 agencyA 1 
-12.0.0.139 agencyA 1 
-12.0.0.137 agencyA 1
+196.168.0.1 agencyA 1 
+196.168.0.3 agencyA 1 
+196.168.0.4 agencyA 1 
+196.168.0.2 agencyA 1
 EOF
 ```
 
@@ -61,28 +61,28 @@ Binary check passed.
 Generating CA key...
 ==============================================================
 Generating keys and certificates ...
-Processing IP=12.0.0.136 Total=1 Agency=agencyA Groups=1
-Processing IP=12.0.0.138 Total=1 Agency=agencyA Groups=1
-Processing IP=12.0.0.139 Total=1 Agency=agencyA Groups=1
-Processing IP=12.0.0.137 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.1 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.3 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.4 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.2 Total=1 Agency=agencyA Groups=1
 ==============================================================
 Generating configuration files ...
-Processing IP=12.0.0.136 Total=1 Agency=agencyA Groups=1
-Processing IP=12.0.0.138 Total=1 Agency=agencyA Groups=1
-Processing IP=12.0.0.139 Total=1 Agency=agencyA Groups=1
-Processing IP=12.0.0.137 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.1 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.3 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.4 Total=1 Agency=agencyA Groups=1
+Processing IP=196.168.0.2 Total=1 Agency=agencyA Groups=1
 ==============================================================
 Group:1 has 4 nodes
 ==============================================================
 [INFO] FISCO-BCOS Path : bin/fisco-bcos
 [INFO] IP List File    : ipconf
 [INFO] Start Port      : 30300 20200 8545
-[INFO] Server IP       : 12.0.0.136 12.0.0.138 12.0.0.139 12.0.0.137
+[INFO] Server IP       : 196.168.0.1 196.168.0.3 196.168.0.4 196.168.0.2
 [INFO] Output Dir      : /home/ubuntu/fisco/nodes
 [INFO] CA Path         : /home/ubuntu/nodes/cert/
 ==============================================================
 [INFO] Execute the download_console.sh script in directory named by IP to get FISCO-BCOS console.
-e.g.  bash /home/ubuntu/fisco/nodes/12.0.0.136/download_console.sh -f
+e.g.  bash /home/ubuntu/fisco/nodes/196.168.0.1/download_console.sh -f
 ==============================================================
 [INFO] All completed. Files in /root/fisco/nodes
 ```
@@ -91,7 +91,7 @@ e.g.  bash /home/ubuntu/fisco/nodes/12.0.0.136/download_console.sh -f
 
 ```bash
 $ ls nodes/
-12.0.0.136  12.0.0.137  12.0.0.138  12.0.0.139  cert
+196.168.0.1  196.168.0.2  196.168.0.3  196.168.0.4  cert
 ```
 
 ### 第二步. 拷贝区块链节点配置
@@ -101,20 +101,20 @@ $ ls nodes/
 ```bash
 # 为每台机器创建操作目录~/fisco
 # (注: 这里使用fisco用户进行操作; 实际操作时，可使用自己的账户进行类似操作, IP也需要替换成自己的机器IP)
-ssh fisco@12.0.0.136 "mkdir -p ~/fisco"
-ssh fisco@12.0.0.137 "mkdir -p ~/fisco"
-ssh fisco@12.0.0.138 "mkdir -p ~/fisco"
-ssh fisco@12.0.0.139 "mkdir -p ~/fisco"
+ssh fisco@196.168.0.1 "mkdir -p ~/fisco"
+ssh fisco@196.168.0.2 "mkdir -p ~/fisco"
+ssh fisco@196.168.0.3 "mkdir -p ~/fisco"
+ssh fisco@196.168.0.4 "mkdir -p ~/fisco"
 
 # 拷贝节点配置
-# 拷贝节点配置到12.0.0.136的~/fisco路径
-scp -r nodes/12.0.0.136/ fisco@12.0.0.136:~/fisco/12.0.0.136
-# 拷贝节点配置到12.0.0.137的~/fisco路径
-scp -r nodes/12.0.0.137/ fisco@12.0.0.137:~/fisco/12.0.0.137
-# 拷贝节点配置到12.0.0.138的~/fisco路径
-scp -r nodes/12.0.0.138/ fisco@12.0.0.138:~/fisco/12.0.0.138
-# 拷贝节点配置到12.0.0.139的~/fisco路径
-scp -r nodes/12.0.0.139/ fisco@12.0.0.139:~/fisco/12.0.0.139
+# 拷贝节点配置到196.168.0.1的~/fisco路径
+scp -r nodes/196.168.0.1/ fisco@196.168.0.1:~/fisco/196.168.0.1
+# 拷贝节点配置到196.168.0.2的~/fisco路径
+scp -r nodes/196.168.0.2/ fisco@196.168.0.2:~/fisco/196.168.0.2
+# 拷贝节点配置到196.168.0.3的~/fisco路径
+scp -r nodes/196.168.0.3/ fisco@196.168.0.3:~/fisco/196.168.0.3
+# 拷贝节点配置到196.168.0.4的~/fisco路径
+scp -r nodes/196.168.0.4/ fisco@196.168.0.4:~/fisco/196.168.0.4
 ```
 
 ### 第三步. 启动多机4节点区块链系统
@@ -123,27 +123,27 @@ scp -r nodes/12.0.0.139/ fisco@12.0.0.139:~/fisco/12.0.0.139
 
 **方法一: 远程启动区块链节点**
 
-这里同样从`12.0.0.136`发起节点启动命令，具体如下：
+这里同样从`196.168.0.1`发起节点启动命令，具体如下：
 
 ```bash
 # (注: 这里使用fisco用户进行操作; 实际操作时，可使用自己的账户进行类似操作, IP也需要替换成自己的机器IP)
-# 启动12.0.0.136机器上部署的区块链节点
-$ ssh fisco@12.0.0.136 "bash ~/fisco/12.0.0.136/start_all.sh"
+# 启动196.168.0.1机器上部署的区块链节点
+$ ssh fisco@196.168.0.1 "bash ~/fisco/196.168.0.1/start_all.sh"
 try to start node0
  node0 start successfully
 
-# 启动12.0.0.137机器上部署的区块链节点
-$ ssh fisco@12.0.0.137 "bash ~/fisco/12.0.0.137/start_all.sh"
+# 启动196.168.0.2机器上部署的区块链节点
+$ ssh fisco@196.168.0.2 "bash ~/fisco/196.168.0.2/start_all.sh"
 try to start node0
  node0 start successfully
 
-# 启动12.0.0.138机器上部署的区块链节点
-$ ssh fisco@12.0.0.138 "bash ~/fisco/12.0.0.138/start_all.sh"
+# 启动196.168.0.3机器上部署的区块链节点
+$ ssh fisco@196.168.0.3 "bash ~/fisco/196.168.0.3/start_all.sh"
 try to start node0
  node0 start successfully
 
-# 启动12.0.0.139机器上部署的区块链节点
-$ ssh fisco@12.0.0.139 "bash ~/fisco/12.0.0.139/start_all.sh"
+# 启动196.168.0.4机器上部署的区块链节点
+$ ssh fisco@196.168.0.4 "bash ~/fisco/196.168.0.4/start_all.sh"
 try to start node0
  node0 start successfully
 ```
@@ -152,21 +152,21 @@ try to start node0
 
 ```bash
 # (注: 这里使用fisco用户进行操作; 实际操作时，可使用自己的账户进行类似操作, IP也需要替换成自己的机器IP)
-# 登录12.0.0.136并启动区块链节点
-$ ssh fisco@12.0.0.136
-$ bash ~/fisco/12.0.0.136/start_all.sh
+# 登录196.168.0.1并启动区块链节点
+$ ssh fisco@196.168.0.1
+$ bash ~/fisco/196.168.0.1/start_all.sh
 
-# 登录12.0.0.137并启动区块链节点
-$ ssh fisco@12.0.0.137
-$ bash ~/fisco/12.0.0.137/start_all.sh
+# 登录196.168.0.2并启动区块链节点
+$ ssh fisco@196.168.0.2
+$ bash ~/fisco/196.168.0.2/start_all.sh
 
-# 登录12.0.0.138并启动区块链节点
-$ ssh fisco@12.0.0.138
-$ bash ~/fisco/12.0.0.138/start_all.sh
+# 登录196.168.0.3并启动区块链节点
+$ ssh fisco@196.168.0.3
+$ bash ~/fisco/196.168.0.3/start_all.sh
 
-# 登录12.0.0.139并启动区块链节点
-$ ssh fisco@12.0.0.139
-$ bash ~/fisco/12.0.0.139/start_all.sh
+# 登录196.168.0.4并启动区块链节点
+$ ssh fisco@196.168.0.4
+$ bash ~/fisco/196.168.0.4/start_all.sh
 
 ```
 
@@ -184,7 +184,7 @@ ps aux | grep fisco | grep -v grep
 正常情况，每台机器都会有类似下面的输出；
 
 ```bash
-fisco     29306  0.8  0.1 747008 31488 ?        Sl   17:08   0:05 /home/ubuntu/fisco/12.0.0.136/node0/../fisco-bcos -c config.ini
+fisco     29306  0.8  0.1 747008 31488 ?        Sl   17:08   0:05 /home/ubuntu/fisco/196.168.0.1/node0/../fisco-bcos -c config.ini
 ```
 
 若某些机器没有类似以上的输出，请检查机器的``30300``, ``20200``, ``8545``端口是否被占用。
@@ -247,11 +247,11 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/downloa
 
 **配置控制台: 拷贝SDK证书**
 
-这里选择从`12.0.0.136`拷贝SDK证书，具体操作如下：
+这里选择从`196.168.0.1`拷贝SDK证书，具体操作如下：
 
 ```bash
-# 从12.0.0.136拷贝证书到conf目录下
-$ scp 12.0.0.136:~/fisco/12.0.0.136/sdk/* ~/fisco/console/conf
+# 从196.168.0.1拷贝证书到conf目录下
+$ scp 196.168.0.1:~/fisco/196.168.0.1/sdk/* ~/fisco/console/conf
 ```
 
 **配置控制台: 修改控制台配置**
@@ -261,7 +261,7 @@ $ scp 12.0.0.136:~/fisco/12.0.0.136/sdk/* ~/fisco/console/conf
 $ cp -n ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
 
 # 修改控制台连接信息(操作中，控制台连接的IP信息请根据实际情况填写)
-sed -i 's/peers=\["127.0.0.1:20200", "127.0.0.1:20201"\]/peers=["12.0.0.136:20200", "12.0.0.137:20200", "12.0.0.138:20200", "12.0.0.139:20200"]/g' ~/fisco/console/conf/config.toml
+sed -i 's/peers=\["127.0.0.1:20200", "127.0.0.1:20201"\]/peers=["196.168.0.1:20200", "196.168.0.2:20200", "196.168.0.3:20200", "196.168.0.4:20200"]/g' ~/fisco/console/conf/config.toml
 ```
 
 ### 第三步. 启动并使用控制台
