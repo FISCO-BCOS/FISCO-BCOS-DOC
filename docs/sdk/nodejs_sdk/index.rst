@@ -17,7 +17,7 @@ Node.js SDK
 
 .. admonition:: **主要特性**
 
-    - 提供调用FISCO BCOS `JSON-RPC <../../reference/api.html>`_ 的Node.js API
+    - 提供调用FISCO BCOS `JSON-RPC <../../api.html>`_ 的Node.js API
     - 提供部署及调用Solidity合约（支持Solidity 0.4.x 及Solidity 0.5.x）的Node.js API
     - 提供调用预编译（Precompiled）合约的Node.js API
     - 使用 `Channel协议 <../../design/protocol_description.html#channelmessage>`_ 与FISCO BCOS节点通信，双向认证更安全

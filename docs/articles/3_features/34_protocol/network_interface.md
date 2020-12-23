@@ -32,7 +32,7 @@ Channel端口应只监听内网IP地址，供机构内其他的应用服务器�
 
 [SDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/sdk.html)
 
-[AMOP协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/certificate_list.html)
+[AMOP协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificate_list.html)
 
 ### 3. RPC端口
 

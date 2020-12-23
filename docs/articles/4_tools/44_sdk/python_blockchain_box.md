@@ -25,7 +25,7 @@
 Python 的阅读难度相对比较低，特别方便学生、初学者通过 Python-SDK 去了解、学习区块链。可尝试按以下环境要求安装搭建。
 
 - Python 环境：python 3.6.3, 3.7.x
-- FISCO BCOS 节点：请参考 [FISCO BCOS 安装搭建](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)
+- FISCO BCOS 节点：请参考 [FISCO BCOS 安装搭建](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)
 
 关于 Python-SDK，可点击参考 FISCO BCOS 团队推出的开发教程。
 

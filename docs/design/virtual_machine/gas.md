@@ -152,5 +152,5 @@ RemoveGas| 删除表中数据的Gas消耗 | 2500 | 200 |
 
 ```eval_rst
 .. note::
-    EVM Gas衡量标准支持插件化配置项位于 ``genesis`` 文件中，详细可参考 `这里 <../../blockchain_dev/configuration.html#evm>`_ 
+    EVM Gas衡量标准支持插件化配置项位于 ``genesis`` 文件中，详细可参考 `这里 <../../manual/configuration.html#evm>`_ 
 ```

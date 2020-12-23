@@ -10,7 +10,7 @@
 
 进入测试前，需要完成以下步骤：链的搭建、控制台安装、智能合约开发、智能合约编译与部署、利用Java等SDK开发一个应用。
 
-详细准备工作可参考《[FISCO BCOS零基础入门，五步轻松构建应用](http://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247485305&idx=1&sn=5a8dc012880aac6f5cd3dacd7db9f1d9&chksm=9f2ef565a8597c73b87fd248c41d1a5b9b0e6a6c6c527baf873498e351e3cb532b77eda9377a&scene=21#wechat_redirect)》和FISCO BCOS官方文档，此处不再赘述。[FISCO BCOS官方文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)地址。
+详细准备工作可参考《[FISCO BCOS零基础入门，五步轻松构建应用](http://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247485305&idx=1&sn=5a8dc012880aac6f5cd3dacd7db9f1d9&chksm=9f2ef565a8597c73b87fd248c41d1a5b9b0e6a6c6c527baf873498e351e3cb532b77eda9377a&scene=21#wechat_redirect)》和FISCO BCOS官方文档，此处不再赘述。[FISCO BCOS官方文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)地址。
 
 ![](../../../../images/articles/smart_contract_test_practice/IMG_5483.PNG)
 
@@ -462,7 +462,7 @@ hello_world_set_method显示了历史调用的所有函数信息。
 
 #### 参考资料
 
-- [Spring Boot项目配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/web3sdk/java_sdk.html#spring-boot)
+- [Spring Boot项目配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#spring-boot)
 - [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)
 - [HelloWorld合约](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/resources/contract/HelloWorld.sol)
 - [转为Java文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id12)

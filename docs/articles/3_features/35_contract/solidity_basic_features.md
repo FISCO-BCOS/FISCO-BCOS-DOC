@@ -164,7 +164,7 @@ function setState(uint value) public onlyAdmin{
 
 了解了上述的智能合约示例的结构，就可以直接上手运行，运行合约的方式有多种，大家可以任意采取其中一种：
 
-- 方法一：可以使用[FISCO BCOS控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html#id7)的方式来部署合约
+- 方法一：可以使用[FISCO BCOS控制台](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#id7)的方式来部署合约
 
 - 方法二：使用FISCO BCOS开源项目WeBASE提供的在线ide WEBASE-front运行
 

@@ -11,15 +11,15 @@
 ## 2. 使用方法
 
 **区块链网络搭建**
-- [使用国密算法](../blockchain_dev/guomi_crypto.html)
-- [使用CFCA证书部署节点 > 如何使用国密CFCA证书](../blockchain_dev/cfca.html#id6)
-- [存储加密](../blockchain_dev/storage_security.html?highlight=国密)
+- [使用国密算法](../manual/guomi_crypto.html)
+- [使用CFCA证书部署节点 > 如何使用国密CFCA证书](../manual/cfca.html#id6)
+- [存储加密](../manual/storage_security.html?highlight=国密)
 - [运维部署工具 > 部署国密区块链](../enterprise_tools/tutorial_detail_operation_gm.html)
 - [运维部署工具 > 国密操作相关](../enterprise_tools/operation.html?highlight=国密#id2)
 
 
 **区块链应用开发**
-- [Web3SDK > SDK国密功能使用](../sdk/web3sdk/java_sdk.html#id12)
+- [Web3SDK > SDK国密功能使用](../sdk/java_sdk.html#id12)
 - [Python SDK > 国密账户配置](../sdk/python_sdk/configuration.html#id3)
 
 ## 3. 博客

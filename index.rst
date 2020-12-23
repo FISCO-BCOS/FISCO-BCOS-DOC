@@ -18,9 +18,9 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速开始</h>
             <br><br>
          
-         - `了解FISCO BCOS区块链 <./docs/intro/introduction.html>`_
+         - `了解FISCO BCOS区块链 <./docs/introduction.html>`_
          - `FISCO BCOS 2.X新特性 <./docs/change_log/index.html#fisco-bcos-2-x>`_
-         - `搭建第一个区块链网络 <./docs/tutorial/installation.html>`_
+         - `搭建第一个区块链网络 <./docs/installation.html>`_
          - `开发第一个区块链应用 <./docs/tutorial/sdk_appliation.html>`_
 
    .. container:: card-holder
@@ -56,7 +56,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <img src="_images/build_chain.png" class="card-holder" >
                <div class="tools-holder">
                   <br>
-                  <h style="font-size: 18px;"><b><a href="./docs/tools/build_chain.html">开发部署工具：区块链网络快速部署工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/manual/build_chain.html">开发部署工具：区块链网络快速部署工具</a></b></h>
                   <br><br>
                   <p>开发部署工具是提供给开发者快速搭建FISCO BCOS区块链网络的脚本工具。</p>
                </div>
@@ -170,7 +170,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :maxdepth: 1
    :caption: 平台介绍
 
-   docs/intro/introduction.md
+   docs/introduction.md
    docs/change_log/index.rst
 
 .. toctree::
@@ -178,7 +178,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :maxdepth: 1
    :caption: 教程
 
-   docs/tutorial/installation.md
+   docs/installation.md
    docs/tutorial/sdk_application.md
    docs/tutorial/index.rst
 
@@ -197,7 +197,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :maxdepth: 1
    :caption: 工具
 
-   docs/tools/build_chain.md
+   docs/manual/build_chain.md
    docs/console/index.rst
    docs/webase/webase.md
    docs/browser/index.rst
@@ -225,7 +225,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :maxdepth: 1
    :caption: 参考
 
-   docs/reference/api.md
+   docs/api.md
    Java SDK JavaDoc <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/javadoc/index.html>
    docs/articles/index.rst
-   docs/reference/community.md
+   docs/community.md

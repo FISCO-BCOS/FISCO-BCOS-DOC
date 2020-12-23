@@ -68,7 +68,7 @@ Solidity语言更新活跃、文档完备，具有良好的一致性和事务性
 
 当然，它在实时调试、第三库支持、运行速度等方面还比不上成熟的语言，如果开发者想要用C++等语言编写智能合约，那就要对区块链上的计算范式进行深入了解，避免写出无法共识的智能合约来，一般是建议有深入的了解后再采用Solidity之外的其他语言编写合约。
 
-要掌握Solidity合约，当然是通读文档，并动手尝试。具体参考以下文：[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html)
+要掌握Solidity合约，当然是通读文档，并动手尝试。具体参考以下文：[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html)
 
 ### ABI接口原理
 
@@ -94,7 +94,7 @@ Solidity语言更新活跃、文档完备，具有良好的一致性和事务性
 
 链上的角色用权限模型控制，包括管理员权限、发布合约的权限、创建表的权限、参数配置权限等，以避免角色之间操作混淆，某些角色既当运动员又当裁判员。
 
-初学者需要仔细阅读区块链平台提供的技术文档了解原理，遵循操作手册的步骤进行操作。具体参考以下文档：[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/permission_control.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/permission_control.html)
+初学者需要仔细阅读区块链平台提供的技术文档了解原理，遵循操作手册的步骤进行操作。具体参考以下文档：[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/permission_control.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/permission_control.html)
 
 ### 数据存储模型
 
