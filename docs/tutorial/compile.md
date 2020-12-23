@@ -1,5 +1,9 @@
 # FISCO BCOS 源码编译
 
+标签：``依赖下载`` ``macOS`` ``ARM``
+
+----
+
 ```eval_rst
 .. note::
 
@@ -48,15 +52,40 @@ brew install openssl git flex patch bison gmp
 
 编译完成后二进制文件位于`FISCO-BCOS/build/bin/fisco-bcos`。
 
+- Ubuntu
+
+推荐使用Ubuntu 18.04以上版本。
+
 ```bash
 cd FISCO-BCOS
 mkdir -p build && cd build
-# source /opt/rh/devtoolset-7/enable  # CentOS请执行此命令，其他系统不需要
-# CentOS请使用cmake3
 cmake ..
 # 高性能机器可添加-j4使用4核加速编译
-# macOS 编译出现 "ld: warning: direct access" 提示时，可以忽略
-make
+make -j2
+```
+
+- CentOS
+
+推荐使用CentOS7以上版本。
+
+```bash
+cd FISCO-BCOS
+mkdir -p build && cd build
+source /opt/rh/devtoolset-7/enable  # CentOS请执行此命令，其他系统不需要
+cmake3 ..
+# 高性能机器可添加-j4使用4核加速编译
+make  -j2
+```
+
+- macOS
+
+推荐xcode11以上版本。
+
+```bash
+cd FISCO-BCOS
+mkdir -p build && cd build
+cmake ..
+make -j2
 ```
 
 ```eval_rst
@@ -82,4 +111,19 @@ sudo apt install -y doxygen graphviz
 # 生成源码文档 生成的源码文档位于build/doc
 cmake ..
 make doc
+```
+
+## 5. ARM平台
+
+FISCO BCOS支持在ARM平台上运行，在基于ARM的平台上编译时，需要打开`ARCH_NATIVE`编译选项。编译指令如下：
+
+```bash
+cmake -DARCH_NATIVE=on ..
+make
+```
+
+出于指令集和兼容性的考虑，FISCO BCOS发布时不提供ARM平台上预编译的二进制程序，用户如果需要在ARM平台上运行需要在对应机器源码编译，然后使用[build_chain的-e](../build_chain.html#e-optional)选项搭建联盟链网络。例如
+
+```bash
+bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
