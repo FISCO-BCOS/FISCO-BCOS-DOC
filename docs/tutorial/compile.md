@@ -1,4 +1,4 @@
-# 源码编译
+# FISCO BCOS 源码编译
 
 ```eval_rst
 .. note::
@@ -7,17 +7,17 @@
 ```
 
 FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台的构建文件，这意味着无论您使用什么操作系统工作流都非常相似：
+1. 从[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)克隆代码。
 1. 安装构建工具和依赖包（依赖于平台）。
-1. 从[FISCO BCOS][FSICO-BCOS-GitHub]克隆代码。
 1. 运行`cmake`生成构建文件并编译。
 
-## 克隆代码
+## 1. 克隆代码
 
 ```bash
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git -b master
 ```
 
-## 安装依赖
+## 2. 安装依赖
 
 - Ubuntu
 
@@ -44,7 +44,7 @@ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gm
 brew install openssl git flex patch bison gmp
 ```
 
-## 编译
+## 3. 编译
 
 编译完成后二进制文件位于`FISCO-BCOS/build/bin/fisco-bcos`。
 
@@ -65,7 +65,7 @@ make
     - 如果编译过程中长时间没有相应，一般是不能访问githubusercontent.com导致依赖无法下载，请使用代理或修改hosts使得机器能够访问githubusercontent.com
 ```
 
-## 编译选项介绍
+## 4. 编译选项介绍
 
 - TESTS，默认off，单元测试编译开关。通过`cmake -DTESTS=on ..`打开单元测试开关。
 - DEMO，默认off，测试程序编译开关。通过`cmake -DDEMO=on ..`打开单元测试开关。
