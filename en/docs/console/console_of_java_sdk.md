@@ -971,7 +971,7 @@ Parameter:
 - Contract interface name: the called interface name.
 - Parameter: determined by contract interface parameters.
 
-**Parameters are separated by spaces. The string and byte type parameters need to be enclosed in double quotes; array parameters need to be enclosed in brackets, such as [1,2,3]; array is a string or byte type and needs to be enclosed in double quotation marks, such as ["alice", "bob"]. Note that there are no spaces in the array parameters; boolean types are true or false. **
+**Parameters are separated by spaces; array parameters need to be enclosed in brackets, such as [1,2,3]; array is a string or byte type and needs to be enclosed in double quotation marks, such as ["alice", "bob"]. Note that there are no spaces in the array parameters; boolean types are true or false. **
 
 
 ```text
