@@ -182,12 +182,7 @@ p {
     padding: 24px 36px;
     min-height: 284px;
 }
-.card-holder{
-    padding: 7.5px;
-    float: left;
-    width: 50%;
-    min-width: 320px;
-}
+
 .row {
     margin-right: -15px;
     margin-left: -15px;
@@ -230,16 +225,35 @@ p {
     margin-left: -15px;
     width: 100%;
 }
-.tools-holder{
-    padding: 7.5px;
-    float: left;
-    width: 50%;
-    min-width:320px;
-}
 pre {
     overflow-y: auto;
     max-height: 500px;
 }
 
-
-
+/* 横向放置的手机和竖向放置的平板之间的分辨率 */
+@media (min-width: 768px) { 
+    .card-holder{
+        padding: 7.5px;
+        float: left;
+        width: 50%;
+    }
+    .tools-holder{
+        padding: 7.5px;
+        float: left;
+        width: 50%;
+    }
+}
+ 
+/* 横向放置的手机及分辨率更小的设备 */
+@media (max-width: 767px) { 
+    .card-holder{
+        padding: 7.5px;
+        float: left;
+        width: 100%;
+    }
+    .tools-holder{
+        padding: 7.5px;
+        float: left;
+        width: 100%;
+    }
+}

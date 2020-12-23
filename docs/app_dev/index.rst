@@ -31,7 +31,7 @@
     - `FISCO BCOS Java SDK <../sdk/java_sdk/index.html>`_
         + (推荐使用)稳定、功能强大、无内置控制台、支持FISCO BCOS 2.0+
     - `FISCO BCOS Web3SDK <../sdk/web3sdk/java_sdk.html>`_
-        + 写旧版Java SDK、支持FISCO BCOS 2.0+
+        + 旧版Java SDK、支持FISCO BCOS 2.0+
     - `FISCO BCOS NodeJS SDK <../sdk/nodejs_sdk/index.html>`_
         + 简单轻便、有内置控制台
     - `FISCO BCOS Python SDK <../sdk/python_sdk/index.html>`_
