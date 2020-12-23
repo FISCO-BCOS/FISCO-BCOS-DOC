@@ -29,7 +29,7 @@ FISCO BCOS区块链向外部暴露了接口，外部业务程序能够通过FISC
 * [Python SDK](./python_sdk/index.html) （简单轻便、有内置控制台）
 * [Node-js SDK](./nodejs_sdk/index.html)（简单轻便、有内置控制台）
 * [Go SDK](./go_sdk/index.html)（简单轻便、有内置控制台）
-
+* [C# SDK](./csharp_sdk/index.html)（完整适配Json RPC API）
 
 .. toctree::
    :hidden:
