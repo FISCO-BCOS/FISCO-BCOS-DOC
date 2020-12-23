@@ -77,7 +77,6 @@ FISCO BCOS是由国内企业主导研发、对外开源、安全可控的企业�
 |开发建链工具|提供[一键搭链脚本工具](../tools/build_chain.html)|
 |合约部署与测试工具|[基于Java SDK的console](../console/console_of_java_sdk.html), 交互式控制台[基于Web3SDK的console](../console/console.html)|
 |SDK语言|[Java](../sdk/java_sdk/index.html)、[nodejs](../sdk/nodejs_sdk/index.html)、[go](https://github.com/FISCO-BCOS/go-sdk)、[python](../sdk/python_sdk/index.html)|
-|快速开发组件|提供[Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
 |压测工具|SDK内嵌压测工具，支持Caliper|
 | <font color=Blue>**运维支持**</font> |
 |运维建链工具|提供[企业级联盟链部署工具](../enterprise_tools/index.html)|
