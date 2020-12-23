@@ -10,7 +10,7 @@ In a network with group architecture, depending on different service scenario, t
 
 - The agency's nodes need to be deployed only once and can participate in different multi-party collaboration services through group settings. They also can divide one service into groups according to the user, time, and other dimensions. The group architecture can expand rapidly in parallel. While expanding the scale of business, it dramatically simplifies the complexity of the operation and reduces the management cost.
 
-For more group introductions, please refer to [Group Architecture Design Document](../design/architecture/group.md) and [Group Usage Tutorial](./blockchain_dev/group_use_cases.md)
+For more group introductions, please refer to [Group Architecture Design Document](../design/architecture/group.md) and [Group Usage Tutorial](./manual/group_use_cases.md)
 
 ## Distributed storage
 
@@ -23,7 +23,7 @@ FISCO BCOS 2.0 has added support for distributed data storage, which allows node
 - The storage of world state has changed from the original MPT storage structure to distributed storage for avoiding the problem of the performance degradation caused by the rapid expansion of world state;
 - Optimize the structure of the data storage for saving storage space.
 
-Meanwhile, FISCO BCOS 2.0 is still compatible with the local storage mode in the 1.0 version. For more information on storage, please refer to [Distributed Storage Operations Manual](../blockchain_dev/distributed_storage.md).
+Meanwhile, FISCO BCOS 2.0 is still compatible with the local storage mode in the 1.0 version. For more information on storage, please refer to [Distributed Storage Operations Manual](../manual/distributed_storage.md).
 
 ## Parallel computing model
 
@@ -33,7 +33,7 @@ In the 1.0 version and most of the traditional blockchain platforms, the transac
 In the 2.0 version, it implements a set of parallel transaction processing model. Based on this model, transaction mutex variables can be customized.
 During the block execution process, based on the transaction mutex variable, the system builds a transaction dependency graph--DAG automatically, what to execute the transaction in parallel based on, increase the performance several times (depending on the number of CPU cores).
 
-For the introduction to more parallel computing models, please refer to the parallel transaction's [Design Document](../design/parallel/dag.md) and [User Manual](../app_dev/transaction_parallel.md).
+For the introduction to more parallel computing models, please refer to the parallel transaction's [Design Document](../design/parallel/dag.md) and [User Manual](../manual/transaction_parallel.md).
 
 ## Precompiled contract
 
@@ -41,7 +41,7 @@ FISCO BCOS 2.0 provides a pre-compiled contract framework that supports compilin
 
 FISCO BCOS provides standardized interfaces and examples to help users with secondary development for making it easy to compile high-performance business contracts, and to quickly deploy them to FISCO BCOS. The pre-compiled contract framework is compatible with the EVM engine to form a "dual-engine" architecture. The users who are familiar with the EVM engine can select to combine Solidity contracts with pre-compiled contracts to achieve significant efficiency while meeting business logic.
 
-In addition, CRUD and the similar operations are also implemented by precompiled contracts. For more introductions to precompiled contracts, please refer to [Precompiled Design Documentation](../design/virtual_machine/precompiled.md) and [Precompiled Contract Development Documentation](../app_dev/smart_contract.html#id2).
+In addition, CRUD and the similar operations are also implemented by precompiled contracts. For more introductions to precompiled contracts, please refer to [Precompiled Design Documentation](../design/virtual_machine/precompiled.md) and [Precompiled Contract Development Documentation](../manual/smart_contract.html#id2).
 
 ## CRUD interface
 
@@ -51,7 +51,7 @@ FISCO BCOS 2.0 has added a contractual interface specification that conforms to 
 - Contracts only need to care about the core logic. Storage and calculation are separated to facilitate contract upgrading;
 - The underlying logic of CRUD is implemented based on pre-compiled contracts. Data storage adopts distributed storage. These make it more efficient;
 
-Meanwhile, the 2.0 version is still compatible with the contract in the 1.0 version. For more introduction to CRUD interface, please refer to [CRUD interface Manual](../app_dev/smart_contract.html#crud).
+Meanwhile, the 2.0 version is still compatible with the contract in the 1.0 version. For more introduction to CRUD interface, please refer to [CRUD interface Manual](../manual/smart_contract.html#crud).
 
 ## Console
 
@@ -76,7 +76,7 @@ In the 2.0 version, we upgrade disk encryption and release KeyManager service fo
 
 The interaction protocol between the node and the KeyManager is open. It supports agency to design the KeyManager service that conforms to its keys management specification, such as hardware encryption technology. 
 
-For more details, please refer to [Manual Document](../blockchain_dev/storage_security.md) and [Design Document](../design/features/storage_security.md).
+For more details, please refer to [Manual Document](../manual/storage_security.md) and [Design Document](../design/features/storage_security.md).
 
 ## Admission control
 

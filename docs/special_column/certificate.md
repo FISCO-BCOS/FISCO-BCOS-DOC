@@ -11,10 +11,10 @@
 ## 2. 使用方法
 
 **区块链网络搭建**
-- [获取证书](../blockchain_dev/certificates.md)
-- [使用CFCA证书部署节点](../blockchain_dev/cfca.md)
-- [配置CA黑白名单](../blockchain_dev/certificate_list.md)
-- [开发部署工具 > 为新节点生成私钥证书](../tools/build_chain.html#id8)
+- [获取证书](../manual/certificates.md)
+- [使用CFCA证书部署节点](../manual/cfca.md)
+- [配置CA黑白名单](../manual/certificate_list.md)
+- [开发部署工具 > 为新节点生成私钥证书](../manual/build_chain.html#id8)
 - [运维部署工具 > 操作手册 > 检验证书有效期](../enterprise_tools/operation.html#id10)
 
 **区块链应用开发**
@@ -23,7 +23,7 @@
 - [控制台1.x版本 > 证书配置](../console/console.html#id3)
 - [Java SDK > 快速开始 > 证书配置](../sdk/java_sdk/quick_start.html#sdk)
 - [Java SDK > 配置说明 > 证书配置](../sdk/java_sdk/configuration.html#id5)
-- [Web3SDK > 配置SDK > 证书配置](../sdk/web3sdk/java_sdk.html#sdk)
+- [Web3SDK > 配置SDK > 证书配置](../sdk/java_sdk.html#sdk)
 - [Go SDK > 配置文件](../sdk/go_sdk/env_conf.html#id3)
 - [Node.js SDK > 证书配置](../sdk/nodejs_sdk/configuration.html#id5)
 - [Python SDK > 配置说明 > 证书配置](../sdk/python_sdk/configuration.html#id6)

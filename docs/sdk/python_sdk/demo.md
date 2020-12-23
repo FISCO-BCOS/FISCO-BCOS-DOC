@@ -11,7 +11,7 @@ Python SDK的源码中提供了完整的Demo供开发者学习
 
 ## 调用节点API
 
-正确的[配置了SDK连接的节点信息](./configuration.md)后。在代码中实例化client结构，并调用client的接口即可。返回json，可以根据对[fisco bcos rpc接口json格式](../../reference/api.md)的理解，进行字段获取和转码。
+正确的[配置了SDK连接的节点信息](./configuration.md)后。在代码中实例化client结构，并调用client的接口即可。返回json，可以根据对[fisco bcos rpc接口json格式](../../api.md)的理解，进行字段获取和转码。
 
 完整Demo: [demo_get.py](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_get.py)
 

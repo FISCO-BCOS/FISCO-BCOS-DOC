@@ -148,4 +148,4 @@ FISCO BCOS中的主要算法特性对比如下：
 
 **Q**：**KHJ**：目前落盘加密的私钥是如何处理的？
 
-**A**：**meng**：要自己保存，可以参考这里的[说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/storage_security.html)
+**A**：**meng**：要自己保存，可以参考这里的[说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/storage_security.html)

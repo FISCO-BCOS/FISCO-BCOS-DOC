@@ -49,7 +49,7 @@ FISCO BCOS技术文档中提供了CFCA证书改造的案例，但在一些细节
 
 5. 结合【白名单机制】一起使用
 
-   https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/certificate_list.html#id2
+   https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificate_list.html#id2
 
 备注：测试过程中节点私钥和请求证书文件统一管理，但在生产环境中节点私钥应由各机构管理员进行生成，提交给CA方，私钥各自留存。
 

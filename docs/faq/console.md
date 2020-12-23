@@ -41,7 +41,7 @@ The execution of the contract rolled back.
 
 **解决方案**
 
-**方法一:** 升级到最新版本控制台，可参考[配置和使用控制台](../tutorial/installation.html#id8)
+**方法一:** 升级到最新版本控制台，可参考[配置和使用控制台](../installation.html#id8)
 **方法二：**
 将`console/lib`目录下的`solcJ-all-0.4.25.jar`替换为国密版本的`solc`，具体操作步骤如下：
 
@@ -69,7 +69,7 @@ bash start.sh
 
 **解决方案**
 
-参考[这里](../blockchain_dev/configuration.html#p2p)，为新加入节点配置所有其他共识节点的连接信息，启动新加入节点，重新通过控制台发送`addSealer`命令，将新节点加入到共识节点列表。
+参考[这里](../manual/configuration.html#p2p)，为新加入节点配置所有其他共识节点的连接信息，启动新加入节点，重新通过控制台发送`addSealer`命令，将新节点加入到共识节点列表。
 <hr>
 
 ## 删除节点报错

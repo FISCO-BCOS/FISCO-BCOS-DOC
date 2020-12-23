@@ -149,7 +149,7 @@ gasUsed | 交易消耗的Gas |
 
 ```eval_rst
 .. note::
-    统计日志配置选项位于 ``config.ini`` 中，详细可参考 `这里 <../../blockchain_dev/configuration.html#id8>`_ 
+    统计日志配置选项位于 ``config.ini`` 中，详细可参考 `这里 <../../manual/configuration.html#id8>`_ 
 ```
 
 
