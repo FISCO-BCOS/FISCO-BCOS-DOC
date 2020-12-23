@@ -10,7 +10,7 @@
    :hidden:
 
    multihost.md
-   enter_group.md
+   add_new_node.md
    compile.md
    caliper.md
    enc.md

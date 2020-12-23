@@ -1,19 +1,16 @@
-# 节点加入网络、加入群组
+# 扩容一个新节点
 
 标签：``节点管理`` ``退出群组`` ``游离节点`` ``观察者节点`` ``共识节点``
 
 ----
+
 FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
 
-* 组员
-  * 共识节点：参与共识的节点，拥有群组的所有数据（搭链时默认都生成共识节点）。
-  * 观察者节点：不参与共识，但能实时同步链上数据的节点。
-* 非组员
-  * 游离节点：已启动，待等待加入群组的节点。处在一种暂时的节点状态，不能获取链上的数据。
+- 共识节点：参与共识的节点，拥有群组的所有数据（搭链时默认都生成共识节点）。
+- 观察者节点：不参与共识，但能实时同步链上数据的节点。
+- 游离节点：已启动，待等待加入群组的节点。处在一种暂时的节点状态，不能获取链上的数据。
 
-## 操作命令
-
-将指定节点分别转换成共识节点、观察者节点、游离节点，主要操作命令如下：
+将指定节点分别转换成共识节点、观察者节点、游离节点，相关操作命令如下：
 
 - [addSealer：根据节点NodeID设置对应节点为共识节点](../console/console_of_java_sdk.html#addsealer)
 - [addObserver：根据节点NodeID设置对应节点为观察节点](../console/console_of_java_sdk.html#addobserver)
@@ -22,17 +19,18 @@ FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/sec
 - [getObserverList：查看群组中观察节点列表](../console/console_of_java_sdk.html#getobserverlist)
 - [getNodeIDList：查看节点已连接的所有其他节点的NodeID](../console/console_of_java_sdk.html#getnodeidlist)
 
-## 举例
 
-下面结合具体操作案例详细阐述群组扩容操作。扩容操作分两个阶段， 分别为**为节点生成证书并启动**、**将节点加入群组**。
+下面结合具体操作案例详细阐述群组如何扩容一个新节点。扩容操作分两个阶段， 分别为**为节点生成证书并启动**、**将节点加入群组**。
 
 本节假设用户已经参照[搭建第一个区块链网络](installation.md)搭建了一条4节点的联盟链，接下来的操作将生成一个新的节点，然后将节点加入群组1。
 
 如果是使用运维部署工具，请参考[这里进行扩容操作](../enterprise_tools/tutorial_one_click.html#id11)。
 
-### 为节点生成证书并启动
+## 1. 为节点生成证书并启动
 
-#### 为新节点生成私钥证书
+每个节点都需要有一套证书来与链上的其他节点建立连接，扩容一个新节点，首先需要为其签发证书。
+
+### 为新节点生成私钥证书
 
 接下来的操作都在`nodes/127.0.0.1`目录下进行
 
@@ -61,7 +59,7 @@ bash gen_node_cert.sh -c ../cert/agency -o node4
 bash gen_node_cert.sh -c ../cert/agency -o node4 -g ../gmcert/agency/
 ```
 
-#### 准备节点配置文件
+### 准备节点配置文件
 
 1. 拷贝`node0/config.ini`、`node0/start.sh`和`node0/stop.sh`到node4目录;
 
@@ -106,7 +104,7 @@ bash node4/start.sh
 5. 确认node4与其他节点连接已经建立，加入网络操作完成。
 
 ```bash
-tail -f node4/log/log*  | grep heartBeat
+tail -f node4/log/log*  | grep "connected count"
 ```
 
 ```
@@ -116,9 +114,9 @@ info|2020-12-22 20:44:46.117942|[P2P][Service] heartBeat,connected count=4
 info|2020-12-22 20:44:56.120799|[P2P][Service] heartBeat,connected count=4
 ```
 
-### 节点加入群组
+## 2. 节点加入群组
 
-#### 获取node4的nodeid
+### 获取node4的nodeid
 
 ```bash
 cat node4/conf/node.nodeid
@@ -130,7 +128,7 @@ cat node4/conf/node.nodeid
 94ae60f93ef9a25a93666e0149b7b4cb0e044a61b7dcd1b00096f2bdb17d1c6853fc81a24e037c9d07803fcaf78f768de2ba56a4f729ef91baeadaa55a8ccd6e
 ```
 
-#### 使用控制台将node4加入群组1
+### 使用控制台将node4加入群组1
 
 1. 使用addObserver将node4作为观察节点加入群组1
 
