@@ -1162,7 +1162,7 @@ Return values:
 参数：
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
-- 合约版本号：部署的合约版本号(长度不能超过40)。
+- 合约版本号：部署的合约版本号。
 ```text
 # 部署HelloWorld合约1.0版
 [group:1]> deployByCNS HelloWorld 1.0
