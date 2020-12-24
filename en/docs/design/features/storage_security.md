@@ -101,4 +101,4 @@ When a node's disk is accidentally brought to external network, the data will no
 
 
 
-The detail operations of disk encryption are introduced here: [Operations of disk encryption](../../blockchain_dev/storage_security.md).
+The detail operations of disk encryption are introduced here: [Operations of disk encryption](../../manual/storage_security.md).

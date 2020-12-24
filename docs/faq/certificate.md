@@ -32,7 +32,7 @@ Java SDK默认的证书配置路径是`conf`，将证书放置与`resources`目�
 
 **解决方法:**
 
-证书续期操作可以参考[证书续期操作](../blockchain_dev/certificates.html#id9)
+证书续期操作可以参考[证书续期操作](../manual/certificates.html#id9)
 <hr>
 
 ## 证书验证失败（运维部署工具）
@@ -54,13 +54,13 @@ ssl._create_default_https_context = ssl._create_unverified_context
 ## 证书配置错误（1.x国密版控制台）
 **问题描述**
 
-搭建国密版本节点，并将`config.ini`中的`chain.sm_crypto_channel`配置为`true`，且参考[安装教程](../tutorial/installation.md)与[配置国密版控制台](../console/console.html#id10)拷贝了证书、配置了国密开关(将`applicationContext.xml`中的`encryptType`设置为1)，启动节点报错如下：
+搭建国密版本节点，并将`config.ini`中的`chain.sm_crypto_channel`配置为`true`，且参考[安装教程](../installation.md)与[配置国密版控制台](../console/console.html#id10)拷贝了证书、配置了国密开关(将`applicationContext.xml`中的`encryptType`设置为1)，启动节点报错如下：
 
 ```
 Failed to init the console！  Failed to connect to nodes: [ ssl handshake failed:/127.0.0.1:20200]The reasons for failure may be:
 	1. the configured certificate is not the same set of certificates as the node's certificate;
 	2. the configured certificate is not issued by the same authority as the node's certificate.
-	Please refer to https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/web3sdk/java_sdk.html#id24
+	Please refer to https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id24
 ```
 
 **问题分析**

@@ -51,7 +51,7 @@ If successful, output FISCO-BCOS Version : x.x.x-x
 ./meta/fisco-bcos -v
 ```
 
-**PS**: [source compile](../blockchain_dev/get_executable.md) Node binary user, you only need to replace the binary in the `meta` folder with the compiled binary.
+**PS**: [source compile](../manual/get_executable.md) Node binary user, you only need to replace the binary in the `meta` folder with the compiled binary.
 
 ## Typical example
 
@@ -82,7 +82,7 @@ The IP of each node, the port number is as follows:
 
     - The RPC/P2P/Channel listening port must be in the range of 1024-65535, and must not conflict with other application listening ports on the machine
 
-    - For security and ease of use consideration, FISCO BCOS v2.3.0 latest node config.ini configuration splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip, please refer to `here <../blockchain_dev/configuration.html#configure-rpc>`_
+    - For security and ease of use consideration, FISCO BCOS v2.3.0 latest node config.ini configuration splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip, please refer to `here <../manual/configuration.html#configure-rpc>`_
 
     - In order to facilitate development and experience, the reference configuration of channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as: intranet IP or specific external IP
 ```

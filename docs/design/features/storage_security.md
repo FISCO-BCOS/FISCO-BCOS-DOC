@@ -105,4 +105,4 @@
 
 
 
-具体落盘加密的使用，可参考：[落盘加密操作](../../blockchain_dev/storage_security.md)
+具体落盘加密的使用，可参考：[落盘加密操作](../../manual/storage_security.md)

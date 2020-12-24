@@ -33,4 +33,4 @@ WeBASE管理平台是由四个WeBASE子系统组成的一套管理FISCO-BCOS联�
 ### [WeBASE其他](https://webasedoc.readthedocs.io/zh_CN/latest)
 WeBASE其他组件可以参考[《WeBASE文档》](https://webasedoc.readthedocs.io/zh_CN/latest)
 
-[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh

@@ -49,7 +49,7 @@ FISCO BCOS国密版本需要使用TASSL生成国密版本的证书，部署工�
 
 ### 账户生成脚本
 
-FISCO BCOS在国密模式下使用sm2曲线和对应签名算法，在非国密场景使用secp256k1曲线和ecdsa签名算法。为方便用户提供了生成脚本，脚本生成私钥并以账户地址命名，支持PEM和PKCS12两种格式。详情请参考这里[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/account.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/account.html)
+FISCO BCOS在国密模式下使用sm2曲线和对应签名算法，在非国密场景使用secp256k1曲线和ecdsa签名算法。为方便用户提供了生成脚本，脚本生成私钥并以账户地址命名，支持PEM和PKCS12两种格式。详情请参考这里[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)
 
 get_account.sh脚本依赖于openssl指令，用于生成secp256k1私钥，如果从GitHub下载失败，可以尝试镜像地址 [https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh](https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh)或[https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh)
 
@@ -58,7 +58,7 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 
 ## 举例：使用国内镜像建链
 
-本节以搭建2.7.1国密版本为例，使用国内镜像建链，非国密版本的操作类似，参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/installation.html)
+本节以搭建2.7.1国密版本为例，使用国内镜像建链，非国密版本的操作类似，参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)
 
 ### 下载开发部署工具
 
@@ -66,11 +66,11 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/manual/build_chain.sh`
 
 ### 下载二进制程序
 
-开发部署工具（build_chain）会自动下载二进制程序，下载失败自动切换官网CDN，不需要用户关注。用户也可以手动下载二进制程序或编译源码，通过开发部署工具的-e选项指定，此时工具不会再去下载。-e选项参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html#e-optional](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html#e-optional)
+开发部署工具（build_chain）会自动下载二进制程序，下载失败自动切换官网CDN，不需要用户关注。用户也可以手动下载二进制程序或编译源码，通过开发部署工具的-e选项指定，此时工具不会再去下载。-e选项参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html#e-optional](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html#e-optional)
 
 ### 搭建2.7.1国密FISCO BCOS链
 
@@ -82,7 +82,7 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -v 2.7.1
 
 ## 举例：使用国内源码镜像编译
 
-本节以CentOS 7 为例，从gitee镜像下载源码并编译，其他操作系统编译流程类似，请参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/get_executable.html#id2](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/get_executable.html#id2)
+本节以CentOS 7 为例，从gitee镜像下载源码并编译，其他操作系统编译流程类似，请参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2)
 
 ### 安装依赖
 

@@ -12,20 +12,20 @@ Q:
 A:
   FISCO BCOS provides multiple ways for developers to interact with the platform. Please refer as follows:
   - FISCO BCOS 2.0 version provides JSON-RPC interface. For the detail, please refer to [here](./api.md).
-  - FISCO BCOS 2.0 version provides Web3SDK to help developers quickly implement applications. For the detail, please refer to [here](./sdk/web3sdk/java_sdk.md).
+  - FISCO BCOS 2.0 version provides Web3SDK to help developers quickly implement applications. For the detail, please refer to [here](./sdk/java_sdk.md).
   - FISCO BCOS version 2.0 provides a console to help users quickly understand how to use FISCO BCOS. For the detail, Please refer to [here](../console/console_of_java_sdk.md) for the console user manual of version 2.6 and above, and [here](../console/console.md) for the console user manual of version 1.x
 
 Q:
   How to build FISCO BCOS 2.0 version? <br>
 A:
   FISCO BCOS supports multiple building methods. The common methods are:
-  - build_chain.sh: It is suitable for developer experience and testing FISCO BCOS alliance chain. For the detail, please [refer to here](../tools/build_chain.md)。
+  - build_chain.sh: It is suitable for developer experience and testing FISCO BCOS alliance chain. For the detail, please [refer to here](../manual/build_chain.md)。
   - FISCO-Generator：For deploying and maintaining the FISCO BCOS Alliance Chain with enterprise users. For the detail, please [refer to here](./enterprise_tools/index.md)。
 
 Q:
   What is the difference on the smart contract between FISCO BCOS 2.0 version and the previous version? And how is the compatibility? <br>
 A:
-  FISCO BCOS version 2.0 supports the latest Solidity contract and precompile contract. For the detail, please [refer to here] (../app_dev/smart_contract.md).
+  FISCO BCOS version 2.0 supports the latest Solidity contract and precompile contract. For the detail, please [refer to here] (../manual/smart_contract.md).
 
 Q:
   What is the difference between the national cryptographic version and the normal version? <br>
@@ -71,7 +71,7 @@ A:
 Q:
   Where to get Ver 2.0 certificates?<br>
 A:
-  Please read [Certificates Decsription](../blockchain_dev/certificates.md)
+  Please read [Certificates Decsription](../manual/certificates.md)
 
 Q:
   What fields are contained in the transaction structure of Ver 2.0?<br>

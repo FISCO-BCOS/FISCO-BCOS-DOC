@@ -81,7 +81,7 @@ The template folder of the generator is as below:
 
 To modify the consensus algorithm of node and the configured default DB, the user only needs to alter the configuration of `config.ini`, re-execute the commands to set relative node information.
 
-For details of FISCO BCOS configuration please check [FISCO BCOS config file](../blockchain_dev/configuration.md)
+For details of FISCO BCOS configuration please check [FISCO BCOS config file](../manual/configuration.md)
 
 ## P2p node connection file peers.txt
 

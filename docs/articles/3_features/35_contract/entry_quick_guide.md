@@ -105,7 +105,7 @@ Solidity合约完整代码如下所示。基于Solidity语言的合约开发，�
 
 CRUD合约是CRUD功能的核心，用户可以直接在合约中引用CRUD接口文件Table.sol，并在Solidity合约中调用CRUD接口。CRUD合约的开发完全遵从数据库的操作习惯，更容易理解和上手。
 
-CRUD合约更多开发细节可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/smart_contract.html#crud
+CRUD合约更多开发细节可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html#crud
 
 #### 创建合约
 

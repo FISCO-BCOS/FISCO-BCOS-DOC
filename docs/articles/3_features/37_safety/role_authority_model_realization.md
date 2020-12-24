@@ -49,7 +49,7 @@ FISCO BCOS的权限控制是通过控制账号对系统中表的写权限来实�
 
 ## 如何使用角色权限？
 
-本节将以“委员增删”和“运维增删”为例进行简要的实操演示，文档含括了更丰富的角色权限相关操作，欢迎移步[查看](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/permission_control.html)。
+本节将以“委员增删”和“运维增删”为例进行简要的实操演示，文档含括了更丰富的角色权限相关操作，欢迎移步[查看](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/permission_control.html)。
 
 ### 增删委员
 

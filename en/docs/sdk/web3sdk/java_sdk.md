@@ -5,7 +5,7 @@
 Main features of version 2.0+ includes:
 - provide Java API to call FISCO BCOS JSON-RPC
 - provide pre-compiled contracts to manage the blockchain
-- provide secure and efficient message channel with [AMOP](../app_dev/amop_protocol.md)
+- provide secure and efficient message channel with [AMOP](../manual/amop_protocol.md)
 - support OSCCA standard
 
 ## Environment requirements
@@ -16,7 +16,7 @@ Main features of version 2.0+ includes:
     - java version
      `JDK8 or above version <https://openjdk.java.net/>`_ is required. Because the lack of JCE(Java Cryptography Extension) of OpenJDK in YUM repository of CentOS will fail the connection between Web3SDK and nodes, we recommend users to download it from OpenJDK website when it is CentOS system. `Download here <https://jdk.java.net/java-se-ri/8>`_  `Installation Guide <https://openjdk.java.net/install/index.html>`_
     - FISCO BCOS environment building
-     please check `FISCO BCOS installation guide <../tutorial/installation.html>`_
+     please check `FISCO BCOS installation guide <../installation.html>`_
     - network connectivity
      using telnet command to test if channel_listen_port of nodes connected with Web3SDK is open. If not, please check the network connectivity and security strategy.
 
@@ -124,7 +124,7 @@ The following picture shows how `applicationContext.xml` is configured in Spring
 Configuration items of `applicationContext.xml`:
 - encryptType: the switch of oscca algorithm (default as 0)                              
   - 0: not use oscca algorithm for transactions                              
-  - 1: use oscca algorithm for transactions (switch on oscca algorithm, nodes will be in oscca standard, for reference of building oscca-standard FISCO BCOS blockchain please check [here](../../blockchain_dev/guomi_crypto.md))
+  - 1: use oscca algorithm for transactions (switch on oscca algorithm, nodes will be in oscca standard, for reference of building oscca-standard FISCO BCOS blockchain please check [here](../../manual/guomi_crypto.md))
 - groupChannelConnectionsConfig:
   - configure the group to be connected, which can be one or more, each should be given a group ID
   - each group configures one or more nodes, set `listen_ip` and `channel_listen_port` of `[rpc]` in node config file **config.ini**.
@@ -238,7 +238,7 @@ Credentials credentials = GenCredential.create(privateKey);
 ```
 
 ##### Load private key file
-After the script `get_accounts.sh` generates PEM or PKCS12 private key file (the use of get-account script is introduced in [Account management document](../app_dev/account.md)), the account can be operated through loading PEM or PKCS12 private key file. There are 2 ways to load private key: P12Manager and PEMManager. P12Manager is to load PKCS12 private key file; PEMManager is to load PEM private key file.
+After the script `get_accounts.sh` generates PEM or PKCS12 private key file (the use of get-account script is introduced in [Account management document](../manual/account.md)), the account can be operated through loading PEM or PKCS12 private key file. There are 2 ways to load private key: P12Manager and PEMManager. P12Manager is to load PKCS12 private key file; PEMManager is to load PEM private key file.
 
 * P12Manager example:
 Configure private key file route and password of PKCS12 account in applicationContext.xml
@@ -323,7 +323,7 @@ The core function of SDK is to deploy/load contract, and to call API of contract
 We provide [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter) as an example. Spring Boot and Spring are similar in development process, except the distinction in config file. Here we will provide some test examples. For detail description on the projects please check the README documents.
 
 ### Operations on OSCCA function of SDK
-- Preconditions: FISCO BCOS blockchain in OSCCA standard, to build it using OSCCA algorithm, please check [the operation tutorial](../../blockchain_dev/guomi_crypto.md).
+- Preconditions: FISCO BCOS blockchain in OSCCA standard, to build it using OSCCA algorithm, please check [the operation tutorial](../../manual/guomi_crypto.md).
 - switch on OSCCA function:  set `encryptType` as 1 in `application.xml`/`application.yml` configuration.
 - The private key is loaded using the `GenCredential` class (for both OSCCA standard and ECDSA standard), and the `Credential` class is only for loading ECDSA standard.
 
@@ -334,14 +334,14 @@ The OSCCA function of SDK calls the API in the same way as the ECDSA SDK. The di
 Web3SDK API is separated into Web3j API and Precompiled Service API. Through Web3j API we can check the blockchain status, send/inquiry transactions; Precompiled Service API is to manage configurations and to realize some functions.
 
 ### Web3j API
-Web3j API is the RPC API of FISCO BCOS called by web3j object, and it has the same API name with RPC API. Please check [RPC API Documentation](../reference/api.md).
+Web3j API is the RPC API of FISCO BCOS called by web3j object, and it has the same API name with RPC API. Please check [RPC API Documentation](../api.md).
 
 ### Precompiled Service API
 ### Precompiled Service API
-Precomplied contract is an efficient smart contract realized in C++ on FISCO BCOS platform. SDK provides java interface of the precompiled contract, through calling which console can execute commands. For operational reference you can check the guide for console operations(2.0 version console command detailed introduction [refer here](../../console/console_of_java_sdk.md), 1.x version console command detailed introduction [refer here](../../console/console.md)). SDK also provides Precompiled Servide class, including PermissionService for distributed permission control, CnsService for [CNS](../design/features/cns_contract_name_service.md), SystemConfigService for system property configuration and ConsensusService for node type configuration. The related error codes are collected here: [Precompiled Service API Error Codes](../reference/api.html#precompiled-service-api)
+Precomplied contract is an efficient smart contract realized in C++ on FISCO BCOS platform. SDK provides java interface of the precompiled contract, through calling which console can execute commands. For operational reference you can check the guide for console operations(2.0 version console command detailed introduction [refer here](../../console/console_of_java_sdk.md), 1.x version console command detailed introduction [refer here](../../console/console.md)). SDK also provides Precompiled Servide class, including PermissionService for distributed permission control, CnsService for [CNS](../design/features/cns_contract_name_service.md), SystemConfigService for system property configuration and ConsensusService for node type configuration. The related error codes are collected here: [Precompiled Service API Error Codes](../api.html#precompiled-service-api)
 
 #### PermissionService
-SDK supports [distributed permission control](../blockchain_dev/distributed_storage.md). PermissionService can configure permission information. The APIs are here:
+SDK supports [distributed permission control](../manual/distributed_storage.md). PermissionService can configure permission information. The APIs are here:
 - **public String grantUserTableManager(String tableName, String address):** set permissions according to user list name and exterior account address.
 - **public String revokeUserTableManager(String tableName, String address):** revoke permissions according to user list name and exterior account address.
 - **public List\<PermissionInfo\> listUserTableManager(String tableName):** inquire permission record list according to the user list name (each record contains exterior account address and effective block number).
