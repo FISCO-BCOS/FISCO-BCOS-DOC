@@ -20,7 +20,7 @@
 
 **高阶教程**
 
-- `搭建多机区块链网络 <./multihost.html>`
+- `搭建多机区块链网络 <./multihost.html>`_
 - `扩容一个新节点 <./add_new_node.html>`_
 - `FISCO BCOS源码编译 <./compile.html>`_
 - `使用MySQL存储账本 <./mysql_node.html>`_

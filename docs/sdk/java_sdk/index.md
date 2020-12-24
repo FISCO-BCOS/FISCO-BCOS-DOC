@@ -11,7 +11,7 @@ Java SDK 提供了访问 FISCO BCOS 节点的Java API，支持节点状态查询
    .. admonition:: **主要特性**
 
       - 提供 `合约编译 <./quick_start.html#solidityjava>`_ ，将Solidity合约文件转换成Java合约文件
-      - 提供 `Java SDK API <./api.html>`_,提供访问FISCO BCOS `JSON-RPC <../../reference/api.html>`_ 的功能，并支持预编译（Precompiled）合约调用
+      - 提供 `Java SDK API <./api.html>`_,提供访问FISCO BCOS `JSON-RPC <../../api.html>`_ 的功能，并支持预编译（Precompiled）合约调用
       - 提供 `自定义构造和发送交易功能 <./assemble_transaction.html>`_
       - 提供 `AMOP <./amop.html>`_ 功能
       - 支持 `事件推送 <./event_sub.html>`_

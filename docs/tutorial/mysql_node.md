@@ -4,7 +4,7 @@
 
 ----
 
-本章介绍使用FISCO BCOS搭建基于MySQL存储引擎的分布式存储区块链网络，通过在单机上部署一条基于MySQL分布式存储的4节点FISCO BCOS联盟链，帮助用户掌握FISCO BCOS分布式存储区块链网络的部署流程，请参考[这里](../blockchain_dev/hardware_requirements.md)获取**系统和硬件要求**信息。
+本章介绍使用FISCO BCOS搭建基于MySQL存储引擎的分布式存储区块链网络，通过在单机上部署一条基于MySQL分布式存储的4节点FISCO BCOS联盟链，帮助用户掌握FISCO BCOS分布式存储区块链网络的部署流程，请参考[这里](../manual/hardware_requirements.md)获取**系统和硬件要求**信息。
 
 
 ## 1. 安装和配置MySQL
@@ -182,7 +182,7 @@ e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh -f
 
 **修改存储配置为MySQL**
 
-通过群组配置文件`group.[group_id].ini`的`storage`配置项可配置MySQL，详细可参考[这里](../blockchain_dev/configuration.html#id21).
+通过群组配置文件`group.[group_id].ini`的`storage`配置项可配置MySQL，详细可参考[这里](../manual/configuration.html#id21).
 本教程中，所有节点均以root用户名连接同一个本机MySQL数据库，真实业务场景中，可按需修改数据库相关配置(包括MySQL的IP和端口，连接MySQL的用户名和密码等)。
 
 ```bash
@@ -281,7 +281,7 @@ info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 ## 3. 使用控制台发起CRUD操作
 
 为了直观显示区块链状态数据在MySQL中的存储形式，本章通过控制台发起CRUD操作，并通过MySQL客户端查询状态数据信息。
-正式开始本操作前，请先参考**搭建第一个区块链网络**中的[配置和使用控制台](./installation.html#id8)安装控制台。
+正式开始本操作前，请先参考**搭建第一个区块链网络**中的[配置和使用控制台](../installation.html#id8)安装控制台。
 
 **创建表t_demo**
 

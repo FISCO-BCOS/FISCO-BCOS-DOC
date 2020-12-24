@@ -48,6 +48,6 @@ SDK请求速率限制包括节点级别的请求速率限制和群组级别的�
 
 ```eval_rst
 .. note::
-    - 节点级别的流量控制配置选项位于 ``config.ini`` ，具体可参考 `这里 <../../blockchain_dev/configuration.html#id12>`_ 
-    - 群组级别的流量控制选项位于 ``group.{group_id}.ini`` ，具体可参考 `这里 <../../blockchain_dev/configuration.html#id34>`_ 
+    - 节点级别的流量控制配置选项位于 ``config.ini`` ，具体可参考 `这里 <../../manual/configuration.html#id12>`_ 
+    - 群组级别的流量控制选项位于 ``group.{group_id}.ini`` ，具体可参考 `这里 <../../manual/configuration.html#id34>`_ 
 ```

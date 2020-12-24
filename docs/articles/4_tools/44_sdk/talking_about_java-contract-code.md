@@ -72,7 +72,7 @@ HelloWorld helloWorld;    // 初始化HelloWorld对象，省略
 TransactionReceipt receipt = helloWorld.set("HelloWorld").send();    // 调用set接口
 ```
 
-Java SDK这种调用合约的姿势可以总结为：面向Java对象操作合约。在这种方式下，用户只需使用合约编译工具生成Java合约类，对合约的所有操作基于构造的Java合约对象，不需要再关注合约ABI，发送接受细节、交易打包编码、结果返回的解码等屏蔽的细节。具体调用合约方式请参考[Java SDK教程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/web3sdk/java_sdk.html)。值得一提的是，在特定场景下，面向对象的Java调用方式显然无法满足需求，比如：无法预先生成Java合约代码，或者，交易签名与交易构造服务需要分离。在这些场景下，使用类似nodejs/python sdk的姿势会更灵活。但最灵活的还是，用户自己关心交易编解码、打包、签名、发送、收回包、解码的整体流程。
+Java SDK这种调用合约的姿势可以总结为：面向Java对象操作合约。在这种方式下，用户只需使用合约编译工具生成Java合约类，对合约的所有操作基于构造的Java合约对象，不需要再关注合约ABI，发送接受细节、交易打包编码、结果返回的解码等屏蔽的细节。具体调用合约方式请参考[Java SDK教程](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html)。值得一提的是，在特定场景下，面向对象的Java调用方式显然无法满足需求，比如：无法预先生成Java合约代码，或者，交易签名与交易构造服务需要分离。在这些场景下，使用类似nodejs/python sdk的姿势会更灵活。但最灵活的还是，用户自己关心交易编解码、打包、签名、发送、收回包、解码的整体流程。
 
 ![](../../../../images/articles/talking_about_java-contract-code/IMG_5745.PNG)
 

@@ -3,7 +3,7 @@
 标签：``java-sdk`` ``AMOP`` ``链上信使`` 
 
 ----
-Java SDK支持[链上信使协议AMOP（Advanced Messages Onchain Protocol）](../../app_dev/amop_protocol.html)，用户可以通过AMOP协议与其它机构互传消息。
+Java SDK支持[链上信使协议AMOP（Advanced Messages Onchain Protocol）](../../manual/amop_protocol.html)，用户可以通过AMOP协议与其它机构互传消息。
 
 
 

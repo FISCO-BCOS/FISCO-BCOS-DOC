@@ -8,7 +8,7 @@
 
 本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉[Solidity语法](https://solidity.readthedocs.io/en/latest/)。
 
-如果您还未搭建区块链网络，或未下载控制台，请先走完教程[搭建第一个区块链网络](./installation.html)，再回到本教程。
+如果您还未搭建区块链网络，或未下载控制台，请先走完教程[搭建第一个区块链网络](../installation.html)，再回到本教程。
 
 ## 1. 了解应用需求
 
@@ -26,7 +26,7 @@
 
 **存储设计**
 
-FISCO BCOS提供[合约CRUD接口](../app_dev/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[合约CRUD接口](../manual/smart_contract.html#crud)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
 -   asset_value: 资产金额(uint256类型)
@@ -243,7 +243,7 @@ contract Asset {
 }
 ```
 
-Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。Table.sol 合约详细接口参考[这里](../app_dev/smart_contract.html#crud)。
+Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。Table.sol 合约详细接口参考[这里](../manual/smart_contract.html#crud)。
 
 运行``ls``命令，确保``Assert.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
 ![](../../images/tutorial/asset_contract.png)

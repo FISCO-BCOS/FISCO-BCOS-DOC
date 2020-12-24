@@ -149,5 +149,5 @@ RemoveGas| Gas consumption to delete data in the table | 2500 | 200 |
 
 ```eval_rst
 .. note::
-    The EVM Gas measurement standard supports plug-in configuration items located in the `` genesis`` file. For details, please refer to `here <../../blockchain_dev/configuration.html#evm>`_ 
+    The EVM Gas measurement standard supports plug-in configuration items located in the `` genesis`` file. For details, please refer to `here <../../manual/configuration.html#evm>`_ 
 ```

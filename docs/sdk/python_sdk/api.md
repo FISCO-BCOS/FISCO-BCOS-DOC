@@ -6,14 +6,14 @@
 
 Python SDK为区块链应用开发者提供了Python API接口，主要包括：
 
-- Python API：封装了访问FISCO BCOS 2.0+节点[JSON-RPC](../../reference/api.md)的Python API
+- Python API：封装了访问FISCO BCOS 2.0+节点[JSON-RPC](../../api.md)的Python API
 - 交易结构定义：定义了FISCO BCOS 2.0+的交易数据结构
 - 交易输入输出解析：提供ABI、Event Log、交易输入和输出解析功能
 - ChannelHandler：FISCO BCOS channel协议实现类，支持节点之间SSL加密通信
 
 
 ## Python API：BcosClient
-实现于`client/bcosclient.py`，封装了访问FISCO BCOS 2.0+节点[JSON-RPC](../../reference/api.md)的Python API，主要接口包括：
+实现于`client/bcosclient.py`，封装了访问FISCO BCOS 2.0+节点[JSON-RPC](../../api.md)的Python API，主要接口包括：
 
 | 接口名        | 描述| 参数 |
 | :--| :--| :-- | 

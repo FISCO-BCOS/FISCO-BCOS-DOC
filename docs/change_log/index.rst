@@ -20,7 +20,7 @@ FISCO BCOS 2.x 新特性
 
 - 机构的节点只需部署一次，通过群组设置即可参与到不同的多方协作业务中，或将一个业务按用户、时间等维度分到各群组，群组架构可快速地平行扩展，在扩大了业务规模同时，极大简化了运维复杂度，降低管理成本。
 
-更多的群组介绍，请参考 `群组架构设计文档 <../design/architecture/group.html>`_ 和 `群组使用教程 <../blockchain_dev/group_use_cases.html>`_
+更多的群组介绍，请参考 `群组架构设计文档 <../design/architecture/group.html>`_ 和 `群组使用教程 <../manual/group_use_cases.html>`_
 
 分布式存储
 >>>>>>>>>
@@ -34,7 +34,7 @@ FISCO BCOS 2.0新增了对分布式数据存储的支持，节点可将数据存
 - 世界状态的存储从原来的MPT存储结构转为分布式存储，避免了世界状态急剧膨胀导致性能下降的问题；
 - 优化了数据存储的结构，更节约存储空间。
 
-同时，2.0版本仍然兼容1.0版本的本地存储模式。更多关于存储介绍，请参考 `分布式存储操作手册 <../blockchain_dev/distributed_storage.html>`_
+同时，2.0版本仍然兼容1.0版本的本地存储模式。更多关于存储介绍，请参考 `分布式存储操作手册 <../manual/distributed_storage.html>`_
 
 并行计算模型
 >>>>>>>>>
@@ -45,7 +45,7 @@ FISCO BCOS 2.0新增了对分布式数据存储的支持，节点可将数据存
 2.0版本基于预编译合约，实现一套并行交易处理模型，基于这个模型可以自定义交易互斥变量。
 在区块执行过程中，系统将会根据交易互斥变量自动构建交易依赖关系图——DAG，基于DAG并行执行交易，最好情况下性能可提升数倍（取决于CPU核数）。
 
-更多并行计算模型的介绍，请参考并行交易的 `设计文档 <../design/parallel/dag.html>`_ 和 `使用手册 <../app_dev/transaction_parallel.html>`_。
+更多并行计算模型的介绍，请参考并行交易的 `设计文档 <../design/parallel/dag.html>`_ 和 `使用手册 <../manual/transaction_parallel.html>`_。
 
 预编译合约
 >>>>>>>>>
@@ -54,7 +54,7 @@ FISCO BCOS 2.0提供预编译合约框架，支持采用C++编写合约，其优
 
 FISCO BCOS提供标准化接口和示例，帮助用户进行二次开发，便于用户编写高性能的业务合约，并方便地部署到FISCO BCOS里运行。预编译合约框架兼容EVM引擎，形成了“双引擎”架构，熟悉EVM引擎的用户可以选择将Solidity合约和预编译合约结合，在满足业务逻辑的同时获得巨大的效率提升。
 
-另外，还有类似CRUD操作等也由预编译合约实现，更多预编译合约的介绍，请参考 `预编译设计文档 <../design/virtual_machine/precompiled.html>`_ 和 `预编译合约开发文档 <../app_dev/smart_contract.html#id2>`_
+另外，还有类似CRUD操作等也由预编译合约实现，更多预编译合约的介绍，请参考 `预编译设计文档 <../design/virtual_machine/precompiled.html>`_ 和 `预编译合约开发文档 <../manual/smart_contract.html#id2>`_
 
 CRUD接口
 >>>>>>>>>
@@ -65,7 +65,7 @@ FISCO BCOS 2.0新增符合CRUD接口的合约接口规范，简化了将主流�
 - 合约只需关心核心逻辑，存储与计算分离，方便合约升级；
 - CRUD底层逻辑基于预编译合约实现，数据存储采用分布式存储，效率更高；
 
-同时，2.0版本仍然兼容1.0版本的合约，更多关于CRUD接口的介绍，请参考 `使用CRUD接口 <../app_dev/smart_contract.html#crud>`_ 。
+同时，2.0版本仍然兼容1.0版本的合约，更多关于CRUD接口的介绍，请参考 `使用CRUD接口 <../manual/smart_contract.html#crud>`_ 。
 
 控制台
 >>>>>>>>>
@@ -90,7 +90,7 @@ FISCO BCOS 2.0新增控制台，作为FISCO BCOS 2.0的交互式客户端工具�
 2.0版本对落盘加密进行了重塑升级，开启落盘加密功能时，依赖KeyManager服务进行密钥管理，安全性更强。
 
 KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的，支持机构设计实现符合自身密钥管理规范的KeyManager服务，比如采用硬件加密机技术。
-该部分更详细的文档请参考 `使用文档 <../blockchain_dev/storage_security.html>`_ 和 `设计文档 <../design/features/storage_security.html>`_
+该部分更详细的文档请参考 `使用文档 <../manual/storage_security.html>`_ 和 `设计文档 <../design/features/storage_security.html>`_
 
 准入控制
 >>>>>>>>>
@@ -157,7 +157,7 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 .. admonition:: 查看节点和数据版本
 
     - 查看节点二进制版本：``./fisco-bcos --version``
-    - 数据格式和通信协议的版本：通过配置文件 `config.ini的supported_version配置项 <../blockchain_dev/configuration.html#id7>`_ 获取
+    - 数据格式和通信协议的版本：通过配置文件 `config.ini的supported_version配置项 <../manual/configuration.html#id7>`_ 获取
 
 
 .. toctree::
