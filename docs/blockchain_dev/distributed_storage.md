@@ -242,7 +242,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 ```bash
 cd ~/fisco;
 curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
-cp -n console/conf/config-example.toml console/conf/config-example.toml
+cp -n console/conf/config-example.toml console/conf/config.toml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
 #### 修改配置文件
