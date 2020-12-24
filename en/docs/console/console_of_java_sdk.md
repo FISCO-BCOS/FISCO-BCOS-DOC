@@ -1061,7 +1061,7 @@ Run deployByCNS and deploy the contract with [CNS](../design/features/cns_contra
 Parameter:
 
 - Contract name: deployable contract name.
-- Contract version number: deployable contract version number(the length cannot exceed 40).
+- Contract version number: deployable contract version number.
 ```text
 # To deploy HelloWorld contract 1.0 version
 [group:1]> deployByCNS HelloWorld 1.0
