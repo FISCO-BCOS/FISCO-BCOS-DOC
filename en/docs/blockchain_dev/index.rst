@@ -87,7 +87,3 @@ Build Blockchain Network
    ../manual/cdn.md
    ../manual/caliper.md
    ../manual/log_description.md
-
-
-
-
