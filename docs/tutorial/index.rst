@@ -25,6 +25,7 @@
 - `FISCO BCOS源码编译 <./compile.html>`_
 - `使用MySQL存储账本 <./mysql_node.html>`_
 - `国内镜像和CDN加速 <./cdn.html>`_
+- `使用CFCA证书部署节点 <./cfca.html>`_
 
 **博客**
 
