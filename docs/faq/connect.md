@@ -67,7 +67,7 @@ Jar包冲突会报如下几个错误。
     create BcosSDK failed, error info: init channel network error: SSL context init failed, please make sure your cert and key files are properly configured. error info: PrivateKey type not supported PKCS#8
     ```
     **问题分析:**<br>
-    Java SDK 2.6.1使用了较高版本的netty和tcnative，Web3SDK 2.6.0与Web3SDK 2.6.1使用的netty和tcnative版本较低，两者同事使用时jar包冲突，导致SDK启动报错。<br>
+    Java SDK 2.6.1使用了较高版本的netty和tcnative，Web3SDK 2.6.0与Web3SDK 2.6.1使用的netty和tcnative版本较低，两者同时使用时jar包冲突，导致SDK启动报错。<br>
     **解决方法**<br>
     由于Java SDK和Web3SDK包含相同的功能，但Java SDK功能更全且会持续迭代，因此不建议同时使用Web3SDK与Java SDK，**建议使用Java SDK替代Web3SDK**.
     - **方法一:** 将Web3SDK升级到`2.6.2`版本，使其与Java SDK基于同样版本的netty与tcnative

@@ -382,7 +382,7 @@ repositories {
 -   引入Java SDK jar包
 
 ```java
-compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT")
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
 ```
 
 ### 证书与配置文件

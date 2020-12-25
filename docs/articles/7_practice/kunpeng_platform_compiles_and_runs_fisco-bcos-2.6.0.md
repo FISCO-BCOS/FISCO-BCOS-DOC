@@ -42,8 +42,8 @@ yum update
 ### 2. 安装基础依赖
 
 ```
-yum install -y epel-release centos-release-scl
-yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
+sudo yum install -y epel-release centos-release-scl
+sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
 ```
 
 ### 3. 安装鲲鹏版本jdk-1.8

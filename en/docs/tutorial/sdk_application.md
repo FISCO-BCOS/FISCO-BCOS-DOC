@@ -380,7 +380,7 @@ repositories {
 -   introduce the Java SDK jar package
 
 ```java
-compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT")
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
 ```
 
 ### Certificate and configuration file
