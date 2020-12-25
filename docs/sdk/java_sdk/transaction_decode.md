@@ -181,7 +181,7 @@ TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWith
 只解析调用函数过程中触发的日志。传入合约的abi文件和交易回执的logs，解析交易结果；返回事件名和事件List的Map。
 
 ```
-Map<String, List<List<Object>>>> events = decoder.decodeEvents(abi, transactionReceipt.getLogs());
+Map<String, List<List<Object>>> events = decoder.decodeEvents(abi, transactionReceipt.getLogs());
 ```
 
 ### 解析结果示例：
