@@ -124,25 +124,25 @@ cd browser-deploy
 部署所有服务：
 
 ```shell
-python deploy.py installAll
+python3 deploy.py installAll
 ```
 
 停止所有服务：
 
 ```shell
-python deploy.py stopAll
+python3 deploy.py stopAll
 ```
 
 启动所有服务：
 
 ```shell
-python deploy.py startAll
+python3 deploy.py startAll
 ```
 
 单独启停命令和说明可查看帮助：
 
 ```shell
-python deploy.py help
+python3 deploy.py help
 ```
 
 **备注：** 部署过程出现问题可以查看 [常见问题](#id19)
