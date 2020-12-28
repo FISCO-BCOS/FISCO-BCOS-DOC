@@ -113,7 +113,7 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
 $ cd ~/fisco/console
 ```
 

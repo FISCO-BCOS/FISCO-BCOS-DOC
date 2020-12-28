@@ -235,7 +235,7 @@ The console connects to the FISCO BCOS node, it is used to query the blockchain 
 $ cd ~/fisco
 
 # Download console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
 
 # Switch to console directory
 $ cd console
@@ -628,7 +628,7 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # If you have never downloaded the console, please do the following to download the console, otherwise copy the console to the ~/fisco directory:
 $ cd ~/fisco
 # Download console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
 ```
 
 **Configuration console**
