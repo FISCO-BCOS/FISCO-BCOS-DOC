@@ -7,7 +7,8 @@
 ```eval_rst
 .. note::
 
-    目前FISCO BCOS适配的Caliper版本为0.2.0，请在部署Caliper运行环境时确保Caliper的版本为0.2.0，如在部署或使用过程中遇到任何问题，请优先参考(https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248)[https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248]中的解决方案进行排查。
+    目前FISCO BCOS适配的Caliper版本为0.2.0，请在部署Caliper运行环境时确保Caliper的版本为0.2.0，如在部署或使用过程中遇到任何问题，请优先参考 `https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248>`_ 中的解决方案进行排查。
+    
 ```
 
 ## 1. 环境要求
@@ -496,7 +497,7 @@ monitor:
 
 - 测试内容配置
 
-`test`项负责对测试内容进行配置。配置主要集中在`round`字段中指定如何对区块链系统进行测试。每一个测试可以包含多轮，每一轮可以向区块链发起不同的测试请求。具体要HelloWorld合约测试，测试中包含两轮，分别对合约的`get`接口和`set`接口进行测试。在每一轮测试中，可以通过`txNumber`或`txDuration`字段指定测试的交易发送数量或执行时间，并通过`rateControl`字段指定交易发送时的速率控制器，在本节的示例中，使用了QPS为1000的匀速控制器，更多速率控制器的介绍可以参考[官方文档](https://hyperledger.github.io/caliper/vLatest/rate-controllers/)。
+`test`项负责对测试内容进行配置。配置主要集中在`round`字段中指定如何对区块链系统进行测试。每一个测试可以包含多轮，每一轮可以向区块链发起不同的测试请求。具体要HelloWorld合约测试，测试中包含两轮，分别对合约的`get`接口和`set`接口进行测试。在每一轮测试中，可以通过`txNumber`或`txDuration`字段指定测试的交易发送数量或执行时间，并通过`rateControl`字段指定交易发送时的速率控制器，在本节的示例中，使用了QPS为1000的匀速控制器，更多速率控制器的介绍可以参考[官方文档](https://hyperledger.github.io/caliper/v0.2/getting-started/)。
 
 - 性能监视器配置
 

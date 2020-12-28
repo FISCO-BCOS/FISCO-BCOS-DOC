@@ -70,7 +70,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/buil
 
 ### 下载二进制程序
 
-开发部署工具（build_chain）会自动下载二进制程序，下载失败自动切换官网CDN，不需要用户关注。用户也可以手动下载二进制程序或编译源码，通过开发部署工具的-e选项指定，此时工具不会再去下载。-e选项参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html#e-optional](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html#e-optional)
+开发部署工具（build_chain）会自动下载二进制程序，下载失败自动切换官网CDN，不需要用户关注。用户也可以手动下载二进制程序或编译源码，通过开发部署工具的-e选项指定，此时工具不会再去下载。-e选项参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html#e-optional](../manual/build_chain.html#e-optional)
 
 ### 搭建2.7.1国密FISCO BCOS链
 
@@ -82,7 +82,7 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -v 2.7.1
 
 ## 举例：使用国内源码镜像编译
 
-本节以CentOS 7 为例，从gitee镜像下载源码并编译，其他操作系统编译流程类似，请参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2)
+本节以CentOS 7 为例，从gitee镜像下载源码并编译，其他操作系统编译流程类似，请参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id2](../manual/get_executable.html#id2)
 
 ### 安装依赖
 

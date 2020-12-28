@@ -14,7 +14,7 @@
 - 区块链浏览器：JDK8或以上版本
 
 ## 2. 安装方法
-- [Java SDK > 快速入门 > 安装环境](../java_sdk/quick_start.html#id2)
+- [Java SDK > 快速入门 > 安装环境](../sdk/java_sdk/quick_start.html#id2)
 
 ## 3. 问题排查
 - [连接失败 > 检查JDK版本](../faq/connect.html)
