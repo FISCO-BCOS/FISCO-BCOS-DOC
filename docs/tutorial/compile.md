@@ -122,7 +122,7 @@ cmake -DARCH_NATIVE=on ..
 make
 ```
 
-出于指令集和兼容性的考虑，FISCO BCOS发布时不提供ARM平台上预编译的二进制程序，用户如果需要在ARM平台上运行需要在对应机器源码编译，然后使用[build_chain的-e](../build_chain.html#e-optional)选项搭建联盟链网络。例如
+出于指令集和兼容性的考虑，FISCO BCOS发布时不提供ARM平台上预编译的二进制程序，用户如果需要在ARM平台上运行需要在对应机器源码编译，然后使用[build_chain的-e](../manual/build_chain.html#e-optional)选项搭建联盟链网络。例如
 
 ```bash
 bash build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos

@@ -13,9 +13,9 @@
 **区块链网络搭建**
 - [使用国密算法](../manual/guomi_crypto.html)
 - [使用CFCA证书部署节点 > 如何使用国密CFCA证书](../manual/cfca.html#id6)
-- [存储加密](../manual/storage_security.html?highlight=国密)
+- [存储加密](../manual/storage_security.html)
 - [运维部署工具 > 部署国密区块链](../enterprise_tools/tutorial_detail_operation_gm.html)
-- [运维部署工具 > 国密操作相关](../enterprise_tools/operation.html?highlight=国密#id2)
+- [运维部署工具 > 国密操作相关](../enterprise_tools/operation.html#id2)
 
 
 **区块链应用开发**

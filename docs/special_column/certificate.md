@@ -35,5 +35,5 @@
 
 ## 4. 博客
 - [FISCO BCOS上使用第三方CA证书底层节点部署实操](../articles/3_features/37_safety/third-party-CA_node_deployment.html)
-- [FISCO BCOS证书说明](../articles/3_features/37_safety/certificate_description.html?highlight=证书)
+- [FISCO BCOS证书说明](../articles/3_features/37_safety/certificate_description.html)
 - [FISCO BCOS的TLS1.2握手流程](../articles/3_features/37_safety/tsl1.2_establish_process.html#part-2)

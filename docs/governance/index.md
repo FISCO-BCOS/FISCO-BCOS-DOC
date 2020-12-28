@@ -53,7 +53,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 提供FISCO BCOS节点数据扩容、备份和裁剪的能力。
 可基于binlog协议同步区块链底层节点数据，支持断点续传，数据可信验证，并提供快速同步机制。
 
-    ![](../../images/governance/Data-Stash.png)
+![](../../images/governance/Data-Stash.png)
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Stash)
@@ -65,7 +65,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 支持将链上数据导出到MySQL等结构化存储中，解决区块链数据复杂查询、分析和处理的问题。
 只需简单配置、无需开发、即可实时导出个性化的业务数据，实现将裸数据转化为标准化、结构化、有序化、可视化的高价值数据。
 
-    ![](../../images/governance/Data-Export.png)
+![](../../images/governance/Data-Export.png)
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Export)
@@ -77,7 +77,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 提供区块链数据的对账解决方案。
 灵活配置、无需开发，支持自定义对账数据和对账格式，支持定时对账和触发对账，对账处理模块可插拔可扩展。
 
-    ![](../../images/governance/Data-Reconcile.png)
+![](../../images/governance/Data-Reconcile.png)
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Reconcile)
