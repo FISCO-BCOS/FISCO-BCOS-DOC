@@ -13,7 +13,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 
 ## 功能介绍
 
-- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/manual/build_chain.sh][build_chain]。
+- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh)。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，支持创建各种复杂业务场景FISCO BCOS链。**`-l`和`-f`选项必须指定一个且不可共存**。
 - 建议测试时使用`-T`，`-T`开启log级别到DEBUG，**p2p模块默认监听 `0.0.0.0`**。
 
