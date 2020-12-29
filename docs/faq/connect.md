@@ -10,7 +10,7 @@
 
 **第一步.检查节点进程**
 
-通过`ps aux | grep fisco bcos`命令检查节点进程是否启动
+通过`ps aux | grep fisco-bcos`命令检查节点进程是否启动
 
 **第二步.检查节点监听IP**
 

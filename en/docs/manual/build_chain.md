@@ -9,7 +9,8 @@ FISCO BCOS has provided `build_chain` script to help users quickly build FISCO B
 
 ## Script introduction
 
-- `build_chain.sh` is used to quickly generate configuration files of a chain node. For the script that depends on `openssl`, please according your own operating system to install `openssl 1.0.2` version and above. The source code of script is located at [FISCO-BCOS/manual/build_chain.sh][build_chain].
+- `build_chain.sh` is used to quickly generate configuration files of a chain node. For the script that depends on `openssl`, please according your own operating system to install `openssl 1.0.2` version and above. The source code of script is located at [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh).
+
 - For quick experience can use the `-l` option to specify the node IP and number. `-f` option supports the creation of FISCO BCOS chains for complex business scenarios by using a configuration file in a specified format. **`-l` and `-f` options must be specified uniquely and cannot coexist**.
 - It is recommended to use `-T` option for testing. `-T` enables log level to DEBUG, **p2p module listens for `0.0.0.0` by default**.
 
