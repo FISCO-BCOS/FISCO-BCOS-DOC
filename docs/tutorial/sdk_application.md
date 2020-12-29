@@ -252,6 +252,11 @@ Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录
 ``.sol``的智能合约需要编译成ABI和BIN文件才能部署至区块链网络上。有了这两个文件即可凭借Java SDK进行合约部署和调用。但这种调用方式相对繁琐，需要用户根据合约ABI来传参和解析结果。为此，控制台提供的编译工具不仅可以编译出ABI和BIN文件，还可以自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。
 
 ```bash
+# 创建工作目录~/fisco
+mkdir -p ~/fisco
+# 下载控制台
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+
 # 切换到fisco/console/目录
 cd ~/fisco/console/
 
@@ -387,10 +392,11 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT")
-}
+-   引入Java SDK jar包
+
+```java
+testCompile group: 'junit', name: 'junit', version: '4.12'
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
 ```
 ![](../../images/tutorial/import_sdk.png)
 
