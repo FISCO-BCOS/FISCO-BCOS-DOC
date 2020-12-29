@@ -7,7 +7,7 @@ Node.js SDK的配置文件为一个JSON文件，主要包括**通用配置**，*
 
 ## 通用配置
 
-- `privateKey`: `object`，必需。外部账户的私钥，可以为一个256 bits的随机整数，也可以是一个pem或p12格式的私钥文件，后两者需要结合[get_account.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/account.html)生成的私钥文件使用。`privateKey`包含两个必需字段，一个可选字段：
+- `privateKey`: `object`，必需。外部账户的私钥，可以为一个256 bits的随机整数，也可以是一个pem或p12格式的私钥文件，后两者需要结合[get_account.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)生成的私钥文件使用。`privateKey`包含两个必需字段，一个可选字段：
   - `type`: `string`，必需。用于指示私钥类型。`type`的值必需为下列三个值之一：
     - `ecrandom`：随机整数
     - `pem`：pem格式的文件

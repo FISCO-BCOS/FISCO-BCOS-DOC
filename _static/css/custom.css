@@ -65,7 +65,7 @@ p {
 }
 
 .wy-nav-content {
-    background-color: #fff max-width: 1200px;
+    background-color: #fff;
     max-width: 1200px !important;
 }
 
@@ -172,4 +172,88 @@ p {
     background-size: Auto 19px;
     background-position: center top;
     background-origin: content box;
+}
+
+/*Card */
+.card {
+    color: #33444d;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(11,33,74,0.09), 0 -2px 2px rgba(11,33,74,0.03);
+    padding: 24px 36px;
+    min-height: 284px;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.card-title{
+    font-size: large;
+}
+.rocket{
+    background-image: url(../images/rocket.svg);
+    background-origin: content-box;
+    background-repeat: no-repeat;
+}
+.manuals{
+    background-image: url(../images/manuals.svg);
+    background-origin: content-box;
+    background-repeat: no-repeat;
+}
+
+.ref{
+    background-image: url(../images/reference.svg);
+    background-origin: content-box;
+    background-repeat: no-repeat;
+}
+
+.card-holder-bigger {
+    padding: 7.5px;
+    float: left;
+    width: 100%;
+    min-width:320px;
+}
+.card-bigger {
+    color: #33444d;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(11,33,74,0.09), 0 -2px 2px rgba(11,33,74,0.03);
+    padding: 24px 36px;
+    min-height: 100px;
+}
+.tools{
+    margin-right: -15px;
+    margin-left: -15px;
+    width: 100%;
+}
+pre {
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+/* 横向放置的手机和竖向放置的平板之间的分辨率 */
+@media (min-width: 768px) { 
+    .card-holder{
+        padding: 7.5px;
+        float: left;
+        width: 50%;
+    }
+    .tools-holder{
+        padding: 7.5px;
+        float: left;
+        width: 50%;
+    }
+}
+ 
+/* 横向放置的手机及分辨率更小的设备 */
+@media (max-width: 767px) { 
+    .card-holder{
+        padding: 7.5px;
+        float: left;
+        width: 100%;
+    }
+    .tools-holder{
+        padding: 7.5px;
+        float: left;
+        width: 100%;
+    }
 }

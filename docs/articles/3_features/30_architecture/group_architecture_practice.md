@@ -54,7 +54,7 @@
 搭建FISCO BCOS 2.0区块链节点需要准备如下依赖软件：
 
 - openssl：FISCO BCOS 2.0的网络协议依赖openssl
-- build_chain.sh脚本：主要用于构建区块链节点配置，可从https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/build_chain.sh下载
+- build_chain.sh脚本：主要用于构建区块链节点配置，可从https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/manual/build_chain.sh下载
 
 ### 生成区块链节点配置
 

@@ -2,7 +2,7 @@
 
 ```eval_rst
 .. important::
-    - ``Console 1.x`` series is based on `Web3SDK <../sdk/web3sdk/java_sdk.html>`_ implementation, after ``console 2.6+`` is based on `Java SDK <./sdk/java_sdk/index.html>`_ implementation, this tutorial is aimed at **2.6 and above version console**, for 1.x version console usage documentation please refer to `here <./console.html>`_ 
+    - ``Console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, after ``console 2.6+`` is based on `Java SDK <./sdk/java_sdk/index.html>`_ implementation, this tutorial is aimed at **2.6 and above version console**, for 1.x version console usage documentation please refer to `here <./console.html>`_ 
     - You can view the current console version through the command ``./start.sh --version``
 ```
 
@@ -14,7 +14,7 @@ Console command consists of two parts, the instructions and the parameters relat
 - **Instruction**: instruction is an executed operation command, including blockchain status inquiry and contracts deployment and calling. And some of the instructions call the JSON-RPC interface, so they have same name as the JSON-RPC interface.
 **Use suggestions: instructions can be completed using the tab key, and support for displaying historical input commands by pressing the up and down keys.**
 
-- **Parameters related to the instruction**: parameters required by instruction call interface. Instructions to parameters and parameters to parameters are separated by spaces. The parameters name same as JSON-RPC interface and the explanation of getting information field can be referred to [JSON-RPC API](../reference/api.md).
+- **Parameters related to the instruction**: parameters required by instruction call interface. Instructions to parameters and parameters to parameters are separated by spaces. The parameters name same as JSON-RPC interface and the explanation of getting information field can be referred to [JSON-RPC API](../api.md).
 
 ### Common command link:
 #### Contract related commands
@@ -52,7 +52,7 @@ When a console command is launched, the console will obtain the result of the co
 
 ```eval_rst
 .. important::
-    Precondition：to build FISCO BCOS blockchain, please refer to `Building Chain Script <../tools/build_chain.html>`_ or `Enterprise Tools <../enterprise_tools/index.html>`_.
+    Precondition：to build FISCO BCOS blockchain, please refer to `Building Chain Script <../manual/build_chain.html>`_ or `Enterprise Tools <../enterprise_tools/index.html>`_.
 
 
 ```
@@ -227,7 +227,7 @@ console version: 2.0.0
 
 ##### Console loads private key
 
-The console provides the account generation script get_account.sh (for the script tutorial, please refer to [Account Management Document](../app_dev/account.md). The generated account file is in the accounts directory, and the account file loaded by console must be placed in the directory.
+The console provides the account generation script get_account.sh (for the script tutorial, please refer to [Account Management Document](../manual/account.md). The generated account file is in the accounts directory, and the account file loaded by console must be placed in the directory.
 
 
 The console startup methods are as follows:
@@ -1052,7 +1052,7 @@ Return values:
 ]
 ---------------------------------------------------------------------------------------------
 ```
-**Note:** TableTest.sol contract code[Reference here](../app_dev/smart_contract.html#solidity)。
+**Note:** TableTest.sol contract code[Reference here](../manual/smart_contract.html#solidity)。
 
 ### **deployByCNS**
 

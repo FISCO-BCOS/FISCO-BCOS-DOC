@@ -4,7 +4,7 @@
 
 ----
 
-本文档对黑、白名单进行介绍性说明，实践方法参见[《CA黑白名单操作手册》](../../blockchain_dev/certificate_list.md)。
+本文档对黑、白名单进行介绍性说明，实践方法参见[《CA黑白名单操作手册》](../../manual/certificate_list.md)。
 
 ## 名词解释
 

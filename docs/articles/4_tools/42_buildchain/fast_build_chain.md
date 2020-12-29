@@ -38,7 +38,7 @@ build_chain脚本需要使用OpenSSL来生成节点所需要使用到的相关�
 
 ### 解析参数
 
-build_chain脚本支持很多自定义参数，例如-p指定节点使用的端口范围、-f搭建指定配置的网络、-g搭建国密版本、-v指定FISCO BCOS程序版本号、-o指定输出路径等，[可参考详情](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html#id4)
+build_chain脚本支持很多自定义参数，例如-p指定节点使用的端口范围、-f搭建指定配置的网络、-g搭建国密版本、-v指定FISCO BCOS程序版本号、-o指定输出路径等，[可参考详情](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html#id4)
 
 ![](../../../../images/articles/fast_build_chain/IMG_4954.PNG)
 
@@ -62,9 +62,9 @@ FISCO BCOS支持证书链，默认使用三级证书链结构，使用自签CA�
 
 ###  生成配置文件和工具脚本
 
-build_chain脚本中内置了FISCO BCOS节点所需要使用的配置文件模板，根据用户指定的参数修改，生成节点所使用的配置文件([可查看配置文件的介绍](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/configuration.html))。
+build_chain脚本中内置了FISCO BCOS节点所需要使用的配置文件模板，根据用户指定的参数修改，生成节点所使用的配置文件([可查看配置文件的介绍](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/configuration.html))。
 
-同时，为方便用户启动和停止节点，节点目录下还会生成start.sh和stop.sh（[可查看节点目录结构说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html#id5)）。
+同时，为方便用户启动和停止节点，节点目录下还会生成start.sh和stop.sh（[可查看节点目录结构说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html#id5)）。
 
 ## 总结
 

@@ -10,7 +10,7 @@
 
 **第一步.检查节点进程**
 
-通过`ps aux | grep fisco bcos`命令检查节点进程是否启动
+通过`ps aux | grep fisco-bcos`命令检查节点进程是否启动
 
 **第二步.检查节点监听IP**
 
@@ -18,7 +18,7 @@
 
 **第三步.检查SDK的连接配置**
 
-检查SDK配置的节点连接是否正确，Web3SDK的节点连接配置参考[这里](../sdk/web3sdk/java_sdk.html#spring)；Java SDK的节点连接配置参考[这里](../sdk/java_sdk/configuration.html#id6)
+检查SDK配置的节点连接是否正确，Web3SDK的节点连接配置参考[这里](../sdk/java_sdk.html#spring)；Java SDK的节点连接配置参考[这里](../sdk/java_sdk/configuration.html#id6)
 
 **第四步.检查SDK与节点之间连通性**
 
@@ -80,7 +80,7 @@ Jar包冲突会报如下几个错误。
 
 **第一步.检查证书配置**
 
-若没有配置证书，请参考[Web3SDK证书配置](../sdk/web3sdk/java_sdk.html#id2)配置SDK证书
+若没有配置证书，请参考[Web3SDK证书配置](../sdk/java_sdk.html#id2)配置SDK证书
 
 **第二步.检查SDK与直连节点是否处于相同机构**
 

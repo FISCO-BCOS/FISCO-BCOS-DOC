@@ -5,7 +5,7 @@
 ----
 ```eval_rst
 .. important::
-    - ``控制台2.6+`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现, ``控制台1.x`` 系列基于 `Web3SDK <../sdk/web3sdk/java_sdk.html>`_ 实现，本教程针对 **2.6及其以上版本控制台**，1.x及其以上版本控制台使用文档请 `参考这里 <./console.html>`_ 
+    - ``控制台2.6+`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现, ``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，本教程针对 **2.6及其以上版本控制台**，1.x及其以上版本控制台使用文档请 `参考这里 <./console.html>`_ 
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
     - 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 开发应用过程中将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``2.6+`` 版本控制台，具体请参考  `这里 <../console/download_console.html>`_ 
 ```
@@ -16,7 +16,7 @@
 
 ```eval_rst
 .. important::
-    前置条件：搭建FISCO BCOS区块链请参考 `开发部署工具 <../tools/build_chain.html>`_ 或 `企业工具 <../enterprise_tools/index.html>`_。
+    前置条件：搭建FISCO BCOS区块链请参考 `开发部署工具 <../manual/build_chain.html>`_ 或 `企业工具 <../enterprise_tools/index.html>`_。
 ```
 
 ### 获取控制台
@@ -220,7 +220,7 @@ console version: 2.6.0
 #### 账户使用方式
 
 ##### 控制台加载私钥
-控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../app_dev/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
 控制台启动方式有如下几种：
 ```
 ./start.sh
@@ -267,7 +267,7 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
 
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../reference/api.md)。
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
 ### 常用命令
 #### 合约相关命令
@@ -297,8 +297,8 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../reference/api.html#rpc)。
-  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../reference/api.html#precompiled-service-api)。
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
+  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。
 ## 控制台命令列表
 ### **help**
 输入help或者h，查看控制台所有的命令。
@@ -1154,7 +1154,7 @@ Return values:
 ]
 ---------------------------------------------------------------------------------------------
 ```
-**注：** TableTest.sol合约代码[参考这里](../app_dev/smart_contract.html#solidity)。
+**注：** TableTest.sol合约代码[参考这里](../manual/smart_contract.html#solidity)。
 
 ### **deployByCNS**
 

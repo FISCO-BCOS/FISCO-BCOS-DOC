@@ -9,7 +9,7 @@
 ### 1.1 基本介绍
 **全新适配FISCO BCOS 2.0+版本，如果使用FISCO BCOS 1.2或1.3版本请用[v1.2.1版本](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1)。**
 
-区块链浏览器将区块链中的数据可视化，并进行实时展示。方便用户以Web页面的方式，获取当前区块链中的信息。本浏览器版本适配[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS)，关于2.0+版本的特性可以参考此[链接](../intro/introduction.md)。在使用本浏览器之前需要先理解2.0+版本的群组特性，详情可以参考此[链接](../faq/what_is_new.html#id2)。
+区块链浏览器将区块链中的数据可视化，并进行实时展示。方便用户以Web页面的方式，获取当前区块链中的信息。本浏览器版本适配[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS)，关于2.0+版本的特性可以参考此[链接](../introduction.md)。在使用本浏览器之前需要先理解2.0+版本的群组特性，详情可以参考此[链接](../faq/what_is_new.html#id2)。
 
 ![](../../images/browser/overview.png)
 
@@ -43,7 +43,7 @@
 
 区块链浏览器展示的数据是从区块链上同步下来的。为了同步数据需要初始化配置（添加群组信息和节点信息），故在同步数据展示前需要用户先搭建好区块链群组。[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS)提供了多种便捷的群组搭建方式。
 
-1. 如果是开发者进行开发调试，建议使用[开发部署工具 build_chain](../tutorial/installation.md)。
+1. 如果是开发者进行开发调试，建议使用[开发部署工具 build_chain](../installation.md)。
 2. 如果是开发企业级应用，建议使用企业部署工具[运维部署工具 FISCO BCOS generator](../enterprise_tools/tutorial_one_click.md)。
 
 两者的主要区别在于build_chain为了使体验更好，搭建速度更快，辅助生成了群组内各个节点的私钥；但企业部署工具出于安全的考虑不辅助生成私钥，需要用户自己生成并设置。
@@ -77,7 +77,7 @@
 服务搭建成功后，可使用网页浏览器访问nginx配置的前端IP和前端端口，进入到浏览器页面。未初始化群组的浏览器页面会引导大家到新建群组配置页面，新建群组需要配置群组ID，群组名称，描述。
 
 **群组ID需要和区块链群组ID保持一致。** 群组ID有多种查看方式:
-- [rpc接口获取](../reference/api.html#getgrouplist)
+- [rpc接口获取](../api.html#getgrouplist)
 - 控制台命令: 2.6及其以上版本控制台使用手册请参考[这里](../console/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../console/console.md)。
 
 群组名称是为群组ID取的一个有意义，便于理解的名字。

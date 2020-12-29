@@ -1,5 +1,5 @@
 ##############################################################
-更多教程
+高阶教程
 ##############################################################
 
 标签：``教程``
@@ -10,7 +10,7 @@
    :hidden:
 
    multihost.md
-   enter_group.md
+   add_new_node.md
    compile.md
    caliper.md
    enc.md
@@ -18,6 +18,16 @@
    mysql_node.md
    cdn.md
 
+**高阶教程**
+
+- `搭建多机区块链网络 <./multihost.html>`_
+- `扩容一个新节点 <./add_new_node.html>`_
+- `FISCO BCOS源码编译 <./compile.html>`_
+- `使用MySQL存储账本 <./mysql_node.html>`_
+- `国内镜像和CDN加速 <./cdn.html>`_
+- `使用CFCA证书部署节点 <./cfca.html>`_
+- `配置落盘加密 <./enc.html>`_
+- `使用Caliper进行性能压测 <./caliper.html>`_
 
 **博客**
 
@@ -40,8 +50,7 @@
    - `智能合约编写之Solidity的设计模式 <../articles/3_features/35_contract/solidity_design_patterns.html>`_
    - `智能合约编写之Solidity的编程攻略 <../articles/3_features/35_contract/solidity_design_programming_strategy.html>`_
    - `Meetup回顾|16大技巧快速实现高水准智能合约 <../articles/3_features/35_contract/16skills_to_high-level_smart_contracts.html>`_
-   
+   - `Meetup回顾|存证&积分场景合约设计技巧与实例代码解析 <https://mp.weixin.qq.com/s/ER9cv-YeS5jCc9kCbUi2pw>`_
 
 
 
-   
