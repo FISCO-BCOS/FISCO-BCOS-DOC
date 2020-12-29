@@ -1,6 +1,6 @@
 # Java SDK - Java版本要求
 
-Java SDK要求JDK版本大于等于1.8，推荐使用OpenJDK/OracleJDK 15以下版本的JDK，不同系统的Java安装请参考[这里](../installation.html#id9)
+Java SDK要求JDK版本大于等于1.8，推荐使用`<= OpenJDK/OracleJDK 15`的JDK，不同系统的Java安装请参考[这里](../installation.html#id9)
 
 ------------
 
@@ -22,6 +22,8 @@ Java SDK默认的证书配置路径是`conf`，将证书放置与`resources`目�
 
 - **方法一**：在项目根目录下新建`conf`文件夹，并将SDK证书拷贝到该目录，详细参考[Java SDK快速入门章节的证书配置操作](../sdk/java_sdk/quick_start.html#sdk)
 - **方法二**：修改证书配置选项`certPath`，使其指向当前证书路径，证书配置选项说明参考[这里](../sdk/java_sdk/configuration.html#id5)
+
+- **方法三**: 使用`>= 2.7.1`版本的Java SDK
 
 ---------
 
@@ -61,7 +63,7 @@ Java SDK默认的证书配置路径是`conf`，将证书放置与`resources`目�
 
 **问题分析**
 
-Java SDK 2.6.1使用了较高版本的netty和tcnative，Web3SDK 2.6.0与Web3SDK 2.6.1使用的netty和tcnative版本较低，两者同事使用时jar包冲突，导致SDK启动报错。
+Java SDK 2.6.1使用了较高版本的netty和tcnative，Web3SDK 2.6.0与Web3SDK 2.6.1使用的netty和tcnative版本较低，两者同时使用时jar包冲突，导致SDK启动报错。
 
 **解决方法**
 

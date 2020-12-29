@@ -61,7 +61,7 @@ When a console command is launched, the console will obtain the result of the co
 ```bash
 $ cd ~ && mkdir fisco && cd fisco
 # get console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -971,7 +971,7 @@ Parameter:
 - Contract interface name: the called interface name.
 - Parameter: determined by contract interface parameters.
 
-**Parameters are separated by spaces. The string and byte type parameters need to be enclosed in double quotes; array parameters need to be enclosed in brackets, such as [1,2,3]; array is a string or byte type and needs to be enclosed in double quotation marks, such as ["alice", "bob"]. Note that there are no spaces in the array parameters; boolean types are true or false. **
+**Parameters are separated by spaces; array parameters need to be enclosed in brackets, such as [1,2,3]; array is a string or byte type and needs to be enclosed in double quotation marks, such as ["alice", "bob"]. Note that there are no spaces in the array parameters; boolean types are true or false. **
 
 
 ```text
@@ -1061,7 +1061,7 @@ Run deployByCNS and deploy the contract with [CNS](../design/features/cns_contra
 Parameter:
 
 - Contract name: deployable contract name.
-- Contract version number: deployable contract version number(the length cannot exceed 40).
+- Contract version number: deployable contract version number.
 ```text
 # To deploy HelloWorld contract 1.0 version
 [group:1]> deployByCNS HelloWorld 1.0
