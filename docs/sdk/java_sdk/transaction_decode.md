@@ -33,8 +33,8 @@ TransactionDecoderInterface decoder = new TransactionDecoderService(cryptoSuite)
 
 TransactionDecoderInterface 主要包括以下功能：
 // abi在合约生成的java客户端文件夹下,以HelloWorld.sol为例,为HelloWorld.abi中的json字符串。
-- **public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：**   解析不带函数返回值的交易回执。
-- **public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：** 解析带函数返回值的交易回执。
+- **public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：**  解析带函数返回值的交易回执。
+- **public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：** 解析不带函数返回值的交易回执。
 - **public Map\<String, List\<List\<Object\>\>\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易日志。
 - **public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)：** 解析回执的状态和报错信息等。
 
