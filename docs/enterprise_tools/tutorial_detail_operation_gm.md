@@ -10,6 +10,8 @@
 
 本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS运维部署工具一键部署](./tutorial_one_click.md)。
 
+开启使用国密SSL连接，可以在`-g`国密选项开启的情况下，配合`-G`选项开启国密SSL连接特性。
+
 ## 下载安装
 
 **下载**
@@ -962,7 +964,7 @@ bash ~/generator-C/nodeC/start_all.sh
 国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项 (**默认下载2.6.0+版本控制台不需要额外配**)：
 
 ```bash
-./generator --download_console ./ --cdn
+./generator --download_console ./ -g --cdn
 ```
 
 
