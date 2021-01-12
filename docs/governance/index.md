@@ -4,13 +4,13 @@
 
 ----
 
-## 什么是数据治理通用组件 
+## 组件定位
 
-    数据治理通用组件的全名是WeBankBlockchain-Data数据治理通用组件，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。
-    它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。
-
-    这三个组件分别从底层数据存储层、智能合约数据解析层和应用层三个方面，提供了区块链数据挖掘、裁剪、扩容、可信存储、抽取、分析、审计、对账、监管等数据治理方面的关键能力。
-    WeBankBlockchain-Data已在金融、公益、农牧产品溯源、司法存证、零售等多个行业落地和使用。
+数据治理通用组件的全名是WeBankBlockchain-Data数据治理通用组件，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。
+它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。
+    
+这三个组件分别从底层数据存储层、智能合约数据解析层和应用层三个方面，提供了区块链数据挖掘、裁剪、扩容、可信存储、抽取、分析、审计、对账、监管等数据治理方面的关键能力。
+WeBankBlockchain-Data已在金融、公益、农牧产品溯源、司法存证、零售等多个行业落地和使用。
 
 ## 设计目标
 
@@ -70,7 +70,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Export)
 - [Gitee地址](https://github.com/FISCO-BCOS/FISCO-BCOS)
-- [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/install.html)
+- [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)
 - [快速开始](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/install.html)
     
 ### WeBankBlockchain-Data-Reconcile  数据对账组件
@@ -82,7 +82,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Reconcile)
 - [Gitee地址](https://github.com/FISCO-BCOS/FISCO-BCOS)
-- [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/install.html)
+- [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/index.html)
 - [快速开始](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/install.html)
 
 ## 使用场景
