@@ -57,7 +57,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Stash)
-- [Gitee地址](https://github.com/FISCO-BCOS/FISCO-BCOS)
+- [Gitee地址](https://gitee.com/WeBankBlockchain/Data-Stash)
 - [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)
 - [快速开始](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/quickstart.html)
 
@@ -69,7 +69,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Export)
-- [Gitee地址](https://github.com/FISCO-BCOS/FISCO-BCOS)
+- [Gitee地址](https://gitee.com/WeBankBlockchain/Data-Export)
 - [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)
 - [快速开始](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/install.html)
     
@@ -81,7 +81,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Reconcile)
-- [Gitee地址](https://github.com/FISCO-BCOS/FISCO-BCOS)
+- [Gitee地址](https://gitee.com/WeBankBlockchain/Data-Reconcile)
 - [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/index.html)
 - [快速开始](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/install.html)
 
