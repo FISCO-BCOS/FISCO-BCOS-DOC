@@ -148,7 +148,7 @@ cat node4/conf/node.nodeid
 ]
 ```
 
-2. 使用addObserver将node4作为观察节点加入群组1
+2. 使用addSealer将node4作为共识节点加入群组1
 
 ```bash
 [group:1]> getSealerList
