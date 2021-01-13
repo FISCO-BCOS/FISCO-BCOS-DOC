@@ -15,3 +15,6 @@
    certificate.md
    console.md
    tools.md
+   contract.md
+   tx.md
+   precompiled.md
