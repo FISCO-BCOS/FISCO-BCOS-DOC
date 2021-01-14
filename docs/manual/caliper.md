@@ -383,6 +383,11 @@ scp -r 192.168.1.4/node0/ app@192.168.1.3:/data/test
                     "rpcPort": "8914",
                     "channelPort": "20914"
                 },
+                 {
+                    "ip": "192.168.1.4",
+                    "rpcPort": "8914",
+                    "channelPort": "20914"
+                }
            ],
             "authentication": {
                 "key": "packages/caliper-samples/network/fisco-bcos/4nodes1group/sdk/node.key",
