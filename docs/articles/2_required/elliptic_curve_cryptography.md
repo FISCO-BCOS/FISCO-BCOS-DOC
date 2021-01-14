@@ -12,7 +12,7 @@
 
 现今有非常多的公钥加密算法，椭圆曲线只是其中之一。其他的有 RSA、Diffie-Helman 等等。我们先简单介绍一下公钥加密是如何工作的，如下图所示。
 
-![avatar](../../../images/articles/elliptic_curve_cryptography/ecc_1.jpeg)
+![](../../../images/articles/elliptic_curve_cryptography/ecc_1.jpeg)
 
 我们生成了两把钥匙，一把公钥，一把私钥。公钥是对外公开的，任何人都可以拿它对数据进行加密。私钥是留在自己手里的，用于解密公钥加密后的数据。
 
@@ -76,7 +76,7 @@
 
 本章的核心来了，ECC 的陷门函数非常特别，它看起来像是在打台球。首先，我们在曲线上确定一个起点，然后我们用一个方法(dot function) 去找到下一个点。重复调用 dot 方法，直到我们到达最后一个点。如下图所示:
 
-![avatar](../../../images/articles/elliptic_curve_cryptography/ecc_2.gif)
+![](../../../images/articles/elliptic_curve_cryptography/ecc_2.gif)
 
 * 从 A 点开始。
 * A dot B = -C (从 A 点画一条直线到 B 点，直线与曲线相交于 -C 点)
@@ -105,17 +105,17 @@ Private Key: A 到 E 共计执行了几次 dot 方法
 
 举例说明，这是曲线 y2 = x3 - x + 1 的部分视图:
 
-![avatar](../../../images/articles/elliptic_curve_cryptography/ecc_3.png)
+![](../../../images/articles/elliptic_curve_cryptography/ecc_3.png)
 
 如果把点的最大值设置为 97，则整数点的分布如下图所示:
 
-![avatar](../../../images/articles/elliptic_curve_cryptography/ecc_4.png)
+![](../../../images/articles/elliptic_curve_cryptography/ecc_4.png)
 
 虽然看起来很难想象这是一条曲线，但它就是。由于最大值为 97，如果 dot 方法的结果大于 97，那么它会被折回。再加上我们只标出了整数点，所以看起来会有点怪。我们依然可以从图中看出这些点是基于 X 轴对称的。
 
 实际上，我们还是可以在这张图上面打台球，把相关的点都连起来。如下图所示，当 A dot B 的直线碰到球桌边界时，它神奇的出现在了台球桌的另一面，并且继续画直线。如果又遇到了边界，又神奇的出现在了台球桌的另一面，直到直线跟曲线相交点的位置小于最大值。
 
-![avatar](../../../images/articles/elliptic_curve_cryptography/ecc_5.gif)
+![](../../../images/articles/elliptic_curve_cryptography/ecc_5.gif)
 
 到这里，我们可以这样理解椭圆曲线加密体系，有一个大质数作为最大值，有一个曲线方程，有一个公开的起点。私钥是数字 priv，公钥是起点被执行 priv 次 dot 方法的点。
 
