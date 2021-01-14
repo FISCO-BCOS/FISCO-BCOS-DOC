@@ -23,11 +23,11 @@
 - `搭建多机区块链网络 <./multihost.html>`_
 - `扩容一个新节点 <./add_new_node.html>`_
 - `FISCO BCOS源码编译 <./compile.html>`_
-- `使用MySQL存储账本 <./mysql_node.html>`_
-- `国内镜像和CDN加速 <./cdn.html>`_
+- `Caliper压力测试指南 <./caliper.html>`_
+- `存储加密 <./enc.html>`_
 - `使用CFCA证书部署节点 <./cfca.html>`_
-- `配置落盘加密 <./enc.html>`_
-- `使用Caliper进行性能压测 <./caliper.html>`_
+- `使用MySQL存储引擎 <./mysql_node.html>`_
+- `国内镜像和CDN加速 <./cdn.html>`_
 
 **博客**
 
