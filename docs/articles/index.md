@@ -33,6 +33,7 @@ FISCO BCOS开源社区已沉淀120+篇技术文章，这些文章涉猎理论、
    2_required/practical_skill_tree.md
    2_required/entry_to_master.md
    2_required/go_through_sourcecode.md
+   2_required/elliptic_curve_cryptography.md
 ```
 
 ## FISCO BCOS的原理和特性
