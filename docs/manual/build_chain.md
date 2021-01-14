@@ -171,7 +171,38 @@ bash build_chain.sh -l 127.0.0.1:2 -g -G
 
 ### **`t`选项[**Optional**]**
 
-该选项用于指定生成证书时的证书配置文件。
+该选项用于指定生成证书时的证书配置文件，当前该选项只对非国密模式生效，配置文件示例如下
+
+```bash
+[ca]
+default_ca=default_ca
+[default_ca]
+default_days = 365
+default_md = sha256
+
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+[req_distinguished_name]
+countryName = CN
+countryName_default = CN
+stateOrProvinceName = State or Province Name (full name)
+stateOrProvinceName_default =GuangDong
+localityName = Locality Name (eg, city)
+localityName_default = ShenZhen
+organizationalUnitName = Organizational Unit Name (eg, section)
+organizationalUnitName_default = fisco-bcos
+commonName =  Organizational  commonName (eg, fisco-bcos)
+commonName_default = fisco-bcos
+commonName_max = 64
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v4_req ]
+basicConstraints = CA:TRUE
+```
 
 ### **`6`选项[**Optional**]**
 
