@@ -132,27 +132,27 @@ public CryptoKeyPair getCreatedCryptoKeyPair(Client client)
 
 ## 4. `p12`和`pem`文件解析接口
 
-java sdk的`org.fisco.bcos.sdk.crypto.keystore.KeyManager`提供`p12`和`pem`文件解析接口。
+java sdk的`org.fisco.bcos.sdk.crypto.keystore.KeyTool`提供`p12`和`pem`文件解析接口。
 
 从指定文件加载`pem`文件示例如下：
 
 ```java
-public KeyManager loadPem(String pemFilePath)
+public KeyTool loadPem(String pemFilePath)
 {
-    return new PEMManager(pemFilePath);
+    return new PEMKeyStore(pemFilePath);
 }
 ```
 
 从指定文件加载`pem`文件示例如下：
 
 ```java
-public KeyManger loadP12(String p12FilePath, String password)
+public KeyTool loadP12(String p12FilePath, String password)
 {
-    return new P12Manager(p12FilePath, password);
+    return new P12KeyStore(p12FilePath, password);
 }
 ```
 
-`pem`和`p12`解析后生成的`KeyManager`对象提供了访问公私钥信息的接口如下：
+`pem`和`p12`解析后生成的`KeyTool`对象提供了访问公私钥信息的接口如下：
 
 ```java
 // 获取公私钥对信息
@@ -162,18 +162,18 @@ public KeyPair getKeyPair();
 此外，`org.fisco.bcos.sdk.crypto.CryptoSuite`也提供了将`java.security.KeyPair`类型的公私钥信息转换为`CryptoKeyPair`的功能，示例如下：
 
 ```java
-// KeyManager中维护的是非国密公私钥信息
-public CryptoKeyPair loadKeyManager(KeyManager keyManager)
+// KeyTool中维护的是非国密公私钥信息
+public CryptoKeyPair loadKeyStore(KeyTool keyTool)
 {
-    KeyPair keyPair = keyManager.getKeyPair();
+    KeyPair keyPair = keyTool.getKeyPair();
     CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
     return cryptoSuite.createKeyPair(keyPair);
 }
 
-// KeyManager中维护的是国密公私钥信息
-public CryptoKeyPair loadGMKeyManager(KeyManager GMKeyManager)
+// KeyTool中维护的是国密公私钥信息
+public CryptoKeyPair loadGMKeyStore(KeyTool gmKeyTool)
 {
-    KeyPair keyPair = GMKeyManager.getKeyPair();
+    KeyPair keyPair = gmKeyTool.getKeyPair();
     CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
     return cryptoSuite.createKeyPair(keyPair);
 }
