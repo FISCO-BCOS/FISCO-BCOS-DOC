@@ -106,7 +106,7 @@ amop.subscribeTopic("MyTopic", cb);
 **参数：**
 
 * topicName: 话题名称。类型：``String``。
-* privateKeyManager：证明订阅者身份的私钥信息。类型：``KeyManager``。
+* privateKeyTool：证明订阅者身份的私钥信息。类型：``KeyTool``。
 * callback: 处理该话题消息的函数，当收到该话题相关消息时，会被调用。类型：``AmopCallback``。
 
 **例子：**
@@ -127,7 +127,7 @@ AmopCallback cb = new AmopCallback() {
 };
 
 // 加载私钥
-KeyManager km = new P12Manager("private_key.p12", "12s230");
+KeyTool km = new P12KeyStore("private_key.p12", "12s230");
 
 // 订阅话题
 amop.subscribePrivateTopics("MyPrivateTopic", km, cb);
@@ -142,7 +142,7 @@ amop.subscribePrivateTopics("MyPrivateTopic", km, cb);
 **参数：**
 
 * topicName: 话题名称。类型：``String``。
-* publicKeyManagers：指定订阅者的公钥列表。类型：``List<KeyManager>``。
+* publicKeyTools：指定订阅者的公钥列表。类型：``List<KeyTool>``。
 
 **例子**：
 
@@ -152,9 +152,9 @@ BcosSDK sdk = new BcosSDK("config-example.toml");
 Amop amop = sdk.getAmop();
 
 // 加载指定订阅者的私钥列表
-List<KeyManager> publicKeyList = new ArrayList<>();
-KeyManager pubKey1 = new PEMManager("target_subscriber1_public_key.pem");
-KeyManager pubKey2 = new PEMManager("target_subscriber2_public_key.pem");
+List<KeyTool> publicKeyList = new ArrayList<>();
+KeyTool pubKey1 = new PEMKeyStore("target_subscriber1_public_key.pem");
+KeyTool pubKey2 = new PEMKeyStore("target_subscriber2_public_key.pem");
 publicKeyList.add(pubKey1);
 publicKeyList.add(pubKey2);
 
