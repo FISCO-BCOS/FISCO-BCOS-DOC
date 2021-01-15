@@ -6,7 +6,7 @@
 
 java sdk提供账户管理接口，支持以下功能：
 
-- **账户加载**: 从指定路径加载账户，同时支持`pem`和`p12`格式的账户文件加载
+- **账户加载**: 从指定路径加载账户，同时支持`pem`和`p12`格式的账户文件加载，也支持加载十六进制的私钥字符串
 
 - **账户生成**: 随机生成账户公私钥对
 
@@ -25,6 +25,83 @@ java sdk提供账户管理接口，支持以下功能：
 
 java sdk的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./configuration.html#id6).
 
+### 1.1 从十六进制私钥字符串加载账户
+
+从十六进制私钥字符串加载账户的示例如下：
+
+```java
+/* 示例一：创建cryptoSuite，通过CryptoSuite加载私钥字符串 ****/
+// cryptoType: 用于需要指定加载的私钥类型
+// hexPrivateKey: 十六进制的私钥字符串
+public CryptoKeyPair loadAccountFromHexPrivateKey(int cryptoType, String hexPrivateKey)
+{
+    // 根据cryptoType创建cryptoSuite，cryptoType目前支持：
+    // 1. CryptoType.ECDSA_TYPE: 用于创建非国密类型的CryptoSuite
+    // 2. CryptoType.SM_TYPE:    用于创建国密类型的CryptoSuite
+    CryptoSuite cryptoSuite = new CryptoSuite(cryptoType);
+    // 从十六进制私钥字符串hexPrivateKey加载私钥对象
+    return cryptoSuite.getKeyPairFactory().createKeyPair(hexPrivateKey);
+}
+
+/* 示例二：直接加载非国密私钥 ****/
+public CryptoKeyPair loadECDSAAccountFromHexPrivateKey(String hexPrivateKey)
+{
+    // 创建国密类型的KeyFactory
+    ECDSAKeyPair keyFacotry = new ECDSAKeyPair();
+    // 从十六进制字符串加载hexPrivateKey
+    return keyFacotry.createKeyPair(hexPrivateKey);
+}
+
+/* 示例三：直接加载国密私钥 ****/
+public CryptoKeyPair loadGMAccountFromHexPrivateKey(String hexPrivateKey)
+{
+    // 创建国密类型的KeyFactory
+    SM2KeyPair keyFacotry = new SM2KeyPair();
+    // 从十六进制字符串加载hexPrivateKey
+    return keyFacotry.createKeyPair(hexPrivateKey);
+}
+
+```
+
+### 1.2 从大整数私钥加载账户
+
+**从大整数私钥加载账户的示例如下：**
+
+```java
+/* 示例一：创建cryptoSuite，通过CryptoSuite加载私钥字符串 ****/
+// cryptoType: 用于需要指定加载的私钥类型
+// privateKey: 私钥
+public CryptoKeyPair loadAccountFromHexPrivateKey(int cryptoType, BigInteger privateKey)
+{
+    // 根据cryptoType创建cryptoSuite，cryptoType目前支持：
+    // 1. CryptoType.ECDSA_TYPE: 用于创建非国密类型的CryptoSuite
+    // 2. CryptoType.SM_TYPE:    用于创建国密类型的CryptoSuite
+    CryptoSuite cryptoSuite = new CryptoSuite(cryptoType);
+    // 从十六进制私钥字符串hexPrivateKey加载私钥对象
+    return cryptoSuite.getKeyPairFactory().createKeyPair(privateKey);
+}
+
+/* 示例二：直接加载非国密私钥 ****/
+public CryptoKeyPair loadECDSAAccountFromHexPrivateKey(BigInteger privateKey)
+{
+    // 创建国密类型的KeyFactory
+    ECDSAKeyPair keyFacotry = new ECDSAKeyPair();
+    // 从十六进制字符串加载hexPrivateKey
+    return keyFacotry.createKeyPair(privateKey);
+}
+
+/* 示例三：直接加载国密私钥 ****/
+public CryptoKeyPair loadGMAccountFromHexPrivateKey(BigInteger privateKey)
+{
+    // 创建国密类型的KeyFactory
+    SM2KeyPair keyFacotry = new SM2KeyPair();
+    // 从十六进制字符串加载hexPrivateKey
+    return keyFacotry.createKeyPair(privateKey);
+}
+```
+
+### 1.3 从pem文件加载账户
+
 从指定`pem`账户文件加载交易发送账户的示例如下(client初始化方法请参考[快速入门](./quick_start.html#id4))：
 
 ```java
@@ -37,6 +114,8 @@ public void loadPemAccount(Client client, String pemAccountFilePath)
     cryptoSuite.loadAccount("pem", pemAccountFilePath, null);
 }
 ```
+
+### 1.4 从p12文件加载账户
 
 从指定的`p12`账户文件加载交易发送账户的示例如下：
 
@@ -78,8 +157,6 @@ CryptoKeyPair cryptoKeyPair = cryptoSuite.createKeyPair();
 // 获取账户地址
 String accountAddress = cryptoKeyPair.getAddress();
 ```
-
-
 
 ## 3. 账户保存
 
@@ -134,6 +211,8 @@ public CryptoKeyPair getCreatedCryptoKeyPair(Client client)
 
 java sdk的`org.fisco.bcos.sdk.crypto.keystore.KeyTool`提供`p12`和`pem`文件解析接口。
 
+### 4.1 `pem`账户文件解析接口
+
 从指定文件加载`pem`文件示例如下：
 
 ```java
@@ -143,6 +222,8 @@ public KeyTool loadPem(String pemFilePath)
 }
 ```
 
+### 4.2 `p12`账户文件解析接口
+
 从指定文件加载`pem`文件示例如下：
 
 ```java
@@ -151,6 +232,8 @@ public KeyTool loadP12(String p12FilePath, String password)
     return new P12KeyStore(p12FilePath, password);
 }
 ```
+
+### 4.3 通过`KeyTool`获取`KeyPair`对象
 
 `pem`和`p12`解析后生成的`KeyTool`对象提供了访问公私钥信息的接口如下：
 
