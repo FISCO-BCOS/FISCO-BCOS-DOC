@@ -148,7 +148,7 @@ ps -ef | grep -v grep | grep fisco-bcos
 ```
 
 正常情况会有类似下面的输出；
-如果进程数不为4，则进程没有启动（一般是端口被占用导致的）
+如果进程数不为4，则进程没有启动（一般是端口被占用导致的）。
 
 ```bash
 fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
