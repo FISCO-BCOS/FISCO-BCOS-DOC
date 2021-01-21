@@ -1,6 +1,6 @@
 # 创建和使用账户
 
-标签：``创建账户`` ``国密账户`` ``密钥文件`` 
+标签：``创建账户`` ``国密账户`` ``密钥文件``
 
 ----
 
@@ -30,7 +30,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
 ```
 
 国密版本请使用下面的指令获取脚本
@@ -41,7 +41,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
     - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/tassl-1.0.2/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
 ```
 
