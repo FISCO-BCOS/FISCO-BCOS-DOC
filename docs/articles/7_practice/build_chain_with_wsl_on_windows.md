@@ -157,7 +157,13 @@ sudo chmod 777 /etc/apt/sources.list
 notepad.exe /etc/apt/sources.list
 ```
 
-在记事本中将文件整个替换为
+若记事本显示无法找到源文件目录，则使用如下代码
+```bash
+sudo chmod 777 /etc/apt/sources.list
+sudo vim /etc/apt/sources.list
+```
+
+在记事本/vim中将文件整个替换为
 
 ```
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
