@@ -317,3 +317,54 @@ ApplicationContext context =
     new ClassPathXmlApplicationContext("classpath:applicationContext-sample.xml");
 BcosSDK sdk = context.getBean(BcosSDK.class);
 ```
+
+### 附录四. 使用`ConfigOption`初始化`BcosSDK`
+
+Java SDK提供了灵活的`BcosSDK`初始化方式，应用除了直接通过`toml`和`xml`直接初始化`BcosSDK`外，还可通过`ConfigProperty`对象加载`ConfigOption`，并使用`ConfigOption`初始化`BcosSDK`。
+
+`ConfigProperty`维护了`key, value`类型配置映射，其核心的数据结构如下：
+
+```java
+public class ConfigProperty {
+    // 证书配置选项，目前主要包括以下几个配置项：
+    // certPath: 证书路径
+    // caCert: CA证书路径
+    // sslCert: SDK证书
+    // sslKey: SDK私钥
+    // enSslCert: 国密SSL的SDK证书
+    // enSslKey: 国密SSL的SDK私钥
+    public Map<String, Object> cryptoMaterial;
+
+    // SDK到节点的网络配置选项，目前包含以下配置选项：
+    // peers: 配置SDK连接的节点列表
+    public Map<String, Object> network;
+
+    // AMOP配置选项，目前包括以下配置项：
+    // topicName: 订阅的AMOP topic
+    // publicKeys: 私有AMOP topic中，定义允许接收本客户端消息的其他客户端的公钥列表，用于进行topic认证
+    // privateKey: 私有AMOP topic中，定义本客户端的私钥，用于进行topic认证
+    // password: 若客户端私钥是p12文件，此配置项定义私钥文件的加载密码
+    public List<AmopTopic> amop;
+    public Map<String, Object> account;
+
+    public Map<String, Object> threadPool;
+}
+```
+应用可根据实际情况初始化`ConfigProperty`，`ConfigProperty`初始化完毕后，可加载产生`ConfigOption`，示例代码如下：
+
+```java
+// 从ConfigProperty加载ConfigOption
+public ConfigOption loadConfigOption(ConfigProperty configProperty)throws ConfigException
+{
+    return new ConfigOption(configProperty);
+}
+```
+
+初始化`ConfigOption`后，可通过`ConfigOption`创建`BcosSDK`，示例代码如下：
+
+```java
+public BcosSDK createBcosSDK(ConfigOption configOption)throws BcosSDKException
+{
+    return new BcosSDK(configOption);
+}
+```
