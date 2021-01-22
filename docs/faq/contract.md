@@ -4,7 +4,7 @@
 
 ----
 
-## CompilerError: Stack too deep, try removing local variables
+## 1. CompilerError: Stack too deep, try removing local variables
 
 **问题描述:**
 
@@ -13,5 +13,10 @@
 
 **解决方法:**
 
-1. 减少接口内部定义的局部变量个数
-2. 可以使用数组或者struct类型作为参数减少参数列表的个数
+- 减少接口内部定义的局部变量个数
+- 可以使用数组或者struct类型作为参数减少参数列表的个数
+
+
+## 2. sol转换java编译报错: Unsupported type encountered: tuple
+
+目前Java SDK还不支持`struct`类型的`sol`到`Java`的转换，后续版本会支持，请关注[Java SDK Issue #248](https://github.com/FISCO-BCOS/java-sdk/issues/248)
