@@ -18,3 +18,4 @@
    contract.md
    tx.md
    precompiled.md
+   compile.md
