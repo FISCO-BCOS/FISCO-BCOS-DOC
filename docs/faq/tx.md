@@ -4,7 +4,8 @@
 
 ----
 
-## out of gas
+FISCO BCOS完整的错误码描述请参考[这里](../api.html#id1).
+## 1. out of gas
 
 **问题描述:**
 
@@ -19,7 +20,7 @@
 
 2. 检查合约的逻辑，修复合约逻辑的漏洞
 
-## revert instruction
+## 2. revert instruction
 
 **问题描述:**
 
@@ -34,3 +35,4 @@
 **解决方法:**
 
 检查合约逻辑，修复漏洞。
+
