@@ -345,8 +345,18 @@ public class ConfigProperty {
     // privateKey: 私有AMOP topic中，定义本客户端的私钥，用于进行topic认证
     // password: 若客户端私钥是p12文件，此配置项定义私钥文件的加载密码
     public List<AmopTopic> amop;
+
+    // 账户配置项，目前包括以下配置项：
+    // keyStoreDir: 账户私钥保存路径，默认为account
+    // accountFilePath: 从配置文件中加载的账户路劲
+    // accountFileFormat: 账户格式，目前支持pem和p12
+    // accountAddress: 加载的账户地址
+    // password: 加载p12类型账户私钥时，定义访问账户私钥的口令
     public Map<String, Object> account;
 
+    // 线程池配置项，目前主要包括以下配置项:
+    // channelProcessorThreadSize: 处理channel消息包的线程数目，默认为CPU核心线程数目
+    // receiptProcessorThreadSize: 处理交易回执的线程数目，默认为CPU核心数目
     public Map<String, Object> threadPool;
 }
 ```
