@@ -4,11 +4,16 @@
 
 ## 一：概述
 
-本文讲述了基于“适用于Windows的Linux子系统（wsl/wsl2）”，在Windows-10平台上无双启动/虚拟机负担搭建Fisco-Bcos的流程和心得，并结合@power老师的charp-sdk进行本机调试。
+最近有一些朋友在FISCO的社区提到，因为某些限制，只能使用Windows平台进行开发，希望有一个基于Windows的Fisco-Bcos部署教程。正好@power林宣名老师 的C# SDK也趋于成熟，因此写下了这篇文章，希望能让Windows部署Fisco开发环境变得更加简单。
 
-wsl与wsl2在底层实现上完全不同，区别请参看https://docs.microsoft.com/zh-cn/windows/wsl/compare-versions
+本文介绍了采用**适用于Windows的Linux子系统(wsl/wsl2)**，在Windows-10平台上无双系统/虚拟机负担搭建Fisco-Bcos的流程和心得，届时可以将Visual Studio和Fisco的开发结合起来，搭建一个较为舒适的Windows开发环境。
 
-本文在二者有差异的地方会分别指出，推荐使用wsl2。
+wsl与wsl2在底层实现上完全不同，区别请参看https://docs.microsoft.com/zh-cn/windows/wsl/compare-versions。
+
+基于wsl第一代使用linux中间件翻译的性能和兼容性考虑，推荐使用基于轻量级hyper-v的wsl2，对于不想使用hyper-v的朋友，可以只使用wsl，至少在当前阶段尚未发现有兼容性问题。
+
+由于二者在搭建fisco的步骤上完全一致，本文会先在wsl上搭建fisco单机4节点区块链，再切换到wsl2安装控制台以展示二者可随时切换的性质。
+
 
 ## 二：配置要求
 
@@ -107,11 +112,11 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/taskmgr_fisco.png)
 
-通过右键点击进程，可以快速定位到Ubuntu子系统的Home目录
+通过右键点击进程，可以快速定位到Ubuntu子系统的Home目录，**不要在Windows中修改这个目录里的任何文件**，要访问wsl的Home，在资源管理器的地址栏中输入：\wsl$
 
 ## 五：wsl与wsl2之间的切换
 
-本部分介绍如何在wsl和wsl2之间切换，在接下来的6，7节中的所有教程同时适用于wsl及wsl2，推荐使用基于轻量级虚拟系统的wsl2。
+本部分介绍如何在wsl和wsl2之间切换，本书中所有教程同时适用于wsl及wsl2，可以在任意一步切换wsl版本并继续教程
 
 首先停止刚才启动的fisco节点，并退出Ubuntu子系统
 
@@ -150,7 +155,7 @@ wsl --set-version Ubuntu-20.04 1
 
 安装教程请参照[搭建第一个区块链网络](../../installation.md)中安装控制台部分，本文尽量简短的做一个整合介绍
 
-由于Ubuntu源实在太慢，jdk下载速度堪忧，在此更换为阿里的源
+由于Ubuntu子系统自带的源在国外，对国内的用户来说，jdk下载速度会很慢，在此更换为国内阿里的镜像
 
 ```bash
 sudo chmod 777 /etc/apt/sources.list
