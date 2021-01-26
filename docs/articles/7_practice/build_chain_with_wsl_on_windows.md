@@ -1,6 +1,6 @@
 # 基于wsl/wsl2的Windows-10搭建Fisco-Bcos区块链心得
 
-作者：黄一（成都万物数创科技有限公司）｜FISCO BCOS 开发者
+作者：黄一（四川万物数创科技有限公司）｜FISCO BCOS 开发者
 
 ## 一：概述
 
