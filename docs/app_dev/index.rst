@@ -50,11 +50,6 @@
    ../manual/account.md
    ../manual/smart_contract.md
    ../manual/precompiled_contract.md
-   ../sdk/java_sdk/index.md
-   ../sdk/java_sdk.md
-   ../sdk/nodejs_sdk/index.rst
-   ../sdk/python_sdk/index.rst
-   ../sdk/go_sdk/index.rst
    ../manual/amop_protocol.md
    ../manual/transaction_parallel.md
    ../manual/privacy.md
