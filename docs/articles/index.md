@@ -103,6 +103,7 @@ FISCO BCOS开源社区已沉淀120+篇技术文章，这些文章涉猎理论、
    7_practice/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0.md
    7_community/group_deploy_case.md
    7_community/suibe_blockchain_center_toolbox.md
+   7_practice/ansible_FISCO-BCOS_Webase-deploy.md
 ```
 
 ## 社区写作指南
