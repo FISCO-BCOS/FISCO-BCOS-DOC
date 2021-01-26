@@ -9,6 +9,7 @@
 ```eval_rst
 .. note::
     - 搭建全链路国密版本的链，`请参考这里 <manual/guomi_crypto.html>`_ 。
+    - FISCO BCOS支持x86_64和aarch64（ARM）架构的Linux和macOS，ARM架构需要编译源码获取fisco-bcos可执行程序。
 ```
 
 ## 1. 搭建单群组FISCO BCOS联盟链
@@ -60,7 +61,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/buil
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/manual/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ![](./../images/installation/download_build_chain.gif)
@@ -194,9 +195,9 @@ info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 ```eval_rst
 .. important::
     - ``控制台1.x`` 系列基于 `Web3SDK <sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
-    - 2.6及其以上版本控制台使用文档请 `参考这里 <console/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <console/console.html>`_ 
+    - 2.6及其以上版本控制台使用文档请 `参考这里 <console/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <console/console.html>`_
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
-    - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <console/download_console.html>`_ 
+    - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <console/download_console.html>`_
 ```
 
 在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](console/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](console/console.md)。
@@ -298,7 +299,7 @@ ClientVersion{
         ipAndPort='127.0.0.1:30302',
         agency='agency',
         topic=[
-            
+
         ],
         node='node2'
     },
@@ -316,13 +317,13 @@ ClientVersion{
         ipAndPort='127.0.0.1:30303',
         agency='agency',
         topic=[
-            
+
         ],
         node='node3'
     }
 ]
 
-[group:1]> 
+[group:1]>
 ```
 
 ![](./../images/installation/console.png)
