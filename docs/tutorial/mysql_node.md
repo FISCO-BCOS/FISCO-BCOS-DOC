@@ -137,7 +137,7 @@ sudo yum install -y openssl openssl-devel curl
 mkdir -p ~/fisco && cd ~/fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 2.3 搭建单机4节点分布式存储区块链网络

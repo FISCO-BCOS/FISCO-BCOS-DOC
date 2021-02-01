@@ -63,7 +63,7 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 ### 下载开发部署工具
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh
 ```
 
 如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
