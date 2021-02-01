@@ -27,7 +27,7 @@ FISCO BCOS每个新版本发布会在[GitHub的release](https://github.com/FISCO
 
 ## FISCO BCOS文档镜像
 
-FISCO BCOS文档使用readthedocs管理，全部开源于[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)，同样提供国内镜像[http://www.fisco-bcos.org/developer/](http://www.fisco-bcos.org/developer/)。
+FISCO BCOS文档使用readthedocs管理，全部开源于[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)，同样提供国内镜像[http://docs.fisco-bcos.org](http://docs.fisco-bcos.org)。
 
 每个版本发布会为上个版本的文档打Tag，新版本的文档会合入主干分支，文档由于会持续改进，所以是下个版本发布才打上个版本的tag。readthedocs文档支持下载PDF格式，方便用户使用。
 
