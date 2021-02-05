@@ -62,7 +62,7 @@ $ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison 
 推荐xcode10以上版本。macOS依赖包安装依赖于[Homebrew](https://brew.sh/)。
 
 ```bash
-brew install openssl git flex patch bison gmp
+brew install openssl git flex bison gmp
 ```
 
 ### 克隆代码
