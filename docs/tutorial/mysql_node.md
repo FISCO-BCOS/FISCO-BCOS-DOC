@@ -62,13 +62,13 @@ mysql> set password for root@localhost = password('123456');
 
 **修改MySQL配置文件**
 
+在`/etc/mysql/my.cnf`配置文件的`[mysqld]`部分添加如下配置：
+
 ```bash
-sudo bash -c 'cat >> /etc/mysql/my.cnf << EOF
 max_allowed_packet = 1024M
 sql_mode =STRICT_TRANS_TABLES
 ssl=0
 default_authentication_plugin = mysql_native_password
-EOF'
 ```
 **重启MySQL服务**
 
