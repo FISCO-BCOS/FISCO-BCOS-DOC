@@ -1,6 +1,6 @@
-# 基于ABI和BIN的合约调用
+# 基于ABI和BIN调用合约
 
-标签：``java-sdk`` ``发送交易`` 
+标签：``java-sdk`` ``发送交易`` ``使用接口签名发送交易`` ``组装交易`` ``合约调用``
 
 ----
 ```eval_rst
@@ -8,7 +8,34 @@
     java sdk同时支持将 `solidity` 转换为 `java` 文件后，调用相应的 `java` 方法部署和调用合约，也支持构造交易的方式部署和调用合约，这里主要展示交易构造与发送，前者的使用方法请参考 `这里 <./quick_start.html#solidityjava>`_ 
 ```
 
-## 1. 准备abi和binary文件
+## 概念解析：部署和调用
+合约的操作可分为合约部署和合约调用两大类。其中合约调用又可以被区分为『交易』和『查询』。
+
+**合约部署**是指新创建和发布一个合约。交易创建传入的数据会被转换为 EVM 字节码并执行，执行的输出将作为合约代码被永久存储。
+
+**合约调用**是指调用已部署的合约的函数。合约调用又可以被区分为『交易』和『查询』。
+
+**“查询”**：被view修饰符修饰的方法一般称为“查询”，“查询”无需被同步和发送给到其他节点全网共识。
+
+**“交易”**：未被修饰的才会称为“交易”。，而“交易”需发送全网进行上链的共识。
+
+以下是“交易”和“查询”更详细的区别。
+
+| 内容 | 查询 | 交易 |
+| ---- | ---- | ----|
+| 合约表现 | view修饰 | 无view修饰符 |
+| ABI表现 | "constant":true | "constant":false |
+| 是否需要签名 | 否  | 是 |
+| rpc类型  | call | sendTransaction |
+| 执行节点 | 所有共识节点 | 执行层面 |
+| 是否消耗gas | 否 | 是 |
+| 是否变更存储状态 | 否 | 是 |
+
+
+## 快速上手
+在快速上手环节，使用同步方式来发送。
+
+### 1. 准备abi和binary文件
 控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
 
 通过运行sol2java.sh脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
@@ -29,16 +56,8 @@ contract HelloWorld{
 }
 ```
 
-
-
-## 2. 部署并调用合约
-
-Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。可以使用AssembleTransactionProcessor来完成合约操作。
-
-### 2.1 部署合约
-
-部署合约调用了deployByContractLoader方法，传入合约名和构造函数的参数，上链部署合约，并获得TransactionResponse的结果。
-
+### 2. 初始化SDK
+基于配置文件，初始化SDK，如：
 ```java
     // 初始化BcosSDK对象
     BcosSDK sdk = new BcosSDK(configFile);
@@ -46,7 +65,33 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
     Client client = sdk.getClient(Integer.valueOf(1));
     // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
     CryptoKeyPair keyPair = client.getCryptoSuite().createKeyPair();
-    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
+```
+
+
+### 3. 初始化配置对象
+
+#### 部署、交易和查询
+
+Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。本场景下适用于默认的情况，通过创建和使用AssembleTransactionProcessor对象来完成合约相关的部署、调用和查询等操作。
+
+```java
+       AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
+```
+
+#### 仅交易和查询
+假如只交易和查询，而不部署合约，那么就不需要复制binary文件，且在构造时无需传入binary文件的路径，例如构造方法的最后一个参数可传入空字符串。
+
+```java
+    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
+```
+
+### 4. 发送操作指令
+完成初始化和
+
+#### 4.1 同步部署合约
+部署合约调用了deployByContractLoader方法，传入合约名和构造函数的参数，上链部署合约，并获得TransactionResponse的结果。
+
+```java
     // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
     TransactionResponse response = transactionProcessor.deployByContractLoader("HelloWorld", new ArrayList<>());
 
@@ -94,27 +139,8 @@ TransactionResponse的数据结构如下：
 }
 ```
 
-
-### 2.2 调用合约
-假如只调用合约，而不部署合约，那么就不需要复制binary文件，且在构造时无需传入binary文件的路径，例如构造方法的最后一个参数可传入空字符串。
-
-```java
-    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
-```
-
-合约调用又可以被区分为『交易』和『查询』。被view修饰符修饰的方法一般称为“查询”，而未被修饰的才会称为“交易”。以下是“交易”和“查询”更详细的区别。
-
-| 内容 | 查询 | 交易 |
-| ---- | ---- | ----|
-| 合约表现 | view修饰 | 无view修饰符 |
-| ABI表现 | "constant":true | "constant":false |
-| 是否需要签名 | 否  | 是 |
-| rpc类型  | call | sendTransaction |
-| 执行节点 | 所有共识节点 | 执行层面 |
-| 是否消耗gas | 否 | 是 |
-| 是否变更存储状态 | 否 | 是 |
-
-#### 2.2.1 发送交易
+ 
+#### 4.2 同步交易
 
 调用合约交易使用了sendTransactionAndGetResponseByContractLoader来调用合约交易，此处展示了如何调用HelloWorld中的set函数。
 
@@ -159,9 +185,8 @@ TransactionResponse的数据结构如下：
 }
 ```
 
-
-#### 2.2.2 查询合约
-查询合约使用了sendCallByContractLoader来查询合约，此处展示了如何调用HelloWorld中的name函数来进行查询。
+#### 4.3 查询
+查询合约直接通过调用链上的节点查询函数即可返回结果，无需共识；因此所有的查询交易都是同步的。查询合约使用了sendCallByContractLoader函数来查询合约，此处展示了如何调用HelloWorld中的name函数来进行查询。
 
 ```
     // 查询HelloWorld合约的『name』函数，合约地址为helloWorldAddress，参数为空
@@ -178,9 +203,11 @@ TransactionResponse的数据结构如下：
 }
 ```
 
-## 3. 详细API功能介绍
+## 详细API功能介绍
 
-AssembleTransactionProcessor支持自定义参数发送交易，详细的API功能如下。
+AssembleTransactionProcessor支持自定义参数发送交易，支持异步的方式来发送交易，也支持返回多种封装方式的结果。
+
+详细的API功能如下。
 
 - **public void deployOnly(String abi, String bin, List\<Object\> params)：** 传入合约abi、bin和构造函数参数来部署合约，不接收回执结果。
 - **public TransactionResponse deployAndGetResponse(String abi, String bin, List\<Object\> params) ：** 传入合约abi、bin和构造函数参数来部署合约，接收回执结果
@@ -201,12 +228,13 @@ AssembleTransactionProcessor支持自定义参数发送交易，详细的API功�
 - **public CallResponse sendCallWithStringParams(String from, String to, String abi, String functionName, List\<String\> paramsList):** 传入调用者地址、合约地址、合约abi、函数名、String类型List的函数参数，并接收CallResponse结果。
 
 
-## 4. 扩展：使用接口签名的方式发送交易
+## 更多操作
+### 使用接口签名的方式发送交易
 此外，对于特殊的场景，可以通过接口签名的方式DIY拼装交易和发送交易。
 
 例如上述HelloWorld智能合约定义的set方法的签名为 "set(string)"
 
-### 4.1 构造接口签名
+#### 构造接口签名
 
 ```java
     ABICodec abiCodec = new ABICodec(client.getCryptoSuite());
@@ -214,14 +242,15 @@ AssembleTransactionProcessor支持自定义参数发送交易，详细的API功�
     String abiEncoded = abiCodec.encodeMethodByInterface(setMethodSignature, new Object[]{new String("Hello World")});
 ```
 
-### 4.2 构造TransactionProcessor
-TransactionProcessor同样可使用TransactionProcessorFactory来构造。
+#### 构造TransactionProcessor
+由于通过构造接口签名的方式无需提供abi，故可以构造一个TransactionProcessor来操作。同样可使用TransactionProcessorFactory来构造。
 ```java
     // ……
     TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
 ```
 
-### 4.3 发送交易
+#### 发送交易
+发送交易到FISCO BCOS节点并接收回执。
 ```java
     // ……
     TransactionReceipt transactionReceipt = transactionProcessor.sendTransactionAndGetReceipt(contractAddress, abiEncoded, keyPair);
