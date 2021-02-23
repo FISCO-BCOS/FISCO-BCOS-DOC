@@ -1,5 +1,5 @@
 ##############################################################
-区块链应用开发
+开发和使用智能合约
 ##############################################################
 
 标签：``应用开发`` ``索引`` ``开发手册`` ``区块链应用``
@@ -47,9 +47,8 @@
 .. toctree::
    :hidden:
 
-   ../manual/account.md
+   
    ../manual/smart_contract.md
    ../manual/precompiled_contract.md
-   ../manual/amop_protocol.md
    ../manual/transaction_parallel.md
    ../manual/privacy.md

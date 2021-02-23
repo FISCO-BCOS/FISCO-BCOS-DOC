@@ -192,28 +192,37 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 教程
+   :caption: 快速开始
 
    docs/installation.md
    docs/tutorial/sdk_application.md
-   docs/tutorial/index.rst
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 开发手册
+   :caption: 搭建区块链网络
 
    docs/tutorial/key_concepts.md
-   docs/blockchain_dev/index.rst
+   docs/blockchain_dev/env.rst
+   docs/blockchain_dev/config.rst
+   docs/blockchain_dev/maintain.rst
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: 开发区块链应用
+
+   docs/manual/account.md
    docs/app_dev/index.rst
    docs/sdk/index.rst
    docs/api.md
+   docs/manual/amop_protocol.md
    docs/faq/index.rst
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 工具
+   :caption: 使用工具
 
    docs/manual/build_chain.md
    docs/console/index.rst
@@ -228,21 +237,15 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :caption: 系统设计
    
    docs/design/architecture/index.rst
+   docs/design/tx_procedure.md
+   docs/design/protocol_description.md
    docs/design/index.rst
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: 专栏
-
-   docs/special_column/guomi.md
-   docs/special_column/certificate.md
-   docs/special_column/jdk_version.md
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 参考
+   :caption: 更多参考资料
 
    docs/articles/index.rst
    docs/community.md
