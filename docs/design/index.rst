@@ -6,7 +6,9 @@
 
 ----
 
-本章介绍FISCO BCOS平台的设计思路，包括每个模块的结构以及实现，面向FISCO BCOS平台开发者。
+本章介绍FISCO BCOS平台核心模块的设计思路，包括：
+
+
 
 .. toctree::
    :maxdepth: 1
