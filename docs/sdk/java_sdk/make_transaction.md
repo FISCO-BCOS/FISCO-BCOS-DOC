@@ -1,8 +1,10 @@
-# 交易的组装与发送
+# 交易的组装与发送详解
 
 标签：``java-sdk`` ``组装交易`` 
 
-考虑到真实业务场景中，应用可能会用单独的签名服务对交易进行签名，Java SDK提供了灵活的交易构造接口，包括：
+Java SDK提供了灵活的交易构造接口，针对不同的签名方式，提供了包括[在SDK中对交易进行签名的AssembleTransactionProcessor](./assemble_transaction.html)和[用单独的签名服务对交易进行签名的AssembleTransactionWithRemoteSignProcessor](./remote_sign_assemble_transaction.html)。
+
+本章节进一步详解交易的组装与发送的原理和细节。主要包括：
 
 - `RawTransaction`构造：构造不带有签名的交易
 - `RawTransaction`编码：对不带有签名的交易进行编码，并计算其哈希
@@ -169,13 +171,32 @@ public byte[] encodeRawTransactionAndGetHash(
 
 ## 4. 签名服务对交易进行签名
 
-第3节获取RawTransaction的哈希后，可以调用硬件加密机或远程签名服务对该哈希进行签名，该流程因业务系统的不同而有所差异，设接口为`requestForSign`，示例如下，其中`txHash`是第3节获取到的交易哈希。
+第3节获取RawTransaction的哈希后，可以调用硬件加密机或远程签名服务对该哈希进行签名，该流程因业务系统的不同而有所差异。外部签名服务需实现RemoteSignProviderInterface接口，具体的接口定义如下：
 
 ```java
-public String requestForSign(byte[] txHash);
+public interface RemoteSignProviderInterface {
+    /**
+     * request for signature provider service, and return the signature.
+     *
+     * @param dataToSign data to be signed
+     * @param cryptoType: ECDSA=0,SM=1, or self defined
+     * @return signature result
+     */
+    public String requestForSign(byte[] dataToSign, int cryptoType);
+
+    /**
+     * request for signature provider service asynchronously
+     *
+     * @param dataToSign data to be signed
+     * @param cryptoType: ECDSA=0,SM=1, or self defined
+     * @param callback transaction sign callback
+     */
+    public void requestForSignAsync(
+            byte[] dataToSign, int cryptoType, RemoteSignCallbackInterface callback);
+}
 ```
 
-Java SDK收到签名服务返回的签名后(这里设为`txSignature`)，需要对齐反序列化为`SignatureResult`对象，接口示例如下：
+示例如下，其中`dataToSign`是第3节获取到的交易哈希。Java SDK收到签名服务返回的签名后(这里设为`txSignature`)，需要对齐反序列化为`SignatureResult`对象，接口示例如下：
 
 ```java
 public SignatureResult decodeSign(String txSignature);
@@ -237,7 +258,7 @@ TransactionReceipt sendTransaction(
 
 ```eval_rst
 .. note::
-    - 真实业务场景中，程序逻辑中同步等待签名服务器返回签名结果可能影响系统性能，需要采用异步加缓存的方法提升系统性能
+    - 真实业务场景中，程序逻辑中同步等待签名服务器返回签名结果可能影响系统性能，需要采用异步加缓存的方法提升系统性能。
     - 该示例基于 ``toml`` 文件初始化 ``BcosSDK`` , 基于 ``xml`` 或 ``ConfigOption`` 初始化 ``BcosSDK`` 的示例可参考 `使用xml配置BcosSDK <./quick_start.html#xml>`_  以及 `使用ConfigOption初始化BcosSDK <./quick_start.html#configoptionbcossdk>`_ 
 ```
 经过以上6个步骤即可完成交易构造，下面以根据合约abi、合约方法、合约地址发送交易并使用签名服务器对交易进行签名为例，介绍了交易构造的主要流程`makeAndSendSignedTransaction`:
@@ -292,7 +313,7 @@ public class TransactionMaker
         // 获取RawTransaction的哈希
         byte[] rawTxHash = encodeRawTransactionAndGetHash(transactionEncoder, client, rawTransaction);
         // 请求签名服务，获取交易签名
-        String signature = requestForSign(rawTxHash);
+        String signature = requestForSign(rawTxHash， encryptType);
         // 对签名结果进行反序列化
         return decodeSign(signature);
     }
