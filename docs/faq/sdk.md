@@ -43,4 +43,3 @@ Web3SDK要求JDK版本大于等于1.8，推荐使用OracleJDK。
 
 - java.lang.NoSuchFieldError: SSL_MODE_ENABLE_FALSE_START
   请参考[web3sdk issue #711](https://github.com/FISCO-BCOS/web3sdk/issues/711)<br>
-
