@@ -137,7 +137,7 @@ node1接收到node0 group1的数据包{groupID(1) + packetA}后：
 
 (1) Node0, Node1和Node2的区块同步线程定期广播最新区块高度信息；
 
-(2) Node1收到Node0和Node2的最新区块高度后，发现自身块高3低于Node0和Node2最新快高6；
+(2) Node1收到Node0和Node2的最新区块高度后，发现自身块高3低于Node0和Node2最新块高6；
 
 (3)本着负载均衡的原则， Node1向Node2请求第4个区块，向Node0请求区块5和区块6；
 
