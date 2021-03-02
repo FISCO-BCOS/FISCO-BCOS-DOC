@@ -40,7 +40,7 @@
 
 通过运行sol2java.sh脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
-为了便于演示，我们使用了以下HelloWorld的合约。
+为了便于演示，我们使用了以下`HelloWorld`的合约。
 ```
 pragma solidity ^0.4.25;
 
@@ -94,7 +94,7 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 
 #### 2.3.1 部署、交易和查询
 
-Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。本场景下适用于默认的情况，通过创建和使用AssembleTransactionProcessor对象来完成合约相关的部署、调用和查询等操作。
+Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。本场景下适用于默认的情况，通过创建和使用`AssembleTransactionProcessor`对象来完成合约相关的部署、调用和查询等操作。
 
 ```java
        AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
@@ -111,7 +111,7 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 完成初始化SDK和配置对象后，可以发起合约操作指令。
 
 #### 2.4.1 同步方式部署合约
-部署合约调用了deployByContractLoader方法，传入合约名和构造函数的参数，上链部署合约，并获得TransactionResponse的结果。
+部署合约调用了deployByContractLoader方法，传入合约名和构造函数的参数，上链部署合约，并获得`TransactionResponse`的结果。
 
 ```java
     // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
@@ -119,7 +119,7 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 
 ```
 
-TransactionResponse的数据结构如下：
+`TransactionResponse`的数据结构如下：
 - returnCode: 返回的响应码。其中0为成功。
 - returnMessages: 返回的错误信息。
 - TransactionReceipt：上链返回的交易回执。
@@ -128,7 +128,7 @@ TransactionResponse的数据结构如下：
 - events: 如果有触发日志记录，则返回解析后的日志返回值，返回Json格式的字符串。
 - receiptMessages: 返回解析后的交易回执信息。
 
-例如，部署HelloWorld合约的返回结果：
+例如，部署`HelloWorld`合约的返回结果：
 
 ```json
 {
@@ -164,7 +164,7 @@ TransactionResponse的数据结构如下：
  
 #### 2.4.2 同步方式发送交易
 
-调用合约交易使用了sendTransactionAndGetResponseByContractLoader来调用合约交易，此处展示了如何调用HelloWorld中的set函数。
+调用合约交易使用了`sendTransactionAndGetResponseByContractLoader`来调用合约交易，此处展示了如何调用`HelloWorld`中的`set`函数。
 
 ```java
     // 创建调用交易函数的参数，此处为传入一个参数
@@ -174,7 +174,7 @@ TransactionResponse的数据结构如下：
     TransactionResponse transactionResponse = transactionProcessor.sendTransactionAndGetResponseByContractLoader("HelloWorld", helloWorldAddrss, "set", params);
 ```
 
-例如，调用HelloWorld合约的返回如下：
+例如，调用`HelloWorld`合约的返回如下：
 
 ```json
 {
@@ -208,7 +208,7 @@ TransactionResponse的数据结构如下：
 ```
 
 #### 2.4.3 调用合约查询接口
-查询合约直接通过调用链上的节点查询函数即可返回结果，无需共识；因此所有的查询交易都是同步方式通讯的。查询合约使用了sendCallByContractLoader函数来查询合约，此处展示了如何调用HelloWorld中的name函数来进行查询。
+查询合约直接通过调用链上的节点查询函数即可返回结果，无需共识；因此所有的查询交易都是同步方式通讯的。查询合约使用了`sendCallByContractLoader`函数来查询合约，此处展示了如何调用`HelloWorld`中的`name`函数来进行查询。
 
 ```java
     // 查询HelloWorld合约的『name』函数，合约地址为helloWorldAddress，参数为空
@@ -230,7 +230,7 @@ TransactionResponse的数据结构如下：
 ### 3.1 拼接签名的方式发送交易
 此外，对于特殊的场景，可以通过接口签名的方式DIY拼装交易和发送交易。
 
-例如上述HelloWorld智能合约定义的set方法的签名为 "set(string)"
+例如上述`HelloWorld`智能合约定义的set方法的签名为 `set(string)`
 
 #### 3.1.1 构造接口签名
 
@@ -241,7 +241,7 @@ TransactionResponse的数据结构如下：
 ```
 
 #### 3.1.2 构造TransactionProcessor
-由于通过构造接口签名的方式无需提供abi，故可以构造一个TransactionProcessor来操作。同样可使用TransactionProcessorFactory来构造。
+由于通过构造接口签名的方式无需提供abi，故可以构造一个`TransactionProcessor`来操作。同样可使用`TransactionProcessorFactory`来构造。
 ```java
     // ……
     TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
@@ -258,7 +258,7 @@ TransactionResponse的数据结构如下：
 #### 3.2.1 定义回调类
 异步发送交易的时候，可以自定义回调类，实现和重写回调处理函数。
 
-自定义的回调类需要继承抽象类`TransactionCallback`, 实现onResponse方法。同时，可按需决定是否需要重写`onError`、`onTimeout`等方法。
+自定义的回调类需要继承抽象类`TransactionCallback`, 实现`onResponse`方法。同时，可按需决定是否需要重写`onError`、`onTimeout`等方法。
 
 例如，我们定义一个简单的回调类。该回调类实现了一个基于可重入锁的异步调用效果，可减少线程的同步等待时间。
 ```java
@@ -297,7 +297,7 @@ public class TransactionCallbackMock extends TransactionCallback {
 ```
 
 #### 3.2.2 采用callback的方式异步部署合约
-首先，创建一个回调类的实例。然后使用deployByContractLoaderAsync方法，异步部署合约。
+首先，创建一个回调类的实例。然后使用`deployByContractLoaderAsync`方法，异步部署合约。
 
 ```java
     // 创建回调类的实例
@@ -325,7 +325,7 @@ public class TransactionCallbackMock extends TransactionCallback {
 ### 3.3 采用CompletableFuture的方式异步操作合约
 
 #### 3.3.1 采用CompletableFuture的方式部署合约
-SDK还支持使用CompletableFuture封装的方式异步部署合约。
+SDK还支持使用`CompletableFuture`封装的方式异步部署合约。
 
 ```java
     // 异步部署交易，并获得CompletableFuture<TransactionReceipt> 对象
@@ -346,7 +346,7 @@ SDK还支持使用CompletableFuture封装的方式异步部署合约。
 
 ## 4. 详细API功能介绍
 
-AssembleTransactionProcessor支持自定义参数发送交易，支持异步的方式来发送交易，也支持返回多种封装方式的结果。
+`AssembleTransactionProcessor`支持自定义参数发送交易，支持异步的方式来发送交易，也支持返回多种封装方式的结果。
 
 详细的API功能如下。
 

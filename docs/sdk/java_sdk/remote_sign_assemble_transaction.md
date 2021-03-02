@@ -73,7 +73,7 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 ``` java
 public interface RemoteSignProviderInterface {
     // 同步签名接口
-    public String requestForSign(byte[] dataToSign, int cryptoType);
+    public SignatureResult requestForSign(byte[] dataToSign, int cryptoType);
 
     // 异步签名接口
     public void requestForSignAsync(
@@ -81,13 +81,24 @@ public interface RemoteSignProviderInterface {
 }
 ```
 
-用户可按需实现requestForSign和requestForSignAsync接口，实现调用外部签名服务，同步或异步返回结果的逻辑。具体的业务逻辑视业务场景自主封装，可以是调用硬件加签机服务，也可以是调用外部托管的签名服务。
+用户可按需实现`requestForSign和requestForSignAsync`接口，实现调用外部签名服务，同步或异步返回结果的逻辑。具体的业务逻辑视业务场景自主封装，可以是调用硬件加签机服务，也可以是调用外部托管的签名服务。当异步签名接口结果返回后，会自动回调`RemoteSignCallbackInterface`中定义的`handleSignedTransaction`接口。该接口定义如下：
+```java
+public interface RemoteSignCallbackInterface {
+    /**
+     * receive the signature,and execute the callback function later.
+     *
+     * @param signature
+     * @return result code
+     */
+    public int handleSignedTransaction(SignatureResult signature);
+}
+```
 
-为了便于演示，我们创建一个外部签名服务的Mock类，该类模拟实现了RemoteSignProviderInterface的同步签名接口requestForSign和异步签名接口requestForSignAsync。
+为了便于演示，我们创建一个外部签名服务的Mock类(代码位置`src/integration-test/java/org/fisco/bcos/sdk/transaction/mock/RemoteSignProviderMock` )，该类模拟实现了`RemoteSignProviderInterface`的同步签名接口`requestForSign`和异步签名接口`requestForSignAsync`。
 
 #### 2.3.2 部署、交易和查询
 
-Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。本场景下适用于默认的情况，通过创建和使用AssembleTransactionWithRemoteSignProcessor对象来完成合约相关的部署、调用和查询等操作。此处， 假设我们创建了一个外部签名的Mock类 RemoteSignProviderMock。
+Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。本场景下适用于默认的情况，通过创建和使用`AssembleTransactionWithRemoteSignProcessor`对象来完成合约相关的部署、调用和查询等操作。此处， 假设我们创建了一个外部签名的Mock类 `RemoteSignProviderMock`。
 
 ```java
       // remoteSignProviderMock 对象需实现RemoteSignCallbackInterface 接口
@@ -110,7 +121,7 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 完成初始化SDK和配置对象后，可以发起合约操作指令。
 
 #### 2.4.1 同步方式部署合约
-部署合约调用了deployByContractLoader方法，传入合约名和构造函数的参数，上链部署合约，并获得TransactionResponse的结果。
+部署合约调用了`deployByContractLoader`方法，传入合约名和构造函数的参数，上链部署合约，并获得`TransactionResponse`的结果。
 
 ```java
     // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
@@ -119,7 +130,7 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
                         "HelloWorld", new ArrayList<>());
 ```
 
-TransactionResponse的数据结构如下：
+`TransactionResponse`的数据结构如下：
 - returnCode: 返回的响应码。其中0为成功。
 - returnMessages: 返回的错误信息。
 - TransactionReceipt：上链返回的交易回执。
@@ -128,7 +139,7 @@ TransactionResponse的数据结构如下：
 - events: 如果有触发日志记录，则返回解析后的日志返回值，返回Json格式的字符串。
 - receiptMessages: 返回解析后的交易回执信息。
 
-例如，部署HelloWorld合约的返回结果：
+例如，部署`HelloWorld`合约的返回结果：
 
 ```json
 {
@@ -164,7 +175,7 @@ TransactionResponse的数据结构如下：
  
 #### 2.4.2 同步方式发送交易
 
-调用合约交易使用了sendTransactionAndGetResponseByContractLoader来调用合约交易，此处展示了如何调用HelloWorld中的set函数。
+调用合约交易使用了`sendTransactionAndGetResponseByContractLoader`来调用合约交易，此处展示了如何调用`HelloWorld`中的`set`函数。
 
 ```java
     // 创建调用交易函数的参数，此处为传入一个参数
@@ -175,7 +186,7 @@ TransactionResponse的数据结构如下：
             helloWorldAddrss, abi, "set", params);
 ```
 
-例如，调用HelloWorld合约的返回如下：
+例如，调用`HelloWorld`合约的返回如下：
 
 ```json
 {
@@ -209,7 +220,7 @@ TransactionResponse的数据结构如下：
 ```
 
 #### 2.4.3 调用合约查询接口
-查询合约直接通过调用链上的节点查询函数即可返回结果，无需共识；因此所有的查询交易都是同步的。查询合约使用了sendCallByContractLoader函数来查询合约，此处展示了如何调用HelloWorld中的name函数来进行查询。
+查询合约直接通过调用链上的节点查询函数即可返回结果，无需共识；因此所有的查询交易都是同步的。查询合约使用了`sendCallByContractLoader`函数来查询合约，此处展示了如何调用`HelloWorld`中的`name`函数来进行查询。
 
 ```java
     // 查询HelloWorld合约的『name』函数，合约地址为helloWorldAddress，参数为空
@@ -237,7 +248,7 @@ TransactionResponse的数据结构如下：
 #### 3.1.1 定义回调类
 异步调用外部签名服务的时候，可以自定义回调类，实现和重写回调处理函数。
 
-自定义的回调类需要继承抽象类`RemoteSignCallbackInterface`, 实现handleSignedTransaction方法。
+自定义的回调类需要继承抽象类`RemoteSignCallbackInterface`, 实现`handleSignedTransaction`方法。
 
 例如，我们定义一个简单的回调类。该回调类实现了异步回调发送交易到节点的效果。
 ```java
@@ -274,7 +285,7 @@ public class RemoteSignCallbackMock implements RemoteSignCallbackInterface {
 ```
 
 #### 3.1.2 采用callback的方式异步部署合约
-首先，创建一个回调类的实例。然后使用deployAsync方法异步部署合约。
+首先，创建一个回调类的实例。然后使用`deployAsync`方法异步部署合约。
 
 ```java
     // 创建 RawTransaction
