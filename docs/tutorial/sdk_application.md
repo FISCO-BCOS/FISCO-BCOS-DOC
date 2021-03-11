@@ -391,8 +391,8 @@ repositories {
     }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
-
--   引入Java SDK jar包
+```
+引入Java SDK jar包
 
 ```java
 testCompile group: 'junit', name: 'junit', version: '4.12'

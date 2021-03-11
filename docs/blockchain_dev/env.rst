@@ -9,10 +9,10 @@
 本章提供了丰富的FISCO BCOS区块链网络搭建教程。
 
 - 首先，请确保您用于部署区块链网络的主机满足FISCO BCOS区块链搭建的 `硬件和系统要求 <../manual/hardware_requirements.html>`_
-- 如果您的操作系统为Ubuntu 16.04和CentOS 7.2及以上版本，则可以直接 `下载预编译文件 <../manual/get_executable.html>`_ , 并运行节点 。否则请从 `源码编译 <../tutorial/compile.html>`_FISCO BCOS可执行文件。
+- 如果您的操作系统为Ubuntu 16.04和CentOS 7.2及以上版本，则可以直接 `下载预编译文件 <../manual/get_executable.html>`_ , 并运行节点 。否则请从 `源码编译 <../tutorial/compile.html>`_ FISCO BCOS可执行文件。
 - 如果您在国内访问GitHub较慢，请参照 `国内镜像和CDN加速 <../tutorial/cdn.html>`_ 提升您的下载速度。
-- 在多台机器上运行区块链节点，构成一个区块链网络，请参照`搭建多机区块链网络 <../tutorial/multihost.html>`_ 教程。
-- `使用Docker容器搭建区块链网络 <../tutorial/multihost.html>`_ 。
+- 在多台机器上运行区块链节点，构成一个区块链网络，请参照 `搭建多机区块链网络 <../tutorial/multihost.html>`_ 教程。
+- `使用Docker容器搭建区块链网络 <../tutorial/docker.html>`_ 。
 - `扩容一个新节点 <../tutorial/add_new_node.html>`_ 。
 - `多群组部署 <../manual/group_use_cases.html>`_ 。
 - FISCO BOCS网络采用面向CA的准入机制，`获取和续期证书 <../manual/certificates.html>`_ 。
