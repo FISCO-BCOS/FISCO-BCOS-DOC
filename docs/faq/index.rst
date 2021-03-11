@@ -18,4 +18,5 @@
    contract.md
    tx.md
    precompiled.md
+   table.md
    compile.md
