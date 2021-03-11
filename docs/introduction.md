@@ -71,7 +71,7 @@ FISCO BCOS是由国内企业主导研发、对外开源、安全可控的企业�
 |场景化隐私保护机制|基于[WeDPR](https://fintech.webank.com/wedpr)支持隐匿支付、匿名投票、匿名竞拍、选择性披露等场景|
 | <font color=Blue>**跨链协议**</font> |
 |SPV|提供获取SPV证明的接口|
-|跨链协议|基于[WeCross](https://github.com/WeBankFinTech/WeCross)支持同构、异构跨链|
+|跨链协议|基于[WeCross](https://github.com/WeBankBlockchain/WeCross)支持同构、异构跨链|
 | <font color=Blue>**开发支持**</font> |
 |合约开发工具|[WeBASE-IDE](https://github.com/WeBankFinTech/WeBASE)，[ChainIDE](https://fiscoide.com/)|
 |开发建链工具|提供[一键搭链脚本工具](manual/build_chain.html)|

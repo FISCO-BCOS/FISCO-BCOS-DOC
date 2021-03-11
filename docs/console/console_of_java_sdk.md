@@ -63,6 +63,13 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/downloa
 curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh -v 0.6	
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/v2.7.1/tools/download_console.sh && bash download_console.sh -v 0.5` 
+    0.6版本请尝试命令： `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/v2.7.1/tools/download_console.sh && bash download_console.sh -v 0.6`
+
+```
+
 ### 配置控制台
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
