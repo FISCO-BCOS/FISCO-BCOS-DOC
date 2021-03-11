@@ -11,7 +11,13 @@ Java sdk主要包括五个配置选项，分别是
 * 账户配置（非必须，不配置则使用默认配置值）
 * 线程池配置（非必须，不配置则使用默认配置值）
 
+支持的配置格式，包括
 
+* toml(默认)
+* properties
+* yml
+
+其中`properties`和`yml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./configuration.html#id12)
 
 ## 1. 快速配置
 
@@ -316,3 +322,199 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
 ```
 
+## 4. 其它格式的配置
+
+Java SDK还支持`properties`以及`yml`格式的配置文件。
+
+### properties格式
+
+#### 配置示例
+
+各字段的含义以及默认值与`toml`配置文件一致。
+
+在项目的主目录创建文件`fisco-config.properties`，复制以下配置内容，并根据实际情况修改各配置项。
+
+```properties
+cryptoMaterial.certPath=conf                       # The certification path  
+
+# The following configurations take the certPath by default if commented
+# cryptoMaterial.caCert=conf/ca.crt 
+# cryptoMaterial.sslCert=conf/sdk.crt
+# cryptoMaterial.sslKey=conf/sdk.key
+# cryptoMaterial.enSslCert=conf/gm/gmensdk.crt
+# cryptoMaterial.enSslKey=conf/gm/gmensdk.key
+
+
+# The peer list to connect
+network.peers[0]=127.0.0.1:20200
+network.peers[0]=127.0.0.1:21200
+
+
+# AMOP configuration
+
+# Configure a private topic as a topic message sender.
+# amop[0].publicKeys[0]=conf/amop/consumer_public_key_1.pem
+# amop[0].topicName=PrivateTopic1
+
+# Configure a private topic as a topic subscriber.
+# amop[1].password=123456 
+# amop[1].privateKey=conf/amop/consumer_private_key.p12
+# amop[1].topicName=PrivateTopic2
+
+
+account.keyStoreDir=account
+# account.accountFilePath=conf
+account.accountFileFormat=pem
+# account.accountAddress=0x
+# account.password=123456
+
+# threadPool.channelProcessorThreadSize=16
+# threadPool.receiptProcessorThreadSize=16
+threadPool.maxBlockingQueueSize=102400
+```
+
+#### 代码示例
+
+使用SpringBoot的配置装载方法，创建配置类:
+
+```java
+@Data
+@ToString
+@Component
+@ConfigurationProperties
+@PropertySource(value = "classpath:fisco-config.properties", ignoreResourceNotFound = true, encoding = "UTF-8")
+public class BcosConfig {
+    private Map<String, Object> cryptoMaterial;
+    public Map<String, List<String> > network;
+    public List<AmopTopic> amop;
+    public Map<String, Object> account;
+    public Map<String, Object> threadPool;
+}
+```
+
+基于配置类初始化`BcosSDK`:
+
+```java
+@Slf4j
+@Data
+@Component
+public class FiscoBcos {
+
+    @Autowired
+    BcosConfig bcosConfig;
+
+    BcosSDK bcosSDK;
+
+    public void init() {
+        ConfigProperty configProperty = loadProperty();
+        ConfigOption configOption;
+        try {
+            configOption = new ConfigOption(configProperty, CryptoType.ECDSA_TYPE);
+        } catch (ConfigException e) {
+            log.error("init error:" + e.toString());
+            return ;
+        }
+        bcosSDK = new BcosSDK(configOption);
+    }
+
+    public ConfigProperty loadProperty() {
+        ConfigProperty configProperty = new ConfigProperty();
+        configProperty.setCryptoMaterial(bcosConfig.getCryptoMaterial());
+        configProperty.setAccount(bcosConfig.getAccount());
+        configProperty.setNetwork(new HashMap<String, Object>(){{
+            put("peers", bcosConfig.getNetwork().get("peers"));
+        }} );
+        configProperty.setAmop(bcosConfig.getAmop());
+        configProperty.setThreadPool(bcosConfig.getThreadPool());
+        return configProperty;
+    }
+}
+```
+
+### yml格式
+
+#### 配置示例
+
+各字段的含义以及默认值与`toml`配置文件一致。
+
+在项目的主目录创建文件`fisco-config.yml`，复制以下配置内容，并根据实际情况修改各配置项。
+
+```yml
+cryptoMaterial:                     
+  certPath: "conf"                   
+#  caCert: "conf/ca.crt"               
+#  sslCert: "conf/sdk.crt"             
+#  sslKey: "conf/sdk.key"
+#  enSslCert: "conf/gm/gmensdk.crt"
+#  enSslKey: "conf/gm/gmensdk.key"
+
+network:
+  peers:
+    - "127.0.0.1:20201"
+    - "127.0.0.1:20200"
+
+amop:
+#  - publicKeys: [ "conf/amop/consumer_public_key_1.pem" ]
+#    topicName: "PrivateTopic1"
+#  - password: "123456"
+#    privateKey: "conf/amop/consumer_private_key.p12"
+#    topicName: "PrivateTopic2"
+
+account:
+  keyStoreDir: "account"
+#  accountFilePath: "conf"
+  accountFileFormat: "pem"
+#  accountAddress: "0x"
+#  password: ""
+
+
+threadPool:
+#  channelProcessorThreadSize: "16"
+#  receiptProcessorThreadSize: "16"
+#  maxBlockingQueueSize: "102400"
+```
+
+#### 代码示例
+
+引入`yml`文件解析工具：
+
+```gradle
+    #
+	compile ("org.yaml:snakeyaml:1.27")
+```
+
+初始化`BcosSDK`:
+
+```java
+@Data
+@Component
+@Slf4j
+public class FiscoBcos {
+
+    BcosSDK bcosSDK;
+
+    public void init() {
+        ConfigProperty configProperty = loadProperty();
+        ConfigOption configOption ;
+        try {
+            configOption = new ConfigOption(configProperty, CryptoType.ECDSA_TYPE);
+        } catch (ConfigException e) {
+            log.error("init error:" + e.toString());
+            return ;
+        }
+        bcosSDK = new BcosSDK(configOption);
+    }
+
+    public ConfigProperty loadProperty() {
+        Representer representer = new Representer();
+        representer.getPropertyUtils().setSkipMissingProperties(true);
+        Yaml yaml = new Yaml(representer);
+        String configFile = "/fisco-config.yml";
+        try (InputStream inputStream = this.getClass().getResourceAsStream(configFile)) {
+            return yaml.loadAs(inputStream, ConfigProperty.class);
+        } catch (Exception e) {
+            log.error("load property: ", e);
+        }
+    }
+}
+```
