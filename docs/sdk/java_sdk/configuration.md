@@ -16,8 +16,9 @@ Java sdk主要包括五个配置选项，分别是
 * toml(默认)
 * properties
 * yml
+* xml
 
-其中`properties`和`yml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./configuration.html#id12)
+其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./configuration.html#id12)
 
 ## 1. 快速配置
 
@@ -324,7 +325,7 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 
 ## 4. 其它格式的配置
 
-Java SDK还支持`properties`以及`yml`格式的配置文件。
+Java SDK还支持`properties`、`yml`以及`xml`格式的配置文件。
 
 ### properties格式
 
@@ -479,7 +480,6 @@ threadPool:
 引入`yml`文件解析工具：
 
 ```gradle
-    #
 	compile ("org.yaml:snakeyaml:1.27")
 ```
 
@@ -517,4 +517,78 @@ public class FiscoBcos {
         }
     }
 }
+```
+
+### xml格式
+
+#### 配置示例
+
+各property的含义与`toml`配置文件一致。
+
+在项目的主目录创建文件`fisco-config.xml`，复制以下配置内容，并根据实际情况修改各配置项。
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
+        <property name="cryptoMaterial">
+            <map>
+                <entry key="certPath" value="conf" />
+            </map>
+        </property>
+        <property name="network">
+            <map>
+                <entry key="peers">
+                    <list>
+                        <value>127.0.0.1:20200</value>
+                        <value>127.0.0.1:20201</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+        <property name="account">
+            <map>
+                <entry key="keyStoreDir" value="account" />
+                <entry key="accountAddress" value="" />
+                <entry key="accountFileFormat" value="pem" />
+                <entry key="password" value="" />
+                <entry key="accountFilePath" value="" />
+            </map>
+        </property>
+        <property name="threadPool">
+            <map>
+                <entry key="channelProcessorThreadSize" value="16" />
+                <entry key="receiptProcessorThreadSize" value="16" />
+                <entry key="maxBlockingQueueSize" value="102400" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
+        <constructor-arg name="configProperty">
+            <ref bean="defaultConfigProperty"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
+        <constructor-arg name="configOption">
+            <ref bean="defaultConfigOption"/>
+        </constructor-arg>
+    </bean>
+</beans>
+```
+
+#### 代码示例
+
+初始化`BcosSDK`:
+
+```java
+    @SuppressWarnings("resource")
+    ApplicationContext context =
+            new ClassPathXmlApplicationContext("classpath:fisco-config.xml");
+    BcosSDK bcosSDK = context.getBean(BcosSDK.class);
 ```
