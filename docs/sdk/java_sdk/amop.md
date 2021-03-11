@@ -15,6 +15,12 @@ AMOP私有话题的特别之处在于，SDK间需要进行了身份认证，认�
 
 当用户需要订阅私有话题，或者作为消息发布者配置一个私有话题时，可用配置文件进行配置。但AMOP的配置不是必须项，私有话题的订阅和设置，还可以通过调用AMOP的接口实现。以下是AMOP的配置示例，是``test/resource/config-example.toml``配置文件中的一部分。
 
+```eval_rst
+.. important::
+    注意：AMOP私有话题目前只支持非国密算法。
+    请使用 `生成公私钥脚本 <./account.md>_ 生成非国密公私钥文件.
+```
+
 ```toml
 # AMOP configuration
 # You can use following two methods to configure as a private topic message sender or subscriber.
@@ -61,7 +67,7 @@ AMOP私有话题的特别之处在于，SDK间需要进行了身份认证，认�
    privateKey = "conf/amop/consumer_private_key.p12"
    password = "123456"
    ```
-
+  
    
 
 ## 2. 接口说明
