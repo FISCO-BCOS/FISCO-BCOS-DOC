@@ -2,9 +2,9 @@
 网络搭建
 ##############################################################
 
-.. admonition::提示
+.. important::
 
-   如果您希望快速搭建一个区块链网络，推荐您参考“快速开始” > " `搭建第一个区块链网络<../installation.html>`_ "。
+   如果您希望快速搭建一个区块链网络，推荐您参考“快速开始” > " `搭建第一个区块链网络<../installation.html>`_ "。建链工具可参考`开发部署工具 <../manual/build_chain.html>`_ 或 `运维部署工具 <../enterprise_tools/index.html>`_。
 
 本章提供了丰富的FISCO BCOS区块链网络搭建教程。
 
@@ -19,6 +19,7 @@
 - 我们支持采用第三方证书部署节点，如有需要请参考 `使用CFCA证书部署节点 <../tutorial/cfca.html>`_ 。
 - `使用MySQL存储引擎 <../tutorial/cfca.html>`_ 搭建区块链网络。
 - 搭建 `使用国密算法 <../manual/guomi_crypto.html>`_ 的区块链网络。
+    
 
 .. toctree::
    :hidden:
