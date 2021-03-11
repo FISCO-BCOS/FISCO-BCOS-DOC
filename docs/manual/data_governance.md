@@ -67,8 +67,18 @@ fisco-sync工具需拉取FISCO-BCOS源码，打开编译开关后自行编译。
 - 注意：fisco-sync工具编译涉及的编译开关为TOOL，默认OFF，可通过`cmake3 -DTOOL=ON ..`打开该编译开关；
 - 编译后，fisco-sync工具路径的生成路径`build/bin/fisco-sync`。
 
-```
+下载FISCO-BCOS：
+
+```bash
 $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git`
+```
+
+```bash
 $ cd FISCO-BCOS
 $ mkdir -p build && cd build
 # CentOS请使用cmake3
@@ -184,6 +194,9 @@ fisco-sync工具以表为单位从“数据仓库”拉取数据。如一个表�
 
 ```bash
 git clone https://github.com/FISCO-BCOS/amdb-proxy.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/amdb-proxy.git
 ```
 
 #### 编译源码

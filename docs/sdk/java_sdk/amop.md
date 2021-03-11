@@ -833,6 +833,10 @@ amop.stop()
 mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
+
+# 若因为网络问题导致长时间拉取失败，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
+
 cd java-sdk-demo
 # 构建项目
 bash gradlew build
@@ -946,6 +950,10 @@ gradlew.bat build -x test
 cd ~/fisco
 # 获取java-sdk-demo代码
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
+
+# 若因为网络问题导致长时间拉取失败，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
+
 cd java-sdk-demo
 
 # build项目

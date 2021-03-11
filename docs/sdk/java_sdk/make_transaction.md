@@ -19,7 +19,12 @@
 ```bash
 # 下载控制台
 $ mkdir -p ~/fisco && cd ~/fisco
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+# 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+$ bash download_console.sh
 ```
 
 **准备合约，这里以HelloWorld为例：**

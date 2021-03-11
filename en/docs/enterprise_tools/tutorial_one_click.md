@@ -18,7 +18,11 @@ This tutorial is suitable for single-node deployment of all nodes. The enterpris
 **download**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# If you have network issue for exec the command above, please try:
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 **Installation**
