@@ -50,7 +50,7 @@ bash build_chain.sh -d -l 127.0.0.1:4 -p 30300,20200,8545
 
 ```eval_rst
 .. note::
-    - build_chain.sh 各个参数的使用，参考 `这里 <manual/build_chain.html>`_
+    - build_chain.sh 各个参数的使用，参考 `这里 <../manual/build_chain.html>`_
 ```
 
 命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
