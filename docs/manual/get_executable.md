@@ -11,7 +11,7 @@
 
 ## 下载预编译fisco-bcos
 
-我们提供静态链接的预编译程序，在Ubuntu 16.04和CentOS 7经过测试。请从[Release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)页面下载最新发布的**预编译程序**。
+我们提供静态链接的预编译程序，在Ubuntu 16.04和CentOS 7经过测试。请从[GitHub Release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)或[gitee Release](https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases)页面下载最新发布的**预编译程序**。
 
 ## docker镜像
 
