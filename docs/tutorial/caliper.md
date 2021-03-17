@@ -32,6 +32,10 @@
     ```bash
     # 安装nvm
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+
+    # 若出现因网络问题导致长时间下载失败，可尝试以下命令
+    curl -o- https://gitee.com/mirrors/nvm/raw/v0.33.2/install.sh | bash
+
     # 加载nvm配置
     source ~/.$(basename $SHELL)rc
     # 安装Node.js 8
