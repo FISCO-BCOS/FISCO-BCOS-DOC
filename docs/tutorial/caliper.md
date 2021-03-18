@@ -32,6 +32,10 @@
     ```bash
     # 安装nvm
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+
+    # 若出现因网络问题导致长时间下载失败，可尝试以下命令
+    curl -o- https://gitee.com/mirrors/nvm/raw/v0.33.2/install.sh | bash
+
     # 加载nvm配置
     source ~/.$(basename $SHELL)rc
     # 安装Node.js 8
@@ -208,6 +212,13 @@ npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 
 ```bash
 git clone https://github.com/vita-dounai/caliper-benchmarks.git
+```
+
+**注意** 若出现网络问题导致的长时间拉取代码失败，则尝试以下方式:
+
+```bash
+# 拉取gitee代码
+git clone https://gitee.com/mirrors_hyperledger/caliper-benchmarks.git
 ```
 
 **执行HelloWorld合约测试**

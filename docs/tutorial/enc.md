@@ -12,7 +12,7 @@
 
 ## 第一步. 部署Key Manager
 
-每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager README](https://github.com/FISCO-BCOS/key-manager)
+每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager GitHub README](https://github.com/FISCO-BCOS/key-manager)或[Key Manager Gitee README](https://gitee.com/FISCO-BCOS/key-manager)
 
 ```eval_rst
 .. important::
