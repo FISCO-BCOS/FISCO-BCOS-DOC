@@ -214,6 +214,13 @@ npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 git clone https://github.com/vita-dounai/caliper-benchmarks.git
 ```
 
+**注意** 若出现网络问题导致的长时间拉取代码失败，则尝试以下方式:
+
+```bash
+# 拉取gitee代码
+git clone https://gitee.com/mirrors_hyperledger/caliper-benchmarks.git
+```
+
 **执行HelloWorld合约测试**
 
 ```bash
