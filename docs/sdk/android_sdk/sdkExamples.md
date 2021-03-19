@@ -4,7 +4,7 @@
 
 ----
 
-参考上一节[快速入门](./quick_start.html)描述的内容，`fisco-bcos-android-sdk`提供了一个[Demo](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk/tree/main/demo)，用于展示 sdk 初始化、部署合约和调用合约相关接口、释放 sdk 的整个过程。
+参考上一节[快速入门](./quick_start.html)描述的内容，`fisco-bcos-android-sdk`提供了一个 [demo](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk/tree/main/demo) ，用于展示 sdk 初始化、部署合约和调用合约相关接口、释放 sdk 的整个过程。
 
 本 Demo 适用于：
 - 体验 android-sdk 进行合约部署及调用的用户
