@@ -35,12 +35,15 @@ allprojects {
         maven{
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
+        maven {
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+        }
     }
 }
 
 ## 注：对于接入 sdk 的项目已有的依赖，可忽略对应的添加
 dependencies {
-    implementation 'org.fisco-bcos.android-sdk:fisco-bcos-android-sdk:1.0.0-SNAPSHOT'
+    implementation 'org.fisco-bcos.android-sdk:fisco-bcos-android-sdk:1.0.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.1'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.12.1'
@@ -81,7 +84,7 @@ dependencies {
 
 ### 4. 编译合约
 
-开发者基于智能合约开发应用前，需将 Solidity 合约文件通过[tool](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk/tree/main/tool)提供的工具，编译生成 **Java 文件**和 **abi 、binary 文件**。
+开发者基于智能合约开发应用前，需将 Solidity 合约文件通过 [tool](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk/tree/main/tool) 提供的工具，编译生成 **Java 文件**和 **abi 、binary 文件**。
 
 本节提供一个示例合约`HelloWorld.sol`，并描述合约的编译过程。
 
@@ -126,7 +129,7 @@ try {
 
     HelloWorld sol = HelloWorld.deploy(client, client.getCryptoSuite().getCryptoKeyPair());
     logger.info("deploy contract , contract address: " + JsonUtils.toJson(sol.getContractAddress()));
-    // HelloWorldProxy sol = HelloWorldProxy.load("0x2ffa020155c6c7e388c5e5c9ec7e6d403ec2c2d6", client, client.getCryptoSuite().getCryptoKeyPair());
+    // HelloWorld sol = HelloWorld.load("0x2ffa020155c6c7e388c5e5c9ec7e6d403ec2c2d6", client, client.getCryptoSuite().getCryptoKeyPair());
     TransactionReceipt ret1 = sol.set("Hello, FISCO BCOS.");
     logger.info("send, receipt: " + JsonUtils.toJson(ret1));
     String ret2 = sol.get();
