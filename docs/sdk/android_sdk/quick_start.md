@@ -81,7 +81,7 @@ dependencies {
 
 ### 4. 编译合约
 
-开发者基于智能合约开发应用前，需将 Solidity 合约文件通过[tool](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk/tree/feature-lite/tool)提供的工具，编译生成 **Java 文件**和 **abi 、binary 文件**。
+开发者基于智能合约开发应用前，需将 Solidity 合约文件通过[tool](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk/tree/main/tool)提供的工具，编译生成 **Java 文件**和 **abi 、binary 文件**。
 
 本节提供一个示例合约`HelloWorld.sol`，并描述合约的编译过程。
 

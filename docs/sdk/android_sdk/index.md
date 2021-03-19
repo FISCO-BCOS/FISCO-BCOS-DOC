@@ -4,7 +4,7 @@
 
 ----
 
-开发者可在 Android 应用中通过 [fisco-bcos-android-sdk](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk/tree/feature-lite)（以下简称 android-sdk）实现对 FISCO-BCOS 区块链的操作。目前，android-sdk 支持 [FISCO BCOS 2.0+](../../change_log/index.md)。
+开发者可在 Android 应用中通过 [fisco-bcos-android-sdk](https://github.com/FISCO-BCOS/fisco-bcos-android-sdk)（以下简称 android-sdk）实现对 FISCO-BCOS 区块链的操作。目前，android-sdk 支持 [FISCO BCOS 2.0+](../../change_log/index.md)。
 
 ```eval_rst
 .. admonition:: **主要特性**
