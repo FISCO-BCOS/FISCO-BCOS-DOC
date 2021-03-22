@@ -27,7 +27,7 @@ FISCO BCOS每个新版本发布会在[GitHub的release](https://github.com/FISCO
 
 ## FISCO BCOS文档镜像
 
-FISCO BCOS文档使用readthedocs管理，全部开源于[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)，同样提供国内镜像[http://www.fisco-bcos.org/developer/](http://www.fisco-bcos.org/developer/)。
+FISCO BCOS文档使用readthedocs管理，全部开源于[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)，同样提供国内镜像[http://docs.fisco-bcos.org](http://docs.fisco-bcos.org)。
 
 每个版本发布会为上个版本的文档打Tag，新版本的文档会合入主干分支，文档由于会持续改进，所以是下个版本发布才打上个版本的tag。readthedocs文档支持下载PDF格式，方便用户使用。
 
@@ -51,9 +51,9 @@ FISCO BCOS国密版本需要使用TASSL生成国密版本的证书，部署工�
 
 FISCO BCOS在国密模式下使用sm2曲线和对应签名算法，在非国密场景使用secp256k1曲线和ecdsa签名算法。为方便用户提供了生成脚本，脚本生成私钥并以账户地址命名，支持PEM和PKCS12两种格式。详情请参考这里[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)
 
-get_account.sh脚本依赖于openssl指令，用于生成secp256k1私钥，如果从GitHub下载失败，可以尝试镜像地址 [https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh](https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh)或[https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh)
+get_account.sh脚本依赖于openssl指令，用于生成secp256k1私钥，如果从GitHub下载失败，可以尝试镜像地址[https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh)
 
-get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub下载失败，可以尝试镜像地址 [https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh](https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh)或[https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh)
+get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub下载失败，可以尝试镜像地址[https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh](https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh)
 
 
 ## 举例：使用国内镜像建链
@@ -63,10 +63,10 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 ### 下载开发部署工具
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/manual/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.7.2/build_chain.sh`
 
 ### 下载二进制程序
 

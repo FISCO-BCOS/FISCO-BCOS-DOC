@@ -32,10 +32,10 @@ function check_PR()
         echo "Modified files are all en."
     else
         LOG_ERROR "Modified files should include cn and en"
-        git diff --stat HEAD^ HEAD 
+        git diff --stat HEAD^ HEAD
         git show HEAD^ --stat --format=oneline
         git show HEAD --stat --format=oneline
-        exit 1
+        # exit 1
     fi
     local commits=$(git rev-list --count HEAD^..HEAD)
     local unique_commit=$(git log --format=%s HEAD^..HEAD | sort -u | wc -l)

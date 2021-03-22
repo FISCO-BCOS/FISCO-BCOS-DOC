@@ -62,13 +62,13 @@ mysql> set password for root@localhost = password('123456');
 
 **修改MySQL配置文件**
 
+在`/etc/mysql/my.cnf`配置文件的`[mysqld]`部分添加如下配置：
+
 ```bash
-sudo bash -c 'cat >> /etc/mysql/my.cnf << EOF
 max_allowed_packet = 1024M
 sql_mode =STRICT_TRANS_TABLES
 ssl=0
 default_authentication_plugin = mysql_native_password
-EOF'
 ```
 **重启MySQL服务**
 
@@ -137,7 +137,7 @@ sudo yum install -y openssl openssl-devel curl
 mkdir -p ~/fisco && cd ~/fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 2.3 搭建单机4节点分布式存储区块链网络
