@@ -9,7 +9,7 @@ For specific disk encryption introduction, please refer to: [Introduction of Dis
 
 ## Key Manager deployment
 
-Each agency has a Key Manager. For specific deployment steps, please refer to [Key Manager README](https://github.com/FISCO-BCOS/key-manager)
+Each agency has a Key Manager. For specific deployment steps, please refer to [Key Manager README](https://github.com/FISCO-BCOS/key-manager) or [Key Manager Gitee README](https://gitee.com/FISCO-BCOS/key-manager)
 
 ## Node building
 
