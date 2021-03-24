@@ -27,7 +27,7 @@ Type="channel"
 CAFile="ca.crt"
 Cert="sdk.crt"
 Key="sdk.key"
-[[Network.Connection]] 
+[[Network.Connection]]
 NodeURL="127.0.0.1:20200"
 GroupID=1
 # [[Network.Connection]]
@@ -55,6 +55,12 @@ SMCrypto=false
 
 - `NodeURL`：待连接节点的URL地址，由IP和port两部分组成；
 - `GroupID`：待连接节点所属的群组ID。
+
+```eval_rst
+.. note::
+    - go-sdk暂不支持使用国密SSL与节点建立连接，使用国密时请将节点config.ini中配置设置为`chain.sm_crypto_channel=false`
+    - 国密SSL配置项说明请参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/configuration.html#id10
+```
 
 ### 账户配置
 

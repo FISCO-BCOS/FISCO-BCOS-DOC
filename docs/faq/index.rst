@@ -13,9 +13,11 @@
    version.md
    connect.md
    certificate.md
+   gm_cfca.md
    console.md
    tools.md
    contract.md
    tx.md
    precompiled.md
+   table.md
    compile.md
