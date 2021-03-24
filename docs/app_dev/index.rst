@@ -14,6 +14,8 @@
         + 外部应用调用区块链上的智能合约
     - `链上信使协议 <../manual/amop_protocol.html>`_
         + 多个SDK间的消息相互推送
+    - `节点接入代理服务 <../manual/bcos_node_proxy.html>`_
+        + 节点接入代理服务
 
 .. admonition:: 合约开发
 
@@ -38,6 +40,8 @@
         + 简单轻便、有内置控制台
     - `FISCO BCOS Go SDK <../sdk/go_sdk/index.html>`_
         + 简单轻便、有内置控制台
+    - `FISCO BCOS Android SDK <../sdk/android_sdk/index.html>`_
+        + 移动端 Android SDK，实现对合约的部署及调用    
 
 .. important::
 
@@ -52,3 +56,4 @@
    ../manual/precompiled_contract.md
    ../manual/transaction_parallel.md
    ../manual/privacy.md
+   ../manual/bcos_node_proxy.md
