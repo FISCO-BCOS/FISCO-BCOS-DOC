@@ -255,7 +255,7 @@ Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录
 # 创建工作目录~/fisco
 mkdir -p ~/fisco
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -396,7 +396,7 @@ repositories {
 
 ```java
 testCompile group: 'junit', name: 'junit', version: '4.12'
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
 ```
 ![](../../images/tutorial/import_sdk.png)
 
@@ -414,7 +414,7 @@ List spring = [
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2")
     compile spring
 }
 ```
@@ -838,7 +838,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 ```groovy
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2")
     compile spring
     compile ('org.slf4j:slf4j-log4j12:1.7.25')
     runtime ('org.slf4j:slf4j-log4j12:1.7.25')
