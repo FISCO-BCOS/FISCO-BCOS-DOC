@@ -77,7 +77,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>2.7.1</version>
+    <version>2.7.2</version>
 </dependency>
 ```
 
