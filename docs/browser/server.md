@@ -15,6 +15,7 @@
 | Java   | JDK8或以上版本 |
 | gradle | gradle-5.0或以上版本 |
 | 数据库    | mysql-5.7或以上版本  |
+
 备注：安装说明请参看 [附录](#appendix)。
 
 ## 3.部署说明
@@ -134,13 +135,13 @@ Could not find method annotationProcessor() for arguments [org.projectlombok:lom
    mysql -uroot -p mysql  
 ```
 
-## 5.附录
-
 <span id="appendix"></span>
 
-### 5.1 Java环境部署
+## 5.附录
 
 <span id="jdk"></span>
+
+### 5.1 Java环境部署
 
 #### CentOS环境安装Java
 
@@ -200,9 +201,9 @@ export GRADLE_HOME=/software/gradle-XXX
 export PATH=$GRADLE_HOME/bin:$PATH
 ```
 
-### 5.3 数据库部署
-
 <span id="mysql"></span>
+
+### 5.3 数据库部署
 
 此处以Centos安装*MariaDB*为例。*MariaDB*数据库是 MySQL 的一个分支，主要由开源社区在维护，采用 GPL 授权许可。*MariaDB*完全兼容 MySQL，包括API和命令行。其他安装方式请参考[MySQL官网](https://dev.mysql.com/downloads/mysql/)。
 

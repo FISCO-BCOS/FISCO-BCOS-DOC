@@ -11,7 +11,7 @@
 | 环境   | 版本                   |
 | ------ | ---------------------- |
 | Java   | JDK8或以上版本 |
-| MySQL | MySQL-5.6或以上版本 |
+| MySQL | MySQL-5.7或以上版本 |
 | Python | Python3.5+ |
 | PyMySQL | 使用python3时需安装 |
 
@@ -41,7 +41,7 @@ MySQL-5.7或以上版本：
 mysql --version
 ```
 
-- Mysql安装部署可参考[数据库部署](#id14)
+- Mysql安装部署可参考[数据库部署](#mysql)
 
 #### 检查Python
 
@@ -164,13 +164,13 @@ http://127.0.0.1:5100/
 
 ## 7.附录
 
-### 7.1 Java环境部署
-
 <span id="jdk"></span>
 
-#### CentOS环境安装Java
+### 7.1 Java环境部署
 
 <span id="centosjava"></span>
+
+#### CentOS环境安装Java
 
 **注意：CentOS下OpenJDK无法正常工作，需要安装OracleJDK[下载链接](https://www.oracle.com/technetwork/java/javase/downloads/index.html)。**
 
@@ -197,9 +197,9 @@ $ source /etc/profile
 java -version
 ```
 
-#### Ubuntu环境安装Java
-
 <span id="ubuntujava"></span>
+
+#### Ubuntu环境安装Java
 
 ```
   # 安装默认Java版本(Java 8或以上)
@@ -208,9 +208,9 @@ java -version
   java -version
 ```
 
-### 7.2. 数据库部署
-
 <span id="mysql"></span>
+
+### 7.2. 数据库部署
 
 此处以Centos安装*MariaDB*为例。*MariaDB*数据库是 MySQL 的一个分支，主要由开源社区在维护，采用 GPL 授权许可。*MariaDB*完全兼容 MySQL，包括API和命令行。其他安装方式请参考[MySQL官网](https://dev.mysql.com/downloads/mysql/)。
 
@@ -292,9 +292,9 @@ mysql -utest -p123456 -h localhost -P 3306
 mysql > create database db_browser;
 ```
 
-### 7.3. Python部署
-
 <span id="python3"></span>
+
+### 7.3. Python部署
 
 python版本要求使用python3.x, 推荐使用python3.6及以上版本
 
@@ -315,9 +315,9 @@ python版本要求使用python3.x, 推荐使用python3.6及以上版本
   sudo apt-get install -y python3-pip
   ```
 
-## 8.常见问题
-
 <span id="q&a"></span>
+
+## 8.常见问题
 
 ### 8.1 数据库安装后登录报错
 
