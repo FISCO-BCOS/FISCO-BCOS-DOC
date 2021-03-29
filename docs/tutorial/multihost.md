@@ -242,7 +242,7 @@ sudo yum install -y java java-devel
 # 创建操作目录
 mkdir -p ~/fisco && cd ~/fisco
 
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 ```
 
 **配置控制台: 拷贝SDK证书**
