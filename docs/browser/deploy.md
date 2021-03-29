@@ -19,25 +19,23 @@
 
 #### 平台要求
 
-推荐使用CentOS 7.2+, Ubuntu 16.04及以上版本, 一键部署脚本将自动安装`openssl, curl, wget, git, nginx`相关依赖项。
+推荐使用CentOS 7.2+, Ubuntu 16.04及以上版本, 一键部署脚本将自动安装`openssl, curl, wget, git, nginx, dos2unix`相关依赖项。
 
-其余系统可能导致安装依赖失败，可自行安装`openssl, curl, wget, git, nginx`依赖项后重试
+其余系统可能导致安装依赖失败，可自行安装`openssl, curl, wget, git, nginx, dos2unix`依赖项后重试
 
 #### 检查Java
 
-推荐JDK8-JDK13版本：
+推荐JDK8-JDK13版本，使用OracleJDK[安装指引](#jdk)：
 
 ```
 java -version
 ```
 
-- Java推荐使用[OpenJDK](#id10) ，建议从[OpenJDK网站](https://jdk.java.net/java-se-ri/11) 自行下载。
-
-- **注意：需要配置root用户的java_home**
+*注意：不要用`sudo`执行安装脚本*
 
 #### 检查mysql
 
-MySQL-5.6或以上版本：
+MySQL-5.7或以上版本：
 
 ```
 mysql --version
@@ -49,7 +47,7 @@ mysql --version
 
 <span id="checkpy"></span>
 
-使用Python3.5或以上版本：
+使用Python3.6或以上版本：
 
 ```
 python3 --version
@@ -57,9 +55,11 @@ python3 --version
 
 - Python3安装部署可参考[Python部署](#python3)
 
-#### PyMySQL部署（Python3.5+）
+#### PyMySQL部署（Python3.6+）
 
-Python3.5及以上版本，需安装PyMysql依赖包：
+<span id="pymysql"></span>
+
+Python3.6及以上版本，需安装PyMysql依赖包：
 
 - CentOS
 
@@ -87,7 +87,7 @@ Python3.5及以上版本，需安装PyMysql依赖包：
 
 获取部署安装包：
 ```shell
-wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.2/browser-deploy.zip
+wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.3/browser-deploy.zip
 ```
 解压安装包：
 ```shell
@@ -102,7 +102,7 @@ cd browser-deploy
 
 ① 可以使用以下命令修改，也可以直接修改文件（vi common.properties）
 
-② 数据库需要提前安装（数据库安装请参看 [数据库部署](#id14)）
+② 数据库需要提前安装（数据库安装请参看 [数据库部署](#mysql)）
 
 ③ 服务端口不能小于1024
 
@@ -145,7 +145,7 @@ python3 deploy.py startAll
 python3 deploy.py help
 ```
 
-**备注：** 部署过程出现问题可以查看 [常见问题](#id19)
+**备注：** 部署过程出现问题可以查看 [常见问题](#q&a)
 
 ## 5.访问
 
@@ -166,47 +166,51 @@ http://127.0.0.1:5100/
 
 ### 7.1 Java环境部署
 
-此处给出OpenJDK安装简单步骤，供快速查阅。更详细的步骤，请参考[官网](https://openjdk.java.net/install/index.html)。
+<span id="jdk"></span>
 
-#### ① 安装包下载
+#### CentOS环境安装Java
 
-从[官网](https://jdk.java.net/java-se-ri/11)下载对应版本的java安装包，并解压到服务器相关目录
+<span id="centosjava"></span>
 
-```shell
-mkdir /software
-tar -zxvf openjdkXXX.tar.gz /software/
-```
-
-#### ② 配置环境变量
-
-- 修改/etc/profile
+**注意：CentOS下OpenJDK无法正常工作，需要安装OracleJDK[下载链接](https://www.oracle.com/technetwork/java/javase/downloads/index.html)。**
 
 ```
-sudo vi /etc/profile
-```
+# 创建新的文件夹，安装Java 8或以上的版本，推荐JDK8-JDK13版本，将下载的jdk放在software目录
+# 从Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
+$ mkdir /software
 
-- 在/etc/profile末尾添加以下信息
+# 解压jdk
+$ tar -zxvf jdk-8u201-linux-x64.tar.gz
 
-```shell
-JAVA_HOME=/software/jdk-11
-PATH=$PATH:$JAVA_HOME/bin
-CLASSPATH==.:$JAVA_HOME/lib
-export JAVA_HOME CLASSPATH PATH
-```
+# 配置Java环境，编辑/etc/profile文件
+$ vim /etc/profile
 
-- 重载/etc/profile
+# 打开以后将下面三句输入到文件里面并保存退出
+export JAVA_HOME=/software/jdk-8u201  #这是一个文件目录，非文件
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 
-```
-source /etc/profile
-```
+# 生效profile
+$ source /etc/profile
 
-#### ③ 查看版本
-
-```
+# 查询Java版本，出现的版本是自己下载的版本，则安装成功。
 java -version
 ```
 
+#### Ubuntu环境安装Java
+
+<span id="ubuntujava"></span>
+
+```
+  # 安装默认Java版本(Java 8或以上)
+  sudo apt install -y default-jdk
+  # 查询Java版本
+  java -version
+```
+
 ### 7.2. 数据库部署
+
+<span id="mysql"></span>
 
 此处以Centos安装*MariaDB*为例。*MariaDB*数据库是 MySQL 的一个分支，主要由开源社区在维护，采用 GPL 授权许可。*MariaDB*完全兼容 MySQL，包括API和命令行。其他安装方式请参考[MySQL官网](https://dev.mysql.com/downloads/mysql/)。
 
@@ -292,7 +296,7 @@ mysql > create database db_browser;
 
 <span id="python3"></span>
 
-python版本要求使用python3.x, 推荐使用python3.5及以上版本
+python版本要求使用python3.x, 推荐使用python3.6及以上版本
 
 - CentOS
 
@@ -312,6 +316,8 @@ python版本要求使用python3.x, 推荐使用python3.5及以上版本
   ```
 
 ## 8.常见问题
+
+<span id="q&a"></span>
 
 ### 8.1 数据库安装后登录报错
 
@@ -354,7 +360,7 @@ File "/home/ubuntu/webase-deploy/comm/utils.py", line 127, in getCommProperties
 TypeError: get() got an unexpected keyword argument 'fallback'
 ```
 
-答：检查[Python版本](#checkpy)，推荐使用python3.5及以上版本
+答：检查[Python版本](#checkpy)，推荐使用python3.6及以上版本
 
 ### 8.3 使用Python3时找不到pymysql
 
@@ -364,7 +370,7 @@ Traceback (most recent call last):
 ImportError: No module named 'pymysql'
 ```
 
-答：需要安装PyMySQL，安装请参看 [pymysql](#pymysql-python3-5)
+答：需要安装PyMySQL，安装请参看 [pymysql](#pymysql)
 
 ### 8.4 部署时数据库访问报错
 
