@@ -9,7 +9,7 @@
 
     - FISCO BCOS为实现海量数据治理的功能，需使用scalable存储模式、开启binlog及配置amdb-proxy，相关操作见本文档说明；
     
-    - “数据仓库”的使用请参考[文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)。
+    - “数据仓库”的使用请参考 `[文档] <https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html>`_ 。
 
 ```
 

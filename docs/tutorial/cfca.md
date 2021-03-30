@@ -4,7 +4,7 @@
 
 ----
 
-使用前建议阅读[证书说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/certificates.html)
+使用前建议阅读[证书说明](../manual/certificates.html)
 
 ## 购买前注意事项
 
@@ -20,7 +20,7 @@
 
 - cfca申请的`ca.crt--node.crt`二级证书结构与fisco bcos自带工具生成的三级证书结构互相兼容，用户可直接使用cfca签发的二级证书作为节点或sdk的证书使用
 
-建议用户结合[白名单机制](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/certificate_list.html#id2)一起使用
+建议用户结合[白名单机制](../manual/certificate_list.html#id2)一起使用
 
 ### 第一步. 获取节点证书
 

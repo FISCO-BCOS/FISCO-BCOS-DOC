@@ -125,7 +125,7 @@ cmake3 .. -DBUILD_GM=ON
 cmake .. -DBUILD_GM=ON
 ```
 
-其它步骤与标准版Key Manager相同，请参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)。
+其它步骤与标准版Key Manager相同，请参考：[key-manager github repository](https://github.com/FISCO-BCOS/key-manager), [key-manager gitee repository](https://gitee.com/FISCO-BCOS/key-manager)。
 
 ### 国密版节点配置
 
