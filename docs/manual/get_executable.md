@@ -35,7 +35,7 @@ build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，�
 
 FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台的构建文件，这意味着无论您使用什么操作系统工作流都非常相似：
 1. 安装构建工具和依赖包（依赖于平台）。
-1. 从[FISCO BCOS][FSICO-BCOS-GitHub]克隆代码。
+1. 从FISCO BCOS克隆代码。
 1. 运行`cmake`生成构建文件并编译。
 
 ### 安装依赖
