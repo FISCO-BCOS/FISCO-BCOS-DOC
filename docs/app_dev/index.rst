@@ -26,3 +26,4 @@
    ../manual/precompiled_contract.md
    ../manual/transaction_parallel.md
    ../manual/privacy.md
+   ../manual/bcos_node_proxy.md

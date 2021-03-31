@@ -248,6 +248,7 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### 准备依赖
 
 ```bash
+
 cd ~/fisco
 curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
 

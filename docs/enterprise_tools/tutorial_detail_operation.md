@@ -904,7 +904,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
+此步操作需要重启节点，热更新操作请参考[JSON-RPC API](../api.md##generategroup)
 
 重启机构C节点:
 

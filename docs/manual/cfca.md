@@ -8,9 +8,9 @@
 
 ## 购买前注意事项
 
-- 普通版FISCO BCOS节点使用的节点证书算法为EC secp256k1曲线
+- 普通版FISCO BCOS节点使用的节点证书算法为EC secp256k1曲线**(注：由于CFCA目前官网仅支持rsa和sm2证书，建议用户使用普通版FISCO BCOS节点时，使用其他可以签发EC secp256k1曲线的第三方证书机构)**
 
-- 国密版FISCO BCOS节点使用的节点证书算法为SM2
+- 国密版FISCO BCOS节点使用的节点证书算法为SM2，具体操作可以参考[使用CFCA证书部署国密FISCO BCOS](../faq/gm_cfca.md)
 
 - 用户向CFCA购买前请确认签发算法是否正确
 

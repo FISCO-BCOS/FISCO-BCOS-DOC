@@ -894,8 +894,6 @@ Send the configuration file of group1 to agencyC.
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-Currently, `FISCO BCOS` does not support file hot update. It is necessary to restart the node after adding genesis block of group1 to agencyC node.
-
 Restart agencyC's node:
 
 ```bash

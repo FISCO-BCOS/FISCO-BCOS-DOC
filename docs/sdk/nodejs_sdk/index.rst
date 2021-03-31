@@ -12,6 +12,7 @@ Node.js SDK
     :class: red
 
     **Node.js SDK目前仅处于个人开发者体验阶段，开发企业级应用请使用** `Web3SDK <../java_sdk.html>`_
+    Node.js SDK目前不支持国密SSL通信协议
 
 
 
