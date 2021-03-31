@@ -11,7 +11,14 @@ Java sdk主要包括五个配置选项，分别是
 * 账户配置（非必须，不配置则使用默认配置值）
 * 线程池配置（非必须，不配置则使用默认配置值）
 
+支持的配置格式，包括
 
+* toml(默认)
+* properties
+* yml
+* xml
+
+其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./configuration.html#id12)
 
 ## 1. 快速配置
 
@@ -23,7 +30,7 @@ Java sdk主要包括五个配置选项，分别是
 
 3. 将配置文件config-example.toml, 存放在应用的主目录下。
 
-   * config-example.toml可以在[java-sdk](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)的源文件以下位置找到：`src/test/resources/config-example.toml`
+   * config-example.toml可以在java-sdk [GitHub链接](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)或[Gitee链接](https://gitee.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)的源文件以下位置找到：`src/test/resources/config-example.toml`
    * 本文的“3. 配置示例” 部分也可以看到``config-example.toml``的内容。
 
 4. 修改config-example.toml中节点的IP和端口，与您要连接的节点所匹配。
@@ -316,3 +323,272 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
 ```
 
+## 4. 其它格式的配置
+
+Java SDK还支持`properties`、`yml`以及`xml`格式的配置文件。
+
+### properties格式
+
+#### 配置示例
+
+各字段的含义以及默认值与`toml`配置文件一致。
+
+在项目的主目录创建文件`fisco-config.properties`，复制以下配置内容，并根据实际情况修改各配置项。
+
+```properties
+cryptoMaterial.certPath=conf                       # The certification path  
+
+# The following configurations take the certPath by default if commented
+# cryptoMaterial.caCert=conf/ca.crt 
+# cryptoMaterial.sslCert=conf/sdk.crt
+# cryptoMaterial.sslKey=conf/sdk.key
+# cryptoMaterial.enSslCert=conf/gm/gmensdk.crt
+# cryptoMaterial.enSslKey=conf/gm/gmensdk.key
+
+
+# The peer list to connect
+network.peers[0]=127.0.0.1:20200
+network.peers[0]=127.0.0.1:21200
+
+
+# AMOP configuration
+
+# Configure a private topic as a topic message sender.
+# amop[0].publicKeys[0]=conf/amop/consumer_public_key_1.pem
+# amop[0].topicName=PrivateTopic1
+
+# Configure a private topic as a topic subscriber.
+# amop[1].password=123456 
+# amop[1].privateKey=conf/amop/consumer_private_key.p12
+# amop[1].topicName=PrivateTopic2
+
+
+account.keyStoreDir=account
+# account.accountFilePath=conf
+account.accountFileFormat=pem
+# account.accountAddress=0x
+# account.password=123456
+
+# threadPool.channelProcessorThreadSize=16
+# threadPool.receiptProcessorThreadSize=16
+threadPool.maxBlockingQueueSize=102400
+```
+
+#### 代码示例
+
+使用SpringBoot的配置装载方法，创建配置类:
+
+```java
+@Data
+@ToString
+@Component
+@ConfigurationProperties
+@PropertySource(value = "classpath:fisco-config.properties", ignoreResourceNotFound = true, encoding = "UTF-8")
+public class BcosConfig {
+    private Map<String, Object> cryptoMaterial;
+    public Map<String, List<String> > network;
+    public List<AmopTopic> amop;
+    public Map<String, Object> account;
+    public Map<String, Object> threadPool;
+}
+```
+
+基于配置类初始化`BcosSDK`:
+
+```java
+@Slf4j
+@Data
+@Component
+public class FiscoBcos {
+
+    @Autowired
+    BcosConfig bcosConfig;
+
+    BcosSDK bcosSDK;
+
+    public void init() {
+        ConfigProperty configProperty = loadProperty();
+        ConfigOption configOption;
+        try {
+            configOption = new ConfigOption(configProperty, CryptoType.ECDSA_TYPE);
+        } catch (ConfigException e) {
+            log.error("init error:" + e.toString());
+            return ;
+        }
+        bcosSDK = new BcosSDK(configOption);
+    }
+
+    public ConfigProperty loadProperty() {
+        ConfigProperty configProperty = new ConfigProperty();
+        configProperty.setCryptoMaterial(bcosConfig.getCryptoMaterial());
+        configProperty.setAccount(bcosConfig.getAccount());
+        configProperty.setNetwork(new HashMap<String, Object>(){{
+            put("peers", bcosConfig.getNetwork().get("peers"));
+        }} );
+        configProperty.setAmop(bcosConfig.getAmop());
+        configProperty.setThreadPool(bcosConfig.getThreadPool());
+        return configProperty;
+    }
+}
+```
+
+### yml格式
+
+#### 配置示例
+
+各字段的含义以及默认值与`toml`配置文件一致。
+
+在项目的主目录创建文件`fisco-config.yml`，复制以下配置内容，并根据实际情况修改各配置项。
+
+```yml
+cryptoMaterial:                     
+  certPath: "conf"                   
+#  caCert: "conf/ca.crt"               
+#  sslCert: "conf/sdk.crt"             
+#  sslKey: "conf/sdk.key"
+#  enSslCert: "conf/gm/gmensdk.crt"
+#  enSslKey: "conf/gm/gmensdk.key"
+
+network:
+  peers:
+    - "127.0.0.1:20201"
+    - "127.0.0.1:20200"
+
+amop:
+#  - publicKeys: [ "conf/amop/consumer_public_key_1.pem" ]
+#    topicName: "PrivateTopic1"
+#  - password: "123456"
+#    privateKey: "conf/amop/consumer_private_key.p12"
+#    topicName: "PrivateTopic2"
+
+account:
+  keyStoreDir: "account"
+#  accountFilePath: "conf"
+  accountFileFormat: "pem"
+#  accountAddress: "0x"
+#  password: ""
+
+
+threadPool:
+#  channelProcessorThreadSize: "16"
+#  receiptProcessorThreadSize: "16"
+#  maxBlockingQueueSize: "102400"
+```
+
+#### 代码示例
+
+引入`yml`文件解析工具：
+
+```gradle
+	compile ("org.yaml:snakeyaml:1.27")
+```
+
+初始化`BcosSDK`:
+
+```java
+@Data
+@Component
+@Slf4j
+public class FiscoBcos {
+
+    BcosSDK bcosSDK;
+
+    public void init() {
+        ConfigProperty configProperty = loadProperty();
+        ConfigOption configOption ;
+        try {
+            configOption = new ConfigOption(configProperty, CryptoType.ECDSA_TYPE);
+        } catch (ConfigException e) {
+            log.error("init error:" + e.toString());
+            return ;
+        }
+        bcosSDK = new BcosSDK(configOption);
+    }
+
+    public ConfigProperty loadProperty() {
+        Representer representer = new Representer();
+        representer.getPropertyUtils().setSkipMissingProperties(true);
+        Yaml yaml = new Yaml(representer);
+        String configFile = "/fisco-config.yml";
+        try (InputStream inputStream = this.getClass().getResourceAsStream(configFile)) {
+            return yaml.loadAs(inputStream, ConfigProperty.class);
+        } catch (Exception e) {
+            log.error("load property: ", e);
+        }
+    }
+}
+```
+
+### xml格式
+
+#### 配置示例
+
+各property的含义与`toml`配置文件一致。
+
+在项目的主目录创建文件`fisco-config.xml`，复制以下配置内容，并根据实际情况修改各配置项。
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
+        <property name="cryptoMaterial">
+            <map>
+                <entry key="certPath" value="conf" />
+            </map>
+        </property>
+        <property name="network">
+            <map>
+                <entry key="peers">
+                    <list>
+                        <value>127.0.0.1:20200</value>
+                        <value>127.0.0.1:20201</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+        <property name="account">
+            <map>
+                <entry key="keyStoreDir" value="account" />
+                <entry key="accountAddress" value="" />
+                <entry key="accountFileFormat" value="pem" />
+                <entry key="password" value="" />
+                <entry key="accountFilePath" value="" />
+            </map>
+        </property>
+        <property name="threadPool">
+            <map>
+                <entry key="channelProcessorThreadSize" value="16" />
+                <entry key="receiptProcessorThreadSize" value="16" />
+                <entry key="maxBlockingQueueSize" value="102400" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
+        <constructor-arg name="configProperty">
+            <ref bean="defaultConfigProperty"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
+        <constructor-arg name="configOption">
+            <ref bean="defaultConfigOption"/>
+        </constructor-arg>
+    </bean>
+</beans>
+```
+
+#### 代码示例
+
+初始化`BcosSDK`:
+
+```java
+    @SuppressWarnings("resource")
+    ApplicationContext context =
+            new ClassPathXmlApplicationContext("classpath:fisco-config.xml");
+    BcosSDK bcosSDK = context.getBean(BcosSDK.class);
+```

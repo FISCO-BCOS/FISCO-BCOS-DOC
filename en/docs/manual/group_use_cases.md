@@ -82,6 +82,11 @@ mkdir -p ~/fisco && cd ~/fisco
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
 **Generate configuration for star networking blockchain system**
 ```bash
 # Generate ip_list(configuration)
@@ -235,7 +240,12 @@ The console connects to the FISCO BCOS node, it is used to query the blockchain 
 $ cd ~/fisco
 
 # Download console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+# If you have network issue for exec command above, please try:
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
+
+$ bash download_console.sh
 
 # Switch to console directory
 $ cd console
@@ -507,7 +517,12 @@ In a parallel multi-group scenario, node join and exit group operations are simi
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh
+
+# If you have network issue for exec command above, please try:
+$ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh
+
+$ chmod u+x build_chain.sh
 #Build a local single-group four-node blockchain (in a production environment, it is recommended that each node be deployed on a different physical machine)
 $ bash build_chain.sh -l 127.0.0.1:4 -o multi_nodes -p 20000,20100,7545
 Generating CA key...
@@ -628,7 +643,12 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # If you have never downloaded the console, please do the following to download the console, otherwise copy the console to the ~/fisco directory:
 $ cd ~/fisco
 # Download console
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+# If you have network issue for exec command above, please try:
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
+
+bash download_console.sh
 ```
 
 **Configuration console**

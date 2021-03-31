@@ -111,6 +111,12 @@ mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
 #### Generate configuration file
 ```bash
 # generate blockchain configuration file ipconf
@@ -258,6 +264,12 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/downloa
 cp -n console/conf/config-example.toml console/conf/config.toml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+```
+
 #### Modify configuration file
 Modify ~/fisco/console/conf/applicationContext.xml to the following configuration (partial information)
 

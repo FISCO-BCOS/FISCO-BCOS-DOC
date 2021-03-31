@@ -13,7 +13,11 @@ This chapter is a process that multi-agency peer-to-peer deployment and a situat
 **download**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# If you have network issue for exec the command above, please try:
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 **install**
