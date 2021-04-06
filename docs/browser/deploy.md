@@ -35,7 +35,7 @@ java -version
 
 #### 检查mysql
 
-MySQL-5.7或以上版本：
+MySQL-5.6或以上版本：
 
 ```
 mysql --version
@@ -147,7 +147,100 @@ python3 deploy.py help
 
 **备注：** 部署过程出现问题可以查看 [常见问题](#q&a)
 
-## 5.访问
+## 5.状态检查
+
+成功部署后，可以根据以下步骤**确认各子服务是否启动成功**
+
+### 检查子系统进程
+
+通过`ps`命令，检查各子系统的进程是否存在
+
+- 包含：后端server进程和前端的`nginx`进程
+
+检查方法如下，若无输出，则代表进程未启动，需要到该子系统的日志中[检查日志错误信息](#checklog)，并根据错误提示或本文档的[常见问题](#q&a)进行排查
+
+- 检查后端server进程
+
+```
+$ ps -ef | grep org.bcos.browser
+```
+
+输出如下
+
+```
+root     91851      1  0 Mar31 ?        00:04:08 /usr/local/jdk1.8.0_181/bin/java -cp conf/:apps/*:lib/* org.bcos.browser.Application
+```
+
+- 检查前端的nginx进程
+
+```
+$ ps -ef | grep browser |grep nginx       
+```
+
+输出如下
+
+```
+root      112543      1  0 Mar23 ?        00:00:00 nginx: master process /usr/sbin/nginx -c /data/home/webase/webase/browser-deploy/comm/nginx.conf
+```
+
+### 检查进程端口
+
+通过`netstat`命令，检查各子系统进程的端口监听情况。
+
+检查方法如下，若无输出，则代表进程端口监听异常，需要到该子系统的日志中[检查日志错误信息](#checklog)，并根据错误提示或本文档的[常见问题](#q&a)进行排查
+
+- 检查后端server端口(默认为5101)是否已监听
+
+```
+$ netstat -anlp | grep 5101
+```
+
+输出如下
+
+```
+tcp        0      0 0.0.0.0:5101            0.0.0.0:*               LISTEN      91851/java
+```
+
+- 检查前端端口(默认为5100)在nginx是否已监听
+
+```
+$ netstat -anlp | grep 5100
+```
+
+输出如下
+
+```
+tcp        0      0 0.0.0.0:5100            0.0.0.0:*               LISTEN      112543/nginx: maste 
+```
+
+<span id="checklog"></span>
+
+### 检查服务日志 
+
+<span id="logpath"></span>
+
+#### 日志路径如下：
+
+```
+部署日志：log/
+后端日志：server/log/
+前端日志：web/log/
+```
+
+#### 检查服务日志有无错误信息
+
+- 如果各个子服务的进程**已启用**且端口**已监听**，可直接访问下一章节[访问](#access)
+
+- 如果上述检查步骤出现异常，如检查不到进程或端口监听，则需要按[日志路径](#logpath)进入**异常子服务**的日志目录，检查该服务的日志
+
+
+启动失败或无法使用时，欢迎到`区块链浏览器`[提交Issue](https://github.com/FISCO-BCOS/fisco-bcos-browser/issues)或到技术社区共同探讨。
+
+- 提交Issue或讨论问题时，可以在issue中配上自己的**环境配置，操作步骤，错误现象，错误日志**等信息，方便社区用户快速定位问题
+
+<span id="access"></span>
+
+## 6.访问
 
 例如：在浏览器输入以下访问地址，IP为部署服务器IP，端口为前端服务端口
 
@@ -155,12 +248,10 @@ python3 deploy.py help
 http://127.0.0.1:5100/
 ```
 
-## 6.日志路径
-```
-部署日志：log/
-后端日志：server/log/
-前端日志：web/log/
-```
+**备注：** 
+
+- 部署服务器IP和前端服务端口需对应修改，网络策略需开通
+- 区块链浏览器使用请查看[使用介绍](../browser.html#id1)
 
 ## 7.附录
 
