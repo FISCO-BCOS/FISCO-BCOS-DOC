@@ -43,7 +43,7 @@ FISCO BCOS提供了**可并行合约开发框架**，开发者只需按照框架
 
 ### solidity合约并行框架
 
-编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。（ParallelContract.sol合约代码[参考这里](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)）
+编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。（ParallelContract.sol合约代码[GitHub源码](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)、[Gitee源码](https://gitee.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)）
 
 先给出完整的举例，例子中的ParallelOk合约实现了并行转账的功能
 
@@ -365,7 +365,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 ### 并行预编译合约：DagTransferPrecompiled
 
-与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行预编译合约的例子（[DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
+与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行预编译合约的例子（[DagTransferPrecompiled GitHub源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/DagTransferPrecompiled.cpp)或[DagTransferPrecompiled Gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
 
 **注意：DagTransferPrecompiled为并行交易的举例，功能较为简单，请勿用于线上业务。**
 

@@ -69,12 +69,22 @@
 
 搭建国密版FISCO BCOS的区块链方式主要有2种：
 
-##### (1). 使用buildchain.sh脚本搭建
+##### (1). 使用build_chain.sh脚本搭建
 
 buildchain.sh脚本的-g为国密编译选项，使用成功后会生成国密版的节点。默认从GitHub下载最新稳定版本可执行程序，操作方式：
 
-```
+```bash
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
+运行以下命令，搭建四节点的国密版FISCO BCOS联盟链
+
+```bash
 ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g
 ```
 

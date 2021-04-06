@@ -36,7 +36,7 @@ call(gasLimit, to, value, inputOffset, inputSize, outputOffset, outputSize)
 
 ![](../../images/articles/pre-compiled_contract_architecture_design/IMG_5429.PNG)
 
-**注：**√ 代表支持，× 代表不支持
+**注：**  √ 代表支持，× 代表不支持
 
 ## FISCO BCOS预编译合约架构
 

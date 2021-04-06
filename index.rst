@@ -138,7 +138,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             .. raw:: html
 
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/enterprise_tools/index.html">数据治理通用组件：</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/governanc/index.html">数据治理通用组件：</a></b></h>
                   <br><br>
                   <p>数据治理通用组件的全名是“WeBankBlockchain-Data数据治理通用组件”，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。</p>
                </div>
@@ -192,28 +192,37 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 教程
+   :caption: 快速开始
 
    docs/installation.md
    docs/tutorial/sdk_application.md
-   docs/tutorial/index.rst
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 开发手册
+   :caption: 构建和管理区块链网络
 
    docs/tutorial/key_concepts.md
-   docs/blockchain_dev/index.rst
+   docs/blockchain_dev/env.rst
+   docs/blockchain_dev/config.rst
+   docs/blockchain_dev/maintain.rst
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: 开发区块链应用
+
+   docs/manual/account.md
    docs/app_dev/index.rst
    docs/sdk/index.rst
    docs/api.md
+   docs/manual/amop_protocol.md
    docs/faq/index.rst
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 工具
+   :caption: 使用工具
 
    docs/manual/build_chain.md
    docs/console/index.rst
@@ -228,21 +237,15 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :caption: 系统设计
    
    docs/design/architecture/index.rst
+   docs/design/tx_procedure.md
+   docs/design/protocol_description.md
    docs/design/index.rst
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: 专栏
-
-   docs/special_column/guomi.md
-   docs/special_column/certificate.md
-   docs/special_column/jdk_version.md
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 参考
+   :caption: 更多参考资料
 
    docs/articles/index.rst
    docs/community.md

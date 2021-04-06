@@ -1,4 +1,4 @@
-# JSON-RPC API
+# 区块链功能接口列表
 
 下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[jsonrpc_listen_ip]`(若节点小于v2.3.0版本，查看配置项`listen_ip`)和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id2)。
 
@@ -169,6 +169,7 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | 0xc | GROUP_CONF_NOT_FOUND         | 调用启动群组接口时，未找到群组配置文件             |
 | 0xd | GROUP_IS_STOPPING            | 调用接口时，群组正在释放资源                     |
 | 0xf | GROUP_NOT_DELETED            | 调用恢复接口时，群组并未被删除                   |
+
 ## getClientVersion
 返回节点的版本信息
 ### 参数

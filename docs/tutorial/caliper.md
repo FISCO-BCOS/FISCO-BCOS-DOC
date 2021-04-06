@@ -32,6 +32,10 @@
     ```bash
     # 安装nvm
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+
+    # 若出现因网络问题导致长时间下载失败，可尝试以下命令
+    curl -o- https://gitee.com/mirrors/nvm/raw/v0.33.2/install.sh | bash
+
     # 加载nvm配置
     source ~/.$(basename $SHELL)rc
     # 安装Node.js 8
@@ -210,6 +214,13 @@ npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 git clone https://github.com/vita-dounai/caliper-benchmarks.git
 ```
 
+**注意** 若出现网络问题导致的长时间拉取代码失败，则尝试以下方式:
+
+```bash
+# 拉取gitee代码
+git clone https://gitee.com/mirrors_hyperledger/caliper-benchmarks.git
+```
+
 **执行HelloWorld合约测试**
 
 ```bash
@@ -320,7 +331,7 @@ docker -H 192.168.1.1:2375 images
 
 #### 建链
 
-使用[开发部署工具 build_chain.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
+使用[开发部署工具 build_chain.sh](../manual/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
 
 创建生成节点的配置文件（如一个名为`ipconf`的文件），文件内容如下：
 

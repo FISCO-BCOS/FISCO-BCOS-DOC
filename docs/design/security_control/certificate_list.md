@@ -29,6 +29,7 @@
 ![](../../../images/node_management/architecture.png)
 
 <center>模块架构</center>
+
 ## 核心流程
 
 底层实现SSL双向验证。节点在handshake过程中，通过对方提供的证书获取对方节点的nodeID，检查该nodeID与节点配置的黑、白名单是否有关系。如果根据黑、白名单的配置，拒绝该关闭的connection，继续后续流程。
