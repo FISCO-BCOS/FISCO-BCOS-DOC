@@ -1,4 +1,4 @@
-# 数据治理通用组件
+# 区块链应用开发组件
 
 标签：``WeBankBlockchain-SmartDev`` ``应用开发`` ``通用组件`` ``智能合约库`` ``智能合约编译插件`` ``应用开发脚手架``
 
@@ -37,6 +37,10 @@ solidity智能合约如何快速编译为abi和binary文件？
 ![](../../images/governance/SmartDev/compare.png)
 
 ## 组件简介
+SmartDev包含了一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包括智能合约库（SmartDev-Contract）、智能合约编译插件（SmartDev-SCGP）和应用开发脚手架（SmartDev-Scaffold）。开发者可根据自己的情况自由选择相应的开发工具，提升开发效率。
+
+![](../../images/governance/SmartDev/smartdev_overview.png)
+
 ### SmartDev-Contract 智能合约库
 solidity智能合约代码库。包含基础类型、数据结构、通用功能、上层业务等智能合约库。用户可根据实际需求进行参考、复用。
 
