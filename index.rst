@@ -138,11 +138,11 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             .. raw:: html
 
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/governanc/index.html">数据治理通用组件：</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/governance/data_index.html">数据治理通用组件：</a></b></h>
                   <br><br>
                   <p>数据治理通用组件的全名是“WeBankBlockchain-Data数据治理通用组件”，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。</p>
                </div>
-               <img src="_images/governance.jpg" class="card-holder">
+               <img src="./docs/images/governance/governance.jpg" class="card-holder">
                <div style="clear:both"></div>
 
    .. container:: card-holder
@@ -229,7 +229,9 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/webase/webase.md
    docs/browser/index.rst
    docs/enterprise_tools/index.md
-   docs/governance/index.md
+   docs/webank_blockchain/data_index.md
+   docs/webank_blockchain/governance_index.md
+   docs/webank_blockchain/smartdev_index.md
 
 .. toctree::
    :hidden:
