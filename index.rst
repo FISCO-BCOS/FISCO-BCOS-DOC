@@ -153,12 +153,12 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
             .. raw:: html
 
+               <img src="_images/MCGF_overview.png" class="card-holder">
                <div class="tools-holder">
                   <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/governance_index.html">区块链多方协作治理组件：</a></b></h>
                   <br><br>
                   <p>WeBankBlockchain-Governance 是一套轻量解耦、简洁易用、通用场景和一站式的区块链治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。 首批开源的有账户治理组件(WeBankBlockchain-Governance-Account)、权限治理组件(WeBankBlockchain-Governance-Auth)、 私钥管理组件(WeBankBlockchain-Governance-Key)和证书管理组件（WeBankBlockchain-Governance-Cert）。这四个组件分别从私钥丢失重置、合约权限细粒度管控、私钥和证书的全生命周期管控等方面着手，提供了可部署的智能合约代码、易于使用的SDK和可参考的落地实践Demo等交付物。</p>
                </div>
-               <img src="_images/MCGF_overview.png" class="card-holder">
                <div style="clear:both"></div>
 
             .. raw:: html
