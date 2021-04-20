@@ -138,7 +138,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             .. raw:: html
 
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/data_index.html">数据治理通用组件： </a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/data_index.html">数据治理通用组件：释放数据价值 </a></b></h>
                   <br><br>
                   <p>数据治理通用组件的全名是“WeBankBlockchain-Data数据治理通用组件”，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。</p>
                </div>
@@ -155,9 +155,9 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
                <img src="_images/MCGF_overview.png" class="card-holder">
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/governance_index.html">区块链多方协作治理组件：</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/governance_index.html">区块链多方协作治理组件：开启治理实践新起点</a></b></h>
                   <br><br>
-                  <p>WeBankBlockchain-Governance区块链多方协作治理组件是一套轻量解耦、简洁易用、通用场景和一站式的区块链治理组件解决方案。 首批开源的有账户治理组件(WeBankBlockchain-Governance-Account)、权限治理组件(WeBankBlockchain-Governance-Auth)、 私钥管理组件(WeBankBlockchain-Governance-Key)和证书管理组件（WeBankBlockchain-Governance-Cert）。上述组件都提供了可部署的智能合约代码、易于使用的SDK和可参考的落地实践Demo等交付物。</p>
+                  <p>WeBankBlockchain-Governance区块链多方协作治理组件是一套轻量解耦、简洁易用、通用场景和一站式的区块链治理组件解决方案。 首批开源的有账户治理组件(Governance-Account)、权限治理组件(Governance-Auth)、 私钥管理组件(Governance-Key)和证书管理组件（Governance-Cert）。上述组件都提供了可部署的智能合约代码、易于使用的SDK和可参考的落地实践Demo等交付物。</p>
                </div>
                <div style="clear:both"></div>
 
@@ -170,7 +170,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             .. raw:: html
 
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/smartdev_index.html">区块链应用开发组件：</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/smartdev_index.html">区块链应用开发组件：助力低代码开发</a></b></h>
                   <br><br>
                   <p>WeBankBlockchain-SmartDev应用开发组件包含了一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包括智能合约库（SmartDev-Contract）、智能合约编译插件（SmartDev-SCGP）和应用开发脚手架（SmartDev-Scaffold）。开发者可根据自己的情况自由选择相应的开发工具，提升开发效率。</p>
                </div>
