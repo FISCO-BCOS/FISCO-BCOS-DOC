@@ -157,7 +157,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <div class="tools-holder">
                   <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/governance_index.html">区块链多方协作治理组件：</a></b></h>
                   <br><br>
-                  <p>WeBankBlockchain-Governance 是一套轻量解耦、简洁易用、通用场景和一站式的区块链治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。 首批开源的有账户治理组件(WeBankBlockchain-Governance-Account)、权限治理组件(WeBankBlockchain-Governance-Auth)、 私钥管理组件(WeBankBlockchain-Governance-Key)和证书管理组件（WeBankBlockchain-Governance-Cert）。这四个组件分别从私钥丢失重置、合约权限细粒度管控、私钥和证书的全生命周期管控等方面着手，提供了可部署的智能合约代码、易于使用的SDK和可参考的落地实践Demo等交付物。</p>
+                  <p>WeBankBlockchain-Governance区块链多方协作治理组件是一套轻量解耦、简洁易用、通用场景和一站式的区块链治理组件解决方案。 首批开源的有账户治理组件(WeBankBlockchain-Governance-Account)、权限治理组件(WeBankBlockchain-Governance-Auth)、 私钥管理组件(WeBankBlockchain-Governance-Key)和证书管理组件（WeBankBlockchain-Governance-Cert）。上述组件都提供了可部署的智能合约代码、易于使用的SDK和可参考的落地实践Demo等交付物。</p>
                </div>
                <div style="clear:both"></div>
 
@@ -172,7 +172,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <div class="tools-holder">
                   <h style="font-size: 18px;"><b><a href="./docs/webank_blockchain/smartdev_index.html">区块链应用开发组件：</a></b></h>
                   <br><br>
-                  <p>WeBankBlockchain-SmartDev应用开发组件的初衷是全方位助力开发者高效、敏捷地开发区块链应用。SmartDev包含了一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包括智能合约库（SmartDev-Contract）、智能合约编译插件（SmartDev-SCGP）和应用开发脚手架（SmartDev-Scaffold）。开发者可根据自己的情况自由选择相应的开发工具，提升开发效率。</p>
+                  <p>WeBankBlockchain-SmartDev应用开发组件包含了一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包括智能合约库（SmartDev-Contract）、智能合约编译插件（SmartDev-SCGP）和应用开发脚手架（SmartDev-Scaffold）。开发者可根据自己的情况自由选择相应的开发工具，提升开发效率。</p>
                </div>
                <img src="_images/smartdev_overview.png" class="card-holder">
                <div style="clear:both"></div>
