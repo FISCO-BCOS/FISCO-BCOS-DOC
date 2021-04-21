@@ -215,7 +215,7 @@ contract Table {
 ```eval_rst
 .. note::
     - Table合约的insert、remove、update和select函数中key的类型为string，其长度最大支持255字符。
-    - Entry的get/set接口的key的类型为string，其长度最大支持255字符，value支持的类型有int256(int)、address和string，其中string的不能超过16MB。
+    - Entry的get/set接口的key的类型为string，其长度最大支持255字符，value支持的类型有int256(int)、address和string，其中string的长度不能超过16MB。
 ```
 
 提供一个合约案例`TableTest.sol`，代码如下：
