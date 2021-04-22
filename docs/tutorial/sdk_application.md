@@ -361,7 +361,7 @@ public class Asset extends Contract {
 
 ### 第二步. 创建一个Java工程
 
-在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``assert-app``。
+在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app``。
 
 ![](../../images/tutorial/create_app_mid.gif)
 
@@ -763,7 +763,7 @@ TransactionReceipt receipt = asset.register(assetAccount, amount);
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-在``asset-app/tools``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
+在``asset-app/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 ![](../../images/tutorial/make_sh.png)
 
 ```bash
