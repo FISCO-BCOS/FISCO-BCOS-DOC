@@ -169,6 +169,7 @@ FISCO BCOS RPC接口错误码及其对应的含义如下：
 | 0xc | GROUP_CONF_NOT_FOUND         | 调用启动群组接口时，未找到群组配置文件             |
 | 0xd | GROUP_IS_STOPPING            | 调用接口时，群组正在释放资源                     |
 | 0xf | GROUP_NOT_DELETED            | 调用恢复接口时，群组并未被删除                   |
+
 ## getClientVersion
 返回节点的版本信息
 ### 参数
