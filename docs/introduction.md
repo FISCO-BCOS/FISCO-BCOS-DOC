@@ -185,6 +185,10 @@ FISCO BCOS引入开发部署工具、交互式控制台、区块链浏览器等�
   
 - <font color=blue>**[区块链数据治理组件解决方案](https://data-doc.readthedocs.io/zh_CN/latest/)**</font>：稳定、高效、安全的区块链数据治理组件解决方案，分别从底层数据存储层、智能合约数据解析层和应用层三个方面，提供了区块链数据挖掘、裁剪、扩容、可信存储、抽取、分析、审计、对账、监管等数据治理方面的关键能力。
 
+- <font color=blue>**[区块链多方协作治理组件解决方案](https://governance-doc.readthedocs.io/zh_CN/latest/)**</font>：可无缝适配FISCO BCOS的区块链治理组件解决方案。首批开源的四个组件分别从私钥丢失重置、合约权限细粒度管控、私钥和证书的全生命周期管控等方面着手，提供了可部署的智能合约代码、易于使用的SDK和可参考的落地实践Demo等交付物。
+  
+- <font color=blue>**[区块链应用开发组件解决方案](https://smartdev-doc.readthedocs.io/zh_CN/latest/)**</font>：一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包含了Solidity智能合约开发工具库、 智能合约Gradle编译插件、应用开发脚手架。
+
 - <font color=blue>**[ChainIDE](https://fiscoide.com/)**</font>：提供智能合约云端开发工具，帮助开发者节约边际成本，加速推送区块链应用落地。
 
 - <font color=blue>**[FISCO BCOS区块链工具箱](https://github.com/SUIBE-Blockchain/FISCO_BCOS_Toolbox/)**</font>：与WeBase/Remix/VSCode/ChainIDE等IDE协同工作，提升开发体验与开发效率。
