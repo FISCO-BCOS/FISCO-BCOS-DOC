@@ -4,7 +4,7 @@
 
 **Hyperledger Caliper在发布的0.2.0版本中，正式宣布支持FISCO BCOS平台**。
 
-关于如何使用Caliper对FISCO BCOS进行压测，开发小哥已经呕心沥血对如何部署Caliper及如何自定义测试用例进行了全面总结，欢迎猛戳[FISCO BCOS官方文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/caliper.html)学习如何使用：
+关于如何使用Caliper对FISCO BCOS进行压测，开发小哥已经呕心沥血对如何部署Caliper及如何自定义测试用例进行了全面总结，欢迎猛戳[FISCO BCOS官方文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/stress_testing.html)学习如何使用：
 
 本文将深入解析Caliper，以便大家更好使用Caliper压测FISCO BCOS。
 
