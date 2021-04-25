@@ -24,7 +24,7 @@
    ../manual/permission_control.md
    ../manual/consensus_recover.md
    ../tutorial/cdn.md
-   ../manual/caliper.md
+   ../tutorial/stress_testing.md
    ../manual/log_description.md
 
 

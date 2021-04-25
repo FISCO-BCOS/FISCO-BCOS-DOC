@@ -12,18 +12,18 @@
    multihost.md
    add_new_node.md
    compile.md
-   caliper.md
    enc.md
    cfca.md
    mysql_node.md
    cdn.md
+   stress_testing.md
 
 **高阶教程**
 
 - `搭建多机区块链网络 <./multihost.html>`_
 - `扩容一个新节点 <./add_new_node.html>`_
 - `FISCO BCOS源码编译 <./compile.html>`_
-- `Caliper压力测试指南 <./caliper.html>`_
+- `压力测试指南 <./stress_testing.html>`_
 - `存储加密 <./enc.html>`_
 - `使用CFCA证书部署节点 <./cfca.html>`_
 - `使用MySQL存储引擎 <./mysql_node.html>`_
