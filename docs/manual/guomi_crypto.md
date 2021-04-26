@@ -29,7 +29,7 @@ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build
 # -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
 # -g 搭建国密版本的链
-# -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
+# -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（Java SDK 以及 Web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
 $ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G
 ```
 

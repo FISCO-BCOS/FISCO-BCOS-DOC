@@ -73,7 +73,7 @@ The community links multiple parties with open source. As of May 2020, more than
 |Contract development tools|[WeBASE-IDE](https://github.com/WeBankFinTech/WeBASE)，[ChainIDE](https://fiscoide.com/)|
 |Development of chain building tools | [build_chain](manual/build_chain.md)|
 |Contract deployment and testing tools| [Console](console/console.html)|
-|SDK|[Java](https://github.com/FISCO-BCOS/web3sdk)、[nodejs](https://github.com/FISCO-BCOS/nodejs-sdk)、[go](https://github.com/FISCO-BCOS/go-sdk)、[python](https://github.com/FISCO-BCOS/python-sdk)|
+|SDK|[Java](https://github.com/FISCO-BCOS/java-sdk)、[nodejs](https://github.com/FISCO-BCOS/nodejs-sdk)、[go](https://github.com/FISCO-BCOS/go-sdk)、[python](https://github.com/FISCO-BCOS/python-sdk)|
 |Rapid component development| [Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
 |Performance measuring tool|SDK embedded performance testing tool, supports Caliper|
 | <font color=Blue>**Operation and maintenance support**</font> |
@@ -157,8 +157,8 @@ In the consortium blockchain platform, the operation and maintenance of the bloc
 FISCO BCOS introduces tools such as development and deployment tools, interactive console, blockchain browsers, etc. to improve the ease of use of the system and greatly reduce the time to build chains and deploy applications.
 
 - <font color=blue>**[Development and deployment tools](manual/build_chain.md)**</font>
-- <font color=blue>**[Interactive command line tool console based on Web3SDK](console/console.md)**</font>
 - <font color=blue>**[Interactive command line tool console based on JavaSDK](console/console_of_java_sdk.md)**</font>
+- <font color=blue>**[Interactive command line tool console based on Web3SDK](console/console.md)**</font>
 - <font color=blue>**[Blockchain browser](browser/browser.md)**</font>
 
 In order to facilitate the rapid development of applications for developers of different languages, FISCO BCOS also supports [Java SDK](sdk/java_sdk/index.md)、[Node.js SDK](sdk/nodejs_sdk/install.md)、[Python SDK](sdk/python_sdk/configuration.md) and [Go SDK](https://github.com/FISCO-BCOS/go-sdk)
