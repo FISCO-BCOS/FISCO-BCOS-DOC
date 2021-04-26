@@ -81,7 +81,7 @@ Java sdk主要包括五个配置选项，分别是
 
 ### 证书配置
 
-基于安全考虑，java sdk与节点间采用SSL加密通信，目前同时支持非国密SSL连接以及国密SSL连接，`[cryptoMaterial]`配置SSL连接的证书信息，具体包括如下配置项：
+基于安全考虑，Java SDK与节点间采用SSL加密通信，目前同时支持非国密SSL连接以及国密SSL连接，`[cryptoMaterial]`配置SSL连接的证书信息，具体包括如下配置项：
 
 - `certPath`: 证书存放路径，默认是`conf`目录；
 
@@ -131,7 +131,7 @@ certPath = "conf"                           # The certification path
 
 ### 网络连接配置
 
-SDK与FISCO BCOS节点通信，必须配置SDK连接的节点的`IP`和`Port`，`[network]`配置了java sdk连接的节点信息，具体包括如下配置项：
+SDK与FISCO BCOS节点通信，必须配置SDK连接的节点的`IP`和`Port`，`[network]`配置了Java SDK连接的节点信息，具体包括如下配置项：
 
 - peers：SDK连接的节点的`IP:Port`信息，可配置多个连接。
 
@@ -228,7 +228,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 
 ### 线程池配置
 
-为了方便业务根据机器实际负载调整SDK的处理线程，java sdk将其线程配置项暴露在配置中，`[threadPool]`是线程池相关配置，具体包括：
+为了方便业务根据机器实际负载调整SDK的处理线程，Java SDK将其线程配置项暴露在配置中，`[threadPool]`是线程池相关配置，具体包括：
 
 - `channelProcessorThreadSize`: 处理网络回调的线程数目，默认注释该配置项，注释该配置项时，其默认值为机器的CPU数目；开启该配置项时，根据配置的值创建处理网络回调的线程数目；
 

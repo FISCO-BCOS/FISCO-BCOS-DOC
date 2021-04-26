@@ -4,9 +4,9 @@
 
 ----
 
-java sdk提供了可访问所有密码学相关接口的`CryptoSuite`，`CryptoSuite`会根据传入的`cryptoType`(目前支持`CryptoType.ECDSA_TYPE`和`CryptoType.SM_TYPE`，前者用在非国密链中，后者用于国密链中)初始化密码学相关的套件。
+Java SDK提供了可访问所有密码学相关接口的`CryptoSuite`，`CryptoSuite`会根据传入的`cryptoType`(目前支持`CryptoType.ECDSA_TYPE`和`CryptoType.SM_TYPE`，前者用在非国密链中，后者用于国密链中)初始化密码学相关的套件。
 
-java sdk目前支持以下功能:
+Java SDK目前支持以下功能:
 
 - **计算哈希**: 支持`sm3`和`keccak256`两种哈希算法，一般国密采用前者，非国密采用后者；
 
@@ -14,7 +14,7 @@ java sdk目前支持以下功能:
 
 ## 创建CryptoSuite
 
-java sdk目前支持创建非国密、国密类型的`CryptoSuite`。
+Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 
 **创建非国密类型的CryptoSuite的示例如下:**
 
@@ -328,7 +328,7 @@ java sdk目前支持创建非国密、国密类型的`CryptoSuite`。
 
 ### 签名结果类型转换
 
-java sdk提供了将签名结果`SignatureResult`转换为字符串，以及从字符串中构造签名对象`SignatureResult`的功能，示例如下:
+Java SDK提供了将签名结果`SignatureResult`转换为字符串，以及从字符串中构造签名对象`SignatureResult`的功能，示例如下:
 
 ```java
     // 将签名结果转换为字符串

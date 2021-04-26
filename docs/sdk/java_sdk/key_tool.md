@@ -4,7 +4,7 @@
 
 ----
 
-java sdk提供账户管理接口，支持以下功能：
+Java SDK提供账户管理接口，支持以下功能：
 
 - **账户加载**: 从指定路径加载账户，同时支持`pem`和`p12`格式的账户文件加载，也支持加载十六进制的私钥字符串
 
@@ -16,14 +16,14 @@ java sdk提供账户管理接口，支持以下功能：
 
 ```eval_rst
 .. note::
-    java sdk提供了接口级别的账户生成方法，工具级别的账户生成脚本请参考 `get_account.sh脚本 <../../manual/account.html>`_ .
+    Java SDK提供了接口级别的账户生成方法，工具级别的账户生成脚本请参考 `get_account.sh脚本 <../../manual/account.html>`_ .
 ```
 
 
 
 ## 1. 账户加载
 
-java sdk的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./configuration.html#id6).
+Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./configuration.html#id6).
 
 ### 1.1 从十六进制私钥字符串加载账户
 
@@ -134,7 +134,7 @@ public void loadP12Account(Client client, String p12AccountFilePath, String pass
 
 ## 2. 账户生成
 
-java sdk的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供了账户生成功能。
+Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供了账户生成功能。
 
 随机生成非国密账户示例如下：
 
@@ -160,7 +160,7 @@ String accountAddress = cryptoKeyPair.getAddress();
 
 ## 3. 账户保存
 
-当没有自定义加载账户，也没有通过配置文件配置账户信息时(账户配置请参考[这里](./configuration.html#id6))，java sdk会随机生成账户发送交易，java sdk的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户保存功能，可将随机生成的账户保存在指定路径。
+当没有自定义加载账户，也没有通过配置文件配置账户信息时(账户配置请参考[这里](./configuration.html#id6))，Java SDK会随机生成账户发送交易，Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户保存功能，可将随机生成的账户保存在指定路径。
 
 以`pem`的格式保存账户文件到指定路径的示例如下：
 
@@ -196,7 +196,7 @@ public void saveAccountWithP12ToKeyStoreDir(CryptoKeyPair cryptoKeyPair, String 
     cryptoKeyPair.storeKeyPairWithP12Format(password);
 }
 ```
-java sdk随机生成的账户信息可通过如下方法获取：
+Java SDK随机生成的账户信息可通过如下方法获取：
 
 ```java
 public CryptoKeyPair getCreatedCryptoKeyPair(Client client)
@@ -209,7 +209,7 @@ public CryptoKeyPair getCreatedCryptoKeyPair(Client client)
 
 ## 4. `p12`和`pem`文件解析接口
 
-java sdk的`org.fisco.bcos.sdk.crypto.keystore.KeyTool`提供`p12`和`pem`文件解析接口。
+Java SDK的`org.fisco.bcos.sdk.crypto.keystore.KeyTool`提供`p12`和`pem`文件解析接口。
 
 ### 4.1 `pem`账户文件解析接口
 

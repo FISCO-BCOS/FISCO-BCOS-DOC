@@ -43,7 +43,7 @@ FISCO BCOS提供了**可并行合约开发框架**，开发者只需按照框架
 
 ### solidity合约并行框架
 
-编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。（ParallelContract.sol合约代码[GitHub源码](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)、[Gitee源码](https://gitee.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)）
+编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。（ParallelContract.sol合约代码[GitHub源码](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol)、[Gitee源码](https://gitee.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol)）
 
 先给出完整的举例，例子中的ParallelOk合约实现了并行转账的功能
 
@@ -184,7 +184,7 @@ function disableParallel() public
 
 **（4）部署/执行并行合约**
 
-用控制台(2.6及其以上版本控制台使用手册请参考[这里](../console/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../console/console.md))或[Web3SDK](../sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
+用控制台(2.6及其以上版本控制台使用手册请参考[这里](../console/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../console/console.md))或[java-sdk-demo](../sdk/java_sdk.md)编译和部署合约，此处以控制台为例。
 
 部署合约
 
@@ -277,30 +277,30 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 该举例需要以下执行环境：
 
-- Web3SDK客户端
+- java-sdk-demo客户端
 - 一条FISCO BCOS链
 
-Web3SDK用来发送并行交易，FISCO BCOS链用来执行并行交易。相关配置，可参考：
+java-sdk-demo用来发送并行交易，FISCO BCOS链用来执行并行交易。相关配置，可参考：
 
-- [Web3SDK的配置](../sdk/java_sdk.md)
+- [java-sdk-demo的配置](../sdk/java_sdk/index.md)
 - [搭链](../manual/build_chain.md)
 
 若需要压测最大的性能，至少需要：
 
-- 3个Web3SDK，才能产生足够多的交易
-- 4个节点，且所有Web3SDK都配置了链上所有的节点信息，让交易均匀的发送到每个节点上，才能让链能接收足够多的交易
+- 3个java-sdk-demo，才能产生足够多的交易
+- 4个节点，且所有java-sdk-demo都配置了链上所有的节点信息，让交易均匀的发送到每个节点上，才能让链能接收足够多的交易
 
 ### 并行Solidity合约：ParallelOk
 
 基于账户模型的转账，是一种典型的业务操作。ParallelOk合约，是账户模型的一个举例，能实现并行的转账功能。ParallelOk合约已在上文中给出。
 
-FISCO BCOS在Web3SDK中内置了ParallelOk合约，此处给出用Web3SDK来发送大量并行交易的操作方法。
+FISCO BCOS在java-sdk-demo中内置了ParallelOk合约，此处给出用java-sdk-demo来发送大量并行交易的操作方法。
 
 **（1）用SDK部署合约、新建用户、开启合约的并行能力**
 
 ```shell
-# 参数：<groupID> add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT 1 add 10000 2500 user
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
+java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 add 10000 2500 user
 # 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
@@ -311,15 +311,15 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.Perf
 **注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
 ```shell
-# 参数：<groupID> transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT 1 transfer 100000 4000 user 2
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 transfer 100000 4000 user
 
 # 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
 ```
 
 **（3）验证并行正确性**
 
-并行交易执行完成后，Web3SDK会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
+并行交易执行完成后，java-sdk-demo会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
 
 ```log
 Total transactions:  100000
@@ -346,7 +346,7 @@ validation:
 
 **（4）计算总TPS**
 
-单个Web3SDK无法发送足够多的交易以达到节点并行执行能力的上限。需要多个Web3SDK同时发送交易。在多个Web3SDK同时发送交易后，单纯的将结果中的TPS加和得到的TPS不够准确，需要直接从节点处获取TPS。
+单个java-sdk-demo无法发送足够多的交易以达到节点并行执行能力的上限。需要多个java-sdk-demo同时发送交易。在多个java-sdk-demo同时发送交易后，单纯的将结果中的TPS加和得到的TPS不够准确，需要直接从节点处获取TPS。
 
 用脚本从日志文件中计算TPS
 
@@ -371,17 +371,17 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 **（1）生成用户**
 
-用Web3SDK发送创建用户的操作，创建的用户信息保存在user文件中。命令参数与parallelOk相同，不同的仅仅是命令所调用的对象是precompile。
+用java-sdk-demo发送创建用户的操作，创建的用户信息保存在user文件中。命令参数与parallelOk相同，不同的仅仅是命令所调用的对象是precompile。
 
 ```shell
-# 参数：<groupID> add <创建的用户数量> <此创建操作请求的TPS> <生成的用户信息文件名>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT 1 add 10000 2500 user
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
+java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 add 10000 2500 user
 # 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
 **（2）批量发送并行转账交易**
 
-用Web3SDK发送并行转账交易
+用java-sdk-demo发送并行转账交易
 
 **注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
@@ -393,7 +393,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.Perf
 
 **（3）验证并行正确性**
 
-并行交易执行完成后，Web3SDK会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
+并行交易执行完成后，java-sdk-demo会打印出执行结果。```TPS``` 是此SDK发送的交易在节点上执行的TPS。```validation``` 是转账交易执行结果的检查。
 
 ```log
 Total transactions:  80000
@@ -420,7 +420,7 @@ validation:
 
 **（4）计算总TPS**
 
-单个Web3SDK无法发送足够多的交易以达到节点并行执行能力的上限。需要多个Web3SDK同时发送交易。在多个Web3SDK同时发送交易后，单纯的将结果中的TPS加和得到的TPS不够准确，需要直接从节点处获取TPS。
+单个java-sdk-demo无法发送足够多的交易以达到节点并行执行能力的上限。需要多个java-sdk-demo同时发送交易。在多个java-sdk-demo同时发送交易后，单纯的将结果中的TPS加和得到的TPS不够准确，需要直接从节点处获取TPS。
 
 用脚本从日志文件中计算TPS
 
