@@ -427,9 +427,9 @@ Event相当于提供了log日志的简单机制，当出现无法解决且需要
 
 #### 解决方案：
 
-Solidity缺乏独立的可对外访问的数据层，无法直接获取每笔交易或每个状态的详情。不过，我们可以通过WeBASE数据导出组件来导出所有链上数据。WeBASE-Collect-Bee可以导出区块链上的基础数据，如当前块高、交易总量等。如果正确配置了FISCO BCOS上运行的所有合约，WeBASE-Collect-Bee可以导出区块链上合约的业务数据，包括event、构造函数、合约地址、执行函数的信息等。数据导出组件WeBASE-Collect-Bee的目的在于降低获取区块链数据的开发门槛，提升研发效率。研发人员几乎无需编写任何代码，只进行简单配置，就可以把数据导出到Mysql数据库。
+Solidity缺乏独立的可对外访问的数据层，无法直接获取每笔交易或每个状态的详情。不过，我们可以通过WeBASE数据导出组件来导出所有链上数据。WeBankBlockchain-Data-Export可以导出区块链上的基础数据，如当前块高、交易总量等。如果正确配置了FISCO BCOS上运行的所有合约，Data-Export可以导出区块链上合约的业务数据，包括event、构造函数、合约地址、执行函数的信息等。数据导出组件Data-Export的目的在于降低获取区块链数据的开发门槛，提升研发效率。研发人员几乎无需编写任何代码，只进行简单配置，就可以把数据导出到Mysql数据库。
 
-还是以上面的HelloWorld为例，参考安装文档：WeBASE-Collect-Bee快速部署。安装过程略过不表，导出以后会自动在数据库中生成如下的表：
+还是以上面的HelloWorld为例，参考安装文档：Data-Export快速部署。安装过程略过不表，导出以后会自动在数据库中生成如下的表：
 
 ![](../../../../images/articles/smart_contract_test_practice/IMG_5493.PNG)
 
@@ -462,9 +462,7 @@ hello_world_set_method显示了历史调用的所有函数信息。
 
 - [Spring Boot项目配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#spring-boot)
 - [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)
+- [合约转为Java文件指引](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/quick_start.html#id4)
 - [HelloWorld合约](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/resources/contract/HelloWorld.sol)
-- [转为Java文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id12)
-- [HelloWorld.java](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/java/org/fisco/bcos/solidity/HelloWorld.java)
-- [ContractTest](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/java/org/fisco/bcos/ContractTest.java)
-- [WeBASE-Collect-Bee快速部署](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Codegen-Monkey/install.html#)
+- [WeBankBlockchain-Data-Export快速部署](https://data-doc.readthedocs.io/zh_CN/dev/docs/WeBankBlockchain-Data-Export/install_Service.html)
 
