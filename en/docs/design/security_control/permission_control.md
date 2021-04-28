@@ -131,4 +131,4 @@ The process of permission control: first, client end sends transaction request, 
 
 The operation methods of permission control in FISCO BCOS include:
 - non-developers can user permission function through console command, the detailed operation is introduced in [Operation tutorial for permission control](../../manual/distributed_storage.md).
-- For developers, SDK has implemented 3 APIs (grant/remove/inquire) in light of user table and system table, so they can call PermissionService of [SDK API](../../sdk/sdk.html#web3sdk-api) to realize permission management.
+- For developers, SDK has implemented 3 APIs (grant/remove/inquire) in light of user table and system table, so they can call PermissionService of [SDK API](../../sdk/sdk.html) to realize permission management.

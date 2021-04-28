@@ -142,7 +142,7 @@ SDK developer can realize registration and query of CNS through the following 2 
 - Illustration：contractNameAndVersion splits contract name and version through `:`, SDK is defaulted to call the latest version of contract for query when lacking of version information
 
 Note：
-1. Before calling API, sol contract needs to be transferred to Java class and placed it to the right folder together with abi, bin files. For detail operations please check [Web3SDK](../../sdk/java_sdk.md);
+1. Before calling API, sol contract needs to be transferred to Java class and placed it to the right folder together with abi, bin files. For detail operations please check [Java SDK](../../sdk/java_sdk.md);
 2. The operation examples of the 2 API are introduced in the implementation of deployByCNS and callByCNS APIs in[ConsoleImpl.java](https://github.com/FISCO-BCOS/console/blob/master/src/main/java/console/contract/ContractImpl.java).
 
 ## Operation tool

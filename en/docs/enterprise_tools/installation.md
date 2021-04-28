@@ -17,6 +17,9 @@ Download
 
 ```bash
 $ git clone https://github.com/FISCO-BCOS/generator.git
+
+# If you have network issue for exec the command above, please try:
+$ git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 Install

@@ -125,3 +125,5 @@ ed157f4588b86d61a2e1745efe71e6ea
 #### 参考链接
 
 [Key Manager源码](https://github.com/FISCO-BCOS/key-manager)
+
+[Key Manager源码gitee地址](https://gitee.com/FISCO-BCOS/key-manager)

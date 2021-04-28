@@ -66,6 +66,9 @@ brew install openssl git flex bison gmp
 
 ```bash
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
+
+# If you have network issue for exec the command above, please try:
+git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
 ```
 
 ### Compile

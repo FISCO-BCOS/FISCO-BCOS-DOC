@@ -19,21 +19,19 @@
 
 #### 平台要求
 
-推荐使用CentOS 7.2+, Ubuntu 16.04及以上版本, 一键部署脚本将自动安装`openssl, curl, wget, git, nginx`相关依赖项。
+推荐使用CentOS 7.2+, Ubuntu 16.04及以上版本, 一键部署脚本将自动安装`openssl, curl, wget, git, nginx, dos2unix`相关依赖项。
 
-其余系统可能导致安装依赖失败，可自行安装`openssl, curl, wget, git, nginx`依赖项后重试
+其余系统可能导致安装依赖失败，可自行安装`openssl, curl, wget, git, nginx, dos2unix`依赖项后重试
 
 #### 检查Java
 
-推荐JDK8-JDK13版本：
+推荐JDK8-JDK13版本，使用OracleJDK[安装指引](#jdk)：
 
 ```
 java -version
 ```
 
-- Java推荐使用[OpenJDK](#id10) ，建议从[OpenJDK网站](https://jdk.java.net/java-se-ri/11) 自行下载。
-
-- **注意：需要配置root用户的java_home**
+*注意：不要用`sudo`执行安装脚本*
 
 #### 检查mysql
 
@@ -43,13 +41,13 @@ MySQL-5.6或以上版本：
 mysql --version
 ```
 
-- Mysql安装部署可参考[数据库部署](#id14)
+- Mysql安装部署可参考[数据库部署](#mysql)
 
 #### 检查Python
 
 <span id="checkpy"></span>
 
-使用Python3.5或以上版本：
+使用Python3.6或以上版本：
 
 ```
 python3 --version
@@ -57,9 +55,11 @@ python3 --version
 
 - Python3安装部署可参考[Python部署](#python3)
 
-#### PyMySQL部署（Python3.5+）
+#### PyMySQL部署（Python3.6+）
 
-Python3.5及以上版本，需安装PyMysql依赖包：
+<span id="pymysql"></span>
+
+Python3.6及以上版本，需安装PyMysql依赖包：
 
 - CentOS
 
@@ -87,7 +87,7 @@ Python3.5及以上版本，需安装PyMysql依赖包：
 
 获取部署安装包：
 ```shell
-wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.2/browser-deploy.zip
+wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.3/browser-deploy.zip
 ```
 解压安装包：
 ```shell
@@ -102,7 +102,7 @@ cd browser-deploy
 
 ① 可以使用以下命令修改，也可以直接修改文件（vi common.properties）
 
-② 数据库需要提前安装（数据库安装请参看 [数据库部署](#id14)）
+② 数据库需要提前安装（数据库安装请参看 [数据库部署](#mysql)）
 
 ③ 服务端口不能小于1024
 
@@ -145,9 +145,102 @@ python3 deploy.py startAll
 python3 deploy.py help
 ```
 
-**备注：** 部署过程出现问题可以查看 [常见问题](#id19)
+**备注：** 部署过程出现问题可以查看 [常见问题](#q&a)
 
-## 5.访问
+## 5.状态检查
+
+成功部署后，可以根据以下步骤**确认各子服务是否启动成功**
+
+### 检查子系统进程
+
+通过`ps`命令，检查各子系统的进程是否存在
+
+- 包含：后端server进程和前端的`nginx`进程
+
+检查方法如下，若无输出，则代表进程未启动，需要到该子系统的日志中[检查日志错误信息](#checklog)，并根据错误提示或本文档的[常见问题](#q&a)进行排查
+
+- 检查后端server进程
+
+```
+$ ps -ef | grep org.bcos.browser
+```
+
+输出如下
+
+```
+root     91851      1  0 Mar31 ?        00:04:08 /usr/local/jdk1.8.0_181/bin/java -cp conf/:apps/*:lib/* org.bcos.browser.Application
+```
+
+- 检查前端的nginx进程
+
+```
+$ ps -ef | grep browser |grep nginx       
+```
+
+输出如下
+
+```
+root      112543      1  0 Mar23 ?        00:00:00 nginx: master process /usr/sbin/nginx -c /data/home/webase/webase/browser-deploy/comm/nginx.conf
+```
+
+### 检查进程端口
+
+通过`netstat`命令，检查各子系统进程的端口监听情况。
+
+检查方法如下，若无输出，则代表进程端口监听异常，需要到该子系统的日志中[检查日志错误信息](#checklog)，并根据错误提示或本文档的[常见问题](#q&a)进行排查
+
+- 检查后端server端口(默认为5101)是否已监听
+
+```
+$ netstat -anlp | grep 5101
+```
+
+输出如下
+
+```
+tcp        0      0 0.0.0.0:5101            0.0.0.0:*               LISTEN      91851/java
+```
+
+- 检查前端端口(默认为5100)在nginx是否已监听
+
+```
+$ netstat -anlp | grep 5100
+```
+
+输出如下
+
+```
+tcp        0      0 0.0.0.0:5100            0.0.0.0:*               LISTEN      112543/nginx: maste 
+```
+
+<span id="checklog"></span>
+
+### 检查服务日志 
+
+<span id="logpath"></span>
+
+#### 日志路径如下：
+
+```
+部署日志：log/
+后端日志：server/log/
+前端日志：web/log/
+```
+
+#### 检查服务日志有无错误信息
+
+- 如果各个子服务的进程**已启用**且端口**已监听**，可直接访问下一章节[访问](#access)
+
+- 如果上述检查步骤出现异常，如检查不到进程或端口监听，则需要按[日志路径](#logpath)进入**异常子服务**的日志目录，检查该服务的日志
+
+
+启动失败或无法使用时，欢迎到`区块链浏览器`[提交Issue](https://github.com/FISCO-BCOS/fisco-bcos-browser/issues)或到技术社区共同探讨。
+
+- 提交Issue或讨论问题时，可以在issue中配上自己的**环境配置，操作步骤，错误现象，错误日志**等信息，方便社区用户快速定位问题
+
+<span id="access"></span>
+
+## 6.访问
 
 例如：在浏览器输入以下访问地址，IP为部署服务器IP，端口为前端服务端口
 
@@ -155,56 +248,58 @@ python3 deploy.py help
 http://127.0.0.1:5100/
 ```
 
-## 6.日志路径
-```
-部署日志：log/
-后端日志：server/log/
-前端日志：web/log/
-```
+**备注：** 
+
+- 部署服务器IP和前端服务端口需对应修改，网络策略需开通
+- 区块链浏览器使用请查看[使用介绍](../browser.html#id1)
 
 ## 7.附录
 
+<span id="jdk"></span>
+
 ### 7.1 Java环境部署
 
-此处给出OpenJDK安装简单步骤，供快速查阅。更详细的步骤，请参考[官网](https://openjdk.java.net/install/index.html)。
+<span id="centosjava"></span>
 
-#### ① 安装包下载
+#### CentOS环境安装Java
 
-从[官网](https://jdk.java.net/java-se-ri/11)下载对应版本的java安装包，并解压到服务器相关目录
-
-```shell
-mkdir /software
-tar -zxvf openjdkXXX.tar.gz /software/
-```
-
-#### ② 配置环境变量
-
-- 修改/etc/profile
+**注意：CentOS下OpenJDK无法正常工作，需要安装OracleJDK[下载链接](https://www.oracle.com/technetwork/java/javase/downloads/index.html)。**
 
 ```
-sudo vi /etc/profile
-```
+# 创建新的文件夹，安装Java 8或以上的版本，推荐JDK8-JDK13版本，将下载的jdk放在software目录
+# 从Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz
+$ mkdir /software
 
-- 在/etc/profile末尾添加以下信息
+# 解压jdk
+$ tar -zxvf jdk-8u201-linux-x64.tar.gz
 
-```shell
-JAVA_HOME=/software/jdk-11
-PATH=$PATH:$JAVA_HOME/bin
-CLASSPATH==.:$JAVA_HOME/lib
-export JAVA_HOME CLASSPATH PATH
-```
+# 配置Java环境，编辑/etc/profile文件
+$ vim /etc/profile
 
-- 重载/etc/profile
+# 打开以后将下面三句输入到文件里面并保存退出
+export JAVA_HOME=/software/jdk-8u201  #这是一个文件目录，非文件
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 
-```
-source /etc/profile
-```
+# 生效profile
+$ source /etc/profile
 
-#### ③ 查看版本
-
-```
+# 查询Java版本，出现的版本是自己下载的版本，则安装成功。
 java -version
 ```
+
+<span id="ubuntujava"></span>
+
+#### Ubuntu环境安装Java
+
+```
+  # 安装默认Java版本(Java 8或以上)
+  sudo apt install -y default-jdk
+  # 查询Java版本
+  java -version
+```
+
+<span id="mysql"></span>
 
 ### 7.2. 数据库部署
 
@@ -288,11 +383,11 @@ mysql -utest -p123456 -h localhost -P 3306
 mysql > create database db_browser;
 ```
 
-### 7.3. Python部署
-
 <span id="python3"></span>
 
-python版本要求使用python3.x, 推荐使用python3.5及以上版本
+### 7.3. Python部署
+
+python版本要求使用python3.x, 推荐使用python3.6及以上版本
 
 - CentOS
 
@@ -310,6 +405,8 @@ python版本要求使用python3.x, 推荐使用python3.5及以上版本
   sudo apt-get install -y python3.6
   sudo apt-get install -y python3-pip
   ```
+
+<span id="q&a"></span>
 
 ## 8.常见问题
 
@@ -354,7 +451,7 @@ File "/home/ubuntu/webase-deploy/comm/utils.py", line 127, in getCommProperties
 TypeError: get() got an unexpected keyword argument 'fallback'
 ```
 
-答：检查[Python版本](#checkpy)，推荐使用python3.5及以上版本
+答：检查[Python版本](#checkpy)，推荐使用python3.6及以上版本
 
 ### 8.3 使用Python3时找不到pymysql
 
@@ -364,7 +461,7 @@ Traceback (most recent call last):
 ImportError: No module named 'pymysql'
 ```
 
-答：需要安装PyMySQL，安装请参看 [pymysql](#pymysql-python3-5)
+答：需要安装PyMySQL，安装请参看 [pymysql](#pymysql)
 
 ### 8.4 部署时数据库访问报错
 

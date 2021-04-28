@@ -37,6 +37,10 @@ nginx安装请参考附录
 
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
+
+
+# 若因网络问题导致长时间下载失败，可尝试以下命令
+git clone https://gitee.com/FISCO-BCOS/fisco-bcos-browser.git
 ```
 
 ```shell
