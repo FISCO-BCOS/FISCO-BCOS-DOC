@@ -327,7 +327,7 @@ git clone https://github.com/vita-dounai/caliper-benchmarks.git
 
 ```bash
 # 拉取gitee代码
-git clone https://gitee.com/mirrors_hyperledger/caliper-benchmarks.git
+git clone https://gitee.com/vita-dounai/caliper-benchmarks.git
 ```
 
 **执行HelloWorld合约测试**
