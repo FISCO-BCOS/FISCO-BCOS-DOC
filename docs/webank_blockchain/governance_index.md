@@ -108,7 +108,7 @@ WeBankBlockchain-Governance 定位为区块链链治理组件，不仅希望在�
 
 私钥管理组件还全面提供了国密支持。
 
-![](../../images/governance/MCGF/governance_cert.png)
+![](../../images/governance/MCGF/governance_key.png)
 
 请参考 
 - [Github地址](https://github.com/WeBankBlockchain/Governance-Key)
@@ -123,7 +123,7 @@ WeBankBlockchain-Governance 定位为区块链链治理组件，不仅希望在�
 
 组件包括了cert-toolkit和cert-mgr两个模块，cert-toolkit提供证书生成等基础能力，可作为独立工具包使用，cert-mgr基于cert-toolkit工具包，提供了证书的托管能力，并统一规范了签发的流程。
 
-![](../../images/governance/MCGF/governance_key.png)
+![](../../images/governance/MCGF/governance_cert.png)
 
 请参考 
 - [Github地址](https://github.com/WeBankBlockchain/Governance-Cert)
