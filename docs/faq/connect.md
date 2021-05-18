@@ -22,7 +22,7 @@
 
 **第四步.检查SDK与节点之间连通性**
 
-下载telnet工具，使用命令`telnet ${channel_listen_ip}:${channel_listen_port}`检查SDK与节点之间是否可连通，其中`${channel_listen_ip}`为节点IP，`${channel_listen_port}`为节点Channel服务的监听端口，可通过节点目录下的`config.ini`配置文件中`rpc.channel_listen_port`配置选项获取，若SDK与节点之间不连通，请检查是否开启了防火墙/安全组策略，需要在防火墙/安全组中开放FISCO BCOS节点所使用的channel端口。
+下载telnet工具，使用命令`telnet ${channel_listen_ip} ${channel_listen_port}`检查SDK与节点之间是否可连通，其中`${channel_listen_ip}`为节点IP，`${channel_listen_port}`为节点Channel服务的监听端口，可通过节点目录下的`config.ini`配置文件中`rpc.channel_listen_port`配置选项获取，若SDK与节点之间不连通，请检查是否开启了防火墙/安全组策略，需要在防火墙/安全组中开放FISCO BCOS节点所使用的channel端口。
 <hr>
 
 ## Java SDK握手失败
