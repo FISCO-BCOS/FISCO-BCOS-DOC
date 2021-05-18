@@ -14,7 +14,7 @@
 
 **第二步.检查节点监听IP**
 
-若SDK与节点处于不同机器，检查节点的channel服务的监听端口`channel_listen_ip`(位于SDK直连节点的config.ini配置文件中)是否为`0.0.0.0`或外网IP(**注:** 此外网IP非云服务器的虚拟IP，必须是机器的网卡IP)
+若SDK与节点处于不同机器，检查节点的channel服务的监听IP `channel_listen_ip`(位于SDK直连节点的config.ini配置文件中)是否为`0.0.0.0`或外网IP(**注:** 此外网IP非云服务器的虚拟IP，必须是机器的网卡IP)
 
 **第三步.检查SDK的连接配置**
 
@@ -22,7 +22,7 @@
 
 **第四步.检查SDK与节点之间连通性**
 
-下载telnet工具，使用命令`telnet ${nodeIP}:${channel_listen_port}`检查SDK与节点之间是否可连通，其中`${nodeIP}`为节点IP，`${channel_listen_ip}`为节点Channel服务的监听端口，可通过节点目录下的`config.ini`配置文件中`rpc.channel_listen_port`配置选项获取，若SDK与节点之间不连通，请检查是否开启了防火墙/安全组策略，需要在防火墙/安全组中开放FISCO BCOS节点所使用的channel端口。
+下载telnet工具，使用命令`telnet ${channel_listen_ip}:${channel_listen_port}`检查SDK与节点之间是否可连通，其中`${channel_listen_ip}`为节点IP，`${channel_listen_port}`为节点Channel服务的监听端口，可通过节点目录下的`config.ini`配置文件中`rpc.channel_listen_port`配置选项获取，若SDK与节点之间不连通，请检查是否开启了防火墙/安全组策略，需要在防火墙/安全组中开放FISCO BCOS节点所使用的channel端口。
 <hr>
 
 ## Java SDK握手失败
