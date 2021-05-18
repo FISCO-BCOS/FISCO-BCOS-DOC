@@ -60,4 +60,4 @@ SMCrypto=false
 ### 链配置
 
 - `ChainID`：待连接节点所属的链ID，可通过查看节点config.ini配置文件中chain.id配置项获得；
-- `SMCrypto`：待连接节点所属链使用的签名算法，ture表示使用国密SM2，false表示使用普通ECDSA。
+- `SMCrypto`：待连接节点所属链使用的签名算法，true表示使用国密SM2，false表示使用普通ECDSA。
