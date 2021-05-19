@@ -242,6 +242,11 @@ pre {
         float: left;
         width: 50%;
     }
+    .card-holder-full{
+        padding: 7.5px;
+        float: left;
+        width: 100%;
+    }
 }
  
 /* 横向放置的手机及分辨率更小的设备 */
@@ -252,6 +257,11 @@ pre {
         width: 100%;
     }
     .tools-holder{
+        padding: 7.5px;
+        float: left;
+        width: 100%;
+    }
+    .card-holder-full{
         padding: 7.5px;
         float: left;
         width: 100%;
