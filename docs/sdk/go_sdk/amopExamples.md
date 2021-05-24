@@ -1,5 +1,9 @@
 # AMOP 使用案例
 
+标签：``go-sdk`` ``AMOP``
+
+----
+
 AMOP（Advanced Messages Onchain Protocol）即链上信使协议，旨在为联盟链提供一个安全高效的消息信道，联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用AMOP进行通讯，AMOP有如下优势：
 
 -   实时：AMOP消息不依赖区块链交易和共识，消息在节点间实时传输，延时在毫秒级。
@@ -8,7 +12,7 @@ AMOP（Advanced Messages Onchain Protocol）即链上信使协议，旨在为联
 -   安全：AMOP的所有通讯链路使用SSL加密，加密算法可配置,支持身份认证机制。
 -   易用：使用AMOP时，无需在SDK做任何额外配置。
 
-进一步了解 AMOP，请参考：[链上信使协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/amop_protocol.html)。案例源码，请参考：[go-sdk](https://github.com/FISCO-BCOS/go-sdk)
+进一步了解 AMOP，请参考：[链上信使协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificate_list.html)。案例源码，请参考：[go-sdk](https://github.com/FISCO-BCOS/go-sdk)
 
 **初始化**：
 
@@ -74,7 +78,7 @@ AMOP（Advanced Messages Onchain Protocol）即链上信使协议，旨在为联
 
 ## 身份验证单播案例
 
-常规场景中，任何一个监听了某topic的接收者都能接受到发送者推送的消息。但在某些场景下，发送者只希望特定的接收者能接收到消息，不希望无关的接收者能任意的监听此topic。针对此类场景，FISCO BCOS 推出了 topic 认证功能。 认证功能是指对于特定的topic消息，只允许通过认证的接收者接收消息。详细请参考：[Topic认证功能](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/manual/amop_protocol.html#topic)
+常规场景中，任何一个监听了某topic的接收者都能接受到发送者推送的消息。但在某些场景下，发送者只希望特定的接收者能接收到消息，不希望无关的接收者能任意的监听此topic。针对此类场景，FISCO BCOS 推出了 topic 认证功能。 认证功能是指对于特定的topic消息，只允许通过认证的接收者接收消息。详细请参考：[Topic认证功能](https://fisco-bcos-doc-qiubing.readthedocs.io/en/latest/docs/manual/certificate_list.html#topic)
 
 -   启动 AMOP 消息订阅者：
 

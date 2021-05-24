@@ -1,6 +1,174 @@
-# JSON-RPC API
+# 区块链功能接口列表
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[jsonrpc_listen_ip]`(若节点小于v2.3.0版本，查看配置项`listen_ip`)和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id51)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[jsonrpc_listen_ip]`(若节点小于v2.3.0版本，查看配置项`listen_ip`)和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id2)。
+
+
+## 错误码描述
+
+### RPC 错误码
+
+当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
+
+- code: 使用数值表示该异常的错误类型，必须为整数。
+- message: 对该错误的简单描述字符串。
+- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。
+
+错误对象包含两类错误码，分别是JSON-RPC标准错误码和FISCO BCOS RPC错误码。
+
+#### JSON-RPC标准错误码
+
+标准错误码及其对应的含义如下：
+
+| code   | message              | 含义                       |
+| :----- | :------------------- | :------------------------- |
+| -32600 | INVALID_JSON_REQUEST | 发送无效的请求对象         |
+| -32601 | METHOD_NOT_FOUND     | 该方法不存在或无效         |
+| -32602 | INVALID_PARAMS       | 无效的方法参数             |
+| -32603 | INTERNAL_ERROR       | 内部调用错误               |
+| -32604 | PROCEDURE_IS_METHOD  | 内部错误，请求未提供id字段 |
+| -32700 | JSON_PARSE_ERROR     | 服务端接收到的json无法解析 |
+
+#### FISCO BCOS RPC错误码
+
+FISCO BCOS RPC接口错误码及其对应的含义如下：
+
+| code  | message                                                                     | 含义                                        |
+| :---- | :-------------------------------------------------------------------------- | :------------------------------------------ |
+| -40001 | GroupID does not exist                                                      | GroupID不存在                               |
+| -40002 | Response json parse error                                                   | JSON RPC获取的json数据解析错误              |
+| -40003 | BlockHash does not exist                                                    | 区块哈希不存在                              |
+| -40004 | BlockNumber does not exist                                                  | 区块高度不存在                              |
+| -40005 | TransactionIndex is out of range                                            | 交易索引越界                                |
+| -40006 | Call needs a 'from' field                                                   | call接口需要提供from字段                    |
+| -40007 | Only pbft consensus supports the view property                              | getPbftView接口，只有pbft共识机制有view属性 |
+| -40008 | Invalid System Config                                                       | getSystemConfigByKey接口，查询无效的key     |
+| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
+| -40010 | RPC module initialization is incomplete                                    | RPC模块初始化尚未完成     |
+| -40011 | Over QPS limit                                   | SDK到节点的请求速率超过节点的请求速率限制     |
+| -40012 |  The SDK is not allowed to access this group| SDK无访问群组的权限|
+
+
+
+### 交易回执状态
+
+| status(十进制/十六进制) | message                    | 含义                                                  |
+| :---------------------- | :------------------------- | :---------------------------------------------------- |
+| 0(0x0)                  | None                       | 正常                                                  |
+| 1(0x1)                  | Unknown                    | 未知异常                                              |
+| 2(0x2)                  | BadRLP                     | 无效RLP异常                                           |
+| 3(0x3)                  | InvalidFormat              | 无效格式异常                                          |
+| 4(0x4)                  | OutOfGasIntrinsic          | 部署的合约长度超过gas限制/调用合约接口参数超过gas限制 |
+| 5(0x5)                  | InvalidSignature           | 无效的签名异常                                        |
+| 6(0x6)                  | InvalidNonce               | 无效nonce异常                                         |
+| 7(0x7)                  | NotEnoughCash              | cash不足异常                                          |
+| 8(0x8)                  | OutOfGasBase               | 调用合约的参数过长 (RC版本)                           |
+| 9(0x9)                  | BlockGasLimitReached       | GasLimit异常                                          |
+| 10(0xa)                 | BadInstruction             | 错误指令异常                                          |
+| 11(0xb)                 | BadJumpDestination         | 错误目的跳转异常                                      |
+| 12(0xc)                 | OutOfGas                   | 合约执行时gas不足 / 部署的合约长度超过最长上限        |
+| 13(0xd)                 | OutOfStack                 | 栈溢出异常                                            |
+| 14(0xe)                 | StackUnderflow             | 栈下限溢位异常                                        |
+| 15(0xf)                 | NonceCheckFail             | nonce检测失败异常                                     |
+| 16(0x10)                | BlockLimitCheckFail        | blocklimit检测失败异常                                |
+| 17(0x11)                | FilterCheckFail            | filter检测失败异常                                    |
+| 18(0x12)                | NoDeployPermission         | 非法部署合约异常                                      |
+| 19(0x13)                | NoCallPermission           | 非法call合约异常                                      |
+| 20(0x14)                | NoTxPermission             | 非法交易异常                                          |
+| 21(0x15)                | PrecompiledError           | precompiled错误异常                                   |
+| 22(0x16)                | RevertInstruction          | revert指令异常                                        |
+| 23(0x17)                | InvalidZeroSignatureFormat | 无效签名格式异常                                      |
+| 24(0x18)                | AddressAlreadyUsed         | 地址占用异常                                          |
+| 25(0x19)                | PermissionDenied           | 无权限异常                                            |
+| 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在                                |
+| 27(0x1b)                | GasOverflow                | Gas溢出错误                                          |
+| 28(0x1c)                | TxPoolIsFull               | 交易池已满异常                                       |
+| 29(0x1d)                | TransactionRefused         | 交易被拒绝异常                                       |
+| 30(0x1e)                | ContractFrozen             | 合约被冻结异常                                       |
+| 31(0x1f)                | AccountFrozen              | 账户被冻结异常                                       |
+| 10000(0x2710)           | AlreadyKnown               | 交易已经在交易池中                                     |
+| 10001(0x2711)           | AlreadyInChain             | 交易已经上链异常                                       |
+| 10002(0x2712)           | InvalidChainId             | 无效的链ID异常                                       |
+| 10003(0x2713)           | InvalidGroupId             | 无效的群组ID异常                                       |
+| 10004(0x2714)           | RequestNotBelongToTheGroup | 请求不属于群组异常                                       |
+| 10005(0x2715)           | MalformedTx                | 交易格式错误                                          |
+| 10006(0x2716)           | OverGroupMemoryLimit       | 超出群组内存限制异常                                   |
+
+### Precompiled Service API 错误码
+
+| 错误码 | 消息内容                                          | 备注      |
+| :----- | :----------------------------------------------  | :-----   |
+| 0      | success                                          |          |
+| -50000  | permission denied                               |          |
+| -50001  | table name already exist                        |          |
+| -50002  | table name length is overflowed                 |          |
+| -50003  | table name field length is overflowed           |          |
+| -50004  | table name field total length is overflowed     |          |
+| -50005  | table key value length is overflowed            |          |
+| -50006  | table field value length is overflowed          |          |
+| -50007  | table field is duplicated                       |          |
+| -50008  | table field is invalidate                       |          |
+| -50100  | table does not exist                            |          |
+| -50101  | unknown function call                            |          |
+| -50102  | address invalid                                 |          |
+| -51002  | table name overflow                             |          |
+| -51003  | contract not exist                              |          |
+| -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
+| -51100  | invalid node ID                                 | SDK错误码 |
+| -51101  | the last sealer cannot be removed               |           |
+| -51102  | the node is not reachable                       | SDK错误码 |
+| -51103  | the node is not a group peer                    | SDK错误码 |
+| -51104  | the node is already in the sealer list          | SDK错误码 |
+| -51105  | the node is already in the observer list        | SDK错误码 |
+| -51200  | contract name and version already exist         | SDK错误码 |
+| -51201  | version length exceeds the maximum limit        | SDK错误码 |
+| -51300  | invalid configuration entry                     |          |
+| -51500  | entry parse error                               |          |
+| -51501  | condition parse error                           |          |
+| -51502  | condition operation undefined                   |          |
+| -51600  | invalid ciphers                                 |          |
+| -51700  | group sig failed                                |          |
+| -51800  | ring sig failed                                 |          |
+| -51900  | contract frozen                              |          |
+| -51901  | contract available                              |          |
+| -51902  | contract repeat authorization                    |          |
+| -51903  | invalid contract address                    |          |
+| -51904  | table not exist                    |          |
+| -51905  | no authorized                  |          |
+| -52000  | committee member exist                    |          |
+| -52001  | committee member not exist                |          |
+| -52002  | invalid request permission denied         |          |
+| -52003  | invalid threshold                    |          |
+| -52004  | operator can't be committee member                    |          |
+| -52005  | committee member can't be operator                    |          |
+| -52006  | operator exist                    |          |
+| -52007  | operator not exist                    |          |
+| -52008  | account not exist                    |          |
+| -52009  | invalid account address                    |          |
+| -52010  | account already available                   |          |
+| -52011  | account frozen                    |          |
+| -52012  | current value is expected value              |          |
+
+### 动态群组管理 API 状态码
+
+| 状态码 | 消息内容                     | 释义                                        |
+| :-- | :--------------------------- | :------------------------------------------ |
+| 0x0 | SUCCESS                      | 接口调用成功                                  |
+| 0x1 | INTERNAL_ERROR               | 节点内部错误                                  |
+| 0x2 | GROUP_ALREADY_EXISTS         | 调用创建群组接口时，群组已存在                   |
+| 0x3 | GROUP_ALREADY_RUNNING        | 调用启动群组接口时，群组已处于运行状态             |
+| 0x4 | GROUP_ALREADY_STOPPED        | 调用停止群组接口时，群组已处于停止状态             |
+| 0x5 | GROUP_ALREADY_DELETED        | 调用删除群组接口时，群组已处于删除状态             |
+| 0x6 | GROUP_NOT_FOUND              | 调用接口时，对应的群组不存在                     |
+| 0x7 | INVALID_PARAMS               | 调用接口时，参数不合法                          |
+| 0x8 | PEERS_NOT_CONNECTED          | 调用创建群组接口时，与sealer间不存在有效的P2P连接  |
+| 0x9 | GENESIS_CONF_ALREADY_EXISTS  | 调用创建群组接口时，创世块配置文件已存在           |
+| 0xa | GROUP_CONF_ALREADY_EXIST     | 调用创建群组接口时，群组配置文件已存在             |
+| 0xb | GENESIS_CONF_NOT_FOUND       | 调用启动群组接口时，未找到创世块配置文件           |
+| 0xc | GROUP_CONF_NOT_FOUND         | 调用启动群组接口时，未找到群组配置文件             |
+| 0xd | GROUP_IS_STOPPING            | 调用接口时，群组正在释放资源                     |
+| 0xf | GROUP_NOT_DELETED            | 调用恢复接口时，群组并未被删除                   |
 
 ## getClientVersion
 返回节点的版本信息
@@ -470,7 +638,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xf
     "gasUsed": "0x0",
     "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x0",
@@ -528,7 +696,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xf
     "gasUsed": "0x0",
     "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x0",
@@ -584,7 +752,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHeaderByHash","params":[
     "gasUsed": "0x0",
     "hash": "0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x2",
@@ -755,7 +923,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `logsBloom`: `string` - log的布隆过滤器值
     - `output`: `string` - 交易的输出
     - `root`: `string` - 状态根（state root）
-    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态]()
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希
     - `transactionIndex`: `string` - 交易序号
@@ -1096,7 +1264,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHashWithProof","
     - `logs`: `array` - 交易产生的log
     - `logsBloom`: `string` - log的布隆过滤器值
     - `output`: `string` - 交易的输出
-    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id2)
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希
     - `transactionIndex`: `string` - 交易序号
@@ -1502,170 +1670,3 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRa
   "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
 }
 ```
-
-## 错误码描述
-
-### RPC 错误码
-
-当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
-
-- code: 使用数值表示该异常的错误类型，必须为整数。
-- message: 对该错误的简单描述字符串。
-- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。
-
-错误对象包含两类错误码，分别是JSON-RPC标准错误码和FISCO BCOS RPC错误码。
-
-#### JSON-RPC标准错误码
-
-标准错误码及其对应的含义如下：
-
-| code   | message              | 含义                       |
-| :----- | :------------------- | :------------------------- |
-| -32600 | INVALID_JSON_REQUEST | 发送无效的请求对象         |
-| -32601 | METHOD_NOT_FOUND     | 该方法不存在或无效         |
-| -32602 | INVALID_PARAMS       | 无效的方法参数             |
-| -32603 | INTERNAL_ERROR       | 内部调用错误               |
-| -32604 | PROCEDURE_IS_METHOD  | 内部错误，请求未提供id字段 |
-| -32700 | JSON_PARSE_ERROR     | 服务端接收到的json无法解析 |
-
-#### FISCO BCOS RPC错误码
-
-FISCO BCOS RPC接口错误码及其对应的含义如下：
-
-| code  | message                                                                     | 含义                                        |
-| :---- | :-------------------------------------------------------------------------- | :------------------------------------------ |
-| -40001 | GroupID does not exist                                                      | GroupID不存在                               |
-| -40002 | Response json parse error                                                   | JSON RPC获取的json数据解析错误              |
-| -40003 | BlockHash does not exist                                                    | 区块哈希不存在                              |
-| -40004 | BlockNumber does not exist                                                  | 区块高度不存在                              |
-| -40005 | TransactionIndex is out of range                                            | 交易索引越界                                |
-| -40006 | Call needs a 'from' field                                                   | call接口需要提供from字段                    |
-| -40007 | Only pbft consensus supports the view property                              | getPbftView接口，只有pbft共识机制有view属性 |
-| -40008 | Invalid System Config                                                       | getSystemConfigByKey接口，查询无效的key     |
-| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
-| -40010 | RPC module initialization is incomplete                                    | RPC模块初始化尚未完成     |
-| -40011 | Over QPS limit                                   | SDK到节点的请求速率超过节点的请求速率限制     |
-| -40012 |  The SDK is not allowed to access this group| SDK无访问群组的权限|
-
-
-
-### 交易回执状态
-
-| status(十进制/十六进制) | message                    | 含义                                                  |
-| :---------------------- | :------------------------- | :---------------------------------------------------- |
-| 0(0x0)                  | None                       | 正常                                                  |
-| 1(0x1)                  | Unknown                    | 未知异常                                              |
-| 2(0x2)                  | BadRLP                     | 无效RLP异常                                           |
-| 3(0x3)                  | InvalidFormat              | 无效格式异常                                          |
-| 4(0x4)                  | OutOfGasIntrinsic          | 部署的合约长度超过gas限制/调用合约接口参数超过gas限制 |
-| 5(0x5)                  | InvalidSignature           | 无效的签名异常                                        |
-| 6(0x6)                  | InvalidNonce               | 无效nonce异常                                         |
-| 7(0x7)                  | NotEnoughCash              | cash不足异常                                          |
-| 8(0x8)                  | OutOfGasBase               | 调用合约的参数过长 (RC版本)                           |
-| 9(0x9)                  | BlockGasLimitReached       | GasLimit异常                                          |
-| 10(0xa)                 | BadInstruction             | 错误指令异常                                          |
-| 11(0xb)                 | BadJumpDestination         | 错误目的跳转异常                                      |
-| 12(0xc)                 | OutOfGas                   | 合约执行时gas不足 / 部署的合约长度超过最长上限        |
-| 13(0xd)                 | OutOfStack                 | 栈溢出异常                                            |
-| 14(0xe)                 | StackUnderflow             | 栈下限溢位异常                                        |
-| 15(0xf)                 | NonceCheckFail             | nonce检测失败异常                                     |
-| 16(0x10)                | BlockLimitCheckFail        | blocklimit检测失败异常                                |
-| 17(0x11)                | FilterCheckFail            | filter检测失败异常                                    |
-| 18(0x12)                | NoDeployPermission         | 非法部署合约异常                                      |
-| 19(0x13)                | NoCallPermission           | 非法call合约异常                                      |
-| 20(0x14)                | NoTxPermission             | 非法交易异常                                          |
-| 21(0x15)                | PrecompiledError           | precompiled错误异常                                   |
-| 22(0x16)                | RevertInstruction          | revert指令异常                                        |
-| 23(0x17)                | InvalidZeroSignatureFormat | 无效签名格式异常                                      |
-| 24(0x18)                | AddressAlreadyUsed         | 地址占用异常                                          |
-| 25(0x19)                | PermissionDenied           | 无权限异常                                            |
-| 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在                                |
-| 27(0x1b)                | GasOverflow                | Gas溢出错误                                          |
-| 28(0x1c)                | TxPoolIsFull               | 交易池已满异常                                       |
-| 29(0x1d)                | TransactionRefused         | 交易被拒绝异常                                       |
-| 30(0x1e)                | ContractFrozen             | 合约被冻结异常                                       |
-| 31(0x1f)                | AccountFrozen              | 账户被冻结异常                                       |
-| 10000(0x2710)           | AlreadyKnown               | 交易已经在交易池中                                     |
-| 10001(0x2711)           | AlreadyInChain             | 交易已经上链异常                                       |
-| 10002(0x2712)           | InvalidChainId             | 无效的链ID异常                                       |
-| 10003(0x2713)           | InvalidGroupId             | 无效的群组ID异常                                       |
-| 10004(0x2714)           | RequestNotBelongToTheGroup | 请求不属于群组异常                                       |
-| 10005(0x2715)           | MalformedTx                | 交易格式错误                                          |
-| 10006(0x2716)           | OverGroupMemoryLimit       | 超出群组内存限制异常                                   |
-
-### Precompiled Service API 错误码
-
-| 错误码 | 消息内容                                          | 备注      |
-| :----- | :----------------------------------------------  | :-----   |
-| 0      | success                                          |          |
-| -50000  | permission denied                               |          |
-| -50001  | table name already exist                        |          |
-| -50002  | table name length is overflowed                 |          |
-| -50003  | table name field length is overflowed           |          |
-| -50004  | table name field total length is overflowed     |          |
-| -50005  | table key value length is overflowed            |          |
-| -50006  | table field value length is overflowed          |          |
-| -50007  | table field is duplicated                       |          |
-| -50008  | table field is invalidate                       |          |
-| -50100  | table does not exist                            |          |
-| -50101  | unknown function call                            |          |
-| -50102  | address invalid                                 |          |
-| -51002  | table name overflow                             |          |
-| -51003  | contract not exist                              |          |
-| -51004  | committee member permission managed by ChainGovernance           |          |
-| -51000  | table name or address already exist            |          |
-| -51001  | table name or address does not exist           |          |
-| -51100  | invalid node ID                                 | SDK错误码 |
-| -51101  | the last sealer cannot be removed               |           |
-| -51102  | the node is not reachable                       | SDK错误码 |
-| -51103  | the node is not a group peer                    | SDK错误码 |
-| -51104  | the node is already in the sealer list          | SDK错误码 |
-| -51105  | the node is already in the observer list        | SDK错误码 |
-| -51200  | contract name and version already exist         | SDK错误码 |
-| -51201  | version length exceeds the maximum limit        | SDK错误码 |
-| -51300  | invalid configuration entry                     |          |
-| -51500  | entry parse error                               |          |
-| -51501  | condition parse error                           |          |
-| -51502  | condition operation undefined                   |          |
-| -51600  | invalid ciphers                                 |          |
-| -51700  | group sig failed                                |          |
-| -51800  | ring sig failed                                 |          |
-| -51900  | contract frozen                              |          |
-| -51901  | contract available                              |          |
-| -51902  | contract repeat authorization                    |          |
-| -51903  | invalid contract address                    |          |
-| -51904  | table not exist                    |          |
-| -51905  | no authorized                  |          |
-| -52000  | committee member exist                    |          |
-| -52001  | committee member not exist                |          |
-| -52002  | invalid request permission denied         |          |
-| -52003  | invalid threshold                    |          |
-| -52004  | operator can't be committee member                    |          |
-| -52005  | committee member can't be operator                    |          |
-| -52006  | operator exist                    |          |
-| -52007  | operator not exist                    |          |
-| -52008  | account not exist                    |          |
-| -52009  | invalid account address                    |          |
-| -52010  | account already available                   |          |
-| -52011  | account frozen                    |          |
-| -52012  | current value is expected value              |          |
-
-### 动态群组管理 API 状态码
-
-| 状态码 | 消息内容                     | 释义                                        |
-| :-- | :--------------------------- | :------------------------------------------ |
-| 0x0 | SUCCESS                      | 接口调用成功                                  |
-| 0x1 | INTERNAL_ERROR               | 节点内部错误                                  |
-| 0x2 | GROUP_ALREADY_EXISTS         | 调用创建群组接口时，群组已存在                   |
-| 0x3 | GROUP_ALREADY_RUNNING        | 调用启动群组接口时，群组已处于运行状态             |
-| 0x4 | GROUP_ALREADY_STOPPED        | 调用停止群组接口时，群组已处于停止状态             |
-| 0x5 | GROUP_ALREADY_DELETED        | 调用删除群组接口时，群组已处于删除状态             |
-| 0x6 | GROUP_NOT_FOUND              | 调用接口时，对应的群组不存在                     |
-| 0x7 | INVALID_PARAMS               | 调用接口时，参数不合法                          |
-| 0x8 | PEERS_NOT_CONNECTED          | 调用创建群组接口时，与sealer间不存在有效的P2P连接  |
-| 0x9 | GENESIS_CONF_ALREADY_EXISTS  | 调用创建群组接口时，创世块配置文件已存在           |
-| 0xa | GROUP_CONF_ALREADY_EXIST     | 调用创建群组接口时，群组配置文件已存在             |
-| 0xb | GENESIS_CONF_NOT_FOUND       | 调用启动群组接口时，未找到创世块配置文件           |
-| 0xc | GROUP_CONF_NOT_FOUND         | 调用启动群组接口时，未找到群组配置文件             |
-| 0xd | GROUP_IS_STOPPING            | 调用接口时，群组正在释放资源                     |
-| 0xf | GROUP_NOT_DELETED            | 调用恢复接口时，群组并未被删除                   |

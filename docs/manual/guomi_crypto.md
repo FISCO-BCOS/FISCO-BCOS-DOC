@@ -1,10 +1,14 @@
-# 国密支持
+# 使用国密算法
+
+标签：``国密算法`` ``国密证书`` ``国密版FISCO BCOS`` ``国密配置``
+
+----
 
 为了充分支持国产密码学算法，金链盟基于国产密码学标准，在FISCO BCOS平台中集成了国密加解密、签名、验签、哈希算法、国密SSL通信协议，实现了对国家密码局认定的商用密码的完全支持。设计文档见[国密版FISCO BCOS设计手册](../design/features/guomi.md)。
 
 ## 初次部署国密版FISCO BCOS
 
-本节使用[`build_chain`](build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
+本节使用[`build_chain`](../manual/build_chain.md)脚本在本地搭建一条4节点的FISCO BCOS链，以`Ubuntu 16.04`系统为例操作。本节使用预编译的静态`fisco-bcos`二进制文件，在CentOS 7和Ubuntu 16.04上经过测试。
 
 ```bash
 # Ubuntu16安装依赖
@@ -12,7 +16,10 @@ sudo apt install -y openssl curl
 # 准备环境
 cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链
@@ -22,11 +29,11 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/buil
 # -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
 # -g 搭建国密版本的链
-# -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
+# -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（Java SDK 以及 Web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
 $ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G
 ```
 
-关于`build_chain.sh`脚本选项，请[参考这里](build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
+关于`build_chain.sh`脚本选项，请[参考这里](../manual/build_chain.md)。命令正常执行会输出`All completed`。（如果没有输出，则参考`nodes/build.log`检查）。
 
 ```bash
 [INFO] Downloading tassl binary ...
@@ -87,17 +94,23 @@ FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信�
     sm_crypto_channel=true
 ```
 
+
+```eval_rst
+.. important::
+    国密环境下统一使用了国密商用密码相关算法，在solidity中使用keccak256/sha3指令，虚拟机中实际执行sm3算法！
+```
+
 ## 国密版SDK使用
 
 详细操作参考[SDK文档](../sdk/java_sdk.html#id10)。
 
 ## 国密版控制台配置
 
-1.x版本控制台需要配置国密选项，详情操作参考[配置国密版控制台](../manual/console.html#id11)。
+1.x版本控制台需要配置国密选项，详情操作参考[配置国密版控制台](../console/console.html#id11)。
 
 ## 国密控制台使用
 
-国密版控制台功能与标准版控制台使用方式相同，2.6及其以上版本控制台不需要额外配置国密选项，1.x版本控制台的配置方法请参考[控制台操作手册](../manual/console.html#id11)。
+国密版控制台功能与标准版控制台使用方式相同，2.6及其以上版本控制台不需要额外配置国密选项，1.x版本控制台的配置方法请参考[控制台操作手册](../console/console.html#id11)。
 
 ## 国密落盘加密配置
 
@@ -112,7 +125,7 @@ cmake3 .. -DBUILD_GM=ON
 cmake .. -DBUILD_GM=ON
 ```
 
-其它步骤与标准版Key Manager相同，请参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)。
+其它步骤与标准版Key Manager相同，请参考：[key-manager github repository](https://github.com/FISCO-BCOS/key-manager), [key-manager gitee repository](https://gitee.com/FISCO-BCOS/key-manager)。
 
 ### 国密版节点配置
 

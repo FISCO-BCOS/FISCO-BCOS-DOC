@@ -1,5 +1,8 @@
 # 环境和配置文件
 
+标签：``go-sdk`` ``环境配置``
+
+----
 ## 环境
 
 - Go开发环境
@@ -24,7 +27,7 @@ Type="channel"
 CAFile="ca.crt"
 Cert="sdk.crt"
 Key="sdk.key"
-[[Network.Connection]] 
+[[Network.Connection]]
 NodeURL="127.0.0.1:20200"
 GroupID=1
 # [[Network.Connection]]
@@ -53,9 +56,15 @@ SMCrypto=false
 - `NodeURL`：待连接节点的URL地址，由IP和port两部分组成；
 - `GroupID`：待连接节点所属的群组ID。
 
+```eval_rst
+.. note::
+    - go-sdk暂不支持使用国密SSL与节点建立连接，使用国密时请将节点config.ini中配置设置为`chain.sm_crypto_channel=false`
+    - 国密SSL配置项说明请参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/configuration.html#id10
+```
+
 ### 账户配置
 
-- `KeyFile`：外部账户的私钥文件路径，目前只支持pem格式的私钥文件。国密和非国密账户脚本可从[get_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_account.sh)和[get_gm_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_gm_account.sh)下载，使用方式可参考[账户管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)。此外，Go SDK代码也支持生成账号，[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)了解更多。
+- `KeyFile`：外部账户的私钥文件路径，目前只支持pem格式的私钥文件。国密和非国密账户脚本可从[get_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_account.sh)和[get_gm_account.sh](https://github.com/FISCO-BCOS/console/blob/master/tools/get_gm_account.sh)下载（若因为网络原因导致长时间无法下载`get_account.sh`脚本和`get_gm_account.sh`脚本，可尝试这两个链接：[get_account.sh](https://gitee.com/FISCO-BCOS/console/blob/master/tools/get_account.sh)和[get_gm_account.sh](https://gitee.com/FISCO-BCOS/console/blob/master/tools/get_gm_account.sh)），使用方式可参考[账户管理](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)。此外，Go SDK代码也支持生成账号，[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)了解更多。
 
 ### 链配置
 

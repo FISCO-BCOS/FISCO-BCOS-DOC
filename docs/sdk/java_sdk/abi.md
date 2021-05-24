@@ -1,5 +1,8 @@
 # ABI解析
 
+标签：``java-sdk`` ``abi`` 
+
+----
 ABI（Application Binary Interface）定义了调用智能合约函数以及合约之间函数调用的消息编码格式。它作为智能合约函数调用的接口说明，其内容包括了合约的函数签名、参数编码、返回结果编码等。
 
 在Java SDK中，`org.fisco.bcos.sdk.abi.ABICodec`类提供了编码交易的输出（`data`的字段）、解析交易返回值及解析合约事件推送内容的功能。

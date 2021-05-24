@@ -1,5 +1,8 @@
 # CNS方案
 
+标签：``合约命名服务`` ``CNS表结构``
+
+----
 ## 概述
 
 调用以太坊智能合约的流程包括： 
@@ -143,11 +146,11 @@ SDK开发者可使用`org.fisco.bcos.web3j.precompile.cns`中以下两接口实�
 
 注意：
 1. 在调用接口前，需将sol合约转换Java类，并将生成的Java类以及abi、bin文件置于正确的目录，详细使用方法请参考[Web3SDK](../../sdk/java_sdk.md)；
-2. 两个接口的使用例子可参考[ConsoleImpl.java](https://github.com/FISCO-BCOS/console/blob/master/src/main/java/console/contract/ContractImpl.java)中的deployByCNS和callByCNS接口实现。
+2. 两个接口的使用例子可参考[ConsoleImpl.java](https://github.com/FISCO-BCOS/console/blob/master/src/main/java/console/contract/ConsoleContractImpl.java)中的deployByCNS和callByCNS接口实现。
 
 ## 操作工具
 
-控制台可提供部署合约、调用合约、基于合约名查询链上已有合约的功能，2.6及其以上版本控制台使用手册请参考[这里](../../manual/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../../manual/console.md)。
+控制台可提供部署合约、调用合约、基于合约名查询链上已有合约的功能，2.6及其以上版本控制台使用手册请参考[这里](../../console/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../../console/console.md)。
 
 控制台提供的命令包括：
 

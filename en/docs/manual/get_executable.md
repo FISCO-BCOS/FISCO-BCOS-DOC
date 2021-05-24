@@ -14,7 +14,7 @@ The statically linked precompiled executable provided has been tested on Ubuntu 
 
 From v2.0.0 version, we provide the docker image for the tag version. Corresponding to the master branch, we provide image of `latest` tag. For more docker tags please refer to[here](https://hub.docker.com/r/fiscoorg/fiscobcos/tags).
 
-build_chain.sh script adds the `-d` option to provide docker mode building for developers to deploy. For details, please refer to [here](build_chain.html#id4).
+build_chain.sh script adds the `-d` option to provide docker mode building for developers to deploy. For details, please refer to [here](../manual/build_chain.html#id4).
 
 ```eval_rst
 .. note::
@@ -59,13 +59,16 @@ $ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison 
 xcode10 version and above are recommended. macOS dependent package installation depends on [Homebrew](https://brew.sh/).
 
 ```bash
-brew install openssl git flex patch bison gmp
+brew install openssl git flex bison gmp
 ```
 
 ### Code clone
 
 ```bash
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
+
+# If you have network issue for exec the command above, please try:
+git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
 ```
 
 ### Compile

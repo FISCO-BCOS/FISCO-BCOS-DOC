@@ -1,5 +1,9 @@
 # 开发样例
 
+标签：``Python API`` ``快速安装``
+
+----
+
 Python SDK的源码中提供了完整的Demo供开发者学习
 
 * [调用节点API](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_get.py)

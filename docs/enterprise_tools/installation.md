@@ -1,5 +1,8 @@
 # 下载安装
 
+标签：``运维部署工具`` ``下载安装`` 
+
+----
 ## 环境依赖
 
 FISCO BCOS generator依赖如下：
@@ -17,6 +20,9 @@ FISCO BCOS generator依赖如下：
 
 ``` bash
 $ git clone https://github.com/FISCO-BCOS/generator.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+$ git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 安装

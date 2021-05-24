@@ -1,13 +1,18 @@
-# 安装
+# 搭建第一个区块链网络
 
-本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](./manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
+标签：``搭建区块链网络`` ``区块链教程`` ``HelloWorld`` ``控制台调用合约``
+
+----
+
+本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
 
 ```eval_rst
 .. note::
     - 搭建全链路国密版本的链，`请参考这里 <manual/guomi_crypto.html>`_ 。
+    - FISCO BCOS支持x86_64和aarch64（ARM）架构的Linux和macOS，ARM架构需要编译源码获取fisco-bcos可执行程序。
 ```
 
-## 1. 单群组FISCO BCOS联盟链的搭建
+## 1. 搭建单群组FISCO BCOS联盟链
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
 
@@ -51,12 +56,12 @@ sudo yum install -y openssl openssl-devel
 cd ~ && mkdir -p fisco && cd fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.7.2/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ![](./../images/installation/download_build_chain.gif)
@@ -70,7 +75,6 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.0/buil
 .. note::
     - 国密版本请执行 ``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
     - 其中-g表示生成国密配置，-G表示使用国密SSL连接
-    - web3sdk已经支持国密SSL，如果使用web3sdk建议带上-G选项使用国密SSL
 ```
 
 ```bash
@@ -153,7 +157,7 @@ fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0
 fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
 ```
 
-<img src="./../images/installation/check_result.gif" />
+![](./../images/installation/start.gif)
 
 ### 第六步. 检查日志输出
 
@@ -163,7 +167,7 @@ fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0
 tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
-正常情况会不停地输出链接信息，从输出可以看出node0与另外3个节点有链接。
+正常情况会不停地输出连接信息，从输出可以看出node0与另外3个节点有连接。
 ```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat,connected count=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat,connected count=3
@@ -179,9 +183,8 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 
 正常情况会不停输出`++++Generating seal`，表示共识正常。
 ```bash
-info|2019-01-21 17:23:32.576197| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=13dcd2da...
-info|2019-01-21 17:23:36.592280| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=31d21ab7...
-info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++Generating seal on,blkNum=1,tx=0,myIdx=2,hash=49d0e830...
+info|2020-12-22 17:24:43.729402|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=2e133146...
+info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=eb199760...
 ```
 
 ![](./../images/installation/show_log.gif)
@@ -190,13 +193,13 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ```eval_rst
 .. important::
-    - ``控制台1.x`` 系列基于 `Web3SDK <./sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <./sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
-    - 2.6及其以上版本控制台使用文档请 `参考这里 <./manual/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <./manual/console.html>`_ 
+    - ``控制台1.x`` 系列基于 `Web3SDK <sdk/java_sdk.html>`_ 实现，``控制台2.6之后`` 基于 `Java SDK <sdk/java_sdk/index.html>`_ 实现，最新版本控制台基于 ``Java SDK`` 实现
+    - 2.6及其以上版本控制台使用文档请 `参考这里 <console/console_of_java_sdk.html>`_ ，1.x版本控制台使用文档请 `参考这里 <console/console.html>`_
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
-    - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <tutorial/download_console.html>`_ 
+    - 基于 `Web3SDK <sdk/java_sdk.html>`_ 开发应用时将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``1.x`` 版本控制台，具体请参考  `这里 <console/download_console.html>`_
 ```
 
-在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)。
+在控制台链接FISCO BCOS节点，实现**查询区块链状态、部署调用合约**等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍[参考这里](console/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](console/console.md)。
 
 ### 第一步. 准备依赖
 
@@ -213,7 +216,7 @@ sudo yum install -y java java-devel
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -271,7 +274,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 =============================================================================================
 ```
 
-若1.x控制台启动失败，参考 [附录：JavaSDK启动失败场景](./sdk/java_sdk.html#id22)
+若1.x控制台启动失败，参考 [Web3SDK启动失败场景](faq/connect.html)
 
 * 用控制台获取信息
 
@@ -295,7 +298,7 @@ ClientVersion{
         ipAndPort='127.0.0.1:30302',
         agency='agency',
         topic=[
-            
+
         ],
         node='node2'
     },
@@ -313,16 +316,16 @@ ClientVersion{
         ipAndPort='127.0.0.1:30303',
         agency='agency',
         topic=[
-            
+
         ],
         node='node3'
     }
 ]
 
-[group:1]> 
+[group:1]>
 ```
 
-![](./../images/installation/use_console.gif)
+![](./../images/installation/console.png)
 
 
 
@@ -422,16 +425,6 @@ Return values:
 [group:1]> quit
 ```
 
-## WeBASE搭建
-微众银行开源的自研区块链中间件平台——[WeBASE(WeBank Blockchain Application Software Extension)](https://webasedoc.readthedocs.io/zh_CN/latest/) 是区块链应用和FISCO BCOS节点之间搭建的中间件平台。WeBASE屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。用户可以根据业务所需，选择子系统进行部署，可以进一步体验丰富交互的体验、可视化智能合约开发环境IDE。
-### [WeBASE快速入门](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)
-开发者只需要搭建节点和节点前置服务(WeBASE-Front)，就可通过WeBASE-Front的合约编辑器进行合约的编辑，编译，部署，调试。搭建可参考[《WeBASE快速入门文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)。
-![](../images/webase/webase-front.png)
-### [WeBASE管理台](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)
-通过WeBASE一键脚本，可以搭建一个WeBASE的基础环境，可以方便用户体验WeBASE核心功能如：区块浏览，节点查看，合约IDE，系统管理，节点监控，交易审计，私钥管理。搭建可参考[《WeBASE一键部署文档》](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)。![](../images/webase/webase-web.png)
-### [WeBASE其他](https://webasedoc.readthedocs.io/zh_CN/latest)
-WeBASE其他组件可以参考[《WeBASE文档》](https://webasedoc.readthedocs.io/zh_CN/latest)
-
-[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
-
 ![](./../images/installation/hello_world.gif)
+
+

@@ -1,14 +1,13 @@
 ##############################################################
-System design
+Module design
 ##############################################################
 
 This chapter introduces to the developers on FISCO BCOS the design concept of the platform, including structure and implementation of every model.
 
 .. toctree::
-   :maxdepth: 2
+   :hidden: 
 
-   architecture/index.rst
-   sync/sync.md
+   sync/index.rst
    consensus/index.rst
    virtual_machine/index.rst
    storage/index.rst
@@ -17,4 +16,4 @@ This chapter introduces to the developers on FISCO BCOS the design concept of th
    rpc.md
    protocol_description.md
    parallel/dag.md
-   features/index.rst 
+   features/index.rst

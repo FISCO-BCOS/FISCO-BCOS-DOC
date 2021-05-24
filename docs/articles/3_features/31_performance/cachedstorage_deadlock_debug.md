@@ -40,13 +40,13 @@
 
 在这个前提下，似乎一切都能解释得通。上述流程的时序图如下所示：
 
-![](../../../../images/articles/cachedstorage_deadlock_debug/IMG_5261.PNG)
+![](../../../../images/articles/cachedstorage_deadlock_debug/IMG_5261.JPG)
 
 我们找到了TBB中Spin RW Lock的实现代码，如下图所示：
 
 获取写锁：
 
-![](../../../../images/articles/cachedstorage_deadlock_debug/IMG_5262.PNG)
+![](../../../../images/articles/cachedstorage_deadlock_debug/IMG_5262.JPG)
 
 获取读锁：
 

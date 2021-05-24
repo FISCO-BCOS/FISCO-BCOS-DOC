@@ -40,7 +40,7 @@ So far, FISCO BCOS offers two types of parallel contract development structure: 
 
 ### Solidity development structure
 
-Parallel solidity contract shares the same development process with [regular solidity contract](./smart_contract.html#id1): make [``` ParallelContract ```](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol) as the base class of the parallel contract and call ``` registerParallelFunction() ``` to register the interface. （ParallelContract.sol can be found at [here](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/test/resources/contract/ParallelContract.sol)）
+Parallel solidity contract shares the same development process with [regular solidity contract](./smart_contract.html#id1): make [``` ParallelContract ```](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol) as the base class of the parallel contract and call ``` registerParallelFunction() ``` to register the interface. （ParallelContract.sol can be found at [here](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol)）
 
 Here is a complete example of how ParallelOk contract realize parallel payment transfer
 
@@ -262,7 +262,7 @@ std::vector<std::string> getParallelTag(bytesConstRef param) override
 
 **（3）Compile, restart node**
 
-To manually compile nodes please check [here](./get_executable.md)
+To manually compile nodes please check [here](../manual/get_executable.md)
 
 After compilation, close node and replace with the original node binaries, and restart node.
 
@@ -274,31 +274,31 @@ Here gives 2 parallel examples of solidity contract and precompiled contract.
 
 The execution environment in this case:
 
-- Web3SDK client end
+- java-sdk-demo client end
 - a FISCO BCOS chain
 
-Web3SDK is to send parallel transaction, FISCO BCOS chain is to execute parallel transaction. The related configuration are:
+java-sdk-demo is to send parallel transaction, FISCO BCOS chain is to execute parallel transaction. The related configuration are:
 
-- [Web3SDK configuration](../sdk/java_sdk.md)
-- [Chain building](./build_chain.md)
+- [java-sdk-demo configuration](../sdk/java_sdk/configuration.md)
+- [Chain building](../manual/build_chain.md)
 
 For pressure test on maximum performance, it at least needs:
 
-- 3 Web3SDKs to generate enough transactions
-- 4 nodes, all Web3SDKs are configured with all information of nodes on chain to send transaction evenly to each node so that the chain can receive enough transaction
+- 3 java-sdk-demo to generate enough transactions
+- 4 nodes, all java-sdk-demo are configured with all information of nodes on chain to send transaction evenly to each node so that the chain can receive enough transaction
 
 ### Parallel Solidity contract: ParallelOk
 
 Payment transfer based on account model is a typical operation. ParallelOk contract is an example of account model and is capable of parallel transfer. The ParallelOk contract is given in former context.
 
-FISCO BCOS has built-in ParallelOk contract in Web3SDK. Here is the operation method to send massive parallel transactions through Web3SDK.
+FISCO BCOS has built-in ParallelOk contract in java-sdk-demo. Here is the operation method to send massive parallel transactions through java-sdk-demo.
 
 **（1）Deploy contract, create new user, activate parallel contract through SDK**
 
 ```shell
-# parameters：<groupID> add <quantity of users created> <TPS request of the creation operation> <user information file name>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT 1 add 10000 2500 user
-# 10000 users has been created in group1, creation transactions are sent at 2500TPS, the generated user information is stored in user
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
+java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 add 10000 2500 user
+# 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
 After executed, ParallelOk contract will be deployed to blockchain, the created user information is stored in user file, and the parallel ability of ParallelOk contract is activated.
@@ -308,15 +308,14 @@ After executed, ParallelOk contract will be deployed to blockchain, the created 
 **Note: before send transactions in batch, please adjust the SDK log level to  ``ERROR`` to ensure capacity.**
 
 ```shell
-# parameter：<groupID> transfer <transaction volume> <TPS limit of the transfer request> <user information file> <the exclusion percentage of transaction：0~10>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT 1 transfer 100000 4000 user 2
-
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 transfer 100000 4000 user
 # 100000 transactions have been sent to group1, the TPS limit is 4000, users are the same in the user file created formerly, 20% of exclusion exists between transactions.
 ```
 
 **（3）Verify parallel correctness**
 
-After parallel transaction is executed, Web3SDK will print execution result. ```TPS``` is the TPS executed on node in the transaction sent by SDK. ```validation``` is the verification of transfer transaction result.
+After parallel transaction is executed, java-sdk-demo will print execution result. ```TPS``` is the TPS executed on node in the transaction sent by SDK. ```validation``` is the verification of transfer transaction result.
 
 ```log
 Total transactions:  100000
@@ -343,7 +342,7 @@ We can see that the TPS of this transaction is 2905. No error (``` verify_failed
 
 **（4）Count total TPS**
 
-Single Web3SDK cannot send enough transactions to reach the parallel execution limit of nodes. It needs multiple Web3SDKs to send transactions at the same time. TPS by simply summing together won't be correct enough when multiple Web3SDKs sending transactions, so it should be acquired directly from node.
+Single java-sdk-demo cannot send enough transactions to reach the parallel execution limit of nodes. It needs multiple java-sdk-demos to send transactions at the same time. TPS by simply summing together won't be correct enough when multiple java-sdk-demos sending transactions, so it should be acquired directly from node.
 
 count TPS from log file using script
 
@@ -368,29 +367,30 @@ Same with the function of ParallelOk contract, FISCO BCOS has built-in example o
 
 **（1）Create user**
 
-Use Web3SDK to send transaction to create user, the user information will be stored in user file. Command parameter is the same with parallelOk, the only difference is that the object called by the command is precompile.
+Use java-sdk-demo to send transaction to create user, the user information will be stored in user file. Command parameter is the same with parallelOk, the only difference is that the object called by the command is precompile.
 
 ```shell
-# parameters：<groupID> add <created user quantity> <TPS requests in this operation> <user information file name>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT 1 add 10000 2500 user
-# 10000 users has been created in group1, creation transactions are sent at 2500 TPS, the generated user information is stored in user file
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
+java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 add 10000 2500 user
+# 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
 **（2）Send parallel transfer transactions in batch**
 
-Send parallel transfer transactions through Web3SDK
+Send parallel transfer transactions through java-sdk-demo
 
 **Note: before sending transactions in batch, please adjust SDK log level to ``ERROR`` for enough capability to send transactions.**
 
 ```shell
-# parameters：<groupID> transfer <transaction volume> <TPS limit of the transfer request> <user information file> <transaction exclusion percentage: 0~10>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT 1 transfer 100000 4000 user 2
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 transfer 100000 4000 user
+
 # 100000 transactions has been sent to group1, the TPS limit is 4000, users are the same ones in the user file created formerly, 20% exclusion exists between transactions.
 ```
 
 **（3）Verify parallel correctness**
 
-After parallel transactions are executed, Web3SDK will print execution result. ```TPS``` is the TPS of the transaction sent by SDK on the node. ```validation``` is the verification of transfer execution result.
+After parallel transactions are executed, java-sdk-demo will print execution result. ```TPS``` is the TPS of the transaction sent by SDK on the node. ```validation``` is the verification of transfer execution result.
 
 ```log
 Total transactions:  80000
@@ -417,7 +417,7 @@ We can see that in this transaction, the TPS is 3143. No error (``` verify_faile
 
 **（4）Count total TPS**
 
-Single Web3SDK can send enough transactions to meet the parallel execution limit of node. It needs multiple Web3SDK to send tranactions. And by simply summing the TPS of each transaction won't be correct, so the TPS should be acquired from node directly.
+Single java-sdk-demo can send enough transactions to meet the parallel execution limit of node. It needs multiple java-sdk-demo to send tranactions. And by simply summing the TPS of each transaction won't be correct, so the TPS should be acquired from node directly.
 
 Count TPS from log file using script
 

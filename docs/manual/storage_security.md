@@ -1,4 +1,8 @@
-# 存储安全
+# 存储加密
+
+标签：``存储安全`` ``存储加密`` ``落盘加密`` 
+
+----
 
 联盟链的数据，只对联盟内部成员可见。落盘加密，保证了运行联盟链的数据，在硬盘上的安全性。一旦硬盘被带出联盟链自己的内网环境，数据将无法被解密。
 
@@ -8,7 +12,7 @@
 
 ## 部署Key Manager
 
-每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager README](https://github.com/FISCO-BCOS/key-manager)
+每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager Github README](https://github.com/FISCO-BCOS/key-manager)或[Key Manager Gitee README](https://gitee.com/FISCO-BCOS/key-manager)
 
 ```eval_rst
 .. important::
@@ -19,9 +23,19 @@
 
 用[```build_chain.sh```](../installation.md)脚本，用普通的操作方法，先生成节点。
 
+下载`build_chain.sh`脚本
 ``` shell
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
+部署四个节点：
+
+```bash
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
 

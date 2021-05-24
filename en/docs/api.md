@@ -2,6 +2,171 @@
 
 The following examples in this chapter adopt the [curl](https://curl.haxx.se/) command, which is a data transfer tool that runs the command line by the URL language. JSON-RPC API of FISCO BCOS can be accessed by sending HTTP post request through curl commands. The URL address of the curl command is set as `[jsonrpc_listen_ip]`(If the node is less than v2.3.0, set as the configuration item `listen_ip`) and `[jsonrpc listen port]` of `[rpc]` in a node config file. To format the json data, [jq](https://stedolan.github.io/jq/) is used as a formatter. For the error codes, please check the [RPC Design Documentation](design/rpc.html#json-rpc). For the transaction receipt status, please check [here](./api.html#transaction-receipt-status-list).
 
+## Error codes
+
+### RPC error code
+
+When a rpc call is made, the Server will reply with a response, which contains error result field, which includes as follows:
+
+- code: A Number that indicates the error type that occurred.
+- message: A String providing a short description of the error.
+- data: A Primitive or Structured value that contains additional information about the error. This may be omitted.
+
+There are 2 types of error code: JSON-RPC standard error code and FISCO BCOS RPC error code.
+
+#### JSON-RPC standard error code
+
+Standard error codes and their corresponding meanings are as follows:
+
+| code   | message              | definition                       |
+| :----- | :------------------- | :------------------------- |
+| -32600 | INVALID_JSON_REQUEST | send invalid request object         |
+| -32601 | METHOD_NOT_FOUND     | method not exist or valid         |
+| -32602 | INVALID_PARAMS       | invalid method parameter             |
+| -32603 | INTERNAL_ERROR       | internal call error               |
+| -32604 | PROCEDURE_IS_METHOD  | internal error; ID field not provided in the request |
+| -32700 | JSON_PARSE_ERROR     | json received by server fails to be parsed |
+
+#### FISCO BCOS RPC error code
+
+FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
+
+| code  | message                                                      | definition                                        |
+| :---- | :----------------------------------------------------------- | :------------------------------------------ |
+| -40001 | GroupID does not exist                                       | GroupID does not exist                               |
+| -40002 | Response json parse error                                    | json acquired by JSON RPC parses error             |
+| -40003 | BlockHash does not exist                                     | block hash doesn't exist                              |
+| -40004 | BlockNumber does not exist                                   | block number doesn't exist     |
+| -40005 | TransactionIndex is out of range                             | transaction index is out of range                           |
+| -40006 | Call needs a 'from' field                                    | call needs a 'from' field                   |
+| -40007 | Only pbft consensus supports the view property               | getPbftView interface; only pbft consensus supports the view property |
+| -40008 | Invalid System Config                                        | getSystemConfigByKey interface, inquire invalid key    |
+| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | invalid request from non-group-member node                  |
+| -40010 | RPC module initialization is incomplete                                    | RPC module initialization is incomplete     |
+| -40011 | Over QPS limit                                       | The request rate from the SDK to the node exceeds the request rate limit of the node     |
+| -40012 |  The SDK is not allowed to access this group| SDK does not have permission to access the group|
+
+## Transaction receipt status list
+
+|status (decimal/hexadecimal)  |message   |definition  |
+|:----|:-----|:----|
+|0(0x0)  |None |normal |
+|1(0x1)  |Unknown |unknown exception |
+|2(0x2)  |BadRLP|invalid RLP exception |
+|3(0x3)  |InvalidFormat |invalid format exception |
+|4(0x4)  |OutOfGasIntrinsic |contract to deploy is too long / input data is too long |
+|5(0x5)  |InvalidSignature |invalid signature exception |
+|6(0x6)  |InvalidNonce |invalid nonce exception |
+|7(0x7)  |NotEnoughCash |not-enough cash exception |
+|8(0x8)  |OutOfGasBase |input data is too long (RC version) |
+|9(0x9)  |BlockGasLimitReached|GasLimit exception |
+|10(0xa)  |BadInstruction |wrong instruction exception |
+|11(0xb)  |BadJumpDestination |wrong jump destination exception |
+|12(0xc)  |OutOfGas |out-of-gas during EVM execution / contract to deploy exceeds max contract length |
+|13(0xd)  |OutOfStack |out-of-stack exception |
+|14(0xe)  |StackUnderflow |Stack under flow exception |
+|15(0xf)  |NonceCheckFail |nonce check fail exception |
+|16(0x10)  |BlockLimitCheckFail |blocklimit check fail exception |
+|17(0x11)  |FilterCheckFail |filter check fail exception |
+|18(0x12)  |NoDeployPermission |deploy contract with no permission |
+|19(0x13)  |NoCallPermission |call contract with no permission |
+|20(0x14)  |NoTxPermission |transaction with no permission |
+|21(0x15)  |PrecompiledError|precompiled error exception |
+|22(0x16)  |RevertInstruction |revert instruction exception |
+|23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
+|24(0x18)  |AddressAlreadyUsed |address is already used |
+|25(0x19)  |PermissionDenied |no permission |
+|26(0x1a)  |CallAddressError | contract address not exist |
+|27(0x1b)  |GasOverflow | gas overflowed error  |
+|28(0x1c)  |TxPoolIsFull | transaction is full |
+|29(0x1d)  |TransactionRefused | transaction is refused |
+|30(0x1e)  |ContractFrozen | frozen contract exception |
+|31(0x1f)  |AccountFrozen | frozen account exception |
+|10000(0x2710)  |AlreadyKnown | transaction is already known |
+|10001(0x2711)  |AlreadyInChain | transaction is already in chain |
+|10002(0x2712)  |InvalidChainId | invalid chain id exception |
+|10003(0x2713)  |InvalidGroupId  | invalid group id exception |
+|10004(0x2714)  |RequestNotBelongToTheGroup | request doesn't belong to the group exception |
+|10005(0x2715)  |MalformedTx | malformed transaction error |
+|10006(0x2716)  |OverGroupMemoryLimit | memory is over group memory limit exception |
+
+### Precompiled Service API error code
+
+| error code | message                                        | Remarks |
+| :----- | :---------------------------------------------- | :-----   |
+| 0      | success                                         |          |
+| -50000  | permission denied                               |          |
+| -50001  | table name already exist                        |          |
+| -50002  | table name length is overflowed                 |          |
+| -50003  | table name field length is overflowed           |          |
+| -50004  | table name field total length is overflowed     |          |
+| -50005  | table key value length is overflowed            |          |
+| -50006  | table field value length is overflowed          |          |
+| -50007  | table field is duplicated                       |          |
+| -50008  | table field is invalidate                       |          |
+| -50100  | table does not exist                            |          |
+| -50101  | unknown function call                            |          |
+| -50102  | address invalid                                 |          |
+| -51002  | table name overflow                             |          |
+| -51003  | contract not exist                              |          |
+| -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
+| -51100  | invalid node ID                                 |SDK Error Code |
+| -51101  | the last sealer cannot be removed               |          |
+| -51102  | the node is not reachable                       |SDK Error Code |
+| -51103  | the node is not a group peer                    |SDK Error Code |
+| -51104  | the node is already in the sealer list          |SDK Error Code |
+| -51105  | the node is already in the observer list        |SDK Error Code |
+| -51200  | contract name and version already exist         |SDK Error Code |
+| -51201  | version length exceeds the maximum limit|SDK Error Code |
+| -51300  | invalid configuration entry                     |          |
+| -51500  | entry parse error                               |          |
+| -51501  | condition parse error                           |          |
+| -51502  | condition operation undefined                   |          |
+| -51600  | invalid ciphers                                 |          |
+| -51700  | group sig failed                                |          |
+| -51800  | ring sig failed                                 |          |
+| -51900  | contract frozen                              |          |
+| -51901  | contract available                              |          |
+| -51902  | contract repeat authorization                   |          |
+| -51903  | invalid contract address                    |          |
+| -51904  | table not exist                    |          |
+| -51905  | no authorized                  |          |
+| -52000  | committee member exist                    |          |
+| -52001  | committee member not exist                |          |
+| -52002  | invalid request permission denied         |          |
+| -52003  | invalid threshold                    |          |
+| -52004  | operator can't be committee member                    |          |
+| -52005  | committee member can't be operator                    |          |
+| -52006  | operator exist                    |          |
+| -52007  | operator not exist                    |          |
+| -52008  | account not exist                    |          |
+| -52009  | invalid account address                    |          |
+| -52010  | account already available                   |          |
+| -52011  | account frozen                    |          |
+| -52012  | current value is expected value              |          |
+
+### Dynamice group management API status code
+
+| status code | message                      | definition                                           |
+| :---------- | :--------------------------- | :--------------------------------------------------- |
+| 0x0         | SUCCESS                      | Success                                              |
+| 0x1         | INTERNAL_ERROR               | Internal error                                       |
+| 0x2         | GROUP_ALREADY_EXISTS         | The group already existed when calling generateGroup |
+| 0x3         | GROUP_ALREADY_RUNNING        | The group already run when calling startGroup        |
+| 0x4         | GROUP_ALREADY_STOPPED        | The group already stopppd when calling stopGroup     |
+| 0x5         | GROUP_ALREADY_DELETED        | The group already deleted when calling removeGroup   |
+| 0x6         | GROUP_NOT_FOUND              | The group not exists                                 |
+| 0x7         | INVALID_PARAMS               | Parameters are illegal                               |
+| 0x8         | PEERS_NOT_CONNECTED          | No valid P2P connections between sealers             |
+| 0x9         | GENESIS_CONF_ALREADY_EXISTS  | Configuration of genesis block already existed       |
+| 0xa         | GROUP_CONF_ALREADY_EXIST     | Configuration of group already existed               |
+| 0xb         | GENESIS_CONF_NOT_FOUND       | Configuration of genesis block not found             |
+| 0xc         | GROUP_CONF_NOT_FOUND         | Configuration of group not found                     |
+| 0xd         | GROUP_IS_STOPPING            | The group is stopping                                |
+| 0xf         | GROUP_NOT_DELETED            | The group hasn't been deleted when call recoverGroup |
+
 ## getClientVersion
 Returns the current node version.
 ### Parameters
@@ -475,7 +640,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xf
     "gasUsed": "0x0",
     "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x0",
@@ -533,7 +698,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xf
     "gasUsed": "0x0",
     "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x0",
@@ -591,7 +756,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHeaderByHash","params":[
     "gasUsed": "0x0",
     "hash": "0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x2",
@@ -1512,168 +1677,3 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRa
   "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
 }
 ```
-
-## Error codes
-
-### RPC error code
-
-When a rpc call is made, the Server will reply with a response, which contains error result field, which includes as follows:
-
-- code: A Number that indicates the error type that occurred.
-- message: A String providing a short description of the error.
-- data: A Primitive or Structured value that contains additional information about the error. This may be omitted.
-
-There are 2 types of error code: JSON-RPC standard error code and FISCO BCOS RPC error code.
-
-#### JSON-RPC standard error code
-
-Standard error codes and their corresponding meanings are as follows:
-
-| code   | message              | definition                       |
-| :----- | :------------------- | :------------------------- |
-| -32600 | INVALID_JSON_REQUEST | send invalid request object         |
-| -32601 | METHOD_NOT_FOUND     | method not exist or valid         |
-| -32602 | INVALID_PARAMS       | invalid method parameter             |
-| -32603 | INTERNAL_ERROR       | internal call error               |
-| -32604 | PROCEDURE_IS_METHOD  | internal error; ID field not provided in the request |
-| -32700 | JSON_PARSE_ERROR     | json received by server fails to be parsed |
-
-#### FISCO BCOS RPC error code
-
-FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
-
-| code  | message                                                      | definition                                        |
-| :---- | :----------------------------------------------------------- | :------------------------------------------ |
-| -40001 | GroupID does not exist                                       | GroupID does not exist                               |
-| -40002 | Response json parse error                                    | json acquired by JSON RPC parses error             |
-| -40003 | BlockHash does not exist                                     | block hash doesn't exist                              |
-| -40004 | BlockNumber does not exist                                   | block number doesn't exist     |
-| -40005 | TransactionIndex is out of range                             | transaction index is out of range                           |
-| -40006 | Call needs a 'from' field                                    | call needs a 'from' field                   |
-| -40007 | Only pbft consensus supports the view property               | getPbftView interface; only pbft consensus supports the view property |
-| -40008 | Invalid System Config                                        | getSystemConfigByKey interface, inquire invalid key    |
-| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | invalid request from non-group-member node                  |
-| -40010 | RPC module initialization is incomplete                                    | RPC module initialization is incomplete     |
-| -40011 | Over QPS limit                                       | The request rate from the SDK to the node exceeds the request rate limit of the node     |
-| -40012 |  The SDK is not allowed to access this group| SDK does not have permission to access the group|
-
-## Transaction receipt status list
-
-|status (decimal/hexadecimal)  |message   |definition  |
-|:----|:-----|:----|
-|0(0x0)  |None |normal |
-|1(0x1)  |Unknown |unknown exception |
-|2(0x2)  |BadRLP|invalid RLP exception |
-|3(0x3)  |InvalidFormat |invalid format exception |
-|4(0x4)  |OutOfGasIntrinsic |contract to deploy is too long / input data is too long |
-|5(0x5)  |InvalidSignature |invalid signature exception |
-|6(0x6)  |InvalidNonce |invalid nonce exception |
-|7(0x7)  |NotEnoughCash |not-enough cash exception |
-|8(0x8)  |OutOfGasBase |input data is too long (RC version) |
-|9(0x9)  |BlockGasLimitReached|GasLimit exception |
-|10(0xa)  |BadInstruction |wrong instruction exception |
-|11(0xb)  |BadJumpDestination |wrong jump destination exception |
-|12(0xc)  |OutOfGas |out-of-gas during EVM execution / contract to deploy exceeds max contract length |
-|13(0xd)  |OutOfStack |out-of-stack exception |
-|14(0xe)  |StackUnderflow |Stack under flow exception |
-|15(0xf)  |NonceCheckFail |nonce check fail exception |
-|16(0x10)  |BlockLimitCheckFail |blocklimit check fail exception |
-|17(0x11)  |FilterCheckFail |filter check fail exception |
-|18(0x12)  |NoDeployPermission |deploy contract with no permission |
-|19(0x13)  |NoCallPermission |call contract with no permission |
-|20(0x14)  |NoTxPermission |transaction with no permission |
-|21(0x15)  |PrecompiledError|precompiled error exception |
-|22(0x16)  |RevertInstruction |revert instruction exception |
-|23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
-|24(0x18)  |AddressAlreadyUsed |address is already used |
-|25(0x19)  |PermissionDenied |no permission |
-|26(0x1a)  |CallAddressError | contract address not exist |
-|27(0x1b)  |GasOverflow | gas overflowed error  |
-|28(0x1c)  |TxPoolIsFull | transaction is full |
-|29(0x1d)  |TransactionRefused | transaction is refused |
-|30(0x1e)  |ContractFrozen | frozen contract exception |
-|31(0x1f)  |AccountFrozen | frozen account exception |
-|10000(0x2710)  |AlreadyKnown | transaction is already known |
-|10001(0x2711)  |AlreadyInChain | transaction is already in chain |
-|10002(0x2712)  |InvalidChainId | invalid chain id exception |
-|10003(0x2713)  |InvalidGroupId  | invalid group id exception |
-|10004(0x2714)  |RequestNotBelongToTheGroup | request doesn't belong to the group exception |
-|10005(0x2715)  |MalformedTx | malformed transaction error |
-|10006(0x2716)  |OverGroupMemoryLimit | memory is over group memory limit exception |
-
-### Precompiled Service API error code
-
-| error code | message                                        | Remarks |
-| :----- | :---------------------------------------------- | :-----   |
-| 0      | success                                         |          |
-| -50000  | permission denied                               |          |
-| -50001  | table name already exist                        |          |
-| -50002  | table name length is overflowed                 |          |
-| -50003  | table name field length is overflowed           |          |
-| -50004  | table name field total length is overflowed     |          |
-| -50005  | table key value length is overflowed            |          |
-| -50006  | table field value length is overflowed          |          |
-| -50007  | table field is duplicated                       |          |
-| -50008  | table field is invalidate                       |          |
-| -50100  | table does not exist                            |          |
-| -50101  | unknown function call                            |          |
-| -50102  | address invalid                                 |          |
-| -51002  | table name overflow                             |          |
-| -51003  | contract not exist                              |          |
-| -51004  | committee member permission managed by ChainGovernance           |          |
-| -51000  | table name or address already exist            |          |
-| -51001  | table name or address does not exist           |          |
-| -51100  | invalid node ID                                 |SDK Error Code |
-| -51101  | the last sealer cannot be removed               |          |
-| -51102  | the node is not reachable                       |SDK Error Code |
-| -51103  | the node is not a group peer                    |SDK Error Code |
-| -51104  | the node is already in the sealer list          |SDK Error Code |
-| -51105  | the node is already in the observer list        |SDK Error Code |
-| -51200  | contract name and version already exist         |SDK Error Code |
-| -51201  | version length exceeds the maximum limit|SDK Error Code |
-| -51300  | invalid configuration entry                     |          |
-| -51500  | entry parse error                               |          |
-| -51501  | condition parse error                           |          |
-| -51502  | condition operation undefined                   |          |
-| -51600  | invalid ciphers                                 |          |
-| -51700  | group sig failed                                |          |
-| -51800  | ring sig failed                                 |          |
-| -51900  | contract frozen                              |          |
-| -51901  | contract available                              |          |
-| -51902  | contract repeat authorization                   |          |
-| -51903  | invalid contract address                    |          |
-| -51904  | table not exist                    |          |
-| -51905  | no authorized                  |          |
-| -52000  | committee member exist                    |          |
-| -52001  | committee member not exist                |          |
-| -52002  | invalid request permission denied         |          |
-| -52003  | invalid threshold                    |          |
-| -52004  | operator can't be committee member                    |          |
-| -52005  | committee member can't be operator                    |          |
-| -52006  | operator exist                    |          |
-| -52007  | operator not exist                    |          |
-| -52008  | account not exist                    |          |
-| -52009  | invalid account address                    |          |
-| -52010  | account already available                   |          |
-| -52011  | account frozen                    |          |
-| -52012  | current value is expected value              |          |
-
-### Dynamice group management API status code
-
-| status code | message                      | definition                                           |
-| :---------- | :--------------------------- | :--------------------------------------------------- |
-| 0x0         | SUCCESS                      | Success                                              |
-| 0x1         | INTERNAL_ERROR               | Internal error                                       |
-| 0x2         | GROUP_ALREADY_EXISTS         | The group already existed when calling generateGroup |
-| 0x3         | GROUP_ALREADY_RUNNING        | The group already run when calling startGroup        |
-| 0x4         | GROUP_ALREADY_STOPPED        | The group already stopppd when calling stopGroup     |
-| 0x5         | GROUP_ALREADY_DELETED        | The group already deleted when calling removeGroup   |
-| 0x6         | GROUP_NOT_FOUND              | The group not exists                                 |
-| 0x7         | INVALID_PARAMS               | Parameters are illegal                               |
-| 0x8         | PEERS_NOT_CONNECTED          | No valid P2P connections between sealers             |
-| 0x9         | GENESIS_CONF_ALREADY_EXISTS  | Configuration of genesis block already existed       |
-| 0xa         | GROUP_CONF_ALREADY_EXIST     | Configuration of group already existed               |
-| 0xb         | GENESIS_CONF_NOT_FOUND       | Configuration of genesis block not found             |
-| 0xc         | GROUP_CONF_NOT_FOUND         | Configuration of group not found                     |
-| 0xd         | GROUP_IS_STOPPING            | The group is stopping                                |
-| 0xf         | GROUP_NOT_DELETED            | The group hasn't been deleted when call recoverGroup |

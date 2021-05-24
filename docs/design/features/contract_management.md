@@ -1,5 +1,9 @@
 # 合约管理
 
+标签：``合约生命周期`` ``智能合约``
+
+----
+
 本文档描述合约生命周期管理中冻结/解冻操作（以下简称合约生命周期管理操作）及其操作权限的设计方案。
 
 ```eval_rst
@@ -11,11 +15,11 @@
 
 合约管理的相关操作包括冻结、解冻、查询状态、授权、查询授权。
 
-- [冻结合约](../../manual/console.html#freezecontract)：可逆操作，一合约冻结后读写接口都不能被调用
-- [解冻合约](../../manual/console.html#unfreezecontract)：撤销冻结的操作，一合约解冻后读写接口都可调用
-- [查询合约状态](../../manual/console.html#getcontractstatus)：查询合约状态，返回该合约可用/已冻结的状态
-- [授权](../../manual/console.html#grantcontractstatusmanager)：已有权限的账号可以给其他账号授予合约管理权限
-- [查询授权](../../manual/console.html#listcontractstatusmanager)：查询合约的管理权限列表
+- [冻结合约](../../console/console.html#freezecontract)：可逆操作，一合约冻结后读写接口都不能被调用
+- [解冻合约](../../console/console.html#unfreezecontract)：撤销冻结的操作，一合约解冻后读写接口都可调用
+- [查询合约状态](../../console/console.html#getcontractstatus)：查询合约状态，返回该合约可用/已冻结的状态
+- [授权](../../console/console.html#grantcontractstatusmanager)：已有权限的账号可以给其他账号授予合约管理权限
+- [查询授权](../../console/console.html#listcontractstatusmanager)：查询合约的管理权限列表
 
 ```eval_rst
 .. important::
