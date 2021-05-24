@@ -12,7 +12,7 @@ Q:
 A:
   FISCO BCOS provides multiple ways for developers to interact with the platform. Please refer as follows:
   - FISCO BCOS 2.0 version provides JSON-RPC interface. For the detail, please refer to [here](./api.md).
-  - FISCO BCOS 2.0 version provides Web3SDK to help developers quickly implement applications. For the detail, please refer to [here](./sdk/java_sdk.md).
+  - FISCO BCOS 2.0 version provides Java SDK to help developers quickly implement applications. For the detail, please refer to [here](./sdk/java_sdk/index.md).
   - FISCO BCOS version 2.0 provides a console to help users quickly understand how to use FISCO BCOS. For the detail, Please refer to [here](../console/console_of_java_sdk.md) for the console user manual of version 2.6 and above, and [here](../console/console.md) for the console user manual of version 1.x
 
 Q:
@@ -150,17 +150,17 @@ A：Due to possible fault of file system, group status recorded by node on local
 - DELETED
 - RUNNING
 
-## Web3SDK
+## Java SDK
 
 Q:
   What does Web3SDK require to Java version? <br>
 A:
   It requires [JDK8 version or above](https://openjdk.java.net/)<br>
 
-  The OpenJDK of yum repository of CentOS lacks JCE (Java Cryptography Extension), which causes Web3SDK to fail to connect to blockchain node. When using the CentOS operation system, it is recommended to download it from the OpenJDK website. [Installation Guide] (https://openjdk.java.net/install/index.html)
+  The OpenJDK of yum repository of CentOS lacks JCE (Java Cryptography Extension), which causes Java SDK to fail to connect to blockchain node. When using the CentOS operation system, it is recommended to download it from the OpenJDK website. [Installation Guide] (https://openjdk.java.net/install/index.html)
 
 Q:
-  After the Web3SDK configuration is completed, what is the reason for the failed transaction? <br>
+  After the Java SDK configuration is completed, what is the reason for the failed transaction? <br>
 A:
   The ip, port, group number in applicationContext.xml are incorrectly filled or the node files of ca.crt, sdk.crt, and sdk.key files are missing.
 

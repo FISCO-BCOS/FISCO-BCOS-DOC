@@ -27,7 +27,7 @@ FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers
 
 - `jsonrpc_listen_ip`：RPC listening IP, security considerations, the default setting is 127.0.0.1, if there is an external network access requirement, please monitor **node external network IP** or `0.0.0.0`;
 
-- `channel_listen_port`: Channel port, is corresponding to `channel_listen_port` in [Web3SDK](../sdk/sdk.html#id2) configuration;
+- `channel_listen_port`: Channel port, is corresponding to `channel_listen_port` in [Java SDK]](../sdk/sdk.html#id2) configuration;
 
 - `jsonrpc_listen_port`: JSON-RPC port.
 

@@ -906,7 +906,7 @@ bash ~/generator-C/nodeC/start_all.sh
 
 ### Configure console
 
-agencyA's configure console or java sdk. In the tutorial, console is used as an example:
+agencyA's configure console or Java SDK. In the tutorial, console is used as an example:
 
 Note: This command will complete the console configuration according to the node and group in the user-configured `node_deployment.ini`. User can directly start the console. Please ensure that java is installed before starting.
 
