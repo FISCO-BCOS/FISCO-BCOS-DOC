@@ -48,7 +48,49 @@ gradle build
 ```
 构建完成后，会在目录中生成已编译的代码目录dist。
 
-### 3.3 修改配置
+### 3.3 数据初始化
+
+（1）新建数据库
+
+```
+#登录MySQL:
+mysql -u ${your_db_account} -p${your_db_password}  例如：mysql -u root -p123456
+#新建数据库：
+CREATE DATABASE IF NOT EXISTS {your_db_name} DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+
+（2）修改脚本配置
+
+进入数据库脚本目录
+
+```shell
+cd  dist/script
+```
+
+修改数据库连接信息：
+
+```shell
+修改数据库名称：sed -i "s/db_browser/${your_db_name}/g" browser.sh
+修改数据库用户名：sed -i "s/dbUsername/${your_db_account}/g" browser.sh
+修改数据库密码：sed -i "s/dbPassword/${your_db_password}/g" browser.sh
+```
+
+例如：将数据库用户名修改为root，则执行：
+
+```shell
+sed -i "s/dbUsername/root/g" browser.sh
+```
+
+（2）运行数据库脚本
+
+执行命令：bash  browser.sh  ${dbIP}  ${dbPort}
+如：
+
+```shell
+bash browser.sh 127.0.0.1 3306
+```
+
+### 3.4 修改配置
 
 （1）dist目录中提供了一份配置模板dist/conf_template，**供拷贝参考**：
 
@@ -78,7 +120,7 @@ cd dist/conf
 
 1. 实际生产中建议将编译后的安装包（dist目录）放到服务部署目录。例如/data/app/fisco-bcos-browser
 
-### 3.4 服务启停
+### 3.5 服务启停
 
 进入到已编译的代码根目录：
 ```shell
@@ -90,7 +132,7 @@ cd dist
 检查：sh status.sh
 ```
 
-### 3.5 查看日志
+### 3.6 查看日志
 
 进入到已编译的代码根目录：
 ```shell
