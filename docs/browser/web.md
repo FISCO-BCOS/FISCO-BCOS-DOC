@@ -51,7 +51,31 @@ cd fisco-bcos-browser
 
 **提示：** 目录可以自定义指定，只需要nginx配置文件步骤2保持一致即可。
 
-### 2.3 修改nginx配置
+
+### 2.3 下载solc-bin
+
+执行脚本get_solc_js.sh会自动下载solc-bin，即下面v0.4.25.js等文件。 在 `/data/app/web`目录中直接执行脚本get_solc_js.sh（（脚本与`dist`文件夹同级））
+
+```shell
+	bash ./get_solc_js.sh
+```
+等待脚本执行完成
+
+- 如果执行不成功，请使用下面的命令：
+
+`注意：当且仅当get_solc_js.sh脚本执行失败才需要执行下面的命令`
+
+```shell
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.4.25.js -o ./dist/static/js/v0.4.25.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.4.25-gm.js -o ./dist/static/js/v0.4.25-gm.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.5.2.js -o ./dist/static/js/v0.5.2.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.5.2-gm.js -o ./dist/static/js/v0.5.2-gm.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.6.10.js -o ./dist/static/js/v0.6.10.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.6.10-gm.js -o ./dist/static/js/v0.6.10-gm.js
+```
+执行完后检查dist/static/js是否下载完这些js文件。
+
+### 2.4 修改nginx配置
 
 在./web/fisco-bcos-browser-front/doc文件下有nginx配置文件，直接可以拿来替换安装的nginx的配置文件nginx.conf；
 
@@ -89,7 +113,7 @@ cd fisco-bcos-browser
             }
 ```
 
-### 2.4 启动nginx
+### 2.5 启动nginx
 
 (1)、启动nginx。
 启动命令：
