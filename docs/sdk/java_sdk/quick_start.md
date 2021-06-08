@@ -68,7 +68,7 @@
 在build.gradle中引入Java SDK
 
 ```
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -77,7 +77,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>2.7.1</version>
+    <version>2.7.2</version>
 </dependency>
 ```
 
@@ -85,7 +85,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
 
 ### 第三步. 配置SDK证书
 
-参考[java sdk证书配置](./configuration.html#id5)。
+参考[Java SDK证书配置](./configuration.html#id5)。
 
 ```eval_rst
 .. note::
@@ -94,7 +94,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
     - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .
 ```
 
-将SDK证书拷贝到java sdk的示例如下(这里假设SDK证书位于`~/fisco/nodes/127.0.0.1/sdk`目录)：
+将SDK证书拷贝到Java SDK的示例如下(这里假设SDK证书位于`~/fisco/nodes/127.0.0.1/sdk`目录)：
 
 ```bash
 # 假设SDK证书位于~/fisco/nodes/127.0.0.1/sdk/目录
@@ -113,7 +113,12 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+# 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+$ bash download_console.sh
 $ cd ~/fisco/console
 ```
 
@@ -192,7 +197,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 ### 第六步. 使用Java SDK部署和调用智能合约
 
-以使用java sdk调用群组1的`getBlockNumber`接口获取群组1最新块高，并向群组1部署和调用`HelloWorld`合约为例，对应的示例代码如下：
+以使用Java SDK调用群组1的`getBlockNumber`接口获取群组1最新块高，并向群组1部署和调用`HelloWorld`合约为例，对应的示例代码如下：
 
 ```java
 public class BcosSDKTest
@@ -231,6 +236,10 @@ public class BcosSDKTest
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
 $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
+
+# 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
+$ git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
+
 $ cd java-sdk-demo
 # 编译
 $ ./gradlew clean build -x test
@@ -270,7 +279,7 @@ $ bash sol2java.sh -h
 
 ### 附录三. 使用xml配置进行配置
 
-为了适配更多场景，java sdk支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考java sdk源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
+为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
 
 通过`xml`配置文件初始化`BcosSDK`之前，需要先引入`spring`。
 

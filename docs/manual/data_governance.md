@@ -9,7 +9,7 @@
 
     - FISCO BCOS为实现海量数据治理的功能，需使用scalable存储模式、开启binlog及配置amdb-proxy，相关操作见本文档说明；
     
-    - “数据仓库”的使用请参考[文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)。
+    - “数据仓库”的使用请参考 `[文档] <https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html>`_ 。
 
 ```
 
@@ -47,7 +47,7 @@ binlog文件记录了每个区块的每个交易对区块链状态的修改结�
 └── 32.binlog
 ```
 
-基于1，用户可根据下图描述的binlog协议，通过访问binlog文件来获取指定key的历史修改记录。解析binlog文件的具体操作可参考[binlog_reader](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/fisco-bcos/tools/binlog_reader.cpp)的相关实现。
+基于1，用户可根据下图描述的binlog协议，通过访问binlog文件来获取指定key的历史修改记录。解析binlog文件的具体操作可参考[binlog_reader GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/fisco-bcos/tools/binlog_reader.cpp)或[binlog_reader Gitee源码链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/fisco-bcos/tools/binlog_reader.cpp)的相关实现。
 
 ![](../../images/storage/binlog.png)
 
@@ -67,8 +67,18 @@ fisco-sync工具需拉取FISCO-BCOS源码，打开编译开关后自行编译。
 - 注意：fisco-sync工具编译涉及的编译开关为TOOL，默认OFF，可通过`cmake3 -DTOOL=ON ..`打开该编译开关；
 - 编译后，fisco-sync工具路径的生成路径`build/bin/fisco-sync`。
 
-```
+下载FISCO-BCOS：
+
+```bash
 $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git`
+```
+
+```bash
 $ cd FISCO-BCOS
 $ mkdir -p build && cd build
 # CentOS请使用cmake3
@@ -184,6 +194,9 @@ fisco-sync工具以表为单位从“数据仓库”拉取数据。如一个表�
 
 ```bash
 git clone https://github.com/FISCO-BCOS/amdb-proxy.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/amdb-proxy.git
 ```
 
 #### 编译源码

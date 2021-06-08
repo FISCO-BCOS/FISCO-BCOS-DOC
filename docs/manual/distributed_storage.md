@@ -105,11 +105,18 @@ FISCO BCOS在2.0.0-rc3之后，支持节点通过连接池直连MySQL，相对�
 使用分布式存储之前，需要完成联盟链的搭建和多群组的配置，具体参考如下步骤。
 
 #### 准备依赖
+
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/v2.7.2/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
 #### 生成配置文件
 ```bash
 # 生成区块链配置文件ipconf
@@ -239,12 +246,20 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 ### 使用控制台发送交易
 
 #### 准备依赖
+
 ```bash
-cd ~/fisco;
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+
+cd ~/fisco
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试下面的命令：
+curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+bash download_console.sh
 cp -n console/conf/config-example.toml console/conf/config.toml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
+
 #### 修改配置文件
 将~/fisco/console/conf/config.toml修改为如下配置(部分信息)
 ```bash

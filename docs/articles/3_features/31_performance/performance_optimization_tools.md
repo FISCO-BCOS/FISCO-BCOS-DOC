@@ -153,6 +153,12 @@ chmod +x sample-bt-off-cpu
 ./flamegraph.pl --colors=io out.folded > offcpu.svg
 ```
 
+如果因为网络问题出现`sample-bt-off-cpu`脚本长时间下载失败，可尝试以下命令：
+
+```bash
+https://gitee.com/mirrors/openresty-systemtap-toolkit/raw/master/sample-bt-off-cpu
+```
+
 得到的Off-CPU火焰图如下图所示：
 
 ![](../../../../images/articles/performance_optimization_tools/IMG_5245.JPG)

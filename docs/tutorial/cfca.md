@@ -4,7 +4,7 @@
 
 ----
 
-使用前建议阅读[证书说明](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/certificates.html)
+使用前建议阅读[证书说明](../manual/certificates.html)
 
 ## 购买前注意事项
 
@@ -20,7 +20,7 @@
 
 - cfca申请的`ca.crt--node.crt`二级证书结构与fisco bcos自带工具生成的三级证书结构互相兼容，用户可直接使用cfca签发的二级证书作为节点或sdk的证书使用
 
-建议用户结合[白名单机制](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/certificate_list.html#id2)一起使用
+建议用户结合[白名单机制](../manual/certificate_list.html#id2)一起使用
 
 ### 第一步. 获取节点证书
 
@@ -96,7 +96,11 @@ C7/4
 - 获取generator
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 - 安装依赖
@@ -252,9 +256,4 @@ ps -ef | grep fisco
 
 后续操作与[使用企业级部署工具](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/tutorial_detail_operation.html)相同
 
-
-```eval_rst
-.. note::
-
-    国密CFCA证书申请和使用流程与上述过程类似，需额外向CFCA申请证书生成小工具，或使用FISCO BCOS的tassl小工具生成对应的证书请求文件，可以参考开发部署工具，国密节点生成过程使用tassl小工具[build_chain.sh](../manual/build_chain.md)
-```
+国密CFCA证书申请和使用流程与上述过程类似，需额外向CFCA申请证书生成小工具，或使用FISCO BCOS的tassl小工具生成对应的证书请求文件，可以参考开发部署工具，国密节点生成过程使用tassl小工具[build_chain.sh](../manual/build_chain.md)

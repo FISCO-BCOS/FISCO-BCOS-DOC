@@ -75,7 +75,6 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/buil
 .. note::
     - 国密版本请执行 ``bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G``
     - 其中-g表示生成国密配置，-G表示使用国密SSL连接
-    - web3sdk已经支持国密SSL，如果使用web3sdk建议带上-G选项使用国密SSL
 ```
 
 ```bash
@@ -217,7 +216,7 @@ sudo yum install -y java java-devel
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

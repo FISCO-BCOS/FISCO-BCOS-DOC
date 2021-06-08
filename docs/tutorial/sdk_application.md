@@ -255,7 +255,7 @@ Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录
 # 创建工作目录~/fisco
 mkdir -p ~/fisco
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -361,7 +361,7 @@ public class Asset extends Contract {
 
 ### 第二步. 创建一个Java工程
 
-在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``assert-app``。
+在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app``。
 
 ![](../../images/tutorial/create_app_mid.gif)
 
@@ -391,12 +391,12 @@ repositories {
     }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
-
--   引入Java SDK jar包
+```
+引入Java SDK jar包
 
 ```java
 testCompile group: 'junit', name: 'junit', version: '4.12'
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
 ```
 ![](../../images/tutorial/import_sdk.png)
 
@@ -414,7 +414,7 @@ List spring = [
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2")
     compile spring
 }
 ```
@@ -763,7 +763,7 @@ TransactionReceipt receipt = asset.register(assetAccount, amount);
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-在``asset-app/tools``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
+在``asset-app/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 ![](../../images/tutorial/make_sh.png)
 
 ```bash
@@ -838,7 +838,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 ```groovy
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2")
     compile spring
     compile ('org.slf4j:slf4j-log4j12:1.7.25')
     runtime ('org.slf4j:slf4j-log4j12:1.7.25')

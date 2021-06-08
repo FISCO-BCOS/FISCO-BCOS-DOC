@@ -140,6 +140,11 @@ mkdir -p ~/fisco && cd ~/fisco
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
 ### 2.3 搭建单机4节点分布式存储区块链网络
 
 ```eval_rst
