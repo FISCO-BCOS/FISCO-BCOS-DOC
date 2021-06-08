@@ -52,6 +52,9 @@ The execution of the contract rolled back.
 # 199.232.28.133 raw.githubusercontent.com
 curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
 
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
+
 # 替换非国密的`solc`为国密的solc
 cp solcJ-all-0.4.25-gm.jar lib/ && rm -rf lib/solcJ-all-0.4.25.jar
 

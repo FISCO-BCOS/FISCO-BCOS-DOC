@@ -34,7 +34,7 @@ FISCO BCOS采用的是paillier加密算法，支持加法同态。paillier的公
 
 FISCO BCOS同态加密模块提供的功能组件包括：
 
-- paillier[同态库](https://github.com/FISCO-BCOS/paillier-lib)，包括java库和c++同态接口。
+- paillier同态库[GitHub源码](https://github.com/FISCO-BCOS/paillier-lib)/[Gitee源码](https://gitee.com/FISCO-BCOS/paillier-lib)，包括java库和c++同态接口。
 
 - paillier[预编译合约](#id18)，供智能合约调用，提供密文同态运算接口。
 
@@ -90,11 +90,11 @@ FISCO BCOS群/环签名模块提供的功能组件包括：
 
 FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
 
-- 群/环签名[服务端](https://github.com/FISCO-BCOS/group-signature-server): 提供完整的群/环签名RPC服务。
+- 群/环签名服务端: 提供完整的群/环签名RPC服务。[GitHub源码](https://github.com/FISCO-BCOS/group-signature-server)、[Gitee源码](https://gitee.com/FISCO-BCOS/group-signature-server)
 
-- 群/环签名[客户端](https://github.com/FISCO-BCOS/sig-service-client): 调用RPC服务对数据进行签名，并提供签名上链以及链上验证等功能。
+- 群/环签名客户端: 调用RPC服务对数据进行签名，并提供签名上链以及链上验证等功能。[GitHub源码](https://github.com/FISCO-BCOS/sig-service-client)、[Gitee源码](https://gitee.com/FISCO-BCOS/sig-service-client)
 
-示例框架如下图所示，具体操作方法请参阅[客户端指南](https://github.com/FISCO-BCOS/sig-service-client)。
+示例框架如下图所示，具体操作方法请参阅[客户端指南 Github链接](https://github.com/FISCO-BCOS/sig-service-client)或[客户端指南 Gitee链接](https://gitee.com/FISCO-BCOS/sig-service-client)。
 
 ![](../../images/privacy/demo.jpg)
 
@@ -117,7 +117,9 @@ bash ../manual/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 
 1.已为隐私模块的预编译合约分配了地址，无需另行注册。隐私模块实现的预编译合约列表以及地址分配如下：
 
-   | 地址   | 功能       | [源码](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension) |
+源码可参考链接：[GitHub链接](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension)、[Gitee链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension)
+
+   | 地址   | 功能       | 源码 |
    | ------ | ---------- | ------------------------------------------------------------ |
    | 0x5003 | 同态加密   | PaillierPrecompiled.cpp                                      |
    | 0x5004 | 群签名     | GroupSigPrecompiled.cpp                                      |
@@ -170,7 +172,7 @@ call PaillierPrecompiled 0x5003 paillierAdd "0100E97E06A781DAAE6DBC9C094FC963D73
 0100E97E06A781DAAE6DBC9C094FC963D73B340D99FD934782A5D629E094D3B051FBBEA26F46BB681EB5314AE98A6A63805834E26BD0154243581DD77709C5DB15357DBEC34F8D8B9D5892FDF5F5FC56B1474CF58D6AC23AA867E34653B469058DCDBDC283D493711022131FBCBCFAC639919A7C0FE45EECDBD43FA543492D3058737F567626318282C2C35027B05E901F45CB3B71479FC49FD08B3F81C82326DEF28739D6A7D090F93D1B5058CDA89134AB103DB49EA51FF14310179FF9B3284BC6C3B6BA3BB0FCB35FEA6AF1453A4AAEB3EB82E9B99875BEA89CD970905B40E6E5FC906F0959769865FF29A83CD23ACC0C832A0DE30D0C691335A7ABE2EA0782774D011D9A668B26E65506EF2E8B3EBA70B882DE36FEC5951B64B9D967EE5E05B1AF62EE569358360C43220A756E7FB610FCBD5A366D077C48342EE3025735D6590531A7E609ADE2608BB4173167F972AB860674DB89769E2D97EE3E308D3CA04802EF8F85BC6BFCD270F1FC6AEA5C09F51E8914273D8BD7833D55D9AF3D0102315880A57D531E30EDD8E777CDE8708AE7DDF83A8C5B48854FD4CD4E7372CED017C0BACD49E409C45F7071113B12494D3955BA1D7618E196A14012B11ADB63B857C9033604575FC7FF1D5833A53ACDE8877311FFE78F0CAEBAA27B0E5ADCDD809AEDCD5C7D2CA7F15E53AB7D62ADF04686E05B1F79CA91AFD2CE120AAD7D0F15C8E7B59968CE13BA10C99B50BE696C22A59109C3E6E5EDBE364FF5717443C175DEE5680908AEF67AF6261644AEEFAD42538A8686481CF0109296D1A2FF030143A0DED95F54CC158BF3A3FCD0B2278BDB6942D6E536CA45E3015B764FF5A94B57D232F86CFC66A29C55B9A78336026FFB6D8882E6F4CE2F8D007C225B6B3DE814FC60EB278B25FB0A1F6B4A34E920CA952BC3F14D121D5438E12634AD951EBD5911B281E3ADEC43410B91DC28B68F9D79D7F203245E87EE1DB3883B0C925C5A9BA157AB2F07ACD9A09F89EF211EED16358E78EDAF091FBA914225BF8A7DCDD2DD12EC0ABBC10E9E5F7DD48239B0A68CBD81637B1C0D7ED1DF89D714DFC6C1B7B6B3
 ```
 
-**注：** 控制台输入的密文可通过paillier库中的[java库](https://github.com/FISCO-BCOS/paillier-lib/tree/master/paillierJava)生成。
+**注：** 控制台输入的密文可通过paillier库中的java库生成。源代码链接：[GitHub链接](https://github.com/FISCO-BCOS/paillier-lib/tree/master/paillierJava)、[Gitee链接](https://gitee.com/FISCO-BCOS/paillier-lib/tree/master/paillierJava)
 
 ## solidity合约调用
 

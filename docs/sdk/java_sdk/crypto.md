@@ -4,9 +4,9 @@
 
 ----
 
-java sdk提供了可访问所有密码学相关接口的`CryptoSuite`，`CryptoSuite`会根据传入的`cryptoType`(目前支持`CryptoType.ECDSA_TYPE`和`CryptoType.SM_TYPE`，前者用在非国密链中，后者用于国密链中)初始化密码学相关的套件。
+Java SDK提供了可访问所有密码学相关接口的`CryptoSuite`，`CryptoSuite`会根据传入的`cryptoType`(目前支持`CryptoType.ECDSA_TYPE`和`CryptoType.SM_TYPE`，前者用在非国密链中，后者用于国密链中)初始化密码学相关的套件。
 
-java sdk目前支持以下功能:
+Java SDK目前支持以下功能:
 
 - **计算哈希**: 支持`sm3`和`keccak256`两种哈希算法，一般国密采用前者，非国密采用后者；
 
@@ -14,7 +14,7 @@ java sdk目前支持以下功能:
 
 ## 创建CryptoSuite
 
-java sdk目前支持创建非国密、国密类型的`CryptoSuite`。
+Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 
 **创建非国密类型的CryptoSuite的示例如下:**
 
@@ -129,7 +129,7 @@ java sdk目前支持创建非国密、国密类型的`CryptoSuite`。
     签名/验签接口传入的明文数据必须是哈希，生成指定明文的签名前，须计算其哈希，并将哈希结果作为签名原文传入接口生成签名
 ```
 
-### 使用CryptoSuite调用哈希接口
+### 使用CryptoSuite调用签名/验签接口
 
 **非国密签名/验签接口调用示例如下:**
 
@@ -168,13 +168,13 @@ java sdk目前支持创建非国密、国密类型的`CryptoSuite`。
         return cryptoSuite.verify(keyPair.getHexPublicKey(), hashData, signatureResult.convertToString());
     }
     // 入参为byte[]
-    public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, byte[]ß data)
+    public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, byte[] data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
         // 计算data的哈希(keccak256k1哈希算法)
         byte[] hashData = cryptoSuite.hash(data);
         // 验证签名
-        return cryptoSuite.verify(keyPair.getHexPublicKey(), hashData, signatureResult.convertToString());
+        return cryptoSuite.verify(keyPair.getHexPublicKey(), hashData, signatureResult.getSignatureBytes());
     }
 ```
 
@@ -215,7 +215,7 @@ java sdk目前支持创建非国密、国密类型的`CryptoSuite`。
         return cryptoSuite.verify(keyPair.getHexPublicKey(), hashData, signatureResult.convertToString());
     }
     // 入参为byte[]
-    public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, byte[]ß data)
+    public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, byte[] data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
         // 计算data的哈希(sm3哈希算法)
@@ -328,7 +328,7 @@ java sdk目前支持创建非国密、国密类型的`CryptoSuite`。
 
 ### 签名结果类型转换
 
-java sdk提供了将签名结果`SignatureResult`转换为字符串，以及从字符串中构造签名对象`SignatureResult`的功能，示例如下:
+Java SDK提供了将签名结果`SignatureResult`转换为字符串，以及从字符串中构造签名对象`SignatureResult`的功能，示例如下:
 
 ```java
     // 将签名结果转换为字符串

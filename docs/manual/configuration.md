@@ -26,7 +26,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 - `jsonrpc_listen_ip`：RPC监听IP，安全考虑，默认设置为127.0.0.1，若有外网访问需求，请监听**节点外网IP**或`0.0.0.0`；
 
-- `channel_listen_port`: Channel端口，对应到[Web3SDK](../sdk/java_sdk.html#id2)配置中的`channel_listen_port`；
+- `channel_listen_port`: Channel端口，对应到[Java SDK](../sdk/java_sdk.html#id2)配置中的`channel_listen_port`；
 
 - `jsonrpc_listen_port`: JSON-RPC端口。
 

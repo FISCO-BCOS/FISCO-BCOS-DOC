@@ -11,14 +11,20 @@
 ```
 
 FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台的构建文件，这意味着无论您使用什么操作系统工作流都非常相似：
-1. 从[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)克隆代码。
-1. 安装构建工具和依赖包（依赖于平台）。
-1. 运行`cmake`生成构建文件并编译。
+
+1. 从代码仓库克隆代码。
+    - 默认使用github链接[FISCO BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)
+    - 若出现网络问题导致长时间拉取代码失败，可使用gitee连接[FISCO-BCOS](https://gitee.com/FISCO-BCOS/FISCO-BCOS)
+2. 安装构建工具和依赖包（依赖于平台）。
+3. 运行`cmake`生成构建文件并编译。
 
 ## 1. 克隆代码
 
 ```bash
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git -b master
+
+# 若出现网络问题导致长时间拉取代码失败，可执行以下命令：
+git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git -b master
 ```
 
 ## 2. 安装依赖

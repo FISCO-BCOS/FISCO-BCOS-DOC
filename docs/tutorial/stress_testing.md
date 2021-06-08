@@ -1,8 +1,117 @@
-# Caliper压力测试指南
+# 压力测试指南
 
-标签：``压力测试`` ``Caliper``
+标签：``压力测试`` ``Java SDK Demo`` ``Caliper``
 
 ----
+
+## 1. 通过Java SDK进行压力测试
+
+Java SDK Demo是基于Java SDK的基准测试集合，能够对FISCO BCOS节点进行压力测试。Java SDK Demo提供有合约编译功能，能够将Solidity合约文件转换成Java合约文件，此外还提供了针对转账合约、CRUD合约以及AMOP功能的压力测试示例程序。
+
+### 第一步. 安装JDK
+
+  Java SDK Demo中的测试程序能够在部署有JDK 1.8 ~ JDK 14的环境中运行，执行测试程序前请先确保已安装所需版本的JDK。以在Ubuntu系统中安装OpenJDK 11为例：
+
+  ```bash
+  # 安装open JDK 11
+  $ sudo apt install openjdk-11-jdk
+  # 验证Java版本
+  $ java --version
+  # 输出以下内容：
+  # openjdk 11.0.10 2021-01-19
+  # OpenJDK Runtime Environment (build 11.0.10+9-Ubuntu-0ubuntu1.20.04)
+  # OpenJDK 64-Bit Server VM (build 11.0.10+9-Ubuntu-0ubuntu1.20.04, mixed mode, sharing)
+  ```
+
+### 第二步. 编译源码
+
+  ```bash
+  # 下载源码
+  $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
+  $ cd java-sdk-demo
+  # 编译源码
+  $ ./gradlew build 
+  ```
+
+  ```eval_rst
+  .. note::
+
+      当网络无法访问GitHub时，请从https://gitee.com/FISCO-BCOS/java-sdk-demo处下载源码。
+  ```
+
+### 第三步. 配置Demo
+
+  使用Java SDK Demo之前，需要首先要Java SDK，包括证书拷贝以及端口配置，详细请参考[这里](../sdk/java_sdk/quick_start.html)
+
+  ```bash
+  # 拷贝证书(假设SDK证书位于~/fisco/nodes/127.0.0.1/sdk目录，请根据实际情况更改路径)
+  $ cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
+
+  # 拷贝配置文件
+  # 注:
+  #   默认搭建的FISCO BCOS区块链系统Channel端口是20200，若修改了该端口，请同步修改config.toml中的[network.peers]配置选项
+  $ cp conf/config-example.toml conf/config.toml
+  ```
+
+### 第四步. 执行示例压力测试程序
+
+  Java SDK Demo提供了一系列压测程序，包括串行转账合约压测、并行转账合约压测、AMOP压测等，具体使用方法如下：
+
+  ```bash
+  # 进入dist目录
+  $ cd dist
+
+  # 将需要转换为java代码的sol文件拷贝到dist/contracts/solidity路径下
+  # 转换sol, 其中${packageName}是生成的java代码包路径
+  # 生成的java代码位于 /dist/contracts/sdk/java目录下
+  $ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${packageName}
+
+  # 压测串行转账合约:
+  # count: 压测的交易总量
+  # tps: 压测QPS
+  # groupId: 压测的群组ID
+  java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceOk [count] [tps] [groupId]
+
+  # 压测并行转账合约
+  # --------------------------
+  # 基于Solidity并行合约parallelok添加账户:
+  # groupID: 压测的群组ID
+  # count: 压测的交易总量
+  # tps: 压测QPS
+  # file: 保存生成账户的文件名
+  $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [parallelok] [groupID] [add] [count] [tps] [file]
+  # 基于Precompiled并行合约precompiled添加账户
+  # (参数含义同上)
+  java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
+  # --------------------------
+  # 基于Solidity并行合约parallelok发起转账交易压测
+  # groupID: 压测的群组ID
+  # count: 压测的交易总量
+  # tps: 压测的QPS
+  # file: 转账用户文件
+  $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [parallelok] [groupID] [transfer] [count] [tps] [file]
+  # 基于Precompiled并行合约Precompiled发起转账压测
+  $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
+
+
+  # CRUD合约压测
+  # 压测CRUD insert
+  # count: 压测的交易总量
+  # tps: 压测QPS
+  # groupId: 压测群组
+  $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceTable [insert] [count] [tps] [groupId]
+  # 压测CRUD update
+  # (参数解释同上)
+  $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceTable [update] [count] [tps] [groupId]
+  # 压测CRUD remove
+  # (参数解释同上)
+  $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceTable [remove] [count] [tps] [groupId]
+  # 压测CRUD query
+  # (参数解释同上)
+  $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceTable [query] [count] [tps] [groupId]
+  ```
+
+## 2. 通过Caliper进行压力测试程序
 
 ```eval_rst
 .. note::
@@ -11,7 +120,7 @@
     
 ```
 
-## 1. 环境要求
+## 2.1. 环境要求
 
 ### 第一步. 配置基本环境
 
@@ -19,7 +128,7 @@
 - 操作系统版本需要满足以下要求：Ubuntu >= 16.04、CentOS >= 7或MacOS >= 10.14；
 - 部署Caliper的计算机需要安装有以下软件：python 2.7、make、g++、gcc及git。
 
-### 第二步. NodeJS
+### 第二步. 安装NodeJS
 
 - 版本要求：
 
@@ -32,6 +141,10 @@
     ```bash
     # 安装nvm
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+
+    # 若出现因网络问题导致长时间下载失败，可尝试以下命令
+    curl -o- https://gitee.com/mirrors/nvm/raw/v0.33.2/install.sh | bash
+
     # 加载nvm配置
     source ~/.$(basename $SHELL)rc
     # 安装Node.js 8
@@ -126,7 +239,7 @@
     sudo chmod +x /usr/local/bin/docker-compose
     ```
 
-## 2. Caliper部署
+## 2.2. Caliper部署
 
 ### 第一步. 部署
 
@@ -210,6 +323,13 @@ npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 git clone https://github.com/vita-dounai/caliper-benchmarks.git
 ```
 
+**注意** 若出现网络问题导致的长时间拉取代码失败，则尝试以下方式:
+
+```bash
+# 拉取gitee代码
+git clone https://gitee.com/vita-dounai/caliper-benchmarks.git
+```
+
 **执行HelloWorld合约测试**
 
 ```bash
@@ -250,13 +370,13 @@ Options:
 **--caliper-benchconfig**：用于指定测试配置文件，测试配置文件中包含测试的具体参数，如交易的发送方式、发送速率控制器类型、性能监视器类型等；
 **--caliper-networkconfig**：用于指定网络配置文件，网络配置文件中会指定Caliper与受测系统的连接方式及要部署测试的合约等。
 
-## 3. 自定义测试用例
+## 2.3. 自定义测试用例
 
 本节将会以测试HelloWorld合约为例，介绍如何使用Caliper测试自定义的测试用例。
 
 Caliper前后端分离的设计原则使得只要后端的区块链系统开放了相关网络端口，Caliper便可以对该系统进行测试。结合Docker提供的性能数据统计服务或本地的`ps`命令工具，Caliper能够在测试的同时收集节点所在机器上的各种性能数据，包括CPU、内存、网络及磁盘的使用等。尽管Caliper能工作在不使用Docker模式而是使用原生二进制ficos-bcos可执行程序搭建出的链上，但是那样Caliper将无法获知节点所在机器上的资源消耗。因此，在目前的Caliper版本下（v0.2.0），我们推荐使用Docker模式搭链。
 
-### 第一步. 配置Docker Daemon及部署FISCO BCOS网络
+### 配置Docker Daemon及部署FISCO BCOS网络
 
 如果只想基于已经搭建好的链进行测试，可以跳过本小节。
 
@@ -320,7 +440,7 @@ docker -H 192.168.1.1:2375 images
 
 #### 建链
 
-使用[开发部署工具 build_chain.sh](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tools/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
+使用[开发部署工具 build_chain.sh](../manual/build_chain.html)脚本快速建链。本节以4个节点、全连接的形式搭链，但本节所述的测试方法能够推广任意数量节点及任意网络拓扑形式的链。
 
 创建生成节点的配置文件（如一个名为`ipconf`的文件），文件内容如下：
 

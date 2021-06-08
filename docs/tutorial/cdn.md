@@ -15,7 +15,7 @@ FISCO BCOS当前所有仓库源码位于[https://github.com/FISCO-BCOS/FISCO-BCO
 
 ### 二进制程序
 
-FISCO BCOS每个新版本发布会在[GitHub的release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)中提供对应的二进制程序和部署工具，同时在CDN也会提供同样的二进制程序。当前所提供的二进制程序包括：
+FISCO BCOS每个新版本发布会在[GitHub Release](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)或[Gitee Release](https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases)中提供对应的二进制程序和部署工具，同时在CDN也会提供同样的二进制程序。当前所提供的二进制程序包括：
 
 1. fisco-bcos.tar.gz ：静态二进制程序，支持CentOS 7 和Ubuntu 16.04以上版本
 1. fisco-bcos-macOS.tar.gz ：对应macOS系统的二进制程序
