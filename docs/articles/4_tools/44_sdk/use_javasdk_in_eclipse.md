@@ -152,6 +152,8 @@ public class NodeVersionTest {
 
 下载[asset-app](https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz)，下载之后本地解压至指定路径。
 
+[asset-app gitee下载](https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz)
+
 ### 导入工程
 
 打开Eclipse选择: File => Import => Gradle => Existing Gradle Project。

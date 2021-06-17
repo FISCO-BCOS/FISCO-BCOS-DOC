@@ -67,7 +67,7 @@ FISCO BCOS的区块链数据，默认是通过RocksDB保存在磁盘中。如果
 
 FISCO BCOS提供了灵活的数据存储机制，对于追求便利与性能的场景，可以使用默认的RocksDB；对于偏重审计和治理的场景，可以使用MySQL，满足不同的需求。
 
-**关于FISCO BCOS存储，请参考[FISCO BCOS分布式存储文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/distributed_storage.html)**
+**关于FISCO BCOS存储，请参考[FISCO BCOS分布式存储文档](../../../manual/distributed_storage.html)**
 
 ------
 

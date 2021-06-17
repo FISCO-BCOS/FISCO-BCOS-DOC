@@ -160,7 +160,7 @@ FISCO BCOS还提供方案，将历史数据导出到链下数据库进行关联�
 
 [关键概念](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/key_concepts.html)
 
-[以及使用手册](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/index.html)
+[以及使用手册](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/blockchain_dev/index.html)
 
 [FISCO BCOS公众号的开发教程仓库](http://mp.weixin.qq.com/mp/homepage?__biz=MzU5NTg0MjA4MA==&hid=9&sn=7edf9a62a2f45494671c91f0608db903&scene=18#wechat_redirect)
 

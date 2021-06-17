@@ -1,11 +1,15 @@
 # 控制台
 
+标签：``Python SDK`` ``PythonSDK控制台``
+
+----
+
 [Python SDK](https://github.com/FISCO-BCOS/python-sdk)通过`console.py`实现了一个简单的控制台，支持合约操作、账户管理操作等。
 
 ```eval_rst
 .. note::
 
-    - **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Web3SDK <../java_sdk.html>`_
+    - **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Java SDK <../java_sdk/index.html>`_
     - 安装Java版本控制台可参考 `这里 <../../installation.html>`_
     - windows环境下执行console.py请使用 ``.\console.py`` 或者 ``python console.py``
 
@@ -414,7 +418,7 @@ INFO >> setSystemConfigByKey
 
 ## 权限管理
 
-Python SDK提供了权限管理功能，包括授权、撤销权限和列出权限列表等，权限控制的详细内容可参考[这里](../../manual/permission_control.md)。
+Python SDK提供了权限管理功能，包括授权、撤销权限和列出权限列表等，权限控制的详细内容可参考[这里](../../manual/distributed_storage.md)。
 
 ### grantPermissionManager
 将控制权限的功能授权给指定账户：

@@ -1,4 +1,8 @@
-## SDK白名单机制
+## 设置SDK白名单
+
+标签：``SDK访问控制`` ``SDK白名单`` ``SDK白配置`` 
+
+----
 
 FISCO BCOS 2.0开始支持多群组，但没有控制SDK对多群组的访问权限，SDK只要可以与节点建立连接，就可以访问节点的所有群组，会带来安全风险。
 
@@ -29,7 +33,7 @@ FISCO BCOS v2.6.0引入了群组级别的SDK白名单机制，控制SDK对群组
 
 ```bash
 # 设证书已拷贝到SDK，则进入SDK目录，执行如下命令(设sdk位于~/fisco目录)
-$ cd ~/fisco/web3sdk
+$ cd ~/fisco/java-sdk
 
 # 获取国密版SDK公钥
 $ cat dist/conf/sdk.publickey
@@ -67,8 +71,9 @@ $ cat dist/conf/gmsdk.publickey
 ```eval_rst
 .. note::
     旧链节点无 `reload_sdk_allowlist.sh` 脚本，可通过命令 `curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/reload_sdk_allowlist.sh` 下载该脚本。
-```
 
+    - 如果因为网络问题导致长时间无法下载 `reload_sdk_allowlist.sh` 脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/reload_sdk_allowlist.sh`
+```
 
 ### 示例
 

@@ -1,5 +1,8 @@
 # 合约开发样例
 
+标签：``go-sdk`` ``合约开发``
+
+----
 ## 非国密样例
 
 本开发样例使用标准单群组四节点区块链网络结构，搭建请参考：[安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)。
@@ -548,6 +551,7 @@ import (
     "github.com/FISCO-BCOS/go-sdk/conf"
     "github.com/FISCO-BCOS/go-sdk/helloworld"
     "github.com/ethereum/go-ethereum/common"
+    "github.com/FISCO-BCOS/go-sdk/core/types"
 )
 
 func main() {
@@ -562,7 +566,7 @@ func main() {
 	}
 	var contractAddress common.Address
 	var channel = make(chan int, 0)
-	tx, err := AsyncDeployHelloWorld(client.GetTransactOpts(), func(receipt *types.Receipt, err error) {
+	tx, err := helloworld.AsyncDeployHelloWorld(client.GetTransactOpts(), func(receipt *types.Receipt, err error) {
 		if err != nil {
 			fmt.Printf("%v\n", err)
 			return
@@ -573,7 +577,7 @@ func main() {
 	}, client)
 	fmt.Println("transaction hash: ", tx.Hash().Hex())
 	<-channel
-	instance, err := NewHelloWorld(contractAddress, client)
+	instance, err := helloworld.NewHelloWorld(contractAddress, client)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -581,7 +585,7 @@ func main() {
 		fmt.Printf("Deploy failed, err:%v", err)
 		return
 	}
-	hello := &HelloWorldSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
+	hello := &helloworld.HelloWorldSession{Contract: instance, CallOpts: *client.GetCallOpts(), TransactOpts: *client.GetTransactOpts()}
 	ret, err := hello.Get()
 	if err != nil {
 		fmt.Printf("hello.Get() failed: %v", err)

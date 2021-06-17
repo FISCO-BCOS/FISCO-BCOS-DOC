@@ -1,5 +1,8 @@
-# 组员管理
+# 组员节点管理
 
+标签：``节点管理`` ``退出群组`` ``游离节点`` ``观察者节点`` ``共识节点``
+
+----
 FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/security_control/node_management.html#id6)，这三种节点类型可通过控制台相互转换。
 
 * 组员
@@ -10,7 +13,7 @@ FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/sec
 
 ## 操作命令
 
-控制台提供了 **[addSealer](./console.html#addsealer)** 、**[addObserver](./console.html#addobserver)** 和 **[removeNode](./console.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList](./console.html#getsealerlist)**、**[getObserverList](./console.html#getobserverlist)** 和 **[getNodeIDList](./console.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
+控制台提供了 **[addSealer](../console/console_of_java_sdk.html#addsealer)** 、**[addObserver](../console/console_of_java_sdk.html#addobserver)** 和 **[removeNode](../console/console_of_java_sdk.html#removenode)** 三类命令将指定节点转换为共识节点、观察者节点和游离节点，并可使用 **[getSealerList](../console/console_of_java_sdk.html#getsealerlist)**、**[getObserverList](../console/console_of_java_sdk.html#getobserverlist)** 和 **[getNodeIDList](../console/console_of_java_sdk.html#getnodeidlist)** 查看当前组的共识节点列表、观察者节点列表和组内所有节点列表。
 
 - addSealer：根据节点NodeID设置对应节点为共识节点；
 - addObserver：根据节点NodeID设置对应节点为观察节点；

@@ -1,5 +1,8 @@
-# 预编译合约介绍
+# 使用预编译合约
 
+标签：``预编译合约`` ``高性能合约``
+
+----
 
 FISCO BCOS 2.0受以太坊内置合约启发，实现了一套预编译合约框架。未来，我们还会尝试将现有的典型业务场景抽象，开发成预编译合约模板，作为底层提供的基础能力，帮助用户更快的更方便的在业务中使用FISCO BCOS。
 
@@ -33,7 +36,7 @@ call(gasLimit, to, value, inputOffset, inputSize, outputOffset, outputSize)
 
 ![](../../images/articles/pre-compiled_contract_architecture_design/IMG_5429.PNG)
 
-**注：**√ 代表支持，× 代表不支持
+**注：**  √ 代表支持，× 代表不支持
 
 ## FISCO BCOS预编译合约架构
 

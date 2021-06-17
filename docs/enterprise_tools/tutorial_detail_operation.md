@@ -1,8 +1,13 @@
 # 使用运维部署工具
 
+标签：``运维部署工具``
+
+----
 FISCO BCOS运维部署工具面向于真实的多机构生产环境。为了保证机构的密钥安全，运维部署工具提供了一种机构间相互合作部署联盟链方式。
 
 本章以部署**6节点3机构2群组**的组网模式，演示运维部署工具的使用方法。更多参数选项说明请参考[这里](./operation.md)。
+
+本文为在本地服务器部署的操作手册，多机部署，可以参考[这里](../articles/7_community/group_deploy_case.md)
 
 国密部署教程说明请参考[使用运维部署工具部署国密区块链](./tutorial_detail_operation_gm.md)。
 
@@ -13,7 +18,11 @@ FISCO BCOS运维部署工具面向于真实的多机构生产环境。为了保�
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
@@ -466,7 +475,7 @@ cd ~/generator-A
 
 生成机构A所属节点，此命令会根据用户配置的`node_deployment.ini`文件生成相应的节点配置文件夹:
 
-注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的链接信息，多个机构组网的情况下需要将其合并。
+注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的连接信息，多个机构组网的情况下需要将其合并。
 
 ```bash
 ./generator --build_install_package ./meta/peersB.txt ./nodeA
@@ -895,7 +904,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
+此步操作需要重启节点，热更新操作请参考[JSON-RPC API](../api.md##generategroup)
 
 重启机构C节点:
 
@@ -1041,7 +1050,7 @@ info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,n
 
 通过本节教程，我们在本机生成一个网络拓扑结构为3机构2群组6节点的多群组架构联盟链。
 
-如果使用该教程遇到问题，请查看[FAQ](../faq.md)
+如果使用该教程遇到问题，请查看[FAQ](../faq/index.md)
 
 ## 扩展教程2--机构A扩容节点加入群组1
 
@@ -1126,7 +1135,7 @@ cd ~/generator-A
 
 生成机构A所属节点，此命令会根据用户配置的`node_deployment.ini`文件生成相应的节点配置文件夹:
 
-注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的链接信息，多个机构组网的情况下需要将其合并。
+注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的连接信息，多个机构组网的情况下需要将其合并。
 
 合并当前节点的peers.txt
 
@@ -1284,4 +1293,4 @@ info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,n
 
 至此 我们完成了所示构建教程中的所有操作。
 
-如果使用该教程遇到问题，请查看[FAQ](../faq.md)
+如果使用该教程遇到问题，请查看[FAQ](../faq/index.md)

@@ -21,7 +21,7 @@
 
 ### ABI接口说明
 
-ABI是合约接口的说明，内容包括合约的接口列表、接口名称、参数名称、参数类型、返回类型等。这些信息以JSON格式保存，可以在solidity文件编译时由合约编译器生成，[详情请参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id12)。
+ABI是合约接口的说明，内容包括合约的接口列表、接口名称、参数名称、参数类型、返回类型等。这些信息以JSON格式保存，可以在solidity文件编译时由合约编译器生成，[详情请参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id12)。
 
 这里以Asset.sol合约为例:
 
