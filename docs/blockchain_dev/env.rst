@@ -20,6 +20,7 @@
 - 我们支持采用第三方证书部署节点，如有需要请参考 `使用CFCA证书部署节点 <../tutorial/cfca.html>`_ 。
 - `使用MySQL存储引擎 <../tutorial/mysql_node.html>`_ 搭建区块链网络。
 - 搭建 `使用国密算法 <../manual/guomi_crypto.html>`_ 的区块链网络。
+- 搭建 `使用硬件加密模块的国密算法 <../tutorial/use_hsm.html>`_ 的区块链网络。
     
 
 .. toctree::
@@ -38,4 +39,5 @@
    ../tutorial/cfca.md
    ../tutorial/mysql_node.md
    ../manual/guomi_crypto.md
+   ../tutorial/use_hsm.md
   
