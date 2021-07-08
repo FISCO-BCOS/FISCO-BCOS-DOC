@@ -21,3 +21,4 @@
    precompiled.md
    table.md
    compile.md
+   hsm.md
