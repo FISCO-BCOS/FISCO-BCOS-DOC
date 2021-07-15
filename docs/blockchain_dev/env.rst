@@ -40,4 +40,5 @@
    ../tutorial/mysql_node.md
    ../manual/guomi_crypto.md
    ../tutorial/use_hsm.md
+   ../tutorial/add_new_hsm_node.md
   
