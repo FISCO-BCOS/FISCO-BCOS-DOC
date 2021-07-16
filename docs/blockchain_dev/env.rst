@@ -21,6 +21,7 @@
 - `使用MySQL存储引擎 <../tutorial/mysql_node.html>`_ 搭建区块链网络。
 - 搭建 `使用国密算法 <../manual/guomi_crypto.html>`_ 的区块链网络。
 - 搭建 `使用硬件加密模块的国密算法 <../tutorial/use_hsm.html>`_ 的区块链网络。
+- `扩容使用密码机的节点 <../tutorial/add_new_hsm_node.html>`_ 。
     
 
 .. toctree::
