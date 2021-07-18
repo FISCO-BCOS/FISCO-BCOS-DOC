@@ -22,7 +22,7 @@
 - 搭建 `使用国密算法 <../manual/guomi_crypto.html>`_ 的区块链网络。
 - 搭建 `使用硬件加密模块的国密算法 <../tutorial/use_hsm.html>`_ 的区块链网络。
 - `扩容使用密码机的节点 <../tutorial/add_new_hsm_node.html>`_ 。
-- `使用基于硬件加密模块的控制台和Java SDK <../tutorial/add_hsm_java_sdk.html>`_ 。 
+- `使用基于硬件加密模块的控制台和Java SDK <../tutorial/use_hsm_java_sdk.html>`_ 。 
 
 .. toctree::
    :hidden:
@@ -42,5 +42,5 @@
    ../manual/guomi_crypto.md
    ../tutorial/use_hsm.md
    ../tutorial/add_new_hsm_node.md
-   ../tutorial/add_hsm_java_sdk.md
+   ../tutorial/use_hsm_java_sdk.md
   
