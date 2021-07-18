@@ -82,6 +82,15 @@ bash gen_gm_hsm_node_cert.sh  -g nodes/gmcert/agencyA-gm -t internalKey -a 21 -o
 bash gen_gm_hsm_node_cert.sh -g nodes/gmcert/agencyA-gm -t internalKey -a 21 -o node4 -k internalKey -i 31,32 -H 192.168.10.12,10000,XXXXX
 ```
 
+```eval_rst
+.. important::
+    - 使用这个脚本同样可以生成SDK的证书。在以上命令后面加上 -s 即可。
+    bash gen_gm_hsm_node_cert.sh -g nodes/gmcert/agencyA-gm -o sdk -s
+    bash gen_gm_hsm_node_cert.sh  -g nodes/gmcert/agencyA-gm -o sdk  -k internalKey -i 31,32 -H 192.168.10.12,10000,XXXXX -s
+    bash gen_gm_hsm_node_cert.sh  -g nodes/gmcert/agencyA-gm -t internalKey -a 21 -o sdk -H 192.168.10.12,10000,XXXXX -s
+    bash gen_gm_hsm_node_cert.sh -g nodes/gmcert/agencyA-gm -t internalKey -a 21 -o sdk -k internalKey -i 31,32 -H 192.168.10.12,10000,XXXXX -s
+```
+
 
 ### 准备节点配置文件
 
