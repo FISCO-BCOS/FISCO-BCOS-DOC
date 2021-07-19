@@ -381,7 +381,7 @@ contract Test1 {
 }
 
 contract Test2 {
-    //占据1个slot, "gasUsed":188937
+    //占据3个slot, "gasUsed":188937
     struct S {
         bytes31 b31;
         bytes32 b32;

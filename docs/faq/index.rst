@@ -21,3 +21,4 @@
    precompiled.md
    table.md
    compile.md
+   fisco_faq.md
