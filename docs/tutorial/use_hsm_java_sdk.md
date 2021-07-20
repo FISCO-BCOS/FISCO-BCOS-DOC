@@ -121,6 +121,11 @@ password = ""               # If use hardware inner key, please config the key i
 maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
 ```
 
+```eval_rst
+.. note::
+    您在配置文件的[Account]下指定了accountKeyIndex, 那么您在部署合约时将使用该密钥进行签名。因此，不需要手动在控制台生成账户。
+```
+
 最后，运行控制台
 ```
 cd ~/fisco/console/dist
