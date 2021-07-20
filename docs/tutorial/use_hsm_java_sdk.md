@@ -273,6 +273,6 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 ```bash
 cd ~/fisco/java-sdk-demo/dist
 export LD_LIBRARY_PATH=~/.fisco/swssl/lib
-export OPENSSL_CONF=swssl.cnf
+export USE_SWSSL_HSM=true
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
 ```
