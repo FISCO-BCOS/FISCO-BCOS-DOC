@@ -127,15 +127,29 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 ```
 
 最后，运行控制台
-```
+```bash
 cd ~/fisco/console/dist
 export LD_LIBRARY_PATH=~/.fisco/swssl/lib
 export USE_SWSSL_HSM=true
 ./start.sh
 ```
 
-### 配置和运行使用密码机外部密钥的控制台**
-如果你的控制台使用的是外部密钥，那么控制台的配置和使用方式请参考[这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console_of_java_sdk.html#id4)
+### 配置和运行使用密码机外部密钥的控制台
+如果你的控制台使用的是外部密钥
+
+```bash
+mkdir ~/fisco
+cd ~/fisco
+git clone https://github.com/FISCO-BCOS/console.git -b release-2.8.0
+cd console
+# 需要连接fisco-bcos-2.8.0-hsm的节点，控制台也必须使用hsm版的Java SDK（fisco-bcos-java-sdk-2.8.0-hsm.jar）
+./gradlew build -b build-hsm.gradle
+cd dist/
+cp conf/config-example.toml config.toml
+# 将节点sdk目录下的所有文件复制到conf目录下。
+export LD_LIBRARY_PATH=~/.fisco/swssl/lib
+./start.sh
+```
 
 ## 使用基于硬件加密模块的Java SDK Demo。
 
