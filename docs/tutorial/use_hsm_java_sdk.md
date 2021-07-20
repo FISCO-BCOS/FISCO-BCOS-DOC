@@ -130,7 +130,7 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 ```
 cd ~/fisco/console/dist
 export LD_LIBRARY_PATH=~/.fisco/swssl/lib
-export OPENSSL_CONF=swssl.cnf
+export USE_SWSSL_HSM=true
 ./start.sh
 ```
 
