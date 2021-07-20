@@ -140,7 +140,7 @@ export OPENSSL_CONF=swssl.cnf
 mkdir ~/fisco
 cd ~/fisco
 # 下载源码
-git clone https://github.com/FISCO-BCOS/java-sdk-demon -b release-2.8.0
+git clone https://github.com/FISCO-BCOS/java-sdk-demo -b release-2.8.0
 cd java-sdk-demo
 # 编译源码
 ./gradlew build -b build-hsm.gradle
