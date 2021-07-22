@@ -22,3 +22,4 @@
    table.md
    compile.md
    fisco_faq.md
+   hsm.md
