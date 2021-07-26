@@ -115,7 +115,7 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 ------------------
 
 .. admonition:: FISCO BCOS 2.x Releases
-     - `FISCO BCOS v2.7.0 <./2_7_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.8.0>`_]
+     - `FISCO BCOS v2.8.0 <./2_8_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.8.0>`_]
      - `FISCO BCOS v2.7.0 <./2_7_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.7.0>`_]
      - `FISCO BCOS v2.6.0 <./2_6_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.6.0>`_]
      - `FISCO BCOS v2.5.0 <./2_5_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.5.0>`_]
@@ -163,6 +163,7 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 .. toctree::
    :hidden:
 
+   2_8_0.md
    2_7_0.md
    2_6_0.md
    2_5_0.md
