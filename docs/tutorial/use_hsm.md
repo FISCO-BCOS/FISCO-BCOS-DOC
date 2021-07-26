@@ -40,6 +40,7 @@ git checkout -b release-2.8.0 origin/release-2.8.0
 ```bash
 mkdir build && cd build
 cmake .. -DUSE_HSM_SDF=on  # 如果您使用的是Linux X86环境
+cmake3 .. -DUSE_HSM_SDF=on  # 如果您使用的是Linux X86环境
 make -j6
 ```
 ### 第三步. 确认源码版本
@@ -194,7 +195,6 @@ git clone https://github.com/FISCO-BCOS/console.git
 cd console
 git checkout -b release-2.8.0 origin/release-2.8.0
 ./gradlew build -b build-hsm.gradle
-./
 ```
 
 配置控制台
@@ -216,7 +216,7 @@ cd dist && bash start.sh
 
 ```bash
 =============================================================================================
-Welcome to FISCO BCOS console(2.6.0)！
+Welcome to FISCO BCOS console(2.8.0)！
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________  ______   ______    ______    ______         _______    ______    ______    ______
 |        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \

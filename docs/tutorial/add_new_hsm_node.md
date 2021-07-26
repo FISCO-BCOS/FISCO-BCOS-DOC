@@ -85,9 +85,13 @@ bash gen_gm_hsm_node_cert.sh -g nodes/gmcert/agencyA-gm -t internalKey -a 21 -o 
 ```eval_rst
 .. important::
     - 使用这个脚本同样可以生成SDK的证书。在以上命令后面加上 -s 即可。
+
     bash gen_gm_hsm_node_cert.sh -g nodes/gmcert/agencyA-gm -o sdk -s
+
     bash gen_gm_hsm_node_cert.sh  -g nodes/gmcert/agencyA-gm -o sdk  -k internalKey -i 31,32 -H 192.168.10.12,10000,XXXXX -s
+    
     bash gen_gm_hsm_node_cert.sh  -g nodes/gmcert/agencyA-gm -t internalKey -a 21 -o sdk -H 192.168.10.12,10000,XXXXX -s
+    
     bash gen_gm_hsm_node_cert.sh -g nodes/gmcert/agencyA-gm -t internalKey -a 21 -o sdk -k internalKey -i 31,32 -H 192.168.10.12,10000,XXXXX -s
 ```
 
@@ -147,10 +151,10 @@ info|2020-12-22 20:44:56.120799|[P2P][Service] heartBeat,connected count=4
 ### 获取node4的nodeid
 
 ```bash
-cat node4/conf/node.nodeid
+cat node4/conf/gmnode.nodeid
 ```
 
-得到类似下面的字符串就是nodeid，nodeid是节点公钥的16进制表示，国密请执行`cat node4/conf/gmnode.nodeid`
+得到类似下面的字符串就是nodeid
 
 ```bash
 94ae60f93ef9a25a93666e0149b7b4cb0e044a61b7dcd1b00096f2bdb17d1c6853fc81a24e037c9d07803fcaf78f768de2ba56a4f729ef91baeadaa55a8ccd6e
