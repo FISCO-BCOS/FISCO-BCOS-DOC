@@ -134,6 +134,10 @@ export USE_SWSSL_HSM=true
 ./start.sh
 ```
 
+```eval_rst
+.. note::
+    在使用控制台调用listAccount时，只显示软件密钥，暂不显示密码机内部密钥。当你进行权限管理时，你使用的是密码机内部密钥进行权限管理。如果你需要使用软件密钥进行权限管理，则请使用loadAccount进行切换。
+```
 ### 配置和运行使用密码机外部密钥的控制台
 如果你的控制台使用的是外部密钥
 
@@ -167,7 +171,6 @@ cd java-sdk-demo
 
 ```eval_rst
 .. note::
-
     当网络无法访问GitHub时，请从https://gitee.com/FISCO-BCOS/java-sdk-demo处下载源码。
 ```
 
@@ -191,6 +194,7 @@ sdk
 ```
 cp -r sdk/gm ~/fisco/java-sdk-demo/dist/conf/
 cp swsds.ini swsds.cnf ~/fisco/java-sdk-demo/dist/
+sudo cp swsds.ini /etc/
 ```
 
 接着，配置java-sdk-demo，将``config-hsm-example.toml``复制成``config.toml``, 修改配置。
@@ -273,6 +277,7 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 ```bash
 cd ~/fisco/java-sdk-demo/dist
 export LD_LIBRARY_PATH=~/.fisco/swssl/lib
+export OPENSSL_CONF=swssl.cnf
 export USE_SWSSL_HSM=true
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
 ```
