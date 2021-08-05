@@ -87,7 +87,9 @@ Python3.6及以上版本，需安装PyMysql依赖包：
 
 获取部署安装包：
 ```shell
-wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.4/browser-deploy.zip
+
+wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.5/browser-deploy.zip
+
 ```
 解压安装包：
 ```shell
