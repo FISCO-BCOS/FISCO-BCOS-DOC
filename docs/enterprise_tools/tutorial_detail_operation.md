@@ -18,7 +18,11 @@ FISCO BCOS运维部署工具面向于真实的多机构生产环境。为了保�
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
@@ -900,7 +904,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
+此步操作需要重启节点，热更新操作请参考[JSON-RPC API](../api.md##generategroup)
 
 重启机构C节点:
 

@@ -12,7 +12,7 @@ AMOP（Advanced Messages Onchain Protocol）即链上信使协议，旨在为联
 -   安全：AMOP的所有通讯链路使用SSL加密，加密算法可配置,支持身份认证机制。
 -   易用：使用AMOP时，无需在SDK做任何额外配置。
 
-进一步了解 AMOP，请参考：[链上信使协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificate_list.html)。案例源码，请参考：[go-sdk](https://github.com/FISCO-BCOS/go-sdk)
+进一步了解 AMOP，请参考：[链上信使协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/amop_protocol.html)。案例源码，请参考：[go-sdk](https://github.com/FISCO-BCOS/go-sdk)
 
 **初始化**：
 

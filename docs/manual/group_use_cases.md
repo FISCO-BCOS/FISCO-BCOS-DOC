@@ -76,8 +76,14 @@ mkdir -p ~/fisco && cd ~/fisco
 ```
 
 - 获取build_chain.sh脚本
+
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 **生成星形区块链系统配置文件**
@@ -228,7 +234,10 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 $ cd ~/fisco
 
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
 
 # 进入控制台操作目录
 $ cd console
@@ -490,7 +499,11 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+$ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
+
 # 构建本机单群组四节点区块链(生产环境中，建议每个节点部署在不同物理机上)
 $ bash build_chain.sh -l 127.0.0.1:4 -o multi_nodes -p 20000,20100,7545
 Generating CA key...
@@ -612,6 +625,9 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 $ cd ~/fisco
 # 获取控制台
 $ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
 ```
 
 **配置控制台**

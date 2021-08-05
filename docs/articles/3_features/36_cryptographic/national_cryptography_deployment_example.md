@@ -66,6 +66,11 @@ FISCO BCOS为实际项目中部署和使用联盟链提供了企业级部署工�
 
 - 获取企业级部署工具：git clone https://github.com/FISCO-BCOS/generator.git，得到企业级部署工具根目录generator。
 
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载企业级部署工具，请尝试 `git clone https://gitee.com/FISCO-BCOS/generator.git`
+```
+
 - 将generator上传(或直接clone)为/usr/local/rc3-test-BCOS/generator/，以下简称为目录generator。
 
 - 保证generator的操作权限：chmod -R 777 /usr/local/rc3-test-BCOS/generator/

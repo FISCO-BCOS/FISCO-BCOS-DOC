@@ -13,7 +13,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 
 ## 功能介绍
 
-- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh)。
+- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh)，[gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh)。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，支持创建各种复杂业务场景FISCO BCOS链。**`-l`和`-f`选项必须指定一个且不可共存**。
 - 建议测试时使用`-T`，`-T`开启log级别到DEBUG，**p2p模块默认监听 `0.0.0.0`**。
 
@@ -171,7 +171,38 @@ bash build_chain.sh -l 127.0.0.1:2 -g -G
 
 ### **`t`选项[**Optional**]**
 
-该选项用于指定生成证书时的证书配置文件。
+该选项用于指定生成证书时的证书配置文件，当前该选项只对非国密模式生效，配置文件示例如下
+
+```bash
+[ca]
+default_ca=default_ca
+[default_ca]
+default_days = 365
+default_md = sha256
+
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+[req_distinguished_name]
+countryName = CN
+countryName_default = CN
+stateOrProvinceName = State or Province Name (full name)
+stateOrProvinceName_default =GuangDong
+localityName = Locality Name (eg, city)
+localityName_default = ShenZhen
+organizationalUnitName = Organizational Unit Name (eg, section)
+organizationalUnitName_default = fisco-bcos
+commonName =  Organizational  commonName (eg, fisco-bcos)
+commonName_default = fisco-bcos
+commonName_max = 64
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v4_req ]
+basicConstraints = CA:TRUE
+```
 
 ### **`6`选项[**Optional**]**
 
@@ -285,7 +316,7 @@ Usage:
     -m                     Download mini binary, only works with -b option
     -h Help
 e.g
-    ./download_bin.sh -v 2.7.1
+    ./download_bin.sh -v 2.7.2
 ```
 
 
@@ -295,8 +326,8 @@ e.g
 
 **最简单的操作方式是在有外网的Linux机器上使用build_chain建好链，借助-z选项打包，然后拷贝到无外网的机器上运行。**
 
-1. 针对某些场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
-1. 请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新版本的build_chain脚本。
+1. 针对某些场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)或[gitee镜像发布页面](https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
+1. 请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)或[gitee镜像发布页面](https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新版本的build_chain脚本。
 1. 上传fisco-bcos.tar.gz和build_chain.sh到目标服务器，需要注意目标服务器要求64位，要求安装有openssl 1.0.2以上版本。
 1. 解压fisco-bcos.tar.gz得到fisco-bcos可执行文件，作为-e选项的参数。
 1. 构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`）。

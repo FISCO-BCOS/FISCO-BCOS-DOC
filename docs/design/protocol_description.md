@@ -111,8 +111,6 @@ v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组*
 | Seq        | uint32_t     | 数据包序列号，每个数据包自增         |
 | Data       | vector<byte> | 数据本身，长度为lenght-12           |
 
-v2.0.0-rc2以前的P2PMessage定义请[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0-rc3/docs/design/protocol_description.html#p2pmessage-v2-0-0-rc1)
-
 **补充**
 
 1. P2PMessage不限制包大小，由上层调用模块（共识/同步/AMOP等)进行包大小管理；
@@ -121,8 +119,6 @@ v2.0.0-rc2以前的P2PMessage定义请[参考这里](https://fisco-bcos-document
 4. 目前AMOP使用的packetType有`SendTopicSeq = 1，RequestTopics = 2，SendTopics = 3`。
 
 ### ChannelMessage v2
-
-[ChannelMessage v1 请参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/v2.0.0/docs/design/protocol_description.html#channelmessage-v1)
 
 | 字段   | 类型         |长度(Byte)| 描述 |
 | :----- | :----------- |:---| :-------------------|

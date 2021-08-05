@@ -155,6 +155,37 @@ No parameter option. When setting this option, the tar package of node is genera
 ### **`t`option[**Optional**]**
 This option is used to specify the certificate configuration file when certificate is generated.
 
+```bash
+[ca]
+default_ca=default_ca
+[default_ca]
+default_days = 365
+default_md = sha256
+
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+[req_distinguished_name]
+countryName = CN
+countryName_default = CN
+stateOrProvinceName = State or Province Name (full name)
+stateOrProvinceName_default =GuangDong
+localityName = Locality Name (eg, city)
+localityName_default = ShenZhen
+organizationalUnitName = Organizational Unit Name (eg, section)
+organizationalUnitName_default = fisco-bcos
+commonName =  Organizational  commonName (eg, fisco-bcos)
+commonName_default = fisco-bcos
+commonName_max = 64
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v4_req ]
+basicConstraints = CA:TRUE
+```
+
 ### **`6`选项[**Optional**]**
 
 Use IPv6 mode, listen `::`
@@ -397,6 +428,11 @@ bash gen_node_cert.sh -c ../cert/agency -o newSDK -g ../gmcert/agency/ -s
 
 ```bash
 curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_agency_cert.sh`
 ```
 
 2. Generating new agency private key certificates

@@ -15,7 +15,7 @@ Web3SDK要求JDK版本大于等于1.8，推荐使用OracleJDK。
   无法加载到证书文件，证书文件没有正确拷贝至conf目录，可以参考控制台安装流程，拷贝证书文件至conf目录下。<br><br>  
 
 - Failed to initialize the SSLContext: Input stream not contain valid certificates. <br> 
-  加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../manual/console.html#java)章节重新安装OracleJDK。<br><br> 
+  加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../console/console.html?#centosjava)章节重新安装OracleJDK。<br><br> 
 
 - Failed to connect to nodes: [connection timed out: /127.0.0.1:20200]<br>  
   连接超时，节点的网络不可达，请检查提示的IP是否配置错误，或者，当前JavaSDK运行环境与节点的环境网络确实不通，可以咨询运维人员解决网络不通的问题。<br><br> 
@@ -31,7 +31,7 @@ Web3SDK要求JDK版本大于等于1.8，推荐使用OracleJDK。
   与节点ssl握手失败，可能原因：<br>  
   1. 拷贝了错误的证书，检查拷贝的证书是否正确。
   2. 端口配置错误，连接其他服务正在监听的端口，检查连接端口是否为节点`channel_listen_port`端口。
-  3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../manual/console.html#java)章节安装OracleJDK。<br><br> 
+  3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../console/console.html?#centosjava)章节安装OracleJDK。<br><br> 
   
 - Failed to connect to [127.0.0.1:20233, 127.0.0.1:20234, 127.0.0.1:20235] ,groupId: 1 ,caCert: classpath:ca.crt ,sslKey: classpath:sdk.key ,sslCrt: classpath:sdk.crt ,java version: 1.8.0_231.
   其他未知的错误，需要查看日志文件分析具体错误。<br>

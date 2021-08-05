@@ -52,6 +52,9 @@ The execution of the contract rolled back.
 # 199.232.28.133 raw.githubusercontent.com
 curl -LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
 
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+curl -LO https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/solcj/solcJ-all-0.4.25-gm.jar
+
 # 替换非国密的`solc`为国密的solc
 cp solcJ-all-0.4.25-gm.jar lib/ && rm -rf lib/solcJ-all-0.4.25.jar
 
@@ -82,3 +85,64 @@ bash start.sh
 
 正常报错，当被删除的节点不属于群组时，会报出该错误，可通过[getGroupPeers](../console/console_of_java_sdk.html#getgrouppeers)命令确定群组是否在该群组中.
 
+## sol2java.sh报错
+
+**问题描述**
+
+使用脚本sol2java.sh生成java wrapper类时报错: `Unsupported type encountered: tuple`
+
+**答案**
+
+合约的接口参数或者返回值包含struct类型时，sol2java.sh无法将该合约转换生成java wrapper类。
+
+举个例子:
+```shell
+pragma solidity>=0.4.24 <0.6.11;
+pragma experimental ABIEncoderV2;
+
+contract StructSample {
+    struct C {
+        int c;
+    };
+    
+    C c;
+    
+    function setC(C _c) public {
+        c = _c;
+    }
+    
+    function getC() view public returns(C) {
+        return c;
+    }
+}
+```
+
+StructSample合约接口setC参数类型为C，getC返回值类型也为C，使用sol2java.sh转换StructSample合约时提示
+```shell
+$ bash sol2java.sh aa
+Unsupported type encountered: tuple
+```
+
+这个问题会在后续版本解决，用户可以关注后续控制台的更新。
+
+## Permission denied错误
+
+**问题描述**
+
+使用控制台进行操作时，出现`Permission denied`的错误
+
+举个例子:
+```shell
+[group:1]> addObserver 36b58afe86395dd8740967c10557410bc28fb102378b074f8a35651aa963a505330fd17a878f28ec0bef201236fc13d6c85ae87590b240e586cd7ac3fb27950c
+{
+    "code":-50000,
+    "msg":"Permission denied"
+}
+```
+
+**解决方法**
+
+`Permission denied`错误是因为节点开启了权限控制，控制台当前用来发送交易的账户没有权限，参考下面的链接解决:
+[权限控制特性](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/security_control/permission_control.html)
+[控制台加载账户](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#loadaccount)
+[控制台切换账户](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#switchaccount)

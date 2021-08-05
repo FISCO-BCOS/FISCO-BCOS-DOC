@@ -15,6 +15,14 @@ AMOP私有话题的特别之处在于，SDK间需要进行了身份认证，认�
 
 当用户需要订阅私有话题，或者作为消息发布者配置一个私有话题时，可用配置文件进行配置。但AMOP的配置不是必须项，私有话题的订阅和设置，还可以通过调用AMOP的接口实现。以下是AMOP的配置示例，是``test/resource/config-example.toml``配置文件中的一部分。
 
+```eval_rst
+.. important::
+    注意：
+    1. AMOP私有话题目前只支持非国密算法。请使用 `生成公私钥脚本 <./account.md>_ 生成非国密公私钥文件.
+    2. 如果私有话题的发送者和订阅者连接了同一个节点，则被视为是同一个组织的两个SDK，这两个不需要进行私有话题认证流程即可通过该私有话题通信。
+    3. 如果私有话题的两个发送者A1和A2连接了同一个节点Node1，该私有话题的订阅者B连接了Node2，Node1和Node2相连。若A1已经和B完成了私有话题的认证，则A2可以不经过认证，向B发送私有话题消息，因为同机构的A1已经对订阅者B的身份进行了验证。
+```
+
 ```toml
 # AMOP configuration
 # You can use following two methods to configure as a private topic message sender or subscriber.
@@ -61,7 +69,7 @@ AMOP私有话题的特别之处在于，SDK间需要进行了身份认证，认�
    privateKey = "conf/amop/consumer_private_key.p12"
    password = "123456"
    ```
-
+  
    
 
 ## 2. 接口说明
@@ -106,7 +114,7 @@ amop.subscribeTopic("MyTopic", cb);
 **参数：**
 
 * topicName: 话题名称。类型：``String``。
-* privateKeyManager：证明订阅者身份的私钥信息。类型：``KeyManager``。
+* privateKeyTool：证明订阅者身份的私钥信息。类型：``KeyTool``。
 * callback: 处理该话题消息的函数，当收到该话题相关消息时，会被调用。类型：``AmopCallback``。
 
 **例子：**
@@ -127,7 +135,7 @@ AmopCallback cb = new AmopCallback() {
 };
 
 // 加载私钥
-KeyManager km = new P12Manager("private_key.p12", "12s230");
+KeyTool km = new P12KeyStore("private_key.p12", "12s230");
 
 // 订阅话题
 amop.subscribePrivateTopics("MyPrivateTopic", km, cb);
@@ -142,7 +150,7 @@ amop.subscribePrivateTopics("MyPrivateTopic", km, cb);
 **参数：**
 
 * topicName: 话题名称。类型：``String``。
-* publicKeyManagers：指定订阅者的公钥列表。类型：``List<KeyManager>``。
+* publicKeyTools：指定订阅者的公钥列表。类型：``List<KeyTool>``。
 
 **例子**：
 
@@ -152,9 +160,9 @@ BcosSDK sdk = new BcosSDK("config-example.toml");
 Amop amop = sdk.getAmop();
 
 // 加载指定订阅者的私钥列表
-List<KeyManager> publicKeyList = new ArrayList<>();
-KeyManager pubKey1 = new PEMManager("target_subscriber1_public_key.pem");
-KeyManager pubKey2 = new PEMManager("target_subscriber2_public_key.pem");
+List<KeyTool> publicKeyList = new ArrayList<>();
+KeyTool pubKey1 = new PEMKeyStore("target_subscriber1_public_key.pem");
+KeyTool pubKey2 = new PEMKeyStore("target_subscriber2_public_key.pem");
 publicKeyList.add(pubKey1);
 publicKeyList.add(pubKey2);
 
@@ -325,7 +333,7 @@ amop.stop()
 
 ## 3. 示例
 
-更多的示例请看[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/main/java/org/fisco/bcos/sdk/demo/amop/tool``下的代码示范。
+更多的示例请看[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/main/java/org/fisco/bcos/sdk/demo/amop/tool``下的代码示范，链接：[java-sdk-demo GitHub链接](https://github.com/FISCO-BCOS/java-sdk-demo)，[java-sdk-demo Gitee链接](https://gitee.com/FISCO-BCOS/java-sdk-demo)。
 
 * 普通话题代码示例：
 
@@ -833,6 +841,10 @@ amop.stop()
 mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
+
+# 若因为网络问题导致长时间拉取失败，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
+
 cd java-sdk-demo
 # 构建项目
 bash gradlew build
@@ -946,6 +958,10 @@ gradlew.bat build -x test
 cd ~/fisco
 # 获取java-sdk-demo代码
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
+
+# 若因为网络问题导致长时间拉取失败，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
+
 cd java-sdk-demo
 
 # build项目

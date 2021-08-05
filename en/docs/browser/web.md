@@ -32,6 +32,9 @@ Execute command: (when web and server are deployed on the same machine, it only 
 
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
+
+# If you have network issue for exec the command above, please try:
+git clone https://gitee.com/FISCO-BCOS/fisco-bcos-browser.git
 ```
 
 ```shell

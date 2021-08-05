@@ -16,7 +16,8 @@
 
 ```eval_rst
 .. important::
-    前置条件：搭建FISCO BCOS区块链请参考 `开发部署工具 <../manual/build_chain.html>`_ 或 `企业工具 <../enterprise_tools/index.html>`_。
+    前置条件：搭建FISCO BCOS区块链，请参考 `搭建第一个区块链网络 <../installation.html>`_
+    建链工具参考：`开发部署工具 <../manual/build_chain.html>`_ 或 `运维部署工具 <../enterprise_tools/index.html>`_。
 ```
 
 ### 获取控制台
@@ -24,7 +25,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -57,9 +58,16 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/downloa
 **注意：默认下载的控制台内置`0.4.25`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**	
 ```bash	
 # 0.5	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh -v 0.5	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh -v 0.5	
 # 0.6	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh -v 0.6	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh -v 0.6	
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/v2.7.1/tools/download_console.sh && bash download_console.sh -v 0.5` 
+    0.6版本请尝试命令： `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/v2.7.1/tools/download_console.sh && bash download_console.sh -v 0.6`
+
 ```
 
 ### 配置控制台

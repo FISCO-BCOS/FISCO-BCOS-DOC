@@ -16,7 +16,10 @@ sudo apt install -y openssl curl
 # 准备环境
 cd ~ && mkdir -p fisco && cd fisco
 # 下载build_chain.sh脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链
@@ -26,7 +29,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/buil
 # -p指定起始端口，分别是p2p_port,channel_port,jsonrpc_port
 # 根据下面的指令，需要保证机器的30300~30303，20200~20203，8545~8548端口没有被占用
 # -g 搭建国密版本的链
-# -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
+# -G 设置`chain.sm_crypto_channel=true`。确认sdk支持的情况下（Java SDK 以及 Web3sdk v2.5.0+），可以指定-G参数，连接也使用国密SSL
 $ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G
 ```
 
@@ -122,7 +125,7 @@ cmake3 .. -DBUILD_GM=ON
 cmake .. -DBUILD_GM=ON
 ```
 
-其它步骤与标准版Key Manager相同，请参考：[key-manager repository](https://github.com/FISCO-BCOS/key-manager)。
+其它步骤与标准版Key Manager相同，请参考：[key-manager github repository](https://github.com/FISCO-BCOS/key-manager), [key-manager gitee repository](https://gitee.com/FISCO-BCOS/key-manager)。
 
 ### 国密版节点配置
 

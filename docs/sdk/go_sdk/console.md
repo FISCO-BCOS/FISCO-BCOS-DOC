@@ -13,6 +13,10 @@
 ```shell
 # 拉取代码
 git clone https://github.com/FISCO-BCOS/go-sdk.git
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/go-sdk.git
+
 # 切换目录
 cd go-sdk
 # 编译 cmd/console.go

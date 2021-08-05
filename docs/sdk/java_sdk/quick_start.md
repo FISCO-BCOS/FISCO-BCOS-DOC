@@ -68,7 +68,7 @@
 在build.gradle中引入Java SDK
 
 ```
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -77,7 +77,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>2.7.1</version>
+    <version>2.7.2</version>
 </dependency>
 ```
 
@@ -85,7 +85,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
 
 ### 第三步. 配置SDK证书
 
-参考[java sdk证书配置](./configuration.html#id5)。
+参考[Java SDK证书配置](./configuration.html#id5)。
 
 ```eval_rst
 .. note::
@@ -94,7 +94,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.1')
     - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .
 ```
 
-将SDK证书拷贝到java sdk的示例如下(这里假设SDK证书位于`~/fisco/nodes/127.0.0.1/sdk`目录)：
+将SDK证书拷贝到Java SDK的示例如下(这里假设SDK证书位于`~/fisco/nodes/127.0.0.1/sdk`目录)：
 
 ```bash
 # 假设SDK证书位于~/fisco/nodes/127.0.0.1/sdk/目录
@@ -113,7 +113,12 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+# 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+
+$ bash download_console.sh
 $ cd ~/fisco/console
 ```
 
@@ -192,7 +197,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 ### 第六步. 使用Java SDK部署和调用智能合约
 
-以使用java sdk调用群组1的`getBlockNumber`接口获取群组1最新块高，并向群组1部署和调用`HelloWorld`合约为例，对应的示例代码如下：
+以使用Java SDK调用群组1的`getBlockNumber`接口获取群组1最新块高，并向群组1部署和调用`HelloWorld`合约为例，对应的示例代码如下：
 
 ```java
 public class BcosSDKTest
@@ -231,6 +236,10 @@ public class BcosSDKTest
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
 $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
+
+# 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
+$ git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
+
 $ cd java-sdk-demo
 # 编译
 $ ./gradlew clean build -x test
@@ -270,7 +279,7 @@ $ bash sol2java.sh -h
 
 ### 附录三. 使用xml配置进行配置
 
-为了适配更多场景，java sdk支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考java sdk源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
+为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
 
 通过`xml`配置文件初始化`BcosSDK`之前，需要先引入`spring`。
 
@@ -316,4 +325,65 @@ compile spring
 ApplicationContext context =
     new ClassPathXmlApplicationContext("classpath:applicationContext-sample.xml");
 BcosSDK sdk = context.getBean(BcosSDK.class);
+```
+
+### 附录四. 使用`ConfigOption`初始化`BcosSDK`
+
+Java SDK提供了灵活的`BcosSDK`初始化方式，应用除了直接通过`toml`和`xml`直接初始化`BcosSDK`外，还可通过`ConfigProperty`对象加载`ConfigOption`，并使用`ConfigOption`初始化`BcosSDK`。
+
+`ConfigProperty`维护了`key, value`类型配置映射，其核心的数据结构如下：
+
+```java
+public class ConfigProperty {
+    // 证书配置选项，目前主要包括以下几个配置项：
+    // certPath: 证书路径
+    // caCert: CA证书路径
+    // sslCert: SDK证书
+    // sslKey: SDK私钥
+    // enSslCert: 国密SSL的SDK证书
+    // enSslKey: 国密SSL的SDK私钥
+    public Map<String, Object> cryptoMaterial;
+
+    // SDK到节点的网络配置选项，目前包含以下配置选项：
+    // peers: 配置SDK连接的节点列表
+    public Map<String, Object> network;
+
+    // AMOP配置选项，目前包括以下配置项：
+    // topicName: 订阅的AMOP topic
+    // publicKeys: 私有AMOP topic中，定义允许接收本客户端消息的其他客户端的公钥列表，用于进行topic认证
+    // privateKey: 私有AMOP topic中，定义本客户端的私钥，用于进行topic认证
+    // password: 若客户端私钥是p12文件，此配置项定义私钥文件的加载密码
+    public List<AmopTopic> amop;
+
+    // 账户配置项，目前包括以下配置项：
+    // keyStoreDir: 账户私钥保存路径，默认为account
+    // accountFilePath: 从配置文件中加载的账户路劲
+    // accountFileFormat: 账户格式，目前支持pem和p12
+    // accountAddress: 加载的账户地址
+    // password: 加载p12类型账户私钥时，定义访问账户私钥的口令
+    public Map<String, Object> account;
+
+    // 线程池配置项，目前主要包括以下配置项:
+    // channelProcessorThreadSize: 处理channel消息包的线程数目，默认为CPU核心线程数目
+    // receiptProcessorThreadSize: 处理交易回执的线程数目，默认为CPU核心数目
+    public Map<String, Object> threadPool;
+}
+```
+应用可根据实际情况初始化`ConfigProperty`，`ConfigProperty`初始化完毕后，可加载产生`ConfigOption`，示例代码如下：
+
+```java
+// 从ConfigProperty加载ConfigOption
+public ConfigOption loadConfigOption(ConfigProperty configProperty)throws ConfigException
+{
+    return new ConfigOption(configProperty);
+}
+```
+
+初始化`ConfigOption`后，可通过`ConfigOption`创建`BcosSDK`，示例代码如下：
+
+```java
+public BcosSDK createBcosSDK(ConfigOption configOption)throws BcosSDKException
+{
+    return new BcosSDK(configOption);
+}
 ```

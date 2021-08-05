@@ -13,6 +13,11 @@
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
     - 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 开发应用过程中将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``2.6+`` 版本控制台，具体请参考  `这里 <../console/download_console.html>`_ 
 
+.. important::
+    前置条件：搭建FISCO BCOS区块链，请参考 `搭建第一个区块链网络 <../installation.html>`_
+    建链工具参考：`开发部署工具 <../manual/build_chain.html>`_ 或 `运维部署工具 <../enterprise_tools/index.html>`_。
+
+
 .. toctree::
    :maxdepth: 1
 

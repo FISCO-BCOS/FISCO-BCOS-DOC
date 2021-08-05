@@ -10,12 +10,18 @@
 
 本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS运维部署工具一键部署](./tutorial_one_click.md)。
 
+开启使用国密SSL连接，可以在`-g`国密选项开启的情况下，配合`-G`选项开启国密SSL连接特性。
+
 ## 下载安装
 
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
@@ -937,7 +943,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
+此步操作需要重启节点，热更新操作请参考[JSON-RPC API](../api.md##generategroup)
 
 重启机构C节点:
 
@@ -962,7 +968,7 @@ bash ~/generator-C/nodeC/start_all.sh
 国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项 (**默认下载2.6.0+版本控制台不需要额外配**)：
 
 ```bash
-./generator --download_console ./ --cdn
+./generator --download_console ./ -g --cdn
 ```
 
 
