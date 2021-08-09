@@ -1,5 +1,9 @@
 # 极端异常下的共识恢复应急方案
 
+标签：``共识恢复`` ``存活性`` 
+
+----
+
 ```eval_rst
 .. important::
    - 使用此方案之前，请确保您对区块链共识、存储、以及区块链无法篡改特性有深刻理解。该方案所涉及的操作都是高危操作，仅用于发生极端异常情况导致区块链网络无法正常运行时的紧急修复。切勿在其它场合使用，使用不当可能导致数据异常甚至系统异常，请明确知悉，谨慎使用。确定使用该恢复方案之前，建议先对已有数据进行备份。
@@ -159,7 +163,7 @@ bash ./node3/start.sh
 
 **处理步骤**：假设网络中存在A、B、C、D四个共识节点，C、D节点由于某些原因发生崩溃，导致网络无法正常共识打包出块。
 
-1. **获取rocksdb-storage工具**：编译 [FISCO BCOS源码](https://github.com/FISCO-BCOS/FISCO-BCOS) 获取 rocksdb-storage 工具，使用该工具查询、修改 rocksdb 数据库中信息；
+1. **获取rocksdb-storage工具**：编译FISCO BCOS源码，获取 rocksdb-storage 工具，使用该工具查询、修改 rocksdb 数据库中信息；
 2. **关闭节点A和节点B**：为了防止操作数据库给正在运行的网络造成影响，建议先关闭节点A和节点B；
 3. **手动修改节点A和节点B的数据库**：确保A、B、C、D节点块高一致的前提下修改节点A和节点B数据库中 `_sys_consensus_` 表，将节点C和节点D的 type 字段值从 sealer 修改为 observer；
 4. **启动节点A和节点B**：启动节点之后，网络中共识节点只有节点A和节点B，满足 PBFT 共识条件，网络可正常共识打包出块；
@@ -174,7 +178,7 @@ bash ./node3/start.sh
 
 ### 获取rocksdb-storage工具
 
-FISCO BCOS 提供查询、修改 rocksdb 数据库信息的 rocksdb-storage 工具。该工具需要手动编译 [FISCO BCOS源码](https://github.com/FISCO-BCOS/FISCO-BCOS) 获取，编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
+FISCO BCOS 提供查询、修改 rocksdb 数据库信息的 rocksdb-storage 工具。该工具需要手动编译FISCO BCOS源码获取：[FISCO BCOS GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS)或[FISCO BCOS Gitee源码链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS)，编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
 
 ```shell
 #  编译成功后将 rocksdb-storage 工具移动到节点主目录，如 ~/fisco/nodes/127.0.0.1/
@@ -314,7 +318,7 @@ bash ./node3/start.sh
 
 FISCO BCOS 提供 rocksdb-storage 工具帮助用户对 rocksdb 数据库进行常规 CRUD 操作，此外 rocksdb-storage 工具也支持手动创建数据表。
 
-**获取途径**：手动编译 [FISCO BCOS源码](https://github.com/FISCO-BCOS/FISCO-BCOS)。编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
+**获取途径**：手动编译FISCO BCOS源码：[FISCO BCOS GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS)或[FISCO BCOS Gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS)。编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
 
 ### 帮助
 

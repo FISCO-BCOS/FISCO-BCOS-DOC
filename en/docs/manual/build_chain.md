@@ -9,7 +9,8 @@ FISCO BCOS has provided `build_chain` script to help users quickly build FISCO B
 
 ## Script introduction
 
-- `build_chain.sh` is used to quickly generate configuration files of a chain node. For the script that depends on `openssl`, please according your own operating system to install `openssl 1.0.2` version and above. The source code of script is located at [FISCO-BCOS/tools/build_chain.sh][build_chain].
+- `build_chain.sh` is used to quickly generate configuration files of a chain node. For the script that depends on `openssl`, please according your own operating system to install `openssl 1.0.2` version and above. The source code of script is located at [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh).
+
 - For quick experience can use the `-l` option to specify the node IP and number. `-f` option supports the creation of FISCO BCOS chains for complex business scenarios by using a configuration file in a specified format. **`-l` and `-f` options must be specified uniquely and cannot coexist**.
 - It is recommended to use `-T` option for testing. `-T` enables log level to DEBUG, **p2p module listens for `0.0.0.0` by default**.
 
@@ -49,7 +50,7 @@ Usage:
     -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
     -h Help
 e.g
-    ./tools/build_chain.sh -l 127.0.0.1:4
+    ./manual/build_chain.sh -l 127.0.0.1:4
 ```
 
 ## Option introduction
@@ -154,13 +155,44 @@ No parameter option. When setting this option, the tar package of node is genera
 ### **`t`option[**Optional**]**
 This option is used to specify the certificate configuration file when certificate is generated.
 
+```bash
+[ca]
+default_ca=default_ca
+[default_ca]
+default_days = 365
+default_md = sha256
+
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+[req_distinguished_name]
+countryName = CN
+countryName_default = CN
+stateOrProvinceName = State or Province Name (full name)
+stateOrProvinceName_default =GuangDong
+localityName = Locality Name (eg, city)
+localityName_default = ShenZhen
+organizationalUnitName = Organizational Unit Name (eg, section)
+organizationalUnitName_default = fisco-bcos
+commonName =  Organizational  commonName (eg, fisco-bcos)
+commonName_default = fisco-bcos
+commonName_max = 64
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v4_req ]
+basicConstraints = CA:TRUE
+```
+
 ### **`6`选项[**Optional**]**
 
 Use IPv6 mode, listen `::`
 
 ### **`T`option[**Optional**]**
 
-No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](./configuration.html#id6).
+No parameter option. When setting this option, set the log level of node to DEBUG. The related configuration of log [reference here](../manual/configuration.html#id6).
 
 ### **`k`option[**Optional**]**
 Use the private key specified by the user and the certificate issued the agency and node certification. The parameter is the path of ca.crt/ca.key. If the specified private key and certificate are intermediate Ca, root.crt should also be included in this folder to store the upper certificate chain.
@@ -177,13 +209,13 @@ No parameter option. When this option is set, the directory name of the generate
 
 ### **`E`option[**Optional**]**
 
-No parameter option, when setting this option, [Free Storage] (design/virtual_machine/gas.html#evm-gas) Gas mode is enabled, and `Free Storage` Gas mode is disabled by default.
+No parameter option, when setting this option, [Free Storage] (../design/virtual_machine/gas.html#evm-gas) Gas mode is enabled, and `Free Storage` Gas mode is disabled by default.
 
 ## Node file organization
 
 - cert folder stores root certificate and organization certificate of the chain.
 - The folder named by IP address stores the certificate configuration file required by related configuration of all nodes , `fisco-bcos` executable program, and SDK in the server.
-- The `node*` folder under each IP folder stores configuration file required by the node. `config.ini` is the main configuration of node. In `conf` directory, to store certificate files and group related configurations. For the configuration detail, please refer to [here](configuration.md). Each node provides two scripts which are used to start and stop the node.
+- The `node*` folder under each IP folder stores configuration file required by the node. `config.ini` is the main configuration of node. In `conf` directory, to store certificate files and group related configurations. For the configuration detail, please refer to [here](../manual/configuration.md). Each node provides two scripts which are used to start and stop the node.
 - Under each IP folder, two scripts providing `start_all.sh` and `stop_all.sh` are used to start and stop all nodes.
 
 ```bash
@@ -261,7 +293,7 @@ Usage:
     -m                     Download mini binary, only works with -b option
     -h Help
 e.g
-    ./download_bin.sh -v 2.6.0
+    ./download_bin.sh -v 2.7.1
 ```
 
 
@@ -356,7 +388,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
     ```
 
 4. Start node, use `newNode/start.sh`
-5. Add new nodes to group 1 through console, refer to [here](./console.html#addsealer) and [here](./node_management.html#id7)
+5. Add new nodes to group 1 through console, refer to [here](../console/console.html#addsealer) and [here](./node_management.html#id7)
 
 #### Start a new node, check links and consensus
 
@@ -398,6 +430,11 @@ bash gen_node_cert.sh -c ../cert/agency -o newSDK -g ../gmcert/agency/ -s
 curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
 ```
 
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_agency_cert.sh`
+```
+
 2. Generating new agency private key certificates
 
 ```bash
@@ -417,5 +454,5 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 
 Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
 
-[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh
 

@@ -2,6 +2,171 @@
 
 The following examples in this chapter adopt the [curl](https://curl.haxx.se/) command, which is a data transfer tool that runs the command line by the URL language. JSON-RPC API of FISCO BCOS can be accessed by sending HTTP post request through curl commands. The URL address of the curl command is set as `[jsonrpc_listen_ip]`(If the node is less than v2.3.0, set as the configuration item `listen_ip`) and `[jsonrpc listen port]` of `[rpc]` in a node config file. To format the json data, [jq](https://stedolan.github.io/jq/) is used as a formatter. For the error codes, please check the [RPC Design Documentation](design/rpc.html#json-rpc). For the transaction receipt status, please check [here](./api.html#transaction-receipt-status-list).
 
+## Error codes
+
+### RPC error code
+
+When a rpc call is made, the Server will reply with a response, which contains error result field, which includes as follows:
+
+- code: A Number that indicates the error type that occurred.
+- message: A String providing a short description of the error.
+- data: A Primitive or Structured value that contains additional information about the error. This may be omitted.
+
+There are 2 types of error code: JSON-RPC standard error code and FISCO BCOS RPC error code.
+
+#### JSON-RPC standard error code
+
+Standard error codes and their corresponding meanings are as follows:
+
+| code   | message              | definition                       |
+| :----- | :------------------- | :------------------------- |
+| -32600 | INVALID_JSON_REQUEST | send invalid request object         |
+| -32601 | METHOD_NOT_FOUND     | method not exist or valid         |
+| -32602 | INVALID_PARAMS       | invalid method parameter             |
+| -32603 | INTERNAL_ERROR       | internal call error               |
+| -32604 | PROCEDURE_IS_METHOD  | internal error; ID field not provided in the request |
+| -32700 | JSON_PARSE_ERROR     | json received by server fails to be parsed |
+
+#### FISCO BCOS RPC error code
+
+FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
+
+| code  | message                                                      | definition                                        |
+| :---- | :----------------------------------------------------------- | :------------------------------------------ |
+| -40001 | GroupID does not exist                                       | GroupID does not exist                               |
+| -40002 | Response json parse error                                    | json acquired by JSON RPC parses error             |
+| -40003 | BlockHash does not exist                                     | block hash doesn't exist                              |
+| -40004 | BlockNumber does not exist                                   | block number doesn't exist     |
+| -40005 | TransactionIndex is out of range                             | transaction index is out of range                           |
+| -40006 | Call needs a 'from' field                                    | call needs a 'from' field                   |
+| -40007 | Only pbft consensus supports the view property               | getPbftView interface; only pbft consensus supports the view property |
+| -40008 | Invalid System Config                                        | getSystemConfigByKey interface, inquire invalid key    |
+| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | invalid request from non-group-member node                  |
+| -40010 | RPC module initialization is incomplete                                    | RPC module initialization is incomplete     |
+| -40011 | Over QPS limit                                       | The request rate from the SDK to the node exceeds the request rate limit of the node     |
+| -40012 |  The SDK is not allowed to access this group| SDK does not have permission to access the group|
+
+## Transaction receipt status list
+
+|status (decimal/hexadecimal)  |message   |definition  |
+|:----|:-----|:----|
+|0(0x0)  |None |normal |
+|1(0x1)  |Unknown |unknown exception |
+|2(0x2)  |BadRLP|invalid RLP exception |
+|3(0x3)  |InvalidFormat |invalid format exception |
+|4(0x4)  |OutOfGasIntrinsic |contract to deploy is too long / input data is too long |
+|5(0x5)  |InvalidSignature |invalid signature exception |
+|6(0x6)  |InvalidNonce |invalid nonce exception |
+|7(0x7)  |NotEnoughCash |not-enough cash exception |
+|8(0x8)  |OutOfGasBase |input data is too long (RC version) |
+|9(0x9)  |BlockGasLimitReached|GasLimit exception |
+|10(0xa)  |BadInstruction |wrong instruction exception |
+|11(0xb)  |BadJumpDestination |wrong jump destination exception |
+|12(0xc)  |OutOfGas |out-of-gas during EVM execution / contract to deploy exceeds max contract length |
+|13(0xd)  |OutOfStack |out-of-stack exception |
+|14(0xe)  |StackUnderflow |Stack under flow exception |
+|15(0xf)  |NonceCheckFail |nonce check fail exception |
+|16(0x10)  |BlockLimitCheckFail |blocklimit check fail exception |
+|17(0x11)  |FilterCheckFail |filter check fail exception |
+|18(0x12)  |NoDeployPermission |deploy contract with no permission |
+|19(0x13)  |NoCallPermission |call contract with no permission |
+|20(0x14)  |NoTxPermission |transaction with no permission |
+|21(0x15)  |PrecompiledError|precompiled error exception |
+|22(0x16)  |RevertInstruction |revert instruction exception |
+|23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
+|24(0x18)  |AddressAlreadyUsed |address is already used |
+|25(0x19)  |PermissionDenied |no permission |
+|26(0x1a)  |CallAddressError | contract address not exist |
+|27(0x1b)  |GasOverflow | gas overflowed error  |
+|28(0x1c)  |TxPoolIsFull | transaction is full |
+|29(0x1d)  |TransactionRefused | transaction is refused |
+|30(0x1e)  |ContractFrozen | frozen contract exception |
+|31(0x1f)  |AccountFrozen | frozen account exception |
+|10000(0x2710)  |AlreadyKnown | transaction is already known |
+|10001(0x2711)  |AlreadyInChain | transaction is already in chain |
+|10002(0x2712)  |InvalidChainId | invalid chain id exception |
+|10003(0x2713)  |InvalidGroupId  | invalid group id exception |
+|10004(0x2714)  |RequestNotBelongToTheGroup | request doesn't belong to the group exception |
+|10005(0x2715)  |MalformedTx | malformed transaction error |
+|10006(0x2716)  |OverGroupMemoryLimit | memory is over group memory limit exception |
+
+### Precompiled Service API error code
+
+| error code | message                                        | Remarks |
+| :----- | :---------------------------------------------- | :-----   |
+| 0      | success                                         |          |
+| -50000  | permission denied                               |          |
+| -50001  | table name already exist                        |          |
+| -50002  | table name length is overflowed                 |          |
+| -50003  | table name field length is overflowed           |          |
+| -50004  | table name field total length is overflowed     |          |
+| -50005  | table key value length is overflowed            |          |
+| -50006  | table field value length is overflowed          |          |
+| -50007  | table field is duplicated                       |          |
+| -50008  | table field is invalidate                       |          |
+| -50100  | table does not exist                            |          |
+| -50101  | unknown function call                            |          |
+| -50102  | address invalid                                 |          |
+| -51002  | table name overflow                             |          |
+| -51003  | contract not exist                              |          |
+| -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
+| -51100  | invalid node ID                                 |SDK Error Code |
+| -51101  | the last sealer cannot be removed               |          |
+| -51102  | the node is not reachable                       |SDK Error Code |
+| -51103  | the node is not a group peer                    |SDK Error Code |
+| -51104  | the node is already in the sealer list          |SDK Error Code |
+| -51105  | the node is already in the observer list        |SDK Error Code |
+| -51200  | contract name and version already exist         |SDK Error Code |
+| -51201  | version length exceeds the maximum limit|SDK Error Code |
+| -51300  | invalid configuration entry                     |          |
+| -51500  | entry parse error                               |          |
+| -51501  | condition parse error                           |          |
+| -51502  | condition operation undefined                   |          |
+| -51600  | invalid ciphers                                 |          |
+| -51700  | group sig failed                                |          |
+| -51800  | ring sig failed                                 |          |
+| -51900  | contract frozen                              |          |
+| -51901  | contract available                              |          |
+| -51902  | contract repeat authorization                   |          |
+| -51903  | invalid contract address                    |          |
+| -51904  | table not exist                    |          |
+| -51905  | no authorized                  |          |
+| -52000  | committee member exist                    |          |
+| -52001  | committee member not exist                |          |
+| -52002  | invalid request permission denied         |          |
+| -52003  | invalid threshold                    |          |
+| -52004  | operator can't be committee member                    |          |
+| -52005  | committee member can't be operator                    |          |
+| -52006  | operator exist                    |          |
+| -52007  | operator not exist                    |          |
+| -52008  | account not exist                    |          |
+| -52009  | invalid account address                    |          |
+| -52010  | account already available                   |          |
+| -52011  | account frozen                    |          |
+| -52012  | current value is expected value              |          |
+
+### Dynamice group management API status code
+
+| status code | message                      | definition                                           |
+| :---------- | :--------------------------- | :--------------------------------------------------- |
+| 0x0         | SUCCESS                      | Success                                              |
+| 0x1         | INTERNAL_ERROR               | Internal error                                       |
+| 0x2         | GROUP_ALREADY_EXISTS         | The group already existed when calling generateGroup |
+| 0x3         | GROUP_ALREADY_RUNNING        | The group already run when calling startGroup        |
+| 0x4         | GROUP_ALREADY_STOPPED        | The group already stopppd when calling stopGroup     |
+| 0x5         | GROUP_ALREADY_DELETED        | The group already deleted when calling removeGroup   |
+| 0x6         | GROUP_NOT_FOUND              | The group not exists                                 |
+| 0x7         | INVALID_PARAMS               | Parameters are illegal                               |
+| 0x8         | PEERS_NOT_CONNECTED          | No valid P2P connections between sealers             |
+| 0x9         | GENESIS_CONF_ALREADY_EXISTS  | Configuration of genesis block already existed       |
+| 0xa         | GROUP_CONF_ALREADY_EXIST     | Configuration of group already existed               |
+| 0xb         | GENESIS_CONF_NOT_FOUND       | Configuration of genesis block not found             |
+| 0xc         | GROUP_CONF_NOT_FOUND         | Configuration of group not found                     |
+| 0xd         | GROUP_IS_STOPPING            | The group is stopping                                |
+| 0xf         | GROUP_NOT_DELETED            | The group hasn't been deleted when call recoverGroup |
+
 ## getClientVersion
 Returns the current node version.
 ### Parameters
@@ -441,6 +606,7 @@ Returns information about a block by hash.
 - `includeTransactions`: `bool` - If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
 ### Returns
 - `object` - A block object:
+     - `dbHash`: `string` - hash that records transaction data changes
     - `extraData`: `array` - extra data
     - `gasLimit`: `string` - the maximum gas allowed in block
     - `gasUsed`: `string` - gas used by all transactions
@@ -448,85 +614,103 @@ Returns information about a block by hash.
     - `logsBloom`: `string` - bloom filter value of log
     - `number`: `string` - block height
     - `parentHash`: `string` - hash of parent block
+    - `receiptsRoot`: `string` - the merkle root of all transaction receipts in the block
     - `sealer`: `string` - consensus node sequence number
     - `sealerList`: `array` - consensus nodes list
     - `stateRoot`: `string` - hash of state root
     - `timestamp`: `string` - time stamp
+    - `signatureList`: `string` - PBFT consensus signature list
     - `transactions`: `array` - transaction list, when `includeTransactions` is `false`, it shows the hash of transaction; when `includeTransactions` is `true`, it shows transaction details (detail fields please check [getTransactionByHash](./api.html#gettransactionbyhash))
+     - `transactionsRoot`: `string` - The merkle root of all transactions in the block
 
 - Example
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",true],"id":1}' http://127.0.0.1:8545 |jq
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",true],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
   "id": 1,
   "jsonrpc": "2.0",
   "result": {
+    "dbHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": [],
     "gasLimit": "0x0",
     "gasUsed": "0x0",
-    "hash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+    "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "number": "0x1",
-    "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-    "sealer": "0x3",
-    "sealerList":[
-    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
+    "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer": "0x0",
+    "sealerList": [
+      "4ca3a91a4937355dba6a2e5fe76141479a1fc44e9caa86750092dab64e0b8382f6b8476749c2d2de414350a54491620d38813d2a1442f524e36e3d9946109c4d"
     ],
-    "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
-    "timestamp": "0x1687e801d99",
+    "signatureList": [
+      {
+        "index": "0x0",
+        "signature": "0x4602135870d9a4846e2536d4a48e831825a5d95768dd0d4f08544a0bd4c2af41242dec1751a05c07d7572027f8d6ac1625c48145beb004e2dce8b7ce9e2bb73d00"
+      }
+    ],
+    "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x175ac38cf10",
     "transactions": [
       {
-        "blockHash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+        "blockHash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
+        "blockLimit": "0x100",
         "blockNumber": "0x1",
-        "from": "0xadf06b974703a1c25c621ce53676826198d4b046",
-        "gas": "0x1c9c380",
-        "gasPrice": "0x1",
-        "hash": "0x022dcb1ad2d940ce7b2131750f7458eb8ace879d129ee5b650b84467cb2184d7",
-        "input": "0x608060405234801561001057600080fd5b5060016000800160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506402540be40060006001018190555060028060000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060006002600101819055506103bf806100c26000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100515780636d4ce63c1461007e575b600080fd5b34801561005d57600080fd5b5061007c600480360381019080803590602001909291905050506100a9565b005b34801561008a57600080fd5b506100936102e1565b6040518082815260200191505060405180910390f35b8060006001015410806100c757506002600101548160026001015401105b156100d1576102de565b8060006001015403600060010181905550806002600101600082825401925050819055507fc77b710b83d1dc3f3fafeccd08a6c469beb873b2f0975b50d1698e46b3ee5b4c816040518082815260200191505060405180910390a160046080604051908101604052806040805190810160405280600881526020017f323031373034313300000000000000000000000000000000000000000000000081525081526020016000800160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001838152509080600181540180825580915050906001820390600052602060002090600402016000909192909190915060008201518160000190805190602001906102419291906102ee565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b6000600260010154905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061032f57805160ff191683800117855561035d565b8280016001018555821561035d579182015b8281111561035c578251825591602001919060010190610341565b5b50905061036a919061036e565b5090565b61039091905b8082111561038c576000816000905550600101610374565b5090565b905600a165627a7a72305820fb983c66bee66788f407721b23b10a8aae3dc9ef8f1b09e08ec6a6c0b0ec70100029",
-        "nonce": "0x1a9d06264238ea69c1bca2a74cfced979d6b6a66ce8ad6f5a30e8017b5a98d8",
-        "to": null,
+        "chainId": "0x1",
+        "extraData": "0x",
+        "from": "0x57c7be32cbfb3bfed4fddc87efcc735b4e945fb3",
+        "gas": "0x2faf080",
+        "gasPrice": "0xa",
+        "groupId": "0x1",
+        "hash": "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d",
+        "input": "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a464953434f2042434f5300000000000000000000000000000000000000000000",
+        "nonce": "0x3eb675ec791c2d19858c91d0046821c27d815e2e9c151604912205000002968",
+        "signature": {
+          "r": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd",
+          "s": "0x2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf",
+          "signature": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf00",
+          "v": "0x0"
+        },
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
         "transactionIndex": "0x0",
         "value": "0x0"
       }
     ],
-    "transactionsRoot": "0x07506c27626365c4f0db788619a96df1e6f8f62c583f158192700e08c10fec6a"
+    "transactionsRoot": "0xb880b08df3b43a9ffc334d7a526522b33e004ef95403d61d76454b6085b9b2f1"
   }
 }
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",false],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",false],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
   "id": 1,
   "jsonrpc": "2.0",
   "result": {
+    "dbHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": [],
     "gasLimit": "0x0",
     "gasUsed": "0x0",
-    "hash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+    "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "number": "0x1",
-    "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-    "sealer": "0x3",
-    "sealerList":[
-    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
+    "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer": "0x0",
+    "sealerList": [
+      "4ca3a91a4937355dba6a2e5fe76141479a1fc44e9caa86750092dab64e0b8382f6b8476749c2d2de414350a54491620d38813d2a1442f524e36e3d9946109c4d"
     ],
-    "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
-    "timestamp": "0x1687e801d99",
+    "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x175ac38cf10",
     "transactions": [
-      "0x022dcb1ad2d940ce7b2131750f7458eb8ace879d129ee5b650b84467cb2184d7"
+      "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d"
     ],
-    "transactionsRoot": "0x07506c27626365c4f0db788619a96df1e6f8f62c583f158192700e08c10fec6a"
+    "transactionsRoot": "0xb880b08df3b43a9ffc334d7a526522b33e004ef95403d61d76454b6085b9b2f1"
   }
 }
 ```
@@ -572,7 +756,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHeaderByHash","params":[
     "gasUsed": "0x0",
     "hash": "0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x2",
@@ -648,6 +832,10 @@ Returns the information about a transaction by transaction hash.
 ### Returns
 - `object`: - A transaction object:
     - `blockHash`: `string` - hash of the block where this transaction was in.
+    - `blockLimit`: `string` - the `blockLimit` of the transaction, used to prevent duplication of transactions
+    - `chainId`:  `string` - Chain ID where the transaction is located
+    - `extraData`: `string` - ExtraData in the transaction
+    - `groupId`:  `string` - Group ID where the transaction is located
     - `blockNumber`: `string` -  block number where this transaction was in.
     - `from`: `string` - address of the sender
     - `gas`: `string` - gas provided by the sender
@@ -655,31 +843,42 @@ Returns the information about a transaction by transaction hash.
     - `hash`: `string` - hash of the transaction
     - `input`: `string` - the data send along with the transaction
     - `nonce`: `string` - the number of transactions made by the sender prior to this one
+    - `signature`: transaction signature, including `r`, `s`, `v` and serialized transaction signature `signature`
     - `to`: `string` - address of the receiver, `0x0000000000000000000000000000000000000000` when its a contract creation transaction`
     - `transactionIndex`: `string` - integer of the transaction's index position in the block
     - `value`: `string` - value transferred
 - Example
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
-{
-    "id": 1,
-    "jsonrpc": "2.0",
-    "result": {
-        "blockHash": "0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa",
-        "blockNumber": "0x1",
-        "from": "0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102",
-        "gas": "0x9184e729fff",
-        "gasPrice": "0x174876e7ff",
-        "hash": "0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f",
-        "input": "0x48f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a37",
-        "nonce": "0x65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f",
-        "to": "0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d",
-        "transactionIndex": "0x0",
-        "value": "0x0"
-    }
+ {
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockHash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
+    "blockLimit": "0x100",
+    "blockNumber": "0x1",
+    "chainId": "0x1",
+    "extraData": "0x",
+    "from": "0x57c7be32cbfb3bfed4fddc87efcc735b4e945fb3",
+    "gas": "0x2faf080",
+    "gasPrice": "0xa",
+    "groupId": "0x1",
+    "hash": "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d",
+    "input": "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a464953434f2042434f5300000000000000000000000000000000000000000000",
+    "nonce": "0x3eb675ec791c2d19858c91d0046821c27d815e2e9c151604912205000002968",
+    "signature": {
+      "r": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd",
+      "s": "0x2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf",
+      "signature": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf00",
+      "v": "0x0"
+    },
+    "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+    "transactionIndex": "0x0",
+    "value": "0x0"
+  }
 }
 ```
 ## getTransactionByBlockHashAndIndex
@@ -1303,167 +1502,178 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"queryGroupStatus","params":[2],"
 
 ```
 
-## Error codes
 
-### RPC error code
+## getNodeInfo
 
-When a rpc call is made, the Server will reply with a response, which contains error result field, which includes as follows:
+Get the NodeID, Topic and other information of the requested node
 
-- code: A Number that indicates the error type that occurred.
-- message: A String providing a short description of the error.
-- data: A Primitive or Structured value that contains additional information about the error. This may be omitted.
+#### **Parameters**
 
-There are 2 types of error code: JSON-RPC standard error code and FISCO BCOS RPC error code.
+- 无
 
-#### JSON-RPC standard error code
+#### **Returns**
 
-Standard error codes and their corresponding meanings are as follows:
+- NodeInfo: Get node information, including the agency where the node is located, the node name, the NodeID, and the topic subscribed by the node
 
-| code   | message              | definition                       |
-| :----- | :------------------- | :------------------------- |
-| -32600 | INVALID_JSON_REQUEST | send invalid request object         |
-| -32601 | METHOD_NOT_FOUND     | method not exist or valid         |
-| -32602 | INVALID_PARAMS       | invalid method parameter             |
-| -32603 | INTERNAL_ERROR       | internal call error               |
-| -32604 | PROCEDURE_IS_METHOD  | internal error; ID field not provided in the request |
-| -32700 | JSON_PARSE_ERROR     | json received by server fails to be parsed |
+- Example:
 
-#### FISCO BCOS RPC error code
+```shell
+curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeInfo","params":[],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "Agency": "agency",
+    "IPAndPort": "0.0.0.0:30300",
+    "Node": "node1",
+    "NodeID": "2263a586cba1c1b8419f0dd9e623c7db79b2ba9127367aa854b1493e218efaa2ef58b08de1b36defdeb1d407449014e29cf8b4f457c7f7be7331d381362eb74e",
+    "Topic": []
+  }
+}
+```
 
-FISCO BCOS RPC  error codes and their corresponding meanings are as follows:
+## getBatchReceiptsByBlockNumberAndRange
 
-| code  | message                                                      | definition                                        |
-| :---- | :----------------------------------------------------------- | :------------------------------------------ |
-| -40001 | GroupID does not exist                                       | GroupID does not exist                               |
-| -40002 | Response json parse error                                    | json acquired by JSON RPC parses error             |
-| -40003 | BlockHash does not exist                                     | block hash doesn't exist                              |
-| -40004 | BlockNumber does not exist                                   | block number doesn't exist     |
-| -40005 | TransactionIndex is out of range                             | transaction index is out of range                           |
-| -40006 | Call needs a 'from' field                                    | call needs a 'from' field                   |
-| -40007 | Only pbft consensus supports the view property               | getPbftView interface; only pbft consensus supports the view property |
-| -40008 | Invalid System Config                                        | getSystemConfigByKey interface, inquire invalid key    |
-| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | invalid request from non-group-member node                  |
-| -40010 | RPC module initialization is incomplete                                    | RPC module initialization is incomplete     |
-| -40011 | Over QPS limit                                       | The request rate from the SDK to the node exceeds the request rate limit of the node     |
-| -40012 |  The SDK is not allowed to access this group| SDK does not have permission to access the group|
+According to the block number and transaction range, batch return the transaction receipt information of the specified group.
 
-## Transaction receipt status list
+#### **Parameters**
 
-|status (decimal/hexadecimal)  |message   |definition  |
-|:----|:-----|:----|
-|0(0x0)  |None |normal |
-|1(0x1)  |Unknown |unknown exception |
-|2(0x2)  |BadRLP|invalid RLP exception |
-|3(0x3)  |InvalidFormat |invalid format exception |
-|4(0x4)  |OutOfGasIntrinsic |contract to deploy is too long / input data is too long |
-|5(0x5)  |InvalidSignature |invalid signature exception |
-|6(0x6)  |InvalidNonce |invalid nonce exception |
-|7(0x7)  |NotEnoughCash |not-enough cash exception |
-|8(0x8)  |OutOfGasBase |input data is too long (RC version) |
-|9(0x9)  |BlockGasLimitReached|GasLimit exception |
-|10(0xa)  |BadInstruction |wrong instruction exception |
-|11(0xb)  |BadJumpDestination |wrong jump destination exception |
-|12(0xc)  |OutOfGas |out-of-gas during EVM execution / contract to deploy exceeds max contract length |
-|13(0xd)  |OutOfStack |out-of-stack exception |
-|14(0xe)  |StackUnderflow |Stack under flow exception |
-|15(0xf)  |NonceCheckFail |nonce check fail exception |
-|16(0x10)  |BlockLimitCheckFail |blocklimit check fail exception |
-|17(0x11)  |FilterCheckFail |filter check fail exception |
-|18(0x12)  |NoDeployPermission |deploy contract with no permission |
-|19(0x13)  |NoCallPermission |call contract with no permission |
-|20(0x14)  |NoTxPermission |transaction with no permission |
-|21(0x15)  |PrecompiledError|precompiled error exception |
-|22(0x16)  |RevertInstruction |revert instruction exception |
-|23(0x17)  |InvalidZeroSignatureFormat |invalid signature format |
-|24(0x18)  |AddressAlreadyUsed |address is already used |
-|25(0x19)  |PermissionDenied |no permission |
-|26(0x1a)  |CallAddressError | contract address not exist |
-|27(0x1b)  |GasOverflow | gas overflowed error  |
-|28(0x1c)  |TxPoolIsFull | transaction is full |
-|29(0x1d)  |TransactionRefused | transaction is refused |
-|30(0x1e)  |ContractFrozen | frozen contract exception |
-|31(0x1f)  |AccountFrozen | frozen account exception |
-|10000(0x2710)  |AlreadyKnown | transaction is already known |
-|10001(0x2711)  |AlreadyInChain | transaction is already in chain |
-|10002(0x2712)  |InvalidChainId | invalid chain id exception |
-|10003(0x2713)  |InvalidGroupId  | invalid group id exception |
-|10004(0x2714)  |RequestNotBelongToTheGroup | request doesn't belong to the group exception |
-|10005(0x2715)  |MalformedTx | malformed transaction error |
-|10006(0x2716)  |OverGroupMemoryLimit | memory is over group memory limit exception |
+- `groupID`: Group ID
+- `blockNumber`: The height of the block where the requested receipt information is located
+- `from`: The start index of the receipt to be obtained
+- `count`: The number of receipts that need to be obtained in batches. When set to -1, return all receipt information in the block
+- `compressFlag`: Compression flag. When set to false, the batch transaction receipt information is returned in plain text; when set to true, the batch transaction receipt information is compressed in zlib format, and the compressed receipt information is returned in Base64 encoded format.
 
-### Precompiled Service API error code
+#### **Returns**
 
-| error code | message                                        | Remarks |
-| :----- | :---------------------------------------------- | :-----   |
-| 0      | success                                         |          |
-| -50000  | permission denied                               |          |
-| -50001  | table name already exist                        |          |
-| -50002  | table name length is overflowed                 |          |
-| -50003  | table name field length is overflowed           |          |
-| -50004  | table name field total length is overflowed     |          |
-| -50005  | table key value length is overflowed            |          |
-| -50006  | table field value length is overflowed          |          |
-| -50007  | table field is duplicated                       |          |
-| -50008  | table field is invalidate                       |          |
-| -50100  | table does not exist                            |          |
-| -50101  | unknown function call                            |          |
-| -50102  | address invalid                                 |          |
-| -51002  | table name overflow                             |          |
-| -51003  | contract not exist                              |          |
-| -51004  | committee member permission managed by ChainGovernance           |          |
-| -51000  | table name or address already exist            |          |
-| -51001  | table name or address does not exist           |          |
-| -51100  | invalid node ID                                 |SDK Error Code |
-| -51101  | the last sealer cannot be removed               |          |
-| -51102  | the node is not reachable                       |SDK Error Code |
-| -51103  | the node is not a group peer                    |SDK Error Code |
-| -51104  | the node is already in the sealer list          |SDK Error Code |
-| -51105  | the node is already in the observer list        |SDK Error Code |
-| -51200  | contract name and version already exist         |SDK Error Code |
-| -51201  | version length exceeds the maximum limit|SDK Error Code |
-| -51300  | invalid configuration entry                     |          |
-| -51500  | entry parse error                               |          |
-| -51501  | condition parse error                           |          |
-| -51502  | condition operation undefined                   |          |
-| -51600  | invalid ciphers                                 |          |
-| -51700  | group sig failed                                |          |
-| -51800  | ring sig failed                                 |          |
-| -51900  | contract frozen                              |          |
-| -51901  | contract available                              |          |
-| -51902  | contract repeat authorization                   |          |
-| -51903  | invalid contract address                    |          |
-| -51904  | table not exist                    |          |
-| -51905  | no authorized                  |          |
-| -52000  | committee member exist                    |          |
-| -52001  | committee member not exist                |          |
-| -52002  | invalid request permission denied         |          |
-| -52003  | invalid threshold                    |          |
-| -52004  | operator can't be committee member                    |          |
-| -52005  | committee member can't be operator                    |          |
-| -52006  | operator exist                    |          |
-| -52007  | operator not exist                    |          |
-| -52008  | account not exist                    |          |
-| -52009  | invalid account address                    |          |
-| -52010  | account already available                   |          |
-| -52011  | account frozen                    |          |
-| -52012  | current value is expected value              |          |
+When `compressFlag` is true, return the batch transaction receipt information in plain text; when `compressFlag` is false, return the batch receipt information compressed by zlib and Base64 encoding. The specific fields returned are as follows:
 
-### Dynamice group management API status code
+- `blockHash`: The hash of the block where the receipt is located
+- `blockNumber`:The height of the block where the receipt is located
+- `receiptRoot`: The receiptRoot of the block where the receipt is located
+- `receiptsCount`: Number of receipts contained in the block
 
-| status code | message                      | definition                                           |
-| :---------- | :--------------------------- | :--------------------------------------------------- |
-| 0x0         | SUCCESS                      | Success                                              |
-| 0x1         | INTERNAL_ERROR               | Internal error                                       |
-| 0x2         | GROUP_ALREADY_EXISTS         | The group already existed when calling generateGroup |
-| 0x3         | GROUP_ALREADY_RUNNING        | The group already run when calling startGroup        |
-| 0x4         | GROUP_ALREADY_STOPPED        | The group already stopppd when calling stopGroup     |
-| 0x5         | GROUP_ALREADY_DELETED        | The group already deleted when calling removeGroup   |
-| 0x6         | GROUP_NOT_FOUND              | The group not exists                                 |
-| 0x7         | INVALID_PARAMS               | Parameters are illegal                               |
-| 0x8         | PEERS_NOT_CONNECTED          | No valid P2P connections between sealers             |
-| 0x9         | GENESIS_CONF_ALREADY_EXISTS  | Configuration of genesis block already existed       |
-| 0xa         | GROUP_CONF_ALREADY_EXIST     | Configuration of group already existed               |
-| 0xb         | GENESIS_CONF_NOT_FOUND       | Configuration of genesis block not found             |
-| 0xc         | GROUP_CONF_NOT_FOUND         | Configuration of group not found                     |
-| 0xd         | GROUP_IS_STOPPING            | The group is stopping                                |
-| 0xf         | GROUP_NOT_DELETED            | The group hasn't been deleted when call recoverGroup |
+The fields included in each receipt message are as follows:
+
+- contractAddress: Contract address corresponding to the receipt
+- from: External account information corresponding to the transaction receipt
+- gasUsed: gas information
+- logs: Event log information included in the receipt
+- output: Transaction execution result
+- status: Receipt status
+- to: Target account address
+- transactionHash: The transaction hash that generated the receipt
+- transactionIndex: Index of the transaction that generated the receipt in the block
+
+**Example:** 
+
+```shell
+# Get the plaintext information of all receipts of the block with a block height of 1
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockNumberAndRange","params":[1,"0x1","0","-1",false],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockInfo": {
+      "blockHash": "0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2",
+      "blockNumber": "0x1",
+      "receiptRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+      "receiptsCount": "0x1"
+    },
+    "transactionReceipts": [
+      {
+        "contractAddress": "0x0000000000000000000000000000000000000000",
+        "from": "0xb8e3901e6f5f842499fd537a7ac7151e546863ad",
+        "gasUsed": "0x5798",
+        "logs": [],
+        "output": "0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000364572726f7220616464726573733a3863313763663331366331303633616236633839646638373565393663396630663562326637343400000000000000000000",
+        "status": "0x1a",
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+        "transactionHash": "0xc6ec15fd1e4d696e66d7fbef6064bda3ed012bcb7744d09903ee289df65f7d53",
+        "transactionIndex": "0x0"
+      }
+    ]
+  }
+}
+
+# Get all receipt information after compression encoding with a block height of 1
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockNumberAndRange","params":[1,"0x1","0","-1",true],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
+}
+```
+
+## getBatchReceiptsByBlockHashAndRange
+
+According to the block hash and transaction range, batch return the transaction receipt information of the specified group.
+
+#### **Parameters**
+
+- `groupID`: Group ID
+- `blockHash`: The hash of the block where the requested receipt information is located
+- `from`: The start index of the receipt to be obtained
+- `count`: The number of receipts that need to be obtained in batches. When set to -1, return all receipt information in the block
+- `compressFlag`: Compression flag. When set to false, the batch transaction receipt information is returned in plain text; when set to true, the batch transaction receipt information is compressed in zlib format, and the compressed receipt information is returned in Base64 encoded format.
+
+#### **Returns**
+
+When `compressFlag` is true, return the batch transaction receipt information in plain text; when `compressFlag` is false, return the batch receipt information compressed by zlib and Base64 encoding. The specific fields returned are as follows:
+
+- `blockHash`: The hash of the block where the receipt is located
+- `blockNumber`:The height of the block where the receipt is located
+- `receiptRoot`: The receiptRoot of the block where the receipt is located
+- `receiptsCount`: Number of receipts contained in the block
+
+The fields included in each receipt message are as follows:
+
+- contractAddress: Contract address corresponding to the receipt
+- from: External account information corresponding to the transaction receipt
+- gasUsed: gas information
+- logs: Event log information included in the receipt
+- output: Transaction execution result
+- status: Receipt status
+- to: Target account address
+- transactionHash: The transaction hash that generated the receipt
+- transactionIndex: Index of the transaction that generated the receipt in the block
+
+**Example:** 
+
+```shell
+# 获取区块哈希为0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2的区块所有回执明文信息
+ curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRange","params":[1,"0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2","0","1",false],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockInfo": {
+      "blockHash": "0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2",
+      "blockNumber": "0x1",
+      "receiptRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+      "receiptsCount": "0x1"
+    },
+    "transactionReceipts": [
+      {
+        "contractAddress": "0x0000000000000000000000000000000000000000",
+        "from": "0xb8e3901e6f5f842499fd537a7ac7151e546863ad",
+        "gasUsed": "0x5798",
+        "logs": [],
+        "output": "0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000364572726f7220616464726573733a3863313763663331366331303633616236633839646638373565393663396630663562326637343400000000000000000000",
+        "status": "0x1a",
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+        "transactionHash": "0xc6ec15fd1e4d696e66d7fbef6064bda3ed012bcb7744d09903ee289df65f7d53",
+        "transactionIndex": "0x0"
+      }
+    ]
+  }
+}
+
+# 获取区块哈希为0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2的压缩编码后的所有回执信息
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRange","params":[1,"0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2","0","1",true],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
+}
+```

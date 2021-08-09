@@ -10,7 +10,7 @@ FISCO BCOS introduces [free nodes, observer nodes and consensus nodes](../design
 
 ## Operation command
 
-The console provides three commands of **[AddSealer](./console.html#addSealer)**, **[AddObserver](./console.html#addObserver)**, and **[RemoveNode](./console.html#removenode)** to convert the specified node to Sealer, Oberserver, and RemoveNode, and can use  **[getSealerList](./console.html#getSealerlist)**, **[getObserverList](./console.html#getObserverlist)**, and **[getNodeIDList](./console.html#getnodeidlist)** to view the current list of Sealer, Observer, and other nodes.
+The console provides three commands of **[AddSealer](../console/console.html#addSealer)**, **[AddObserver](../console/console.html#addObserver)**, and **[RemoveNode](../console/console.html#removenode)** to convert the specified node to Sealer, Oberserver, and RemoveNode, and can use  **[getSealerList](../console/console.html#getSealerlist)**, **[getObserverList](../console/console.html#getObserverlist)**, and **[getNodeIDList](../console/console.html#getnodeidlist)** to view the current list of Sealer, Observer, and other nodes.
 
 - addSealer: to set the corresponding node as the Sealer according to the NodeID;
 - addObserver: to set the corresponding node as the Observer according to the NodeID;

@@ -42,8 +42,8 @@ yum update
 ### 2. 安装基础依赖
 
 ```
-yum install -y epel-release centos-release-scl
-yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
+sudo yum install -y epel-release centos-release-scl
+sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7
 ```
 
 ### 3. 安装鲲鹏版本jdk-1.8
@@ -265,56 +265,25 @@ info|2020-09-04 17:34:22.459794|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 
 说明：控制台程序依赖 java-1.8 需要提前安装好鲲鹏版本（arrch64）的java-1.8
 
-### 1. 下载控制台程序
+```bash
+# 下载控制台
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
+$ cd console
 
-```
-cd
-git clone https://github.com/FISCO-BCOS/console.git
-```
+# 拷贝证书
+cp ~/nodes/127.0.0.1/sdk/* conf
 
-### 2. 进行编译
-
-```
-# cd console
-# git checkout release-1.1.1
-# ./gradlew build -x test
-
-> Task :compileJava
-注: /root/console/src/main/java/console/web3j/Web3jImpl.java使用或覆盖了已过时的 API。
-注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
-注: /root/console/src/main/java/console/common/ContractClassFactory.java使用了未经检查或不安全的操作。
-注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
-
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
-Use '--warning-mode all' to show the individual deprecation warnings.
-See https://docs.gradle.org/5.6.2/userguide/command_line_interface.html#sec:command_line_warnings
-
-BUILD SUCCESSFUL in 24s
-3 actionable tasks: 3 executed
+# 修改配置文件
+# 如果端口没有冲突，直接复制配置文件即可，否则复制之后，修改 config.toml中的network.peers配置项为相应的 channel 端口
+$ cp conf/config-example.toml conf/config.toml
 ```
 
-### 3. 修改配置文件
+**启动控制台**
 
 ```
-#cd dist/conf
-
-//如果端口没有冲突，直接复制配置文件即可，否则复制之后，修改 applicationContext.xml 中的 20200 为相应的 channel 端口
-#cp applicationContext-sample.xml applicationContext.xml
-```
-
-### 4. 拷贝证书
-
-```
-cp ${HOME}/nodes/127.0.0.1/sdk/* .
-```
-
-### 5. 启动控制台
-
-```
-# cd /${HOME}/console/dist/
-# ./start.sh
+# cd ~/console/ && bash start.sh
 =============================================================================================
-Welcome to FISCO BCOS console(1.1.0)!
+Welcome to FISCO BCOS console(2.6.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -350,6 +319,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  * 部署并调用合约
 ```
 [group:1]> deploy HelloWorld
+transaction hash: 0xa71f136107389348d5a092a345aa6bc72770d98805a7dbab0dbf8fe569ff3f37
 contract address: 0xd22aa109bc0708ad016391fa5188e18d35b16434
 
 [group:1]> call HelloWorld 0xd22aa109bc0708ad016391fa5188e18d35b16434 set "asfdas"

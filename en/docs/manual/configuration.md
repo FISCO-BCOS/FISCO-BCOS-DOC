@@ -27,7 +27,7 @@ FISCO BCOS supports multiple ledger. Each chain includes multiple unique ledgers
 
 - `jsonrpc_listen_ip`：RPC listening IP, security considerations, the default setting is 127.0.0.1, if there is an external network access requirement, please monitor **node external network IP** or `0.0.0.0`;
 
-- `channel_listen_port`: Channel port, is corresponding to `channel_listen_port` in [Web3SDK](../sdk/sdk.html#id2) configuration;
+- `channel_listen_port`: Channel port, is corresponding to `channel_listen_port` in [Java SDK]](../sdk/sdk.html#id2) configuration;
 
 - `jsonrpc_listen_port`: JSON-RPC port.
 
@@ -308,7 +308,7 @@ For example:`group1` system configuration generally names as `group.1.genesis`. 
 
     - After chain is initialized, even if genesis configuration is modified, new configuration will not take effect, and system still uses the genesis configuration when initializing the chain.
 
-    - Since genesis configuration requires all nodes in the group to be consistent, it is recommended to use `build_chain <build_chain.html>`_ to generate the configuration.
+    - Since genesis configuration requires all nodes in the group to be consistent, it is recommended to use `build_chain <../manual/build_chain.html>`_ to generate the configuration.
 ```
 
 ### Group configuration
@@ -328,16 +328,16 @@ id=2
 
 - `consensus_type`：consensus algorithm type, currently supports [PBFT](../design/consensus/pbft.md), [Raft](../design/consensus/raft.md) and rPBFT. To use PBFT by default;
 
-- `max_trans_num`：a maximum number of transactions that can be packed in a block. The default is 1000. After the chain is initialized, the parameter can be dynamically adjusted through [Console](./console.html#setsystemconfigbykey);
+- `max_trans_num`：a maximum number of transactions that can be packed in a block. The default is 1000. After the chain is initialized, the parameter can be dynamically adjusted through [Console](../console/console.html#setsystemconfigbykey);
 
-- `consensus_timeout`: In the PBFT consensus process, the timeout period of each block execution, the default is 3s, the unit is seconds, the parameter can be dynamically adjusted through [Console](./console.html#setsystemconfigbykey);
+- `consensus_timeout`: In the PBFT consensus process, the timeout period of each block execution, the default is 3s, the unit is seconds, the parameter can be dynamically adjusted through [Console](../console/console.html#setsystemconfigbykey);
 
 - `node.idx`：consensus node list, has configured with the [Node ID] of the participating consensus nodes. The Node ID can be obtained by the `${data_path}/node.nodeid` file (where `${data_path}` can be obtained by the configuration item `[secure].data_path` of the main configuration `config.ini`)
 
 FISCO BCOS v2.3.0 introduced the rPBFT consensus algorithm, The rPBFT related configuration is as follows:
 
-- `epoch_sealer_num`：The number of nodes participating in the consensus is selected in a consensus period. The default is the total number of all consensus nodes. After the chain is initialized, this parameter can be dynamically adjusted through [Console] (./console.html#setsystemconfigbykey)
-- `epoch_block_num`：The number of blocks generated in a consensus period, the default is 1000, which can be dynamically adjusted through [Console] (./console.html#setsystemconfigbykey)
+- `epoch_sealer_num`：The number of nodes participating in the consensus is selected in a consensus period. The default is the total number of all consensus nodes. After the chain is initialized, this parameter can be dynamically adjusted through [Console] (../console/console.html#setsystemconfigbykey)
+- `epoch_block_num`：The number of blocks generated in a consensus period, the default is 1000, which can be dynamically adjusted through [Console] (../console/console.html#setsystemconfigbykey)
 
 ```eval_rst
 .. note::
@@ -389,7 +389,7 @@ FISCO BCOS is compatible with Ethereum virtual machine ([EVM](../design/virtual_
 
 FISCO BCOS is alliance chain that simplifies gas design. **It retains only maximum gas limit of transaction, and maximum gas of block is constrained together by [consensus configuration max_trans_num](./configs.html#id8) and transaction maximum gas limit.**
 
-FISCO BCOS configures maximum gas limit of the transaction through genesis `[tx].gas_limit`. The default value is 300000000. After chain is initialized, the gas limit can be dynamically adjusted through the [console command](./console.html#setsystemconfigbykey).
+FISCO BCOS configures maximum gas limit of the transaction through genesis `[tx].gas_limit`. The default value is 300000000. After chain is initialized, the gas limit can be dynamically adjusted through the [console command](../console/console.html#setsystemconfigbykey).
 
 
 ```ini
@@ -799,8 +799,8 @@ FISCO BCOS system currently includes the following system parameters (other syst
 | rpbft_epoch_block_num | 1000 | rPBFT system configuration, the number of blocks produced in a consensus period|
 | consensus_timeout | 3 | During the PBFT consensus process, the block execution timeout time is at least 3s, When supported_version>=v2.6.0, the configuration item takes effect|
 
-Console provides **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** command to modify these system parameters.
-**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** command can view the current value of the system parameter:
+Console provides **[setSystemConfigByKey](../console/console.html#setsystemconfigbykey)** command to modify these system parameters.
+**[getSystemConfigByKey](../console/console.html#getsystemconfigbykey)** command can view the current value of the system parameter:
 
 
 ```eval_rst

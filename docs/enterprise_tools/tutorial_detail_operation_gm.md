@@ -1,4 +1,8 @@
-# 使用运维部署工具部署国密区块链
+# 部署国密区块链
+
+标签：``部署区块链`` ``国密区块链`` ``运维部署工具``
+
+----
 
 此文档为[使用运维部署工具部署](./tutorial_detail_operation.md)的国密部署版本
 
@@ -6,12 +10,18 @@
 
 本章节为多机构对等部署的过程，适用于多机构部署，机构私钥不出内网的情况，由单机构一键生成所有机构节点配置文件的教程可以参考[FISCO BCOS运维部署工具一键部署](./tutorial_one_click.md)。
 
+开启使用国密SSL连接，可以在`-g`国密选项开启的情况下，配合`-G`选项开启国密SSL连接特性。
+
 ## 下载安装
 
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
@@ -38,7 +48,9 @@ cd ~/generator && bash ./scripts/install.sh
 
 **检查二进制版本**
 
-若成功，输出 FISCO-BCOS gm Version : x.x.x-x
+2.5 及以前版本，若成功，输出 FISCO-BCOS Version : x.x.x-x
+
+2.6 版本之后，直接输出 FISCO-BCOS Version : x.x.x-x
 
 ```bash
 ./meta/fisco-bcos -v
@@ -512,7 +524,7 @@ cd ~/generator-A
 
 生成机构A所属节点，此命令会根据用户配置的`node_deployment.ini`文件生成相应的节点配置文件夹:
 
-注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的链接信息，多个机构组网的情况下需要将其合并。
+注意，此步指定的节点P2P连接信息`peers.txt`为群组内其他节点的连接信息，多个机构组网的情况下需要将其合并。
 
 ```bash
 ./generator --build_install_package ./meta/peersB.txt ./nodeA -g
@@ -931,7 +943,7 @@ cd ~/generator-A
 ./generator --add_group ./group/group.1.genesis  ~/generator-C/nodeC
 ```
 
-当前`FISCO BCOS`暂不支持文件热更新，为机构C节点添加群组1创世区块后需重启节点。
+此步操作需要重启节点，热更新操作请参考[JSON-RPC API](../api.md##generategroup)
 
 重启机构C节点:
 
@@ -953,26 +965,13 @@ bash ~/generator-C/nodeC/start_all.sh
     企业部署工具会根据generator/meta文件夹下的机构证书及私钥生成sdk相应证书，如需手动生成可以参考操作手册中的generate_sdk_certificate命令
 ```
 
-国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项：
+国内用户推荐使用cdn下载，如果访问github较快，可以去掉`--cdn`选项 (**默认下载2.6.0+版本控制台不需要额外配**)：
 
 ```bash
-./generator --download_console ./ --cdn
+./generator --download_console ./ -g --cdn
 ```
 
-**修改国密配置**
 
-```bash
-vi ./console/conf/applicationContext.xml
-```
-
-进行如下修改
-
-```xml
-<bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
-    <!-- encryptType值设置为1，打开国密开关 -->
-    <constructor-arg value="1"/> <!-- 0:standard 1:guomi -->
-</bean>
-```
 
 ### 查看机构C节点4信息
 
@@ -1098,4 +1097,4 @@ info|2019-02-26 16:03:44.282927| [g:1][p:65544][CONSENSUS][PBFT]^^^^^^^^Report,n
 
 通过本节教程，我们在本机生成一个网络拓扑结构为3机构2群组6节点的多群组架构联盟链。
 
-如果使用该教程遇到问题，请查看[FAQ](../faq.md)
+如果使用该教程遇到问题，请查看[FAQ](../faq/index.md)

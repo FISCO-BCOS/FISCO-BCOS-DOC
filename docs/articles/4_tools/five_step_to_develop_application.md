@@ -13,8 +13,18 @@
 
 (请先在home目录创建fisco目录，接下来都在这个目录操作）
 
-```
+```bash
 $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
+执行`build_chain.sh`脚本，启动四个节点：
+
+```bash
 $ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 $ bash nodes/127.0.0.1/start_all.sh
 ```
@@ -29,8 +39,20 @@ $ bash nodes/127.0.0.1/start_all.sh
 
 控制台是一个可以交互式访问区块链，进行区块链数据读写请求的工具。无需太多解释，**四步完成控制台安装：**
 
+下载控制台：
+
+```bash
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh && bash download_console.sh -c 1.2.0
 ```
-$ bash <(curl -s https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/download_console.sh)
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载控制台，请尝试命令 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh -c 1.2.0`
+```
+
+配置并启动控制台：
+
+```bash
 $ cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
 $ cp nodes/127.0.0.1/sdk/* console/conf/
 $ cd console && ./start.sh
@@ -84,7 +106,7 @@ Solidity合约需要通过编译器转换成机器（虚拟机）可执行的二
 
 额，老毛病犯了，又唠唠叨叨讲原理，还是讲讲**如何无脑一键完成合约编译与部署吧：**
 
-参考说明文档【控制台】的deploy命令：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html
+参考说明文档【控制台】的deploy命令：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html
 
 将Assert.sol放置在console/solidity/contract目录，在控制台执行deploy Assert.sol即可完成合约的编译以及部署。
 
@@ -109,5 +131,7 @@ Solidity合约需要通过编译器转换成机器（虚拟机）可执行的二
 5、在main/java目录新建AssetClient类，Asset.java已经实现了有deploy，load，select，register，transfer接口，通过调用这些接口实现业务相关逻辑。
 
 具体代码可参考示例工程：https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
+
+[示例工程gitee下载地址]https://gitee.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
 
 到这里，你已经完成第一个基于FISCO BCOS的应用开发！如你对开发流程有疑问或优化建议，可以通过公众号进入技术交流群和我们一起探讨。

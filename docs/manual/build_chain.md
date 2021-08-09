@@ -1,15 +1,19 @@
-# 开发部署工具
+# 开发部署工具(build_chain.sh)
+
+标签：``build_chain`` ``搭建区块链网络``
+
+----
 
 ```eval_rst
 .. important::
-    开发部署工具 build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `运维部署工具 <../enterprise_tools/index.html>`_ 。
+    部署工具 build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `运维部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
 FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联盟链，该脚本默认从[GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS)下载`master`分支最新版本预编译可执行程序进行相关环境的搭建。
 
-## 脚本功能简介
+## 功能介绍
 
-- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[FISCO-BCOS/tools/build_chain.sh][build_chain]。
+- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh)，[gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh)。
 - 快速体验可以使用`-l`选项指定节点IP和数目。`-f`选项通过使用一个指定格式的配置文件，支持创建各种复杂业务场景FISCO BCOS链。**`-l`和`-f`选项必须指定一个且不可共存**。
 - 建议测试时使用`-T`，`-T`开启log级别到DEBUG，**p2p模块默认监听 `0.0.0.0`**。
 
@@ -18,7 +22,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
     为便于开发和体验，p2p模块默认监听IP是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如内网IP或特定的外网IP
 ```
 
-## 帮助
+## 使用方法
 
 ```bash
 Usage:
@@ -51,8 +55,9 @@ Usage:
 e.g
     ./build_chain.sh -l 127.0.0.1:4
 ```
+比如：使用build_chain.sh部署4个本地节点。
 
-## 选项介绍
+![](../../images/installation/build_chain.png)
 
 ### **`l`选项:**
 
@@ -166,7 +171,38 @@ bash build_chain.sh -l 127.0.0.1:2 -g -G
 
 ### **`t`选项[**Optional**]**
 
-该选项用于指定生成证书时的证书配置文件。
+该选项用于指定生成证书时的证书配置文件，当前该选项只对非国密模式生效，配置文件示例如下
+
+```bash
+[ca]
+default_ca=default_ca
+[default_ca]
+default_days = 365
+default_md = sha256
+
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+[req_distinguished_name]
+countryName = CN
+countryName_default = CN
+stateOrProvinceName = State or Province Name (full name)
+stateOrProvinceName_default =GuangDong
+localityName = Locality Name (eg, city)
+localityName_default = ShenZhen
+organizationalUnitName = Organizational Unit Name (eg, section)
+organizationalUnitName_default = fisco-bcos
+commonName =  Organizational  commonName (eg, fisco-bcos)
+commonName_default = fisco-bcos
+commonName_max = 64
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v4_req ]
+basicConstraints = CA:TRUE
+```
 
 ### **`6`选项[**Optional**]**
 
@@ -194,13 +230,13 @@ bash build_chain.sh -l 127.0.0.1:2 -g -G
 
 ### **`E`选项[**Optional**]**
 
-无参数选项，设置该选项时，启用[Free Storage](design/virtual_machine/gas.html#evm-gas) Gas模式，默认关闭`Free Storage` Gas模式
+无参数选项，设置该选项时，启用[Free Storage Gas](design/virtual_machine/gas.html#evm-gas)模式，默认关闭`Free Storage` Gas模式
 
 ## 节点文件组织结构
 
 - cert文件夹下存放链的根证书和机构证书。
 - 以IP命名的文件夹下存储该服务器所有节点相关配置、`fisco-bcos`可执行程序、SDK所需的证书文件。
-- 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](configuration.md)。每个节点中还提供`start.sh`和`stop.sh`脚本，用于启动和停止节点。
+- 每个IP文件夹下的`node*`文件夹下存储节点所需的配置文件。其中`config.ini`为节点的主配置，`conf`目录下存储证书文件和群组相关配置。配置文件详情，请[参考这里](../manual/configuration.md)。每个节点中还提供`start.sh`和`stop.sh`脚本，用于启动和停止节点。
 - 每个IP文件夹下的提供`start_all.sh`和`stop_all.sh`两个脚本用于启动和停止所有节点。
 
 ```bash
@@ -248,7 +284,7 @@ nodes/
 │   └── cert.cnf
 ```
 
-## 工具脚本
+## 使用工具脚本
 
 介绍由build_chain.sh生成的脚本。
 
@@ -280,18 +316,18 @@ Usage:
     -m                     Download mini binary, only works with -b option
     -h Help
 e.g
-    ./download_bin.sh -v 2.6.0
+    ./download_bin.sh -v 2.7.2
 ```
 
 
-## 使用举例
+## 使用教程
 
-### 无外网条件的单群组
+### 无外网条件的搭建单群组区块链网络
 
 **最简单的操作方式是在有外网的Linux机器上使用build_chain建好链，借助-z选项打包，然后拷贝到无外网的机器上运行。**
 
-1. 针对某些场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
-1. 请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新版本的build_chain脚本。
+1. 针对某些场景下无外网条件下建链，请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)或[gitee镜像发布页面](https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新的目标操作系统的二进制，例如对于Linux系统下载fisco-bcos.tar.gz。
+1. 请从[发布页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)或[gitee镜像发布页面](https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases)下载最新版本的build_chain脚本。
 1. 上传fisco-bcos.tar.gz和build_chain.sh到目标服务器，需要注意目标服务器要求64位，要求安装有openssl 1.0.2以上版本。
 1. 解压fisco-bcos.tar.gz得到fisco-bcos可执行文件，作为-e选项的参数。
 1. 构建本机上4节点的FISCO BCOS联盟链，使用默认起始端口`30300,20200,8545`（4个节点会占用`30300-30303`,`20200-20203`,`8545-8548`）。
@@ -385,7 +421,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
         node.4=127.0.0.1:30304
     ```
 4. 启动新节点，执行`newNode/start.sh`
-5. 通过console将新节点加入群组1，2.6版本控制台指令详细介绍[参考这里](manual/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](manual/console.md)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
+5. 通过console将新节点加入群组1，2.6版本控制台指令详细介绍[参考这里](../console/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](../console/console.md)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
 
 ### 为机构生成新的SDK证书
@@ -442,4 +478,4 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 
 使用`build_chain`脚本构建多服务器多群组的FISCO BCOS联盟链需要借助脚本配置文件，详细使用方式可以[参考这里](../manual/group_use_cases.md)。
 
-[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh

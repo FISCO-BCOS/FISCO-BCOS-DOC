@@ -1,5 +1,8 @@
-# 配置文件与配置项
+# 节点配置
 
+标签：``节点配置`` ``开发手册`` ``config.ini`` ``端口配置`` ``日志级别`` ``配置``
+
+----
 FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据相互隔离，群组间交易处理相互隔离，每个节点包括一个主配置`config.ini`和多个账本配置`group.group_id.genesis`、`group.group_id.ini`。
 
 - `config.ini`：主配置文件，主要配置RPC、P2P、SSL证书、账本配置文件路径、兼容性等信息。
@@ -23,7 +26,7 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 - `jsonrpc_listen_ip`：RPC监听IP，安全考虑，默认设置为127.0.0.1，若有外网访问需求，请监听**节点外网IP**或`0.0.0.0`；
 
-- `channel_listen_port`: Channel端口，对应到[Web3SDK](../sdk/java_sdk.html#id2)配置中的`channel_listen_port`；
+- `channel_listen_port`: Channel端口，对应到[Java SDK](../sdk/java_sdk.html#id2)配置中的`channel_listen_port`；
 
 - `jsonrpc_listen_port`: JSON-RPC端口。
 
@@ -275,7 +278,7 @@ SDK请求速率限制位于配置项`[flow_control].limit_req`中，用于限制
 
 为了防止区块同步、AMOP消息传输占用过多的网络流量，并影响共识模块的消息包传输，FISCO BCOS v2.5.0引入了节点间流量限制的功能，该配置项用于配置节点平均出带宽的上限，但不限制区块共识、交易同步的流量，当节点平均出带宽超过配置值时，会暂缓区块发送、AMOP消息传输。
 
-- `[flow_control].outgoing_bandwidth_limit`：节点出带宽限制，单位为`Mbit/s`，当节点出带宽超过该值时，会暂缓区块发送，也会拒绝客户端发送的[AMOP](./amop_protocol.md)请求，但不会限制区块共识和交易广播的流量，**该配置项默认关闭，若要打开流量限制功能，请将`outgoing_bandwidth_limit`配置项前面的`;`去掉**。
+- `[flow_control].outgoing_bandwidth_limit`：节点出带宽限制，单位为`Mbit/s`，当节点出带宽超过该值时，会暂缓区块发送，也会拒绝客户端发送的[AMOP](../manual/amop_protocol.md)请求，但不会限制区块共识和交易广播的流量，**该配置项默认关闭，若要打开流量限制功能，请将`outgoing_bandwidth_limit`配置项前面的`;`去掉**。
 
 打开节点出带宽流量限制，并将其设置为`5MBit/s`的配置示例如下：
 
@@ -300,7 +303,7 @@ SDK请求速率限制位于配置项`[flow_control].limit_req`中，用于限制
     - **配置群组内一致** ：群组系统配置用于产生创世块(第0块)，因此必须保证群组内所有节点的该配置一致
     - **节点启动后不可更改** ：系统配置已经作为创世块写入了系统表，链初始化后不可更改
     - 链初始化后，即使更改了genesis配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
-    - 由于genesis配置要求群组内所有节点一致，建议使用 `开发部署工具 build_chain <build_chain.html>`_ 生成该配置
+    - 由于genesis配置要求群组内所有节点一致，建议使用 `开发部署工具 build_chain <../manual/build_chain.html>`_ 生成该配置
 ```
 
 ### 群组配置
@@ -319,16 +322,16 @@ id=2
 
 - `consensus_type`：共识算法类型，目前支持[PBFT](../design/consensus/pbft.md)，[Raft](../design/consensus/raft.md)和[rPBFT](../design/consensus/rpbft.md)，默认使用PBFT共识算法；
 
-- `max_trans_num`：一个区块可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
+- `max_trans_num`：一个区块可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](../console/console.html#setsystemconfigbykey)动态调整该参数；
 
-- `consensus_timeout`：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
+- `consensus_timeout`：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒，可通过[控制台](../console/console.html#setsystemconfigbykey)动态调整该参数；
 
 - `node.idx`：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过`${data_path}/node.nodeid`文件获取(其中`${data_path}`可通过主配置`config.ini`的`[network_security].data_path`配置项获取)
 
 FISCO BCOS v2.3.0引入了rPBFT共识算法，具体可参考[这里](../design/consensus/rpbft.md)，rPBFT相关配置如下：
 
-- `epoch_sealer_num`：一个共识周期内选择参与共识的节点数目，默认是所有共识节点总数，链初始化后可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
-- `epoch_block_num`：一个共识周期出块数目，默认为1000，可通过[控制台](./console.html#setsystemconfigbykey)动态调整该参数；
+- `epoch_sealer_num`：一个共识周期内选择参与共识的节点数目，默认是所有共识节点总数，链初始化后可通过[控制台](../console/console.html#setsystemconfigbykey)动态调整该参数；
+- `epoch_block_num`：一个共识周期出块数目，默认为1000，可通过[控制台](../console/console.html#setsystemconfigbykey)动态调整该参数；
 
 ```eval_rst
 .. note::
@@ -395,7 +398,7 @@ FISCO BCOS v2.3.0引入了rPBFT共识算法，具体可参考[这里](../design/
 
 ### gas配置
 
-FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，为了防止针对[EVM](../design/virtual_machine/evm.md)的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，**仅保留交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](./configuration.html#id11)和交易最大gas限制一起约束**。FISCO BCOS通过genesis的`[tx].gas_limit`来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](./console.html#setsystemconfigbykey)动态调整gas限制。
+FISCO BCOS兼容以太坊虚拟机([EVM](../design/virtual_machine/evm.md))，为了防止针对[EVM](../design/virtual_machine/evm.md)的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制和区块最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易或区块。FISCO BCOS是联盟链，简化了gas设计，**仅保留交易最大gas限制，区块最大gas通过[共识配置的max_trans_num](../manual/configuration.html#id11)和交易最大gas限制一起约束**。FISCO BCOS通过genesis的`[tx].gas_limit`来配置交易最大gas限制，默认是300000000，链初始化完毕后，可通过[控制台指令](../console/console.html#setsystemconfigbykey)动态调整gas限制。
 
 ```ini
 [tx]
@@ -618,7 +621,7 @@ FISCO BCOS v2.3.0引入rPBFT共识算法，具体可参考[这里](../design/con
 - `[consensus].max_request_prepare_waitTime`：节点Prepare缓存缺失时，等待父节点发送Prepare包的最长时延，默认为100ms，超过这个时延后，节点会向其他拥有该Prepare包的节点请求
 
 
-下面为rPBFT模式下开启[Prepare包结构优化](./configuration.html#pbft-prepare)后，负载均衡相关配置：
+下面为rPBFT模式下开启[Prepare包结构优化](../manual/configuration.html#pbft-prepare)后，负载均衡相关配置：
 
 - `[consensus].max_request_missedTxs_waitTime`：节点Prepare包内交易缺失后，等待父节点或其他非leader节点同步Prepare包状态的最长时延，默认为100ms，若在等待时延窗口内同步到父节点或非leader节点Prepare包状态，则会随机选取一个节点请求缺失交易；若等待超时，直接向leader请求缺失交易。
 
@@ -792,7 +795,7 @@ FISCO BCOS系统目前主要包括如下系统参数(未来会扩展其他系统
 | consensus_timeout | 3 | PBFT共识过程中，区块执行的超时时间，最少为3s, supported_version>=v2.6.0时，配置项生效 |
 
 
-控制台提供 **[setSystemConfigByKey](./console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](./console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
+控制台提供 **[setSystemConfigByKey](../console/console.html#setsystemconfigbykey)** 命令来修改这些系统参数，**[getSystemConfigByKey](../console/console.html#getsystemconfigbykey)** 命令可查看系统参数的当前值：
 
 
 ```eval_rst

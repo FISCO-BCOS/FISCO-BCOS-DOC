@@ -1,4 +1,8 @@
-# 配置文件
+# 配置方法
+
+标签：``运维部署工具`` ``配置``
+
+----
 
 FISCO BCOS generator的配置文件在./conf文件夹下，配置文件为：群组创世区块配置文件`group_genesis.ini`和生成节点配置文件`node_deployment.ini`。
 
@@ -68,7 +72,7 @@ jsonrpc_listen_port=8546
 generator的模板文件夹如下图所示：
 
 ```bash
-├── applicationContext.xml # sdk配置文件模板
+├── config.toml # sdk配置文件模板
 ├── config.ini # 节点配置文件模板
 ├── config.ini.gm # 国密节点配置文件模板
 ├── group.i.genesis # 群组创世区块模板

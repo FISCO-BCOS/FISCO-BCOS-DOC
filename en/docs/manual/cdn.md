@@ -24,7 +24,7 @@ FISCO BCOS每个新版本发布会在GitHub的tag中提供对应的二进制程�
 
 ## FISCO BCOS文档
 
-FISCO BCOS文档使用readthedocs管理，全部开源于[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)，同样提供国内镜像[http://www.fisco-bcos.org/developer/](http://www.fisco-bcos.org/developer/)。
+FISCO BCOS文档使用readthedocs管理，全部开源于[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)，同样提供国内镜像[http://docs.fisco-bcos.org](http://docs.fisco-bcos.org)。
 
 每个版本发布会为上个版本的文档打Tag，新版本的文档会和入主干分支，文档由于会持续改进，所以是下个版本发布才打上个版本的tag。readthedocs文档支持下载PDF格式，方便用户使用。
 
@@ -62,7 +62,7 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/manual/build_chain.sh`
 
 ### 下载二进制程序
 

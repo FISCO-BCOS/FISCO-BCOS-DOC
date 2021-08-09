@@ -1,6 +1,8 @@
+# 账户权限控制
 
-# 权限控制
+标签：``账户权限`` ``增删委员`` ``修改链配置项`` ``委员账号`` ``运维账号``
 
+----
 ## 基于角色的权限控制
 
 本节描述角色权限控制的操作，使用前请先阅读设计文档[角色权限控制设计文档](../design/security_control/chain_governance.md)。2.5.0版本开始，提供一种基于角色的权限控制模型，原来的链管理员相当于当前的治理委员会委员角色，拥有链治理相关的操作权限。用户不需要去具体关注底层系统表对应的权限，只需要关注角色的权限即可。
@@ -43,7 +45,7 @@
 
 
 ### 权限控制示例账户
-控制台提供账户生成脚本`get_account.sh`，生成的账户文件在`accounts`目录下。控制台可以指定账户启动，具体用法参考[控制台手册](./console.html#id11)。因此，通过控制台可以指定账户，体验权限控制功能。在控制台根目录下通过`get_account.sh`脚本生成三个PEM格式的账户文件如下：
+控制台提供账户生成脚本`get_account.sh`，生成的账户文件在`accounts`目录下。控制台可以指定账户启动，具体用法参考[控制台手册](../console/console.html#id11)。因此，通过控制台可以指定账户，体验权限控制功能。在控制台根目录下通过`get_account.sh`脚本生成三个PEM格式的账户文件如下：
 ```bash
 # 账户1
 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a.pem
@@ -315,7 +317,7 @@ Empty set.
 配置并启动FISCO BCOS 2.0区块链节点和控制台，请参考[安装文档](../installation.md)。
 
 ### 权限控制工具
-FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/java_sdk.html#permissionservice)的PermissionService接口使用权限功能），其中涉及的权限控制命令如下:
+FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调用[SDK API](../sdk/java_sdk/api.html#permissionservice)的PermissionService接口使用权限功能），其中涉及的权限控制命令如下:
 
 |命令名称|命令参数|功能|
 |:----|:-----|:----|
@@ -339,7 +341,7 @@ FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调�
 |listUserTableManager              |table_name            |查询拥有对用户表写权限的账号列表            |
 
 ### 权限控制示例账户
-控制台提供账户生成脚本`get_account.sh`，生成的账户文件在`accounts`目录下。控制台可以指定账户启动，具体用法参考[控制台手册](./console.html#id11)。因此，通过控制台可以指定账户，体验权限控制功能。为了账户安全起见，我们可以在控制台根目录下通过`get_account.sh`脚本生成三个PKCS12格式的账户文件，生成过程中输入的密码需要牢记。生成的三个PKCS12格式的账户文件如下：
+控制台提供账户生成脚本`get_account.sh`，生成的账户文件在`accounts`目录下。控制台可以指定账户启动，具体用法参考[控制台手册](../console/console.html)。因此，通过控制台可以指定账户，体验权限控制功能。为了账户安全起见，我们可以在控制台根目录下通过`get_account.sh`脚本生成三个PKCS12格式的账户文件，生成过程中输入的密码需要牢记。生成的三个PKCS12格式的账户文件如下：
 ```bash
 # 账户1
 0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252.p12
@@ -399,7 +401,7 @@ $ ./start.sh 1 -p12 accounts/0xd86572ad4c92d4598852e2f34720a865dd4fc3dd.p12
 | 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
-登录账户2的控制台，部署控制台提供的TableTest合约。TableTest.sol合约代码[参考这里](smart_contract.html#solidity)。其提供创建用户表t_test和相关增删改查的方法。
+登录账户2的控制台，部署控制台提供的TableTest合约。TableTest.sol合约代码[参考这里](../manual/smart_contract.html#solidity)。其提供创建用户表t_test和相关增删改查的方法。
 ```
 [group:1]> deploy TableTest.sol
 contract address:0xfe649f510e0ca41f716e7935caee74db993e9de8
@@ -430,7 +432,7 @@ count = 0
 - **注意：** 其中部署合约和创建用户表是“二合一”的控制项，在使用Table合约（CRUD接口合约）时，我们建议部署合约的时候一起把合约里用到的表创建了（在合约的构造函数中创建表），否则接下来读写表的交易可能会遇到“缺表”错误。如果业务流程需要动态创建表，动态建表的权限也应该只分配给少数账户，否则链上可能会出现各种废表。
 
 #### 授权利用CNS部署合约
-控制台提供3个涉及[CNS](../design/features/CNS_contract_name_service.md)的命令，如下所示：
+控制台提供3个涉及[CNS](../design/features/cns_contract_name_service.md)的命令，如下所示：
 
 |命令名称|命令参数|功能|
 |:----|:-----|:----|

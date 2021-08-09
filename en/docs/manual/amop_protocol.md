@@ -19,7 +19,7 @@ We take the typical IDC architecture of the bank as the example to overview each
 
 ## Configuration
 
-AMOP does not require any additional configuration. The following is a configuration case for [Web3SDK] (./configuration.md) .
+AMOP does not require any additional configuration. The following is a configuration case for [Java SDK]] (./../configuration.md) .
 SDK configuration（Spring Bean）：
 
 

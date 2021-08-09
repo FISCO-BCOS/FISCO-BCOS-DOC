@@ -1,7 +1,7 @@
 # Build the first blockchain application
 
 
-This chapter will introduce a whole process of business application scenario development based on FISCO BCOS blockchain. The introduce includes business scenario analysis, contract design implementation, contract compilation, and blockchain development. Finally, we introduce an application module implementation which is to implement calling access to the contract on blockchain through the Web3SDK we provide.
+This chapter will introduce a whole process of business application scenario development based on FISCO BCOS blockchain. The introduce includes business scenario analysis, contract design implementation, contract compilation, and blockchain development. Finally, we introduce an application module implementation which is to implement calling access to the contract on blockchain through the Java SDK we provide.
 
 This tutorial requires user to be familiar with the Linux operating environment, has the basic skills of Java development, is able to use the Gradle tool, and is familiar with [Solidity syntax](https://solidity.readthedocs.io/en/latest/).
 
@@ -9,9 +9,9 @@ This tutorial requires user to be familiar with the Linux operating environment,
 
 1. How to express the logic of a business scenario in the form of a contract
 2. How to convert Solidity contract into Java class
-3. How to configure Web3SDK
-4. How to build an application and integrate Web3SDK into application engineering
-5. How to call the contract interface through Web3SDK, and to understand its principle
+3. How to configure Java SDK
+4. How to build an application and integrate Java SDK into application engineering
+5. How to call the contract interface through Java SDK, and to understand its principle
 
 The full project source code for the sample is provided in the tutorial and users can quickly develop their own applications based on it.
 
@@ -251,6 +251,9 @@ In the previous section, we designed the storage and interface of the contract `
 
 The console provides a compilation tool that stores the `Asset.sol` contract file in the `console/contract/solidity` directory. Compile with the `sol2java.sh` script provided in the console directory, as follows:
 ```bash
+$ mkdir -p ~/fisco
+# download console
+$ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 # switch to the fisco/console/ directory
 $ cd ~/fisco/console/
 # compile the contract, specify a Java package name parameter later, you can specify the package name according to the actual project path.
@@ -289,17 +292,17 @@ package org.fisco.bcos.asset.contract;
 
 public class Asset extends Contract {
     // Asset.sol contract  transfer interface generation
-    public RemoteCall<TransactionReceipt> transfer(String from_account, String to_account, BigInteger amount);
+    public TransactionReceipt transfer(String from_account, String to_account, BigInteger amount);
     // Asset.sol contract  register interface generation
-    public RemoteCall<TransactionReceipt> register(String account, BigInteger asset_value);
+    public TransactionReceipt register(String account, BigInteger asset_value);
     // Asset.sol contract  select interface generation
-    public RemoteCall<Tuple2<BigInteger, BigInteger>> select(String account);
+     public Tuple2<BigInteger, BigInteger> select(String account) throws ContractException;
 
     // Load the Asset contract address, to generate Asset object
-    public static Asset load(String contractAddress, Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
+    public static Asset load(String contractAddress, Client client, CryptoKeyPair credential);
 
     // Deploy Assert.sol contract, to generate Asset object
-    public static RemoteCall<Asset> deploy(Web3j web3j, Credentials credentials, ContractGasProvider contractGasProvider);
+    public static Asset deploy(Client client, CryptoKeyPair credential) throws ContractException;
 }
 ```
 
@@ -311,11 +314,12 @@ The load and deploy functions are used to construct the Asset object, and the ot
 We provide a Java engineering project for development. First, get the Java engineering project:
 
 ```bash
-    # get the Java project project archive
-    $ cd ~
-    $ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
-    # extract the Java project project asset-app directory
-    $ tar -zxf asset-app.tar.gz
+$ mkdir -p ~/fisco
+# get the Java project project archive
+$ cd ~/fisco
+$ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
+# extract the Java project project asset-app directory
+$ tar -zxf asset-app.tar.gz
 ```
 
 ```eval_rst
@@ -357,26 +361,26 @@ The directory structure of the asset-app project is as follows:
     |-- asset_run.sh // project running script
 ```
 
-### Project introduced Web3SDK
+### Project introduced Java SDK
 
-**The project's `build.gradle` file has been introduced to Web3SDK and no need to be modified**. The introduction method is as follows:
+**The project's `build.gradle` file has been introduced to Java SDK and no need to be modified**. The introduction method is as follows:
 
-- Web3SDK introduces Ethereum's solidity compiler-related jar package, so you need to add Ethereum's remote repository to the `build.gradle` file:
+- You need to add maven remote repository to the `build.gradle` file:
 
 ```java
 repositories {
-    maven {
-        url "http：//maven.aliyun.com/nexus/content/groups/public/"
-    }
-    maven { url "https：//dl.bintray.com/ethereum/maven/" }
     mavenCentral()
+    maven {
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 ```
 
--   introduce the Web3SDK jar package
+-   introduce the Java SDK jar package
 
 ```java
-compile ('org.fisco-bcos：web3sdk：2.5.0')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
 ```
 
 ### Certificate and configuration file
@@ -388,19 +392,22 @@ Copy the SDK certificate corresponding to the blockchain node
 ```bash
 # go to the ~ directory
 # copy the node certificate to the project's resource directory
-$ cd ~
-$ cp fisco/nodes/127.0.0.1/sdk/* asset-app/src/test/resources/
+$ cd ~/fisco
+$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/test/resources/conf
+# if you want to run this app in IDE, copy the certificate to the main resource directory
+$ mkdir -p asset-app/src/main/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
 ```
 
 -   applicationContext.xml
 
 **Note:**
 
-If the channel_listen_ip (If the node version is less than v2.3.0, check listen_ip) set in the chain is 127.0.0.1 or 0.0.0.0 and the channel_port is 20200, the `applicationContext.xml` configuration does not need to be modified. If the configuration of blockchain node is changed, you need to modify `applicationContext.xml`. For details, please refer to [SDK Usage Document](../sdk/sdk.html#spring).
+If the channel_listen_ip (If the node version is less than v2.3.0, check listen_ip) set in the chain is 127.0.0.1 or 0.0.0.0 and the channel_listen_port is 20200, the `applicationContext.xml` configuration does not need to be modified. If the configuration of blockchain node is changed, you need to modify `applicationContext.xml`.
 
 ## Business development
 
-We've covered how to introduce and configure the Web3SDK in your own project. This section describes how to invoke a contract through a Java program, as well as an example asset management note. The asset-app project already contains the full source code of the sample, which users can use directly. Now introduces the design and implementation of the core class `AssetClient`.
+We've covered how to introduce and configure the Java SDK in your own project. This section describes how to invoke a contract through a Java program, as well as an example asset management note. The asset-app project already contains the full source code of the sample, which users can use directly. Now introduces the design and implementation of the core class `AssetClient`.
 
 `AssetClient.java`: The deployment and invocation of the contract is implemented by calling `Asset.java`, The path `/src/main/java/org/fisco/bcos/asset/client`, the initialization and the calling process are all in this class.
 
@@ -410,17 +417,16 @@ We've covered how to introduce and configure the Web3SDK in your own project. Th
 The main function of the initialization code is to construct the Web3j and Credentials' objects, which are needed to be used when creating the corresponding contract class object (calling the contract class's deploy or load function).
 
 ```java
-// Initialize in function initialize
-ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-Service service = context.getBean(Service.class);
-service.run();
-
-ChannelEthereumService channelEthereumService = new ChannelEthereumService();
-channelEthereumService.setChannelService(service);
-// initialize the Web3j object
-Web3j web3j = Web3j.build(channelEthereumService, 1);
-// initialize the Credentials object
-Credentials credentials = Credentials.create(Keys.createEcKeyPair());
+@SuppressWarnings("resource")
+ApplicationContext context =
+        new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+bcosSDK = context.getBean(BcosSDK.class);
+// init the client that can send requests to the group one
+client = bcosSDK.getClient(1);
+// create the keyPair
+cryptoKeyPair = client.getCryptoSuite().createKeyPair();
+client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
+logger.debug("create client for group1, account address is " + cryptoKeyPair.getAddress());
 ```
 
 -   construct contract class object
@@ -429,9 +435,9 @@ Contract objects can be initialized using the deploy or load functions, which ar
 
 ```java
 // deploy contract
-Asset asset = Asset.deploy(web3j, credentials, new StaticGasProvider(gasPrice, gasLimit)).send();
+Asset asset = Asset.deploy(client, cryptoKeyPair);
 // load contract address
-Asset asset = Asset.load(contractAddress, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
+Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 ```
 
 -   interface calling
@@ -440,11 +446,11 @@ Use the contract object to call the corresponding interface and handle the retur
 
 ```java
 // select interface calling
-Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount).send();
+ Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount);
 // register interface calling
-TransactionReceipt receipt = asset.register(assetAccount, amount).send();
+TransactionReceipt receipt = asset.register(assetAccount, amount);
 // transfer interface
-TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount).send();
+TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
 ## Running

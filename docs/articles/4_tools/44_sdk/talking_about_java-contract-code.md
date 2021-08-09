@@ -6,7 +6,7 @@ FISCO BCOS提供了多种语言的SDK，包括Go、NodeJS、Python和Java。Java
 
 ## 如何生成Java合约代码
 
-合约编译工具可将Solidity源码生成对应的Java代码，具体使用方式可参考[以下链接](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id10)。在说明合约编译工具如何生成Java合约代码之前，先介绍合约ABI的概念。ABI的定义为：
+合约编译工具可将Solidity源码生成对应的Java代码，具体使用方式可参考[以下链接](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id10)。在说明合约编译工具如何生成Java合约代码之前，先介绍合约ABI的概念。ABI的定义为：
 
 ```
 The Contract Application Binary Interface (ABI) is the standard way to interact with contracts in the Ethereum ecosystem, both from outside the blockchain and for contract-to-contract interaction.

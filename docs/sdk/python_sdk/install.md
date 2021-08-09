@@ -1,5 +1,8 @@
 # 快速安装
 
+标签：``Python API`` ``快速安装``
+
+----
 ## 环境要求
 
 **依赖软件**
@@ -29,6 +32,9 @@
 
 ```bash
 git clone https://github.com/FISCO-BCOS/python-sdk
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/python-sdk
 ```
 
 **配置环境**
@@ -78,8 +84,12 @@ python环境变量配置可参考[这里](https://jingyan.baidu.com/article/b0b6
 **拉取源代码**
 
 打开 git，在任意目录执行如下命令
+
 ```bash
 git clone https://github.com/FISCO-BCOS/python-sdk
+
+# 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/python-sdk
 ```
 
 

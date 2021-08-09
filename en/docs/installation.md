@@ -1,6 +1,6 @@
 # Installation
 
-This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS. Please use the supported **hardware and platform** operations [according to here](./manual/hardware_requirements.md).
+This chapter will introduce the required installations and configurations of FISCO BCOS. For better understanding, we will illustrate an example of deploying a 4-node consortium chain in a local machine using FISCO BCOS. Please use the supported **hardware and platform** operations [according to here](manual/hardware_requirements.md).
 
 ## To build a single-group consortium chain
 
@@ -9,10 +9,10 @@ This section takes the construction of single group FISCO BCOS chain as an examp
 ```eval_rst
 .. note::
     - To update an existing chain, please refer to `compatibility <change_log/index.html>`_ chapter.
-    - To build OSCCA chain, please refer to ` <manual/guomi_crypto.html>`_ 。
+    - To build OSCCA chain, please refer to ` <../manual/guomi_crypto.html>`_ 。
     - It is similar to build a multi-group chain, interested can be referred to `here <manual/group_use_cases.html>`_ .
     - This section uses pre-compiled static `fisco-bcos` binaries which tested on CentOS 7 and Ubuntu 16.04 64bit.
-    - `build_chain use docker <manual/build_chain.html#d-optional>`_
+    - `build_chain use docker <../manual/build_chain.html#d-optional>`_
 ```
 
 ### Prepare environment
@@ -22,7 +22,11 @@ This section takes the construction of single group FISCO BCOS chain as an examp
 `build_chain.sh` script depends on `openssl, curl` and is installed by using the following instructions. For CentOS system, to replaces `apt` with `yum` in the following command. For macOS system, execute `brew install openssl curl`.
 
 ```bash
+# ubuntu
 sudo apt install -y openssl curl
+
+# centos
+sudo yum install -y openssl openssl-devel
 ```
 
 - Create operation directory
@@ -34,12 +38,12 @@ cd ~ && mkdir -p fisco && cd fisco
 - Download `build_chain.sh` script
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ### Build a single-group 4-node consortium chain
@@ -55,7 +59,7 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 .. note::
     - The -p option specifies the starting port, which are p2p_port, channel_port, and jsonrpc_port.
 
-    - For security and ease of use consideration, the latest configuration of v2.3.0 version splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip. For details, please refer to `here <manual/configuration.html#configure-rpc>`_
+    - For security and ease of use consideration, the latest configuration of v2.3.0 version splits listen_ip into jsonrpc_listen_ip and channel_listen_ip, but still retains the parsing function of listen_ip. For details, please refer to `here <../manual/configuration.html#configure-rpc>`_
 
     - In order to facilitate development and experience, the reference configuration of channel_listen_ip is `0.0.0.0`. For security reasons, please modify it to a safe listening address according to the actual business network situation, such as: intranet IP or specific external IP
 ```
@@ -161,13 +165,13 @@ info|2019-01-21 17:23:40.612241| [g:1][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 ```eval_rst
 .. important::
-    - ``console 1.x`` series is based on `Web3SDK <./sdk/java_sdk.html>`_ implementation, ``Console 2.6 after`` is based on `Java SDK <./sdk/java_sdk/index.html >`_ implementation, the latest version of the console is based on the ``Java SDK`` implementation
-    - For 2.6 and above version console documentation please refer to `here <./manual/console_of_java_sdk.html>`_
-    - For 1.x version console documentation, please refer to `here <./manual/console.html>`_ 
+    - ``console 1.x`` series is based on `Web3SDK <../sdk/java_sdk.html>`_ implementation, ``Console 2.6 after`` is based on `Java SDK <../sdk/java_sdk/index.html >`_ implementation, the latest version of the console is based on the ``Java SDK`` implementation
+    - For 2.6 and above version console documentation please refer to `here <../console/console_of_java_sdk.html>`_
+    - For 1.x version console documentation, please refer to `here <../console/console.html>`_ 
     - You can view the current console version through the command ``./start.sh --version``
 ```
 
-Console links nodes of FISCO BCOS through Web3SDK so as to realize functions like blockchain status query, call and deploy contracts. 2.0 version console command detailed introduction [refer here](manual/console_of_java_sdk.md), 1.x version console command detailed introduction [refer here](manual/console.md).
+Console links nodes of FISCO BCOS so as to realize functions like blockchain status query, call and deploy contracts. 2.0 version console command detailed introduction [refer here](console/console_of_java_sdk.md), 1.x version console command detailed introduction [refer here](console/console.md).
 
 ### Prepare environment
 
@@ -176,13 +180,17 @@ Console links nodes of FISCO BCOS through Web3SDK so as to realize functions lik
 In macOS, execute `brew cask install java` to install java
 
 ```bash
+# ubuntu
 sudo apt install -y default-jdk
+
+# centos
+sudo yum install -y java java-devel
 ```
 
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.6.0/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -210,7 +218,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
 ```
 
-If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/applicationContext.xml are configured correctly.
+If it outputs following information, then the console has been started successfully, otherwise please check if the node ports in conf/config.toml are configured correctly.
 
 ```bash
 =============================================================================================
@@ -360,4 +368,4 @@ Return values:
 [group:1]> quit
 ```
 
-[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh
+[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh

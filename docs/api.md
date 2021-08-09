@@ -1,6 +1,174 @@
-# JSON-RPC API
+# 区块链功能接口列表
 
-下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[jsonrpc_listen_ip]`(若节点小于v2.3.0版本，查看配置项`listen_ip`)和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id51)。
+下列接口的示例中采用[curl](https://curl.haxx.se/)命令，curl是一个利用url语法在命令行下运行的数据传输工具，通过curl命令发送http post请求，可以访问FISCO BCOS的JSON RPC接口。curl命令的url地址设置为节点配置文件`[rpc]`部分的`[jsonrpc_listen_ip]`(若节点小于v2.3.0版本，查看配置项`listen_ip`)和`[jsonrpc listen port]`端口。为了格式化json，使用[jq](https://stedolan.github.io/jq/)工具进行格式化显示。错误码参考[RPC设计文档](design/rpc.html#json-rpc)。交易回执状态列表[参考这里](./api.html#id2)。
+
+
+## 错误码描述
+
+### RPC 错误码
+
+当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
+
+- code: 使用数值表示该异常的错误类型，必须为整数。
+- message: 对该错误的简单描述字符串。
+- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。
+
+错误对象包含两类错误码，分别是JSON-RPC标准错误码和FISCO BCOS RPC错误码。
+
+#### JSON-RPC标准错误码
+
+标准错误码及其对应的含义如下：
+
+| code   | message              | 含义                       |
+| :----- | :------------------- | :------------------------- |
+| -32600 | INVALID_JSON_REQUEST | 发送无效的请求对象         |
+| -32601 | METHOD_NOT_FOUND     | 该方法不存在或无效         |
+| -32602 | INVALID_PARAMS       | 无效的方法参数             |
+| -32603 | INTERNAL_ERROR       | 内部调用错误               |
+| -32604 | PROCEDURE_IS_METHOD  | 内部错误，请求未提供id字段 |
+| -32700 | JSON_PARSE_ERROR     | 服务端接收到的json无法解析 |
+
+#### FISCO BCOS RPC错误码
+
+FISCO BCOS RPC接口错误码及其对应的含义如下：
+
+| code  | message                                                                     | 含义                                        |
+| :---- | :-------------------------------------------------------------------------- | :------------------------------------------ |
+| -40001 | GroupID does not exist                                                      | GroupID不存在                               |
+| -40002 | Response json parse error                                                   | JSON RPC获取的json数据解析错误              |
+| -40003 | BlockHash does not exist                                                    | 区块哈希不存在                              |
+| -40004 | BlockNumber does not exist                                                  | 区块高度不存在                              |
+| -40005 | TransactionIndex is out of range                                            | 交易索引越界                                |
+| -40006 | Call needs a 'from' field                                                   | call接口需要提供from字段                    |
+| -40007 | Only pbft consensus supports the view property                              | getPbftView接口，只有pbft共识机制有view属性 |
+| -40008 | Invalid System Config                                                       | getSystemConfigByKey接口，查询无效的key     |
+| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
+| -40010 | RPC module initialization is incomplete                                    | RPC模块初始化尚未完成     |
+| -40011 | Over QPS limit                                   | SDK到节点的请求速率超过节点的请求速率限制     |
+| -40012 |  The SDK is not allowed to access this group| SDK无访问群组的权限|
+
+
+
+### 交易回执状态
+
+| status(十进制/十六进制) | message                    | 含义                                                  |
+| :---------------------- | :------------------------- | :---------------------------------------------------- |
+| 0(0x0)                  | None                       | 正常                                                  |
+| 1(0x1)                  | Unknown                    | 未知异常                                              |
+| 2(0x2)                  | BadRLP                     | 无效RLP异常                                           |
+| 3(0x3)                  | InvalidFormat              | 无效格式异常                                          |
+| 4(0x4)                  | OutOfGasIntrinsic          | 部署的合约长度超过gas限制/调用合约接口参数超过gas限制 |
+| 5(0x5)                  | InvalidSignature           | 无效的签名异常                                        |
+| 6(0x6)                  | InvalidNonce               | 无效nonce异常                                         |
+| 7(0x7)                  | NotEnoughCash              | cash不足异常                                          |
+| 8(0x8)                  | OutOfGasBase               | 调用合约的参数过长 (RC版本)                           |
+| 9(0x9)                  | BlockGasLimitReached       | GasLimit异常                                          |
+| 10(0xa)                 | BadInstruction             | 错误指令异常                                          |
+| 11(0xb)                 | BadJumpDestination         | 错误目的跳转异常                                      |
+| 12(0xc)                 | OutOfGas                   | 合约执行时gas不足 / 部署的合约长度超过最长上限        |
+| 13(0xd)                 | OutOfStack                 | 栈溢出异常                                            |
+| 14(0xe)                 | StackUnderflow             | 栈下限溢位异常                                        |
+| 15(0xf)                 | NonceCheckFail             | nonce检测失败异常                                     |
+| 16(0x10)                | BlockLimitCheckFail        | blocklimit检测失败异常                                |
+| 17(0x11)                | FilterCheckFail            | filter检测失败异常                                    |
+| 18(0x12)                | NoDeployPermission         | 非法部署合约异常                                      |
+| 19(0x13)                | NoCallPermission           | 非法call合约异常                                      |
+| 20(0x14)                | NoTxPermission             | 非法交易异常                                          |
+| 21(0x15)                | PrecompiledError           | precompiled错误异常                                   |
+| 22(0x16)                | RevertInstruction          | revert指令异常                                        |
+| 23(0x17)                | InvalidZeroSignatureFormat | 无效签名格式异常                                      |
+| 24(0x18)                | AddressAlreadyUsed         | 地址占用异常                                          |
+| 25(0x19)                | PermissionDenied           | 无权限异常                                            |
+| 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在                                |
+| 27(0x1b)                | GasOverflow                | Gas溢出错误                                          |
+| 28(0x1c)                | TxPoolIsFull               | 交易池已满异常                                       |
+| 29(0x1d)                | TransactionRefused         | 交易被拒绝异常                                       |
+| 30(0x1e)                | ContractFrozen             | 合约被冻结异常                                       |
+| 31(0x1f)                | AccountFrozen              | 账户被冻结异常                                       |
+| 10000(0x2710)           | AlreadyKnown               | 交易已经在交易池中                                     |
+| 10001(0x2711)           | AlreadyInChain             | 交易已经上链异常                                       |
+| 10002(0x2712)           | InvalidChainId             | 无效的链ID异常                                       |
+| 10003(0x2713)           | InvalidGroupId             | 无效的群组ID异常                                       |
+| 10004(0x2714)           | RequestNotBelongToTheGroup | 请求不属于群组异常                                       |
+| 10005(0x2715)           | MalformedTx                | 交易格式错误                                          |
+| 10006(0x2716)           | OverGroupMemoryLimit       | 超出群组内存限制异常                                   |
+
+### Precompiled Service API 错误码
+
+| 错误码 | 消息内容                                          | 备注      |
+| :----- | :----------------------------------------------  | :-----   |
+| 0      | success                                          |          |
+| -50000  | permission denied                               |          |
+| -50001  | table name already exist                        |          |
+| -50002  | table name length is overflowed                 |          |
+| -50003  | table name field length is overflowed           |          |
+| -50004  | table name field total length is overflowed     |          |
+| -50005  | table key value length is overflowed            |          |
+| -50006  | table field value length is overflowed          |          |
+| -50007  | table field is duplicated                       |          |
+| -50008  | table field is invalidate                       |          |
+| -50100  | table does not exist                            |          |
+| -50101  | unknown function call                            |          |
+| -50102  | address invalid                                 |          |
+| -51002  | table name overflow                             |          |
+| -51003  | contract not exist                              |          |
+| -51004  | committee member permission managed by ChainGovernance           |          |
+| -51000  | table name or address already exist            |          |
+| -51001  | table name or address does not exist           |          |
+| -51100  | invalid node ID                                 | SDK错误码 |
+| -51101  | the last sealer cannot be removed               |           |
+| -51102  | the node is not reachable                       | SDK错误码 |
+| -51103  | the node is not a group peer                    | SDK错误码 |
+| -51104  | the node is already in the sealer list          | SDK错误码 |
+| -51105  | the node is already in the observer list        | SDK错误码 |
+| -51200  | contract name and version already exist         | SDK错误码 |
+| -51201  | version length exceeds the maximum limit        | SDK错误码 |
+| -51300  | invalid configuration entry                     |          |
+| -51500  | entry parse error                               |          |
+| -51501  | condition parse error                           |          |
+| -51502  | condition operation undefined                   |          |
+| -51600  | invalid ciphers                                 |          |
+| -51700  | group sig failed                                |          |
+| -51800  | ring sig failed                                 |          |
+| -51900  | contract frozen                              |          |
+| -51901  | contract available                              |          |
+| -51902  | contract repeat authorization                    |          |
+| -51903  | invalid contract address                    |          |
+| -51904  | table not exist                    |          |
+| -51905  | no authorized                  |          |
+| -52000  | committee member exist                    |          |
+| -52001  | committee member not exist                |          |
+| -52002  | invalid request permission denied         |          |
+| -52003  | invalid threshold                    |          |
+| -52004  | operator can't be committee member                    |          |
+| -52005  | committee member can't be operator                    |          |
+| -52006  | operator exist                    |          |
+| -52007  | operator not exist                    |          |
+| -52008  | account not exist                    |          |
+| -52009  | invalid account address                    |          |
+| -52010  | account already available                   |          |
+| -52011  | account frozen                    |          |
+| -52012  | current value is expected value              |          |
+
+### 动态群组管理 API 状态码
+
+| 状态码 | 消息内容                     | 释义                                        |
+| :-- | :--------------------------- | :------------------------------------------ |
+| 0x0 | SUCCESS                      | 接口调用成功                                  |
+| 0x1 | INTERNAL_ERROR               | 节点内部错误                                  |
+| 0x2 | GROUP_ALREADY_EXISTS         | 调用创建群组接口时，群组已存在                   |
+| 0x3 | GROUP_ALREADY_RUNNING        | 调用启动群组接口时，群组已处于运行状态             |
+| 0x4 | GROUP_ALREADY_STOPPED        | 调用停止群组接口时，群组已处于停止状态             |
+| 0x5 | GROUP_ALREADY_DELETED        | 调用删除群组接口时，群组已处于删除状态             |
+| 0x6 | GROUP_NOT_FOUND              | 调用接口时，对应的群组不存在                     |
+| 0x7 | INVALID_PARAMS               | 调用接口时，参数不合法                          |
+| 0x8 | PEERS_NOT_CONNECTED          | 调用创建群组接口时，与sealer间不存在有效的P2P连接  |
+| 0x9 | GENESIS_CONF_ALREADY_EXISTS  | 调用创建群组接口时，创世块配置文件已存在           |
+| 0xa | GROUP_CONF_ALREADY_EXIST     | 调用创建群组接口时，群组配置文件已存在             |
+| 0xb | GENESIS_CONF_NOT_FOUND       | 调用启动群组接口时，未找到创世块配置文件           |
+| 0xc | GROUP_CONF_NOT_FOUND         | 调用启动群组接口时，未找到群组配置文件             |
+| 0xd | GROUP_IS_STOPPING            | 调用接口时，群组正在释放资源                     |
+| 0xf | GROUP_NOT_DELETED            | 调用恢复接口时，群组并未被删除                   |
 
 ## getClientVersion
 返回节点的版本信息
@@ -437,6 +605,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
 - `includeTransactions`: `bool` - 包含交易标志(true显示交易详细信息，false仅显示交易的hash)
 ### 返回值
 - `object` - 区块信息，字段如下：
+    - `dbHash`: `string` - 记录交易数据变更的哈希
     - `extraData`: `array` - 附加数据
     - `gasLimit`: `string` - 区块中允许的gas最大值
     - `gasUsed`: `string` - 区块中所有交易消耗的gas
@@ -444,85 +613,102 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":[],"id":1
     - `logsBloom`: `string` - log的布隆过滤器值
     - `number`: `string` - 区块高度
     - `parentHash`: `string` - 父区块哈希
+    - `receiptsRoot`: `string` - 区块内所有交易回执的merkle根
     - `sealer`: `string` - 共识节点序号
     - `sealerList`: `array` - 共识节点列表
+    - `signatureList`: `string` - PBFT共识的签名列表
     - `stateRoot`: `string` - 状态根哈希
-    - `timestamp`: `string` - 时间戳
+    - `timestamp`: `string` - 时间戳，单位毫秒
     - `transactions`: `array` - 交易列表，当`includeTransactions`为`false`时，显示交易的哈希。当`includeTransactions`为`true`时，显示交易详细信息（详细字段见[getTransactionByHash](./api.html#gettransactionbyhash)）
+    - `transactionsRoot`: `string` - 区块内所有交易的merkle根
 
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",true],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",true],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
   "id": 1,
   "jsonrpc": "2.0",
   "result": {
+    "dbHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": [],
     "gasLimit": "0x0",
     "gasUsed": "0x0",
-    "hash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+    "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "number": "0x1",
-    "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-    "sealer": "0x3",
-    "sealerList":[
-    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
+    "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer": "0x0",
+    "sealerList": [
+      "4ca3a91a4937355dba6a2e5fe76141479a1fc44e9caa86750092dab64e0b8382f6b8476749c2d2de414350a54491620d38813d2a1442f524e36e3d9946109c4d"
     ],
-    "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
-    "timestamp": "0x1687e801d99",
+    "signatureList": [
+      {
+        "index": "0x0",
+        "signature": "0x4602135870d9a4846e2536d4a48e831825a5d95768dd0d4f08544a0bd4c2af41242dec1751a05c07d7572027f8d6ac1625c48145beb004e2dce8b7ce9e2bb73d00"
+      }
+    ],
+    "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x175ac38cf10",
     "transactions": [
       {
-        "blockHash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+        "blockHash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
+        "blockLimit": "0x100",
         "blockNumber": "0x1",
-        "from": "0xadf06b974703a1c25c621ce53676826198d4b046",
-        "gas": "0x1c9c380",
-        "gasPrice": "0x1",
-        "hash": "0x022dcb1ad2d940ce7b2131750f7458eb8ace879d129ee5b650b84467cb2184d7",
-        "input": "0x608060405234801561001057600080fd5b5060016000800160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506402540be40060006001018190555060028060000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060006002600101819055506103bf806100c26000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100515780636d4ce63c1461007e575b600080fd5b34801561005d57600080fd5b5061007c600480360381019080803590602001909291905050506100a9565b005b34801561008a57600080fd5b506100936102e1565b6040518082815260200191505060405180910390f35b8060006001015410806100c757506002600101548160026001015401105b156100d1576102de565b8060006001015403600060010181905550806002600101600082825401925050819055507fc77b710b83d1dc3f3fafeccd08a6c469beb873b2f0975b50d1698e46b3ee5b4c816040518082815260200191505060405180910390a160046080604051908101604052806040805190810160405280600881526020017f323031373034313300000000000000000000000000000000000000000000000081525081526020016000800160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001838152509080600181540180825580915050906001820390600052602060002090600402016000909192909190915060008201518160000190805190602001906102419291906102ee565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b6000600260010154905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061032f57805160ff191683800117855561035d565b8280016001018555821561035d579182015b8281111561035c578251825591602001919060010190610341565b5b50905061036a919061036e565b5090565b61039091905b8082111561038c576000816000905550600101610374565b5090565b905600a165627a7a72305820fb983c66bee66788f407721b23b10a8aae3dc9ef8f1b09e08ec6a6c0b0ec70100029",
-        "nonce": "0x1a9d06264238ea69c1bca2a74cfced979d6b6a66ce8ad6f5a30e8017b5a98d8",
-        "to": null,
+        "chainId": "0x1",
+        "extraData": "0x",
+        "from": "0x57c7be32cbfb3bfed4fddc87efcc735b4e945fb3",
+        "gas": "0x2faf080",
+        "gasPrice": "0xa",
+        "groupId": "0x1",
+        "hash": "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d",
+        "input": "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a464953434f2042434f5300000000000000000000000000000000000000000000",
+        "nonce": "0x3eb675ec791c2d19858c91d0046821c27d815e2e9c151604912205000002968",
+        "signature": {
+          "r": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd",
+          "s": "0x2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf",
+          "signature": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf00",
+          "v": "0x0"
+        },
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
         "transactionIndex": "0x0",
         "value": "0x0"
       }
     ],
-    "transactionsRoot": "0x07506c27626365c4f0db788619a96df1e6f8f62c583f158192700e08c10fec6a"
+    "transactionsRoot": "0xb880b08df3b43a9ffc334d7a526522b33e004ef95403d61d76454b6085b9b2f1"
   }
 }
 
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",false],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":[1,"0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",false],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
   "id": 1,
   "jsonrpc": "2.0",
   "result": {
+    "dbHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": [],
     "gasLimit": "0x0",
     "gasUsed": "0x0",
-    "hash": "0x910ea44e2a83618c7cc98456678c9984d94977625e224939b24b3c904794b5ec",
+    "hash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "number": "0x1",
-    "parentHash": "0x4765a126a9de8d876b87f01119208be507ec28495bef09c1e30a8ab240cf00f2",
-    "sealer": "0x3",
-    "sealerList":[
-    "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-    "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-    "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-    "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
+    "parentHash": "0x249f59e00beac8424a7821c4750fdd70c128f4ce795afbab53f345e9fce95d1a",
+    "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+    "sealer": "0x0",
+    "sealerList": [
+      "4ca3a91a4937355dba6a2e5fe76141479a1fc44e9caa86750092dab64e0b8382f6b8476749c2d2de414350a54491620d38813d2a1442f524e36e3d9946109c4d"
     ],
-    "stateRoot": "0xfb7ca5a7a271c8ffb51bc689b78d0aeded23497c9c22e67dff8b1c7b4ec88a2a",
-    "timestamp": "0x1687e801d99",
+    "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x175ac38cf10",
     "transactions": [
-      "0x022dcb1ad2d940ce7b2131750f7458eb8ace879d129ee5b650b84467cb2184d7"
+      "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d"
     ],
-    "transactionsRoot": "0x07506c27626365c4f0db788619a96df1e6f8f62c583f158192700e08c10fec6a"
+    "transactionsRoot": "0xb880b08df3b43a9ffc334d7a526522b33e004ef95403d61d76454b6085b9b2f1"
   }
 }
 ```
@@ -566,7 +752,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHeaderByHash","params":[
     "gasUsed": "0x0",
     "hash": "0x99576e7567d258bd6426ddaf953ec0c953778b2f09a078423103c6555aa4362d",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number": 1,
+    "number": "0x1",
     "parentHash": "0x4f6394763c33c1709e5a72b202ad4d7a3b8152de3dc698cef6f675ecdaf20a3b",
     "receiptsRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
     "sealer": "0x2",
@@ -641,6 +827,10 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 ### 返回值
 - `object`: - 交易信息，其字段如下：
     - `blockHash`: `string` - 包含该交易的区块哈希
+    - `blockLimit`: `string` - 交易的`blockLimit`，用于交易防重
+    - `chainId`:  `string` - 交易所在的链ID
+    - `extraData`: `string` - 交易内的extraData
+    - `groupId`:  `string` - 交易所在的群组ID
     - `blockNumber`: `string` - 包含该交易的区块高度
     - `from`: `string` - 发送者的地址
     - `gas`: `string` - 发送者提供的gas
@@ -648,31 +838,42 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
     - `hash`: `string` - 交易哈希
     - `input`: `string` - 交易的输入
     - `nonce`: `string` - 交易的nonce值
+    - `signature`: 交易签名，包含`r`, `s`, `v`以及序列化的交易签名`signature`
     - `to`: `string` - 接收者的地址，创建合约交易的该值为`0x0000000000000000000000000000000000000000`
     - `transactionIndex`: `string` - 交易的序号
     - `value`: `string` - 转移的值
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f"],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHash","params":[1,"0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d"],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
-{
-    "id": 1,
-    "jsonrpc": "2.0",
-    "result": {
-        "blockHash": "0x10bfdc1e97901ed22cc18a126d3ebb8125717c2438f61d84602f997959c631fa",
-        "blockNumber": "0x1",
-        "from": "0x6bc952a2e4db9c0c86a368d83e9df0c6ab481102",
-        "gas": "0x9184e729fff",
-        "gasPrice": "0x174876e7ff",
-        "hash": "0x7536cf1286b5ce6c110cd4fea5c891467884240c9af366d678eb4191e1c31c6f",
-        "input": "0x48f85bce000000000000000000000000000000000000000000000000000000000000001bf5bd8a9e7ba8b936ea704292ff4aaa5797bf671fdc8526dcd159f23c1f5a05f44e9fa862834dc7cb4541558f2b4961dc39eaaf0af7f7395028658d0e01b86a37",
-        "nonce": "0x65f0d06e39dc3c08e32ac10a5070858962bc6c0f5760baca823f2d5582d03f",
-        "to": "0xd6f1a71052366dbae2f7ab2d5d5845e77965cf0d",
-        "transactionIndex": "0x0",
-        "value": "0x0"
-    }
+ {
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockHash": "0xfa639d1454362a8cdfcab1ca1948a5defaf7048b28f67e80780ab1e24e8f8c59",
+    "blockLimit": "0x100",
+    "blockNumber": "0x1",
+    "chainId": "0x1",
+    "extraData": "0x",
+    "from": "0x57c7be32cbfb3bfed4fddc87efcc735b4e945fb3",
+    "gas": "0x2faf080",
+    "gasPrice": "0xa",
+    "groupId": "0x1",
+    "hash": "0x3961fac263d8e640b148ddcfafd71d2069e93a006abc937c32fb16cfa96e661d",
+    "input": "0x4ed3885e0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a464953434f2042434f5300000000000000000000000000000000000000000000",
+    "nonce": "0x3eb675ec791c2d19858c91d0046821c27d815e2e9c151604912205000002968",
+    "signature": {
+      "r": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd",
+      "s": "0x2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf",
+      "signature": "0x9edf7c0cb63645442aff11323916d51ec5440de979950747c0189f338afdcefd2f3473184513c6a3516e066ea98b7cfb55a79481c9db98e658dd016c37f03dcf00",
+      "v": "0x0"
+    },
+    "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+    "transactionIndex": "0x0",
+    "value": "0x0"
+  }
 }
 ```
 ## getTransactionByBlockHashAndIndex
@@ -722,7 +923,7 @@ Result见[getTransactionByHash](./api.html#gettransactionbyhash)
     - `logsBloom`: `string` - log的布隆过滤器值
     - `output`: `string` - 交易的输出
     - `root`: `string` - 状态根（state root）
-    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态]()
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希
     - `transactionIndex`: `string` - 交易序号
@@ -1063,7 +1264,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionByHashWithProof","
     - `logs`: `array` - 交易产生的log
     - `logsBloom`: `string` - log的布隆过滤器值
     - `output`: `string` - 交易的输出
-    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id52)
+    - `status`: `string` - 交易的状态值，参考：[交易回执状态](./api.html#id2)
     - `to`: `string` - 接收者的地址，创建合约交易的该值为null
     - `transactionHash`: `string` - 交易哈希
     - `transactionIndex`: `string` - 交易序号
@@ -1295,169 +1496,177 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"queryGroupStatus","params":[2],"
 
 ```
 
-## 错误码描述
+## getNodeInfo
 
-### RPC 错误码
+获取请求节点的NodeID，Topic等信息。
 
-当一个RPC调用遇到错误时，返回的响应对象必须包含error错误结果字段，该字段有下列成员参数：
+#### **参数**
 
-- code: 使用数值表示该异常的错误类型，必须为整数。
-- message: 对该错误的简单描述字符串。
-- data: 包含关于错误附加信息的基本类型或结构化类型，该成员可选。
+- 无
 
-错误对象包含两类错误码，分别是JSON-RPC标准错误码和FISCO BCOS RPC错误码。
+#### **返回值**
 
-#### JSON-RPC标准错误码
+- NodeInfo: 获取节点信息，包括节点所在的机构、节点名、节点NodeID以及节点订阅的Topic
 
-标准错误码及其对应的含义如下：
+- 示例: 
 
-| code   | message              | 含义                       |
-| :----- | :------------------- | :------------------------- |
-| -32600 | INVALID_JSON_REQUEST | 发送无效的请求对象         |
-| -32601 | METHOD_NOT_FOUND     | 该方法不存在或无效         |
-| -32602 | INVALID_PARAMS       | 无效的方法参数             |
-| -32603 | INTERNAL_ERROR       | 内部调用错误               |
-| -32604 | PROCEDURE_IS_METHOD  | 内部错误，请求未提供id字段 |
-| -32700 | JSON_PARSE_ERROR     | 服务端接收到的json无法解析 |
+```shell
+curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeInfo","params":[],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "Agency": "agency",
+    "IPAndPort": "0.0.0.0:30300",
+    "Node": "node1",
+    "NodeID": "2263a586cba1c1b8419f0dd9e623c7db79b2ba9127367aa854b1493e218efaa2ef58b08de1b36defdeb1d407449014e29cf8b4f457c7f7be7331d381362eb74e",
+    "Topic": []
+  }
+}
+```
 
-#### FISCO BCOS RPC错误码
+## getBatchReceiptsByBlockNumberAndRange
 
-FISCO BCOS RPC接口错误码及其对应的含义如下：
+根据区块高度和交易范围，批量返回指定群组的交易回执信息。
 
-| code  | message                                                                     | 含义                                        |
-| :---- | :-------------------------------------------------------------------------- | :------------------------------------------ |
-| -40001 | GroupID does not exist                                                      | GroupID不存在                               |
-| -40002 | Response json parse error                                                   | JSON RPC获取的json数据解析错误              |
-| -40003 | BlockHash does not exist                                                    | 区块哈希不存在                              |
-| -40004 | BlockNumber does not exist                                                  | 区块高度不存在                              |
-| -40005 | TransactionIndex is out of range                                            | 交易索引越界                                |
-| -40006 | Call needs a 'from' field                                                   | call接口需要提供from字段                    |
-| -40007 | Only pbft consensus supports the view property                              | getPbftView接口，只有pbft共识机制有view属性 |
-| -40008 | Invalid System Config                                                       | getSystemConfigByKey接口，查询无效的key     |
-| -40009 | Don't send requests to this group, <br>the node doesn't belong to the group | 非群组内节点发起无效的请求                  |
-| -40010 | RPC module initialization is incomplete                                    | RPC模块初始化尚未完成     |
-| -40011 | Over QPS limit                                   | SDK到节点的请求速率超过节点的请求速率限制     |
-| -40012 |  The SDK is not allowed to access this group| SDK无访问群组的权限|
+#### **参数**
 
+- `groupID`: 群组ID;
+- `blockNumber`: 请求获取的回执信息所在的区块高度;
+- `from`: 需要获取的回执起始索引;
+- `count`: 需要批量获取的回执数目，当设置为-1时，返回区块内所有回执信息;
+- `compressFlag`: 压缩标志，当设置为false时，以明文的形式返回批量交易回执信息; 当设置为true时, 以zlib格式压缩批量交易回执，并将压缩后的回执信息以Base64编码的格式返回。
 
+#### **返回值**
 
-### 交易回执状态
+当`compressFlag`为true，返回明文形式的批量交易回执信息; 当`compressFlag`为false时，返回zlib压缩后的Base64编码的批量回执信息，返回的具体字段如下:
 
-| status(十进制/十六进制) | message                    | 含义                                                  |
-| :---------------------- | :------------------------- | :---------------------------------------------------- |
-| 0(0x0)                  | None                       | 正常                                                  |
-| 1(0x1)                  | Unknown                    | 未知异常                                              |
-| 2(0x2)                  | BadRLP                     | 无效RLP异常                                           |
-| 3(0x3)                  | InvalidFormat              | 无效格式异常                                          |
-| 4(0x4)                  | OutOfGasIntrinsic          | 部署的合约长度超过gas限制/调用合约接口参数超过gas限制 |
-| 5(0x5)                  | InvalidSignature           | 无效的签名异常                                        |
-| 6(0x6)                  | InvalidNonce               | 无效nonce异常                                         |
-| 7(0x7)                  | NotEnoughCash              | cash不足异常                                          |
-| 8(0x8)                  | OutOfGasBase               | 调用合约的参数过长 (RC版本)                           |
-| 9(0x9)                  | BlockGasLimitReached       | GasLimit异常                                          |
-| 10(0xa)                 | BadInstruction             | 错误指令异常                                          |
-| 11(0xb)                 | BadJumpDestination         | 错误目的跳转异常                                      |
-| 12(0xc)                 | OutOfGas                   | 合约执行时gas不足 / 部署的合约长度超过最长上限        |
-| 13(0xd)                 | OutOfStack                 | 栈溢出异常                                            |
-| 14(0xe)                 | StackUnderflow             | 栈下限溢位异常                                        |
-| 15(0xf)                 | NonceCheckFail             | nonce检测失败异常                                     |
-| 16(0x10)                | BlockLimitCheckFail        | blocklimit检测失败异常                                |
-| 17(0x11)                | FilterCheckFail            | filter检测失败异常                                    |
-| 18(0x12)                | NoDeployPermission         | 非法部署合约异常                                      |
-| 19(0x13)                | NoCallPermission           | 非法call合约异常                                      |
-| 20(0x14)                | NoTxPermission             | 非法交易异常                                          |
-| 21(0x15)                | PrecompiledError           | precompiled错误异常                                   |
-| 22(0x16)                | RevertInstruction          | revert指令异常                                        |
-| 23(0x17)                | InvalidZeroSignatureFormat | 无效签名格式异常                                      |
-| 24(0x18)                | AddressAlreadyUsed         | 地址占用异常                                          |
-| 25(0x19)                | PermissionDenied           | 无权限异常                                            |
-| 26(0x1a)                | CallAddressError           | 被调用的合约地址不存在                                |
-| 27(0x1b)                | GasOverflow                | Gas溢出错误                                          |
-| 28(0x1c)                | TxPoolIsFull               | 交易池已满异常                                       |
-| 29(0x1d)                | TransactionRefused         | 交易被拒绝异常                                       |
-| 30(0x1e)                | ContractFrozen             | 合约被冻结异常                                       |
-| 31(0x1f)                | AccountFrozen              | 账户被冻结异常                                       |
-| 10000(0x2710)           | AlreadyKnown               | 交易已经在交易池中                                     |
-| 10001(0x2711)           | AlreadyInChain             | 交易已经上链异常                                       |
-| 10002(0x2712)           | InvalidChainId             | 无效的链ID异常                                       |
-| 10003(0x2713)           | InvalidGroupId             | 无效的群组ID异常                                       |
-| 10004(0x2714)           | RequestNotBelongToTheGroup | 请求不属于群组异常                                       |
-| 10005(0x2715)           | MalformedTx                | 交易格式错误                                          |
-| 10006(0x2716)           | OverGroupMemoryLimit       | 超出群组内存限制异常                                   |
+- `blockHash`: 回执所在的区块哈希
+- `blockNumber`: 回执所在的区块高度
+- `receiptRoot`: 回执所在的区块的receiptRoot
+- `receiptsCount`: 区块中包含的回执数目
 
-### Precompiled Service API 错误码
+每条回执信息包含的字段如下:
 
-| 错误码 | 消息内容                                          | 备注      |
-| :----- | :----------------------------------------------  | :-----   |
-| 0      | success                                          |          |
-| -50000  | permission denied                               |          |
-| -50001  | table name already exist                        |          |
-| -50002  | table name length is overflowed                 |          |
-| -50003  | table name field length is overflowed           |          |
-| -50004  | table name field total length is overflowed     |          |
-| -50005  | table key value length is overflowed            |          |
-| -50006  | table field value length is overflowed          |          |
-| -50007  | table field is duplicated                       |          |
-| -50008  | table field is invalidate                       |          |
-| -50100  | table does not exist                            |          |
-| -50101  | unknown function call                            |          |
-| -50102  | address invalid                                 |          |
-| -51002  | table name overflow                             |          |
-| -51003  | contract not exist                              |          |
-| -51004  | committee member permission managed by ChainGovernance           |          |
-| -51000  | table name or address already exist            |          |
-| -51001  | table name or address does not exist           |          |
-| -51100  | invalid node ID                                 | SDK错误码 |
-| -51101  | the last sealer cannot be removed               |           |
-| -51102  | the node is not reachable                       | SDK错误码 |
-| -51103  | the node is not a group peer                    | SDK错误码 |
-| -51104  | the node is already in the sealer list          | SDK错误码 |
-| -51105  | the node is already in the observer list        | SDK错误码 |
-| -51200  | contract name and version already exist         | SDK错误码 |
-| -51201  | version length exceeds the maximum limit        | SDK错误码 |
-| -51300  | invalid configuration entry                     |          |
-| -51500  | entry parse error                               |          |
-| -51501  | condition parse error                           |          |
-| -51502  | condition operation undefined                   |          |
-| -51600  | invalid ciphers                                 |          |
-| -51700  | group sig failed                                |          |
-| -51800  | ring sig failed                                 |          |
-| -51900  | contract frozen                              |          |
-| -51901  | contract available                              |          |
-| -51902  | contract repeat authorization                    |          |
-| -51903  | invalid contract address                    |          |
-| -51904  | table not exist                    |          |
-| -51905  | no authorized                  |          |
-| -52000  | committee member exist                    |          |
-| -52001  | committee member not exist                |          |
-| -52002  | invalid request permission denied         |          |
-| -52003  | invalid threshold                    |          |
-| -52004  | operator can't be committee member                    |          |
-| -52005  | committee member can't be operator                    |          |
-| -52006  | operator exist                    |          |
-| -52007  | operator not exist                    |          |
-| -52008  | account not exist                    |          |
-| -52009  | invalid account address                    |          |
-| -52010  | account already available                   |          |
-| -52011  | account frozen                    |          |
-| -52012  | current value is expected value              |          |
+- contractAddress: 回执对应的合约地址
+- from: 交易回执对应的外部账户信息
+- gasUsed: gas信息
+- logs: 回执中包含的event log信息
+- output: 交易执行结果
+- status: 回执状态
+- to: 目标账户地址
+- transactionHash: 产生回执的交易哈希
+- transactionIndex: 产生回执的交易在区块中的索引
 
-### 动态群组管理 API 状态码
+**示例:** 
 
-| 状态码 | 消息内容                     | 释义                                        |
-| :-- | :--------------------------- | :------------------------------------------ |
-| 0x0 | SUCCESS                      | 接口调用成功                                  |
-| 0x1 | INTERNAL_ERROR               | 节点内部错误                                  |
-| 0x2 | GROUP_ALREADY_EXISTS         | 调用创建群组接口时，群组已存在                   |
-| 0x3 | GROUP_ALREADY_RUNNING        | 调用启动群组接口时，群组已处于运行状态             |
-| 0x4 | GROUP_ALREADY_STOPPED        | 调用停止群组接口时，群组已处于停止状态             |
-| 0x5 | GROUP_ALREADY_DELETED        | 调用删除群组接口时，群组已处于删除状态             |
-| 0x6 | GROUP_NOT_FOUND              | 调用接口时，对应的群组不存在                     |
-| 0x7 | INVALID_PARAMS               | 调用接口时，参数不合法                          |
-| 0x8 | PEERS_NOT_CONNECTED          | 调用创建群组接口时，与sealer间不存在有效的P2P连接  |
-| 0x9 | GENESIS_CONF_ALREADY_EXISTS  | 调用创建群组接口时，创世块配置文件已存在           |
-| 0xa | GROUP_CONF_ALREADY_EXIST     | 调用创建群组接口时，群组配置文件已存在             |
-| 0xb | GENESIS_CONF_NOT_FOUND       | 调用启动群组接口时，未找到创世块配置文件           |
-| 0xc | GROUP_CONF_NOT_FOUND         | 调用启动群组接口时，未找到群组配置文件             |
-| 0xd | GROUP_IS_STOPPING            | 调用接口时，群组正在释放资源                     |
-| 0xf | GROUP_NOT_DELETED            | 调用恢复接口时，群组并未被删除                   |
+```shell
+# 获取块高为1的区块所有回执明文信息
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockNumberAndRange","params":[1,"0x1","0","-1",false],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockInfo": {
+      "blockHash": "0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2",
+      "blockNumber": "0x1",
+      "receiptRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+      "receiptsCount": "0x1"
+    },
+    "transactionReceipts": [
+      {
+        "contractAddress": "0x0000000000000000000000000000000000000000",
+        "from": "0xb8e3901e6f5f842499fd537a7ac7151e546863ad",
+        "gasUsed": "0x5798",
+        "logs": [],
+        "output": "0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000364572726f7220616464726573733a3863313763663331366331303633616236633839646638373565393663396630663562326637343400000000000000000000",
+        "status": "0x1a",
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+        "transactionHash": "0xc6ec15fd1e4d696e66d7fbef6064bda3ed012bcb7744d09903ee289df65f7d53",
+        "transactionIndex": "0x0"
+      }
+    ]
+  }
+}
+
+# 获取区块高度为1的压缩编码后的所有回执信息
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockNumberAndRange","params":[1,"0x1","0","-1",true],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
+}
+```
+
+## getBatchReceiptsByBlockHashAndRange
+
+根据区块哈希和交易范围，批量返回指定群组的交易回执信息。
+
+#### **参数**
+
+- `groupID`: 群组ID;
+- `blockHash`: 包含需要获取的回执信息的区块的哈希;
+- `from`: 需要获取的回执起始索引;
+- `count`: 需要批量获取的回执数目，当设置为-1时，返回区块内所有回执信息;
+- `compressFlag`: 压缩标志，当设置为false时，以明文的形式返回批量交易回执信息; 当设置为true时, 以zlib格式压缩批量交易回执，并将压缩后的回执信息以Base64编码的格式返回。
+
+#### **返回值**
+
+当`compressFlag`为true，返回明文形式的批量交易回执信息; 当`compressFlag`为false时，返回zlib压缩后的Base64编码的批量回执信息，返回的具体字段如下:
+
+- `blockHash`: 回执所在的区块哈希
+- `blockNumber`: 回执所在的区块高度
+- `receiptRoot`: 回执所在的区块的receiptRoot
+- `receiptsCount`: 区块中包含的回执数目
+
+每条回执信息包含的字段如下:
+
+- contractAddress: 回执对应的合约地址
+- from: 交易回执对应的外部账户信息
+- gasUsed: gas信息
+- logs: 回执中包含的event log信息
+- output: 交易执行结果
+- status: 回执状态
+- to: 目标账户地址
+- transactionHash: 产生回执的交易哈希
+- transactionIndex: 产生回执的交易在区块中的索引
+
+**示例:** 
+
+```shell
+# 获取区块哈希为0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2的区块所有回执明文信息
+ curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRange","params":[1,"0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2","0","1",false],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "blockInfo": {
+      "blockHash": "0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2",
+      "blockNumber": "0x1",
+      "receiptRoot": "0x69a04fa6073e4fc0947bac7ee6990e788d1e2c5ec0fe6c2436d0892e7f3c09d2",
+      "receiptsCount": "0x1"
+    },
+    "transactionReceipts": [
+      {
+        "contractAddress": "0x0000000000000000000000000000000000000000",
+        "from": "0xb8e3901e6f5f842499fd537a7ac7151e546863ad",
+        "gasUsed": "0x5798",
+        "logs": [],
+        "output": "0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000364572726f7220616464726573733a3863313763663331366331303633616236633839646638373565393663396630663562326637343400000000000000000000",
+        "status": "0x1a",
+        "to": "0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744",
+        "transactionHash": "0xc6ec15fd1e4d696e66d7fbef6064bda3ed012bcb7744d09903ee289df65f7d53",
+        "transactionIndex": "0x0"
+      }
+    ]
+  }
+}
+
+# 获取区块哈希为0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2的压缩编码后的所有回执信息
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBatchReceiptsByBlockHashAndRange","params":[1,"0xcef82a3c1e7770aa4e388af5c70e97ae177a3617c5020ae052be4095dfdd39a2","0","1",true],"id":1}' http://127.0.0.1:8545 |jq
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": "eJylUrFu3DAM3fsZmm+gRImUbiu6NEuHAJ2KDLJEpkETK7B9QIDD/XsZX4AgQIcCEWCLj+YjafKd3fQ42p+bWYc7nq/ge11/u6ODlyaaQ8XmhZmh1iiYc9XUGKRwFc9ckTy3BAGqQAqTRCipa+9YanCHa8Ifp6dJlj2lN98iTR6et9sxtt1HpULUSsAoURuUyFNtLEKlgHDO3UtoSRqoUAsRqUMuQVjRgnt4T7l+G6d5eyt0ObhtqfNa2/Yw5tu3CHf8dXZtzPapbV97X2RddwL857FquoynnTNlwQJeSJPmGGIp2hNyZWvfJy8pUias3Tj3df25St9piUs21+O4f23n7uDGaXs+XfuG3JBtIJ874ZN8pJg4cCDlEIA8RYqGEiMjVrSfQo9MSGaYRTs2FpocKOw4YzEW2c2YKGHZvcVeYE+yqGA3Y8T4rw5sPutWt9N1Ob4a3sZu52aKU/TUPNhwJ2q5dM2cpFArCpqmoByj+7D/d1GTNJ/UNBU7FRKizjqJElCcekXp4MPUJrYUHUyBKBJeK1BStu1+THszd3m5Ls5d7i5f/gLIg98l"
+}
+```

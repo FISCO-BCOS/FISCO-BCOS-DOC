@@ -4,7 +4,7 @@ For fully supporting the OSCCA-approved cryptography algorithm, FISCO integrates
 
 ## Initial deployment of FISCO BCOS OSCCA-approved cryptography version
 
-This section uses the [`build_chain`] (build_chain.md) script to build a 4-nodes FISCO BCOS chain locally, and uses `Ubuntu 16.04` system as an example to operate. This section uses pre-compiled static `fisco-bcos` binaries for testing on CentOS 7 and Ubuntu 16.04.
+This section uses the [`build_chain`](../manual/build_chain.md) script to build a 4-nodes FISCO BCOS chain locally, and uses `Ubuntu 16.04` system as an example to operate. This section uses pre-compiled static `fisco-bcos` binaries for testing on CentOS 7 and Ubuntu 16.04.
 
 ```bash
 # rely on the installation of Ubuntu16
@@ -12,7 +12,12 @@ $ sudo apt install -y openssl curl
 # prepare environment
 $ cd ~ && mkdir -p fisco && cd fisco
 # download build_chain.sh script
-$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh 
+
+# If you have network issue for exec command above, please try:
+$ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh
+
+$ chmod u+x build_chain.sh
 ```
 
 - build a 4-nodes FISCO BCOS chain
@@ -25,7 +30,7 @@ $ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/bu
 $ ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g
 ```
 
-For the `build_chain.sh` script option, please [refer to here] (build_chain.md). The command that execute normally will output `All completed`. (If there is no output, refer to `nodes/build.log` for checking).
+For the `build_chain.sh` script option, please [refer to here] (../manual/build_chain.md). The command that execute normally will output `All completed`. (If there is no output, refer to `nodes/build.log` for checking).
 
 ```bash
 [INFO] Downloading tassl binary ...
@@ -93,7 +98,7 @@ For details, refer to [SDK Documentation] (../sdk/sdk.html#id8).
 
 ## using OSCCA-approved cryptography console
 
-The function of OSCCA-approved cryptography console is used in the same way as the standard console. Console version 2.6 and above does not require additional configuration. For the configuration method of console version 1.x, please refer to [Console Operation Manual](../manual/console.md).
+The function of OSCCA-approved cryptography console is used in the same way as the standard console. Console version 2.6 and above does not require additional configuration. For the configuration method of console version 1.x, please refer to [Console Operation Manual](../console/console.md).
 
 
 ## OSCCA-approved cryptography configuration

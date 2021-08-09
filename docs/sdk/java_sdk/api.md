@@ -1,5 +1,8 @@
-# Java SDK API
+# 远程调用接口
 
+标签：``java-sdk`` ``Client`` 
+
+----
 Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java API可分为如下几类：
 
 - Client: 提供访问FISCO BCOS 2.0+节点JSON-RPC接口支持、提供部署及调用合约的支持；
@@ -398,6 +401,18 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 #### **返回值**
 - NodeVersion: 查询获取的节点版本信息。
 
+### getNodeInfo
+
+获取节点的NodeID，Topic等信息。
+
+#### **参数**
+
+- ipAndPort: 请求发送的目标节点，包括`IP:Port`信息。
+
+#### **返回值**
+
+- NodeInfo: 查询获取的节点版本信息。
+
 
 ### getConsensusStatus
 获取节点共识状态。
@@ -761,6 +776,27 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - List<PermissionInfo>: 运维管理员列表。
+
+
+#### queryVotesOfMember
+
+查询指定账户被选举为委员账户的投票情况
+
+**参数**
+- `account`: 被查询的账户地址
+
+**返回值**
+- `String`: 返回该账户被选举为委员账户的投票情况；若没有任何委员选举该账户，则返回null字符串
+
+#### queryVotesOfThreshold
+
+查询updateThreshold的投票情况
+
+**参数**
+- 无
+
+**返回值**
+- String: updateThreshold的投票情况，当没有任何委员更新threshold时，返回null字符串。
   
 #### freezeAccount
 冻结指定账户，被冻结的账户不能部署和调用合约。
@@ -994,3 +1030,67 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 - String: 查询到的合约地址。
+
+
+### getBatchReceiptsByBlockNumberAndRange
+
+根据区块高度和交易范围，批量返回群组内的交易回执信息。
+
+#### **参数**
+
+- `blockNumber`: 请求获取的回执信息所在的区块高度;
+- `from`: 需要获取的回执起始索引;
+- `count`: 需要批量获取的回执数目，当设置为-1时，返回区块内所有回执信息;
+
+#### **返回值**
+
+- `BcosTransactionReceiptsDecoder`: 包含压缩编码信息的交易回执数据，调用`decodeTransactionReceiptsInfo`方法可将压缩的交易回执转换为`TransactionReceiptsInfo`对象，并可通过该对象获取交易回执具体信息
+
+**示例:**
+
+```java
+    // 获取最新区块高度的所有交易回执信息(cient初始化过程省略，详细可以参考快速入门)
+   BcosTransactionReceiptsDecoder bcosTransactionReceiptsDecoder =
+                    client.getBatchReceiptsByBlockNumberAndRange(
+                            client.getBlockNumber().getBlockNumber(), "0", "-1");
+    // 解码交易回执信息
+    BcosTransactionReceiptsInfo.TransactionReceiptsInfo receiptsInfo = bcosTransactionReceiptsDecoder.decodeTransactionReceiptsInfo();
+    // 获取回执所在的区块信息
+    BcosTransactionReceiptsInfo.BlockInfo blockInfo = receiptsInfo.getBlockInfo();
+    // 获取交易回执列表
+    List<TransactionReceipt> receiptList = receiptsInfo.getTransactionReceipts();
+
+```
+
+### getBatchReceiptsByBlockHashAndRange
+
+根据区块哈希和交易范围，批量返回群组内的交易回执信息。
+
+#### **参数**
+
+- `blockHash`: 请求获取的回执信息所在的区块哈希;
+- `from`: 需要获取的回执起始索引;
+- `count`: 需要批量获取的回执数目，当设置为-1时，返回区块内所有回执信息;
+
+#### **返回值**
+
+- `BcosTransactionReceiptsDecoder`: 包含压缩编码信息的交易回执数据，调用`decodeTransactionReceiptsInfo`方法可将压缩的交易回执转换为`TransactionReceiptsInfo`对象，并可通过该对象获取交易回执具体信息
+
+**示例:**
+
+```java
+    // 获取最新区块的所有交易回执信息(cient初始化过程省略，详细可以参考快速入门)
+    BcosTransactionReceiptsDecoder bcosTransactionReceiptsDecoder =
+                    client.getBatchReceiptsByBlockHashAndRange(
+                            client.getBlockHashByNumber(client.getBlockNumber().getBlockNumber())
+                                    .getBlockHashByNumber(),
+                            "0",
+                            "-1");
+    // 解码交易回执信息
+    BcosTransactionReceiptsInfo.TransactionReceiptsInfo receiptsInfo = bcosTransactionReceiptsDecoder.decodeTransactionReceiptsInfo();
+    // 获取回执所在的区块信息
+    BcosTransactionReceiptsInfo.BlockInfo blockInfo = receiptsInfo.getBlockInfo();
+    // 获取交易回执列表
+    List<TransactionReceipt> receiptList = receiptsInfo.getTransactionReceipts();
+
+```

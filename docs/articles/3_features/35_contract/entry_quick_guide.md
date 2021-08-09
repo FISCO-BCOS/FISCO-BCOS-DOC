@@ -169,7 +169,7 @@ createTable接口返回值为0时，说明创建成功。需要注意的是，�
 ## 合约部署及调用
 
 开发完智能合约后，需要对合约进行编译和部署，然后才能调用。FISCO BCOS平台提供了交互式控制台工具（Console）,可以非常方便地与链进行交互。下面将以上述智能合约为例，采用控制台工具进行部署和调用。
-控制台安装及使用可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html
+控制台安装及使用可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html
 
 ### 准备工作
 

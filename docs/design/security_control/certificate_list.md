@@ -1,5 +1,9 @@
 # CA黑白名单介绍
 
+标签：``安全控制`` ``网络安全`` ``黑白名单``
+
+----
+
 本文档对黑、白名单进行介绍性说明，实践方法参见[《CA黑白名单操作手册》](../../manual/certificate_list.md)。
 
 ## 名词解释
@@ -25,6 +29,7 @@
 ![](../../../images/node_management/architecture.png)
 
 <center>模块架构</center>
+
 ## 核心流程
 
 底层实现SSL双向验证。节点在handshake过程中，通过对方提供的证书获取对方节点的nodeID，检查该nodeID与节点配置的黑、白名单是否有关系。如果根据黑、白名单的配置，拒绝该关闭的connection，继续后续流程。

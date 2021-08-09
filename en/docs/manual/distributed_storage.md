@@ -32,6 +32,62 @@ mysql -uroot
 mysql> set password for root@localhost = password('123456');
 ```
 
+## Configure MySQL parameters
+### check the configuration file my.cnf
+```bash
+mysql --help | grep 'Default options' -A 1
+```
+After execution, you can see the following data:
+
+```
+Default options are read from the following files in the given order:
+/etc/mysql/my.cnf /etc/my.cnf ~/.my.cnf
+```
+### Configure my.cnf
+mysql loads the configuration from /etc/mysql/my.cnf, /etc/my.cnf, ~/.my.cnf in turn. Search these files in turn, find the first file that exists, and add the following content in the [mysqld] section (modify the value if it exists).
+```
+max_allowed_packet = 1024M
+sql_mode =STRICT_TRANS_TABLES
+ssl=0
+default_authentication_plugin = mysql_native_password
+```
+
+### Restart mysql-server and verify parameters
+
+Ubuntu：Execute the following command to restart
+```bash
+service mysql restart
+```
+
+CentOS：Execute the following command to restart
+```bash
+service mysqld start
+# If mariadb is installed, use the following command to start:
+service mariadb start
+```
+
+Validation parameter:
+```bash
+mysql -uroot -p
+# Execute the following command to view the value of max_allowed_packet
+MariaDB [(none)]>  show variables like 'max_allowed_packet%';
++--------------------+------------+
+| Variable_name      | Value      |
++--------------------+------------+
+| max_allowed_packet | 1073741824 |
++--------------------+------------+
+1 row in set (0.00 sec)
+
+# Execute the following command to view the value of sql_mode
+MariaDB [(none)]>  show variables like 'sql_mode%';
++---------------+---------------------+
+| Variable_name | Value               |
++---------------+---------------------+
+| sql_mode      | STRICT_TRANS_TABLES |
++---------------+---------------------+
+1 row in set (0.00 sec)
+```
+
 ## Node directly connected to MySQL
 
 FISCO BCOS in version 2.0.0-rc3 supports nodes directly connected to MySQL through connection pool. Compared to the proxy access MySQL mode, this configuration is simple. No need to manually create a database. Please refer to the configuration method:
@@ -53,8 +109,14 @@ Before using distributed storage, you need to complete the establishment of the 
 ```bash
 mkdir -p ~/fisco && cd ~/fisco
 # Download build_chain.sh script
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh && chmod u+x build_chain.sh
 ```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+```
+
 #### Generate configuration file
 ```bash
 # generate blockchain configuration file ipconf
@@ -198,28 +260,21 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 #### Prepare dependence
 ```bash
 cd ~/fisco;
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/download_console.sh && bash download_console.sh
-cp -n console/conf/applicationContext-sample.xml console/conf/applicationContext.xml
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
+cp -n console/conf/config-example.toml console/conf/config.toml
 cp nodes/127.0.0.1/sdk/* console/conf/
 ```
+
+```eval_rst
+.. note::
+    - If the script cannot be downloaded for a long time due to network problems, try `https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+```
+
 #### Modify configuration file
 Modify ~/fisco/console/conf/applicationContext.xml to the following configuration (partial information)
 
 ```bash
-<bean id="groupChannelConnectionsConfig" class="org.fisco.bcos.channel.handler.GroupChannelConnectionsConfig">
-	<property name="allChannelConnections">
-		<list>
-			<bean id="group1"  class="org.fisco.bcos.channel.handler.ChannelConnections">
-				<property name="groupId" value="1" />
-					<property name="connectionsStr">
-					<list>
-						<value>127.0.0.1:20200</value>
-					</list>
-				</property>
-			</bean>
-		</list>
-	</property>
-</bean>
+peers=["127.0.0.1:20300", "127.0.0.1:20301"]    # The peer list to connect
 ```
 #### Start console
 ```bash

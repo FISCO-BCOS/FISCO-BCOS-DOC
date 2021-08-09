@@ -1,6 +1,10 @@
 ##############################################################
 Compatibility
 ##############################################################
+.. admonition:: `FISCO BCOS 2.7.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.7.0>`_
+
+     **Change description, compatibility and upgrade instructions**
+      - `FISCO BCOS v2.7.0 <./2_7_0.html>`_
 
 .. admonition:: `FISCO BCOS 2.6.0 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.6.0>`_
 
@@ -40,8 +44,8 @@ Compatibility
 .. admonition:: `FISCO BCOS 2.0.0-rc3 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc3>`_
 
      **New features**
-      - `Distributed storage <../what_is_new.html#id3>`_ (`Operation Manual <../manual/distributed_storage.html>`_)
-      - `CRUD SDK interface<../sdk/sdk.html#crudservice>`_ (`Operation Manual <../manual/console.html#create-sql>`_)
+      - `Distributed storage <../faq/what_is_new.html#id3>`_ (`Operation Manual <../manual/distributed_storage.html>`_)
+      - `CRUD SDK interface<../sdk/sdk.html#crudservice>`_ (`Operation Manual <../console/console.html#create-sql>`_)
 
      **Change description, compatibility and upgrade instructions**
       - `FISCO BCOS v2.0.0-rc3 <./2_0_0_rc3.html>`_
@@ -49,8 +53,8 @@ Compatibility
 .. admonition:: `FISCO BCOS 2.0.0-rc2 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc2>`_
 
      **New features**
-      - `Parallel computing model <../what_is_new.html#id4>`_ (`Operation Manual <../manual/transaction_parallel.html>`_) (`Operation Tutorial <../manual/group_use_cases.html>`_)
-      - `Distributed storage <../what_is_new.html#id3>`_ (`Operation Manual <../manual/distributed_storage.html>`_)
+      - `Parallel computing model <../faq/what_is_new.html#id4>`_ (`Operation Manual <../manual/transaction_parallel.html>`_) (`Operation Tutorial <../manual/group_use_cases.html>`_)
+      - `Distributed storage <../faq/what_is_new.html#id3>`_ (`Operation Manual <../manual/distributed_storage.html>`_)
 
      **Change description, compatibility and upgrade instructions**
       - `FISCO BCOS v2.0.0-rc2 <./2_0_0_rc2.html>`_
@@ -59,13 +63,13 @@ Compatibility
 .. admonition:: `FISCO BCOS 2.0.0-rc1 <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.0.0-rc1>`_
 
      **New features**
-      - `Group architecture <../what_is_new.html#id2>`_ (`Operation Tutorial <../manual/group_use_cases.html>`_) (`Design Document <../design/architecture/group.html>`_)
-      - `Console <../what_is_new.html#id6>`_ (`Installation <../installation.html#id7>`_) (`Operation Manual <../manual/console.html>`_)
-      - `Virtual machine <../what_is_new.html#id7>`_
-      - `Compile contract <../what_is_new.html#id5>`_ (`Operation Manual <../manual/smart_contract.html>`_)
-      - `CRUD interface contract <../what_is_new.html#crud>`_ (`Operation Tutorial <../tutorial/sdk_application.html>`_)
-      - `Key management service <../what_is_new.html#id8>`_ (`Operation Manual <../manual/storage_security.html>`_)
-      - `Admission control <../what_is_new.html#id9>`_ (`Operation Manual <../manual/node_management.html>`_)
+      - `Group architecture <../faq/what_is_new.html#id2>`_ (`Operation Tutorial <../manual/group_use_cases.html>`_) (`Design Document <../design/architecture/group.html>`_)
+      - `Console <../faq/what_is_new.html#id6>`_ (`Installation <../installation.html#id7>`_) (`Operation Manual <../console/console.html>`_)
+      - `Virtual machine <../faq/what_is_new.html#id7>`_
+      - `Compile contract <../faq/what_is_new.html#id5>`_ (`Operation Manual <../manual/smart_contract.html>`_)
+      - `CRUD interface contract <../faq/what_is_new.html#crud>`_ (`Operation Tutorial <../tutorial/sdk_application.html>`_)
+      - `Key management service <../faq/what_is_new.html#id8>`_ (`Operation Manual <../manual/storage_security.html>`_)
+      - `Admission control <../faq/what_is_new.html#id9>`_ (`Operation Manual <../manual/node_management.html>`_)
 
      **Change description, compatibility and upgrade instructions**
       - `FISCO BCOS v2.0.0-rc1 <./2_0_0_rc1.html>`_
@@ -105,7 +109,7 @@ Compatibility
 
 .. toctree::
    :hidden:
-
+   2_7_0.md
    2_6_0.md
    2_5_0.md
    2_4_0.md
