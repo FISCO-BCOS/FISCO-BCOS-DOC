@@ -193,7 +193,7 @@ function setState(uint value) public onlyAdmin{
 
 在这里，用户可以看到交易执行状态(status)、交易执行人(from)、交易输入输出(decoded input, decoded output)、交易开销(execution cost)以及交易日志(logs)。在logs中，我们看到SetState事件被抛出，里面的参数也记录了事件传入的值4。如果我们换一个账户来执行，那么调用会失败，因为onlyAdmin修饰符会阻止用户调用。
 
-![](../../../../images/articles/solidity_basic_features/IMG_5448.PNG)
+![](../../../../images/articles/solidity_basic_features/IMG_5448.JPG)
 
 ### getState
 
