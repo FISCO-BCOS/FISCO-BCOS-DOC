@@ -1,60 +1,34 @@
-# 使用基于硬件加密模块的控制台和Java SDK
-当您的应用需要与使用2.8.0-hsm版本的节点建立，需要使用基于硬件加密模块的Java SDK
-
+# 使用基于硬件安全模块的控制台和Java SDK
 ## 准备环境
 请确保将符合了GMT0018-2012规范的头文件和库文件安装在了动态库默认的搜索路径中，请确保动态库libswsds.so的版本为v1.4.06。
 1. 确保头文件``swsds.h``在目录``/usr/include``中，并保证所有用户都有读权限。
 2. 如果您使用的是Ubuntu操作系统，请将库文件``libswsds.so``放在``/usr/lib``目录下，保重用户具有读和执行权限。
 3. 如果您使用的是Centos操作系统，请将库文件``libswsds.so``以及``/lib64``目录下，保证用户具有读和执行权限。
-
-下载swssl，请在``-H``后输入连接加密机的正确IP地址、端口、密码。
-```bash
-curl -#LO https://raw.githubusercontent.com/MaggieNgWu/FISCO-BCOS/newoct/tools/download_swssl.sh
-bash download_swssl.sh -H 192.168.10.12,10000,XXXXX
-```
-
-## 使用基于硬件加密模块的控制台。
+## 使用基于硬件安全模块的控制台。
 ### 下载控制台
 首先，下载并构建控制台。
 ```bash
 mkdir ~/fisco
 cd ~/fisco
-git clone https://github.com/FISCO-BCOS/console.git -b release-2.8.0
-# 需要连接fisco-bcos-2.8.0-hsm的节点，控制台也必须使用hsm版的Java SDK（fisco-bcos-java-sdk-2.8.0-hsm.jar）
-./gradlew build -b build-hsm.gradle
+git clone https://github.com/FISCO-BCOS/console.git
+./gradlew build
 ```
 ### 配置和运行使用密码机内部密钥的控制台
-首先，请参照[扩容一个使用密码机的节点](./add_new_hsm_node.md)教程，使用``gen_gm_hsm_node_cert.sh``脚本为SDK生成密钥文件。
-假设，您指定了使用31,32号密钥座位上SDK的签名密钥和加密密钥，那么你将得到以下文件：
+首先，将SDK证书复制到控制台的conf目录下。
 ```
-sdk
-|---gm
-|    |----gmca.crt  
-|    |----gmensdk.crt  
-|    |----gmnode.serial  
-|    |----gmsdk.crt  
-|    |----gmsdk.publickey    
-|
-|---swssl.cnf
-|---swsds.ini
+cp -r ～/fisco/nodes/sdk/* ~/fisco/console/dist/conf/
 ```
 
-然后，请将这些文件复制到console的正确目录下。
-```
-cp -r sdk/gm ~/fisco/console/dist/conf/
-cp swsds.ini swsds.cnf ~/fisco/console/dist/
-```
+然后，根据硬件安全模块厂商的指引，为控制台生成一对SM2签名密钥。比如，生成了一对密钥索引为53的签名密钥。
 
-接着，配置console，将``config-hsm-example.toml``复制成``config.toml``, 修改配置。
+接着，配置console，将``config-hsm.toml``复制成``config.toml``, 修改配置。
 ```
 cd ~/fisco/console/dist/
-cp conf/config-hsm-example.toml config.toml
+cp conf/config-example.toml config.toml
 vim conf/config.toml
 ```
 
-将config.toml中的``sslKeyIndex``和``enSslKeyIndex``改成生成SDK时使用的签名密钥索引和加密密钥索引的值，在本例中是31、32.
-
-如果您要使用密码机内部密钥进行交易签名，请在[account]下修改配置，改成正确的签名密钥索引，以及密码。如果没有密码则配置成``password = ""   ``.
+如果您要使用密码机内部密钥进行交易签名，请在[account]下修改配置，写入签名密钥索引，以及密钥访问的密码。如果没有密码则配置成``password = ""   ``.
 ```
 cryptoMaterial]
 certPath = "conf"                           # The certification path
@@ -75,8 +49,6 @@ certPath = "conf"                           # The certification path
 # enSslKey = "conf/gm/gmensdk.key"          # GM ssl cert file path
 # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
 cryptoProvider = "hsm"
-sslKeyIndex = "31"
-enSslKeyIndex = "32"
 
 [network]
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
@@ -126,11 +98,11 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
     您在配置文件的[Account]下指定了accountKeyIndex, 那么您在部署合约时将使用该密钥进行签名。因此，不需要手动在控制台生成账户。
 ```
 
+接着，请根据硬件加密模块厂商的配置指引，配置好密码机，确保java SDK可以根据你的配置访问密码机。比如，如果您用的是密码机，那么需要根据密码机厂商的指引，配置好密码机的IP地址和端口等信息。
+
 最后，运行控制台
 ```bash
 cd ~/fisco/console/dist
-export LD_LIBRARY_PATH=~/.fisco/swssl/lib
-export USE_SWSSL_HSM=true
 ./start.sh
 ```
 
@@ -140,23 +112,18 @@ export USE_SWSSL_HSM=true
 ```
 ### 配置和运行使用密码机外部密钥的控制台
 如果你的控制台使用的是外部密钥
-
 ```bash
 mkdir ~/fisco
 cd ~/fisco
-git clone https://github.com/FISCO-BCOS/console.git -b release-2.8.0
+git clone https://github.com/FISCO-BCOS/console.git
 cd console
-# 需要连接fisco-bcos-2.8.0-hsm的节点，控制台也必须使用hsm版的Java SDK（fisco-bcos-java-sdk-2.8.0-hsm.jar）
-./gradlew build -b build-hsm.gradle
+./gradlew build 
 cd dist/
 cp conf/config-example.toml config.toml
-# 将节点sdk目录下的所有文件复制到conf目录下。
-export LD_LIBRARY_PATH=~/.fisco/swssl/lib
 ./start.sh
 ```
 
 ## 使用基于硬件加密模块的Java SDK Demo。
-
 ### 下载Java SDK Demo
 首先，下载并构建控制台。
 ```bash
@@ -175,40 +142,34 @@ cd java-sdk-demo
 ```
 
 ### 配置和运行使用密码机内部密钥的java sdk demo
-首先，请参照[扩容一个使用密码机的节点](./add_new_hsm_node.md)教程，使用``gen_gm_hsm_node_cert.sh``脚本为SDK生成密钥文件。
-假设，您指定了使用31,32号密钥座位上SDK的签名密钥和加密密钥，那么你将得到以下文件：
+首先，根据密码机/密码卡厂商的指引，为SDK生成用于交易签名的SM2密钥，假设已生成了一对密钥索引为53的SM2签名密钥。
+
+然后，请将SDK证书复制到java-sdk-demo的正确目录下。
 ```
-sdk
-|---gm
-|    |----gmca.crt  
-|    |----gmensdk.crt  
-|    |----gmnode.serial  
-|    |----gmsdk.crt  
-|    |----gmsdk.publickey    
-|
-|---swssl.cnf
-|---swsds.ini
+cp -r ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/java-sdk-demo/dist/conf/
 ```
 
-然后，请将这些文件复制到java-sdk-demo的正确目录下。
-```
-cp -r sdk/gm ~/fisco/java-sdk-demo/dist/conf/
-cp swsds.ini swsds.cnf ~/fisco/java-sdk-demo/dist/
-sudo cp swsds.ini /etc/
-```
-
-接着，配置java-sdk-demo，将``config-hsm-example.toml``复制成``config.toml``, 修改配置。
+接着，配置java-sdk-demo，将``config-example.toml``复制成``config.toml``, 修改配置。
 ```
 cd ~/fisco/java-sdk-demo/dist/
-cp conf/config-hsm-example.toml config.toml
+cp conf/config-example.toml config.toml
 vim conf/config.toml
 ```
 
-将config.toml中的``sslKeyIndex``和``enSslKeyIndex``改成生成SDK时使用的签名密钥索引和加密密钥索引的值，在本例中是31、32.
-
-如果您要使用密码机内部密钥进行交易签名，请在[account]下修改配置，改成正确的签名密钥索引，以及密码。如果没有密码则配置成``password = ""   ``.
+在``[cryptoMaterial]``配置下，指定使用硬件加密模块``cryptoProvider = "hsm" ``
+```toml
+cryptoProvider = "hsm"                      # Use hard ware secure module
 ```
-cryptoMaterial]
+
+并在``[account]``配置下，指定发送交易所使用的内部密钥索引以及密钥访问的密码。如果没有密码则配置成``password = ""   ``.
+```toml
+accountKeyIndex = "53"
+password = "XXXXX"                 # The password used to load the account file or hsm internal 
+```
+
+完整配置文件如下：
+```toml
+[cryptoMaterial]
 certPath = "conf"                           # The certification path
 
 # The following configurations take the certPath by default if commented
@@ -226,9 +187,7 @@ certPath = "conf"                           # The certification path
 
 # enSslKey = "conf/gm/gmensdk.key"          # GM ssl cert file path
 # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
-cryptoProvider = "hsm"
-sslKeyIndex = "31"
-enSslKeyIndex = "32"
+cryptoProvider = "hsm"                      # Use hardware secure module
 
 [network]
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
@@ -261,7 +220,7 @@ peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
 
 # password = ""                 # The password used to load the account file
 accountKeyIndex = "53"           # If use hardware inner key, please config the key index and password
-password = ""               # If use hardware inner key, please config the key index and password
+password = ""                    # If use hardware inner key, please config the key index and password
 
 [threadPool]
 # channelProcessorThreadSize = "16"         # The size of the thread pool to process channel callback
@@ -276,8 +235,6 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 最后，运行Java SDK Demo
 ```bash
 cd ~/fisco/java-sdk-demo/dist
-export LD_LIBRARY_PATH=~/.fisco/swssl/lib
-export OPENSSL_CONF=swssl.cnf
-export USE_SWSSL_HSM=true
-java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add｜transfer] [count] [tps] [file]
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 add 1000 100 user.txt
 ```
