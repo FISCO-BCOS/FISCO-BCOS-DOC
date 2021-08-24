@@ -201,8 +201,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
-
-
 ### 第三步. 使用控制台获取节点信息，并发送交易。
 
 ```bash
@@ -306,11 +304,12 @@ password = "XXXXX"              # The password used to load the account file or 
 maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
 ```
 
-
-
 ### 第三步. 运行控制台，发送交易
+首先，请根据硬件加密模块厂商的配置指引，配置好密码机，确保java SDK可以根据你的配置访问密码机。比如，如果您用的是密码机，那么需要根据密码机厂商的指引，配置好密码机的IP地址和端口等信息。
+
+然后，运行控制台。
 ```bash
-cd dist && bash start.sh
+cd ～/console/dist && bash start.sh
 
 =============================================================================================
 Welcome to FISCO BCOS console(2.8.0)！

@@ -16,7 +16,7 @@ git clone https://github.com/FISCO-BCOS/console.git
 ### 配置和运行使用密码机内部密钥的控制台
 首先，将SDK证书复制到控制台的conf目录下。
 ```
-cp -r ～/fisco/nodes/sdk/* ~/fisco/console/dist/conf/
+cp -r ～/fisco/nodes/127.0.0.1/sdk/* ~/fisco/console/dist/conf/
 ```
 
 然后，根据硬件安全模块厂商的指引，为控制台生成一对SM2签名密钥。比如，生成了一对密钥索引为53的签名密钥。
@@ -231,6 +231,8 @@ password = ""                    # If use hardware inner key, please config the 
 
 maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
 ```
+
+接着，请根据硬件加密模块厂商的配置指引，配置好密码机，确保java SDK可以根据你的配置访问密码机。比如，如果您用的是密码机，那么需要根据密码机厂商的指引，配置好密码机的IP地址和端口等信息。
 
 最后，运行Java SDK Demo
 ```bash
