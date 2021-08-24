@@ -16,10 +16,9 @@
 构建使用硬件密码模块的国密链，你需要在节点所在的服务器安装上密码卡或密码机。FISCO BCOS支持了《GMT0018-2012 密码设备应用接口规范》的密码卡/密码机。
 
 ### 第一步. 请根据您密码卡/密码机的安装指引安装好密码机.
-确保将符合了GMT0018-2012规范的头文件和库文件安装在了动态库默认的搜索路径中。
+确保将符合了GMT0018-2012规范的头文件和库文件安装在了动态库默认的搜索路径中。比如：
 1. 确保头文件``swsds.h``在目录``/usr/include``中，并保证所有用户都有读权限。
-2. 如果您使用的是Ubuntu操作系统，请将库文件``libswsds.so``放在``/usr/lib``目录下，保重用户具有读和执行权限。
-3. 如果您使用的是Centos操作系统，请将库文件``libswsds.so``以及``/lib64``目录下，保证用户具有读和执行权限。
+2. 请将库文件``libswsds.so``放在``/usr/lib``目录下，保重用户具有读和执行权限。如果您使用的是CentOS操作系统，请将库文件``libswsds.so``以及``/lib64``目录下，保证用户具有读和执行权限。
 
 ### 第二步. 请初始化密码卡/密码机，运行其测试程序确保功能正常.
 请根据密码卡/密码机厂商的指引初始化设备，并创建你所需要的内部密钥。然后运行测试程序，确保功能正常，确保能通过安装在``/usr/lib``和``/usr/lib64``下的库能正确调用密码机所提供GMT0018-2012的接口方法。
@@ -27,16 +26,16 @@
 ## 3. 从源码编译FISCO BCOS 2.8.0 HSM版二进制
 ### 第一步. 获取源码
 ```bash
-git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
+git clone -b release-2.8.0 https://github.com/FISCO-BCOS/FISCO-BCOS.git
 cd FISCO-BCOS
-git checkout -b release-2.8.0 origin/release-2.8.0 
 ```
 
 ### 第二步. 编译源码
 ```bash
 mkdir build && cd build
-cmake .. -DUSE_HSM_SDF=on  # 如果您使用的是Linux X86环境
-cmake3 .. -DUSE_HSM_SDF=on  # 如果您使用的是Linux X86环境
+cmake .. -DUSE_HSM_SDF=on  
+# 如果使用CentOS, 请使用cmake3命令
+cmake3 .. -DUSE_HSM_SDF=on  
 make -j6
 ```
 ### 第三步. 确认源码版本
@@ -65,9 +64,9 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s htt
 ### 第二步. 配置密钥类型和密钥索引
 例如，配置节点node0使用密码机内部密钥。
 
-首先，请将node0的节点密钥导入密码机。比如，将``nodes/127.0.0.1/node0/conf/gmnode.key``和``nodes/127.0.0.1/node0/conf/gmennode.key``，分别导入到密码机的43和44号密钥索引位置。
+首先，请将node0的节点密钥导入密码机。比如，将``~/fisco/nodes/127.0.0.1/node0/conf/gmnode.key``和``~/fisco/nodes/127.0.0.1/node0/conf/gmennode.key``，分别导入到密码机的43和44号密钥索引位置。
 
-然后，修改node0的配置文件，``nodes/127.0.0.1/node0/config.ini``。设置crypto_provider、key_id、enckey_id三个配置项，指定节点使用硬件加密模块，以及硬件加密模块内的密钥索引。
+然后，修改node0的配置文件，``~/fisco/nodes/127.0.0.1/node0/config.ini``。设置crypto_provider、key_id、enckey_id三个配置项，指定节点使用硬件加密模块，以及硬件加密模块内的密钥索引。
 ```
 [network_security]
     ; directory the certificates located in
