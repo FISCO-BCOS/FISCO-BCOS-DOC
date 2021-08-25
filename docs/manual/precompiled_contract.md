@@ -421,3 +421,24 @@ contract KVTable {
 - valueField不能以下划线开始，允许字母、数字、下划线，单字段名不超过64字符， valueFields总长度不超过1024
 - valueFields与keyField不能存在重复字段
 
+
+### CryptoPrecompiled-0x5006
+
+#### 接口声明
+
+```solidity
+contract Crypto
+{
+    function sm3(bytes data) public view returns(bytes32){}
+    function keccak256Hash(bytes data) public view returns(bytes32){}
+    function sm2Verify(bytes32 message, bytes publicKey, bytes32 r, bytes32 s) public view returns(bool, address){}
+    function curve25519VRFVerify(string input, string vrfPublicKey, string vrfProof) public view returns(bool,uint256){}
+}
+```
+
+#### 接口说明
+
+- `sm3`: 使用国密sm3算法计算指定数据的哈希;
+- `keccak256Hash`: 使用keccak256算法计算指定数据的哈希;
+- `sm2Verify`: 使用sm2算法验证签名`(publicKey, r, s)`是否有效，验证通过返回`true`以及通过公钥推导出的国密账户，验证失败返回`false`和地址全0的账户;
+- `curve25519VRFVerify`: 给定VRF输入和VRF公钥，使用基于ed25519曲线的VRF算法验证VRF证明是否有效，若VRF证明验证成功，返回`true`以及根据证明推导出来的VRF随机数；若VRF证明验证失败，则返回`(false, 0)`。
