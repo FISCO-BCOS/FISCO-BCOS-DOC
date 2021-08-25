@@ -17,8 +17,8 @@
 
 ### 第一步. 请根据您密码卡/密码机的安装指引安装好密码机.
 确保将符合了GMT0018-2012规范的头文件和库文件安装在了动态库默认的搜索路径中。比如：
-1. 确保头文件``swsds.h``在目录``/usr/include``中，并保证所有用户都有读权限。
-2. 请将库文件``libswsds.so``放在``/usr/lib``目录下，保重用户具有读和执行权限。如果您使用的是CentOS操作系统，请将库文件``libswsds.so``以及``/lib64``目录下，保证用户具有读和执行权限。
+1. 确保头文件``gmt0018.h``在目录``/usr/include``中，并保证所有用户都有读权限。
+2. 请将库文件``libgmt0018.so``放在默认的库搜索路径下，并保证用户具有读和执行权限。如，放在Ubuntu操作系统的``/usr/lib``目录下，放在CentOS操作系统，`/lib64``目录下。
 
 ### 第二步. 请初始化密码卡/密码机，运行其测试程序确保功能正常.
 请根据密码卡/密码机厂商的指引初始化设备，并创建你所需要的内部密钥。然后运行测试程序，确保功能正常，确保能通过安装在``/usr/lib``和``/usr/lib64``下的库能正确调用密码机所提供GMT0018-2012的接口方法。
@@ -144,7 +144,7 @@ info|2020-12-22 17:24:43.729402|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=eb199760...
 ```
 
-## 4. 以使用密码机外部密钥运行Java SDK并发送交易
+## 4. 通过控制台给区块链网络发送交易
 命令行使用Java SDK与节点交互。我们用命令行交互控制台展示Java SDK与FISCO BCOS HSM节点建立连接和发送交易等功能。
 ### 第一步. 准备依赖
 
@@ -219,123 +219,3 @@ ClientVersion{
 0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
 ```
 
-## 5. 使用密码机内部密钥运行Java SDK并发送交易
-我们仍然以控制台为例。
-### 第一步. 获取内部密钥对应的SDK证书
-配置控制台
-```bash
-cp dist/conf/config-example.toml dist/conf/config.toml
-# 将SDK的证书从节点复制到dist/conf/目录下
-# 假设节点目录w为～/fisco/nodes/
-cp -r ～/fisco/nodes/127.0.0.1/sdk/* dist/conf
-```
-### 第二步. 配置Java SDK使用内部密钥
-首先，根据密码机/密码卡厂商的指引，为SDK生成用于交易签名的SM2密钥，假设已生成了一对密钥索引为53的SM2签名密钥。
-
-然后，打开Java SDK的配置文件``config.toml``,在``[cryptoMaterial]``配置下，指定使用硬件加密模块``cryptoProvider = "hsm" ``
-```toml
-cryptoProvider = "hsm"                      # Use hard ware secure module
-```
-
-并在``[account]``配置下，指定发送交易所使用的内部密钥索引以及密钥访问的密码。如果没有密码则配置成``password = ""   ``.
-```toml
-accountKeyIndex = "53"
-password = "XXXXX"                 # The password used to load the account file or hsm internal 
-```
-
-完整的配置文件如下。
-```toml
-[cryptoMaterial]
-
-certPath = "conf"                           # The certification path
-
-# The following configurations take the certPath by default if commented
-# caCert = "conf/ca.crt"                    # CA cert file path
-                                            # If connect to the GM node, default CA cert path is ${certPath}/gm/gmca.crt
-
-# sslCert = "conf/sdk.crt"                  # SSL cert file path
-                                            # If connect to the GM node, the default SDK cert path is ${certPath}/gm/gmsdk.crt
-
-# sslKey = "conf/sdk.key"                   # SSL key file path
-                                            # If connect to the GM node, the default SDK privateKey path is ${certPath}/gm/gmsdk.key
-
-# enSslCert = "conf/gm/gmensdk.crt"         # GM encryption cert file path
-                                            # default load the GM SSL encryption cert from ${certPath}/gm/gmensdk.crt
-
-# enSslKey = "conf/gm/gmensdk.key"          # GM ssl cert file path
-                                            # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
-cryptoProvider = "hsm"                      # Use hard ware secure module
-
-[network]
-peers=["172.17.0.2:20200", "172.17.0.2:20201"]    # The peer list to connect
-
-# Configure a private topic as a topic message sender.
-# [[amop]]
-# topicName = "PrivateTopic1"
-# publicKeys = [ "conf/amop/consumer_public_key_1.pem" ]    # Public keys of the nodes that you want to send AMOP message of this topic to.
-
-# Configure a private topic as a topic subscriber.
-# [[amop]]
-# topicName = "PrivateTopic2"
-# privateKey = "conf/amop/consumer_private_key.p12"         # Your private key that used to subscriber verification.
-# password = "123456"
-
-
-[account]
-# keyStoreDir = "account"         # The directory to load/store the account file, default is "account"
-# accountFilePath = ""          # The account file path (default load from the path specified by the keyStoreDir)
-# accountFileFormat = "pem"       # The storage format of account file (Default is "pem", "p12" as an option)
-
-# accountAddress = ""           # The transactions sending account address
-                                # Default is a randomly generated account
-                                # The randomly generated account is stored in the path specified by the keyStoreDir
-
-accountKeyIndex = "53"          # Key index.
-password = "XXXXX"              # The password used to load the account file or hsm internal. 
-
-[threadPool]
-# channelProcessorThreadSize = "16"         # The size of the thread pool to process channel callback
-                                            # Default is the number of cpu cores
-
-# receiptProcessorThreadSize = "16"         # The size of the thread pool to process transaction receipt notification
-                                            # Default is the number of cpu cores
-
-maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
-```
-
-### 第三步. 运行控制台，发送交易
-首先，请根据硬件加密模块厂商的配置指引，配置好密码机，确保java SDK可以根据你的配置访问密码机。比如，如果您用的是密码机，那么需要根据密码机厂商的指引，配置好密码机的IP地址和端口等信息。
-
-然后，运行控制台。
-```bash
-cd ～/console/dist && bash start.sh
-
-=============================================================================================
-Welcome to FISCO BCOS console(2.8.0)！
-Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________  ______   ______    ______    ______         _______    ______    ______    ______
-|        \|      \ /      \  /      \  /      \       |       \  /      \  /      \  /      \
-| $$$$$$$$ \$$$$$$|  $$$$$$\|  $$$$$$\|  $$$$$$\      | $$$$$$$\|  $$$$$$\|  $$$$$$\|  $$$$$$\
-| $$__      | $$  | $$___\$$| $$   \$$| $$  | $$      | $$__/ $$| $$   \$$| $$  | $$| $$___\$$
-| $$  \     | $$   \$$    \ | $$      | $$  | $$      | $$    $$| $$      | $$  | $$ \$$    \
-| $$$$$     | $$   _\$$$$$$\| $$   __ | $$  | $$      | $$$$$$$\| $$   __ | $$  | $$ _\$$$$$$\
-| $$       _| $$_ |  \__| $$| $$__/  \| $$__/ $$      | $$__/ $$| $$__/  \| $$__/ $$|  \__| $$
-| $$      |   $$ \ \$$    $$ \$$    $$ \$$    $$      | $$    $$ \$$    $$ \$$    $$ \$$    $$
- \$$       \$$$$$$  \$$$$$$   \$$$$$$   \$$$$$$        \$$$$$$$   \$$$$$$   \$$$$$$   \$$$$$$
-
-=============================================================================================
-# 获取节点信息
-[group:1]> getNodeVersion
-ClientVersion{
-    version='2.8.0-hsm gm',
-    supportedVersion='2.8.0',
-    chainId='1',
-    buildTime='20210629 18:07:28',
-    buildType='Linux/g++/RelWithDebInfo',
-    gitBranch='newoct',
-    gitCommitHash='9f1273d8bc9dcef3d6a36e1f32f4f23deaa7d6bb'
-}
-# 部署HelloWorld
-[group:1]> deploy HelloWorld
-0x8c17cf316c1063ab6c89df875e96c9f0f5b2f744
-```
