@@ -6,6 +6,7 @@
 * [Java SDK使用](./java_sdk.md)
 * [Web3SDK使用](./sdk.md)
 * [企业部署工具相关问题](./generator.md)
+* [使用硬件加密模块问题](./hsm.md)
 
 ```eval_rst
 .. toctree::
@@ -18,4 +19,5 @@
    java_sdk.md
    sdk.md
    generator.md
+   hsm.md
 ```
