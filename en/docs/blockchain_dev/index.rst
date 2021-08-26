@@ -30,7 +30,7 @@ Build Blockchain Network
         + Send messages between SDKs
 
 
-.. admonition:: Write samrt contracts
+.. admonition:: Write smart contracts
 
     - `Smart contract development <../manual/smart_contract.html>`_
         + Solidity smart contract and precompiled contract
