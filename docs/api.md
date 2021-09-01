@@ -1061,7 +1061,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 返回根据key值查询的value值
 ### 参数
 - `groupID`: `unsigned int` - 群组ID
-- `key`: `string` - 支持tx_count_limit和tx_gas_limit
+- `key`: `string` - 支持tx_count_limit，tx_gas_limit，consensus_timeout
 ### 返回值
 - `string` - value值
 - 示例
