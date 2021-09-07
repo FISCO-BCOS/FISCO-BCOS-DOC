@@ -36,9 +36,21 @@ KVTable合约实现键值型读写数据的方式，KVTable合约接口声明如
 pragma solidity ^0.4.24;
 
 contract KVTableFactory {
-    function openTable(string) public view returns (KVTable);
-    // 创建KVTable，参数分别是表名、主键列名、以逗号分割的字段名，字段可以有多个
-    function createTable(string, string, string) public returns (int256);
+    /**
+     * @brief 打开表，返回Table合约地址
+     * @param tableName 表的名称
+     * @return 返回Table的地址，当表不存在时，将会返回空地址即address(0x0)
+     */
+    function openTable(string tableName) public constant returns (KVTable);
+
+    /**
+     * @brief 创建表，返回是否成功
+     * @param tableName 表的名称
+     * @param key 表的主键名
+     * @param valueFields 表的字段名，多个字段名以英文逗号分隔
+     * @return 返回错误码，成功为0，错误则为负数
+     */
+    function createTable(string tableName,string key,string valueFields) public returns(int256);
 }
 
 //一条记录
@@ -121,7 +133,7 @@ contract KVTableTest {
 `KVTableTest.sol`调用了`KVTable`合约，实现的是创建用户表`t_kvtest`，并对`t_kvtest`表进行读写的功能。`t_kvtest`表结构如下，该表记录某公司仓库中物资，以唯一的物资编号作为主key，保存物资的名称和价格。
 
 | id*          | item_name | item_price |
-| :----------- | :-------- | :--------- |
+|:-------------|:----------|:-----------|
 | 100010001001 | Laptop    | 6000       |
 
 ```eval_rst
@@ -148,8 +160,21 @@ contract KVTableTest {
 pragma solidity ^0.4.24;
 
 contract TableFactory {
-    function openTable(string) public constant returns (Table);  // 打开表
-    function createTable(string,string,string) public returns(int);  // 创建表
+    /**
+     * @brief 打开表，返回Table合约地址
+     * @param tableName 表的名称
+     * @return 返回Table的地址，当表不存在时，将会返回空地址即address(0x0)
+     */
+    function openTable(string tableName) public constant returns (Table);
+
+    /**
+     * @brief 创建表，返回是否成功
+     * @param tableName 表的名称
+     * @param key 表的主键名
+     * @param valueFields 表的字段名，多个字段名以英文逗号分隔
+     * @return 返回错误码，成功为0，错误则为负数
+     */
+    function createTable(string tableName,string key,string valueFields) public returns(int);
 }
 
 // 查询条件
@@ -198,14 +223,35 @@ contract Entries {
 
 // Table主类
 contract Table {
-    // 查询接口
-    function select(string, Condition) public constant returns(Entries);
-    // 插入接口
-    function insert(string, Entry) public returns(int);
-    // 更新接口
-    function update(string, Entry, Condition) public returns(int);
-    // 删除接口
-    function remove(string, Condition) public returns(int);
+    /**
+     * @brief 查询接口
+     * @param key 查询主键值
+     * @param cond 查询条件
+     * @return Entries合约地址，合约地址一定存在
+     */
+    function select(string key, Condition cond) public constant returns(Entries);
+    /**
+     * @brief 插入接口
+     * @param key 插入主键值
+     * @param entry 插入字段值
+     * @return 插入影响的行数
+     */
+    function insert(string key, Entry entry) public returns(int);
+    /**
+     * @brief 更新接口
+     * @param key 更新主键值
+     * @param entry 更新字段值
+     * @param cond 更新条件
+     * @return 更新影响的行数
+     */
+    function update(string key, Entry entry, Condition cond) public returns(int);
+    /**
+     * @brief 删除接口
+     * @param key 删除的主键值
+     * @param cond 删除条件
+     * @return 删除影响的行数
+     */
+    function remove(string key, Condition cond) public returns(int);
 
     function newEntry() public constant returns(Entry);
     function newCondition() public constant returns(Condition);
@@ -324,7 +370,7 @@ contract TableTest {
 `TableTest.sol`调用了 AMDB 专用的智能合约`Table.sol`，实现的是创建用户表`t_test`，并对`t_test`表进行增删改查的功能。`t_test`表结构如下，该表记录某公司员工领用物资和编号。
 
 | name* | item_name | item_id      |
-| :---- | :-------- | :----------- |
+|:------|:----------|:-------------|
 | Bob   | Laptop    | 100010001001 |
 
 ```eval_rst
@@ -358,7 +404,7 @@ contract TableTest {
 调用solidity合约或者预编译合约需要根据合约地址来区分，地址空间划分：
 
 | 地址用途              | 地址范围        |
-| --------------------- | --------------- |
+|-----------------------|-----------------|
 | 以太坊precompiled     | 0x0001-0x0008   |
 | 保留                  | 0x0008-0x0fff   |
 | FISCO BCOS precompied | 0x1000-0x1006   |
@@ -373,15 +419,15 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 
 源码可见：([libprecompiled GitHub目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled))、([libprecompiled Gitee目录](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled))
 
-| 地址   | 功能           | 源码|
-| ------ | -------------- | ----------------------------------------------------------------------------------------------- |
-| 0x1000 | 系统参数管理   | SystemConfigPrecompiled.cpp                                                                     |
-| 0x1001 | 表工厂合约     | TableFactoryPrecompiled.cpp                                                                     |
-| 0x1002 | CRUD操作实现   | CRUDPrecompiled.cpp                                                                             |
-| 0x1003 | 共识节点管理   | ConsensusPrecompiled.cpp                                                                        |
-| 0x1004 | CNS功能        | CNSPrecompiled.cpp                                                                              |
-| 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp                                                                        |
-| 0x1006 | 并行合约配置   | ParallelConfigPrecompiled.cpp                                                                   |
+| 地址   | 功能           | 源码                          |
+|--------|----------------|-------------------------------|
+| 0x1000 | 系统参数管理   | SystemConfigPrecompiled.cpp   |
+| 0x1001 | 表工厂合约     | TableFactoryPrecompiled.cpp   |
+| 0x1002 | CRUD操作实现   | CRUDPrecompiled.cpp           |
+| 0x1003 | 共识节点管理   | ConsensusPrecompiled.cpp      |
+| 0x1004 | CNS功能        | CNSPrecompiled.cpp            |
+| 0x1005 | 存储表权限管理 | AuthorityPrecompiled.cpp      |
+| 0x1006 | 并行合约配置   | ParallelConfigPrecompiled.cpp |
 
 - **定义合约接口**
 
@@ -499,7 +545,7 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 表结构：
 
 | key       | value       |
-| --------- | ----------- |
+|-----------|-------------|
 | hello_key | hello_value |
 
 该表只存储一对键值对，key字段为hello_key，value字段为hello_value 存储对应的字符串值，可以通过set(string)接口修改，通过get()接口获取。
