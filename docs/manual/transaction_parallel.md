@@ -300,7 +300,7 @@ FISCO BCOS在java-sdk-demo中内置了ParallelOk合约，此处给出用java-sdk
 
 ```shell
 # java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
-java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 add 10000 2500 user
+java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf parallelok 1 add 10000 2500 user
 # 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
@@ -312,7 +312,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompi
 
 ```shell
 # java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
-java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 transfer 100000 4000 user
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf parallelok 1 transfer 100000 4000 user
 
 # 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
 ```
@@ -386,9 +386,9 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompi
 **注意：在批量发送前，请将SDK的日志等级请调整为``ERROR``，才能有足够的发送能力。**
 
 ```shell
-# 参数：<groupID> transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
-java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.precompile.PerformanceDT 1 transfer 100000 4000 user 2
-# 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
+# java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [add] [count] [tps] [file]
+java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 transfer 10000 2500 user
+# 在group1上创建了 10000个用户，创建操作以2500TPS发送的，生成的用户信息保存在user中
 ```
 
 **（3）验证并行正确性**
