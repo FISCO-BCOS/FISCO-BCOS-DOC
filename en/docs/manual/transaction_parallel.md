@@ -417,8 +417,6 @@ We can see that in this transaction, the TPS is 3143. No error (``` verify_faile
 
 **（4）Count total TPS**
 
-Single Web3SDK can send enough transactions to meet the parallel execution limit of node. It needs multiple Web3SDK to send tranactions. And by simply summing the TPS of each transaction won't be correct, so the TPS should be acquired from node directly.
-
 Count TPS from log file using script
 
 ```shell
