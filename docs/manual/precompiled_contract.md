@@ -72,18 +72,18 @@ call(gasLimit, to, value, inputOffset, inputSize, outputOffset, outputSize)
 ### FISCO BCOS当前系统合约及地址如下表：
 
 
-|地址|合约|说明|
-|:----|:----|:----|
-|0x1000|SystemConfigPrecompiled|实现对群组系统参数配置管理|
-|0x1001|TableFactoryPrecompiled|Solidity中使用的Table|
-|0x1002|CRUDPrecompiled|CRUD接口实现，供SDK对链上表增删改查|
-|0x1003|ConsensusPrecompiled|群组节点及节点身份管理|
-|0x1004|CNSPrecompiled|保存更新CNS(contract name service)信息|
-|0x1005|PermissionPrecompiled|基于表的权限控制|
-|0x1006|ParallelConfigPrecompiled|Solidity中合约并行接口配置|
-|0x1007|ContractLifecyclePrecompiled|合约生命周期管理|
-|0x1008|ChainGovernancePrecompiled|角色权限管理|
-|0x1010|KVTableFactoryPrecompiled|Solidity中使用KVTable|
+| 地址   | 合约                         | 说明                                   |
+|:-------|:-----------------------------|:---------------------------------------|
+| 0x1000 | SystemConfigPrecompiled      | 实现对群组系统参数配置管理             |
+| 0x1001 | TableFactoryPrecompiled      | Solidity中使用的Table                  |
+| 0x1002 | CRUDPrecompiled              | CRUD接口实现，供SDK对链上表增删改查    |
+| 0x1003 | ConsensusPrecompiled         | 群组节点及节点身份管理                 |
+| 0x1004 | CNSPrecompiled               | 保存更新CNS(contract name service)信息 |
+| 0x1005 | PermissionPrecompiled        | 基于表的权限控制                       |
+| 0x1006 | ParallelConfigPrecompiled    | Solidity中合约并行接口配置             |
+| 0x1007 | ContractLifecyclePrecompiled | 合约生命周期管理                       |
+| 0x1008 | ChainGovernancePrecompiled   | 角色权限管理                           |
+| 0x1010 | KVTableFactoryPrecompiled    | Solidity中使用KVTable                  |
 
 ## 预编译合约接口描述与SDK支持
 
@@ -102,8 +102,20 @@ contract SystemConfigPrecompiled
 
 #### setValueByKey说明
 
+**入参：**
+
 - key表示配置项名称，当前支持的参数有`tx_count_limit`,`tx_gas_limit`,`rpbft_epoch_sealer_num`,`rpbft_epoch_block_num`,`consensus_timeout`。
 - value表示对应配置项的值，其中`tx_count_limit`默认值为1000，不可设置为负数，`tx_gas_limit`默认值为300000000，不可设置为负数。
+
+**返回：**
+
+- setValueByKey将以错误码的形式返回
+
+| 错误码        | 说明               |
+|:--------------|:-------------------|
+| 错误码大等于0 | 修改所影响的行数   |
+| -50000        | 用户没有权限修改   |
+| -51300        | 输入的系统参数有误 |
 
 #### SDK支持
 
@@ -129,15 +141,40 @@ contract TableFactory {
 
 #### openTable说明
 
+**入参：**
+
 - 根据入参Table返回Solidity中的Table对象
 
+**返回：**
+
+- 当入参的`tableName`是不存在的表名时，将会返回空地址，需要进一步判断
+
 #### createTable说明
+
+**入参：**
 
 - 根据入参创建表，其中valueFields可以有多个字段，使用英文逗号分割。
 - 表名允许字母、数字、下划线，表名不超48字符
 - keyField不能以下划线开始，允许字母、数字、下划线，总长度不能超过64字符
 - valueField不能以下划线开始，允许字母、数字、下划线，单字段名不超过64字符， valueFields总长度不超过1024
 - valueFields与keyField不能存在重复字段
+
+**返回：**
+
+- creatTable将会以错误码的形式返回：
+
+| 错误码 | 说明                         |
+|:-------|:-----------------------------|
+| 0      | 创建成功                     |
+| -50000 | 用户没有权限                 |
+| -50001 | 创建表名已存在               |
+| -50002 | 表名超过48字符               |
+| -50003 | valueField长度超过64字符     |
+| -50004 | valueField总长度超过1024字符 |
+| -50005 | keyField长度超过64字符       |
+| -50007 | 存在重复字段                 |
+| -50007 | 字段存在非法字符             |
+| 其他   | 创建时遇到的其他错误         |
 
 ### CRUDPrecompiled-0x1002
 
@@ -172,6 +209,18 @@ contract CRUDPrecompiled {
 - Select接口根据condition查询对应Table中key下的记录
 - Desc接口，查询对应Table的字段名
 
+**接口返回说明：**
+
+- 接口均以错误码形式返回
+
+| 错误码        | 说明                            |
+|:--------------|:--------------------------------|
+| 错误码大等于0 | 修改所影响的行数                |
+| -50000        | 用户没有权限                    |
+| -51500        | entry解码错误                   |
+| -51501        | condition解码错误               |
+| -51502        | condition包含错误的条件比较语句 |
+| -51503        | update的key错误                 |
 
 #### SDK支持
 
@@ -200,6 +249,16 @@ contract ConsensusPrecompiled {
 - addObserver添加一个观察节点或将已经存在的共识节点身份改为观察节点
 - Remove删除某个节点，如果是最后一个共识节点则不允许删除
 - 数据存放在_sys_consensus_表中
+
+**接口返回说明：**
+
+- 接口均以错误码形式返回
+| 错误码        | 说明                   |
+|:--------------|:-----------------------|
+| 错误码大等于0 | 修改所影响的行数       |
+| -50000        | 用户没有权限修改       |
+| -51100        | 输入错误的nodeID       |
+| -51101        | 正在删除最后一个sealer |
 
 #### SDK支持
 
@@ -231,6 +290,16 @@ contract CNSPrecompiled
 - selectByNameAndVersion根据合约名和版本号返回对应地址、abi的json
 - getContractAddress根据合约名和版本号返回合约地址
 - version不超128字符，address不超256字符，abi不超16MB
+
+**接口返回说明：**
+
+- 接口均以错误码形式返回
+| 错误码        | 说明                     |
+|:--------------|:-------------------------|
+| 错误码大等于0 | 修改所影响的行数         |
+| -50000        | 用户没有权限修改         |
+| -51200        | 合约版本号超过128字符    |
+| -51201        | 合约地址与版本号已经存在 |
 
 #### SDK支持
 
@@ -267,6 +336,20 @@ contract PermissionPrecompiled {
 - Insert为某个表添加一条写权限。可以对同一个表插入多个账户有写权限。
 - Remove删除某个表的一个账户的写权限。
 - queryByName返回有表写权限的地址等信息的json，sdk需要解析
+
+**接口返回说明：**
+
+- 接口均以错误码形式返回
+
+| 错误码        | 说明                                          |
+|:--------------|:----------------------------------------------|
+| 错误码大等于0 | 修改所影响的行数                              |
+| -50000        | 用户没有权限修改                              |
+| -51009        | 表和地址已经存在                              |
+| -51001        | 表和地址都不存在                              |
+| -51002        | 表名长度超过限制                              |
+| -51003        | 合约不存在                                    |
+| -51004        | ChainGovernancePrecompiled committee 特有权限 |
 
 #### SDK支持
 
