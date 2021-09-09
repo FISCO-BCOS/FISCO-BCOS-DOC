@@ -74,6 +74,9 @@ Python3.4及以上版本，需安装PyMysql依赖包：
 
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
+
+# 若因网络问题导致长时间下载失败，可尝试以下命令
+git clone https://gitee.com/FISCO-BCOS/fisco-bcos-browser.git
 ```
 
 进入目录：

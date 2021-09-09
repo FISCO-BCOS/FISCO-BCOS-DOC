@@ -1,4 +1,3 @@
 # WIP
 
-<!-- TODO add console details fix type -->
-
+<!-- TODO add details fix type -->

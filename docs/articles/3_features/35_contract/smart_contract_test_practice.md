@@ -20,7 +20,7 @@ FISCO BCOS提供控制台、WeBASE-Front和SDK代码测试，这三种环境适�
 
 - 控制台：提供命令行交互界面，通过在控制台创建合约和输入调用、查询指令，来进行简单调试。适用于非常简单的合约。
 - WeBASE-Front：提供可视化交互界面以及简易的IDE环境。适用于业务逻辑并不复杂的合约，更推荐开发人员进行一些调试。
-- SDK：例如集成Java Web3sdk，创建一个Java项目，并编写应用和测试代码。适用于对智能合约质量要求较高、要求测试案例可复用、业务逻辑复杂或要求持续集成的场景。
+- SDK：例如集成Java sdk，创建一个Java项目，并编写应用和测试代码。适用于对智能合约质量要求较高、要求测试案例可复用、业务逻辑复杂或要求持续集成的场景。
 
 ### 控制台测试
 
@@ -152,7 +152,7 @@ contract BasicAuth {
 
 要满足以上甚至更多测试实践原则，使用控制台或WeBASE-Front的方式就显得有些力不从心，而集成SDK并编写测试代码的方式更值得推荐。这种方式虽然前期花费时间较长、成本较高；但测试后期能大大降低重复的工作量，显著提升整体测试效率。这也符合IT公司现行的软件测试实践规范。一般这部分代码由公司开发测试人员或质量保证（QA）工程师编写。但在很多公司中，这部分代码由开发人员编写。良好的测试代码，能提升代码质量，降低代码重构难度，提高开发效率。
 
-FISCO BCOS提供了多语言SDK，如Java、Python、Node.js等，其中最为成熟与常用的是Java版Web3SDK。《[手把手教你在Eclipse中使用JavaSDK](https://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247485274&idx=1&sn=b64733bd88a5ec92d2ca3ee6a49fc7a7&scene=21#wechat_redirect)》详细介绍了在Eclipse创建新工程以及将已经提供的示例项目导入Eclipse。在Java开发实践中，Springboot使用更为深入人心，FISCO BCOS也提供了相应使用案例，相关配置文档可以参考：《Spring Boot项目配置》，通过spring-boot-starter开发者可快速下载示例工程，并导入偏好的IDE中。
+FISCO BCOS提供了多语言SDK，如Java、Python、Node.js等，其中最为成熟与常用的是Java SDK。《[在IDE中使用JavaSDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/quick_start.html)》详细介绍了在IDE中创建新工程以及将已经提供的示例项目导入IDE。在Java开发实践中，Springboot使用更为深入人心，FISCO BCOS也提供了相应使用案例，相关配置文档可以参考：《Spring Boot项目配置》，通过spring-boot-starter开发者可快速下载示例工程，并导入偏好的IDE中。
 
 配置工程链基本环境后，下面将以上述spring-boot-starter工程为例，介绍具体测试步骤和要点。
 
@@ -169,14 +169,12 @@ FISCO BCOS提供了多语言SDK，如Java、Python、Node.js等，其中最为�
 @Test
 public void deployAndCallHelloWorld() throws Exception {
     // deploy contract
-    HelloWorld helloWorld = HelloWorld
-           .deploy(web3j, credentials, new StaticGasProvider(GasConstants.GAS_PRICE, GasConstants.GAS_LIMIT))
-           .send();
+    HelloWorld helloWorld = HelloWorld.deploy(client, credential);
     Assert.assertNotNull(helloWorld);
     // call set function
-    helloWorld.set("Hello, World!").send();
+    helloWorld.set("Hello, World!");
     // call get function
-    String result = helloWorld.get().send();
+    String result = helloWorld.get();
     Assert.assertTrue("Hello, World!".equals(result));
  }
 ```
@@ -188,7 +186,7 @@ public void deployAndCallHelloWorld() throws Exception {
 值得一提的是，在Java SDK中，任意交易上链后，会获得一个回执TransactionReceipt对象，该对象中包含了返回状态和错误信息（如果交易成功，则message为null），可通过这个状态判断交易是否正常，例如：
 
 ```
-TransactionReceipt tr = helloWorld.set("Hello, World!").send();
+TransactionReceipt tr = helloWorld.set("Hello, World!");
 Assert.assertEquals(tr.getMessage(), "0x0", tr.getStatus());
 ```
 
@@ -429,9 +427,9 @@ Event相当于提供了log日志的简单机制，当出现无法解决且需要
 
 #### 解决方案：
 
-Solidity缺乏独立的可对外访问的数据层，无法直接获取每笔交易或每个状态的详情。不过，我们可以通过WeBASE数据导出组件来导出所有链上数据。WeBASE-Collect-Bee可以导出区块链上的基础数据，如当前块高、交易总量等。如果正确配置了FISCO BCOS上运行的所有合约，WeBASE-Collect-Bee可以导出区块链上合约的业务数据，包括event、构造函数、合约地址、执行函数的信息等。数据导出组件WeBASE-Collect-Bee的目的在于降低获取区块链数据的开发门槛，提升研发效率。研发人员几乎无需编写任何代码，只进行简单配置，就可以把数据导出到Mysql数据库。
+Solidity缺乏独立的可对外访问的数据层，无法直接获取每笔交易或每个状态的详情。不过，我们可以通过WeBASE数据导出组件来导出所有链上数据。WeBankBlockchain-Data-Export可以导出区块链上的基础数据，如当前块高、交易总量等。如果正确配置了FISCO BCOS上运行的所有合约，Data-Export可以导出区块链上合约的业务数据，包括event、构造函数、合约地址、执行函数的信息等。数据导出组件Data-Export的目的在于降低获取区块链数据的开发门槛，提升研发效率。研发人员几乎无需编写任何代码，只进行简单配置，就可以把数据导出到Mysql数据库。
 
-还是以上面的HelloWorld为例，参考安装文档：WeBASE-Collect-Bee快速部署。安装过程略过不表，导出以后会自动在数据库中生成如下的表：
+还是以上面的HelloWorld为例，参考安装文档：Data-Export快速部署。安装过程略过不表，导出以后会自动在数据库中生成如下的表：
 
 ![](../../../../images/articles/smart_contract_test_practice/IMG_5493.PNG)
 
@@ -464,9 +462,7 @@ hello_world_set_method显示了历史调用的所有函数信息。
 
 - [Spring Boot项目配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#spring-boot)
 - [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)
+- [合约转为Java文件指引](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/quick_start.html#id4)
 - [HelloWorld合约](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/resources/contract/HelloWorld.sol)
-- [转为Java文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id12)
-- [HelloWorld.java](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/java/org/fisco/bcos/solidity/HelloWorld.java)
-- [ContractTest](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/java/org/fisco/bcos/ContractTest.java)
-- [WeBASE-Collect-Bee快速部署](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Codegen-Monkey/install.html#)
+- [WeBankBlockchain-Data-Export快速部署](https://data-doc.readthedocs.io/zh_CN/dev/docs/WeBankBlockchain-Data-Export/install_Service.html)
 

@@ -2,7 +2,8 @@
 
 ```eval_rst
 .. note::
-    Since multiple nodes share network bandwidth, CPU, and memory resources, it is not recommended to configure too much nodes on one machine in order to ensure the stability of service.
+    - FISCO BCOS supports x86_ 64 and aarch64 (ARM) architecture CPU
+    - Since multiple nodes share network bandwidth, CPU, and memory resources, it is not recommended to configure too much nodes on one machine in order to ensure the stability of service.
 
 ```
 
@@ -27,3 +28,5 @@ The following table is a recommended configuration for single-group and single-n
 - CentOS 7.2+
 - Ubuntu 16.04
 - macOS 10.14+
+- Kylin OS V10
+- deepin

@@ -53,7 +53,7 @@ FISCO BCOS offers permission control of console commands (developers can call Pe
 |listUserTableManager              |table_name            |Inquire list of accounts with permission to write user table            |
 
 ### Permission control example
-Console provides script `get_account.sh` to generate accounts. The account files will be stored in `accounts` folder. Console can set active accounts. The operation method is introduced in [Console tutorial](./console.html#id11). Therefore, through console we can set account to experience permission control. For account safety, we will generate 3 PKCS12 account files under the root folder of console by `get_account.sh` script. Please remember the password during generation. The 3 PKCS12 account files are:
+Console provides script `get_account.sh` to generate accounts. The account files will be stored in `accounts` folder. Console can set active accounts. The operation method is introduced in [Console tutorial](../console/console.html#id11). Therefore, through console we can set account to experience permission control. For account safety, we will generate 3 PKCS12 account files under the root folder of console by `get_account.sh` script. Please remember the password during generation. The 3 PKCS12 account files are:
 ```bash
 # account 1
 0x2c7f31d22974d5b1b2d6d5c359e81e91ee656252.p12
@@ -114,7 +114,7 @@ Account 1 grants permission of system manager to account 2. At first, grant acco
 | 0x7fc8335fec9da5f84e60236029bb4a64a469a021  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
-Log in console with account 2 and deploy TableTest contract offered by console. Code of TableTest.sol contract is [here](smart_contract.html#solidity). The CRUD operations of user table t_test are also provided.
+Log in console with account 2 and deploy TableTest contract offered by console. Code of TableTest.sol contract is [here](../manual/smart_contract.html#solidity). The CRUD operations of user table t_test are also provided.
 ```
 [group:1]> deploy TableTest.sol
 contract address:0xfe649f510e0ca41f716e7935caee74db993e9de8

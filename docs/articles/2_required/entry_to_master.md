@@ -94,8 +94,10 @@
 
 [FISCO BCOS开源项目github地址](https://www.github.com/fisco-bcos)
 
-[关键概念阅读](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/tutorial/key_concepts.html)
+[FISCO BCOS开源项目gitee地址](https://gitee.com/fisco-bcos)
+
+[关键概念阅读](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/key_concepts.html)
 
 [《FISCO BCOS零基础入门，五步轻松构建应用》](https://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247485305&idx=1&sn=5a8dc012880aac6f5cd3dacd7db9f1d9&chksm=9f2ef565a8597c73b87fd248c41d1a5b9b0e6a6c6c527baf873498e351e3cb532b77eda9377a&token=705851025&lang=zh_CN#rd)
 
-[深入区块链底层平台FISCO BCOS](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/index.html)
+[深入区块链底层平台FISCO BCOS](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/index.html)

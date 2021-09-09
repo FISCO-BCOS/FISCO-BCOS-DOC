@@ -126,7 +126,7 @@ int count = table.remove(name, condition);
 
 #### PS
 
-存储架构的优化是个基础工程，也是个大工程。实现的转变，其实是架构世界观的一种进化，影响会比看到的功能点更深远。此二文所讲述的，仅是分布式存储的冰山一角。更多原理和使用案例，请参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/smart_contract.html
+存储架构的优化是个基础工程，也是个大工程。实现的转变，其实是架构世界观的一种进化，影响会比看到的功能点更深远。此二文所讲述的，仅是分布式存储的冰山一角。更多原理和使用案例，请参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/smart_contract.html
 
 ### 系列精选
 

@@ -1,12 +1,15 @@
 
 
-# 区块链浏览器前端
+# 浏览器前端
 
+标签：``前端`` ``区块链浏览器`` 
+
+----
 本项目是FISCO BCOS前端项目，使用框架`vue-cli`。
 
 兼容浏览器IE9及以上，360浏览器兼容版（IE9内核），360浏览器极速版，chrome浏览器。
 
-## 1、功能
+## 1.功能
 
 (1)、主要功能是区块链概览，查看区块，查看交易，节点配置以及群组切换。
 
@@ -16,7 +19,7 @@
 
 (4)、区块链概览，查看区块，查看交易和节点配置页面每10s执行一轮请求。
 
-## 2、部署
+## 2.部署
 
 ### 2.1 依赖环境
 
@@ -34,6 +37,10 @@ nginx安装请参考附录
 
 ```shell
 git clone https://github.com/FISCO-BCOS/fisco-bcos-browser.git
+
+
+# 若因网络问题导致长时间下载失败，可尝试以下命令
+git clone https://gitee.com/FISCO-BCOS/fisco-bcos-browser.git
 ```
 
 ```shell
@@ -44,7 +51,31 @@ cd fisco-bcos-browser
 
 **提示：** 目录可以自定义指定，只需要nginx配置文件步骤2保持一致即可。
 
-### 2.3 修改nginx配置
+
+### 2.3 下载solc-bin
+
+执行脚本get_solc_js.sh会自动下载solc-bin，即下面v0.4.25.js等文件。 在 `/data/app/web`目录中直接执行脚本get_solc_js.sh（（脚本与`dist`文件夹同级））
+
+```shell
+	bash ./get_solc_js.sh
+```
+等待脚本执行完成
+
+- 如果执行不成功，请使用下面的命令：
+
+`注意：当且仅当get_solc_js.sh脚本执行失败才需要执行下面的命令`
+
+```shell
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.4.25.js -o ./dist/static/js/v0.4.25.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.4.25-gm.js -o ./dist/static/js/v0.4.25-gm.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.5.2.js -o ./dist/static/js/v0.5.2.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.5.2-gm.js -o ./dist/static/js/v0.5.2-gm.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.6.10.js -o ./dist/static/js/v0.6.10.js
+    curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.6.10-gm.js -o ./dist/static/js/v0.6.10-gm.js
+```
+执行完后检查dist/static/js是否下载完这些js文件。
+
+### 2.4 修改nginx配置
 
 在./web/fisco-bcos-browser-front/doc文件下有nginx配置文件，直接可以拿来替换安装的nginx的配置文件nginx.conf；
 
@@ -53,8 +84,12 @@ cd fisco-bcos-browser
 然后修改nginx.conf；
 
 1. 修改前端服务的ip地址和端口。
-2. 修改前端文件的路径,直接指向已拉取代码的dist目录。
+2. 修改前端文件的路径,直接指向已拉取代码的dist目录。并且如果有需要请修改nginx的user配置，换成对应的user用户（有dist目录访问权限的用户）
 3. 修改后端服务(fisco-bcos-browser)的ip和端口，注意'/api'不要修改。
+
+```Nginx
+#user nobody
+```
 
 ```Nginx
     server {
@@ -78,7 +113,7 @@ cd fisco-bcos-browser
             }
 ```
 
-### 2.4 启动nginx
+### 2.5 启动nginx
 
 (1)、启动nginx。
 启动命令：
@@ -96,10 +131,10 @@ cd fisco-bcos-browser
 
 (3)、打开页面后，配置群组（群组ip是搭链的群组ip），配置节点（该群组下节点），然后就可以查看具体数据了。
 
-## 3、附录
+## 3.附录
 ### 3.1 安装nginx（可参考[网络教程](http://www.runoob.com/linux/nginx-install-setup.html)）
 #### 3.1.1 下载nginx依赖
-在安装nginx前首先要确认系统中安装了gcc、pcre-devel、zlib-devel、openssl-devel。如果没有，请执行命令
+在安装nginx前首先要确认系统中安装了gcc.pcre-devel.zlib-devel、openssl-devel。如果没有，请执行命令
 
 	yum -y install gcc pcre-devel zlib-devel openssl openssl-devel
 执行命令时注意权限问题，如遇到，请加上sudo

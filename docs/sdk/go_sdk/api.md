@@ -1,5 +1,9 @@
 # Go API
 
+标签：``go-sdk`` ``AMOP``
+
+----
+
 Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供外部调用。按照功能，Go API可以分为如下几类：
 
 - **client**：提供访问FISCO BCOS 2.0+节点[JSON-RPC](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html)接口支持、提供部署及调用合约的支持；
@@ -158,7 +162,7 @@ Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供�
 | RevokeOperator      | 根据外部账户地址撤销运维权限             | 外部账户地址 |
 | ListOperators      | 查询全体运维成员列表             | 无 |
 | FreezeAccount      | 根据外部账户地址冻结账户，该外部账号需要是部署过合约的账号             | 外部账户地址 |
-| UnfreezeAccount      | 根据外部账户地址解冻合账户            | 外部账户地址 |
+| UnfreezeAccount      | 根据外部账户地址解冻账户            | 外部账户地址 |
 | GetAccountStatus | 根据外部账户地址查询账户状态 | 外部账户地址   |
 
 ## ContractLifeCycleService

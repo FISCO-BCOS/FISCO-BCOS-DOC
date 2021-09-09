@@ -21,18 +21,18 @@ FISCO BCOS 2.0的网络包括P2P端口、RPC端口、Channel端口。
 P2P端口，用于区块链节点之间的互联，包括机构内的多个节点，以及多机构间节点和节点的互联。如果其他节点在机构外，那么这个连接要监听公网地址，或者监听内网，且由连接公网的网关（如nginx）转发网络连接。
 节点之间的连接会由联盟链的准入机制控制，节点之间连接依赖节点证书验证，以排除未经许可的危险连接。这个链路上的数据通过SSL方式加密，采用高强度密钥，可以有效的保护通信安全。
 
-[P2P网络详细设计](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/p2p/p2p.html)
+[P2P网络详细设计](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/p2p/p2p.html)
 
-[网络安全和准入控制](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/security_control/index.html)
+[网络安全和准入控制](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/security_control/index.html)
 
 ### 2.Channel端口
 
 Channel端口，控制台和客户端SDK连接Channel端口，互相之间要通过证书认证，只有经过认证的客户端才能向节点发起请求，通信数据也是采用SSL方式加密。Channel端口使用了TCP的长连接，用心跳包检测和保持存活，通信效率较高，支持AMOP协议的点对点通信，功能相当灵活强大。
 Channel端口应只监听内网IP地址，供机构内其他的应用服务器通过SDK连接，不应监听外网地址或接受公网的连接，以免发生不必要的安全的问题，也不要只监听本地地址（127.0.0.1或localhost），否则其他应用服务器将无法连接到节点上。
 
-[SDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/sdk/sdk.html)
+[SDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/sdk.html)
 
-[AMOP协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/manual/amop_protocol.html)
+[AMOP协议](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificate_list.html)
 
 ### 3. RPC端口
 
@@ -40,7 +40,7 @@ RPC是客户端与区块链系统交互的一套协议和接口，用户通过RP
 
 RPC端口接受JSON-RPC格式的请求，格式比较直观清晰，采用CURL、JavaScript、Python、Go等语言都可以组装JSON格式的请求，发送到节点来处理。当然发送交易时，要在客户端实现交易签名。要注意的是，RPC连接没有做证书验证，且网络传输默认是明文的，安全性相对不高，建议只监听内网端口，用于监控、运营管理，状态查询等内部的工作流程上。目前监控脚本，区块链浏览器连接的是RPC端口。
 
-[RPC端口文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/design/rpc.html)
+[RPC端口文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/rpc.html)
 
 ## 一个FISCO BCOS 2.0的典型网络配置
 

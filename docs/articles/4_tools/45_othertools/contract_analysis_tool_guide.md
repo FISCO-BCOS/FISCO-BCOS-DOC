@@ -113,7 +113,7 @@ public class EventResultEntity extends ResultEntity {
 
 是英雄，一定有用武之地！交易解析工具入场的地方包括如下场景：
 
-- **控制台**：控制台1.0.4版本已使用交易解析工具解析查询的交易、交易回执以及调用合约时的相关字段。[具体用法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#call)
+- **控制台**：控制台1.0.4版本已使用交易解析工具解析查询的交易、交易回执以及调用合约时的相关字段。[具体用法](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#call)
 - **区块链浏览器、WeBASE管理平台**：用于解码交易和交易回执中的字段，便于交易详情展示。
 - **基于web3sdk的区块链应用**：比较重要的意义是用于获取合约方法的返回值，以往一般对于发送交易的方法，习惯用event记录数据，而方法的返回值处于闲置状态。现在可以使用返回值，并利用交易解析工具解析返回值，助力业务开发。
 

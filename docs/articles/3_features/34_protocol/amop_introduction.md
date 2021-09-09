@@ -50,7 +50,7 @@ AMOP支持同一个区块链网络中有多个Topic收发消息，支持任意�
 
 ## 配置文件配置
 
-AMOP无需任何额外配置，以下为Web3Sdk的参考配置，详细请[参考文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/sdk/sdk.html)。
+AMOP无需任何额外配置，以下为Web3Sdk的参考配置，详细请[参考文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/sdk.html)。
 
 ![](../../../../images/articles/amop_introduction/IMG_5318.PNG)
 

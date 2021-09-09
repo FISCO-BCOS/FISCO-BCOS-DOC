@@ -51,7 +51,7 @@ deploy命令部署合约之后，会显示一个合约地址，考虑到后续�
 FISCO BCOS 2.0 提供节点管理、系统参数管理、权限管理功能，控制台均提供对应的命令进行操作，方便用户通过简单的命令轻松管理区块链。
 其中，节点管理的命令是addSealer(添加共识节点)、addObserver(添加观察节点)、removeNode(移除群组中的节点)；系统参数管理的命令是setSystemConfigByKey(设置系统参数)；权限管理有一系列的命令，管理区块链系统相关功能的操作权限，其具体是以grant开头的赋予权限命令，以revoke开头的撤销权限命令，以及以list开头的查询权限命令。
 
-[具体使用参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#grantpermissionmanager)
+[具体使用参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#grantpermissionmanager)
 
 ### 需求5：可以不用写CRUD合约，操作区块链中的用户表吗？
 
@@ -73,7 +73,7 @@ FISCO BCOS 2.0提供分布式存储，其核心在于表存储设计。CRUD合�
 
 - **面向初学人员**：不用搭建复杂的开发环境，只要简单的节点ip和端口配置，非常轻量级，就可以极速体验区块链功能。当启动控制台后便呈现出一个炫酷的FISCO BCOS标志图案时，会顿时感觉自己成功地与FISCO BCOS产生了第一次连接，从而信心倍增地继续探索区块链。
 
-  [配置和启动控制台请参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id8)
+  [配置和启动控制台请参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id8)
 
 - **面向开发人员**：开发人员可以利用控制台部署和调试合约，当写好合约后，可以在控制台先部署，采用call指令调用验证合约逻辑，观察合约运行过程和结果。如果业务端采用Java开发应用，可以利用控制台的合约编译工具将Solidity合约一键编译为Java客户端代码文件，供客户端的java工程调用。
 
@@ -89,7 +89,7 @@ FISCO BCOS 2.0提供分布式存储，其核心在于表存储设计。CRUD合�
 
 **2、控制台文档列表**：
 
-[Java版控制台使用文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html )  
+[Java版控制台使用文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html )  
 
 [Python版控制台使用文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/python_sdk/console.html)
 

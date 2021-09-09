@@ -109,7 +109,7 @@
 
 针对类似需求，在FISCO BCOS底层平台中，提供了AMOP（链上信使协议），利用已经搭建起来的区块链网络，在全网范围实现点对点、实时、安全的通信。基于AMOP，可以支持即时消息、快速协商、事件通知、交换秘密、构建私有交易等，推荐。
 
-*注：【AMOP】详情可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/amop_protocol.html
+*注：【AMOP】详情可参考：https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificate_list.html
 
 ## 链下信息如何可信上链？
 
