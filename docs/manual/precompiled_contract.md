@@ -399,10 +399,11 @@ contract ContractLifeCyclePrecompiled {
 
 #### 接口说明
 
-- Kill将某个合约置为删除状态，不可恢复
-- Freeze冻结合约
-- Unfree解冻
-- queryStatus查询合约状态
+- freeze冻结合约
+- unfree解冻
+- grantManager授权某个用户为合约的管理者
+- getStatus查询合约状态
+- listManager查询合约管理者
 
 
 #### SDK支持
