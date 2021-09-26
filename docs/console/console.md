@@ -1415,7 +1415,6 @@ Hello,CNS2
 	"msg":"success"
 }
 ```
-**注：权限控制相关命令的示例使用可以参考[权限控制使用文档](./permission_control.md)。**
 
 ### **listPermissionManager**
 
@@ -1825,7 +1824,7 @@ The contract is available.
 
 ### grantCommitteeMember
 
-添加治理委员会委员，如果当前没有委员，则直接添加成功，否则判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。委员账号可以添加运维、管理链系统配置、节点增删等，详情[参考这里](../permission_control.md)。参数：
+添加治理委员会委员，如果当前没有委员，则直接添加成功，否则判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。委员账号可以添加运维、管理链系统配置、节点增删等，详情[参考这里](../manual/permission_control.md)。参数：
 
 - 账号地址：投票添加该账号为委员
 

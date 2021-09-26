@@ -1228,8 +1228,6 @@ Run grantPermissionManager to grant the account's chain administrator privileges
 }
 ```
 
-**Note: For an example of the using permission control related commands, refer to [Permission Control Manual Document](./permission_control.md). **
-
 ### **listPermissionManager**
 To run listPermissionManager to inquire the list of permission records with administrative privileges.
 ```text

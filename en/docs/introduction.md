@@ -128,7 +128,7 @@ Considering the high security requirements of the consortium blockchain platform
 
 - <font color=blue>**[Black and white list mechanism](design/security_control/certificate_list.md)**</font>: Each group can only receive messages from the corresponding group to ensure the isolation of network communication between the groups; the CA blacklist mechanism can disconnect the network connection from the malicious node in time, ensuring the security of the system.
 
-- <font color=blue>**[Authority management mechanism](design/security_control/permission_control.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables.
+- <font color=blue>**[Authority management mechanism](design/security_control/chain_governance.md)**</font>: Based on distributed storage permission control mechanism, flexible and fine-grained control of permissions for external account deployment contracts and creation, insertion, deletion and update of user tables.
 
 - <font color=blue>**[Support OSCCA-approved algorithm](manual/guomi_crypto.md)**</font>: Support OSCCA-approved encryption, signature algorithm and OSCCA-approved SSL communication protocol.
 
