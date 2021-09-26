@@ -649,7 +649,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}
 
 ### 查看节点
 
-查看节点log内group1信息:
+查看节点log内group2信息:
 
 ```bash
 tail -f ~/generator/tmp_one_click/agency*/node/node*/log/log* | grep g:2 | grep +++
