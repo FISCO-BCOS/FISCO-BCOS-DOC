@@ -68,7 +68,7 @@
 在build.gradle中引入Java SDK
 
 ```
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -77,10 +77,15 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>2.7.2</version>
+    <version>2.8.0</version>
 </dependency>
 ```
 
+
+```eval_rst
+.. note::
+    - 由于sol转java代码的变更，若使用最新控制台生成java代码，请升级Java SDK到最新的2.8.0版本
+```
 
 
 ### 第三步. 配置SDK证书
