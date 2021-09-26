@@ -11,11 +11,11 @@ This document describes the design of the freezing/unfreezing operations(referre
 
 Contract management related operations include `freezeContract`, `unfreezeContract`, `grantContractStatusManager`, `getContractStatus`, `listContractStatusManager`.
 
-- [freezeContract](../../manual/console.html#freezecontract) : Reversible operation, the interfaces of a frozen contract can not be called
-- [unfreezeContract](../../manual/console.html#unfreezecontract) : Undo the `freezeContract` operation, the interfaces of an unfrozen contract can be called
-- [getContractStatus](../../manual/console.html#getcontractstatus) : Query the status of a contract to return the status of available/frozen
-- [grantContractStatusManager](../../manual/console.html#grantcontractstatusmanager) : Grant the account's permission of contract status managememt
-- [listContractStatusManager](../../manual/console.html#listcontractstatusmanager) : Query a list of authorized accounts that can manage a specified contract
+- [freezeContract](../../console/console.html#freezecontract) : Reversible operation, the interfaces of a frozen contract can not be called
+- [unfreezeContract](../../console/console.html#unfreezecontract) : Undo the `freezeContract` operation, the interfaces of an unfrozen contract can be called
+- [getContractStatus](../../console/console.html#getcontractstatus) : Query the status of a contract to return the status of available/frozen
+- [grantContractStatusManager](../../console/console.html#grantcontractstatusmanager) : Grant the account's permission of contract status managememt
+- [listContractStatusManager](../../console/console.html#listcontractstatusmanager) : Query a list of authorized accounts that can manage a specified contract
 
 ```eval_rst
 .. important::

@@ -1,5 +1,8 @@
 # 一键部署
 
+标签：``运维部署工具`` ``一键部署``
+
+----
 `one_click_generator.sh`脚本为根据用户填写的节点配置，一键部署联盟链的脚本。脚本会根据用户指定文件夹下配置的`node_deployment.ini`，在文件夹下生成相应的节点。
 
 本章主要以部署**3机构2群组6节点**的组网模式，为用户讲解单机构一键部署运维部署工具的使用方法。
@@ -16,7 +19,11 @@
 **下载**
 
 ```bash
-cd ~/ && git clone https://github.com/FISCO-BCOS/generator.git
+cd ~/ 
+git clone https://github.com/FISCO-BCOS/generator.git
+
+# 若因为网络问题导致长时间无法下载，请尝试以下命令：
+git clone https://gitee.com/FISCO-BCOS/generator.git
 ```
 
 **安装**
@@ -671,4 +678,4 @@ info|2019-02-25 17:25:57.038284| [g:2][p:264][CONSENSUS][SEALER]++++++++++++++++
 
 更多操作，可以参考[操作手册](./operation.md)，或[企业工具对等部署教程](./tutorial_detail_operation.md)。
 
-如果使用该教程遇到问题，请查看[FAQ](../faq.md)
+如果使用该教程遇到问题，请查看[FAQ](../faq/index.md)

@@ -1,5 +1,8 @@
 # 快速安装
 
+标签：``安装Node.js`` ``命令行工具`` 
+
+----
 ## 环境要求
 
 - Node.js开发环境
@@ -76,8 +79,16 @@ Node.js SDK内嵌CLI工具，供用户在命令行中方便地与区块链进行
 *若您的系统中已经搭建了FISCO BCOS链，请跳过本节。*
 
 ```bash
-# 获取开发部署工具
+# 获取开发部署工具build_chain.sh脚本
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+```
+
+```bash
 # 在本地建一个4节点的FISCO BCOS链
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -i
 # 启动FISCO BCOS链

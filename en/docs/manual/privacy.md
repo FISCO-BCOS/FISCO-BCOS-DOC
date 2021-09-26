@@ -87,7 +87,7 @@ Due to its natural anonymity, group/ring signature has broad application prospec
 Make sure you are in the `FISCO-BCOS/build` directory, and execute the following command to build a local 4-node chain. [Refer to here](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html) to get more build options.
 
 ```bash
-bash ../tools/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
+bash ../manual/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 ```
 
 ## Precompiled contract interface

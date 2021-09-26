@@ -34,7 +34,7 @@
 
 ![](../../../images/articles/industry_application_case/IMG_5127.PNG)
 
-![](../../../images/articles/industry_application_case/IMG_5128.PNG)
+![](../../../images/articles/industry_application_case/IMG_5128.JPG)
 
 ![](../../../images/articles/industry_application_case/IMG_5129.PNG)
 
@@ -72,21 +72,21 @@
 
 ![](../../../images/articles/industry_application_case/IMG_5146.PNG)
 
-![](../../../images/articles/industry_application_case/IMG_5147.PNG)
+![](../../../images/articles/industry_application_case/IMG_5147.JPG)
 
-![](../../../images/articles/industry_application_case/IMG_5148.PNG)
+![](../../../images/articles/industry_application_case/IMG_5148.JPG)
 
-![](../../../images/articles/industry_application_case/IMG_5149.PNG)
+![](../../../images/articles/industry_application_case/IMG_5149.JPG)
 
 ![](../../../images/articles/industry_application_case/IMG_5150.PNG)
 
-![](../../../images/articles/industry_application_case/IMG_5151.PNG)
+![](../../../images/articles/industry_application_case/IMG_5151.JPG)
 
-![](../../../images/articles/industry_application_case/IMG_5152.PNG)
+![](../../../images/articles/industry_application_case/IMG_5152.JPG)
 
 ![](../../../images/articles/industry_application_case/IMG_5153.PNG)
 
-![](../../../images/articles/industry_application_case/IMG_5154.PNG)
+![](../../../images/articles/industry_application_case/IMG_5154.JPG)
 
 ![](../../../images/articles/industry_application_case/IMG_5155.PNG)
 
@@ -94,7 +94,7 @@
 
 ![](../../../images/articles/industry_application_case/IMG_5157.PNG)
 
-![](../../../images/articles/industry_application_case/IMG_5158.PNG)
+![](../../../images/articles/industry_application_case/IMG_5158.JPG)
 
 ![](../../../images/articles/industry_application_case/IMG_5159.PNG)
 

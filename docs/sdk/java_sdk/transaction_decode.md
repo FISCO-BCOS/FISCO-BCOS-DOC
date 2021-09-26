@@ -1,6 +1,10 @@
 # 交易回执解析
 
-FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署合约，调用合约接口，维护合约的生命周期以及管理资产，进行价值交换等。当交易确认后会产生交易回执，[交易回执](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt)和[交易](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash)均保存在区块里，用于记录交易执行过程生成的信息，如结果码、日志、消耗的gas量等。用户可以使用交易哈希查询交易回执，判定交易是否完成。  
+标签：``java-sdk`` ``回执解析`` ``事件解析``
+
+----
+
+FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署合约，调用合约接口，维护合约的生命周期以及管理资产，进行价值交换等。当交易确认后会产生交易回执，[交易回执](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt)和[交易](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash)均保存在区块里，用于记录交易执行过程生成的信息，如结果码、事件、消耗的gas量等。用户可以使用交易哈希查询交易回执，判定交易是否完成。  
 
 交易回执包含三个关键字段，分别是input, output , logs:
 
@@ -28,13 +32,25 @@ TransactionDecoderInterface decoder = new TransactionDecoderService(cryptoSuite)
 ```
 
 TransactionDecoderInterface 主要包括以下功能：
-
-- **public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：** 解析不带函数返回值的交易回执。
-- **public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：** 解析带函数返回值的交易回执。
-- **public Map\<String, List\<List\<Object\>\>\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易日志。
+// abi在合约生成的java客户端文件夹下,以HelloWorld.sol为例,为HelloWorld.abi中的json字符串。
+- **public TransactionResponse decodeReceiptWithValues(String abi, String functionName, TransactionReceipt receipt)：**  解析带函数返回值的交易回执。
+- **public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：** 解析不带函数返回值的交易回执。
+- **public Map\<String, List\<List\<Object\>\>\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易事件。
 - **public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)：** 解析回执的状态和报错信息等。
 
+### 解析合约函数示例
+我们以一个简单的递增函数为例，来演示如何解析交易。递增函数对应的solidity代码如下：
+```
+function incrementUint256(uint256 v) public returns(uint256){
+    _uint256V = v + 1 ;
+    emit LogIncrement(msg.sender, v);
+    return _uint256V;
+}
+```
+在上面这段代码中，首先将传入的参数加1，然后记录了递增事件（event），最后返回结果。
+
 ## 2. 解析带返回值的交易
+
 
 传入合约的abi文件，调用函数的名称，以及交易回执，解析交易结果。
 
@@ -45,14 +61,6 @@ TransactionResponse transactionResponse = decoder.decodeReceiptWithValues(abi, "
 
 ### 解析结果示例：
 
-对应的solidity代码：
-```
-function incrementUint256(uint256 v) public returns(uint256){
-    _uint256V = v + 1 ;
-    emit LogIncrement(msg.sender, v);
-    return _uint256V;
-}
-```
 
 以上函数定义中，有函数返回值，也触发了event调用。我们的传入值v为1. 解析交易执行返回的TransactionReceipt以后，对应的结果如下：
 
@@ -106,11 +114,32 @@ function incrementUint256(uint256 v) public returns(uint256){
   }
 }
 ```
+上述解析的报文中，包含了区块链回执的数据结构的详细字段值。此外，还解析了函数的事件（event）以及返回值。
 
-
+解析后的函数事件(event)以及返回值，可查看`events`或`eventResultMap`以及`values`或`valuesList`字段。
+```
+{
+   ……
+  "values": "[2]",
+  "events": "{\"LogIncrement\":[\"0x7c8000530ae01adb3f8f77e7096b335eef83172f\",1]}",
+  "valuesList": [
+    2
+  ],
+  "eventResultMap": {
+    "LogIncrement": [
+      [
+        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
+        1
+      ]
+    ]
+  }
+}
+```
 
 
 ## 3. 解析无返回值的交易
+在某些场景下，我们不关心交易的返回值，只需解析函数中触发的事件(event)以及交易回执的详细数据结构。
+
 传入合约的abi文件和交易回执，解析交易结果。
 
 ```
@@ -170,11 +199,28 @@ TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWith
 }
 ```
 
+上述解析的报文结果中，包含了区块链回执的数据结构的详细字段值和解析后的函数事件(event)。
+
+解析后的函数事件(event)，可查看`events`或`eventResultMap`字段。
+```
+{
+  ……
+  "events": "{\"LogIncrement\":[\"0x7c8000530ae01adb3f8f77e7096b335eef83172f\",1]}",
+  "eventResultMap": {
+    "LogIncrement": [
+      [
+        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
+        1
+      ]
+    ]
+  }
+}
+```
 
 
-## 4. 解析日志
+## 4. 解析事件（event）
 
-只解析调用函数过程中触发的日志。传入合约的abi文件和交易回执的logs，解析交易结果；返回事件名和事件List的Map。
+只解析调用函数过程中触发的事件。传入合约的abi文件和交易回执的logs，解析交易结果；返回事件名和事件List的Map。
 
 ```
 Map<String, List<List<Object>>>> events = decoder.decodeEvents(abi, transactionReceipt.getLogs());
@@ -182,7 +228,7 @@ Map<String, List<List<Object>>>> events = decoder.decodeEvents(abi, transactionR
 
 ### 解析结果示例：
 
-还是以上节调用incrementUint256函数为例，现在演示只解析事件，返回的结果如下：
+还是以上节调用incrementUint256函数为例，现在演示只解析事件（event），返回的结果如下：
 ```
 {
   "LogIncrement": [

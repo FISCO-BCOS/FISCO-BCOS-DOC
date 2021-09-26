@@ -74,7 +74,7 @@ client端支持的TLS协议
 
 ### (2) server hello
 
-![](../../../../images/articles/tsl1.2_establish_process/IMG_5536.PNG)
+![](../../../../images/articles/tsl1.2_establish_process/IMG_5536.JPG)
 
 server端接收到client的请求后，对其进行回应，包括：
 

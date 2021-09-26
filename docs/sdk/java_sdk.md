@@ -1,5 +1,9 @@
 #  Web3SDK
 
+标签：``Web3SDK``
+
+----
+
 [Web3SDK](https://github.com/FISCO-BCOS/web3sdk)可以支持访问节点、查询节点状态、修改系统设置和发送交易等功能。该版本（2.0）的技术文档只适用Web3SDK 2.0及以上版本(与FISCO BCOS 2.0及以上版本适配)，1.2.x版本的技术文档请查看[Web3SDK 1.2.x版本技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-1.3/docs/web3sdk/config_web3sdk.html)。
 
 2.0+版本主要特性包括：
@@ -20,7 +24,7 @@
      
      **注意**：CentOS的yum仓库的OpenJDK缺少JCE(Java Cryptography Extension)，会导致JavaSDK无法正常连接区块链节点。
     - Java安装
-     参考 `Java环境配置 <../manual/console.html#java>`_
+     参考 `Java环境配置 <../console/console.html#java>`_
     - FISCO BCOS区块链环境搭建
      参考 `FISCO BCOS安装教程 <../installation.html>`_
     - 网络连通性
@@ -52,7 +56,7 @@ repositories {
         maven { url "https://dl.bintray.com/ethereum/maven/" }
     }
 ```
-**注：** 如果下载Web3SDK的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../manual/console.html#jar)进行下载。
+**注：** 如果下载Web3SDK的依赖`solcJ-all-0.4.25.jar`速度过慢，可以[参考这里](../console/console.html#jar)进行下载。
 
 ## 配置SDK
 
@@ -70,7 +74,7 @@ FISCO-BCOS 2.5及之后的版本，在国密区块链环境下支持节点与SDK
 
     - 国密SSL连接只有在国密区块链环境下才可以使用。
 
-    - 是否选择国密SSL连接，SDK与区块链节点的配置要保持一致，节点配置参考 `配置链属性 <../manual/configuration.html?highlight=sm_crypto_channel#id10>`_
+    - 是否选择国密SSL连接，SDK与区块链节点的配置要保持一致，节点配置参考 `配置链属性 <../manual/configuration.html#id10>`_
 
     - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错。
 
@@ -320,7 +324,7 @@ System.out.println("PEM Address: " + credentialsPEM.getAddress());
 
 #### 通过SDK部署并调用合约
 ##### 准备Java合约文件
-控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件，具体使用方式[参考这里](../manual/console.html#id10)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译为Java合约文件，具体使用方式[参考这里](../console/console.html#id10)。
 
 ##### 部署并调用合约
 SDK的核心功能是部署/加载合约，然后调用合约相关接口，实现相关业务功能。部署合约调用Java合约类的deploy方法，获取合约对象。通过合约对象可以调用getContractAddress方法获取部署合约的地址以及调用该合约的其他方法实现业务功能。如果合约已部署，则通过部署的合约地址可以调用load方法加载合约对象，然后调用该合约的相关方法。
@@ -356,7 +360,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
 - 启用国密功能：`applicationContext.xml`/`application.yml`配置文件中将`encryptType`属性设置为1。
 - 加载私钥使用`GenCredential`类(适用于国密和非国密)，`Credential`类只适用于加载非国密私钥。
 
-国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。编译国密版的Java合约文件[参考这里](../manual/console.html#id10)。
+国密版SDK调用API的方式与普通版SDK调用API的方式相同，其差异在于国密版SDK需要生成国密版的Java合约文件。编译国密版的Java合约文件[参考这里](../console/console.html#id10)。
 
 ## Web3SDK API
 
@@ -366,10 +370,10 @@ Web3SDK API主要分为Web3j API和Precompiled Service API。其中Web3j API可�
 Web3j API是由web3j对象调用的FISCO BCOS的RPC API，其API名称与RPC API相同，参考[RPC API文档](../api.md)。
 
 ### Precompiled Service API
-预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](../manual/console.md)。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的PermissionService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。相关错误码请参考：[Precompiled Service API 错误码](../api.html#precompiled-service-api)
+预编译合约是FISCO BCOS底层通过C++实现的一种高效智能合约。SDK已提供预编译合约对应的Java接口，控制台通过调用这些Java接口实现了相关的操作命令，体验控制台，参考[控制台手册](2.6版本控制台[参考这里](../../console/console_of_java_sdk.md)，1.x版本控制台[参考这里](../../console/console.md))。SDK提供Precompiled对应的Service类，分别是分布式控制权限相关的PermissionService，[CNS](../design/features/cns_contract_name_service.md)相关的CnsService，系统属性配置相关的SystemConfigService和节点类型配置相关ConsensusService。相关错误码请参考：[Precompiled Service API 错误码](../api.html#precompiled-service-api)
 
 #### PermissionService
-SDK提供对[分布式控制权限](../manual/permission_control.md)的支持，PermissionService可以配置权限信息，其API如下：
+SDK提供对[分布式控制权限](../manual/distributed_storage.md)的支持，PermissionService可以配置权限信息，其API如下：
 - **public String grantUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址设置权限信息。
 - **public String revokeUserTableManager(String tableName, String address)：** 根据用户表名和外部账户地址去除权限信息。
 - **public List\<PermissionInfo\> listUserTableManager(String tableName)：** 根据用户表名查询设置的权限记录列表(每条记录包含外部账户地址和生效块高)。
@@ -1129,7 +1133,7 @@ contract Asset {
 }
 ```
 
-将`Asset.sol`生成对应`Java`合约文件[[将solidity合约生成对应的Java调用文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/console.html#id10)]
+将`Asset.sol`生成对应`Java`合约文件[[将solidity合约生成对应的Java调用文件](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html#id10)]
 ```Java
 class Asset {
     // 其他生成代码 省略
@@ -1387,7 +1391,7 @@ class Asset {
   无法加载到证书文件，证书文件没有正确拷贝至conf目录，可以参考控制台安装流程，拷贝证书文件至conf目录下。<br><br>  
 
 - Failed to initialize the SSLContext: Input stream not contain valid certificates. <br> 
-  加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../manual/console.html#java)章节重新安装OracleJDK。<br><br> 
+  加载证书文件失败，CentOS系统使用OpenJDK的错误，参考[CentOS环境安装JDK](../console/console.html#java)章节重新安装OracleJDK。<br><br> 
 
 - Failed to connect to nodes: [connection timed out: /127.0.0.1:20200]<br>  
   连接超时，节点的网络不可达，请检查提示的IP是否配置错误，或者，当前JavaSDK运行环境与节点的环境网络确实不通，可以咨询运维人员解决网络不通的问题。<br><br> 
@@ -1403,7 +1407,7 @@ class Asset {
   与节点ssl握手失败，可能原因：<br>  
   1. 拷贝了错误的证书，检查拷贝的证书是否正确。
   2. 端口配置错误，连接其他服务正在监听的端口，检查连接端口是否为节点`channel_listen_port`端口。
-  3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../manual/console.html#java)章节安装OracleJDK。<br><br> 
+  3. JDK版本问题，推荐使用1.8以及以上的OracleJDK，参考[CentOS环境安装JDK](../console/console.html#java)章节安装OracleJDK。<br><br> 
   
 - Failed to connect to [127.0.0.1:20233, 127.0.0.1:20234, 127.0.0.1:20235] ,groupId: 1 ,caCert: classpath:ca.crt ,sslKey: classpath:sdk.key ,sslCrt: classpath:sdk.crt ,java version: 1.8.0_231.<br>
   其他未知的错误，需要查看日志文件分析具体错误。
