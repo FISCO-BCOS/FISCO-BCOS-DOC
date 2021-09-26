@@ -10,6 +10,11 @@
     - 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 开发应用过程中将 ``solidity`` 代码转换为 ``java`` 代码时，必须使用 ``2.6+`` 版本控制台，具体请参考  `这里 <../console/download_console.html>`_ 
 ```
 
+```eval_rst	
+.. note::	
+    从 ``v1.0.9`` 开始，控制台不再支持 ``grantPermissionManager`` 命令，请使用 ``grantCommitteeMembers`` 和 ``grantOperator`` 等区块链委员权限管理相关的命令替代该命令。	
+```
+
 [控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
 
 ## 控制台配置与运行
@@ -1763,7 +1768,7 @@ The contract is available.
 
 ### grantCommitteeMember
 
-添加治理委员会委员，如果当前没有委员，则直接添加成功，否则判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。委员账号可以添加运维、管理链系统配置、节点增删等，详情[参考这里](../permission_control.md)。参数：
+添加治理委员会委员，如果当前没有委员，则直接添加成功，否则判断投票账号是否有权限投票，如有则记录投票并检查投票是否生效。委员账号可以添加运维、管理链系统配置、节点增删等，详情[参考这里](../manual/permission_control.md)。参数：
 
 - 账号地址：投票添加该账号为委员
 

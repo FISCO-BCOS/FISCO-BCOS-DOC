@@ -10,6 +10,11 @@
 
 本期文章讲的就是FISCO BCOS权限控制这点事，作者从FISCO BCOS的权限分类、典型的联盟链角色设计、权限控制操作基本步骤等角度进行了解析。
 
+```eval_rst	
+.. note::	
+    从 ``v1.0.9`` 开始，控制台不再支持 ``grantPermissionManager`` 命令，请使用 ``grantCommitteeMembers`` 和 ``grantOperator`` 等区块链委员权限管理相关的命令替代该命令。	
+```
+
 ## FISCO BCOS的权限分类
 
 FISCO BCOS在链刚建立起来的时候，为了方便快速地进行开发和体验，默认并没有做任何权限控制。但如果这条链是用来提供企业级服务，则从一开始就要设计权限控制的策略并落实之。 FISCO BCOS的权限分类：  

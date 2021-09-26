@@ -132,7 +132,7 @@ FISCO BCOS采用高通量可扩展的[多群组架构](design/architecture/group
 
 - <font color=blue>**[黑白名单机制](design/security_control/certificate_list.md)**</font>：每个群组仅可接收相应群组的消息，保证群组间网络通信的隔离性；CA黑名单机制可及时与作恶节点断开网络连接，保障了系统安全。
 
-- <font color=blue>**[权限管理机制](design/security_control/permission_control.md)**</font>：基于分布式存储权限控制机制，灵活、细粒度地控制外部账户部署合约和创建、插入、删除和更新用户表的权限。
+- <font color=blue>**[权限管理机制](design/security_control/chain_governance.md)**</font>：基于分布式存储权限控制机制，灵活、细粒度地控制外部账户部署合约和创建、插入、删除和更新用户表的权限。
 
 - <font color=blue>**[支持国密算法](manual/guomi_crypto.md)**</font>：支持国密加密、签名算法和国密通信协议。
 
