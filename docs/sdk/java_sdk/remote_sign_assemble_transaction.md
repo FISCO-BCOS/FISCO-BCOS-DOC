@@ -40,7 +40,10 @@ contract HelloWorld{
 # 切换到控制台所在目录
 $ cd ~/fisco/console
 
-# 调用sol2java.sh脚本，编译HelloWorld合约
+# 若控制台版本大于等于2.8.0，调用sol2java.sh脚本，编译HelloWorld合约如下：
+$ bash sol2java.sh -p org -s HelloWorld.sol
+
+# 若控制台版本小于2.8.0，调用sol2java.sh脚本，编译HelloWorld合约
 $ bash sol2java.sh org HelloWorld.sol
 
 # 生成的abi位于contracts/sdk/abi/HelloWorld.abi路径

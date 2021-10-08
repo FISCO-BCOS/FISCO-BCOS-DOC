@@ -142,6 +142,16 @@ HelloWorld.sol	KVTableTest.sol	ShaTest.sol	Table.sol	TableTest.sol
 
 **接着，生成调用该智能合约的java类**
 
+**若控制台版本大于等于2.8.0：**
+```bash
+# 使用sol2java.sh将contracts/solidity下的所有合约编译产生bin,abi,java工具类。
+# 当前目录~/fisco/console
+$ bash sol2java.sh -p org.com.fisco
+# 以上命令中参数“org.com.fisco”是指定产生的java类所属的包名。
+# 通过命令./sol2java.sh -h可查看该脚本使用方法
+```
+
+**若控制台版本小于2.8.0：**
 ```bash
 # 使用sol2java.sh将contracts/solidity下的所有合约编译产生bin,abi,java工具类。
 # 当前目录~/fisco/console
@@ -263,6 +273,23 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${p
 控制台`v2.6+`提供了`sol2java.sh`脚本可将`solidity`转换为`java`代码, `sol2java.sh`使用方法如下：
 
 ```shell
+# 若控制台版本大于或等于2.8.0, 脚本sol2java.sh的使用方法如下：
+$ bash sol2java.sh -h
+usage: Compile Solidity Tool:
+ -h,--help
+ -l,--libraries <arg>   [Optional] Set library address information built
+                        into the solidity contract
+                        eg:
+                        --libraries lib1:lib1_address lib2:lib2_address
+ -o,--output <arg>      [Optional] The file path of the generated java
+                        code, default is contracts/sdk/java/
+ -p,--package <arg>     [Optional] The package name of the generated java
+                        code, default is com
+ -s,--sol <arg>         [Optional] The solidity file path or the solidity
+                        directory path, default is contracts/solidity/
+
+                        
+# 若控制台版本小于2.8.0，脚本sol2java.sh的使用方法如下：
 $ bash sol2java.sh -h
 # Compile Solidity Tool
 ./sol2java.sh [packageName] [solidityFilePath] [javaCodeOutputDir]
@@ -273,15 +300,6 @@ $ bash sol2java.sh -h
  	 javaCodeOutputDir:
  		 (optional) the directory where the generated Java files located, default: contracts/sdk/java
 ```
-
-**参数如下：**
-
-- `packageName`: 生成`Java`文件的包名
-- `solidityFilePath`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
-- `javaCodeOutputDir`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录
-
-
-
 ### 附录三. 使用xml配置进行配置
 
 为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
