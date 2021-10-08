@@ -257,7 +257,7 @@ $ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/downloa
 # switch to the fisco/console/ directory
 $ cd ~/fisco/console/
 # compile the contract, specify a Java package name parameter later, you can specify the package name according to the actual project path.
-$ ./sol2java.sh org.fisco.bcos.asset.contract
+$ ./sol2java.sh -p org.fisco.bcos.asset.contract
 ```
 
 After successful operation, the java, abi, and bin directories will be generated in the `console/contracts/sdk directory` as shown below.

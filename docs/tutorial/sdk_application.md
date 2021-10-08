@@ -260,10 +260,12 @@ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/
 # 切换到fisco/console/目录
 cd ~/fisco/console/
 
-# 编译合约，后面指定一个Java的包名参数，可以根据实际项目路径指定包名
+# 若控制台版本大于等于2.8.0，编译合约方法如下:（可通过bash sol2java.sh -h命令查看该脚本使用方法）
+bash sol2java.sh -p org.fisco.bcos.asset.contract
+
+# 若控制台版本小于2.8.0，编译合约(后面指定一个Java的包名参数，可以根据实际项目路径指定包名)如下：
 ./sol2java.sh org.fisco.bcos.asset.contract
 ```
-![](../../images/tutorial/compile_asset.png)
 
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
 

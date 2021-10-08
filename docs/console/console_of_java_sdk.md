@@ -30,7 +30,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -63,9 +63,9 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/downloa
 **注意：默认下载的控制台内置`0.4.25`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**	
 ```bash	
 # 0.5	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh -v 0.5	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/download_console.sh && bash download_console.sh -v 0.5	
 # 0.6	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh -v 0.6	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/download_console.sh && bash download_console.sh -v 0.6	
 ```
 
 ```eval_rst
@@ -152,7 +152,9 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 #### 合约编译工具
 
 **控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 
+
 ```shell
+# 若控制台版本小于v2.8.0，脚本sol2java.sh的使用方法如下：
 $ bash sol2java.sh -h
 # Compile Solidity Tool
 ./sol2java.sh [packageName] [solidityFilePath] [javaCodeOutputDir]
@@ -162,6 +164,21 @@ $ bash sol2java.sh -h
  		 (optional) the solidity file path or the directory where solidity files located, default: contracts/solidity
  	 javaCodeOutputDir:
  		 (optional) the directory where the generated Java files located, default: contracts/sdk/java
+
+# 若控制台版本大于等于v2.8.0，脚本sol2java.sh的使用方法如下：
+$ bash sol2java.sh -h
+usage: Compile Solidity Tool:
+ -h,--help
+ -l,--libraries <arg>   [Optional] Set library address information built
+                        into the solidity contract
+                        eg:
+                        --libraries lib1:lib1_address lib2:lib2_address
+ -o,--output <arg>      [Optional] The file path of the generated java
+                        code, default is contracts/sdk/java/
+ -p,--package <arg>     [Optional] The package name of the generated java
+                        code, default is com
+ -s,--sol <arg>         [Optional] The solidity file path or the solidity
+                        directory path, default is contracts/solidity/
 ```
 参数
 - `packageName`: 生成`Java`文件的包名
@@ -171,7 +188,11 @@ $ bash sol2java.sh -h
 使用
 ```bash
 $ cd ~/fisco/console
+# 若控制台版本小于2.8.0
 $ ./sol2java.sh org.com.fisco # 指定java包名
+
+# 若控制台版本大于等于2.8.9
+$ bash sol2java.sh -p org.com.fisco
 ```
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
 ```bash

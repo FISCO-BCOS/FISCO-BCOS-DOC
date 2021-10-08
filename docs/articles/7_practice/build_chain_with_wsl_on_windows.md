@@ -187,7 +187,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted univer
 
 ```bash
 sudo apt update && sudo apt install -y default-jdk
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/download_console.sh && bash download_console.sh
 cp -n console/conf/config-example.toml console/conf/config.toml
 cp -r nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh
@@ -219,6 +219,7 @@ git地址：<https://github.com/FISCO-BCOS/csharp-sdk>
 ### 2. 编译示例合约HelloWorld
 
 编译工程，在工程输出目录下，建立一个contracts文件夹
+
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/mkdir_contracts.png)
 
