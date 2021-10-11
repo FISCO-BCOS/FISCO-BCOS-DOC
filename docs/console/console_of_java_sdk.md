@@ -191,7 +191,7 @@ $ cd ~/fisco/console
 # 若控制台版本小于2.8.0
 $ ./sol2java.sh org.com.fisco # 指定java包名
 
-# 若控制台版本大于等于2.8.9
+# 若控制台版本大于等于2.8.0
 $ bash sol2java.sh -p org.com.fisco
 ```
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
