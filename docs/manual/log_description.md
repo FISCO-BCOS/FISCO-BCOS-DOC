@@ -132,10 +132,9 @@ FISCO BCOS日志中核心模块关键字如下：
 | 区块/交易同步模块 |SYNC|
 | 交易池 |TXPOOL|
 | 区块链模块 | BLOCKCHAIN |
-| 区块验证器模块    | BLOCKVERIFIER | 
+| 区块验证器模块    | BLOCKVERIFIER |
 | DAG模块 |DAG |
 | 区块执行模块 | EXECUTIVECONTEXT|
 | Precompile合约 |PRECOMPILED|
 | 存储中间件模块 |STORAGE|
-| External存储引擎 |SQLConnectionPool|
 | MySQL存储引擎  |ZdbStorage|

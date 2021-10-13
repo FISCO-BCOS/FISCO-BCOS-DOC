@@ -436,12 +436,8 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 
 ### 配置storage
 
-存储目前支持RocksDB、MySQL、External三种模式，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看；External通过数据代理访问MySQL，用户需要在启动并配置数据代理。设计文档参考[AMDB存储设计](../design/storage/storage.html)。RC3版本起我们使用RocksDB替代LevelDB以获得更好的性能表现，仍支持旧版本LevelDB。
+存储目前支持RocksDB、MySQL和Scalable，用户可以根据需要选择使用的DB，其中RocksDB性能最高；MySQL支持用户使用MySQL数据库，方便数据的查看。
 
-```eval_rst
-.. note::
-    - v2.3.0版本开始，为便于链的维护，推荐使用 `MySQL` 存储模式替代 `External` 存储模式
-```
 
 #### 公共配置项
 
@@ -458,8 +454,6 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
 
 #### 数据库相关配置项
 
-- `topic`：当type为`External`时，需要配置该字段，表示区块链系统关注的AMDB代理topic，详细请参考[这里](./distributed_storage.html#id3)。
-- `max_retry`：当type为`External`时，需要配置该字段，表示写入失败时的重试次数，详细请参考[这里](./distributed_storage.html#id3)。
 - `scroll_threshold_multiple`：当type为`Scalable`时，此配置项用于配置区块数据库的切换阈值，按`scroll_threshold_multiple*1000`。默认为2，区块数据按每2000块存储在不同的RocksDB实例中。
 - `db_ip`：当type为`MySQL`时，需要配置该字段，表示MySQL的IP地址。
 - `db_port`：当type为`MySQL`时，需要配置该字段，表示MySQL的端口号。
@@ -477,9 +471,6 @@ FISCO BCOS v2.4.0引入`Free Storage` Gas衡量模式，提升CPU和内存在Gas
     type=RocksDB
     max_capacity=256
     max_forward_block=10
-    ; only for external
-    max_retry=100
-    topic=DB
     ; only for MySQL
     db_ip=127.0.0.1
     db_port=3306

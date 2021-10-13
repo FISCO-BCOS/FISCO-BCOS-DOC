@@ -28,7 +28,7 @@
 
 [storage]
 
-type=LevelDB：分布式存储的DB引擎类型，支持”LevelDB”和“External”（rc2版本）
+type=LevelDB：分布式存储的DB引擎类型
 
 [state]
 
@@ -62,9 +62,9 @@ import "./Table.sol";
 
 ```
 // TableFactory的地址固定为0x1001
-TableFactory tf = TableFactory(0x1001); 
+TableFactory tf = TableFactory(0x1001);
 
-// 创建t_test表，表的key_field为name，value_field为item_id,item_name 
+// 创建t_test表，表的key_field为name，value_field为item_id,item_name
 // key_field表示分布式存储主key value_field表示表中的列，可以有多列，以逗号分隔
 int count = tf.createTable("t_test", "name", "item_id,item_name");
 ```
@@ -85,7 +85,7 @@ Entries entries = table.select(name, condition);
 
 ```
 TableFactory tf = TableFactory(0x1001);
-Table table = tf.openTable("t_test"); 
+Table table = tf.openTable("t_test");
 
 Entry entry = table.newEntry();
 entry.set("name", name);
