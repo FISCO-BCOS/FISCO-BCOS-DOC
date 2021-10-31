@@ -245,7 +245,7 @@ contract Asset {
 
 Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。Table.sol 合约详细接口参考[这里](../manual/smart_contract.html#crud)。
 
-运行``ls``命令，确保``Assert.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
+运行``ls``命令，确保``Asset.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
 ![](../../images/tutorial/asset_contract.png)
 ## 3. 编译智能合约
 
@@ -331,14 +331,14 @@ public class Asset extends Contract {
   # 确认您当前的java版本
   $ java -version
   # 确认您的java路径
-  $ ls Library/Java/JavaVirtualMachines
+  $ ls /Library/Java/JavaVirtualMachines
   # 返回
   # jdk-14.0.2.jdk
   
   # 如果使用的是bash
   $ vim .bash_profile 
   # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
+  # export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
   $ source .bash_profile
   
   # 如果使用的是zash
@@ -389,16 +389,20 @@ $ tar -zxf asset-app.tar.gz
 repositories {
     mavenCentral()
     maven {
+        allowInsecureProtocol = true
         url "http://maven.aliyun.com/nexus/content/groups/public/"
     }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven {
+        allowInsecureProtocol = true
+        url "https://oss.sonatype.org/content/repositories/snapshots" 
+    }
 }
 ```
 引入Java SDK jar包
 
 ```java
-testCompile group: 'junit', name: 'junit', version: '4.12'
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2')
+testImplementation group: 'junit', name: 'junit', version: '4.12'
+implementation ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')
 ```
 ![](../../images/tutorial/import_sdk.png)
 
@@ -415,9 +419,9 @@ List spring = [
 ]
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2")
-    compile spring
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    implementation ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0")
+    implementation spring
 }
 ```
 
@@ -812,7 +816,7 @@ function usage()
 
 ```
 
-接着，配置好log。在``asset-app/test/resources``目录下创建``log4j.properties``
+接着，配置好log。在``asset-app/src/test/resources``目录下创建``log4j.properties``
 ![](../../images/tutorial/config_log.png)
 
 ```properties
@@ -835,7 +839,7 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %C{1}.%M(%L) | %m%n
 ```
 
-接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
+接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app/src/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
 ![](../../images/tutorial/conf_jar_log.png)
 ```groovy
 dependencies {
