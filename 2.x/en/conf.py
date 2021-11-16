@@ -3,7 +3,7 @@
 # Test documentation build configuration file, created by
 # sphinx-quickstart on Sat Feb  7 20:09:23 2015.
 #
-# This file is execfile()d with the current directory set to its
+# This file is execfile() with the current directory set to its
 # containing dir.
 #
 # Note that not all possible configuration values are present in this
@@ -21,43 +21,13 @@ from recommonmark.transform import AutoStructify
 
 
 DOC_SOURCES_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(DOC_SOURCES_DIR))
+PROJECT_ROOT_DIR = os.path.dirname(os.path.abspath(DOC_SOURCES_DIR))
 sys.path.insert(0, DOC_SOURCES_DIR)
-print('PROJECT_ROOT_DIR', PROJECT_ROOT_DIR)
+print('PROJECT_ROOT_DIR:', PROJECT_ROOT_DIR)
+print('DOC_SOURCES_DIR:', DOC_SOURCES_DIR)
 
 # If runs on ReadTheDocs environment
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-# Hack for lacking git-lfs support ReadTheDocs
-if on_rtd:
-    print('Fetching files with git_lfs')
-
-    import git_lfs
-    try:
-        from urllib.error import HTTPError
-    except ImportError:
-        from urllib2 import HTTPError
-
-    _fetch_urls = git_lfs.fetch_urls
-    def _patched_fetch_urls(lfs_url, oid_list):
-        """Hack git_lfs library that sometimes makes too big requests"""
-        objects = []
-
-        try:
-            objects.extend(_fetch_urls(lfs_url, oid_list))
-        except HTTPError as err:
-            if err.code != 413:
-                raise
-            print("LFS: request entity too large, splitting in half")
-            objects.extend(_patched_fetch_urls(lfs_url, oid_list[:len(oid_list) // 2]))
-            objects.extend(_patched_fetch_urls(lfs_url, oid_list[len(oid_list) // 2:]))
-
-        return objects
-
-    git_lfs.fetch_urls = _patched_fetch_urls
-    git_lfs.fetch(DOC_SOURCES_DIR)
-
-
 # The suffix of source filenames.
 source_parsers = {
 	'.md': 'recommonmark.parser.CommonMarkParser',
@@ -87,7 +57,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['../../_templates']
 
 
 
@@ -98,9 +68,9 @@ templates_path = ['_templates']
 master_doc = 'index'
 
 # General information about the project.
-project = u'FISCO BCOS'
+project = u'FISCO BCOS EN'
 copyright = u'© 2020. All rights reserved.'
-author = u'fisco-bcos-dev'
+author = u'fisco-dev'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -117,7 +87,7 @@ release = 'v2.7.2'
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
 #language = None
-language = 'zh_CN'
+language = 'en'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -155,14 +125,14 @@ pygments_style = 'sphinx'
 
 
 # -- Options for HTML output ----------------------------------------------
-html_theme = 'sphinx_rtd_theme'
+
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme_options = {'navigation_depth': 3,}
+html_theme = 'sphinx_rtd_theme'
+html_theme_options = {'navigation_depth': 4,}
 using_rtd_theme = True
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 todo_include_todos = True
-html_extra_path = ['_static', './docs/sdk/java_sdk/javadoc']
 
 # VCS options: https://docs.readthedocs.io/en/latest/vcs.html#github
 html_context = {
@@ -183,15 +153,14 @@ html_context = {
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-# html_title = None
+#html_title = None
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-# html_short_title = None
+#html_short_title = None
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-# html_logo = None
-# html_logo = '_static/images/FISCO_BCOS_Logo.png'
+#html_logo = None
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -201,7 +170,7 @@ html_context = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['../../_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -254,7 +223,7 @@ html_show_sourcelink = True
 #   'da', 'de', 'en', 'es', 'fi', 'fr', 'hu', 'it', 'ja'
 #   'nl', 'no', 'pt', 'ro', 'ru', 'sv', 'tr'
 #html_search_language = 'en'
-html_search_language = 'zh'
+html_search_language = 'en'
 
 # A dictionary with options for the search language support, empty by default.
 # Now only 'ja' uses this config value
@@ -265,7 +234,7 @@ html_search_language = 'zh'
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'FISCO_BCOS_doc'
+htmlhelp_basename = 'FISCO_BCOS_en_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -304,7 +273,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'FISCO-BCOS.tex', u'FISCO BCOS Documentation',
+  (master_doc, 'FISCO-BCOS_en.tex', u'FISCO BCOS EN Documentation',
    u'fisco-dev', 'manual'),
 ]
 
@@ -334,7 +303,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'FISCO BCOS', u'FISCO BCOS Documentation',
+    (master_doc, 'FISCO BCOS', u'FISCO BCOS EN Documentation',
      [author], 1)
 ]
 
@@ -348,8 +317,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'FISCO BCOS', u'FISCO BCOS Documentation',
-   author, 'fisco-dev', 'documents of FISCO BCOS',
+  (master_doc, 'FISCO BCOS', u'FISCO BCOS EN Documentation',
+   author, 'fisco-dev', 'english documents of FISCO BCOS',
    'Miscellaneous'),
 ]
 
@@ -379,4 +348,4 @@ def setup(app):
 
     app.add_transform(AutoStructify)
     app.add_stylesheet('css/custom.css')
-    app.add_javascript('js/readthedocs-analytics.js')
+    app.add_javascript('../../_static/js/en-readthedocs-analytics.js')
