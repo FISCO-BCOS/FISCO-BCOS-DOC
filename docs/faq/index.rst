@@ -22,4 +22,5 @@
    table.md
    compile.md
    fisco_faq.md
+   java_sdk_faq.md
    hsm.md
