@@ -10,6 +10,6 @@
    :hidden:
 
    add_precompiled_impl.md
-   use_crud_precompiled.md
+   use_kv_precompiled.md
    precompiled_contract_api.md
 ```

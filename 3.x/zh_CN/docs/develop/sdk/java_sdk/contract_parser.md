@@ -3,7 +3,7 @@
 标签：``java-sdk`` ``abi`` ``codec``
 
 ----
-
+// FIXME: 增加scale编码
 # ABI解析
 
 标签：``java-sdk`` ``abi``
