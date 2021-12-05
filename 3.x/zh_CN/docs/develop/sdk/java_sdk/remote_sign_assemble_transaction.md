@@ -16,14 +16,14 @@ SDK支持同步和异步方式来调用合约。在快速上手环节，首先�
 
 ### 2.1 准备abi和binary文件
 
-控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/Liquid合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
 
-通过运行sol2java.sh脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
+通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
-为了便于演示，我们使用了以下HelloWorld的合约。
+为了便于演示，我们使用了以下HelloWorld的Solidity合约。
 
 ```solidity
-pragma solidity ^0.4.25;
+pragma solidity ^0.6.0;
 
 contract HelloWorld{
     string public name;
@@ -31,7 +31,7 @@ contract HelloWorld{
        name = "Hello, World!";
     }
 
-    function set(string n) public{
+    function set(string memory n) public{
         name = n;
     }
 }
@@ -65,10 +65,10 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 ```java
     // 初始化BcosSDK对象
     BcosSDK sdk = new BcosSDK(configFile);
-    // 获取Client对象，此处传入的群组ID为1
-    Client client = sdk.getClient(Integer.valueOf(1));
+    // 获取Client对象，此处传入的群组名为 group
+    Client client = sdk.getClient("group");
     // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
-    CryptoKeyPair keyPair = client.getCryptoSuite().createKeyPair();
+    CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
 ```
 
 ### 2.3 初始化配置对象

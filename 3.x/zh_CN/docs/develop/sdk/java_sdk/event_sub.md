@@ -10,7 +10,7 @@
 
 ## 2. 交互协议
 
-客户端与节点的交互基于[`Channel`](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/protocol_description.html#id4)协议。交互分为三个阶段：注册请求，节点回复，`Event Log`数据推送。
+客户端与节点的交互基于WebSocket协议。交互分为三个阶段：注册请求，节点回复，`Event Log`数据推送。
 
 ### 2.1 注册请求
 
@@ -92,7 +92,7 @@ public class EventLogParams {
     private String fromBlock;   
     private String toBlock;
     private List<String> addresses;
-    private List<Object> topics;
+    private List<List<String>> topics;
 }
 ```
 
@@ -128,11 +128,9 @@ public interface EventCallback {
     private String logIndex;
     private String transactionIndex;
     private String transactionHash;
-    private String blockHash;
     private String blockNumber;
     private String address;
     private String data;
-    private String type;
     private List<String> topics;
   }
 ```

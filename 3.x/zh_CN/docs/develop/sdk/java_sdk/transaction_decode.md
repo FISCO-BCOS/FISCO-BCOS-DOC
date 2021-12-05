@@ -3,7 +3,6 @@
 标签：``java-sdk`` ``回执解析`` ``事件解析``
 
 ----
-// FIXME: 检查sdk接口
 FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署合约，调用合约接口，维护合约的生命周期以及管理资产，进行价值交换等。当交易确认后会产生交易回执，[交易回执](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt)和[交易](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionbyhash)均保存在区块里，用于记录交易执行过程生成的信息，如结果码、事件、消耗的gas量等。用户可以使用交易哈希查询交易回执，判定交易是否完成。  
 
 交易回执包含三个关键字段，分别是input, output , logs:
@@ -23,12 +22,12 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 ```Java
 // 初始化SDK
 BcosSDK sdk =  BcosSDK.build(configFile);
-// 发送群组ID1
-Client client = sdk.getClient(Integer.valueOf(1));
+// 发送群组group
+Client client = sdk.getClient("group");
 // 获取当前群组对应的密码学接口
 CryptoSuite cryptoSuite = client.getCryptoSuite();
-// 构造TransactionDecoderService实例，传入是否密钥类型参数。
-TransactionDecoderInterface decoder = new TransactionDecoderService(cryptoSuite);
+// 构造TransactionDecoderService实例，传入是否密钥类型参数。并且传入是否使用scale解码
+TransactionDecoderInterface decoder = new TransactionDecoderService(cryptoSuite, client.isWASM());
 ```
 
 TransactionDecoderInterface 主要包括以下功能：
@@ -59,7 +58,6 @@ function incrementUint256(uint256 v) public returns(uint256){
 
 ```Java
 TransactionResponse transactionResponse = decoder.decodeReceiptWithValues(abi, "incrementUint256", transactionReceipt);
-
 ```
 
 ### 解析结果示例
@@ -269,7 +267,7 @@ function setBytesMapping(bytes[] bytesArray) public returns (bool) {
 
 ```json
 {
-  "returnCode": 22,
+  "returnCode": 16,
   "returnMessage": "Bytes array is less than 2",
   "transactionReceipt": null,
   "contractAddress": null,

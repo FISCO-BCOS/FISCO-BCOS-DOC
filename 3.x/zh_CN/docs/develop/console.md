@@ -1722,3 +1722,231 @@ test
 ```
 
 ### 2.9 权限操作命令
+
+权限操作只在节点开启权限模式，且设置初始化治理委员地址才可使用。
+
+##### getCommitteeInfo 获取委员会信息
+
+在初始化时，将会部署一个治理委员，该治理委员的地址信息在 build_chain.sh时自动生成或者指定。初始化只有一个委员，并且委员的权重为1
+
+```shell
+[group]: /> getCommitteeInfo
+CommitteeInfo{
+    governorList=[
+        GovernorInfo{
+            governorAddress='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
+            weight=1
+        }
+    ],
+    participatesRate=0,
+    winRate=0
+}
+```
+
+##### getProposalInfo 获取特定提案的信息
+
+获取某个特定的提案信息，提案ID必须存在，否则会报错。
+
+`proposalType` 和  `status` 可以看到提案的类型和状态
+
+proposalType分为以下几种：
+
+- setWeight：当治理委员发起updateGovernorProposal 提案时会生成
+- setRate：setRateProposal 提案会生成
+- setDeployAuthType：setDeployAuthTypeProposal 提案会生成
+- modifyDeployAuth：openDeployAuthProposal 和closeDeployAuthProposal 提案会生成
+- resetAdmin：resetAdminProposal 提案会生成
+- unknown：这个类型出现时，有可能是有bug
+
+status分为以下几种：
+
+- notEnoughVotes：提案正常，还未收集到足够的投票
+- success ：提案成功
+- failed：提案失败
+- revoke：提案被撤回
+- unknown：这个类型出现时，有可能是有bug
+
+```shell
+[group]: /> getProposalInfo 1
+ProposalInfo{
+    resourceId='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
+    proposer='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
+    proposalType=setWeight,
+    blockNumberInterval=604801,
+    status=success,
+    agreeVoters=[
+        0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+    ],
+    againstVoters=[
+
+    ]
+}
+```
+
+##### getDeployAuth 获取当前全局部署的权限策略
+
+权限策略分为：
+
+- 无权限，所有人都可以部署
+- 黑名单，在黑名单上的用户不可以部署
+- 白名单，只有在白名单的用户可以部署
+
+```shell
+[group]: /> getDeployAuth
+There is no deploy strategy, everyone can deploy contracts.
+```
+
+#### 2.9.1 治理委员会命令
+
+治理委员会专用命令，必须要有治理委员会的Governors中的账户才可以调用
+
+如果治理委员只有一个，且提案是该委员发起的，那么这个提案一定能成功
+
+##### updateGovernorProposal 更新治理委员会成员提案
+
+如果是新加治理委员，新增地址和权重即可。
+
+如果是删除治理委员，将一个治理委员的权重设置为0 即可
+
+```shell
+[group]: /> updateGovernorProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8 321
+Update governor proposal created, id is: 2
+
+[group]: /> getProposalInfo 2
+ProposalInfo{
+    resourceId='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
+    proposer='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
+    proposalType=setWeight,
+    blockNumberInterval=604802,
+    status=success,
+    agreeVoters=[
+        0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+    ],
+    againstVoters=[
+
+    ]
+}
+
+```
+
+##### setRateProposal 设置委员会提案阈值的提案
+
+设置提案阈值，提案阈值分为参与阈值和权重阈值。
+
+阈值在这里是以百分比为单位进行使用的。
+
+```shell
+[group]: /> setRateProposal 1 1
+Set rate proposal created, id is: 3
+
+[group]: /> getProposalInfo 3
+ProposalInfo{
+    resourceId='0x0000000000000000000000000000000000010001',
+    proposer='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
+    proposalType=setRate,
+    blockNumberInterval=604803,
+    status=success,
+    agreeVoters=[
+        0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+    ],
+    againstVoters=[
+
+    ]
+}
+```
+
+##### setDeployAuthTypeProposal 设置全局部署策略的提案
+
+设置部署的ACL策略，只支持 white_list 和 black_list 两种策略
+
+```shell
+[group]: /> setDeployAuthTypeProposal white_list
+Set deploy auth type proposal created, id is: 4
+
+[group]: /> getDeployAuth
+Deploy strategy is White List Access.
+```
+
+##### openDeployAuthProposal 开启某个管理员部署权限的提案
+
+```shell
+[group]: /> deploy HelloWorld
+deploy contract for HelloWorld failed!
+return message: Permission denied
+return code:18
+Return values:null
+
+[group]: /> openDeployAuthProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+Open deploy auth proposal created, id is: 5
+
+[group]: /> deploy HelloWorld
+transaction hash: 0x4708ba16df0df78db5472cffdd5a11c45977b6dcba047abfc346a89179e6a030
+contract address: 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
+currentAccount: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+```
+
+##### closeDeployAuthProposal 关闭某个管理员部署权限的提案
+
+```shell
+[group]: /> deploy HelloWorld
+transaction hash: 0x4708ba16df0df78db5472cffdd5a11c45977b6dcba047abfc346a89179e6a030
+contract address: 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
+currentAccount: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+
+[group]: /> closeDeployAuthProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+Close deploy auth proposal created, id is: 6
+
+[group]: /> deploy HelloWorld
+deploy contract for HelloWorld failed!
+return message: Permission denied
+return code:18
+Return values:null
+```
+
+##### resetAdminProposal 重置某个合约的管理员的提案
+
+```shell
+[group]: /> resetAdminProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
+Reset contract admin proposal created, id is: 7
+
+[group]: /> getContractAdmin 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
+Admin for contract 0x6546c3571F17858Ea45575e7C6457dad03E53DbB is: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+```
+
+##### revokeProposal 撤销还未成功的提案
+
+##### voteProposal 投票提案
+
+#### 2.9.2 管理员专用命令
+
+**特别注意：合约的接口权限控制目前只能对写方法进行控制。**
+
+##### setMethodAuth 管理员设置方法的权限策略
+
+```shell
+[group]: /> setMethodAuth 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 "set(string)" white_list
+Set method auth type success, resultCode is: 0
+
+[group]: /> call HelloWorld 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 set 123
+call for HelloWorld failed, contractAddress: 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903
+{
+    "code":18,
+    "msg":"Permission denied"
+}
+description: Permission denied, please refer to https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#id73
+```
+
+##### openMethodAuth	管理员开启用户可以访问合约的某个方法的权限
+
+```shell
+[group]: /> openMethodAuth  0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94 "set(string)" 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+Open success, resultCode is: 0
+```
+
+##### closeMethodAuth	管理员关闭用户可以访问合约的某个方法的权限
+
+```shell
+[group]: /> closeMethodAuth  0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94 "set(string)" 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+Close success, resultCode is: 0
+```
+

@@ -41,14 +41,14 @@
 
 ### 2.1 准备abi和binary文件
 
-控制台提供一个专门的编译合约工具，方便开发者将Solidity合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/Liquid合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
 
-通过运行sol2java.sh脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
+通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
-为了便于演示，我们使用了以下`HelloWorld`的合约。
+为了便于演示，我们使用了以下HelloWorld的Solidity合约。
 
 ```solidity
-pragma solidity ^0.4.25;
+pragma solidity ^0.6.0;
 
 contract HelloWorld{
     string public name;
@@ -56,7 +56,7 @@ contract HelloWorld{
        name = "Hello, World!";
     }
 
-    function set(string n) public{
+    function set(string memory n) public{
         name = n;
     }
 }
@@ -68,11 +68,8 @@ contract HelloWorld{
 # 切换到控制台所在目录
 $ cd ~/fisco/console
 
-# 若控制台版本小于2.8.0，调用sol2java.sh脚本，编译HelloWorld合约
-$ bash sol2java.sh org HelloWorld.sol
-
-# 若控制台版本大于等于2.8.0, 调用sol2java.sh脚本，编译HelloWorld合约
-$ bash sol2java.sh -p org -s HelloWorld.sol
+# 若控制台版本大于等于2.8.0，调用sol2java.sh脚本，编译HelloWorld合约如下：
+$ bash contratc2java.sh solidity -p org -s HelloWorld.sol
 
 # 生成的abi位于contracts/sdk/abi/HelloWorld.abi路径
 $ ls contracts/sdk/abi/HelloWorld.abi
@@ -84,7 +81,7 @@ $ ls contracts/sdk/bin/HelloWorld.bin
 $ ls contracts/sdk/bin/sm/HelloWorld.bin
 ```
 
-至此`HelloWorld`合约的abi和binary文件均已生成。
+至此`HelloWorld`合约的abi和binary文件均已生成
 
 ### 2.2 初始化SDK
 
@@ -93,10 +90,10 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 ```java
     // 初始化BcosSDK对象
     BcosSDK sdk = new BcosSDK(configFile);
-    // 获取Client对象，此处传入的群组ID为1
-    Client client = sdk.getClient(Integer.valueOf(1));
+    // 获取Client对象，此处传入的群组名 group
+    Client client = sdk.getClient("group");
     // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
-    CryptoKeyPair keyPair = client.getCryptoSuite().createKeyPair();
+    CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
 ```
 
 ### 2.3 初始化配置对象
@@ -106,7 +103,7 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。本场景下适用于默认的情况，通过创建和使用`AssembleTransactionProcessor`对象来完成合约相关的部署、调用和查询等操作。
 
 ```java
-       AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
+AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
 ```
 
 #### 2.3.2 仅交易和查询
@@ -127,8 +124,7 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 
 ```java
     // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
-    TransactionResponse response = transactionProcessor.deployByContractLoader("HelloWorld", new ArrayList<>());
-
+TransactionResponse response = transactionProcessor.deployByContractLoader("HelloWorld", new ArrayList<>());
 ```
 
 `TransactionResponse`的数据结构如下：
@@ -224,8 +220,8 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 查询合约直接通过调用链上的节点查询函数即可返回结果，无需共识；因此所有的查询交易都是同步方式通讯的。查询合约使用了`sendCallByContractLoader`函数来查询合约，此处展示了如何调用`HelloWorld`中的`name`函数来进行查询。
 
 ```java
-    // 查询HelloWorld合约的『name』函数，合约地址为helloWorldAddress，参数为空
-    CallResponse callResponse = transactionProcessor.sendCallByContractLoader("HelloWorld", helloWorldAddrss, "name", new ArrayList<>());
+// 查询HelloWorld合约的『name』函数，合约地址为helloWorldAddress，参数为空
+CallResponse callResponse = transactionProcessor.sendCallByContractLoader("HelloWorld", helloWorldAddrss, "name", new ArrayList<>());
 ```
 
 查询函数返回如下：
@@ -249,9 +245,10 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 #### 3.1.1 构造接口签名
 
 ```java
-    ABICodec abiCodec = new ABICodec(client.getCryptoSuite());
-    String setMethodSignature = "set(string)";
-    String abiEncoded = abiCodec.encodeMethodByInterface(setMethodSignature, new Object[]{new String("Hello World")});
+// 使用Liquid合约时_isWasm 为true，Solidity合约则为false
+ABICodec abiCodec = new ABICodec(client.getCryptoSuite(), _isWasm);
+String setMethodSignature = "set(string)";
+String abiEncoded = abiCodec.encodeMethodByInterface(setMethodSignature, new Object[]{new String("Hello World")});
 ```
 
 #### 3.1.2 构造TransactionProcessor
@@ -259,8 +256,7 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 由于通过构造接口签名的方式无需提供abi，故可以构造一个`TransactionProcessor`来操作。同样可使用`TransactionProcessorFactory`来构造。
 
 ```java
-    // ……
-    TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
+TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
 ```
 
 #### 3.1.3 发送交易
@@ -268,8 +264,7 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 发送交易到FISCO BCOS节点并接收回执。
 
 ```java
-    // ……
-    TransactionReceipt transactionReceipt = transactionProcessor.sendTransactionAndGetReceipt(contractAddress, abiEncoded, keyPair);
+TransactionReceipt transactionReceipt = transactionProcessor.sendTransactionAndGetReceipt(contractAddress, abiEncoded, keyPair);
 ```
 
 ### 3.2 采用callback的方式异步操作合约
@@ -322,12 +317,12 @@ public class TransactionCallbackMock extends TransactionCallback {
 首先，创建一个回调类的实例。然后使用`deployByContractLoaderAsync`方法，异步部署合约。
 
 ```java
-    // 创建回调类的实例
-    TransactionCallbackMock callbackMock = new TransactionCallbackMock();
-    // 异步部署合约
-    transactionProcessor.deployByContractLoaderAsync("HelloWorld", new ArrayList<>(), callbackMock);
-    // 异步等待获取回执
-    TransactionReceipt transactionReceipt = callbackMock.getResult();
+// 创建回调类的实例
+TransactionCallbackMock callbackMock = new TransactionCallbackMock();
+// 异步部署合约
+transactionProcessor.deployByContractLoaderAsync("HelloWorld", new ArrayList<>(), callbackMock);
+// 异步等待获取回执
+TransactionReceipt transactionReceipt = callbackMock.getResult();
 ```
 
 #### 3.2.3 采用callback的方式发送交易
@@ -335,14 +330,14 @@ public class TransactionCallbackMock extends TransactionCallback {
 参考部署合约交易，可采用异步的方式发送交易。
 
 ```java
-    // 创建回调类的实例
-    TransactionCallbackMock callbackMock = new TransactionCallbackMock();
-    // 定义构造参数
-    List<Object> params = Lists.newArrayList("test");
-    // 异步调用合约交易
-    transactionProcessor.sendTransactionAsync(to, abi, "set", params, callbackMock );
-    // 异步等待获取回执
-    TransactionReceipt transactionReceipt = callbackMock.getResult();
+// 创建回调类的实例
+TransactionCallbackMock callbackMock = new TransactionCallbackMock();
+// 定义构造参数
+List<Object> params = Lists.newArrayList("test");
+// 异步调用合约交易
+transactionProcessor.sendTransactionAsync(to, abi, "set", params, callbackMock );
+// 异步等待获取回执
+TransactionReceipt transactionReceipt = callbackMock.getResult();
 ```
 
 ### 3.3 采用CompletableFuture的方式异步操作合约

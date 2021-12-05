@@ -44,7 +44,7 @@
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
 
-![](./../../../images/java-sdk/install_java_intellij.gif)
+![](./../../../../images/java-sdk/install_java_intellij.gif)
 
 ## 2. 搭建一条FISCO BCOS链
 
@@ -56,14 +56,14 @@
 
 在IntelliJ IDE中创建一个gradle项目。勾选Gradle和Java
 
-![](./../../../images/java-sdk/create.gif)
+![](./../../../../images/java-sdk/create.gif)
 
 ### 第二步. 引入Java SDK
 
 在build.gradle中引入Java SDK
 
 ```gradle
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -72,13 +72,8 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>2.8.0</version>
+    <version>3.0.0</version>
 </dependency>
-```
-
-```eval_rst
-.. note::
-    - 由于sol转java代码的变更，若使用最新控制台生成java代码，请升级Java SDK到最新的2.8.0版本
 ```
 
 ### 第三步. 配置SDK证书
@@ -99,11 +94,9 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')
 mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```
 
-![](./../../../images/java-sdk/import_sdk.gif)
+![](./../../../../images/java-sdk/import_sdk.gif)
 
 ### 第四步. 准备智能合约
-
-// FIXME: 加上liquid的实例
 
 控制台`console`和``java-sdk-demo``均提供了工具，可以将`solidity`合约生成出调用该合约`java`工具类。本例中使用``console``做为例子，使用``java-sdk-demo``的例子请看第6章“附录一. 使用``java-sdk-demo``给智能合约生成调用它的Java工具类”
 
@@ -134,12 +127,37 @@ $ ls contracts/solidity
 HelloWorld.sol  KVTableTest.sol ShaTest.sol KVTable.sol
 ```
 
+**特别的： 如果你想体验Liquid的部署操作，控制台也为你提供了例子。**
+
+在使用之前，请先保证cargo liquid的编译环境，使用搭建请参考：https://liquid-doc.readthedocs.io/。
+
+可在控制台dist目录下contracts/liquid下查看，下面以hello_world为例子：
+
+```shell
+$ ls contracts/liquid
+asset_test    hello_world   kv_table_test
+
+$ cd contracts/liquid/hello_world
+
+// 使用cargo liquid 编译
+$ cargo liquid build
+[1/4] 🔍  Collecting crate metadata
+[2/4] 🚚  Building cargo project
+[3/4] 🔗  Optimizing Wasm bytecode
+[4/4] 📃  Generating ABI file
+
+✨ Done in 1 minute, your project is ready now:
+Binary: /Users/kyon_guo/IdeaProjects/bcos-console/dist/contracts/liquid/hello_world/target/hello_world.wasm
+   ABI: /Users/kyon_guo/IdeaProjects/bcos-console/dist/contracts/liquid/hello_world/target/hello_world.abi
+```
+
+生成`hello_world.wasm`和`hello_world.abi`两个文件
+
 #### 2. 生成调用该智能合约的java类
 
 ```shell
-# contract2java.sh将contracts/solidity下的所有合约编译产生bin,abi,java工具类。
 # 当前目录~/fisco/console
-$ bash contract2java.sh -p org.com.fisco
+$ bash contract2java.sh solidity -p org.com.fisco
 # 以上命令中参数“org.com.fisco”是指定产生的java类所属的包名。
 # 通过命令./contract2java.sh -h可查看该脚本使用方法
 ```
@@ -175,11 +193,25 @@ $ ls contracts/sdk/java/org/com/fisco
 # HelloWorld.java   KVTableTest.java    ShaTest.java    KVTable.java    TableTest.java
 ```
 
+**特别的，如果你想使用Liquid合约编译后的wasm二进制和abi文件生成Java合约**
+
+```shell
+# 当前目录~/fisco/console
+$ bash contract2java.sh liquid -b ./contracts/liquid/hello_world/hello_world.wasm -a ./contracts/liquid/hello_world/hello_world.abi -s ./contracts/liquid/hello_world/hello_world_sm.wasm -p org.com.fisco
+# 通过命令./contract2java.sh -h可查看该脚本使用方法
+
+$ ls contracts/sdk/java/org/com/fisco 
+# 得到返回
+# HelloWorld.java
+```
+
+
+
 **最后, 将编译得到的HelloWorld.java放入应用中。**注意：在应用中所放的位置要与我们设定的包名相同。
 
 (操作示范请看如下gif动图，动画总共有2分40秒，请耐心等待观看，请勿点击图片，如果点击图片将从头开始播放。)
 
-![](./../../../images/java-sdk/prepare_contract.gif)
+![](./../../../../images/java-sdk/prepare_contract.gif)
 
 ### 第五步. 创建配置文件
 
@@ -199,8 +231,8 @@ public class BcosSDKTest
      public void testClient() throws ConfigException {
          // 初始化BcosSDK
         BcosSDK sdk =  BcosSDK.build(configFile);
-        // 为群组1初始化client
-        Client client = sdk.getClient(Integer.valueOf(1));
+        // 为群组group初始化client
+        Client client = sdk.getClient("group");
     
         // 获取群组1的块高
         BlockNumber blockNumber = client.getBlockNumber();
@@ -241,16 +273,17 @@ $ cd dist && mkdir -p contracts/solidity
 java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${packageName}
 ```
 
-// FIXME: 增加Liquid的使用
-
 ### 附录二. ``contract2java.sh``脚本的使用方法
 
-控制台提供了`contract2java.sh`脚本可将`solidity`转换为`java`代码, `contract2java.sh`使用方法如下：
+控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和Liquid合约文件编译为Java合约文件。
+
+当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定Liquid编译后的WASM文件以及ABI文件生成Java文件。
+
+**Solidity合约使用**
 
 ```shell
-# 若控制台版本大于或等于2.8.0, 脚本sol2java.sh的使用方法如下：
-$ bash sol2java.sh -h
-usage: Compile Solidity Tool:
+$ bash contract2java.sh solidity -h 
+usage: contract2java.sh <solidity|liquid> [OPTIONS...]
  -h,--help
  -l,--libraries <arg>   [Optional] Set library address information built
                         into the solidity contract
@@ -263,6 +296,70 @@ usage: Compile Solidity Tool:
  -s,--sol <arg>         [Optional] The solidity file path or the solidity
                         directory path, default is contracts/solidity/
 ```
+
+参数详细：
+
+- `package`: 生成`Java`文件的包名。
+- `sol`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
+- `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
+
+**Liquid合约使用**
+
+```shell
+$ bash contract2java.sh liquid -h
+usage: contract2java.sh <solidity|liquid> [OPTIONS...]
+ -a,--abi <arg>       [Required] The ABI file path of Liquid contract.
+ -b,--bin <arg>       [Required] The binary file path of Liquid contract.
+ -h,--help
+ -o,--output <arg>    [Optional] The file path of the generated java code,
+                      default is contracts/sdk/java/
+ -p,--package <arg>   [Optional] The package name of the generated java
+                      code, default is com
+ -s,--sm-bin <arg>    [Required] The SM binary file path of Liquid
+                      contract.
+```
+
+参数详细：
+
+- `abi `：（必选）Liquid合约`ABI`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `bin`：（必选）Liquid合约`wasm bin`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `package`：（可选）生成`Java`文件的包名，默认为`org`。
+- `sm-bin`：（必选）Liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
+
+**使用**
+
+```shell
+$ cd ~/fisco/console
+
+# 生成Solidity合约的Java代码
+$ bash contract2java.sh solidity -p org.com.fisco
+
+# 生成Liquid合约的Java代码
+$ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test/asset_test.wasm -a ./contracts/liquid/asset_test/asset_test.abi -s ./contracts/liquid/asset_test/asset_test_sm.wasm 
+```
+
+运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
+
+```shell
+|-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
+|   |-- HelloWorld.abi
+|   |-- KVTable.abi
+|   |-- KVTableTest.abi
+|-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
+|   |-- HelloWorld.bin
+|   |-- KVTable.bin
+|   |-- KVTableTest.bin
+|-- java  # 存放编译的包路径及Java合约文件
+|   |-- org
+|       |-- com
+|           |-- fisco
+|               |-- HelloWorld.java # Solidity编译的HelloWorld Java文件
+|               |-- KVTable.java    # Solidity编译的KV存储接口合约 Java文件
+|               |-- KVTableTest.java  # Solidity编译的KVTableTest Java文件
+|               |-- AssetTest.java  # Liquid生成的AssetTest文件
+```
+
+Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`、`KVTableTest.java`、`KVTable.java`和`AssetTest.java`。其中`HelloWorld.java`、`KVTableTest.java`和`AssetTest.java`是Java应用所需要的Java合约文件。
 
 ### 附录三. 使用xml配置进行配置
 
