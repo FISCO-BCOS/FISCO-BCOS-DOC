@@ -12,7 +12,10 @@
 
 ## 1. 下载spring-boot-starter、证书拷贝
 
-项目GitHub地址：https://github.com/FISCO-BCOS/spring-boot-starter.git  （FIXME: 待补充gitee地址）
+```eval_rst
+.. note::
+   若访问github速度较慢，可尝试从gittee克隆代码，gittee链接为https://gittee.com/FISCO-BCOS/spring-boot-starter.git
+```
 
 ```shell
 git clone https://github.com/FISCO-BCOS/spring-boot-starter.git

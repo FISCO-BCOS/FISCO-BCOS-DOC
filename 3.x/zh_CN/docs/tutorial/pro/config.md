@@ -78,12 +78,11 @@ build_chain.py 生成gateway、rpc会生成tgz文件，可上传到tars使用:
 
 #### consensus 共识
 
-- FIXME:
 - `consensus_type`: 共识类型，默认设置为`pbft`；
 - `block_tx_count_limit`: 每个区块里可包含的最大交易数，默认设置为 1000;
 - `leader_period`: 共识过程，每个leader连续打包的区块数目，默认为 5；
-- `node.0`: FIXME；
-- `node.1`: FIXME；
+- `node.idx`：共识节点列表，配置了参与共识节点的NodeID。
+
 
 consensus配置示例如下：
 ```ini
@@ -97,8 +96,7 @@ node.1 = 74034fb43f75c63bb2259a63f71d9d1c658945409889d3028d257914be1612d1f2e80c4
 
 #### tx 交易
 
-- FIXME:
-- `gas_limit`: gas限制，默认设置为 300000000；
+- `gas_limit`: 交易执行时gas限制，默认设置为 300000000；
 
 consensus配置示例如下：
 ```ini
@@ -110,8 +108,7 @@ gas_limit = 300000000
 
 #### chain
 
-- FIXME:
-- `sm_crypto`: 是否使用国密加密，默认设置为`false`；
+- `sm_crypto`: 是否使用国密算法加密，默认设置为`false`；
 - `group_id`: 群组id;
 - `chain_id`: 链id；
 

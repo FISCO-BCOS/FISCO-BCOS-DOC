@@ -311,18 +311,13 @@ Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录
 # 创建工作目录~/fisco
 mkdir -p ~/fisco
 # 下载控制台
-# FIXME: 由于3.1release包还没有，下载链接后续待修改
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.x.x/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
 
-# FIXME: 编译合约方法待确定
-# 若控制台版本大于等于2.8.0，编译合约方法如下:（可通过bash sol2java.sh -h命令查看该脚本使用方法）
+# 可通过bash sol2java.sh -h命令查看该脚本使用方法
 bash sol2java.sh -p org.fisco.bcos.asset.contract
-
-# 若控制台版本小于2.8.0，编译合约(后面指定一个Java的包名参数，可以根据实际项目路径指定包名)如下：
-./sol2java.sh org.fisco.bcos.asset.contract
 ```
 
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
@@ -380,7 +375,6 @@ public class Asset extends Contract {
 首先，我们需要安装JDK以及集成开发环境
 
 - Java：JDK 14 （JDK1.8 至JDK 14都支持）
-# FIXME: java jdk版本待确定
 
   首先，在官网上下载JDK14并安装
 
@@ -463,8 +457,7 @@ repositories {
 
 ```java
 testCompile group: 'junit', name: 'junit', version: '4.12'
-# FIXME: JAVA-SDK 版本号
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.1.0')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
 ```
 
 ### 第四步. 配置SDK证书
@@ -491,7 +484,7 @@ dependencies {
 ![](../../images/quick_start/config.png)
 
 applicationContext.xml的内容如下：
-# FIXME: 注释是否要去掉
+
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 
@@ -924,7 +917,6 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 
 接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
 
-# FIXME: contract.properties文件内容
 ```groovy
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
