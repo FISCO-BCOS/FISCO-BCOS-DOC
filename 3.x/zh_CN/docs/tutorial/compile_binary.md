@@ -88,6 +88,9 @@ cmake ..
 
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
 make -j2
+
+# 生成tgz包
+rm -rf *.tgz && make tgz
 ```
 ### 3.2 CentOS
 
@@ -103,6 +106,8 @@ mkdir -p build && cd build
 cmake3 ..
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
+# 生成tgz包
+rm -rf *.tgz && make tgz
 ```
 
 ### 3.3 macOS
@@ -116,4 +121,7 @@ mkdir -p build && cd build
 cmake ..
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
+
+# 生成tgz包
+rm -rf *.tgz && make tgz
 ```

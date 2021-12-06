@@ -11,7 +11,8 @@
 
    installation.md
    config.md
-   generator.md
+   pro_builder.md
+   expand_service.md
    expand_node.md
    expand_group.md
 ```
