@@ -4,21 +4,20 @@
 
 ---------
 
-### 前置条件
+## 前置条件
 
 搭建FISCO BCOS区块链，具体步骤[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)。
 **注意：** 当前版本还不支持Table的CRUD接口，只提供KV接口的功能。CRUD的功能将在下个版本支持。
 
 ### 获取源码
 
-```bash
+```shell
 # 直接从github克隆代码
 git clone https://github.com/FISCO-BCOS/spring-boot-crud.git
 
 # 若网络很慢，可从gittee克隆代码
 git clone https://gitee.com/FISCO-BCOS/spring-boot-crud
 ```
-
 
 ### 配置节点证书
 
@@ -56,6 +55,7 @@ $ cp ~/fisco/nodes/127.0.0.1/sdk/* src/main/resources/conf/
 </property>
 ...
 ```
+
 项目中关于SDK配置的详细说明请[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/configuration.html)。
 
 WebServer主要配置了监听端口，默认为`45000`，具体如下：
@@ -70,20 +70,21 @@ server:
 
 可以使用IDEA导入并编译并安装该项目，也可使用提供的`mvnw`脚本在命令行编译项目如下：
 
-```bash
+```shell
 # 编译项目
 $ bash mvnw compile
 
 # 安装项目，安装完毕后，在target/目录下生成fisco-bcos-spring-boot-crud-0.0.1-SNAPSHOT.jar的jar包
 $ bash mvnw install
 ```
+
 ### 启动spring-boot-crud服务
 
-**方法一：** 
+**方法一：**
 
 打开IDEA导入并编译该项目，编译成功后，运行`AppApplication.java`即可启动spring boot服务。
 
-**方法二**
+**方法二：**
 
 使用`bash mvnw install`生成的jar包`target/fisco-bcos-spring-boot-crud-0.0.1-SNAPSHOT.jar`启动spring-boot-crud服务：
 
@@ -149,6 +150,7 @@ $ curl http://localhost:45000/get/fisco
 
 - 我们欢迎并非常感谢您的贡献，请参阅[代码贡献流程](https://mp.weixin.qq.com/s/hEn2rxqnqp0dF6OKH6Ua-A)和[代码规范](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/CODING_STYLE.md)。
 - 如项目对您有帮助，欢迎star支持！
+
 ## 加入我们
 
 **FISCO BCOS开源社区**是国内活跃的开源社区，社区长期为机构和个人开发者提供各类支持与帮助。已有来自各行业的数千名技术爱好者在研究和使用FISCO BCOS。如您对FISCO BCOS开源技术及应用感兴趣，欢迎加入社区获得更多支持与帮助。
@@ -160,4 +162,3 @@ $ curl http://localhost:45000/get/fisco
 - 了解FISCO BCOS项目，请参考[FISCO BCOS文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/introduction.html)。
 - 了解Java SDK项目，请参考[Java SDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/index.html)。
 - 了解spring boot，请参考[Spring Boot官网](https://spring.io/guides/gs/spring-boot/)。
-

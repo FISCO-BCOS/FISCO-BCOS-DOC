@@ -10,22 +10,27 @@
 
 若您想通过JavaSdk+Maven+SpringBoot方式访问智能合约，请参考[maven示例](https://github.com/FISCO-BCOS/spring-boot-crud)
 
-
 ## 1. 下载spring-boot-starter、证书拷贝
+
 项目GitHub地址：https://github.com/FISCO-BCOS/spring-boot-starter.git  （FIXME: 待补充gitee地址）
-```bash
+
+```shell
 git clone https://github.com/FISCO-BCOS/spring-boot-starter.git
 ```
+
 进入spring-boot-starter项目
-```bash
+
+```shell
 cd spring-boot-starter
 ```
+
 请将证书拷贝到src/main/resources/conf目录下。
 
 ## 2. 配置连接节点
 
 请修改application.properties，该文件包含如下信息：
-```
+
+```yml
 ### Java sdk configuration
 cryptoMaterial.certPath=conf
 network.peers[0]=127.0.0.1:20200
@@ -37,18 +42,20 @@ system.hexPrivateKey=
 
 ### Springboot configuration
 server.port=8080
-
 ```
+
 其中：
+
 - java sdk configuration配置部分与[javasdk](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/configuration.html)一致。就本例而言，用户需要：
-    * 请将network.peers更换成实际的链节点监听地址。
-    * cryptoMaterial.certPath设为conf
+  - 请将network.peers更换成实际的链节点监听地址。
+  - cryptoMaterial.certPath设为conf
 
 - System configuration配置部分，需要配置：
-    * system.hexPrivateKey是16进制的私钥明文，可运行Demos.java中的`keyGeneration`生成（文件路径：src/test/java/org/example/demo/Demos.java）。该配置允许为空，此时系统会随机生成一个私钥。
-    * system.groupId设为目标群组，默认为1
+  - system.hexPrivateKey是16进制的私钥明文，可运行Demos.java中的`keyGeneration`生成（文件路径：src/test/java/org/example/demo/Demos.java）。该配置允许为空，此时系统会随机生成一个私钥。
+  - system.groupId设为目标群组，默认为1
 
 Demos.java 代码如下：（**以项目最新文件为准**）
+
 ```java
 package org.example.demo;
 
@@ -105,41 +112,47 @@ public class Demos {
 }
 ```
 
-
 ## 3. 编译和运行
+
 您可以在idea内直接运行，也可以编译成可执行jar包后运行。以编译jar包方式为例：
 
-```
+```shell
 cd spring-boot-starter
 bash gradlew bootJar
 cd dist
 ```
+
 会在dist目录生成spring-boot-starter-exec.jar，可执行此jar包：
-```
+
+```shell
 java -jar spring-boot-starter-exec.jar
 ```
+
 随后，即可访问相关接口。
 
 set示例：
 
-```
+```shell
 curl http://127.0.0.1:8080/hello/set?n=hello
 ```
+
 返回示例（表示交易哈希）：
-```
+
+```shell
 0x1c8b283daef12b38632e8a6b8fe4d798e053feb5128d9eaf2be77c324645763b
 ```
 
 get示例：
 
-```
+```shell
 curl http://127.0.0.1:8080/hello/get
 ```
+
 返回示例：
-```
+
+```json
 ["hello"]
 ```
-
 
 ## 加入我们的社区
 
