@@ -52,6 +52,7 @@ extensions = [
   'sphinx_copybutton',
   'sphinxcontrib.mermaid',
   'sphinx.ext.mathjax',
+  'sphinx.ext.imgconverter',
   'sphinx_markdown_tables',
 ]
 
@@ -262,6 +263,7 @@ latex_elements = {
 \DeclareUnicodeCharacter{221B}{\ensuremath{\sqrt[3]{}}}
 \DeclareUnicodeCharacter{2295}{\ensuremath{\oplus}}
 \DeclareUnicodeCharacter{2297}{\ensuremath{\otimes}}
+\begin{CJK}{UTF8}{gbsn}
 \AtEndDocument{\end{CJK}}
 ''',
 # Latex figure (float) alignment

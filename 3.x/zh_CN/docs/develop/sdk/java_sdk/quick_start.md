@@ -94,8 +94,6 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
 mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```
 
-![](./../../../../images/java-sdk/import_sdk.gif)
-
 ### 第四步. 准备智能合约
 
 控制台`console`和``java-sdk-demo``均提供了工具，可以将`solidity`合约生成出调用该合约`java`工具类。本例中使用``console``做为例子，使用``java-sdk-demo``的例子请看第6章“附录一. 使用``java-sdk-demo``给智能合约生成调用它的Java工具类”
