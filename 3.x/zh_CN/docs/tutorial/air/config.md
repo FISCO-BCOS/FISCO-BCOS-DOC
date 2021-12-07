@@ -5,7 +5,7 @@
 ----
 
 
-FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据相互隔离，群组间交易处理相互隔离，每个节点包括一个主配置`config.ini`。 FIXME: 去掉group.group_id.genesis、 group.group_id.ini
+FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据相互隔离，群组间交易处理相互隔离，每个节点包括一个主配置`config.ini`。
 
 - `config.ini`：主配置文件，主要配置RPC、P2P、SSL证书、账本配置文件路径、兼容性等信息。
 
@@ -15,36 +15,21 @@ FISCO BCOS支持多账本，每条链包括多个独立账本，账本间数据�
 
 ```eval_rst
 .. important::
-    FIXME: jsonrpc_listen_ip/channel_listen_ip字段已经不存在？
     - 云主机的公网IP均为虚拟IP，若listen_ip填写外网IP，会绑定失败，须填写0.0.0.0
-    FIXME: Channel字段去掉了？
     - RPC/P2P监听端口必须位于1024-65535范围内，且不能与机器上其他应用监听端口冲突
     - 为便于开发和体验，listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
 ```
 
 ### 配置RPC
 
-- FIXME: 只有一个listen_ip？其他字段说明
 - `listen_ip`: 监听IP，为方便节点和SDK跨机器部署，默认设置为`0.0.0.0`；
-
 - `listen_port`: 监听端口，默认设置为`20200`;
 - `thread_count`: 线程数，默认为 4；
 - `sm_ssl`: 使用 ssl 还是 sm ssl，默认为 false；
 
-```eval_rst
-.. note::
-    FIEME: 注解需要更新
-    出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能：
-
-     - 配置中仅包含listen_ip：RPC和Channel的监听IP均为配置的listen_ip
-     - 配置中同时包含listen_ip、channel_listen_ip或jsonrpc_listen_ip：优先解析channel_listen_ip和jsonrpc_listen_ip，没有配置的配置项用listen_ip的值替代
-     - v2.6.0 版本开始，RPC 支持 ipv4 和 ipv6
-```
-
 RPC配置示例如下：
 
 ```ini
-FIXME: 是否已经不需要区分ipv4 ipv6
 [rpc]
     listen_ip=0.0.0.0
     listen_port=20200
@@ -57,26 +42,17 @@ FIXME: 是否已经不需要区分ipv4 ipv6
 
 ### 配置P2P
 
-FIXME: 介绍是否要更新
 当前版本FISCO BCOS必须在`config.ini`配置中配置连接节点的`IP`和`Port`，P2P相关配置包括：
-
-```eval_rst
-.. note::
-    - 为便于开发和体验，listen_ip参考配置是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP
-    - v2.6.0 版本开始，P2P 支持 ipv4 和 ipv6 FIXME: 是否区分ipv4 6
-```
 
 - `listen_ip`：P2P监听IP，默认设置为`0.0.0.0`；
 - `listen_port`：节点P2P监听端口；
 - `sm_ssl`: 使用 ssl 还是 sm ssl，默认为 false；
 - `nodes_path`：生成节点的文件路径，默认为 `./` 当前文件夹
-- `nodes_file`：节点信息json文件的文件名，默认为 nodes.json FIXME: 待确定
-v2.6.0 版本开始，P2P 支持 ipv4 和 ipv6 FIXME: 待确定
+- `nodes_file`：节点链接信息文件`nodes.json`所在路径。
 
 P2P配置示例如下：
 
 ```ini
-FIXME: 是否已经不需要区分ipv4 ipv6
 [p2p]
     listen_ip=0.0.0.0
     listen_port=30300
@@ -91,8 +67,6 @@ FIXME: 是否已经不需要区分ipv4 ipv6
 基于安全考虑，FISCO BCOS节点间采用SSL加密通信，`[cert]`配置SSL连接的证书信息：
 - `ca_path`: ca证书文件夹。
 - `ca_cert`: ca证书文件路径。
-- `node_key`：节点私钥文件，设置SDK是否只能连本机构节点，默认为开启（check_cert_issuer=true）。 FIXME: 描述是否要修改
-- `node_cert`：节点证书文件，设置SDK是否只能连本机构节点，默认为开启（check_cert_issuer=true）。 FIXME: 描述是否要修改
 
 ```ini
 [cert]
@@ -133,8 +107,14 @@ FIXME: 是否已经不需要区分ipv4 ipv6
 
 ### 配置共识信息
 
-`[consensus]`配置节点的链信息，该配置下的字段信息，一旦确定就不应该再更改：
-- `min_seal_time`: 最小的区块生成时间，默认为500ms。 FIXME: 描述
+考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS在可变配置`config.ini`的`[consensus]`下引入`min_seal_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_seal_time`且打包的交易数大于0才会开始共识流程，处理打包生成的新区块。
+
+```eval_rst
+.. important::
+   - ``min_seal_time`` 默认为500ms
+   - ``min_seal_time`` 不可超过出空块时间1000ms，若设置值超过1000ms，系统默认min_seal_time为500ms
+
+```
 
 ```ini
 [consensus]
@@ -145,7 +125,7 @@ FIXME: 是否已经不需要区分ipv4 ipv6
 ### 配置executor信息
 
 `[executor]`配置执行器信息：
-- `is_wasm`: 是否使用wasm虚拟机，默认为false。 FIXME: 描述
+- `is_wasm`: 是否使用wasm虚拟机，当设置为false时启动evm虚拟机，默认为false。
 - `is_auth_check`: 是否开启权限检查，默认为false。
 - `auth_admin_account`: FIXME: 描述
 
@@ -160,7 +140,7 @@ FIXME: 是否已经不需要区分ipv4 ipv6
 ### 配置storage信息
 
 `[storage]`配置存储信息：
-- `data_path`: 存储数据的文件路径，默认为data。 FIXME: 描述
+- `data_path`: 区块链节点数据存储路径，默认为data。
 
 ```ini
 [storage]
@@ -170,9 +150,9 @@ FIXME: 是否已经不需要区分ipv4 ipv6
 ### 配置交易池信息
 
 `[txpool]`配置交易池信息：为防止过多交易堆积在交易池内占用太多内存，FISCO BCOS提供了`[tx_pool].limit`来限制交易池容量
-- `limit`: 限制交易池内可以容纳的最大交易数目，默认为`150000`，超过该限制后，客户端发到节点的交易会被拒绝。 FIXME: 描述
-- `notify_worker_num`: 通知线程数量，默认为2。 FIXME: 描述
-- `verify_worker_num`: 确认线程数量，默认为2。 FIXME: 描述
+- `limit`: 限制交易池内可以容纳的最大交易数目，默认为`150000`，超过该限制后，客户端发到节点的交易会被拒绝。
+- `notify_worker_num`: 交易通知线程数量，默认为2。
+- `verify_worker_num`: 交易验证线程数量，默认为2。
 
 ```ini
 [txpool]

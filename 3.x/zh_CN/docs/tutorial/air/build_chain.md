@@ -13,11 +13,10 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 
 ## 功能介绍
 
-- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-3.1.0/tools/BcosAirBuilder/build_chain.sh)， 【FIXME: gitee源码地址待补充】
+- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-3.1.0/tools/BcosAirBuilder/build_chain.sh), [gittee源码](https://gittee.com/FISCO-BCOS/FISCO-BCOS/blob/release-3.1.0/tools/BcosAirBuilder/build_chain.sh)
 
 ```eval_rst
 .. note::
-    FIXME: 描述
     为便于开发和体验，p2p模块默认监听IP是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如内网IP或特定的外网IP
 ```
 
@@ -53,8 +52,7 @@ expand node e.g
 `command`: 脚本的命令，支持 `deploy` 与 `expand`。`deploy` 用于部署新节点，`expand` 用于节点扩容。不输入的话默认为`deploy`。
 
 ### **`v`选项**
-用于指定搭建FISCO BCOS时使用的二进制版本。默认为最新的 `latest v3.0.0-rc1`
-FIXME:  描述待补充
+用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本。
 
 ### **`l`选项**
 
@@ -96,36 +94,27 @@ $ bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 
 
 ### **`D`选项[**Optional**]**
 
-使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限，即用户加入docker群组。默认为关闭docker模式。
+使用docker模式搭建FISCO BCOS，使用该选项时不再拉取二进制，但要求用户启动节点机器安装docker且账户有docker权限，即用户加入docker群组。
+在节点目录下执行如下命令启动节点
 
 ```bash
-FIXME: -D 用法示例待补充
+./start.sh
+```
+
+该模式下 start.sh 脚本启动节点的命令如下
+
+```bash
 docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
 
 ### **`A`选项[**Optional**]**
 
-使用权限模式，该模式下会以权限搭建区块链，并且产生admin账号。默认为关闭权限模式。
+使用权限模式，该模式下会以权限搭建区块链，并且产生admin账号。默认关闭权限模式。
 
-```bash
-FIXME: -D 用法示例待补充
-```
 
 ### **`a`选项[**Optional**]**
 
 在权限模式为可选参数，该模式下用于指定admin的账号地址。
-
-```bash
-FIXME: -D 用法示例待补充
-```
-
-### **`a`选项[**Optional**]**
-
-在权限模式为可选参数，该模式下用于指定admin的账号地址。
-
-```bash
-FIXME: -D 用法示例待补充
-```
 
 ### **`h`选项[**Optional**]**
 
@@ -151,8 +140,8 @@ nodes/
 │   │   │   ├── node.pem # 节点pem格式证书
 │   │   │   ├── node.nodeid # 节点id，公钥的16进制表示
 │   │   │   ├── sm_ca.crt # sm链根证书
-│   │   │   ├── sm_enssl.crt # sm ssl连接证书 FIXME: enssl含义待确定
-│   │   │   ├── sm_enssl.key # sm ssl连接私钥 FIXME: enssl含义待确定
+│   │   │   ├── sm_enssl.crt # sm ssl连接加密证书
+│   │   │   ├── sm_enssl.key # sm ssl连接加密证书对应的私钥
 │   │   │   ├── sm_ssl.crt # sm ssl连接证书
 │   │   │   ├── sm_ssl.key # sm ssl连接私钥
 │   │   │   ├── sm_ssl.nodeid # sm ssl连接节点id
@@ -167,7 +156,7 @@ nodes/
 │   │.....
 │   ├── node3 # 节点3文件夹
 │   │.....
-│   ├── sdk # FIXME: 【描述】SDK与节点SSL连接配置，FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建联报错
+│   ├── sdk # SDK证书
 │   │   ├── ca.crt # SSL连接根证书
 │   │   ├── cert.cnf # 证书配置
 │   │   ├── sdk.crt # SDK根证书
