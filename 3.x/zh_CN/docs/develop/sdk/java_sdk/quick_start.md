@@ -44,8 +44,6 @@
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
 
-![](./../../../../images/java-sdk/install_java_intellij.gif)
-
 ## 2. 搭建一条FISCO BCOS链
 
 请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。【FIXME: 链接有误】
@@ -55,8 +53,6 @@
 ### 第一步. 创建一个Gradle应用
 
 在IntelliJ IDE中创建一个gradle项目。勾选Gradle和Java
-
-![](./../../../../images/java-sdk/create.gif)
 
 ### 第二步. 引入Java SDK
 

@@ -431,16 +431,11 @@ public class Asset extends Contract {
 
 - IDE：IntelliJ IDE. 
 
-  进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
-
-![](../../images/java-sdk/install_java_intellij.gif)
+  进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE。
 
 ### 第二步. 创建一个Java工程
 
 在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app``。
-
-![](../../images/quick_start/create_app_mid.gif)
-
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
 ```bash
