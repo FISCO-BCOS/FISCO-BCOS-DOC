@@ -133,7 +133,7 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
 
 - RPC服务负责接收客户端请求，并将请求转发到节点进行处理， RPC服务可横向扩展，一个RPC服务可接入多个区块链节点服务
 - Gateway服务负责跨机构区块链节点之间的网络通信，Gateway服务横向可扩展，一个Gateway服务可接入多个区块链节点服务
-- 区块链节点服务BcosNodeService提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能
+- 区块链节点服务BcosNodeService提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。每一个BcosNodeService表示一个群组，可以部署多个BcosNodeService扩展多群组服务。
 
 关于Pro版本FISCO BCOS的总体架构设计可参考[这里](../../design/architecture.md)。
 

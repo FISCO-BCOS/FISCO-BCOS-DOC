@@ -62,6 +62,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/
 .. note::
    - 其中-p选项指定起始端口，分别是p2p监听端口、rpc监听端口
 ```
+ - Air版搭建脚本 build_chain.sh 介绍文档[参考这里](../tutorial/air/build_chain.md)
 
 命令成功后会输出`All completed`：
 
@@ -188,12 +189,13 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 ```
 
 ### 第四步. 启动并使用控制台
+控制台介绍文档[参考这里](../develop/console.md)
 
 - 启动
-
 ```bash
 cd ~/fisco/console && bash start.sh
 ```
+
 
 输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
@@ -274,7 +276,7 @@ contract HelloWorld {
 
 ### 第二步. 部署HelloWorld合约
 
-为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录`contracts/solidity/HelloWorld。sol`，参考下面命令部署：
+为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录`contracts/solidity/HelloWorld.sol`，参考下面命令部署：
 
 ```bash
 # 在控制台输入以下指令 部署成功则返回合约地址
@@ -288,7 +290,7 @@ currentAccount: 0x7b047472a4516e9697446576f8c7fcc064f967fa
 1
 ```
 
-### 第三部. 调用HelloWorld合约
+### 第三步. 调用HelloWorld合约
 
 ```bash
 # 调用get接口获取name变量，此处的合约地址是deploy指令返回的地址
@@ -330,3 +332,5 @@ Event: {}
 # 退出控制台
 [group]: /> exit
 ```
+
+**总结：** 至此，我们完成了第一条FISCO-BCOS链的搭建，配置使用了控制台，并最终完成了第一个合约的部署调用。

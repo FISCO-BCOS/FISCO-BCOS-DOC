@@ -41,7 +41,7 @@
 
 ### 2.1 准备abi和binary文件
 
-控制台提供一个专门的编译合约工具，方便开发者将Solidity/Liquid合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称wbc-liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
 
 通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
@@ -136,6 +136,8 @@ TransactionResponse response = transactionProcessor.deployByContractLoader("Hell
 - values: 如果调用的函数存在返回值，则返回解析后的交易返回值，返回Json格式的字符串。
 - events: 如果有触发日志记录，则返回解析后的日志返回值，返回Json格式的字符串。
 - receiptMessages: 返回解析后的交易回执信息。
+
+`returnCode`与`returnMessages`对应表汇总[参考这里](./retcode_retmsg.md)
 
 例如，部署`HelloWorld`合约的返回结果：
 
@@ -245,7 +247,7 @@ CallResponse callResponse = transactionProcessor.sendCallByContractLoader("Hello
 #### 3.1.1 构造接口签名
 
 ```java
-// 使用Liquid合约时_isWasm 为true，Solidity合约则为false
+// 使用wbc-liquid合约时_isWasm 为true，Solidity合约则为false
 ABICodec abiCodec = new ABICodec(client.getCryptoSuite(), _isWasm);
 String setMethodSignature = "set(string)";
 String abiEncoded = abiCodec.encodeMethodByInterface(setMethodSignature, new Object[]{new String("Hello World")});

@@ -48,7 +48,7 @@ FISCO BCOS是由国内企业主导研发、对外开源、安全可控的企业�
 | 消息订阅服务 | AMOP协议 |
 | <font color=Blue>**智能合约**|
 |合约引擎| 支持WASM和EVM|
-|合约语言| 支持Solidity, C++和Liquid|
+|合约语言| 支持Solidity, C++和wbc-liquid|
 |引擎特点| 图灵完备，沙盒运行 |
 |版本控制| 基于CNS支持多版本合约 |
 | <font color=Blue>**密码算法和协议**</font>  |
@@ -73,7 +73,7 @@ FISCO BCOS是由国内企业主导研发、对外开源、安全可控的企业�
 |合约开发工具|[WeBASE-IDE](https://github.com/WeBankFinTech/WeBASE)，[ChainIDE](https://fiscoide.com/)|
 |开发建链工具|提供[Air版本区块链部署工具build_chain](../air/build_chain.md)和[Pro版本区块链部署工具BcosProBuilder](../pro/pro_builder.md)|
 |合约部署与测试工具|交互式控制台 [基于Java SDK的控制台](../develop/console.md)|
-|SDK语言|[Java](../develop/sdk/java_sdk/index.md)|
+|SDK语言|[Java](../develop/sdk/java_sdk/index.md)（待适配语言：go、nodejs、Rust、Python、iOS、Android）
 |快速开发组件|提供[Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
 | <font color=Blue>**运维支持**</font> |
 |可视化节点管理|基于[WeBASE](https://github.com/WeBankFinTech/WeBASE)，提供节点管理器|

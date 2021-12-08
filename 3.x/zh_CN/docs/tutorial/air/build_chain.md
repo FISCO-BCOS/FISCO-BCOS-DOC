@@ -20,9 +20,8 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
     为便于开发和体验，p2p模块默认监听IP是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如内网IP或特定的外网IP
 ```
 
-## 使用方法
-
 ```bash
+# 键入bash build_chain.sh -h展示脚本用法及参数
 Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
     -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc1
@@ -170,34 +169,7 @@ nodes/
 │   ├── start_all.sh # 启动脚本，用于启动所有节点
 │   ├── stop_all.sh # 停止脚本，用于停止所有节点
 ```
-
-## 使用工具脚本
-
-介绍与使用build_chain.sh相关，以及build_chain.sh生成的脚本。
-
-### start_all.sh
-
-启动当前目录下的所有节点。
-
-### stop_all.sh
-
-停止当前目录下的所有节点。
-
-### download_binary.py
-
-用于下载fisco-bcos二进制程序，支持下载**air**与**pro**版fisco-bcos。选项如下：
-
-```bash
-usage: download_binary.py [-h] --command COMMAND
-
-download_binary
-
-optional arguments:
-  -h, --help         show this help message and exit
-  --command COMMAND  [required]the command, support download_air and download_pro
-```
-
-## 使用教程
+## build_chain.sh使用教程
 
 下载`FISCO-BCOS`项目并执行脚本`build_chain.sh`指令如下：
 ```bash
@@ -285,4 +257,30 @@ drwxr-xr-x   8 leevaygr  staff       256 12  2 12:13 node5/
 drwxr-xr-x  12 leevaygr  staff       384 12  2 11:03 sdk/
 -rwxr--r--   1 leevaygr  staff       326 12  2 11:03 start_all.sh*
 -rwxr--r--   1 leevaygr  staff       323 12  2 11:03 stop_all.sh*
+```
+
+## 相关工具脚本
+
+介绍与使用build_chain.sh相关，以及build_chain.sh生成的脚本。
+
+### start_all.sh
+
+启动当前目录下的所有节点。
+
+### stop_all.sh
+
+停止当前目录下的所有节点。
+
+### download_binary.py
+
+用于下载fisco-bcos二进制程序，支持下载**air**与**pro**版fisco-bcos。选项如下：
+
+```bash
+usage: download_binary.py [-h] --command COMMAND
+
+download_binary
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --command COMMAND  [required]the command, support download_air and download_pro
 ```
