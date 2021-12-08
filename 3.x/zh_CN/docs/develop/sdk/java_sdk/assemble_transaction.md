@@ -41,7 +41,7 @@
 
 ### 2.1 准备abi和binary文件
 
-控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称wbc-liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称wbc-liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。【FIXME: 链接有误】
 
 通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 

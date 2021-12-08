@@ -48,7 +48,7 @@
 
 ## 2. 搭建一条FISCO BCOS链
 
-请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。
+请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。【FIXME: 链接有误】
 
 ## 3. 开发智能合约应用
 
@@ -78,7 +78,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
 
 ### 第三步. 配置SDK证书
 
-参考[Java SDK证书配置](./configuration.html#id5)。
+参考[Java SDK证书配置](./configuration.html#id5)。【FIXME: 链接有误】
 
 ```eval_rst
 .. note::
@@ -213,7 +213,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 ### 第五步. 创建配置文件
 
-在项目中创建配置文件``config.toml``, 可参照[配置向导](./configuration.html)进行配置，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
+在项目中创建配置文件``config.toml``, 可参照[配置向导](./configuration.html)进行配置【FIXME: 链接有误】，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
 
 通过``xml``配置请参照第4章“附录三. 使用xml配置进行配置”。
 
@@ -361,7 +361,7 @@ Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会
 
 ### 附录三. 使用xml配置进行配置
 
-为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
+为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md)【FIXME: 链接有误】.
 
 通过`xml`配置文件初始化`BcosSDK`之前，需要先引入`spring`。
 

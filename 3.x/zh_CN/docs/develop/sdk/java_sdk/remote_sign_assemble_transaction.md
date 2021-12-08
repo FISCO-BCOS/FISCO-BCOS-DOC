@@ -4,11 +4,11 @@
 
 ----
 
-[AssembleTransactionProcessor](./assemble_transaction.html)已经支持和覆盖了常见的合约操作接口。但是在真实的业务场景中，对于某些特定的业务场景，需要调用硬件加密机或远程签名服务对该哈希进行签名。为此，我们在AssembleTransactionProcessor的基础上进一步提供了AssembleTransactionWithRemoteSignProcessor，来便于用户集成自定义签名服务。
+[AssembleTransactionProcessor](./assemble_transaction.html)【FIXME: 链接有误】已经支持和覆盖了常见的合约操作接口。但是在真实的业务场景中，对于某些特定的业务场景，需要调用硬件加密机或远程签名服务对该哈希进行签名。为此，我们在AssembleTransactionProcessor的基础上进一步提供了AssembleTransactionWithRemoteSignProcessor，来便于用户集成自定义签名服务。
 
 ## 1. 概念解析：部署和调用
 
-部署、调用（交易和查询）的相关概念可参考[概念解析：部署和调用](./assemble_transaction.html#id1)
+部署、调用（交易和查询）的相关概念可参考[概念解析：部署和调用](./assemble_transaction.html#id1)【FIXME: 链接有误】
 
 ## 2. 快速上手
 
@@ -16,7 +16,7 @@ SDK支持同步和异步方式来调用合约。在快速上手环节，首先�
 
 ### 2.1 准备abi和binary文件
 
-控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（简称wbc-liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)。 FIXME: 链接有误
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（简称wbc-liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)【FIXME: 链接有误】。 FIXME: 链接有误
 
 通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
@@ -384,7 +384,7 @@ SDK还支持使用CompletableFuture封装的方式异步部署合约。
 
 `AssembleTransactionWithRemoteSignProcessor`继承了 `AssembleTransactionProcessor`类，实现了`AssembleTransactionWithRemoteSignProviderInterface`接口。
 
-继承的接口参考[AssembleTransactionWithRemoteSignProcessor](./assemble_transaction.html#api)
+继承的接口参考[AssembleTransactionWithRemoteSignProcessor](./assemble_transaction.html#api)【FIXME: 链接有误】
 
 详细的API功能如下。
 
