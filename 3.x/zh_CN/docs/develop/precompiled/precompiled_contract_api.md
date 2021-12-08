@@ -27,7 +27,7 @@ FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们
 | 0x100c           | DAGTransferPrecompiled    | 提供DAG转账测试合约                    |
 | 0x100e           | BFSPrecompiled            | BFS系统合约接口                        |
 
-下表的BFS路径只用于Liquid合约。
+下表的BFS路径只用于 webankblockchain-liquid（以下简称wbc-liquid）合约。
 
 | BFS路径              | 合约                      | 说明                                   |
 | :------------------- | :------------------------ | :------------------------------------- |
@@ -49,7 +49,7 @@ FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们
 #### 合约地址
 
 - Solidity：0x1000
-- Liquid：/sys/status
+- wbc-liquid：/sys/status
 
 #### 接口声明
 
@@ -102,7 +102,7 @@ contract SystemConfigPrecompiled
 #### 合约地址
 
 - Solidity：0x1003
-- Liquid：/sys/consensus
+- wbc-liquid: /sys/consensus
 
 #### 接口声明
 
@@ -148,7 +148,7 @@ contract ConsensusPrecompiled {
 #### 合约地址
 
 - Solidity：0x1004
-- Liquid：/sys/cns
+- wbc-liquid: /sys/cns
 
 #### 接口声明
 
@@ -192,7 +192,7 @@ contract CNSPrecompiled
 #### 合约地址
 
 - Solidity：0x1006
-- Liquid：/sys/parallel_config
+- wbc-liquid: /sys/parallel_config
 
 #### 接口声明
 
@@ -220,7 +220,7 @@ contract ParallelConfigPrecompiled {
 #### 合约地址
 
 - Solidity：0x1009
-- Liquid：/sys/kv_storage
+- wbc-liquid: /sys/kv_storage
 
 #### 接口声明
 
@@ -276,7 +276,7 @@ contract KVTable {
 #### 合约地址
 
 - Solidity：0x100a
-- Liquid：/sys/crypto_tools
+- wbc-liquid: /sys/crypto_tools
 
 #### 接口声明
 
@@ -306,7 +306,7 @@ contract Crypto
 #### 合约地址
 
 - Solidity：0x100e
-- Liquid：/sys/bfs
+- wbc-liquid: /sys/bfs
 
 #### 接口声明
 

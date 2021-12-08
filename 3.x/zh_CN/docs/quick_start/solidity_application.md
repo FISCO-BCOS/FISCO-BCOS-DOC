@@ -26,7 +26,7 @@
 
 **存储设计**
 
-//FIXME: 合约CRUD接口路径待确定
+//FIXME: 合约CRUD接口,换成kv table,路径待确定
 FISCO BCOS提供[合约CRUD接口](../../../..//2.x/docs/manual/smart_contract.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
@@ -53,7 +53,7 @@ function transfer(string memory from_account, string memory to_account, uint256 
 ```
 
 ### 第二步. 开发源码
-根据我们第一步的存储和接口设计，创建一个Asset的智能合约，实现注册、转账、查询功能，并引入一个叫Table的系统合约，这个合约提供了CRUD接口。
+根据我们第一步的存储和接口设计，创建一个Asset的智能合约，实现注册、转账、查询功能，并引入一个叫Table的系统合约，这个合约提供了CRUD接口。 FIXME: 是否还有CRUD接口
 
 ```bash
 # 进入console/contracts目录
@@ -299,10 +299,9 @@ contract Asset {
 }
 ```
 
-Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。Table.sol 合约详细接口参考[这里](../../../..//2.x/docs/manual/smart_contract.md)。
+Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。Table.sol 合约详细接口参考[这里](../../../..//2.x/docs/manual/smart_contract.md)。 FIXME: CRUD是否已经没有了；Table.sol合约详细接口，链接是否有变化
 
-运行``ls``命令，确保``Assert.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
-![](../../images/quick_start/asset_contract.png)
+运行``ls``命令，确保``Asset.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
 ## 3. 编译智能合约
 
 ``.sol``的智能合约需要编译成ABI和BIN文件才能部署至区块链网络上。有了这两个文件即可凭借Java SDK进行合约部署和调用。但这种调用方式相对繁琐，需要用户根据合约ABI来传参和解析结果。为此，控制台提供的编译工具不仅可以编译出ABI和BIN文件，还可以自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。
@@ -332,7 +331,7 @@ bash sol2java.sh -p org.fisco.bcos.asset.contract
 |   |-- Table.bin
 |-- contracts # 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
 |   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖Table.sol
-|   |-- Table.sol # 实现系统CRUD操作的合约接口文件
+|   |-- Table.sol # 实现系统CRUD操作的合约接口文件 FIXME: 描述
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
@@ -362,7 +361,7 @@ public class Asset extends Contract {
     // 加载Asset合约地址，生成Asset对象
     public static Asset load(String contractAddress, Client client, CryptoKeyPair credential);
 
-    // 部署Assert.sol合约，生成Asset对象
+    // 部署Asset.sol合约，生成Asset对象
     public static Asset deploy(Client client, CryptoKeyPair credential) throws ContractException;
 }
 ```
@@ -435,8 +434,6 @@ $ tar -zxf asset-app.tar.gz
 # FIXME: asset-app项目待确定，目前在（https://github.com/kyonRay/asset-app.git），待放入FISCO-BCOS
     - 如果因为网络问题导致长时间无法下载，请尝试将`199.232.28.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
 ```
-![](../../images/quick_start/download_asset.png)
-
 
 ### 第三步. 引入FISCO BCOS Java SDK
 在build.gradle文件中的``dependencies``下加入对FISCO BCOS Java SDK的引用。
@@ -569,7 +566,8 @@ applicationContext.xml的内容如下：
 
 
 ```
-**注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的`IP:channel_listen_port`。
+**注意：** FIXME: applicationContext.xml下配置字段改动待确定
+   则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的`IP:channel_listen_port`。  FIXME: channel_listen_port是否需要修改
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
 
@@ -584,8 +582,6 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app/src/test/resources/conf
 $ mkdir -p asset-app/src/main/resources/conf
 $ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
 ```
-![](../../images/quick_start/copy_cert.png)
-
 
 ## 5. 业务逻辑开发
 我们已经介绍了如何在自己的项目中引入以及配置Java SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。
@@ -597,7 +593,6 @@ cd ~/fisco
 # 将编译好的合约Java类引入项目中。
 cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app/src/main/java/org/fisco/bcos/asset/contract/Asset.java
 ```
-![](../../images/quick_start/copy_contract.png)
 
 ### 第二步.开发业务逻辑
 
@@ -847,7 +842,6 @@ TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, am
 ```
 
 在``asset-app/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
-![](../../images/quick_start/make_sh.png)
 
 ```bash
 #!/bin/bash 
@@ -893,7 +887,6 @@ function usage()
 ```
 
 接着，配置好log。在``asset-app/test/resources``目录下创建``log4j.properties``
-![](../../images/quick_start/config_log.png)
 
 ```properties
 ### set log levels ###
@@ -954,7 +947,7 @@ jar {
 }
 ```
 
-至此，我们已经完成了这个应用的开发。最后，我们得到的assert-app的目录结构如下：
+至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app的目录结构如下：
 
 ```bash
 |-- build.gradle // gradle配置文件
@@ -1012,7 +1005,6 @@ jar {
 ## 6. 运行应用
 
 至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
-![](../../images/quick_start/test.png)
 
 -   编译
 
@@ -1063,4 +1055,4 @@ $ bash asset_run.sh query Bob
 account Bob, value 150000
 ```
 
-**总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
+**总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的solidity应用。

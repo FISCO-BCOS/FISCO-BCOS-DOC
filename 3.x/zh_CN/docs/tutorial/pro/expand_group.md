@@ -179,9 +179,9 @@ generated/chain/group2
 
 ## 2. 向新群组发送交易
 
-新群组部署成功后，可使用控制台直接连接新群组`group2`，向新群组发送交易。控制台`contract/liquid`目录下提供了已经编译好的`hello_world`合约，这里直接使用即可。关于`Liquid`合约编写和编译，可参考[这里](https://liquid-doc.readthedocs.io/zh_CN/latest/)。
+新群组部署成功后，可使用控制台直接连接新群组`group2`，向新群组发送交易。控制台`contract/liquid`目录下提供了已经编译好的`hello_world`合约，这里直接使用即可。关于`webankblockchain-liquid（以下简称wbc-liquid）`合约编写和编译，可参考[这里](https://liquid-doc.readthedocs.io/zh_CN/latest/)。
 
-Liquid hello_world合约如下：
+wbc-liquid hello_world合约如下：
 
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -264,7 +264,7 @@ peer1: a6448fd526eb90438621d653e59cd2c850cf60953cdf702471e62731b4363412f05319f92
 [group2]: /> mkdir tmp
 Success
 
-# 部署hello_world liquid合约
+# 部署hello_world wbc-liquid合约
 [group2]: /> deploy contracts/liquid/hello_world/hello_world.wasm contracts/liquid/hello_world/hello_world.abi tmp
 transaction hash: 0x39bdce5954e39bfe0e2291a0373a5107fc7f29522f9dfddc69dcf1dd33e21bd4
 contract address: /tmp

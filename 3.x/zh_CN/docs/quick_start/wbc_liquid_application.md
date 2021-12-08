@@ -1,12 +1,12 @@
-# 开发第一个Liquid区块链应用
+# 开发第一个wbc-liquid区块链应用
 
-标签：``开发第一个应用`` ``Liquid`` ``合约开发`` ``区块链应用`` ``WASM``
+标签：``开发第一个应用`` ``wbc-liquid`` ``合约开发`` ``区块链应用`` ``WASM``
 
 ---
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的[Java SDK](../develop/sdk/java_sdk/index.md)实现对区块链上合约的调用访问。
 
-本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉liquid语法，并且进行了[Liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
+本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉webankblockchain-liquid语法（以下简称wbc-liquid），并且进行了[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
 如果您还未搭建区块链网络，或未下载控制台，请先走完教程[搭建第一个区块链网络](./air_installation.md)，再回到本教程。
 
@@ -26,7 +26,7 @@
 
 **存储设计**
 
-FISCO BCOS提供[合约CRUD接口](../develop/precompiled/precompiled_contract_api.html#kvtablefactoryprecompiled)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[kv table](.. FIXME: 链接待确定)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
 -   asset_value: 资产金额(uint256类型)
@@ -54,7 +54,7 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i256
 ### 第二步. 开发源码
 #### 创建
 根据我们第一步的存储和接口设计，创建一个Asset的智能合约项目。
-在终端中执行以下命令创建 Liquid 智能合约项目：
+在终端中执行以下命令创建 wbc-liquid 智能合约项目：
 
 ```rust
 cargo liquid new contract asset
@@ -75,13 +75,13 @@ asset/
 
 其中各文件的功能如下：
 
--   `.gitignore`：隐藏文件，用于告诉版本管理软件[Git](https://git-scm.com/)哪些文件或目录不需要被添加到版本管理中。Liquid 会默认将某些不重要的问题件（如编译过程中生成的临时文件）排除在版本管理之外，如果不需要使用 Git 管理对项目版本进行管理，可以忽略该文件；
+-   `.gitignore`：隐藏文件，用于告诉版本管理软件[Git](https://git-scm.com/)哪些文件或目录不需要被添加到版本管理中。wbc-liquid 会默认将某些不重要的问题件（如编译过程中生成的临时文件）排除在版本管理之外，如果不需要使用 Git 管理对项目版本进行管理，可以忽略该文件；
 
--   `.liquid/`：隐藏目录，用于实现 Liquid 智能合的内部功能，其中`abi_gen`子目录下包含了 ABI 生成器的实现，该目录下的编译配置及代码逻辑是固定的，如果被修改可能会造成无法正常生成 ABI；
+-   `.liquid/`：隐藏目录，用于实现 wbc-liquid 智能合的内部功能，其中`abi_gen`子目录下包含了 ABI 生成器的实现，该目录下的编译配置及代码逻辑是固定的，如果被修改可能会造成无法正常生成 ABI；
 
 -   `Cargo.toml`：项目配置清单，主要包括项目信息、外部库依赖、编译配置等，一般而言无需修改该文件，除非有特殊的需求（如引用额外的第三方库、调整优化等级等）；
 
--   `src/lib.rs`：Liquid 智能合约项目根文件，合约代码存放于此文件中。智能合约项目创建完毕后，`lib.rs`文件中会自动填充部分样板代码，我们可以基于这些样板代码做进一步的开发。
+-   `src/lib.rs`：wbc-liquid 智能合约项目根文件，合约代码存放于此文件中。智能合约项目创建完毕后，`lib.rs`文件中会自动填充部分样板代码，我们可以基于这些样板代码做进一步的开发。
 
 我们将Asset liquid中的代码复制至`lib.rs`文件中后，便可进行后续步骤。
 
@@ -314,7 +314,7 @@ Done in 4 minutes, your project is ready now:
 Binary: /Users/leevaygr/Desktop/webank/liquid/asset/target/asset.wasm
    ABI: /Users/leevaygr/Desktop/webank/liquid/asset/target/asset.abi
 ```
-其中，“Binary:”后为生成的字节码文件的绝对路径，“ABI:”后为生成的 ABI 文件的绝对路径。为尽量简化 FISCO BCOS 各语言 SDK 的适配工作，Liquid 采用了与 Solidity ABI 规范兼容的 ABI 格式.
+其中，“Binary:”后为生成的字节码文件的绝对路径，“ABI:”后为生成的 ABI 文件的绝对路径。为尽量简化 FISCO BCOS 各语言 SDK 的适配工作，wbc-liquid 采用了与 Solidity ABI 规范兼容的 ABI 格式.
 
 进入到 target 目录中，将 asset.wasm 重命名为 asset_sm.wasm。因为我们待会还要生成非国密的Binary、ABI文件，但是 `cargo liquid build` 会覆盖同名文件。
 ```bash
@@ -354,14 +354,14 @@ bash contract2java.sh -a ~/Desktop/webank/liquid/asset/target/asset.abi -b ~/Des
 $ bash contract2java.sh liquid -h
 Missing required options: b, a, sb
 usage: contract2java.sh <solidity|liquid> [OPTIONS...]
- -a,--abi <arg>       [Required] The ABI file path of Liquid contract.
- -b,--bin <arg>       [Required] The binary file path of Liquid contract.
+ -a,--abi <arg>       [Required] The ABI file path of wbc-liquid contract.
+ -b,--bin <arg>       [Required] The binary file path of wbc-liquid contract.
  -h,--help
  -o,--output <arg>    [Optional] The file path of the generated java code,
                       default is contracts/sdk/java/
  -p,--package <arg>   [Optional] The package name of the generated java
                       code, default is com
- -sb,--sm-bin <arg>   [Required] The SM binary file path of Liquid
+ -sb,--sm-bin <arg>   [Required] The SM binary file path of wbc-liquid
                       contract.
 ```
 
@@ -383,7 +383,7 @@ public class Asset extends Contract {
     // 加载Asset合约地址，生成Asset对象
     public static Asset load(String contractAddress, Client client, CryptoKeyPair credential);
 
-    // 部署Assert.sol合约，生成Asset对象
+    // 部署Asset.sol合约，生成Asset对象
     public static Asset deploy(Client client, CryptoKeyPair credential) throws ContractException;
 }
 ```
@@ -586,7 +586,8 @@ applicationContext.xml的内容如下：
 	</bean>
 </beans>
 ```
-**注意：** 如果搭链时设置的jsonrpc_listen_ip为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的`IP:channel_listen_port`。
+**注意：** FIXME: applicationContext.xml下配置字段改动待确定
+`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的`IP:channel_listen_port`。 FIXME: channel_listen_port是否需要修改
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
 
@@ -601,8 +602,6 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app/src/test/resources/conf
 $ mkdir -p asset-app/src/main/resources/conf
 $ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
 ```
-![](../../images/quick_start/copy_cert.png)
-
 
 ## 5. 业务逻辑开发
 我们已经介绍了如何在自己的项目中引入以及配置Java SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。
@@ -614,7 +613,6 @@ cd ~/fisco
 # 将编译好的合约Java类引入项目中。
 cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app/src/main/java/org/fisco/bcos/asset/contract/Asset.java
 ```
-![](../../images/quick_start/copy_contract.png)
 
 ### 第二步.开发业务逻辑
 
@@ -980,7 +978,7 @@ jar {
 }
 ```
 
-至此，我们已经完成了这个应用的开发。最后，我们得到的assert-app的目录结构如下：
+至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app的目录结构如下：
 
 ```bash
 |-- build.gradle // gradle配置文件
@@ -1012,10 +1010,10 @@ jar {
 |   |        |-- applicationContext.xml // 项目配置文件
 |   |        |-- contract.properties // 存储部署合约地址的文件
 |   |        |-- log4j.properties // 日志配置文件
-|   |        |-- contract //存放 liquid 合约文件
+|   |        |-- contract //存放 wbc-liquid 合约文件
 |   |               |-- asset-test
 |   |                   |-- src
-|   |                       |-- lib.rs Liquid文件
+|   |                       |-- lib.rs wbc-liquid文件
 |   |-- test
 |       |-- resources // 存放代码资源文件
 |           |-- conf
@@ -1028,9 +1026,9 @@ jar {
 |           |-- applicationContext.xml // 项目配置文件
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
-|           |-- contract //存放 liquid 合约文件
+|           |-- contract //存放 wbc-liquid 合约文件
 |                   |-- asset-test
-|                       |-- lib.rs Liquid文件
+|                       |-- lib.rs wbc-liquid文件
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本
@@ -1039,7 +1037,6 @@ jar {
 ## 6. 运行应用
 
 至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
-![](../../images/quick_start/test.png)
 
 -   编译
 
@@ -1090,4 +1087,4 @@ $ bash asset_run.sh query Bob
 account Bob, value 150000
 ```
 
-**总结：** 至此，我们通过Liquid合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的应用。
+**总结：** 至此，我们通过wbc-liquid合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的wbc-liquid应用。

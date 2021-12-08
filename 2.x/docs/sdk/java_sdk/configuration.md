@@ -51,7 +51,7 @@ Java sdk主要包括五个配置选项，分别是
 
 ```
 ├── lib
-│   ├── fisco-bcos-java-sdk-2.7.0.jar
+│   ├── fisco-bcos-java-sdk-2.7.0.jar //FIXME: 版本号需更新
 │   └── XXXXX.jar
 ├── conf
 │   ├── applicationContext.xml

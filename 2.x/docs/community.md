@@ -22,7 +22,7 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 - **WeDPR 即时可用，场景式隐私保护高效解决方案套件和服务**：[GitHub](https://github.com/WeBankBlockchain/WeDPR-Lab-Core) 、 [Gitee](https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto) 、 [文档](https://wedpr-lab.readthedocs.io/) 
 - **WeCross 区块链跨链协作平台**: [GitHub](https://github.com/WeBankBlockchain/WeCross) 、 [Gitee](https://gitee.com/WeBank/WeCross) 、 [文档](https://wecross.readthedocs.io/) 
 - **Truora 可信预言机服务**：[GitHub](https://github.com/WeBankBlockchain/Truora) 、 [Gitee](https://gitee.com/WeBankBlockchain/Truora) 、  [文档](https://truora.readthedocs.io/) 
-- **Liquid 智能合约编程语言软件**：[GitHub](https://github.com/WeBankBlockchain/liquid) 、 [Gitee](https://gitee.com/WeBankBlockchain/liquid) 、  [文档](https://liquid-doc.readthedocs.io/)
+- **webankblockchain-liquid（简称wbc-liquid） 智能合约编程语言软件**：[GitHub](https://github.com/WeBankBlockchain/liquid) 、 [Gitee](https://gitee.com/WeBankBlockchain/liquid) 、  [文档](https://liquid-doc.readthedocs.io/)
 - **WeBankBlockchain-Data 数据治理通用组件**：
     - Data-Stash 数据仓库组件： [GitHub](https://github.com/WeBankBlockchain/Data-Stash) 、 [Gitee](https://gitee.com/WeBankBlockchain/Data-Stash) 、  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)
     - Data-Export 数据导出组件： [GitHub](https://github.com/WeBankBlockchain/Data-Export) 、 [Gitee](https://gitee.com/WeBankBlockchain/Data-Export) 、  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)
