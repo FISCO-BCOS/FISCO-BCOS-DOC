@@ -52,7 +52,6 @@ extensions = [
   'sphinx_copybutton',
   'sphinxcontrib.mermaid',
   'sphinx.ext.mathjax',
-  'sphinx.ext.imgconverter',
   'sphinx_markdown_tables',
 ]
 
