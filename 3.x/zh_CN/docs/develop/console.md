@@ -10,7 +10,7 @@
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 
-[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译为Java合约文件。
+[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)【FIXME: 链接有误】与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译为Java合约文件。
 
 wbc-liquid编译请参考：FIXME:
 
@@ -125,7 +125,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
                                             # Default is the number of cpu cores
 ```
 
-配置项详细说明[参考这里](../sdk/java_sdk/configuration.md)。
+配置项详细说明[参考这里](../sdk/java_sdk/configuration.md)【FIXME: 链接有误】。
 
 ```eval_rst
 .. important::
@@ -260,7 +260,7 @@ console version: 3.0.0
 
 FIXME: 账户管理文档
 
-控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)【FIXME: 链接有误】，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
 控制台启动方式有如下几种：
 
 ```shell
@@ -320,26 +320,26 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
 
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)【FIXME: 链接有误】。
 
 ### 1.6 常用命令
 
 #### 合约相关命令
 
-- 利用[CNS](../design/features/cns_contract_name_service.md)部署和调用合约(**推荐**)
-  - 部署合约: [deployByCNS](./console.html#deploybycns)
-  - 调用合约: [callByCNS](./console.html#callbycns)
-  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+- 利用[CNS](../design/features/cns_contract_name_service.md)【FIXME: 链接有误】部署和调用合约(**推荐**)
+  - 部署合约: [deployByCNS](./console.html#deploybycns)【FIXME: 链接有误】
+  - 调用合约: [callByCNS](./console.html#callbycns)【FIXME: 链接有误】
+  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)【FIXME: 链接有误】
 - 普通部署和调用合约
-  - 部署合约: [deploy](./console.html#deploy)
-  - 调用合约: [call](./console.html#call)
+  - 部署合约: [deploy](./console.html#deploy)【FIXME: 链接有误】
+  - 调用合约: [call](./console.html#call)【FIXME: 链接有误】
 
 #### 其他命令
 
-- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
-- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
-- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
-- 切换群组: [switch](./console.html#switch)
+- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)【FIXME: 链接有误】
+- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)【FIXME: 链接有误】
+- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)【FIXME: 链接有误】
+- 切换群组: [switch](./console.html#switch)【FIXME: 链接有误】
 
 ### 快捷键
 
@@ -356,8 +356,8 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
-  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。【FIXME: 链接有误】
+  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。【FIXME: 链接有误】
 
 ## 2. 控制台命令列表
 
@@ -482,7 +482,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x6fad87071f790c32
 加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
 参数：
 
-- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](../sdk/java_sdk/configuration.html#id9)。
+- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](../sdk/java_sdk/configuration.html#id9)。【FIXME: 链接有误】
 
 - 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
 
@@ -1387,7 +1387,7 @@ Return values:
 ---------------------------------------------------------------------------------------------
 ```
 
-**注：** TableTest.sol合约代码[参考这里](../manual/smart_contract.html#solidity)。
+**注：** TableTest.sol合约代码[参考这里](../manual/smart_contract.html#solidity)【FIXME: 链接有误】。
 
 #### 2.6.3 getCode
 
@@ -1449,7 +1449,7 @@ Event list:
 
 #### 2.6.6 deployByCNS
 
-运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)部署合约。用CNS部署的合约，可用合约名直接调用。
+运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)【FIXME: 链接有误】部署合约。用CNS部署的合约，可用合约名直接调用。
 参数：
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。

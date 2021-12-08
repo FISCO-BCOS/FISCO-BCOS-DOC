@@ -21,7 +21,7 @@ Java SDK提供账户管理接口，支持以下功能：
 
 ## 1. 账户加载
 
-Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./configuration.html#id6).
+Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./configuration.html#id6). 【FIXME: 链接有误】
 
 ### 1.1 从十六进制私钥字符串加载账户
 
@@ -100,7 +100,7 @@ public CryptoKeyPair loadGMAccountFromHexPrivateKey(BigInteger privateKey)
 
 ### 1.3 从pem文件加载账户
 
-从指定`pem`账户文件加载交易发送账户的示例如下(client初始化方法请参考[快速入门](./quick_start.html#id4))：
+从指定`pem`账户文件加载交易发送账户的示例如下(client初始化方法请参考[快速入门](./quick_start.html#id4))： 【FIXME: 链接有误】
 
 ```java
 // 从pemAccountFilePath指定路径加载pem账户文件，并将其设置为交易发送账户
@@ -155,7 +155,7 @@ String accountAddress = cryptoKeyPair.getAddress();
 ```
 
 ## 3. 账户保存
-
+【FIXME: 链接有误】
 当没有自定义加载账户，也没有通过配置文件配置账户信息时(账户配置请参考[这里](./configuration.html#id6))，Java SDK会随机生成账户发送交易，Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户保存功能，可将随机生成的账户保存在指定路径。
 
 以`pem`的格式保存账户文件到指定路径的示例如下：

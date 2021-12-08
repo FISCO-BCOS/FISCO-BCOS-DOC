@@ -19,7 +19,7 @@ Java sdk主要包括五个配置选项，分别是
 * yml
 * xml
 
-其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./configuration.html#id12)
+其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./configuration.html#id12) 【FIXME: 链接有误】
 
 ## 1. 快速配置
 
@@ -48,7 +48,7 @@ Java sdk主要包括五个配置选项，分别是
    BcosSDK sdk =  BcosSDK.build(configFile);
    ```
 
-关于如何在业务项目中引入以及配置Java SDK的进一步详细说明，可参考[例子](../../tutorial/sdk_application.html#java-sdk)。（FIXME: 链接有误） 对一项目，完成Java SDK引入、配置文件及证书放置、编译后，项目的dist目录结构如下：
+关于如何在业务项目中引入以及配置Java SDK的进一步详细说明，可参考[例子](../../tutorial/sdk_application.html#java-sdk)。（FIXME: 链接有误） 对一项目，完成Java SDK引入、配置文件及证书放置、编译后，项目的dist目录结构如下：  【FIXME: 链接有误】
 
 ```shell
 ├── lib
@@ -189,7 +189,8 @@ publicKeys = [ "conf/amop/consumer_public_key_1.pem" ]    # Public keys of the n
 
 ### 账户配置
 
-账户配置主要用于设置SDK向节点发交易的账户信息，SDK初始化[client](./api.md)时，默认读取`[account]`配置项加载账户信息，具体如下：
+【FIXME: 链接有误】
+账户配置主要用于设置SDK向节点发交易的账户信息，SDK初始化[client](./api.md)时，默认读取`[account]`配置项加载账户信息，具体如下： 
 
 * `keyStoreDir`: 加载/保存账户文件的路径，默认为`account`；
 

@@ -3,7 +3,7 @@
 标签：``java-sdk`` ``AMOP`` ``链上信使``
 
 ----
-Java SDK支持[链上信使协议AMOP（Advanced Messages Onchain Protocol）](../../manual/amop_protocol.html)，用户可以通过AMOP协议与其它机构互传消息。
+Java SDK支持[链上信使协议AMOP（Advanced Messages Onchain Protocol）](../../manual/amop_protocol.html)，用户可以通过AMOP协议与其它机构互传消息。 FIXME: 链接有误
 
 ## 1. 配置方法
 
@@ -908,7 +908,7 @@ try to start node3
  node2 start successfully
 ```
 
-方法二：您也可以根据[指引](../../installation.html#fisco-bcos)搭建FISCO BCOS区块链网络。然后进行以下操作
+方法二：您也可以根据[指引](../../installation.html#fisco-bcos)搭建FISCO BCOS区块链网络。然后进行以下操作  【FIXME: 链接有误】
 
 ```cmd
 # 当前目录为java-sdk,构建项目
