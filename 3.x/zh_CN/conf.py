@@ -56,7 +56,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['../../_templates']
+templates_path = ['../_templates']
 
 
 
@@ -131,7 +131,7 @@ html_theme_options = {'navigation_depth': 3,}
 using_rtd_theme = True
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 todo_include_todos = True
-html_extra_path = ['../../_static', '../../2.x/images', 'images']
+html_extra_path = ['../_static', '../../2.x/images', 'images']
 
 # VCS options: https://docs.readthedocs.io/en/latest/vcs.html#github
 html_context = {
@@ -170,7 +170,7 @@ html_context = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['../../_static']
+html_static_path = ['../_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

@@ -14,7 +14,7 @@
 
 ```eval_rst
 .. note::
-   若访问github速度较慢，可尝试从gittee克隆代码，gittee链接为https://gittee.com/FISCO-BCOS/spring-boot-starter.git
+   若访问github速度较慢，可尝试从gitee克隆代码，gitee链接为https://gitee.com/FISCO-BCOS/spring-boot-starter.git
 ```
 
 ```shell
