@@ -13,7 +13,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 
 ## 功能介绍
 
-- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-3.1.0/tools/BcosAirBuilder/build_chain.sh), [gittee源码](https://gittee.com/FISCO-BCOS/FISCO-BCOS/blob/release-3.1.0/tools/BcosAirBuilder/build_chain.sh)
+- `build_chain.sh`脚本用于快速生成一条链中节点的配置文件，脚本依赖于`openssl`请根据自己的操作系统安装`openssl 1.0.2`以上版本。脚本的源码位于[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/release-3.1.0/tools/BcosAirBuilder/build_chain.sh), [gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/release-3.1.0/tools/BcosAirBuilder/build_chain.sh)
 
 ```eval_rst
 .. note::

@@ -15,7 +15,7 @@
 # 直接从github克隆代码
 git clone https://github.com/FISCO-BCOS/spring-boot-crud.git
 
-# 若网络很慢，可从gittee克隆代码
+# 若网络很慢，可从gitee克隆代码
 git clone https://gitee.com/FISCO-BCOS/spring-boot-crud
 ```
 
