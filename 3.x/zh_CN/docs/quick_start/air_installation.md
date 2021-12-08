@@ -69,19 +69,19 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/
 ```bash
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
-[INFO] Generate test_nodes/127.0.0.1/sdk cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node0/conf cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node1/conf cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node2/conf cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/sdk cert successful!
+[INFO] Generate nodes/127.0.0.1/node0/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node1/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
 ==============================================================
 [INFO] fisco-bcos Path     : bin/fisco-bcos
 [INFO] Auth Mode           : false
 [INFO] Start Port          : 30300 20200
 [INFO] Server IP           : 127.0.0.1:4
 [INFO] SM Model            : false
-[INFO] output dir          : test_nodes
-[INFO] All completed. Files in test_nodes
+[INFO] output dir          : nodes
+[INFO] All completed. Files in nodes
 ```
 
 ### 第四步. 启动FISCO BCOS链
