@@ -61,27 +61,27 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/
 ```eval_rst
 .. note::
    - 其中-p选项指定起始端口，分别是p2p监听端口、rpc监听端口
+   - Air版搭建脚本build_chain.sh介绍文档 `参考这里 <../tutorial/air/build_chain.html>`
 ```
- - Air版搭建脚本 build_chain.sh 介绍文档[参考这里](../tutorial/air/build_chain.md)
 
 命令成功后会输出`All completed`：
 
 ```bash
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
-[INFO] Generate test_nodes/127.0.0.1/sdk cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node0/conf cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node1/conf cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node2/conf cert successful!
-[INFO] Generate test_nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/sdk cert successful!
+[INFO] Generate nodes/127.0.0.1/node0/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node1/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
 ==============================================================
 [INFO] fisco-bcos Path     : bin/fisco-bcos
 [INFO] Auth Mode           : false
 [INFO] Start Port          : 30300 20200
 [INFO] Server IP           : 127.0.0.1:4
 [INFO] SM Model            : false
-[INFO] output dir          : test_nodes
-[INFO] All completed. Files in test_nodes
+[INFO] output dir          : nodes
+[INFO] All completed. Files in nodes
 ```
 
 ### 第四步. 启动FISCO BCOS链
@@ -189,9 +189,15 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 ```
 
 ### 第四步. 启动并使用控制台
-控制台介绍文档[参考这里](../develop/console.md)
+
+```eval_rst
+.. note::
+   - 请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
+   - 控制台的配置方法和命令请参考 `这里 <../develop/console.html>`_
+```
 
 - 启动
+
 ```bash
 cd ~/fisco/console && bash start.sh
 ```
@@ -333,4 +339,4 @@ Event: {}
 [group]: /> exit
 ```
 
-**总结：** 至此，我们完成了第一条FISCO-BCOS链的搭建，配置使用了控制台，并最终完成了第一个合约的部署调用。
+至此，我们完成了第一条FISCO-BCOS链的搭建、控制台的配置和使用，并部署和调用了第一个合约。关于**Pro版本FISCO BCOS的搭建、配置和使用请参考[这里](../tutorial/pro/index.md)。**

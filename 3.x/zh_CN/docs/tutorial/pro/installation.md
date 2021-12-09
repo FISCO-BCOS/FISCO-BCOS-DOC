@@ -10,6 +10,7 @@ FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 .. note::
    - Pro版本FISCO BCOS使用 ``BcosProBuilder`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `部署工具BcosProBuilder <./pro_builder.html>`_ 
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
+   - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
 ```
 
 ## 1. 安装依赖
@@ -36,6 +37,11 @@ brew install curl docker docker-compose python3
 ```
 
 ## 2. 下载Pro版区块链构建工具BcosBuilder
+
+```eval_rst
+.. note::
+   - 部署工具 ``BcosProBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
+```
 
 ```bash
 # 创建操作目录
@@ -133,7 +139,7 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
 
 - RPC服务负责接收客户端请求，并将请求转发到节点进行处理， RPC服务可横向扩展，一个RPC服务可接入多个区块链节点服务
 - Gateway服务负责跨机构区块链节点之间的网络通信，Gateway服务横向可扩展，一个Gateway服务可接入多个区块链节点服务
-- 区块链节点服务BcosNodeService提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。每一个BcosNodeService表示一个群组，可以部署多个BcosNodeService扩展多群组服务。
+- 区块链节点服务BcosNodeService提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。每一个BcosNodeService表示一个群组，可以部署多个BcosNodeService扩展多群组。
 
 关于Pro版本FISCO BCOS的总体架构设计可参考[这里](../../design/architecture.md)。
 
@@ -149,7 +155,25 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
    - 部署Pro版本区块链节点之前，请先确保您的tars服务是启动的状态，安装/启动和配置tars服务请参考3.2节
 ```
 
-### 4.1 部署RPC服务
+### 4.1 下载二进制
+
+构建Pro版本FISCO BCOS前，需要先下载二进制包，`BcosProBuilder`的提供了基于linux的静态二进制包下载功能，可部署到`tarsnode`中，下载最新二进制的命令如下：
+
+```eval_rst
+.. note::
+   - 可通过 ``python3 build_chain.py -h`` 查看部署脚本使用方法
+   - 二进制默认下载到 ``binary`` 目录
+```
+
+```bash
+# 进入操作目录
+cd ~/fisco/BcosProBuilder
+
+# 运行build_chain.py脚本下载二进制，二进制包默认下载到binary目录
+python3 build_chain.py download_binary
+```
+
+### 4.2 部署RPC服务
 
 在建链工具BcosProBuilder目录，执行如下命令，可部署并启动2机构RPC服务，对应的RPC服务名分别为`agencyABcosRpcService`和`agencyBBcosRpcService`，ip均为`172.25.0.3`，占用的监听端口分别为`20200`和`20201`(进行本操作前，请确保机器的`20200`和`20201`端口没被占用)。
 
@@ -260,7 +284,7 @@ RPC服务启动成功后，可在tars网页管理平台看到服务列表`agency
    - **请妥善保存部署服务过程中生成的RPC服务CA证书和CA私钥，用于SDK证书申请、RPC服务扩容等操作**
 ```
 
-### 4.2 部署Gateway服务
+### 4.3 部署Gateway服务
 
 RPC服务部署完成后，需要再部署Gateway服务，用于建立机构之间的网络连接。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构Gateway服务，对应的Gateway服务名分别为`agencyABcosGatewayService`和`agencyBBcosGatewayService`，ip均为`172.25.0.3`，占用的端口分别为`30300`和`30301`(进行本操作前，请确保机器的`30300`和`30301`端口没被占用)。
 
@@ -354,7 +378,7 @@ generated/gateway/chain
 Gateway服务启动成功后，可在tars网页管理平台看到服务列表`agencyABcosGatewayService`和`agencyBBcosGatewayService`，且每个服务均是`active`的状态：
 ![](../../../images/tutorial/gateway_service.png)
 
-### 4.3 部署区块链节点服务
+### 4.4 部署区块链节点服务
 
 RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，链ID均为`chain`，群组ID均为`group`。
 
@@ -429,6 +453,11 @@ generated/chain
 
 控制台同时适用于Pro版本和Air版本的FISCO BCOS区块链，且在体验上完全一致。Pro版本区块链体验环境搭建完毕后，可配置并使用控制台向Pro版本区块链发送交易。
 ### 5.1 安装依赖
+
+```eval_rst
+.. note::
+   - 控制台的配置方法和命令请参考 `这里 <../../develop/console.html>`_
+```
 
 使用控制台之前，需先安装java环境：
 

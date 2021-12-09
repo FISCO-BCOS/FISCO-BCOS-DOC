@@ -44,8 +44,6 @@
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
 
-![](./../../../../images/java-sdk/install_java_intellij.gif)
-
 ## 2. 搭建一条FISCO BCOS链
 
 请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。【FIXME: 链接有误】
@@ -55,8 +53,6 @@
 ### 第一步. 创建一个Gradle应用
 
 在IntelliJ IDE中创建一个gradle项目。勾选Gradle和Java
-
-![](./../../../../images/java-sdk/create.gif)
 
 ### 第二步. 引入Java SDK
 
@@ -103,10 +99,10 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh
 
 # 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
-$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh
 
 $ bash download_console.sh
 $ cd ~/fisco/console

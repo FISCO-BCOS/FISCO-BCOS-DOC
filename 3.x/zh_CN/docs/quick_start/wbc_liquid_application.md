@@ -431,16 +431,11 @@ public class Asset extends Contract {
 
 - IDE：IntelliJ IDE. 
 
-  进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
-
-![](../../images/java-sdk/install_java_intellij.gif)
+  进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE。
 
 ### 第二步. 创建一个Java工程
 
 在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app``。
-
-![](../../images/quick_start/create_app_mid.gif)
-
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
 ```bash
@@ -944,7 +939,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 ```groovy
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1")
     compile spring
     compile ('org.slf4j:slf4j-log4j12:1.7.25')
     runtime ('org.slf4j:slf4j-log4j12:1.7.25')

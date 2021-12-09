@@ -264,7 +264,18 @@ node_count=1
 可使用`python3 build_chain.py -h`查看`BcosProBuilder`的使用方法: 
 
 ```bash
-$ python3 build_chain.py -h
+----------- help for subcommand 'download_binary' -----------
+usage: build_chain.py download_binary [-h] [-t TYPE] [-v VERSION] [-p PATH]
+
+Download binary, eg: python3 build_chain.py download_binary -t cdn
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t TYPE, --type TYPE  [Optional] Specify the source of the download, support cdn,git now, default type is git
+  -v VERSION, --version VERSION
+                        [Optional] Specify the version of the binary, default is v3.0.0-rc1
+  -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
+
 ----------- help for subcommand 'chain' -----------
 usage: build_chain.py chain [-h] -o OP [-c CONFIG] [-t TYPE]
 
@@ -297,7 +308,15 @@ optional arguments:
                         [required] specified the subnet, e.g. 172.25.0.0/16
 ```
 
-### 2.1 **`-o, --op`选项[**Required**]**
+### 2.1 **`download_binary`命令**
+
+二进制下载命令，目前包括`-t`(`--type`), `-v`(`--version`)和`-p`(`--path`)三个选项，所有选项均是可选的，默认从FISCO BCOS github release tags下载最新版本二进制到`binary`文件夹，各选项功能如下：
+
+- `-t`, `--type`: 指定下载类型，目前支持`git`和`cdn`两种下载类型，默认从FISCO BCOS github release tags下载最新版本二进制到，**若搭建和部署Pro版本区块链时访问git慢，可以使用cdn选项加速下载**。
+- `-v`, `--version`: 指定下载的二进制版本，默认下载最新二进制，**FISCO BCOS 3.0默认的二进制最低版本不小于3.0.0-rc1**。
+- `-p`, `--path`: 指定二进制下载路径，默认下载到`binary`文件夹。
+
+### 2.2 **`-o, --op`选项**
 
 用于指定操作命令，目前支持`gen-config, upload, deploy, upgrade, undeploy, expand, start, stop`:
 
@@ -310,16 +329,16 @@ optional arguments:
 - `start`: 启动服务。
 - `stop`: 停止服务。
 
-### 2.2 **`-t, --type`选项[**Required**]**
+### 2.3 **`-t, --type`选项**
 
-用于指定操作的服务类型，目前包括`rpc, gateway, node`:
+用于指定操作的服务类型，当使用`-o`(`--op`)选项时，必须设置该选项，目前包括`rpc, gateway, node`:
 
 - **rpc**: 指定操作的服务类型为RPC服务。
 - **gateway**: 指定操作的服务类型为Gateway服务。
 - **node**: 指定操作的服务类型为区块链节点服务。
 
 
-### 2.3 **`-c, --config`选项[**Required**]:**
+### 2.4 **`-c, --config`选项[**Optional**]:**
 
 用于指定配置文件路径，默认为`config.toml`，`BcosProBuilder`提供了三类配置模板：
 
@@ -328,7 +347,7 @@ optional arguments:
 - `conf/config-node-expand-example.toml`: 区块链节点管理服务配置模板。
 
 
-### 2.4 **`create-subnet`命令**
+### 2.5 **`create-subnet`命令**
 
 ```eval_rst
 .. note::
