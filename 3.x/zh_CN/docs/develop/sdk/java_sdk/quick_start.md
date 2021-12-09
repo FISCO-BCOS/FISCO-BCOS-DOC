@@ -16,7 +16,7 @@
 
 ## 2. 搭建一条FISCO BCOS链
 
-请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。【FIXME: 链接有误】
+请参考[搭建第一个区块链网络](../../../quick_start/air_installation.html#fisco-bcos)搭建。
 
 ## 3. 开发智能合约应用
 
@@ -44,7 +44,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
 
 ### 第三步. 配置SDK证书
 
-参考[Java SDK证书配置](./config.html#id5)。【FIXME: 链接有误】
+参考[Java SDK证书配置](./config.html#id5)。
 
 ```eval_rst
 .. note::
@@ -111,8 +111,8 @@ $ cargo liquid build
 [4/4] 📃  Generating ABI file
 
 ✨ Done in 1 minute, your project is ready now:
-Binary: /Users/kyon_guo/IdeaProjects/bcos-console/dist/contracts/liquid/hello_world/target/hello_world.wasm
-   ABI: /Users/kyon_guo/IdeaProjects/bcos-console/dist/contracts/liquid/hello_world/target/hello_world.abi
+Binary: ~/fisco/contracts/liquid/hello_world/target/hello_world.wasm
+   ABI: ~/fisco/console/dist/contracts/liquid/hello_world/target/hello_world.abi
 ```
 
 生成`hello_world.wasm`和`hello_world.abi`两个文件
@@ -173,7 +173,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 ### 第五步. 创建配置文件
 
-在项目中创建配置文件``config.toml``, 可参照[配置向导](./configuration.html)进行配置【FIXME: 链接有误】，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
+在项目中创建配置文件``config.toml``, 可参照[配置向导](./config.html)进行配置，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
 
 通过``xml``配置请参照第4章“附录三. 使用xml配置进行配置”。
 
@@ -259,7 +259,7 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 
 - `package`: 生成`Java`文件的包名。
 - `sol`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
-- `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
+- `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。
 
 **WBC-Liquid合约使用**
 
@@ -321,7 +321,7 @@ Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会
 
 ### 附录三. 使用xml配置进行配置
 
-为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md)【FIXME: 链接有误】.
+为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./config.md).
 
 通过`xml`配置文件初始化`BcosSDK`之前，需要先引入`spring`。
 

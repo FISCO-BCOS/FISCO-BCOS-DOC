@@ -1,4 +1,4 @@
-# spring-boot-crud
+# Maven SpringBoot实用示例
 
 标签：``spring-boot-crud`` ``开发区块链应用``
 
