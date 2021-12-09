@@ -1710,17 +1710,15 @@ test
 在初始化时，将会部署一个治理委员，该治理委员的地址信息在 build_chain.sh时自动生成或者指定。初始化只有一个委员，并且委员的权重为1
 
 ```shell
-[group]: /> getCommitteeInfo
-CommitteeInfo{
-    governorList=[
-        GovernorInfo{
-            governorAddress='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
-            weight=1
-        }
-    ],
-    participatesRate=0,
-    winRate=0
-}
+[group]: /> getCommitteeInfo 
+---------------------------------------------------------------------------------------------
+Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
+ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
+---------------------------------------------------------------------------------------------
+ParticipatesRate: 0% , WinRate: 0%
+---------------------------------------------------------------------------------------------
+Governor Address                                        | Weight
+index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 1
 ```
 
 ### getProposalInfo
@@ -1741,26 +1739,23 @@ proposalType分为以下几种：
 status分为以下几种：
 
 - notEnoughVotes：提案正常，还未收集到足够的投票
-- success ：提案成功
+- finish：提案执行完成
 - failed：提案失败
 - revoke：提案被撤回
 - unknown：这个类型出现时，有可能是有bug
 
 ```shell
 [group]: /> getProposalInfo 1
-ProposalInfo{
-    resourceId='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
-    proposer='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
-    proposalType=setWeight,
-    blockNumberInterval=604801,
-    status=success,
-    agreeVoters=[
-        0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
-    ],
-    againstVoters=[
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : setWeight
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
 
-    ]
-}
 ```
 
 ### getDeployAuth
@@ -1787,23 +1782,17 @@ There is no deploy strategy, everyone can deploy contracts.
 如果是删除治理委员，将一个治理委员的权重设置为0 即可
 
 ```shell
-[group]: /> updateGovernorProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8 321
-Update governor proposal created, id is: 2
-
-[group]: /> getProposalInfo 2
-ProposalInfo{
-    resourceId='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
-    proposer='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
-    proposalType=setWeight,
-    blockNumberInterval=604802,
-    status=success,
-    agreeVoters=[
-        0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
-    ],
-    againstVoters=[
-
-    ]
-}
+[group]: /> updateGovernorProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 2
+Update governor proposal created, ID is: 1
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : setWeight
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
 
 ```
 
@@ -1814,23 +1803,18 @@ ProposalInfo{
 阈值在这里是以百分比为单位进行使用的。
 
 ```shell
-[group]: /> setRateProposal 1 1
-Set rate proposal created, id is: 3
+[group]: /> setRateProposal 51 51
+Set rate proposal created, ID is: 2
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : setRate
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
 
-[group]: /> getProposalInfo 3
-ProposalInfo{
-    resourceId='0x0000000000000000000000000000000000010001',
-    proposer='0xc49fd7d7648ef4f4774d642d905db2e66f5089a8',
-    proposalType=setRate,
-    blockNumberInterval=604803,
-    status=success,
-    agreeVoters=[
-        0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
-    ],
-    againstVoters=[
-
-    ]
-}
 ```
 
 ### setDeployAuthTypeProposal
@@ -1839,9 +1823,18 @@ ProposalInfo{
 
 ```shell
 [group]: /> setDeployAuthTypeProposal white_list
-Set deploy auth type proposal created, id is: 4
+Set deploy auth type proposal created, ID is: 4
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : setDeployAuthType
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
 
-[group]: /> getDeployAuth
+[group]: /> getDeployAuth 
 Deploy strategy is White List Access.
 ```
 
@@ -1850,19 +1843,32 @@ Deploy strategy is White List Access.
 开启某个管理员部署权限的提案
 
 ```shell
-[group]: /> deploy HelloWorld
+# 在白名单模式下，只有白名单内的用户可以使用
+[group]: /> deploy HelloWorld 
 deploy contract for HelloWorld failed!
 return message: Permission denied
 return code:18
 Return values:null
 
-[group]: /> openDeployAuthProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
-Open deploy auth proposal created, id is: 5
+# 治理委员开启自己（也可以其他账号）的部署权限
+[group]: /> openDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Open deploy auth proposal created, ID is: 5
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : modifyDeployAuth
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
 
-[group]: /> deploy HelloWorld
-transaction hash: 0x4708ba16df0df78db5472cffdd5a11c45977b6dcba047abfc346a89179e6a030
-contract address: 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
-currentAccount: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+# 再次部署，可以成功
+[group]: /> deploy HelloWorld 
+transaction hash: 0x732e29baa263fc81e17a93a4102a0aa1cc2ec33ffbc1408c6b206d124b7f7ae0
+contract address: 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+
 ```
 
 ### closeDeployAuthProposal
@@ -1870,19 +1876,32 @@ currentAccount: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
  关闭某个管理员部署权限的提案
 
 ```shell
-[group]: /> deploy HelloWorld
-transaction hash: 0x4708ba16df0df78db5472cffdd5a11c45977b6dcba047abfc346a89179e6a030
-contract address: 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
-currentAccount: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+# 账号可以部署合约
+[group]: /> deploy HelloWorld 
+transaction hash: 0x732e29baa263fc81e17a93a4102a0aa1cc2ec33ffbc1408c6b206d124b7f7ae0
+contract address: 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
-[group]: /> closeDeployAuthProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
-Close deploy auth proposal created, id is: 6
+# 关闭账号的部署权限
+[group]: /> closeDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 
+Close deploy auth proposal created, ID is: 6
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : modifyDeployAuth
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
 
-[group]: /> deploy HelloWorld
+# 该账号不再可以部署合约
+[group]: /> deploy HelloWorld 
 deploy contract for HelloWorld failed!
 return message: Permission denied
 return code:18
 Return values:null
+
 ```
 
 ### resetAdminProposal
@@ -1890,11 +1909,26 @@ Return values:null
 重置某个合约的管理员的提案
 
 ```shell
-[group]: /> resetAdminProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
-Reset contract admin proposal created, id is: 7
+# 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
-[group]: /> getContractAdmin 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
-Admin for contract 0x6546c3571F17858Ea45575e7C6457dad03E53DbB is: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
+# reset 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号为 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
+[group]: /> resetAdminProposal 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a  0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+Reset contract admin proposal created, ID is: 8
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : resetAdmin
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+[group]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
+
 ```
 
 ### revokeProposal
@@ -1912,16 +1946,35 @@ Admin for contract 0x6546c3571F17858Ea45575e7C6457dad03E53DbB is: 0xc49fd7d7648e
 **特别注意：合约的接口权限控制目前只能对写方法进行控制。**
 
 ```shell
-[group]: /> setMethodAuth 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 "set(string)" white_list
-Set method auth type success, resultCode is: 0
-
-[group]: /> call HelloWorld 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 set 123
-call for HelloWorld failed, contractAddress: 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903
+# 设置合约地址为 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的HelloWorld合约的 set(string) 接口为白名单模式
+[group]: /> setMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) white_list
 {
-    "code":18,
-    "msg":"Permission denied"
+    "code":0,
+    "msg":"Success"
 }
-description: Permission denied, please refer to https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#id73
+
+# 这个接口目前为白名单模式，只有白名单模式的账号可以调用 set 接口
+[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set 123
+transaction hash: 0x51e43a93b8e6621e45357ba542112117c3dd3e089b5067e06084e36243458074
+---------------------------------------------------------------------------------------------
+transaction status: 18
+---------------------------------------------------------------------------------------------
+Receipt message: Permission denied
+Return message: Permission denied
+---------------------------------------------------------------------------------------------
+
+# 不影响该账号调用 get 接口
+[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get 
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return value size:1
+Return types: (string)
+Return values:(Hello, World!)
+---------------------------------------------------------------------------------------------
+
 ```
 
 ### openMethodAuth
@@ -1929,8 +1982,39 @@ description: Permission denied, please refer to https://fisco-bcos-documentation
 管理员开启用户可以访问合约的某个方法的权限
 
 ```shell
-[group]: /> openMethodAuth  0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94 "set(string)" 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
-Open success, resultCode is: 0
+# 开启账号0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 的 0xCcEeF68C9b4811b32c75df284a1396C7C5509561地址的 set(string)接口调用
+[group]: /> openMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+{
+    "code":0,
+    "msg":"Success"
+}
+
+# 该账号可以使用HelloWorld的set接口
+[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "Hello, FISCO BCOS!"
+transaction hash: 0x0b94b775312a771197e5093fe9e24fffc386d0350f1330fe4ded6f3cfb01a0b6
+---------------------------------------------------------------------------------------------
+transaction status: 0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Receipt message: Success
+Return message: Success
+Return value size:0
+Return types: ()
+Return values:()
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
+
+[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return value size:1
+Return types: (string)
+Return values:(Hello, FISCO BCOS!)
+---------------------------------------------------------------------------------------------
 ```
 
 ### closeMethodAuth
@@ -1938,7 +2022,21 @@ Open success, resultCode is: 0
 管理员关闭用户可以访问合约的某个方法的权限
 
 ```shell
-[group]: /> closeMethodAuth  0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94 "set(string)" 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
-Close success, resultCode is: 0
+# 关闭HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的set接口
+[group]: /> closeMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+{
+    "code":0,
+    "msg":"Success"
+}
+
+# 该账户不再可以访问合约的set接口
+[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "oops, permission deny!"
+transaction hash: 0x4db693c3c1fbb498ad1595dac111b5b23efe68a44bd4b622d421e52b4890fdd0
+---------------------------------------------------------------------------------------------
+transaction status: 18
+---------------------------------------------------------------------------------------------
+Receipt message: Permission denied
+Return message: Permission denied
+---------------------------------------------------------------------------------------------
 ```
 
