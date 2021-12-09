@@ -24,19 +24,19 @@
 ### 合约相关命令
 
 - 利用**CNS**部署和调用合约(**推荐**)
-  - 部署合约: [deployByCNS](./console.html#deploybycns)
-  - 调用合约: [callByCNS](./console.html#callbycns)
-  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+  - 部署合约: [deployByCNS](./console_commands.html#deploybycns)
+  - 调用合约: [callByCNS](./console_commands.html#callbycns)
+  - 查询CNS部署合约信息: [queryCNS](./console_commands.html#querycns)
 - 普通部署和调用合约
-  - 部署合约: [deploy](./console.html#deploy)
-  - 调用合约: [call](./console.html#call)
+  - 部署合约: [deploy](./console_commands.html#deploy)
+  - 调用合约: [call](./console_commands.html#call)
 
 ### 其他命令
 
-- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
-- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
-- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
-- 切换群组: [switch](./console.html#switch)
+- 查询区块高度：[getBlockNumber](./console_commands.html#getblocknumber)
+- 查询共识节点列表：[getSealerList](./console_commands.html#getsealerlist)
+- 查询交易回执信息: [getTransactionReceipt](./console_commands.html#gettransactionreceipt)
+- 切换群组: [switch](./console_commands.html#switch)
 
 ### 快捷键
 
