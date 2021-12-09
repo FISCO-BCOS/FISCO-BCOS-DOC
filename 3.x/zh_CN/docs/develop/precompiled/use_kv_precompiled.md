@@ -17,7 +17,7 @@
 ### 1. KVTable合约
 
 - Solidity合约只需要引入FISCO BCOS官方提供的KVTable.sol抽象接口合约文件即可。
-- webankblockchain-liquid（以下简称wbc-liquid）合约在实现合约之前对KVTable的接口进行声明使用即可。
+- webankblockchain-liquid（以下简称WBC-Liquid）合约在实现合约之前对KVTable的接口进行声明使用即可。
 
 KVTable包含分布式存储专用的智能合约接口，其接口实现在区块链节点，可以创建表，并对表进行get/set操作。
 
@@ -142,11 +142,11 @@ function get(string memory id) public view returns (bool, string memory, string 
 }
 ```
 
-### 3. wbc-liquid合约使用KVTable接口
+### 3. WBC-Liquid合约使用KVTable接口
 
 #### 3.1 声明KVTable接口
 
-在wbc-liquid合约中使用接口之前先对KVTable的接口进行声明。
+在WBC-Liquid合约中使用接口之前先对KVTable的接口进行声明。
 
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -184,9 +184,9 @@ mod kv_table {
 }
 ```
 
-#### 3.2 wbc-liquid创建表
+#### 3.2 WBC-Liquid创建表
 
-可在wbc-liquid的构造函数中实现创建表的逻辑，此处引入的KVTable的地址为BFS路径 `/sys/kv_storage` ，注意wbc-liquid和Solidity的区别。
+可在WBC-Liquid的构造函数中实现创建表的逻辑，此处引入的KVTable的地址为BFS路径 `/sys/kv_storage` ，注意WBC-Liquid和Solidity的区别。
 
 创建表的原理与Solidity的类似，再次不再赘述。
 

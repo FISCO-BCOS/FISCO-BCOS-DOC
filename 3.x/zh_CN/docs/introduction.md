@@ -48,7 +48,7 @@ FISCO BCOS是由国内企业主导研发、对外开源、安全可控的企业�
 | 消息订阅服务 | AMOP协议 |
 | <font color=Blue>**智能合约**|
 |合约引擎| 支持WASM和EVM|
-|合约语言| 支持Solidity, C++和wbc-liquid|
+|合约语言| 支持Solidity, C++和WBC-Liquid|
 |引擎特点| 图灵完备，沙盒运行 |
 |版本控制| 基于CNS支持多版本合约 |
 | <font color=Blue>**密码算法和协议**</font>  |
