@@ -26,7 +26,7 @@
 
 **存储设计**
 
-FISCO BCOS提供[合约KV存储接口](../precompiled/use_kv_precompiled.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[合约KV存储接口](../develop/precompiled/use_kv_precompiled.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
 -   asset_value: 资产金额(uint256类型)
@@ -325,9 +325,9 @@ contract Asset {
 }
 ```
 
-Asset.sol所引用的KVTable.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作KV存储接口时，均需要引入该接口合约文件。KVTable.sol 合约详细接口参考[这里](../precompiled/precompiled_contract_api.md)。
+Asset.sol所引用的KVTable.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作KV存储接口时，均需要引入该接口合约文件。KVTable.sol 合约详细接口参考[这里](../develop/precompiled/precompiled_contract_api.md)。
 
-运行``ls``命令，确保``Asset.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
+运行``ls``命令，确保``Asset.sol``和``KVTable.sol``在目录``~/fisco/console/contracts/solidity``下。
 ## 3. 编译智能合约
 
 ``.sol``的智能合约需要编译成ABI和BIN文件才能部署至区块链网络上。有了这两个文件即可凭借Java SDK进行合约部署和调用。但这种调用方式相对繁琐，需要用户根据合约ABI来传参和解析结果。为此，控制台提供的编译工具不仅可以编译出ABI和BIN文件，还可以自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。
@@ -347,13 +347,13 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 # 其它无关文件省略
 |-- abi # 生成的abi目录，存放solidity合约编译生成的abi文件
 |   |-- Asset.abi
-|   |-- Table.abi
+|   |-- KVTable.abi
 |-- bin # 生成的bin目录，存放solidity合约编译生成的bin文件
 |   |-- Asset.bin
-|   |-- Table.bin
+|   |-- KVTable.bin
 |-- contracts # 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
-|   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖Table.sol
-|   |-- Table.sol # 实现系统CRUD操作的合约接口文件 FIXME: 描述
+|   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖KVTable.sol
+|   |-- KVTable.sol # 实现系统KV存储操作的合约接口文件 FIXME: 描述
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
@@ -361,11 +361,11 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 |                  |--asset
 |                       |--contract
 |                             |--Asset.java  # Asset.sol合约生成的Java文件
-|                             |--Table.java  # Table.sol合约生成的Java文件
+|                             |--KVTable.java  # KVTable.sol合约生成的Java文件
 |-- contract2java.sh
 ```
 
-java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`Table.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
+java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`KVTable.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
 
 `Asset.java`的主要接口：
 
@@ -993,7 +993,7 @@ jar {
 |   |        |-- log4j.properties // 日志配置文件
 |   |        |-- contract //存放solidity约文件
 |   |                |-- Asset.sol
-|   |                |-- Table.sol
+|   |                |-- KVTable.sol
 |   |-- test
 |       |-- resources // 存放代码资源文件
 |           |-- conf
@@ -1008,7 +1008,7 @@ jar {
 |           |-- log4j.properties // 日志配置文件
 |           |-- contract //存放solidity约文件
 |                   |-- Asset.sol
-|                   |-- Table.sol
+|                   |-- KVTable.sol
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本
