@@ -85,7 +85,7 @@ cmake ..
 make -j2
 
 # 生成tgz包
-rm -rf *.tgz && make tgz
+rm -rf *.tgz && make tar
 ```
 ### 3.2 CentOS
 
@@ -102,7 +102,7 @@ cmake3 ..
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
 # 生成tgz包
-rm -rf *.tgz && make tgz
+rm -rf *.tgz && make tar
 ```
 
 ### 3.3 macOS
@@ -118,5 +118,5 @@ cmake ..
 make -j2
 
 # 生成tgz包
-rm -rf *.tgz && make tgz
+rm -rf *.tgz && make tar
 ```
