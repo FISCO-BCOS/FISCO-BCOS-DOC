@@ -3,9 +3,14 @@
 标签：``搭建区块链网络`` ``区块链教程`` ``HelloWorld`` ``控制台调用合约``
 
 ----
-本章介绍使用FISCO BCOS底层区块链系统所需要的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程，请[参考这里](./hardware_requirements.md)使用支持的硬件和平台操作。
+本章介绍使用FISCO BCOS底层区块链系统所需要的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程，请参考[硬件和系统要求](./hardware_requirements.md)使用支持的硬件和平台操作。
 
-关于Air版本与其他两个版本FISCO BCOS联盟链的介绍，见[系统架构](../design/architecture.md)
+```eval_rst
+.. note::
+   - FISCO BCOS 3.0的系统架构，请参考 `这里 <../design/architecture.html>`_
+   - FISCO BCOS 3.0 Air版本搭建和使用教程，请参考 `这里 <../tutorial/air/index.html>`_
+   - FISCO BCOS 3.0 Pro版本搭建和使用教程，请参考 `这里 <../tutorial/pro/index.html>`_
+```
 
 ## 1. 搭建Air版本FISCO BCOS联盟链
 

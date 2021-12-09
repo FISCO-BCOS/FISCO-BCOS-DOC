@@ -7,7 +7,8 @@
 
 ```eval_rst
 .. toctree::
-   :hidden:
+   :maxdepth: 1
+   
 
    webase.md
    data_index.md
