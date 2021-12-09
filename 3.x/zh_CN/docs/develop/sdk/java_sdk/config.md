@@ -52,7 +52,7 @@ Java sdk主要包括五个配置选项，分别是
 
 ```shell
 ├── lib
-│   ├── fisco-bcos-java-sdk-2.7.0.jar
+│   ├── fisco-bcos-java-sdk-3.0.0-rc1.jar
 │   └── XXXXX.jar
 ├── conf
 │   ├── applicationContext.xml
