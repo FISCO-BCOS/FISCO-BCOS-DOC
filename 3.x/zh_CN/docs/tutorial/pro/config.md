@@ -1,4 +1,4 @@
-# 配置说明
+# 配置介绍
 
 标签：``Pro版区块链网络`` ``扩容群组`` ``多群组微服务区块链`` ``tars`` ``RpcService`` ``GatewayService`` ``NodeService``
 
