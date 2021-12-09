@@ -121,7 +121,7 @@ $ ls contracts/solidity
 HelloWorld.sol  KVTableTest.sol ShaTest.sol KVTable.sol
 ```
 
-**特别的： 如果你想体验 webankblockchain-liquid（以下简称wbc-liquid）的部署操作，控制台也为你提供了例子。**
+**特别的： 如果你想体验 webankblockchain-liquid（以下简称WBC-Liquid）的部署操作，控制台也为你提供了例子。**
 
 在使用之前，请先保证cargo liquid的编译环境，使用搭建请参考：https://liquid-doc.readthedocs.io/。
 
@@ -187,7 +187,7 @@ $ ls contracts/sdk/java/org/com/fisco
 # HelloWorld.java   KVTableTest.java    ShaTest.java    KVTable.java    TableTest.java
 ```
 
-**特别的，如果你想使用wbc-liquid合约编译后的wasm二进制和abi文件生成Java合约**
+**特别的，如果你想使用WBC-Liquid合约编译后的wasm二进制和abi文件生成Java合约**
 
 ```shell
 # 当前目录~/fisco/console
@@ -269,9 +269,9 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${p
 
 ### 附录二. ``contract2java.sh``脚本的使用方法
 
-控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和wbc-liquid合约文件编译为Java合约文件。
+控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和WBC-Liquid合约文件编译为Java合约文件。
 
-当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
+当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定WBC-Liquid编译后的WASM文件以及ABI文件生成Java文件。
 
 **Solidity合约使用**
 
@@ -297,28 +297,28 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 - `sol`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
 - `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
 
-**wbc-liquid合约使用**
+**WBC-Liquid合约使用**
 
 ```shell
 $ bash contract2java.sh liquid -h
 usage: contract2java.sh <solidity|liquid> [OPTIONS...]
- -a,--abi <arg>       [Required] The ABI file path of wbc-liquid contract.
- -b,--bin <arg>       [Required] The binary file path of wbc-liquid contract.
+ -a,--abi <arg>       [Required] The ABI file path of WBC-Liquid contract.
+ -b,--bin <arg>       [Required] The binary file path of WBC-Liquid contract.
  -h,--help
  -o,--output <arg>    [Optional] The file path of the generated java code,
                       default is contracts/sdk/java/
  -p,--package <arg>   [Optional] The package name of the generated java
                       code, default is com
- -s,--sm-bin <arg>    [Required] The SM binary file path of wbc-liquid
+ -s,--sm-bin <arg>    [Required] The SM binary file path of WBC-Liquid
                       contract.
 ```
 
 参数详细：
 
-- `abi `：（必选）wbc-liquid合约`ABI`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
-- `bin`：（必选）wbc-liquid合约`wasm bin`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `abi `：（必选）WBC-Liquid合约`ABI`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `bin`：（必选）WBC-Liquid合约`wasm bin`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
 - `package`：（可选）生成`Java`文件的包名，默认为`org`。
-- `sm-bin`：（必选）wbc-liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
+- `sm-bin`：（必选）WBC-Liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
 
 **使用**
 
@@ -328,7 +328,7 @@ $ cd ~/fisco/console
 # 生成Solidity合约的Java代码
 $ bash contract2java.sh solidity -p org.com.fisco
 
-# 生成wbc-liquid合约的Java代码
+# 生成WBC-Liquid合约的Java代码
 $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test/asset_test.wasm -a ./contracts/liquid/asset_test/asset_test.abi -s ./contracts/liquid/asset_test/asset_test_sm.wasm 
 ```
 
@@ -350,7 +350,7 @@ $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test
 |               |-- HelloWorld.java # Solidity编译的HelloWorld Java文件
 |               |-- KVTable.java    # Solidity编译的KV存储接口合约 Java文件
 |               |-- KVTableTest.java  # Solidity编译的KVTableTest Java文件
-|               |-- AssetTest.java  # wbc-liquid生成的AssetTest文件
+|               |-- AssetTest.java  # WBC-Liquid生成的AssetTest文件
 ```
 
 Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`、`KVTableTest.java`、`KVTable.java`和`AssetTest.java`。其中`HelloWorld.java`、`KVTableTest.java`和`AssetTest.java`是Java应用所需要的Java合约文件。
