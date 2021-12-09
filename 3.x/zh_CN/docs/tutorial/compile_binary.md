@@ -46,11 +46,6 @@ brew install git flex bison
 
 ## 2. 克隆代码
 
-```eval_rst
-.. note::
-   FISCO BCOS的源码位于 https://github.com/FISCO-BCOS/FISCO-BCOS 仓库的 ``master-3.0`` 分支
-```
-
 ```bash
 # 创建源码编译目录
 mkdir -p ~/fisco && cd ~/fisco
@@ -61,8 +56,8 @@ git clone git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试下面的命令：
 git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
 
-# 切换到master-3.0分支
-cd FISCO-BCOS && git checkout master-3.0
+# 切换到源码目录
+cd FISCO-BCOS
 ```
 
 ## 3. 编译
