@@ -48,7 +48,7 @@ brew install curl docker docker-compose python3
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/BcosProBuilder.tgz && unzip BcosProBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosProBuilder && pip3 install -r requirements.txt

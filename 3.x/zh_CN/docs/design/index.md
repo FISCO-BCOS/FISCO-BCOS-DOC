@@ -27,6 +27,7 @@ FISCO BCOS 3.0版本采用**微服务模块化**设计架构，总体上系统�
    :maxdepth: 1
 
    architecture.md
+   tx_procedure.md
    protocol_description.md
    consensus.md
    sync.md
