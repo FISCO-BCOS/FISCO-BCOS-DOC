@@ -15,4 +15,5 @@
    sync.md
    storage.md
    contract_directory.md
+   DMC.md
 ```
