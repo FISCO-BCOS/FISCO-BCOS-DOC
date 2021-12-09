@@ -43,7 +43,7 @@ contract HelloWorld{
 # 切换到控制台所在目录
 $ cd ~/fisco/console
 
-# 若控制台版本大于等于2.8.0，调用sol2java.sh脚本，编译HelloWorld合约如下：
+# 调用sol2java.sh脚本，编译HelloWorld合约如下：
 $ bash contratc2java.sh solidity -p org -s HelloWorld.sol
 
 # 生成的abi位于contracts/sdk/abi/HelloWorld.abi路径
