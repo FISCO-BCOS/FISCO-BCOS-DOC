@@ -26,17 +26,19 @@
 
 **存储设计**
 
-FISCO BCOS提供[合约KV存储接口](../develop/precompiled/use_kv_precompiled.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+针对本应用需要设计一个存储资产管理的表，该表字段如下：
 
--   account: 主键，资产账户(string类型)
--   asset_value: 资产金额(uint256类型)
+- account: 主键，资产账户(string类型)
+- asset_value: 资产金额(uint256类型)
 
-其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。`t_asset`表示例如下：
+其中account是主键，即操作表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。存储表示例如下：
 
 | account | asset_value |
 | ------- | ----------- |
 | Alice   | 10000       |
 | Bob     | 20000       |
+
+在本示例中，使用rust自带的Mapping作为存储字段进行记录。
 
 **接口设计**
 
@@ -427,7 +429,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.1.0-SNAPSHOT")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1")
     compile spring
 }
 ```

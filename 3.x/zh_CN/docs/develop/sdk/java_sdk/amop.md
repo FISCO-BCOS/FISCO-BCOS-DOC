@@ -504,7 +504,7 @@ amop.stop()
 
 接下来，可以根据下一节的方法来试用这些AMOP的Demo。
 
-## 4. 快速试用AMOP
+## 3. 快速试用AMOP
 
 ### 第一步：下载项目
 
@@ -747,7 +747,7 @@ Step 2:Receive file, filename length:34 filename binary:[46, 46, 47, 100, 111, 9
 |---save file:../docs/images/FISCO_BCOS_Logo.svg success
 |---response:Yes, I received!
 ```
-## 5. 错误码
+## 4. 错误码
 
 - 99：发送消息失败，AMOP经由所有链路的尝试后，消息未能发到服务端，建议使用发送时生成的`seq`，检查链路上各个节点的处理情况。
 - 100：区块链节点之间经由所有链路的尝试后，消息未能发送到可以接收该消息的节点，和错误码‘99’一样，建议使用发送时生成的‘seq’，检查链路上各个节点的处理情况。
