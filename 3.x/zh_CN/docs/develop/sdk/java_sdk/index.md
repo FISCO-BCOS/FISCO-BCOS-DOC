@@ -5,7 +5,6 @@
 ----
 Java SDK 提供了访问 FISCO BCOS 节点的Java API，支持节点状态查询、部署和调用合约等功能.
 
-
 ```eval_rst
 .. toctree::
    :maxdepth: 1

@@ -260,7 +260,7 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 - `package`：（可选）生成`Java`文件的包名，默认为`org`。
 - `sm-bin`：（必选）wbc-liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
 
-**使用**
+#### 使用
 
 ```shell
 $ cd ~/fisco/console
