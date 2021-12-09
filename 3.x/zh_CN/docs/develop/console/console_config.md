@@ -1,4 +1,4 @@
-# 控制台获取与配置
+# 控制台配置
 
 标签：``console`` ``控制台配置`` ``命令行交互工具``
 
@@ -14,7 +14,7 @@
 
 wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
-## 1. 控制台配置与运行
+## 控制台配置与运行
 
 ```eval_rst
 .. important::
@@ -22,7 +22,7 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
     建链工具参考：单群组区块链（Air版本）` <../../tutorial/air/build_chain.html>`_ 或 `多群组区块链（Pro版本） <../../tutorial/pro/build_chain.html>`_。
 ```
 
-### 1.1 获取控制台
+### 1. 获取控制台
 
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
@@ -59,7 +59,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/dow
 │-- contract2java.sh # Solidity/wbc-liquid合约文件编译为java合约文件的开发工具脚本
 ```
 
-### 1.2 配置控制台
+### 2. 配置控制台
 
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
@@ -117,13 +117,103 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
     - 当控制台配置文件在一个群组内配置多个节点连接时，由于群组内的某些节点在操作过程中可能退出群组，因此控制台轮询节点查询时，其返回信息可能不一致，属于正常现象。建议使用控制台时，配置一个节点或者保证配置的节点始终在群组中，这样在同步时间内查询的群组内信息保持一致。
 ```
 
-#### 1.2.1 Java合约生成工具
+### 3. 启动控制台
+
+在节点正在运行的情况下，启动控制台：
+
+```shell
+$ ./start.sh
+# 输出下述信息表明启动成功
+=====================================================================================
+Welcome to FISCO BCOS console(3.0.0-rc1)!
+Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
+ ________ ______  ______   ______   ______       _______   ______   ______   ______
+|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
+| $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
+| $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
+| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
+| $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
+| $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
+| $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
+ \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
+
+=====================================================================================
+```
+
+### 4. 启动脚本说明
+
+#### 4.1 查看当前控制台版本
+
+```shell
+./start.sh --version
+console version: 3.0.0-rc1
+```
+
+#### 4.2 账户使用方式
+
+##### 4.2.1 控制台加载私钥
+
+控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台启动方式有如下几种：
+
+```shell
+./start.sh
+./start.sh group
+./start.sh group -pem pemName
+./start.sh group -p12 p12Name
+```
+
+##### 4.2.2 默认启动
+
+使用控制台配置文件指定的默认群组号启动。
+
+```shell
+./start.sh
+```
+
+**注意**: 控制台启动未指定私钥账户时，会尝试从`account`目录下加载一个可用的私钥账户用于发送交易，加载失败则会创建一个新的`PEM`格式的账户文件，将其保存在`account`目录下。
+
+##### 4.2.3 指定群组名启动
+
+使用命令行指定的群组名启动。
+
+```shell
+./start.sh group
+```
+
+##### 4.2.4 使用PEM格式私钥文件启动
+
+- 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
+
+```shell
+./start.sh group -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
+```
+
+##### 4.2.5 使用PKCS12格式私钥文件启动
+
+- 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
+
+```shell
+./start.sh group -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
+Enter Export Password:
+```
+
+**注意：**
+控制台启动时加载p12文件出现下面报错：
+
+```shell
+exception unwrapping private key - java.security.InvalidKeyException: Illegal key size
+```
+
+可能是Java版本的原因，参考解决方案：[https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size](https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size)
+
+## Java合约生成工具
 
 控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和wbc-liquid合约文件编译为Java合约文件。
 
 当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
 
-**Solidity合约使用**
+### Solidity合约使用
 
 ```shell
 $ bash contract2java.sh solidity -h 
@@ -147,7 +237,7 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 - `sol`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
 - `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
 
-**wbc-liquid合约使用**
+### wbc-liquid合约使用
 
 ```shell
 $ bash contract2java.sh liquid -h
@@ -204,140 +294,3 @@ $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test
 ```
 
 Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`、`KVTableTest.java`、`KVTable.java`和`AssetTest.java`。其中`HelloWorld.java`、`KVTableTest.java`和`AssetTest.java`是Java应用所需要的Java合约文件。
-
-### 1.3. 启动控制台
-
-在节点正在运行的情况下，启动控制台：
-
-```shell
-$ ./start.sh
-# 输出下述信息表明启动成功
-=====================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc1)!
-Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
- ________ ______  ______   ______   ______       _______   ______   ______   ______
-|        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
-| $$$$$$$$\$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\    | $$$$$$$|  $$$$$$|  $$$$$$|  $$$$$$\
-| $$__     | $$ | $$___\$| $$   \$| $$  | $$    | $$__/ $| $$   \$| $$  | $| $$___\$$
-| $$  \    | $$  \$$    \| $$     | $$  | $$    | $$    $| $$     | $$  | $$\$$    \
-| $$$$$    | $$  _\$$$$$$| $$   __| $$  | $$    | $$$$$$$| $$   __| $$  | $$_\$$$$$$\
-| $$      _| $$_|  \__| $| $$__/  | $$__/ $$    | $$__/ $| $$__/  | $$__/ $|  \__| $$
-| $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
- \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
-
-=====================================================================================
-```
-
-### 1.4 启动脚本说明
-
-#### 1.4.1 查看当前控制台版本：
-
-```shell
-./start.sh --version
-console version: 3.0.0-rc1
-```
-
-#### 1.4.2 账户使用方式
-
-##### 1.4.2.1 控制台加载私钥
-
-控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
-控制台启动方式有如下几种：
-
-```shell
-./start.sh
-./start.sh group
-./start.sh group -pem pemName
-./start.sh group -p12 p12Name
-```
-
-##### 1.4.2.2 默认启动
-
-使用控制台配置文件指定的默认群组号启动。
-
-```shell
-./start.sh
-```
-
-**注意**: 控制台启动未指定私钥账户时，会尝试从`account`目录下加载一个可用的私钥账户用于发送交易，加载失败则会创建一个新的`PEM`格式的账户文件，将其保存在`account`目录下。
-
-##### 1.4.2.3 指定群组名启动
-
-使用命令行指定的群组名启动。
-
-```shell
-./start.sh group
-```
-
-##### 1.4.2.4 使用PEM格式私钥文件启动
-
-- 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
-
-```shell
-./start.sh group -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
-```
-
-##### 1.4.2.5 使用PKCS12格式私钥文件启动
-
-- 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
-
-```shell
-./start.sh group -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
-Enter Export Password:
-```
-
-**注意：**
-控制台启动时加载p12文件出现下面报错：
-
-```shell
-exception unwrapping private key - java.security.InvalidKeyException: Illegal key size
-```
-
-可能是Java版本的原因，参考解决方案：[https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size](https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size)
-
-### 1.5 控制台命令结构
-
-控制台命令由两部分组成，即指令和指令相关的参数：
-
-- **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
-  **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
-
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](./api.md)。
-
-### 1.6 控制台常用命令
-
-#### 合约相关命令
-
-- 利用**CNS**部署和调用合约(**推荐**)
-  - 部署合约: [deployByCNS](./console.html#deploybycns)
-  - 调用合约: [callByCNS](./console.html#callbycns)
-  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
-- 普通部署和调用合约
-  - 部署合约: [deploy](./console.html#deploy)
-  - 调用合约: [call](./console.html#call)
-
-#### 其他命令
-
-- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
-- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
-- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
-- 切换群组: [switch](./console.html#switch)
-
-### 快捷键
-
-- `Ctrl+A`：光标移动到行首
-- `Ctrl+D`：退出控制台
-- `Ctrl+E`：光标移动到行尾
-- `Ctrl+R`：搜索输入的历史命令
-- &uarr;：向前浏览历史命令
-- &darr;：向后浏览历史命令
-
-### 控制台响应
-
-当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
-
-- **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
-- **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
-  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。【FIXME: 链接有误】
-
