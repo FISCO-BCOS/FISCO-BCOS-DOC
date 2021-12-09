@@ -6,39 +6,9 @@
 
 ## 1. 安装环境
 
-- Java：JDK 14 （JDK1.8 至JDK 14都支持）
+- Java推荐：JDK 11 （JDK8 至 JDK 14 都支持）
 
-  首先，在官网上下载JDK14并安装
-
-  然后，修改环境变量
-
-  ```bash
-  # 确认您当前的java版本
-  $ java -version
-  # 确认您的java路径
-  $ ls Library/Java/JavaVirtualMachines
-  # 返回
-  # jdk-14.0.2.jdk
-  
-  # 如果使用的是bash
-  $ vim .bash_profile 
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .bash_profile
-  
-  # 如果使用的是zash
-  $ vim .zashrc
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .zashrc
-  
-  # 确认您的java版本
-  $ java -version
-  # 返回
-  # java version "14.0.2" 2020-07-14
-  # Java(TM) SE Runtime Environment (build 14.0.2+12-46)
-  # Java HotSpot(TM) 64-Bit Server VM (build 14.0.2+12-46, mixed mode, sharing)
-  ```
+  首先，在官网上下载JDK11并安装
 
 - IDE：IntelliJ IDE.
 
@@ -59,7 +29,7 @@
 在build.gradle中引入Java SDK
 
 ```gradle
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -68,19 +38,19 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.0-rc1</version>
 </dependency>
 ```
 
 ### 第三步. 配置SDK证书
 
-参考[Java SDK证书配置](./configuration.html#id5)。【FIXME: 链接有误】
+参考[Java SDK证书配置](./config.html#id5)。【FIXME: 链接有误】
 
 ```eval_rst
 .. note::
     - 大部分场景仅需要配置 `certPath` 配置项即可，其他配置项不需额外配置；
-    - SDK证书获取：若参考 `安装 <../../installation.html>`_ 搭建区块链，则参考 `这里 <../../installation.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../installation.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath` 指定路径，`certPath`默认为`conf`目录；
-    - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .
+    - SDK证书获取：若参考 `安装 <../../installation.html>`_ 搭建区块链，则参考 `这里 <../../installation.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../installation.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath` 指定路径，`certPath`默认为`conf`目录；【FIXME: 没有运维部署工具】
+    - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .【FIXME：SSL连接方式改了】
 ```
 
 将SDK证书拷贝到Java SDK的示例如下(这里假设SDK证书位于`~/fisco/nodes/127.0.0.1/sdk`目录)：
@@ -199,13 +169,7 @@ $ ls contracts/sdk/java/org/com/fisco
 # HelloWorld.java
 ```
 
-
-
-**最后, 将编译得到的HelloWorld.java放入应用中。**注意：在应用中所放的位置要与我们设定的包名相同。
-
-(操作示范请看如下gif动图，动画总共有2分40秒，请耐心等待观看，请勿点击图片，如果点击图片将从头开始播放。)
-
-![](./../../../../images/java-sdk/prepare_contract.gif)
+**最后, 将编译得到的HelloWorld.java放入应用中。**
 
 ### 第五步. 创建配置文件
 
