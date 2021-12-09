@@ -6,7 +6,7 @@
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的[Java SDK](../develop/sdk/java_sdk/index.md)实现对区块链上合约的调用访问。
 
-本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉webankblockchain-liquid语法（以下简称wbc-liquid），并且进行了[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
+本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉WebankBlockchain-liquid语法（以下简称wbc-liquid），并且进行了[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
 如果您还未搭建区块链网络，或未下载控制台，请先走完教程[搭建第一个区块链网络](./air_installation.md)，再回到本教程。
 
@@ -26,7 +26,7 @@
 
 **存储设计**
 
-FISCO BCOS提供[kv table](.. FIXME: 链接待确定)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[合约KV存储接口](../precompiled/use_kv_precompiled.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
 -   asset_value: 资产金额(uint256类型)
@@ -46,9 +46,9 @@ FISCO BCOS提供[kv table](.. FIXME: 链接待确定)开发模式，可以通过
 // 查询资产金额
 pub fn select(&mut self, account: String) -> (bool, u128)
 // 资产注册
-pub fn register(&mut self, account: String, asset_value: u128) -> i256
+pub fn register(&mut self, account: String, asset_value: u128) -> i16
 // 资产转移
-pub fn transfer(&mut self, from: String, to: String, value: u128) -> i256
+pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 ```
 
 ### 第二步. 开发源码
@@ -56,12 +56,25 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i256
 根据我们第一步的存储和接口设计，创建一个Asset的智能合约项目。
 在终端中执行以下命令创建 wbc-liquid 智能合约项目：
 
-```rust
+```shell
+# 创建工作目录~/fisco
+mkdir -p ~/fisco
+
+# 下载控制台
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+
+# 切换到fisco/console/目录
+cd ~/fisco/console/
+
+# 进入console/contracts目录
+cd ~/fisco/console/contracts/liquid
+
+# 创建新的合约
 cargo liquid new contract asset
 ```
 
 asset目录内的文件结构如下所示：
-```
+```shell
 asset/
 ├── .gitignore
 ├── .liquid
@@ -86,50 +99,19 @@ asset/
 我们将Asset liquid中的代码复制至`lib.rs`文件中后，便可进行后续步骤。
 
 Asset liquid的内容如下：
-```js
+```rust
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use liquid::storage;
 use liquid_lang as liquid;
-use liquid_lang::InOut;
-use liquid_prelude::{
-    string::{String, ToString},
-    vec::Vec,
-};
-
-#[derive(InOut)]
-pub struct KVField {
-    key: String,
-    value: String,
-}
-#[derive(InOut)]
-pub struct Entry {
-    fileds: Vec<KVField>,
-}
-
-#[liquid::interface(name = auto)]
-mod kv_table {
-    use super::*;
-
-    extern "liquid" {
-        fn createTable(
-            &mut self,
-            table_name: String,
-            key: String,
-            value_fields: String,
-        ) -> i256;
-        fn get(&self, table_name: String, key: String) -> (bool, Entry);
-        fn set(&mut self, table_name: String, key: String, entry: Entry) -> i256;
-    }
-}
 
 #[liquid::contract]
-mod asset_test {
-    use super::{kv_table::*, *};
+mod asset {
+    use super::{*};
 
     #[liquid(event)]
     struct RegisterEvent {
-        ret_code: i256,
+        ret_code: i16,
         #[liquid(indexed)]
         account: String,
         #[liquid(indexed)]
@@ -138,7 +120,7 @@ mod asset_test {
 
     #[liquid(event)]
     struct TransferEvent {
-        ret_code: i256,
+        ret_code: i16,
         #[liquid(indexed)]
         from: String,
         #[liquid(indexed)]
@@ -147,63 +129,33 @@ mod asset_test {
     }
 
     #[liquid(storage)]
-    struct AssetTableTest {
-        table: storage::Value<KvTable>,
+    struct Asset {
+        asset_table: storage::Mapping<String, u128>,
     }
 
     #[liquid(methods)]
-    impl AssetTableTest {
+    impl Asset {
         pub fn new(&mut self) {
-            self.table
-                .initialize(KvTable::at("/sys/kv_storage".parse().unwrap()));
-            self.table.createTable(
-                String::from("t_asset").clone(),
-                String::from("account").clone(),
-                String::from("asset_value").clone(),
-            );
+            self.asset_table.initialize();
         }
 
         pub fn select(&mut self, account: String) -> (bool, u128) {
-            if let Some((result, entry)) =
-            (*self.table).get(String::from("t_asset"), account)
-            {
-                return (
-                    result,
-                    u128::from_str_radix(&entry.fileds[0].value.clone(), 10)
-                        .ok()
-                        .unwrap(),
-                );
+            if self.asset_table.contains_key(&account) {
+               return (true, self.asset_table[&account]) 
             }
-            return (false, Default::default());
+            return (false, 0)
         }
 
-        pub fn register(&mut self, account: String, asset_value: u128) -> i256 {
-            let ret_code: i256;
+        pub fn register(&mut self, account: String, asset_value: u128) -> i16 {
+            let ret_code: i16;
             let (ok, _) = self.select(account.clone());
             if ok == false {
-                let kv0 = KVField {
-                    key: String::from("account"),
-                    value: account.clone(),
-                };
-                let kv1 = KVField {
-                    key: String::from("asset_value"),
-                    value: asset_value.to_string(),
-                };
-                let mut kv_fields = Vec::new();
-                kv_fields.push(kv0);
-                kv_fields.push(kv1);
-                let entry = Entry { fileds: kv_fields };
-                let result = (*self.table)
-                    .set(String::from("t_asset"), account.clone(), entry)
-                    .unwrap();
-
-                if result == 1.into() {
-                    ret_code = 0.into();
-                } else {
-                    ret_code = (-2).into();
-                }
+                self.asset_table.insert(
+                    account.clone(), asset_value
+                );
+                ret_code = 0;
             } else {
-                ret_code = (-1).into();
+                ret_code = -1;
             }
             let ret = ret_code.clone();
             self.env().emit(RegisterEvent {
@@ -214,105 +166,91 @@ mod asset_test {
             return ret;
         }
 
-        pub fn transfer(&mut self, from: String, to: String, value: u128) -> i256 {
-            let mut ret_code: i256 = 0.into();
+        pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16 {
+            let mut ret_code: i16 = 0;
             let (ok, from_value) = self.select(from.clone());
-            if ok == true.into() {
-                ret_code = (-1).into();
+            if ok != true.into() {
+                ret_code = -1;
                 self.env().emit(TransferEvent {
                     ret_code,
                     from,
                     to,
                     value,
                 });
-                return (-1).into();
+                return ret_code;
             }
 
             let (ret, to_value) = self.select(to.clone());
             if ret != true {
-                ret_code = (-2).into();
+                ret_code = -2;
                 self.env().emit(TransferEvent {
                     ret_code,
                     from,
                     to,
                     value,
                 });
-                return (-2).into();
+                return ret_code;
             }
 
             if from_value < value.clone() {
-                ret_code = (-3).into();
+                ret_code = -3;
                 self.env().emit(TransferEvent {
                     ret_code,
                     from,
                     to,
                     value,
                 });
-                return (-3).into();
+                return ret_code;
             }
 
             if to_value.clone() + value.clone() < to_value.clone() {
-                ret_code = (-3).into();
+                ret_code = -4;
                 self.env().emit(TransferEvent {
                     ret_code,
                     from,
                     to,
                     value,
                 });
-                return (-4).into();
+                return ret_code;
             }
 
-            let from_u = self.update(from.clone(), from_value - value.clone());
-            if from_u != 1.into() {
-                ret_code = (-5).into();
-                self.env().emit(TransferEvent {
-                    ret_code,
-                    from,
-                    to,
-                    value,
-                });
-                return (-5).into();
-            }
 
-            let r = self.update(to.clone(), to_value.clone() + value.clone());
+            self.asset_table.insert(
+                from.clone(),from_value - value.clone()
+            );
+
+            self.asset_table.insert(
+                to.clone(),to_value.clone() + value.clone()
+            );
+
             self.env().emit(TransferEvent {
                 ret_code,
                 from,
                 to,
                 value,
             });
-            return r;
-        }
-
-        pub fn update(&mut self, account: String, value: u128) -> i256 {
-            let kv0 = KVField {
-                key: String::from("asset_value"),
-                value: value.to_string(),
-            };
-            let mut kv_fields = Vec::new();
-            kv_fields.push(kv0);
-
-            let entry = Entry { fileds: kv_fields };
-
-            let r = (*self.table)
-                .set(String::from("t_asset"), account, entry)
-                .unwrap();
-            return r;
+            return ret_code;
         }
     }
 }
 ```
 #### 构建
 在 asset 项目根目录下执行以下命令即可开始进行构建：
-```bash
+```shell
+# 编译国密版本的wasm二进制文件
 cargo liquid build -g
 ```
 该命令会引导 Rust 语言编译器以`wasm32-unknown-unknown`为目标对智能合约代码进行编译，最终生成 Wasm 格式字节码及 ABI。`-g` 构建出能够在国密版FISCO BCOS区块链底层平台上运行的智能合约。命令执行完成后，会显示如下形式的内容：
 
-```
-Done in 4 minutes, your project is ready now:
-Binary: /Users/leevaygr/Desktop/webank/liquid/asset/target/asset.wasm
-   ABI: /Users/leevaygr/Desktop/webank/liquid/asset/target/asset.abi
+```shell
+[1/4] 🔍  Collecting crate metadata
+[2/4] 🚚  Building cargo project
+[3/4] 🔗  Optimizing Wasm bytecode
+[4/4] 📃  Generating ABI file
+
+✨ Done in 30 seconds, your project is ready now:
+Binary: ~/fisco/console/contracts/liquid/asset/target/asset.wasm
+   ABI: ~/fisco/console/contracts/liquid/asset/target/asset.abi
 ```
 其中，“Binary:”后为生成的字节码文件的绝对路径，“ABI:”后为生成的 ABI 文件的绝对路径。为尽量简化 FISCO BCOS 各语言 SDK 的适配工作，wbc-liquid 采用了与 Solidity ABI 规范兼容的 ABI 格式.
 
@@ -348,7 +286,7 @@ cd console && ./gradlew build
 cd dist
 
 # 编译合约(后面指定BINARY、abi 文件路径，可以根据实际项目路径指定路径)如下：
-bash contract2java.sh -a ~/Desktop/webank/liquid/asset/target/asset.abi -b ~/Desktop/webank/liquid/asset/target/asset.wasm -sb ~/Desktop/webank/liquid/asset/target/asset_sm.wasm
+bash contract2java.sh -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_sm.wasm
 
 # 脚本用法：
 $ bash contract2java.sh liquid -h
@@ -440,16 +378,16 @@ public class Asset extends Contract {
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
 ```bash
 $ cd ~/fisco
-# FIXME: asset-app项目待确定，目前在（https://github.com/kyonRay/asset-app-liquid.git），待放入FISCO-BCOS
-$ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
-# 解压得到Java工程项目asset-app
-$ tar -zxf asset-app.tar.gz
+
+$ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app-3.0-liquid.tar.gz
+
+# 解压得到Java工程项目asset-app-liquid
+$ tar -zxf asset-app-3.0-liquid.tar.gz
 ```
 
 ```eval_rst
 .. note::
-# FIXME: asset-app项目待确定，目前在（https://github.com/kyonRay/asset-app-liquid.git），待放入FISCO-BCOS
-    - 如果因为网络问题导致长时间无法下载，请尝试将`199.232.28.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
+- 如果因为网络问题导致长时间无法下载，请尝试将`185.199.108.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app-3.0-liquid.tar.gz`
 ```
 
 ### 第三步. 引入FISCO BCOS Java SDK
@@ -495,7 +433,6 @@ dependencies {
 ```
 
 在``asset-app/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
-![](../../images/quick_start/config.png)
 
 applicationContext.xml的内容如下：
 
@@ -581,21 +518,20 @@ applicationContext.xml的内容如下：
 	</bean>
 </beans>
 ```
-**注意：** FIXME: applicationContext.xml下配置字段改动待确定
-`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的`IP:channel_listen_port`。 FIXME: channel_listen_port是否需要修改
+**注意：** 如果搭链时设置的 rpc listen_ip 为127.0.0.1或者0.0.0.0，listen_port 为20200，则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的 `[rpc]`配置的`listen_ip:listen_port`。
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
 
 ```bash
-# 假设我们将asset-app放在~/fisco目录下 进入~/fisco目录
+# 假设我们将asset-app-liquid放在~/fisco目录下 进入~/fisco目录
 $ cd ~/fisco
 # 创建放置证书的文件夹
-$ mkdir -p asset-app/src/test/resources/conf
+$ mkdir -p asset-app-liquid/src/test/resources/conf
 # 拷贝节点证书到项目的资源目录
-$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/test/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/test/resources/conf
 # 若在IDE直接运行，拷贝证书到resources路径
-$ mkdir -p asset-app/src/main/resources/conf
-$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
+$ mkdir -p asset-app-liquid/src/main/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources/conf
 ```
 
 ## 5. 业务逻辑开发
@@ -606,14 +542,12 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
 ```bash
 cd ~/fisco  
 # 将编译好的合约Java类引入项目中。
-cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app/src/main/java/org/fisco/bcos/asset/contract/Asset.java
+cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-liquid/src/main/java/org/fisco/bcos/asset/contract/Asset.java
 ```
 
 ### 第二步.开发业务逻辑
 
 在路径`/src/main/java/org/fisco/bcos/asset/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
-
-![](../../images/quick_start/asset_client.png)
 
 `AssetClient.java` 代码如下：
 ```java
@@ -624,12 +558,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Random;
 
 import org.fisco.bcos.asset.liquid.contract.Asset;
 import org.fisco.bcos.sdk.BcosSDK;
 import org.fisco.bcos.sdk.client.Client;
+import org.fisco.bcos.sdk.codec.datatypes.generated.tuples.generated.Tuple1;
 import org.fisco.bcos.sdk.codec.datatypes.generated.tuples.generated.Tuple2;
 import org.fisco.bcos.sdk.crypto.keypair.CryptoKeyPair;
 import org.fisco.bcos.sdk.model.TransactionReceipt;
@@ -725,17 +661,17 @@ public class AssetClient {
 
       Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
       TransactionReceipt receipt = asset.register(assetAccount, amount);
-      List<Asset.RegisterEventEventResponse> response = asset.getRegisterEventEvents(receipt);
-      if (!response.isEmpty()) {
-        if (response.get(0).ret_code.compareTo(BigInteger.valueOf(0)) == 0) {
-          System.out.println(
-                  " register asset account success => asset: " + assetAccount + ", value:  " + amount);
+      Tuple1<BigInteger> registerOutput = asset.getRegisterOutput(receipt);
+      if (receipt.getStatus() == 0) {
+        if (Objects.equals(registerOutput.getValue1(), BigInteger.valueOf(0))) {
+          System.out.printf(
+                  " register asset account success => asset: %s, value: %s \n", assetAccount, amount);
         } else {
-          System.out.println(
-                  " register asset account failed, ret code is " + response.get(0).ret_code.toString());
+          System.out.printf(
+                  " register asset account failed, ret code is %s \n", registerOutput.getValue1());
         }
       } else {
-        System.out.println(" event log not found, maybe transaction not exec. ");
+        System.out.println(" receipt status is error, maybe transaction not exec, status is: " + receipt.getStatus());
       }
     } catch (Exception e) {
       // TODO Auto-generated catch block
@@ -751,16 +687,18 @@ public class AssetClient {
       String contractAddress = loadAssetAddr();
       Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
       TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
-      List<Asset.TransferEventEventResponse> response = asset.getTransferEventEvents(receipt);
-      if (!response.isEmpty()) {
-        if (response.get(0).ret_code.compareTo(BigInteger.valueOf(0)) == 0) {
-          System.out.println(" transfer success => from_asset: " + fromAssetAccount + ", to_asset: " + toAssetAccount + ", amount: " + amount);
+      Tuple1<BigInteger> transferOutput = asset.getTransferOutput(receipt);
+      if (receipt.getStatus() == 0) {
+        if (Objects.equals(transferOutput.getValue1(), BigInteger.valueOf(0))) {
+          System.out.printf(
+                  " transfer success => from_asset: %s, to_asset: %s, amount: %s \n",
+                  fromAssetAccount, toAssetAccount, amount);
         } else {
-          System.out.println(
-                  " transfer asset account failed, ret code is " + response.get(0).ret_code.toString());
+          System.out.printf(
+                  " transfer asset account failed, ret code is %s \n", transferOutput.getValue1());
         }
       } else {
-        System.out.println(" event log not found, maybe transaction not exec. ");
+        System.out.println(" receipt status is error, maybe transaction not exec. status is: " + receipt.getStatus());
       }
     } catch (Exception e) {
 
@@ -975,7 +913,7 @@ jar {
 
 至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app的目录结构如下：
 
-```bash
+```shell
 |-- build.gradle // gradle配置文件
 |-- gradle
 |   |-- wrapper
@@ -1037,7 +975,7 @@ jar {
 
 ```bash
 # 切换到项目目录
-$ cd ~/fisco/asset-app
+$ cd ~/fisco/asset-app-liquid
 # 编译项目
 $ ./gradlew build
 ```

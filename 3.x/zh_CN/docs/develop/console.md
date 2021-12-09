@@ -10,9 +10,9 @@
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 
-[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)【FIXME: 链接有误】与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译为Java合约文件。
+[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.0重要的交互式客户端工具，它通过[Java SDK](./sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译后的WASM文件转换为Java合约文件。
 
-wbc-liquid编译请参考：FIXME:
+wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
 ## 1. 控制台配置与运行
 
@@ -23,8 +23,6 @@ wbc-liquid编译请参考：FIXME:
 ```
 
 ### 1.1 获取控制台
-
-FIXME: 更新控制台URL
 
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
@@ -61,7 +59,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0/downloa
 │-- contract2java.sh # Solidity/wbc-liquid合约文件编译为java合约文件的开发工具脚本
 ```
 
-**注意：默认下载的控制台内置`0.6.10`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**
+**注意：默认下载的控制台内置`0.6.10`版本的`solidity`编译器，用户需要编译`0.4.25`或者`0.5`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**
 
 ```shell
 # 0.4.25
@@ -123,7 +121,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
                                             # Default is the number of cpu cores
 ```
 
-配置项详细说明[参考这里](../sdk/java_sdk/configuration.md)【FIXME: 链接有误】。
+配置项详细说明[参考这里](./sdk/java_sdk/config.md)。
 
 ```eval_rst
 .. important::
@@ -228,7 +226,7 @@ Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会
 $ ./start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
-Welcome to FISCO BCOS console(3.0.0)!
+Welcome to FISCO BCOS console(3.0.0-rc1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -249,14 +247,12 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```shell
 ./start.sh --version
-console version: 3.0.0
+console version: 3.0.0-rc1
 ```
 
 #### 1.4.2 账户使用方式
 
 ##### 1.4.2.1 控制台加载私钥
-
-FIXME: 账户管理文档
 
 控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)【FIXME: 链接有误】，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
 控制台启动方式有如下几种：
@@ -283,7 +279,7 @@ FIXME: 账户管理文档
 使用命令行指定的群组名启动。
 
 ```shell
-./start.sh group2
+./start.sh group
 ```
 
 ##### 1.4.2.4 使用PEM格式私钥文件启动
@@ -318,26 +314,26 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
 
-- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)【FIXME: 链接有误】。
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](./api.md)。
 
 ### 1.6 常用命令
 
 #### 合约相关命令
 
-- 利用[CNS](../design/features/cns_contract_name_service.md)【FIXME: 链接有误】部署和调用合约(**推荐**)
-  - 部署合约: [deployByCNS](./console.html#deploybycns)【FIXME: 链接有误】
-  - 调用合约: [callByCNS](./console.html#callbycns)【FIXME: 链接有误】
-  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)【FIXME: 链接有误】
+- 利用**CNS**部署和调用合约(**推荐**)
+  - 部署合约: [deployByCNS](./console.html#deploybycns)
+  - 调用合约: [callByCNS](./console.html#callbycns)
+  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
 - 普通部署和调用合约
-  - 部署合约: [deploy](./console.html#deploy)【FIXME: 链接有误】
-  - 调用合约: [call](./console.html#call)【FIXME: 链接有误】
+  - 部署合约: [deploy](./console.html#deploy)
+  - 调用合约: [call](./console.html#call)
 
 #### 其他命令
 
-- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)【FIXME: 链接有误】
-- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)【FIXME: 链接有误】
-- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)【FIXME: 链接有误】
-- 切换群组: [switch](./console.html#switch)【FIXME: 链接有误】
+- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
+- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
+- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
+- 切换群组: [switch](./console.html#switch)
 
 ### 快捷键
 
@@ -354,16 +350,14 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。【FIXME: 链接有误】
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
   - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。【FIXME: 链接有误】
 
 ## 2. 控制台命令列表
 
 控制台命令包含
 
-### 2.1 控制台基础命令
-
-#### 2.1.1 help
+### help
 
 输入help或者h，查看控制台所有的命令。
 
@@ -381,6 +375,7 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 * quit([quit, q, exit])                     Quit console
 * getBlockByHash                            Query information about a block by hash
 * getBlockByNumber                          Query information about a block by number
+* getBlockHashByNumber                      Query block hash by block number.
 * getBlockHeaderByHash                      Query information about a block header by hash
 * getBlockHeaderByNumber                    Query information about a block header by block number
 * getBlockNumber                            Query the number of most recent block
@@ -435,10 +430,10 @@ Query information about a block by block number.
 Usage: 
 getBlockByNumber blockNumber [boolean]
 * blockNumber -- Integer of a block number, from 0 to 2147483647.
-* boolean -- (optional) If true it returns the full transaction objects, if false only the hashes of the transactions.
+* boolean -- (optional) If true it returns only the hashes of the transactions, if false then return the full transaction objects.
 ```
 
-#### 2.1.2 switch
+### switch
 
 运行switch或者s，切换到指定群组。群组号显示在命令提示符前面。
 
@@ -449,7 +444,7 @@ Switched to group2.
 [group2]>
 ```
 
-#### 2.1.3 quit
+### quit
 
 运行quit、q或exit，退出控制台。
 
@@ -457,9 +452,7 @@ Switched to group2.
 quit
 ```
 
-### 2.2 账户相关命令
-
-#### 2.2.1 newAccount
+### newAccount
 
 创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`account`目录下。
 
@@ -475,12 +468,12 @@ $ ls -al account/ecdsa/0x6fad87071f790c3234108f41b76bb99874a6d813.pem
 $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x6fad87071f790c3234108f41b76bb99874a6d813.pem
 ```
 
-#### 2.2.2 loadAccount
+### loadAccount
 
 加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
 参数：
 
-- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](../sdk/java_sdk/configuration.html#id9)。【FIXME: 链接有误】
+- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
 
 - 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
 
@@ -489,7 +482,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x6fad87071f790c32
 Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 ```
 
-#### 2.2.3 listAccount
+### listAccount
 
 查看当前加载的所有账户信息
 
@@ -501,7 +494,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 
 **注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`loadAccount`进行切换**
 
-#### 2.2.4 getCurrentAccount
+### getCurrentAccount
 
 获取当前账户地址。
 
@@ -510,9 +503,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 0x6fad87071f790c3234108f41b76bb99874a6d813
 ```
 
-### 2.3 区块链状态查询命令
-
-#### 2.3.1 getBlockNumber
+### getBlockNumber
 
 运行getBlockNumber，查看区块高度。
 
@@ -521,7 +512,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 90
 ```
 
-#### 2.3.2 getSyncStatus
+### getSyncStatus
 
 运行getSyncStatus，查看同步状态。
 
@@ -560,7 +551,7 @@ SyncStatusInfo{
 }
 ```
 
-#### 2.3.3 getPeers
+### getPeers
 
 运行getPeers，查看节点的peers。
 
@@ -618,95 +609,7 @@ PeersInfo{
 }
 ```
 
-#### 2.3.4 getBlockHeaderByHash
-
-运行getBlockHeaderByHash，根据区块哈希查询区块头信息。
-参数：
-
-- 区块哈希：0x开头的区块哈希值
-
-```shell
-[group]: /> getBlockHeaderByHash 0xfde78118e4b387b5c7ba74c19ddbd59992c5956145c5cc86265ee43814c2a320
-{
-    transactions=null,
-    number='1',
-    hash='0xfde78118e4b387b5c7ba74c19ddbd59992c5956145c5cc86265ee43814c2a320',
-    logsBloom='null',
-    transactionsRoot='0xf09ac805845ab8a2f63367d89804fc8e438c1f0988fc13edb2f053adbe6764ec',
-    receiptRoot='0x169c46acddead6923067c057172dff458ac3f9e56008bcf2a138d605797e75c8',
-    stateRoot='0x6fc1ca9cc8c937ff208aac3f9d262389fb33a16d5f9ca0027ab596cd65667aff',
-    sealer='2',
-    sealerList=[
-        0x44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85,
-        0xbb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824,
-        0xc1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c,
-        0xf39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
-    ],
-    extraData=0x,
-    gasUsed='3',
-    timestamp='1638624581393',
-    signatureList=[
-        {
-            index='0',
-            signature='0x341ce6b7a7724eb432a914a4e7a154343a3116d457e05329725299f144cf430454a38e64d969c454fe7f1e864ca13a6a7e5d1a01b42bb1afc152471bb9ee3ea401'
-        },
-        {
-            index='2',
-            signature='0x2787c0be632b20abfe7f6f1cbf031eee0aa57b6e5e2cc242f3e19bafc455f847450df7acb897958e0ef5b54e1dde1b084127933bf8736b09621b7376d273d5da01'
-        },
-        {
-            index='3',
-            signature='0xcc04713e6c6dbbe8c204e9c33493dcbbd94731c56afaa4cd1fd22d14b5bd9a4a53b48d907956743d48c22fe352f361d9d48b7f9ccbb8c7e054b1c5db1bdab40400'
-        }
-    ]
-}
-```
-
-#### 2.3.5 getBlockHeaderByNumber
-
-运行getBlockHeaderByNumber，根据区块高度查询区块头信息。
-参数：
-
-- 区块高度
-
-```shell
-[group]: /> getBlockHeaderByNumber 1
-{
-    transactions=null,
-    number='1',
-    hash='0xfde78118e4b387b5c7ba74c19ddbd59992c5956145c5cc86265ee43814c2a320',
-    logsBloom='null',
-    transactionsRoot='0xf09ac805845ab8a2f63367d89804fc8e438c1f0988fc13edb2f053adbe6764ec',
-    receiptRoot='0x169c46acddead6923067c057172dff458ac3f9e56008bcf2a138d605797e75c8',
-    stateRoot='0x6fc1ca9cc8c937ff208aac3f9d262389fb33a16d5f9ca0027ab596cd65667aff',
-    sealer='2',
-    sealerList=[
-        0x44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85,
-        0xbb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824,
-        0xc1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c,
-        0xf39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
-    ],
-    extraData=0x,
-    gasUsed='3',
-    timestamp='1638624581393',
-    signatureList=[
-        {
-            index='0',
-            signature='0x341ce6b7a7724eb432a914a4e7a154343a3116d457e05329725299f144cf430454a38e64d969c454fe7f1e864ca13a6a7e5d1a01b42bb1afc152471bb9ee3ea401'
-        },
-        {
-            index='2',
-            signature='0x2787c0be632b20abfe7f6f1cbf031eee0aa57b6e5e2cc242f3e19bafc455f847450df7acb897958e0ef5b54e1dde1b084127933bf8736b09621b7376d273d5da01'
-        },
-        {
-            index='3',
-            signature='0xcc04713e6c6dbbe8c204e9c33493dcbbd94731c56afaa4cd1fd22d14b5bd9a4a53b48d907956743d48c22fe352f361d9d48b7f9ccbb8c7e054b1c5db1bdab40400'
-        }
-    ]
-}
-```
-
-#### 2.3.6 getBlockByHash
+### getBlockByHash
 
 运行getBlockByHash，根据区块哈希查询区块信息。
 参数：
@@ -714,72 +617,85 @@ PeersInfo{
 - 区块哈希：0x开头的区块哈希值。
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 ```shell
-[group]: />  getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
+[group]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42
 {
-    "extraData":[
-
-    ],
-    "gasLimit":"0x0",
-    "gasUsed":"0x0",
-    "hash":"0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855",
-    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number":"0x1",
-    "parentHash":"0xeccad5274949b9d25996f7a96b89c0ac5c099eb9b72cc00d65bc6ef09f7bd10b",
-    "sealer":"0x0",
-    "sealerList":[
-        "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-        "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-        "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-        "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
-    ],
-    "stateRoot":"0x9711819153f7397ec66a78b02624f70a343b49c60bc2f21a77b977b0ed91cef9",
-    "timestamp":"0x1692f119c84",
-    "transactions":[
-        "0xa14638d47cc679cf6eeb7f36a6d2a30ea56cb8dcf0938719ff45023a7a8edb5d"
-    ],
-    "transactionsRoot":"0x516787f85980a86fd04b0e9ce82a1a75950db866e8cdf543c2cae3e4a51d91b7"
-}
-[group]: />  getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855 true
-{
-    "extraData":[
-
-    ],
-    "gasLimit":"0x0",
-    "gasUsed":"0x0",
-    "hash":"0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855",
-    "logsBloom":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "number":"0x1",
-    "parentHash":"0xeccad5274949b9d25996f7a96b89c0ac5c099eb9b72cc00d65bc6ef09f7bd10b",
-    "sealer":"0x0",
-    "sealerList":[
-        "0471101bcf033cd9e0cbd6eef76c144e6eff90a7a0b1847b5976f8ba32b2516c0528338060a4599fc5e3bafee188bca8ccc529fbd92a760ef57ec9a14e9e4278",
-        "2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108",
-        "cf93054cf524f51c9fe4e9a76a50218aaa7a2ca6e58f6f5634f9c2884d2e972486c7fe1d244d4b49c6148c1cb524bcc1c99ee838bb9dd77eb42f557687310ebd",
-        "ed1c85b815164b31e895d3f4fc0b6e3f0a0622561ec58a10cc8f3757a73621292d88072bf853ac52f0a9a9bbb10a54bdeef03c3a8a42885fe2467b9d13da9dec"
-    ],
-    "stateRoot":"0x9711819153f7397ec66a78b02624f70a343b49c60bc2f21a77b977b0ed91cef9",
-    "timestamp":"0x1692f119c84",
-    "transactions":[
+    transactions=[
         {
-            "blockHash":"0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855",
-            "blockNumber":"0x1",
-            "from":"0x7234c32327795e4e612164e3442cfae0d445b9ad",
-            "gas":"0x1c9c380",
-            "gasPrice":"0x1",
-            "hash":"0xa14638d47cc679cf6eeb7f36a6d2a30ea56cb8dcf0938719ff45023a7a8edb5d",
-            "input":"0x608060405234801561001057600080fd5b506040805190810160405280600d81526020017f48656c6c6f2c20576f726c6421000000000000000000000000000000000000008152506000908051906020019061005c929190610062565b50610107565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100a357805160ff19168380011785556100d1565b828001600101855582156100d1579182015b828111156100d05782518255916020019190600101906100b5565b5b5090506100de91906100e2565b5090565b61010491905b808211156101005760008160009055506001016100e8565b5090565b90565b6102d7806101166000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634ed3885e146100515780636d4ce63c146100ba575b600080fd5b34801561005d57600080fd5b506100b8600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061014a565b005b3480156100c657600080fd5b506100cf610164565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561010f5780820151818401526020810190506100f4565b50505050905090810190601f16801561013c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b8060009080519060200190610160929190610206565b5050565b606060008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101fc5780601f106101d1576101008083540402835291602001916101fc565b820191906000526020600020905b8154815290600101906020018083116101df57829003601f168201915b5050505050905090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061024757805160ff1916838001178555610275565b82800160010185558215610275579182015b82811115610274578251825591602001919060010190610259565b5b5090506102829190610286565b5090565b6102a891905b808211156102a457600081600090555060010161028c565b5090565b905600a165627a7a72305820fd74886bedbe51a7f3d834162de4d9af7f276c70133e04fd6776b5fbdd3653000029",
-            "nonce":"0x3443a1391c9c29f751e8350304efb310850b8afbaa7738f5e89ddfce79b1d6",
-            "to":null,
-            "transactionIndex":"0x0",
-            "value":"0x0"
+            version='0',
+            from='0x33909383b925fd20b3c12fb5fcfd7d39b4b015cc',
+            hash='0x214bde834b119a3d8e834debefdf6708edabeca404dc268f794552ae6c5d338d',
+            input='0x2317489345789578231243122904823904583905',
+            nonce='1322329174548920161282698967016643957683885216413423752035236304235782814228',
+            to='',
+            blockLimit='500',
+            chainId='chain',
+            groupID='group',
+            transactionProof='null',
+            signature=0x5aefca1279c60d06da60f53c4d6c80203944ddd8bde5c2286de2ca3d640675fd7f855bd33c7f1a69835273bc411e9effc628b0a28491df1a4c0527fb4dfad16901
         }
     ],
-    "transactionsRoot":"0x516787f85980a86fd04b0e9ce82a1a75950db866e8cdf543c2cae3e4a51d91b7"
+    number='1',
+    hash='0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42',
+    logsBloom='null',
+    transactionsRoot='0x42734ef2f6a30539ed5c597ed4b6d904b0a6138980a251c21b18d5f28f2bcd83',
+    receiptRoot='0x624065350d722316acf34efea6ea73c9d03902d0c8eb927796030502ce0728d0',
+    stateRoot='0x028a4a625185ccc909c4820246d495aa6b04c70b10dda04bcc2875df6c172021',
+    sealer='0',
+    sealerList=[
+        0x017115d6ae70f6331c7e2240dbba983fcc9e83cbd9b6bc12117b2b54513161c1dc6b78ace10d17a1b045b37c0345970cb57a2d56e6174508b52c56aa6283fecb,
+        0x24b31c75b8448afd3495a2fd1941773e8e565473da35bf125868752ce2c81554623de2109a38a219c37b345cd43499d6fe092ed6723021ee21aa787b239da0b1
+    ],
+    extraData=0x,
+    gasUsed='36488',
+    timestamp='1639032194201',
+    signatureList=[
+        {
+            index='0',
+            signature='0xf4b77e92ddd74fb0bb33d28344260ae4935c0646092399d40b37cf3b364c324174d34c2b5a5495f2b403b34b342eff7cac00dcf8dfa0e2cb4458360d0bb0f04800'
+        },
+        {
+            index='1',
+            signature='0x41a43f6f0053496e68d258f4790c5a7497f6e80617cffb558db6fd6d746d212c6d721aaa68ed4d6ccfc709356296a4b5393680f20dd27120d94f2bc008a5c39800'
+        }
+    ]
+}
+
+[group]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42 true
+{
+    transactions=[
+        TransactionHash{
+            value='0x214bde834b119a3d8e834debefdf6708edabeca404dc268f794552ae6c5d338d'
+        }
+    ],
+    number='1',
+    hash='0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42',
+    logsBloom='null',
+    transactionsRoot='0x42734ef2f6a30539ed5c597ed4b6d904b0a6138980a251c21b18d5f28f2bcd83',
+    receiptRoot='0x624065350d722316acf34efea6ea73c9d03902d0c8eb927796030502ce0728d0',
+    stateRoot='0x028a4a625185ccc909c4820246d495aa6b04c70b10dda04bcc2875df6c172021',
+    sealer='0',
+    sealerList=[
+        0x017115d6ae70f6331c7e2240dbba983fcc9e83cbd9b6bc12117b2b54513161c1dc6b78ace10d17a1b045b37c0345970cb57a2d56e6174508b52c56aa6283fecb,
+        0x24b31c75b8448afd3495a2fd1941773e8e565473da35bf125868752ce2c81554623de2109a38a219c37b345cd43499d6fe092ed6723021ee21aa787b239da0b1
+    ],
+    extraData=0x,
+    gasUsed='36488',
+    timestamp='1639032194201',
+    signatureList=[
+        {
+            index='0',
+            signature='0xf4b77e92ddd74fb0bb33d28344260ae4935c0646092399d40b37cf3b364c324174d34c2b5a5495f2b403b34b342eff7cac00dcf8dfa0e2cb4458360d0bb0f04800'
+        },
+        {
+            index='1',
+            signature='0x41a43f6f0053496e68d258f4790c5a7497f6e80617cffb558db6fd6d746d212c6d721aaa68ed4d6ccfc709356296a4b5393680f20dd27120d94f2bc008a5c39800'
+        }
+    ]
 }
 ```
 
 
-#### 2.3.7 getBlockByNumber
+### getBlockByNumber
 
 运行getBlockByNumber，根据区块高度查询区块信息。
 参数：
@@ -788,57 +704,84 @@ PeersInfo{
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 
 ```shell
-[group]: /> getBlockByNumber 1 
+[group]: /> getBlockByNumber 1
 {
     transactions=[
         {
             version='0',
-            from='0x3977d248ce98f3affa78a800c4f234434355aa77',
-            hash='0x459e0bbe907bc1fb34367a150a3485921e5ce3d49c6b044e8ebb7171f8081241',
-            input='0x2800efc0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000806262323132323862303736323433336561366534636231383565316335346165623833636439363465633065383331663837333263623235323237393562623536396435383231356466626562376433666334373466646365333364633961373933643466306538366365363938333465646463373037623438393135383234',
-            nonce='1244654254262255984079741307028596561526481167594459835423352512079777563980',
-            to='0x0000000000000000000000000000000000001003',
+            from='0x33909383b925fd20b3c12fb5fcfd7d39b4b015cc',
+            hash='0x214bde834b119a3d8e834debefdf6708edabeca404dc268f794552ae6c5d338d',
+            input='0x4678294769234805890812340281049328540945470',
+            nonce='1322329174548920161282698967016643957683885216413423752035236304235782814228',
+            to='',
             blockLimit='500',
             chainId='chain',
             groupID='group',
             transactionProof='null',
-            signature=0x10617472b24161960284e1812f2becefbac5f8a4f3973ad5f600aff10a8935e345e9a8a99406f9b51bcaa2537055c76d24b0864a4fdd64b6c0c9dbfc5056680a00
+            signature=0x5aefca1279c60d06da60f53c4d6c80203944ddd8bde5c2286de2ca3d640675fd7f855bd33c7f1a69835273bc411e9effc628b0a28491df1a4c0527fb4dfad16901
         }
     ],
     number='1',
-    hash='0xfde78118e4b387b5c7ba74c19ddbd59992c5956145c5cc86265ee43814c2a320',
+    hash='0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42',
     logsBloom='null',
-    transactionsRoot='0xf09ac805845ab8a2f63367d89804fc8e438c1f0988fc13edb2f053adbe6764ec',
-    receiptRoot='0x169c46acddead6923067c057172dff458ac3f9e56008bcf2a138d605797e75c8',
-    stateRoot='0x6fc1ca9cc8c937ff208aac3f9d262389fb33a16d5f9ca0027ab596cd65667aff',
-    sealer='2',
+    transactionsRoot='0x42734ef2f6a30539ed5c597ed4b6d904b0a6138980a251c21b18d5f28f2bcd83',
+    receiptRoot='0x624065350d722316acf34efea6ea73c9d03902d0c8eb927796030502ce0728d0',
+    stateRoot='0x028a4a625185ccc909c4820246d495aa6b04c70b10dda04bcc2875df6c172021',
+    sealer='0',
     sealerList=[
-        0x44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85,
-        0xbb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824,
-        0xc1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c,
-        0xf39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
+        0x017115d6ae70f6331c7e2240dbba983fcc9e83cbd9b6bc12117b2b54513161c1dc6b78ace10d17a1b045b37c0345970cb57a2d56e6174508b52c56aa6283fecb,
+        0x24b31c75b8448afd3495a2fd1941773e8e565473da35bf125868752ce2c81554623de2109a38a219c37b345cd43499d6fe092ed6723021ee21aa787b239da0b1
     ],
     extraData=0x,
-    gasUsed='3',
-    timestamp='1638624581393',
+    gasUsed='36488',
+    timestamp='1639032194201',
     signatureList=[
         {
             index='0',
-            signature='0x341ce6b7a7724eb432a914a4e7a154343a3116d457e05329725299f144cf430454a38e64d969c454fe7f1e864ca13a6a7e5d1a01b42bb1afc152471bb9ee3ea401'
+            signature='0xf4b77e92ddd74fb0bb33d28344260ae4935c0646092399d40b37cf3b364c324174d34c2b5a5495f2b403b34b342eff7cac00dcf8dfa0e2cb4458360d0bb0f04800'
         },
         {
-            index='2',
-            signature='0x2787c0be632b20abfe7f6f1cbf031eee0aa57b6e5e2cc242f3e19bafc455f847450df7acb897958e0ef5b54e1dde1b084127933bf8736b09621b7376d273d5da01'
+            index='1',
+            signature='0x41a43f6f0053496e68d258f4790c5a7497f6e80617cffb558db6fd6d746d212c6d721aaa68ed4d6ccfc709356296a4b5393680f20dd27120d94f2bc008a5c39800'
+        }
+    ]
+}
+
+[group]: /> getBlockByNumber 1 true
+{
+    transactions=[
+        TransactionHash{
+            value='0x214bde834b119a3d8e834debefdf6708edabeca404dc268f794552ae6c5d338d'
+        }
+    ],
+    number='1',
+    hash='0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42',
+    logsBloom='null',
+    transactionsRoot='0x42734ef2f6a30539ed5c597ed4b6d904b0a6138980a251c21b18d5f28f2bcd83',
+    receiptRoot='0x624065350d722316acf34efea6ea73c9d03902d0c8eb927796030502ce0728d0',
+    stateRoot='0x028a4a625185ccc909c4820246d495aa6b04c70b10dda04bcc2875df6c172021',
+    sealer='0',
+    sealerList=[
+        0x017115d6ae70f6331c7e2240dbba983fcc9e83cbd9b6bc12117b2b54513161c1dc6b78ace10d17a1b045b37c0345970cb57a2d56e6174508b52c56aa6283fecb,
+        0x24b31c75b8448afd3495a2fd1941773e8e565473da35bf125868752ce2c81554623de2109a38a219c37b345cd43499d6fe092ed6723021ee21aa787b239da0b1
+    ],
+    extraData=0x,
+    gasUsed='36488',
+    timestamp='1639032194201',
+    signatureList=[
+        {
+            index='0',
+            signature='0xf4b77e92ddd74fb0bb33d28344260ae4935c0646092399d40b37cf3b364c324174d34c2b5a5495f2b403b34b342eff7cac00dcf8dfa0e2cb4458360d0bb0f04800'
         },
         {
-            index='3',
-            signature='0xcc04713e6c6dbbe8c204e9c33493dcbbd94731c56afaa4cd1fd22d14b5bd9a4a53b48d907956743d48c22fe352f361d9d48b7f9ccbb8c7e054b1c5db1bdab40400'
+            index='1',
+            signature='0x41a43f6f0053496e68d258f4790c5a7497f6e80617cffb558db6fd6d746d212c6d721aaa68ed4d6ccfc709356296a4b5393680f20dd27120d94f2bc008a5c39800'
         }
     ]
 }
 ```
 
-#### 2.3.8 getBlockHashByNumber
+### getBlockHashByNumber
 
 运行getBlockHashByNumber，通过区块高度获得区块哈希。
 参数：
@@ -850,7 +793,7 @@ PeersInfo{
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
 
-#### 2.3.9 getTransactionByHash
+### getTransactionByHash
 
 运行getTransactionByHash，通过交易哈希查询交易信息。
 参数：
@@ -874,7 +817,7 @@ PeersInfo{
 }
 ```
 
-#### 2.3.10 getTransactionReceipt
+### getTransactionReceipt
 
 运行getTransactionReceipt，通过交易哈希查询交易回执。
 参数：
@@ -907,14 +850,14 @@ PeersInfo{
     "transactionIndex":"0x0"
 }
 ```
-#### 2.3.11 getPendingTxSize
+### getPendingTxSize
 运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。
 ```shell
 [group]: />  getPendingTxSize
 0
 ```
 
-#### 2.3.12 getTotalTransactionCount
+### getTotalTransactionCount
 
 运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。
 
@@ -927,9 +870,7 @@ PeersInfo{
 }
 ```
 
-### 2.4 共识操作命令
-
-#### 2.4.1 getSealerList
+### getSealerList
 
 运行getSealerList，查看共识节点列表。
 
@@ -955,7 +896,7 @@ PeersInfo{
 ]
 ```
 
-#### 2.4.2 getObserverList
+### getObserverList
 
 运行getObserverList，查看观察节点列表。
 
@@ -965,7 +906,7 @@ PeersInfo{
     bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824
 ]
 ```
-#### 2.4.3 getPbftView
+### getPbftView
 
 运行getPbftView，查看pbft视图。
 
@@ -974,7 +915,7 @@ PeersInfo{
 2730
 ```
 
-#### 2.4.4 getConsensusStatus
+### getConsensusStatus
 
 运行getConsensusStatus，查看共识状态。
 
@@ -1015,7 +956,7 @@ ConsensusStatusInfo{
 
 ```
 
-#### 2.4.5 addSealer
+### addSealer
 
 运行addSealer，将节点添加为共识节点。
 参数：
@@ -1031,7 +972,7 @@ ConsensusStatusInfo{
 }
 ```
 
-#### 2.4.6 addObserver
+### addObserver
 
 运行addObserver，将节点添加为观察节点。
 参数：
@@ -1046,7 +987,7 @@ ConsensusStatusInfo{
 }
 ```
 
-#### 2.4.7 removeNode
+### removeNode
 
 运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。
 参数：
@@ -1061,7 +1002,7 @@ ConsensusStatusInfo{
 }
 ```
 
-#### 2.4.8 setConsensusWeight
+### setConsensusWeight
 
 运行setConsensusWeight，设置某一个特定节点的共识权重。
 
@@ -1073,9 +1014,7 @@ ConsensusStatusInfo{
 }
 ```
 
-### 2.5 群组查询命令
-
-#### 2.5.1 getGroupPeers
+### getGroupPeers
 
 运行getGroupPeers，查看节点所在group的共识节点和观察节点列表。
 
@@ -1087,7 +1026,7 @@ peer2: c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b
 peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
 ```
 
-#### 2.5.2 getGroupInfo
+### getGroupInfo
 
 运行getGroupInfo，查看节点所在group的详细信息。
 
@@ -1146,7 +1085,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 }
 ```
 
-#### 2.5.3 getGroupList
+### getGroupList
 
 运行getGroupList，查看群组列表：
 
@@ -1155,7 +1094,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 group0: group
 ```
 
-#### 2.5.4 getGroupInfoList
+### getGroupInfoList
 
 运行getGroupList，查看所有的群组信息列表：
 
@@ -1216,7 +1155,7 @@ group0: group
 ]
 ```
 
-#### 2.5.5 getGroupNodeInfo
+### getGroupNodeInfo
 
 运行getGroupNodeInfo命令，获取当前群组内某一个节点的信息：
 
@@ -1268,12 +1207,13 @@ group0: group
 }
 ```
 
-### 2.6 合约操作命令
+### deploy
 
-#### 2.6.1 deploy
+部署合约。(默认提供HelloWorld合约和KVTableTest进行示例使用)
 
-部署合约。(默认提供HelloWorld合约和TableTest.sol进行示例使用)
-参数：
+**新增Liquid部署方式**：当连接节点在配置开启 “is_wasm=true”选项时，可自动启动控制台使用，具体配置项请参考：[节点配置](../tutorial/air/config.md)
+
+Solidity部署参数：
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：HelloWorld。
 
@@ -1284,7 +1224,7 @@ contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署HelloWorld合约，相对路径
 [group]: />  deploy contracts/solidity/HelloWorld.sol
-contract address:0xd653139b9abffc3fe07573e7bacdfd35210b5576
+contract address:0x4721D1A77e0E76851D460073E64Ea06d9C104194
 
 # 部署HelloWorld合约，绝对路径
 [group]: />  deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
@@ -1297,10 +1237,28 @@ contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 - 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 
-#### 2.6.2 call
+**Liquid部署参数：**
+
+- wasm二进制文件路径：cargo-liquid编译过后的wasm文件，支持绝对路径、相对路径
+- ABI文件路径：编译过后的ABI文件，支持绝对路径、相对路径
+- 部署BFS路径：BFS文件系统中的路径名
+- 部署构造参数：部署时所需要的构造参数
+
+```shell
+# 部署HelloWorld合约，相对路径
+[group]: /> deploy asset/asset.wasm asset/asset.abi asset_test
+transaction hash: 0x7498487dbf79378b5b50c4e36c09ea90842a343de307ee66d560d005d3c40ccb
+contract address: /asset_test
+currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
+```
+
+### call
 
 运行call，调用合约。
-参数：
+
+**新增Liquid部署方式**：当连接节点在配置开启 “is_wasm=true”选项时，可自动启动控制台使用，具体配置项请参考：[节点配置](../tutorial/air/config.md)
+
+**Solidity调用参数：**
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
 - 合约地址: 部署合约获取的地址。
@@ -1309,85 +1267,117 @@ contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 
 ```shell
 # 调用HelloWorld的get接口获取name字符串
-[group]: />  call HelloWorld 0x175b16a1299c7af3e2e49b97e68a44734257a35e get
+[group]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
 Return message: Success
 ---------------------------------------------------------------------------------------------
-Return values:
-[
-    "Hello,World!"
-]
+Return value size:1
+Return types: (string)
+Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 
 # 调用HelloWorld的set接口设置name字符串
-[group]: />  call HelloWorld 0x175b16a1299c7af3e2e49b97e68a44734257a35e set "Hello, FISCO BCOS"
-transaction hash: 0x54b7bc73e3b57f684a6b49d2fad41bd8decac55ce021d24a1f298269e56f1ce1
+[group]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 set "Hello, FISCO BCOS 3.0" 
+transaction hash: 0x622808fb47e765576e444175793e74230ac4cd056b18d578d23442eb5a0102a0
 ---------------------------------------------------------------------------------------------
-transaction status: 0x0
+transaction status: 0
 description: transaction executed successfully
 ---------------------------------------------------------------------------------------------
-Output
 Receipt message: Success
 Return message: Success
+Return value size:0
+Return types: ()
+Return values:()
 ---------------------------------------------------------------------------------------------
 Event logs
 Event: {}
 
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
-[group]: />  call HelloWorld 0x175b16a1299c7af3e2e49b97e68a44734257a35e get
+[group]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
 Return message: Success
 ---------------------------------------------------------------------------------------------
-Return values:
-[
-    "Hello,FISCO BCOS"
-]
+Return value size:1
+Return types: (string)
+Return values:(Hello, FISCO BCOS 3.0)
 ---------------------------------------------------------------------------------------------
 
-
-# 调用TableTest的insert接口插入记录，字段为name, item_id, item_name
-[group]: />  call TableTest 0x5f248ad7e917cddc5a4d408cf18169d19c0990e5 insert "fruit" 1 "apple"
-transaction hash: 0x64bfab495dc1f50c58d219b331df5a47577aa8afc16be926260238a9b0ec0fbb
+# 调用KVTableTest的set接口插入记录，字段为name, item_id, item_name
+[group]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 set "fruit" "1" "apple"
+transaction hash: 0xa92e85febdb6dba0fc0fecf8113caeed2b60860ffc01139c067e847c5f7684d1
 ---------------------------------------------------------------------------------------------
-transaction status: 0x0
+transaction status: 0
 description: transaction executed successfully
 ---------------------------------------------------------------------------------------------
-Output
 Receipt message: Success
 Return message: Success
+Return value size:1
+Return types: (int256)
+Return values:(1)
 ---------------------------------------------------------------------------------------------
 Event logs
-Event: {"InsertResult":[1]}
+Event: {}
 
-# 调用TableTest的select接口查询记录
-[group]: />  [group]: />  call TableTest 0x5f248ad7e917cddc5a4d408cf18169d19c0990e5 select "fruit"
+
+# 调用KVTableTest的get接口查询记录
+[group]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 get "fruit" 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
 Return message: Success
 ---------------------------------------------------------------------------------------------
-Return values:
-[
-    [
-        "fruit"
-    ],
-    [
-        1
-    ],
-    [
-        "apple"
-    ]
-]
+Return value size:3
+Return types: (bool, string, string)
+Return values:(true, 1, apple)
 ---------------------------------------------------------------------------------------------
 ```
 
-**注：** TableTest.sol合约代码[参考这里](../manual/smart_contract.html#solidity)【FIXME: 链接有误】。
+**Liquid参数:**
 
-#### 2.6.3 getCode
+- 合约路径: 部署合约时填入的BFS文件系统中的路径名。
+- 合约接口名：调用的合约接口名。
+- 参数：由合约接口参数决定。**参数由空格分隔；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]，注意数组参数中不要有空格；布尔类型为true或者false。**
+
+```shell
+# 调用 /apps/asset_test 路径下的合约，注册一个新的资产 asset1
+[group]: /> call ./apps/asset_test register asset1 10000
+transaction hash: 0xf9289064053eed8a71b4af43fd793dc1cd703d75f74b19e302bc4456e523fcf2
+---------------------------------------------------------------------------------------------
+transaction status: 0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Receipt message: Success
+Return message: Success
+Return value size:1
+Return types: (int16)
+Return values:(0)
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
+
+# 调用 /apps/asset_test 路径下的合约，查询资产 asset1
+[group]: /> call ./apps/asset_test select asset1
+transaction hash: 0x68867d2e55a1c16c96ec31f96a9c913c5995b4cb9ff8985b016a18b80e9c02cb
+---------------------------------------------------------------------------------------------
+transaction status: 0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Receipt message: Success
+Return message: Success
+Return value size:2
+Return types: (bool, uint128)
+Return values:(true, 10000)
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
+
+```
+
+### getCode
 
 运行getCode，根据合约地址查询合约二进制代码。
 参数：
@@ -1399,7 +1389,7 @@ Return values:
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
 ```
 
-#### 2.6.4 listAbi
+### listAbi
 
 显示合约接口和Event列表
 参数：
@@ -1426,7 +1416,7 @@ Event list:
  insert              |   0xe020d464e502c11b54a7e37e568c78f0fcd360213eb5f4ac0a25a17733fc19f7  |   insert(string,int256,string)
 ```
 
-#### 2.6.5 getDeployLog
+### getDeployLog
 
 运行getDeployLog，查询群组内**由当前控制台**部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
 
@@ -1445,7 +1435,7 @@ Event list:
 
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
-#### 2.6.6 deployByCNS
+### deployByCNS
 
 运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)【FIXME: 链接有误】部署合约。用CNS部署的合约，可用合约名直接调用。
 参数：
@@ -1487,7 +1477,7 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 
 
-#### 2.6.7 queryCNS
+### queryCNS
 
 运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。
 参数：
@@ -1510,7 +1500,7 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 ---------------------------------------------------------------------------------------------
 ```
 
-#### 2.6.8 callByCNS
+### callByCNS
 运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。
 参数：
 
@@ -1574,7 +1564,7 @@ Return values:
 ---------------------------------------------------------------------------------------------
 ```
 
-#### 2.6.9 registerCNS
+### registerCNS
 
 注册合约至CNS。
 
@@ -1591,7 +1581,7 @@ Return values:
 }
 ```
 
-#### 2.6.10 listDeployContractAddress
+### listDeployContractAddress
 
 列出指定合约名部署的所有合约地址，
 列出部署指定合约产生的合约地址列表，参数：
@@ -1621,11 +1611,7 @@ Return values:
 0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
 ```
 
-### 2.7 BFS操作命令
-
-BFS为FISCO BCOS 3.0新的特性，详细设计请参考：FIXME
-
-#### 2.7.1 cd
+### cd
 
 与Linux的cd命令类似，可以切换当前所在的路径，支持绝对路径、相对路径。
 
@@ -1643,7 +1629,7 @@ BFS为FISCO BCOS 3.0新的特性，详细设计请参考：FIXME
 [group]: />
 ```
 
-#### 2.7.2 ls
+### ls
 
 与Linux的ls命令相似，可以查看当前路径下的资源，如果是目录，则展示出该目录下所有资源；如果是合约，则展示该合约的元信息。
 
@@ -1660,7 +1646,7 @@ Hello
 name: Hello, type: contract
 ```
 
-#### 2.7.3 mkdir
+### mkdir
 
 与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
 
@@ -1676,7 +1662,7 @@ name: Hello, type: contract
 test
 ```
 
-#### 2.7.4 pwd
+### pwd
 
 与Linux的pwd命令相似，没有参数，展示当前路径。
 
@@ -1685,9 +1671,7 @@ test
 /apps/Hello/BFS
 ```
 
-### 2.8 系统设置操作命令
-
-#### 2.7.1 setSystemConfigByKey
+### setSystemConfigByKey
 
 运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`consensus_leader_period`。这些系统参数的键名可以通过tab键补全：
 
@@ -1707,7 +1691,7 @@ test
 }
 ```
 
-#### 2.7.2 getSystemConfigByKey
+### getSystemConfigByKey
 
 运行getSystemConfigByKey，根据键查询系统参数的值。
 参数：
@@ -1719,11 +1703,9 @@ test
 100
 ```
 
-### 2.9 权限操作命令
 
-权限操作只在节点开启权限模式，且设置初始化治理委员地址才可使用。
 
-##### getCommitteeInfo 获取委员会信息
+### getCommitteeInfo
 
 在初始化时，将会部署一个治理委员，该治理委员的地址信息在 build_chain.sh时自动生成或者指定。初始化只有一个委员，并且委员的权重为1
 
@@ -1741,7 +1723,7 @@ CommitteeInfo{
 }
 ```
 
-##### getProposalInfo 获取特定提案的信息
+### getProposalInfo
 
 获取某个特定的提案信息，提案ID必须存在，否则会报错。
 
@@ -1781,7 +1763,7 @@ ProposalInfo{
 }
 ```
 
-##### getDeployAuth 获取当前全局部署的权限策略
+### getDeployAuth
 
 权限策略分为：
 
@@ -1794,13 +1776,11 @@ ProposalInfo{
 There is no deploy strategy, everyone can deploy contracts.
 ```
 
-#### 2.9.1 治理委员会命令
-
 治理委员会专用命令，必须要有治理委员会的Governors中的账户才可以调用
 
 如果治理委员只有一个，且提案是该委员发起的，那么这个提案一定能成功
 
-##### updateGovernorProposal 更新治理委员会成员提案
+### updateGovernorProposal
 
 如果是新加治理委员，新增地址和权重即可。
 
@@ -1827,7 +1807,7 @@ ProposalInfo{
 
 ```
 
-##### setRateProposal 设置委员会提案阈值的提案
+### setRateProposal
 
 设置提案阈值，提案阈值分为参与阈值和权重阈值。
 
@@ -1853,7 +1833,7 @@ ProposalInfo{
 }
 ```
 
-##### setDeployAuthTypeProposal 设置全局部署策略的提案
+### setDeployAuthTypeProposal
 
 设置部署的ACL策略，只支持 white_list 和 black_list 两种策略
 
@@ -1865,7 +1845,9 @@ Set deploy auth type proposal created, id is: 4
 Deploy strategy is White List Access.
 ```
 
-##### openDeployAuthProposal 开启某个管理员部署权限的提案
+### openDeployAuthProposal
+
+开启某个管理员部署权限的提案
 
 ```shell
 [group]: /> deploy HelloWorld
@@ -1883,7 +1865,9 @@ contract address: 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
 currentAccount: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
 ```
 
-##### closeDeployAuthProposal 关闭某个管理员部署权限的提案
+### closeDeployAuthProposal
+
+ 关闭某个管理员部署权限的提案
 
 ```shell
 [group]: /> deploy HelloWorld
@@ -1901,7 +1885,9 @@ return code:18
 Return values:null
 ```
 
-##### resetAdminProposal 重置某个合约的管理员的提案
+### resetAdminProposal
+
+重置某个合约的管理员的提案
 
 ```shell
 [group]: /> resetAdminProposal 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8 0x6546c3571F17858Ea45575e7C6457dad03E53DbB
@@ -1911,15 +1897,19 @@ Reset contract admin proposal created, id is: 7
 Admin for contract 0x6546c3571F17858Ea45575e7C6457dad03E53DbB is: 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
 ```
 
-##### revokeProposal 撤销还未成功的提案
+### revokeProposal
 
-##### voteProposal 投票提案
+撤销还未成功的提案
 
-#### 2.9.2 管理员专用命令
+### voteProposal
+
+ 投票提案
+
+### setMethodAuth
+
+ 管理员设置方法的权限策略
 
 **特别注意：合约的接口权限控制目前只能对写方法进行控制。**
-
-##### setMethodAuth 管理员设置方法的权限策略
 
 ```shell
 [group]: /> setMethodAuth 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 "set(string)" white_list
@@ -1934,14 +1924,18 @@ call for HelloWorld failed, contractAddress: 0xd24180cc0feF2f3E545de4F9AAFc09345
 description: Permission denied, please refer to https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#id73
 ```
 
-##### openMethodAuth	管理员开启用户可以访问合约的某个方法的权限
+### openMethodAuth
+
+管理员开启用户可以访问合约的某个方法的权限
 
 ```shell
 [group]: /> openMethodAuth  0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94 "set(string)" 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
 Open success, resultCode is: 0
 ```
 
-##### closeMethodAuth	管理员关闭用户可以访问合约的某个方法的权限
+### closeMethodAuth
+
+管理员关闭用户可以访问合约的某个方法的权限
 
 ```shell
 [group]: /> closeMethodAuth  0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94 "set(string)" 0xc49fd7d7648ef4f4774d642d905db2e66f5089a8
