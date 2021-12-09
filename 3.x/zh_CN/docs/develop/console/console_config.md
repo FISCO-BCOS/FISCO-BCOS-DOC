@@ -42,14 +42,14 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/dow
 │   └── console.jar
 ├── lib # 相关依赖的jar包目录
 ├── conf
-│   ├── clog.ini    # c sdk日志配置文件
-│   ├── config-example.toml # 配置文件
-│   └── log4j.properties # 日志配置文件
+│   ├── clog.ini    # c sdk日志配置文件
+│   ├── config-example.toml # 配置文件
+│   └── log4j.properties # 日志配置文件
 ├── contracts # 合约所在目录
-│   ├── console # 控制台部署合约时编译的合约abi, bin，java文件目录
-│   ├── sdk     # sol2java.sh脚本编译的合约abi, bin，java文件目录
-│   ├── liquid  # wbc-liquid 合约存放目录
-│   └── solidity    # solidity合约存放目录
+│   ├── console # 控制台部署合约时编译的合约abi, bin，java文件目录
+│   ├── sdk     # sol2java.sh脚本编译的合约abi, bin，java文件目录
+│   ├── liquid  # wbc-liquid 合约存放目录
+│   └── solidity    # solidity合约存放目录
 │       └── HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 │       └── KVTableTest.sol # 使用KV存储接口的合约：KVTableTest合约，可部署和调用
 │       └── KVTable.sol # 提供KV存储操作的接口合约    
@@ -241,7 +241,7 @@ console version: 3.0.0-rc1
 
 ##### 1.4.2.1 控制台加载私钥
 
-控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)【FIXME: 链接有误】，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
+控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
 控制台启动方式有如下几种：
 
 ```shell
