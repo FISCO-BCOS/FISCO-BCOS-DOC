@@ -72,9 +72,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0/downloa
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/v2.7.1/tools/download_console.sh && bash download_console.sh -v 0.5` 
-    0.6版本请尝试命令： `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/v2.7.1/tools/download_console.sh && bash download_console.sh -v 0.6`
-
+    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/v3.0.0-rc1/tools/download_console.sh && bash download_console.sh` 
 ```
 
 ### 1.2 配置控制台

@@ -257,6 +257,7 @@ latex_elements = {
 \DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
 \DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
 \DeclareUnicodeCharacter{2713}{x}
+\DeclareUnicodeCharacter{01F5}{x}
 \DeclareUnicodeCharacter{27FA}{\ensuremath{\Longleftrightarrow}}
 \DeclareUnicodeCharacter{221A}{\ensuremath{\sqrt{}}}
 \DeclareUnicodeCharacter{221B}{\ensuremath{\sqrt[3]{}}}
