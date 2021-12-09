@@ -3,6 +3,7 @@
 标签：``RPC``
 
 ---------
+
 Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java API可分为如下几类：
 
 - Client: 提供访问FISCO BCOS 3.0+节点JSON-RPC接口支持、提供部署及调用合约的支持；
@@ -23,39 +24,47 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 发送交易到区块链RPC。
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - signedTransactionData：签名后的交易
 - withProof：返回是否带上默克尔树证明
-**返回值**
+  **返回值**
 - BcosTransactionReceipt: 节点收到交易后，回复给SDK的回包，包括交易哈希信息。
 
 
 ### sendTransactionAsync
+
 交易发布异步接口, 收到节点的响应之后，调用指定的callback。
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - signedTransactionData: 签名后的交易字符串;
 - withProof：返回是否带上默克尔树证明
 - callback: SDK收到节点的回包后，调用的回调函数，回调函数时将会带上交易回执。
-**返回值**
+  **返回值**
 - 无
 
 ### call
+
 向节点发送请求，调用合约常量接口。
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - transaction: 合约调用信息，包含合约地址、合约调用者以及调用的合约接口和参数的abi编码
-**返回值**
+  **返回值**
 - Call: 合约常量接口的返回结果，包括当前块高、接口执行状态信息以及接口执行结果
 
 ### callAsync
+
 合约常量接口异步调用，接收到节点返回的合约接口执行结果后，执行指定的回调函数
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - transaction: 合约调用信息，包含合约地址、合约调用者以及调用的接口和参数信息；
 - callback: 回调函数。
 
 **返回值**
+
 - 无
 
 ### getCode
@@ -74,12 +83,15 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ## 2. 区块链查询接口
 
 ### getBlockNumber
+
 获取Client对象对应的群组最新块高。
 
 **参数**
+
 - node：可让RPC发送请求到指定节点
 
 **返回值**
+
 - BlockNumber: Client对象对应的群组最新区块高度。
 
 ### getBlockNumberAsync
@@ -96,16 +108,19 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### getTotalTransactionCount
+
 获取Client对应群组的交易统计信息，包括上链的交易数、上链失败的交易数目。
 
 **参数**
+
 - node：可让RPC发送请求到指定节点
 
 **返回值**
+
 - TotalTransactionCount: 交易统计信息，包括：
-    - txSum: 上链的交易总量
-    - blockNumber: 群组的当前区块高度
-    - failedTxSum: 上链执行异常的交易总量
+  - txSum: 上链的交易总量
+  - blockNumber: 群组的当前区块高度
+  - failedTxSum: 上链执行异常的交易总量
 
 ### getTotalTransactionCountAsync
 
@@ -156,17 +171,20 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### getBlockByHash
+
 根据区块哈希获取区块信息。
 
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - blockHash: 区块哈希
 - onlyHeader：true/false，表明获取的区块信息中是否只获取区块头数据；
 - onlyTxHash: true/false，表明获取的区块信息中是否包含完整的交易信息；
-    - true: 节点返回的区块中仅包含交易哈希;
-    - false: 节点返回的区块中包含完整的交易信息。
+  - true: 节点返回的区块中仅包含交易哈希;
+  - false: 节点返回的区块中包含完整的交易信息。
 
 **返回值**
+
 - BcosBlock: 查询获取的区块信息。
 
 ### getBlockByHashAsync
@@ -188,11 +206,13 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### getBlockHashByNumber
+
 根据区块高度获取区块哈希
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - blockNumber: 区块高度
-**返回值**
+  **返回值**
 - BlockHash: 指定区块高度对应的区块哈希
 
 ### getBlockHashByNumberAsync
@@ -211,12 +231,14 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 
 ### getTransactionByHash
+
 根据交易哈希获取交易信息。
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - transactionHash: 交易哈希
 - withProof：是否带上默克尔树证明
-**返回值**
+  **返回值**
 - BcosTransaction: 指定哈希对应的交易信息。
 
 ### getTransactionByHashAsync
@@ -236,14 +258,17 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 
 ### getTransactionReceipt
+
 根据交易哈希获取交易回执信息。
 
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - transactionHash: 交易哈希
 - withProof：返回是否带上默克尔树证明
 
 **返回值**
+
 - BcosTransactionReceipt: 交易哈希对应的回执信息。
 
 ### getTransactionReceiptAync
@@ -262,10 +287,12 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### getPendingTxSize
+
 获取交易池内未处理的交易数目。
 **参数**
+
 - node：可让RPC发送请求到指定节点
-**返回值**
+  **返回值**
 - PendingTxSize: 交易池内未处理的交易数目。
 
 ### getPendingTxSizeAsync
@@ -282,12 +309,15 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### getBlockLimit
+
 获取Client对应群组的BlockLimit，BlockLimit主要用于交易防重。
 
 **参数**
+
 - 无
 
 **返回值**
+
 - BigInteger: 群组的BlockLimit。
 
 ### getPeers
@@ -471,11 +501,14 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ## 4. 群组查询接口
 
 ### getGroupInfo
+
 查询当前群组的状态信息。
 **参数**
+
 - 无
 
 **返回值**
+
 - BcosGroupInfo: 被查询的群组状态信息。
 
 ### getGroupInfoAsync
@@ -491,10 +524,12 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### getGroupList
+
 获取当前节点的群组列表。
 **参数**
+
 - 无
-**返回值**
+  **返回值**
 - BcosGroupList: 当前节点的群组列表。
 
 ### getGroupListAsync
@@ -511,12 +546,15 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 
 ### getGroupPeers
+
 获取当前节点指定群组连接的节点列表。
 
 **参数**
+
 - 无
-**返回值**
+  **返回值**
 - GroupPeers: 指定群组连接的节点列表。
+
 ### getGroupPeersAsync
 
 异步获取当前节点指定群组连接的节点列表。
@@ -530,10 +568,12 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### getGroupInfoList
+
 获取当前节点群组信息列表。
 **参数**
+
 - 无
-**返回值**
+  **返回值**
 - BcosGroupInfoList: 当前节点群组信息列表。
 
 ### getGroupInfoListAsync
@@ -604,6 +644,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### 5.2 ConsensusService
 
 #### addSealer
+
  将指定节点添加为共识节点。
 
 **参数**
@@ -612,6 +653,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - weight：添加共识节点的权重
 
 **返回值**
+
 - RetCode: 共识节点添加结果。
 
 ```eval_rst
@@ -620,81 +662,103 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ```
 
 #### addObserver
+
 将指定节点添加为观察节点。
 
 **参数**
+
 - nodeId: 被添加为观察节点的node ID.
 
 **返回值**
+
 - RetCode: 观察节点添加结果。
 
 #### removeNode
+
 将指定节点移出群组。
 
 **参数**
+
 - nodeId: 被移出群组的节点的node ID.
 
 **返回值**
+
 - RetCode: 节点被移出群组的执行结果。
 
 ### 5.3 SystemConfigService
 
 #### setValueByKey
+
 设置指定系统配置项的值。
 
 **参数**
+
 - key: 配置项，目前支持`tx_count_limit`, `consensus_leader_period`；
 
 - value: 系统配置项被设置的值。
 
 **返回值**
+
 - RetCode: 系统配置项设置结果。
 
 ### 5.4 KVTableService
 
 #### createTable
+
 创建用户表。
 
 **参数**
+
 - tableName: 创建的用户表名;
 - keyFieldName: 用户表的主key名;
 - valueFields: 用户表的fields.
 
 **返回值**
+
 - RetCode: 用户表创建结果。
 
 #### set
+
 向指定用户表中写入一条记录。
 
 **参数**
+
 - tableName: 需要插入记录的表名;
 - key: 主key被设置的值;
 - fieldNameToValue: 每个field到其对应值的映射。
 
 **返回值**
+
 - RetCode: 记录是否插入成功。
 
 #### get
+
 查询用户表指定记录。
 
 **参数**
+
 - tableName: 被查询的用户表名;
 - key: 被查询的主key值;
 
 **返回值**
+
 - Map<String, String>: 查询结果。     
 
 #### desc
+
 获取指定用户表的描述信息。
 
 **参数**
+
 - tableName: 被查询的用户表名。
 
 **返回值**
+
 - Map<String, String>: 用户表描述信息，记录了`PrecompiledConstant.KEY_NAME`到主key的映射，以及`PrecompiledConstant.FIELD_NAME`到所有field的映射，field之间用逗号分隔开。
 
 
 #### asyncSet
+
 `set`的异步接口，向指定表写入指定记录，并在接收到节点的回执后，调用指定回调函数。
 
 **参数**
@@ -705,43 +769,54 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - callback: 回调函数。
 
 **返回值**
+
 - 无      
 
 
 ### 5.5 CNSService
 
 #### registerCNS
+
 为指定合约注册CNS。
 
 **参数**
+
 - contractName: 合约名;
 - contractVersion: 注册的合约版本;
 - contractAddress: 合约地址;
 - abiData: 注册合约的abi;
 
 **返回值**
+
 - RetCode: CNS注册结果。
-  
+
 #### selectByName
+
 根据合约名查询合约CNS信息。
 
 **参数**
+
 - contractName: 需要查询CNS信息的合约名;
 
 **返回值**
+
 - List<CnsInfo>: 查询到的CNS信息列表。
-  
+
 #### selectByNameAndVersion
+
 根据合约名和合约版本查询CNS信息。
 
 **参数**
+
 - contractName: 合约名;
 - contractVersion: 合约版本。
 
 **返回值**
+
 - Tuple2<String, String>: 查询到的CNS信息，包含地址和ABI。
-  
+
 #### getContractAddress
+
 根据合约名和合约版本获取合约地址。
 
 **参数**
@@ -750,6 +825,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - contractVersion: 合约版本。
 
 **返回值**
+
 - String: 查询到的合约地址。
 
 ## 6. AuthManager权限管理接口
