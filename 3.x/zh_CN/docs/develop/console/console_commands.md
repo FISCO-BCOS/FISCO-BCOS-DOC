@@ -10,9 +10,55 @@
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 
-## 1. 控制台基础命令
+## 控制台命令结构
 
-### help
+控制台命令由两部分组成，即指令和指令相关的参数：
+
+- **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
+  **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
+
+- **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](./api.md)。
+
+### 控制台常用命令
+
+### 合约相关命令
+
+- 利用**CNS**部署和调用合约(**推荐**)
+  - 部署合约: [deployByCNS](./console.html#deploybycns)
+  - 调用合约: [callByCNS](./console.html#callbycns)
+  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+- 普通部署和调用合约
+  - 部署合约: [deploy](./console.html#deploy)
+  - 调用合约: [call](./console.html#call)
+
+### 其他命令
+
+- 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
+- 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
+- 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
+- 切换群组: [switch](./console.html#switch)
+
+### 快捷键
+
+- `Ctrl+A`：光标移动到行首
+- `Ctrl+D`：退出控制台
+- `Ctrl+E`：光标移动到行尾
+- `Ctrl+R`：搜索输入的历史命令
+- &uarr;：向前浏览历史命令
+- &darr;：向后浏览历史命令
+
+### 控制台响应
+
+当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
+
+- **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
+- **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
+  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#id5)。
+
+## 控制台基础命令
+
+### 1. help
 
 输入help或者h，查看控制台所有的命令。
 
@@ -88,7 +134,7 @@ getBlockByNumber blockNumber [boolean]
 * boolean -- (optional) If true it returns only the hashes of the transactions, if false then return the full transaction objects.
 ```
 
-### switch
+### 2. switch
 
 运行switch或者s，切换到指定群组。群组号显示在命令提示符前面。
 
@@ -99,7 +145,7 @@ Switched to group2.
 [group2]>
 ```
 
-### quit
+### 3. quit
 
 运行quit、q或exit，退出控制台。
 
@@ -107,9 +153,9 @@ Switched to group2.
 quit
 ```
 
-## 2. 合约操作命令
+## 合约操作命令
 
-### deploy
+### 1. deploy
 
 部署合约。(默认提供HelloWorld合约和KVTableTest进行示例使用)
 
@@ -154,7 +200,7 @@ contract address: /asset_test
 currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
 ```
 
-### call
+### 2. call
 
 运行call，调用合约。
 
@@ -279,7 +325,7 @@ Event: {}
 
 ```
 
-### getCode
+### 3. getCode
 
 运行getCode，根据合约地址查询合约二进制代码。
 参数：
@@ -291,7 +337,7 @@ Event: {}
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
 ```
 
-### listAbi
+### 4. listAbi
 
 显示合约接口和Event列表
 参数：
@@ -318,7 +364,7 @@ Event list:
  insert              |   0xe020d464e502c11b54a7e37e568c78f0fcd360213eb5f4ac0a25a17733fc19f7  |   insert(string,int256,string)
 ```
 
-### getDeployLog
+### 5. getDeployLog
 
 运行getDeployLog，查询群组内**由当前控制台**部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
 
@@ -337,7 +383,7 @@ Event list:
 
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
-### deployByCNS
+### 6. deployByCNS
 
 运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)【FIXME: 链接有误】部署合约。用CNS部署的合约，可用合约名直接调用。
 参数：
@@ -381,7 +427,7 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 
 
-### queryCNS
+### 7. queryCNS
 
 运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。
 参数：
@@ -404,7 +450,7 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 ---------------------------------------------------------------------------------------------
 ```
 
-### callByCNS
+### 8. callByCNS
 
 运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。
 参数：
@@ -469,7 +515,7 @@ Return values:
 ---------------------------------------------------------------------------------------------
 ```
 
-### registerCNS
+### 9. registerCNS
 
 注册合约至CNS。
 
@@ -487,7 +533,7 @@ Return values:
 }
 ```
 
-### listDeployContractAddress
+### 10. listDeployContractAddress
 
 列出指定合约名部署的所有合约地址，
 列出部署指定合约产生的合约地址列表，参数：
@@ -517,9 +563,9 @@ Return values:
 0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
 ```
 
-## 3. 区块链状态查询命令
+## 区块链状态查询命令
 
-### getBlockNumber
+### 1. getBlockNumber
 
 运行getBlockNumber，查看区块高度。
 
@@ -528,7 +574,7 @@ Return values:
 90
 ```
 
-### getSyncStatus
+### 2. getSyncStatus
 
 运行getSyncStatus，查看同步状态。
 
@@ -567,7 +613,7 @@ SyncStatusInfo{
 }
 ```
 
-### getPeers
+### 3. getPeers
 
 运行getPeers，查看节点的peers。
 
@@ -625,7 +671,7 @@ PeersInfo{
 }
 ```
 
-### getBlockByHash
+### 4. getBlockByHash
 
 运行getBlockByHash，根据区块哈希查询区块信息。
 参数：
@@ -712,7 +758,7 @@ PeersInfo{
 ```
 
 
-### getBlockByNumber
+### 5. getBlockByNumber
 
 运行getBlockByNumber，根据区块高度查询区块信息。
 参数：
@@ -798,7 +844,7 @@ PeersInfo{
 }
 ```
 
-### getBlockHashByNumber
+### 6. getBlockHashByNumber
 
 运行getBlockHashByNumber，通过区块高度获得区块哈希。
 参数：
@@ -810,7 +856,7 @@ PeersInfo{
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
 
-### getTransactionByHash
+### 7. getTransactionByHash
 
 运行getTransactionByHash，通过交易哈希查询交易信息。
 参数：
@@ -834,7 +880,7 @@ PeersInfo{
 }
 ```
 
-### getTransactionReceipt
+### 8. getTransactionReceipt
 
 运行getTransactionReceipt，通过交易哈希查询交易回执。
 参数：
@@ -868,7 +914,7 @@ PeersInfo{
 }
 ```
 
-### getPendingTxSize
+### 9. getPendingTxSize
 
 运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。
 
@@ -877,7 +923,7 @@ PeersInfo{
 0
 ```
 
-### getTotalTransactionCount
+### 10. getTotalTransactionCount
 
 运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。
 
@@ -890,7 +936,7 @@ PeersInfo{
 }
 ```
 
-### setSystemConfigByKey
+### 11. setSystemConfigByKey
 
 运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`consensus_leader_period`。这些系统参数的键名可以通过tab键补全：
 
@@ -910,7 +956,7 @@ PeersInfo{
 }
 ```
 
-### getSystemConfigByKey
+### 12. getSystemConfigByKey
 
 运行getSystemConfigByKey，根据键查询系统参数的值。
 参数：
@@ -922,9 +968,9 @@ PeersInfo{
 100
 ```
 
-## 4. 账户操作命令
+## 账户操作命令
 
-### newAccount
+### 1. newAccount
 
 创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`account`目录下。
 
@@ -940,7 +986,7 @@ $ ls -al account/ecdsa/0x6fad87071f790c3234108f41b76bb99874a6d813.pem
 $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x6fad87071f790c3234108f41b76bb99874a6d813.pem
 ```
 
-### loadAccount
+### 2. loadAccount
 
 加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
 参数：
@@ -954,7 +1000,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x6fad87071f790c32
 Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 ```
 
-### listAccount
+### 3. listAccount
 
 查看当前加载的所有账户信息
 
@@ -966,7 +1012,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 
 **注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`loadAccount`进行切换**
 
-### getCurrentAccount
+### 4. getCurrentAccount
 
 获取当前账户地址。
 
@@ -975,9 +1021,9 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 0x6fad87071f790c3234108f41b76bb99874a6d813
 ```
 
-## 5. 共识操作命令
+## 共识操作命令
 
-### getSealerList
+### 1. getSealerList
 
 运行getSealerList，查看共识节点列表。
 
@@ -1003,7 +1049,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 ]
 ```
 
-### getObserverList
+### 2. getObserverList
 
 运行getObserverList，查看观察节点列表。
 
@@ -1014,7 +1060,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 ]
 ```
 
-### getPbftView
+### 3. getPbftView
 
 运行getPbftView，查看pbft视图。
 
@@ -1023,7 +1069,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 2730
 ```
 
-### getConsensusStatus
+### 4. getConsensusStatus
 
 运行getConsensusStatus，查看共识状态。
 
@@ -1064,7 +1110,7 @@ ConsensusStatusInfo{
 
 ```
 
-### addSealer
+### 5. addSealer
 
 运行addSealer，将节点添加为共识节点。
 参数：
@@ -1080,7 +1126,7 @@ ConsensusStatusInfo{
 }
 ```
 
-### addObserver
+### 6. addObserver
 
 运行addObserver，将节点添加为观察节点。
 参数：
@@ -1095,7 +1141,7 @@ ConsensusStatusInfo{
 }
 ```
 
-### removeNode
+### 7. removeNode
 
 运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。
 参数：
@@ -1110,7 +1156,7 @@ ConsensusStatusInfo{
 }
 ```
 
-### setConsensusWeight
+### 8. setConsensusWeight
 
 运行setConsensusWeight，设置某一个特定节点的共识权重。
 
@@ -1122,9 +1168,9 @@ ConsensusStatusInfo{
 }
 ```
 
-## 6. 群组查询命令
+## 群组查询命令
 
-### getGroupPeers
+### 1. getGroupPeers
 
 运行getGroupPeers，查看节点所在group的共识节点和观察节点列表。
 
@@ -1136,7 +1182,7 @@ peer2: c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b
 peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
 ```
 
-### getGroupInfo
+### 2. getGroupInfo
 
 运行getGroupInfo，查看节点所在group的详细信息。
 
@@ -1195,7 +1241,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 }
 ```
 
-### getGroupList
+### 3. getGroupList
 
 运行getGroupList，查看群组列表：
 
@@ -1204,7 +1250,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 group0: group
 ```
 
-### getGroupInfoList
+### 4. getGroupInfoList
 
 运行getGroupList，查看所有的群组信息列表：
 
@@ -1265,7 +1311,7 @@ group0: group
 ]
 ```
 
-### getGroupNodeInfo
+### 5. getGroupNodeInfo
 
 运行getGroupNodeInfo命令，获取当前群组内某一个节点的信息：
 
@@ -1317,9 +1363,9 @@ group0: group
 }
 ```
 
-## 7. BFS操作命令
+## BFS操作命令
 
-### cd
+### 1. cd
 
 与Linux的cd命令类似，可以切换当前所在的路径，支持绝对路径、相对路径。
 
@@ -1337,7 +1383,7 @@ group0: group
 [group]: />
 ```
 
-### ls
+### 2. ls
 
 与Linux的ls命令相似，可以查看当前路径下的资源，如果是目录，则展示出该目录下所有资源；如果是合约，则展示该合约的元信息。
 
@@ -1354,7 +1400,7 @@ Hello
 name: Hello, type: contract
 ```
 
-### mkdir
+### 3. mkdir
 
 与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
 
@@ -1370,7 +1416,7 @@ name: Hello, type: contract
 test
 ```
 
-### pwd
+### 4. pwd
 
 与Linux的pwd命令相似，没有参数，展示当前路径。
 
@@ -1379,9 +1425,9 @@ test
 /apps/Hello/BFS
 ```
 
-## 8. 权限操作命令
+## 权限操作命令
 
-### getCommitteeInfo
+### 1. getCommitteeInfo
 
 在初始化时，将会部署一个治理委员，该治理委员的地址信息在 build_chain.sh时自动生成或者指定。初始化只有一个委员，并且委员的权重为1
 
@@ -1397,7 +1443,7 @@ Governor Address                                        | Weight
 index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 1
 ```
 
-### getProposalInfo
+### 2. getProposalInfo
 
 获取某个特定的提案信息，提案ID必须存在，否则会报错。
 
@@ -1434,7 +1480,7 @@ Against Voters:
 
 ```
 
-### getDeployAuth
+### 3. getDeployAuth
 
 权限策略分为：
 
@@ -1451,7 +1497,7 @@ There is no deploy strategy, everyone can deploy contracts.
 
 如果治理委员只有一个，且提案是该委员发起的，那么这个提案一定能成功
 
-### checkDeployAuth
+### 4. checkDeployAuth
 
 检查账户是否有部署权限
 
@@ -1471,7 +1517,7 @@ Deploy : ACCESS
 Account: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 ```
 
-### checkMethodAuth
+### 5. checkMethodAuth
 
 检查账户是否有调用某个合约接口的权限
 
@@ -1498,7 +1544,7 @@ Interface: set(string)
 Contract : 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
 ```
 
-### updateGovernorProposal
+### 6. updateGovernorProposal
 
 如果是新加治理委员，新增地址和权重即可。
 
@@ -1519,7 +1565,7 @@ Against Voters:
 
 ```
 
-### setRateProposal
+### 7. setRateProposal
 
 设置提案阈值，提案阈值分为参与阈值和权重阈值。
 
@@ -1540,7 +1586,7 @@ Against Voters:
 
 ```
 
-### setDeployAuthTypeProposal
+### 8. setDeployAuthTypeProposal
 
 设置部署的ACL策略，只支持 white_list 和 black_list 两种策略
 
@@ -1561,7 +1607,7 @@ Against Voters:
 Deploy strategy is White List Access.
 ```
 
-### openDeployAuthProposal
+### 9. openDeployAuthProposal
 
 开启某个管理员部署权限的提案
 
@@ -1594,7 +1640,7 @@ currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 ```
 
-### closeDeployAuthProposal
+### 10. closeDeployAuthProposal
 
  关闭某个管理员部署权限的提案
 
@@ -1627,7 +1673,7 @@ Return values:null
 
 ```
 
-### resetAdminProposal
+### 11. resetAdminProposal
 
 重置某个合约的管理员的提案
 
@@ -1654,7 +1700,7 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f
 
 ```
 
-### revokeProposal
+### 12. revokeProposal
 
 撤销还未成功的提案，撤销提案的动作只能由发起提案的治理委员发起。
 
@@ -1699,7 +1745,7 @@ Against Voters:
 
 ```
 
-### voteProposal
+### 13. voteProposal
 
 治理委员可向某个提案进行投票，投票时可选择同意和不同意。
 
@@ -1748,7 +1794,7 @@ index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 2
 index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
 ```
 
-### getLatestProposal
+### 14. getLatestProposal
 
 为了避免发起提案超时、退出控制台遗忘提案ID，getLatestProposal的命令可以获取当前委员会的最新的提案信息。
 
@@ -1766,7 +1812,7 @@ Agree Voters:
 Against Voters:
 ```
 
-### setMethodAuth
+### 15. setMethodAuth
 
  管理员设置方法的权限策略
 
@@ -1804,7 +1850,7 @@ Return values:(Hello, World!)
 
 ```
 
-### openMethodAuth
+### 16. openMethodAuth
 
 管理员开启用户可以访问合约的某个方法的权限
 
@@ -1844,7 +1890,7 @@ Return values:(Hello, FISCO BCOS!)
 ---------------------------------------------------------------------------------------------
 ```
 
-### closeMethodAuth
+### 17. closeMethodAuth
 
 管理员关闭用户可以访问合约的某个方法的权限
 
