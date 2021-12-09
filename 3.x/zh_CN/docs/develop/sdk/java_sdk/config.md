@@ -23,7 +23,7 @@ Java sdk主要包括五个配置选项，分别是
 * yml
 * xml
 
-其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./configuration.html#id12) 【FIXME: 链接有误】
+其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./config.html#id12) 【FIXME: 链接有误】
 
 ## 1. 快速配置
 
@@ -151,44 +151,6 @@ SDK与节点间的网络配置示例如下：
 [network]
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
 defaultGroup = "group"
-```
-
-### AMOP配置
-
-[AMOP](./amop.md)支持私有话题的功能，配置文件中提供了`AMOP`相关配置项于 `[[amop]]`中。
-
-#### 私有话题订阅配置
-
-AMOP私有话题订阅者需要配置私钥用于进行私有话题认证，具体配置项包括：
-
-* `topicName`: 私有话题名称；
-* `privateKey`: 私有话题订阅者的私钥路径，用于证明订阅房身份信息；
-* `password`: 访问私钥文件的口令。
-
-AMOP订阅私有话题的配置项示例如下：
-
-```toml
-# Configure a private topic as a topic subscriber.
-[[amop]]
-topicName = "PrivateTopic"
-privateKey = "conf/amop/consumer_private_key.p12"         # Your private key that used to subscriber verification.
-password = "123456"
-```
-
-#### 私有话题消息发布配置
-
-AMOP私有话题认证成功后，消息发布方可向订阅方发送私有话题消息，发布私有话题消息的配置包括：
-
-* `topicName`: 私有话题名称；
-* `publicKeys`: 消息订阅方的公钥列表。
-
-AMOP发布私有话题消息的配置示例如下：
-
-```toml
-# Configure a private topic as a topic message sender.
-[[amop]]
-topicName = "PrivateTopic"
-publicKeys = [ "conf/amop/consumer_public_key_1.pem" ]    # Public keys of the nodes that you want to send AMOP message of this topic to.
 ```
 
 ### 账户配置
