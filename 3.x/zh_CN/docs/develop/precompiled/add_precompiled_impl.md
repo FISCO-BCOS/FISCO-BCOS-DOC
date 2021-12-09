@@ -126,7 +126,7 @@ else
 
 ##### 参数解析与返回：
 
-调用合约时的参数包含在call函数的_param参数中，如果是Solidity调用，则使用Solidity ABI编码，如果是webankblockchain-liquid（简称wbc-liquid）则使用Scale编码。
+调用合约时的参数包含在call函数的_param参数中，如果是Solidity调用，则使用Solidity ABI编码，如果是webankblockchain-liquid（简称WBC-Liquid）则使用Scale编码。
 
 PrecompiledCodec封装了两种编码格式的接口，使用PrecompiledCodec即可。
 

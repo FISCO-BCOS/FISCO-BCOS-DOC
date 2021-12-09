@@ -1,12 +1,12 @@
-# 开发第一个wbc-liquid区块链应用
+# 开发第一个WBC-Liquid区块链应用
 
-标签：``开发第一个应用`` ``wbc-liquid`` ``合约开发`` ``区块链应用`` ``WASM``
+标签：``开发第一个应用`` ``WBC-Liquid`` ``合约开发`` ``区块链应用`` ``WASM``
 
 ---
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的[Java SDK](../develop/sdk/java_sdk/index.md)实现对区块链上合约的调用访问。
 
-本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉WebankBlockchain-liquid语法（以下简称wbc-liquid），并且进行了[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
+本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉webankblockchain-liquid语法（以下简称WBC-Liquid），并且进行了[WBC-Liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
 如果您还未搭建区块链网络，或未下载控制台，请先走完教程[搭建第一个区块链网络](./air_installation.md)，再回到本教程。
 
@@ -54,7 +54,7 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 ### 第二步. 开发源码
 #### 创建
 根据我们第一步的存储和接口设计，创建一个Asset的智能合约项目。
-在终端中执行以下命令创建 wbc-liquid 智能合约项目：
+在终端中执行以下命令创建 WBC-Liquid 智能合约项目：
 
 ```shell
 # 创建工作目录~/fisco
@@ -88,13 +88,13 @@ asset/
 
 其中各文件的功能如下：
 
--   `.gitignore`：隐藏文件，用于告诉版本管理软件[Git](https://git-scm.com/)哪些文件或目录不需要被添加到版本管理中。wbc-liquid 会默认将某些不重要的问题件（如编译过程中生成的临时文件）排除在版本管理之外，如果不需要使用 Git 管理对项目版本进行管理，可以忽略该文件；
+-   `.gitignore`：隐藏文件，用于告诉版本管理软件[Git](https://git-scm.com/)哪些文件或目录不需要被添加到版本管理中。WBC-Liquid 会默认将某些不重要的问题件（如编译过程中生成的临时文件）排除在版本管理之外，如果不需要使用 Git 管理对项目版本进行管理，可以忽略该文件；
 
--   `.liquid/`：隐藏目录，用于实现 wbc-liquid 智能合的内部功能，其中`abi_gen`子目录下包含了 ABI 生成器的实现，该目录下的编译配置及代码逻辑是固定的，如果被修改可能会造成无法正常生成 ABI；
+-   `.liquid/`：隐藏目录，用于实现 WBC-Liquid 智能合的内部功能，其中`abi_gen`子目录下包含了 ABI 生成器的实现，该目录下的编译配置及代码逻辑是固定的，如果被修改可能会造成无法正常生成 ABI；
 
 -   `Cargo.toml`：项目配置清单，主要包括项目信息、外部库依赖、编译配置等，一般而言无需修改该文件，除非有特殊的需求（如引用额外的第三方库、调整优化等级等）；
 
--   `src/lib.rs`：wbc-liquid 智能合约项目根文件，合约代码存放于此文件中。智能合约项目创建完毕后，`lib.rs`文件中会自动填充部分样板代码，我们可以基于这些样板代码做进一步的开发。
+-   `src/lib.rs`：WBC-Liquid 智能合约项目根文件，合约代码存放于此文件中。智能合约项目创建完毕后，`lib.rs`文件中会自动填充部分样板代码，我们可以基于这些样板代码做进一步的开发。
 
 我们将Asset liquid中的代码复制至`lib.rs`文件中后，便可进行后续步骤。
 
@@ -252,7 +252,7 @@ cargo liquid build -g
 Binary: ~/fisco/console/contracts/liquid/asset/target/asset.wasm
    ABI: ~/fisco/console/contracts/liquid/asset/target/asset.abi
 ```
-其中，“Binary:”后为生成的字节码文件的绝对路径，“ABI:”后为生成的 ABI 文件的绝对路径。为尽量简化 FISCO BCOS 各语言 SDK 的适配工作，wbc-liquid 采用了与 Solidity ABI 规范兼容的 ABI 格式.
+其中，“Binary:”后为生成的字节码文件的绝对路径，“ABI:”后为生成的 ABI 文件的绝对路径。为尽量简化 FISCO BCOS 各语言 SDK 的适配工作，WBC-Liquid 采用了与 Solidity ABI 规范兼容的 ABI 格式.
 
 进入到 target 目录中，将 asset.wasm 重命名为 asset_sm.wasm。因为我们待会还要生成非国密的Binary、ABI文件，但是 `cargo liquid build` 会覆盖同名文件。
 ```bash
@@ -292,14 +292,14 @@ bash contract2java.sh -a ~/fisco/console/contracts/liquid/asset/target/asset.abi
 $ bash contract2java.sh liquid -h
 Missing required options: b, a, sb
 usage: contract2java.sh <solidity|liquid> [OPTIONS...]
- -a,--abi <arg>       [Required] The ABI file path of wbc-liquid contract.
- -b,--bin <arg>       [Required] The binary file path of wbc-liquid contract.
+ -a,--abi <arg>       [Required] The ABI file path of WBC-Liquid contract.
+ -b,--bin <arg>       [Required] The binary file path of WBC-Liquid contract.
  -h,--help
  -o,--output <arg>    [Optional] The file path of the generated java code,
                       default is contracts/sdk/java/
  -p,--package <arg>   [Optional] The package name of the generated java
                       code, default is com
- -sb,--sm-bin <arg>   [Required] The SM binary file path of wbc-liquid
+ -sb,--sm-bin <arg>   [Required] The SM binary file path of WBC-Liquid
                       contract.
 ```
 
@@ -943,10 +943,10 @@ jar {
 |   |        |-- applicationContext.xml // 项目配置文件
 |   |        |-- contract.properties // 存储部署合约地址的文件
 |   |        |-- log4j.properties // 日志配置文件
-|   |        |-- contract //存放 wbc-liquid 合约文件
+|   |        |-- contract //存放 WBC-Liquid 合约文件
 |   |               |-- asset-test
 |   |                   |-- src
-|   |                       |-- lib.rs wbc-liquid文件
+|   |                       |-- lib.rs WBC-Liquid文件
 |   |-- test
 |       |-- resources // 存放代码资源文件
 |           |-- conf
@@ -959,9 +959,9 @@ jar {
 |           |-- applicationContext.xml // 项目配置文件
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
-|           |-- contract //存放 wbc-liquid 合约文件
+|           |-- contract //存放 WBC-Liquid 合约文件
 |                   |-- asset-test
-|                       |-- lib.rs wbc-liquid文件
+|                       |-- lib.rs WBC-Liquid文件
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本
@@ -1020,4 +1020,4 @@ $ bash asset_run.sh query Bob
 account Bob, value 150000
 ```
 
-**总结：** 至此，我们通过wbc-liquid合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的wbc-liquid应用。
+**总结：** 至此，我们通过WBC-Liquid合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的WBC-Liquid应用。
