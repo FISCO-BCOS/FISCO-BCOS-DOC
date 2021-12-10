@@ -4,13 +4,15 @@
 
 ---------
 
-本示例项目基于JavaSdk+Gradle+SpringBoot方式来调用智能合约，由[脚手架](https://github.com/WeBankBlockchain/SmartDev-Scaffold)生成。
+本示例项目基于Java SDK + Gradle + SpringBoot方式来调用智能合约。
 
-若您仍想使用Web3sdk+Gradle+SpringBoot方式访问智能合约，请参考[web3sdk示例](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-web3sdk)；
+若您想通过Java SDK + Maven + SpringBoot方式访问智能合约，请参考[Maven示例](./spring_boot_crud.md)
 
-若您想通过JavaSdk+Maven+SpringBoot方式访问智能合约，请参考[maven示例](https://github.com/FISCO-BCOS/spring-boot-crud)
+## 前置条件
 
-## 1. 下载spring-boot-starter、证书拷贝
+搭建FISCO BCOS 单群组区块链（Air版本），具体步骤[参考这里](../../../tutorial/air/build_chain.md)。
+
+## 下载spring-boot-starter、证书拷贝
 
 ```eval_rst
 .. note::
@@ -29,7 +31,7 @@ cd spring-boot-starter
 
 请将证书拷贝到src/main/resources/conf目录下。
 
-## 2. 配置连接节点
+## 配置连接节点
 
 请修改application.properties，该文件包含如下信息：
 
@@ -115,7 +117,7 @@ public class Demos {
 }
 ```
 
-## 3. 编译和运行
+## 编译和运行
 
 您可以在idea内直接运行，也可以编译成可执行jar包后运行。以编译jar包方式为例：
 
@@ -165,9 +167,7 @@ curl http://127.0.0.1:8080/hello/get
 
 ## 相关链接
 
-- FISCO BCOS： [FISCO BCOS文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/introduction.html)。
-- Java Sdk： [JavaSdk文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/index.html)。
-- 脚手架：[脚手架文档](https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Scaffold/intro.html)。
+- FISCO BCOS： [FISCO BCOS文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/introduction.html)。
+- Java Sdk： [JavaSdk文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/sdk/java_sdk/index.html)。
 - SpringBoot文档： [Spring Boot](https://spring.io/guides/gs/spring-boot/)。
-- Web3sdk示例：[web3sdk示例](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-web3sdk)。
-- Maven工程示例：[maven示例](https://github.com/FISCO-BCOS/spring-boot-crud)
+- Maven工程示例：[maven示例](https://github.com/FISCO-BCOS/spring-boot-crud)。

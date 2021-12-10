@@ -4,17 +4,14 @@
 
 ----
 
-// clog.ini
-
-
-
-Java sdk主要包括五个配置选项，分别是
+Java SDK主要包括五个配置选项，分别是
 
 * 证书配置（必须）
 * 网络连接配置 （必须）
 * AMOP配置（非必须）
 * 账户配置（非必须，不配置则使用默认配置值）
 * 线程池配置（非必须，不配置则使用默认配置值）
+* Cpp SDK日志配置（必须）
 
 支持的配置格式，包括
 
@@ -23,7 +20,7 @@ Java sdk主要包括五个配置选项，分别是
 * yml
 * xml
 
-其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./config.html#id12) 【FIXME: 链接有误】
+其中`properties`、`yml`和`xml`格式的配置文件示例及使用方法详见[4. 其它格式的配置](./config.html#id10)
 
 ## 1. 快速配置
 
@@ -103,8 +100,9 @@ Java sdk主要包括五个配置选项，分别是
 ```eval_rst
 .. note::
     - 大部分场景仅需要配置 `certPath` 配置项即可，其他配置项不需额外配置；
-    - SDK证书获取：若参考 `安装 <../../installation.html>`_ 搭建区块链，则参考 `这里 <../../installation.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../enterprise_tools/index.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath`指定路径；
-    - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .
+    - SDK证书获取：若参考 `搭建第一个区块链网络 <../../../quick_start/air_installation.html>`_ 搭建区块链，则参考 `这里 <../../../quick_start/air_installation.html#id10>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；
+    - 若区块链节点参考 `运维部署工具 <../../enterprise_tools/index.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath`指定路径；
+    - SDK与节点RPC间SSL连接方式，可通过节点配置项 `sm_crypto` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../../tutorial/air/config.html#chain>`_ .
 ```
 
 SDK证书配置示例如下：
@@ -214,6 +212,24 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
                                             # Default is the number of cpu cores
 
 maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
+```
+
+### Cpp SDK日志配置
+
+因为Java SDK是使用JNI封装的Cpp SDK的接口，对节点进行的操作，因此在启动Java SDK时也会输出Cpp SDK的日志。Cpp SDK的日志以独立的文件形式存在于配置文件中，文件名为`clog.ini`，JNI在启动时将在 `classpath`下的根目录或者conf目录下找这个文件。一般而言，该文件不需要额外配置，按照默认即可。
+
+日志文件示例如下：
+
+```ini
+[log]
+    enable=true
+    log_path=./log
+    ; network statistics interval, unit is second, default is 60s
+    stat_flush_interval=60
+    ; info debug trace
+    level=DEBUG
+    ; MB
+    max_log_file_size=200
 ```
 
 ## 3. 配置示例

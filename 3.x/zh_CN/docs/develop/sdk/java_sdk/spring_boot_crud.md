@@ -1,12 +1,16 @@
-# Maven SpringBoot实用示例
+# Maven SpringBoot 应用使用示例
 
 标签：``spring-boot-crud`` ``开发区块链应用``
 
 ---------
 
+本示例项目基于Java SDK + Maven + SpringBoot方式来调用智能合约。
+
+若您想通过Java SDK + Gradle + SpringBoot方式访问智能合约，请参考[Gradle示例](./spring_boot_starter.md)
+
 ## 前置条件
 
-搭建FISCO BCOS区块链，具体步骤[参考这里](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)。
+搭建FISCO BCOS 单群组区块链（Air版本），具体步骤[参考这里](../../../tutorial/air/build_chain.md)。
 **注意：** 当前版本还不支持Table的CRUD接口，只提供KV接口的功能。CRUD的功能将在下个版本支持。
 
 ### 获取源码
