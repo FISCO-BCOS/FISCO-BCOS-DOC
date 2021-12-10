@@ -548,12 +548,12 @@ applicationContext.xml的内容如下：
 # 假设我们将asset-app-3.0放在~/fisco目录下 进入~/fisco目录
 $ cd ~/fisco
 # 创建放置证书的文件夹
-$ mkdir -p asset-app-3.0/src/test/resources/conf
+$ mkdir -p asset-app-3.0/src/test/resources
 # 拷贝节点证书到项目的资源目录
-$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/test/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/test/resources
 # 若在IDE直接运行，拷贝证书到resources路径
-$ mkdir -p asset-app-3.0/src/main/resources/conf
-$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources/conf
+$ mkdir -p asset-app-3.0/src/main/resources
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources
 ```
 
 ## 5. 业务逻辑开发

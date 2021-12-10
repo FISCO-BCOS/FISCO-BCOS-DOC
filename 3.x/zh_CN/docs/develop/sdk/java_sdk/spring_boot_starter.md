@@ -51,7 +51,7 @@ server.port=8080
 
 其中：
 
-- java sdk configuration配置部分与[javasdk](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/configuration.html)一致。就本例而言，用户需要：
+- Java SDK configuration配置部分与 [Java SDK](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/sdk/java_sdk/config.html)一致。就本例而言，用户需要：
   - 请将network.peers更换成实际的链节点监听地址。
   - cryptoMaterial.certPath设为conf
 
