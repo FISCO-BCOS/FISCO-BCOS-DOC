@@ -9,8 +9,6 @@
     Java SDK同时支持将 `solidity` 转换为 `java` 文件后，调用相应的 `java` 方法部署和调用合约，也支持构造交易的方式部署和调用合约，这里主要展示交易构造与发送，前者的使用方法请参考 `这里 <./quick_start.html#solidityjava>`_ 
 ```
 
-// FIXME: 检查接口
-
 ## 1. 概念解析：部署和调用
 
 合约的操作可分为合约部署和合约调用两大类。其中合约调用又可以被区分为『交易』和『查询』。
@@ -42,7 +40,6 @@
 ### 2.1 准备abi和binary文件
 
 控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称WBC-Liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console_config.html#java)。
-【FIXME: 链接有误】
 
 通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 

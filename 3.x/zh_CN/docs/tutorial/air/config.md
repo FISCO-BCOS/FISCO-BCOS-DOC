@@ -1,4 +1,4 @@
-# 配置介绍
+# 节点配置介绍
 
 标签：``Air版区块链网络`` ``配置`` ``config.ini`` ``config.genesis`` ``端口配置`` ``日志级别`` ``配置``
 
@@ -128,7 +128,7 @@ P2P配置示例如下：
 `[executor]`配置执行器信息：
 - `is_wasm`: 是否使用wasm虚拟机，当设置为false时启动evm虚拟机，默认为false。
 - `is_auth_check`: 是否开启权限检查，默认为false。
-- `auth_admin_account`: FIXME: 描述
+- `auth_admin_account`: 权限管理员账户地址。
 
 ```ini
 [executor]
@@ -172,7 +172,6 @@ FISCO BCOS通用日志配置项如下：
 
 - `enable`: 启用/禁用日志，设置为`true`表示启用日志；设置为`false`表示禁用日志，**默认设置为true，性能测试可将该选项设置为`false`，降低打印日志对测试结果的影响**
 - `log_path`:日志文件路径。
-- `stat_flush_interval`: 由于网络统计日志周期性输出，引入了`log.stat_flush_interval`来控制统计间隔和日志输出频率，单位是秒，默认为60s
 - `level`: 日志级别，当前主要包括`trace`、`debug`、`info`、`warning`、`error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`。
 - `max_log_file_size`：每个日志文件最大容量，**计量单位为MB，默认为200MB**。
 
@@ -182,8 +181,6 @@ boostlog示例配置如下：
 [log]
     enable=true
     log_path=./log
-    ; network statistics interval, unit is second, default is 60s
-    stat_flush_interval=60
     ; info debug trace
     level=DEBUG
     ; MB

@@ -384,7 +384,7 @@ SDK还支持使用CompletableFuture封装的方式异步部署合约。
 
 `AssembleTransactionWithRemoteSignProcessor`继承了 `AssembleTransactionProcessor`类，实现了`AssembleTransactionWithRemoteSignProviderInterface`接口。
 
-继承的接口参考[AssembleTransactionWithRemoteSignProcessor](./assemble_transaction.html#api)【FIXME: 链接有误】
+继承的接口参考[AssembleTransactionWithRemoteSignProcessor](./assemble_transaction.md)。
 
 详细的API功能如下。
 

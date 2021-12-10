@@ -264,8 +264,4 @@ FISCO BCOS 3.0 SDK提供KVTable Service数据上链接口，这些接口实现�
 | get(String, String)                         | 读数据       | 表名、主键名            | Map\<String,String\>     |
 | desc(String tableName)                      | 查询表的信息 | 表名                    | 表的keyField和valueField |
 
-以上接口覆盖了表的创建、查看和读写操作。用户只需要调用SDK的接口就能完成相关操作，[具体示例以下地址查看](https://github.com/FISCO-BCOS/web3sdk/blob/master/src/integration-test/java/org/fisco/bcos/precompile/CRUDServiceTest.java) [gitee地址查看](https://gitee.com/FISCO-BCOS/web3sdk/blob/master/src/integration-test/java/org/fisco/bcos/precompile/CRUDServiceTest.java)。
-
-// FIXME: 修改链接
-
 其中调用写接口会产生与调用KV合约接口等效的交易，需要共识节点共识一致后才会落盘存储。
