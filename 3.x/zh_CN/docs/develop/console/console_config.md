@@ -271,7 +271,7 @@ $ cd ~/fisco/console
 $ bash contract2java.sh solidity -p org.com.fisco
 
 # 生成wbc-liquid合约的Java代码
-$ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test/asset_test.wasm -a ./contracts/liquid/asset_test/asset_test.abi -s ./contracts/liquid/asset_test/asset_test_sm.wasm 
+$ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset/asset.wasm -a ./contracts/liquid/asset/asset.abi -s ./contracts/liquid/asset/asset_gm.wasm 
 ```
 
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
@@ -292,7 +292,7 @@ $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test
 |               |-- HelloWorld.java # Solidity编译的HelloWorld Java文件
 |               |-- KVTable.java    # Solidity编译的KV存储接口合约 Java文件
 |               |-- KVTableTest.java  # Solidity编译的KVTableTest Java文件
-|               |-- AssetTest.java  # wbc-liquid生成的AssetTest文件
+|               |-- Asset.java  # wbc-liquid生成的Asset文件
 ```
 
-Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`、`KVTableTest.java`、`KVTable.java`和`AssetTest.java`。其中`HelloWorld.java`、`KVTableTest.java`和`AssetTest.java`是Java应用所需要的Java合约文件。
+Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`、`KVTableTest.java`、`KVTable.java`和`Asset.java`。其中`HelloWorld.java`、`KVTableTest.java`和`Asset.java`是Java应用所需要的Java合约文件。
