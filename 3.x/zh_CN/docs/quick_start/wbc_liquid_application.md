@@ -270,13 +270,12 @@ cargo liquid build
 
 ## 3. 编译智能合约
 
-``.sol``的智能合约需要编译成ABI和BIN文件才能部署至区块链网络上。有了这两个文件即可凭借Java SDK进行合约部署和调用。但这种调用方式相对繁琐，需要用户根据合约ABI来传参和解析结果。为此，控制台提供的编译工具不仅可以编译出ABI和BIN文件，还可以自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。我们利用console控制台的脚本 `contract2java.sh` 生成 java 文件。
+``Liquid``的智能合约需要编译成ABI和WASM文件才能部署至区块链网络上，有了这两个文件即可凭借Java SDK进行合约部署和调用。Liquid项目的环境构建与编译请参考：[部署Liquid编译环境](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html) 、[Liquid开发指南](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/dev_testing/development.html)。
+
+控制台提供的Java生成工具可以将`cargo liquid build`编译出ABI和BIN文件自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。我们利用console控制台的脚本 `contract2java.sh` 生成Java 文件。
 
 ```bash
-# 创建工作目录~/fisco
-mkdir -p ~/fisco
-# 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+# 假设你已经完成控制台的下载操作，若还没有请查看本文第二节的开发源码步骤
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -292,7 +291,7 @@ bash contract2java.sh -a ~/fisco/console/contracts/liquid/asset/target/asset.abi
 
 # 脚本用法：
 $ bash contract2java.sh liquid -h
-Missing required options: b, a, sb
+Missing required options: b, a, s
 usage: contract2java.sh <solidity|liquid> [OPTIONS...]
  -a,--abi <arg>       [Required] The ABI file path of WBC-Liquid contract.
  -b,--bin <arg>       [Required] The binary file path of WBC-Liquid contract.
@@ -301,7 +300,7 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
                       default is contracts/sdk/java/
  -p,--package <arg>   [Optional] The package name of the generated java
                       code, default is com
- -sb,--sm-bin <arg>   [Required] The SM binary file path of WBC-Liquid
+ -s,--sm-bin <arg>   [Required] The SM binary file path of WBC-Liquid
                       contract.
 ```
 
@@ -313,17 +312,17 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 package org.fisco.bcos.asset.contract;
 
 public class Asset extends Contract {
-    // Asset.sol合约 transfer接口生成
+    // Asset合约 transfer接口生成
     public TransactionReceipt transfer(String from_account, String to_account, BigInteger amount);
-    // Asset.sol合约 register接口生成
+    // Asset合约 register接口生成
     public TransactionReceipt register(String account, BigInteger asset_value);
-    // Asset.sol合约 select接口生成
+    // Asset合约 select接口生成
     public Tuple2<BigInteger, BigInteger> select(String account) throws ContractException;
 
     // 加载Asset合约地址，生成Asset对象
     public static Asset load(String contractAddress, Client client, CryptoKeyPair credential);
 
-    // 部署Asset.sol合约，生成Asset对象
+    // 部署Asset合约，生成Asset对象
     public static Asset deploy(Client client, CryptoKeyPair credential) throws ContractException;
 }
 ```
@@ -335,39 +334,9 @@ public class Asset extends Contract {
 ### 第一步. 安装环境
 首先，我们需要安装JDK以及集成开发环境
 
-- Java：JDK 14 （JDK1.8 至JDK 14都支持）
+- Java：JDK 11 （JDK1.8 至JDK 14都支持）
 
-  首先，在官网上下载JDK14并安装
-
-  然后，修改环境变量
-
-  ```bash
-  # 确认您当前的java版本
-  $ java -version
-  # 确认您的java路径
-  $ ls Library/Java/JavaVirtualMachines
-  # 返回
-  # jdk-14.0.2.jdk
-  
-  # 如果使用的是bash
-  $ vim .bash_profile 
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .bash_profile
-  
-  # 如果使用的是zash
-  $ vim .zashrc
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .zashrc
-  
-  # 确认您的java版本
-  $ java -version
-  # 返回
-  # java version "14.0.2" 2020-07-14
-  # Java(TM) SE Runtime Environment (build 14.0.2+12-46)
-  # Java HotSpot(TM) 64-Bit Server VM (build 14.0.2+12-46, mixed mode, sharing)
-  ```
+  首先，在官网上下载JDK11并安装，并自行修改JAVA_HOME环境变量
 
 - IDE：IntelliJ IDE. 
 
@@ -375,7 +344,7 @@ public class Asset extends Contract {
 
 ### 第二步. 创建一个Java工程
 
-在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app``。
+在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-liquid``。
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
 ```bash
@@ -407,13 +376,6 @@ repositories {
     }
 }
 ```
-引入Java SDK jar包
-
-```java
-testCompile group: 'junit', name: 'junit', version: '4.12'
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
-```
-
 ### 第四步. 配置SDK证书
 修改``build.gradle``文件，引入Spring框架。
 
@@ -434,7 +396,7 @@ dependencies {
 }
 ```
 
-在``asset-app/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
+在``asset-app-liquid/src/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
 
 applicationContext.xml的内容如下：
 
@@ -539,7 +501,7 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources/conf
 ## 5. 业务逻辑开发
 我们已经介绍了如何在自己的项目中引入以及配置Java SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。
 
-### 第一步.将3编译好的Java合约引入项目中
+### 第一步 将3编译好的Java合约引入项目中
 
 ```bash
 cd ~/fisco  
@@ -547,11 +509,12 @@ cd ~/fisco
 cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-liquid/src/main/java/org/fisco/bcos/asset/contract/Asset.java
 ```
 
-### 第二步.开发业务逻辑
+### 第二步 开发业务逻辑
 
 在路径`/src/main/java/org/fisco/bcos/asset/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
 
 `AssetClient.java` 代码如下：
+
 ```java
 package org.fisco.bcos.asset.liquid.client;
 
@@ -801,14 +764,14 @@ Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 
 ```java
 // select接口调用
- Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount);
+Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount);
 // register接口调用
 TransactionReceipt receipt = asset.register(assetAccount, amount);
 // transfer接口
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-在``asset-app/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
+在``asset-app-liquid/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 ```bash
 #!/bin/bash 
 
@@ -852,7 +815,7 @@ function usage()
     java -Djdk.tls.namedGroups="secp256k1" -cp 'apps/*:conf/:lib/*' org.fisco.bcos.asset.liquid.client.AssetClient $@
 ```
 
-接着，配置好log。在``asset-app/test/resources``目录下创建``log4j.properties``
+接着，配置好log。在``asset-app-liquid/src/test/resources``目录下创建``log4j.properties``
 
 ```properties
 ### set log levels ###
@@ -874,46 +837,9 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %C{1}.%M(%L) | %m%n
 ```
 
-接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
+接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app-liquid/src/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
 
-```groovy
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1")
-    compile spring
-    compile ('org.slf4j:slf4j-log4j12:1.7.25')
-    runtime ('org.slf4j:slf4j-log4j12:1.7.25')
-}
-jar {
-    destinationDir file('dist/apps')
-    archiveName project.name + '.jar'
-    exclude '**/*.xml'
-    exclude '**/*.properties'
-    exclude '**/*.crt'
-    exclude '**/*.key'
-
-    doLast {
-        copy {
-            from configurations.runtime
-            into 'dist/lib'
-        }
-        copy {
-            from file('src/test/resources/')
-            into 'dist/conf'
-        }
-        copy {
-            from file('tool/')
-            into 'dist/'
-        }
-        copy {
-            from file('src/test/resources/contract')
-            into 'dist/contract'
-        }
-    }
-}
-```
-
-至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app的目录结构如下：
+至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app-liquid的目录结构如下：
 
 ```shell
 |-- build.gradle // gradle配置文件
@@ -941,7 +867,6 @@ jar {
 |   |               |-- node.key
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
-|   |               |-- sdk.publickey
 |   |        |-- applicationContext.xml // 项目配置文件
 |   |        |-- contract.properties // 存储部署合约地址的文件
 |   |        |-- log4j.properties // 日志配置文件
