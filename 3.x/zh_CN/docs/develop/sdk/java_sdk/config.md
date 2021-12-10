@@ -49,7 +49,7 @@ Java SDK主要包括五个配置选项，分别是
    BcosSDK sdk =  BcosSDK.build(configFile);
    ```
 
-关于如何在业务项目中引入以及配置Java SDK的进一步详细说明，可参考[例子](../../tutorial/sdk_application.html#java-sdk)。（FIXME: 链接有误） 对一项目，完成Java SDK引入、配置文件及证书放置、编译后，项目的dist目录结构如下：
+关于如何在业务项目中引入以及配置Java SDK的进一步详细说明，可参考[例子](./quick_start.html#java-sdk)。对一项目，完成Java SDK引入、配置文件及证书放置、编译后，项目的dist目录结构如下：
 
 ```shell
 ├── lib
@@ -153,8 +153,7 @@ defaultGroup = "group"
 
 ### 账户配置
 
-【FIXME: 链接有误】
-账户配置主要用于设置SDK向节点发交易的账户信息，SDK初始化[client](./api.md)时，默认读取`[account]`配置项加载账户信息，具体如下： 
+账户配置主要用于设置SDK向节点发交易的账户信息，SDK初始化[client](./rpc_api.md)时，默认读取`[account]`配置项加载账户信息，具体如下： 
 
 * `keyStoreDir`: 加载/保存账户文件的路径，默认为`account`；
 
@@ -224,8 +223,6 @@ maxBlockingQueueSize = "102400"             # The max blocking queue size of the
 [log]
     enable=true
     log_path=./log
-    ; network statistics interval, unit is second, default is 60s
-    stat_flush_interval=60
     ; info debug trace
     level=DEBUG
     ; MB

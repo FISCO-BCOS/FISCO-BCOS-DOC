@@ -385,7 +385,7 @@ Event list:
 
 ### 6. deployByCNS
 
-运行deployByCNS，采用[CNS](../design/features/cns_contract_name_service.md)【FIXME: 链接有误】部署合约。用CNS部署的合约，可用合约名直接调用。
+运行deployByCNS，用CNS部署的合约，可用合约名直接调用。
 参数：
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。

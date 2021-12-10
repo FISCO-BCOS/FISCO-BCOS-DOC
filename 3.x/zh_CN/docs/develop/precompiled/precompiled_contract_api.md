@@ -93,9 +93,7 @@ contract SystemConfigPrecompiled
 
 #### SDK支持
 
-// FIXME: 更新url
-
-- [Java SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/api.html#systemconfigservice)
+- [Java SDK](../sdk/java_sdk/index.md)
 
 ### ConsensusPrecompiled
 
