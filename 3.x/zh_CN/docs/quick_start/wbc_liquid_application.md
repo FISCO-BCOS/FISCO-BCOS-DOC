@@ -14,9 +14,9 @@
 
 区块链天然具有防篡改，可追溯等特性，这些特性决定其更容易受金融领域的青睐。本示例中，将会提供一个简易的资产管理的开发示例，并最终实现以下功能：
 
--   能够在区块链上进行资产注册
--   能够实现不同账户的转账
--   可以查询账户的资产金额
+- 能够在区块链上进行资产注册
+- 能够实现不同账户的转账
+- 可以查询账户的资产金额
 
 ## 2. 设计与开发智能合约
 
@@ -54,7 +54,9 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 ```
 
 ### 第二步. 开发源码
+
 #### 创建
+
 根据我们第一步的存储和接口设计，创建一个Asset的智能合约项目。
 在终端中执行以下命令创建 WBC-Liquid 智能合约项目：
 
@@ -76,6 +78,7 @@ cargo liquid new contract asset
 ```
 
 asset目录内的文件结构如下所示：
+
 ```shell
 asset/
 ├── .gitignore
@@ -143,7 +146,7 @@ mod asset {
 
         pub fn select(&mut self, account: String) -> (bool, u128) {
             if self.asset_table.contains_key(&account) {
-               return (true, self.asset_table[&account]) 
+               return (true, self.asset_table[&account])
             }
             return (false, 0)
         }
@@ -236,12 +239,16 @@ mod asset {
     }
 }
 ```
+
 #### 构建
+
 在 asset 项目根目录下执行以下命令即可开始进行构建：
+
 ```shell
 # 编译国密版本的wasm二进制文件
 cargo liquid build -g
 ```
+
 该命令会引导 Rust 语言编译器以`wasm32-unknown-unknown`为目标对智能合约代码进行编译，最终生成 Wasm 格式字节码及 ABI。`-g` 构建出能够在国密版FISCO BCOS区块链底层平台上运行的智能合约。命令执行完成后，会显示如下形式的内容：
 
 ```shell
@@ -254,19 +261,17 @@ cargo liquid build -g
 Binary: ~/fisco/console/contracts/liquid/asset/target/asset.wasm
    ABI: ~/fisco/console/contracts/liquid/asset/target/asset.abi
 ```
+
 其中，“Binary:”后为生成的字节码文件的绝对路径，“ABI:”后为生成的 ABI 文件的绝对路径。为尽量简化 FISCO BCOS 各语言 SDK 的适配工作，WBC-Liquid 采用了与 Solidity ABI 规范兼容的 ABI 格式.
 
-进入到 target 目录中，将 asset.wasm 重命名为 asset_sm.wasm。因为我们待会还要生成非国密的Binary、ABI文件，但是 `cargo liquid build` 会覆盖同名文件。
-```bash
-mv asset.wasm asset_sm.wasm
-```
-
 接着生成非国密的 Binary、ABI 文件：
+
 ```bash
 cargo liquid build
 ```
+
 注意：不带 `-g`。
-执行命令后，生成信息和上述雷同，进入 `target` ，看到生成新的 Binary、ABI，以及刚刚的 `asset_sm.wasm`
+执行命令后，生成信息和上述雷同，进入 `target` ，看到生成新的 Binary、ABI，以及刚刚的 `asset_gm.wasm`
 
 ## 3. 编译智能合约
 
@@ -287,7 +292,7 @@ cd console && ./gradlew build
 cd dist
 
 # 编译合约(后面指定BINARY、abi 文件路径，可以根据实际项目路径指定路径)如下：
-bash contract2java.sh -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_sm.wasm
+bash contract2java.sh -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm
 
 # 脚本用法：
 $ bash contract2java.sh liquid -h
@@ -338,7 +343,7 @@ public class Asset extends Contract {
 
   首先，在官网上下载JDK11并安装，并自行修改JAVA_HOME环境变量
 
-- IDE：IntelliJ IDE. 
+- IDE：IntelliJ IDE.
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE。
 
@@ -372,14 +377,16 @@ repositories {
     }
     maven {
         allowInsecureProtocol = true
-        url "https://oss.sonatype.org/content/repositories/snapshots" 
+        url "https://oss.sonatype.org/content/repositories/snapshots"
     }
 }
 ```
+
 ### 第四步. 配置SDK证书
+
 修改``build.gradle``文件，引入Spring框架。
 
-```
+```java
 def spring_version = "4.3.27.RELEASE"
 List spring = [
         "org.springframework:spring-core:$spring_version",
@@ -504,7 +511,7 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources/conf
 ### 第一步 将3编译好的Java合约引入项目中
 
 ```bash
-cd ~/fisco  
+cd ~/fisco
 # 将编译好的合约Java类引入项目中。
 cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-liquid/src/main/java/org/fisco/bcos/asset/contract/Asset.java
 ```
@@ -735,7 +742,7 @@ public class AssetClient {
 初始化代码的主要功能为构造Client与CryptoKeyPair对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 
 ```java
-// 函数initialize中进行初始化 
+// 函数initialize中进行初始化
 // 初始化BcosSDK
 @SuppressWarnings("resource")
 ApplicationContext context =
@@ -773,9 +780,9 @@ TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, am
 
 在``asset-app-liquid/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 ```bash
-#!/bin/bash 
+#!/bin/bash
 
-function usage() 
+function usage()
 {
     echo " Usage : "
     echo "   bash asset_run.sh deploy"
@@ -898,7 +905,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 
 至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
 
--   编译
+- 编译
 
 ```bash
 # 切换到项目目录
@@ -909,7 +916,7 @@ $ ./gradlew build
 
 编译成功之后，将在项目根目录下生成`dist`目录。dist目录下有一个`asset_run.sh`脚本，简化项目运行。现在开始一一验证本文开始定下的需求。
 
--   部署`Asset.liquid`合约
+- 部署`Asset.liquid`合约
 
 ```bash
 # 进入dist目录
@@ -918,7 +925,7 @@ $ bash asset_run.sh deploy
 Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
 ```
 
--   注册资产
+- 注册资产
 
 ```bash
 $ bash asset_run.sh register Alice 100000
@@ -927,7 +934,7 @@ $ bash asset_run.sh register Bob 100000
 Register account successfully => account: Bob, value: 100000
 ```
 
--   查询资产
+- 查询资产
 
 ```bash
 $ bash asset_run.sh query Alice
@@ -936,7 +943,7 @@ $ bash asset_run.sh query Bob
 account Bob, value 100000
 ```
 
--   资产转移
+- 资产转移
 
 ```bash
 $ bash asset_run.sh transfer Alice Bob  50000
