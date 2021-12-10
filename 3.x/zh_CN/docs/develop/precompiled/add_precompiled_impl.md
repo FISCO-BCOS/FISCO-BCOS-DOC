@@ -126,7 +126,7 @@ else
 
 ##### 参数解析与返回：
 
-调用合约时的参数包含在call函数的_param参数中，如果是Solidity调用，则使用Solidity ABI编码，如果是webankblockchain-liquid（简称wbc-liquid）则使用Scale编码。
+调用合约时的参数包含在call函数的_param参数中，如果是Solidity调用，则使用Solidity ABI编码，如果是webankblockchain-liquid（简称WBC-Liquid）则使用Scale编码。
 
 PrecompiledCodec封装了两种编码格式的接口，使用PrecompiledCodec即可。
 
@@ -216,7 +216,7 @@ m_constantPrecompiled.insert({"0000000000000000000000000000000000005001", helloP
 
 在控制台solidity/contracts创建HelloWorldPrecompiled.sol文件，文件内容是HelloWorld预编译合约的接口声明，如下
 
-```
+```solidity
 pragma solidity ^0.6.0;
 contract HelloWorldPrecompiled{
     function get() public constant returns(string memory);
@@ -235,7 +235,7 @@ Hello World!
 
 我们尝试在Solidity合约中创建预编译合约对象并调用其接口。在控制台solidity/contracts创建HelloWorldHelper.sol文件，文件内容如下
 
-```
+```solidity
 pragma solidity ^0.6.0;
 import "./HelloWorldPrecompiled.sol";
 

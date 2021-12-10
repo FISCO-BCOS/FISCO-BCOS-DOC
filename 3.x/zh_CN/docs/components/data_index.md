@@ -33,7 +33,7 @@ WeBankBlockchain-Data已在金融、公益、农牧产品溯源、司法存证�
 
 WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和应用层等多个层次入手，提供区块链数据挖掘、裁剪、扩容、可信存储、抽取、分析、审计、对账、监管等数据治理方面的关键能力，满足数据治理全流程开发场景的需求，如下图所示：
 
-![](../../images/governance/data/data-comp-design.png)
+![](../../../../2.x/images/governance/data/data-comp-design.png)
 
 区块链数据经过区块链共识节点的多方共识，一旦生成就不会被修改。
 
@@ -47,13 +47,13 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 ## 组件简介
 目前，WeBankBlockchain-Data由数据仓库组件(Data-Stash)、数据导出组件(Data-Export)、数据对账组件(Data-Reconcile)三个相互独立、可插拔、可灵活组装的组件构成，后续会根据业务和场景诉求提供更多的功能和解决方案子组件。
 
-![](../../images/governance/data/data-gov.png)
+![](../../../../2.x/images/governance/data/data-gov.png)
 
 ### WeBankBlockchain-Data-Stash  数据仓库组件
 提供FISCO BCOS节点数据扩容、备份和裁剪的能力。
 可基于binlog协议同步区块链底层节点数据，支持断点续传，数据可信验证，并提供快速同步机制。
 
-![](../../images/governance/data/Data-Stash.png)
+![](../../../../2.x/images/governance/data/Data-Stash.png)
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Stash)
@@ -65,7 +65,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 支持将链上数据导出到MySQL等结构化存储中，解决区块链数据复杂查询、分析和处理的问题。
 只需简单配置、无需开发、即可实时导出个性化的业务数据，实现将裸数据转化为标准化、结构化、有序化、可视化的高价值数据。
 
-![](../../images/governance/data/Data-Export.png)
+![](../../../../2.x/images/governance/data/Data-Export.png)
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Export)
@@ -77,7 +77,7 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 提供区块链数据的对账解决方案。
 灵活配置、无需开发，支持自定义对账数据和对账格式，支持定时对账和触发对账，对账处理模块可插拔可扩展。
 
-![](../../images/governance/data/Data-Reconcile.png)
+![](../../../../2.x/images/governance/data/Data-Reconcile.png)
 
 请参考  
 - [Github地址](https://github.com/WeBankBlockchain/Data-Reconcile)

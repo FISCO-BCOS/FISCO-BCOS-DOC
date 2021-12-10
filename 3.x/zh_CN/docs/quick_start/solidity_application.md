@@ -26,8 +26,7 @@
 
 **存储设计**
 
-//FIXME: 合约CRUD接口,换成kv table,路径待确定
-FISCO BCOS提供[合约CRUD接口](../../../..//2.x/docs/manual/smart_contract.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
+FISCO BCOS提供[合约KV存储接口](../develop/precompiled/use_kv_precompiled.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
 -   account: 主键，资产账户(string类型)
 -   asset_value: 资产金额(uint256类型)
@@ -45,17 +44,26 @@ FISCO BCOS提供[合约CRUD接口](../../../..//2.x/docs/manual/smart_contract.m
 
 ```js
 // 查询资产金额
-function select(string memory account) public view returns(int256, uint256)
+function select(string memory account) public view returns(int256, uint256);
 // 资产注册
-function register(string memory account, uint256 asset_value) public returns(int256)
+function register(string memory account, uint256 asset_value) public returns(int256);
 // 资产转移
-function transfer(string memory from_account, string memory to_account, uint256 amount) public returns(int256)
+function transfer(string memory from_account, string memory to_account, uint256 amount) public returns(int256);
 ```
 
 ### 第二步. 开发源码
-根据我们第一步的存储和接口设计，创建一个Asset的智能合约，实现注册、转账、查询功能，并引入一个叫Table的系统合约，这个合约提供了CRUD接口。 FIXME: 是否还有CRUD接口
+根据我们第一步的存储和接口设计，创建一个Asset的智能合约，实现注册、转账、查询功能，并引入一个叫KVTable的系统合约，这个合约提供了KV存储接口。 
 
 ```bash
+# 创建工作目录~/fisco
+mkdir -p ~/fisco
+
+# 下载控制台
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+
+# 切换到fisco/console/目录
+cd ~/fisco/console/
+
 # 进入console/contracts目录
 cd ~/fisco/console/contracts/solidity
 # 创建Asset.sol合约文件
@@ -67,20 +75,30 @@ vi Asset.sol
 
 Asset.sol的内容如下：
 ```js
+// SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.6.0;
 pragma experimental ABIEncoderV2;
 
-import "./Table.sol";
+import "./KVTable.sol";
 
 contract Asset {
     // event
-    event RegisterEvent(int256 ret, string indexed account, uint256 indexed asset_value);
-    event TransferEvent(int256 ret, string indexed from_account, string indexed to_account, uint256 indexed amount);
-    Table tf;
+    event RegisterEvent(
+        int256 ret,
+        string indexed account,
+        uint256 indexed asset_value
+    );
+    event TransferEvent(
+        int256 ret,
+        string indexed from_account,
+        string indexed to_account,
+        uint256 indexed amount
+    );
+    KVTable tf;
 
     constructor() public {
         // 构造函数中创建t_asset表
-        tf = Table(0x1001);
+        tf = KVTable(0x1009);
         // 资产管理表, key : account, field : asset_value
         // |  资产账户(主键)      |     资产金额       |
         // |-------------------- |-------------------|
@@ -100,23 +118,17 @@ contract Asset {
             参数一： 成功返回0, 账户不存在返回-1
             参数二： 第一个参数为0时有效，资产金额
     */
-    function select(string memory account) public view returns(int256, uint256) {
-        // 打开表
-
-        CompareTriple memory compareTriple1 = CompareTriple("account",account,Comparator.EQ);
-        CompareTriple[] memory compareFields = new CompareTriple[](1);
-        compareFields[0] = compareTriple1;
-        Condition memory condition;
-        condition.condFields = compareFields;
+    function select(string memory account) public view returns (bool, uint256) {
         // 查询
-        Entry[] memory entries = tf.select("t_asset",condition);
+        Entry memory entry;
+        bool result;
+        (result, entry) = tf.get("t_asset", account);
         uint256 asset_value = 0;
-        if (0 == uint256(entries.length)) {
-            return (-1, asset_value);
-        } else {
-            asset_value = safeParseInt(entries[0].fields[0].value);
-            return (0, uint256(asset_value));
+        if (entry.fields.length == 0) {
+            return (false, 0);
         }
+        asset_value = safeParseInt(entry.fields[0].value);
+        return (result, asset_value);
     }
 
     /*
@@ -129,23 +141,24 @@ contract Asset {
             -1 资产账户已存在
             -2 其他错误
     */
-    function register(string memory account, uint256 asset_value) public returns(int256){
+    function register(string memory account, uint256 asset_value)
+    public
+    returns (int256)
+    {
         int256 ret_code = 0;
-        int256 ret= 0;
+        bool ret = true;
         uint256 temp_asset_value = 0;
         // 查询账号是否存在
         (ret, temp_asset_value) = select(account);
-        if(ret != 0) {
+        if (ret != true) {
             string memory asset_value_str = uint2str(asset_value);
-            KVField memory kv0 = KVField("account",account);
-            KVField memory kv1 = KVField("asset_value",asset_value_str);
-            KVField[] memory KVFields = new KVField[](2);
-            KVFields[0] = kv0;
-            KVFields[1] = kv1;
+            KVField memory kv1 = KVField("asset_value", asset_value_str);
+            KVField[] memory KVFields = new KVField[](1);
+            KVFields[0] = kv1;
             Entry memory entry = Entry(KVFields);
 
             // 插入
-            int256 count = tf.insert("t_asset",entry);
+            int256 count = tf.set("t_asset", account, entry);
             if (count == 1) {
                 // 成功
                 ret_code = 0;
@@ -177,31 +190,33 @@ contract Asset {
             -4 金额溢出
             -5 其他错误
     */
-    function transfer(string memory from_account, string memory to_account, uint256 amount) public returns(int256) {
+    function transfer(
+        string memory from_account,
+        string memory to_account,
+        uint256 amount
+    ) public returns (int16) {
         // 查询转移资产账户信息
-        int256 ret = 0;
+        bool ret = true;
         uint256 from_asset_value = 0;
         uint256 to_asset_value = 0;
 
         // 转移账户是否存在?
         (ret, from_asset_value) = select(from_account);
-        if(ret != 0) {
-
+        if (ret != true) {
             // 转移账户不存在
             emit TransferEvent(-1, from_account, to_account, amount);
             return -1;
-
         }
 
         // 接受账户是否存在?
         (ret, to_asset_value) = select(to_account);
-        if(ret != 0) {
+        if (ret != true) {
             // 接收资产的账户不存在
             emit TransferEvent(-2, from_account, to_account, amount);
             return -2;
         }
 
-        if(from_asset_value < amount) {
+        if (from_asset_value < amount) {
             // 转移资产的账户金额不足
             emit TransferEvent(-3, from_account, to_account, amount);
             return -3;
@@ -214,109 +229,116 @@ contract Asset {
         }
 
         string memory f_new_value_str = uint2str(from_asset_value - amount);
-        KVField memory kv1 = KVField("asset_value",f_new_value_str);
+        KVField memory kv1 = KVField("asset_value", f_new_value_str);
         KVField[] memory KVFields1 = new KVField[](1);
         KVFields1[0] = kv1;
         Entry memory entry1 = Entry(KVFields1);
 
-        Condition memory condition1;
-        condition1.condFields = new CompareTriple[](1);
-        condition1.condFields[0] = CompareTriple("account",from_account,Comparator.EQ);
-
         // 更新转账账户
-        int count = tf.update("t_asset",entry1, condition1);
-        if(count != 1) {
+        int256 count = tf.set("t_asset", from_account, entry1);
+        if (count != 1) {
             // 失败? 无权限或者其他错误?
             emit TransferEvent(-5, from_account, to_account, amount);
             return -5;
         }
 
-
         string memory to_new_value_str = uint2str(to_asset_value + amount);
-        kv1 = KVField("asset_value",to_new_value_str);
+        kv1 = KVField("asset_value", to_new_value_str);
         KVFields1 = new KVField[](1);
         KVFields1[0] = kv1;
         entry1 = Entry(KVFields1);
 
-        condition1.condFields[0] =  CompareTriple("account",to_account,Comparator.EQ);
-
         // 更新接收账户
-        tf.update("t_asset",entry1, condition1);
+        tf.set("t_asset", to_account, entry1);
 
         emit TransferEvent(0, from_account, to_account, amount);
 
         return 0;
     }
-
-
-    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+		
+    // solidity 字符串和数字的转换工具
+    function uint2str(uint256 _i)
+    internal
+    pure
+    returns (string memory _uintAsString)
+    {
         if (_i == 0) {
             return "0";
         }
-        uint j = _i;
-        uint len;
+        uint256 j = _i;
+        uint256 len;
         while (j != 0) {
             len++;
             j /= 10;
         }
         bytes memory bstr = new bytes(len);
-        uint k = len - 1;
+        uint256 k = len - 1;
         while (_i != 0) {
-            bstr[k--] = byte(uint8(48 + _i % 10));
+            bstr[k--] = bytes1(uint8(48 + (_i % 10)));
             _i /= 10;
         }
         return string(bstr);
     }
 
-    function safeParseInt(string memory _a) internal pure returns (uint _parsedInt) {
+    function safeParseInt(string memory _a)
+    internal
+    pure
+    returns (uint256 _parsedInt)
+    {
         return safeParseInt(_a, 0);
     }
 
-    function safeParseInt(string memory _a, uint _b) internal pure returns (uint _parsedInt) {
+    function safeParseInt(string memory _a, uint256 _b)
+    internal
+    pure
+    returns (uint256 _parsedInt)
+    {
         bytes memory bresult = bytes(_a);
-        uint mint = 0;
+        uint256 mint = 0;
         bool decimals = false;
-        for (uint i = 0; i < bresult.length; i++) {
-            if ((uint(uint8(bresult[i])) >= 48) && (uint(uint8(bresult[i])) <= 57)) {
+        for (uint256 i = 0; i < bresult.length; i++) {
+            if (
+                (uint256(uint8(bresult[i])) >= 48) &&
+                (uint256(uint8(bresult[i])) <= 57)
+            ) {
                 if (decimals) {
                     if (_b == 0) break;
                     else _b--;
                 }
                 mint *= 10;
-                mint += uint(uint8(bresult[i])) - 48;
-            } else if (uint(uint8(bresult[i])) == 46) {
-                require(!decimals, 'More than one decimal encountered in string!');
+                mint += uint256(uint8(bresult[i])) - 48;
+            } else if (uint256(uint8(bresult[i])) == 46) {
+                require(
+                    !decimals,
+                    "More than one decimal encountered in string!"
+                );
                 decimals = true;
             } else {
                 revert("Non-numeral character encountered in string!");
             }
         }
         if (_b > 0) {
-            mint *= 10 ** _b;
+            mint *= 10**_b;
         }
         return mint;
     }
 }
 ```
 
-Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作CRUD接口时，均需要引入该接口合约文件。Table.sol 合约详细接口参考[这里](../../../..//2.x/docs/manual/smart_contract.md)。 FIXME: CRUD是否已经没有了；Table.sol合约详细接口，链接是否有变化
+Asset.sol所引用的KVTable.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作KV存储接口时，均需要引入该接口合约文件。KVTable.sol 合约详细接口参考[这里](../develop/precompiled/precompiled_contract_api.md)。
 
-运行``ls``命令，确保``Asset.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
+运行``ls``命令，确保``Asset.sol``和``KVTable.sol``在目录``~/fisco/console/contracts/solidity``下。
 ## 3. 编译智能合约
 
 ``.sol``的智能合约需要编译成ABI和BIN文件才能部署至区块链网络上。有了这两个文件即可凭借Java SDK进行合约部署和调用。但这种调用方式相对繁琐，需要用户根据合约ABI来传参和解析结果。为此，控制台提供的编译工具不仅可以编译出ABI和BIN文件，还可以自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。
 
 ```bash
-# 创建工作目录~/fisco
-mkdir -p ~/fisco
-# 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
-
+# 假设你已经完成控制台的下载操作，若还没有请查看本文第二节的开发源码步骤
 # 切换到fisco/console/目录
 cd ~/fisco/console/
 
-# 可通过bash sol2java.sh -h命令查看该脚本使用方法
-bash sol2java.sh -p org.fisco.bcos.asset.contract
+# 可通过bash contract2java.sh -h命令查看该脚本使用方法
+bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 ```
 
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
@@ -325,13 +347,10 @@ bash sol2java.sh -p org.fisco.bcos.asset.contract
 # 其它无关文件省略
 |-- abi # 生成的abi目录，存放solidity合约编译生成的abi文件
 |   |-- Asset.abi
-|   |-- Table.abi
+|   |-- KVTable.abi
 |-- bin # 生成的bin目录，存放solidity合约编译生成的bin文件
 |   |-- Asset.bin
-|   |-- Table.bin
-|-- contracts # 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
-|   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖Table.sol
-|   |-- Table.sol # 实现系统CRUD操作的合约接口文件 FIXME: 描述
+|   |-- KVTable.bin
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
@@ -339,11 +358,10 @@ bash sol2java.sh -p org.fisco.bcos.asset.contract
 |                  |--asset
 |                       |--contract
 |                             |--Asset.java  # Asset.sol合约生成的Java文件
-|                             |--Table.java  # Table.sol合约生成的Java文件
-|-- sol2java.sh
+|                             |--KVTable.java  # KVTable.sol合约生成的Java文件
 ```
 
-java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`Table.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
+java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`KVTable.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
 
 `Asset.java`的主要接口：
 
@@ -373,66 +391,34 @@ public class Asset extends Contract {
 ### 第一步. 安装环境
 首先，我们需要安装JDK以及集成开发环境
 
-- Java：JDK 14 （JDK1.8 至JDK 14都支持）
+- Java：推荐JDK 11 （JDK1.8 至JDK 14都支持）
+  首先，在官网上下载JDK并安装，并自行修改JAVA_HOME环境变量
 
-  首先，在官网上下载JDK14并安装
-
-  然后，修改环境变量
-
-  ```bash
-  # 确认您当前的java版本
-  $ java -version
-  # 确认您的java路径
-  $ ls Library/Java/JavaVirtualMachines
-  # 返回
-  # jdk-14.0.2.jdk
-  
-  # 如果使用的是bash
-  $ vim .bash_profile 
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .bash_profile
-  
-  # 如果使用的是zash
-  $ vim .zashrc
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .zashrc
-  
-  # 确认您的java版本
-  $ java -version
-  # 返回
-  # java version "14.0.2" 2020-07-14
-  # Java(TM) SE Runtime Environment (build 14.0.2+12-46)
-  # Java HotSpot(TM) 64-Bit Server VM (build 14.0.2+12-46, mixed mode, sharing)
-  ```
-
-- IDE：IntelliJ IDE. 
+- IDE：IntelliJ IDE
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
 
 ### 第二步. 创建一个Java工程
 
-在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app``。
+在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-3.0``。
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
 ```bash
 $ cd ~/fisco
-# FIXME: asset-app项目待确定，目前在（https://github.com/kyonRay/asset-app.git），待放入FISCO-BCOS
-$ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app.tar.gz
-# 解压得到Java工程项目asset-app
-$ tar -zxf asset-app.tar.gz
+
+$ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app-3.0-solidity.tar.gz
+# 解压得到Java工程项目asset-app-3.0
+$ tar -zxf asset-app-3.0-solidity.tar.gz
 ```
 
 ```eval_rst
 .. note::
-# FIXME: asset-app项目待确定，目前在（https://github.com/kyonRay/asset-app.git），待放入FISCO-BCOS
-    - 如果因为网络问题导致长时间无法下载，请尝试将`199.232.28.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
+    - 如果因为网络问题导致长时间无法下载，请尝试将`185.199.108.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app-3.0-solidity.tar.gz`
 ```
 
 ### 第三步. 引入FISCO BCOS Java SDK
 在build.gradle文件中的``dependencies``下加入对FISCO BCOS Java SDK的引用。
-```
+```groovy
 repositories {
     mavenCentral()
     maven {
@@ -445,17 +431,11 @@ repositories {
     }
 }
 ```
-引入Java SDK jar包
-
-```java
-testCompile group: 'junit', name: 'junit', version: '4.12'
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
-```
 
 ### 第四步. 配置SDK证书
 修改``build.gradle``文件，引入Spring框架。
 
-```
+```groovy
 def spring_version = "4.3.27.RELEASE"
 List spring = [
         "org.springframework:spring-core:$spring_version",
@@ -467,13 +447,12 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.1.0-SNAPSHOT")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1")
     compile spring
 }
 ```
 
-在``asset-app/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
-![](../../images/quick_start/config.png)
+在``asset-app-3.0/src/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
 
 applicationContext.xml的内容如下：
 
@@ -561,21 +540,20 @@ applicationContext.xml的内容如下：
 
 
 ```
-**注意：** FIXME: applicationContext.xml下配置字段改动待确定
-   则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的`IP:channel_listen_port`。  FIXME: channel_listen_port是否需要修改
+**注意：** 如果搭链时设置的 rpc listen_ip 为127.0.0.1或者0.0.0.0，listen_port 为20200，则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的 `[rpc]`配置的`listen_ip:listen_port`。
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
 
 ```bash
-# 假设我们将asset-app放在~/fisco目录下 进入~/fisco目录
+# 假设我们将asset-app-3.0放在~/fisco目录下 进入~/fisco目录
 $ cd ~/fisco
 # 创建放置证书的文件夹
-$ mkdir -p asset-app/src/test/resources/conf
+$ mkdir -p asset-app-3.0/src/test/resources/conf
 # 拷贝节点证书到项目的资源目录
-$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/test/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/test/resources/conf
 # 若在IDE直接运行，拷贝证书到resources路径
-$ mkdir -p asset-app/src/main/resources/conf
-$ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
+$ mkdir -p asset-app-3.0/src/main/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources/conf
 ```
 
 ## 5. 业务逻辑开发
@@ -586,14 +564,12 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app/src/main/resources/conf
 ```bash
 cd ~/fisco  
 # 将编译好的合约Java类引入项目中。
-cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app/src/main/java/org/fisco/bcos/asset/contract/Asset.java
+cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-3.0/src/main/java/org/fisco/bcos/asset/contract/Asset.java
 ```
 
 ### 第二步.开发业务逻辑
 
 在路径`/src/main/java/org/fisco/bcos/asset/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
-
-![](../../images/quick_start/asset_client.png)
 
 `AssetClient.java` 代码如下：
 ```java
@@ -679,8 +655,8 @@ public class AssetClient {
     try {
       String contractAddress = loadAssetAddr();
       Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
-      Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount);
-      if (result.getValue1().compareTo(new BigInteger("0")) == 0) {
+      Tuple2<Boolean, BigInteger> result = asset.select(assetAccount);
+      if (result.getValue1()) {
         System.out.printf(" asset account %s, value %s \n", assetAccount, result.getValue2());
       } else {
         System.out.printf(" %s asset account is not exist \n", assetAccount);
@@ -836,7 +812,7 @@ TransactionReceipt receipt = asset.register(assetAccount, amount);
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-在``asset-app/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
+在``asset-app-3.0/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 
 ```bash
 #!/bin/bash 
@@ -881,7 +857,7 @@ function usage()
     java -Djdk.tls.namedGroups="secp256k1" -cp 'apps/*:conf/:lib/*' org.fisco.bcos.asset.client.AssetClient $@
 ```
 
-接着，配置好log。在``asset-app/test/resources``目录下创建``log4j.properties``
+接着，配置好log。在``asset-app-3.0/src/test/resources``目录下创建``log4j.properties``
 
 ```properties
 ### set log levels ###
@@ -903,48 +879,11 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %C{1}.%M(%L) | %m%n
 ```
 
-接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
+接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app-3.0/src/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
 
-```groovy
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1")
-    compile spring
-    compile ('org.slf4j:slf4j-log4j12:1.7.25')
-    runtime ('org.slf4j:slf4j-log4j12:1.7.25')
-}
-jar {
-    destinationDir file('dist/apps')
-    archiveName project.name + '.jar'
-    exclude '**/*.xml'
-    exclude '**/*.properties'
-    exclude '**/*.crt'
-    exclude '**/*.key'
+至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app-3.0的目录结构如下：
 
-    doLast {
-        copy {
-            from configurations.runtime
-            into 'dist/lib'
-        }
-        copy {
-            from file('src/test/resources/')
-            into 'dist/conf'
-        }
-        copy {
-            from file('tool/')
-            into 'dist/'
-        }
-        copy {
-            from file('src/test/resources/contract')
-            into 'dist/contract'
-        }
-    }
-}
-```
-
-至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app的目录结构如下：
-
-```bash
+```shell
 |-- build.gradle // gradle配置文件
 |-- gradle
 |   |-- wrapper
@@ -966,32 +905,28 @@ jar {
 |   |   |-- resources
 |   |        |-- conf
 |   |               |-- ca.crt
-|   |               |-- node.crt
-|   |               |-- node.key
+|   |               |-- cert.cnf
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
-|   |               |-- sdk.publickey
 |   |        |-- applicationContext.xml // 项目配置文件
 |   |        |-- contract.properties // 存储部署合约地址的文件
 |   |        |-- log4j.properties // 日志配置文件
 |   |        |-- contract //存放solidity约文件
 |   |                |-- Asset.sol
-|   |                |-- Table.sol
+|   |                |-- KVTable.sol
 |   |-- test
-|       |-- resources // 存放代码资源文件
-|           |-- conf
-|                  |-- ca.crt
-|                  |-- node.crt
-|                  |-- node.key
-|                  |-- sdk.crt
-|                  |-- sdk.key
-|                  |-- sdk.publickey
-|           |-- applicationContext.xml // 项目配置文件
-|           |-- contract.properties // 存储部署合约地址的文件
-|           |-- log4j.properties // 日志配置文件
-|           |-- contract //存放solidity约文件
-|                   |-- Asset.sol
-|                   |-- Table.sol
+|   |    |-- resources // 存放代码资源文件
+|   |       |-- conf
+|   |               |-- ca.crt
+|   |               |-- cert.cnf
+|   |               |-- sdk.crt
+|   |               |-- sdk.key
+|   |       |-- applicationContext.xml // 项目配置文件
+|   |       |-- contract.properties // 存储部署合约地址的文件
+|   |       |-- log4j.properties // 日志配置文件
+|   |       |-- contract //存放solidity约文件
+|   |               |-- Asset.sol
+|   |               |-- KVTable.sol
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本
@@ -1003,9 +938,9 @@ jar {
 
 -   编译
 
-```bash
+```shell
 # 切换到项目目录
-$ cd ~/fisco/asset-app
+$ cd ~/fisco/asset-app-3.0
 # 编译项目
 $ ./gradlew build
 ```

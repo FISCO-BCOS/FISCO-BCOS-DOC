@@ -43,29 +43,19 @@
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
 
-![](./../../../images/java-sdk/install_java_intellij.gif)
-
-
-
 ## 2. 搭建一条FISCO BCOS链
 
 请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。
-
-
 
 ## 3. 开发智能合约应用
 
 ### 第一步. 创建一个Gradle应用
 
-在IntelliJ IDE中创建一个gradle项目。勾选Gradle和Java
-
-![](./../../../images/java-sdk/create.gif)
-
-
+在IntelliJ IDE中创建一个gradle项目。勾选Gradle和Java。
 
 ### 第二步. 引入Java SDK
 
-在build.gradle中引入Java SDK
+在build.gradle中引入Java SDK。
 
 ```
 compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')

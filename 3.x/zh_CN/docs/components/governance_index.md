@@ -59,7 +59,7 @@ WeBankBlockchain-Governance 定位为区块链链治理组件，不仅希望在�
 ## 组件简介
 本次开源的区块链治理通用组件由私钥管理组件（Governance-Key）、账户治理组件（Governance-Account）、权限治理组件（Governance-Authority）、证书管理组件（Governance-Cert）等组件构成。
 
-![](../../images/governance/MCGF/MCGF_overview.png)
+![](../../../../2.x/images/governance/MCGF/MCGF_overview.png)
 
 各治理组件提供了详细的使用文档。其中，账户治理组件和权限治理组件还提供了合约代码、Java语言的SDK、合约集成Demo和Java版SDK的使用Demo，以便于使用者基于自身业务的实际场景进行自由、灵活地使用和集成。
 
@@ -72,7 +72,7 @@ WeBankBlockchain-Governance 定位为区块链链治理组件，不仅希望在�
 
 账户治理组件提供了多种区块链账户治理规则、账户生命周期管理等整体解决方案，包括创建治理账户、选择多种治理规则，授权治理权限，创建账户、冻结账户、解冻账户、更换私钥、销户等账户生命周期的各类账户管理功能。
 
-![](../../images/governance/MCGF/governance_account.png)
+![](../../../../2.x/images/governance/MCGF/governance_account.png)
 
 请参考
 - [Github地址](https://github.com/WeBankBlockchain/Governance-Account)
@@ -91,7 +91,7 @@ WeBankBlockchain-Governance 定位为区块链链治理组件，不仅希望在�
 
 此外，权限治理组件还支持多种权限治理规则，例如一票通过、阈值投票等。
 
-![](../../images/governance/MCGF/governance_authority.png)
+![](../../../../2.x/images/governance/MCGF/governance_authority.png)
 
 请参考 
 - [Github地址](https://github.com/WeBankBlockchain/Governance-Authority)
@@ -108,7 +108,7 @@ WeBankBlockchain-Governance 定位为区块链链治理组件，不仅希望在�
 
 私钥管理组件还全面提供了国密支持。
 
-![](../../images/governance/MCGF/governance_key.png)
+![](../../../../2.x/images/governance/MCGF/governance_key.png)
 
 请参考 
 - [Github地址](https://github.com/WeBankBlockchain/Governance-Key)
@@ -123,7 +123,7 @@ WeBankBlockchain-Governance 定位为区块链链治理组件，不仅希望在�
 
 组件包括了cert-toolkit和cert-mgr两个模块，cert-toolkit提供证书生成等基础能力，可作为独立工具包使用，cert-mgr基于cert-toolkit工具包，提供了证书的托管能力，并统一规范了签发的流程。
 
-![](../../images/governance/MCGF/governance_cert.png)
+![](../../../../2.x/images/governance/MCGF/governance_cert.png)
 
 请参考 
 - [Github地址](https://github.com/WeBankBlockchain/Governance-Cert)

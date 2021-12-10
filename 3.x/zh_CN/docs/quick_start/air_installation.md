@@ -3,7 +3,14 @@
 标签：``搭建区块链网络`` ``区块链教程`` ``HelloWorld`` ``控制台调用合约``
 
 ----
-本章介绍使用FISCO BCOS底层区块链系统所需要的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程，请[参考这里](./hardware_requirements.md)使用支持的硬件和平台操作。
+本章介绍使用FISCO BCOS底层区块链系统所需要的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程，请参考[硬件和系统要求](./hardware_requirements.md)使用支持的硬件和平台操作。
+
+```eval_rst
+.. note::
+   - FISCO BCOS 3.0的系统架构，请参考 `这里 <../design/architecture.html>`_
+   - FISCO BCOS 3.0 Air版本搭建和使用教程，请参考 `这里 <../tutorial/air/index.html>`_
+   - FISCO BCOS 3.0 Pro版本搭建和使用教程，请参考 `这里 <../tutorial/pro/index.html>`_
+```
 
 ## 1. 搭建Air版本FISCO BCOS联盟链
 
@@ -39,10 +46,13 @@ sudo yum install -y curl openssl openssl-devel
 
 ```bash
 # 创建操作目录
-cd ~ && mkidr -p fisco && cd fisco
+cd ~ && mkdir -p fisco && cd fisco
 
 # 下载建链脚本
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
+
+# Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 第三步. 搭建4节点非国密联盟链
@@ -55,13 +65,13 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链:
 
 ```bash
-    bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
 ```
 
 ```eval_rst
 .. note::
    - 其中-p选项指定起始端口，分别是p2p监听端口、rpc监听端口
-   - Air版搭建脚本build_chain.sh介绍文档 `参考这里 <../tutorial/air/build_chain.html>`
+   - Air版搭建脚本build_chain.sh介绍文档 `参考这里 <../tutorial/air/build_chain.html>`_
 ```
 
 命令成功后会输出`All completed`：
@@ -69,19 +79,19 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/
 ```bash
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
-[INFO] Generate nodes/127.0.0.1/sdk cert successful!
-[INFO] Generate nodes/127.0.0.1/node0/conf cert successful!
-[INFO] Generate nodes/127.0.0.1/node1/conf cert successful!
-[INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
-[INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
+[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!
+[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!
+[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
+[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
 ==============================================================
 [INFO] fisco-bcos Path     : bin/fisco-bcos
 [INFO] Auth Mode           : false
 [INFO] Start Port          : 30300 20200
 [INFO] Server IP           : 127.0.0.1:4
 [INFO] SM Model            : false
-[INFO] output dir          : nodes
-[INFO] All completed. Files in nodes
+[INFO] output dir          : ./nodes
+[INFO] All completed. Files in ./nodes
 ```
 
 ### 第四步. 启动FISCO BCOS链
@@ -115,10 +125,10 @@ ps aux |grep -v grep |grep fisco-bcos
 正常情况会有类似下面的输出； 如果进程数不为4，则进程没有启动（一般是端口被占用导致的）
 
 ```
-fisco        35249   7.1  0.2  5170924  57584 s003  S     2:25下午   0:31.63 /home/ubuntu/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini -g config.genesis
-fisco        35218   6.8  0.2  5301996  57708 s003  S     2:25下午   0:31.78 /home/ubuntu/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini -g config.genesis
-fisco        35277   6.7  0.2  5301996  57660 s003  S     2:25下午   0:31.85 /home/ubuntu/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini -g config.genesis
-fisco        35307   6.6  0.2  5301996  57568 s003  S     2:25下午   0:31.93 /home/ubuntu/nodes//127.0.0.1/node3/../fisco-bcos -c config.ini -g config.genesis
+fisco        35249   7.1  0.2  5170924  57584 s003  S     2:25下午   0:31.63 /home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini -g config.genesis
+fisco        35218   6.8  0.2  5301996  57708 s003  S     2:25下午   0:31.78 /home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini -g config.genesis
+fisco        35277   6.7  0.2  5301996  57660 s003  S     2:25下午   0:31.85 /home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini -g config.genesis
+fisco        35307   6.6  0.2  5301996  57568 s003  S     2:25下午   0:31.93 /home/fisco/nodes//127.0.0.1/node3/../fisco-bcos -c config.ini -g config.genesis
 ```
 
 ### 第六步. 检查日志输出

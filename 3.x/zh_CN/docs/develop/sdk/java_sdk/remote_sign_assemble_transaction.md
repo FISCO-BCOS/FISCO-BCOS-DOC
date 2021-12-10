@@ -4,11 +4,11 @@
 
 ----
 
-[AssembleTransactionProcessor](./assemble_transaction.html)【FIXME: 链接有误】已经支持和覆盖了常见的合约操作接口。但是在真实的业务场景中，对于某些特定的业务场景，需要调用硬件加密机或远程签名服务对该哈希进行签名。为此，我们在AssembleTransactionProcessor的基础上进一步提供了AssembleTransactionWithRemoteSignProcessor，来便于用户集成自定义签名服务。
+[AssembleTransactionProcessor](./assemble_transaction.md)已经支持和覆盖了常见的合约操作接口。但是在真实的业务场景中，对于某些特定的业务场景，需要调用硬件加密机或远程签名服务对该哈希进行签名。为此，我们在AssembleTransactionProcessor的基础上进一步提供了AssembleTransactionWithRemoteSignProcessor，来便于用户集成自定义签名服务。
 
 ## 1. 概念解析：部署和调用
 
-部署、调用（交易和查询）的相关概念可参考[概念解析：部署和调用](./assemble_transaction.html#id1)【FIXME: 链接有误】
+部署、调用（交易和查询）的相关概念可参考[概念解析：部署和调用](./assemble_transaction.html#id1)
 
 ## 2. 快速上手
 
@@ -16,7 +16,7 @@ SDK支持同步和异步方式来调用合约。在快速上手环节，首先�
 
 ### 2.1 准备abi和binary文件
 
-控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（简称wbc-liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console.html#id10)【FIXME: 链接有误】。 FIXME: 链接有误
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（简称WBC-Liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console_config.html#java)
 
 通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
@@ -43,7 +43,7 @@ contract HelloWorld{
 # 切换到控制台所在目录
 $ cd ~/fisco/console
 
-# 若控制台版本大于等于2.8.0，调用sol2java.sh脚本，编译HelloWorld合约如下：
+# 调用sol2java.sh脚本，编译HelloWorld合约如下：
 $ bash contratc2java.sh solidity -p org -s HelloWorld.sol
 
 # 生成的abi位于contracts/sdk/abi/HelloWorld.abi路径
@@ -63,12 +63,12 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 基于配置文件，初始化SDK，如：
 
 ```java
-    // 初始化BcosSDK对象
-    BcosSDK sdk = new BcosSDK(configFile);
-    // 获取Client对象，此处传入的群组名为 group
-    Client client = sdk.getClient("group");
-    // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
-    CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
+// 初始化BcosSDK对象
+BcosSDK sdk = new BcosSDK(configFile);
+// 获取Client对象，此处传入的群组名为 group
+Client client = sdk.getClient("group");
+// 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
+CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
 ```
 
 ### 2.3 初始化配置对象

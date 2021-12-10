@@ -6,39 +6,9 @@
 
 ## 1. 安装环境
 
-- Java：JDK 14 （JDK1.8 至JDK 14都支持）
+- Java推荐：JDK 11 （JDK8 至 JDK 14 都支持）
 
-  首先，在官网上下载JDK14并安装
-
-  然后，修改环境变量
-
-  ```bash
-  # 确认您当前的java版本
-  $ java -version
-  # 确认您的java路径
-  $ ls Library/Java/JavaVirtualMachines
-  # 返回
-  # jdk-14.0.2.jdk
-  
-  # 如果使用的是bash
-  $ vim .bash_profile 
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .bash_profile
-  
-  # 如果使用的是zash
-  $ vim .zashrc
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .zashrc
-  
-  # 确认您的java版本
-  $ java -version
-  # 返回
-  # java version "14.0.2" 2020-07-14
-  # Java(TM) SE Runtime Environment (build 14.0.2+12-46)
-  # Java HotSpot(TM) 64-Bit Server VM (build 14.0.2+12-46, mixed mode, sharing)
-  ```
+  首先，在官网上下载JDK11并安装
 
 - IDE：IntelliJ IDE.
 
@@ -46,7 +16,7 @@
 
 ## 2. 搭建一条FISCO BCOS链
 
-请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建。【FIXME: 链接有误】
+请参考[搭建第一个区块链网络](../../../quick_start/air_installation.html#fisco-bcos)搭建。
 
 ## 3. 开发智能合约应用
 
@@ -59,7 +29,7 @@
 在build.gradle中引入Java SDK
 
 ```gradle
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -68,19 +38,19 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.0-rc1</version>
 </dependency>
 ```
 
 ### 第三步. 配置SDK证书
 
-参考[Java SDK证书配置](./configuration.html#id5)。【FIXME: 链接有误】
+参考[Java SDK证书配置](./config.html#id5)。
 
 ```eval_rst
 .. note::
     - 大部分场景仅需要配置 `certPath` 配置项即可，其他配置项不需额外配置；
-    - SDK证书获取：若参考 `安装 <../../installation.html>`_ 搭建区块链，则参考 `这里 <../../installation.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../installation.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath` 指定路径，`certPath`默认为`conf`目录；
-    - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .
+    - SDK证书获取：若参考 `安装 <../../installation.html>`_ 搭建区块链，则参考 `这里 <../../installation.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../installation.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath` 指定路径，`certPath`默认为`conf`目录；【FIXME: 没有运维部署工具】
+    - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .【FIXME：SSL连接方式改了】
 ```
 
 将SDK证书拷贝到Java SDK的示例如下(这里假设SDK证书位于`~/fisco/nodes/127.0.0.1/sdk`目录)：
@@ -121,7 +91,7 @@ $ ls contracts/solidity
 HelloWorld.sol  KVTableTest.sol ShaTest.sol KVTable.sol
 ```
 
-**特别的： 如果你想体验 webankblockchain-liquid（以下简称wbc-liquid）的部署操作，控制台也为你提供了例子。**
+**特别的： 如果你想体验 webankblockchain-liquid（以下简称WBC-Liquid）的部署操作，控制台也为你提供了例子。**
 
 在使用之前，请先保证cargo liquid的编译环境，使用搭建请参考：https://liquid-doc.readthedocs.io/。
 
@@ -141,8 +111,8 @@ $ cargo liquid build
 [4/4] 📃  Generating ABI file
 
 ✨ Done in 1 minute, your project is ready now:
-Binary: /Users/kyon_guo/IdeaProjects/bcos-console/dist/contracts/liquid/hello_world/target/hello_world.wasm
-   ABI: /Users/kyon_guo/IdeaProjects/bcos-console/dist/contracts/liquid/hello_world/target/hello_world.abi
+Binary: ~/fisco/contracts/liquid/hello_world/target/hello_world.wasm
+   ABI: ~/fisco/console/dist/contracts/liquid/hello_world/target/hello_world.abi
 ```
 
 生成`hello_world.wasm`和`hello_world.abi`两个文件
@@ -187,7 +157,7 @@ $ ls contracts/sdk/java/org/com/fisco
 # HelloWorld.java   KVTableTest.java    ShaTest.java    KVTable.java    TableTest.java
 ```
 
-**特别的，如果你想使用wbc-liquid合约编译后的wasm二进制和abi文件生成Java合约**
+**特别的，如果你想使用WBC-Liquid合约编译后的wasm二进制和abi文件生成Java合约**
 
 ```shell
 # 当前目录~/fisco/console
@@ -199,17 +169,11 @@ $ ls contracts/sdk/java/org/com/fisco
 # HelloWorld.java
 ```
 
-
-
-**最后, 将编译得到的HelloWorld.java放入应用中。**注意：在应用中所放的位置要与我们设定的包名相同。
-
-(操作示范请看如下gif动图，动画总共有2分40秒，请耐心等待观看，请勿点击图片，如果点击图片将从头开始播放。)
-
-![](./../../../../images/java-sdk/prepare_contract.gif)
+**最后, 将编译得到的HelloWorld.java放入应用中。**
 
 ### 第五步. 创建配置文件
 
-在项目中创建配置文件``config.toml``, 可参照[配置向导](./configuration.html)进行配置【FIXME: 链接有误】，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
+在项目中创建配置文件``config.toml``, 可参照[配置向导](./config.html)进行配置，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
 
 通过``xml``配置请参照第4章“附录三. 使用xml配置进行配置”。
 
@@ -269,9 +233,9 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${p
 
 ### 附录二. ``contract2java.sh``脚本的使用方法
 
-控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和wbc-liquid合约文件编译为Java合约文件。
+控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和WBC-Liquid合约文件编译为Java合约文件。
 
-当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
+当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定WBC-Liquid编译后的WASM文件以及ABI文件生成Java文件。
 
 **Solidity合约使用**
 
@@ -295,30 +259,30 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 
 - `package`: 生成`Java`文件的包名。
 - `sol`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
-- `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
+- `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。
 
-**wbc-liquid合约使用**
+**WBC-Liquid合约使用**
 
 ```shell
 $ bash contract2java.sh liquid -h
 usage: contract2java.sh <solidity|liquid> [OPTIONS...]
- -a,--abi <arg>       [Required] The ABI file path of wbc-liquid contract.
- -b,--bin <arg>       [Required] The binary file path of wbc-liquid contract.
+ -a,--abi <arg>       [Required] The ABI file path of WBC-Liquid contract.
+ -b,--bin <arg>       [Required] The binary file path of WBC-Liquid contract.
  -h,--help
  -o,--output <arg>    [Optional] The file path of the generated java code,
                       default is contracts/sdk/java/
  -p,--package <arg>   [Optional] The package name of the generated java
                       code, default is com
- -s,--sm-bin <arg>    [Required] The SM binary file path of wbc-liquid
+ -s,--sm-bin <arg>    [Required] The SM binary file path of WBC-Liquid
                       contract.
 ```
 
 参数详细：
 
-- `abi `：（必选）wbc-liquid合约`ABI`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
-- `bin`：（必选）wbc-liquid合约`wasm bin`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `abi `：（必选）WBC-Liquid合约`ABI`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `bin`：（必选）WBC-Liquid合约`wasm bin`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
 - `package`：（可选）生成`Java`文件的包名，默认为`org`。
-- `sm-bin`：（必选）wbc-liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
+- `sm-bin`：（必选）WBC-Liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
 
 **使用**
 
@@ -328,7 +292,7 @@ $ cd ~/fisco/console
 # 生成Solidity合约的Java代码
 $ bash contract2java.sh solidity -p org.com.fisco
 
-# 生成wbc-liquid合约的Java代码
+# 生成WBC-Liquid合约的Java代码
 $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test/asset_test.wasm -a ./contracts/liquid/asset_test/asset_test.abi -s ./contracts/liquid/asset_test/asset_test_sm.wasm 
 ```
 
@@ -350,14 +314,14 @@ $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset_test
 |               |-- HelloWorld.java # Solidity编译的HelloWorld Java文件
 |               |-- KVTable.java    # Solidity编译的KV存储接口合约 Java文件
 |               |-- KVTableTest.java  # Solidity编译的KVTableTest Java文件
-|               |-- AssetTest.java  # wbc-liquid生成的AssetTest文件
+|               |-- AssetTest.java  # WBC-Liquid生成的AssetTest文件
 ```
 
 Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成Java合约文件`HelloWorld.java`、`KVTableTest.java`、`KVTable.java`和`AssetTest.java`。其中`HelloWorld.java`、`KVTableTest.java`和`AssetTest.java`是Java应用所需要的Java合约文件。
 
 ### 附录三. 使用xml配置进行配置
 
-为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md)【FIXME: 链接有误】.
+为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./config.md).
 
 通过`xml`配置文件初始化`BcosSDK`之前，需要先引入`spring`。
 

@@ -46,11 +46,6 @@ brew install git flex bison
 
 ## 2. 克隆代码
 
-```eval_rst
-.. note::
-   FISCO BCOS的源码位于 https://github.com/FISCO-BCOS/FISCO-BCOS 仓库的 ``master-3.0`` 分支
-```
-
 ```bash
 # 创建源码编译目录
 mkdir -p ~/fisco && cd ~/fisco
@@ -61,15 +56,15 @@ git clone git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试下面的命令：
 git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
 
-# 切换到master-3.0分支
-cd FISCO-BCOS && git checkout master-3.0
+# 切换到源码目录
+cd FISCO-BCOS
 ```
 
 ## 3. 编译
 
 **编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos/fisco-bcos`路径。**
 
-**编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
+**编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
 - Rpc服务：`FISCO-BCOS/build/RpcService/main/BcosRpcService`
 - Gateway服务：`FISCO-BCOS/build/GatewayService/main/BcosGatewayService`
 - 区块链节点服务：`NodeService/main/BcosNodeService`
@@ -79,7 +74,7 @@ cd FISCO-BCOS && git checkout master-3.0
 **要求版本不小于Ubuntu 18.04。**
 
 ```bash
-# 进入源码目录
+# 进入源码目录
 cd ~/fisco/FISCO-BCOS
 
 # 创建编译目录
@@ -90,7 +85,7 @@ cmake ..
 make -j2
 
 # 生成tgz包
-rm -rf *.tgz && make tgz
+rm -rf *.tgz && make tar
 ```
 ### 3.2 CentOS
 
@@ -107,7 +102,7 @@ cmake3 ..
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
 # 生成tgz包
-rm -rf *.tgz && make tgz
+rm -rf *.tgz && make tar
 ```
 
 ### 3.3 macOS
@@ -123,5 +118,5 @@ cmake ..
 make -j2
 
 # 生成tgz包
-rm -rf *.tgz && make tgz
+rm -rf *.tgz && make tar
 ```

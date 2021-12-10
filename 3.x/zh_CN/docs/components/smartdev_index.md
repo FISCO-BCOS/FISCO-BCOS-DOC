@@ -24,7 +24,7 @@ solidity智能合约如何快速编译为abi和binary文件？
 编程小白如何快速上手区块链应用开发？
 ...
 
-这些问题既有与合约开发相关的，也有与应用开发相关的。基于此类场景问题，结合自身实践经验，微众银行区块链正式开源区块链应用开发组件WeBankBlockchain-SmartDev，期望从区块链应用开发中的各个环节入手，多维度地提高区块链应用的开发效率，帮助开发者成为区块链应用开发的“10倍工程师”。目前，整个组件基于solidity语言开发。近期微众银行区块链还开源了webankblockchain-liquid（以下简称wbc-liquid）合约语言，未来我们也会适配wbc-liquid语言。
+这些问题既有与合约开发相关的，也有与应用开发相关的。基于此类场景问题，结合自身实践经验，微众银行区块链正式开源区块链应用开发组件WeBankBlockchain-SmartDev，期望从区块链应用开发中的各个环节入手，多维度地提高区块链应用的开发效率，帮助开发者成为区块链应用开发的“10倍工程师”。目前，整个组件基于solidity语言开发。近期微众银行区块链还开源了webankblockchain-liquid（以下简称WBC-Liquid）合约语言，未来我们也会适配WBC-Liquid语言。
 
 区块链应用开发组件WeBankBlockchain-SmartDev的研发初衷在于打造低代码开发的组件库，全方位助力开发者高效、敏捷地开发区块链应用。WeBankBlockchain-SmartDev包含了一套开放、轻量的开发组件集，覆盖合约的开发、编译、应用开发等环节，开发者可根据自己的情况选择相应开发工具，提升开发效率。
 
@@ -34,17 +34,17 @@ solidity智能合约如何快速编译为abi和binary文件？
 
 从应用开发的视角来看，从智能合约到项目搭建，包含了大量机械而重复的工作，如创建项目、引入依赖、编写配置代码、访问智能合约、编写相关实体类等。相形之下，通过WeBankBlockchain-SmartDev，开发者可以选用应用开发脚手架。脚手架会根据智能合约自动生成项目工程。工程中已经包含了上述逻辑代码，开发者只需基于该工程继续添加业务逻辑代码，聚焦在自身的业务上即可。
 
-![](../../images/governance/SmartDev/compare.png)
+![](../../../../2.x/images/governance/SmartDev/compare.png)
 
 ## 组件简介
 SmartDev包含了一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包括智能合约库（SmartDev-Contract）、智能合约编译插件（SmartDev-SCGP）和应用开发脚手架（SmartDev-Scaffold）。开发者可根据自己的情况自由选择相应的开发工具，提升开发效率。
 
-![](../../images/governance/SmartDev/smartdev_overview.png)
+![](../../../../2.x/images/governance/SmartDev/smartdev_overview.png)
 
 ### SmartDev-Contract 智能合约库
 solidity智能合约代码库。包含基础类型、数据结构、通用功能、上层业务等智能合约库。用户可根据实际需求进行参考、复用。
 
-![](../../images/governance/SmartDev/contract_lib.png)
+![](../../../../2.x/images/governance/SmartDev/contract_lib.png)
 
 请参考  
 
@@ -60,7 +60,7 @@ solidity智能合约代码库。包含基础类型、数据结构、通用功能
 ### SmartDev-SCGP (Solidity Compiler Gradle Plugin) 智能合约编译插件
 将solidity智能合约代码编译为Java代码的gradle插件，可以编译项目中的智能合约，生成对应的Java文件，并自动拷贝到对应包目录下。 
 
-![](../../images/governance/SmartDev/compile_plugin.png)
+![](../../../../2.x/images/governance/SmartDev/compile_plugin.png)
 
 请参考
 
@@ -75,7 +75,7 @@ solidity智能合约代码库。包含基础类型、数据结构、通用功能
 ### SmartDev-Scaffold 应用开发脚手架
 基于配置的智能合约文件，自动生成应用项目的脚手架代码，包含了智能合约所对应的实体类、服务类等内容，帮助用户只需要修改和编写较少量的代码，即可实现一个应用，大大简化了智能合约开发。 
 
-![](../../images/governance/SmartDev/scaffold.png)
+![](../../../../2.x/images/governance/SmartDev/scaffold.png)
 
 请参考
 
@@ -106,7 +106,7 @@ solidity智能合约代码库。包含基础类型、数据结构、通用功能
 
 在区块链应用开发、调试过程中，通常需要在项目中用到abi、bin、java合约等内容，并基于这些内容进行相应的调试。如果合约出于调整等原因而需要重新编译，此时不必将合约拷入控制台编译，只需运行相应的gradle指令，就可以生成新的编译物。同时，这些编译物直接嵌在了项目中。如下图示例中，对HelloWorld合约编译后，产生的编译物示例：
 
-![](../../images/governance/SmartDev/example.png)
+![](../../../../2.x/images/governance/SmartDev/example.png)
 
 ### 场景3：区块链应用开发
 

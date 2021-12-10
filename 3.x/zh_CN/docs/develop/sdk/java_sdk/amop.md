@@ -146,7 +146,7 @@ amop.stop()
 
 ## 2. 示例
 
-更多的示例请看[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/main/java/org/fisco/bcos/sdk/demo/amop/tool``下的代码示范，链接：[java-sdk-demo GitHub链接](https://github.com/FISCO-BCOS/java-sdk-demo)，[java-sdk-demo Gitee链接](https://gitee.com/FISCO-BCOS/java-sdk-demo)。
+更多的示例请看[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/main/java/org/fisco/bcos/sdk/demo/amop``下的代码示范，链接：[java-sdk-demo GitHub链接](https://github.com/FISCO-BCOS/java-sdk-demo)，[java-sdk-demo Gitee链接](https://gitee.com/FISCO-BCOS/java-sdk-demo)。
 
 * 普通话题代码示例：
 
@@ -168,7 +168,7 @@ amop.stop()
 
   Java SDK支持动态订阅话题。也可以在配置文件中配置固定的私有话题。
 
-  订阅者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/resources/amop/config-subscriber-for-test.toml``
+  订阅者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/test/resources/amop/config-subscriber-for-test.toml``
 
   ```toml
   [network]
@@ -185,7 +185,7 @@ amop.stop()
 
   注意，订阅方通过这种方法配置的话题，需要在程序中设定一个默认的回调函数，否则，接收消息时会因为找不到回调函数而报错。
 
-  发送者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/resources/amop/config-publisher-for-test.toml``
+  发送者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/test/resources/amop/config-publisher-for-test.toml``
 
   ```toml
   [network]
@@ -203,47 +203,81 @@ amop.stop()
 
 * 公有话题订阅和发送
 
-  订阅者代码例子：``src/main/java/org/fisco/bcos/sdk/demo/amop/tool/AmopSubscriber.java``
+  订阅者代码例子：``src/main/java/org/fisco/bcos/sdk/demo/amop/Subscribe.java``
 
   ```java
-  package org.fisco.bcos.sdk.demo.amop.tool;
+  package org.fisco.bcos.sdk.demo.amop;
   
   import java.net.URL;
-  import org.fisco.bcos.sdk.BcosSDK;
   import org.fisco.bcos.sdk.amop.Amop;
-  import org.fisco.bcos.sdk.amop.AmopCallback;
+  import org.fisco.bcos.sdk.config.Config;
+  import org.fisco.bcos.sdk.config.ConfigOption;
+  import org.fisco.bcos.sdk.config.exceptions.ConfigException;
+  import org.fisco.bcos.sdk.demo.perf.ParallelOkPerf;
+  import org.fisco.bcos.sdk.jni.common.JniException;
+  import org.fisco.bcos.sdk.model.ConstantConfig;
+  import org.slf4j.Logger;
+  import org.slf4j.LoggerFactory;
   
-  public class AmopSubscriber {
+  public class Subscribe {
   
-      public static void main(String[] args) throws Exception {
-          URL configUrl =
-                  AmopSubscriber.class
-                          .getClassLoader()
-                          .getResource("amop/config-subscriber-for-test.toml");
-          if (args.length < 1) {
-              System.out.println("Param: topic");
+      private static final Logger logger = LoggerFactory.getLogger(Subscribe.class);
+  
+      public static void usage() {
+          System.out.println("\tUsage: ");
+          System.out.println(
+                  "\t\tjava -cp \"conf/:lib/*:apps/*\"  org.fisco.bcos.sdk.demo.amop.Subscribe topic");
+          System.out.println("\tExample:");
+          System.out.println(
+                  "\t\tjava -cp \"conf/:lib/*:apps/*\"  org.fisco.bcos.sdk.demo.amop.Subscribe topic");
+          System.exit(0);
+      }
+  
+      public static void main(String[] args)
+              throws InterruptedException, JniException, ConfigException {
+  
+          String configFileName = ConstantConfig.CONFIG_FILE_NAME;
+          URL configUrl = ParallelOkPerf.class.getClassLoader().getResource(configFileName);
+          if (configUrl == null) {
+              System.out.println("The configFile " + configFileName + " doesn't exist!");
               return;
           }
+  
+          if (args.length < 1) {
+              usage();
+          }
+  
           String topic = args[0];
-          // Construct a BcosSDK instance
-          BcosSDK sdk = BcosSDK.build(configUrl.getPath());
-          
-          // Get the amop module instance
-          Amop amop = sdk.getAmop();
-          
-          // Set callback
-          AmopCallback cb = new DemoAmopCallback();
-          // Set a default callback
-          amop.setCallback(cb);
-          // Subscriber a normal topic
-          amop.subscribeTopic(topic, cb);
-          System.out.println("Start test");
+  
+          System.out.println(" ====== AMOP subscribe, topic: " + topic);
+  
+          String configFile = configUrl.getPath();
+          ConfigOption configOption = Config.load(configFile);
+  
+          Amop amop = Amop.build(configOption);
+          amop.start();
+  
+          amop.subscribeTopic(
+                  topic,
+                  (endpoint, seq, data) -> {
+                      System.out.println(" ==> receive message from client");
+                      System.out.println(" \t==> endpoint: " + endpoint);
+                      System.out.println(" \t==> seq: " + seq);
+                      System.out.println(" \t==> data: " + new String(data));
+  
+                      amop.sendResponse(endpoint, seq, data);
+                  });
+  
+          while (true) {
+  
+              Thread.sleep(10000);
+          }
       }
   }
   ```
-
+  
   回调函数例子: ``src/main/java/org/fisco/bcos/sdk/demo/amop/tool/DemoAmopCallback.java``
-
+  
   ```java
   package org.fisco.bcos.sdk.demo.amop.tool;
   
@@ -347,9 +381,9 @@ amop.stop()
       }
   }
   ```
-
+  
   发送方使用例子：``src/main/java/org/fisco/bcos/sdk/demo/amop/tool/AmopPublisher.java``
-
+  
   ```java
   package org.fisco.bcos.sdk.demo.amop.tool;
   
@@ -423,9 +457,9 @@ amop.stop()
   }
   
   ```
-
+  
   发送方接收回包的函数例子：``src/main/java/org/fisco/bcos/sdk/demo/amop/tool/DemoAmopResponseCallback.java``
-
+  
   ```java
   package org.fisco.bcos.sdk.demo.amop.tool;
   
@@ -470,7 +504,7 @@ amop.stop()
 
 接下来，可以根据下一节的方法来试用这些AMOP的Demo。
 
-## 4. 快速试用AMOP
+## 3. 快速试用AMOP
 
 ### 第一步：下载项目
 
@@ -713,7 +747,7 @@ Step 2:Receive file, filename length:34 filename binary:[46, 46, 47, 100, 111, 9
 |---save file:../docs/images/FISCO_BCOS_Logo.svg success
 |---response:Yes, I received!
 ```
-## 5. 错误码
+## 4. 错误码
 
 - 99：发送消息失败，AMOP经由所有链路的尝试后，消息未能发到服务端，建议使用发送时生成的`seq`，检查链路上各个节点的处理情况。
 - 100：区块链节点之间经由所有链路的尝试后，消息未能发送到可以接收该消息的节点，和错误码‘99’一样，建议使用发送时生成的‘seq’，检查链路上各个节点的处理情况。

@@ -7,7 +7,7 @@
 
 WBC-WeBASE管理平台是由四个WBC-WeBASE子系统组成的一套管理FISCO-BCOS联盟链的工具集。详细了解可以参考[《WBC-WeBASE管理平台使用手册》](https://webasedoc.readthedocs.io/zh_CN/lab/) 。
 
-## 主要功能
+## 1. 主要功能
 
 1. 区块链数据概览
 2. 节点管理
@@ -18,24 +18,25 @@ WBC-WeBASE管理平台是由四个WBC-WeBASE子系统组成的一套管理FISCO-
 7. 交易审计
 8. 账号管理
 
-## WBC-WeBASE管理平台搭建
+## 2. WBC-WeBASE管理平台搭建
 
 搭建可参考[一键部署文档](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE/install.html)。
 
-![](../../images/webase/webase-web.png)
+![](../../../../2.x/images/webase/webase-web.png)
 
-### [WBC-WeBASE快速入门](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE-Install/developer.html)
+
+### 2.1 [WBC-WeBASE快速入门](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE-Install/developer.html)
 
 开发者只需要搭建节点和节点前置服务，就可通过节点前置服务的合约编辑器进行合约的编辑，编译，部署，调试。搭建可参考[快速入门文档](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE-Install/developer.html)。
-![](../../images/webase/webase-front.png)
+![](../../../../2.x/images/webase/webase-front.png)
 
 
-### [WBC-WeBASE管理台](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE/install.html)
+### 2.2 [WBC-WeBASE管理台](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE/install.html)
 
-通过WBC-WeBASE一键脚本，可以搭建一个WBC-WeBASE的基础环境，可以方便用户体验核心功能如：区块浏览，节点查看，合约IDE，系统管理，节点监控，交易审计，私钥管理。搭建可参考[一键部署文档](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE/install.html)。![](../../images/webase/webase-web.png)
+通过WBC-WeBASE一键脚本，可以搭建一个WBC-WeBASE的基础环境，可以方便用户体验核心功能如：区块浏览，节点查看，合约IDE，系统管理，节点监控，交易审计，私钥管理。搭建可参考[一键部署文档](https://webasedoc.readthedocs.io/zh_CN/lab/docs/WeBASE/install.html)。![](../../../../2.x/images/webase/webase-web.png)
 
 
-### [WBC-WeBASE其他](https://webasedoc.readthedocs.io/zh_CN/lab)
+### 2.3 [WBC-WeBASE其他](https://webasedoc.readthedocs.io/zh_CN/lab)
 
 WBC-WeBASE其他组件可以参考[这里](https://webasedoc.readthedocs.io/zh_CN/lab)
 
