@@ -2,16 +2,16 @@
 版本和兼容性
 ##############################################################
 
-标签：``版本特性`` ``Release Note`` 
+标签：``版本特性`` ``Release Note``
 
 ------------
 
 FISCO BCOS 3.x 新特性
 ---------------------
 
+
 微服务架构
 >>>>>>>>>>>>>>
-----
 
 FISCO BCOS 3.0版本采用 **微服务模块化** 设计架构，总体上系统包含接入层、调度层、计算层、存储层和管理层:
 
@@ -109,7 +109,9 @@ v3.0.0-rc1
 .. admonition:: FISCO BCOS 3.x Releases
 
      - `FISCO BCOS v3.0.0-rc1 <./v3.0.0-rc1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc1>`_]
-
+     
+     - v3.0.0-rc1不包括 ``FISCO BCOS Max`` 版本，Max版本的FISCO BCOS会在后续版本中推出
+     
 .. admonition:: 查看节点和数据版本
 
     - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
