@@ -10,7 +10,7 @@
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 
-[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.0重要的交互式客户端工具，它通过[Java SDK](./sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译后的WASM文件转换为Java合约文件。
+[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译后的WASM文件转换为Java合约文件。
 
 wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
@@ -18,10 +18,10 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
 
 ```eval_rst
 .. important::
-    前置条件：搭建FISCO BCOS区块链，请参考 `搭建第一个区块链网络 <../installation.html>`_
+    前置条件：搭建FISCO BCOS区块链，请参考 `搭建第一个区块链网络 <../../quick_start/air_installation.html>`_
     建链工具参考:
-     - `Air版本 <../../tutorial/air/build_chain.html>`_
-     - `多群组区块链（Pro版本） <../../tutorial/pro/pro_builder.html>`_
+     - `Air版本FISCO BCOS建链脚本build_chain <../../tutorial/air/build_chain.html>`_
+     - `Pro版本FISCO BCOS建链工具BcosProBuilder <../../tutorial/pro/pro_builder.html>`_
 ```
 
 ### 1. 获取控制台

@@ -602,7 +602,7 @@ try to start node3
  node2 start successfully
 ```
 
-方法二：您也可以根据[指引](../../installation.html#fisco-bcos)搭建FISCO BCOS区块链网络。然后进行以下操作  【FIXME: 链接有误】
+方法二：您也可以根据[指引](../../../quick_start/air_installation.html)搭建FISCO BCOS区块链网络。然后进行以下操作  【FIXME: 链接有误】
 
 ```cmd
 # 当前目录为java-sdk,构建项目

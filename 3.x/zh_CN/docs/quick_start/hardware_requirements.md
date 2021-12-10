@@ -30,7 +30,5 @@
 ## 操作系统
 
 - CentOS 7.2+
-- Ubuntu 16.04+
+- Ubuntu 18.04+
 - macOS 10.14+
-- 麒麟V10
-- deepin
