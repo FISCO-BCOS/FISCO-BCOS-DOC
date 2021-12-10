@@ -41,6 +41,7 @@ brew install curl docker docker-compose python3
 ```eval_rst
 .. note::
    - 部署工具 ``BcosProBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
+   - 若从github下载部署工具 ``BcosProBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 ```
 
 ```bash
@@ -49,6 +50,9 @@ mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+
+# Note: 若网速太慢，可尝试如下命令下载部署脚本:
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosProBuilder && pip3 install -r requirements.txt
@@ -163,6 +167,7 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
 .. note::
    - 可通过 ``python3 build_chain.py -h`` 查看部署脚本使用方法
    - 二进制默认下载到 ``binary`` 目录
+   - 若下载二进制比较慢，请尝试: ``python3 build_chain.py download_binary -t cdn``
 ```
 
 ```bash
@@ -171,6 +176,9 @@ cd ~/fisco/BcosProBuilder
 
 # 运行build_chain.py脚本下载二进制，二进制包默认下载到binary目录
 python3 build_chain.py download_binary
+
+# Note: 若网速太慢，可尝试如下命令下载二进制:
+python3 build_chain.py download_binary -t cdn
 ```
 
 ### 4.2 部署RPC服务

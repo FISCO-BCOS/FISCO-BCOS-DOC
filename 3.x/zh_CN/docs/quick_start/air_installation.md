@@ -50,6 +50,9 @@ cd ~ && mkdir -p fisco && cd fisco
 
 # 下载建链脚本
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
+
+# Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 第三步. 搭建4节点非国密联盟链
@@ -68,7 +71,7 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
 ```eval_rst
 .. note::
    - 其中-p选项指定起始端口，分别是p2p监听端口、rpc监听端口
-   - Air版搭建脚本build_chain.sh介绍文档 `参考这里 <../tutorial/air/build_chain.html>`
+   - Air版搭建脚本build_chain.sh介绍文档 `参考这里 <../tutorial/air/build_chain.html>`_
 ```
 
 命令成功后会输出`All completed`：

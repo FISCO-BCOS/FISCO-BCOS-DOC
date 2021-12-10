@@ -19,7 +19,9 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
 ```eval_rst
 .. important::
     前置条件：搭建FISCO BCOS区块链，请参考 `搭建第一个区块链网络 <../installation.html>`_
-    建链工具参考：单群组区块链（Air版本）` <../../tutorial/air/build_chain.html>`_ 或 `多群组区块链（Pro版本） <../../tutorial/pro/build_chain.html>`_。
+    建链工具参考:
+     - `Air版本 <../../tutorial/air/build_chain.html>`_
+     - `多群组区块链（Pro版本） <../../tutorial/pro/pro_builder.html>`_
 ```
 
 ### 1. 获取控制台
@@ -62,7 +64,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/dow
 ### 2. 配置控制台
 
 - 区块链节点和证书的配置：
-  - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
+  - 将节点sdk目录下的所有文件拷贝到`conf`目录下。
   - 将`conf`目录下的`config-example.toml`文件重命名为`config.toml`文件。配置`config.toml`文件，其中添加注释的内容根据区块链节点配置做相应修改。
 
 配置示例文件如下：
