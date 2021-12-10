@@ -55,7 +55,7 @@ gateway_sm_ssl=false
 
 ```eval_rst
 .. note::
-   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 ``这里 <>``
+   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
 ```
 RPC服务的配置项位于`[[chain.rpc]]`中，一条链可部署多个RPC服务，主要配置项包括：
 
@@ -460,9 +460,6 @@ services:
     network_mode: "host"
     ports:
       - "3310:3306"
-    networks:
-      tars_net:
-        ipv4_address: 172.25.0.2
     environment:
       MYSQL_ROOT_PASSWORD: ""
     restart: always

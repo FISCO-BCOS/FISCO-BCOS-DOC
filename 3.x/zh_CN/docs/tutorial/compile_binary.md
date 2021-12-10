@@ -51,7 +51,7 @@ brew install git flex bison
 mkdir -p ~/fisco && cd ~/fisco
 
 # 克隆代码
-git clone git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
+git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试下面的命令：
 git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git

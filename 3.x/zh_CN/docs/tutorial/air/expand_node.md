@@ -4,11 +4,11 @@
 
 ------
 
-`build_chain.sh`提供了扩容新节点功能，本章在[搭建第一个区块链网络](../quick_start/air_installation.md)的基础上扩容一个新的区块链节点，帮助用户掌握Air版本FISCO BCOS区块链节点的扩容步骤。
+`build_chain.sh`提供了扩容新节点功能，本章在[搭建第一个区块链网络](../../quick_start/air_installation.md)的基础上扩容一个新的区块链节点，帮助用户掌握Air版本FISCO BCOS区块链节点的扩容步骤。
 
 ```eval_rst
 .. note::
-   进行节点扩容操作前，请先参考 `搭建第一个区块链网络 <../quick_start/air_installation.html>`_ 部署Pro版本区块链。
+   进行节点扩容操作前，请先参考 `搭建第一个区块链网络 <../../quick_start/air_installation.html>`_ 部署Pro版本区块链。
 ```
 
 ## 1. 准备扩容所需文件
@@ -22,7 +22,7 @@ Air版本区块链扩容时，需要提前准备证书和配置文件，用于�
 
 ```eval_rst
 .. note::
-   Air版本区块链节点根证书位于搭链时生成的目录下，可进入搭建节点时生成的文件夹(如：`搭建第一个区块链网络 <../quick_start/air_installation.html>`_ 生成的节点配置文件夹是`nodes`)，通过 ``find . -name ca`` 查找链的根证书
+   Air版本区块链节点根证书位于搭链时生成的目录下，可进入搭建节点时生成的文件夹(如：`搭建第一个区块链网络 <../../quick_start/air_installation.html>`_ 生成的节点配置文件夹是`nodes`)，通过 ``find . -name ca`` 查找链的根证书
 ```
 这里以[搭建第一个区块链网络](../quick_start.md)为基础，基于`node0`扩容一个新节点`node4`为例：
 
@@ -61,7 +61,7 @@ $ cat config/nodes.json
 ```eval_rst
 .. note::
    - 请确保机器的 ``30304`` 和 ``20204`` 端口没有被占用
-   - 请参考`搭建第一个区块链网络 <../quick_start/air_installation.html>`_ 下载建链脚本 ``build_chain.sh``, ``build_chain`` 的使用可参考 `这里 <../build_chain.html>`_
+   - 请参考 `搭建第一个区块链网络 <../../quick_start/air_installation.html>`_ 下载建链脚本 ``build_chain.sh``, ``build_chain`` 的使用可参考 `这里 <./build_chain.html>`_
 ```
 
 **步骤1：生成扩容节点配置**
@@ -73,6 +73,9 @@ $ cat config/nodes.json
 cd ~/fisco
 
 # 调用build_chain.sh扩容节点，新节点扩容到nodes/127.0.0.1/node4目录
+# -c: 指定扩容配置config.ini, config.genesis和nodes.json路径
+# -d: 指定CA证书和私钥的路径
+# -o: 指定扩容节点配置所在目录
 bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node4
 ```
 当节点输出`All completed. Files in nodes/127.0.0.1/node4`说明生成扩容配置成功，输出的日志如下：
@@ -126,7 +129,7 @@ bash nodes/127.0.0.1/node4/start.sh
 ```eval_rst
 .. note::
    - 执行本步骤前请启动包括扩容节点在内的所有节点 
-   - 请参考`搭建第一个区块链网络的【配置和使用控制台】 <../../quick_start/air_installation.html#id7>`_ 下载控制台
+   - 请参考 `搭建第一个区块链网络的【配置和使用控制台】 <../../quick_start/air_installation.html#id7>`_ 下载控制台
 ```
 
 **步骤1：检查是否所有节点均启动**
