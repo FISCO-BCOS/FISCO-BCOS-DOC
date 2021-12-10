@@ -70,8 +70,8 @@ Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服�
 
 ```eval_rst
 .. note::
-   - 这里采用docker安装/启动tars服务，请确保拥有root权限
-   - 安装tars服务后，大概经过1min左右才可通过http://127.0.0.1:3000/访问tars网页管理平台
+   - 这里采用docker安装/启动tars服务，请确保拥有root权限，并确保docker服务处于启动状态
+   - 安装tars服务后，大概经过一分钟左右才可通过http://127.0.0.1:3000/访问tars网页管理平台
 ```
 
 **安装tars服务：若是首次运行tars服务，请您运行如下命令安装并启动tars服务。**
@@ -80,10 +80,12 @@ Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服�
 # 进入BcosProBuilder目录
 cd ~/fisco/BcosProBuilder
 
+# Note: 这里需要保证docker服务处于启动状态
 # 若之前已经操作过，可跳过本步骤
 # 创建网段为172.25.0.0/16的bridge类型网络tars-network
 python3 build_chain.py create-subnet -n tars-network -s 172.25.0.0/16
 
+# Note: 这里需要保证docker服务处于启动状态
 # linux系统：进入到docker配置文件路径(macOS系统可跳过本步骤)
 cd docker/bridge/linux/framework
 # macOS系统：进入到docker配置文件路径(linux系统可跳过本步骤)
@@ -105,6 +107,7 @@ docker-compose up -d
 # 进入BcosProBuilder目录
 cd ~/fisco/BcosProBuilder
 
+# Note: 这里需要保证docker服务处于启动状态
 # linux系统：进入到docker配置文件路径(macOS系统可跳过本步骤)
 cd docker/bridge/linux/framework
 # macOS系统：进入到docker配置文件路径(linux系统可跳过本步骤)
@@ -114,7 +117,7 @@ cd docker/bridge/mac/framework
 docker-compose start
 ```
 
-tars服务安装启动完成后，即可通过http://127.0.0.1:3000/访问tars网页管理平台。
+tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访问tars网页管理平台，跨机器环境可通过http://${ip}:3000/访问tars管理平台，其中`${ip}`是部署TarsFramework服务机器的物理IP。
 
 ### 3.2 配置tars服务
 
@@ -464,7 +467,7 @@ generated/chain
 
 ```eval_rst
 .. note::
-   - 控制台的配置方法和命令请参考 `这里 <../../develop/console.html>`_
+   - 控制台的配置方法和命令请参考 `这里 <../../develop/console/console_config.html>`_
 ```
 
 使用控制台之前，需先安装java环境：
@@ -482,7 +485,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```bash
-cd ~/fisco && url -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::
@@ -508,13 +511,6 @@ cp -r BcosProBuilder/generated/rpc/chain/172.25.0.3/agencyBBcosRpcService/sdk/* 
 ```
 
 **步骤3：启动并使用控制台**
-
-```bash
-cd ~/fisco/console && bash start.sh
-```
-**步骤4: 启动并使用控制台**
-
-- 启动控制台
 
 ```bash
 cd ~/fisco/console && bash start.sh
