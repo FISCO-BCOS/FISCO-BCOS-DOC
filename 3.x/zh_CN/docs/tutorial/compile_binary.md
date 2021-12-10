@@ -64,7 +64,7 @@ cd FISCO-BCOS
 
 **编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos/fisco-bcos`路径。**
 
-**编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
+**编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
 - Rpc服务：`FISCO-BCOS/build/RpcService/main/BcosRpcService`
 - Gateway服务：`FISCO-BCOS/build/GatewayService/main/BcosGatewayService`
 - 区块链节点服务：`NodeService/main/BcosNodeService`
@@ -74,7 +74,7 @@ cd FISCO-BCOS
 **要求版本不小于Ubuntu 18.04。**
 
 ```bash
-# 进入源码目录
+# 进入源码目录
 cd ~/fisco/FISCO-BCOS
 
 # 创建编译目录
