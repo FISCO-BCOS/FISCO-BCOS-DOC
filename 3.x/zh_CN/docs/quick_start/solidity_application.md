@@ -351,9 +351,6 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 |-- bin # 生成的bin目录，存放solidity合约编译生成的bin文件
 |   |-- Asset.bin
 |   |-- KVTable.bin
-|-- contracts # 存放solidity合约源码文件，将需要编译的合约拷贝到该目录下
-|   |-- Asset.sol # 拷贝进来的Asset.sol合约，依赖KVTable.sol
-|   |-- KVTable.sol # 实现系统KV存储操作的合约接口文件 FIXME: 描述
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
@@ -362,7 +359,6 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 |                       |--contract
 |                             |--Asset.java  # Asset.sol合约生成的Java文件
 |                             |--KVTable.java  # KVTable.sol合约生成的Java文件
-|-- contract2java.sh
 ```
 
 java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`KVTable.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
@@ -395,47 +391,16 @@ public class Asset extends Contract {
 ### 第一步. 安装环境
 首先，我们需要安装JDK以及集成开发环境
 
-- Java：JDK 14 （JDK1.8 至JDK 14都支持）
+- Java：推荐JDK 11 （JDK1.8 至JDK 14都支持）
+  首先，在官网上下载JDK并安装，并自行修改JAVA_HOME环境变量
 
-  首先，在官网上下载JDK14并安装
-
-  然后，修改环境变量
-
-  ```bash
-  # 确认您当前的java版本
-  $ java -version
-  # 确认您的java路径
-  $ ls Library/Java/JavaVirtualMachines
-  # 返回
-  # jdk-14.0.2.jdk
-  
-  # 如果使用的是bash
-  $ vim .bash_profile 
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .bash_profile
-  
-  # 如果使用的是zash
-  $ vim .zashrc
-  # 在文件中加入JAVA_HOME的路径
-  # export JAVA_HOME = Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home 
-  $ source .zashrc
-  
-  # 确认您的java版本
-  $ java -version
-  # 返回
-  # java version "14.0.2" 2020-07-14
-  # Java(TM) SE Runtime Environment (build 14.0.2+12-46)
-  # Java HotSpot(TM) 64-Bit Server VM (build 14.0.2+12-46, mixed mode, sharing)
-  ```
-
-- IDE：IntelliJ IDE. 
+- IDE：IntelliJ IDE
 
   进入[IntelliJ IDE官网](https://www.jetbrains.com/idea/download/)，下载并安装社区版IntelliJ IDE
 
 ### 第二步. 创建一个Java工程
 
-在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app``。
+在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-3.0``。
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
 ```bash
@@ -466,12 +431,6 @@ repositories {
     }
 }
 ```
-引入Java SDK jar包
-
-```java
-testCompile group: 'junit', name: 'junit', version: '4.12'
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
-```
 
 ### 第四步. 配置SDK证书
 修改``build.gradle``文件，引入Spring框架。
@@ -493,7 +452,7 @@ dependencies {
 }
 ```
 
-在``asset-app/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
+在``asset-app-3.0/src/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
 
 applicationContext.xml的内容如下：
 
@@ -853,7 +812,7 @@ TransactionReceipt receipt = asset.register(assetAccount, amount);
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-在``asset-app/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
+在``asset-app-3.0/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 
 ```bash
 #!/bin/bash 
@@ -898,7 +857,7 @@ function usage()
     java -Djdk.tls.namedGroups="secp256k1" -cp 'apps/*:conf/:lib/*' org.fisco.bcos.asset.client.AssetClient $@
 ```
 
-接着，配置好log。在``asset-app-3.0/test/resources``目录下创建``log4j.properties``
+接着，配置好log。在``asset-app-3.0/src/test/resources``目录下创建``log4j.properties``
 
 ```properties
 ### set log levels ###
@@ -920,44 +879,7 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %C{1}.%M(%L) | %m%n
 ```
 
-接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app-3.0/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
-
-```groovy
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1")
-    compile spring
-    compile ('org.slf4j:slf4j-log4j12:1.7.25')
-    runtime ('org.slf4j:slf4j-log4j12:1.7.25')
-}
-jar {
-    destinationDir file('dist/apps')
-    archiveName project.name + '.jar'
-    exclude '**/*.xml'
-    exclude '**/*.properties'
-    exclude '**/*.crt'
-    exclude '**/*.key'
-
-    doLast {
-        copy {
-            from configurations.runtime
-            into 'dist/lib'
-        }
-        copy {
-            from file('src/test/resources/')
-            into 'dist/conf'
-        }
-        copy {
-            from file('tool/')
-            into 'dist/'
-        }
-        copy {
-            from file('src/test/resources/contract')
-            into 'dist/contract'
-        }
-    }
-}
-```
+接着，通过配置gradle中的Jar命令，指定复制和编译任务。并引入日志库，在``asset-app-3.0/src/test/resources``目录下，创建一个空的``contract.properties``文件，用于应用在运行时存放合约地址。
 
 至此，我们已经完成了这个应用的开发。最后，我们得到的asset-app-3.0的目录结构如下：
 
@@ -983,11 +905,9 @@ jar {
 |   |   |-- resources
 |   |        |-- conf
 |   |               |-- ca.crt
-|   |               |-- node.crt
-|   |               |-- node.key
+|   |               |-- cert.cnf
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
-|   |               |-- sdk.publickey
 |   |        |-- applicationContext.xml // 项目配置文件
 |   |        |-- contract.properties // 存储部署合约地址的文件
 |   |        |-- log4j.properties // 日志配置文件
@@ -995,20 +915,18 @@ jar {
 |   |                |-- Asset.sol
 |   |                |-- KVTable.sol
 |   |-- test
-|       |-- resources // 存放代码资源文件
-|           |-- conf
-|                  |-- ca.crt
-|                  |-- node.crt
-|                  |-- node.key
-|                  |-- sdk.crt
-|                  |-- sdk.key
-|                  |-- sdk.publickey
-|           |-- applicationContext.xml // 项目配置文件
-|           |-- contract.properties // 存储部署合约地址的文件
-|           |-- log4j.properties // 日志配置文件
-|           |-- contract //存放solidity约文件
-|                   |-- Asset.sol
-|                   |-- KVTable.sol
+|   |    |-- resources // 存放代码资源文件
+|   |       |-- conf
+|   |               |-- ca.crt
+|   |               |-- cert.cnf
+|   |               |-- sdk.crt
+|   |               |-- sdk.key
+|   |       |-- applicationContext.xml // 项目配置文件
+|   |       |-- contract.properties // 存储部署合约地址的文件
+|   |       |-- log4j.properties // 日志配置文件
+|   |       |-- contract //存放solidity约文件
+|   |               |-- Asset.sol
+|   |               |-- KVTable.sol
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本
