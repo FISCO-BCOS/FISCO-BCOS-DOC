@@ -24,7 +24,7 @@
 
 ### 第一步. 设计智能合约
 
-**存储设计**
+#### 存储设计
 
 针对本应用需要设计一个存储资产管理的表，该表字段如下：
 
@@ -40,11 +40,11 @@
 
 在本示例中，使用rust自带的Mapping作为存储字段进行记录。
 
-**接口设计**
+#### 接口设计
 
  按照业务的设计目标，需要实现资产注册，转账，查询功能，对应功能的接口如下：
 
-```js
+```solidity
 // 查询资产金额
 pub fn select(&mut self, account: String) -> (bool, u128)
 // 资产注册
@@ -93,17 +93,18 @@ asset/
 
 其中各文件的功能如下：
 
--   `.gitignore`：隐藏文件，用于告诉版本管理软件[Git](https://git-scm.com/)哪些文件或目录不需要被添加到版本管理中。WBC-Liquid 会默认将某些不重要的问题件（如编译过程中生成的临时文件）排除在版本管理之外，如果不需要使用 Git 管理对项目版本进行管理，可以忽略该文件；
+- `.gitignore`：隐藏文件，用于告诉版本管理软件[Git](https://git-scm.com/)哪些文件或目录不需要被添加到版本管理中。WBC-Liquid 会默认将某些不重要的问题件（如编译过程中生成的临时文件）排除在版本管理之外，如果不需要使用 Git 管理对项目版本进行管理，可以忽略该文件；
 
--   `.liquid/`：隐藏目录，用于实现 WBC-Liquid 智能合的内部功能，其中`abi_gen`子目录下包含了 ABI 生成器的实现，该目录下的编译配置及代码逻辑是固定的，如果被修改可能会造成无法正常生成 ABI；
+- `.liquid/`：隐藏目录，用于实现 WBC-Liquid 智能合的内部功能，其中`abi_gen`子目录下包含了 ABI 生成器的实现，该目录下的编译配置及代码逻辑是固定的，如果被修改可能会造成无法正常生成 ABI；
 
--   `Cargo.toml`：项目配置清单，主要包括项目信息、外部库依赖、编译配置等，一般而言无需修改该文件，除非有特殊的需求（如引用额外的第三方库、调整优化等级等）；
+- `Cargo.toml`：项目配置清单，主要包括项目信息、外部库依赖、编译配置等，一般而言无需修改该文件，除非有特殊的需求（如引用额外的第三方库、调整优化等级等）；
 
--   `src/lib.rs`：WBC-Liquid 智能合约项目根文件，合约代码存放于此文件中。智能合约项目创建完毕后，`lib.rs`文件中会自动填充部分样板代码，我们可以基于这些样板代码做进一步的开发。
+- `src/lib.rs`：WBC-Liquid 智能合约项目根文件，合约代码存放于此文件中。智能合约项目创建完毕后，`lib.rs`文件中会自动填充部分样板代码，我们可以基于这些样板代码做进一步的开发。
 
 我们将Asset liquid中的代码复制至`lib.rs`文件中后，便可进行后续步骤。
 
 Asset liquid的内容如下：
+
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -337,6 +338,7 @@ public class Asset extends Contract {
 ## 4. 创建区块链应用项目
 
 ### 第一步. 安装环境
+
 首先，我们需要安装JDK以及集成开发环境
 
 - Java：JDK 11 （JDK1.8 至JDK 14都支持）
@@ -352,6 +354,7 @@ public class Asset extends Contract {
 在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-liquid``。
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
+
 ```shell
 $ cd ~/fisco
 
@@ -367,8 +370,10 @@ $ tar -zxf asset-app-3.0-liquid.tar.gz
 ```
 
 ### 第三步. 引入FISCO BCOS Java SDK
+
 在build.gradle文件中的``dependencies``下加入对FISCO BCOS Java SDK的引用。
-```
+
+```groovy
 repositories {
     mavenCentral()
     maven {
@@ -411,84 +416,83 @@ applicationContext.xml的内容如下：
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-	<bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
-		<property name="cryptoMaterial">
-			<map>
-				<entry key="certPath" value="conf" />
-				<entry key="useSMCrypto" value="false"/>
-				<!-- SSL certificate configuration -->
-				<!-- entry key="caCert" value="conf/ca.crt" /-->
-				<!-- entry key="sslCert" value="conf/sdk.crt" /-->
-				<!-- entry key="sslKey" value="conf/sdk.key" /-->
-				<!-- GM SSL certificate configuration -->
-				<!-- entry key="caCert" value="conf/gm/gmca.crt" /-->
-				<!-- entry key="sslCert" value="conf/gm/gmsdk.crt" /-->
-				<!-- entry key="sslKey" value="conf/gm/gmsdk.key" /-->
-				<!--entry key="enSslCert" value="conf/gm/gmensdk.crt" /-->
-				<!--entry key="enSslKey" value="conf/gm/gmensdk.key" /-->
-			</map>
-		</property>
-		<property name="network">
-			<map>
-				<entry key="peers">
-					<list>
-						<value>127.0.0.1:20200</value>
-						<value>127.0.0.1:20201</value>
-					</list>
-				</entry>
-				<entry key="defaultGroup" value="group" />
-			</map>
-		</property>
-		<!--
-		<property name="amop">
-			<list>
-				<bean id="amopTopic1" class="org.fisco.bcos.sdk.config.model.AmopTopic">
-					<property name="topicName" value="PrivateTopic1" />
-					<property name="password" value="" />
-					<property name="privateKey" value="" />
-					<property name="publicKeys">
-						<list>
-							<value>conf/amop/consumer_public_key_1.pem</value>
-						</list>
-					</property>
-				</bean>
-			</list>
-		</property>
-		-->
-		<property name="account">
-			<map>
-				<entry key="keyStoreDir" value="account" />
-				<entry key="accountAddress" value="" />
-				<entry key="accountFileFormat" value="pem" />
-				<entry key="password" value="" />
-				<entry key="accountFilePath" value="" />
-			</map>
-		</property>
-		<property name="threadPool">
-			<map>
-				<entry key="channelProcessorThreadSize" value="16" />
-				<entry key="receiptProcessorThreadSize" value="16" />
-				<entry key="maxBlockingQueueSize" value="102400" />
-			</map>
-		</property>
-	</bean>
+  <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
+    <property name="cryptoMaterial">
+      <map>
+        <entry key="certPath" value="conf" />
+        <entry key="useSMCrypto" value="false"/>
+        <!-- SSL certificate configuration -->
+        <!-- entry key="caCert" value="conf/ca.crt" /-->
+        <!-- entry key="sslCert" value="conf/sdk.crt" /-->
+        <!-- entry key="sslKey" value="conf/sdk.key" /-->
+        <!-- GM SSL certificate configuration -->
+        <!-- entry key="caCert" value="conf/gm/gmca.crt" /-->
+        <!-- entry key="sslCert" value="conf/gm/gmsdk.crt" /-->
+        <!-- entry key="sslKey" value="conf/gm/gmsdk.key" /-->
+        <!--entry key="enSslCert" value="conf/gm/gmensdk.crt" /-->
+        <!--entry key="enSslKey" value="conf/gm/gmensdk.key" /-->
+      </map>
+    </property>
+    <property name="network">
+      <map>
+        <entry key="peers">
+          <list>
+            <value>127.0.0.1:20200</value>
+            <value>127.0.0.1:20201</value>
+          </list>
+        </entry>
+        <entry key="defaultGroup" value="group" />
+      </map>
+    </property>
+    <!--
+    <property name="amop">
+      <list>
+        <bean id="amopTopic1" class="org.fisco.bcos.sdk.config.model.AmopTopic">
+          <property name="topicName" value="PrivateTopic1" />
+          <property name="password" value="" />
+          <property name="privateKey" value="" />
+          <property name="publicKeys">
+            <list>
+              <value>conf/amop/consumer_public_key_1.pem</value>
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+    -->
+    <property name="account">
+      <map>
+        <entry key="keyStoreDir" value="account" />
+        <entry key="accountAddress" value="" />
+        <entry key="accountFileFormat" value="pem" />
+        <entry key="password" value="" />
+        <entry key="accountFilePath" value="" />
+      </map>
+    </property>
+    <property name="threadPool">
+      <map>
+        <entry key="threadPoolSize" value="16" />
+      </map>
+    </property>
+  </bean>
 
-	<bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
-		<constructor-arg name="configProperty">
-			<ref bean="defaultConfigProperty"/>
-		</constructor-arg>
-	</bean>
+  <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
+    <constructor-arg name="configProperty">
+      <ref bean="defaultConfigProperty"/>
+    </constructor-arg>
+  </bean>
 
-	<bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
-		<constructor-arg name="configOption">
-			<ref bean="defaultConfigOption"/>
-		</constructor-arg>
-	</bean>
+  <bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
+    <constructor-arg name="configOption">
+      <ref bean="defaultConfigOption"/>
+    </constructor-arg>
+  </bean>
 </beans>
 ```
+
 **注意：** 如果搭链时设置的 rpc listen_ip 为127.0.0.1或者0.0.0.0，listen_port 为20200，则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的 `[rpc]`配置的`listen_ip:listen_port`。
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
@@ -506,6 +510,7 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources
 ```
 
 ## 5. 业务逻辑开发
+
 我们已经介绍了如何在自己的项目中引入以及配置Java SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。
 
 ### 第一步 将3编译好的Java合约引入项目中
@@ -737,7 +742,8 @@ public class AssetClient {
 ```
 
 让我们通过AssetClient这个例子，来了解FISCO BCOS Java SDK的调用：
--   初始化
+
+- 初始化
 
 初始化代码的主要功能为构造Client与CryptoKeyPair对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 
@@ -754,7 +760,7 @@ client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
 logger.debug("create client for group, account address is " + cryptoKeyPair.getAddress());
 ```
 
--   构造合约类对象
+- 构造合约类对象
 
 可以使用deploy或者load函数初始化合约对象，两者使用场景不同，前者适用于初次部署合约，后者在合约已经部署并且已知合约地址时使用。
 
@@ -765,7 +771,7 @@ Asset asset = Asset.deploy(client, cryptoKeyPair, assetPath);
 Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 ```
 
--   接口调用
+- 接口调用
 
 使用合约对象调用对应的接口，处理返回结果。
 
@@ -779,6 +785,7 @@ TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, am
 ```
 
 在``asset-app-liquid/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
+
 ```shell
 #!/bin/bash
 

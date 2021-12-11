@@ -49,7 +49,7 @@ $ bash gradlew build
 
   # 拷贝配置文件
   # 注:
-  #   默认搭建的FISCO BCOS区块链系统Channel端口是20200，若修改了该端口，请同步修改config.toml中的[network.peers]配置选项
+  #   默认搭建的FISCO BCOS区块链系统RPC端口是20200，若修改了该端口，请同步修改config.toml中的[network.peers]配置选项
   $ cp conf/config-example.toml conf/config.toml
   ```
 
