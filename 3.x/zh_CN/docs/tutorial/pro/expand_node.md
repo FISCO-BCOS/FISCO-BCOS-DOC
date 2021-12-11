@@ -21,7 +21,7 @@
    - 若已经安装过tarsnode，且tarsnode处于启动的状态，可忽略本步骤
 ```
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -44,7 +44,7 @@ docker-compose up -d
 
 区块链节点服务的扩容配置可参考`BcosProBuilder`的扩容模板`conf/config-node-expand-example.toml`，具体配置步骤如下：
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -92,7 +92,7 @@ node_count=1
 
 ## 3. 扩容区块链节点服务
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -102,7 +102,7 @@ python3 build_chain.py chain -o expand -t node
 
 执行上述命令后，当脚本输出`expand nodes for the given group success`时，则说明区块链节点服务扩容成功，详细日志输出如下：
 
-```bash
+```shell
 =========================================================
 ----------- expand nodes for the given group -----------
 * reload node config
@@ -135,7 +135,7 @@ upload tar package generated/./groupnode30BcosNodeService.tgz success, config id
 
 扩容过程中生成的RPC服务相关的配置位于`generated/${chainID}/${groupID}/${deploy_ip}`目录，具体如下：
 
-```bash
+```shell
 $ tree generated/chain/group/172.25.0.5
 generated/chain/group/172.25.0.5
 ├── groupnode20BcosNodeService
@@ -166,7 +166,7 @@ s
 
 新节点扩容成功后，可通过控制台的`getGroupPeers`命令查看新增的节点列表：
 
-```bash
+```shell
 [group]: /> getGroupPeers
 peer0: 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27
 peer1: 23d88283fe20c959734c3a3e6f34fb1cb0db9e286ec6e31aa140245ca0bd8aa2a35e288e4d0e10430b8143e06aa46d1b80434a86a8f39980686b43577b415b90
@@ -193,7 +193,7 @@ peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
 
 **步骤2: 将扩容节点加入为观察节点**
 
-```bash
+```shell
 [group]: /> addObserver 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27
 {
     "code":0,
@@ -215,7 +215,7 @@ peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
 
 **步骤3：扩容节点同步到最高块后，将扩容节点加入为共识节点**
 
-```bash
+```shell
 [group]: /> addSealer 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27 1
 {
     "code":0,
@@ -251,7 +251,7 @@ peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
 
 **步骤4：部署和调用合约**
 
-```bash
+```shell
 [group]: /> deploy HelloWorld
 transaction hash: 0x62b2fe3514ca22ea2126b7d6bcab1f2912e03503045b3b806ff2d87d605aca5c
 contract address: 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01

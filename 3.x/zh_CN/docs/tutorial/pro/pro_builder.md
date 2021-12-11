@@ -23,7 +23,7 @@ FISCO BCOS提供了`BcosProBuilder`工具帮助用户快速部署、启停、更
 
 下面是tars服务配置项的示例：
 
-```bash
+```shell
 [tars]
 tars_url = "http://127.0.0.1:3000"
 tars_token = ""
@@ -44,7 +44,7 @@ tars_pkg_dir = ""
 
 链ID为`chain`, RPC与SDK之间、Gateway服务之间均采用RSA加密连接的配置项如下：
 
-```bash
+```shell
 [chain]
 chain_id="chain"
 rpc_sm_ssl=false
@@ -263,7 +263,7 @@ node_count=1
 
 可使用`python3 build_chain.py -h`查看`BcosProBuilder`的使用方法: 
 
-```bash
+```shell
 ----------- help for subcommand 'download_binary' -----------
 usage: build_chain.py download_binary [-h] [-t TYPE] [-v VERSION] [-p PATH]
 

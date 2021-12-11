@@ -9,7 +9,7 @@
 - `CentOs 7.2+`
 - `Ubuntu 18.04+`
 - `Windows 10`
-- `macOs 12`
+- `macOS 12`
 
 **依赖安装:**
 

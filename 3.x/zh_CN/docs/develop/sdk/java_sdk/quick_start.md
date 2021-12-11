@@ -44,18 +44,11 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1')
 
 ### 第三步. 配置SDK证书
 
-参考[Java SDK证书配置](./config.html#id5)。
-
-```eval_rst
-.. note::
-    - 大部分场景仅需要配置 `certPath` 配置项即可，其他配置项不需额外配置；
-    - SDK证书获取：若参考 `安装 <../../../tutorial/air/build_chain.html>`_ 搭建区块链，则参考 `这里 <../../../tutorial/air/config.html#id7>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；若区块链节点参考 `运维部署工具 <../../installation.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath` 指定路径，`certPath`默认为`conf`目录；【FIXME: 没有运维部署工具】
-    - SDK与节点间SSL连接方式，可通过节点配置项 `sm_crypto_channel` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../manual/configuration.html#id10>`_ .【FIXME：SSL连接方式改了】
-```
+参考[SDK连接证书配置](../cert_config.md) 进行配置即可，Java SDK证书配置项细则参考[Java SDK证书配置](./config.html#id5)。
 
 将SDK证书拷贝到Java SDK的示例如下(这里假设SDK证书位于`~/fisco/nodes/127.0.0.1/sdk`目录)：
 
-```bash
+```shell
 # 假设SDK证书位于~/fisco/nodes/127.0.0.1/sdk/目录
 mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```
@@ -66,7 +59,7 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 
 #### 1. 下载控制台
 
-```bash
+```shell
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
 $ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh
@@ -80,7 +73,7 @@ $ cd ~/fisco/console
 
 **然后，将您要用到的Solidity智能合约放入``~/fisco/console/contracts/solidity``的目录**。本次我们用console中的HelloWorld.sol作为例子。保证HelloWorld.sol在指定的目录下。
 
-```bash
+```shell
 # 当前目录~/fisco/console
 $ ls contracts/solidity 
 ```
@@ -128,7 +121,7 @@ $ bash contract2java.sh solidity -p org.com.fisco
 
 得到返回
 
-```bash
+```shell
 
 *** Compile solidity KVTableTest.sol*** 
 INFO: Compile for solidity KVTableTest.sol success.
@@ -212,7 +205,7 @@ public class BcosSDKTest
 
 ### 附录一. 使用``java-sdk-demo``给智能合约生成调用它的Java工具类
 
-```bash
+```shell
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
 $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
@@ -327,7 +320,7 @@ Java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会
 
 **通过gradle引入`spring`如下**：
 
-```bash
+```shell
 def spring_version = "4.3.27.RELEASE"
 List spring = [
         "org.springframework:spring-core:$spring_version",

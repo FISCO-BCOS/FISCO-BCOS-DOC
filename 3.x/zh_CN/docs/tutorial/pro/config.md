@@ -9,7 +9,7 @@ FISCO BCOS使用tars构建多群组微服务区块链，搭建FISCO BCOS Pro版�
 ## 多群组微服务文件组织结构
 利用区块链构建脚本 `build_chain.py` 可构建 **RpcService** RPC服务，**GatewayService** 网关服务，以及 **NodeService** 节点服务。构建后生成 `generated` 目录，服务配置信息在此目录下。
 
-```bash
+```shell
 generated/
 ├── chain # 链
 │   ├── group # 群组

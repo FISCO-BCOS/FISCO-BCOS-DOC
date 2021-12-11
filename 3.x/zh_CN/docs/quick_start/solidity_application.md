@@ -54,7 +54,7 @@ function transfer(string memory from_account, string memory to_account, uint256 
 ### 第二步. 开发源码
 根据我们第一步的存储和接口设计，创建一个Asset的智能合约，实现注册、转账、查询功能，并引入一个叫KVTable的系统合约，这个合约提供了KV存储接口。 
 
-```bash
+```shell
 # 创建工作目录~/fisco
 mkdir -p ~/fisco
 
@@ -332,7 +332,7 @@ Asset.sol所引用的KVTable.sol已在``~/fisco/console/contracts/solidity``目�
 
 ``.sol``的智能合约需要编译成ABI和BIN文件才能部署至区块链网络上。有了这两个文件即可凭借Java SDK进行合约部署和调用。但这种调用方式相对繁琐，需要用户根据合约ABI来传参和解析结果。为此，控制台提供的编译工具不仅可以编译出ABI和BIN文件，还可以自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。
 
-```bash
+```shell
 # 假设你已经完成控制台的下载操作，若还没有请查看本文第二节的开发源码步骤
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -343,7 +343,7 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
 
-```bash
+```shell
 # 其它无关文件省略
 |-- abi # 生成的abi目录，存放solidity合约编译生成的abi文件
 |   |-- Asset.abi
@@ -403,7 +403,7 @@ public class Asset extends Contract {
 在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-3.0``。
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
-```bash
+```shell
 $ cd ~/fisco
 
 $ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app-3.0-solidity.tar.gz
@@ -544,7 +544,7 @@ applicationContext.xml的内容如下：
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
 
-```bash
+```shell
 # 假设我们将asset-app-3.0放在~/fisco目录下 进入~/fisco目录
 $ cd ~/fisco
 # 创建放置证书的文件夹
@@ -561,7 +561,7 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources
 
 ### 第一步.将3编译好的Java合约引入项目中
 
-```bash
+```shell
 cd ~/fisco  
 # 将编译好的合约Java类引入项目中。
 cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-3.0/src/main/java/org/fisco/bcos/asset/contract/Asset.java
@@ -814,7 +814,7 @@ TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, am
 
 在``asset-app-3.0/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 
-```bash
+```shell
 #!/bin/bash 
 
 function usage() 
@@ -949,7 +949,7 @@ $ ./gradlew build
 
 -   部署`Asset.sol`合约
 
-```bash
+```shell
 # 进入dist目录
 $ cd dist
 $ bash asset_run.sh deploy
@@ -958,7 +958,7 @@ Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c46
 
 -   注册资产
 
-```bash
+```shell
 $ bash asset_run.sh register Alice 100000
 Register account successfully => account: Alice, value: 100000
 $ bash asset_run.sh register Bob 100000
@@ -967,7 +967,7 @@ Register account successfully => account: Bob, value: 100000
 
 -   查询资产
 
-```bash
+```shell
 $ bash asset_run.sh query Alice
 account Alice, value 100000
 $ bash asset_run.sh query Bob
@@ -976,7 +976,7 @@ account Bob, value 100000
 
 -   资产转移
 
-```bash
+```shell
 $ bash asset_run.sh transfer Alice Bob  50000
 Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000
 $ bash asset_run.sh query Alice

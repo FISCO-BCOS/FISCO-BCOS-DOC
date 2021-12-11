@@ -19,20 +19,20 @@ FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 
 **安装Ubuntu依赖(版本不小于Ubuntu18.04)**
 
-```bash
+```shell
 sudo apt-get update
 sudo apt-get install -y curl docker docker-compose python3
 ```
 
 **安装CentOS依赖(版本不小于CentOS 7)**
 
-```bash
+```shell
 sudo yum install -y curl docker docker-compose python3 python3-devel
 ```
 
 **安装macOS依赖**
 
-```bash
+```shell
 brew install curl docker docker-compose python3
 ```
 
@@ -44,7 +44,7 @@ brew install curl docker docker-compose python3
    - 若从github下载部署工具 ``BcosProBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 ```
 
-```bash
+```shell
 # 创建操作目录
 mkdir -p ~/fisco && cd ~/fisco
 
@@ -76,7 +76,7 @@ Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服�
 
 **安装tars服务：若是首次运行tars服务，请您运行如下命令安装并启动tars服务。**
 
-```bash
+```shell
 # 进入BcosProBuilder目录
 cd ~/fisco/BcosProBuilder
 
@@ -103,7 +103,7 @@ docker-compose up -d
 
 **启动tars服务：若之前已经安装过tars服务，请您运行如下命令直接启动tars服务。**
 
-```bash
+```shell
 # 进入BcosProBuilder目录
 cd ~/fisco/BcosProBuilder
 
@@ -173,7 +173,7 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
    - 若下载二进制比较慢，请尝试: ``python3 build_chain.py download_binary -t cdn``
 ```
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -188,7 +188,7 @@ python3 build_chain.py download_binary -t cdn
 
 在建链工具BcosProBuilder目录，执行如下命令，可部署并启动2机构RPC服务，对应的RPC服务名分别为`agencyABcosRpcService`和`agencyBBcosRpcService`，ip均为`172.25.0.3`，占用的监听端口分别为`20200`和`20201`(进行本操作前，请确保机器的`20200`和`20201`端口没被占用)。
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -208,7 +208,7 @@ python3 build_chain.py chain -o deploy -t rpc
 
 执行上述命令后，当脚本输出`deploy service success, type: rpc`时，则说明RPC服务部署成功，详细日志输出如下：
 
-```bash
+```shell
 =========================================================
 ----------- deploy service, type: rpc -----------
 =========================================================
@@ -249,7 +249,7 @@ upload tar package generated/./agencyBBcosRpcService.tgz success, config id: 15
 
 部署过程中生成的RPC服务相关的配置位于`generated/rpc/${chainID}`目录，具体如下：
 
-```bash
+```shell
 $ tree generated/rpc/chain
 generated/rpc/chain
 ├── 172.25.0.3 
@@ -299,7 +299,7 @@ RPC服务启动成功后，可在tars网页管理平台看到服务列表`agency
 
 RPC服务部署完成后，需要再部署Gateway服务，用于建立机构之间的网络连接。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构Gateway服务，对应的Gateway服务名分别为`agencyABcosGatewayService`和`agencyBBcosGatewayService`，ip均为`172.25.0.3`，占用的端口分别为`30300`和`30301`(进行本操作前，请确保机器的`30300`和`30301`端口没被占用)。
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -309,7 +309,7 @@ python3 build_chain.py chain -o deploy -t gateway
 
 执行上述命令后，当脚本输出`deploy service success, type: gateway`时，则说明RPC服务部署成功，详细日志输出如下：
 
-```bash
+```shell
 =========================================================
 ----------- deploy service, type: gateway -----------
 =========================================================
@@ -352,7 +352,7 @@ upload tar package generated/./agencyBBcosGatewayService.tgz success, config id:
 
 部署过程中生成的RPC服务相关的配置位于`generated/gateway/${chainID}`目录，具体如下：
 
-```bash
+```shell
 $ tree generated/gateway/chain
 generated/gateway/chain
 ├── 172.25.0.3
@@ -393,7 +393,7 @@ Gateway服务启动成功后，可在tars网页管理平台看到服务列表`ag
 
 RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，链ID均为`chain`，群组ID均为`group`。
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -402,7 +402,7 @@ python3 build_chain.py chain -o deploy -t node
 ```
 执行上述命令后，当脚本输出`deploy all nodes of the given group success`时，则说明区块链节点服务部署成功，详细日志输出如下：
 
-```bash
+```shell
 =========================================================
 ----------- deploy all nodes of the given group -----------
 generate config for chain = chain, group = group
@@ -434,7 +434,7 @@ upload tar package generated/./groupnode10BcosNodeService.tgz success, config id
 ```
 部署过程中生成的RPC服务相关的配置位于`generated/${chainID}`(`chainID`默认为`chain`)目录，具体如下：
 
-```bash
+```shell
 $ tree generated/chain
 generated/chain
 └── group
@@ -472,7 +472,7 @@ generated/chain
 
 使用控制台之前，需先安装java环境：
 
-```bash
+```shell
 # ubuntu系统安装java
 sudo apt install -y default-jdk
 
@@ -484,7 +484,7 @@ sudo yum install -y java java-devel
 
 **步骤1：下载控制台**
 
-```bash
+```shell
 cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
@@ -498,27 +498,27 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 若RPC服务未采用默认端口，请将文件中的20200替换成RPC服务监听端口。
 
-```bash
+```shell
 # 最新版本控制台使用如下命令拷贝配置文件
 cp -n console/conf/config-example.toml console/conf/config.toml
 ```
 
 - 配置控制台证书
 
-```bash
+```shell
 # 可通过命令 find . -name sdk找到所有SDK证书路径
 cp -r BcosProBuilder/generated/rpc/chain/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
 ```
 
 **步骤3：启动并使用控制台**
 
-```bash
+```shell
 cd ~/fisco/console && bash start.sh
 ```
 
 输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确以及是否配置了SDK证书：
 
-```bash
+```shell
 =============================================================================================
 Welcome to FISCO BCOS console(3.0.0-rc1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
@@ -538,7 +538,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 - 用控制台获取信息
 
-```bash
+```shell
 # 获取网络连接信息：
 [group]: /> getPeers
 PeersInfo{
@@ -615,7 +615,7 @@ contract HelloWorld {
 
 为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录`contracts/solidity/HelloWorld。sol`，参考下面命令部署：
 
-```bash
+```shell
 # 在控制台输入以下指令 部署成功则返回合约地址
 [group]: /> deploy HelloWorld
 transaction hash: 0x0fe66c42f2678b8d041624358837de34ac7db195abb6f5a57201952062190590
@@ -629,7 +629,7 @@ currentAccount: 0x537149148696c7e6c3449331d77ddfaabc3c7a75
 
 **步骤3. 调用HelloWorld合约**
 
-```bash
+```shell
 # 调用get接口获取name变量，此处的合约地址是deploy指令返回的地址
 [group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
 ---------------------------------------------------------------------------------------------

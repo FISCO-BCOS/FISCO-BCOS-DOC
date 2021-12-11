@@ -4,7 +4,7 @@
 
 ----
 
-## 1. 通过Java SDK进行压力测试
+## 通过Java SDK进行压力测试
 
 Java SDK Demo是基于[Java SDK](./sdk/java_sdk/index.md)的基准测试集合，能够对FISCO BCOS节点进行压力测试。Java SDK Demo提供有合约编译功能，能够将Solidity合约文件转换成Java合约文件，此外还提供了针对转账合约、CRUD合约以及AMOP功能的压力测试示例程序。
 
@@ -12,7 +12,7 @@ Java SDK Demo是基于[Java SDK](./sdk/java_sdk/index.md)的基准测试集合�
 
 Java SDK Demo中的测试程序能够在部署有JDK 1.8 ~ JDK 14的环境中运行，执行测试程序前请先确保已安装所需版本的JDK。以在Ubuntu系统中安装OpenJDK 11为例：
 
-  ```bash
+  ```shell
 # 安装open JDK 11
 $ sudo apt install openjdk-11-jdk
 # 验证Java版本
@@ -25,7 +25,7 @@ $ java --version
 
 ### 第二步. 编译源码
 
-  ```bash
+  ```shell
 # 下载源码
 $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
 $ cd java-sdk-demo
@@ -43,7 +43,7 @@ $ bash gradlew build
 
 使用Java SDK Demo之前，需要首先配置Java SDK，包括证书拷贝以及端口配置，详细请参考[这里](./sdk/java_sdk/quick_start.md)
 
-  ```bash
+  ```shell
   # 拷贝证书(假设SDK证书位于~/fisco/nodes/127.0.0.1/sdk目录，请根据实际情况更改路径)
   $ cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 
@@ -59,7 +59,7 @@ Java SDK Demo提供了一系列压测程序，包括串行转账合约压测、�
 
 **注意：下面的压力测试程序均为EVM的节点执行环境，节点配置详情请参考：[节点配置](../tutorial/air/config.md)**
 
-  ```bash
+  ```shell
 # 进入dist目录
 $ cd dist
 
@@ -134,5 +134,12 @@ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelLiquidPerf [g
 # tps: 压测的QPS
 # file: 转账用户文件
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelLiquidPerf [groupId] [transfer] [count] [tps] [file]
+```
+
+### 压力测试示例
+
+
+
+```shell
 ```
 

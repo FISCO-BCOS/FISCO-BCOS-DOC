@@ -20,7 +20,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
     为便于开发和体验，p2p模块默认监听IP是 `0.0.0.0` ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如内网IP或特定的外网IP
 ```
 
-```bash
+```shell
 # 键入bash build_chain.sh -h展示脚本用法及参数
 $ bash build_chain.sh
 Usage:
@@ -79,7 +79,7 @@ expand node e.g
 
 指定30300为P2P服务监听的起始端口；20200为RPC服务监听的起始端口示例如下：
 
-```bash
+```shell
 # 两个节点的P2P服务分别占用30300和30301端口
 # RPC服务分别占用20200和20201端口
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2
@@ -94,7 +94,7 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2
 - **区块链节点之间采用国密SSL连接**。
 
 搭建单机四节点国密区块链节点的示例如下：
-```bash
+```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 ```
 
@@ -112,13 +112,13 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 
 可在节点目录下执行如下命令启动docker节点:
 
-```bash
+```shell
 ./start.sh
 ```
 
 该模式下 start.sh 脚本启动节点的命令如下
 
-```bash
+```shell
 docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc1 -c config.ini -g config.genesis
 ```
 
@@ -134,7 +134,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 部署开启权限控制的Air版本区块链示例如下：
 
-```bash
+```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -A
 [INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/fisco-bcos-macOS-x86_64.tar.gz ...
 [INFO] Generate ca cert successfully!
@@ -177,7 +177,7 @@ Processing IP:127.0.0.1 Total:4
 
 单机四节点Air版本非国密区块链的配置文件组织示例如下:
 
-```bash
+```shell
 nodes/
 ├── 127.0.0.1
 │   ├── fisco-bcos # 二进制程序

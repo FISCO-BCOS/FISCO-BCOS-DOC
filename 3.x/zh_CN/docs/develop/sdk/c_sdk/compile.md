@@ -27,7 +27,7 @@ bcos-c-sdk.sln
 打开成功之后,右键点击解决方案`ALL BUILD`,开始编译
 编译生成`build/Release/c-sdk.lib`
 
-- `Ubuntu`、`CentOS`、`macOs`编译
+- `Ubuntu`、`CentOS`、`macOS`编译
 
 ```shell
 cd bcos-c-sdk

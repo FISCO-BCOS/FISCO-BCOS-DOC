@@ -346,14 +346,13 @@ Event: {}
 - 合约名：(可选)合约名称，默认情况下使用合约文件名作为合约名参数
 
 ```shell
-[group]: />  listAbi TableTest
+[group]: /> listAbi KVTableTest
 Method list:
  name                |    constant  |    methodId    |    signature
   --------------------------------------------------------------
- remove              |    false     |    0x0fe1160f  |    remove(string,int256)
- update              |    false     |    0x49cc36b5  |    update(string,int256,string)
- select              |    true      |    0x5b325d78  |    select(string)
- insert              |    false     |    0xe020d464  |    insert(string,int256,string)
+ createTable         |    false     |    56004b6a    |    createTable(string,string,string)
+ set                 |    false     |    da465d74    |    set(string,string,string)
+ get                 |    true      |    693ec85e    |    get(string)
 
 Event list:
  name                |   topic                                                                   signature
@@ -374,11 +373,11 @@ Event list:
 [group]: />  getDeployLog 2
 
 2019-05-26 08:37:03  [group]  HelloWorld            0xc0ce097a5757e2b6e189aa70c7d55770ace47767
-2019-05-26 08:37:45  [group]  TableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
+2019-05-26 08:37:45  [group]  KVTableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
 [group]: />  getDeployLog 1
 
-2019-05-26 08:37:45  [group]  TableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
+2019-05-26 08:37:45  [group]  KVTableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
@@ -411,7 +410,7 @@ contract address: 0xf68a1aabfad336847e109c33ca471b192c93c0a9
 }
 
 # 部署TableTest合约
-[group]: />  deployByCNS TableTest 1.0
+[group]: />  deployByCNS KVTableTest 1.0
 transaction hash: 0x288ccc6e166e43f5cd3bd563e00af48988e641196aaea57a59f0ab256e23c84e
 contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 {
@@ -501,18 +500,6 @@ Return values:
 ]
 ---------------------------------------------------------------------------------------------
 
-# 调用HelloWorld合约最新版(即2.0版)，通过get接口获取name字符串
-[group]: />  callByCNS HelloWorld get
----------------------------------------------------------------------------------------------
-Return code: 0
-description: transaction executed successfully
-Return message: Success
----------------------------------------------------------------------------------------------
-Return values:
-[
-    "Hello,CNS2"
-]
----------------------------------------------------------------------------------------------
 ```
 
 ### 9. registerCNS
@@ -528,7 +515,7 @@ Return values:
 ```shell
 [group]: />  registerCNS HelloWorld 0xf19a7ec01f0b1adb16a033f0a30fb321ec6edcbf v1.0.0
 {
-    "code":1,
+    "code":0,
     "msg":"success"
 }
 ```
@@ -978,12 +965,13 @@ PeersInfo{
 # 控制台连接非国密区块链时，账户文件自动保存在`account/ecdsa`目录
 # 控制台连接国密区块链时，账户文件自动保存在`accout/gm`目录下
 [group]: />  newAccount
-AccountPath: account/ecdsa/0x6fad87071f790c3234108f41b76bb99874a6d813.pem
-newAccount: 0x6fad87071f790c3234108f41b76bb99874a6d813
+AccountPath: account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+Note: This operation does not create an account in the blockchain, but only creates a local account, and deploying a contract through this account will create an account in the blockchain
+newAccount: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 AccountType: ecdsa
 
-$ ls -al account/ecdsa/0x6fad87071f790c3234108f41b76bb99874a6d813.pem
-$ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x6fad87071f790c3234108f41b76bb99874a6d813.pem
+$ ls -al account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+$ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
 ```
 
 ### 2. loadAccount
