@@ -26,7 +26,7 @@ Air版本区块链扩容时，需要提前准备证书和配置文件，用于�
 ```
 这里以[搭建第一个区块链网络](../quick_start.md)为基础，基于`node0`扩容一个新节点`node4`为例：
 
-```bash
+```shell
 # 进入操作目录(Note: 进行本操作之前，请参考【搭建第一个区块链网络节点】部署一条Air版FISCO BCOS区块链)
 $ cd ~/fisco/nodes
 
@@ -68,7 +68,7 @@ $ cat config/nodes.json
 
 准备好配置文件后，使用建链脚本`build_chain.sh`扩容新节点node4：
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco
 
@@ -80,7 +80,7 @@ bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node4
 ```
 当节点输出`All completed. Files in nodes/127.0.0.1/node4`说明生成扩容配置成功，输出的日志如下：
 
-```bash
+```shell
 [INFO] Use binary bin/fisco-bcos
 [INFO] generate_node_scripts ...
 [INFO] generate_node_scripts success...
@@ -101,7 +101,7 @@ bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node4
 
 扩容节点node4目录如下：
 
-```bash
+```shell
 $ tree nodes/127.0.0.1/node4
 nodes/127.0.0.1/node4
 ├── conf
@@ -120,7 +120,7 @@ nodes/127.0.0.1/node4
 
 **步骤2：启动扩容节点**
 
-```bash
+```shell
 bash nodes/127.0.0.1/node4/start.sh
 ```
 
@@ -134,7 +134,7 @@ bash nodes/127.0.0.1/node4/start.sh
 
 **步骤1：检查是否所有节点均启动**
 
-```bash
+```shell
 fisco        79637   4.5  0.1  4979692  19072 s005  S     6:22下午   0:11.49 /home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini -g config.genesis
 fisco        79695   4.4  0.1  4979692  19080 s005  S     6:22下午   0:11.56 /home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini -g config.genesis
 fisco        79671   4.3  0.1  5241836  19192 s005  S     6:22下午   0:11.59 /home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini -g config.genesis
@@ -143,7 +143,7 @@ fisco        78968   3.6  0.1  5110764  19116 s005  S     6:16下午   0:21.27 /
 ```
 
 **步骤2：确定节点NodeID**
-```bash
+```shell
 # 进入操作目录
 $ cd ~/fisco
 
@@ -154,7 +154,7 @@ $ cat nodes/127.0.0.1/node4/conf/node.nodeid
 
 **步骤3：通过控制台将节点加为观察节点**
 
-```bash
+```shell
 =============================================================================================
 Welcome to FISCO BCOS console(3.0.0-rc1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
@@ -190,7 +190,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
    为了保证新节点加入不影响共识，须先将扩容节点加入为观察节点，当扩容节点同步到最新区块时，再将其加入到共识节点。
 ```
 
-```bash
+```shell
 # 将扩容节点加入为共识节点
 [group]: /> addSealer 51f25a366613ec7524910e3750407278be33d1dd6583b35503dff63d2219469bda55ee4c869a6583526ef1924a3143b776e2553bd07494dfc24716ced3638105 1
 {

@@ -20,20 +20,20 @@
 
 **安装macOS依赖**
 
-```bash
+```shell
 brew install curl openssl
 ```
 
 **安装ubuntu依赖**
 
-```bash
+```shell
 sudo apt install -y curl openssl
 
 ```
 
 **安装centos依赖**
 
-```bash
+```shell
 sudo yum install -y curl openssl openssl-devel
 ```
 
@@ -44,7 +44,7 @@ sudo yum install -y curl openssl openssl-devel
    如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-```bash
+```shell
 # 创建操作目录
 cd ~ && mkdir -p fisco && cd fisco
 
@@ -64,7 +64,7 @@ curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-
 
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链:
 
-```bash
+```shell
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
 ```
 
@@ -76,7 +76,7 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
 
 命令成功后会输出`All completed`：
 
-```bash
+```shell
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
@@ -98,12 +98,12 @@ Processing IP:127.0.0.1 Total:4
 
 - 启动所有节点
 
-```bash
+```shell
 bash nodes/127.0.0.1/start_all.sh
 ```
 启动成功会输出如下信息。否则请使用`netstat -an |grep tcp`检查机器`30300~30303, 20200~20203`端口是否被占用。
 
-```bash
+```shell
 try to start node0
  node0 start successfully
 try to start node1
@@ -118,7 +118,7 @@ try to start node3
 
 - 检查进程是否启动
 
-```bash
+```shell
 ps aux |grep -v grep |grep fisco-bcos
 ```
 
@@ -137,13 +137,13 @@ fisco        35307   6.6  0.2  5301996  57568 s003  S     2:25下午   0:31.93 /
 
 以node0为例：
 
-```bash
+```shell
 tail -f nodes/127.0.0.1/node0/log/* |grep -i "heartBeat,connected count"
 ```
 
 正常情况下会每间隔10秒输出连接信息，从输出日志可看出node0与另外3个节点均有连接，网络连接正常：
 
-```bash
+```shell
 info|2021-11-23 14:36:13.839347|[P2PService][Service]heartBeat,connected count=3
 info|2021-11-23 14:36:23.844032|[P2PService][Service]heartBeat,connected count=3
 info|2021-11-23 14:36:33.848776|[P2PService][Service]heartBeat,connected count=3
@@ -158,7 +158,7 @@ info|2021-11-23 14:36:43.852888|[P2PService][Service]heartBeat,connected count=3
 
 控制台运行依赖java环境(推荐使用java 14)，安装命令如下：
 
-```bash
+```shell
 # ubuntu系统安装java
 sudo apt install -y default-jdk
 
@@ -181,7 +181,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 - 拷贝控制台配置文件
 
-```bash
+```shell
 cp -n console/conf/config-example.toml console/conf/config.toml
 ```
 
@@ -194,7 +194,7 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 控制台与节点之间默认开启SSL连接，控制台需要配置证书才可连接节点。开发建链脚本在生成节点的同时，生成了SDK证书，可直接拷贝生成的证书供控制台使用：
 
-```bash
+```shell
 cp -r nodes/127.0.0.1/sdk/* console/conf
 ```
 
@@ -208,14 +208,14 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 
 - 启动
 
-```bash
+```shell
 cd ~/fisco/console && bash start.sh
 ```
 
 
 输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
-```bash
+```shell
 =============================================================================================
 Welcome to FISCO BCOS console(3.0.0-rc1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
@@ -235,7 +235,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 - 用控制台获取信息
 
-```bash
+```shell
 # 获取节点列表信息
 [group]: /> getGroupPeers
 peer0: 48fde62f1d2dc59a65bed2e3bb9bd199de26de6b9894e2201199726d6e9e98d090bb1d7e22c931b412728a832ffacdd2727b34fc808f5a755af6bc623c44aba6
@@ -294,7 +294,7 @@ contract HelloWorld {
 
 为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录`contracts/solidity/HelloWorld.sol`，参考下面命令部署：
 
-```bash
+```shell
 # 在控制台输入以下指令 部署成功则返回合约地址
 [group]: /> deploy HelloWorld
 transaction hash: 0x796b573aece250bba891b9251b8fb464d22f41cb36e7cae407b2bd0a870f5b72
@@ -308,7 +308,7 @@ currentAccount: 0x7b047472a4516e9697446576f8c7fcc064f967fa
 
 ### 第三步. 调用HelloWorld合约
 
-```bash
+```shell
 # 调用get接口获取name变量，此处的合约地址是deploy指令返回的地址
 [group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
 ---------------------------------------------------------------------------------------------

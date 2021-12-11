@@ -25,7 +25,7 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 
 要求使用Ubuntu 18.04及以上版本。
 
-```bash
+```shell
 sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison
 ```
 
@@ -33,20 +33,20 @@ sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake fl
 
 要求使用CentOS7以上版本。
 
-```bash
+```shell
 sudo yum install -y epel-release centos-release-scl
 sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel python-devel python3-devel git flex bison devtoolset-7
 ```
 
 - **macOS**
 
-```bash
+```shell
 brew install git flex bison
 ```
 
 ## 2. 克隆代码
 
-```bash
+```shell
 # 创建源码编译目录
 mkdir -p ~/fisco && cd ~/fisco
 
@@ -73,7 +73,7 @@ cd FISCO-BCOS
 
 **要求版本不小于Ubuntu 18.04。**
 
-```bash
+```shell
 # 进入源码目录
 cd ~/fisco/FISCO-BCOS
 
@@ -91,7 +91,7 @@ rm -rf *.tgz && make tar
 
 **要求版本不小于CentOS 7。**
 
-```bash
+```shell
 # 使用gcc7
 source /opt/rh/devtoolset-7/enable
 
@@ -109,7 +109,7 @@ rm -rf *.tgz && make tar
 
 **推荐xcode11以上版本。**
 
-```bash
+```shell
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build

@@ -508,7 +508,7 @@ amop.stop()
 
 ### 第一步：下载项目
 
-```bash
+```shell
 mkdir -p ~/fisco && cd ~/fisco
 # 获取java-sdk代码
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
@@ -527,7 +527,7 @@ bash gradlew build
 
 initEnv.sh
 
-```bash
+```shell
 #!/bin/bash
 download_tassl()
 {
@@ -577,7 +577,7 @@ prepare_environment
 
 运行该文件：
 
-```bash
+```shell
 # 更改文件权限
 chmod 777 initEnv.sh     
 # 运行initEnv.sh文件
@@ -586,7 +586,7 @@ chmod 777 initEnv.sh
 
 运行完成后，终端显示4个节点已经启动，demo环境就已经准备好了。
 
-```bash
+```shell
 FISCO-BCOS Version : 3.0.0-rc1
 Build Time         : 20200814 09:04:17
 Build Type         : Darwin/appleclang/RelWithDebInfo
@@ -621,7 +621,7 @@ gradlew.bat build -x test
 
 新打开一个终端，下载java-sdk-demo的代码，并build。
 
-```bash
+```shell
 cd ~/fisco
 # 获取java-sdk-demo代码
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
@@ -637,7 +637,7 @@ bash gradlew build
 
 **运行订阅者：**
 
-```bash
+```shell
 # 进入java-sdk-demo/dist目录
 cd dist 
 # 使用第三节中所描述的工具
@@ -647,7 +647,7 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopSubscriber t
 
 订阅方的终端输出
 
-```bash
+```shell
 Start test
 ```
 
@@ -655,7 +655,7 @@ Start test
 
 **单播消息**：
 
-```bash
+```shell
 # 调用AmopPublisher发送AMOP消息
 # 话题名：testTopic，是否广播：false(即使用单播)，内容：Tell you something， 发送次数：2次
 java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopPublisher testTopic false "Tell you something" 2
@@ -663,7 +663,7 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopPublisher te
 
 终端输出：
 
-```bash
+```shell
 3s ...
 2s ...
 1s ...
@@ -677,7 +677,7 @@ Step 3:Get response, { errorCode:0 error:null seq:2bc754b1d8844445a4cc2af226fbaa
 
 同时，返回到话题订阅者的终端，发现终端输出：
 
-```bash
+```shell
 Step 2:Receive msg, topic:testTopic content:Tell you something
 |---response:Yes, I received!
 Step 2:Receive msg, topic:testTopic content:Tell you something
@@ -686,7 +686,7 @@ Step 2:Receive msg, topic:testTopic content:Tell you something
 
 **广播消息**：
 
-```bash
+```shell
 # 调用AmopPublisher发送AMOP消息
 # 话题名：testTopic，是否广播：false(即使用单播)，内容：Tell you something， 发送次数：1次
 java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopPublisher testTopic true "Tell you something" 1
@@ -694,7 +694,7 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopPublisher te
 
 终端的输出
 
-```bash
+```shell
 3s ...
 2s ...
 1s ...
@@ -721,7 +721,7 @@ Step 2:Receive msg, topic:testTopic content:Tell you something
 
 **发送文件**：
 
-```bash
+```shell
 # 调用AmopPublisherFile发送AMOP消息文件
 # 话题名：testTopic，是否广播：false(即使用单播)，文件：dist/conf/ca.crt， 发送次数：1次
 java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopPublisherFile testTopic false ../docs/images/FISCO_BCOS_Logo.svg 1
@@ -729,7 +729,7 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.tool.AmopPublisherFil
 
 终端输出
 
-```bash
+```shell
 3s ...
 2s ...
 1s ...
@@ -741,7 +741,7 @@ Step 3:Get response, { errorCode:0 error:null seq:6e6a1e23d7ca47a0a1904bcb0a151f
 
 订阅者终端输出
 
-```bash
+```shell
 Start test
 Step 2:Receive file, filename length:34 filename binary:[46, 46, 47, 100, 111, 99, 115, 47, 105, 109, 97, 103, 101, 115, 47, 70, 73, 83, 67, 79, 95, 66, 67, 79, 83, 95, 76, 111, 103, 111, 46, 115, 118, 103] filename:../docs/images/FISCO_BCOS_Logo.svg
 |---save file:../docs/images/FISCO_BCOS_Logo.svg success

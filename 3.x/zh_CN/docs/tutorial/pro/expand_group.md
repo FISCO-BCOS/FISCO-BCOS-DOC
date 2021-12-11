@@ -26,7 +26,7 @@ Pro版本FISCO BCOS区块链系统支持动态多群组区块链网络，可在�
 
 **macOS系统:**
 
-```bash
+```shell
 # 进入操作目录
 $ cd ~/fisco/BcosProBuilder
 
@@ -54,7 +54,7 @@ vm_type="wasm"
 
 **linux系统:**
 
-```bash
+```shell
 # 进入操作目录
 $ cd ~/fisco/BcosProBuilder
 # 拷贝配置文件
@@ -114,7 +114,7 @@ gateway_service_name = "agencyBBcosGatewayService"
 
 ### 1.2 扩容新群组
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -124,7 +124,7 @@ python3 build_chain.py chain -o deploy -t node
 
 执行上述命令后，当脚本输出`deploy all nodes of the given group success`时，则说明区块链节点扩容新群组成功，详细日志输出如下：
 
-```bash
+```shell
 =========================================================
 ----------- deploy all nodes of the given group -----------
 generate config for chain = chain, group = group2
@@ -157,7 +157,7 @@ upload tar package generated/./group2node10BcosNodeService.tgz success, config i
 
 群组扩容过程中生成的区块链节点相关的配置位于`generated/${chainID}/${groupID}`目录，具体如下：
 
-```bash
+```shell
 $ tree generated/chain/group2
 generated/chain/group2
 └── 172.25.0.3
@@ -235,7 +235,7 @@ mod hello_world {
 }
 ```
 
-```bash
+```shell
 $ bash start group2
 =============================================================================================
 Welcome to FISCO BCOS console(3.0.0-rc1)!
@@ -325,7 +325,7 @@ Return values:(Hello, Fisco)
 
 下线群组`group2`的步骤如下：
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -334,7 +334,7 @@ python3 build_chain.py chain -o undeploy -t node
 ```
 
 执行上述命令后，当脚本输出`undeploy all nodes of the given group success`时，则说明区块链节点下线新群组成功，详细日志输出如下：
-```bash
+```shell
 =========================================================
 ----------- undeploy all nodes of the given group -----------
 undeploy services for all the group nodes

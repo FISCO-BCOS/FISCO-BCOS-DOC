@@ -1,4 +1,4 @@
-# Maven SpringBoot 应用使用示例
+# Maven SpringBoot 应用示例
 
 标签：``spring-boot-crud`` ``开发区块链应用``
 
@@ -29,7 +29,7 @@ git clone https://gitee.com/FISCO-BCOS/spring-boot-crud
 
 设节点路径为`~/fisco/nodes/127.0.0.1`，则可使用如下命令拷贝SDK证书:
 
-```bash
+```shell
 # 进入项目路径
 $ cd spring-boot-crud
 # 创建证书存放路径
@@ -92,7 +92,7 @@ $ bash mvnw install
 
 使用`bash mvnw install`生成的jar包`target/fisco-bcos-spring-boot-crud-0.0.1-SNAPSHOT.jar`启动spring-boot-crud服务：
 
-```bash
+```shell
 # 启动spring-boot-crud(启动成功后会输出create client for group 1 success的日志)
 $ java -jar ./target/fisco-bcos-spring-boot-crud-0.0.1-SNAPSHOT.jar
 ```
@@ -119,7 +119,7 @@ public ResponseData set(@RequestBody Person person) {
 
 **使用curl工具访问接口如下**：
 
-```bash
+```shell
 # 这里假设WebServer监听端口为45000
 # 将用户fisco的信息上链，其中name为fisco, age为6，tel为123456789
 $ curl -H "Content-Type: application/json" -X POST --data '{"name":"fisco", "age":"6", "tel":"123456789"}' http://localhost:45000/set
@@ -140,7 +140,7 @@ public ResponseData get(@PathVariable("name") String name) throws Exception {
 
 **使用curl工具访问接口如下**：
 
-```bash
+```shell
 # 这里假设WebServer监听端口为45000
 # 查询用户名为fisco的用户信息
 $ curl http://localhost:45000/get/fisco

@@ -39,7 +39,7 @@ contract HelloWorld{
 
 **编译合约，生成abi和binary:**
 
-```bash
+```shell
 # 切换到控制台所在目录
 $ cd ~/fisco/console
 

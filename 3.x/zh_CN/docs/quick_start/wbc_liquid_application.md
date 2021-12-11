@@ -266,7 +266,7 @@ Binary: ~/fisco/console/contracts/liquid/asset/target/asset.wasm
 
 接着生成非国密的 Binary、ABI 文件：
 
-```bash
+```shell
 cargo liquid build
 ```
 
@@ -279,7 +279,7 @@ cargo liquid build
 
 控制台提供的Java生成工具可以将`cargo liquid build`编译出ABI和BIN文件自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。我们利用console控制台的脚本 `contract2java.sh` 生成Java 文件。
 
-```bash
+```shell
 # 假设你已经完成控制台的下载操作，若还没有请查看本文第二节的开发源码步骤
 
 # 切换到fisco/console/目录
@@ -352,7 +352,7 @@ public class Asset extends Contract {
 在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-liquid``。
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
-```bash
+```shell
 $ cd ~/fisco
 
 $ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app-3.0-liquid.tar.gz
@@ -493,7 +493,7 @@ applicationContext.xml的内容如下：
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
 
-```bash
+```shell
 # 假设我们将asset-app-liquid放在~/fisco目录下 进入~/fisco目录
 $ cd ~/fisco
 # 创建放置证书的文件夹
@@ -510,7 +510,7 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources
 
 ### 第一步 将3编译好的Java合约引入项目中
 
-```bash
+```shell
 cd ~/fisco
 # 将编译好的合约Java类引入项目中。
 cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-liquid/src/main/java/org/fisco/bcos/asset/contract/Asset.java
@@ -779,7 +779,7 @@ TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, am
 ```
 
 在``asset-app-liquid/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
-```bash
+```shell
 #!/bin/bash
 
 function usage()
@@ -907,7 +907,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 
 - 编译
 
-```bash
+```shell
 # 切换到项目目录
 $ cd ~/fisco/asset-app-liquid
 # 编译项目
@@ -918,7 +918,7 @@ $ ./gradlew build
 
 - 部署`Asset.liquid`合约
 
-```bash
+```shell
 # 进入dist目录
 $ cd dist
 $ bash asset_run.sh deploy
@@ -927,7 +927,7 @@ Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c46
 
 - 注册资产
 
-```bash
+```shell
 $ bash asset_run.sh register Alice 100000
 Register account successfully => account: Alice, value: 100000
 $ bash asset_run.sh register Bob 100000
@@ -936,7 +936,7 @@ Register account successfully => account: Bob, value: 100000
 
 - 查询资产
 
-```bash
+```shell
 $ bash asset_run.sh query Alice
 account Alice, value 100000
 $ bash asset_run.sh query Bob
@@ -945,7 +945,7 @@ account Bob, value 100000
 
 - 资产转移
 
-```bash
+```shell
 $ bash asset_run.sh transfer Alice Bob  50000
 Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000
 $ bash asset_run.sh query Alice

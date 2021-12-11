@@ -20,7 +20,7 @@
    实际生产环境中tarsnode的安装请参考 `tars安装部署 <https://newdoc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
 ```
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -47,7 +47,7 @@ tarsnode安装成功后，可在tars网页管理平台的【运维管理】->【
 
 RPC/Gateway服务的扩容配置可参考`BcosProBuilder`的扩容模板`conf/config-service-expand-example.toml`，具体配置步骤如下：
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -113,7 +113,7 @@ rpc_service_name = "agencyABcosRpcService"
 
 ## 3. 扩容RPC服务
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -126,7 +126,7 @@ telnet 127.0.0.1 10200
 
 执行上述命令后，当脚本输出`expand service success, type: rpc`时，则说明RPC服务扩容成功，详细日志输出如下：
 
-```bash
+```shell
 =========================================================
 ----------- expand service, type: rpc -----------
 =========================================================
@@ -157,7 +157,7 @@ upload tar package generated/./agencyABcosRpcService.tgz success, config id: 19
 
 扩容过程中生成的RPC服务相关的配置位于`generated/rpc/${chainID}/${deploy_ip}`目录，具体如下：
 
-```bash
+```shell
 $ tree generated/rpc/chain/172.25.0.5
 generated/rpc/chain/172.25.0.5
 └── agencyABcosRpcService
@@ -180,7 +180,7 @@ RPC服务扩容成功后，可在tars网页管理平台看到服务`agencyABcosR
 
 ## 4. 扩容Gateway服务
 
-```bash
+```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
@@ -193,7 +193,7 @@ telnet 127.0.0.1 40300
 
 执行上述命令后，当脚本输出`expand service success, type: gateway`时，则说明Gateway服务扩容成功，详细日志输出如下：
 
-```bash
+```shell
 =========================================================
 ----------- expand service, type: gateway -----------
 =========================================================
@@ -225,7 +225,7 @@ upload tar package generated/./agencyABcosGatewayService.tgz success, config id:
 
 扩容过程中生成的Gateway服务相关的配置位于`generated/gateway/${chainID}/${deploy_ip}`目录，具体如下：
 
-```bash
+```shell
 $ tree generated/gateway/chain/172.25.0.5
 generated/gateway/chain/172.25.0.5
 └── agencyABcosGatewayService
@@ -251,7 +251,7 @@ Gateway服务扩容成功后，可在tars网页管理平台看到服务`agencyAB
 
 启动控制台，输入`getPeers`命令，控制台显示的Gateway服务节点数目由2个增加为3个。
 
-```bash
+```shell
 # 进入操作目录
 $ cd ~/fisco/console
 
