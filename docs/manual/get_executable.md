@@ -15,7 +15,7 @@
 
 ## docker镜像
 
-从v2.0.0版本开始，我们提供对应版本tag的docker镜像。对应于master分支，我们提供`lastest`标签的镜像，更多的docker标签[请参考这里](https://hub.docker.com/r/fiscoorg/fiscobcos/tags)。
+从v2.0.0版本开始，我们提供对应版本tag的docker镜像。对应于master-2.0分支，我们提供`lastest`标签的镜像，更多的docker标签[请参考这里](https://hub.docker.com/r/fiscoorg/fiscobcos/tags)。
 
 build_chain.sh脚本增加了`-d`选项，提供docker模式建链的选择，方便开发者部署。详情请[参考这里](../manual/build_chain.html#id4)。
 
@@ -80,7 +80,7 @@ git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```bash
 $ cd FISCO-BCOS
-$ git checkout master
+$ git checkout master-2.0
 $ mkdir -p build && cd build
 $ source /opt/rh/devtoolset-7/enable  # CentOS请执行此命令，其他系统不需要
 # CentOS请使用cmake3

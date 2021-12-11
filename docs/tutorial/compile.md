@@ -21,10 +21,10 @@ FSICO-BCOS使用通用[CMake](https://cmake.org)构建系统生成特定平台�
 ## 1. 克隆代码
 
 ```bash
-git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git -b master
+git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git -b master-2.0
 
 # 若出现网络问题导致长时间拉取代码失败，可执行以下命令：
-git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git -b master
+git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git -b master-2.0
 ```
 
 ## 2. 安装依赖

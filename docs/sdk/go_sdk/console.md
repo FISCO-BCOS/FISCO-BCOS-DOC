@@ -237,7 +237,7 @@ Client Version:
   "Build Type": "Linux/g++/RelWithDebInfo",
   "Chain Id": "1",
   "FISCO-BCOS Version": "2.5.0",
-  "Git Branch": "master",
+  "Git Branch": "master-2.0",
   "Git Commit Hash": "b0978f773ca1dbb499a4343b9fb3a12c40b8fc97",
   "Supported Version": "2.4.0"
 }

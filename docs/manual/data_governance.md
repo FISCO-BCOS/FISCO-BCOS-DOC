@@ -47,7 +47,7 @@ binlog文件记录了每个区块的每个交易对区块链状态的修改结�
 └── 32.binlog
 ```
 
-基于1，用户可根据下图描述的binlog协议，通过访问binlog文件来获取指定key的历史修改记录。解析binlog文件的具体操作可参考[binlog_reader GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/fisco-bcos/tools/binlog_reader.cpp)或[binlog_reader Gitee源码链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/fisco-bcos/tools/binlog_reader.cpp)的相关实现。
+基于1，用户可根据下图描述的binlog协议，通过访问binlog文件来获取指定key的历史修改记录。解析binlog文件的具体操作可参考[binlog_reader GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/fisco-bcos/tools/binlog_reader.cpp)或[binlog_reader Gitee源码链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/fisco-bcos/tools/binlog_reader.cpp)的相关实现。
 
 ![](../../images/storage/binlog.png)
 

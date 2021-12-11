@@ -197,7 +197,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
     "Build Time": "20190106 20:49:10",
     "Build Type": "Linux/g++/RelWithDebInfo",
     "FISCO-BCOS Version": "2.0.0",
-    "Git Branch": "master",
+    "Git Branch": "master-2.0",
     "Git Commit Hash": "693a709ddab39965d9c39da0104836cfb4a72054"
   }
 }
