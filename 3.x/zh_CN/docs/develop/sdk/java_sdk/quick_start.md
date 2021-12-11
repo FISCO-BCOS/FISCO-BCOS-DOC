@@ -398,8 +398,7 @@ public class ConfigProperty {
     public Map<String, Object> account;
 
     // 线程池配置项，目前主要包括以下配置项:
-    // channelProcessorThreadSize: 处理channel消息包的线程数目，默认为CPU核心线程数目
-    // receiptProcessorThreadSize: 处理交易回执的线程数目，默认为CPU核心数目
+    // threadPoolSize: 处理RPC消息包的线程数目，默认为CPU核心线程数目
     public Map<String, Object> threadPool;
 }
 ```

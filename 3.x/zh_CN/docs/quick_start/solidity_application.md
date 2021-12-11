@@ -14,9 +14,9 @@
 
 区块链天然具有防篡改，可追溯等特性，这些特性决定其更容易受金融领域的青睐。本示例中，将会提供一个简易的资产管理的开发示例，并最终实现以下功能：
 
--   能够在区块链上进行资产注册
--   能够实现不同账户的转账
--   可以查询账户的资产金额
+- 能够在区块链上进行资产注册
+- 能够实现不同账户的转账
+- 可以查询账户的资产金额
 
 ## 2. 设计与开发智能合约
 
@@ -24,12 +24,12 @@
 
 ### 第一步. 设计智能合约
 
-**存储设计**
+#### 存储设计
 
 FISCO BCOS提供[合约KV存储接口](../develop/precompiled/use_kv_precompiled.md)开发模式，可以通过合约创建表，并对创建的表进行增删改查操作。针对本应用需要设计一个存储资产管理的表`t_asset`，该表字段如下：
 
--   account: 主键，资产账户(string类型)
--   asset_value: 资产金额(uint256类型)
+- account: 主键，资产账户(string类型)
+- asset_value: 资产金额(uint256类型)
 
 其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。`t_asset`表示例如下：
 
@@ -38,7 +38,7 @@ FISCO BCOS提供[合约KV存储接口](../develop/precompiled/use_kv_precompiled
 | Alice   | 10000       |
 | Bob     | 20000       |
 
-**接口设计**
+#### 接口设计
 
  按照业务的设计目标，需要实现资产注册，转账，查询功能，对应功能的接口如下：
 
@@ -52,7 +52,8 @@ function transfer(string memory from_account, string memory to_account, uint256 
 ```
 
 ### 第二步. 开发源码
-根据我们第一步的存储和接口设计，创建一个Asset的智能合约，实现注册、转账、查询功能，并引入一个叫KVTable的系统合约，这个合约提供了KV存储接口。 
+
+根据我们第一步的存储和接口设计，创建一个Asset的智能合约，实现注册、转账、查询功能，并引入一个叫KVTable的系统合约，这个合约提供了KV存储接口。
 
 ```shell
 # 创建工作目录~/fisco
@@ -74,7 +75,8 @@ vi Asset.sol
 ```
 
 Asset.sol的内容如下：
-```js
+
+```solidity
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.6.0;
 pragma experimental ABIEncoderV2;
@@ -255,7 +257,7 @@ contract Asset {
 
         return 0;
     }
-		
+
     // solidity 字符串和数字的转换工具
     function uint2str(uint256 _i)
     internal
@@ -328,6 +330,7 @@ contract Asset {
 Asset.sol所引用的KVTable.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作KV存储接口时，均需要引入该接口合约文件。KVTable.sol 合约详细接口参考[这里](../develop/precompiled/precompiled_contract_api.md)。
 
 运行``ls``命令，确保``Asset.sol``和``KVTable.sol``在目录``~/fisco/console/contracts/solidity``下。
+
 ## 3. 编译智能合约
 
 ``.sol``的智能合约需要编译成ABI和BIN文件才能部署至区块链网络上。有了这两个文件即可凭借Java SDK进行合约部署和调用。但这种调用方式相对繁琐，需要用户根据合约ABI来传参和解析结果。为此，控制台提供的编译工具不仅可以编译出ABI和BIN文件，还可以自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。
@@ -389,6 +392,7 @@ public class Asset extends Contract {
 ## 4. 创建区块链应用项目
 
 ### 第一步. 安装环境
+
 首先，我们需要安装JDK以及集成开发环境
 
 - Java：推荐JDK 11 （JDK1.8 至JDK 14都支持）
@@ -403,6 +407,7 @@ public class Asset extends Contract {
 在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-3.0``。
 
 注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
+
 ```shell
 $ cd ~/fisco
 
@@ -417,7 +422,9 @@ $ tar -zxf asset-app-3.0-solidity.tar.gz
 ```
 
 ### 第三步. 引入FISCO BCOS Java SDK
+
 在build.gradle文件中的``dependencies``下加入对FISCO BCOS Java SDK的引用。
+
 ```groovy
 repositories {
     mavenCentral()
@@ -433,6 +440,7 @@ repositories {
 ```
 
 ### 第四步. 配置SDK证书
+
 修改``build.gradle``文件，引入Spring框架。
 
 ```groovy
@@ -460,86 +468,83 @@ applicationContext.xml的内容如下：
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-	<bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
-		<property name="cryptoMaterial">
-			<map>
-				<entry key="certPath" value="conf" />
-				<entry key="useSMCrypto" value="false"/>
-				<!-- SSL certificate configuration -->
-				<!-- entry key="caCert" value="conf/ca.crt" /-->
-				<!-- entry key="sslCert" value="conf/sdk.crt" /-->
-				<!-- entry key="sslKey" value="conf/sdk.key" /-->
-				<!-- GM SSL certificate configuration -->
-				<!-- entry key="caCert" value="conf/gm/gmca.crt" /-->
-				<!-- entry key="sslCert" value="conf/gm/gmsdk.crt" /-->
-				<!-- entry key="sslKey" value="conf/gm/gmsdk.key" /-->
-				<!--entry key="enSslCert" value="conf/gm/gmensdk.crt" /-->
-				<!--entry key="enSslKey" value="conf/gm/gmensdk.key" /-->
-			</map>
-		</property>
-		<property name="network">
-			<map>
-				<entry key="peers">
-					<list>
-						<value>127.0.0.1:20200</value>
-						<value>127.0.0.1:20201</value>
-					</list>
-				</entry>
-				<entry key="defaultGroup" value="group" />
-			</map>
-		</property>
-		<!--
-		<property name="amop">
-			<list>
-				<bean id="amopTopic1" class="org.fisco.bcos.sdk.config.model.AmopTopic">
-					<property name="topicName" value="PrivateTopic1" />
-					<property name="password" value="" />
-					<property name="privateKey" value="" />
-					<property name="publicKeys">
-						<list>
-							<value>conf/amop/consumer_public_key_1.pem</value>
-						</list>
-					</property>
-				</bean>
-			</list>
-		</property>
-		-->
-		<property name="account">
-			<map>
-				<entry key="keyStoreDir" value="account" />
-				<entry key="accountAddress" value="" />
-				<entry key="accountFileFormat" value="pem" />
-				<entry key="password" value="" />
-				<entry key="accountFilePath" value="" />
-			</map>
-		</property>
-		<property name="threadPool">
-			<map>
-				<entry key="channelProcessorThreadSize" value="16" />
-				<entry key="receiptProcessorThreadSize" value="16" />
-				<entry key="maxBlockingQueueSize" value="102400" />
-			</map>
-		</property>
-	</bean>
+  <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
+    <property name="cryptoMaterial">
+      <map>
+        <entry key="certPath" value="conf" />
+        <entry key="useSMCrypto" value="false"/>
+        <!-- SSL certificate configuration -->
+        <!-- entry key="caCert" value="conf/ca.crt" /-->
+        <!-- entry key="sslCert" value="conf/sdk.crt" /-->
+        <!-- entry key="sslKey" value="conf/sdk.key" /-->
+        <!-- GM SSL certificate configuration -->
+        <!-- entry key="caCert" value="conf/gm/gmca.crt" /-->
+        <!-- entry key="sslCert" value="conf/gm/gmsdk.crt" /-->
+        <!-- entry key="sslKey" value="conf/gm/gmsdk.key" /-->
+        <!--entry key="enSslCert" value="conf/gm/gmensdk.crt" /-->
+        <!--entry key="enSslKey" value="conf/gm/gmensdk.key" /-->
+      </map>
+    </property>
+    <property name="network">
+      <map>
+        <entry key="peers">
+          <list>
+            <value>127.0.0.1:20200</value>
+            <value>127.0.0.1:20201</value>
+          </list>
+        </entry>
+        <entry key="defaultGroup" value="group" />
+      </map>
+    </property>
+    <!--
+    <property name="amop">
+      <list>
+        <bean id="amopTopic1" class="org.fisco.bcos.sdk.config.model.AmopTopic">
+          <property name="topicName" value="PrivateTopic1" />
+          <property name="password" value="" />
+          <property name="privateKey" value="" />
+          <property name="publicKeys">
+            <list>
+              <value>conf/amop/consumer_public_key_1.pem</value>
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+    -->
+    <property name="account">
+      <map>
+        <entry key="keyStoreDir" value="account" />
+        <entry key="accountAddress" value="" />
+        <entry key="accountFileFormat" value="pem" />
+        <entry key="password" value="" />
+        <entry key="accountFilePath" value="" />
+      </map>
+    </property>
+    <property name="threadPool">
+      <map>
+      <entry key="threadPoolSize" value="16" />
+      </map>
+    </property>
+  </bean>
 
-	<bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
-		<constructor-arg name="configProperty">
-			<ref bean="defaultConfigProperty"/>
-		</constructor-arg>
-	</bean>
+  <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
+    <constructor-arg name="configProperty">
+      <ref bean="defaultConfigProperty"/>
+    </constructor-arg>
+  </bean>
 
-	<bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
-		<constructor-arg name="configOption">
-			<ref bean="defaultConfigOption"/>
-		</constructor-arg>
-	</bean>
+  <bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
+    <constructor-arg name="configOption">
+      <ref bean="defaultConfigOption"/>
+    </constructor-arg>
+  </bean>
 </beans>
-
-
 ```
+
 **注意：** 如果搭链时设置的 rpc listen_ip 为127.0.0.1或者0.0.0.0，listen_port 为20200，则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的 `[rpc]`配置的`listen_ip:listen_port`。
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
@@ -557,6 +562,7 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources
 ```
 
 ## 5. 业务逻辑开发
+
 我们已经介绍了如何在自己的项目中引入以及配置Java SDK，本节介绍如何通过Java程序调用合约，同样以示例的资产管理说明。
 
 ### 第一步.将3编译好的Java合约引入项目中
@@ -572,6 +578,7 @@ cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app
 在路径`/src/main/java/org/fisco/bcos/asset/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
 
 `AssetClient.java` 代码如下：
+
 ```java
 package org.fisco.bcos.asset.client;
 
@@ -771,7 +778,8 @@ public class AssetClient {
 ```
 
 让我们通过AssetClient这个例子，来了解FISCO BCOS Java SDK的调用：
--   初始化
+
+- 初始化
 
 初始化代码的主要功能为构造Client与CryptoKeyPair对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 
@@ -788,7 +796,7 @@ client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
 logger.debug("create client for group, account address is " + cryptoKeyPair.getAddress());
 ```
 
--   构造合约类对象
+- 构造合约类对象
 
 可以使用deploy或者load函数初始化合约对象，两者使用场景不同，前者适用于初次部署合约，后者在合约已经部署并且已知合约地址时使用。
 
@@ -799,7 +807,7 @@ Asset asset = Asset.deploy(client, cryptoKeyPair);
 Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 ```
 
--   接口调用
+- 接口调用
 
 使用合约对象调用对应的接口，处理返回结果。
 
@@ -936,7 +944,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 
 至此我们已经介绍使用区块链开发资产管理应用的所有流程并实现了功能，接下来可以运行项目，测试功能是否正常。
 
--   编译
+- 编译
 
 ```shell
 # 切换到项目目录
@@ -947,7 +955,7 @@ $ ./gradlew build
 
 编译成功之后，将在项目根目录下生成`dist`目录。dist目录下有一个`asset_run.sh`脚本，简化项目运行。现在开始一一验证本文开始定下的需求。
 
--   部署`Asset.sol`合约
+- 部署`Asset.sol`合约
 
 ```shell
 # 进入dist目录
@@ -956,7 +964,7 @@ $ bash asset_run.sh deploy
 Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
 ```
 
--   注册资产
+- 注册资产
 
 ```shell
 $ bash asset_run.sh register Alice 100000
@@ -965,7 +973,7 @@ $ bash asset_run.sh register Bob 100000
 Register account successfully => account: Bob, value: 100000
 ```
 
--   查询资产
+- 查询资产
 
 ```shell
 $ bash asset_run.sh query Alice
@@ -974,7 +982,7 @@ $ bash asset_run.sh query Bob
 account Bob, value 100000
 ```
 
--   资产转移
+- 资产转移
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000

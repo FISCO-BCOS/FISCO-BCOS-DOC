@@ -87,22 +87,21 @@ Java sdk主要包括五个配置选项，分别是
 
 * `certPath`: 证书存放路径，默认是`conf`目录；
 
-* `caCert`: CA证书路径，默认注释该配置项，该配置项注释时，当SDK与节点间采用非国密SSL连接时，默认的CA证书路径为`${certPath}/ca.crt`，当SDK与节点采用国密SSL连接时，默认的CA证书路径为`${certPath}/gm/gmca.crt`；开启该配置项时，从配置指定的路径加载CA证书；
+* `caCert`: CA证书路径，默认注释该配置项，该配置项注释时，当SDK与节点间采用非国密SSL连接时，默认的CA证书路径为`${certPath}/ca.crt`，当SDK与节点采用国密SSL连接时，默认的CA证书路径为`${certPath}/sm_ca.crt`；开启该配置项时，从配置指定的路径加载CA证书；
 
-* `sslCert`: SDK证书路径，默认注释该配置项，该配置项注释时，当SDK与节点间采用非国密SSL连接时，从`${certPath}/sdk.crt`加载SDK证书，当SDK与节点间采用国密SSL连接时，从`${certPath}/gm/gmsdk.crt`加载SDK证书；开启该配置选项时，从配置指定的路径加载SDK证书；
+* `sslCert`: SDK证书路径，默认注释该配置项，该配置项注释时，当SDK与节点间采用非国密SSL连接时，从`${certPath}/sdk.crt`加载SDK证书，当SDK与节点间采用国密SSL连接时，从`${certPath}/sm_sdk.crt`加载SDK证书；开启该配置选项时，从配置指定的路径加载SDK证书；
 
-* `sslKey`: SDK私钥路径，默认注释该配置项，当该配置项注释时，当SDK与节点间采用非国密SSL连接时，从`${certPath}/sdk.key`加载SDK私钥，SDK与节点采用国密SSL连接时，从`${certPaht}/gm/gmsdk.key`加载SDK私钥；开启该配置项时，直接从配置项指定的路径加载SDK私钥；
+* `sslKey`: SDK私钥路径，默认注释该配置项，当该配置项注释时，当SDK与节点间采用非国密SSL连接时，从`${certPath}/sdk.key`加载SDK私钥，SDK与节点采用国密SSL连接时，从`${certPaht}/sm_sdk.key`加载SDK私钥；开启该配置项时，直接从配置项指定的路径加载SDK私钥；
 
-* `enSslCert`: 国密SSL加密证书路径，仅当SDK与节点间采用国密SSL连接时，需要配置该配置项，默认从`${certPath}/gm/gmensdk.crt`加载国密SSL加密证书；当开启该配置项时，从配置项指定的路径加载国密SSL加密证书；
+* `enSslCert`: 国密SSL加密证书路径，仅当SDK与节点间采用国密SSL连接时，需要配置该配置项，默认从`${certPath}/sm_ensdk.crt`加载国密SSL加密证书；当开启该配置项时，从配置项指定的路径加载国密SSL加密证书；
 
-* `enSslKey`: 国密SSL加密私钥路径，仅当SDK与节点间采用国密SSL连接时，需配置该配置项，默认从`${certPath}/gm/gmensdk.key`加载国密SSL加密私钥；当卡其该配置项时，从配置项指定的路径加载国密SSL加密私钥。
+* `enSslKey`: 国密SSL加密私钥路径，仅当SDK与节点间采用国密SSL连接时，需配置该配置项，默认从`${certPath}/sm_ensdk.key`加载国密SSL加密私钥；当卡其该配置项时，从配置项指定的路径加载国密SSL加密私钥。
 
 ```eval_rst
 .. note::
     - 大部分场景仅需要配置 `certPath` 配置项即可，其他配置项不需额外配置；
-    - SDK证书获取：若参考 `搭建第一个区块链网络 <../../../quick_start/air_installation.html>`_ 搭建区块链，则参考 `这里 <../../../quick_start/air_installation.html#id10>`_ 将 `nodes/${ip}/sdk/` 目录下的证书拷贝到 `certPath` 指定的路径；
-    - 若区块链节点参考 `运维部署工具 <../../enterprise_tools/index.html>`_ 搭建，则参考 `这里 <../../enterprise_tools/tutorial_one_click.html#id15>`_ 将 `generator/meta` 文件夹下的SDK证书拷贝到 `certPath`指定路径；
-    - SDK与节点RPC间SSL连接方式，可通过节点配置项 `sm_crypto` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../../tutorial/air/config.html#chain>`_ .
+    - SDK证书获取：参考 `SDK连接证书配置 <../cert_config.html>`
+    - SDK与节点RPC间SSL连接方式，可通过节点配置项 `sm_crypto` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../../tutorial/air/config.html#rpc>`_ .
 ```
 
 SDK证书配置示例如下：
@@ -111,23 +110,19 @@ SDK证书配置示例如下：
 [cryptoMaterial]
 
 certPath = "conf"                           # The certification path
-useSMCrypto = "false"												# RPC SM crypto type
+useSMCrypto = "false"                       # RPC SM crypto type
 
 # The following configurations take the certPath by default if commented
 # caCert = "conf/ca.crt"                    # CA cert file path
-                                            # If connect to the GM node, default CA cert path is ${certPath}/gm/gmca.crt
-
 # sslCert = "conf/sdk.crt"                  # SSL cert file path
-                                            # If connect to the GM node, the default SDK cert path is ${certPath}/gm/gmsdk.crt
-
 # sslKey = "conf/sdk.key"                   # SSL key file path
-                                            # If connect to the GM node, the default SDK privateKey path is ${certPath}/gm/gmsdk.key
 
-# enSslCert = "conf/gm/gmensdk.crt"         # GM encryption cert file path
-                                            # default load the GM SSL encryption cert from ${certPath}/gm/gmensdk.crt
-
-# enSslKey = "conf/gm/gmensdk.key"          # GM ssl cert file path
-                                            # default load the GM SSL encryption privateKey from ${certPath}/gm/gmensdk.key
+# The following configurations take the sm certPath by default if commented
+# caCert = "conf/sm_ca.crt"                    # SM CA cert file path
+# sslCert = "conf/sm_sdk.crt"                  # SM SSL cert file path
+# sslKey = "conf/sm_sdk.key"                    # SM SSL key file path
+# enSslCert = "conf/sm_ensdk.crt"               # SM encryption cert file path
+# enSslKey = "conf/sm_ensdk.key"                # SM ssl cert file path
 ```
 
 ### 网络连接配置
@@ -140,7 +135,7 @@ SDK与FISCO BCOS节点通信，必须配置SDK连接的节点的`IP`和`Port`，
 ```eval_rst
 .. note::
     节点与网络之间的连接信息
-    SDK与节点间通过 `ChannelServer` 进行通信，SDK需要连接 `ChannelServer` 的监听端口，该端口可通过节点 `config.ini` 的 `rpc.channel_listen_port` 获取，具体请参考 `这里 <../../manual/configuration.html#rpc>`_
+    SDK与节点间通过 `RPC` 进行通信，SDK需要连接 `RPC` 的监听端口，该端口可通过节点 `config.ini` 的 `rpc.listen_port` 获取，具体请参考 `这里 <../../../tutorial/air/config.html#rpc>`_
 ```
 
 SDK与节点间的网络配置示例如下：
@@ -189,11 +184,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 
 为了方便业务根据机器实际负载调整SDK的处理线程，Java SDK将其线程配置项暴露在配置中，`[threadPool]`是线程池相关配置，具体包括：
 
-* `channelProcessorThreadSize`: 处理网络回调的线程数目，默认注释该配置项，注释该配置项时，其默认值为机器的CPU数目；开启该配置项时，根据配置的值创建处理网络回调的线程数目；
-
-* `receiptProcessorThreadSize`: 接收交易的线程数目，默认注释该配置项，注释该配置项时，默认值为机器的CPU数目；开启该配置项时，根据配置的值创建接收交易的线程数目；
-
-* `maxBlockingQueueSize`: 线程池队列等待被处理的最大任务数目，默认为102400。
+* `threadPoolSize`: 接收交易的线程数目，默认注释该配置项，注释该配置项时，默认值为机器的CPU数目；开启该配置项时，根据配置的值创建接收交易的线程数目；
 
 ```eval_rst
 .. note::
@@ -204,13 +195,8 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 
 ```toml
 [threadPool]
-# channelProcessorThreadSize = "16"         # The size of the thread pool to process channel callback
-                                            # Default is the number of cpu cores
-
-# receiptProcessorThreadSize = "16"         # The size of the thread pool to process transaction receipt notification
-                                            # Default is the number of cpu cores
-
-maxBlockingQueueSize = "102400"             # The max blocking queue size of the thread pool
+# threadPoolSize = "16"         # The size of the thread pool to process message callback
+                                # Default is the number of cpu cores
 ```
 
 ### Cpp SDK日志配置
@@ -270,7 +256,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 
 [threadPool]
 # threadPoolSize = "16"         # The size of the thread pool to process message callback
-                                            # Default is the number of cpu cores
+                                # Default is the number of cpu cores
 ```
 
 ## 4. 其它格式的配置
@@ -293,8 +279,8 @@ cryptoMaterial.useSMCrypto=false
 # cryptoMaterial.caCert=conf/ca.crt 
 # cryptoMaterial.sslCert=conf/sdk.crt
 # cryptoMaterial.sslKey=conf/sdk.key
-# cryptoMaterial.enSslCert=conf/gm/gmensdk.crt
-# cryptoMaterial.enSslKey=conf/gm/gmensdk.key
+# cryptoMaterial.enSslCert=conf/sm_ensdk.crt
+# cryptoMaterial.enSslKey=conf/sm_ensdk.key
 
 
 # The peer list to connect
@@ -321,9 +307,7 @@ account.accountFileFormat=pem
 # account.accountAddress=0x
 # account.password=123456
 
-# threadPool.channelProcessorThreadSize=16
-# threadPool.receiptProcessorThreadSize=16
-threadPool.maxBlockingQueueSize=102400
+# threadPool.threadPoolSize=16
 ```
 
 #### 代码示例
@@ -393,16 +377,16 @@ public class FiscoBcos {
 
 ```yml
 cryptoMaterial:
-	useSMCrypto: false
+  useSMCrypto: false
   certPath: "conf"                   
 #  caCert: "conf/ca.crt"               
 #  sslCert: "conf/sdk.crt"             
 #  sslKey: "conf/sdk.key"
-#  enSslCert: "conf/gm/gmensdk.crt"
-#  enSslKey: "conf/gm/gmensdk.key"
+#  enSslCert: "conf/sm_ensdk.crt"
+#  enSslKey: "conf/sm_ensdk.key"
 
 network:
-	defaultGroup: "group"
+  defaultGroup: "group"
   peers:
     - "127.0.0.1:20201"
     - "127.0.0.1:20200"
@@ -423,9 +407,7 @@ account:
 
 
 threadPool:
-#  channelProcessorThreadSize: "16"
-#  receiptProcessorThreadSize: "16"
-#  maxBlockingQueueSize: "102400"
+#  threadPoolSize: "16"
 ```
 
 #### yml配置代码示例
@@ -491,7 +473,7 @@ public class FiscoBcos {
         <property name="cryptoMaterial">
             <map>
                 <entry key="certPath" value="conf" />
-              	<entry key="useSMCrypto" value="false"/>
+                <entry key="useSMCrypto" value="false"/>
             </map>
         </property>
         <property name="network">
@@ -502,7 +484,7 @@ public class FiscoBcos {
                         <value>127.0.0.1:20201</value>
                     </list>
                 </entry>
-								<entry key="defaultGroup" value="group" />
+                <entry key="defaultGroup" value="group" />
             </map>
         </property>
         <property name="account">
@@ -516,9 +498,7 @@ public class FiscoBcos {
         </property>
         <property name="threadPool">
             <map>
-                <entry key="channelProcessorThreadSize" value="16" />
-                <entry key="receiptProcessorThreadSize" value="16" />
-                <entry key="maxBlockingQueueSize" value="102400" />
+                <entry key="threadPoolSize" value="16" />
             </map>
         </property>
     </bean>
