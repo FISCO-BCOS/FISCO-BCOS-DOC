@@ -9,7 +9,7 @@
 
 ### 源码同步
 
-FISCO BCOS当前所有仓库源码位于[https://github.com/FISCO-BCOS/FISCO-BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)，每个新的版本发布会将代码合入master分支。
+FISCO BCOS当前所有仓库源码位于[https://github.com/FISCO-BCOS/FISCO-BCOS](https://github.com/FISCO-BCOS/FISCO-BCOS)，每个新的版本发布会将代码合入master-2.0分支。
 
 为了方便国内用户，我们同样在gitee上提供了镜像仓库[https://gitee.com/FISCO-BCOS/FISCO-BCOS](https://gitee.com/FISCO-BCOS/FISCO-BCOS)，每次新版本发布后，镜像仓库会同步GitHub上官方仓库的更新，如果从GitHub下载失败，请尝试使用gitee镜像仓库。
 
@@ -40,7 +40,7 @@ FISCO BCOS控制台是一个交互式命令行工具，使用Java开发，代码
 控制台每个版本发布会提供编译好的包，用户下载后配置后即可使用，为了下载控制台用户需要获取download_console.sh脚本。此脚本会从GitHub下载最新版本console.tar.gz，如果下载失败则自动尝试从官网CDN下载。下面的指令从国内镜像获取download_console.sh脚本并执行。
 
 ```bash
-curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
+curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh && bash download_console.sh
 ```
 
 ### TASSL

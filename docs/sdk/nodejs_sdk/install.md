@@ -85,7 +85,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s ht
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ```bash
@@ -156,7 +156,7 @@ rcfile=~/.$(basename $SHELL)rc && ./cli.js completion >> $rcfile && source $rcfi
     "Build Type": "Linux/g++/RelWithDebInfo",
     "Chain Id": "1",
     "FISCO-BCOS Version": "2.0.0",
-    "Git Branch": "master",
+    "Git Branch": "master-2.0",
     "Git Commit Hash": "d8605a73e30148cfb9b63807fb85fa211d365014",
     "Supported Version": "2.0.0"
   }

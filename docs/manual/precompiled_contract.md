@@ -128,7 +128,7 @@ contract SystemConfigPrecompiled
 
 #### 接口声明
 
-完整solidity请[参考这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/solidity/Table.sol)
+完整solidity请[参考这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/solidity/Table.sol)
 
 ```solidity
 pragma solidity>=0.4.24 <0.6.11;

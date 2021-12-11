@@ -417,7 +417,7 @@ contract TableTest {
 
 FISCO BCOS中实现的precompild合约列表以及地址分配：
 
-源码可见：([libprecompiled GitHub目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled))、([libprecompiled Gitee目录](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled))
+源码可见：([libprecompiled GitHub目录](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0/libprecompiled))、([libprecompiled Gitee目录](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0/libprecompiled))
 
 | 地址   | 功能           | 源码                          |
 |--------|----------------|-------------------------------|
@@ -455,7 +455,7 @@ FISCO BCOS中实现的precompild合约列表以及地址分配：
 
 - **实现调用逻辑**
 
-实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承`Precompiled`类, 重载call函数， 在call函数中实现各个接口的调用行为。可参考源码：[Precompiled GitHub源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/Precompiled.h#L42)、[Precompiled Gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/Precompiled.h#L42)
+实现新增合约的调用逻辑，需要新实现一个c++类，该类需要继承`Precompiled`类, 重载call函数， 在call函数中实现各个接口的调用行为。可参考源码：[Precompiled GitHub源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/Precompiled.h#L42)、[Precompiled Gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/Precompiled.h#L42)
 
 ```cpp
     // libprecompiled/Precompiled.h
@@ -476,7 +476,7 @@ call函数有三个参数：
 如何实现一个Precompiled类在下面的sample中会详细说明。
 - **注册合约**
 
-最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用precompiled合约时合约的执行逻辑才能被正确识别执行， 查看注册的`预编译合约列表`。可参考链接：[预编译合约列表 GitHub链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libblockverifier/ExecutiveContextFactory.cpp#L50)，[预编译合约列表 Gitee链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/libblockverifier/ExecutiveContextFactory.cpp#L50)
+最后需要将合约的地址与对应的类注册到合约的执行上下文，这样通过地址调用precompiled合约时合约的执行逻辑才能被正确识别执行， 查看注册的`预编译合约列表`。可参考链接：[预编译合约列表 GitHub链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libblockverifier/ExecutiveContextFactory.cpp#L50)，[预编译合约列表 Gitee链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libblockverifier/ExecutiveContextFactory.cpp#L50)
 
 注册路径：
 
@@ -510,7 +510,7 @@ contract HelloWorld{
 
 上述源码为solidity编写的HelloWorld合约， 本章节会实现一个相同功能的预编译合约，通过step by step使用户对预编译合约编写有直观的认识。
 
-示例的c++[GitHub源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp)或[Gitee源码路径](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp)：
+示例的c++[GitHub源码路径](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp)或[Gitee源码路径](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp)：
 
 ```cpp
     libprecompiled/extension/HelloWorldPrecompiled.h
@@ -552,7 +552,7 @@ HelloWorldPrecompiled需要存储set的字符串值，所以涉及到存储操�
 
 ##### 2.2.4 实现调用逻辑
 
-添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数 GitHub源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)/[call函数 Gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
+添加HelloWorldPrecompiled类，重载call函数，实现所有接口的调用行为，[call函数 GitHub源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)/[call函数 Gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66)。
 
 用户自定义的Precompiled合约需要新增一个类，在类中定义合约的调用行为，在示例中添加HelloWorldPrecompiled类，然后主要需要完成以下工作：
 
@@ -660,7 +660,7 @@ abi.abiOut(out, strOut1, strOut2, amount);
 // amoumt = 11111
 ```
 
-最后，给出HelloWorldPrecompiled call函数的完整实现[GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L63)或[Gitee源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L63)。
+最后，给出HelloWorldPrecompiled call函数的完整实现[GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp#L63)或[Gitee源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp#L63)。
 
 ```c++
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,

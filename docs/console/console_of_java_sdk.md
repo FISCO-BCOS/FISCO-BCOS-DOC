@@ -35,7 +35,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/downloa
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh && bash download_console.sh`
 ```
 
 目录结构如下：
@@ -656,7 +656,7 @@ ConsensusInfo{
 	"Build Time":"20190107 10:15:23",
 	"Build Type":"Linux/g++/RelWithDebInfo",
 	"FISCO-BCOS Version":"2.0.0",
-	"Git Branch":"master",
+	"Git Branch":"master-2.0",
 	"Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
 }
 ```

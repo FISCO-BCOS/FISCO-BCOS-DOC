@@ -117,7 +117,7 @@ bash ../manual/build_chain.sh -l 127.0.0.1:4 -e bin/fisco-bcos
 
 1.已为隐私模块的预编译合约分配了地址，无需另行注册。隐私模块实现的预编译合约列表以及地址分配如下：
 
-源码可参考链接：[GitHub链接](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension)、[Gitee链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension)
+源码可参考链接：[GitHub链接](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0/libprecompiled/extension)、[Gitee链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0/libprecompiled/extension)
 
    | 地址   | 功能       | 源码 |
    | ------ | ---------- | ------------------------------------------------------------ |
