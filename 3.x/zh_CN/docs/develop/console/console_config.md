@@ -50,7 +50,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/dow
 ├── contracts # 合约所在目录
 │   ├── console # 控制台部署合约时编译的合约abi, bin，java文件目录
 │   ├── sdk     # sol2java.sh脚本编译的合约abi, bin，java文件目录
-│   ├── liquid  # wbc-liquid 合约存放目录
+│   ├── liquid  # WBC-Liquid 合约存放目录
 │   └── solidity    # solidity合约存放目录
 │       └── HelloWorld.sol # 普通合约：HelloWorld合约，可部署和调用
 │       └── KVTableTest.sol # 使用KV存储接口的合约：KVTableTest合约，可部署和调用
@@ -58,7 +58,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/dow
 │-- start.sh # 控制台启动脚本
 │-- get_account.sh # 账户生成脚本
 │-- get_gm_account.sh # 账户生成脚本，国密版
-│-- contract2java.sh # Solidity/wbc-liquid合约文件编译为java合约文件的开发工具脚本
+│-- contract2java.sh # Solidity/WBC-Liquid合约文件编译为java合约文件的开发工具脚本
 ```
 
 ### 2. 配置控制台
@@ -244,23 +244,23 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 ```shell
 $ bash contract2java.sh liquid -h
 usage: contract2java.sh <solidity|liquid> [OPTIONS...]
- -a,--abi <arg>       [Required] The ABI file path of wbc-liquid contract.
- -b,--bin <arg>       [Required] The binary file path of wbc-liquid contract.
+ -a,--abi <arg>       [Required] The ABI file path of WBC-Liquid contract.
+ -b,--bin <arg>       [Required] The binary file path of WBC-Liquid contract.
  -h,--help
  -o,--output <arg>    [Optional] The file path of the generated java code,
                       default is contracts/sdk/java/
  -p,--package <arg>   [Optional] The package name of the generated java
                       code, default is com
- -s,--sm-bin <arg>    [Required] The SM binary file path of wbc-liquid
+ -s,--sm-bin <arg>    [Required] The SM binary file path of WBC-Liquid
                       contract.
 ```
 
 参数详细：
 
-- `abi `：（必选）wbc-liquid合约`ABI`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
-- `bin`：（必选）wbc-liquid合约`wasm bin`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `abi `：（必选）WBC-Liquid合约`ABI`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
+- `bin`：（必选）WBC-Liquid合约`wasm bin`文件的路径，在使用`cargo liquid build`命令之后生成在target文件夹中。
 - `package`：（可选）生成`Java`文件的包名，默认为`org`。
-- `sm-bin`：（必选）wbc-liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
+- `sm-bin`：（必选）WBC-Liquid合约`wasm sm bin`文件的路径，在使用`cargo liquid build -g`命令之后生成在target文件夹中。
 
 #### 使用
 
@@ -270,7 +270,7 @@ $ cd ~/fisco/console
 # 生成Solidity合约的Java代码
 $ bash contract2java.sh solidity -p org.com.fisco
 
-# 生成wbc-liquid合约的Java代码
+# 生成WBC-Liquid合约的Java代码
 $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset/asset.wasm -a ./contracts/liquid/asset/asset.abi -s ./contracts/liquid/asset/asset_gm.wasm 
 ```
 
