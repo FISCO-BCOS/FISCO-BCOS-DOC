@@ -4,7 +4,7 @@
 
 ----
 
-## 通过Java SDK进行压力测试
+## 通过Java SDK demo进行压力测试
 
 Java SDK Demo是基于[Java SDK](./sdk/java_sdk/index.md)的基准测试集合，能够对FISCO BCOS节点进行压力测试。Java SDK Demo提供有合约编译功能，能够将Solidity合约文件转换成Java合约文件，此外还提供了针对转账合约、CRUD合约以及AMOP功能的压力测试示例程序。
 
@@ -138,8 +138,130 @@ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelLiquidPerf [g
 
 ### 压力测试示例
 
+示例测试环境：
 
+- 硬件条件：Apple M1 Max (10 cores CPU)，32GB LPDDR5 RAM，1T SSD
+- 系统版本：macOS 12.0.1
+- 编译环境：clang-1300.0.29.3，cmake 3.22.1
+- FISCO BCOS版本：master分支，Git Commit：c0e9dadb6e7ad1bbaf3128a27803226fb7ba6a9a，build type：Darwin/appleclang/release
+
+#### 压力测试物料准备
+
+搭建FISCO BCOS Air版本四节点环境，参考链接：[搭建Air版本FISCO BCOS联盟链](../quick_start/air_installation.md)
+
+搭建完毕后，可以看到已经创建好四节点环境：
 
 ```shell
+tree -L 2 ～/fisco/nodes
+~/fisco/nodes
+├── 127.0.0.1
+│  ├── ca
+│  ├── fisco-bcos
+│  ├── node0
+│  ├── node1
+│  ├── node2
+│  ├── node3
+│  ├── sdk
+│  ├── start_all.sh
+│  └── stop_all.sh
+└── ca
 ```
 
+在启动四个节点之前，更改所有节点配置的日志等级为INFO，关闭节点SSL通信，节点配置可参考这里：[节点配置介绍](../tutorial/air/config.md)。这里以node0为例：
+
+```shell
+# 修改node0的config.ini配置
+vim ～/fisco/nodes/127.0.0.1/node0/config.ini
+```
+
+关闭节点SSL通信：
+
+```ini
+[rpc]
+    listen_ip=0.0.0.0
+    listen_port=20200
+    thread_count=4
+    sm_ssl=false
+    ; 开启这一项
+    disable_ssl=true
+```
+
+将节点日志等级修改为INFO：
+
+```ini
+[log]
+    enable=true
+    log_path=./log
+    ; 等级修改为INFO 
+    level=INFO
+    max_log_file_size=200
+```
+
+配置完成之后，启动四个节点：
+
+```shell
+cd ～/fisco/nodes/127.0.0.1
+bash start_all.sh
+try to start node0
+ node0 start successfully
+try to start node1
+ node1 start successfully
+try to start node2
+ node2 start successfully
+try to start node3
+ node3 start successfully
+```
+
+继续准备压测程序，本例使用`java-sdk-demo`进行压力测试，使用详情请参考本文第一节：[链接](./stress_testing.html#jdk)，在此不再赘述。
+
+配置Java SDK Demo，将交易发送到四个节点：
+
+```shell
+# 进入java-sdk-demo的配置项
+vim ~/fiso/java-sdk-demo/dist/conf/config.toml
+```
+
+配置四个节点，这里的IP和端口均以实际为准：
+
+```toml
+[network]
+peers=["127.0.0.1:20200", "127.0.0.1:20201", "127.0.0.1:20202", "127.0.0.1:20203"]    # The peer list to connect
+```
+
+配置好Java SDK Demo之后，将Java SDK的日志改为ERROR级别：
+
+```shell
+# 进入java-sdk-demo的日志配置项
+vim ~/fiso/java-sdk-demo/dist/conf/log4j2.xml
+```
+
+修改日志级别：
+
+```xml
+<Loggers>
+    <Root level="error">
+      <AppenderRef ref="Demo"/>
+    </Root>
+</Loggers>
+```
+
+#### 开始压力测试
+
+回到`java-sdk-demo`编译好的环境，输入以下命令开始压测：
+
+这里的压力测试是向 group 群组部署32个Account Solidity合约，发送500000笔交易，QPS为20000。
+
+```shell
+cd ~/fiso/java-sdk-demo/dist/
+# 必须要带上-Dorg.fisco.bcos.jni.disableSsl="true" 参数，使得发交易不使用SSL
+java -Dorg.fisco.bcos.jni.disableSsl="true" -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceDMC group 32 500000 20000
+```
+
+#### 测试结果
+
+压力测试结果：
+
+![](../../images/develop/stress_test.png)
+
+- 总共发起50万笔交易，发送到节点的时间为32秒，收集到所有交易回执的时间为51秒。
+- TPS为 9712.321050484645 （交易数/秒）

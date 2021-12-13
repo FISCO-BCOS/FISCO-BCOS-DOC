@@ -17,7 +17,7 @@
 
 ```eval_rst
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 2
 
    console_config.md
    console_commands.md

@@ -65,7 +65,7 @@ $ mkdir -p ~/fisco && cd ~/fisco
 $ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh
 
 # 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
-$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh
+$ curl -#LO https://gitee.com/FISCO-BCOS/console/attach_files/908829/download/download_console.sh
 
 $ bash download_console.sh
 $ cd ~/fisco/console

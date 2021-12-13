@@ -259,7 +259,7 @@ cargo liquid build -g
 [4/4] 📃  Generating ABI file
 
 ✨ Done in 30 seconds, your project is ready now:
-Binary: ~/fisco/console/contracts/liquid/asset/target/asset.wasm
+Binary: ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm
    ABI: ~/fisco/console/contracts/liquid/asset/target/asset.abi
 ```
 
