@@ -108,7 +108,7 @@ v3.0.0-rc1
 
 .. admonition:: FISCO BCOS 3.x Releases
 
-     - `FISCO BCOS v3.0.0-rc1 <./v3.0.0-rc1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc1>`_]
+     - `FISCO BCOS v3.0.0-rc1 <./3_0_0_rc1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc1>`_]
      
      - v3.0.0-rc1不包括 ``FISCO BCOS Max`` 版本，Max版本的FISCO BCOS会在后续版本中推出
      
