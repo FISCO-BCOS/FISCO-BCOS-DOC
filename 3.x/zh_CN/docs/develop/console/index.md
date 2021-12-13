@@ -21,4 +21,5 @@
 
    console_config.md
    console_commands.md
+   console_error.md
 ```
