@@ -36,4 +36,5 @@ ___
    sync.md
    storage.md
    DMC.md
+   contract_directory.md
 ```
