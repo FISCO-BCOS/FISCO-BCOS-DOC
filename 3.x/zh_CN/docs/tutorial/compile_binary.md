@@ -8,6 +8,7 @@
 ```eval_rst
 .. note::
    - FISCO BCOS支持x86_64架构的Linux和macOS编译; Linux平台编译二进制时，要求g++版本不小于7.0; macOS系统编译二进制时，要求clang版本不小于12.0
+   - FISCO BCOS 3.x的编译依赖rust环境，编译源码前请先安装rust环境
    - 源码编译适合于有丰富开发经验的用户，编译过程中需要下载依赖库，请保持网络畅通
    - FISCO BCOS会同时编译出Air版本和Pro版本的二进制
 ```
@@ -26,7 +27,11 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 要求使用Ubuntu 18.04及以上版本。
 
 ```shell
-sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison
+sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev
+
+# 安装rust
+curl https://sh.rustup.rs -sSf | bash -s -- -y
+source $HOME/.cargo/env
 ```
 
 - **CentOS**
@@ -36,12 +41,19 @@ sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake fl
 ```shell
 sudo yum install -y epel-release centos-release-scl
 sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel python-devel python3-devel git flex bison devtoolset-7
+
+# 安装rust
+curl https://sh.rustup.rs -sSf | bash -s -- -y
+source $HOME/.cargo/env
 ```
 
 - **macOS**
 
 ```shell
-brew install git flex bison
+brew install clang git flex bison
+# 安装rust
+curl https://sh.rustup.rs -sSf | bash -s -- -y
+source $HOME/.cargo/env
 ```
 
 ## 2. 克隆代码
