@@ -21,11 +21,11 @@
 
 对于**网络连接失败**的问题,排查方法如下:
 
-检查节点是否正常启动
+1. 检查节点是否正常启动
 
-`ps -ef | egrep fisco`
+    `ps -ef | egrep fisco`
 
-查看控制台配置的节点连接信息是否错误
+2. 查看控制台配置的节点连接信息是否错误
 
    控制台配置的节点连接列表,在控制台配置文件`config.toml`:
 
@@ -42,7 +42,7 @@
         listen_port=20200
     ```
 
-检查网络是否连通
+3. 检查网络是否连通
 
    可以使用`ping`、`telnet`等工具判断，若控制台跟节点所在服务器网络不连通，可以让运维人员帮忙解决
 
@@ -91,7 +91,7 @@
 ```shell
 // config.ini
 [chain]
-    ; the group id, should nerver be changed
+    ; the group id, should never be changed
     group_id=group
 ```
 
