@@ -23,9 +23,9 @@
 
 1. 检查节点是否正常启动
 
-`ps -ef | egrep fisco`
+    `ps -ef | egrep fisco`
 
-1. 查看控制台配置的节点连接信息是否错误
+2. 查看控制台配置的节点连接信息是否错误
 
    控制台配置的节点连接列表,在控制台配置文件`config.toml`:
 
@@ -42,7 +42,7 @@
         listen_port=20200
     ```
 
-1. 检查网络是否连通
+3. 检查网络是否连通
 
    可以使用`ping`、`telnet`等工具判断，若控制台跟节点所在服务器网络不连通，可以让运维人员帮忙解决
 
@@ -55,7 +55,7 @@
 
     将`sdk/*`目录下的证书拷贝至控制台的配置目录`console/conf`
 
-1. 检查`SSL`配置
+2. 检查`SSL`配置
 
    控制台的`SSL`配置:
 
@@ -91,7 +91,7 @@
 ```shell
 // config.ini
 [chain]
-    ; the group id, should nerver be changed
+    ; the group id, should never be changed
     group_id=group
 ```
 
