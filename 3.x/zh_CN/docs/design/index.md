@@ -32,6 +32,7 @@ ___
 
    architecture.md
    tx_procedure.md
+   protocol_description.md
    consensus.md
    sync.md
    storage.md
