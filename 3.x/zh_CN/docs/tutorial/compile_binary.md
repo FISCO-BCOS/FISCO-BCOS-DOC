@@ -27,7 +27,7 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 要求使用Ubuntu 18.04及以上版本。
 
 ```shell
-sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev
+sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
