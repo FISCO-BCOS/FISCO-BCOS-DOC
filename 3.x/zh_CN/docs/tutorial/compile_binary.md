@@ -74,12 +74,25 @@ cd FISCO-BCOS
 
 ## 3. 编译
 
+
 **编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos/fisco-bcos`路径。**
 
 **编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
 - Rpc服务：`FISCO-BCOS/build/RpcService/main/BcosRpcService`
 - Gateway服务：`FISCO-BCOS/build/GatewayService/main/BcosGatewayService`
 - 区块链节点服务：`NodeService/main/BcosNodeService`
+
+
+**若编译过程中从github拉取依赖太慢，可执行如下命令使用`github.com.cnpmjs.org`替代`github.com`加速依赖下载：**
+
+```shell
+$ cat > ~/.gitconfig << EOF
+[url "https://github.com.cnpmjs.org/"]
+        insteadOf = https://github.com/
+[http]
+        sslVerify = false
+EOF
+```
 
 ### 3.1 Ubuntu
 
@@ -93,8 +106,12 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake ..
 
+# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
+cmake .. -DHUNTER_JOBS_NUMBER=2
+
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
 make -j2
+
 
 # 生成tgz包
 rm -rf *.tgz && make tar
@@ -111,6 +128,10 @@ source /opt/rh/devtoolset-7/enable
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake3 ..
+
+# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
+cmake .. -DHUNTER_JOBS_NUMBER=2
+
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
 # 生成tgz包
@@ -126,6 +147,10 @@ rm -rf *.tgz && make tar
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake ..
+
+# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
+cmake .. -DHUNTER_JOBS_NUMBER=2
+
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
 
