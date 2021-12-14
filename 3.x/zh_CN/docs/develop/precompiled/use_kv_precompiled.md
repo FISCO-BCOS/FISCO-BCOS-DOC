@@ -29,12 +29,12 @@ KVTable抽象接口合约文件包括以下抽象合约接口，下面分别进�
 
 ```solidity
 struct KVField {
-	string key;
-	string value;
+  string key;
+  string value;
 }
 
 struct Entry {
-	KVField[] fields;
+  KVField[] fields;
 }
 ```
 
@@ -55,11 +55,12 @@ struct Entry {
 | 0      | 创建成功                     |
 | -50001 | 创建表名已存在               |
 | -50002 | 表名超过48字符               |
-| -50003 | valueField长度超过64字符     |
-| -50004 | valueField总长度超过1024字符 |
-| -50005 | keyField长度超过64字符       |
+| -50003 | valueField字段名长度超过64字符     |
+| -50004 | valueField总字段名长度超过1024字符 |
+| -50005 | keyField字段值长度超过64字符       |
+| -50006 | valueField字段值长度超过64字符       |
 | -50007 | 存在重复字段                 |
-| -50007 | 字段存在非法字符             |
+| -50008 | 字段存在非法字符             |
 | 其他   | 创建时遇到的其他错误         |
 
 有了以上对KVTable抽象接口合约的了解，现在可以正式进行KVTable合约的开发。
@@ -84,15 +85,15 @@ import "./KVTable.sol";
 ```solidity
 KVTable kv_table;
 constructor () public{
-	// 创建KVTable对象，其在区块链上的固定地址是0x1001
-	kv_table = KVTable(0x1009);
-	// 创建t_kv_test表，表的主键名为id，其他字段名为item_price和item_name
-	int count = kv_table.createTable("t_kv_test", "id", "item_price,item_name");
-	// 检查是否创建成功
-	if(count >= 0)
-	{
+  // 创建KVTable对象，其在区块链上的固定地址是0x1001
+  kv_table = KVTable(0x1009);
+  // 创建t_kv_test表，表的主键名为id，其他字段名为item_price和item_name
+  int count = kv_table.createTable("t_kv_test", "id", "item_price,item_name");
+  // 检查是否创建成功
+  if(count >= 0)
+  {
     // success
-	}
+  }
 }
 ```
 
@@ -110,16 +111,16 @@ function set(string memory id, string memory item_price, string memory item_name
 public
 returns (int256)
 {
-	// 创建KVField结构体对象，用于插入entry
-	KVField memory kv1 = KVField("item_price",item_price);
-	KVField memory kv2 = KVField("item_name",item_name);
-	KVField[] memory KVFields = new KVField[](2);
-	KVFields[0] = kv1;
-	KVFields[1] = kv2;
-	// 创建entry，并将创建的KVField对象数组作为参数设置
-	Entry memory entry = Entry(KVFields);
-	int256 count = kv_table.set("t_kv_test", id, entry);
-	return count;
+ // 创建KVField结构体对象，用于插入entry
+ KVField memory kv1 = KVField("item_price",item_price);
+ KVField memory kv2 = KVField("item_name",item_name);
+ KVField[] memory KVFields = new KVField[](2);
+ KVFields[0] = kv1;
+ KVFields[1] = kv2;
+ // 创建entry，并将创建的KVField对象数组作为参数设置
+ Entry memory entry = Entry(KVFields);
+ int256 count = kv_table.set("t_kv_test", id, entry);
+ return count;
 }
 ```
 
@@ -127,18 +128,18 @@ returns (int256)
 
 ```solidity
 function get(string memory id) public view returns (bool, string memory, string memory) {
-		bool ok = false;
-		Entry memory entry;
-		// kv_table在构造函数就已指定地址0x1009
-		(ok, entry) = kv_table.get("t_kv_test",id);
-		string memory item_price;
-		string memory item_name;
-		if (ok) {
-				// 从返回的entry中取值
-				item_price = entry.fields[0].value;
-				item_name = entry.fields[1].value;
-		}
-		return (ok, item_price, item_name);
+  bool ok = false;
+  Entry memory entry;
+  // kv_table在构造函数就已指定地址0x1009
+  (ok, entry) = kv_table.get("t_kv_test",id);
+  string memory item_price;
+  string memory item_name;
+  if (ok) {
+    // 从返回的entry中取值
+    item_price = entry.fields[0].value;
+    item_name = entry.fields[1].value;
+  }
+  return (ok, item_price, item_name);
 }
 ```
 
@@ -192,16 +193,16 @@ mod kv_table {
 
 ```rust
 pub fn new(&mut self) {
-  	// kv table指定系统合约路径为"/sys/kv_storage"
-		self.table
-				.initialize(KvTable::at("/sys/kv_storage".parse().unwrap()));
+   // kv table指定系统合约路径为"/sys/kv_storage"
+  self.table
+    .initialize(KvTable::at("/sys/kv_storage".parse().unwrap()));
   
-  	// 调用接口创建表
-		self.table.createTable(
-				String::from("t_kv_test"),
-				String::from("id"),
-				[String::from("item_price"), String::from("item_name")].join(","),
-		);
+   // 调用接口创建表
+  self.table.createTable(
+    String::from("t_kv_test"),
+    String::from("id"),
+    [String::from("item_price"), String::from("item_name")].join(","),
+  );
 }
 ```
 
@@ -211,29 +212,29 @@ pub fn new(&mut self) {
 
 ```rust
 pub fn set(&mut self, id: String, item_price: String, item_name: String) -> i256 {
-  	// 创建KVField结构体，用于设置进Entry
-		let kv1 = KVField {
-				key: String::from("item_price"),
-				value: item_price,
-		};
-		let kv2 = KVField {
-				key: String::from("item_name"),
-				value: item_name,
-		};
-		let mut kv_fields = Vec::new();
-		kv_fields.push(kv1);
-		kv_fields.push(kv2);
-  	// 创建Entry结构体，将KVField结构体数组作为参数设置
-		let entry = Entry { fileds: kv_fields };
-  	// 调用KVTable的set接口
-		let count = (*self.table)
-				.set(String::from("t_kv_test"), id, entry)
-				.unwrap();
-		// 调用合约事件
-		self.env().emit(SetResult {
-				count: count.clone(),
-		});
-		count
+   // 创建KVField结构体，用于设置进Entry
+  let kv1 = KVField {
+    key: String::from("item_price"),
+    value: item_price,
+  };
+  let kv2 = KVField {
+    key: String::from("item_name"),
+    value: item_name,
+  };
+  let mut kv_fields = Vec::new();
+  kv_fields.push(kv1);
+  kv_fields.push(kv2);
+   // 创建Entry结构体，将KVField结构体数组作为参数设置
+  let entry = Entry { fileds: kv_fields };
+   // 调用KVTable的set接口
+  let count = (*self.table)
+    .set(String::from("t_kv_test"), id, entry)
+    .unwrap();
+  // 调用合约事件
+  self.env().emit(SetResult {
+    count: count.clone(),
+  });
+  count
 }
 ```
 
@@ -241,15 +242,15 @@ pub fn set(&mut self, id: String, item_price: String, item_name: String) -> i256
 
 ```rust
 pub fn get(&self, id: String) -> (bool, String, String) {
-  	// 调用KVTable的get接口
-		if let Some((ok, entry)) = (*self.table).get(String::from("t_kv_test"), id) {
-				return (
-						ok,
-						entry.fileds[0].value.clone(),
-						entry.fileds[1].value.clone(),
-				);
-		}
-		return (false, Default::default(), Default::default());
+   // 调用KVTable的get接口
+  if let Some((ok, entry)) = (*self.table).get(String::from("t_kv_test"), id) {
+    return (
+      ok,
+      entry.fileds[0].value.clone(),
+      entry.fileds[1].value.clone(),
+    );
+  }
+  return (false, Default::default(), Default::default());
 }
 ```
 

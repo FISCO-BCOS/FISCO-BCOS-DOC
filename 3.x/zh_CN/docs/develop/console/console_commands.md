@@ -396,7 +396,7 @@ Event list:
 transaction hash: 0xb994d8e510f147815bdf9838fda542e553c2fe981177ee7a97a0686b9619cfbb
 contract address: 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c
 {
-    "code":1,
+    "code":0,
     "msg":"Success"
 }
 
@@ -435,17 +435,19 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 - 合约版本号：(可选)部署的合约版本号。
 
 ```shell
-[group]: />  queryCNS HelloWorld
+[group]: /> queryCNS HelloWorld
 ---------------------------------------------------------------------------------------------
-|                   version                   |                   address                   |
-|                     1.0                     | 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c  |
-|                     2.0                     | 0xf68a1aabfad336847e109c33ca471b192c93c0a9  |
+* contract address: 6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
+* contract version: 1.0
+---------------------------------------------------------------------------------------------
+* contract address: c8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085
+* contract version: 2.0
 ---------------------------------------------------------------------------------------------
 
-[group]: />  queryCNS HelloWorld 1.0
+[group]: /> queryCNS HelloWorld 1.0
 ---------------------------------------------------------------------------------------------
-|                   version                   |                   address                   |
-|                     1.0                     | 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c  |
+* contract address: 0x6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
+* contract version: 1.0
 ---------------------------------------------------------------------------------------------
 ```
 
@@ -927,8 +929,8 @@ PeersInfo{
 
 运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`consensus_leader_period`。这些系统参数的键名可以通过tab键补全：
 
-* tx_count_limit：区块最大打包交易数
-* consensus_leader_period：交易执行允许消耗的最大gas数
+- tx_count_limit：区块最大打包交易数
+- consensus_leader_period：交易执行允许消耗的最大gas数
 
 参数：
 
@@ -938,7 +940,7 @@ PeersInfo{
 ```shell
 [group]: />  setSystemConfigByKey tx_count_limit 100
 {
-    "code":1,
+    "code":0,
     "msg":"success"
 }
 ```
@@ -1124,7 +1126,7 @@ ConsensusStatusInfo{
 ```shell
 [group]: />  addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-    "code":1,
+    "code":0,
     "msg":"success"
 }
 ```
@@ -1139,7 +1141,7 @@ ConsensusStatusInfo{
 ```shell
 [group]: />  removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-    "code":1,
+    "code":0,
     "msg":"success"
 }
 ```
@@ -1393,10 +1395,12 @@ name: Hello, type: contract
 与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
 
 ```shell
-[group]: /> mkdir test
+[group]: /> mkdir /apps/test
 
-[group]: /> ls
-/ apps usr sys tables test
+[group]: /> cd /apps
+
+[group]: /apps> ls
+test
 
 [group]: /> mkdir ./test/test
 

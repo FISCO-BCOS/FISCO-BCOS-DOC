@@ -4,15 +4,13 @@
 
 ---
 
-
 FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们还会尝试将现有的典型业务场景抽象，开发成预编译合约模板，作为底层提供的基础能力，帮助用户更快的更方便的在业务中使用FISCO BCOS。
 
-### FISCO BCOS当前系统合约及地址
+## FISCO BCOS当前系统合约及地址
 
 该表中的地址只用于Solidity合约。
 
 在FISCO BCOS 3.0暂未开放Table系统合约接口的使用，敬请期待。
-
 
 | 地址             | 合约                      | 说明                                   |
 | :--------------- | :------------------------ | :------------------------------------- |
@@ -129,6 +127,7 @@ contract ConsensusPrecompiled {
 **接口返回说明：**
 
 - 接口均以错误码形式返回
+
 | 错误码        | 说明                   |
 | :------------ | :--------------------- |
 | 错误码大等于0 | 修改所影响的行数       |
@@ -139,7 +138,7 @@ contract ConsensusPrecompiled {
 
 #### SDK支持
 
-- [Java SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/api.html#consensusservice)
+- [Java SDK](../sdk/java_sdk/api.html#consensusservice)
 
 ### CNSPrecompiled
 
@@ -174,16 +173,18 @@ contract CNSPrecompiled
 **接口返回说明：**
 
 - 接口均以错误码形式返回
+
 | 错误码        | 说明                     |
 |:--------------|:-------------------------|
 | 错误码大等于0 | 修改所影响的行数         |
 | -50000        | 用户没有权限修改         |
-| -51200        | 合约版本号超过128字符    |
-| -51201        | 合约地址与版本号已经存在 |
+| -51200        | 合约地址与版本号已经存在 |
+| -51201        | 合约版本号超过128字符    |
+| -51202        | 地址名或版本号不合法    |
 
 #### SDK支持
 
-- [Java SDK](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/api.html#cnsservice)
+- [Java SDK](../sdk/java_sdk/api.html#cnsservice)
 
 ### ParallelConfigPrecompiled
 
