@@ -16,7 +16,7 @@
 
 ## 2. 搭建一条FISCO BCOS链
 
-请参考[搭建第一个区块链网络](../../../quick_start/air_installation.html#fisco-bcos)搭建。
+请参考[搭建第一个区块链网络](../../../quick_start/air_installation.html#airfisco-bcos)搭建。
 
 ## 3. 开发智能合约应用
 
@@ -96,7 +96,7 @@ asset_test    hello_world   kv_table_test
 
 $ cd contracts/liquid/hello_world
 
-// 使用cargo liquid 编译
+# 使用cargo liquid 编译
 $ cargo liquid build
 [1/4] 🔍  Collecting crate metadata
 [2/4] 🚚  Building cargo project
