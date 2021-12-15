@@ -76,7 +76,7 @@ $ perf report -n
 火焰图，即Flame Graph，藉由系统性能大牛 Brendan Gregg提出的动态追踪技术而发扬光大，主要用于将性能分析工具生成的数据进行可视化处理，方便开发人员一眼就能定位到性能问题所在。火焰图的使用较为简单，我们仅需将一系列工具从github上下载下来，置于本地任一目录即可：
 
 ```
-wget https://github.com/brendangregg/FlameGraph/archive/master.zipunzip master.zip
+wget https://github.com/brendangregg/FlameGraph/archive/master.zip && unzip master.zip
 ```
 
 ### 3.1CPU火焰图

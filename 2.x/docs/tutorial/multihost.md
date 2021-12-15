@@ -36,7 +36,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/buil
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 **生成区块链网络配置文件**
@@ -247,10 +247,10 @@ sudo yum install -y java java-devel
 # 创建操作目录
 mkdir -p ~/fisco && cd ~/fisco
 
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/download_console.sh
 
 # 若因为网络问题导致长时间无法下载，请尝试以下命令：
-curl -#LO  https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
+curl -#LO  https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh
 
 bash download_console.sh
 ```

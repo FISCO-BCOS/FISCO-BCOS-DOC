@@ -463,6 +463,6 @@ hello_world_set_method显示了历史调用的所有函数信息。
 - [Spring Boot项目配置参考](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#spring-boot)
 - [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)
 - [合约转为Java文件指引](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/quick_start.html#id4)
-- [HelloWorld合约](https://github.com/FISCO-BCOS/spring-boot-starter/blob/master/src/test/resources/contract/HelloWorld.sol)
+- [HelloWorld合约](https://github.com/FISCO-BCOS/spring-boot-starter/blob/https://github.com/FISCO-BCOS/spring-boot-starter/src/test/resources/contract/HelloWorld.sol)
 - [WeBankBlockchain-Data-Export快速部署](https://data-doc.readthedocs.io/zh_CN/dev/docs/WeBankBlockchain-Data-Export/install_Service.html)
 

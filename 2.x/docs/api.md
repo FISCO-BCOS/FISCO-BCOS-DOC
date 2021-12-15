@@ -197,7 +197,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getClientVersion","params":[],"i
     "Build Time": "20190106 20:49:10",
     "Build Type": "Linux/g++/RelWithDebInfo",
     "FISCO-BCOS Version": "2.0.0",
-    "Git Branch": "master",
+    "Git Branch": "master-2.0",
     "Git Commit Hash": "693a709ddab39965d9c39da0104836cfb4a72054"
   }
 }
@@ -1539,7 +1539,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getNodeInfo","params":[],"id":1}
 
 #### **返回值**
 
-当`compressFlag`为true，返回明文形式的批量交易回执信息; 当`compressFlag`为false时，返回zlib压缩后的Base64编码的批量回执信息，返回的具体字段如下:
+当`compressFlag`为false，返回明文形式的批量交易回执信息; 当`compressFlag`为true时，返回zlib压缩后的Base64编码的批量回执信息，返回的具体字段如下:
 
 - `blockHash`: 回执所在的区块哈希
 - `blockNumber`: 回执所在的区块高度

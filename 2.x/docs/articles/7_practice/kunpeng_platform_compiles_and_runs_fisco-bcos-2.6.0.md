@@ -93,7 +93,7 @@ git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```
 cd FISCO-BCOS
-git checkout master
+git checkout master-2.0
 mkdir -p build && cd build
 
 // CentOS请执行此命令，其他系统不需要
@@ -174,7 +174,7 @@ cp /usr/share/automake-1.13/config.guess ${HOME}/FISCO-BCOS/deps/src/GroupSigLib
 FISCO-BCOS Version : 2.6.0
 Build Time         : 20200810 09:17:18
 Build Type         : Linux/g++/RelWithDebInfo
-Git Branch         : master
+Git Branch         : master-2.0
 Git Commit Hash    : a2c2cd3f504a101fbc5e97833ea0f4443b68098e
 ```
 
@@ -309,7 +309,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
     "Build Type":"Linux/g++/RelWithDebInfo",
     "Chain Id":"1",
     "FISCO-BCOS Version":"2.6.0",
-    "Git Branch":"master",
+    "Git Branch":"master-2.0",
     "Git Commit Hash":"a2c2cd3f504a101fbc5e97833ea0f4443b68098e",
     "Supported Version":"2.6.0"
 }

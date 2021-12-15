@@ -108,10 +108,10 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/download_console.sh
 
 # 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
-$ curl -#LO https://gitee.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh
+$ https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.8.0/download_console.sh
 
 $ bash download_console.sh
 $ cd ~/fisco/console
@@ -194,7 +194,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 ### 第五步. 创建配置文件
 
-在项目中创建配置文件``config.toml``, 可参照[配置向导](./configuration.html)进行配置，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml), 
+在项目中创建配置文件``config.toml``, 可参照[配置向导](./configuration.html)进行配置，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master-2.0/src/test/resources/config-example.toml), 
 
 通过``xml``配置请参照第4章“附录三. 使用xml配置进行配置”。
 
@@ -292,7 +292,7 @@ $ bash sol2java.sh -h
 ```
 ### 附录三. 使用xml配置进行配置
 
-为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
+为了适配更多场景，Java SDK支持使用`xml`初始化`BcosSDK`, `xml`配置示例请参考Java SDK源码的[`applicationContext-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master-2.0/src/test/resources/applicationContext-sample.xml), 配置项的含义参考[配置说明](./configuration.md).
 
 通过`xml`配置文件初始化`BcosSDK`之前，需要先引入`spring`。
 

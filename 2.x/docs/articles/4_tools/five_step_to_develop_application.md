@@ -19,7 +19,7 @@ $ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s h
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 执行`build_chain.sh`脚本，启动四个节点：
@@ -47,7 +47,7 @@ $ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.0/downl
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载控制台，请尝试命令 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh -c 1.2.0`
+    - 如果因为网络问题导致长时间无法下载控制台，请尝试命令 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh && bash download_console.sh -c 1.2.0`
 ```
 
 配置并启动控制台：
