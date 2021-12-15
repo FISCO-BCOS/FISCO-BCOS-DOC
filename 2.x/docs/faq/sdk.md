@@ -6,8 +6,27 @@ Web3SDK要求JDK版本大于等于1.8，推荐使用OracleJDK。
 
 --------
 
-# Web3SDK - 常见的异常启动问题
-
+# Web3SDK - 常见的异常问题
+- solcJ-all-0.4.25.jar 下载失败，报错403<br>
+```shell
+Could not resolve all files for configuration ':compileClasspath'.
+   > Could not download solcJ-all-0.4.25.jar (org.ethereum:solcJ-all:0.4.25)
+      > Could not get resource 'https://dl.bintray.com/ethereum/maven/org/ethereum/solcJ-all/0.4.25/solcJ-all-0.4.25.jar'.
+         > Could not HEAD 'https://dl.bintray.com/ethereum/maven/org/ethereum/solcJ-all/0.4.25/solcJ-all-0.4.25.jar'. Received status code 403 from server: Forbidden
+```
+<br>
+原因:
+solcJ所在的仓库被删除，导致无法下载该依赖
+<br>
+第一种方法：
+升级web3sdk升级至2.6.4版本
+<br>
+第二种办法：
+排除该依赖
+compile ('org.fisco-bcos:web3sdk:2.6.3') {
+exclude group: 'org.ethereum', module: 'solcJ-all'
+}
+<br>
 - Failed to connect to the node. Please check the node status and the console configuration.<br>    
   比较旧的SDK版本的提示，建议将JavaSDK版本升级至**2.2.2**或者以上(修改gradle.build或者maven配置文件中web3sdk的版本号)，可以获取更准确友好的提示，然后参考下面的错误提示解决问题。<br> <br>    
 

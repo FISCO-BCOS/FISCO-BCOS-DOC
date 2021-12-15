@@ -365,7 +365,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 ### 并行预编译合约：DagTransferPrecompiled
 
-与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行预编译合约的例子（[DagTransferPrecompiled GitHub源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/DagTransferPrecompiled.cpp)或[DagTransferPrecompiled Gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
+与ParallelOk合约的功能一样，FISCO BCOS内置了一个并行预编译合约的例子（[DagTransferPrecompiled GitHub源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/DagTransferPrecompiled.cpp)或[DagTransferPrecompiled Gitee源码](https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/DagTransferPrecompiled.cpp)），实现了简单的基于账户模型的转账功能。该合约能够管理多个用户的存款，并提供一个支持并行的transfer接口，实现对用户间转账操作的并行处理。
 
 **注意：DagTransferPrecompiled为并行交易的举例，功能较为简单，请勿用于线上业务。**
 

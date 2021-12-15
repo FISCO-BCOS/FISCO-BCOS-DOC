@@ -25,7 +25,7 @@ FISCO BCOS提供了脚本和Java SDK用以创建账户，同时也提供了Java 
 #### 1. 获取脚本
 
 ```bash
-curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master-2.0/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
 
 ```eval_rst
@@ -36,7 +36,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 国密版本请使用下面的指令获取脚本
 
 ```bash
-curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master-2.0/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
 ```
 
 ```eval_rst
