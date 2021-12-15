@@ -74,7 +74,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
          
                <div class="tools-holder">
                   <br>
-                  <h style="font-size: 18px;"><b><a href="./docs/console/index.html">命令行交互控制台：节点查询与管理工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/develop/console/index.html">命令行交互控制台：节点查询与管理工具</a></b></h>
                   <br><br>
                   <p>命令行交互控制台是提供给开发者使用的节点查询与管理的工具。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。</p>
                </div>
