@@ -194,6 +194,11 @@ cd ~/fisco/BcosProBuilder
 
 # 从conf目录拷贝配置
 cp conf/config-deploy-example.toml config.toml
+```
+
+此时拷贝的`config.toml`为整个`BcosBuilder`使用的配置文件，配置详情请参考链接：[配置介绍](./pro_builder.html#id1)。
+
+```shell
 
 # 将步骤3.2生成的token配置到config.toml的tars_token字段
 # 这里生成的token是eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls，实际使用时，请替换为实际申请的token

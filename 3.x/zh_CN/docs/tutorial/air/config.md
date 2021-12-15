@@ -126,6 +126,7 @@ P2P配置示例如下：
 ### 配置executor信息
 
 `[executor]`配置执行器信息：
+
 - `is_wasm`: 是否使用wasm虚拟机，当设置为false时启动evm虚拟机，默认为false。
 - `is_auth_check`: 是否开启权限检查，默认为false。
 - `auth_admin_account`: 权限管理员账户地址。

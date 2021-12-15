@@ -57,6 +57,7 @@ gateway_sm_ssl=false
 .. note::
    - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
 ```
+
 RPC服务的配置项位于`[[chain.rpc]]`中，一条链可部署多个RPC服务，主要配置项包括：
 
 - `name`: RPC服务的名字，**不能包括除字母和数字之外的所有特殊字符**。
@@ -119,10 +120,14 @@ rpc_service_name = "agencyABcosRpcService"
 .. note::
     区块链群组配置不可修改。
 ```
+
 FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组，因此部署区块链节点前，首先需配置群组信息，群组配置项位于`[group]`中，具体如下：
+
 - `group_id`: 区块链节点所属的群组ID，默认为`group`。
 - `vm_type`: 区块链节点运行的虚拟机类型，目前支持`evm`和`wasm`两种类型，且一个群组仅可运行一种类型的虚拟机，不可以部分节点运行EVM虚拟机、部分节点运行WASM虚拟机。
 - `sm_crypto`: 节点账本是否采用国密类型签名、验签、哈希、加密算法，默认为`false`。
+- `auth_check`: 是否开启权限治理模式，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
+- `init_auth_address`: 开启权限治理时，指定的初始化治理委员账号地址，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
 
 群组配置中还包括了创世块相关的配置：
 - `leader_period`: 每个leader可以连续打包的区块数目，默认为5。
@@ -356,7 +361,6 @@ optional arguments:
 
 - `-n/--name`: 指定桥接网络的名称，如: `tars-network`。
 - `-s/--subnet`: 指定桥接网络的网段，如: `172.25.0.0/16`。
-
 
 ## 3. tars docker-compose配置介绍
 
