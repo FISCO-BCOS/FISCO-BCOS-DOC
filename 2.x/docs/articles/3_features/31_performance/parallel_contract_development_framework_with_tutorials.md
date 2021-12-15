@@ -291,7 +291,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.Perf
 # 参数：<groupID> transfer <总交易数量> <此转账操作请求的TPS上限> <需要的用户信息文件> <交易互斥百分比：0~10>
 java -cp conf/:lib/*:apps/* org.fisco.bcos.channel.test.parallel.parallelok.PerformanceDT 1 transfer 100000 4000 user 2
 ​
-# 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
+# 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户。
 ```
 
 #### step3 验证并行正确性
