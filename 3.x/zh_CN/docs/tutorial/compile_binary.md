@@ -109,6 +109,9 @@ cmake ..
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
 cmake .. -DHUNTER_JOBS_NUMBER=2
 
+# 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
+cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug
+
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
 make -j2
 
@@ -150,6 +153,9 @@ cmake ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
 cmake .. -DHUNTER_JOBS_NUMBER=2
+
+# 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
+cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug
 
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
