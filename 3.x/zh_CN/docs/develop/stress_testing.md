@@ -41,7 +41,7 @@ $ bash gradlew build
 
 ### 第三步. 配置Demo
 
-使用Java SDK Demo之前，需要首先配置Java SDK，包括证书拷贝以及端口配置，详细请参考[这里](./sdk/java_sdk/quick_start.md)
+使用Java SDK Demo之前，需要首先配置Java SDK，包括证书拷贝以及端口配置，详细请参考[这里](./sdk/java_sdk/quick_start.md)，SDK连接证书参考这里：[SDK连接证书配置](../cert_config.md)。下面以FISCO BCOS 3.0+ Air版为例：
 
   ```shell
   # 拷贝证书(假设SDK证书位于~/fisco/nodes/127.0.0.1/sdk目录，请根据实际情况更改路径)

@@ -405,7 +405,7 @@ contract address: 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c
 transaction hash: 0x3132f73e5af72fce44c2e07185a04f554ac06ddd94119dcf798980695b0890a0
 contract address: 0xf68a1aabfad336847e109c33ca471b192c93c0a9
 {
-    "code":1,
+    "code":0,
     "msg":"Success"
 }
 
@@ -414,7 +414,7 @@ contract address: 0xf68a1aabfad336847e109c33ca471b192c93c0a9
 transaction hash: 0x288ccc6e166e43f5cd3bd563e00af48988e641196aaea57a59f0ab256e23c84e
 contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 {
-    "code":1,
+    "code":0,
     "msg":"Success"
 }
 ```

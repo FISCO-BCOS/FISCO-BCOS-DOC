@@ -153,10 +153,14 @@ min_seal_time = 500
 #### executor
 
 - `is_wasm`: 节点是否使用WASM虚拟机，默认使用EVM虚拟机。
+- `is_auth_check`: 是否开启权限检查，默认为false。权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
+- `auth_admin_account`: 权限管理员账户地址，默认为空。权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
 
 ```ini
 [executor]
 is_wasm = false
+is_auth_check=false
+auth_admin_account=
 ```
 
 #### storage

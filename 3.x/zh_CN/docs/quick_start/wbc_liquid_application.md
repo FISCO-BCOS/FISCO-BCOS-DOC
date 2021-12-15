@@ -60,6 +60,8 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 根据我们第一步的存储和接口设计，创建一个Asset的智能合约项目。
 在终端中执行以下命令创建 WBC-Liquid 智能合约项目：
 
+**特别注意：** 为了用户方便使用，控制台已经在 `console/contracts/liquid`路径下准备好了`Asset`示例，下面的流程为创建一个全新WBC-Liquid合约的流程。
+
 ```shell
 # 创建工作目录~/fisco
 mkdir -p ~/fisco
@@ -286,14 +288,8 @@ cargo liquid build
 # 切换到fisco/console/目录
 cd ~/fisco/console/
 
-# 若没有 download_console.sh，在github下载console项目
-git clone https://github.com/FISCO-BCOS/console.git
-# 进入console, 创建执行文件
-cd console && ./gradlew build
-cd dist
-
 # 编译合约(后面指定BINARY、abi 文件路径，可以根据实际项目路径指定路径)如下：
-bash contract2java.sh -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm
+bash contract2java.sh liquid -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm
 
 # 脚本用法：
 $ bash contract2java.sh liquid -h
