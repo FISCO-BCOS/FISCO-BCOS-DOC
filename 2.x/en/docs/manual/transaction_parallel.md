@@ -310,7 +310,7 @@ After executed, ParallelOk contract will be deployed to blockchain, the created 
 ```shell
 # java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf precompiled 1 transfer 100000 4000 user
-# 100000 transactions have been sent to group1, the TPS limit is 4000, users are the same in the user file created formerly, 20% of exclusion exists between transactions.
+# 100000 transactions have been sent to group1, the TPS limit is 4000, users are the same in the user file created formerly.
 ```
 
 **（3）Verify parallel correctness**
