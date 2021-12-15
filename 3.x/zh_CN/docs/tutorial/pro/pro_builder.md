@@ -372,8 +372,8 @@ FISCO BCOS Pro版本区块链基于[tars](https://newdoc.tarsyun.com/#/markdown/
 .. note::
    - **推荐体验环境使用桥接组网的方式搭建tars**。
    - 由于macOS docker跨文件系统io速度慢的问题，不推荐macOS体验环境挂载volume。
-   - 使用docker-compose启动容器前，请先确保桥接网络``tars-network``已经被创建，可使用 ``BcosProBuilder`` 的``create-subnet``命令创建桥接网络。
-   - 桥接网络仅可保证本机容器网间络连通，若需进行跨机器网络通信，推荐使用``host``网络模式或在两台机器间进行``vxlan``网络打通。
+   - 使用docker-compose启动容器前，请先确保桥接网络 ``tars-network`` 已经被创建，可使用 ``BcosProBuilder`` 的 ``create-subnet`` 命令创建桥接网络。
+   - 桥接网络仅可保证本机容器网间络连通，若需进行跨机器网络通信，推荐使用 ``host`` 网络模式或在两台机器间进行``vxlan``网络打通。
 ```
 
 **桥接模式下，tarsFramework的docker-compose配置如下**：
