@@ -314,7 +314,7 @@ java -cp conf/:lib/*:apps/* org.fisco.bcos.sdk.demo.perf.ParallelOkPerf parallel
 # java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf parallelok 1 transfer 100000 4000 user
 
-# 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户，发送的交易间有20%的互斥。
+# 向group1发送了 100000比交易，发送的TPS上限是4000，用的之前创建的user文件里的用户。
 ```
 
 **（3）验证并行正确性**
