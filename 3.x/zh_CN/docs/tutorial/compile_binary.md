@@ -50,7 +50,7 @@ source $HOME/.cargo/env
 - **macOS**
 
 ```shell
-brew install clang git flex bison
+brew install clang git flex bison zstd
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 source $HOME/.cargo/env
@@ -155,7 +155,10 @@ cmake ..
 cmake .. -DHUNTER_JOBS_NUMBER=2
 
 # 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug
+# cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug
+
+# 若执行以上过程报错，请尝试执行如下命令指定SDKROOT
+#rm -rf CMakeCache.txt && export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake ..
 
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
