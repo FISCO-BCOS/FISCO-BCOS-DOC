@@ -148,10 +148,10 @@ init_auth_address="0x2690ef01645972e0940400a4bb43f62eb4e2b7f1"
 
 - [getCommitteeInfo](./console/console_commands.html#getcommitteeinfo)：获取治理委员会详细信息；
 - [getProposalInfo](./console/console_commands.html#getprposalinfo)：获取某个特定的提案信息；
-- [getDeployAuth](/console/console_commands.html#getdeployauth)：获取当前全局的部署权限策略，分为：无策略，白名单策略，黑名单策略；
-- [checkDeployAuth](/console/console_commands.html#checkdeployauth)：检查某个账户是否有部署权限；
-- [getDeployAuth](/console/console_commands.html#getdeployauth)：检查某个账户是否有调用某个合约接口的权限；
-- [getLatestProposal](/console/console_commands.html#getlatestproposal)：获取最新提案的ID；
+- [getDeployAuth](./console/console_commands.html#getdeployauth)：获取当前全局的部署权限策略，分为：无策略，白名单策略，黑名单策略；
+- [checkDeployAuth](./console/console_commands.html#checkdeployauth)：检查某个账户是否有部署权限；
+- [getDeployAuth](./console/console_commands.html#getdeployauth)：检查某个账户是否有调用某个合约接口的权限；
+- [getLatestProposal](./console/console_commands.html#getlatestproposal)：获取最新提案的ID；
 
 ### 2. 治理委员专用命令
 
@@ -454,7 +454,7 @@ Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 ```
 
-管理员可以使用命令开启某个账户对get()接口的使用权限
+管理员可以使用命令开启某个账户对set(string)接口的使用权限
 
 ```shell
 [group]: /> openMethodAuth 0x33E56a083e135936C1144960a708c43A661706C0 "set(string)" 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
