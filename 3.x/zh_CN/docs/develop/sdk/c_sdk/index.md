@@ -13,5 +13,6 @@
    env.md
    compile.md
    api.md
+   config.md
    dev.md
 ```
