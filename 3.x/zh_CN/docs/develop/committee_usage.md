@@ -147,11 +147,12 @@ init_auth_address="0x2690ef01645972e0940400a4bb43f62eb4e2b7f1"
 该命令没有权限控制，所有账户均可访问。
 
 - [getCommitteeInfo](./console/console_commands.html#getcommitteeinfo)：获取治理委员会详细信息；
-- [getProposalInfo](./console/console_commands.html#getprposalinfo)：获取某个特定的提案信息；
+- [getProposalInfo](./console/console_commands.html#getproposalinfo)：获取某个特定的提案信息；
 - [getDeployAuth](./console/console_commands.html#getdeployauth)：获取当前全局的部署权限策略，分为：无策略，白名单策略，黑名单策略；
 - [checkDeployAuth](./console/console_commands.html#checkdeployauth)：检查某个账户是否有部署权限；
-- [getDeployAuth](./console/console_commands.html#getdeployauth)：检查某个账户是否有调用某个合约接口的权限；
+- [checkMethodAuth](./console/console_commands.html#checkmethodauth)：检查某个账户是否有调用某个合约接口的权限；
 - [getLatestProposal](./console/console_commands.html#getlatestproposal)：获取最新提案的ID；
+- [getContractAdmin](./console/console_commands.html#getcontractadmin)：获取某个合约的管理员账号地址；
 
 ### 2. 治理委员专用命令
 
