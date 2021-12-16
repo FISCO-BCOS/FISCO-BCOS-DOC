@@ -1536,7 +1536,35 @@ Interface: set(string)
 Contract : 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
 ```
 
-### 6. updateGovernorProposal
+### 6. getLatestProposal
+
+为了避免发起提案超时、退出控制台遗忘提案ID，getLatestProposal的命令可以获取当前委员会的最新的提案信息。
+
+```shell
+[group]: /> getLatestProposal 
+Latest proposal ID: 9
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : resetAdmin
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
+```
+
+### 7. getContractAdmin
+
+使用命令可获取某个合约的管理员，只有管理员才可以对该合约进行权限控制操作。
+
+```shell
+# 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+```
+
+### 8. updateGovernorProposal
 
 如果是新加治理委员，新增地址和权重即可。
 
@@ -1557,7 +1585,7 @@ Against Voters:
 
 ```
 
-### 7. setRateProposal
+### 9. setRateProposal
 
 设置提案阈值，提案阈值分为参与阈值和权重阈值。
 
@@ -1578,7 +1606,7 @@ Against Voters:
 
 ```
 
-### 8. setDeployAuthTypeProposal
+### 10. setDeployAuthTypeProposal
 
 设置部署的ACL策略，只支持 white_list 和 black_list 两种策略
 
@@ -1599,7 +1627,7 @@ Against Voters:
 Deploy strategy is White List Access.
 ```
 
-### 9. openDeployAuthProposal
+### 11. openDeployAuthProposal
 
 开启某个管理员部署权限的提案
 
@@ -1632,7 +1660,7 @@ currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 ```
 
-### 10. closeDeployAuthProposal
+### 12. closeDeployAuthProposal
 
  关闭某个管理员部署权限的提案
 
@@ -1665,7 +1693,7 @@ Return values:null
 
 ```
 
-### 11. resetAdminProposal
+### 13 resetAdminProposal
 
 重置某个合约的管理员的提案
 
@@ -1692,7 +1720,7 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f
 
 ```
 
-### 12. revokeProposal
+### 14. revokeProposal
 
 撤销还未成功的提案，撤销提案的动作只能由发起提案的治理委员发起。
 
@@ -1737,7 +1765,7 @@ Against Voters:
 
 ```
 
-### 13. voteProposal
+### 15. voteProposal
 
 治理委员可向某个提案进行投票，投票时可选择同意和不同意。
 
@@ -1786,25 +1814,7 @@ index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 2
 index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
 ```
 
-### 14. getLatestProposal
-
-为了避免发起提案超时、退出控制台遗忘提案ID，getLatestProposal的命令可以获取当前委员会的最新的提案信息。
-
-```shell
-[group]: /> getLatestProposal 
-Latest proposal ID: 9
----------------------------------------------------------------------------------------------
-Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-Proposal Type   : resetAdmin
-Proposal Status : finished
----------------------------------------------------------------------------------------------
-Agree Voters:
-0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
----------------------------------------------------------------------------------------------
-Against Voters:
-```
-
-### 15. setMethodAuth
+### 16. setMethodAuth
 
  管理员设置方法的权限策略
 
@@ -1842,7 +1852,7 @@ Return values:(Hello, World!)
 
 ```
 
-### 16. openMethodAuth
+### 17. openMethodAuth
 
 管理员开启用户可以访问合约的某个方法的权限
 
@@ -1882,7 +1892,7 @@ Return values:(Hello, FISCO BCOS!)
 ---------------------------------------------------------------------------------------------
 ```
 
-### 17. closeMethodAuth
+### 18. closeMethodAuth
 
 管理员关闭用户可以访问合约的某个方法的权限
 
