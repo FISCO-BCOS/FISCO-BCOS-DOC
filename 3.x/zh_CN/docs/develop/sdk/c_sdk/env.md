@@ -4,12 +4,12 @@
 
 ----------
 
-**系统支持:**
+**支持系统:**
 
-- `CentOs 7.2+`
+- `CentOS 7.2+`
 - `Ubuntu 18.04+`
 - `Windows 10`
-- `macOS 12`
+- `macOs 12`
 
 **依赖安装:**
 
@@ -19,7 +19,7 @@
 - `Ubuntu`:
   `apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev zlib1g-dev automake libtool`
   
-- `macOS`:
+- `macOs`:
   `brew install openssl git flex bison gmp`
   
 - `Windows`:
