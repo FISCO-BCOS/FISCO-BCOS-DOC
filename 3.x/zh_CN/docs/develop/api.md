@@ -22,7 +22,9 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### sendTransaction
 
 发送交易到区块链RPC。
+
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - signedTransactionData：签名后的交易
 - withProof：返回是否带上默克尔树证明
@@ -31,8 +33,11 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 
 ### sendTransactionAsync
+
 交易发布异步接口, 收到节点的响应之后，调用指定的callback。
+
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - signedTransactionData: 签名后的交易字符串;
 - withProof：返回是否带上默克尔树证明
@@ -41,21 +46,28 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - 无
 
 ### call
+
 向节点发送请求，调用合约常量接口。
+
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - transaction: 合约调用信息，包含合约地址、合约调用者以及调用的合约接口和参数的abi编码
 **返回值**
 - Call: 合约常量接口的返回结果，包括当前块高、接口执行状态信息以及接口执行结果
 
 ### callAsync
+
 合约常量接口异步调用，接收到节点返回的合约接口执行结果后，执行指定的回调函数
+
 **参数**
+
 - node：可让RPC发送请求到指定节点
 - transaction: 合约调用信息，包含合约地址、合约调用者以及调用的接口和参数信息；
 - callback: 回调函数。
 
 **返回值**
+
 - 无
 
 ### getCode
@@ -74,6 +86,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ## 2. 区块链查询接口
 
 ### getBlockNumber
+
 获取Client对象对应的群组最新块高。
 
 **参数**

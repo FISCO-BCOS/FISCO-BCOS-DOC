@@ -4,6 +4,10 @@
 
 ----
 
+FISCO BCOS 3.0+ 引入了合约粒度的权限治理体系。治理委员会可通过投票的方式管理合约的部署、合约的接口调用权限。
+
+详细权限治理使用文档请参考链接：[权限治理使用指南](../develop/committee_usage.md)
+
 ## 整体设计
 
 在FISCO BCOS3.0框架中，治理体系由系统合约实现，系统合约提供了相对灵活且通用的功能模块，在满足几乎所有场景的诉求的同时，确保可插拔。
@@ -117,23 +121,23 @@ uint8 public _winRate;
 function getAdmin(address contractAddr) public view returns (address) {}
 
 function resetAdmin(address contractAddr, address admin)
-		public returns (int256);
+        public returns (int256);
 
 function setMethodAuthType(
-		address contractAddr, bytes4 func, uint8 authType)
-		public returns (int256);
+        address contractAddr, bytes4 func, uint8 authType)
+        public returns (int256);
 
 function openMethodAuth(
-		address contractAddr, bytes4 func, address account)
-		public returns (int256);
+        address contractAddr, bytes4 func, address account)
+        public returns (int256);
 
 function closeMethodAuth(
-		address contractAddr, bytes4 func, address account) 
-		public returns (int256);
+        address contractAddr, bytes4 func, address account) 
+        public returns (int256);
 
 function checkMethodAuth(
-		address contractAddr, bytes4 func, address account)
-		public view returns (bool);
+        address contractAddr, bytes4 func, address account)
+        public view returns (bool);
 
 function deployType() public view returns (uint256);
 
