@@ -43,7 +43,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/buil
 
 ```eval_rst
 .. note::
-    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh && chmod u+x build_chain.sh`
+    - If the build_chain.sh script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/manual/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ### Build a single-group 4-node consortium chain
@@ -195,7 +195,7 @@ cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download
 
 ```eval_rst
 .. note::
-    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`, and modify encryptType to 1 in applicationContext.xml.
+    - If the download_console.sh script cannot be downloaded for a long time due to network problems, try `cd ~/fisco &&  curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh`, and modify encryptType to 1 in applicationContext.xml.
 ```
 
 - Copy the console configuration file. If the node does not use the default port, please replace 20200 in the file with another port.
@@ -368,4 +368,4 @@ Return values:
 [group:1]> quit
 ```
 
-[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh
+[build_chain_code]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/manual/build_chain.sh

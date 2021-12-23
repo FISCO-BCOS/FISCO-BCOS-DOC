@@ -15,7 +15,7 @@ $ cd ~ && mkdir -p fisco && cd fisco
 $ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/build_chain.sh 
 
 # If you have network issue for exec command above, please try:
-$ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/build_chain.sh
+$ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh
 
 $ chmod u+x build_chain.sh
 ```

@@ -114,7 +114,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.2/buil
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/gen_node_cert.sh`
 ```
 
 #### Generate configuration file
@@ -267,7 +267,7 @@ cp nodes/127.0.0.1/sdk/* console/conf/
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh`
 ```
 
 #### Modify configuration file

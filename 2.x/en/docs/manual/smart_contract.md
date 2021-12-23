@@ -365,7 +365,7 @@ The address range of user assigned interval is `0x5001`-`0xffff`. Users needs to
 
 List of precompiled contracts and address assignments implemented in FISCO BCOS:
 
-| address | feature                            | source code ([libprecompiled directory](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled)) |
+| address | feature                            | source code ([libprecompiled directory](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0/libprecompiled)) |
 | ------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | 0x1000  | system parameter management        | SystemConfigPrecompiled.cpp                                                                                   |
 | 0x1001  | table factory contract             | TableFactoryPrecompiled.cpp                                                                                   |
@@ -402,7 +402,7 @@ When a precompiled contract involves a storage operation, it needs to determine 
 
 - **implement contract logic**
 
-For implementing the calling logic of the new contract, you need to implement a new C++ class that needs to inherit [precompiled] (https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/Precompiled.h) #L37 ) to overload the call function for achieving the calling behaviour of each interface.
+For implementing the calling logic of the new contract, you need to implement a new C++ class that needs to inherit [precompiled] (https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/Precompiled.h) #L37 ) to overload the call function for achieving the calling behaviour of each interface.
 
 ```cpp
     // libprecompiled/Precompiled.h
@@ -424,7 +424,7 @@ How to implement a Precompiled class will be detailed in the sample below.
 
 - **register contract**
 
-Finally, the contract address and the corresponding class need to be registered to the execution context of the contract, so that the execution logic of the contract can be correctly recognized when the precompiled contract is called by the address. To view the registered [pre-compiled contract list](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libblockverifier/ExecutiveContextFactory.cpp#L36).
+Finally, the contract address and the corresponding class need to be registered to the execution context of the contract, so that the execution logic of the contract can be correctly recognized when the precompiled contract is called by the address. To view the registered [pre-compiled contract list](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libblockverifier/ExecutiveContextFactory.cpp#L36).
 
 Registration path:
 
@@ -457,7 +457,7 @@ contract HelloWorld{
 ```
 
 The above source code is the HelloWorld contract written by solidity. This chapter will implement a precompiled contract with the same function to enable user step by step to have an visual understanding to the precompiled contract.
-sample c++[source code path](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp):
+sample c++[source code path](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp):
 
 ```cpp
     libprecompiled/extension/HelloWorldPrecompiled.h
@@ -501,7 +501,7 @@ The table stores only a pair of key-value pairs. The key field is hello_key and 
 
 ##### 2.2.4 implement call logic
 
-To add the HelloWorldPrecompiled class, overload the call function, and implement the calling behavior of all interfaces.[call function source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66).
+To add the HelloWorldPrecompiled class, overload the call function, and implement the calling behavior of all interfaces.[call function source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66).
 
 
 The user-defined Precompiled contract needs to add a new class for defining the calling behaviour of the contract in the class. In the example, for adding the HelloWorldPrecompiled class, the following work must complete:
@@ -615,7 +615,7 @@ abi.abiOut(out, strOut1, strOut2, amount);
 // amoumt = 11111
 ```
 
-Finally, the HelloWorldPrecompiled call function is implemented completely.[source code link](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66).
+Finally, the HelloWorldPrecompiled call function is implemented completely.[source code link](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/HelloWorldPrecompiled.cpp#L66).
 
 ```c++
 bytes HelloWorldPrecompiled::call(dev::blockverifier::ExecutiveContext::Ptr _context,

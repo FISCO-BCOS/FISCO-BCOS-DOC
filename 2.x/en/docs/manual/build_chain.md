@@ -9,7 +9,7 @@ FISCO BCOS has provided `build_chain` script to help users quickly build FISCO B
 
 ## Script introduction
 
-- `build_chain.sh` is used to quickly generate configuration files of a chain node. For the script that depends on `openssl`, please according your own operating system to install `openssl 1.0.2` version and above. The source code of script is located at [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/build_chain.sh).
+- `build_chain.sh` is used to quickly generate configuration files of a chain node. For the script that depends on `openssl`, please according your own operating system to install `openssl 1.0.2` version and above. The source code of script is located at [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/tools/build_chain.sh).
 
 - For quick experience can use the `-l` option to specify the node IP and number. `-f` option supports the creation of FISCO BCOS chains for complex business scenarios by using a configuration file in a specified format. **`-l` and `-f` options must be specified uniquely and cannot coexist**.
 - It is recommended to use `-T` option for testing. `-T` enables log level to DEBUG, **p2p module listens for `0.0.0.0` by default**.
@@ -337,12 +337,12 @@ The next operation is done under the `nodes/127.0.0.1` directory generated in th
 1. Acquisition certificate generation script
 
 ```bash
-curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master-2.0/tools/gen_node_cert.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/gen_node_cert.sh`
 ```
 
 2. Generating new node private key certificates
@@ -399,12 +399,12 @@ The next operation is done under the `nodes/127.0.0.1` directory generated in th
 1. Acquisition certificate generation script
 
 ```bash
-curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_node_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master-2.0/tools/gen_node_cert.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_node_cert.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/gen_node_cert.sh`
 ```
 
 2. Generating new node private key certificates
@@ -427,12 +427,12 @@ bash gen_node_cert.sh -c ../cert/agency -o newSDK -g ../gmcert/agency/ -s
 1. Acquisition agency certificate generation script
 
 ```bash
-curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/gen_agency_cert.sh
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master-2.0/tools/gen_agency_cert.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/tools/gen_agency_cert.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/gen_agency_cert.sh`
 ```
 
 2. Generating new agency private key certificates
@@ -454,5 +454,5 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 
 Using the build_chain script to build a multi-server and multi-group FISCO BCOS alliance chain requires the script configuration file. For details, please refer to [here](../manual/group_use_cases.md).
 
-[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/manual/build_chain.sh
+[build_chain]:https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/manual/build_chain.sh
 

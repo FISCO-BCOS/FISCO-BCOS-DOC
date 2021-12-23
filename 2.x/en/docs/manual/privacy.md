@@ -96,7 +96,7 @@ The code of the privacy module is put together with the precompiled contracts de
 
 1. Addresses have been assigned to the precompiled contracts for the privacy module and no additional registration is required. The precompiled contract list and address allocation of the privacy module are as follows:
 
-   | Addresses   | Function   | [Resource](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/libprecompiled/extension) |
+   | Addresses   | Function   | [Resource](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0/libprecompiled/extension) |
    | ------ | ---------- | ------------------------------------------------------------ |
    | 0x5003 | Homomorphic encryption   | PaillierPrecompiled.cpp                                      |
    | 0x5004 | Group signature     | GroupSigPrecompiled.cpp                                      |
