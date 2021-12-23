@@ -67,7 +67,7 @@ In order to facilitate users to modify the SDK allowlist list, the `reload_sdk_a
 
 ```eval_rst
 .. note::
-    There is no `reload_sdk_allowlist.sh` script on the old chain nodes, and the script can be downloaded by the command `curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master/tools/reload_sdk_allowlist.sh`.
+    There is no `reload_sdk_allowlist.sh` script on the old chain nodes, and the script can be downloaded by the command `curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/FISCO-BCOS/master-2.0/tools/reload_sdk_allowlist.sh`.
 ```
 
 

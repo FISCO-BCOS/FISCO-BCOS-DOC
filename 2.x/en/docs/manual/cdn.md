@@ -37,7 +37,7 @@ FISCO BCOS控制台是一个交互式命令行工具，使用Java开发，代码
 控制台每个版本发布会提供编译好的包，用户下载后配置后即可使用，为了下载控制台用户需要获取download_console.sh脚本。此脚本会从GitHub下载最新版本console.tar.gz，如果下载失败则尝试从官网CDN下载。下面的指令从国内镜像获取download_console.sh脚本并执行。
 
 ```bash
-curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
+curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh && bash download_console.sh
 ```
 
 ### TASSL
@@ -48,9 +48,9 @@ FISCO BCOS国密版本需要使用TASSL生成国密版本的证书，部署工�
 
 FISCO BCOS在国密模式下使用sm2曲线和对应签名算法，在非国密场景使用secp256k1曲线和ecdsa签名算法。为方便用户提供了生成脚本，脚本生成私钥并以账户地址命名，支持PEM和PKCS12两种格式。详情请参考这里[https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/account.html)
 
-get_account.sh脚本依赖于openssl指令，用于生成secp256k1私钥，如果从GitHub下载失败，可以尝试镜像地址 [https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh](https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh)
+get_account.sh脚本依赖于openssl指令，用于生成secp256k1私钥，如果从GitHub下载失败，可以尝试镜像地址 [https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/get_account.sh](https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/get_account.sh)
 
-get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub下载失败，可以尝试镜像地址 [https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh](https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh)
+get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub下载失败，可以尝试镜像地址 [https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/get_gm_account.sh](https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/get_gm_account.sh)
 
 ## 举例：使用国内镜像建链
 
@@ -62,7 +62,7 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.4.0/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master/manual/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/manual/build_chain.sh`
 
 ### 下载二进制程序
 

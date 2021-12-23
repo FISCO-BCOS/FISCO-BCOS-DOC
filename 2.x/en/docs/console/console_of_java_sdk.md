@@ -66,7 +66,7 @@ $ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/downl
 
 ```eval_rst
 .. note::
-    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    - If the script cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh && bash download_console.sh`
 ```
 
 The directory structure is as follows:

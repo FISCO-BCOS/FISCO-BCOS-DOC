@@ -361,7 +361,7 @@ total transactions = 193332, execute_time = 34580ms, tps = 5590 (tx/s)
 
 ### Parallel precompiled contract: DagTransferPrecompiled
 
-Same with the function of ParallelOk contract, FISCO BCOS has built-in example of parallel precompiled contract ([DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/libprecompiled/extension/DagTransferPrecompiled.cpp)) and realizes transfer function based on account model. The contract can manage deposits from multiple users and provides a parallel transfer interface for parallel transactions of payment transfer between users.
+Same with the function of ParallelOk contract, FISCO BCOS has built-in example of parallel precompiled contract ([DagTransferPrecompiled](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/extension/DagTransferPrecompiled.cpp)) and realizes transfer function based on account model. The contract can manage deposits from multiple users and provides a parallel transfer interface for parallel transactions of payment transfer between users.
 
 **Note: DagTransferPrecompiled is the example of parallel transaction with simple functions, please don't use it for online transactions.**
 
