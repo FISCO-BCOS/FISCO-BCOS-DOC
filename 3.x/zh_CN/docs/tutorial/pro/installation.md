@@ -21,7 +21,7 @@ FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 
 ```shell
 sudo apt-get update
-sudo apt-get install -y curl docker docker-compose python3
+sudo apt-get install -y curl docker.io docker-compose python3
 ```
 
 **安装CentOS依赖(版本不小于CentOS 7)**
