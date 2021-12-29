@@ -56,7 +56,7 @@ cmake ../ -DBUILD_SAMPLE=ON # BUILD_SAMPLE表示编译sample目录的示例程�
 ## `Windows`编译
 
 ```shell
-cmake -G "Visual Studio 15 2017" -A x64 ../ -DHUNTER_CONFIGURATION_TYPES=Release
+cmake -G "Visual Studio 15 2017" -A x64 ../ -DHUNTER_CONFIGURATION_TYPES=Release -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON
 ```
 
 cmake成功之后,在`build`目录下生成windows工程文件:
@@ -75,7 +75,10 @@ bcos-c-sdk.sln
 
 打开成功之后,右键点击解决方案`ALL BUILD`
 
-编译结果: `build/Release/bcos-c-sdk.dll`
+编译结果:
+
+`build/Release/bcos-c-sdk.dll` # 动态库
+`build/Release/bcos-c-sdk.lib` # 符号表
 
 ## 动态库
 
@@ -86,5 +89,6 @@ bcos-c-sdk.sln
 ├── libbcos-c-sdk-arch64.dylib  # mac, m1
 ├── libbcos-c-sdk.dylib         # mac, x86
 ├── libbcos-c-sdk.dll           # windows
+├── libbcos-c-sdk.lib           # windows dll symbol
 └── libbcos-c-sdk.so            # linux
  ```

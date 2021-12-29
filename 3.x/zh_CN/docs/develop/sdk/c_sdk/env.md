@@ -23,4 +23,6 @@
   `brew install openssl git flex bison gmp`
   
 - `Windows`:
-  `Visual Studio 2017`
+  [Visual Studio 2017](https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes)
+  [perl](https://www.activestate.com/products/perl/)
+  [nasm](https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/)
