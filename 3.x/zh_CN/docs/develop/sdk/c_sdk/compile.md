@@ -78,6 +78,7 @@ bcos-c-sdk.sln
 编译结果:
 
 `build/Release/bcos-c-sdk.dll` # 动态库
+
 `build/Release/bcos-c-sdk.lib` # 符号表
 
 ## 动态库
