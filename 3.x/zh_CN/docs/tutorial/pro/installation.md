@@ -208,7 +208,7 @@ sed -i 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ
 sed -i .bkp 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"/g' config.toml
 
 #部署并启动RPC服务
-python3 build_chain.py chain -o deploy -t rpc
+python3 build_chain.py chain0 -o deploy -t rpc
 ```
 
 执行上述命令后，当脚本输出`deploy service success, type: rpc`时，则说明RPC服务部署成功，详细日志输出如下：
@@ -220,28 +220,28 @@ python3 build_chain.py chain -o deploy -t rpc
 ----------- generate service config -----------
 * generate service config for 172.25.0.3 : agencyABcosRpcService
 * generate config for the rpc service
-* generate generated/rpc/chain/172.25.0.3/agencyABcosRpcService/config.ini.tmp
-* generate cert, output path: generated/rpc/chain/172.25.0.3/agencyABcosRpcService
-* generate sdk cert, output path: generated/rpc/chain/172.25.0.3/agencyABcosRpcService
+* generate generated/rpc/chain0/172.25.0.3/agencyABcosRpcService/config.ini.tmp
+* generate cert, output path: generated/rpc/chain0/172.25.0.3/agencyABcosRpcService
+* generate sdk cert, output path: generated/rpc/chain0/172.25.0.3/agencyABcosRpcService
 * generate config for the rpc service success
 gen configuration for service agencyABcosRpcService success
 * generate service config for 172.25.0.3 : agencyBBcosRpcService
 * generate config for the rpc service
-* generate generated/rpc/chain/172.25.0.3/agencyBBcosRpcService/config.ini.tmp
-* generate cert, output path: generated/rpc/chain/172.25.0.3/agencyBBcosRpcService
-* generate sdk cert, output path: generated/rpc/chain/172.25.0.3/agencyBBcosRpcService
+* generate generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/config.ini.tmp
+* generate cert, output path: generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService
+* generate sdk cert, output path: generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService
 * generate config for the rpc service success
 gen configuration for service agencyBBcosRpcService success
 ----------- generate service config success -----------
 =========================================================
-deploy_service to 172.25.0.3, app: chain, name: agencyABcosRpcService
+deploy_service to 172.25.0.3, app: chain0, name: agencyABcosRpcService
 deploy service agencyABcosRpcService
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: ca.crt
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: ssl.key
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: ssl.crt
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: config.ini
 upload tar package generated/./agencyABcosRpcService.tgz success, config id: 14
-deploy_service to 172.25.0.3, app: chain, name: agencyBBcosRpcService
+deploy_service to 172.25.0.3, app: chain0, name: agencyBBcosRpcService
 deploy service agencyBBcosRpcService
 * add config for service agencyBBcosRpcService, node: 172.25.0.3, config: ca.crt
 * add config for service agencyBBcosRpcService, node: 172.25.0.3, config: ssl.key
@@ -255,8 +255,8 @@ upload tar package generated/./agencyBBcosRpcService.tgz success, config id: 15
 部署过程中生成的RPC服务相关的配置位于`generated/rpc/${chainID}`目录，具体如下：
 
 ```shell
-$ tree generated/rpc/chain
-generated/rpc/chain
+$ tree generated/rpc/chain0
+generated/rpc/chain0
 ├── 172.25.0.3 
 │   ├── agencyABcosRpcService # 机构A的RPC服务目录
 │   │   ├── config.ini.tmp    # 机构A的RPC服务的配置文件
@@ -309,7 +309,7 @@ RPC服务部署完成后，需要再部署Gateway服务，用于建立机构之�
 cd ~/fisco/BcosProBuilder
 
 # 部署并启动Gateway服务
-python3 build_chain.py chain -o deploy -t gateway
+python3 build_chain.py chain0 -o deploy -t gateway
 ```
 
 执行上述命令后，当脚本输出`deploy service success, type: gateway`时，则说明RPC服务部署成功，详细日志输出如下：
@@ -321,21 +321,21 @@ python3 build_chain.py chain -o deploy -t gateway
 ----------- generate service config -----------
 * generate service config for 172.25.0.3 : agencyABcosGatewayService
 * generate config for the gateway service
-* generate generated/gateway/chain/172.25.0.3/agencyABcosGatewayService/config.ini.tmp
-* generate cert, output path: generated/gateway/chain/172.25.0.3/agencyABcosGatewayService
-* generate gateway connection file: generated/gateway/chain/172.25.0.3/agencyABcosGatewayService/nodes.json.tmp
+* generate generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/config.ini.tmp
+* generate cert, output path: generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService
+* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/nodes.json.tmp
 * generate config for the gateway service success
 gen configuration for service agencyABcosGatewayService success
 * generate service config for 172.25.0.3 : agencyBBcosGatewayService
 * generate config for the gateway service
-* generate generated/gateway/chain/172.25.0.3/agencyBBcosGatewayService/config.ini.tmp
-* generate cert, output path: generated/gateway/chain/172.25.0.3/agencyBBcosGatewayService
-* generate gateway connection file: generated/gateway/chain/172.25.0.3/agencyBBcosGatewayService/nodes.json.tmp
+* generate generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/config.ini.tmp
+* generate cert, output path: generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService
+* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/nodes.json.tmp
 * generate config for the gateway service success
 gen configuration for service agencyBBcosGatewayService success
 ----------- generate service config success -----------
 =========================================================
-deploy_service to 172.25.0.3, app: chain, name: agencyABcosGatewayService
+deploy_service to 172.25.0.3, app: chain0, name: agencyABcosGatewayService
 deploy service agencyABcosGatewayService
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: nodes.json
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: ca.crt
@@ -343,7 +343,7 @@ deploy service agencyABcosGatewayService
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: ssl.crt
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: config.ini
 upload tar package generated/./agencyABcosGatewayService.tgz success, config id: 14
-deploy_service to 172.25.0.3, app: chain, name: agencyBBcosGatewayService
+deploy_service to 172.25.0.3, app: chain0, name: agencyBBcosGatewayService
 deploy service agencyBBcosGatewayService
 * add config for service agencyBBcosGatewayService, node: 172.25.0.3, config: nodes.json
 * add config for service agencyBBcosGatewayService, node: 172.25.0.3, config: ca.crt
@@ -358,8 +358,8 @@ upload tar package generated/./agencyBBcosGatewayService.tgz success, config id:
 部署过程中生成的RPC服务相关的配置位于`generated/gateway/${chainID}`目录，具体如下：
 
 ```shell
-$ tree generated/gateway/chain
-generated/gateway/chain
+$ tree generated/gateway/chain0
+generated/gateway/chain0
 ├── 172.25.0.3
 │   ├── agencyABcosGatewayService # 机构A的Gateway服务配置路径
 │   │   ├── config.ini.tmp        # 机构A的Gateway配置文件
@@ -396,37 +396,37 @@ Gateway服务启动成功后，可在tars网页管理平台看到服务列表`ag
 
 ### 4.4 部署区块链节点服务
 
-RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，链ID均为`chain`，群组ID均为`group`。
+RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，链ID均为`chain0`，群组ID均为`group0`。
 
 ```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
 # 部署并启动区块链节点服务
-python3 build_chain.py chain -o deploy -t node
+python3 build_chain.py chain0 -o deploy -t node
 ```
 执行上述命令后，当脚本输出`deploy all nodes of the given group success`时，则说明区块链节点服务部署成功，详细日志输出如下：
 
 ```shell
 =========================================================
 ----------- deploy all nodes of the given group -----------
-generate config for chain = chain, group = group
+generate config for chain = chain0, group = group0
 * generate pem file for groupnode00BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.3/groupnode00BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.3/groupnode00BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 * generate pem file for groupnode10BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.3/groupnode10BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.3/groupnode10BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 * generate genesis config for groupnode00BcosNodeService
-	 path: generated/chain/group/172.25.0.3/groupnode00BcosNodeService/config.genesis.tmp
+	 path: generated/chain0/group0/172.25.0.3/groupnode00BcosNodeService/config.genesis.tmp
 * generate ini config for service groupnode00BcosNodeService
-	config path: generated/chain/group/172.25.0.3/groupnode00BcosNodeService/config.ini.tmp
+	config path: generated/chain0/group0/172.25.0.3/groupnode00BcosNodeService/config.ini.tmp
 * generate genesis config for groupnode10BcosNodeService
-	 path: generated/chain/group/172.25.0.3/groupnode10BcosNodeService/config.genesis.tmp
+	 path: generated/chain0/group0/172.25.0.3/groupnode10BcosNodeService/config.genesis.tmp
 * generate ini config for service groupnode10BcosNodeService
-	config path: generated/chain/group/172.25.0.3/groupnode10BcosNodeService/config.ini.tmp
+	config path: generated/chain0/group0/172.25.0.3/groupnode10BcosNodeService/config.ini.tmp
 deploy services for all the group nodes
 deploy service groupnode00BcosNodeService
 deploy service groupnode00BcosNodeService
@@ -440,9 +440,9 @@ upload tar package generated/./groupnode10BcosNodeService.tgz success, config id
 部署过程中生成的RPC服务相关的配置位于`generated/${chainID}`(`chainID`默认为`chain`)目录，具体如下：
 
 ```shell
-$ tree generated/chain
-generated/chain
-└── group
+$ tree generated/chain0
+generated/chain0
+└── group0
     └── 172.25.0.3
         ├── groupnode00BcosNodeService
         │   ├── config.genesis.tmp       # 创世块配置
@@ -512,7 +512,7 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```shell
 # 可通过命令 find . -name sdk找到所有SDK证书路径
-cp -r BcosProBuilder/generated/rpc/chain/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
+cp -r BcosProBuilder/generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
 ```
 
 **步骤3：启动并使用控制台**

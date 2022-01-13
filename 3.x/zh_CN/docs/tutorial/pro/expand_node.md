@@ -70,7 +70,7 @@ tars_pkg_dir = ""
 
 [chain]
 # 链ID
-chain_id="chain"
+chain_id="chain0"
 
 [[group.deploy_info]]
 # 扩容区块链节点的服务名
@@ -97,7 +97,7 @@ node_count=1
 cd ~/fisco/BcosProBuilder
 
 # 扩容并部署RPC服务
-python3 build_chain.py chain -o expand -t node
+python3 build_chain.py chain0 -o expand -t node
 ```
 
 执行上述命令后，当脚本输出`expand nodes for the given group success`时，则说明区块链节点服务扩容成功，详细日志输出如下：
@@ -106,21 +106,21 @@ python3 build_chain.py chain -o expand -t node
 =========================================================
 ----------- expand nodes for the given group -----------
 * reload node config
-* generate ini config, service: groupnode20BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode20BcosNodeService/config.ini.tmp
+* generate ini config, service: groupnode20BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService/config.ini.tmp
 * generate ini config for service: groupnode20BcosNodeService success
-* generate genesis config, service: groupnode20BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode20BcosNodeService/config.genesis.tmp
+* generate genesis config, service: groupnode20BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService/config.genesis.tmp
 * generate genesis config for service: groupnode20BcosNodeService success
 * reload node config
-* generate ini config, service: groupnode30BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode30BcosNodeService/config.ini.tmp
+* generate ini config, service: groupnode30BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService/config.ini.tmp
 * generate ini config for service: groupnode30BcosNodeService success
-* generate genesis config, service: groupnode30BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode30BcosNodeService/config.genesis.tmp
+* generate genesis config, service: groupnode30BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService/config.genesis.tmp
 * generate genesis config for service: groupnode30BcosNodeService success
 * generate pem file for groupnode20BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.5/groupnode20BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 * generate pem file for groupnode30BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.5/groupnode30BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 deploy service groupnode20BcosNodeService
@@ -136,8 +136,8 @@ upload tar package generated/./groupnode30BcosNodeService.tgz success, config id
 扩容过程中生成的RPC服务相关的配置位于`generated/${chainID}/${groupID}/${deploy_ip}`目录，具体如下：
 
 ```shell
-$ tree generated/chain/group/172.25.0.5
-generated/chain/group/172.25.0.5
+$ tree generated/chain0/group0/172.25.0.5
+generated/chain0/group0/172.25.0.5
 ├── groupnode20BcosNodeService
 │   ├── config.genesis.tmp
 │   ├── config.ini.tmp

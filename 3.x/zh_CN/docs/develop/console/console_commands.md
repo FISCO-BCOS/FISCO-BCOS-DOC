@@ -680,7 +680,7 @@ PeersInfo{
             nonce='1322329174548920161282698967016643957683885216413423752035236304235782814228',
             to='',
             blockLimit='500',
-            chainId='chain',
+            chainId='chain0',
             groupID='group0',
             transactionProof='null',
             signature=0x5aefca1279c60d06da60f53c4d6c80203944ddd8bde5c2286de2ca3d640675fd7f855bd33c7f1a69835273bc411e9effc628b0a28491df1a4c0527fb4dfad16901
@@ -767,7 +767,7 @@ PeersInfo{
             nonce='1322329174548920161282698967016643957683885216413423752035236304235782814228',
             to='',
             blockLimit='500',
-            chainId='chain',
+            chainId='chain0',
             groupID='group0',
             transactionProof='null',
             signature=0x5aefca1279c60d06da60f53c4d6c80203944ddd8bde5c2286de2ca3d640675fd7f855bd33c7f1a69835273bc411e9effc628b0a28491df1a4c0527fb4dfad16901
@@ -862,7 +862,7 @@ PeersInfo{
     nonce='1244654254262255984079741307028596561526481167594459835423352512079777563980',
     to='0x0000000000000000000000000000000000001003',
     blockLimit='500',
-    chainId='chain',
+    chainId='chain0',
     groupID='group0',
     transactionProof='null',
     signature=0x10617472b24161960284e1812f2becefbac5f8a4f3973ad5f600aff10a8935e345e9a8a99406f9b51bcaa2537055c76d24b0864a4fdd64b6c0c9dbfc5056680a00
@@ -1179,7 +1179,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 ```shell
 [group0]: /> getGroupInfo
 {
-    "chainID":"chain",
+    "chainID":"chain0",
     "groupID":"group0",
     "genesisConfig":{
         "consensusType":"pbft",
@@ -1215,7 +1215,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
                     "platform":"Darwin/appleclang",
                     "buildTime":"20211203 10:43:32"
                 },
-                "chainID":"chain",
+                "chainID":"chain0",
                 "groupID":"group0",
                 "smCryptoType":false,
                 "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
@@ -1248,7 +1248,7 @@ group0: group
 [group0]: /> getGroupInfoList 
 [
     {
-        "chainID":"chain",
+        "chainID":"chain0",
         "groupID":"group0",
         "genesisConfig":{
             "consensusType":"pbft",
@@ -1284,7 +1284,7 @@ group0: group
                         "platform":"Darwin/appleclang",
                         "buildTime":"20211203 10:43:32"
                     },
-                    "chainID":"chain",
+                    "chainID":"chain0",
                     "groupID":"group",
                     "smCryptoType":false,
                     "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
@@ -1316,7 +1316,7 @@ group0: group
             "platform":"Darwin/appleclang",
             "buildTime":"20211203 10:43:32"
         },
-        "chainID":"chain",
+        "chainID":"chain0",
         "groupID":"group0",
         "smCryptoType":false,
         "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
@@ -1339,7 +1339,7 @@ group0: group
             "platform":"Darwin/appleclang",
             "buildTime":"20211203 10:43:32"
         },
-        "chainID":"chain",
+        "chainID":"chain0",
         "groupID":"group0",
         "smCryptoType":false,
         "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",

@@ -67,7 +67,7 @@ FISCO BCOS 3.x默认采用[tars](https://newdoc.tarsyun.com/#/markdown/TarsCloud
 
 定义了交易中用于计算哈希的所有字段，具体如下
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 |version |int |require，交易版本号|
 |chainID |string |require，交易对应的链ID |

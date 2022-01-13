@@ -103,7 +103,7 @@ P2P配置示例如下：
     ; the group id, should nerver be changed
     group_id=group0
     ; the chain id, should nerver be changed
-    chain_id=chain
+    chain_id=chain0
 ```
 
 ### 配置共识信息

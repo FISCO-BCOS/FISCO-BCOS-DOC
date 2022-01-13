@@ -71,13 +71,13 @@ tars_token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MT
 tars_pkg_dir = ""
 
 [chain]
-chain_id="chain"
+chain_id="chain0"
 rpc_sm_ssl=false
 gateway_sm_ssl=false
 # RPC服务的根证书、根证书私钥所在目录
-rpc_ca_cert_path="generated/rpc/chain/ca"
+rpc_ca_cert_path="generated/rpc/chain0/ca"
 # Gateway服务的根证书、根证书私钥所在目录
-gateway_ca_cert_path="generated/gateway/chain/ca"
+gateway_ca_cert_path="generated/gateway/chain0/ca"
 
 [[chain.rpc]]
 # 扩容的RPC服务名
@@ -118,7 +118,7 @@ rpc_service_name = "agencyABcosRpcService"
 cd ~/fisco/BcosProBuilder
 
 # 扩容并部署RPC服务
-python3 build_chain.py chain -o expand -t rpc
+python3 build_chain.py chain0 -o expand -t rpc
 
 # 使用telnet探测RPC服务是否扩容成功
 telnet 127.0.0.1 10200
@@ -133,18 +133,18 @@ telnet 127.0.0.1 10200
 ----------- generate service config -----------
 * generate service config for 172.25.0.5 : agencyABcosRpcService
 * generate config for the rpc service
-* generate generated/rpc/chain/172.25.0.5/agencyABcosRpcService/config.ini.tmp
-* generate cert, output path: generated/rpc/chain/172.25.0.5/agencyABcosRpcService
-* generate sdk cert, output path: generated/rpc/chain/172.25.0.5/agencyABcosRpcService
+* generate generated/rpc/chain0/172.25.0.5/agencyABcosRpcService/config.ini.tmp
+* generate cert, output path: generated/rpc/chain0/172.25.0.5/agencyABcosRpcService
+* generate sdk cert, output path: generated/rpc/chain0/172.25.0.5/agencyABcosRpcService
 * generate config for the rpc service success
 gen configuration for service agencyABcosRpcService success
 ----------- generate service config success -----------
 =========================================================
 ----------- begin expand service -----------
-expand to 172.25.0.5, app: chain, name: agencyABcosRpcService
-expand_server_preview, app: chain, server_name: agencyABcosRpcService, expanded_node_list: 172.25.0.5
-expand server preview response b'{"data":[{"application":"chain","server_name":"agencyABcosRpcService","set":"..","obj_name":"RpcServiceObj","node_name":"172.25.0.5","bind_ip":"172.25.0.5","port":0,"template_name":"tars.cpp.default","status":"\xe6\x9c\xaa\xe6\x89\xa9\xe5\xae\xb9","auth":0}],"ret_code":200,"err_msg":""}'
-expand_server, app: chain, server_name: agencyABcosRpcService
+expand to 172.25.0.5, app: chain0, name: agencyABcosRpcService
+expand_server_preview, app: chain0, server_name: agencyABcosRpcService, expanded_node_list: 172.25.0.5
+expand server preview response b'{"data":[{"application":"chain0","server_name":"agencyABcosRpcService","set":"..","obj_name":"RpcServiceObj","node_name":"172.25.0.5","bind_ip":"172.25.0.5","port":0,"template_name":"tars.cpp.default","status":"\xe6\x9c\xaa\xe6\x89\xa9\xe5\xae\xb9","auth":0}],"ret_code":200,"err_msg":""}'
+expand_server, app: chain0, server_name: agencyABcosRpcService
 expand server response b'{"data":{"tars_node_rst":[]},"ret_code":200,"err_msg":""}'
 * add config for service agencyABcosRpcService, node: 172.25.0.5, config: ca.crt
 * add config for service agencyABcosRpcService, node: 172.25.0.5, config: ssl.key
@@ -158,8 +158,8 @@ upload tar package generated/./agencyABcosRpcService.tgz success, config id: 19
 扩容过程中生成的RPC服务相关的配置位于`generated/rpc/${chainID}/${deploy_ip}`目录，具体如下：
 
 ```shell
-$ tree generated/rpc/chain/172.25.0.5
-generated/rpc/chain/172.25.0.5
+$ tree generated/rpc/chain0/172.25.0.5
+generated/rpc/chain0/172.25.0.5
 └── agencyABcosRpcService
     ├── config.ini.tmp
     ├── sdk
@@ -185,7 +185,7 @@ RPC服务扩容成功后，可在tars网页管理平台看到服务`agencyABcosR
 cd ~/fisco/BcosProBuilder
 
 # 扩容并部署RPC服务
-python3 build_chain.py chain -o expand -t gateway
+python3 build_chain.py chain0 -o expand -t gateway
 
 # 使用telnet探测RPC服务是否扩容成功
 telnet 127.0.0.1 40300
@@ -200,18 +200,18 @@ telnet 127.0.0.1 40300
 ----------- generate service config -----------
 * generate service config for 172.25.0.5 : agencyABcosGatewayService
 * generate config for the gateway service
-* generate generated/gateway/chain/172.25.0.5/agencyABcosGatewayService/config.ini.tmp
-* generate cert, output path: generated/gateway/chain/172.25.0.5/agencyABcosGatewayService
-* generate gateway connection file: generated/gateway/chain/172.25.0.5/agencyABcosGatewayService/nodes.json.tmp
+* generate generated/gateway/chain0/172.25.0.5/agencyABcosGatewayService/config.ini.tmp
+* generate cert, output path: generated/gateway/chain0/172.25.0.5/agencyABcosGatewayService
+* generate gateway connection file: generated/gateway/chain0/172.25.0.5/agencyABcosGatewayService/nodes.json.tmp
 * generate config for the gateway service success
 gen configuration for service agencyABcosGatewayService success
 ----------- generate service config success -----------
 =========================================================
 ----------- begin expand service -----------
-expand to 172.25.0.5, app: chain, name: agencyABcosGatewayService
-expand_server_preview, app: chain, server_name: agencyABcosGatewayService, expanded_node_list: 172.25.0.5
-expand server preview response b'{"data":[{"application":"chain","server_name":"agencyABcosGatewayService","set":"..","obj_name":"GatewayServiceObj","node_name":"172.25.0.5","bind_ip":"172.25.0.5","port":0,"template_name":"tars.cpp.default","status":"\xe6\x9c\xaa\xe6\x89\xa9\xe5\xae\xb9","auth":0}],"ret_code":200,"err_msg":""}'
-expand_server, app: chain, server_name: agencyABcosGatewayService
+expand to 172.25.0.5, app: chain0, name: agencyABcosGatewayService
+expand_server_preview, app: chain0, server_name: agencyABcosGatewayService, expanded_node_list: 172.25.0.5
+expand server preview response b'{"data":[{"application":"chain0","server_name":"agencyABcosGatewayService","set":"..","obj_name":"GatewayServiceObj","node_name":"172.25.0.5","bind_ip":"172.25.0.5","port":0,"template_name":"tars.cpp.default","status":"\xe6\x9c\xaa\xe6\x89\xa9\xe5\xae\xb9","auth":0}],"ret_code":200,"err_msg":""}'
+expand_server, app: chain0, server_name: agencyABcosGatewayService
 expand server response b'{"data":{"tars_node_rst":[]},"ret_code":200,"err_msg":""}'
 * add config for service agencyABcosGatewayService, node: 172.25.0.5, config: nodes.json
 * add config for service agencyABcosGatewayService, node: 172.25.0.5, config: ca.crt
@@ -226,8 +226,8 @@ upload tar package generated/./agencyABcosGatewayService.tgz success, config id:
 扩容过程中生成的Gateway服务相关的配置位于`generated/gateway/${chainID}/${deploy_ip}`目录，具体如下：
 
 ```shell
-$ tree generated/gateway/chain/172.25.0.5
-generated/gateway/chain/172.25.0.5
+$ tree generated/gateway/chain0/172.25.0.5
+generated/gateway/chain0/172.25.0.5
 └── agencyABcosGatewayService
     ├── config.ini.tmp
     ├── nodes.json.tmp
@@ -277,7 +277,7 @@ PeersInfo{
     endPoint='0.0.0.0:30301',
     groupNodeIDInfo=[
         NodeIDInfo{
-            group='group',
+            group='group0',
             nodeIDList=[
                 4af0433ac2d2afe305b88e7faae8ea4e94b14c63e78ca93c5c836ece6d0fbcb3d2a476a74ae8fb0a11e9662c0ce9861427c314aea7386cb3b619a4cb21ab227a
             ]
@@ -289,7 +289,7 @@ PeersInfo{
             endPoint='172.25.0.5:35122',
             groupNodeIDInfo=[
                 NodeIDInfo{
-                    group='group',
+                    group='group0',
                     nodeIDList=[
                         8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3
                     ]
@@ -301,7 +301,7 @@ PeersInfo{
             endPoint='172.25.0.3:30300',
             groupNodeIDInfo=[
                 NodeIDInfo{
-                    group='group',
+                    group='group0',
                     nodeIDList=[
                         8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3
                     ]
