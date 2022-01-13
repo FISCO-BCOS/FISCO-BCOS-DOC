@@ -101,7 +101,7 @@ P2P配置示例如下：
     ; use SM crypto or not, should nerver be changed
     sm_crypto=false
     ; the group id, should nerver be changed
-    group_id=group
+    group_id=group0
     ; the chain id, should nerver be changed
     chain_id=chain
 ```

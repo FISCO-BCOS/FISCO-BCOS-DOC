@@ -63,7 +63,7 @@
 输入help或者h，查看控制台所有的命令。
 
 ```shell
-[group]: /> help
+[group0]: /> help
 * help([-h, -help, --h, --H, --help, -H, h])  Provide help information
 * addObserver                               Add an observer node
 * addSealer                                 Add a sealer node
@@ -126,7 +126,7 @@
 - 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：
 
 ```shell
-[group]: /> getBlockByNumber -h
+[group0]: /> getBlockByNumber -h
 Query information about a block by block number.
 Usage: 
 getBlockByNumber blockNumber [boolean]
@@ -139,7 +139,7 @@ getBlockByNumber blockNumber [boolean]
 运行switch或者s，切换到指定群组。群组号显示在命令提示符前面。
 
 ```shell
-[group]: />  switch group2
+[group0]: />  switch group2
 Switched to group2.
 
 [group2]>
@@ -167,15 +167,15 @@ Solidity部署参数：
 
 ```shell
 # 部署HelloWorld合约，默认路径
-[group]: />  deploy HelloWorld
+[group0]: />  deploy HelloWorld
 contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署HelloWorld合约，相对路径
-[group]: />  deploy contracts/solidity/HelloWorld.sol
+[group0]: />  deploy contracts/solidity/HelloWorld.sol
 contract address:0x4721D1A77e0E76851D460073E64Ea06d9C104194
 
 # 部署HelloWorld合约，绝对路径
-[group]: />  deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
+[group0]: />  deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
 contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 ```
 
@@ -194,7 +194,7 @@ contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 
 ```shell
 # 部署HelloWorld合约，相对路径
-[group]: /> deploy asset/asset.wasm asset/asset.abi asset_test
+[group0]: /> deploy asset/asset.wasm asset/asset.abi asset_test
 transaction hash: 0x7498487dbf79378b5b50c4e36c09ea90842a343de307ee66d560d005d3c40ccb
 contract address: /asset_test
 currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
@@ -215,7 +215,7 @@ currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
 
 ```shell
 # 调用HelloWorld的get接口获取name字符串
-[group]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
+[group0]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -227,7 +227,7 @@ Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 
 # 调用HelloWorld的set接口设置name字符串
-[group]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 set "Hello, FISCO BCOS 3.0" 
+[group0]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 set "Hello, FISCO BCOS 3.0" 
 transaction hash: 0x622808fb47e765576e444175793e74230ac4cd056b18d578d23442eb5a0102a0
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -243,7 +243,7 @@ Event logs
 Event: {}
 
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
-[group]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
+[group0]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -255,7 +255,7 @@ Return values:(Hello, FISCO BCOS 3.0)
 ---------------------------------------------------------------------------------------------
 
 # 调用KVTableTest的set接口插入记录，字段为name, item_id, item_name
-[group]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 set "fruit" "1" "apple"
+[group0]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 set "fruit" "1" "apple"
 transaction hash: 0xa92e85febdb6dba0fc0fecf8113caeed2b60860ffc01139c067e847c5f7684d1
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -272,7 +272,7 @@ Event: {}
 
 
 # 调用KVTableTest的get接口查询记录
-[group]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 get "fruit" 
+[group0]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 get "fruit" 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -292,7 +292,7 @@ Return values:(true, 1, apple)
 
 ```shell
 # 调用 /apps/asset_test 路径下的合约，注册一个新的资产 asset1
-[group]: /> call ./apps/asset_test register asset1 10000
+[group0]: /> call ./apps/asset_test register asset1 10000
 transaction hash: 0xf9289064053eed8a71b4af43fd793dc1cd703d75f74b19e302bc4456e523fcf2
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -308,7 +308,7 @@ Event logs
 Event: {}
 
 # 调用 /apps/asset_test 路径下的合约，查询资产 asset1
-[group]: /> call ./apps/asset_test select asset1
+[group0]: /> call ./apps/asset_test select asset1
 transaction hash: 0x68867d2e55a1c16c96ec31f96a9c913c5995b4cb9ff8985b016a18b80e9c02cb
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -333,7 +333,7 @@ Event: {}
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
 
 ```shell
-[group]: />  getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
+[group0]: />  getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
 ```
 
@@ -346,7 +346,7 @@ Event: {}
 - 合约名：(可选)合约名称，默认情况下使用合约文件名作为合约名参数
 
 ```shell
-[group]: /> listAbi KVTableTest
+[group0]: /> listAbi KVTableTest
 Method list:
  name                |    constant  |    methodId    |    signature
   --------------------------------------------------------------
@@ -370,12 +370,12 @@ Event list:
 - 日志行数，可选，根据输入的期望值返回最新的日志信息，当实际条数少于期望值时，按照实际数量返回。当期望值未给出时，默认按照20条返回最新的日志信息。
 
 ```shell
-[group]: />  getDeployLog 2
+[group0]: />  getDeployLog 2
 
 2019-05-26 08:37:03  [group]  HelloWorld            0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 2019-05-26 08:37:45  [group]  KVTableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
-[group]: />  getDeployLog 1
+[group0]: />  getDeployLog 1
 
 2019-05-26 08:37:45  [group]  KVTableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
@@ -392,7 +392,7 @@ Event list:
 
 ```shell
 # 部署HelloWorld合约1.0版
-[group]: />  deployByCNS HelloWorld 1.0
+[group0]: />  deployByCNS HelloWorld 1.0
 transaction hash: 0xb994d8e510f147815bdf9838fda542e553c2fe981177ee7a97a0686b9619cfbb
 contract address: 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c
 {
@@ -401,7 +401,7 @@ contract address: 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c
 }
 
 # 部署HelloWorld合约2.0版
-[group]: />  deployByCNS HelloWorld 2.0
+[group0]: />  deployByCNS HelloWorld 2.0
 transaction hash: 0x3132f73e5af72fce44c2e07185a04f554ac06ddd94119dcf798980695b0890a0
 contract address: 0xf68a1aabfad336847e109c33ca471b192c93c0a9
 {
@@ -410,7 +410,7 @@ contract address: 0xf68a1aabfad336847e109c33ca471b192c93c0a9
 }
 
 # 部署TableTest合约
-[group]: />  deployByCNS KVTableTest 1.0
+[group0]: />  deployByCNS KVTableTest 1.0
 transaction hash: 0x288ccc6e166e43f5cd3bd563e00af48988e641196aaea57a59f0ab256e23c84e
 contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 {
@@ -435,7 +435,7 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 - 合约版本号：(可选)部署的合约版本号。
 
 ```shell
-[group]: /> queryCNS HelloWorld
+[group0]: /> queryCNS HelloWorld
 ---------------------------------------------------------------------------------------------
 * contract address: 6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
 * contract version: 1.0
@@ -444,7 +444,7 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 * contract version: 2.0
 ---------------------------------------------------------------------------------------------
 
-[group]: /> queryCNS HelloWorld 1.0
+[group0]: /> queryCNS HelloWorld 1.0
 ---------------------------------------------------------------------------------------------
 * contract address: 0x6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
 * contract version: 1.0
@@ -462,7 +462,7 @@ contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
 
 ```shell
 # 调用HelloWorld合约1.0版，通过set接口设置name字符串
-[group]: />  callByCNS HelloWorld:1.0 set "Hello,CNS"
+[group0]: />  callByCNS HelloWorld:1.0 set "Hello,CNS"
 transaction hash: 0x7ad2f34a13bbc2272d2d52fa46915e6f03136a6960d84a23478bee3c37e76ad6
 ---------------------------------------------------------------------------------------------
 transaction status: 0x0
@@ -476,7 +476,7 @@ Event logs
 Event: {}
 
 # 调用HelloWorld合约2.0版，通过set接口设置name字符串
-[group]: />  callByCNS HelloWorld:2.0 set "Hello,CNS2"
+[group0]: />  callByCNS HelloWorld:2.0 set "Hello,CNS2"
 transaction hash: 0x41f8decbe137905824321da6c28a19d957e902cfad1e8078d797bc649c078d3e
 ---------------------------------------------------------------------------------------------
 transaction status: 0x0
@@ -490,7 +490,7 @@ Event logs
 Event: {}
 
 # 调用HelloWorld合约1.0版，通过get接口获取name字符串
-[group]: />  callByCNS HelloWorld:1.0 get
+[group0]: />  callByCNS HelloWorld:1.0 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -515,7 +515,7 @@ Return values:
 - 合约版本号: 注册合约版本号
 
 ```shell
-[group]: />  registerCNS HelloWorld 0xf19a7ec01f0b1adb16a033f0a30fb321ec6edcbf v1.0.0
+[group0]: />  registerCNS HelloWorld 0xf19a7ec01f0b1adb16a033f0a30fb321ec6edcbf v1.0.0
 {
     "code":0,
     "msg":"success"
@@ -532,7 +532,7 @@ Return values:
 
 ```shell
 # 获取部署HelloWorld合约产生的合约地址列表
-[group]: />  listDeployContractAddress HelloWorld
+[group0]: />  listDeployContractAddress HelloWorld
 0xe157185434183b276b9e5af7d0315a9829171281  2020-10-13 15:35:29
 0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
 0xd7d0b221bc984a20aa6b0fc098dad89888378e3a  2020-10-13 15:34:14
@@ -547,7 +547,7 @@ Return values:
 
 
 # 限制显示的合约地址列表长度为2
-[group]: />  listDeployContractAddress HelloWorld 2
+[group0]: />  listDeployContractAddress HelloWorld 2
 0xe157185434183b276b9e5af7d0315a9829171281  2020-10-13 15:35:29
 0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
 ```
@@ -559,7 +559,7 @@ Return values:
 运行getBlockNumber，查看区块高度。
 
 ```shell
-[group]: />  getBlockNumber
+[group0]: />  getBlockNumber
 90
 ```
 
@@ -568,7 +568,7 @@ Return values:
 运行getSyncStatus，查看同步状态。
 
 ```shell
-[group]: /> getSyncStatus 
+[group0]: /> getSyncStatus 
 SyncStatusInfo{
     isSyncing='false',
     protocolId='null',
@@ -607,13 +607,13 @@ SyncStatusInfo{
 运行getPeers，查看节点的peers。
 
 ```shell
-[group]: /> getPeers 
+[group0]: /> getPeers 
 PeersInfo{
     p2pNodeID='3082010a0282010100ced891dad17f04738a2da965264e1387c707b351a0a4e360341066bb2893635fd4e2717ba203aed68d2733a633ecc097bd70fd0c34f31cf82c1772c60a2b252f5498d41a6b7c7d26bad930e38dacee2889fef0e7311f76d4c098c80c8096dc8842d95135e27523aa3cfb1910eb2021bfe8c82f73508e419427f79508ca0d5693e1a913a3749d0496c6fcfc43b69eca7d3bd14a9d6e079737af7cf9ad0e78a40ddb6e3081ef88c9928b3864141933d360dada8a197b45cfebb475efba05387cbf54bfb8357681bdc27c1b48b7ab460dc01b1cb8d5ff8256ad36f1e8c1e4dce63d8758bb08a9f9829e366ef5233997b5ff46ec064e46136a8770addc927bbbc81f0203010001',
     endPoint='0.0.0.0:30300',
     groupNodeIDInfo=[
         NodeIDInfo{
-            group='group',
+            group='group0',
             nodeIDList=[
                 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85
             ]
@@ -625,7 +625,7 @@ PeersInfo{
             endPoint='127.0.0.1:55686',
             groupNodeIDInfo=[
                 NodeIDInfo{
-                    group='group',
+                    group='group0',
                     nodeIDList=[
                         f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
                     ]
@@ -637,7 +637,7 @@ PeersInfo{
             endPoint='127.0.0.1:55690',
             groupNodeIDInfo=[
                 NodeIDInfo{
-                    group='group',
+                    group='group0',
                     nodeIDList=[
                         c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c
                     ]
@@ -649,7 +649,7 @@ PeersInfo{
             endPoint='127.0.0.1:55694',
             groupNodeIDInfo=[
                 NodeIDInfo{
-                    group='group',
+                    group='group0',
                     nodeIDList=[
                         bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824
                     ]
@@ -669,7 +669,7 @@ PeersInfo{
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 
 ```shell
-[group]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42
+[group0]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42
 {
     transactions=[
         {
@@ -681,7 +681,7 @@ PeersInfo{
             to='',
             blockLimit='500',
             chainId='chain',
-            groupID='group',
+            groupID='group0',
             transactionProof='null',
             signature=0x5aefca1279c60d06da60f53c4d6c80203944ddd8bde5c2286de2ca3d640675fd7f855bd33c7f1a69835273bc411e9effc628b0a28491df1a4c0527fb4dfad16901
         }
@@ -712,7 +712,7 @@ PeersInfo{
     ]
 }
 
-[group]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42 true
+[group0]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42 true
 {
     transactions=[
         TransactionHash{
@@ -756,7 +756,7 @@ PeersInfo{
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 
 ```shell
-[group]: /> getBlockByNumber 1
+[group0]: /> getBlockByNumber 1
 {
     transactions=[
         {
@@ -768,7 +768,7 @@ PeersInfo{
             to='',
             blockLimit='500',
             chainId='chain',
-            groupID='group',
+            groupID='group0',
             transactionProof='null',
             signature=0x5aefca1279c60d06da60f53c4d6c80203944ddd8bde5c2286de2ca3d640675fd7f855bd33c7f1a69835273bc411e9effc628b0a28491df1a4c0527fb4dfad16901
         }
@@ -799,7 +799,7 @@ PeersInfo{
     ]
 }
 
-[group]: /> getBlockByNumber 1 true
+[group0]: /> getBlockByNumber 1 true
 {
     transactions=[
         TransactionHash{
@@ -841,7 +841,7 @@ PeersInfo{
 - 区块高度：十进制整数。
 
 ```shell
-[group]: />  getBlockHashByNumber 1
+[group0]: />  getBlockHashByNumber 1
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
 
@@ -853,7 +853,7 @@ PeersInfo{
 - 交易哈希：0x开头的交易哈希值。
 
 ```shell
-[group]: /> getTransactionByHash 0x459e0bbe907bc1fb34367a150a3485921e5ce3d49c6b044e8ebb7171f8081241
+[group0]: /> getTransactionByHash 0x459e0bbe907bc1fb34367a150a3485921e5ce3d49c6b044e8ebb7171f8081241
 {
     version='0',
     from='0x3977d248ce98f3affa78a800c4f234434355aa77',
@@ -863,7 +863,7 @@ PeersInfo{
     to='0x0000000000000000000000000000000000001003',
     blockLimit='500',
     chainId='chain',
-    groupID='group',
+    groupID='group0',
     transactionProof='null',
     signature=0x10617472b24161960284e1812f2becefbac5f8a4f3973ad5f600aff10a8935e345e9a8a99406f9b51bcaa2537055c76d24b0864a4fdd64b6c0c9dbfc5056680a00
 }
@@ -877,7 +877,7 @@ PeersInfo{
 - 交易哈希：0x开头的交易哈希值。
 
 ```shell
-[group]: />  getTransactionReceipt 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
+[group0]: />  getTransactionReceipt 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
 {
     "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
     "blockNumber":"0x8",
@@ -908,7 +908,7 @@ PeersInfo{
 运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。
 
 ```shell
-[group]: />  getPendingTxSize
+[group0]: />  getPendingTxSize
 0
 ```
 
@@ -917,7 +917,7 @@ PeersInfo{
 运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。
 
 ```shell
-[group]: />  getTotalTransactionCount
+[group0]: />  getTotalTransactionCount
 {
     "blockNumber":1,
     "txSum":1,
@@ -938,7 +938,7 @@ PeersInfo{
 - value
 
 ```shell
-[group]: />  setSystemConfigByKey tx_count_limit 100
+[group0]: />  setSystemConfigByKey tx_count_limit 100
 {
     "code":0,
     "msg":"success"
@@ -953,7 +953,7 @@ PeersInfo{
 - key
 
 ```shell
-[group]: />  getSystemConfigByKey tx_count_limit
+[group0]: />  getSystemConfigByKey tx_count_limit
 100
 ```
 
@@ -966,7 +966,7 @@ PeersInfo{
 ```shell
 # 控制台连接非国密区块链时，账户文件自动保存在`account/ecdsa`目录
 # 控制台连接国密区块链时，账户文件自动保存在`accout/gm`目录下
-[group]: />  newAccount
+[group0]: />  newAccount
 AccountPath: account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
 Note: This operation does not create an account in the blockchain, but only creates a local account, and deploying a contract through this account will create an account in the blockchain
 newAccount: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
@@ -986,7 +986,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dc
 - 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
 
 ```shell
-[group]: />  loadAccount 0x6fad87071f790c3234108f41b76bb99874a6d813
+[group0]: />  loadAccount 0x6fad87071f790c3234108f41b76bb99874a6d813
 Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 ```
 
@@ -995,7 +995,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 查看当前加载的所有账户信息
 
 ```shell
-[group]: />  listAccount
+[group0]: />  listAccount
 0x6fad87071f790c3234108f41b76bb99874a6d813(current account) <=
 0x726d9f31cf44debf80b08a7e759fa98b360b0736
 ```
@@ -1007,7 +1007,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 获取当前账户地址。
 
 ```shell
-[group]: />  getCurrentAccount
+[group0]: />  getCurrentAccount
 0x6fad87071f790c3234108f41b76bb99874a6d813
 ```
 
@@ -1018,7 +1018,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getSealerList，查看共识节点列表。
 
 ```shell
-[group]: />  getSealerList
+[group0]: />  getSealerList
 [
     Sealer{
         nodeID='44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85',
@@ -1044,7 +1044,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getObserverList，查看观察节点列表。
 
 ```shell
-[group]: />  getObserverList
+[group0]: />  getObserverList
 [  
     bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824
 ]
@@ -1055,7 +1055,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getPbftView，查看pbft视图。
 
 ```shell
-[group]: />  getPbftView
+[group0]: />  getPbftView
 2730
 ```
 
@@ -1064,7 +1064,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getConsensusStatus，查看共识状态。
 
 ```shell
-[group]: /> getConsensusStatus 
+[group0]: /> getConsensusStatus 
 ConsensusStatusInfo{
     nodeID='44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85',
     index=0,
@@ -1109,7 +1109,7 @@ ConsensusStatusInfo{
 - 节点权重
 
 ```shell
-[group]: /> addSealer bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824 2
+[group0]: /> addSealer bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824 2
 {
     "code":0,
     "msg":"Success"
@@ -1124,7 +1124,7 @@ ConsensusStatusInfo{
 - 节点nodeId
 
 ```shell
-[group]: />  addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+[group0]: />  addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
     "code":0,
     "msg":"success"
@@ -1139,7 +1139,7 @@ ConsensusStatusInfo{
 - 节点nodeId
 
 ```shell
-[group]: />  removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+[group0]: />  removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
     "code":0,
     "msg":"success"
@@ -1151,7 +1151,7 @@ ConsensusStatusInfo{
 运行setConsensusWeight，设置某一个特定节点的共识权重。
 
 ```shell
-[group]: /> setConsensusWeight 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85 2
+[group0]: /> setConsensusWeight 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85 2
 {
     "code":0,
     "msg":"Success"
@@ -1165,7 +1165,7 @@ ConsensusStatusInfo{
 运行getGroupPeers，查看节点所在group的共识节点和观察节点列表。
 
 ```shell
-[group]: /> getGroupPeers 
+[group0]: /> getGroupPeers 
 peer0: 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85
 peer1: bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824
 peer2: c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c
@@ -1177,10 +1177,10 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 运行getGroupInfo，查看节点所在group的详细信息。
 
 ```shell
-[group]: /> getGroupInfo
+[group0]: /> getGroupInfo
 {
     "chainID":"chain",
-    "groupID":"group",
+    "groupID":"group0",
     "genesisConfig":{
         "consensusType":"pbft",
         "blockTxCountLimit":1000,
@@ -1216,7 +1216,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
                     "buildTime":"20211203 10:43:32"
                 },
                 "chainID":"chain",
-                "groupID":"group",
+                "groupID":"group0",
                 "smCryptoType":false,
                 "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
                 "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
@@ -1236,7 +1236,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 运行getGroupList，查看群组列表：
 
 ```shell
-[group]: /> getGroupList
+[group0]: /> getGroupList
 group0: group
 ```
 
@@ -1245,11 +1245,11 @@ group0: group
 运行getGroupList，查看所有的群组信息列表：
 
 ```shell
-[group]: /> getGroupInfoList 
+[group0]: /> getGroupInfoList 
 [
     {
         "chainID":"chain",
-        "groupID":"group",
+        "groupID":"group0",
         "genesisConfig":{
             "consensusType":"pbft",
             "blockTxCountLimit":1000,
@@ -1306,7 +1306,7 @@ group0: group
 运行getGroupNodeInfo命令，获取当前群组内某一个节点的信息：
 
 ```shell
-[group]: /> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
+[group0]: /> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
 {
     "type":0,
     "iniConfig":{
@@ -1317,7 +1317,7 @@ group0: group
             "buildTime":"20211203 10:43:32"
         },
         "chainID":"chain",
-        "groupID":"group",
+        "groupID":"group0",
         "smCryptoType":false,
         "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
         "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
@@ -1329,7 +1329,7 @@ group0: group
     "serviceInfoList":null
 }
 
-[group]: /> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
+[group0]: /> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
 {
     "type":0,
     "iniConfig":{
@@ -1340,7 +1340,7 @@ group0: group
             "buildTime":"20211203 10:43:32"
         },
         "chainID":"chain",
-        "groupID":"group",
+        "groupID":"group0",
         "smCryptoType":false,
         "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
         "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
@@ -1360,17 +1360,17 @@ group0: group
 与Linux的cd命令类似，可以切换当前所在的路径，支持绝对路径、相对路径。
 
 ```shell
-[group]: /> cd /tables
+[group0]: /> cd /tables
 
-[group]: /tables>
+[group0]: /tables>
 
-[group]: /> cd ./tables/test
+[group0]: /> cd ./tables/test
 
-[group]: /tables/test>
+[group0]: /tables/test>
 
-[group]: /tables/test> cd ../../
+[group0]: /tables/test> cd ../../
 
-[group]: />
+[group0]: />
 ```
 
 ### 2. ls
@@ -1380,13 +1380,13 @@ group0: group
 ls参数为0时，展示当前文件夹，ls 参数为1时，支持绝对路径和相对路径。
 
 ```shell
-[group]: /> ls
+[group0]: /> ls
 apps usr sys tables
 
-[group]: /> ls apps
+[group0]: /> ls apps
 Hello
 
-[group]: /> ls ./apps/Hello
+[group0]: /> ls ./apps/Hello
 name: Hello, type: contract
 ```
 
@@ -1395,16 +1395,16 @@ name: Hello, type: contract
 与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
 
 ```shell
-[group]: /> mkdir /apps/test
+[group0]: /> mkdir /apps/test
 
-[group]: /> cd /apps
+[group0]: /> cd /apps
 
-[group]: /apps> ls
+[group0]: /apps> ls
 test
 
-[group]: /> mkdir ./test/test
+[group0]: /> mkdir ./test/test
 
-[group]: /> ls ./test
+[group0]: /> ls ./test
 test
 ```
 
@@ -1413,7 +1413,7 @@ test
 与Linux的pwd命令相似，没有参数，展示当前路径。
 
 ```shell
-[group]: /apps/Hello/BFS>  pwd
+[group0]: /apps/Hello/BFS>  pwd
 /apps/Hello/BFS
 ```
 
@@ -1424,7 +1424,7 @@ test
 在初始化时，将会部署一个治理委员，该治理委员的地址信息在 build_chain.sh时自动生成或者指定。初始化只有一个委员，并且委员的权重为1
 
 ```shell
-[group]: /> getCommitteeInfo 
+[group0]: /> getCommitteeInfo 
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -1459,7 +1459,7 @@ status分为以下几种：
 - unknown：这个类型出现时，有可能是有bug
 
 ```shell
-[group]: /> getProposalInfo 1
+[group0]: /> getProposalInfo 1
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Proposal Type   : setWeight
@@ -1481,7 +1481,7 @@ Against Voters:
 - 白名单，只有在白名单的用户可以部署
 
 ```shell
-[group]: /> getDeployAuth
+[group0]: /> getDeployAuth
 There is no deploy strategy, everyone can deploy contracts.
 ```
 
@@ -1495,16 +1495,16 @@ There is no deploy strategy, everyone can deploy contracts.
 
 ```shell
 # 当前的部署权限为白名单模式
-[group]: /> getDeployAuth 
+[group0]: /> getDeployAuth 
 Deploy strategy is White List Access.
 
 # 如果不选择参数，则检查当前的账号是否有部署权限
-[group]: /> checkDeployAuth 
+[group0]: /> checkDeployAuth 
 Deploy : PERMISSION DENIED
 Account: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 # 检查其他账户是否有权限
-[group]: /> checkDeployAuth 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
+[group0]: /> checkDeployAuth 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 Deploy : ACCESS
 Account: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 ```
@@ -1515,21 +1515,21 @@ Account: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 
 ```shell
 # 设置0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b 地址的合约的 set(string) 为白名单模式
-[group]: /> setMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) white_list
+[group0]: /> setMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) white_list
 {
     "code":0,
     "msg":"Success"
 }
 
 # 如果不选择参数，则检查当前账号是否有调用权限
-[group]: /> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string)
+[group0]: /> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string)
 Method   : PERMISSION DENIED
 Account  : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 Interface: set(string)
 Contract : 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
 
 # 检查其他账号的权限
-[group]: /> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Method   : ACCESS
 Account  : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Interface: set(string)
@@ -1541,7 +1541,7 @@ Contract : 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
 为了避免发起提案超时、退出控制台遗忘提案ID，getLatestProposal的命令可以获取当前委员会的最新的提案信息。
 
 ```shell
-[group]: /> getLatestProposal 
+[group0]: /> getLatestProposal 
 Latest proposal ID: 9
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1560,7 +1560,7 @@ Against Voters:
 
 ```shell
 # 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-[group]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 ```
 
@@ -1571,7 +1571,7 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff6
 如果是删除治理委员，将一个治理委员的权重设置为0 即可
 
 ```shell
-[group]: /> updateGovernorProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 2
+[group0]: /> updateGovernorProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 2
 Update governor proposal created, ID is: 1
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1592,7 +1592,7 @@ Against Voters:
 阈值在这里是以百分比为单位进行使用的。
 
 ```shell
-[group]: /> setRateProposal 51 51
+[group0]: /> setRateProposal 51 51
 Set rate proposal created, ID is: 2
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1611,7 +1611,7 @@ Against Voters:
 设置部署的ACL策略，只支持 white_list 和 black_list 两种策略
 
 ```shell
-[group]: /> setDeployAuthTypeProposal white_list
+[group0]: /> setDeployAuthTypeProposal white_list
 Set deploy auth type proposal created, ID is: 4
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1623,7 +1623,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> getDeployAuth 
+[group0]: /> getDeployAuth 
 Deploy strategy is White List Access.
 ```
 
@@ -1633,14 +1633,14 @@ Deploy strategy is White List Access.
 
 ```shell
 # 在白名单模式下，只有白名单内的用户可以使用
-[group]: /> deploy HelloWorld 
+[group0]: /> deploy HelloWorld 
 deploy contract for HelloWorld failed!
 return message: Permission denied
 return code:18
 Return values:null
 
 # 治理委员开启自己（也可以其他账号）的部署权限
-[group]: /> openDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /> openDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Open deploy auth proposal created, ID is: 5
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1653,7 +1653,7 @@ Agree Voters:
 Against Voters:
 
 # 再次部署，可以成功
-[group]: /> deploy HelloWorld 
+[group0]: /> deploy HelloWorld 
 transaction hash: 0x732e29baa263fc81e17a93a4102a0aa1cc2ec33ffbc1408c6b206d124b7f7ae0
 contract address: 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1666,13 +1666,13 @@ currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 ```shell
 # 账号可以部署合约
-[group]: /> deploy HelloWorld 
+[group0]: /> deploy HelloWorld 
 transaction hash: 0x732e29baa263fc81e17a93a4102a0aa1cc2ec33ffbc1408c6b206d124b7f7ae0
 contract address: 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 # 关闭账号的部署权限
-[group]: /> closeDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 
+[group0]: /> closeDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 
 Close deploy auth proposal created, ID is: 6
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1685,7 +1685,7 @@ Agree Voters:
 Against Voters:
 
 # 该账号不再可以部署合约
-[group]: /> deploy HelloWorld 
+[group0]: /> deploy HelloWorld 
 deploy contract for HelloWorld failed!
 return message: Permission denied
 return code:18
@@ -1699,11 +1699,11 @@ Return values:null
 
 ```shell
 # 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-[group]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 # reset 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号为 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
-[group]: /> resetAdminProposal 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a  0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /> resetAdminProposal 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a  0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Reset contract admin proposal created, ID is: 8
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1715,7 +1715,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 
 ```
@@ -1726,7 +1726,7 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f
 
 ```shell
 # 可以看到当前委员会的人数为2人，参与通过阈值和成功阈值均为51%
-[group]: /> getCommitteeInfo 
+[group0]: /> getCommitteeInfo 
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -1738,7 +1738,7 @@ index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 2
 index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
 
 # 发起一个提案，此时需要另外一个委员会同意才能通过，状态为notEnoughVotes
-[group]: /> setRateProposal 66 66
+[group0]: /> setRateProposal 66 66
 Set rate proposal created, ID is: 11
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1751,7 +1751,7 @@ Agree Voters:
 Against Voters:
 
 # 当前账户主动取消提案，提案的状态变为revoke
-[group]: /> revokeProposal 11
+[group0]: /> revokeProposal 11
 Revoke proposal success.
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1771,7 +1771,7 @@ Against Voters:
 
 ```shell
 # 当前账号发起设置阈值变化的提案，提案ID为12
-[group]: /> setRateProposal 66 66
+[group0]: /> setRateProposal 66 66
 Set rate proposal created, ID is: 12
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1784,11 +1784,11 @@ Agree Voters:
 Against Voters:
 
 # 此时模拟另外一个治理委员账户登陆
-[group]: /> loadAccount 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a 
+[group0]: /> loadAccount 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a 
 Load account 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a success!
 
 # 该治理委员投票12为同意（默认第二个参数为true，第二个参数为false时表示拒绝该提案）
-[group]: /> voteProposal 12
+[group0]: /> voteProposal 12
 Vote proposal success.
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1802,7 +1802,7 @@ Agree Voters:
 Against Voters:
 
 # 此时治理委员会的信息已经变更
-[group]: /> getCommitteeInfo 
+[group0]: /> getCommitteeInfo 
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -1822,14 +1822,14 @@ index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
 
 ```shell
 # 设置合约地址为 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的HelloWorld合约的 set(string) 接口为白名单模式
-[group]: /> setMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) white_list
+[group0]: /> setMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) white_list
 {
     "code":0,
     "msg":"Success"
 }
 
 # 这个接口目前为白名单模式，只有白名单模式的账号可以调用 set 接口
-[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set 123
+[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set 123
 transaction hash: 0x51e43a93b8e6621e45357ba542112117c3dd3e089b5067e06084e36243458074
 ---------------------------------------------------------------------------------------------
 transaction status: 18
@@ -1839,7 +1839,7 @@ Return message: Permission denied
 ---------------------------------------------------------------------------------------------
 
 # 不影响该账号调用 get 接口
-[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get 
+[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -1858,14 +1858,14 @@ Return values:(Hello, World!)
 
 ```shell
 # 开启账号0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 的 0xCcEeF68C9b4811b32c75df284a1396C7C5509561地址的 set(string)接口调用
-[group]: /> openMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /> openMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 {
     "code":0,
     "msg":"Success"
 }
 
 # 该账号可以使用HelloWorld的set接口
-[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "Hello, FISCO BCOS!"
+[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "Hello, FISCO BCOS!"
 transaction hash: 0x0b94b775312a771197e5093fe9e24fffc386d0350f1330fe4ded6f3cfb01a0b6
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -1880,7 +1880,7 @@ Return values:()
 Event logs
 Event: {}
 
-[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get
+[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -1898,14 +1898,14 @@ Return values:(Hello, FISCO BCOS!)
 
 ```shell
 # 关闭HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的set接口
-[group]: /> closeMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /> closeMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 {
     "code":0,
     "msg":"Success"
 }
 
 # 该账户不再可以访问合约的set接口
-[group]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "oops, permission deny!"
+[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "oops, permission deny!"
 transaction hash: 0x4db693c3c1fbb498ad1595dac111b5b23efe68a44bd4b622d421e52b4890fdd0
 ---------------------------------------------------------------------------------------------
 transaction status: 18

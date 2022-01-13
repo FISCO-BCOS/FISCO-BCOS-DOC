@@ -183,7 +183,7 @@ public class BcosSDKTest
          // 初始化BcosSDK
         BcosSDK sdk =  BcosSDK.build(configFile);
         // 为群组group初始化client
-        Client client = sdk.getClient("group");
+        Client client = sdk.getClient("group0");
     
         // 获取群组1的块高
         BlockNumber blockNumber = client.getBlockNumber();

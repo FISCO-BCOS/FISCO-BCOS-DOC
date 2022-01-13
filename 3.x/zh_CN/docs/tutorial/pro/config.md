@@ -115,7 +115,7 @@ gas_limit = 300000000
 ```ini
 [chain]
 sm_crypto = false
-group_id = group
+group_id = group0
 chain_id = chain
 ```
 

@@ -54,7 +54,7 @@ $ cp ~/fisco/nodes/127.0.0.1/sdk/* src/main/resources/conf/
                 <value>127.0.0.1:20201</value>
             </list>
         </entry>
-        <entry key="defaultGroup" value="group" />
+        <entry key="defaultGroup" value="group0" />
     </map>
 </property>
 ...

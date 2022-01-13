@@ -538,14 +538,14 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =============================================================================================
-[group]: />
+[group0]: />
 ```
 
 - 用控制台获取信息
 
 ```shell
 # 获取网络连接信息：
-[group]: /> getPeers
+[group0]: /> getPeers
 PeersInfo{
     p2pNodeID='3082010a0282010100c1d64abf0af11ceaa69b237090a5078ccbc122aedbf93486100ae65cb38cbf2a6969b80f2beca1abba7f0c1674876b332380a4b76387d62445ba8da7190b54850ed8c3fb4d6f6bafbd4744249a55805c0d804db9aa0f105c44c3381de20c763469892fc11a2bc8467c523592c9b2738069d6beb4cfb413f90e0be53205eca1cf3618100c625667f0592fd682aabe9cfbca7f7c53d79eeb5961ed9f144681b32c9fa55fc4d80b5ffbf32a9f71e900bc1c9a92ce0a485bb1003a915f9215bd7c42461cd52d1b2add644e8c1c273aa3668d4a707771b1a99d6bfcbfdf28be5b9c619eefb0c182ea7e666c5753c79499b1959df17ad5bd0996b9d7f0d62aa53d2b450203010001',
     endPoint='0.0.0.0:30301',
@@ -574,11 +574,11 @@ PeersInfo{
 }
 
 # 获取节点列表信息
-[group]: /> getGroupPeers
+[group0]: /> getGroupPeers
 peer0: 4af0433ac2d2afe305b88e7faae8ea4e94b14c63e78ca93c5c836ece6d0fbcb3d2a476a74ae8fb0a11e9662c0ce9861427c314aea7386cb3b619a4cb21ab227a
 peer1: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3
 
-[group]: /> getSealerList
+[group0]: /> getSealerList
 [
     Sealer{
         nodeID='8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3',
@@ -622,13 +622,13 @@ contract HelloWorld {
 
 ```shell
 # 在控制台输入以下指令 部署成功则返回合约地址
-[group]: /> deploy HelloWorld
+[group0]: /> deploy HelloWorld
 transaction hash: 0x0fe66c42f2678b8d041624358837de34ac7db195abb6f5a57201952062190590
 contract address: 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1
 currentAccount: 0x537149148696c7e6c3449331d77ddfaabc3c7a75
 
 # 查看当前块高
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 1
 ```
 
@@ -636,7 +636,7 @@ currentAccount: 0x537149148696c7e6c3449331d77ddfaabc3c7a75
 
 ```shell
 # 调用get接口获取name变量，此处的合约地址是deploy指令返回的地址
-[group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
+[group0]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -648,11 +648,11 @@ Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 
 # 查看当前块高，块高不变，因为get接口不更改账本状态
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 1
 
 # 调用set方法设置name
-[group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set "Hello, FISCO BCOS"
+[group0]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set "Hello, FISCO BCOS"
 transaction hash: 0x2f7c85c2c59a76ccaad85d95b09497ad05ca7983c5ec79c8f9d102d1c8dddc30
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -668,9 +668,9 @@ Event logs
 Event: {}
 
 # 查看当前块高，因为set接口修改了账本状态，块高增加到2
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 2
 
 # 退出控制台
-[group]: /> exit
+[group0]: /> exit
 ```

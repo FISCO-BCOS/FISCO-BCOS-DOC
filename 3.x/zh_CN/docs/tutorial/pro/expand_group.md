@@ -350,6 +350,6 @@ undeploy service group2node10BcosNodeService success
 ```
 $ bash start.sh
 # 获取当前群组列表
-[group]: /> getGroupList
+[group0]: /> getGroupList
 ["group"]
 ```

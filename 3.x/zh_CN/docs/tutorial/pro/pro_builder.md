@@ -138,7 +138,7 @@ FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组
 ```toml
 [group]
 # 群组ID
-group_id="group"
+group_id="group0"
 # 虚拟机类型
 vm_type="evm"
 # 是否时国密账本
