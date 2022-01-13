@@ -440,7 +440,7 @@ applicationContext.xml的内容如下：
             <value>127.0.0.1:20201</value>
           </list>
         </entry>
-        <entry key="defaultGroup" value="group" />
+        <entry key="defaultGroup" value="group0" />
       </map>
     </property>
     <!--
@@ -565,7 +565,7 @@ public class AssetClient {
     client = bcosSDK.getClient();
     cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
     client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
-    logger.debug("create client for group1, account address is " + cryptoKeyPair.getAddress());
+    logger.debug("create client for group0, account address is " + cryptoKeyPair.getAddress());
   }
 
   public void deployAssetAndRecordAddr() {

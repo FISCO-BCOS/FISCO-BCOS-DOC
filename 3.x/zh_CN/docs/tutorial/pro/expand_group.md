@@ -84,7 +84,7 @@ vm_type="wasm"
 
 ```ini
 [chain]
-chain_id="chain"
+chain_id="chain0"
 
 [group]
 group_id="group2"
@@ -119,7 +119,7 @@ gateway_service_name = "agencyBBcosGatewayService"
 cd ~/fisco/BcosProBuilder
 
 # 部署新群组
-python3 build_chain.py chain -o deploy -t node
+python3 build_chain.py chain0 -o deploy -t node
 ```
 
 执行上述命令后，当脚本输出`deploy all nodes of the given group success`时，则说明区块链节点扩容新群组成功，详细日志输出如下：
@@ -127,23 +127,23 @@ python3 build_chain.py chain -o deploy -t node
 ```shell
 =========================================================
 ----------- deploy all nodes of the given group -----------
-generate config for chain = chain, group = group2
+generate config for chain = chain0, group = group2
 * generate pem file for group2node00BcosNodeService
-	- pem_path: generated/chain/group2/172.25.0.3/group2node00BcosNodeService
+	- pem_path: generated/chain0/group2/172.25.0.3/group2node00BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 * generate pem file for group2node10BcosNodeService
-	- pem_path: generated/chain/group2/172.25.0.3/group2node10BcosNodeService
+	- pem_path: generated/chain0/group2/172.25.0.3/group2node10BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 * generate genesis config for group2node00BcosNodeService
-	 path: generated/chain/group2/172.25.0.3/group2node00BcosNodeService/config.genesis.tmp
+	 path: generated/chain0/group2/172.25.0.3/group2node00BcosNodeService/config.genesis.tmp
 * generate ini config for service group2node00BcosNodeService
-	config path: generated/chain/group2/172.25.0.3/group2node00BcosNodeService/config.ini.tmp
+	config path: generated/chain0/group2/172.25.0.3/group2node00BcosNodeService/config.ini.tmp
 * generate genesis config for group2node10BcosNodeService
-	 path: generated/chain/group2/172.25.0.3/group2node10BcosNodeService/config.genesis.tmp
+	 path: generated/chain0/group2/172.25.0.3/group2node10BcosNodeService/config.genesis.tmp
 * generate ini config for service group2node10BcosNodeService
-	config path: generated/chain/group2/172.25.0.3/group2node10BcosNodeService/config.ini.tmp
+	config path: generated/chain0/group2/172.25.0.3/group2node10BcosNodeService/config.ini.tmp
 deploy services for all the group nodes
 deploy service group2node00BcosNodeService
 deploy service group2node00BcosNodeService
@@ -158,8 +158,8 @@ upload tar package generated/./group2node10BcosNodeService.tgz success, config i
 群组扩容过程中生成的区块链节点相关的配置位于`generated/${chainID}/${groupID}`目录，具体如下：
 
 ```shell
-$ tree generated/chain/group2
-generated/chain/group2
+$ tree generated/chain0/group2
+generated/chain0/group2
 └── 172.25.0.3
     ├── group2node00BcosNodeService
     │   ├── config.genesis.tmp
@@ -330,7 +330,7 @@ Return values:(Hello, Fisco)
 cd ~/fisco/BcosProBuilder
 
 # 下线群组group2: 须保证config.toml是群组group2扩容时使用的配置文件
-python3 build_chain.py chain -o undeploy -t node
+python3 build_chain.py chain0 -o undeploy -t node
 ```
 
 执行上述命令后，当脚本输出`undeploy all nodes of the given group success`时，则说明区块链节点下线新群组成功，详细日志输出如下：
@@ -350,6 +350,6 @@ undeploy service group2node10BcosNodeService success
 ```
 $ bash start.sh
 # 获取当前群组列表
-[group]: /> getGroupList
+[group0]: /> getGroupList
 ["group"]
 ```

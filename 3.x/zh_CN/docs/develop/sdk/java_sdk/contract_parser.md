@@ -95,7 +95,7 @@ isWasm是决定ABICodec编码格式使用的重要参数：
 // 初始化SDK
 BcosSDK sdk =  BcosSDK.build(configFile);
 // 初始化group群组
-Client client = sdk.getClient("group");
+Client client = sdk.getClient("group0");
 // 使用Solidity合约
 boolean isWasm = false;
 ABICodec abiCodec = new ABICodec(client.getCryptoSuite(), isWasm);

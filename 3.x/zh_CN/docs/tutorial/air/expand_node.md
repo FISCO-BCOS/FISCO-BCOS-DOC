@@ -170,13 +170,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 # 将扩容节点加入为观察节点
-[group]: /> addObserver 51f25a366613ec7524910e3750407278be33d1dd6583b35503dff63d2219469bda55ee4c869a6583526ef1924a3143b776e2553bd07494dfc24716ced3638105
+[group0]: /> addObserver 51f25a366613ec7524910e3750407278be33d1dd6583b35503dff63d2219469bda55ee4c869a6583526ef1924a3143b776e2553bd07494dfc24716ced3638105
 {
     "code":0,
     "msg":"Success"
 }
 # 确认节点成功加入观察节点
-[group]: /> getObserverList
+[group0]: /> getObserverList
 [
     51f25a366613ec7524910e3750407278be33d1dd6583b35503dff63d2219469bda55ee4c869a6583526ef1924a3143b776e2553bd07494dfc24716ced3638105
 ]
@@ -192,13 +192,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```shell
 # 将扩容节点加入为共识节点
-[group]: /> addSealer 51f25a366613ec7524910e3750407278be33d1dd6583b35503dff63d2219469bda55ee4c869a6583526ef1924a3143b776e2553bd07494dfc24716ced3638105 1
+[group0]: /> addSealer 51f25a366613ec7524910e3750407278be33d1dd6583b35503dff63d2219469bda55ee4c869a6583526ef1924a3143b776e2553bd07494dfc24716ced3638105 1
 {
     "code":0,
     "msg":"Success"
 }
 # 确认新节点成功加入为共识节点
-[group]: /> getSealerList
+[group0]: /> getSealerList
 [
     Sealer{
         nodeID='e77e78303f1dd1613285560da7b4bcd261d47bdd66762e10791cac529cc372f1f3f61a71cb3cdb14e9fec4a5de2f8defd3c28a2cfd7a9d158d51fdda7c65ca4e',
@@ -223,13 +223,13 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ]
 
 # 部署HelloWorld测试合约
-[group]: /> deploy HelloWorld
+[group0]: /> deploy HelloWorld
 transaction hash: 0xbf9f7981cddce678fddde6eb1d5f9bdac5dc4c9161b2d8d56a8bb0ecd55aea62
 contract address: 0xC8eAd4B26b2c6Ac14c9fD90d9684c9Bc2cC40085
 currentAccount: 0x537149148696c7e6c3449331d77ddfaabc3c7a75
 
 # 确认所有节点都达到了最新区块
-[group]: /> getSyncStatus
+[group0]: /> getSyncStatus
 SyncStatusInfo{
     isSyncing='false',
     protocolId='null',

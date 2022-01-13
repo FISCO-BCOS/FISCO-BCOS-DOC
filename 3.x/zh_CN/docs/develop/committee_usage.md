@@ -123,7 +123,7 @@ vim config.toml
 ...
 
 [group]
-group_id="group"
+group_id="group0"
 vm_type="evm"
 sm_crypto=false
 auth_check=false
@@ -213,7 +213,7 @@ status分为以下几种：
 并且当前控制台所用的账户就是委员
 
 ```shell
-[group]: /> getCommitteeInfo
+[group0]: /> getCommitteeInfo
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -223,7 +223,7 @@ ParticipatesRate: 0% , WinRate: 0%
 Governor Address                                        | Weight
 index0 : 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642     | 1
 
-[group]: /> getCurrentAccount
+[group0]: /> getCurrentAccount
 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 ```
 
@@ -236,7 +236,7 @@ index0 : 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642     | 1
 使用`getCommitteeInfo` 命令看，确实已经更新了治理委员的权重
 
 ```shell
-[group]: /> updateGovernorProposal 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642 2
+[group0]: /> updateGovernorProposal 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642 2
 Update governor proposal created, ID is: 1
 ---------------------------------------------------------------------------------------------
 Proposer: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
@@ -255,7 +255,7 @@ Against Voters:
 这里只会做长度和字符校验，不会对正确性校验。可以看到成功添加了一个治理委员，权重为1
 
 ```shell
-[group]: /> updateGovernorProposal 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e 1
+[group0]: /> updateGovernorProposal 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e 1
 Update governor proposal created, ID is: 2
 ---------------------------------------------------------------------------------------------
 Proposer: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
@@ -273,7 +273,7 @@ Against Voters:
 设置账户权重为0，则删除治理委员
 
 ```shell
-[group]: /> updateGovernorProposal 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e 0
+[group0]: /> updateGovernorProposal 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e 0
 Update governor proposal created, ID is: 3
 ---------------------------------------------------------------------------------------------
 Proposer: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
@@ -285,7 +285,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> getCommitteeInfo
+[group0]: /> getCommitteeInfo
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -299,7 +299,7 @@ index0 : 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642     | 2
 使用`setRateProposal`命令更改治理委员的投票阈值
 
 ```shell
-[group]: /> setRateProposal 51 51
+[group0]: /> setRateProposal 51 51
 Set rate proposal created, ID is: 4
 ---------------------------------------------------------------------------------------------
 Proposer: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
@@ -311,7 +311,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> getCommitteeInfo
+[group0]: /> getCommitteeInfo
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -329,7 +329,7 @@ index0 : 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642     | 2
 此时，可以看到第6个提案的类型是`setDeployAuthType`，状态是 `notEnoughVotes`，还不可以通过提案，当前的部署权限策略还是处于无策略情况。
 
 ```shell
-[group]: /> setDeployAuthTypeProposal white_list
+[group0]: /> setDeployAuthTypeProposal white_list
 Set deploy auth type proposal created, ID is: 6
 ---------------------------------------------------------------------------------------------
 Proposer: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
@@ -341,17 +341,17 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> getDeployAuth
+[group0]: /> getDeployAuth
 There is no deploy strategy, everyone can deploy contracts.
 ```
 
 切换到另外一个委员会账户中，对提案6进行投票，可以看到投票成功，提案状态变更到结束。部署策略也变为白名单模式。
 
 ```shell
-[group]: /> loadAccount 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e
+[group0]: /> loadAccount 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e
 Load account 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e success!
 
-[group]: /> voteProposal 6
+[group0]: /> voteProposal 6
 Vote proposal success.
 ---------------------------------------------------------------------------------------------
 Proposer: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
@@ -364,7 +364,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> getDeployAuth
+[group0]: /> getDeployAuth
 Deploy strategy is White List Access.
 ```
 
@@ -377,13 +377,13 @@ Deploy strategy is White List Access.
 也可以通过命令`closeDeployAuthProposal` 发起关闭部署权限的提案
 
 ```shell
-[group]: /> deploy HelloWorld
+[group0]: /> deploy HelloWorld
 deploy contract for HelloWorld failed!
 return message: Permission denied
 return code:18
 Return values:null
 
-[group]: /> openDeployAuthProposal 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
+[group0]: /> openDeployAuthProposal 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 Open deploy auth proposal created, ID is: 7
 ---------------------------------------------------------------------------------------------
 Proposer: 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e
@@ -395,10 +395,10 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> loadAccount 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
+[group0]: /> loadAccount 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 Load account 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642 success!
 
-[group]: /> voteProposal 7
+[group0]: /> voteProposal 7
 Vote proposal success.
 ---------------------------------------------------------------------------------------------
 Proposer: 0xba0cd3e729cfe3ebdf1f74a10ec237bfd3954e1e
@@ -411,16 +411,16 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group]: /> checkDeployAuth
+[group0]: /> checkDeployAuth
 Deploy : ACCESS
 Account: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 
-[group]: /> deploy HelloWorld
+[group0]: /> deploy HelloWorld
 transaction hash: 0xe38ca3d69efee66aaf7de5600d3bdada8fd7c658d52bc0401ce65dd7e6437d97
 contract address: 0x33E56a083e135936C1144960a708c43A661706C0
 currentAccount: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 
-[group]: /> getContractAdmin 0x33E56a083e135936C1144960a708c43A661706C0
+[group0]: /> getContractAdmin 0x33E56a083e135936C1144960a708c43A661706C0
 Admin for contract 0x33E56a083e135936C1144960a708c43A661706C0 is: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 ```
 
@@ -437,22 +437,22 @@ Admin for contract 0x33E56a083e135936C1144960a708c43A661706C0 is: 0x1cc06388cd8a
 合约管理员对HelloWorld合约的 “set(string)” 合约设置白名单模式，设置成功之后，管理员也没有权限调用set(string)接口
 
 ```shell
-[group]: /> getContractAdmin 0x33E56a083e135936C1144960a708c43A661706C0
+[group0]: /> getContractAdmin 0x33E56a083e135936C1144960a708c43A661706C0
 Admin for contract 0x33E56a083e135936C1144960a708c43A661706C0 is: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 
-[group]: /> setMethodAuth 0x33E56a083e135936C1144960a708c43A661706C0 "set(string)" white_list
+[group0]: /> setMethodAuth 0x33E56a083e135936C1144960a708c43A661706C0 "set(string)" white_list
 {
     "code":0,
     "msg":"Success"
 }
 
-[group]: /> checkMethodAuth 0x33E56a083e135936C1144960a708c43A661706C0  "set(string)"
+[group0]: /> checkMethodAuth 0x33E56a083e135936C1144960a708c43A661706C0  "set(string)"
 Method   : PERMISSION DENIED
 Account  : 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 Interface: set(string)
 Contract : 0x33E56a083e135936C1144960a708c43A661706C0
 
-[group]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 set oops
+[group0]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 set oops
 transaction hash: 0xf9fcac9a0d4503e366c582c72fccf4e571b081ba44d46f58ff0b17fb7ab4361b
 ---------------------------------------------------------------------------------------------
 transaction status: 18
@@ -462,7 +462,7 @@ Return message: Permission denied
 ---------------------------------------------------------------------------------------------
 
 # 还是可以使用set接口
-[group]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 get
+[group0]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -477,13 +477,13 @@ Return values:(Hello, World!)
 管理员可以使用命令开启某个账户对set(string)接口的使用权限
 
 ```shell
-[group]: /> openMethodAuth 0x33E56a083e135936C1144960a708c43A661706C0 "set(string)" 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
+[group0]: /> openMethodAuth 0x33E56a083e135936C1144960a708c43A661706C0 "set(string)" 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 {
     "code":0,
     "msg":"Success"
 }
 
-[group]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 set "May the flame guide thee."
+[group0]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 set "May the flame guide thee."
 transaction hash: 0x3986a27e3075d703bc6828984bbfa8115fad612eaecaf7749e835edb495f38d6
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -498,7 +498,7 @@ Return values:()
 Event logs
 Event: {}
 
-[group]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 get
+[group0]: /> call HelloWorld 0x33E56a083e135936C1144960a708c43A661706C0 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully

@@ -70,7 +70,7 @@ tars_pkg_dir = ""
 
 [chain]
 # 链ID
-chain_id="chain"
+chain_id="chain0"
 
 [[group.deploy_info]]
 # 扩容区块链节点的服务名
@@ -97,7 +97,7 @@ node_count=1
 cd ~/fisco/BcosProBuilder
 
 # 扩容并部署RPC服务
-python3 build_chain.py chain -o expand -t node
+python3 build_chain.py chain0 -o expand -t node
 ```
 
 执行上述命令后，当脚本输出`expand nodes for the given group success`时，则说明区块链节点服务扩容成功，详细日志输出如下：
@@ -106,21 +106,21 @@ python3 build_chain.py chain -o expand -t node
 =========================================================
 ----------- expand nodes for the given group -----------
 * reload node config
-* generate ini config, service: groupnode20BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode20BcosNodeService/config.ini.tmp
+* generate ini config, service: groupnode20BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService/config.ini.tmp
 * generate ini config for service: groupnode20BcosNodeService success
-* generate genesis config, service: groupnode20BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode20BcosNodeService/config.genesis.tmp
+* generate genesis config, service: groupnode20BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService/config.genesis.tmp
 * generate genesis config for service: groupnode20BcosNodeService success
 * reload node config
-* generate ini config, service: groupnode30BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode30BcosNodeService/config.ini.tmp
+* generate ini config, service: groupnode30BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService/config.ini.tmp
 * generate ini config for service: groupnode30BcosNodeService success
-* generate genesis config, service: groupnode30BcosNodeService, path: generated/chain/group/172.25.0.5/groupnode30BcosNodeService/config.genesis.tmp
+* generate genesis config, service: groupnode30BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService/config.genesis.tmp
 * generate genesis config for service: groupnode30BcosNodeService success
 * generate pem file for groupnode20BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.5/groupnode20BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 * generate pem file for groupnode30BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.5/groupnode30BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
 deploy service groupnode20BcosNodeService
@@ -136,8 +136,8 @@ upload tar package generated/./groupnode30BcosNodeService.tgz success, config id
 扩容过程中生成的RPC服务相关的配置位于`generated/${chainID}/${groupID}/${deploy_ip}`目录，具体如下：
 
 ```shell
-$ tree generated/chain/group/172.25.0.5
-generated/chain/group/172.25.0.5
+$ tree generated/chain0/group0/172.25.0.5
+generated/chain0/group0/172.25.0.5
 ├── groupnode20BcosNodeService
 │   ├── config.genesis.tmp
 │   ├── config.ini.tmp
@@ -167,13 +167,13 @@ s
 新节点扩容成功后，可通过控制台的`getGroupPeers`命令查看新增的节点列表：
 
 ```shell
-[group]: /> getGroupPeers
+[group0]: /> getGroupPeers
 peer0: 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27
 peer1: 23d88283fe20c959734c3a3e6f34fb1cb0db9e286ec6e31aa140245ca0bd8aa2a35e288e4d0e10430b8143e06aa46d1b80434a86a8f39980686b43577b415b90
 peer2: 4af0433ac2d2afe305b88e7faae8ea4e94b14c63e78ca93c5c836ece6d0fbcb3d2a476a74ae8fb0a11e9662c0ce9861427c314aea7386cb3b619a4cb21ab227a
 peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3
 
-[group]: /> getSealerList
+[group0]: /> getSealerList
 [
     Sealer{
         nodeID='8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3',
@@ -184,7 +184,7 @@ peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
         weight=1
     }
 ]
-[group]: /> getObserverList
+[group0]: /> getObserverList
 []
 ```
 
@@ -194,19 +194,19 @@ peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
 **步骤2: 将扩容节点加入为观察节点**
 
 ```shell
-[group]: /> addObserver 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27
+[group0]: /> addObserver 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27
 {
     "code":0,
     "msg":"Success"
 }
 
-[group]: /> addObserver 23d88283fe20c959734c3a3e6f34fb1cb0db9e286ec6e31aa140245ca0bd8aa2a35e288e4d0e10430b8143e06aa46d1b80434a86a8f39980686b43577b415b90
+[group0]: /> addObserver 23d88283fe20c959734c3a3e6f34fb1cb0db9e286ec6e31aa140245ca0bd8aa2a35e288e4d0e10430b8143e06aa46d1b80434a86a8f39980686b43577b415b90
 {
     "code":0,
     "msg":"Success"
 }
 
-[group]: /> getObserverList
+[group0]: /> getObserverList
 [
     0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27,
     23d88283fe20c959734c3a3e6f34fb1cb0db9e286ec6e31aa140245ca0bd8aa2a35e288e4d0e10430b8143e06aa46d1b80434a86a8f39980686b43577b415b90
@@ -216,19 +216,19 @@ peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
 **步骤3：扩容节点同步到最高块后，将扩容节点加入为共识节点**
 
 ```shell
-[group]: /> addSealer 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27 1
+[group0]: /> addSealer 0662759d9ff150b4e004f1e84a84dab15188e04c3772da1a10300302d6677f90dd2a36b75cefe5fcc08310999edf407dda9025332244186430561554f48ebc27 1
 {
     "code":0,
     "msg":"Success"
 }
 
-[group]: /> addSealer 23d88283fe20c959734c3a3e6f34fb1cb0db9e286ec6e31aa140245ca0bd8aa2a35e288e4d0e10430b8143e06aa46d1b80434a86a8f39980686b43577b415b90 1
+[group0]: /> addSealer 23d88283fe20c959734c3a3e6f34fb1cb0db9e286ec6e31aa140245ca0bd8aa2a35e288e4d0e10430b8143e06aa46d1b80434a86a8f39980686b43577b415b90 1
 {
     "code":0,
     "msg":"Success"
 }
 
-[group]: /> getSealerList
+[group0]: /> getSealerList
 [
     Sealer{
         nodeID='8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3',
@@ -252,12 +252,12 @@ peer3: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
 **步骤4：部署和调用合约**
 
 ```shell
-[group]: /> deploy HelloWorld
+[group0]: /> deploy HelloWorld
 transaction hash: 0x62b2fe3514ca22ea2126b7d6bcab1f2912e03503045b3b806ff2d87d605aca5c
 contract address: 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01
 currentAccount: 0x537149148696c7e6c3449331d77ddfaabc3c7a75
 
-[group]: /> call HelloWorld 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01 set "Hello, Fisco"
+[group0]: /> call HelloWorld 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01 set "Hello, Fisco"
 transaction hash: 0x21a44704b4d2f56108f071a61987e20be7627c2049437cc1a73db9b0e00f55f8
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -272,7 +272,7 @@ Return values:()
 Event logs
 Event: {}
 
-[group]: /> call HelloWorld 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01 get
+[group0]: /> call HelloWorld 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully

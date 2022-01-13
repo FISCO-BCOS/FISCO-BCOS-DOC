@@ -38,15 +38,15 @@ tars_pkg_dir = ""
 
 链配置项位于配置`[chain]`中，主要包括：
 
-- `chain_id`: 区块链服务所属的链的ID，默认为`chain`，**不能包括除字母和数字之外的所有特殊字符**。
+- `chain_id`: 区块链服务所属的链的ID，默认为`chain0`，**不能包括除字母和数字之外的所有特殊字符**。
 - `rpc_sm_ssl`: RPC服务与SDK客户端之间采用的SSL连接类型，若设置为`false`，表明采用RSA加密连接；若设置为`true`，表明采用国密SSL连接，默认为`false`。
 - `gateway_sm_ssl`: Gateway服务之间的SSL连接类型，设置为`false`表明采用RSA加密连接；设置为`true`表明采用国密SSL连接，默认为`false`
 
-链ID为`chain`, RPC与SDK之间、Gateway服务之间均采用RSA加密连接的配置项如下：
+链ID为`chain0`, RPC与SDK之间、Gateway服务之间均采用RSA加密连接的配置项如下：
 
 ```shell
 [chain]
-chain_id="chain"
+chain_id="chain0"
 rpc_sm_ssl=false
 gateway_sm_ssl=false
 ```
@@ -138,7 +138,7 @@ FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组
 ```toml
 [group]
 # 群组ID
-group_id="group"
+group_id="group0"
 # 虚拟机类型
 vm_type="evm"
 # 是否时国密账本
@@ -198,9 +198,9 @@ FISCO BCOS Pro版本区块链中，一个RPC服务可包含多个RPC服务节点
 
 ```toml
 [chain]
-chain_id="chain"
+chain_id="chain0"
 rpc_sm_ssl=false
-rpc_ca_cert_path="generated/rpc/chain/ca"
+rpc_ca_cert_path="generated/rpc/chain0/ca"
 
 [[chain.rpc]]
 name="agencyABcosRpcService"
@@ -231,9 +231,9 @@ gateway_service_name = "agencyABcosGatewayService"
 
 ```toml
 [chain]
-chain_id="chain"
+chain_id="chain0"
 gateway_sm_ssl=false
-gateway_ca_cert_path="generated/gateway/chain/ca"
+gateway_ca_cert_path="generated/gateway/chain0/ca"
 
 [[chain.gateway]]
 name="agencyABcosGatewayService"
@@ -282,12 +282,12 @@ optional arguments:
   -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
 
 ----------- help for subcommand 'chain' -----------
-usage: build_chain.py chain [-h] -o OP [-c CONFIG] [-t TYPE]
+usage: build_chain.py chain0 [-h] -o OP [-c CONFIG] [-t TYPE]
 
 e.g:
-* deploy node: python3 build_chain.py chain -o deploy -t node
-* deploy rpc: python3 build_chain.py chain -o deploy -t rpc
-* deploy gateway: python3 build_chain.py chain -o deploy -t gateway
+* deploy node: python3 build_chain.py chain0 -o deploy -t node
+* deploy rpc: python3 build_chain.py chain0 -o deploy -t rpc
+* deploy gateway: python3 build_chain.py chain0 -o deploy -t gateway
 
 optional arguments:
   -h, --help            show this help message and exit

@@ -115,8 +115,8 @@ gas_limit = 300000000
 ```ini
 [chain]
 sm_crypto = false
-group_id = group
-chain_id = chain
+group_id = group0
+chain_id = chain0
 ```
 
 #### service
@@ -241,7 +241,7 @@ rpc = chain.agencyABcosRpcService
 
 ```ini
 [chain]
-chain_id = chain
+chain_id = chain0
 ```
 
 #### log
