@@ -10,7 +10,7 @@ Java SDK目前支持以下功能:
 
 - **计算哈希**: 支持`sm3`和`keccak256`两种哈希算法，一般国密采用前者，非国密采用后者；
 
-- **签名/验签** : 支持`sm2`和`secp256k1`两种签名和验签方法，一半国密采用前者，非国密采用后者。
+- **签名/验签** : 支持`sm2`和`secp256k1`两种签名和验签方法，一般国密采用前者，非国密采用后者。
 
 ## 创建CryptoSuite
 
@@ -344,7 +344,7 @@ Java SDK提供了将签名结果`SignatureResult`转换为字符串，以及从�
     }
 
     // 从签名字符串中构造国密签名对象
-    public SM2SignatureResult covertStringToECDSASignatureResult(CryptoKeyPair smKeyPair, String signatureString)
+    public SM2SignatureResult covertStringToSM2SignatureResult(CryptoKeyPair smKeyPair, String signatureString)
     {
         return new SM2SignatureResult(smKeyPair.getHexPublicKey(), signatureString);
     }
