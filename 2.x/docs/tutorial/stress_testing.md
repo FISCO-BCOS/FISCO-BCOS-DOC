@@ -29,6 +29,8 @@ Java SDK Demo是基于Java SDK的基准测试集合，能够对FISCO BCOS节点�
   # 下载源码
   $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
   $ cd java-sdk-demo
+  # 切换到2.0版本
+  $ git checkout main-2.0
   # 编译源码
   $ ./gradlew build 
   ```

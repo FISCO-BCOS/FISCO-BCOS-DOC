@@ -90,7 +90,7 @@ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git
 ### 下载源码
 
 ```bash
-git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
+git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git -b master-2.0
 ```
 
 ### 下载依赖包
