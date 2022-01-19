@@ -80,6 +80,7 @@ $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```bash
 $ cd FISCO-BCOS
+$ git checkout master-2.0
 $ mkdir -p build && cd build
 # CentOS请使用cmake3
 $ cmake -DTOOL=ON ..
