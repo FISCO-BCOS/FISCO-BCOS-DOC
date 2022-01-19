@@ -108,7 +108,10 @@ FISCO BCOS在编译时会自动下载依赖包，每个依赖包有多个源。�
 1. 创建编译目录
 
 ```bash
-cd FISCO-BCOS && mkdir build && cd build
+cd FISCO-BCOS 
+# 切换到2.0版本
+git checkout master-2.0
+mkdir build && cd build
 ```
 
 2. 使用gcc7
