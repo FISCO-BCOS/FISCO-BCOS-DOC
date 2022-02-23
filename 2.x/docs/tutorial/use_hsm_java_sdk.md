@@ -18,7 +18,7 @@ cd java-sdk-demo
 
 ```eval_rst
 .. note::
-    当网络无法访问GitHub时，请从https://gitee.com/FISCO-BCOS/java-sdk-demo处下载源码。
+    当网络无法访问GitHub时，请从https://gitee.com/FISCO-BCOS/java-sdk-demo的main-2.0分支下载源码。
 ```
 
 ### 配置和运行使用密码机内部密钥的java sdk demo

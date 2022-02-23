@@ -34,7 +34,7 @@
 
 文章来源：人民网
 
-- [FISCO BCOS代码仓库](https://github.com/FISCO-BCOS/FISCO-BCOS)
+- [FISCO BCOS代码仓库](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)
 
 - [WeIdentity代码仓库](https://github.com/WeBankFinTech/WeIdentity)
 

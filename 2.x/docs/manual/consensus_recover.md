@@ -178,7 +178,7 @@ bash ./node3/start.sh
 
 ### 获取rocksdb-storage工具
 
-FISCO BCOS 提供查询、修改 rocksdb 数据库信息的 rocksdb-storage 工具。该工具需要手动编译FISCO BCOS源码获取：[FISCO BCOS GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS)或[FISCO BCOS Gitee源码链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS)，编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
+FISCO BCOS 提供查询、修改 rocksdb 数据库信息的 rocksdb-storage 工具。该工具需要手动编译FISCO BCOS源码获取：[FISCO BCOS GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)或[FISCO BCOS Gitee源码链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)，编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
 
 ```shell
 #  编译成功后将 rocksdb-storage 工具移动到节点主目录，如 ~/fisco/nodes/127.0.0.1/
@@ -318,7 +318,7 @@ bash ./node3/start.sh
 
 FISCO BCOS 提供 rocksdb-storage 工具帮助用户对 rocksdb 数据库进行常规 CRUD 操作，此外 rocksdb-storage 工具也支持手动创建数据表。
 
-**获取途径**：手动编译FISCO BCOS源码：[FISCO BCOS GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS)或[FISCO BCOS Gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS)。编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
+**获取途径**：手动编译FISCO BCOS源码：[FISCO BCOS GitHub源码链接](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)或[FISCO BCOS Gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)。编译时通过 `cmake -DTOOL=on ..` 打开工具开关，编译成功后 rocksdb-storage 工具位于 `FISCO-BCOS/build/bin/`。详细编译步骤可参考：[编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html#id5)。
 
 ### 帮助
 

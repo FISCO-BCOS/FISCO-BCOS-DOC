@@ -136,7 +136,7 @@ WeBASE的社区还在蓬勃发展中，欢迎来到WeBASE的动物园漫步，�
 
 #### 链接指引
 
-- [区块链底层平台FISCO BCOS代码仓库](https://github.com/FISCO-BCOS/FISCO-BCOS)
+- [区块链底层平台FISCO BCOS代码仓库](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)
 
 - [FISCO BCOS技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)
 

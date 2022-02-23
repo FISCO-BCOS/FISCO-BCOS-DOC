@@ -82,7 +82,7 @@ WeBASE-Front还在持续优化开发中，未来会增加越来越丰富的功�
 
 #### 链接指引
 
-- [Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)
+- [Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)
 
 - [Sigar数据收集组件](https://www.jianshu.com/p/c3d88dd617bf)
 

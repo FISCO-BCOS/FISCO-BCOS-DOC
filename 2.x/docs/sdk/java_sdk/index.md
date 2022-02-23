@@ -7,6 +7,11 @@ Java SDK 提供了访问 FISCO BCOS 节点的Java API，支持节点状态查询
 
 
 ```eval_rst
+.. note::
+   v2.0+版本的java-sdk仅支持v2.0+版本FISCO BCOS区块链，若区块链版本是v3.0+,请使用v3.0+版本java-sdk，具体参考 `这里 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/sdk/java_sdk/index.html>`_
+```
+
+```eval_rst
 
    .. admonition:: **主要特性**
 

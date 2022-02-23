@@ -16,7 +16,7 @@ Each agency has a Key Manager. For specific deployment steps, please refer to [K
 Use the script [```build_chain.sh```] (../installation.md) to build a node with normal operations.
 
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.8.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
