@@ -126,7 +126,7 @@ vim config.toml
 group_id="group0"
 vm_type="evm"
 sm_crypto=false
-auth_check=false
+auth_check=true
 init_auth_address="0x2690ef01645972e0940400a4bb43f62eb4e2b7f1"
 
 ...

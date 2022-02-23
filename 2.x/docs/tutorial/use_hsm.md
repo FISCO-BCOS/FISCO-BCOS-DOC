@@ -28,6 +28,8 @@
 ```bash
 git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 cd FISCO-BCOS
+# 切换到2.0版本
+git checkout master-2.0
 ```
 
 ### 第二步. 编译源码
@@ -164,6 +166,8 @@ sudo yum install -y java java-devel
 ```bash
 git clone https://github.com/FISCO-BCOS/console.git
 cd console
+# 切换到2.0版本
+git checkout master-2.0
 ./gradlew build
 ```
 
