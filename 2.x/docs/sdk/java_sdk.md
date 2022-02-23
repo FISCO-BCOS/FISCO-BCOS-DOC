@@ -353,7 +353,7 @@ SDK的核心功能是部署/加载合约，然后调用合约相关接口，实�
     Type result = contract.someMethod(<param1>, ...).send(); 
 ```
 ### Spring Boot项目开发指引
-提供[spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)示例项目供参考。Spring Boot项目开发与Spring项目开发类似，其主要区别在于配置文件方式的差异。该示例项目提供相关的测试案例，具体描述参考示例项目的README文档。
+提供[spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)示例项目供参考。Spring Boot项目开发与Spring项目开发类似，其主要区别在于配置文件方式的差异。该示例项目提供相关的测试案例，具体描述参考示例项目的README文档。
 
 ### SDK国密功能使用
 - 前置条件：FISCO BCOS区块链采用国密算法，搭建国密版的FISCO BCOS区块链请参考[国密使用手册](../manual/guomi_crypto.md)。

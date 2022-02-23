@@ -4,6 +4,11 @@
 
 ----
 
+```eval_rst
+.. note::
+   `generator <https://github.com/FISCO-BCOS/generator>`_ 仅支持搭建2.x链，搭建3.x链请参考 `这里 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/quick_start/air_installation.html>`_
+```
+
 **基本介绍**
 
 FISCO BCOS generator为企业用户提供了部署、管理和监控多机构多群组联盟链的便捷工具，源码可参考链接：[GitHub页面链接](https://github.com/FISCO-BCOS/generator)、[Gitee页面链接](https://gitee.com/FISCO-BCOS/generator)

@@ -59,7 +59,7 @@ Git Commit Hash    : 9f1273d8bc9dcef3d6a36e1f32f4f23deaa7d6bb
 ```bash
 cd ~/fisco
 
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.8.0/build_chain.sh && chmod u+x build_chain.sh
 
 ./build_chain.sh -e ~/fisco/FISCO-BCOS/build/bin/fisco-bcos -l 127.0.0.1:4 -g -G
 ```

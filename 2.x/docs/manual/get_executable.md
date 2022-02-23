@@ -113,4 +113,4 @@ $ make
     $ make doc
     ```
 
-[FSICO-BCOS-GitHub]:https://github.com/FISCO-BCOS/FISCO-BCOS
+[FSICO-BCOS-GitHub]:https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0

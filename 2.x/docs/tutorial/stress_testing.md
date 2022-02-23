@@ -38,7 +38,7 @@ Java SDK Demo是基于Java SDK的基准测试集合，能够对FISCO BCOS节点�
   ```eval_rst
   .. note::
 
-      当网络无法访问GitHub时，请从https://gitee.com/FISCO-BCOS/java-sdk-demo处下载源码。
+      当网络无法访问GitHub时，请从https://gitee.com/FISCO-BCOS/java-sdk-demo处的main-2.0分支下载源码。
   ```
 
 ### 第三步. 配置Demo

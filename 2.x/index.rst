@@ -8,6 +8,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
 .. note::
    本技术文档适用于FISCO BCOS 2.x版本, FISCO BCOS 3.0+技术文档请参考 `FISCO BCOS 3.x技术文档(latest) <https://fisco-bcos-doc.readthedocs.io>`_
+   
+   FISCO BCOS 2.x版本源码位于 ``master-2.0``分支，请参考 `这里 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_
+
+   `generator <https://github.com/FISCO-BCOS/generator>`_ 仅支持搭建2.x链，搭建3.x链请参考 `这里 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/quick_start/air_installation.html>`_
 
 .. container:: row 
    
@@ -208,7 +212,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;社区资源</h>
             <br><br>
          
-         - `Github主页 <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
+         - `Github主页 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_
          - `深度解析系列文章 <http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect>`_
          - `贡献代码 <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
          - `反馈问题 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
@@ -233,7 +237,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
             .. raw:: html
 
-            - **FISCO BCOS企业级金融联盟链底层平台**: `[GitHub] <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ `[Gitee] <https://gitee.com/FISCO-BCOS>`_ `[文档] <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html>`_ 
+            - **FISCO BCOS企业级金融联盟链底层平台**: `[GitHub] <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_ `[Gitee] <https://gitee.com/FISCO-BCOS>`_ `[文档] <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html>`_ 
             - **WeBASE 区块链中间件平台**：`[GitHub] <https://github.com/WeBankFinTech/WeBASE>`_ `[Gitee] <https://gitee.com/WeBank/WeBASE>`_  `[文档] <https://webasedoc.readthedocs.io/>`_ 
             - **WeIdentity 基于区块链的实体身份标识及可信数据交换解决方案**: `[GitHub] <https://github.com/WeBankFinTech/WeIdentity>`_ `[Gitee] <https://gitee.com/WeBank/WeIdentity>`_ `[文档] <https://weidentity.readthedocs.io/>`_ 
             - **WeDPR 即时可用，场景式隐私保护高效解决方案套件和服务**：`[GitHub] <https://github.com/WeBankBlockchain/WeDPR-Lab-Core>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto>`_ `[文档] <https://wedpr-lab.readthedocs.io/>`_ 

@@ -29,7 +29,7 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -127,7 +127,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 $ ./start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc1)!
+Welcome to FISCO BCOS console(3.0.0-rc2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -148,7 +148,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```shell
 ./start.sh --version
-console version: 3.0.0-rc1
+console version: 3.0.0-rc2
 ```
 
 #### 4.2 账户使用方式

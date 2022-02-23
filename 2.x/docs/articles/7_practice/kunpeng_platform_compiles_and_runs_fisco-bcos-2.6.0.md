@@ -85,7 +85,8 @@ git clone https://gitee.com/FISCO-BCOS/LargeFiles.git
 ### 2. 下载源码
 
  * 克隆 FISCO BCOS 代码
-```
+
+```bash
 git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
 ```
 
@@ -196,7 +197,7 @@ cp ${HOME}/FISCO-BCOS/build/bin/fisco-bcos bin
 ### 3. 下载 build_chain.sh 脚本
 
 ```
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/`curl -s https://api.github.com/repos/FISCO-BCOS/FISCO-BCOS/releases | grep "\"v2\.[0-9]\.[0-9]\"" | sort -u | tail -n 1 | cut -d \" -f 4`/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/v2.8.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 4. 运行一键搭建2群组3机构6节点底层FISCO-BCOS联盟链服务脚本

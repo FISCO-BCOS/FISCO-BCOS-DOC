@@ -1,5 +1,10 @@
 # 一键部署工具
 
+```eval_rst
+.. note::
+   `generator <https://github.com/FISCO-BCOS/generator>`_ 仅支持搭建2.x链，搭建3.x链请参考 `这里 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/quick_start/air_installation.html>`_
+```
+
 ## 没有网络怎么使用运维部署工具
 
 运维部署工具依赖configparser等模块，建议在可以连接外网的情况下配置运维部署工具，并生成节点配置文件夹，推送至内网服务器

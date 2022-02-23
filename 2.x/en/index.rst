@@ -6,7 +6,7 @@ FISCO BCOS Documentation
 
 FISCO BCOS is a reliable, secure, efficient and portable blockchain platform with proven success from many partners and successful financial-grade applications.
 
-- `Github homepage <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
+- `Github homepage <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_
 - `Insightful articles <http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect>`_
 - `Code contribution <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
 - `Feedback <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_

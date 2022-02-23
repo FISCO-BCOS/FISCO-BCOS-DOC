@@ -75,7 +75,7 @@ $ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git && cd FISCO-BCOS && git checkout master-2.0`
 ```
 
 ```bash
