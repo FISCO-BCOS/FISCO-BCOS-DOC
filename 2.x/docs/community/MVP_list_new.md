@@ -29,7 +29,8 @@ FISCO BCOS开源社区“集市”历经四载共建，逐渐发展壮大，孕�
 ![zOnKyilujT7YL9W0mm9ImA 1](https://user-images.githubusercontent.com/93572056/154944228-af5167d5-68e4-4167-a0fc-e5ee5d65454e.png)
 
 
-## 推荐阅读：
+**推荐阅读**:
+
 [FISCO BCOS MVP计划](https://mp.weixin.qq.com/s/cqwrzBnQaSd9-jVMrE6_WQ)
 
 [对话MVP | 谷月：结缘FISCO BCOS，成为区块链浪潮中的弄潮儿](https://mp.weixin.qq.com/s/4pufWZVsW7-fdAMsYggDyg)
