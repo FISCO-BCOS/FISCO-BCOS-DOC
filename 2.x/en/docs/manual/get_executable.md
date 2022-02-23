@@ -77,7 +77,7 @@ After compilation, binary files are located at `FISCO-BCOS/build/bin/fisco-bcos`
 
 ```bash
 $ cd FISCO-BCOS
-$ git checkout master
+$ git checkout master-2.0
 $ mkdir -p build && cd build
 $ source /opt/rh/devtoolset-7/enable  # CentOS Please execute
 # please use cmake3 for CentOS

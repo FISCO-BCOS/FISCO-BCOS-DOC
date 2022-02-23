@@ -846,6 +846,8 @@ git clone https://github.com/FISCO-BCOS/java-sdk-demo
 git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
 
 cd java-sdk-demo
+# 切换到2.0版本
+git checkout main-2.0
 # 构建项目
 bash gradlew build
 ```
@@ -963,7 +965,8 @@ git clone https://github.com/FISCO-BCOS/java-sdk-demo
 git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
 
 cd java-sdk-demo
-
+# 切换到2.0版本
+git checkout main-2.0
 # build项目
 bash gradlew build
 ```

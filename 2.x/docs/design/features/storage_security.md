@@ -79,7 +79,7 @@
     节点在生成后，启动前，必须决定好是否采用落盘加密，一旦节点配置成功，并正常启动，将无法切换状态。
 ```
 
-（1）管理员定义好节点的的dataKey，并将dataKey发送给Key Manager，从Key Manager处获取cipherDataKey。
+（1）管理员定义好节点的dataKey，并将dataKey发送给Key Manager，从Key Manager处获取cipherDataKey。
 
 （2）将cipherDataKey配置到节点的配置文件中
 

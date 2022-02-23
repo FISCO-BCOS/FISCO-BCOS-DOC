@@ -246,6 +246,8 @@ $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
 $ git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
 
 $ cd java-sdk-demo
+# 切换到2.0版本
+git checkout main-2.0
 # 编译
 $ ./gradlew clean build -x test
 # 进入sdk-demo/dist目录，创建合约存放目录
