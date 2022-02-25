@@ -70,6 +70,7 @@ Java SDK中`org.fisco.bcos.sdk.eventsub.EventSubscribe`提供合约事件的功�
 #### subscribeEvent
 
 - 接口功能
+
 注册合约事件通知
 
 - 接口原型
@@ -113,7 +114,7 @@ Java SDK中`org.fisco.bcos.sdk.eventsub.EventSubscribe`提供合约事件的功�
     }
     ```
 
-    - id: 字符串类型，表示本次推送的任务id
+    - id: 字符串类型，标记本次推送的id
     - status: 推送状态，0：正常推送，1：推送结束，其他值表示错误码
 
     ```Java
@@ -157,10 +158,11 @@ Java SDK中`org.fisco.bcos.sdk.eventsub.EventSubscribe`提供合约事件的功�
 ```
 
 - 接口功能
+
 取消合约事件通知
 
 - 参数列表
-  - id: `String`类型，推送标记id，由`subscribeEvent`返回
+  - id: `String`类型，推送标记id，`subscribeEvent`返回
 
 ### 3.2 回调实现
 
@@ -436,19 +438,12 @@ class EventSubCallbackSample implements EventSubCallback {
             // 推送完成
             return;
         } else if(status != 0){
-            // 错误处理
+            // ADD 错误处理
             return;
         }
 
-        // status = 0
+        // status == 0
         for (EventLog log : logs) {
-            logger.debug(
-                    " blockNumber:"
-                            + log.getBlockNumber()
-                            + ",txIndex:"
-                            + log.getTransactionIndex()
-                            + " data:"
-                            + log.getData());
             ABICodec abiCodec = new ABICodec(client.getCryptoSuite());
             try {
                 List<Object> list = abiCodec.decodeEvent(abi, "TransferEvent", log);
@@ -456,14 +451,6 @@ class EventSubCallbackSample implements EventSubCallback {
                 // list = [0, 0x81376b9868b292a46a1c486d344e427a3088657fda629b5f4a647822d329cd6a, 0x28cac318a86c8a0a6a9156c2dba2c8c2363677ba0514ef616592d81557e679b6, 0x0000000000000000000000000000000000000000000000000000000000000064]
                 // 后三个事件参数均为indexed属性
                 Assert.assertEquals(4, list.size());
-            } catch (ABICodecException e) {
-                logger.error("decode event log error, " + e.getMessage());
-            }
-            try {
-                List<Object> list = abiCodec.decodeEvent(abi, "TransferAccountEvent", log);
-                logger.debug("decode event log content, " + list);
-                // list = [Alice, Bob]
-                Assert.assertEquals(2, list.size());
             } catch (ABICodecException e) {
                 logger.error("decode event log error, " + e.getMessage());
             }
