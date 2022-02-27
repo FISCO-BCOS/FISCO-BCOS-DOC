@@ -67,7 +67,7 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc2/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -399,7 +399,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc1")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc2")
     compile spring
 }
 ```
@@ -440,7 +440,7 @@ applicationContext.xml的内容如下：
             <value>127.0.0.1:20201</value>
           </list>
         </entry>
-        <entry key="defaultGroup" value="group" />
+        <entry key="defaultGroup" value="group0" />
       </map>
     </property>
     <!--
@@ -565,7 +565,7 @@ public class AssetClient {
     client = bcosSDK.getClient();
     cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
     client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
-    logger.debug("create client for group1, account address is " + cryptoKeyPair.getAddress());
+    logger.debug("create client for group0, account address is " + cryptoKeyPair.getAddress());
   }
 
   public void deployAssetAndRecordAddr() {

@@ -9,7 +9,7 @@
 ### 1.1 基本介绍
 **全新适配FISCO BCOS 2.0+版本，如果使用FISCO BCOS 1.2或1.3版本请用[v1.2.1版本](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1)。**
 
-区块链浏览器将区块链中的数据可视化，并进行实时展示。方便用户以Web页面的方式，获取当前区块链中的信息。本浏览器版本适配[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS)，关于2.0+版本的特性可以参考此[链接](../introduction.md)。在使用本浏览器之前需要先理解2.0+版本的群组特性，详情可以参考此[链接](../faq/what_is_new.html#id2)。
+区块链浏览器将区块链中的数据可视化，并进行实时展示。方便用户以Web页面的方式，获取当前区块链中的信息。本浏览器版本适配[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)，关于2.0+版本的特性可以参考此[链接](../introduction.md)。在使用本浏览器之前需要先理解2.0+版本的群组特性，详情可以参考此[链接](../faq/what_is_new.html#id2)。
 
 ![](../../images/browser/overview.png)
 
@@ -39,7 +39,7 @@
 
 ### 2.1. 群组搭建
 
-区块链浏览器展示的数据是从区块链上同步下来的。为了同步数据需要初始化配置（添加群组信息和节点信息），故在同步数据展示前需要用户先搭建好区块链群组。[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS)提供了多种便捷的群组搭建方式。
+区块链浏览器展示的数据是从区块链上同步下来的。为了同步数据需要初始化配置（添加群组信息和节点信息），故在同步数据展示前需要用户先搭建好区块链群组。[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)提供了多种便捷的群组搭建方式。
 
 1. 如果是开发者进行开发调试，建议使用[开发部署工具 build_chain](../installation.md)。
 2. 如果是开发企业级应用，建议使用企业部署工具[运维部署工具 FISCO BCOS generator](../enterprise_tools/tutorial_one_click.md)。

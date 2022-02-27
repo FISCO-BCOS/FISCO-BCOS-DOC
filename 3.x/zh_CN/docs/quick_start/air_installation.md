@@ -41,7 +41,7 @@ sudo yum install -y curl openssl openssl-devel
 
 ```eval_rst
 .. note::
-   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
+   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```shell
@@ -49,10 +49,10 @@ sudo yum install -y curl openssl openssl-devel
 cd ~ && mkdir -p fisco && cd fisco
 
 # 下载建链脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc2/build_chain.sh && chmod u+x build_chain.sh
 
 # Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc2/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 第三步. 搭建4节点非国密联盟链
@@ -169,7 +169,7 @@ sudo yum install -y java java-devel
 ### 第二步. 下载控制台
 
 ```
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -217,7 +217,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc1)!
+Welcome to FISCO BCOS console(3.0.0-rc2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -237,14 +237,14 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```shell
 # 获取节点列表信息
-[group]: /> getGroupPeers
+[group0]: /> getGroupPeers
 peer0: 48fde62f1d2dc59a65bed2e3bb9bd199de26de6b9894e2201199726d6e9e98d090bb1d7e22c931b412728a832ffacdd2727b34fc808f5a755af6bc623c44aba6
 peer1: 8e510d66644a8a6caa7e031f097f604501bc42a3851b817f65a18eede0c539f2d011349d470da74cb84a3cf88dbd64a4cc18369fa09b17dac4eec9f65975ecc2
 peer2: 9d7ff3f0d3abd54054a99d17a6af27c839f8f7702a4335bdb502323c87a0d7978534a2479cfedb614e1548a869efe038fc49da442b5770aa52c0cc793ca13602
 peer3: f0ffa45cee35dcc1bcf1e1ef7b7c3d96590c25ba75198a28ef5ceb89dc6bec310619cb6850231018c8d5a5d698eaf1e5669118e17ea79379211bd332896aa56a
 
 # 获取共识节点列表信息
-[group]: /> getSealerList
+[group0]: /> getSealerList
 [
     Sealer{
         nodeID='9d7ff3f0d3abd54054a99d17a6af27c839f8f7702a4335bdb502323c87a0d7978534a2479cfedb614e1548a869efe038fc49da442b5770aa52c0cc793ca13602',
@@ -296,13 +296,13 @@ contract HelloWorld {
 
 ```shell
 # 在控制台输入以下指令 部署成功则返回合约地址
-[group]: /> deploy HelloWorld
+[group0]: /> deploy HelloWorld
 transaction hash: 0x796b573aece250bba891b9251b8fb464d22f41cb36e7cae407b2bd0a870f5b72
 contract address: 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1
 currentAccount: 0x7b047472a4516e9697446576f8c7fcc064f967fa
 
 # 查看当前块高
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 1
 ```
 
@@ -310,7 +310,7 @@ currentAccount: 0x7b047472a4516e9697446576f8c7fcc064f967fa
 
 ```shell
 # 调用get接口获取name变量，此处的合约地址是deploy指令返回的地址
-[group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
+[group0]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -322,11 +322,11 @@ Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 
 # 查看当前块高，块高不变，因为get接口不更改账本状态
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 1
 
 # 调用set方法设置name
-[group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set "Hello, FISCO BCOS"
+[group0]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set "Hello, FISCO BCOS"
 transaction hash: 0x2f7c85c2c59a76ccaad85d95b09497ad05ca7983c5ec79c8f9d102d1c8dddc30
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -342,11 +342,11 @@ Event logs
 Event: {}
 
 # 查看当前块高，因为set接口修改了账本状态，块高增加到2
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 2
 
 # 退出控制台
-[group]: /> exit
+[group0]: /> exit
 ```
 
 至此，我们完成了第一条FISCO-BCOS链的搭建、控制台的配置和使用，并部署和调用了第一个合约。关于**Pro版本FISCO BCOS的搭建、配置和使用请参考[这里](../tutorial/pro/index.md)。**

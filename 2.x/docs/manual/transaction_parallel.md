@@ -43,7 +43,7 @@ FISCO BCOS提供了**可并行合约开发框架**，开发者只需按照框架
 
 ### solidity合约并行框架
 
-编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。（ParallelContract.sol合约代码[GitHub源码](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol)、[Gitee源码](https://gitee.com/FISCO-BCOS/java-sdk-demo/blob/main/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol)）
+编写并行的solidity合约，开发流程与开发[普通的solidity合约的流程相同](./smart_contract.html#id1)。在基础上，只需要将[``` ParallelContract ```](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main-2.0/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol) 作为需要并行的合约的基类，并调用``` registerParallelFunction() ```，注册可以并行的接口即可。（ParallelContract.sol合约代码[GitHub源码](https://github.com/FISCO-BCOS/java-sdk-demo/blob/main-2.0/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol)、[Gitee源码](https://gitee.com/FISCO-BCOS/java-sdk-demo/blob/main-2.0/src/main/java/org/fisco/bcos/sdk/demo/contract/sol/ParallelContract.sol)）
 
 先给出完整的举例，例子中的ParallelOk合约实现了并行转账的功能
 

@@ -27,7 +27,7 @@
   "topics": [
     "0x91c95f04198617c60eaf2180fbca88fc192db379657df0e412a9f7dd4ebbe95d"
   ],
-  "groupID": "1",
+  "groupID": "group0",
   "filterID": "bb31e4ec086c48e18f21cb994e2e5967"
 }
 ```

@@ -210,7 +210,7 @@ Python-SDK的开发始于今年6月中旬，写出第一个可用版本只花了
 
 #### 参考资料
 
-- [FISCO BCOS官方控制台](https://github.com/FISCO-BCOS/console)
+- [FISCO BCOS官方控制台](https://github.com/FISCO-BCOS/console/tree/master-2.0)
 - [Python-SDK](https://github.com/FISCO-BCOS/python-sdk)
 - [Nodejs-SDK](https://github.com/FISCO-BCOS/nodejs-sdk)
 - [FISCO BCOS安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)

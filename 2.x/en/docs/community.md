@@ -4,7 +4,7 @@ FISCO BCOS, officially launched in December 2017, is the first China-developed o
 
 ## FISCO BCOS resources
 
-- [Github homepage](https://github.com/FISCO-BCOS/FISCO-BCOS)  
+- [Github homepage](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)  
 - [Technical documents](https://fisco-bcos-documentation.readthedocs.io)
 
 - [Inlightful articles](http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect) 

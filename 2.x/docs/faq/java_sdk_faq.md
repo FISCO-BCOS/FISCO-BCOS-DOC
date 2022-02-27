@@ -71,7 +71,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT')
 </dependency>
 ```
 
-基于 `Spring boot` 封装 `java sdk` 请参考: <https://github.com/FISCO-BCOS/spring-boot-crud>
+基于 `Spring boot` 封装 `java sdk` 请参考: <https://github.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0>
 
 ---------
 

@@ -15,7 +15,7 @@
     从 ``v1.0.9`` 开始，控制台不再支持 ``grantPermissionManager`` 命令，请使用 ``grantCommitteeMembers`` 和 ``grantOperator`` 等区块链委员权限管理相关的命令替代该命令。	
 ```
 
-[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
+[控制台](https://github.com/FISCO-BCOS/console/tree/master-2.0)是FISCO BCOS 2.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。
 
 ## 控制台配置与运行
 

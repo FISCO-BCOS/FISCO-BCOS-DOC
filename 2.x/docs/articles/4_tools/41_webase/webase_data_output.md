@@ -232,7 +232,7 @@ length.[contractName].[methodName or eventName].[paraName]=1024
 
 #### 链接指引
 
-- [区块链底层平台FISCO BCOS代码仓库](https://github.com/FISCO-BCOS/FISCO-BCOS)
+- [区块链底层平台FISCO BCOS代码仓库](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)
 
 - [FISCO BCOS技术文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)
 

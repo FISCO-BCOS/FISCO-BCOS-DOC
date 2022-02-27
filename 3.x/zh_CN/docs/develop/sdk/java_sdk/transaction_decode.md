@@ -23,7 +23,7 @@ FISCO BCOS的交易是一段发往区块链系统的请求数据，用于部署�
 // 初始化SDK
 BcosSDK sdk =  BcosSDK.build(configFile);
 // 发送群组group
-Client client = sdk.getClient("group");
+Client client = sdk.getClient("group0");
 // 获取当前群组对应的密码学接口
 CryptoSuite cryptoSuite = client.getCryptoSuite();
 // 构造TransactionDecoderService实例，传入是否密钥类型参数。并且传入是否使用scale解码

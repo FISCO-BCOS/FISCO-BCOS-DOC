@@ -111,7 +111,7 @@ release分支同样以PR的方式合入master分支。同时，release分支也�
 
 #### 参考资料
 
-[FISCO BCOS仓库](https://github.com/FISCO-BCOS/FISCO-BCOS)
+[FISCO BCOS仓库](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)
 
 [cyjseagull小姐姐的PR](https://github.com/FISCO-BCOS/FISCO-BCOS/pull/1316)
 
