@@ -78,14 +78,14 @@ node_name = "node2"
 # 扩容的区块链节点服务的部署IP
 deploy_ip = "172.25.0.5"
 # 扩容的区块链节点服务模板
-expanded_service = "groupnode00BcosNodeService"
+expanded_service = "group0node00BcosNodeService"
 # 扩容的节点数目
 node_count=1
 
 [[group.deploy_info]]
 node_name = "node3"
 deploy_ip = "172.25.0.5"
-expanded_service = "groupnode00BcosNodeService"
+expanded_service = "group0node00BcosNodeService"
 node_count=1
 ```
 
@@ -97,7 +97,7 @@ node_count=1
 cd ~/fisco/BcosProBuilder
 
 # 扩容并部署RPC服务
-python3 build_chain.py chain0 -o expand -t node
+python3 build_chain.py chain -o expand -t node
 ```
 
 执行上述命令后，当脚本输出`expand nodes for the given group success`时，则说明区块链节点服务扩容成功，详细日志输出如下：
@@ -106,29 +106,29 @@ python3 build_chain.py chain0 -o expand -t node
 =========================================================
 ----------- expand nodes for the given group -----------
 * reload node config
-* generate ini config, service: groupnode20BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService/config.ini.tmp
-* generate ini config for service: groupnode20BcosNodeService success
-* generate genesis config, service: groupnode20BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService/config.genesis.tmp
-* generate genesis config for service: groupnode20BcosNodeService success
+* generate ini config, service: group0node20BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node20BcosNodeService/config.ini.tmp
+* generate ini config for service: group0node20BcosNodeService success
+* generate genesis config, service: group0node20BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node20BcosNodeService/config.genesis.tmp
+* generate genesis config for service: group0node20BcosNodeService success
 * reload node config
-* generate ini config, service: groupnode30BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService/config.ini.tmp
-* generate ini config for service: groupnode30BcosNodeService success
-* generate genesis config, service: groupnode30BcosNodeService, path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService/config.genesis.tmp
-* generate genesis config for service: groupnode30BcosNodeService success
-* generate pem file for groupnode20BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.5/groupnode20BcosNodeService
+* generate ini config, service: group0node30BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node30BcosNodeService/config.ini.tmp
+* generate ini config for service: group0node30BcosNodeService success
+* generate genesis config, service: group0node30BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node30BcosNodeService/config.genesis.tmp
+* generate genesis config for service: group0node30BcosNodeService success
+* generate pem file for group0node20BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/group0node20BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-* generate pem file for groupnode30BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.5/groupnode30BcosNodeService
+* generate pem file for group0node30BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/group0node30BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-deploy service groupnode20BcosNodeService
-deploy service groupnode20BcosNodeService
-upload tar package generated/./groupnode20BcosNodeService.tgz success, config id: 22
-deploy service groupnode30BcosNodeService
-deploy service groupnode30BcosNodeService
-upload tar package generated/./groupnode30BcosNodeService.tgz success, config id: 23
+deploy service group0node20BcosNodeService
+deploy service group0node20BcosNodeService
+upload tar package generated/./group0node20BcosNodeService.tgz success, config id: 22
+deploy service group0node30BcosNodeService
+deploy service group0node30BcosNodeService
+upload tar package generated/./group0node30BcosNodeService.tgz success, config id: 23
 ----------- expand nodes for the given group success -----------
 =========================================================
 ```
@@ -138,12 +138,12 @@ upload tar package generated/./groupnode30BcosNodeService.tgz success, config id
 ```shell
 $ tree generated/chain0/group0/172.25.0.5
 generated/chain0/group0/172.25.0.5
-├── groupnode20BcosNodeService
+├── group0node20BcosNodeService
 │   ├── config.genesis.tmp
 │   ├── config.ini.tmp
 │   ├── node.nodeid
 │   └── node.pem
-└── groupnode30BcosNodeService
+└── group0node30BcosNodeService
     ├── config.genesis.tmp
     ├── config.ini.tmp
     ├── node.nodeid
@@ -151,7 +151,7 @@ generated/chain0/group0/172.25.0.5
 s
 ```
 
-区块链服务扩容成功后，可在tars网页管理平台看到新增的区块链服务`groupnode20BcosNodeService`和`groupnode30BcosNodeService`:
+区块链服务扩容成功后，可在tars网页管理平台看到新增的区块链服务`group0node20BcosNodeService`和`group0node30BcosNodeService`:
 
 ![](../../../images/tutorial/expand_node.png)
 

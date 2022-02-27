@@ -118,7 +118,7 @@ rpc_service_name = "agencyABcosRpcService"
 cd ~/fisco/BcosProBuilder
 
 # 扩容并部署RPC服务
-python3 build_chain.py chain0 -o expand -t rpc
+python3 build_chain.py chain -o expand -t rpc
 
 # 使用telnet探测RPC服务是否扩容成功
 telnet 127.0.0.1 10200
@@ -185,7 +185,7 @@ RPC服务扩容成功后，可在tars网页管理平台看到服务`agencyABcosR
 cd ~/fisco/BcosProBuilder
 
 # 扩容并部署RPC服务
-python3 build_chain.py chain0 -o expand -t gateway
+python3 build_chain.py chain -o expand -t gateway
 
 # 使用telnet探测RPC服务是否扩容成功
 telnet 127.0.0.1 40300

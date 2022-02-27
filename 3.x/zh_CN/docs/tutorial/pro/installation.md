@@ -208,7 +208,7 @@ sed -i 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ
 sed -i .bkp 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"/g' config.toml
 
 #部署并启动RPC服务
-python3 build_chain.py chain0 -o deploy -t rpc
+python3 build_chain.py chain -o deploy -t rpc
 ```
 
 执行上述命令后，当脚本输出`deploy service success, type: rpc`时，则说明RPC服务部署成功，详细日志输出如下：
@@ -309,7 +309,7 @@ RPC服务部署完成后，需要再部署Gateway服务，用于建立机构之�
 cd ~/fisco/BcosProBuilder
 
 # 部署并启动Gateway服务
-python3 build_chain.py chain0 -o deploy -t gateway
+python3 build_chain.py chain -o deploy -t gateway
 ```
 
 执行上述命令后，当脚本输出`deploy service success, type: gateway`时，则说明RPC服务部署成功，详细日志输出如下：
@@ -396,14 +396,14 @@ Gateway服务启动成功后，可在tars网页管理平台看到服务列表`ag
 
 ### 4.4 部署区块链节点服务
 
-RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，链ID均为`chain0`，群组ID均为`group0`。
+RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`group0node00BcosNodeService`和`group0node10BcosNodeService`，链ID均为`chain0`，群组ID均为`group0`。
 
 ```shell
 # 进入操作目录
 cd ~/fisco/BcosProBuilder
 
 # 部署并启动区块链节点服务
-python3 build_chain.py chain0 -o deploy -t node
+python3 build_chain.py chain -o deploy -t node
 ```
 执行上述命令后，当脚本输出`deploy all nodes of the given group success`时，则说明区块链节点服务部署成功，详细日志输出如下：
 
@@ -411,29 +411,29 @@ python3 build_chain.py chain0 -o deploy -t node
 =========================================================
 ----------- deploy all nodes of the given group -----------
 generate config for chain = chain0, group = group0
-* generate pem file for groupnode00BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.3/groupnode00BcosNodeService
+* generate pem file for group0node00BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-* generate pem file for groupnode10BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.3/groupnode10BcosNodeService
+* generate pem file for group0node10BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-* generate genesis config for groupnode00BcosNodeService
-	 path: generated/chain0/group0/172.25.0.3/groupnode00BcosNodeService/config.genesis.tmp
-* generate ini config for service groupnode00BcosNodeService
-	config path: generated/chain0/group0/172.25.0.3/groupnode00BcosNodeService/config.ini.tmp
-* generate genesis config for groupnode10BcosNodeService
-	 path: generated/chain0/group0/172.25.0.3/groupnode10BcosNodeService/config.genesis.tmp
-* generate ini config for service groupnode10BcosNodeService
-	config path: generated/chain0/group0/172.25.0.3/groupnode10BcosNodeService/config.ini.tmp
+* generate genesis config for group0node00BcosNodeService
+	 path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService/config.genesis.tmp
+* generate ini config for service group0node00BcosNodeService
+	config path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService/config.ini.tmp
+* generate genesis config for group0node10BcosNodeService
+	 path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService/config.genesis.tmp
+* generate ini config for service group0node10BcosNodeService
+	config path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService/config.ini.tmp
 deploy services for all the group nodes
-deploy service groupnode00BcosNodeService
-deploy service groupnode00BcosNodeService
-upload tar package generated/./groupnode00BcosNodeService.tgz success, config id: 16
-deploy service groupnode10BcosNodeService
-deploy service groupnode10BcosNodeService
-upload tar package generated/./groupnode10BcosNodeService.tgz success, config id: 17
+deploy service group0node00BcosNodeService
+deploy service group0node00BcosNodeService
+upload tar package generated/./group0node00BcosNodeService.tgz success, config id: 16
+deploy service group0node10BcosNodeService
+deploy service group0node10BcosNodeService
+upload tar package generated/./group0node10BcosNodeService.tgz success, config id: 17
 ----------- deploy all nodes of the given group success -----------
 =========================================================
 ```
@@ -444,12 +444,12 @@ $ tree generated/chain0
 generated/chain0
 └── group0
     └── 172.25.0.3
-        ├── groupnode00BcosNodeService
+        ├── group0node00BcosNodeService
         │   ├── config.genesis.tmp       # 创世块配置
         │   ├── config.ini.tmp           # 区块链节点配置
         │   ├── node.nodeid
         │   └── node.pem                 # 区块链节点服务签名私钥
-        └── groupnode10BcosNodeService
+        └── group0node10BcosNodeService
             ├── config.genesis.tmp
             ├── config.ini.tmp
             ├── node.nodeid
@@ -462,7 +462,7 @@ generated/chain0
    - 部署Pro版本区块链节点之前，请先确保您的tars服务是启动的状态，安装/启动和配置tars服务请参考3.2节
 ```
 
-区块链节点服务启动成功后，可在tars网页管理平台看到服务列表`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，且每个服务均是`active`的状态：
+区块链节点服务启动成功后，可在tars网页管理平台看到服务列表`group0node00BcosNodeService`和`group0node10BcosNodeService`，且每个服务均是`active`的状态：
 ![](../../../images/tutorial/chain_service.png)
 
 ## 5. 配置及使用控制台
@@ -512,7 +512,7 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```shell
 # 可通过命令 find . -name sdk找到所有SDK证书路径
-cp -r BcosProBuilder/generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
+cp -r BcosProBuilder/generated/rpc/chain/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
 ```
 
 **步骤3：启动并使用控制台**

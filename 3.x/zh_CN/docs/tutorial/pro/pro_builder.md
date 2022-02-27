@@ -255,12 +255,12 @@ rpc_service_name = "agencyABcosRpcService"
 - `[[group.deploy_info]].expanded_service`: 指定作为扩容模板的已有的区块链节点服务名，扩容时会从该区块链节点服务拉取配置文件，**若指定群组已经有多个区块链节点服务，从中随机选取一个服务作为`expanded_service`即可**。
 - `[[group.deploy_info]].node_count`: 扩容的区块链节点数目。
 
-以群组ID为`group`的区块链节点服务`groupnode00BcosNodeService`为模板，扩容节点名为`node3`的区块链节点服务到`172.25.0.5`的配置示例如下：
+以群组ID为`group`的区块链节点服务`group0node00BcosNodeService`为模板，扩容节点名为`node3`的区块链节点服务到`172.25.0.5`的配置示例如下：
 ```toml
 [[group.deploy_info]]
 node_name = "node3"
 deploy_ip = "172.25.0.5"
-expanded_service = "groupnode00BcosNodeService"
+expanded_service = "group0node00BcosNodeService"
 node_count=1
 ```
 
@@ -282,12 +282,12 @@ optional arguments:
   -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
 
 ----------- help for subcommand 'chain' -----------
-usage: build_chain.py chain0 [-h] -o OP [-c CONFIG] [-t TYPE]
+usage: build_chain.py chain [-h] -o OP [-c CONFIG] [-t TYPE]
 
 e.g:
-* deploy node: python3 build_chain.py chain0 -o deploy -t node
-* deploy rpc: python3 build_chain.py chain0 -o deploy -t rpc
-* deploy gateway: python3 build_chain.py chain0 -o deploy -t gateway
+* deploy node: python3 build_chain.py chain -o deploy -t node
+* deploy rpc: python3 build_chain.py chain -o deploy -t rpc
+* deploy gateway: python3 build_chain.py chain -o deploy -t gateway
 
 optional arguments:
   -h, --help            show this help message and exit

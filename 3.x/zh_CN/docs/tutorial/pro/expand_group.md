@@ -119,7 +119,7 @@ gateway_service_name = "agencyBBcosGatewayService"
 cd ~/fisco/BcosProBuilder
 
 # 部署新群组
-python3 build_chain.py chain0 -o deploy -t node
+python3 build_chain.py chain -o deploy -t node
 ```
 
 执行上述命令后，当脚本输出`deploy all nodes of the given group success`时，则说明区块链节点扩容新群组成功，详细日志输出如下：
@@ -330,7 +330,7 @@ Return values:(Hello, Fisco)
 cd ~/fisco/BcosProBuilder
 
 # 下线群组group2: 须保证config.toml是群组group2扩容时使用的配置文件
-python3 build_chain.py chain0 -o undeploy -t node
+python3 build_chain.py chain -o undeploy -t node
 ```
 
 执行上述命令后，当脚本输出`undeploy all nodes of the given group success`时，则说明区块链节点下线新群组成功，详细日志输出如下：

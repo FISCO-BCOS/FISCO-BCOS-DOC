@@ -14,12 +14,12 @@ generated/
 ├── chain # 链
 │   ├── group # 群组
 │   │   ├── 10.39.190.60 # 本机的eth0 ip地址
-│   │   │   ├── groupnode00BcosNodeService # NodeService 00
+│   │   │   ├── group0node00BcosNodeService # NodeService 00
 │   │   │   │   ├── config.genesis.tmp # 创世块配置文件
 │   │   │   │   ├── config.ini.tmp # 配置文件
 │   │   │   │   ├── node.nodeid # 节点id
 │   │   │   │   ├── node.pem # 节点pem格式私钥
-│   │   │   ├── groupnode10BcosNodeService # # NodeService 10
+│   │   │   ├── group0node10BcosNodeService # # NodeService 10
 │   │   │   │.....
 ├── gateway # 网关
 │   ├── chain # 链
