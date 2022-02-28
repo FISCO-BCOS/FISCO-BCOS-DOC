@@ -17,17 +17,13 @@ FISCO BCOS开源社区“集市”历经四载共建，逐渐发展壮大，孕�
 下面，让我们一起来认识这些技术的践行者、社区的布道者。
 
 **2021年首批MVP**
-![HmVJIg1N3IWhqSKNl6sU9A 1](https://user-images.githubusercontent.com/93572056/154943706-ea874249-63ff-496e-a937-d6494b08a89f.png)
-![5PA6L0y57y66w5ykNm6KEA 1](https://user-images.githubusercontent.com/93572056/154943834-eb21629b-bd39-4d5c-bac1-d251529e09d5.png)
-![0VQAKgIEoS3Mu1MnTWnZAQ 1](https://user-images.githubusercontent.com/93572056/154943855-66d90863-7305-408a-8271-de4667ef268e.png)
-
-
-
+![](https://user-images.githubusercontent.com/93572056/154943706-ea874249-63ff-496e-a937-d6494b08a89f.png)
+![](https://user-images.githubusercontent.com/93572056/154943834-eb21629b-bd39-4d5c-bac1-d251529e09d5.png)
+![](https://user-images.githubusercontent.com/93572056/154943855-66d90863-7305-408a-8271-de4667ef268e.png)
 
 **2021年第二批MVP**
-![tSGXZ8gvkybtv1DLTIhawA 1](https://user-images.githubusercontent.com/93572056/154944202-7a7325b2-a584-4f5e-aa9c-bf103f3a4d93.png)
-![zOnKyilujT7YL9W0mm9ImA 1](https://user-images.githubusercontent.com/93572056/154944228-af5167d5-68e4-4167-a0fc-e5ee5d65454e.png)
-
+![](https://user-images.githubusercontent.com/93572056/154944202-7a7325b2-a584-4f5e-aa9c-bf103f3a4d93.png)
+![](https://user-images.githubusercontent.com/93572056/154944228-af5167d5-68e4-4167-a0fc-e5ee5d65454e.png)
 
 **推荐阅读**:
 
