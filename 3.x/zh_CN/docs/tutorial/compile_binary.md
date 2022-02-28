@@ -26,7 +26,7 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 要求使用Ubuntu 18.04及以上版本。
 
 ```shell
-sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev
+sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev wget
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -39,7 +39,7 @@ source $HOME/.cargo/env
 
 ```shell
 sudo yum install -y epel-release centos-release-scl
-sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel python-devel python3-devel git flex bison devtoolset-7
+sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel wget  python-devel python3-devel git flex bison devtoolset-7
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -52,7 +52,7 @@ source $HOME/.cargo/env
 # 安装xcode开发工具，若已经安装可略过
 xcode-select --install
 
-brew install git zstd
+brew install git zstd wget
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 source $HOME/.cargo/env

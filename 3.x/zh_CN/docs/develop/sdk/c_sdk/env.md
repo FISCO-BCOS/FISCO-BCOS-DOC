@@ -14,13 +14,13 @@
 **依赖安装:**
 
 - `CentOS`:
-  `yum install -y epel-release centos-release-scl openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7`
+  `yum install -y epel-release centos-release-scl openssl-devel openssl cmake3 gcc-c++ git flex patch bison gmp-static devtoolset-7 wget`
   
 - `Ubuntu`:
-  `apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev zlib1g-dev automake libtool`
+  `apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev zlib1g-dev automake libtool wget`
   
 - `macOs`:
-  `brew install openssl git flex bison gmp`
+  `brew install wget openssl git flex bison gmp`
   
 - `Windows`:
   - [Visual Studio 2017](https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes)
