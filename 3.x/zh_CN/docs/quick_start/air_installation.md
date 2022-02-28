@@ -21,20 +21,20 @@
 **安装macOS依赖**
 
 ```shell
-brew install curl openssl
+brew install curl openssl wget
 ```
 
 **安装ubuntu依赖**
 
 ```shell
-sudo apt install -y curl openssl
+sudo apt install -y curl openssl wget
 
 ```
 
 **安装centos依赖**
 
 ```shell
-sudo yum install -y curl openssl openssl-devel
+sudo yum install -y curl openssl openssl-devel wget
 ```
 
 ### 第二步. 创建操作目录，下载安装脚本
