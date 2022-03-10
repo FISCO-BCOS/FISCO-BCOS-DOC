@@ -457,38 +457,31 @@ services:
 **host模式下，tarsFramework的docker-compose配置如下**：
 
 ```yml
-version: "2"
-services:     
+version: "3"
+services:
   tars-mysql:
     image: mysql:5.6
     network_mode: "host"
-    ports:
-      - "3310:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ""
+      MYSQL_TCP_PORT: 3310
     restart: always
     volumes:
       - ~/app/tars/framework-mysql:/var/lib/mysql
-      - /etc/localtime:/etc/localtime 
+      - /etc/localtime:/etc/localtime
 
   tars-framework:
     image: tarscloud/framework:v3.0.1
     network_mode: "host"
-    # 3000 is the tarsWeb port
-    ports:
-      - "3000:3000"
-      - "3001:3001"
-      - "20200-20205:20200-20205"
-      - "30300-30305:30300-30305"
     environment:
       MYSQL_HOST: "172.25.0.2"
       MYSQL_ROOT_PASSWORD: ""
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3310
       REBUILD: "false"
       INET: eth0
       SLAVE: "false"
     restart: always
-    volumes: 
+    volumes:
       - ~/app/tars/framework:/data/tars
       - /etc/localtime:/etc/localtime
     depends_on:
@@ -499,15 +492,11 @@ services:
 **host模式下，tarsnode的docker-compose配置如下**：
 
 ```yml
-version: "2"
+version: "3"
 services:
   tars-node:
     image: tarscloud/tars-node:latest
     network_mode: "host"
-    ports:
-      - "10200-10205:10200-10205"
-      - "40300-40305:40300-40305"
-      - "9000-9010:9000-9010"
     environment:
       INET: eth0
       WEB_HOST: "http://172.25.0.3:3000"
@@ -515,5 +504,4 @@ services:
     volumes:
       - ~/app/tars:/data/tars
       - /etc/localtime:/etc/localtime
-
 ```
