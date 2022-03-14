@@ -23,25 +23,30 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### sendTransaction
 
 发送交易到区块链RPC。
+
 **参数**
 
 - node：可让RPC发送请求到指定节点
 - signedTransactionData：签名后的交易
 - withProof：返回是否带上默克尔树证明
-  **返回值**
-- BcosTransactionReceipt: 节点收到交易后，回复给SDK的回包，包括交易哈希信息。
+  
+**返回值**
 
+- BcosTransactionReceipt: 节点收到交易后，回复给SDK的回包，包括交易哈希信息。
 
 ### sendTransactionAsync
 
 交易发布异步接口, 收到节点的响应之后，调用指定的callback。
+
 **参数**
 
 - node：可让RPC发送请求到指定节点
 - signedTransactionData: 签名后的交易字符串;
 - withProof：返回是否带上默克尔树证明
 - callback: SDK收到节点的回包后，调用的回调函数，回调函数时将会带上交易回执。
-  **返回值**
+
+**返回值**
+
 - 无
 
 ### call
@@ -57,6 +62,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### callAsync
 
 合约常量接口异步调用，接收到节点返回的合约接口执行结果后，执行指定的回调函数
+
 **参数**
 
 - node：可让RPC发送请求到指定节点
@@ -208,11 +214,14 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### getBlockHashByNumber
 
 根据区块高度获取区块哈希
+
 **参数**
 
 - node：可让RPC发送请求到指定节点
 - blockNumber: 区块高度
-  **返回值**
+
+**返回值**
+
 - BlockHash: 指定区块高度对应的区块哈希
 
 ### getBlockHashByNumberAsync
@@ -229,16 +238,18 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 - 无
 
-
 ### getTransactionByHash
 
 根据交易哈希获取交易信息。
+
 **参数**
 
 - node：可让RPC发送请求到指定节点
 - transactionHash: 交易哈希
 - withProof：是否带上默克尔树证明
-  **返回值**
+
+**返回值**
+
 - BcosTransaction: 指定哈希对应的交易信息。
 
 ### getTransactionByHashAsync
@@ -289,10 +300,13 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### getPendingTxSize
 
 获取交易池内未处理的交易数目。
+
 **参数**
 
 - node：可让RPC发送请求到指定节点
-  **返回值**
+
+**返回值**
+
 - PendingTxSize: 交易池内未处理的交易数目。
 
 ### getPendingTxSizeAsync
@@ -379,7 +393,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - node：可让RPC发送请求到指定节点
 - key: 系统配置项，目前包括`tx_count_limit`, `consensus_leader_period`.
 
-**返回值****
+**返回值**
 
 - SystemConfig: 系统配置项的值。
 
@@ -503,6 +517,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### getGroupInfo
 
 查询当前群组的状态信息。
+
 **参数**
 
 - 无
@@ -526,6 +541,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### getGroupList
 
 获取当前节点的群组列表。
+
 **参数**
 
 - 无
@@ -544,7 +560,6 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 - 无
 
-
 ### getGroupPeers
 
 获取当前节点指定群组连接的节点列表。
@@ -552,7 +567,9 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 **参数**
 
 - 无
-  **返回值**
+
+**返回值**
+
 - GroupPeers: 指定群组连接的节点列表。
 
 ### getGroupPeersAsync
@@ -570,10 +587,13 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### getGroupInfoList
 
 获取当前节点群组信息列表。
+
 **参数**
 
 - 无
-  **返回值**
+
+**返回值**
+
 - BcosGroupInfoList: 当前节点群组信息列表。
 
 ### getGroupInfoListAsync
@@ -770,8 +790,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **返回值**
 
-- 无      
-
+- 无
 
 ### 5.5 CNSService
 
