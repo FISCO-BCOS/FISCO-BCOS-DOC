@@ -1,6 +1,6 @@
 # Java SDK
 
-[Java SDK](https://github.com/FISCO-BCOS/java-sdk) provides the Java API for FISCO BCOS client. You can easily and efficiently build your blockchain applications. The version only supports FISCO BCOS 2.0+. 
+[Java SDK](https://github.com/FISCO-BCOS/java-sdk/tree/master-2.0) provides the Java API for FISCO BCOS client. You can easily and efficiently build your blockchain applications. The version only supports FISCO BCOS 2.0+. 
 
 
 

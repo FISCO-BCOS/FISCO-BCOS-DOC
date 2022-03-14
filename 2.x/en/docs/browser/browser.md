@@ -5,7 +5,7 @@
 ### 1.1 Introduction
 **This blockchain browser is compatible with FISCO BCOS 2.0.0. FISCO BCOS 1.2 or 1.3 users please check [v1.2.1](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1).**
 
-Blockchain browser is capable of blockchain visualization and real-time presentation. Users can get the information of the blockchain through web pages. This browser is only compatible with [FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS). You can learn the newest features in [here](../introduction.md). Before using this browser,  you may need to learn the [groups feature](../faq/what_is_new.html#id2) of FISCO BCOS 2.0+.
+Blockchain browser is capable of blockchain visualization and real-time presentation. Users can get the information of the blockchain through web pages. This browser is only compatible with [FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0). You can learn the newest features in [here](../introduction.md). Before using this browser,  you may need to learn the [groups feature](../faq/what_is_new.html#id2) of FISCO BCOS 2.0+.
 
 
 ![](../../images/browser/overview.png)
@@ -37,7 +37,7 @@ Blockchain browser demonstrates the detail information of specific group on the 
 
 ### 2.1 Group building
 
-Data shown in the blockchain browser is synchronized with blockchain. To synchronize data, initialization configuration (adding group information and node information) is needed. So users have to run a FISCO BCOS instance and build groups before data synchronizing. [FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS) has provided multiple convenient group building methods.
+Data shown in the blockchain browser is synchronized with blockchain. To synchronize data, initialization configuration (adding group information and node information) is needed. So users have to run a FISCO BCOS instance and build groups before data synchronizing. [FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0) has provided multiple convenient group building methods.
 
 1. For developers to experience and debug quickly, we recommend the script [build_chain](../installation.md).
 2. For enterprise applications,  [FISCO BCOS generator](../enterprise_tools/tutorial_one_click.md) is a  more considerable deployment tool.

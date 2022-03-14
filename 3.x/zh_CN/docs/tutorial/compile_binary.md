@@ -26,7 +26,7 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 要求使用Ubuntu 18.04及以上版本。
 
 ```shell
-sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev
+sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev wget
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -39,7 +39,7 @@ source $HOME/.cargo/env
 
 ```shell
 sudo yum install -y epel-release centos-release-scl
-sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel python-devel python3-devel git flex bison devtoolset-7
+sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel wget  python-devel python3-devel git flex bison devtoolset-7
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -52,7 +52,7 @@ source $HOME/.cargo/env
 # 安装xcode开发工具，若已经安装可略过
 xcode-select --install
 
-brew install git zstd
+brew install git zstd wget
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 source $HOME/.cargo/env
@@ -88,11 +88,11 @@ cd FISCO-BCOS
 
 - **使用GitHub镜像（推荐）**
   
-执行如下命令使用`github.com.cnpmjs.org`或者`hub.fastgit.org`替代`github.com`加速依赖下载：
+执行如下命令使用`https://ghproxy.com/https://github.com/`替代`https://github.com/`加速依赖下载：
 
 ```shell
 $ cat > ~/.gitconfig << EOF
-[url "https://github.com.cnpmjs.org/"]
+[url "https://ghproxy.com/https://github.com/"]
         insteadOf = https://github.com/
 [http]
         sslVerify = false
@@ -116,10 +116,10 @@ mkdir -p build && cd build
 cmake ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake .. -DHUNTER_JOBS_NUMBER=2
+cmake .. -DHUNTER_JOBS_NUMBER=2 -DBUILD_STATIC=ON
 
 # 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug
+cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug -DBUILD_STATIC=ON
 
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
 make -j2

@@ -320,7 +320,7 @@ The core function of SDK is to deploy/load contract, and to call API of contract
     Type result = contract.someMethod(<param1>, ...).send(); 
 ```
 ### Guide for Spring Boot development
-We provide [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter) as an example. Spring Boot and Spring are similar in development process, except the distinction in config file. Here we will provide some test examples. For detail description on the projects please check the README documents.
+We provide [spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0) as an example. Spring Boot and Spring are similar in development process, except the distinction in config file. Here we will provide some test examples. For detail description on the projects please check the README documents.
 
 ### Operations on OSCCA function of SDK
 - Preconditions: FISCO BCOS blockchain in OSCCA standard, to build it using OSCCA algorithm, please check [the operation tutorial](../../manual/guomi_crypto.md).

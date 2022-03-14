@@ -84,7 +84,7 @@
 
 ```shell
 [network]   
-    defaultGroup="group"                            # Console default group to connect
+    defaultGroup="group0"                            # Console default group to connect
 ```
 
 节点的群组id,查看节点配置文件`config.ini`:
@@ -93,7 +93,7 @@
 // config.ini
 [chain]
     ; the group id, should never be changed
-    group_id=group
+    group_id=group0
 ```
 
 确保控制台使用的群组id与节点的群组id对应。

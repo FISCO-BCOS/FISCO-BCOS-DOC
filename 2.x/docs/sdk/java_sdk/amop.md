@@ -333,7 +333,7 @@ amop.stop()
 
 ## 3. 示例
 
-更多的示例请看[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/main/java/org/fisco/bcos/sdk/demo/amop/tool``下的代码示范，链接：[java-sdk-demo GitHub链接](https://github.com/FISCO-BCOS/java-sdk-demo)，[java-sdk-demo Gitee链接](https://gitee.com/FISCO-BCOS/java-sdk-demo)。
+更多的示例请看[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)项目源码``java-sdk-demo/src/main/java/org/fisco/bcos/sdk/demo/amop/tool``下的代码示范，链接：[java-sdk-demo GitHub链接](https://github.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)，[java-sdk-demo Gitee链接](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0/)。
 
 * 普通话题代码示例：
 
@@ -373,7 +373,7 @@ amop.stop()
 
   Java SDK支持动态订阅话题。也可以在配置文件中配置固定的私有话题。
 
-  订阅者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/resources/amop/config-subscriber-for-test.toml``
+  订阅者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)项目源码``java-sdk-demo/src/resources/amop/config-subscriber-for-test.toml``
 
   ```toml
   [network]
@@ -390,7 +390,7 @@ amop.stop()
 
   注意，订阅方通过这种方法配置的话题，需要在程序中设定一个默认的回调函数，否则，接收消息时会因为找不到回调函数而报错。
 
-  发送者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)项目源码``java-sdk-demo/src/resources/amop/config-publisher-for-test.toml``
+  发送者配置例子：[java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)项目源码``java-sdk-demo/src/resources/amop/config-publisher-for-test.toml``
 
   ```toml
   [network]

@@ -53,7 +53,7 @@ Java SDK主要包括五个配置选项，分别是
 
 ```shell
 ├── lib
-│   ├── fisco-bcos-java-sdk-3.0.0-rc1.jar
+│   ├── fisco-bcos-java-sdk-3.0.0-rc2.jar
 │   └── XXXXX.jar
 ├── conf
 │   ├── applicationContext.xml
@@ -143,7 +143,7 @@ SDK与节点间的网络配置示例如下：
 ```toml
 [network]
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
-defaultGroup = "group"
+defaultGroup = "group0"
 ```
 
 ### 账户配置
@@ -239,7 +239,7 @@ useSMCrypto = "false"                       # RPC SM crypto type
 
 [network]
 messageTimeout = "10000"
-defaultGroup="group"                            # Console default group to connect
+defaultGroup="group0"                            # Console default group to connect
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
 
 [account]
@@ -284,7 +284,7 @@ cryptoMaterial.useSMCrypto=false
 
 
 # The peer list to connect
-network.defaultGroup=group 
+network.defaultGroup=group0 
 network.peers[0]=127.0.0.1:20200
 network.peers[0]=127.0.0.1:21200
 
@@ -386,7 +386,7 @@ cryptoMaterial:
 #  enSslKey: "conf/sm_ensdk.key"
 
 network:
-  defaultGroup: "group"
+  defaultGroup: "group0"
   peers:
     - "127.0.0.1:20201"
     - "127.0.0.1:20200"
@@ -484,7 +484,7 @@ public class FiscoBcos {
                         <value>127.0.0.1:20201</value>
                     </list>
                 </entry>
-                <entry key="defaultGroup" value="group" />
+                <entry key="defaultGroup" value="group0" />
             </map>
         </property>
         <property name="account">

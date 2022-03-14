@@ -4,7 +4,7 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 
 ## FISCO BCOS社区资源
 
-- [Github主页](https://github.com/FISCO-BCOS/FISCO-BCOS)  
+- [Github主页](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)  
 - [技术文档](https://fisco-bcos-documentation.readthedocs.io)
 
 - [深度解析系列文章](http://mp.weixin.qq.com/mp/homepage?__biz=MzA3MTI5Njg4Mw==&hid=2&sn=4f6d7251fbc4a73ed600e1d6fd61efc1&scene=18#wechat_redirect) 
@@ -16,7 +16,7 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 
 ![](../_static/images/products.jpeg)
 
-- **FISCO BCOS企业级金融联盟链底层平台**: [GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS) 、[Gitee](https://gitee.com/FISCO-BCOS) 、 [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html) 
+- **FISCO BCOS企业级金融联盟链底层平台**: [GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0) 、[Gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0) 、 [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html) 
 - **WeBASE 区块链中间件平台**：[GitHub](https://github.com/WeBankFinTech/WeBASE) 、 [Gitee](https://gitee.com/WeBank/WeBASE) 、  [文档](https://webasedoc.readthedocs.io/) 
 - **WeIdentity 基于区块链的实体身份标识及可信数据交换解决方案**: [GitHub](https://github.com/WeBankFinTech/WeIdentity) 、 [Gitee](https://gitee.com/WeBank/WeIdentity) 、 [文档](https://weidentity.readthedocs.io/) 
 - **WeDPR 即时可用，场景式隐私保护高效解决方案套件和服务**：[GitHub](https://github.com/WeBankBlockchain/WeDPR-Lab-Core) 、 [Gitee](https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto) 、 [文档](https://wedpr-lab.readthedocs.io/) 

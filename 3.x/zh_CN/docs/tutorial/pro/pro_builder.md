@@ -38,15 +38,15 @@ tars_pkg_dir = ""
 
 链配置项位于配置`[chain]`中，主要包括：
 
-- `chain_id`: 区块链服务所属的链的ID，默认为`chain`，**不能包括除字母和数字之外的所有特殊字符**。
+- `chain_id`: 区块链服务所属的链的ID，默认为`chain0`，**不能包括除字母和数字之外的所有特殊字符**。
 - `rpc_sm_ssl`: RPC服务与SDK客户端之间采用的SSL连接类型，若设置为`false`，表明采用RSA加密连接；若设置为`true`，表明采用国密SSL连接，默认为`false`。
 - `gateway_sm_ssl`: Gateway服务之间的SSL连接类型，设置为`false`表明采用RSA加密连接；设置为`true`表明采用国密SSL连接，默认为`false`
 
-链ID为`chain`, RPC与SDK之间、Gateway服务之间均采用RSA加密连接的配置项如下：
+链ID为`chain0`, RPC与SDK之间、Gateway服务之间均采用RSA加密连接的配置项如下：
 
 ```shell
 [chain]
-chain_id="chain"
+chain_id="chain0"
 rpc_sm_ssl=false
 gateway_sm_ssl=false
 ```
@@ -138,7 +138,7 @@ FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组
 ```toml
 [group]
 # 群组ID
-group_id="group"
+group_id="group0"
 # 虚拟机类型
 vm_type="evm"
 # 是否时国密账本
@@ -198,9 +198,9 @@ FISCO BCOS Pro版本区块链中，一个RPC服务可包含多个RPC服务节点
 
 ```toml
 [chain]
-chain_id="chain"
+chain_id="chain0"
 rpc_sm_ssl=false
-rpc_ca_cert_path="generated/rpc/chain/ca"
+rpc_ca_cert_path="generated/rpc/chain0/ca"
 
 [[chain.rpc]]
 name="agencyABcosRpcService"
@@ -231,9 +231,9 @@ gateway_service_name = "agencyABcosGatewayService"
 
 ```toml
 [chain]
-chain_id="chain"
+chain_id="chain0"
 gateway_sm_ssl=false
-gateway_ca_cert_path="generated/gateway/chain/ca"
+gateway_ca_cert_path="generated/gateway/chain0/ca"
 
 [[chain.gateway]]
 name="agencyABcosGatewayService"
@@ -255,12 +255,12 @@ rpc_service_name = "agencyABcosRpcService"
 - `[[group.deploy_info]].expanded_service`: 指定作为扩容模板的已有的区块链节点服务名，扩容时会从该区块链节点服务拉取配置文件，**若指定群组已经有多个区块链节点服务，从中随机选取一个服务作为`expanded_service`即可**。
 - `[[group.deploy_info]].node_count`: 扩容的区块链节点数目。
 
-以群组ID为`group`的区块链节点服务`groupnode00BcosNodeService`为模板，扩容节点名为`node3`的区块链节点服务到`172.25.0.5`的配置示例如下：
+以群组ID为`group`的区块链节点服务`group0node00BcosNodeService`为模板，扩容节点名为`node3`的区块链节点服务到`172.25.0.5`的配置示例如下：
 ```toml
 [[group.deploy_info]]
 node_name = "node3"
 deploy_ip = "172.25.0.5"
-expanded_service = "groupnode00BcosNodeService"
+expanded_service = "group0node00BcosNodeService"
 node_count=1
 ```
 
@@ -278,7 +278,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -t TYPE, --type TYPE  [Optional] Specify the source of the download, support cdn,git now, default type is git
   -v VERSION, --version VERSION
-                        [Optional] Specify the version of the binary, default is v3.0.0-rc1
+                        [Optional] Specify the version of the binary, default is v3.0.0-rc2
   -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
 
 ----------- help for subcommand 'chain' -----------
@@ -457,38 +457,31 @@ services:
 **host模式下，tarsFramework的docker-compose配置如下**：
 
 ```yml
-version: "2"
-services:     
+version: "3"
+services:
   tars-mysql:
     image: mysql:5.6
     network_mode: "host"
-    ports:
-      - "3310:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ""
+      MYSQL_TCP_PORT: 3310
     restart: always
     volumes:
       - ~/app/tars/framework-mysql:/var/lib/mysql
-      - /etc/localtime:/etc/localtime 
+      - /etc/localtime:/etc/localtime
 
   tars-framework:
     image: tarscloud/framework:v3.0.1
     network_mode: "host"
-    # 3000 is the tarsWeb port
-    ports:
-      - "3000:3000"
-      - "3001:3001"
-      - "20200-20205:20200-20205"
-      - "30300-30305:30300-30305"
     environment:
       MYSQL_HOST: "172.25.0.2"
       MYSQL_ROOT_PASSWORD: ""
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3310
       REBUILD: "false"
       INET: eth0
       SLAVE: "false"
     restart: always
-    volumes: 
+    volumes:
       - ~/app/tars/framework:/data/tars
       - /etc/localtime:/etc/localtime
     depends_on:
@@ -499,15 +492,11 @@ services:
 **host模式下，tarsnode的docker-compose配置如下**：
 
 ```yml
-version: "2"
+version: "3"
 services:
   tars-node:
     image: tarscloud/tars-node:latest
     network_mode: "host"
-    ports:
-      - "10200-10205:10200-10205"
-      - "40300-40305:40300-40305"
-      - "9000-9010:9000-9010"
     environment:
       INET: eth0
       WEB_HOST: "http://172.25.0.3:3000"
@@ -515,5 +504,4 @@ services:
     volumes:
       - ~/app/tars:/data/tars
       - /etc/localtime:/etc/localtime
-
 ```

@@ -21,19 +21,19 @@ FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 
 ```shell
 sudo apt-get update
-sudo apt-get install -y curl docker.io docker-compose python3
+sudo apt-get install -y curl docker.io docker-compose python3 wget
 ```
 
 **安装CentOS依赖(版本不小于CentOS 7)**
 
 ```shell
-sudo yum install -y curl docker docker-compose python3 python3-devel
+sudo yum install -y curl docker docker-compose python3 python3-devel wget
 ```
 
 **安装macOS依赖**
 
 ```shell
-brew install curl docker docker-compose python3
+brew install curl docker docker-compose python3 wget
 ```
 
 ## 2. 下载Pro版区块链构建工具BcosBuilder
@@ -41,7 +41,7 @@ brew install curl docker docker-compose python3
 ```eval_rst
 .. note::
    - 部署工具 ``BcosProBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
-   - 若从github下载部署工具 ``BcosProBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+   - 若从github下载部署工具 ``BcosProBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc2/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 ```
 
 ```shell
@@ -49,10 +49,10 @@ brew install curl docker docker-compose python3
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc2/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc1/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc2/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosProBuilder && pip3 install -r requirements.txt
@@ -220,28 +220,28 @@ python3 build_chain.py chain -o deploy -t rpc
 ----------- generate service config -----------
 * generate service config for 172.25.0.3 : agencyABcosRpcService
 * generate config for the rpc service
-* generate generated/rpc/chain/172.25.0.3/agencyABcosRpcService/config.ini.tmp
-* generate cert, output path: generated/rpc/chain/172.25.0.3/agencyABcosRpcService
-* generate sdk cert, output path: generated/rpc/chain/172.25.0.3/agencyABcosRpcService
+* generate generated/rpc/chain0/172.25.0.3/agencyABcosRpcService/config.ini.tmp
+* generate cert, output path: generated/rpc/chain0/172.25.0.3/agencyABcosRpcService
+* generate sdk cert, output path: generated/rpc/chain0/172.25.0.3/agencyABcosRpcService
 * generate config for the rpc service success
 gen configuration for service agencyABcosRpcService success
 * generate service config for 172.25.0.3 : agencyBBcosRpcService
 * generate config for the rpc service
-* generate generated/rpc/chain/172.25.0.3/agencyBBcosRpcService/config.ini.tmp
-* generate cert, output path: generated/rpc/chain/172.25.0.3/agencyBBcosRpcService
-* generate sdk cert, output path: generated/rpc/chain/172.25.0.3/agencyBBcosRpcService
+* generate generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/config.ini.tmp
+* generate cert, output path: generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService
+* generate sdk cert, output path: generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService
 * generate config for the rpc service success
 gen configuration for service agencyBBcosRpcService success
 ----------- generate service config success -----------
 =========================================================
-deploy_service to 172.25.0.3, app: chain, name: agencyABcosRpcService
+deploy_service to 172.25.0.3, app: chain0, name: agencyABcosRpcService
 deploy service agencyABcosRpcService
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: ca.crt
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: ssl.key
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: ssl.crt
 * add config for service agencyABcosRpcService, node: 172.25.0.3, config: config.ini
 upload tar package generated/./agencyABcosRpcService.tgz success, config id: 14
-deploy_service to 172.25.0.3, app: chain, name: agencyBBcosRpcService
+deploy_service to 172.25.0.3, app: chain0, name: agencyBBcosRpcService
 deploy service agencyBBcosRpcService
 * add config for service agencyBBcosRpcService, node: 172.25.0.3, config: ca.crt
 * add config for service agencyBBcosRpcService, node: 172.25.0.3, config: ssl.key
@@ -255,8 +255,8 @@ upload tar package generated/./agencyBBcosRpcService.tgz success, config id: 15
 部署过程中生成的RPC服务相关的配置位于`generated/rpc/${chainID}`目录，具体如下：
 
 ```shell
-$ tree generated/rpc/chain
-generated/rpc/chain
+$ tree generated/rpc/chain0
+generated/rpc/chain0
 ├── 172.25.0.3 
 │   ├── agencyABcosRpcService # 机构A的RPC服务目录
 │   │   ├── config.ini.tmp    # 机构A的RPC服务的配置文件
@@ -321,21 +321,21 @@ python3 build_chain.py chain -o deploy -t gateway
 ----------- generate service config -----------
 * generate service config for 172.25.0.3 : agencyABcosGatewayService
 * generate config for the gateway service
-* generate generated/gateway/chain/172.25.0.3/agencyABcosGatewayService/config.ini.tmp
-* generate cert, output path: generated/gateway/chain/172.25.0.3/agencyABcosGatewayService
-* generate gateway connection file: generated/gateway/chain/172.25.0.3/agencyABcosGatewayService/nodes.json.tmp
+* generate generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/config.ini.tmp
+* generate cert, output path: generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService
+* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/nodes.json.tmp
 * generate config for the gateway service success
 gen configuration for service agencyABcosGatewayService success
 * generate service config for 172.25.0.3 : agencyBBcosGatewayService
 * generate config for the gateway service
-* generate generated/gateway/chain/172.25.0.3/agencyBBcosGatewayService/config.ini.tmp
-* generate cert, output path: generated/gateway/chain/172.25.0.3/agencyBBcosGatewayService
-* generate gateway connection file: generated/gateway/chain/172.25.0.3/agencyBBcosGatewayService/nodes.json.tmp
+* generate generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/config.ini.tmp
+* generate cert, output path: generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService
+* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/nodes.json.tmp
 * generate config for the gateway service success
 gen configuration for service agencyBBcosGatewayService success
 ----------- generate service config success -----------
 =========================================================
-deploy_service to 172.25.0.3, app: chain, name: agencyABcosGatewayService
+deploy_service to 172.25.0.3, app: chain0, name: agencyABcosGatewayService
 deploy service agencyABcosGatewayService
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: nodes.json
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: ca.crt
@@ -343,7 +343,7 @@ deploy service agencyABcosGatewayService
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: ssl.crt
 * add config for service agencyABcosGatewayService, node: 172.25.0.3, config: config.ini
 upload tar package generated/./agencyABcosGatewayService.tgz success, config id: 14
-deploy_service to 172.25.0.3, app: chain, name: agencyBBcosGatewayService
+deploy_service to 172.25.0.3, app: chain0, name: agencyBBcosGatewayService
 deploy service agencyBBcosGatewayService
 * add config for service agencyBBcosGatewayService, node: 172.25.0.3, config: nodes.json
 * add config for service agencyBBcosGatewayService, node: 172.25.0.3, config: ca.crt
@@ -358,8 +358,8 @@ upload tar package generated/./agencyBBcosGatewayService.tgz success, config id:
 部署过程中生成的RPC服务相关的配置位于`generated/gateway/${chainID}`目录，具体如下：
 
 ```shell
-$ tree generated/gateway/chain
-generated/gateway/chain
+$ tree generated/gateway/chain0
+generated/gateway/chain0
 ├── 172.25.0.3
 │   ├── agencyABcosGatewayService # 机构A的Gateway服务配置路径
 │   │   ├── config.ini.tmp        # 机构A的Gateway配置文件
@@ -396,7 +396,7 @@ Gateway服务启动成功后，可在tars网页管理平台看到服务列表`ag
 
 ### 4.4 部署区块链节点服务
 
-RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，链ID均为`chain`，群组ID均为`group`。
+RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`group0node00BcosNodeService`和`group0node10BcosNodeService`，链ID均为`chain0`，群组ID均为`group0`。
 
 ```shell
 # 进入操作目录
@@ -410,46 +410,46 @@ python3 build_chain.py chain -o deploy -t node
 ```shell
 =========================================================
 ----------- deploy all nodes of the given group -----------
-generate config for chain = chain, group = group
-* generate pem file for groupnode00BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.3/groupnode00BcosNodeService
+generate config for chain = chain0, group = group0
+* generate pem file for group0node00BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-* generate pem file for groupnode10BcosNodeService
-	- pem_path: generated/chain/group/172.25.0.3/groupnode10BcosNodeService
+* generate pem file for group0node10BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-* generate genesis config for groupnode00BcosNodeService
-	 path: generated/chain/group/172.25.0.3/groupnode00BcosNodeService/config.genesis.tmp
-* generate ini config for service groupnode00BcosNodeService
-	config path: generated/chain/group/172.25.0.3/groupnode00BcosNodeService/config.ini.tmp
-* generate genesis config for groupnode10BcosNodeService
-	 path: generated/chain/group/172.25.0.3/groupnode10BcosNodeService/config.genesis.tmp
-* generate ini config for service groupnode10BcosNodeService
-	config path: generated/chain/group/172.25.0.3/groupnode10BcosNodeService/config.ini.tmp
+* generate genesis config for group0node00BcosNodeService
+	 path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService/config.genesis.tmp
+* generate ini config for service group0node00BcosNodeService
+	config path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService/config.ini.tmp
+* generate genesis config for group0node10BcosNodeService
+	 path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService/config.genesis.tmp
+* generate ini config for service group0node10BcosNodeService
+	config path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService/config.ini.tmp
 deploy services for all the group nodes
-deploy service groupnode00BcosNodeService
-deploy service groupnode00BcosNodeService
-upload tar package generated/./groupnode00BcosNodeService.tgz success, config id: 16
-deploy service groupnode10BcosNodeService
-deploy service groupnode10BcosNodeService
-upload tar package generated/./groupnode10BcosNodeService.tgz success, config id: 17
+deploy service group0node00BcosNodeService
+deploy service group0node00BcosNodeService
+upload tar package generated/./group0node00BcosNodeService.tgz success, config id: 16
+deploy service group0node10BcosNodeService
+deploy service group0node10BcosNodeService
+upload tar package generated/./group0node10BcosNodeService.tgz success, config id: 17
 ----------- deploy all nodes of the given group success -----------
 =========================================================
 ```
 部署过程中生成的RPC服务相关的配置位于`generated/${chainID}`(`chainID`默认为`chain`)目录，具体如下：
 
 ```shell
-$ tree generated/chain
-generated/chain
-└── group
+$ tree generated/chain0
+generated/chain0
+└── group0
     └── 172.25.0.3
-        ├── groupnode00BcosNodeService
+        ├── group0node00BcosNodeService
         │   ├── config.genesis.tmp       # 创世块配置
         │   ├── config.ini.tmp           # 区块链节点配置
         │   ├── node.nodeid
         │   └── node.pem                 # 区块链节点服务签名私钥
-        └── groupnode10BcosNodeService
+        └── group0node10BcosNodeService
             ├── config.genesis.tmp
             ├── config.ini.tmp
             ├── node.nodeid
@@ -462,7 +462,7 @@ generated/chain
    - 部署Pro版本区块链节点之前，请先确保您的tars服务是启动的状态，安装/启动和配置tars服务请参考3.2节
 ```
 
-区块链节点服务启动成功后，可在tars网页管理平台看到服务列表`groupnode00BcosNodeService`和`groupnode10BcosNodeService`，且每个服务均是`active`的状态：
+区块链节点服务启动成功后，可在tars网页管理平台看到服务列表`group0node00BcosNodeService`和`group0node10BcosNodeService`，且每个服务均是`active`的状态：
 ![](../../../images/tutorial/chain_service.png)
 
 ## 5. 配置及使用控制台
@@ -490,7 +490,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc2/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::
@@ -525,7 +525,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc1)!
+Welcome to FISCO BCOS console(3.0.0-rc2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -538,14 +538,14 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =============================================================================================
-[group]: />
+[group0]: />
 ```
 
 - 用控制台获取信息
 
 ```shell
 # 获取网络连接信息：
-[group]: /> getPeers
+[group0]: /> getPeers
 PeersInfo{
     p2pNodeID='3082010a0282010100c1d64abf0af11ceaa69b237090a5078ccbc122aedbf93486100ae65cb38cbf2a6969b80f2beca1abba7f0c1674876b332380a4b76387d62445ba8da7190b54850ed8c3fb4d6f6bafbd4744249a55805c0d804db9aa0f105c44c3381de20c763469892fc11a2bc8467c523592c9b2738069d6beb4cfb413f90e0be53205eca1cf3618100c625667f0592fd682aabe9cfbca7f7c53d79eeb5961ed9f144681b32c9fa55fc4d80b5ffbf32a9f71e900bc1c9a92ce0a485bb1003a915f9215bd7c42461cd52d1b2add644e8c1c273aa3668d4a707771b1a99d6bfcbfdf28be5b9c619eefb0c182ea7e666c5753c79499b1959df17ad5bd0996b9d7f0d62aa53d2b450203010001',
     endPoint='0.0.0.0:30301',
@@ -574,11 +574,11 @@ PeersInfo{
 }
 
 # 获取节点列表信息
-[group]: /> getGroupPeers
+[group0]: /> getGroupPeers
 peer0: 4af0433ac2d2afe305b88e7faae8ea4e94b14c63e78ca93c5c836ece6d0fbcb3d2a476a74ae8fb0a11e9662c0ce9861427c314aea7386cb3b619a4cb21ab227a
 peer1: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3
 
-[group]: /> getSealerList
+[group0]: /> getSealerList
 [
     Sealer{
         nodeID='8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a7a047966d112847d5c79eef46b32f7d9a2818adb601049126d289f3',
@@ -622,13 +622,13 @@ contract HelloWorld {
 
 ```shell
 # 在控制台输入以下指令 部署成功则返回合约地址
-[group]: /> deploy HelloWorld
+[group0]: /> deploy HelloWorld
 transaction hash: 0x0fe66c42f2678b8d041624358837de34ac7db195abb6f5a57201952062190590
 contract address: 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1
 currentAccount: 0x537149148696c7e6c3449331d77ddfaabc3c7a75
 
 # 查看当前块高
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 1
 ```
 
@@ -636,7 +636,7 @@ currentAccount: 0x537149148696c7e6c3449331d77ddfaabc3c7a75
 
 ```shell
 # 调用get接口获取name变量，此处的合约地址是deploy指令返回的地址
-[group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
+[group0]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -648,11 +648,11 @@ Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 
 # 查看当前块高，块高不变，因为get接口不更改账本状态
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 1
 
 # 调用set方法设置name
-[group]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set "Hello, FISCO BCOS"
+[group0]: /> call HelloWorld 0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set "Hello, FISCO BCOS"
 transaction hash: 0x2f7c85c2c59a76ccaad85d95b09497ad05ca7983c5ec79c8f9d102d1c8dddc30
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -668,9 +668,9 @@ Event logs
 Event: {}
 
 # 查看当前块高，因为set接口修改了账本状态，块高增加到2
-[group]: /> getBlockNumber
+[group0]: /> getBlockNumber
 2
 
 # 退出控制台
-[group]: /> exit
+[group0]: /> exit
 ```

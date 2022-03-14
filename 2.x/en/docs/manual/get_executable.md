@@ -69,6 +69,8 @@ git clone https://github.com/FISCO-BCOS/FISCO-BCOS.git
 
 # If you have network issue for exec the command above, please try:
 git clone https://gitee.com/FISCO-BCOS/FISCO-BCOS.git
+
+cd FISCO-BCOS && git checkout master-2.0
 ```
 
 ### Compile
@@ -109,4 +111,4 @@ $ make
     $ make doc
     ```
 
-[FSICO-BCOS-GitHub]:https://github.com/FISCO-BCOS/FISCO-BCOS
+[FSICO-BCOS-GitHub]:https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0

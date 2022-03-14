@@ -29,7 +29,7 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc1/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -89,7 +89,7 @@ useSMCrypto = "false"                       # RPC SM crypto type
 
 [network]
 messageTimeout = "10000"
-defaultGroup="group"                            # Console default group to connect
+defaultGroup="group0"                            # Console default group to connect
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
 
 [account]
@@ -127,7 +127,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 $ ./start.sh
 # 输出下述信息表明启动成功
 =====================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc1)!
+Welcome to FISCO BCOS console(3.0.0-rc2)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -148,7 +148,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```shell
 ./start.sh --version
-console version: 3.0.0-rc1
+console version: 3.0.0-rc2
 ```
 
 #### 4.2 账户使用方式
@@ -160,9 +160,9 @@ console version: 3.0.0-rc1
 
 ```shell
 ./start.sh
-./start.sh group
-./start.sh group -pem pemName
-./start.sh group -p12 p12Name
+./start.sh group0
+./start.sh group0 -pem pemName
+./start.sh group0 -p12 p12Name
 ```
 
 ##### 4.2.2 默认启动
@@ -180,7 +180,7 @@ console version: 3.0.0-rc1
 使用命令行指定的群组名启动。
 
 ```shell
-./start.sh group
+./start.sh group0
 ```
 
 ##### 4.2.4 使用PEM格式私钥文件启动
@@ -188,7 +188,7 @@ console version: 3.0.0-rc1
 - 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
 
 ```shell
-./start.sh group -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
+./start.sh group0 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
 ```
 
 ##### 4.2.5 使用PKCS12格式私钥文件启动
@@ -196,7 +196,7 @@ console version: 3.0.0-rc1
 - 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
 
 ```shell
-./start.sh group -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
+./start.sh group0 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
 Enter Export Password:
 ```
 
