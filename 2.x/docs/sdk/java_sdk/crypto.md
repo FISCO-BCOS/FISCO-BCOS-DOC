@@ -41,7 +41,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 ### 使用CryptoSuite调用哈希接口
 
 ```java
-    /// 调用keccak256哈希算法
+    // 调用keccak256哈希算法（入参为String）
     public String calculateHashWithkeccak256(String data)
     {
         // 创建非国密的CryptoSuite
@@ -50,6 +50,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return cryptoSuite.hash(data);
     }
 
+    // 调用keccak256哈希算法（入参为byte[]）
     public byte[] calculateHashWithkeccak256(byte[] data)
     {
          // 创建非国密的CryptoSuite
@@ -60,7 +61,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return result;
     }
 
-    /// 调用sm3哈希算法
+    // 调用sm3哈希算法（入参为String）
     public String calculateHashWithSM3(String data)
     {
         // 创建国密的CryptoSuite
@@ -69,6 +70,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return SMcryptoSuite.hash(data);
     }
 
+    // 调用sm3哈希算法（入参为byte[]）
     public byte[] calculateHashWithSM3(byte[] data)
     {
          // 创建非国密的CryptoSuite
@@ -83,7 +85,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 ### 创建指定方法的哈希对象调用哈希接口
 
 ```java
-    /// 调用keccak256哈希算法
+    /// 调用keccak256哈希算法（入参为String）
     public String calculateHashWithkeccak256(String data)
     {
         // 创建keccak256对应的对象
@@ -92,6 +94,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return hasher.hash(data);
     }
 
+    /// 调用keccak256哈希算法（入参为byte[]）
     public byte[] calculateHashWithkeccak256(byte[] data)
     {
         // 创建keccak256对应的对象
@@ -100,7 +103,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return hasher.hash(data);
     }
 
-    /// 调用sm3哈希算法
+    // 调用sm3哈希算法（入参为String）
     public String calculateHashWithSM3(String data)
     {
         // 创建sm3对应的对象
@@ -109,6 +112,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return hasher.hash(data);
     }
 
+    // 调用sm3哈希算法（入参为byte[]）
     public byte[] calculateHashWithSM3(byte[] data)
     {
         // 创建sm3对应的对象
@@ -134,7 +138,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 **非国密签名/验签接口调用示例如下:**
 
 ```java
-    /// 生成secp256k1签名
+    // 生成secp256k1签名（入参为String）
     public ECDSASignatureResult  generateSigantureWithSecp256k1(String data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
@@ -146,7 +150,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (ECDSASignatureResult)(cryptoSuite.sign(hashData, cryptoKeyPair));
     }
 
-    // 当入参为byte[]
+    // 生成secp256k1签名（入参为byte[]）
     public ECDSASignatureResult generateSigantureWithSecp256k1(byte[] data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
@@ -158,7 +162,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (ECDSASignatureResult)(cryptoSuite.sign(hashData, cryptoKeyPair));
     }
 
-    /// 验证签名
+    // 验证secp256k1签名（入参为String）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, String data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
@@ -167,7 +171,8 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         // 验证签名
         return cryptoSuite.verify(keyPair.getHexPublicKey(), hashData, signatureResult.convertToString());
     }
-    // 入参为byte[]
+
+    // 验证secp256k1签名（入参为byte[]）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, byte[] data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
@@ -181,7 +186,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 **类似地，国密签名/验签接口调用示例如下:**
 
 ```java
-    /// 生成sm2签名
+    // 生成sm2签名（入参为String）
     public SM2SignatureResult  generateSigantureWithSM2(String data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
@@ -193,7 +198,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (SM2SignatureResult)(cryptoSuite.sign(hashData, cryptoKeyPair));
     }
 
-    // 当入参为byte[]
+    // 生成sm2签名（入参为byte[]）
     public SM2SignatureResult generateSigantureWithSM2(byte[] data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
@@ -205,7 +210,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (SM2SignatureResult)(cryptoSuite.sign(hashData, cryptoKeyPair));
     }
 
-    /// 验证签名
+    // 验证sm2签名（入参为String）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, String data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
@@ -214,7 +219,8 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         // 验证签名
         return cryptoSuite.verify(keyPair.getHexPublicKey(), hashData, signatureResult.convertToString());
     }
-    // 入参为byte[]
+    
+    // 验证sm2签名（入参为byte[]）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair keyPair, byte[] data)
     {
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
@@ -230,7 +236,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 **非国密签名/验签接口调用示例如下(签名密钥对的生成可参考[这里](./key_tool.html#id3)):**
 
 ```java
-    // 生成secp256k1签名
+    // 生成secp256k1签名（入参为String）
     public ECDSASignatureResult generateSignatureWithSecp256k1(CryptoKeyPair ecdsaKeyPair, String data)
     {
         // 生成secp256k1签名对象
@@ -241,7 +247,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (ECDSASignatureResult)signer.sign(hashData, ecdsaKeyPair);
     }
 
-    // data类型为byte[]
+    // 生成secp256k1签名（入参为byte[]）
     public ECDSASignatureResult generateSignatureWithSecp256k1(CryptoKeyPair ecdsaKeyPair, byte[] data)
     {
         // 生成secp256k1签名对象
@@ -252,7 +258,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (ECDSASignatureResult)signer.sign(hashData, ecdsaKeyPair);
     }
 
-    /// 验证secp256k1签名
+    // 验证secp256k1签名（入参为String）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair ecdsaKeyPair, String data)
     {
         // 生成secp256k1验签对象
@@ -263,7 +269,8 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         // 验证签名
         return verifier.verify(ecdsaKeyPair.getHexPublicKey(), hashData, signatureResult.convertToString());
     }
-    // 入参为byte[]
+    
+    // 验证secp256k1签名（入参为byte[]）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair ecdsaKeyPair, byte[] data)
     {
         // 生成secp256k1验签对象
@@ -280,7 +287,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
 **类似地，国密签名/验签接口调用示例如下:**
 
 ```java
-    // 生成sm2签名
+    // 生成sm2签名（入参为String）
     public SM2SignatureResult generateSignatureWithSM2(CryptoKeyPair sm2KeyPair, String data)
     {
         // 生成sm2签名对象
@@ -291,7 +298,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (SM2SignatureResult)signer.sign(hashData, sm2KeyPair);
     }
 
-    // data类型为byte[]
+    // 生成sm2签名（入参为byte[]）
     public SM2SignatureResult generateSignatureWithSecp256k1(CryptoKeyPair sm2KeyPair, byte[] data)
     {
         // 生成sm2签名对象
@@ -302,7 +309,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         return (SM2SignatureResult)signer.sign(hashData, sm2KeyPair);
     }
 
-    /// 验证sm2签名
+    // 验证sm2签名（入参为String）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair sm2KeyPair, String data)
     {
         // 生成sm2验签对象
@@ -313,7 +320,8 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
         // 验证签名
         return verifier.verify(sm2KeyPair.getHexPublicKey(), hashData, signatureResult.convertToString());
     }
-    // 入参为byte[]
+
+    // 验证sm2签名（入参为byte[]）
     public boolean verifySignature(SignatureResult signatureResult, CryptoKeyPair sm2KeyPair, byte[] data)
     {
         // 生成sm2验签对象
