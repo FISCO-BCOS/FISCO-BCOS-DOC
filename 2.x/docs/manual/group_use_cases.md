@@ -42,7 +42,8 @@ $ sudo yum install -y openssl curl
 $ sudo apt install -y openssl curl
 
 # Mac OS
-$ brew install openssl curl
+# 最新homebrew默认下载的为openssl@3，需要指定版本openssl@1.1下载
+$ brew install openssl@1.1 curl
 ```
 
 ## 星形拓扑

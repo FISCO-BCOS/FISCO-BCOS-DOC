@@ -21,7 +21,8 @@
 **安装macOS依赖**
 
 ```shell
-brew install curl openssl wget
+# 最新homebrew默认下载的为openssl@3，需要指定版本openssl@1.1下载
+brew install openssl@1.1 curl wget
 ```
 
 **安装ubuntu依赖**
