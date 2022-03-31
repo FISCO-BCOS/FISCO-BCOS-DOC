@@ -34,7 +34,11 @@
 **安装macOS依赖**
 
 ```bash
-brew install openssl curl
+# 最新homebrew默认下载的为openssl@3，需要指定版本openssl@1.1下载
+brew install openssl@1.1 curl
+
+openssl version
+OpenSSL 1.1.1n  15 Mar 2022
 ```
 
 **安装ubuntu依赖**
@@ -221,7 +225,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh && bash download_console.sh`
 ```
 
 - 拷贝控制台配置文件
