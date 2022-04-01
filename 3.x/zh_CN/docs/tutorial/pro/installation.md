@@ -512,7 +512,7 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```shell
 # 可通过命令 find . -name sdk找到所有SDK证书路径
-cp -r BcosProBuilder/generated/rpc/chain/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
+cp -r BcosProBuilder/generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
 ```
 
 **步骤3：启动并使用控制台**
