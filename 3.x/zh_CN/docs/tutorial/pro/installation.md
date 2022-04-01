@@ -41,7 +41,7 @@ brew install curl docker docker-compose python3 wget
 ```eval_rst
 .. note::
    - 部署工具 ``BcosProBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
-   - 若从github下载部署工具 ``BcosProBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc2/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+   - 若从github下载部署工具 ``BcosProBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 ```
 
 ```shell
@@ -49,10 +49,10 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc2/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc3/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc2/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosProBuilder && pip3 install -r requirements.txt
@@ -490,7 +490,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc2/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::
@@ -525,7 +525,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc2)!
+Welcome to FISCO BCOS console(3.0.0-rc3)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
