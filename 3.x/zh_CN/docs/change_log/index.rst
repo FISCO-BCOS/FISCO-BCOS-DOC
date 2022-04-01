@@ -140,3 +140,26 @@ v3.0.0-rc2
    :maxdepth: 0
 
    3_0_0_rc2.md
+
+
+v3.0.0-rc3
+------------------
+
+.. admonition:: FISCO BCOS 3.x Releases
+
+     - `FISCO BCOS v3.0.0-rc2 <./3_0_0_rc3.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc3>`_]
+     
+     - v3.0.0-rc3不包括 ``FISCO BCOS Max`` 版本，Max版本的FISCO BCOS会在后续版本中推出
+     
+
+.. admonition:: 查看节点和数据版本
+
+    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
+    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   3_0_0_rc3.md

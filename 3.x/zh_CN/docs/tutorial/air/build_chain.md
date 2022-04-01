@@ -25,7 +25,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 $ bash build_chain.sh
 Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
-    -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc2
+    -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc3
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -o <output dir>                     [Optional] output directory, default ./nodes
     -e <fisco-bcos exec>                [Required] fisco-bcos binary exec
@@ -119,7 +119,7 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 该模式下 start.sh 脚本启动节点的命令如下
 
 ```shell
-docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc2 -c config.ini -g config.genesis
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc3 -c config.ini -g config.genesis
 ```
 
 ### **`A`权限控制选项[**Optional**]**
@@ -136,7 +136,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -A
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc2/fisco-bcos-macOS-x86_64.tar.gz ...
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/fisco-bcos-macOS-x86_64.tar.gz ...
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
