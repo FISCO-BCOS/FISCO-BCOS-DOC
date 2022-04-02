@@ -7,7 +7,7 @@
 Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java API可分为如下几类：
 
 - Client: 提供访问FISCO BCOS 3.0+节点JSON-RPC接口支持、提供部署及调用合约的支持；
-- Precompiled: 提供调用FISCO BCOS 3.0+ Precompiled合约(预编译合约)的接口，主要包括`ConsensusService`、`SystemConfigService`、`BFSService`、`KVTableService`、`CNSService`。
+- Precompiled: 提供调用FISCO BCOS 3.0+ Precompiled合约(预编译合约)的接口，主要包括`ConsensusService`、`SystemConfigService`、`BFSService`、`KVTableService`。
 - AuthManager: 提供FISCO BCOS 3.0+ 权限控制预部署合约的调用。
 
 ```eval_rst
@@ -794,58 +794,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 ### 5.5 CNSService
 
-#### registerCNS
-
-为指定合约注册CNS。
-
-**参数**
-
-- contractName: 合约名;
-- contractVersion: 注册的合约版本;
-- contractAddress: 合约地址;
-- abiData: 注册合约的abi;
-
-**返回值**
-
-- RetCode: CNS注册结果。
-
-#### selectByName
-
-根据合约名查询合约CNS信息。
-
-**参数**
-
-- contractName: 需要查询CNS信息的合约名;
-
-**返回值**
-
-- List<CnsInfo>: 查询到的CNS信息列表。
-
-#### selectByNameAndVersion
-
-根据合约名和合约版本查询CNS信息。
-
-**参数**
-
-- contractName: 合约名;
-- contractVersion: 合约版本。
-
-**返回值**
-
-- Tuple2<String, String>: 查询到的CNS信息，包含地址和ABI。
-
-#### getContractAddress
-
-根据合约名和合约版本获取合约地址。
-
-**参数**
-
-- contractName: 合约名;
-- contractVersion: 合约版本。
-
-**返回值**
-
-- String: 查询到的合约地址。
+**注意：** 从3.0.0-rc3版本开始，不再支持CNS。相应的合约别名功能请参考BFS link功能。
 
 ## 6. AuthManager权限管理接口
 

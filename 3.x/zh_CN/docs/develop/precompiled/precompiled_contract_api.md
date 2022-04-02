@@ -17,7 +17,6 @@ FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们
 | 0x1000           | SystemConfigPrecompiled   | 实现对群组系统参数配置管理             |
 | 0x1001（不支持） | TablePrecompiled          | Solidity中使用的Table                  |
 | 0x1003           | ConsensusPrecompiled      | 群组节点及节点身份管理                 |
-| 0x1004           | CNSPrecompiled            | 保存更新CNS(contract name service)信息 |
 | 0x1005           | ContractAuthPrecompiled   | 基于合约的权限控制                     |
 | 0x1006           | ParallelConfigPrecompiled | Solidity中合约并行接口配置             |
 | 0x1009           | KVTableFactoryPrecompiled | Solidity中使用KVTable                  |
@@ -32,7 +31,6 @@ FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们
 | /sys/status          | SystemConfigPrecompiled   | 实现对群组系统参数配置管理             |
 | /sys/table_storage   | TablePrecompiled          | Solidity中使用的Table                  |
 | /sys/consensus       | ConsensusPrecompiled      | 群组节点及节点身份管理                 |
-| /sys/cns             | CNSPrecompiled            | 保存更新CNS(contract name service)信息 |
 | /sys/auth            | ContractAuthPrecompiled   | 基于合约的权限控制                     |
 | /sys/parallel_config | ParallelConfigPrecompiled | Solidity中合约并行接口配置             |
 | /sys/kv_storage      | KVTableFactoryPrecompiled | Solidity中使用KVTable                  |
@@ -142,49 +140,7 @@ contract ConsensusPrecompiled {
 
 ### CNSPrecompiled
 
-#### 合约地址
-
-- Solidity：0x1004
-- WBC-Liquid: /sys/cns
-
-#### 接口声明
-
-```solidity
-// SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.6.0;
-
-contract CNSPrecompiled
-{
-    function insert(string memory name, string memory version, address addr, string memory abiStr) public returns(uint256){}
-    function selectByName(string memory name) public view returns(string memory){}
-    function selectByNameAndVersion(string memory name, string memory version) public view returns(address,string memory){}
-    function getContractAddress(string memory name, string memory version) public view returns(address){}
-}
-```
-
-#### 接口说明
-
-- Insert插入了合约名、合约版本、地址和abi
-- selectByName返回该合约所有版本的版本、地址、abi的json
-- selectByNameAndVersion根据合约名和版本号返回对应地址、abi的json
-- getContractAddress根据合约名和版本号返回合约地址
-- version不超128字符，address不超256字符，abi不超16MB
-
-**接口返回说明：**
-
-- 接口均以错误码形式返回
-
-| 错误码        | 说明                     |
-|:--------------|:-------------------------|
-| 错误码大等于0 | 修改所影响的行数         |
-| -50000        | 用户没有权限修改         |
-| -51200        | 合约地址与版本号已经存在 |
-| -51201        | 合约版本号超过128字符    |
-| -51202        | 地址名或版本号不合法    |
-
-#### SDK支持
-
-- [Java SDK](../sdk/java_sdk/api.html#cnsservice)
+**注意：** 从3.0.0-rc3版本开始，不再支持CNS。相应的合约别名功能请参考BFS link功能。
 
 ### ParallelConfigPrecompiled
 
