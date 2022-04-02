@@ -23,10 +23,6 @@
 
 ### 合约相关命令
 
-- 利用**CNS**部署和调用合约(**推荐**)
-  - 部署合约: [deployByCNS](./console_commands.html#deploybycns)
-  - 调用合约: [callByCNS](./console_commands.html#callbycns)
-  - 查询CNS部署合约信息: [queryCNS](./console_commands.html#querycns)
 - 普通部署和调用合约
   - 部署合约: [deploy](./console_commands.html#deploy)
   - 调用合约: [call](./console_commands.html#call)
@@ -68,11 +64,9 @@
 * addObserver                               Add an observer node
 * addSealer                                 Add a sealer node
 * call                                      Call a contract by a function and parameters
-* callByCNS                                 Call a contract by a function and parameters by CNS
 * cd                                        Change dir to given path.
 * clearNodeName                             Clear default node name to empty.
 * deploy                                    Deploy a contract on blockchain
-* deployByCNS                               Deploy a contract on blockchain by CNS
 * quit([quit, q, exit])                     Quit console
 * getBlockByHash                            Query information about a block by hash
 * getBlockByNumber                          Query information about a block by number
@@ -110,8 +104,6 @@
 * mkdir                                     Create dir in given path.
 * newAccount                                Create account
 * pwd                                       Show absolute path of working directory name
-* queryCNS                                  Query CNS information by contract name and contract version
-* registerCNS                               RegisterCNS information for the given contract
 * removeNode                                Remove a node
 * switch([s])                               Switch to a specific group by name
 * setConsensusWeight                        Set consensus weight for the specified node
@@ -382,147 +374,7 @@ Event list:
 
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
-### 6. deployByCNS
-
-运行deployByCNS，用CNS部署的合约，可用合约名直接调用。
-参数：
-
-- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
-- 合约版本号：部署的合约版本号。
-
-```shell
-# 部署HelloWorld合约1.0版
-[group0]: />  deployByCNS HelloWorld 1.0
-transaction hash: 0xb994d8e510f147815bdf9838fda542e553c2fe981177ee7a97a0686b9619cfbb
-contract address: 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c
-{
-    "code":0,
-    "msg":"Success"
-}
-
-# 部署HelloWorld合约2.0版
-[group0]: />  deployByCNS HelloWorld 2.0
-transaction hash: 0x3132f73e5af72fce44c2e07185a04f554ac06ddd94119dcf798980695b0890a0
-contract address: 0xf68a1aabfad336847e109c33ca471b192c93c0a9
-{
-    "code":0,
-    "msg":"Success"
-}
-
-# 部署TableTest合约
-[group0]: />  deployByCNS KVTableTest 1.0
-transaction hash: 0x288ccc6e166e43f5cd3bd563e00af48988e641196aaea57a59f0ab256e23c84e
-contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
-{
-    "code":0,
-    "msg":"Success"
-}
-```
-
-**注：**
-
-- 部署用户编写的合约，可以将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
-- 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
-- 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
-
-
-### 7. queryCNS
-
-运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。
-参数：
-
-- 合约名称：部署的合约名称。
-- 合约版本号：(可选)部署的合约版本号。
-
-```shell
-[group0]: /> queryCNS HelloWorld
----------------------------------------------------------------------------------------------
-* contract address: 6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
-* contract version: 1.0
----------------------------------------------------------------------------------------------
-* contract address: c8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085
-* contract version: 2.0
----------------------------------------------------------------------------------------------
-
-[group0]: /> queryCNS HelloWorld 1.0
----------------------------------------------------------------------------------------------
-* contract address: 0x6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
-* contract version: 1.0
----------------------------------------------------------------------------------------------
-```
-
-### 8. callByCNS
-
-运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。
-参数：
-
-- 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`。当省略合约版本号时，例如`HelloWorld`，则调用最新版本的合约。
-- 合约接口名：调用的合约接口名。
-- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
-
-```shell
-# 调用HelloWorld合约1.0版，通过set接口设置name字符串
-[group0]: />  callByCNS HelloWorld:1.0 set "Hello,CNS"
-transaction hash: 0x7ad2f34a13bbc2272d2d52fa46915e6f03136a6960d84a23478bee3c37e76ad6
----------------------------------------------------------------------------------------------
-transaction status: 0x0
-description: transaction executed successfully
----------------------------------------------------------------------------------------------
-Output
-Receipt message: Success
-Return message: Success
----------------------------------------------------------------------------------------------
-Event logs
-Event: {}
-
-# 调用HelloWorld合约2.0版，通过set接口设置name字符串
-[group0]: />  callByCNS HelloWorld:2.0 set "Hello,CNS2"
-transaction hash: 0x41f8decbe137905824321da6c28a19d957e902cfad1e8078d797bc649c078d3e
----------------------------------------------------------------------------------------------
-transaction status: 0x0
-description: transaction executed successfully
----------------------------------------------------------------------------------------------
-Output
-Receipt message: Success
-Return message: Success
----------------------------------------------------------------------------------------------
-Event logs
-Event: {}
-
-# 调用HelloWorld合约1.0版，通过get接口获取name字符串
-[group0]: />  callByCNS HelloWorld:1.0 get
----------------------------------------------------------------------------------------------
-Return code: 0
-description: transaction executed successfully
-Return message: Success
----------------------------------------------------------------------------------------------
-Return values:
-[
-    "Hello,CNS"
-]
----------------------------------------------------------------------------------------------
-
-```
-
-### 9. registerCNS
-
-注册合约至CNS。
-
-参数：
-
-- 合约路径: 合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
-- 合约地址: 注册合约地址
-- 合约版本号: 注册合约版本号
-
-```shell
-[group0]: />  registerCNS HelloWorld 0xf19a7ec01f0b1adb16a033f0a30fb321ec6edcbf v1.0.0
-{
-    "code":0,
-    "msg":"success"
-}
-```
-
-### 10. listDeployContractAddress
+### 6. listDeployContractAddress
 
 列出指定合约名部署的所有合约地址，
 列出部署指定合约产生的合约地址列表，参数：
