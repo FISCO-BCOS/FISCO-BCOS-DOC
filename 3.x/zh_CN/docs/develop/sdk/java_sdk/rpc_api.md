@@ -52,11 +52,14 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### call
 
 向节点发送请求，调用合约常量接口。
+
 **参数**
 
 - node：可让RPC发送请求到指定节点
 - transaction: 合约调用信息，包含合约地址、合约调用者以及调用的合约接口和参数的abi编码
-  **返回值**
+
+**返回值**
+
 - Call: 合约常量接口的返回结果，包括当前块高、接口执行状态信息以及接口执行结果
 
 ### callAsync
@@ -266,7 +269,6 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 **返回值**
 
 - 无
-
 
 ### getTransactionReceipt
 
@@ -545,7 +547,9 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 **参数**
 
 - 无
-  **返回值**
+  
+**返回值**
+
 - BcosGroupList: 当前节点的群组列表。
 
 ### getGroupListAsync
