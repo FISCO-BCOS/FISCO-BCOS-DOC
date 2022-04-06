@@ -349,20 +349,20 @@ public class Asset extends Contract {
 
 在IntelliJ IDE中创建一个gradle项目，勾选Gradle和Java，并输入工程名``asset-app-liquid``。
 
-注意：该项目的源码可以用以下方法获得并参考。（此步骤为非必须步骤）
+注意：（此步骤为非必须步骤）该项目的源码可以用以下方法获得并参考。
 
 ```shell
 $ cd ~/fisco
 
-$ curl -#LO https://github.com/FISCO-BCOS/LargeFiles/raw/master/tools/asset-app-3.0-liquid.tar.gz
+$ curl -o asset-app-3.0-liquid.zip -#LO https://github.com/FISCO-BCOS/asset-app-demo/archive/refs/heads/main-liquid.zip
 
 # 解压得到Java工程项目asset-app-liquid
-$ tar -zxf asset-app-3.0-liquid.tar.gz
+$ unzip asset-app-3.0-liquid.zip
 ```
 
 ```eval_rst
 .. note::
-- 如果因为网络问题导致长时间无法下载，请尝试将`185.199.108.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app-3.0-liquid.tar.gz`
+- 如果因为网络问题导致长时间无法下载，请尝试将`185.199.108.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -o asset-app-3.0-liquid.zip -#LO https://gitee.com/FISCO-BCOS/asset-app-demo/repository/archive/main-liquid.zip`
 ```
 
 ### 第三步. 引入FISCO BCOS Java SDK
@@ -415,7 +415,7 @@ applicationContext.xml的内容如下：
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-  <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
+  <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.v3.config.model.ConfigProperty">
     <property name="cryptoMaterial">
       <map>
         <entry key="certPath" value="conf" />
@@ -446,7 +446,7 @@ applicationContext.xml的内容如下：
     <!--
     <property name="amop">
       <list>
-        <bean id="amopTopic1" class="org.fisco.bcos.sdk.config.model.AmopTopic">
+        <bean id="amopTopic1" class="org.fisco.bcos.sdk.v3.config.model.AmopTopic">
           <property name="topicName" value="PrivateTopic1" />
           <property name="password" value="" />
           <property name="privateKey" value="" />
@@ -475,13 +475,13 @@ applicationContext.xml的内容如下：
     </property>
   </bean>
 
-  <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
+  <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.v3.config.ConfigOption">
     <constructor-arg name="configProperty">
       <ref bean="defaultConfigProperty"/>
     </constructor-arg>
   </bean>
 
-  <bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
+  <bean id="bcosSDK" class="org.fisco.bcos.sdk.v3.BcosSDK">
     <constructor-arg name="configOption">
       <ref bean="defaultConfigOption"/>
     </constructor-arg>
@@ -536,12 +536,12 @@ import java.util.Properties;
 import java.util.Random;
 
 import org.fisco.bcos.asset.liquid.contract.Asset;
-import org.fisco.bcos.sdk.BcosSDK;
-import org.fisco.bcos.sdk.client.Client;
-import org.fisco.bcos.sdk.codec.datatypes.generated.tuples.generated.Tuple1;
-import org.fisco.bcos.sdk.codec.datatypes.generated.tuples.generated.Tuple2;
-import org.fisco.bcos.sdk.crypto.keypair.CryptoKeyPair;
-import org.fisco.bcos.sdk.model.TransactionReceipt;
+import org.fisco.bcos.sdk.v3.BcosSDK;
+import org.fisco.bcos.sdk.v3.client.Client;
+import org.fisco.bcos.sdk.v3.codec.datatypes.generated.tuples.generated.Tuple1;
+import org.fisco.bcos.sdk.v3.codec.datatypes.generated.tuples.generated.Tuple2;
+import org.fisco.bcos.sdk.v3.crypto.keypair.CryptoKeyPair;
+import org.fisco.bcos.sdk.v3.model.TransactionReceipt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
