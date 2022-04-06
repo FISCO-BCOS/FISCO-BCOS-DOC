@@ -103,7 +103,32 @@ uint8 public _winRate;
 2. 访问策略设置：合约管理员有权设置合约访问接口的权限ACL策略，选择黑名单或白名单模式。合约管理员直接调用权限合约的setMethodAuthType(address contractAddr, bytes4 func, uint8 acl)来设置ACL的类型。
 3. 添加访问规则。合约管理员可选择添加访问的规则。则所有的规则被保存在mapping\[methodId]\[account][bool]中
 
-### 3. 底层节点设计
+### 3. 合约设计
+
+权限治理合约地址可参考： https://github.com/FISCO-BCOS/bcos-auth
+
+主要合约包括：
+
+- CommitteeManager：权限治理的唯一入口，管理提案和治理委员会，治理委员可调用合约对应的接口发起治理提案。在底层节点有唯一地址 0x10001
+- ProposalManager：提案管理合约，由CommitteeManager管理，用于存储提案
+- Committee：治理委员合约，由CommitteeManager管理，记录治理委员会信息
+- ContractAuthPrecompiled：底层节点提供的权限信息读写接口，写接口具有权限控制，在底层节点有唯一地址0x1005
+
+权限治理执行步骤如下：
+
+1. 治理委员A发起修改系统配置的提案，调用CommitteeManager接口
+2. CommitteeManager从已有的Committee中获取治理委员的相关信息
+3. CommitteeManager调用ProposalManager，创建提案并push进提案列表
+4. 治理委员B调用CommitteeManager接口，对该提案进行投票
+5. CommitteeManager调用ProposalManager，对该提案进行投票，并写入投票列表
+6. ProposalManager，收集该提案的投票结果，并调用Committee接口，确认是否达到提案阈值
+7. Committee返回确认结果
+8. CommitteeManager确认提案的状态，达到可执行状态后，发起对`SystemConfigPrecompiled`或 `ConsensusPrecompiled`的调用
+9. 系统预编译合约会先确认调用的sender是否以/sys/开头，确认则执行。(CommitteeManager是内置在链上的合约，具有固定地址/sys/10001)
+
+![](../../images/design/committee_contract.png)
+
+### 4. 底层节点设计
 
 ![权限底层设计](../../images/design/committee_adapt_chain.png)
 
