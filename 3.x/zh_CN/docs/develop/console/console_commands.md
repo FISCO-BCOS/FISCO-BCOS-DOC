@@ -1161,29 +1161,6 @@ group0: group
     "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
     "serviceInfoList":null
 }
-
-[group0]: /apps> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
-{
-    "type":0,
-    "iniConfig":{
-        "binaryInfo":{
-            "version":"3.0.0-rc1",
-            "gitCommitHash":"92ac16b4d2da511cbba33031e58369cac240547a",
-            "platform":"Darwin/appleclang",
-            "buildTime":"20211203 10:43:32"
-        },
-        "chainID":"chain0",
-        "groupID":"group0",
-        "smCryptoType":false,
-        "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-        "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-        "rpcServiceName":"",
-        "gatewayServiceName":"",
-        "isWasm":false
-    },
-    "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-    "serviceInfoList":null
-}
 ```
 
 ## BFS操作命令
