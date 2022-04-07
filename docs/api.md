@@ -908,6 +908,79 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
   "result": "1000"
 }
 ```
+## addPeers
+向配置中添加P2P信息
+### 参数
+- `hostPorts`: `array` - 节点连接的ip和端口
+
+### 返回值
+- `object`: 接口调用结果，其字段如下：
+  - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+  - `message`: - 接口消息
+- 示例
+
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:20024","127.0.0.1:20025"]],"id":1}' http://127.0.0.1:8545 |jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": " add peers successfully"
+  }
+}
+```
+## erasePeers
+从配置中删除P2P信息
+### 参数
+- `hostPorts`: `array` - 节点连接的ip和端口
+
+### 返回值
+- `object`: 接口调用结果，其字段如下：
+  - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
+  - `message`: - 接口消息
+- 示例
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"erasePeers","params":[["127.0.0.1:20024","127.0.0.1:20025"]],"id":1}' http://127.0.0.1:8545 |jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": " erase peers successfully"
+  }
+}
+```
+## queryPeers
+查询配置中的P2P信息
+### 参数
+无
+
+### 返回值
+- `array` - 配置的p2p节点IP和端口
+- 示例
+
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"queryPeers","params":[],"id":1}' http://127.0.0.1:8545 |jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    "127.0.0.1:30301",
+    "127.0.0.1:30302",
+    "127.0.0.1:30303"
+  ]
+}
+```
 ## call
 执行一个可以立即获得结果的请求，无需区块链共识
 ### 参数
