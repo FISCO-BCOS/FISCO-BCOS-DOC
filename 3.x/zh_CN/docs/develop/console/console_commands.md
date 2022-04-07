@@ -790,60 +790,6 @@ PeersInfo{
 100
 ```
 
-## 账户操作命令
-
-### 1. newAccount
-
-创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`account`目录下。
-
-```shell
-# 控制台连接非国密区块链时，账户文件自动保存在`account/ecdsa`目录
-# 控制台连接国密区块链时，账户文件自动保存在`accout/gm`目录下
-[group0]: /apps>  newAccount
-AccountPath: account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
-Note: This operation does not create an account in the blockchain, but only creates a local account, and deploying a contract through this account will create an account in the blockchain
-newAccount: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
-AccountType: ecdsa
-
-$ ls -al account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
-$ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
-```
-
-### 2. loadAccount
-
-加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
-参数：
-
-- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
-
-- 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
-
-```shell
-[group0]: /apps>  loadAccount 0x6fad87071f790c3234108f41b76bb99874a6d813
-Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
-```
-
-### 3. listAccount
-
-查看当前加载的所有账户信息
-
-```shell
-[group0]: /apps>  listAccount
-0x6fad87071f790c3234108f41b76bb99874a6d813(current account) <=
-0x726d9f31cf44debf80b08a7e759fa98b360b0736
-```
-
-**注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`loadAccount`进行切换**
-
-### 4. getCurrentAccount
-
-获取当前账户地址。
-
-```shell
-[group0]: /apps>  getCurrentAccount
-0x6fad87071f790c3234108f41b76bb99874a6d813
-```
-
 ## 共识操作命令
 
 ### 1. getSealerList
@@ -989,6 +935,183 @@ ConsensusStatusInfo{
     "code":0,
     "msg":"Success"
 }
+```
+
+## 合约表操作命令
+
+### 1. create
+
+运行create sql语句创建用户表，使用mysql语句形式。
+
+```bash
+# 创建用户表t_demo，其主键为name，其他字段为item_id和item_name
+[group0]: /apps> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
+Create 't_demo' Ok.
+
+# 创建好的t_demo表会在绝对路径 /tables/ 底下可以观察到
+[group0]: /apps> ls ../tables/
+t_demo
+```
+
+**注意：**
+
+- 创建的表名带上前缀的长度不能超过50，例如： /tables/t_demo 的长度不能超过50。
+- 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型，也按照字符串类型设置。
+- 必须指定主键字段。例如创建t_demo表，主键字段为name。
+- 表的主键与关系型数据库中的主键不是相同概念，这里主键取值不唯一，区块链底层处理记录时需要传入主键值。
+- 可以指定字段为主键，但设置的字段自增，非空，索引等修饰关键字不起作用。
+
+### 2. desc
+
+运行desc语句查询表的字段信息，使用mysql语句形式。
+
+```
+# 查询t_demo表的字段信息，可以查看表的主键名和其他字段名
+[group0]: /apps> desc t_demo
+{
+    "key":"name",
+    "valueFields":"item_id,item_name"
+}
+```
+
+## BFS操作命令
+
+### 1. cd
+
+与Linux的cd命令类似，可以切换当前所在的路径，支持绝对路径、相对路径。
+
+```shell
+[group0]: /apps> cd ../tables
+
+[group0]: /tables>
+
+[group0]: /apps> cd ../tables/test
+
+[group0]: /tables/test>
+
+[group0]: /tables/test> cd ../../
+
+[group0]: />
+```
+
+### 2. ls
+
+与Linux的ls命令相似，可以查看当前路径下的资源，如果是目录，则展示出该目录下所有资源；如果是合约，则展示该合约的元信息。
+
+ls参数为0时，展示当前文件夹，ls 参数为1时，支持绝对路径和相对路径。
+
+```shell
+[group0]: /> ls
+apps usr sys tables
+
+[group0]: /> ls apps
+Hello
+
+[group0]: /> ls ./apps/Hello
+name: Hello, type: contract
+```
+
+### 3. mkdir
+
+与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
+
+```shell
+[group0]: /> mkdir /apps/test
+
+[group0]: /> cd /apps
+
+[group0]: /apps> ls
+test
+
+[group0]: /> mkdir ./test/test
+
+[group0]: /> ls ./test
+test
+```
+
+### 4. ln
+
+与Linux的ln命令相似，创建某个合约资源的链接，可以通过直接调用链接发起对实际合约的调用。
+
+```bash
+# 创建合约软链接，合约名为Hello，合约版本为latest
+[group0]: /apps> ln Hello/latest 0x19a6434154de51c7a7406edF312F01527441B561
+{
+    "code":0,
+    "msg":"Success"
+}
+
+# 创建的软链会在/apps/目录下创建链接文件
+[group0]: /apps> ls ./Hello/latest 
+latest -> 19a6434154de51c7a7406edf312f01527441b561      
+
+# 可以直接调用链接
+[group0]: /apps> call ./Hello/latest get
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return value size:1
+Return types: (string)
+Return values:(Hello, World!)
+---------------------------------------------------------------------------------------------
+
+[group0]: /apps> deploy HelloWorld
+contract address: 0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
+
+# 可以覆盖版本号
+[group0]: /apps> ln Hello/latest  0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
+{
+    "code":0,
+    "msg":"Success"
+}
+
+[group0]: /apps> ls ./Hello/latest 
+latest -> 2b5dcbae97f9d9178e8b051b08c9fb4089bae71b  
+```
+
+### 5. tree
+
+与Linux的tree命令相似，将指定BFS路径下的资源以树形结构的形式展示出来。默认深度为3，可使用参数设置深度，不超过5。
+
+```bash
+[group0]: /apps> tree ..
+/
+├─apps
+│ └─Hello
+│   └─latest
+├─sys
+│ ├─auth
+│ ├─bfs
+│ ├─consensus
+│ ├─crypto_tools
+│ ├─kv_storage
+│ ├─parallel_config
+│ ├─status
+│ └─table_storage
+├─tables
+│ └─person
+└─usr
+
+5 directory, 10 contracts.
+
+# 使用深度为1
+[group0]: /apps> tree .. 1
+/
+├─apps
+├─sys
+├─tables
+└─usr
+```
+
+### 6. pwd
+
+与Linux的pwd命令相似，没有参数，展示当前路径。
+
+```shell
+[group0]: /apps/Hello/BFS>  pwd
+/apps/Hello/BFS
 ```
 
 ## 群组查询命令
@@ -1161,146 +1284,6 @@ group0: group
     "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
     "serviceInfoList":null
 }
-```
-
-## BFS操作命令
-
-### 1. cd
-
-与Linux的cd命令类似，可以切换当前所在的路径，支持绝对路径、相对路径。
-
-```shell
-[group0]: /apps> cd ../tables
-
-[group0]: /tables>
-
-[group0]: /apps> cd ../tables/test
-
-[group0]: /tables/test>
-
-[group0]: /tables/test> cd ../../
-
-[group0]: />
-```
-
-### 2. ls
-
-与Linux的ls命令相似，可以查看当前路径下的资源，如果是目录，则展示出该目录下所有资源；如果是合约，则展示该合约的元信息。
-
-ls参数为0时，展示当前文件夹，ls 参数为1时，支持绝对路径和相对路径。
-
-```shell
-[group0]: /> ls
-apps usr sys tables
-
-[group0]: /> ls apps
-Hello
-
-[group0]: /> ls ./apps/Hello
-name: Hello, type: contract
-```
-
-### 3. mkdir
-
-与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
-
-```shell
-[group0]: /> mkdir /apps/test
-
-[group0]: /> cd /apps
-
-[group0]: /apps> ls
-test
-
-[group0]: /> mkdir ./test/test
-
-[group0]: /> ls ./test
-test
-```
-
-### 4. ln
-
-与Linux的ln命令相似，创建某个合约资源的链接，可以通过直接调用链接发起对实际合约的调用。
-
-```bash
-# 创建合约软链接，合约名为Hello，合约版本为latest
-[group0]: /apps> ln Hello/latest 0x19a6434154de51c7a7406edF312F01527441B561
-{
-    "code":0,
-    "msg":"Success"
-}
-
-# 创建的软链会在/apps/目录下创建链接文件
-[group0]: /apps> ls ./Hello/latest 
-latest -> 19a6434154de51c7a7406edf312f01527441b561      
-
-# 可以直接调用链接
-[group0]: /apps> call ./Hello/latest get
----------------------------------------------------------------------------------------------
-Return code: 0
-description: transaction executed successfully
-Return message: Success
----------------------------------------------------------------------------------------------
-Return value size:1
-Return types: (string)
-Return values:(Hello, World!)
----------------------------------------------------------------------------------------------
-
-[group0]: /apps> deploy HelloWorld
-contract address: 0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
-
-# 可以覆盖版本号
-[group0]: /apps> ln Hello/latest  0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
-{
-    "code":0,
-    "msg":"Success"
-}
-
-[group0]: /apps> ls ./Hello/latest 
-latest -> 2b5dcbae97f9d9178e8b051b08c9fb4089bae71b  
-```
-
-### 5. tree
-
-与Linux的tree命令相似，将指定BFS路径下的资源以树形结构的形式展示出来。默认深度为3，可使用参数设置深度，不超过5。
-
-```bash
-[group0]: /apps> tree ..
-/
-├─apps
-│ └─Hello
-│   └─latest
-├─sys
-│ ├─auth
-│ ├─bfs
-│ ├─consensus
-│ ├─crypto_tools
-│ ├─kv_storage
-│ ├─parallel_config
-│ ├─status
-│ └─table_storage
-├─tables
-│ └─person
-└─usr
-
-5 directory, 10 contracts.
-
-# 使用深度为1
-[group0]: /apps> tree .. 1
-/
-├─apps
-├─sys
-├─tables
-└─usr
-```
-
-### 6. pwd
-
-与Linux的pwd命令相似，没有参数，展示当前路径。
-
-```shell
-[group0]: /apps/Hello/BFS>  pwd
-/apps/Hello/BFS
 ```
 
 ## 权限操作命令
@@ -1801,3 +1784,56 @@ Return message: Permission denied
 ---------------------------------------------------------------------------------------------
 ```
 
+## 账户操作命令
+
+### 1. newAccount
+
+创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`account`目录下。
+
+```shell
+# 控制台连接非国密区块链时，账户文件自动保存在`account/ecdsa`目录
+# 控制台连接国密区块链时，账户文件自动保存在`accout/gm`目录下
+[group0]: /apps>  newAccount
+AccountPath: account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+Note: This operation does not create an account in the blockchain, but only creates a local account, and deploying a contract through this account will create an account in the blockchain
+newAccount: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
+AccountType: ecdsa
+
+$ ls -al account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+$ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+```
+
+### 2. loadAccount
+
+加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
+参数：
+
+- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
+
+- 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
+
+```shell
+[group0]: /apps>  loadAccount 0x6fad87071f790c3234108f41b76bb99874a6d813
+Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
+```
+
+### 3. listAccount
+
+查看当前加载的所有账户信息
+
+```shell
+[group0]: /apps>  listAccount
+0x6fad87071f790c3234108f41b76bb99874a6d813(current account) <=
+0x726d9f31cf44debf80b08a7e759fa98b360b0736
+```
+
+**注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`loadAccount`进行切换**
+
+### 4. getCurrentAccount
+
+获取当前账户地址。
+
+```shell
+[group0]: /apps>  getCurrentAccount
+0x6fad87071f790c3234108f41b76bb99874a6d813
+```

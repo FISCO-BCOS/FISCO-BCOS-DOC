@@ -1,4 +1,4 @@
-# TransactionResponse 返回码与信息汇总
+# Response返回码与错误信息汇总
 
 标签：``TransactionResponse`` ``响应码`` ``错误信息`` ``returnCode`` ``returnMessages``
 
@@ -9,7 +9,6 @@
 | returnCode | returnMessages                                                                     |
 |------------|------------------------------------------------------------------------------------|
 | 0          | Success                                                                            |
-| -50000     | Permission denied                                                                  |
 | -53006     | Invalid file type                                                                  |
 | -53005     | Invalid path                                                                       |
 | -53003     | Make directory failed                                                              |
@@ -40,11 +39,11 @@
 | -50102     | Invalid address format                                                             |
 | -50101     | Undefined function                                                                 |
 | -50100     | Open table failed, please check the existence of the table                         |
-| -50001     | The table already exist                                                            |
-| -50002     | The table name length exceeds the limit 50                                         |
-| -50003     | The table field name exceeds the limit 64                                          |
-| -50004     | The length of all the fields name exceeds the limit 1024                           |
-| -50005     | The value exceeds the limit, key max length is 255, field value max length is 1024 |
-| -50006     | The field value exceeds the limit 1024                                             |
-| -50007     | The table contains duplicated field                                                |
 | -50008     | Invalid table name or field name                                                   |
+| -50007     | The table contains duplicated field                                                |
+| -50006     | The field value exceeds the limit 1024                                             |
+| -50005     | The value exceeds the limit, key max length is 255, field value max length is 1024 |
+| -50004     | The length of all the fields name exceeds the limit 1024                           |
+| -50003     | The table field name exceeds the limit 64                                          |
+| -50002     | The table name length exceeds the limit 50                                         |
+| -50001     | The table already exist                                                            |
