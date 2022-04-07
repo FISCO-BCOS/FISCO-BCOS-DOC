@@ -34,7 +34,7 @@ FISCO BCOS提供[合约KV存储接口](../develop/precompiled/use_kv_precompiled
 其中account是主键，即操作`t_asset`表时需要传入的字段，区块链根据该主键字段查询表中匹配的记录。`t_asset`表示例如下：
 
 | account | asset_value |
-| ------- | ----------- |
+|---------|-------------|
 | Alice   | 10000       |
 | Bob     | 20000       |
 
@@ -408,12 +408,12 @@ public class Asset extends Contract {
 
 注意：（此步骤为非必须步骤）该项目的源码可以用以下方法获得并参考。
 
-```shell
+```bash
 $ cd ~/fisco
 
 $ curl -o asset-app-3.0-solidity.zip -#LO https://github.com/FISCO-BCOS/asset-app-demo/archive/refs/heads/main.zip
 # 解压得到Java工程项目asset-app-3.0
-$ unzip asset-app-3.0-solidity.zip
+$ unzip asset-app-3.0-solidity.zip && mv asset-app-demo-main asset-app-3.0
 ```
 
 ```eval_rst
