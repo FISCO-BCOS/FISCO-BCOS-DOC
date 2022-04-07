@@ -269,9 +269,9 @@ java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.Subscribe testTopic
 **单播消息**：
 
 ```shell
-# 调用Publishe发送AMOP消息
+# 调用Publish发送AMOP消息
 # 话题名：testTopic，内容：Tell you something
-java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.Publishe testTopic "Tell you something"
+java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.Publish testTopic "Tell you something"
 ```
 
 终端输出：
