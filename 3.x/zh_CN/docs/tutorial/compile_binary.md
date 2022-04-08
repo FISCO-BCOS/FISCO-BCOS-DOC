@@ -136,6 +136,8 @@ rm -rf *.tgz && make tar
 ```shell
 # 使用gcc7
 source /opt/rh/devtoolset-7/enable
+export LIBCLANG_PATH=/opt/rh/llvm-toolset-7/root/lib64/
+source /opt/rh/llvm-toolset-7/enable
 
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
