@@ -76,13 +76,13 @@ cd FISCO-BCOS
 
 ## 3. 编译
 
-**编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos/fisco-bcos`路径。**
+**编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos-air/fisco-bcos`路径。**
 
 **编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
 
-- Rpc服务：`FISCO-BCOS/build/RpcService/main/BcosRpcService`
-- Gateway服务：`FISCO-BCOS/build/GatewayService/main/BcosGatewayService`
-- 区块链节点服务：`NodeService/main/BcosNodeService`
+- Rpc服务：`FISCO-BCOS/build/fisco-bcos-pro/RpcService/main/BcosRpcService`
+- Gateway服务：`FISCO-BCOS/build/fisco-bcos-pro/GatewayService/main/BcosGatewayService`
+- 区块链节点服务：`FISCO-BCOS/build/fisco-bcos-pro/NodeService/main/BcosNodeService`
 
 **若编译过程中从GitHub拉取依赖太慢，可执行以下方式加速：**
 
