@@ -113,13 +113,13 @@ cd ~/fisco/FISCO-BCOS
 
 # 创建编译目录
 mkdir -p build && cd build
-cmake ..
+cmake -DBUILD_STATIC=ON ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake .. -DHUNTER_JOBS_NUMBER=2 -DBUILD_STATIC=ON
+cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug -DBUILD_STATIC=ON
+cmake -DBUILD_STATIC=ON -DHUNTER_CONFIGURATION_TYPES=Debug ..
 
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
 make -j2
@@ -142,10 +142,10 @@ source /opt/rh/llvm-toolset-7/enable
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
-cmake3 ..
+cmake3 -DBUILD_STATIC=ON ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake .. -DHUNTER_JOBS_NUMBER=2
+cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
@@ -161,13 +161,13 @@ rm -rf *.tgz && make tar
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
-cmake ..
+cmake -DBUILD_STATIC=ON ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake .. -DHUNTER_JOBS_NUMBER=2
+cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-# cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug
+# cmake -DBUILD_STATIC=ON -DHUNTER_CONFIGURATION_TYPES=Debug ..
 
 # 若执行以上过程报错，请尝试执行如下命令指定SDKROOT
 #rm -rf CMakeCache.txt && export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake ..
