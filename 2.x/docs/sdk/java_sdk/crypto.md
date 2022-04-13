@@ -53,7 +53,7 @@ Java SDK目前支持创建非国密、国密类型的`CryptoSuite`。
     // 调用keccak256哈希算法（入参为byte[]）
     public byte[] calculateHashWithkeccak256(byte[] data)
     {
-         // 创建非国密的CryptoSuite
+        // 创建非国密的CryptoSuite
         CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
         // 使用cryptoSuite调用hash算法
         // 返回二进制数组，可通过Hex.toHexString(result)将其转换成十六进制字符串
