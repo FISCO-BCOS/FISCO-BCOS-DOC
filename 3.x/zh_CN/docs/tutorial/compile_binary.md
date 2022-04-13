@@ -76,13 +76,13 @@ cd FISCO-BCOS
 
 ## 3. 编译
 
-**编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos/fisco-bcos`路径。**
+**编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos-air/fisco-bcos`路径。**
 
 **编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
 
-- Rpc服务：`FISCO-BCOS/build/RpcService/main/BcosRpcService`
-- Gateway服务：`FISCO-BCOS/build/GatewayService/main/BcosGatewayService`
-- 区块链节点服务：`NodeService/main/BcosNodeService`
+- Rpc服务：`FISCO-BCOS/build/fisco-bcos-pro/RpcService/main/BcosRpcService`
+- Gateway服务：`FISCO-BCOS/build/fisco-bcos-pro/GatewayService/main/BcosGatewayService`
+- 区块链节点服务：`FISCO-BCOS/build/fisco-bcos-pro/NodeService/main/BcosNodeService`
 
 **若编译过程中从GitHub拉取依赖太慢，可执行以下方式加速：**
 
@@ -113,13 +113,13 @@ cd ~/fisco/FISCO-BCOS
 
 # 创建编译目录
 mkdir -p build && cd build
-cmake ..
+cmake -DBUILD_STATIC=ON ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake .. -DHUNTER_JOBS_NUMBER=2 -DBUILD_STATIC=ON
+cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug -DBUILD_STATIC=ON
+cmake -DBUILD_STATIC=ON -DHUNTER_CONFIGURATION_TYPES=Debug ..
 
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
 make -j2
@@ -136,14 +136,16 @@ rm -rf *.tgz && make tar
 ```shell
 # 使用gcc7
 source /opt/rh/devtoolset-7/enable
+export LIBCLANG_PATH=/opt/rh/llvm-toolset-7/root/lib64/
+source /opt/rh/llvm-toolset-7/enable
 
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
-cmake3 ..
+cmake3 -DBUILD_STATIC=ON ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake .. -DHUNTER_JOBS_NUMBER=2
+cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 高性能机器可添加-j4使用4核加速编译
 make -j2
@@ -159,13 +161,13 @@ rm -rf *.tgz && make tar
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
-cmake ..
+cmake -DBUILD_STATIC=ON ..
 
 # 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake .. -DHUNTER_JOBS_NUMBER=2
+cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-# cmake .. -DHUNTER_CONFIGURATION_TYPES=Debug
+# cmake -DBUILD_STATIC=ON -DHUNTER_CONFIGURATION_TYPES=Debug ..
 
 # 若执行以上过程报错，请尝试执行如下命令指定SDKROOT
 #rm -rf CMakeCache.txt && export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake ..

@@ -11,6 +11,7 @@ FISCO BCOS, officially launched in December 2017, is the first China-developed o
 - [Code contribution](https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ)
 - [Feedbacks](https://github.com/FISCO-BCOS/FISCO-BCOS/issues)
 - [Application cases](https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA)
+- [2021FISCO BCOS Industrial Applications Whitepaper](https://mp.weixin.qq.com/s/PD-PUBp-cKHkn7DuE9YlqQ)
 
 ## Join FISCO BCOS community
 

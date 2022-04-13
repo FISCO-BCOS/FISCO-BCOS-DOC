@@ -16,7 +16,7 @@ FISCO BCOS已落地应用达数百个，场景覆盖政务、金融、公益、�
 - 文化版权：版权存证与交易等。
 - 社会管理：不动产登记等。
 
-此处提供一些具有代表性的[落地应用案例](https://mp.weixin.qq.com/s/RJwRMChWt6mhJrysyBLAmA)。
+此处可查看[2021FISCO BCOS产业应用白皮书](https://mp.weixin.qq.com/s/PD-PUBp-cKHkn7DuE9YlqQ)，获取一些具有代表性的落地应用案例。
 
 ## 贡献代码
 

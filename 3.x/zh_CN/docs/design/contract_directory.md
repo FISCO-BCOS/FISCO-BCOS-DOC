@@ -83,10 +83,14 @@ BFS在区块链节点中是以系统合约的形式存在，在Solidity环境中
 目前BFS提供了两个主要接口：
 
 ```solidity
-// 获取绝对路径下的所有子项目，如果路径对应的是合约，则返回合约的元信息
-function list(string absolutePath) public returns (string);
 // 在绝对路径下创建目录，如果创建过程中出现错误，将会返回错误码
 function mkdir(string absolutePath) public returns (int256);
+// 获取绝对路径下的所有子项目，如果路径对应的是合约，则返回合约的元信息
+function list(string memory absolutePath) public view returns (int256,BfsInfo[] memory);
+// 生成软链
+function link(string memory name, string memory version, address _address, string memory _abi) public returns (int256){}
+function readlink(string memory absolutePath) public view returns (address) {}
+function touch(string memory absolutePath, string memory fileType) public returns (int256){}
 ```
 
 ## BFS使用

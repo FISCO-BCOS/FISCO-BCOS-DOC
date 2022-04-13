@@ -23,10 +23,6 @@
 
 ### 合约相关命令
 
-- 利用**CNS**部署和调用合约(**推荐**)
-  - 部署合约: [deployByCNS](./console_commands.html#deploybycns)
-  - 调用合约: [callByCNS](./console_commands.html#callbycns)
-  - 查询CNS部署合约信息: [queryCNS](./console_commands.html#querycns)
 - 普通部署和调用合约
   - 部署合约: [deploy](./console_commands.html#deploy)
   - 调用合约: [call](./console_commands.html#call)
@@ -63,16 +59,16 @@
 输入help或者h，查看控制台所有的命令。
 
 ```shell
-[group0]: /> help
+[group0]: /apps> help
 * help([-h, -help, --h, --H, --help, -H, h])  Provide help information
 * addObserver                               Add an observer node
 * addSealer                                 Add a sealer node
 * call                                      Call a contract by a function and parameters
-* callByCNS                                 Call a contract by a function and parameters by CNS
 * cd                                        Change dir to given path.
 * clearNodeName                             Clear default node name to empty.
+* create                                    Create table by sql
 * deploy                                    Deploy a contract on blockchain
-* deployByCNS                               Deploy a contract on blockchain by CNS
+* desc                                      Description table information
 * quit([quit, q, exit])                     Quit console
 * getBlockByHash                            Query information about a block by hash
 * getBlockByNumber                          Query information about a block by number
@@ -105,18 +101,18 @@
 * listAbi                                   List functions and events info of the contract.
 * listAccount                               List the current saved account list
 * listDeployContractAddress                 List the contractAddress for the specified contract
+* ln                                        Create a link to access contract.
 * loadAccount                               Load account for the transaction signature
 * ls                                        List resources in given path.
 * mkdir                                     Create dir in given path.
 * newAccount                                Create account
 * pwd                                       Show absolute path of working directory name
-* queryCNS                                  Query CNS information by contract name and contract version
-* registerCNS                               RegisterCNS information for the given contract
 * removeNode                                Remove a node
 * switch([s])                               Switch to a specific group by name
 * setConsensusWeight                        Set consensus weight for the specified node
 * setNodeName                               Set default node name to send request.
 * setSystemConfigByKey                      Set a system config value by key
+* tree                                      List contents of directories in a tree-like format.
 ---------------------------------------------------------------------------------------------
 ```
 
@@ -126,7 +122,7 @@
 - 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：
 
 ```shell
-[group0]: /> getBlockByNumber -h
+[group0]: /apps> getBlockByNumber -h
 Query information about a block by block number.
 Usage: 
 getBlockByNumber blockNumber [boolean]
@@ -139,7 +135,7 @@ getBlockByNumber blockNumber [boolean]
 运行switch或者s，切换到指定群组。群组号显示在命令提示符前面。
 
 ```shell
-[group0]: />  switch group2
+[group0]: /apps>  switch group2
 Switched to group2.
 
 [group2]>
@@ -164,19 +160,24 @@ quit
 Solidity部署参数：
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：HelloWorld。
+- 开启静态分析：可选项，默认为关闭。若开启，则会开启静态分析并行字段冲突域，加速合约并行执行速度。静态分析需要耗时较久，请耐心等待一段时间。
 
 ```shell
 # 部署HelloWorld合约，默认路径
-[group0]: />  deploy HelloWorld
+[group0]: /apps>  deploy HelloWorld
 contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署HelloWorld合约，相对路径
-[group0]: />  deploy contracts/solidity/HelloWorld.sol
+[group0]: /apps>  deploy contracts/solidity/HelloWorld.sol
 contract address:0x4721D1A77e0E76851D460073E64Ea06d9C104194
 
 # 部署HelloWorld合约，绝对路径
-[group0]: />  deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
+[group0]: /apps>  deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
 contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
+
+# 开启静态分析选项
+[group0]: /apps> deploy HelloWorld -p
+contract address: 0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94
 ```
 
 **注：**
@@ -194,7 +195,7 @@ contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 
 ```shell
 # 部署HelloWorld合约，相对路径
-[group0]: /> deploy asset/asset.wasm asset/asset.abi asset_test
+[group0]: /apps> deploy asset/asset.wasm asset/asset.abi asset_test
 transaction hash: 0x7498487dbf79378b5b50c4e36c09ea90842a343de307ee66d560d005d3c40ccb
 contract address: /asset_test
 currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
@@ -215,7 +216,7 @@ currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
 
 ```shell
 # 调用HelloWorld的get接口获取name字符串
-[group0]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
+[group0]: /apps> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -227,7 +228,7 @@ Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 
 # 调用HelloWorld的set接口设置name字符串
-[group0]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 set "Hello, FISCO BCOS 3.0" 
+[group0]: /apps> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 set "Hello, FISCO BCOS 3.0" 
 transaction hash: 0x622808fb47e765576e444175793e74230ac4cd056b18d578d23442eb5a0102a0
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -243,7 +244,7 @@ Event logs
 Event: {}
 
 # 调用HelloWorld的get接口获取name字符串，检查设置是否生效
-[group0]: /> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
+[group0]: /apps> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -254,34 +255,6 @@ Return types: (string)
 Return values:(Hello, FISCO BCOS 3.0)
 ---------------------------------------------------------------------------------------------
 
-# 调用KVTableTest的set接口插入记录，字段为name, item_id, item_name
-[group0]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 set "fruit" "1" "apple"
-transaction hash: 0xa92e85febdb6dba0fc0fecf8113caeed2b60860ffc01139c067e847c5f7684d1
----------------------------------------------------------------------------------------------
-transaction status: 0
-description: transaction executed successfully
----------------------------------------------------------------------------------------------
-Receipt message: Success
-Return message: Success
-Return value size:1
-Return types: (int256)
-Return values:(1)
----------------------------------------------------------------------------------------------
-Event logs
-Event: {}
-
-
-# 调用KVTableTest的get接口查询记录
-[group0]: /> call KVTableTest 0xd24180cc0feF2f3E545de4F9AAFc09345cD08903 get "fruit" 
----------------------------------------------------------------------------------------------
-Return code: 0
-description: transaction executed successfully
-Return message: Success
----------------------------------------------------------------------------------------------
-Return value size:3
-Return types: (bool, string, string)
-Return values:(true, 1, apple)
----------------------------------------------------------------------------------------------
 ```
 
 **Liquid参数:**
@@ -292,7 +265,7 @@ Return values:(true, 1, apple)
 
 ```shell
 # 调用 /apps/asset_test 路径下的合约，注册一个新的资产 asset1
-[group0]: /> call ./apps/asset_test register asset1 10000
+[group0]: /apps> call ./apps/asset_test register asset1 10000
 transaction hash: 0xf9289064053eed8a71b4af43fd793dc1cd703d75f74b19e302bc4456e523fcf2
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -308,7 +281,7 @@ Event logs
 Event: {}
 
 # 调用 /apps/asset_test 路径下的合约，查询资产 asset1
-[group0]: /> call ./apps/asset_test select asset1
+[group0]: /apps> call ./apps/asset_test select asset1
 transaction hash: 0x68867d2e55a1c16c96ec31f96a9c913c5995b4cb9ff8985b016a18b80e9c02cb
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -333,7 +306,7 @@ Event: {}
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
 
 ```shell
-[group0]: />  getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
+[group0]: /apps>  getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
 ```
 
@@ -346,7 +319,7 @@ Event: {}
 - 合约名：(可选)合约名称，默认情况下使用合约文件名作为合约名参数
 
 ```shell
-[group0]: /> listAbi KVTableTest
+[group0]: /apps> listAbi KVTableTest
 Method list:
  name                |    constant  |    methodId    |    signature
   --------------------------------------------------------------
@@ -370,159 +343,19 @@ Event list:
 - 日志行数，可选，根据输入的期望值返回最新的日志信息，当实际条数少于期望值时，按照实际数量返回。当期望值未给出时，默认按照20条返回最新的日志信息。
 
 ```shell
-[group0]: />  getDeployLog 2
+[group0]: /apps>  getDeployLog 2
 
 2019-05-26 08:37:03  [group]  HelloWorld            0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 2019-05-26 08:37:45  [group]  KVTableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 
-[group0]: />  getDeployLog 1
+[group0]: /apps>  getDeployLog 1
 
 2019-05-26 08:37:45  [group]  KVTableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
 
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
-### 6. deployByCNS
-
-运行deployByCNS，用CNS部署的合约，可用合约名直接调用。
-参数：
-
-- 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
-- 合约版本号：部署的合约版本号。
-
-```shell
-# 部署HelloWorld合约1.0版
-[group0]: />  deployByCNS HelloWorld 1.0
-transaction hash: 0xb994d8e510f147815bdf9838fda542e553c2fe981177ee7a97a0686b9619cfbb
-contract address: 0xf485b9ccfffa668f4d7fac37c81c0cd63408188c
-{
-    "code":0,
-    "msg":"Success"
-}
-
-# 部署HelloWorld合约2.0版
-[group0]: />  deployByCNS HelloWorld 2.0
-transaction hash: 0x3132f73e5af72fce44c2e07185a04f554ac06ddd94119dcf798980695b0890a0
-contract address: 0xf68a1aabfad336847e109c33ca471b192c93c0a9
-{
-    "code":0,
-    "msg":"Success"
-}
-
-# 部署TableTest合约
-[group0]: />  deployByCNS KVTableTest 1.0
-transaction hash: 0x288ccc6e166e43f5cd3bd563e00af48988e641196aaea57a59f0ab256e23c84e
-contract address: 0x0fe221339e50c39aaefddfc3a9a26b4aeff23c63
-{
-    "code":0,
-    "msg":"Success"
-}
-```
-
-**注：**
-
-- 部署用户编写的合约，可以将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
-- 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
-- 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
-
-
-### 7. queryCNS
-
-运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。
-参数：
-
-- 合约名称：部署的合约名称。
-- 合约版本号：(可选)部署的合约版本号。
-
-```shell
-[group0]: /> queryCNS HelloWorld
----------------------------------------------------------------------------------------------
-* contract address: 6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
-* contract version: 1.0
----------------------------------------------------------------------------------------------
-* contract address: c8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085
-* contract version: 2.0
----------------------------------------------------------------------------------------------
-
-[group0]: /> queryCNS HelloWorld 1.0
----------------------------------------------------------------------------------------------
-* contract address: 0x6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
-* contract version: 1.0
----------------------------------------------------------------------------------------------
-```
-
-### 8. callByCNS
-
-运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。
-参数：
-
-- 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`。当省略合约版本号时，例如`HelloWorld`，则调用最新版本的合约。
-- 合约接口名：调用的合约接口名。
-- 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
-
-```shell
-# 调用HelloWorld合约1.0版，通过set接口设置name字符串
-[group0]: />  callByCNS HelloWorld:1.0 set "Hello,CNS"
-transaction hash: 0x7ad2f34a13bbc2272d2d52fa46915e6f03136a6960d84a23478bee3c37e76ad6
----------------------------------------------------------------------------------------------
-transaction status: 0x0
-description: transaction executed successfully
----------------------------------------------------------------------------------------------
-Output
-Receipt message: Success
-Return message: Success
----------------------------------------------------------------------------------------------
-Event logs
-Event: {}
-
-# 调用HelloWorld合约2.0版，通过set接口设置name字符串
-[group0]: />  callByCNS HelloWorld:2.0 set "Hello,CNS2"
-transaction hash: 0x41f8decbe137905824321da6c28a19d957e902cfad1e8078d797bc649c078d3e
----------------------------------------------------------------------------------------------
-transaction status: 0x0
-description: transaction executed successfully
----------------------------------------------------------------------------------------------
-Output
-Receipt message: Success
-Return message: Success
----------------------------------------------------------------------------------------------
-Event logs
-Event: {}
-
-# 调用HelloWorld合约1.0版，通过get接口获取name字符串
-[group0]: />  callByCNS HelloWorld:1.0 get
----------------------------------------------------------------------------------------------
-Return code: 0
-description: transaction executed successfully
-Return message: Success
----------------------------------------------------------------------------------------------
-Return values:
-[
-    "Hello,CNS"
-]
----------------------------------------------------------------------------------------------
-
-```
-
-### 9. registerCNS
-
-注册合约至CNS。
-
-参数：
-
-- 合约路径: 合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
-- 合约地址: 注册合约地址
-- 合约版本号: 注册合约版本号
-
-```shell
-[group0]: />  registerCNS HelloWorld 0xf19a7ec01f0b1adb16a033f0a30fb321ec6edcbf v1.0.0
-{
-    "code":0,
-    "msg":"success"
-}
-```
-
-### 10. listDeployContractAddress
+### 6. listDeployContractAddress
 
 列出指定合约名部署的所有合约地址，
 列出部署指定合约产生的合约地址列表，参数：
@@ -532,7 +365,7 @@ Return values:
 
 ```shell
 # 获取部署HelloWorld合约产生的合约地址列表
-[group0]: />  listDeployContractAddress HelloWorld
+[group0]: /apps>  listDeployContractAddress HelloWorld
 0xe157185434183b276b9e5af7d0315a9829171281  2020-10-13 15:35:29
 0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
 0xd7d0b221bc984a20aa6b0fc098dad89888378e3a  2020-10-13 15:34:14
@@ -547,7 +380,7 @@ Return values:
 
 
 # 限制显示的合约地址列表长度为2
-[group0]: />  listDeployContractAddress HelloWorld 2
+[group0]: /apps>  listDeployContractAddress HelloWorld 2
 0xe157185434183b276b9e5af7d0315a9829171281  2020-10-13 15:35:29
 0x136b042e1fc480b03e1e5b075cbdfa52f5851a23  2020-10-13 15:35:22
 ```
@@ -559,7 +392,7 @@ Return values:
 运行getBlockNumber，查看区块高度。
 
 ```shell
-[group0]: />  getBlockNumber
+[group0]: /apps>  getBlockNumber
 90
 ```
 
@@ -568,7 +401,7 @@ Return values:
 运行getSyncStatus，查看同步状态。
 
 ```shell
-[group0]: /> getSyncStatus 
+[group0]: /apps> getSyncStatus 
 SyncStatusInfo{
     isSyncing='false',
     protocolId='null',
@@ -607,7 +440,7 @@ SyncStatusInfo{
 运行getPeers，查看节点的peers。
 
 ```shell
-[group0]: /> getPeers 
+[group0]: /apps> getPeers 
 PeersInfo{
     p2pNodeID='3082010a0282010100ced891dad17f04738a2da965264e1387c707b351a0a4e360341066bb2893635fd4e2717ba203aed68d2733a633ecc097bd70fd0c34f31cf82c1772c60a2b252f5498d41a6b7c7d26bad930e38dacee2889fef0e7311f76d4c098c80c8096dc8842d95135e27523aa3cfb1910eb2021bfe8c82f73508e419427f79508ca0d5693e1a913a3749d0496c6fcfc43b69eca7d3bd14a9d6e079737af7cf9ad0e78a40ddb6e3081ef88c9928b3864141933d360dada8a197b45cfebb475efba05387cbf54bfb8357681bdc27c1b48b7ab460dc01b1cb8d5ff8256ad36f1e8c1e4dce63d8758bb08a9f9829e366ef5233997b5ff46ec064e46136a8770addc927bbbc81f0203010001',
     endPoint='0.0.0.0:30300',
@@ -669,7 +502,7 @@ PeersInfo{
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 
 ```shell
-[group0]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42
+[group0]: /apps> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42
 {
     transactions=[
         {
@@ -712,7 +545,7 @@ PeersInfo{
     ]
 }
 
-[group0]: /> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42 true
+[group0]: /apps> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42 true
 {
     transactions=[
         TransactionHash{
@@ -756,7 +589,7 @@ PeersInfo{
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
 
 ```shell
-[group0]: /> getBlockByNumber 1
+[group0]: /apps> getBlockByNumber 1
 {
     transactions=[
         {
@@ -799,7 +632,7 @@ PeersInfo{
     ]
 }
 
-[group0]: /> getBlockByNumber 1 true
+[group0]: /apps> getBlockByNumber 1 true
 {
     transactions=[
         TransactionHash{
@@ -841,7 +674,7 @@ PeersInfo{
 - 区块高度：十进制整数。
 
 ```shell
-[group0]: />  getBlockHashByNumber 1
+[group0]: /apps>  getBlockHashByNumber 1
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
 
@@ -853,7 +686,7 @@ PeersInfo{
 - 交易哈希：0x开头的交易哈希值。
 
 ```shell
-[group0]: /> getTransactionByHash 0x459e0bbe907bc1fb34367a150a3485921e5ce3d49c6b044e8ebb7171f8081241
+[group0]: /apps> getTransactionByHash 0x459e0bbe907bc1fb34367a150a3485921e5ce3d49c6b044e8ebb7171f8081241
 {
     version='0',
     from='0x3977d248ce98f3affa78a800c4f234434355aa77',
@@ -877,7 +710,7 @@ PeersInfo{
 - 交易哈希：0x开头的交易哈希值。
 
 ```shell
-[group0]: />  getTransactionReceipt 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
+[group0]: /apps>  getTransactionReceipt 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
 {
     "blockHash":"0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b",
     "blockNumber":"0x8",
@@ -908,7 +741,7 @@ PeersInfo{
 运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。
 
 ```shell
-[group0]: />  getPendingTxSize
+[group0]: /apps>  getPendingTxSize
 0
 ```
 
@@ -917,7 +750,7 @@ PeersInfo{
 运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。
 
 ```shell
-[group0]: />  getTotalTransactionCount
+[group0]: /apps>  getTotalTransactionCount
 {
     "blockNumber":1,
     "txSum":1,
@@ -938,7 +771,7 @@ PeersInfo{
 - value
 
 ```shell
-[group0]: />  setSystemConfigByKey tx_count_limit 100
+[group0]: /apps>  setSystemConfigByKey tx_count_limit 100
 {
     "code":0,
     "msg":"success"
@@ -953,62 +786,8 @@ PeersInfo{
 - key
 
 ```shell
-[group0]: />  getSystemConfigByKey tx_count_limit
+[group0]: /apps>  getSystemConfigByKey tx_count_limit
 100
-```
-
-## 账户操作命令
-
-### 1. newAccount
-
-创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`account`目录下。
-
-```shell
-# 控制台连接非国密区块链时，账户文件自动保存在`account/ecdsa`目录
-# 控制台连接国密区块链时，账户文件自动保存在`accout/gm`目录下
-[group0]: />  newAccount
-AccountPath: account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
-Note: This operation does not create an account in the blockchain, but only creates a local account, and deploying a contract through this account will create an account in the blockchain
-newAccount: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
-AccountType: ecdsa
-
-$ ls -al account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
-$ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
-```
-
-### 2. loadAccount
-
-加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
-参数：
-
-- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
-
-- 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
-
-```shell
-[group0]: />  loadAccount 0x6fad87071f790c3234108f41b76bb99874a6d813
-Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
-```
-
-### 3. listAccount
-
-查看当前加载的所有账户信息
-
-```shell
-[group0]: />  listAccount
-0x6fad87071f790c3234108f41b76bb99874a6d813(current account) <=
-0x726d9f31cf44debf80b08a7e759fa98b360b0736
-```
-
-**注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`loadAccount`进行切换**
-
-### 4. getCurrentAccount
-
-获取当前账户地址。
-
-```shell
-[group0]: />  getCurrentAccount
-0x6fad87071f790c3234108f41b76bb99874a6d813
 ```
 
 ## 共识操作命令
@@ -1018,7 +797,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getSealerList，查看共识节点列表。
 
 ```shell
-[group0]: />  getSealerList
+[group0]: /apps>  getSealerList
 [
     Sealer{
         nodeID='44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85',
@@ -1044,7 +823,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getObserverList，查看观察节点列表。
 
 ```shell
-[group0]: />  getObserverList
+[group0]: /apps>  getObserverList
 [  
     bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824
 ]
@@ -1055,7 +834,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getPbftView，查看pbft视图。
 
 ```shell
-[group0]: />  getPbftView
+[group0]: /apps>  getPbftView
 2730
 ```
 
@@ -1064,7 +843,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 运行getConsensusStatus，查看共识状态。
 
 ```shell
-[group0]: /> getConsensusStatus 
+[group0]: /apps> getConsensusStatus 
 ConsensusStatusInfo{
     nodeID='44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85',
     index=0,
@@ -1109,7 +888,7 @@ ConsensusStatusInfo{
 - 节点权重
 
 ```shell
-[group0]: /> addSealer bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824 2
+[group0]: /apps> addSealer bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824 2
 {
     "code":0,
     "msg":"Success"
@@ -1124,7 +903,7 @@ ConsensusStatusInfo{
 - 节点nodeId
 
 ```shell
-[group0]: />  addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+[group0]: /apps>  addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
     "code":0,
     "msg":"success"
@@ -1139,7 +918,7 @@ ConsensusStatusInfo{
 - 节点nodeId
 
 ```shell
-[group0]: />  removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
+[group0]: /apps>  removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
     "code":0,
     "msg":"success"
@@ -1151,11 +930,188 @@ ConsensusStatusInfo{
 运行setConsensusWeight，设置某一个特定节点的共识权重。
 
 ```shell
-[group0]: /> setConsensusWeight 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85 2
+[group0]: /apps> setConsensusWeight 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85 2
 {
     "code":0,
     "msg":"Success"
 }
+```
+
+## 合约表操作命令
+
+### 1. create
+
+运行create sql语句创建用户表，使用mysql语句形式。
+
+```bash
+# 创建用户表t_demo，其主键为name，其他字段为item_id和item_name
+[group0]: /apps> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
+Create 't_demo' Ok.
+
+# 创建好的t_demo表会在绝对路径 /tables/ 底下可以观察到
+[group0]: /apps> ls ../tables/
+t_demo
+```
+
+**注意：**
+
+- 创建的表名带上前缀的长度不能超过50，例如： /tables/t_demo 的长度不能超过50。
+- 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型，也按照字符串类型设置。
+- 必须指定主键字段。例如创建t_demo表，主键字段为name。
+- 表的主键与关系型数据库中的主键不是相同概念，这里主键取值不唯一，区块链底层处理记录时需要传入主键值。
+- 可以指定字段为主键，但设置的字段自增，非空，索引等修饰关键字不起作用。
+
+### 2. desc
+
+运行desc语句查询表的字段信息，使用mysql语句形式。
+
+```
+# 查询t_demo表的字段信息，可以查看表的主键名和其他字段名
+[group0]: /apps> desc t_demo
+{
+    "key":"name",
+    "valueFields":"item_id,item_name"
+}
+```
+
+## BFS操作命令
+
+### 1. cd
+
+与Linux的cd命令类似，可以切换当前所在的路径，支持绝对路径、相对路径。
+
+```shell
+[group0]: /apps> cd ../tables
+
+[group0]: /tables>
+
+[group0]: /apps> cd ../tables/test
+
+[group0]: /tables/test>
+
+[group0]: /tables/test> cd ../../
+
+[group0]: />
+```
+
+### 2. ls
+
+与Linux的ls命令相似，可以查看当前路径下的资源，如果是目录，则展示出该目录下所有资源；如果是合约，则展示该合约的元信息。
+
+ls参数为0时，展示当前文件夹，ls 参数为1时，支持绝对路径和相对路径。
+
+```shell
+[group0]: /> ls
+apps usr sys tables
+
+[group0]: /> ls apps
+Hello
+
+[group0]: /> ls ./apps/Hello
+name: Hello, type: contract
+```
+
+### 3. mkdir
+
+与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
+
+```shell
+[group0]: /> mkdir /apps/test
+
+[group0]: /> cd /apps
+
+[group0]: /apps> ls
+test
+
+[group0]: /> mkdir ./test/test
+
+[group0]: /> ls ./test
+test
+```
+
+### 4. ln
+
+与Linux的ln命令相似，创建某个合约资源的链接，可以通过直接调用链接发起对实际合约的调用。
+
+```bash
+# 创建合约软链接，合约名为Hello，合约版本为latest
+[group0]: /apps> ln Hello/latest 0x19a6434154de51c7a7406edF312F01527441B561
+{
+    "code":0,
+    "msg":"Success"
+}
+
+# 创建的软链会在/apps/目录下创建链接文件
+[group0]: /apps> ls ./Hello/latest 
+latest -> 19a6434154de51c7a7406edf312f01527441b561      
+
+# 可以直接调用链接
+[group0]: /apps> call ./Hello/latest get
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return value size:1
+Return types: (string)
+Return values:(Hello, World!)
+---------------------------------------------------------------------------------------------
+
+[group0]: /apps> deploy HelloWorld
+contract address: 0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
+
+# 可以覆盖版本号
+[group0]: /apps> ln Hello/latest  0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
+{
+    "code":0,
+    "msg":"Success"
+}
+
+[group0]: /apps> ls ./Hello/latest 
+latest -> 2b5dcbae97f9d9178e8b051b08c9fb4089bae71b  
+```
+
+### 5. tree
+
+与Linux的tree命令相似，将指定BFS路径下的资源以树形结构的形式展示出来。默认深度为3，可使用参数设置深度，不超过5。
+
+```bash
+[group0]: /apps> tree ..
+/
+├─apps
+│ └─Hello
+│   └─latest
+├─sys
+│ ├─auth
+│ ├─bfs
+│ ├─consensus
+│ ├─crypto_tools
+│ ├─kv_storage
+│ ├─parallel_config
+│ ├─status
+│ └─table_storage
+├─tables
+│ └─person
+└─usr
+
+5 directory, 10 contracts.
+
+# 使用深度为1
+[group0]: /apps> tree .. 1
+/
+├─apps
+├─sys
+├─tables
+└─usr
+```
+
+### 6. pwd
+
+与Linux的pwd命令相似，没有参数，展示当前路径。
+
+```shell
+[group0]: /apps/Hello/BFS>  pwd
+/apps/Hello/BFS
 ```
 
 ## 群组查询命令
@@ -1165,7 +1121,7 @@ ConsensusStatusInfo{
 运行getGroupPeers，查看节点所在group的共识节点和观察节点列表。
 
 ```shell
-[group0]: /> getGroupPeers 
+[group0]: /apps> getGroupPeers 
 peer0: 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85
 peer1: bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824
 peer2: c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c
@@ -1177,7 +1133,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 运行getGroupInfo，查看节点所在group的详细信息。
 
 ```shell
-[group0]: /> getGroupInfo
+[group0]: /apps> getGroupInfo
 {
     "chainID":"chain0",
     "groupID":"group0",
@@ -1236,7 +1192,7 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 运行getGroupList，查看群组列表：
 
 ```shell
-[group0]: /> getGroupList
+[group0]: /apps> getGroupList
 group0: group
 ```
 
@@ -1245,7 +1201,7 @@ group0: group
 运行getGroupList，查看所有的群组信息列表：
 
 ```shell
-[group0]: /> getGroupInfoList 
+[group0]: /apps> getGroupInfoList 
 [
     {
         "chainID":"chain0",
@@ -1306,7 +1262,7 @@ group0: group
 运行getGroupNodeInfo命令，获取当前群组内某一个节点的信息：
 
 ```shell
-[group0]: /> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
+[group0]: /apps> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
 {
     "type":0,
     "iniConfig":{
@@ -1328,93 +1284,6 @@ group0: group
     "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
     "serviceInfoList":null
 }
-
-[group0]: /> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
-{
-    "type":0,
-    "iniConfig":{
-        "binaryInfo":{
-            "version":"3.0.0-rc1",
-            "gitCommitHash":"92ac16b4d2da511cbba33031e58369cac240547a",
-            "platform":"Darwin/appleclang",
-            "buildTime":"20211203 10:43:32"
-        },
-        "chainID":"chain0",
-        "groupID":"group0",
-        "smCryptoType":false,
-        "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-        "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-        "rpcServiceName":"",
-        "gatewayServiceName":"",
-        "isWasm":false
-    },
-    "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-    "serviceInfoList":null
-}
-```
-
-## BFS操作命令
-
-### 1. cd
-
-与Linux的cd命令类似，可以切换当前所在的路径，支持绝对路径、相对路径。
-
-```shell
-[group0]: /> cd /tables
-
-[group0]: /tables>
-
-[group0]: /> cd ./tables/test
-
-[group0]: /tables/test>
-
-[group0]: /tables/test> cd ../../
-
-[group0]: />
-```
-
-### 2. ls
-
-与Linux的ls命令相似，可以查看当前路径下的资源，如果是目录，则展示出该目录下所有资源；如果是合约，则展示该合约的元信息。
-
-ls参数为0时，展示当前文件夹，ls 参数为1时，支持绝对路径和相对路径。
-
-```shell
-[group0]: /> ls
-apps usr sys tables
-
-[group0]: /> ls apps
-Hello
-
-[group0]: /> ls ./apps/Hello
-name: Hello, type: contract
-```
-
-### 3. mkdir
-
-与Linux的mkdir命令相似，在某个文件夹下创建新的目录，支持绝对路径和相对路径。
-
-```shell
-[group0]: /> mkdir /apps/test
-
-[group0]: /> cd /apps
-
-[group0]: /apps> ls
-test
-
-[group0]: /> mkdir ./test/test
-
-[group0]: /> ls ./test
-test
-```
-
-### 4. pwd
-
-与Linux的pwd命令相似，没有参数，展示当前路径。
-
-```shell
-[group0]: /apps/Hello/BFS>  pwd
-/apps/Hello/BFS
 ```
 
 ## 权限操作命令
@@ -1424,7 +1293,7 @@ test
 在初始化时，将会部署一个治理委员，该治理委员的地址信息在 build_chain.sh时自动生成或者指定。初始化只有一个委员，并且委员的权重为1
 
 ```shell
-[group0]: /> getCommitteeInfo 
+[group0]: /apps> getCommitteeInfo 
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -1459,7 +1328,7 @@ status分为以下几种：
 - unknown：这个类型出现时，有可能是有bug
 
 ```shell
-[group0]: /> getProposalInfo 1
+[group0]: /apps> getProposalInfo 1
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Proposal Type   : setWeight
@@ -1481,7 +1350,7 @@ Against Voters:
 - 白名单，只有在白名单的用户可以部署
 
 ```shell
-[group0]: /> getDeployAuth
+[group0]: /apps> getDeployAuth
 There is no deploy strategy, everyone can deploy contracts.
 ```
 
@@ -1495,16 +1364,16 @@ There is no deploy strategy, everyone can deploy contracts.
 
 ```shell
 # 当前的部署权限为白名单模式
-[group0]: /> getDeployAuth 
+[group0]: /apps> getDeployAuth 
 Deploy strategy is White List Access.
 
 # 如果不选择参数，则检查当前的账号是否有部署权限
-[group0]: /> checkDeployAuth 
+[group0]: /apps> checkDeployAuth 
 Deploy : PERMISSION DENIED
 Account: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 # 检查其他账户是否有权限
-[group0]: /> checkDeployAuth 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
+[group0]: /apps> checkDeployAuth 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 Deploy : ACCESS
 Account: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 ```
@@ -1515,21 +1384,21 @@ Account: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 
 ```shell
 # 设置0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b 地址的合约的 set(string) 为白名单模式
-[group0]: /> setMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) white_list
+[group0]: /apps> setMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) white_list
 {
     "code":0,
     "msg":"Success"
 }
 
 # 如果不选择参数，则检查当前账号是否有调用权限
-[group0]: /> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string)
+[group0]: /apps> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string)
 Method   : PERMISSION DENIED
 Account  : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 Interface: set(string)
 Contract : 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
 
 # 检查其他账号的权限
-[group0]: /> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /apps> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Method   : ACCESS
 Account  : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Interface: set(string)
@@ -1541,7 +1410,7 @@ Contract : 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
 为了避免发起提案超时、退出控制台遗忘提案ID，getLatestProposal的命令可以获取当前委员会的最新的提案信息。
 
 ```shell
-[group0]: /> getLatestProposal 
+[group0]: /apps> getLatestProposal 
 Latest proposal ID: 9
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1560,7 +1429,7 @@ Against Voters:
 
 ```shell
 # 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-[group0]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /apps> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 ```
 
@@ -1571,7 +1440,7 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff6
 如果是删除治理委员，将一个治理委员的权重设置为0 即可
 
 ```shell
-[group0]: /> updateGovernorProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 2
+[group0]: /apps> updateGovernorProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 2
 Update governor proposal created, ID is: 1
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1592,7 +1461,7 @@ Against Voters:
 阈值在这里是以百分比为单位进行使用的。
 
 ```shell
-[group0]: /> setRateProposal 51 51
+[group0]: /apps> setRateProposal 51 51
 Set rate proposal created, ID is: 2
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1611,7 +1480,7 @@ Against Voters:
 设置部署的ACL策略，只支持 white_list 和 black_list 两种策略
 
 ```shell
-[group0]: /> setDeployAuthTypeProposal white_list
+[group0]: /apps> setDeployAuthTypeProposal white_list
 Set deploy auth type proposal created, ID is: 4
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1623,7 +1492,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group0]: /> getDeployAuth 
+[group0]: /apps> getDeployAuth 
 Deploy strategy is White List Access.
 ```
 
@@ -1633,14 +1502,14 @@ Deploy strategy is White List Access.
 
 ```shell
 # 在白名单模式下，只有白名单内的用户可以使用
-[group0]: /> deploy HelloWorld 
+[group0]: /apps> deploy HelloWorld 
 deploy contract for HelloWorld failed!
 return message: Permission denied
 return code:18
 Return values:null
 
 # 治理委员开启自己（也可以其他账号）的部署权限
-[group0]: /> openDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /apps> openDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 Open deploy auth proposal created, ID is: 5
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1653,7 +1522,7 @@ Agree Voters:
 Against Voters:
 
 # 再次部署，可以成功
-[group0]: /> deploy HelloWorld 
+[group0]: /apps> deploy HelloWorld 
 transaction hash: 0x732e29baa263fc81e17a93a4102a0aa1cc2ec33ffbc1408c6b206d124b7f7ae0
 contract address: 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1666,13 +1535,13 @@ currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 ```shell
 # 账号可以部署合约
-[group0]: /> deploy HelloWorld 
+[group0]: /apps> deploy HelloWorld 
 transaction hash: 0x732e29baa263fc81e17a93a4102a0aa1cc2ec33ffbc1408c6b206d124b7f7ae0
 contract address: 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 # 关闭账号的部署权限
-[group0]: /> closeDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 
+[group0]: /apps> closeDeployAuthProposal 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 
 Close deploy auth proposal created, ID is: 6
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1685,7 +1554,7 @@ Agree Voters:
 Against Voters:
 
 # 该账号不再可以部署合约
-[group0]: /> deploy HelloWorld 
+[group0]: /apps> deploy HelloWorld 
 deploy contract for HelloWorld failed!
 return message: Permission denied
 return code:18
@@ -1699,11 +1568,11 @@ Return values:null
 
 ```shell
 # 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-[group0]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /apps> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 # reset 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号为 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
-[group0]: /> resetAdminProposal 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a  0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /apps> resetAdminProposal 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a  0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Reset contract admin proposal created, ID is: 8
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1715,7 +1584,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-[group0]: /> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+[group0]: /apps> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
 Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 
 ```
@@ -1726,7 +1595,7 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f
 
 ```shell
 # 可以看到当前委员会的人数为2人，参与通过阈值和成功阈值均为51%
-[group0]: /> getCommitteeInfo 
+[group0]: /apps> getCommitteeInfo 
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -1738,7 +1607,7 @@ index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 2
 index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
 
 # 发起一个提案，此时需要另外一个委员会同意才能通过，状态为notEnoughVotes
-[group0]: /> setRateProposal 66 66
+[group0]: /apps> setRateProposal 66 66
 Set rate proposal created, ID is: 11
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1751,7 +1620,7 @@ Agree Voters:
 Against Voters:
 
 # 当前账户主动取消提案，提案的状态变为revoke
-[group0]: /> revokeProposal 11
+[group0]: /apps> revokeProposal 11
 Revoke proposal success.
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1771,7 +1640,7 @@ Against Voters:
 
 ```shell
 # 当前账号发起设置阈值变化的提案，提案ID为12
-[group0]: /> setRateProposal 66 66
+[group0]: /apps> setRateProposal 66 66
 Set rate proposal created, ID is: 12
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1784,11 +1653,11 @@ Agree Voters:
 Against Voters:
 
 # 此时模拟另外一个治理委员账户登陆
-[group0]: /> loadAccount 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a 
+[group0]: /apps> loadAccount 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a 
 Load account 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a success!
 
 # 该治理委员投票12为同意（默认第二个参数为true，第二个参数为false时表示拒绝该提案）
-[group0]: /> voteProposal 12
+[group0]: /apps> voteProposal 12
 Vote proposal success.
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1802,7 +1671,7 @@ Agree Voters:
 Against Voters:
 
 # 此时治理委员会的信息已经变更
-[group0]: /> getCommitteeInfo 
+[group0]: /apps> getCommitteeInfo 
 ---------------------------------------------------------------------------------------------
 Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
 ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
@@ -1822,14 +1691,14 @@ index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
 
 ```shell
 # 设置合约地址为 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的HelloWorld合约的 set(string) 接口为白名单模式
-[group0]: /> setMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) white_list
+[group0]: /apps> setMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) white_list
 {
     "code":0,
     "msg":"Success"
 }
 
 # 这个接口目前为白名单模式，只有白名单模式的账号可以调用 set 接口
-[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set 123
+[group0]: /apps> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set 123
 transaction hash: 0x51e43a93b8e6621e45357ba542112117c3dd3e089b5067e06084e36243458074
 ---------------------------------------------------------------------------------------------
 transaction status: 18
@@ -1839,7 +1708,7 @@ Return message: Permission denied
 ---------------------------------------------------------------------------------------------
 
 # 不影响该账号调用 get 接口
-[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get 
+[group0]: /apps> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -1858,14 +1727,14 @@ Return values:(Hello, World!)
 
 ```shell
 # 开启账号0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6 的 0xCcEeF68C9b4811b32c75df284a1396C7C5509561地址的 set(string)接口调用
-[group0]: /> openMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /apps> openMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 {
     "code":0,
     "msg":"Success"
 }
 
 # 该账号可以使用HelloWorld的set接口
-[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "Hello, FISCO BCOS!"
+[group0]: /apps> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "Hello, FISCO BCOS!"
 transaction hash: 0x0b94b775312a771197e5093fe9e24fffc386d0350f1330fe4ded6f3cfb01a0b6
 ---------------------------------------------------------------------------------------------
 transaction status: 0
@@ -1880,7 +1749,7 @@ Return values:()
 Event logs
 Event: {}
 
-[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get
+[group0]: /apps> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 get
 ---------------------------------------------------------------------------------------------
 Return code: 0
 description: transaction executed successfully
@@ -1898,14 +1767,14 @@ Return values:(Hello, FISCO BCOS!)
 
 ```shell
 # 关闭HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的set接口
-[group0]: /> closeMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /apps> closeMethodAuth 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set(string) 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 {
     "code":0,
     "msg":"Success"
 }
 
 # 该账户不再可以访问合约的set接口
-[group0]: /> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "oops, permission deny!"
+[group0]: /apps> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set "oops, permission deny!"
 transaction hash: 0x4db693c3c1fbb498ad1595dac111b5b23efe68a44bd4b622d421e52b4890fdd0
 ---------------------------------------------------------------------------------------------
 transaction status: 18
@@ -1915,3 +1784,56 @@ Return message: Permission denied
 ---------------------------------------------------------------------------------------------
 ```
 
+## 账户操作命令
+
+### 1. newAccount
+
+创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`account`目录下。
+
+```shell
+# 控制台连接非国密区块链时，账户文件自动保存在`account/ecdsa`目录
+# 控制台连接国密区块链时，账户文件自动保存在`accout/gm`目录下
+[group0]: /apps>  newAccount
+AccountPath: account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+Note: This operation does not create an account in the blockchain, but only creates a local account, and deploying a contract through this account will create an account in the blockchain
+newAccount: 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
+AccountType: ecdsa
+
+$ ls -al account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+$ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
+```
+
+### 2. loadAccount
+
+加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
+参数：
+
+- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
+
+- 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
+
+```shell
+[group0]: /apps>  loadAccount 0x6fad87071f790c3234108f41b76bb99874a6d813
+Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
+```
+
+### 3. listAccount
+
+查看当前加载的所有账户信息
+
+```shell
+[group0]: /apps>  listAccount
+0x6fad87071f790c3234108f41b76bb99874a6d813(current account) <=
+0x726d9f31cf44debf80b08a7e759fa98b360b0736
+```
+
+**注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`loadAccount`进行切换**
+
+### 4. getCurrentAccount
+
+获取当前账户地址。
+
+```shell
+[group0]: /apps>  getCurrentAccount
+0x6fad87071f790c3234108f41b76bb99874a6d813
+```
