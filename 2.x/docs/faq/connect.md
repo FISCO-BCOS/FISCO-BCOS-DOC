@@ -4,8 +4,23 @@
 
 Java SDK原则上支持从jdk 1.8到jdk 15版本的`oracle jdk`和`Openjdk`，但中间有部分版本禁用了`secp256k1`曲线，会导致SDK与节点之间握手失败，目前推荐如下版本jdk：
 
-- **`oracle jdk`**:  `oracle jdk 8`, `oracle jdk 11`, `oracle jdk 11.0.8`， `oracle jdk 14.0.2`,  `oracle jdk 15`, `oracle jdk 15.0.1`
-- **`Openjdk`**: `openjdk-1.8.0.252.b09-2`, `Openjdk 11`, `Openjdk-11.0.8.10-0`，`Openjdk-14.0.2.12-1`
+- **`OracleJDK`**:  
+  - 1.8.0_141
+  - 1.8.0_202
+  - 11.0.2
+  - 14.0.2
+  - 15.0.2
+- **`OpenJDK`**:
+  - 11.0.2
+  - 14.0.2
+  - 15.0.2
+
+- **JDK下载链接:**
+  - OracleJDK官网:  
+    - <https://www.oracle.com/java/technologies/downloads/archive/>
+  - 国内镜像:
+    - <http://www.codebaoku.com/jdk/jdk-oracle.html>
+    - <http://www.codebaoku.com/jdk/jdk-openjdk.html>
 
 若从`1.8`到`jdk 15`的某些小版本jdk不支持`secp256k1`曲线，也可以参考 [#issue 470](https://github.com/FISCO-BCOS/java-sdk/issues/470)通过手动修改`java.security`属性的方式启用jdk.
 
