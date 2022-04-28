@@ -253,8 +253,7 @@ vim ~/fiso/java-sdk-demo/dist/conf/log4j2.xml
 
 ```shell
 cd ~/fiso/java-sdk-demo/dist/
-# 必须要带上-Dorg.fisco.bcos.jni.disableSsl="true" 参数，使得发交易不使用SSL
-java -Dorg.fisco.bcos.jni.disableSsl="true" -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceDMC group 32 500000 20000
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceDMC group 32 500000 20000
 ```
 
 #### 测试结果
