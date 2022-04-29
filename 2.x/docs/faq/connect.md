@@ -261,7 +261,7 @@ Caused by: java.lang.NoSuchMethodError: 'void io.netty.handler.ssl.OpenSslContex
 	<dependency>
 		<groupId>org.fisco-bcos.java-sdk</groupId>
 		<artifactId>fisco-bcos-java-sdk</artifactId>
-		<version>2.8.0</version>
+		<version>2.8.1</version>
 		<exclusions>
 			<exclusion>
 				<groupId>io.netty</groupId>
