@@ -25,7 +25,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.2/download_console.sh && bash download_console.sh -c 1.2.0
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.1/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst
