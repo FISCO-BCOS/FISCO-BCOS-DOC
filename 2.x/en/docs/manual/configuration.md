@@ -517,6 +517,19 @@ The number of push threads in the transaction pool is configured as follows:
     notify_worker_num=2
 ```
 
+#### Transaction Expiration Configuration
+
+In order to prevent the txs from pending in the transaction pool for too long when the system is abnormal, FISCO BCOS 2.9.0 introduces the transaction expiration time configuration `txs_expiration_time`. When the txs pending in the transaction pool exceeds `txs_expiration_time`, the transaction pool will actively clear the transaction.
+
+- `[tx_pool].txs_expiration_time`: Transaction expiration time, the default is 10 minutes, the value is required to be not less than the consensus_timeout.
+
+An example of txs_expiration_time configuration is as follows：
+
+```ini
+    ; transaction expiration time, in seconds, default is 10 minute
+    txs_expiration_time=600
+```
+
 ### PBFT consensus configurations
 In order to improve the performance, availability, and network efficiency of the PBFT algorithm, FISCO BCOS has made a series of optimizations for block packaging algorithms and networks, including PBFT block packaging dynamic adjustment strategies, PBFT message forwarding optimization, and PBFT Prepare packet structure optimization.
 

@@ -1081,6 +1081,77 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
   "result": "1000"
 }
 ```
+## addPeers
+Add P2P information to the configuration 
+### Parameters
+- `hostPorts`: `array` - the IP and port of nodes 
+
+### Returns
+- `object`: - result of calling
+  - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+  - `message`: - message
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:20024","127.0.0.1:20025"]],"id":1}' http://127.0.0.1:8545 |jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": " add peers successfully"
+  }
+}
+```
+## erasePeers
+Erase P2P information from the configuration
+### Parameters
+- `hostPorts`: `array` - the IP and port of nodes
+
+### Returns
+- `object`: - result of calling
+  - `code`: - status，it's meaning can be referenced from [Dynamice group management API status code](#Dynamice\ group management\ API\ status\ code)
+  - `message`: - message
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"erasePeers","params":[["127.0.0.1:20024","127.0.0.1:20025"]],"id":1}' http://127.0.0.1:8545 |jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": {
+    "code": "0x0",
+    "message": " erase peers successfully"
+  }
+}
+```
+## queryPeers
+Query the P2P information in the configuration
+### Parameters
+none
+
+### Returns
+- `array` - the IP and port of the nodes in the configuration
+- Example
+```
+// Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"queryPeers","params":[],"id":1}' http://127.0.0.1:8545 |jq
+
+// Result
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    "127.0.0.1:30301",
+    "127.0.0.1:30302",
+    "127.0.0.1:30303"
+  ]
+}
+```
 ## call
 Executes a new message call immediately without creating a transaction on the block chain.
 
