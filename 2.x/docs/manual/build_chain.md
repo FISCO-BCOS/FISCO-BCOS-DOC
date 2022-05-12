@@ -48,6 +48,7 @@ Usage:
     -G <channel use sm crypto ssl>      Default false, only works for guomi mode
     -X <Certificate expiration time>    Default 36500 days
     -T <Enable debug log>               Default off. If set -T, enable debug log
+    -R <Channel use ecdsa crypto ssl>   Default false. If -R is set, use the ecdsa cert for channel ssl, Otherwise the rsa cert will be used
     -S <Enable statistics>              Default off. If set -S, enable statistics
     -F <Disable log auto flush>         Default on. If set -F, disable log auto flush
     -E <Enable free_storage_evm>        Default off. If set -E, enable free_storage_evm
@@ -132,6 +133,9 @@ $ bash build_chain.sh -l 127.0.0.1:2 -p 30300,20200,8545
 ```bash
 docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:latest -c config.ini
 ```
+
+### **`R`选项[**Optional**]**
+`FISCO-BCOS 2.9.0+`版本，`build_chain.sh`在非国密环境默认生成`RSA`格式证书，用于`SDK`与节点`SSL`通信，如果仍然需要使用之前版本的`ECDSA`证书，可以添加`-R`参数。
 
 ### **`s`选项[**Optional**]**
 
@@ -251,6 +255,10 @@ nodes/
 │   │   │   ├── node.crt # 节点证书
 │   │   │   ├── node.key # 节点私钥
 │   │   │   ├── node.nodeid # 节点id，公钥的16进制表示
+|   |   |   ├── channel_cert # 节点与SDK通信的RSA证书，FISCO-BCOS 2.9.0+支持
+|   |   |       ├── ca.crt
+|   |   |       ├── node.crt
+|   |   |       └── node.key
 │   │   ├── config.ini # 节点主配置文件，配置监听IP、端口等
 │   │   ├── start.sh # 启动脚本，用于启动节点
 │   │   └── stop.sh # 停止脚本，用于停止节点
@@ -278,6 +286,10 @@ nodes/
 │   │   ├── ca-agency.crt
 │   │   ├── ca.crt
 │   │   └── cert.cnf
+|   |   └── channel/ # 节点与SDK通过RSA证书SSL通信的根证书，FISCO-BCOS 2.9.0+支持
+|   |      ├── ca.crt
+|   |      ├── ca.key
+|   |      └── ca.srl
 │   ├── ca.crt # 链证书
 │   ├── ca.key # 链私钥
 │   ├── ca.srl
@@ -309,8 +321,8 @@ nodes/
 
 ```bash
 Usage:
-    -v <Version>           Download binary of spectfic version, default latest
-    -b <Branch>            Download binary of spectfic branch
+    -v <Version>           Download binary of specific version, default latest
+    -b <Branch>            Download binary of specific branch
     -o <Output Dir>        Default ./bin
     -l                     List FISCO-BCOS released versions
     -m                     Download mini binary, only works with -b option
