@@ -58,7 +58,7 @@
 在build.gradle中引入Java SDK。
 
 ```
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.0')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
