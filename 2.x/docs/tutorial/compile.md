@@ -91,7 +91,9 @@ make  -j2
 ```bash
 cd FISCO-BCOS
 mkdir -p build && cd build
-cmake ..
+cmake .. 
+# Apple M1 使用下面命令 cmake
+# cmake ../ -DARCH_NATIVE=ON
 make -j2
 ```
 
