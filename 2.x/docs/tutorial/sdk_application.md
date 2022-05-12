@@ -402,7 +402,7 @@ repositories {
 
 ```java
 testImplementation group: 'junit', name: 'junit', version: '4.12'
-implementation ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0')
+implementation ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.0')
 ```
 ![](../../images/tutorial/import_sdk.png)
 
@@ -420,7 +420,7 @@ List spring = [
 
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
-    implementation ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0")
+    implementation ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.0")
     implementation spring
 }
 ```
