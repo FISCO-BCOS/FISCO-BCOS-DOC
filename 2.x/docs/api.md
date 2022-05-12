@@ -1077,7 +1077,18 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 }
 ```
 ## addPeers
-向配置中添加P2P信息
+添加`P2P`连接配置，增加节点`config.ini`配置的`P2P`连接信息
+
+```shell
+// config.ini
+[p2p]
+    ; nodes to connect
+    node.0=127.0.0.1:30300
+    node.1=127.0.0.1:30301
+    node.2=127.0.0.1:30302
+    node.3=127.0.0.1:30303
+```
+
 ### 参数
 - `hostPorts`: `array` - 节点连接的ip和端口
 
@@ -1086,10 +1097,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
   - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理 API 状态码](#动态群组管理\ API\ 状态码)
   - `message`: - 接口消息
 - 示例
-
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:20024","127.0.0.1:20025"]],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:30304","127.0.0.1:30305"]],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -1102,7 +1112,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:
 }
 ```
 ## erasePeers
-从配置中删除P2P信息
+删除`P2P`连接配置，删除节点`config.ini`配置的`P2P`连接信息
 ### 参数
 - `hostPorts`: `array` - 节点连接的ip和端口
 
@@ -1113,7 +1123,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:
 - 示例
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"erasePeers","params":[["127.0.0.1:20024","127.0.0.1:20025"]],"id":1}' http://127.0.0.1:8545 |jq
+curl -X POST --data '{"jsonrpc":"2.0","method":"erasePeers","params":[["127.0.0.1:30300","127.0.0.1:30301"]],"id":1}' http://127.0.0.1:8545 |jq
 
 // Result
 {
@@ -1126,23 +1136,31 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"erasePeers","params":[["127.0.0.
 }
 ```
 ## queryPeers
-查询配置中的P2P信息
+查询`P2P`连接配置，查询节点`config.ini`配置的`P2P`的连接列表
+
+```shell
+// config.ini
+[p2p]
+    ; nodes to connect
+    node.0=127.0.0.1:30300
+    node.1=127.0.0.1:30301
+    node.2=127.0.0.1:30302
+    node.3=127.0.0.1:30303
+```
 ### 参数
 无
-
 ### 返回值
 - `array` - 配置的p2p节点IP和端口
 - 示例
-
 ```
 // Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"queryPeers","params":[],"id":1}' http://127.0.0.1:8545 |jq
-
 // Result
 {
   "id": 1,
   "jsonrpc": "2.0",
   "result": [
+    "127.0.0.1:30300",
     "127.0.0.1:30301",
     "127.0.0.1:30302",
     "127.0.0.1:30303"
