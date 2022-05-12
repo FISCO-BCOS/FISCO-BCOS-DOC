@@ -524,6 +524,18 @@ FISCO BCOS将交易池容量配置开放给用户，用户可根据自己的业�
     notify_worker_num=2
 ```
 
+#### 交易池交易超时时间配置
+
+为防止系统异常时交易在交易池中pending太久，FISCO BCOS 2.9.0引入了交易过期时间配置`txs_expiration_time`，当交易在交易池中pending的时间超过`txs_expiration_time`，交易池会主动清理该交易。
+
+- `[tx_pool].txs_expiration_time`: 交易过期时间，默认为10分钟，要求该值不小于共识超时时间
+
+交易超时时间配置示例如下：
+
+```ini
+    ; transaction expiration time, in seconds, default is 10 minute
+    txs_expiration_time=600
+```
 ### PBFT共识配置
 
 为提升PBFT算法的性能、可用性、网络效率，FISCO BCOS针对区块打包算法和网络做了一系列优化，包括PBFT区块打包动态调整策略、PBFT消息转发优化、PBFT Prepare包结构优化等。
