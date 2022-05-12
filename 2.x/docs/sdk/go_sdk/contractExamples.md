@@ -7,7 +7,7 @@
 
 本开发样例使用标准单群组四节点区块链网络结构，搭建请参考：[安装](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html)。
 
-在利用SDK进行项目开发时，对智能合约进行操作需要利用go-sdk的`abigen`工具将Solidity智能合约转换为`Go`文件代码。整体上主要包含六个流程：
+在利用SDK进行项目开发时，对智能合约进行操作需要利用go-sdk的`abigen`工具将Solidity智能合约转换为`Go`文件代码，会自动生成合约中事件监听的接口。整体上主要包含六个流程：
 
 - 准备需要编译的智能合约
 - 配置好相应版本的solc编译器

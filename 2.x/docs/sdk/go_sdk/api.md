@@ -50,7 +50,20 @@ Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供�
 | GetTotalTransactionCount            | 获取指定群组的上链交易数目                               | 无                                                           |
 | GetSystemConfigByKey                | 根据关键字获取区块链系统配置                             | 系统配置关键字，目前支持：<br/>\- tx_count_limit<br/>\- tx_gas_limit<br/>\- rpbft_epoch_sealer_num<br/>\- rpbft_epoch_block_num |
 | Call                                | 调用只读合约                                             | 合约地址<br/>调用接口*<br/>参数列表                          |
-| SendRawTransaction                  | 发送一个经过签名的交易，该交易随后会被链上节点执行并共识 | 群组ID & 已签名交易                                          |
+| SendRawTransaction                  | 发送一个经过签名的交易，该交易随后会被链上节点执行并共识 |已签名交易                                          |
+| AsyncSendTransaction                | 异步发送一个经过签名的交易，该交易随后会被链上节点执行并共识 |已签名交易以及回调                                         |
+| SubscribeEventLogs                  | 监听合约事件eventlog | event参数与收到后处理的回调函数                                        |
+| SubscribeTopic                  | 监听链上信使协议AMOP的topic |topic与收到后处理的回调函数                                        |
+| SendAMOPMsg                  | 发送链上信使协议AMOP的消息，随机发送到某个监听此topic的SDK |topic与消息                                        |
+| BroadcastAMOPMsg                  | 广播发送链上信使协议AMOP的消息，发送到所有监听此topic的SDK |topic与消息                                        |
+| UnsubscribeTopic                  | 取消监听链上信使协议AMOP的topic |topic                                     |
+| SubscribePrivateTopic                  | 监听权限校验链上信使协议AMOP的topic |topic、私钥和收到后处理的回调函数                                  |
+| PublishPrivateTopic                  | 发布权限校验链上信使协议AMOP的topic |topic、公钥列表                                  |
+| SendAMOPPrivateMsg                  | 发送权限校验链上信使协议AMOP的消息，随机发送到某个监听此topic的SDK |topic、消息                                |
+| BroadcastAMOPPrivateMsg                  | 广播发送权限校验链上信使协议AMOP的消息，发送到所有监听此topic的SDK |topic、消息                                |
+| UnsubscribePrivateTopic                  | 取消监听 |topic                               |
+| SubscribeBlockNumberNotify                  | 取消块高通知 |收到块高通知的回调函数                              |
+| UnsubscribeBlockNumberNotify                  | 取消监听块高通知  |                           |
 
 ```eval_rst
 .. note::
@@ -151,14 +164,14 @@ Go SDK为区块链应用开发者提供了Go API接口，以服务的形式供�
 
 | 接口名      | 描述                 | 参数                                                         |
 | ----------- | -------------------- | ------------------------------------------------------------ |
-| GrantCommitteeMember | 	根据外部账户地址新增委员会成员               | 外部账户地址 |
+| GrantCommitteeMember |  根据外部账户地址新增委员会成员               | 外部账户地址 |
 | RevokeCommitteeMember      | 根据外部账户地址撤销委员会成员             | 外部账户地址 |
 | ListCommitteeMembers      | 查询委员会成员列表             | 无 |
 | QueryCommitteeMemberWeight      | 根据外部账户地址查询委员会成员投票权值             | 外部账户地址 |
 | UpdateCommitteeMemberWeight      | 根据外部账户地址更新委员会成员投票权值             | 外部账户地址 & 权值（大于 0 的整数） |
 | UpdateThreshold | 更新委员会全体委员投票时票数占比生效的阈值 | 阈值 [0, 99)           |
 | QueryThreshold        | 查询委员会全体委员投票时票数占比生效的阈值 | 无       |
-| GrantOperator | 	根据外部账户地址新增运维权限               | 外部账户地址 |
+| GrantOperator |  根据外部账户地址新增运维权限               | 外部账户地址 |
 | RevokeOperator      | 根据外部账户地址撤销运维权限             | 外部账户地址 |
 | ListOperators      | 查询全体运维成员列表             | 无 |
 | FreezeAccount      | 根据外部账户地址冻结账户，该外部账号需要是部署过合约的账号             | 外部账户地址 |
