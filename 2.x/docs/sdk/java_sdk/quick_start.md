@@ -108,10 +108,10 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.8.1/download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.0/download_console.sh
 
 # 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
-$ https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.8.1/download_console.sh
+$ https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.0/download_console.sh
 
 $ bash download_console.sh
 $ cd ~/fisco/console
