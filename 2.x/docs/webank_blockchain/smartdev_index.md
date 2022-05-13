@@ -112,5 +112,7 @@ solidity智能合约代码库。包含基础类型、数据结构、通用功能
 
 假如用户已经写好了智能合约，需要基于智能合约，开发一个提供rest接口的web项目。在这种情况下，用户可以将合约拖入脚手架，一键生成项目。下图是生成的样例工程，包含了必要的配置类、DAO（Data Access Object）相关代码。开发者只需对项目进行必要的配置，并添加相应的controller等代码，就可以轻松实现上述需求。
 
+![66](https://user-images.githubusercontent.com/93572056/168194918-3a40da67-cc5b-4af7-887c-d41c7c9ad1ed.png)
+
 
 
