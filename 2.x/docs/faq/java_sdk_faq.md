@@ -13,7 +13,7 @@ public Pair<List<Object>, List<ABIObject>> decodeTransactionInput(String ABI, St
 public List<String> decodeTransactionInputToString(String ABI, String input);
 ```
 对应的PR可参考 [PR #360](https://github.com/FISCO-BCOS/java-sdk/pull/360/files)
-目前版本已经上传到 `2.8.1-SNAPSHOT`，可引入`2.8.1-SNAPSHOT`试用该版本
+目前版本已经正式发布，可引入`2.8.1`以及以上的版本。
 
 ---------
 

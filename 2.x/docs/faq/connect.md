@@ -41,7 +41,7 @@ maven方式
  	<dependency>
             <groupId>org.fisco-bcos.java-sdk</groupId>
             <artifactId>fisco-bcos-java-sdk</artifactId>
-            <version>2.8.1</version>
+            <version>2.9.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -59,7 +59,7 @@ maven方式
 gradle方式
 ```shell
 dependencies {
-    compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.1')
+    compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.0')
 }
 configurations.all {
     resolutionStrategy {
@@ -261,7 +261,7 @@ Caused by: java.lang.NoSuchMethodError: 'void io.netty.handler.ssl.OpenSslContex
 	<dependency>
 		<groupId>org.fisco-bcos.java-sdk</groupId>
 		<artifactId>fisco-bcos-java-sdk</artifactId>
-		<version>2.8.1</version>
+		<version>2.9.0</version>
 		<exclusions>
 			<exclusion>
 				<groupId>io.netty</groupId>
