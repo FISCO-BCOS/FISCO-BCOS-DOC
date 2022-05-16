@@ -74,7 +74,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.0')
 
 ```eval_rst
 .. note::
-    - 由于sol转java代码的变更，若使用最新控制台生成java代码，请升级Java SDK至`2.8.0+`版本
+    - 由于sol转java代码的变更，若使用最新控制台生成java代码，请升级Java SDK至 `2.8.0+` 版本
 ```
 
 
