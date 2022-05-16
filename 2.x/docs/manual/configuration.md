@@ -224,7 +224,7 @@ FISCO BCOS 2.0+所有版本向前兼容，可通过`config.ini`中的`[compatibi
 
 ```eval_rst
 .. important::
-    - 可通过 `./fisco-bcos --version | grep "Version" ` 命令查看FISCO BCOS的当前支持的最高版本
+    - 可通过 `./fisco-bcos --version | egrep "Version"` 命令查看FISCO BCOS的当前支持的最高版本
     - build_chain.sh生成的区块链节点配置中，supported_version配置为FISCO BCOS当前的最高版本
     - 旧节点升级为新节点时，直接将旧的FISCO BCOS二进制替换为最新FISCO BCOS二进制即可，千万不可修改supported_version
 ```
