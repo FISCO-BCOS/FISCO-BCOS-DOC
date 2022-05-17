@@ -1077,7 +1077,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 }
 ```
 ## addPeers
-添加`P2P`连接配置，增加节点`config.ini`配置的`P2P`连接信息
+新增`P2P`连接配置，增加节点`config.ini:[p2p]`的连接配置
 
 ```shell
 // config.ini
@@ -1090,12 +1090,13 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 ```
 
 ### 参数
-- `hostPorts`: `array` - 节点连接的ip和端口
+- `hostPorts`: `array` - `P2P`连接的ip和端口，格式:`ip:port`，支持IPv4和IPv6
 
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
   - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
   - `message`: - 接口消息
+
 - 示例
 ```
 // Request
@@ -1112,9 +1113,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:
 }
 ```
 ## erasePeers
-删除`P2P`连接配置，删除节点`config.ini`配置的`P2P`连接信息
+删除`P2P`连接配置，删除节点`config.ini:[p2p]`的连接配置
 ### 参数
-- `hostPorts`: `array` - 节点连接的ip和端口
+- `hostPorts`: `array` - `P2P`连接的ip和端口，格式:`ip:port`，支持IPv4和IPv6
 
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
@@ -1136,7 +1137,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"erasePeers","params":[["127.0.0.
 }
 ```
 ## queryPeers
-查询`P2P`连接配置，查询节点`config.ini`配置的`P2P`的连接列表
+查询`P2P`连接配置，查询节点`config.ini:[p2p]`的连接配置列表
 
 ```shell
 // config.ini

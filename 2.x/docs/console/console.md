@@ -411,6 +411,9 @@ unfreezeAccount                          Unfreeze the account.
 getAccountStatus                         GetAccountStatus of the account.
 freezeContract                           Freeze the contract.
 unfreezeContract                         Unfreeze the contract.
+addPeers                                 Add more connected peers to the node p2p network
+erasePeers                               Remove connected peers of the node p2p network
+queryPeers                               Query the configured connected node list of the p2p network
 switch(s)                                Switch to a specific group by group ID.
 [create sql]                             Create table by sql.
 [delete sql]                             Remove records by sql.
@@ -1986,6 +1989,55 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 [group:1]> getAccountStatus 0xcc5fc5abe347b7f81d9833f4d84a356e34488845
 The account is available.
 ```
+
+### **addPeers**
+新增`P2P`连接配置，增加节点`config.ini:[p2p]`的连接配置，参考(../api.html#addpeers)
+
+```shell
+[group:1]> addPeers -h
+Add more connected peers to the node p2p network
+Usage:
+addPeers NodeEndPoint EndPoint0 ... EndPointN
+* NodeEndPoint -- The requested node information, the format is IP:Port, the list of all connected nodes can be obtained through getAvailableConnections
+* EndPointN -- The connected endpoint
+```
+
+参数:
+
+- NodeEndPoint: 请求节点，可以使用`getAvailableConnections`获取当前可用的节点列表
+- EndPointN: 新增连接`P2P`节点配置，可以是多个，使用空格分离
+
+### **erasePeers**
+删除`P2P`连接配置，删除节点`config.ini:[p2p]`的连接配置，参考(../api.html#erasepeers)
+
+```shell
+[group:1]> erasePeers -h
+Remove connected peers of the node p2p network
+Usage:
+erasePeers NodeEndPoint EndPoint0 ... EndPointN
+* NodeEndPoint -- The requested node information, the format is IP:Port, the list of all connected nodes can be obtained through getAvailableConnections
+* EndPointN -- The connected endpoint
+```
+
+参数:
+
+- NodeEndPoint: 请求节点，可以使用`getAvailableConnections`获取当前可用的节点列表
+- EndPointN: 删除连接`P2P`节点配置，可以是多个，使用空格分离
+
+### **queryPeers**
+查询`P2P`连接配置，查询节点`config.ini:[p2p]`的连接配置列表，参考(../api.html#querypeers)
+
+```shell
+[group:1]> queryPeers -h
+Query the configured connected node list of the p2p network
+Usage:
+queryPeers NodeEndPoint
+* NodeEndPoint -- The requested node information, the format is IP:Port, the list of all connected nodes can be obtained through getAvailableConnections
+```
+
+参数:
+
+- NodeEndPoint: 请求节点，可以使用`getAvailableConnections`获取当前可用的节点列表
 
 ## 附录：Java环境配置
 
