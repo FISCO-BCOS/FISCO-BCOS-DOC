@@ -1094,7 +1094,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
-  - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#动态群组管理API状态码)
+  - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
   - `message`: - 接口消息
 - 示例
 ```
@@ -1118,7 +1118,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"addPeers","params":[["127.0.0.1:
 
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
-  - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#动态群组管理API状态码)
+  - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
   - `message`: - 接口消息
 - 示例
 ```
@@ -1436,7 +1436,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceiptByHashWithP
     - `enable_free_storage`: `bool` - 可选，是否启用"free storage"模式，启用后节点将减少STORAGE相关指令的gas耗费
 ### 返回值
 - `object`: - 接口调用结果，其字段如下：
-    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#动态群组管理API状态码)
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
     - `message`: - 接口消息
 
 - 示例
@@ -1486,7 +1486,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"startGroup","params":[2],"id":1}
 - `groupID`: `unsigned int` - 群组ID
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
-    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#动态群组管理API状态码)
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
     - `message`: - 接口消息
 - 示例
 ```
@@ -1511,7 +1511,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"stopGroup","params":[2],"id":1}'
 - `groupID`: `unsigned int` - 群组ID
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
-    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#动态群组管理API状态码)
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
     - `message`: - 接口消息
 - 示例
 ```
@@ -1536,7 +1536,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"removeGroup","params":[2],"id":1
 - `groupID`: `unsigned int` - 群组ID
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
-    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#动态群组管理API状态码)
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
     - `message`: - 接口消息
 - 示例
 ```
@@ -1561,7 +1561,7 @@ curl -Ss -X POST --data '{"jsonrpc":"2.0","method":"recoverGroup","params":[2],"
 - `groupID`: `unsigned int` - 群组ID
 ### 返回值
 - `object`: 接口调用结果，其字段如下：
-    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#动态群组管理API状态码)
+    - `code`: - 接口调用状态码，状态码的释义请参见[动态群组管理API状态码](./api.html#api)
     - `message`: - 接口消息
     - `status`: - 群组状态标识，为下列值之一：
         - `INEXISTENT`: 群组不存在
