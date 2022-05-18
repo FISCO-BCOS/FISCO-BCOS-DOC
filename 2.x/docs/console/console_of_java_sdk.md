@@ -2313,11 +2313,11 @@ TransactionReceiptsInfo{
 控制台在部署、调用合约时，涉及参数输入：
 
 - 部署合约: 合约构造函数包含参数
-  - deploy(./console.html#deploy)
-  - deployCNS(./console.html#deploybycns)
+  - [deploy](./console.html#deploy)
+  - [deployCNS](./console.html#deploybycns)
 - 调用合约
-  - call(./console.html#call)
-  - callByCNS(./console.html#callbycns)
+  - [call](./console.html#call)
+  - [callByCNS](./console.html#callbycns)
 
 包含多个参数时，各参数使用空格分开。
 **注意:不同参数之间使用空格分离，复杂参数内部不要出现空格，否则会被控制台分割，当做不同参数处理**
@@ -2332,7 +2332,10 @@ TransactionReceiptsInfo{
 
 - 数组类型:
   
-  数组按照`[元素1,元素2,...,元素N]`的格式，`[]`作为数组标记，中间的元素使用逗号分割，**注意:数组整体作为一个参数，不要在中间包含空格**。
+  数组按照`[元素1,元素2,...,元素N]`的格式，`[]`作为数组标记，中间的元素使用逗号分割
+  
+  **注意:数组整体作为一个参数，不要在中间包含空格**
+
   例如:
   - `int256[]`: [1,2,3,4]
   - `string[3]`: ["a","b","c"]
@@ -2358,4 +2361,5 @@ TransactionReceiptsInfo{
   构造结构体对应的键值对`JSON`字符串, 同样以上面的`Person`对象为例，按照`JSON`方式输入:`{"name":"XiaoWang","address":"ShenZhen","age":111}`
 
 - 复杂数据类型
+  
   更复杂的数据类型由普通类型嵌套生成，同样遵循之前的规则，按照对应的规则对参数进行嵌套即可
