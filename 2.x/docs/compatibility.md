@@ -1,0 +1,115 @@
+# FISCO-BCOS 版本说明
+
+标签：``FISCO BCOS v2.x`` ``FISCO BCOS v3.x`` ``兼容性``
+
+---
+
+本节内容对FISCO-BCOS常见的一些版本问题进行说明，包括: FISCO-BCOS v2.x vs v3.x、JDK版本、项目兼容性。
+
+## 1. FISCO-BCOS v2.x vs v3.x
+
+`FISCO-BCOS`目前主要存在2.x[[文档链接](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)]和3.x[[文档链接](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/)]两个大版本，用户可以根据不同的场景选择:
+
+- v2.x和v3.x版本之间不兼容，后续会同时保持维护、迭代、更新。
+- v2.x是目前的稳定版本，最新为v2.9.0，已经经过多个机构、多个应用，长时间在生产环境中的实践检验，具备金融级的高性能、高可用性及高安全性。**用户当前有生产级的使用需求，可以直接使用v2.x即可**。
+- v3.x当前处于rc阶段，最新为v3.0.0-rc3，将会在八月份前后发布正式版本，届时生产环境可以使用3.0正式版本。也**欢迎用户预先体验3.0的新特性**。
+
+## 2. JDK版本说明
+
+FISCO-BCOS支持Java版本的SDK，并且大量的示例、周边项目都是基于JavaSDK，使用这些工程之前，推荐用户使用官方已经验证的`JDK`版本:
+
+|       JDK      |  推荐版本   | 下载链接 |
+| ---------------| -----------|-------- |
+| OracleJDK     | 1.8.0_141、1.8.0_202、11.0.2、14.0.2、15.0.2  | [Oracle官网下载](https://www.oracle.com/java/technologies/downloads/archive/)  、[国内镜像下载](http://www.codebaoku.com/jdk/jdk-oracle.html)
+| OpenJDK       | 11.0.2、14.0.2、15.0.2   |  [国内镜像下载](http://www.codebaoku.com/jdk/jdk-openjdk.html)
+
+## 3. 项目版本兼容性
+
+FISCO-BCOS v2.x和v3.x之间不兼容，不同的底层区块链，需要使用不同版本的周边配套项目。
+
+用户可以使用`./fisco-bcos --version`检查当前部署的区块链版本:
+
+```shell
+$ ./fisco-bcos --version
+FISCO BCOS Version : 3.0.0-rc3  # 版本号
+Build Time         : 20220402 04:00:43
+Build Type         : Darwin/appleclang/Release
+Git Branch         : HEAD
+Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
+```
+
+### 3.1. FISCO-BCOS 2.x
+
+|       项目      | 功能简介|  最新版本   | 文档 |    github | gitee |  备注   |
+| ---------------| -----------|-------- |----------|--------|---------|---------
+| FISCO-BCOS     | 区块链底层平台  |   v2.9.0   | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)     |
+| Solidity       | Solidity智能合约 |   v0.6.10   |  [solidity文档](https://docs.soliditylang.org/en/v0.6.10)、[FISCO-BCOS智能合约开发](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/index.html) |          |        | **2.x最高支持v0.6.10的Solidity**
+| JavaSDK |   Java语言SDK |   v2.9.0   | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/master-2.0)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/master-2.0)     |
+| GoSDK | Go语言SDK |   v1.0.0   | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/go_sdk/index.html)   |   [github](https://github.com/FISCO-BCOS/go-sdk)       |    [gitee](https://gitee.com/FISCO-BCOS/go-sdk)    |
+| PythonSDK | Python语言SDK |   v0.9.2    | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/python_sdk/index.html)   |     [github](https://github.com/FISCO-BCOS/python-sdk)     |    [gitee](https://gitee.com/FISCO-BCOS/python-sdk)    |
+| 控制台(console) | 交互式命令行工具 |   v2.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/index.html>)   |      [github](https://github.com/FISCO-BCOS/console/tree/master-2.0)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/master-2.0)     |
+| java-sdk-demo | Java压测工具 |   v2.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/stress_testing.html>)   |      [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)    |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)     |
+| spring-boot-starter | Gradle SpringBoot 应用示例 |   v2.9.0 | [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)  |  [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)  |     [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)     |       |
+| spring-boot-crud |  Maven SpringBoot 应用示例 | v2.9.0  | [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0) |    [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0)  |
+| generator | 企业区块链部署工具 |   v1.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html>)   |      [github](https://github.com/FISCO-BCOS/generator)    |   [gitee](https://gitee.com/FISCO-BCOS/generator)     |
+| WeBASE | 区块链中间件平台 |   v1.5.4   | [文档](https://webasedoc.readthedocs.io/zh_CN/latest)   |   [github](https://github.com/WeBankBlockchain/WeBASE)         |  [gitee](https://gitee.com/WeBank/WeBASE)    |
+| WeCross | 跨链协作平台 |   v1.2.1  | [文档](https://wecross.readthedocs.io/zh_CN/latest)   |    [github](https://github.com/WeBankBlockchain/WeCross)      |    [gitee](https://gitee.com/WeBank/WeCross)    |
+| WeBankBlockchain-Data-Export |  数据导出组件 |   v1.7.6   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export)      |      |
+
+### 3.2. FISCO-BCOS 3.x
+
+FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，用户根据不同的版本，需要使用不同版本的周边配套项目。
+
+#### 3.2.1. FISCO-BCOS v3.0.0-rc1
+
+|       项目      | 功能简介| 版本   | 文档 |    github | gitee |  备注   |
+| ---------------| -----------|-------- |----------|--------|---------|-------
+| FISCO-BCOS     |  区块链底层平台 | v3.0.0-rc1   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc1/)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc1)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc1)     |
+| Solidity       |   Solidity智能合约 | v0.8.11   |  [文档](https://docs.soliditylang.org/en/v0.8.11)   |          |        | **v3.0.0-rc1最高支持v0.8.11的Solidity**
+| JavaSDK |   Java语言SDK | v3.0.0-rc1   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc1/docs/develop/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc1)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc1)    |
+| GoSDK |   Go语言SDK| 暂不支持,后续版本规划  |   |       |   |
+| PythonSDK |   Python语言SDK | 暂不支持,后续版本规划   |    |         |       |
+| 控制台(console) | 交互式命令行工具 |   v3.0.0-rc1   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc1/docs/develop/console/index.html)   |      [github](https://github.com/FISCO-BCOS/console/tree/v3.0.0-rc1)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/v3.0.0-rc1)   |
+| java-sdk-demo |  Java压测工具 | v3.0.0-rc1   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc1/docs/develop/stress_testing.html)  |    [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc1)      |     [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/v3.0.0-rc1) |
+| spring-boot-starter | Gradle SpringBoot 应用示例 |   v3.0.0-rc1  |  [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc1#spring-boot-starter)  |     [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc1)     |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc1)    |
+| spring-boot-crud |  Maven SpringBoot 应用示例 | v3.0.0-rc1   |  [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc1#spring-boot-crud) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc1)    |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc1)     |
+| generator |  部署运维工具 | 不支持  |   |    |    |
+| WeBASE | 区块链中间件平台 | lab-rc1  |    [文档](https://webasedoc.readthedocs.io/zh_CN/lab/)     |  [github](https://github.com/WeBankBlockchain/WeBASE/tree/lab-rc1)    |  [gitee](https://gitee.com/WeBank/WeBASE/tree/lab-rc1)  |
+| WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
+| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+
+#### 3.2.2. FISCO-BCOS v3.0.0-rc2
+
+|       项目      | 功能简介| 版本   | 文档 |    github | gitee |  备注   |
+| ---------------| -----------|-------- |----------|--------|---------|-------
+| FISCO-BCOS     |  区块链底层平台 | v3.0.0-rc2   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc2/)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc2)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc2)     |
+| Solidity       |   Solidity智能合约 | v0.8.11   |  [文档](https://docs.soliditylang.org/en/v0.8.11)   |          |        | **v3.0.0-rc2最高支持v0.8.11的Solidity**
+| JavaSDK |   Java语言SDK | v3.0.0-rc2   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc2/docs/develop/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc2)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc2)    |
+| GoSDK |   Go语言SDK| 暂不支持,后续版本规划  |   |       |   |
+| PythonSDK |   Python语言SDK | 暂不支持,后续版本规划   |    |         |       |
+| 控制台(console) | 交互式命令行工具 |   v3.0.0-rc2   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc2/docs/develop/console/index.html)   |      [github](https://github.com/FISCO-BCOS/console/tree/v3.0.0-rc2)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/v3.0.0-rc2)   |
+| java-sdk-demo |  Java压测工具 | v3.0.0-rc2   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc2/docs/develop/stress_testing.html)  |    [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc2)      |     [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/v3.0.0-rc2) |
+| spring-boot-starter | Gradle SpringBoot 应用示例 |   v3.0.0-rc2   |  [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc2#spring-boot-starter)  |     [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc2)     |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc2)    |
+| spring-boot-crud |  Maven SpringBoot 应用示例 | v3.0.0-rc2   |  [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc2#spring-boot-crud) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc2)    |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc2)     |
+| generator |  企业区块链部署工具 | 不支持  |   |    |    |
+| WeBASE | 区块链中间件平台 | lab-rc2  |    [文档](https://webasedoc.readthedocs.io/zh_CN/lab/)     |  [github](https://github.com/WeBankBlockchain/WeBASE/tree/lab-rc2)    |  [gitee](https://gitee.com/WeBank/WeBASE/tree/lab-rc2)  |
+| WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
+| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+
+#### 3.2.3. FISCO-BCOS v3.0.0-rc3
+
+|       项目      | 功能简介| 版本   | 文档 |    github | gitee |  备注   |
+| ---------------| -----------|-------- |----------|--------|---------|-------
+| FISCO-BCOS     |  区块链底层平台 | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc3)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc3)     |
+| Solidity       |   solidity智能合约 | v0.8.11   |  [文档](https://docs.soliditylang.org/en/v0.8.11)   |          |        | **v3.0.0-rc3最高支持v0.8.11的Solidity**
+| JavaSDK |   Java语言SDK | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc3)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc3)    |
+| GoSDK |   Go语言SDK| 暂不支持,后续版本规划  |   |       |   |
+| PythonSDK |   Python语言SDK | 暂不支持,后续版本规划   |    |         |       |
+| 控制台(console) | 交互式命令行工具 |   v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/console/index.html)   |      [github](https://github.com/FISCO-BCOS/console/tree/v3.0.0-rc3)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/v3.0.0-rc3)   |
+| java-sdk-demo |  Java压测工具 | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/stress_testing.html)  |    [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc3)      |     [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc3) |
+| spring-boot-starter | Gradle SpringBoot 应用示例 |   v3.0.0-rc3   |  [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3#spring-boot-starter)  |     [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3)     |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3)    |
+| spring-boot-crud |  Maven SpringBoot 应用示例 | v3.0.0-rc3   |  [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3#spring-boot-crud) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3)    |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3)     |
+| generator |  企业区块链部署工具 | 不支持  |   |    |    |
+| WeBASE | 区块链中间件平台 | **lab-rc3，适配中**  |         |      |    |
+| WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
+| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
