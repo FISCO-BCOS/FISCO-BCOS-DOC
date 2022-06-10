@@ -20,7 +20,7 @@
   `apt install -y g++ libssl-dev openssl cmake git build-essential autoconf texinfo flex patch bison libgmp-dev zlib1g-dev automake libtool wget`
   
 - `macOs`:
-  `brew install wget openssl@1.1 git flex bison gmp`
+  `brew install wget openssl@1.1 git flex bison gmp cmake`
   
 - `Windows`:
   - [Visual Studio 2017](https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes)
