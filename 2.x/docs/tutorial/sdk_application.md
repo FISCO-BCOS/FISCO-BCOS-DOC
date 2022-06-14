@@ -6,7 +6,7 @@
 
 ```eval_rst
 .. important::
-    `相关软件和环境版本说明！ [<https://fisco-bcos-doc.readthedocs.io>](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html)`_
+    `相关软件和环境版本说明！<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的[Java SDK](../sdk/java_sdk/index.md)实现对区块链上合约的调用访问。
