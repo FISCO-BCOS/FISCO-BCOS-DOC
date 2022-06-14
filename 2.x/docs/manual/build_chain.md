@@ -6,6 +6,11 @@
 
 ```eval_rst
 .. important::
+    `相关软件和环境版本说明！ [<https://fisco-bcos-doc.readthedocs.io>](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html)`_
+```
+
+```eval_rst
+.. important::
     部署工具 build_chain脚本目标是让用户最快的使用FISCO BCOS，对于企业级应用部署FISCO BCOS请参考 `运维部署工具 <../enterprise_tools/index.html>`_ 。
 ```
 
@@ -56,6 +61,7 @@ Usage:
 e.g
     ./build_chain.sh -l 127.0.0.1:4
 ```
+
 比如：使用build_chain.sh部署4个本地节点。
 
 ![](../../images/installation/build_chain.png)
@@ -135,6 +141,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 ```
 
 ### **`R`选项[**Optional**]**
+
 `FISCO-BCOS 2.9.0+`版本，`build_chain.sh`在非国密环境默认生成`RSA`格式证书，用于`SDK`与节点`SSL`通信，如果仍然需要使用之前版本的`ECDSA`证书，可以添加`-R`参数。
 
 ### **`s`选项[**Optional**]**
@@ -154,6 +161,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 - `rPBFT`：设置节点共识算法为[rPBFT](../design/consensus/rpbft.md)。
 
 ### **`C`选项[**Optional**]**
+
 用于指定搭建FISCO BCOS时的链标识。设置该选项时将使用参数设置`config.ini`配置文件中的`[chain].id`，参数范围为正整数，默认设置为1。
 
 ```bash
@@ -331,7 +339,6 @@ e.g
     ./download_bin.sh -v 2.7.2
 ```
 
-
 ## 使用教程
 
 ### 无外网条件的搭建单群组区块链网络
@@ -396,6 +403,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNode
 ```
 
 国密版本请执行下面的指令生成证书。
+
 ```bash
 bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
 ```
@@ -432,6 +440,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newNodeGm -g ../gmcert/agency/
         node.3=127.0.0.1:30303
         node.4=127.0.0.1:30304
     ```
+
 4. 启动新节点，执行`newNode/start.sh`
 5. 通过console将新节点加入群组1，2.6版本控制台指令详细介绍[参考这里](../console/console_of_java_sdk.md)，1.x版本控制台指令详细介绍[参考这里](../console/console.md)，`nodeID`可以通过命令`cat newNode/conf/node.nodeid`来获取
 6. 检查连接和共识
@@ -460,6 +469,7 @@ bash gen_node_cert.sh -c ../cert/agency -o newSDK -s
 ```
 
 国密版本请执行下面的指令生成证书。
+
 ```bash
 bash gen_node_cert.sh -c ../cert/agency -o newSDK -g ../gmcert/agency/ -s
 ```
@@ -482,6 +492,7 @@ bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName
 ```
 
 国密版本请执行下面的指令。
+
 ```bash
 bash gen_agency_cert.sh -c nodes/cert/ -a newAgencyName -g nodes/gmcert/
 ```
