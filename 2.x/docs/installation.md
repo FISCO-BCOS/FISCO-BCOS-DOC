@@ -6,7 +6,7 @@
 
 ```eval_rst
 .. important::
-    `相关软件和环境版本说明！ [<https://fisco-bcos-doc.readthedocs.io>](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html)`_
+    `相关软件和环境版本说明！<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](manual/hardware_requirements.md)使用支持的**硬件和平台**操作。

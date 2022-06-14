@@ -6,7 +6,7 @@
 
 ```eval_rst
 .. important::
-    `相关软件和环境版本说明！ [<https://fisco-bcos-doc.readthedocs.io>](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html)`_
+    `相关软件和环境版本说明！<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 微众银行开源的自研区块链中间件平台——[WeBASE(WeBank Blockchain Application Software Extension)](https://webasedoc.readthedocs.io/zh_CN/latest/) 是区块链应用和FISCO BCOS节点之间搭建的中间件平台。WeBASE屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。用户可以根据业务所需，选择子系统进行部署，可以进一步体验丰富交互的体验、可视化智能合约开发环境IDE。
