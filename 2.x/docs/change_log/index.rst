@@ -7,7 +7,7 @@
 ------------
 
 .. important::
-    `相关软件和环境版本说明！ (https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html)`_
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 
 FISCO BCOS 2.x 新特性
 ---------------------
