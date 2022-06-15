@@ -42,7 +42,7 @@ $ bash nodes/127.0.0.1/start_all.sh
 下载控制台：
 
 ```bash
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.0/download_console.sh && bash download_console.sh -c 1.2.0
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst
