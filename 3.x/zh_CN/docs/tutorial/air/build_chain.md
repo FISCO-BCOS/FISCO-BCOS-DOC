@@ -6,6 +6,11 @@
 
 ```eval_rst
 .. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
+```eval_rst
+.. important::
     本部署工具 build_chain.sh 脚本目标是让用户最快的使用FISCO BCOS Air版。
 ```
 
