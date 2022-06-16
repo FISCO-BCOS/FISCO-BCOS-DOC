@@ -4,6 +4,11 @@
 
 ----
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 FISCO BCOS 3.0版本的多语言SDK设计采用**分层架构**实现，从下到上依次分为通用基础组件层、CPP- SDK层、C-SDK层、多语言、多终端接入层。核心功能由底层CPP-SDK实现，上层多语言简单适配接入，这种方式可快速适配接入多语言SDK。
 
 - **通用基础组件**：封装加密算法、通信协议、网络协议、加密机协议；

@@ -5,6 +5,11 @@
 ----------
 
 ```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
+```eval_rst
 .. note::
    - FISCO BCOS支持x86_64架构的Linux和macOS编译; Linux平台编译二进制时，要求g++版本不小于7.0; macOS系统编译二进制时，要求clang版本不小于12.0
    - FISCO BCOS 3.x支持带有Apple Silicon的macOS编译，编译步骤与x86_64相同。

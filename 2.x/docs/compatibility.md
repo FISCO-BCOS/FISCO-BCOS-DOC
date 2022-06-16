@@ -4,11 +4,11 @@
 
 ---
 
-本节内容对FISCO-BCOS常见的一些版本问题进行说明，包括: FISCO-BCOS v2.x vs v3.x、JDK版本、项目兼容性。
+本节内容对FISCO-BCOS常见的一些版本问题进行说明，包括: FISCO-BCOS v2.x v3.x对比、JDK版本、项目兼容性。
 
-## 1. FISCO-BCOS v2.x vs v3.x
+## 1. `FISCO-BCOS v2.x` VS `v3.x`
 
-`FISCO-BCOS`目前主要存在2.x[[文档链接](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)]和3.x[[文档链接](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/)]两个大版本，用户可以根据不同的场景选择:
+`FISCO-BCOS`目前主要存在`2.x`[[文档链接](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/)]和`3.x`[[文档链接](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/)]两个大版本，用户可以根据不同的场景选择:
 
 - v2.x和v3.x版本之间不兼容，后续会同时保持维护、迭代、更新。
 - v2.x是目前的稳定版本，最新为v2.9.0，已经经过多个机构、多个应用，长时间在生产环境中的实践检验，具备金融级的高性能、高可用性及高安全性。**用户当前有生产级的使用需求，可以直接使用v2.x即可**。
@@ -44,10 +44,10 @@ Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
 | ---------------| -----------|-------- |----------|--------|---------|---------
 | FISCO-BCOS     | 区块链底层平台  |   v2.9.0   | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)     |
 | Solidity       | Solidity智能合约 |   v0.6.10   |  - [solidity文档](https://docs.soliditylang.org/en/v0.6.10) </br> - [FISCO-BCOS智能合约开发](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/app_dev/index.html) |          |        | **2.x最高支持v0.6.10的Solidity**
-| JavaSDK |   Java语言SDK |   v2.9.0   | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/master-2.0)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/master-2.0)     |
+| JavaSDK |   Java语言SDK |   v2.9.1   | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/master-2.0)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/master-2.0)     |
 | GoSDK | Go语言SDK |   v1.0.0   | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/go_sdk/index.html)   |   [github](https://github.com/FISCO-BCOS/go-sdk)       |    [gitee](https://gitee.com/FISCO-BCOS/go-sdk)    |
 | PythonSDK | Python语言SDK |   v0.9.2    | [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/python_sdk/index.html)   |     [github](https://github.com/FISCO-BCOS/python-sdk)     |    [gitee](https://gitee.com/FISCO-BCOS/python-sdk)    |
-| 控制台(console) | 交互式命令行工具 |   v2.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/index.html>)   |      [github](https://github.com/FISCO-BCOS/console/tree/master-2.0)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/master-2.0)     |
+| 控制台(console) | 交互式命令行工具 |   v2.9.1   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/index.html>)   |      [github](https://github.com/FISCO-BCOS/console/tree/master-2.0)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/master-2.0)     |
 | java-sdk-demo | Java压测工具 |   v2.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/stress_testing.html>)   |      [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)    |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/main-2.0)     |
 | spring-boot-starter | Gradle SpringBoot 应用示例 |   v2.9.0 | [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)  |  [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)  |     [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)     |       |
 | spring-boot-crud |  Maven SpringBoot 应用示例 | v2.9.0  | [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0) |    [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0)  |
@@ -62,9 +62,10 @@ Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
 FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，用户根据不同的版本，需要使用不同版本的周边配套项目。
 
 目前FISCO-BCOS 3.x包含以下RC版本：
-- FISCO-BCOS v3.0.0-rc1
-- FISCO-BCOS v3.0.0-rc2
-- FISCO-BCOS v3.0.0-rc3
+
+- [v3.0.0-rc1](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc1)
+- [v3.0.0-rc2](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc2)
+- [v3.0.0-rc3](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc3)
 
 #### 3.2.1. FISCO-BCOS v3.0.0-rc1
 
