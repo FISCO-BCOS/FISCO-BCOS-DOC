@@ -55,6 +55,7 @@ Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
 | WeBASE | 区块链中间件平台 |   v1.5.4   | [文档](https://webasedoc.readthedocs.io/zh_CN/latest)   |   [github](https://github.com/WeBankBlockchain/WeBASE)         |  [gitee](https://gitee.com/WeBank/WeBASE)    |   
 | WeCross | 跨链协作平台 |   v1.2.1  | [文档](https://wecross.readthedocs.io/zh_CN/latest)   |    [github](https://github.com/WeBankBlockchain/WeCross)      |    [gitee](https://gitee.com/WeBank/WeCross)    |
 | WeBankBlockchain-Data-Export |  数据导出组件 |   v1.7.6   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export)      |      |
+| WeIdentity | 分布式身份解决方案 |   v1.8.4   | [文档](https://weidentity.readthedocs.io/zh_CN/latest/)   |   [github](https://github.com/WeBankBlockchain/WeIdentity)         |  [gitee](https://gitee.com/WeBank/WeIdentity)    |   
 
 ### 3.2. FISCO-BCOS 3.x
 
@@ -82,6 +83,7 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | WeBASE | 区块链中间件平台 | lab-rc1  |    [文档](https://webasedoc.readthedocs.io/zh_CN/lab-rc1/)     |  [github](https://github.com/WeBankBlockchain/WeBASE/tree/lab-rc1)    |  [gitee](https://gitee.com/WeBank/WeBASE/tree/lab-rc1)  |
 | WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
 | WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+| WeIdentity | 分布式身份解决方案 |  暂不支持,后续版本规划  |    |        |     |   
 
 #### 3.2.2. FISCO-BCOS v3.0.0-rc2
 
@@ -100,6 +102,7 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | WeBASE | 区块链中间件平台 | lab-rc2  |    [文档](https://webasedoc.readthedocs.io/zh_CN/lab/)     |  [github](https://github.com/WeBankBlockchain/WeBASE/tree/lab-rc2)    |  [gitee](https://gitee.com/WeBank/WeBASE/tree/lab-rc2)  |
 | WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
 | WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+| WeIdentity | 分布式身份解决方案 |  暂不支持,后续版本规划  |    |        |     |   
 
 #### 3.2.3. FISCO-BCOS v3.0.0-rc3
 
@@ -118,3 +121,4 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | WeBASE | 区块链中间件平台 | **lab-rc3，适配中**  |         |      |    |
 | WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
 | WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+| WeIdentity | 分布式身份解决方案 |  暂不支持,后续版本规划  |    |        |     |   
