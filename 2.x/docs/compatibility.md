@@ -54,8 +54,18 @@ Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
 | generator | 企业区块链部署工具 |   v1.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html>)   |      [github](https://github.com/FISCO-BCOS/generator)    |   [gitee](https://gitee.com/FISCO-BCOS/generator)     |
 | WeBASE | 区块链中间件平台 |   v1.5.4   | [文档](https://webasedoc.readthedocs.io/zh_CN/latest)   |   [github](https://github.com/WeBankBlockchain/WeBASE)         |  [gitee](https://gitee.com/WeBank/WeBASE)    |   
 | WeCross | 跨链协作平台 |   v1.2.1  | [文档](https://wecross.readthedocs.io/zh_CN/latest)   |    [github](https://github.com/WeBankBlockchain/WeCross)      |    [gitee](https://gitee.com/WeBank/WeCross)    |
-| WeBankBlockchain-Data-Export |  数据导出组件 |   v1.7.6   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export)      |      |
 | WeIdentity | 分布式身份解决方案 |   v1.8.4   | [文档](https://weidentity.readthedocs.io/zh_CN/latest/)   |   [github](https://github.com/WeBankBlockchain/WeIdentity)         |  [gitee](https://gitee.com/WeBank/WeIdentity)    |   
+| WeBankBlockchain-Data-Export |  数据导出组件 |   v1.7.6   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export)      |      |
+| WeBankBlockchain-Data-Export |  数据导出组件 |   v1.7.7   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Export)  |
+| WeBankBlockchain-Data-Stash |  数据仓库组件 |   v1.2.3   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Stash)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Stash)  |
+| WeBankBlockchain-Data-Reconcile |  数据对账组件 |   v1.0.0   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Reconcile)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Reconcile)  |
+| WeBankBlockchain-SmartDev-Scaffold |  应用开发脚手架 |   v1.1.1   |  [文档](https://toolkit-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Scaffold/index.html)  |    [github](https://github.com/WeBankBlockchain/SmartDev-Scaffold)      |    [gitee](https://gitee.com/WeBankBlockchain/SmartDev-Scaffold)  |
+| WeBankBlockchain-SmartDev-SCGP |  智能合约编译插件 |   v1.0.1   |  [文档](https://toolkit-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-SCGP/index.html)  |    [github](https://github.com/WeBankBlockchain/SmartDev-SCGP)      |    [gitee](https://gitee.com/WeBankBlockchain/SmartDev-SCGP)  |
+| WeBankBlockchain-SmartDev-Contract |  智能合约库 |   v1.0.0   |  [文档](https://toolkit-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html)  |    [github](https://github.com/WeBankBlockchain/SmartDev-Contract)      |    [gitee](https://gitee.com/WeBankBlockchain/SmartDev-Contract)  |
+| WeBankBlockchain-Governance-Cert |  证书管理组件 |   v1.0.1   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Cert/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Cert)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Cert)  |
+| WeBankBlockchain-Governance-Key |  私钥管理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Key)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Key)  |
+| WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  | 
+| WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  | 
 
 ### 3.2. FISCO-BCOS 3.x
 
@@ -83,8 +93,19 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | generator |  部署运维工具 | 不支持  |   |    |    |
 | WeBASE | 区块链中间件平台 | lab-rc1  |    [文档](https://webasedoc.readthedocs.io/zh_CN/lab-rc1/)     |  [github](https://github.com/WeBankBlockchain/WeBASE/tree/lab-rc1)    |  [gitee](https://gitee.com/WeBank/WeBASE/tree/lab-rc1)  |
 | WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
-| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
 | WeIdentity | 分布式身份解决方案 |  暂不支持,后续版本规划  |    |        |     |   
+| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+| WeBankBlockchain-Data-Export| 数据导出组件 | 不支持   |   |          |        |
+| WeBankBlockchain-Data-Stash |  数据仓库组件 |   不支持    |   |          |        |
+| WeBankBlockchain-Data-Reconcile |  数据对账组件 |   不支持    |   |          |        |
+| WeBankBlockchain-SmartDev-Scaffold |  应用开发脚手架 | 不支持    |   |          |        |
+| WeBankBlockchain-SmartDev-SCGP |  智能合约编译插件 | 适配中    |   |          |        |
+| WeBankBlockchain-SmartDev-Contract |  智能合约库 |   v1.0.0   |  [文档](https://toolkit-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html)  |    [github](https://github.com/WeBankBlockchain/SmartDev-Contract)      |    [gitee](https://gitee.com/WeBankBlockchain/SmartDev-Contract)  |
+| WeBankBlockchain-Governance-Cert |  证书管理组件 |   v1.0.1   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Cert/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Cert)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Cert)  |
+| WeBankBlockchain-Governance-Key |  私钥管理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Key)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Key)  |
+| WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  | 合约部分支持，sdk部分不支持
+| WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  | 合约部分支持，sdk部分不支持
+
 
 #### 3.2.2. FISCO-BCOS v3.0.0-rc2
 
@@ -102,8 +123,18 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | generator |  企业区块链部署工具 | 不支持  |   |    |    |
 | WeBASE | 区块链中间件平台 | lab-rc2  |    [文档](https://webasedoc.readthedocs.io/zh_CN/lab/)     |  [github](https://github.com/WeBankBlockchain/WeBASE/tree/lab-rc2)    |  [gitee](https://gitee.com/WeBank/WeBASE/tree/lab-rc2)  |
 | WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
-| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
 | WeIdentity | 分布式身份解决方案 |  暂不支持,后续版本规划  |    |        |     |   
+| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+| WeBankBlockchain-Data-Export| 数据导出组件 | 不支持   |   |          |        |
+| WeBankBlockchain-Data-Stash |  数据仓库组件 |   不支持    |   |          |        |
+| WeBankBlockchain-Data-Reconcile |  数据对账组件 |   不支持    |   |          |        |
+| WeBankBlockchain-SmartDev-Scaffold |  应用开发脚手架 | 不支持    |   |          |        |
+| WeBankBlockchain-SmartDev-SCGP |  智能合约编译插件 | 适配中    |   |          |        |
+| WeBankBlockchain-SmartDev-Contract |  智能合约库 |   v1.0.0   |  [文档](https://toolkit-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html)  |    [github](https://github.com/WeBankBlockchain/SmartDev-Contract)      |    [gitee](https://gitee.com/WeBankBlockchain/SmartDev-Contract)  |
+| WeBankBlockchain-Governance-Cert |  证书管理组件 |   v1.0.1   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Cert/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Cert)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Cert)  |
+| WeBankBlockchain-Governance-Key |  私钥管理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Key)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Key)  |
+| WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  | 合约部分支持，sdk部分不支持
+| WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  | 合约部分支持，sdk部分不支持
 
 #### 3.2.3. FISCO-BCOS v3.0.0-rc3
 
@@ -121,5 +152,14 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | generator |  企业区块链部署工具 | 不支持  |   |    |    |
 | WeBASE | 区块链中间件平台 | **lab-rc3，适配中**  |         |      |    |
 | WeCross|  跨链协作平台 | 暂不支持，后续版本规划  |    |         |     |
-| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
 | WeIdentity | 分布式身份解决方案 |  暂不支持,后续版本规划  |    |        |     |   
+| WeBankBlockchain-Data-Export| 数据导出组件 | 暂不支持，后续版本规划   |   |          |        |
+| WeBankBlockchain-Data-Export| 数据导出组件 |  v3.0.0  | [文档](https://data-doc.readthedocs.io/zh_CN/data_export_2.0/docs/WeBankBlockchain-Data-Export/install_Service_2.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export/tree/3.0.0)       |   [gitee](https://gitee.com/WeBankBlockchain/Data-Export/tree/2.0.0/)     |
+| WeBankBlockchain-Data-Stash |  数据仓库组件 |   不支持    |   |          |        |
+| WeBankBlockchain-Data-Reconcile |  数据对账组件 |   暂不支持，后续版本规划    |   |          |        |
+| WeBankBlockchain-SmartDev-Scaffold |  应用开发脚手架 | 暂不支持，后续版本规划    |   |          |        |
+| WeBankBlockchain-SmartDev-SCGP |  智能合约编译插件 | 适配中    |   |          |        |
+| WeBankBlockchain-SmartDev-Contract |  智能合约库 |   v1.0.0   |  [文档](https://toolkit-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html)  |    [github](https://github.com/WeBankBlockchain/SmartDev-Contract)      |    [gitee](https://gitee.com/WeBankBlockchain/SmartDev-Contract)  |
+| WeBankBlockchain-Governance-Cert |  证书管理组件 |   v1.0.1   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Cert/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Cert)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Cert)  |
+| WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  | 合约部分支持，sdk部分不支持
+| WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  | 合约部分支持，sdk部分不支持
