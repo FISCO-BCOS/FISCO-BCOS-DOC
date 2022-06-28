@@ -2,7 +2,6 @@
 
 标签：``预编译合约`` ``接口`` ``开发``
 
-
 ----------
 
 ```eval_rst
@@ -12,4 +11,5 @@
    add_precompiled_impl.md
    use_kv_precompiled.md
    precompiled_contract_api.md
+   privacy.md
 ```
