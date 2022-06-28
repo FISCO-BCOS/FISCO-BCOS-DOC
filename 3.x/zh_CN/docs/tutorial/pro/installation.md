@@ -465,6 +465,70 @@ generated/chain0
 区块链节点服务启动成功后，可在tars网页管理平台看到服务列表`group0node00BcosNodeService`和`group0node10BcosNodeService`，且每个服务均是`active`的状态：
 ![](../../../images/tutorial/chain_service.png)
 
+### 4.5部署区块链节点监控服务
+
+RPC服务和Gateway服务和node服务均部署完成后，可部署区块链节点监控服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动区块链节点监控服务。
+
+```shell
+# 进入操作目录
+cd ~/fisco/BcosProBuilder
+
+# 部署并启动区块链节点服务
+python3 build_chain.py chain -o deploy -t monitor
+```
+
+执行上述命令后，当脚本输出`deploy all nodes monitor success`时，则说明区块链节点服务部署成功，详细日志输出如下：
+
+```shell
+========================================================= 
+----------- deploy all nodes monitor ----------- 
+-----------  generate graphna&prometheus config  ----------- 
+* store monitor config 
+	 path: /root/xiao/pro/BcosBuilder/pro/../docker/host/linux/monitor/prometheus/prometheus.yml 
+* store monitor config success 
+----------- generate graphna&prometheus config success ----------- 
+----------- generate mtail config for group group0 ----------- 
+* store mtail config for agencyAgroup0node0BcosNodeService
+	 path: /root/app/tars/framework/app_log/chain0/agencyAgroup0node0BcosNodeService/mtail/node.mtail 
+* store mtail config for agencyAgroup0node0BcosNodeService success 
+* execute_ansible_copy_with_command pro path: 
+* store mtail config for agencyBgroup0node0BcosNodeService
+	 path: /root/app/tars/framework/app_log/chain0/agencyBgroup0node0BcosNodeService/mtail/node.mtail 
+* store mtail config for agencyBgroup0node0BcosNodeService success 
+* execute_ansible_copy_with_command pro path: 
+----------- generate mtail config for group group0 success ----------- 
+----------- deploy all nodes monitor success ----------- 
+========================================================= 
+```
+
+部署过程中生成的监控服务相关的配置位于`/root/app/tars/framework/app_log`目录，具体如下：
+
+```shell
+[root@172 framework]# tree app_log/
+app_log/
+├── chain0
+│   ├── agencyAgroup0node0BcosNodeService
+│   │   └── mtail
+│   │       ├── mtail
+│   │       ├── node.mtail
+│   │       ├── start_mtail_monitor.sh
+│   │       └── stop_mtail_monitor.sh
+│   └── agencyBgroup0node0BcosNodeService
+│       └── mtail
+│           ├── mtail
+│           ├── node.mtail
+│           ├── start_mtail_monitor.sh
+│           └── stop_mtail_monitor.sh
+
+```
+
+```eval_rst
+.. note::
+   - 建议部署RPC和Gateway和node服务之后再部署区块链节点监控服务
+```
+
+区块链节点服务启动成功后，可在graphna和prometheus页面查看各个指标数据。
+
 ## 5. 配置及使用控制台
 
 控制台同时适用于Pro版本和Air版本的FISCO BCOS区块链，且在体验上完全一致。Pro版本区块链体验环境搭建完毕后，可配置并使用控制台向Pro版本区块链发送交易。
