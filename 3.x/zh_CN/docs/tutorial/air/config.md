@@ -153,6 +153,20 @@ P2P配置示例如下：
     data_path=data
 ```
 
+### 配置storage信息
+
+`[storage_security]`配置落盘加密信息：
+- `enable`: 是否启用落盘加密。
+- `key_manager_url`: Key Manager的访问地址。
+- `cipher_data_key`: 用来向Key Manager请求dataKey。
+
+```ini
+[storage_security]
+    enable=false
+    key_manager_url=
+    cipher_data_key=
+```
+
 ### 配置交易池信息
 
 `[txpool]`配置交易池信息：为防止过多交易堆积在交易池内占用太多内存，FISCO BCOS提供了`[tx_pool].limit`来限制交易池容量
