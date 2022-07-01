@@ -866,7 +866,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 ```groovy
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.0")
     compile spring
     compile ('org.slf4j:slf4j-log4j12:1.7.25')
     runtime ('org.slf4j:slf4j-log4j12:1.7.25')
