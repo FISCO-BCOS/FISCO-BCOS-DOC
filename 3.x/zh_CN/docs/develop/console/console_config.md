@@ -29,7 +29,7 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
