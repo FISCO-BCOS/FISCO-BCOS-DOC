@@ -1,4 +1,4 @@
-# 存储加密
+# 部署落盘加密节点
 
 标签：``存储安全`` ``存储加密`` ``落盘加密`` 
 
@@ -8,49 +8,52 @@
 
 落盘加密是对节点存储在硬盘上的内容进行加密，加密的内容包括：合约的数据、节点的私钥。
 
-具体的落盘加密介绍，可参考：[落盘加密的介绍](../design/storage_security.md)
+具体的落盘加密介绍，可参考：[落盘加密的介绍](../../design/storage_security.md)
 
-## 部署Key Manager
+## 1. 部署Key Manager
 
 每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager Github README](https://github.com/FISCO-BCOS/key-manager)或[Key Manager Gitee README](https://gitee.com/FISCO-BCOS/key-manager)
 
 ```eval_rst
 .. important::
-    若节点为国密版，Key Manager则必须使用国密方式启动。此处以非国密版为例。
+    若节点为国密版，Key Manager则必须使用国密方式启动，此处以非国密版为例。
 ```
 
-## 生成节点
+## 2. 生成区块链节点
 
-参照[搭建第一个区块链网络](../quick_start/air_installation.md)，使用build_chain.sh脚本生成四个air版本节点。
+参照[搭建第一个区块链网络](../../quick_start/air_installation.md)，使用build_chain.sh脚本生成四个air版本节点。
 
 下载`build_chain.sh`脚本
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc3/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc4/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 部署四个节点：
 
 ```bash
-bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
+bash build_chain.sh -l 127.0.0.1:4
 ```
 
 ```eval_rst
 .. important::
-    节点生成后，不能启动，待dataKey配置后将得到的cipher_data_key写入节点的配置文件再启动。一旦节点开始运行，无法切换启用/禁用落盘加密模式。
+    节点生成后，不能启动，dataKey配置后将得到的cipher_data_key写入节点的配置文件再启动。一旦节点开始运行，无法切换启用/禁用落盘加密模式。
 ```
 
-## 启动Key Manager
+## 3. 启动Key Manager
 
 参照下列命令启动`key-manager`。若还未部署`key-manager`，可参考本文档前面小节`部署Key Manager`先进行部署
 
 ```shell
 # 参数：端口，superkey
 ./key-manager 8150 123xyz
+
+# 若是国密区块链节点，请使用如下命令启动Key Manager
+./key-manager 8150 123xyz -g
 ```
 
 启动成功，打印日志
@@ -59,7 +62,7 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
 [1546501342949][TRACE][Load]key-manager started,port=8150
 ```
 
-## 配置dataKey
+## 4. 配置dataKey
 
 ```eval_rst
 .. important::
@@ -97,22 +100,26 @@ key_manager_url=127.0.0.1:8150
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
-## 加密节点私钥
+## 5. 加密节点私钥
 
-执行脚本，加密所有节点的私钥，此处以node0节点为例。
+执行脚本，加密所有节点的私钥，此处以`node0`节点为例。
 
-```shell
-cd key-manager/scripts
+```bash
+$ cd key-manager/scripts
 # 参数：ip port 节点私钥文件 cipherDataKey
-bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/ssl.key ed157f4588b86d61a2e1745efe71e6ea
-```
-
-执行后，节点私钥自动被加密，加密前的文件备份到了文件``` ssl.key.bak.xxxxxx ```中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**
-
-```log
+# 加密SSL连接私钥
+$ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/ssl.key ed157f4588b86d61a2e1745efe71e6ea
 [INFO] File backup to "nodes/127.0.0.1/node0/conf/ssl.key.bak.1546502474"
 [INFO] "nodes/127.0.0.1/node0/conf/ssl.key" encrypted!
+
+# 加密节点签名私钥
+$ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/node.pem ed157f4588b86d61a2e1745efe71e6ea
+[INFO] File backup to "nodes/127.0.0.1/node0/conf/node.pem.bak.1546502474"
+[INFO] "nodes/127.0.0.1/node0/conf/node.pem" encrypted!
 ```
+
+执行后，节点私钥自动被加密，加密前的文件备份到了文件`ssl.key.bak.xxxxxx`和``node.pem.bak.xxxxxx``中，**请将备份私钥妥善保管，并删除节点上生成的备份私钥**
+
 
 若查看`ssl.key`，可看到，已经被加密为密文
 
@@ -123,38 +130,15 @@ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/ssl.key
 ```eval_rst
 .. important::
     所有需要加密的文件列举如下，若未加密，节点无法启动。
-
     - 非国密版：conf/ssl.key conf/node.pem
     - 国密版：conf/sm_ssl.key conf/sm_enssl.key conf/node.pem
-
 ```
 
+## 6. 节点运行
 
-
-## 节点运行
-
-直接启动节点即可
+启动节点:
 
 ```shell
 cd nodes/127.0.0.1/node0/
-./start.sh
-```
-
-## 正确性判断
-
-（1）节点正常运行，正常共识，不断输出共识打包信息。
-
-``` shell
-tail -f nodes/127.0.0.1/node0/log/* | grep +++
-```
-
-（2）`key-manager`在节点每次启动时，都会打印一条日志。例如，节点在一次启动时，Key Manager直接输出的日志如下。
-
-``` log
-[1546504272699][TRACE][Dec]Respond
-{
-   "dataKey" : "313233343536",
-   "error" : 0,
-   "info" : "success"
-}
+bash start.sh
 ```

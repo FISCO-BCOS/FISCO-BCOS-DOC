@@ -1,4 +1,4 @@
-# 落盘加密
+# 数据落盘加密
 
 标签：``落盘加密`` ``数据加密`` ``数据安全``
 
@@ -16,18 +16,13 @@
 
 对于链上通信数据的访问控制，FISCO BCOS是通过节点证书和SSL来完成。此处主要介绍的是节点存储数据的访问控制，即落盘加密。
 
-
-
 ![](../../images/design/data_secure_background.png)
-
-
 
 ## 主要思想
 
 落盘加密是在机构内部进行的。在机构的内网环境中，每个机构独立地对节点的硬盘数据进行加密。当节点所在机器的硬盘被带离机构，并让节点在机构内网之外的网络启动，硬盘数据将无法解密，节点无法启动。进而无法盗取联盟链上的数据。
 
 ## 方案架构
-
 
 
 ![](../../images/design/diskencryption_framework.png)
@@ -59,9 +54,6 @@
 - Key Manager必须实时在线，响应节点的启动请求。
 - 当节点启动时，发来cipherDataKey，Key Manager用superKey对cipherDataKey进行解密，若解密成功，就将节点的dataK返回给节点。
 - Key Manager只能在内网访问，机构内的外网无法访问Key Manager.
-
-
-
 
 
 ![](../../images/design/diskencryption.png)
@@ -103,6 +95,6 @@
 
 （2）不启动节点，直接对节点本地的数据进行操作，由于拿不到dataKey，无法解密Encrypted Space，拿不到敏感数据。
 
+具体落盘加密的使用，可参考：
 
-
-具体落盘加密的使用，可参考：[落盘加密操作](../../manual/storage_security.md)
+- [部署Air版落盘加密](../tutorial/air/storage_security.md)

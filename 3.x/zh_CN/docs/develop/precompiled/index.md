@@ -11,5 +11,5 @@
    add_precompiled_impl.md
    use_kv_precompiled.md
    precompiled_contract_api.md
-   privacy.md
+   use_group_ring_sig.md
 ```

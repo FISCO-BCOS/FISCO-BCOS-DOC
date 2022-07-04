@@ -39,4 +39,5 @@ ___
    DMC.md
    contract_directory.md
    committee_design.md
+   storage_security.md
 ```

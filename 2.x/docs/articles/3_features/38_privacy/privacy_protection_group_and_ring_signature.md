@@ -129,7 +129,7 @@ FISCO BCOS为用户提供了一个群/环签名的开发示例，以客户端为
 
 ![](../../../../images/articles/privacy_protection_group_and_ring_signature/IMG_4946.PNG)
 
-群/环签名客户端调用服务端的RPC接口完成群/环的创建、成员的加入以及签名的生成；同时客户端与区块链平台交互，将签名信息上链；最后客户端调用预编译合约验证链上的签名。更多的操作步骤和技术细节，请参阅群/环签名客户端指南。参考链接如下：https://github.com/FISCO-BCOS/group-signature-client
+群/环签名客户端调用服务端的RPC接口完成群/环的创建、成员的加入以及签名的生成；同时客户端与区块链平台交互，将签名信息上链；最后客户端调用预编译合约验证链上的签名。更多的操作步骤和技术细节，请参阅群/环签名客户端指南。参考链接如下：https://github.com/FISCO-BCOS/group-signature-client/tree/master-2.0
 
 ## 改进的方向
 

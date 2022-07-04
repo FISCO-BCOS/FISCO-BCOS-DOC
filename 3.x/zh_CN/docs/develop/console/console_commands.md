@@ -762,8 +762,10 @@ PeersInfo{
 
 运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`consensus_leader_period`。这些系统参数的键名可以通过tab键补全：
 
-- tx_count_limit：区块最大打包交易数
-- consensus_leader_period：交易执行允许消耗的最大gas数
+- `tx_count_limit`: 区块最大打包交易数
+- `consensus_leader_period`: 交易执行允许消耗的最大gas数
+- `gas_limit`: 交易执行的gas限制
+- `compatibility_version`: 数据兼容版本号，当区块链所有二进制均升级到最新版本后，可通过`setSystemConfigByKey`升级数据兼容版本号到最新
 
 参数：
 
