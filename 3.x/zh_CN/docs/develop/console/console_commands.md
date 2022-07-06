@@ -941,7 +941,7 @@ ConsensusStatusInfo{
 
 ## 合约表操作命令
 
-### 1. create
+### 1. [create sql]
 
 运行create sql语句创建用户表，使用mysql语句形式。
 
@@ -963,7 +963,34 @@ t_demo
 - 表的主键与关系型数据库中的主键不是相同概念，这里主键取值不唯一，区块链底层处理记录时需要传入主键值。
 - 可以指定字段为主键，但设置的字段自增，非空，索引等修饰关键字不起作用。
 
-### 2. desc
+### 2. [alter sql]
+
+运行alter sql语句修改用户表，使用mysql语句形式。
+
+```bash
+# 修改用户表t_demo，新增字段comment
+[group0]: /apps> alter table t_demo add comment varchar
+Alter 't_demo' Ok.
+
+[group0]: /apps> desc t_demo
+{
+    "key_field":[
+        "name"
+    ],
+    "value_field":[
+        "item_id",
+        "item_name",
+        "comment"
+    ]
+}
+```
+
+**注意：**
+
+- 修改的表必须存在，且目前**只支持新增字段**
+- 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型，也按照字符串类型设置，且不能重复
+
+### 3. desc
 
 运行desc语句查询表的字段信息，使用mysql语句形式。
 
@@ -971,10 +998,103 @@ t_demo
 # 查询t_demo表的字段信息，可以查看表的主键名和其他字段名
 [group0]: /apps> desc t_demo
 {
-    "key":"name",
-    "valueFields":"item_id,item_name"
+    "key_field":[
+        "name"
+    ],
+    "value_field":[
+        "item_id",
+        "item_name"
+    ]
 }
 ```
+
+### 4. [insert sql]
+
+运行insert sql语句插入记录，使用mysql语句形式。
+
+```text
+[group0]: /apps> insert into t_demo (name, item_id, item_name) values (fruit, 1, apple1)
+Insert OK:
+1 row(s) affected.
+```
+
+**注意：**
+
+- 插入记录sql语句必须插入表的主键字段值。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
+
+### 5. [select sql]
+
+运行select sql语句查询记录，使用mysql语句形式。
+
+与一般的SQL不同的是，遍历接口的条件语句目前只支持key字段的条件。
+
+```text
+# 查询包含所有字段的记录
+[group0]: /apps> select * from t_demo where name = fruit
+{name=fruit, item_id=1, item_name=apple1}
+1 row(s) in set.
+
+# 查询包含指定字段的记录
+[group0]: /apps> select name, item_id, item_name from t_demo where name = fruit
+{name=fruit, item_id=1, item_name=apple1}
+1 row(s) in set.
+
+# 插入一条新记录
+[group0]: /apps> insert into t_demo values (fruit2, 2, apple2)
+Insert OK, 1 row affected.
+
+# 使用and关键字连接多个查询条件
+[group0]: /apps> select * from t_demo where name >= fruit
+{name=fruit, item_id=1, item_name=apple1}
+{name=fruit2, item_id=2, item_name=apple2}
+2 row(s) in set.
+
+# 使用limit字段，查询第1行记录，没有提供偏移量默认为0
+[group0]: /apps> select * from t_demo where name = fruit limit 1
+{item_id=1, item_name=apple1, name=fruit}
+1 row in set.
+
+# 使用limit字段，查询第2行记录，偏移量为1
+[group0]: /apps> select * from t_demo where name = fruit limit 1,1
+{item_id=1, item_name=apple1, name=fruit}
+1 rows in set.
+```
+
+**注意：**
+
+- 查询记录sql语句必须在where子句中提供表的主键字段值。
+- 关系型数据库中的limit字段可以使用，提供两个参数，分别offset(偏移量)和记录数(count)。
+- where条件子句只支持and关键字，其他or、in、like、inner、join，union以及子查询、多表联合查询等均不支持。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
+
+### 6. [update sql]
+
+运行update sql语句更新记录，使用mysql语句形式。
+
+```text
+[group:1]> update t_demo set item_name = orange where name = fruit
+Update OK, 1 row affected.
+```
+
+**注意：**
+
+- 更新记录sql语句的where子句目前只支持表的主键字段值条件。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
+
+### 7. [delete sql]
+
+运行delete sql语句删除记录，使用mysql语句形式。
+
+```text
+[group:1]> delete from t_demo where name = fruit and item_id = 1
+Remove OK, 1 row affected.
+```
+
+**注意：**
+
+- 删除记录sql语句的where子句目前只支持表的主键字段值条件。
+- 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ## BFS操作命令
 
@@ -1290,7 +1410,13 @@ group0: group
 
 ## 权限操作命令
 
-### 1. getCommitteeInfo
+权限治理操作命令分为：查询权限治理状态命令、治理委员专用命令、合约管理员专用命令。
+
+### 1. 查询权限治理命令
+
+该种类的命令没有权限控制，所有账户均可访问。
+
+#### 1.1. getCommitteeInfo
 
 在初始化时，将会部署一个治理委员，该治理委员的地址信息在 build_chain.sh时自动生成或者指定。初始化只有一个委员，并且委员的权重为1
 
@@ -1306,9 +1432,9 @@ Governor Address                                        | Weight
 index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 1
 ```
 
-### 2. getProposalInfo
+#### 1.2. getProposalInfo
 
-获取某个特定的提案信息，提案ID必须存在，否则会报错。
+批量获取某个特定范围内的提案信息，若只输入单个ID则返回单个ID的提案信息。
 
 `proposalType` 和  `status` 可以看到提案的类型和状态
 
@@ -1319,6 +1445,9 @@ proposalType分为以下几种：
 - setDeployAuthType：setDeployAuthTypeProposal 提案会生成
 - modifyDeployAuth：openDeployAuthProposal 和closeDeployAuthProposal 提案会生成
 - resetAdmin：resetAdminProposal 提案会生成
+- setConfig: setSysConfigProposal 提案会生成
+- setNodeWeight: addObserverProposal、addSealerProposal、setConsensusNodeWeightProposal 提案生成
+- removeNode：removeNodeProposal 提案生成
 - unknown：这个类型出现时，有可能是有bug
 
 status分为以下几种：
@@ -1327,23 +1456,56 @@ status分为以下几种：
 - finish：提案执行完成
 - failed：提案失败
 - revoke：提案被撤回
+- outdated：提案超过投票期限
 - unknown：这个类型出现时，有可能是有bug
 
 ```shell
 [group0]: /apps> getProposalInfo 1
+Show proposal, ID is: 1
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : setWeight
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+# 批量获取
+[group0]: /apps> getProposalInfo 1 2
+Proposal ID: 1
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : setWeight
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+```
+
+#### 1.3. getLatestProposal
+
+为了避免发起提案超时、退出控制台遗忘提案ID，getLatestProposal的命令可以获取当前委员会的最新的提案信息。
+
+```shell
+[group0]: /apps> getLatestProposal 
+Latest proposal ID: 9
 ---------------------------------------------------------------------------------------------
 Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-Proposal Type   : setWeight
+Proposal Type   : resetAdmin
 Proposal Status : finished
 ---------------------------------------------------------------------------------------------
 Agree Voters:
 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 ---------------------------------------------------------------------------------------------
 Against Voters:
-
 ```
 
-### 3. getDeployAuth
+#### 1.4. getDeployAuth
 
 权限策略分为：
 
@@ -1360,7 +1522,7 @@ There is no deploy strategy, everyone can deploy contracts.
 
 如果治理委员只有一个，且提案是该委员发起的，那么这个提案一定能成功
 
-### 4. checkDeployAuth
+#### 1.5. checkDeployAuth
 
 检查账户是否有部署权限
 
@@ -1380,7 +1542,17 @@ Deploy : ACCESS
 Account: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 ```
 
-### 5. checkMethodAuth
+#### 1.6. getContractAdmin
+
+使用命令可获取某个合约的管理员，只有管理员才可以对该合约进行权限控制操作。
+
+```shell
+# 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+[group0]: /apps> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
+Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+```
+
+#### 1.7. checkMethodAuth
 
 检查账户是否有调用某个合约接口的权限
 
@@ -1407,35 +1579,53 @@ Interface: set(string)
 Contract : 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
 ```
 
-### 6. getLatestProposal
+#### 1.8. getMethodAuth
 
-为了避免发起提案超时、退出控制台遗忘提案ID，getLatestProposal的命令可以获取当前委员会的最新的提案信息。
-
-```shell
-[group0]: /apps> getLatestProposal 
-Latest proposal ID: 9
----------------------------------------------------------------------------------------------
-Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-Proposal Type   : resetAdmin
-Proposal Status : finished
----------------------------------------------------------------------------------------------
-Agree Voters:
-0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
----------------------------------------------------------------------------------------------
-Against Voters:
-```
-
-### 7. getContractAdmin
-
-使用命令可获取某个合约的管理员，只有管理员才可以对该合约进行权限控制操作。
+获取某个合约接口的所有访问列表
 
 ```shell
-# 合约地址 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 的admin账号是 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-[group0]: /apps> getContractAdmin 0xCcEeF68C9b4811b32c75df284a1396C7C5509561
-Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+# 开启账户对合约0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set接口访问权限
+[group0]: /apps> openMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b "set(string)" 0x5298906acaa14e9b1a3c1462c6938e044bd41967
+{
+    "code":0,
+    "msg":"Success"
+}
+# 获取合约0x6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1 set接口的权限列表
+[group0]: /apps> getMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b "set(string)"
+---------------------------------------------------------------------------------------------
+Contract address: 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b
+Contract method : set(string)
+Method auth type: WHITE_LIST
+---------------------------------------------------------------------------------------------
+Access address:
+5298906acaa14e9b1a3c1462c6938e044bd41967
+---------------------------------------------------------------------------------------------
+Block address :
 ```
 
-### 8. updateGovernorProposal
+#### 1.9. getContractStatus
+
+获取某个合约的状态，目前只有（冻结、正常访问）两种状态
+
+```shell
+[group0]: /apps> getContractStatus 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01
+Available
+
+[group0]: /apps> freezeContract 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01
+{
+    "code":0,
+    "msg":"Success"
+}
+
+[group0]: /apps> getContractStatus 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01
+Freeze
+```
+
+### 2. 治理委员专用命令
+
+这些命令只能持有治理委员的账户才可以使用。
+
+#### 2.1. updateGovernorProposal
 
 如果是新加治理委员，新增地址和权重即可。
 
@@ -1456,7 +1646,7 @@ Against Voters:
 
 ```
 
-### 9. setRateProposal
+#### 2.2. setRateProposal
 
 设置提案阈值，提案阈值分为参与阈值和权重阈值。
 
@@ -1477,7 +1667,7 @@ Against Voters:
 
 ```
 
-### 10. setDeployAuthTypeProposal
+#### 2.3. setDeployAuthTypeProposal
 
 设置部署的ACL策略，只支持 white_list 和 black_list 两种策略
 
@@ -1498,7 +1688,7 @@ Against Voters:
 Deploy strategy is White List Access.
 ```
 
-### 11. openDeployAuthProposal
+#### 2.4. openDeployAuthProposal
 
 开启某个管理员部署权限的提案
 
@@ -1531,7 +1721,7 @@ currentAccount: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
 
 ```
 
-### 12. closeDeployAuthProposal
+#### 2.5. closeDeployAuthProposal
 
  关闭某个管理员部署权限的提案
 
@@ -1564,7 +1754,7 @@ Return values:null
 
 ```
 
-### 13 resetAdminProposal
+#### 2.6. resetAdminProposal
 
 重置某个合约的管理员的提案
 
@@ -1591,52 +1781,284 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0xea9b0d13812f
 
 ```
 
-### 14. revokeProposal
+#### 2.7. addSealerProposal
 
-撤销还未成功的提案，撤销提案的动作只能由发起提案的治理委员发起。
+发起新增共识节点Sealer的提案
 
 ```shell
-# 可以看到当前委员会的人数为2人，参与通过阈值和成功阈值均为51%
-[group0]: /apps> getCommitteeInfo 
+# 新增共识节点Sealer，权重为1
+[group0]: /apps> addSealerProposal 6471685bb764ddd625c8855809ae23ae803fcf2890977def7c3d4353e22633cdea92471ba0859fc0538679c31b89577e1dd13b292d6538acff42ac4c599d5ce8 1
+Add consensus sealer proposal created, ID is: 3
 ---------------------------------------------------------------------------------------------
-Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
-ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
----------------------------------------------------------------------------------------------
-ParticipatesRate: 51% , WinRate: 51%
----------------------------------------------------------------------------------------------
-Governor Address                                        | Weight
-index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 2
-index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
-
-# 发起一个提案，此时需要另外一个委员会同意才能通过，状态为notEnoughVotes
-[group0]: /apps> setRateProposal 66 66
-Set rate proposal created, ID is: 11
----------------------------------------------------------------------------------------------
-Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-Proposal Type   : setRate
-Proposal Status : notEnoughVotes
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : setNodeWeight
+Proposal Status : finished
 ---------------------------------------------------------------------------------------------
 Agree Voters:
-0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-# 当前账户主动取消提案，提案的状态变为revoke
-[group0]: /apps> revokeProposal 11
-Revoke proposal success.
----------------------------------------------------------------------------------------------
-Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
-Proposal Type   : setRate
-Proposal Status : revoke
----------------------------------------------------------------------------------------------
-Agree Voters:
-0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
----------------------------------------------------------------------------------------------
-Against Voters:
-
+# 确认增加成功
+[group0]: /apps> getSealerList
+[
+    Sealer{
+        nodeID='63a2e45b2d84f83b32342f0741ffc51069c74fb7c82b8eb0247b12230d50169b86545ecf84420adeec86c57dbc48db1342f4afebc6a127b481eeaaa23722fff0',
+        weight=1
+    },
+    Sealer{
+        nodeID='6471685bb764ddd625c8855809ae23ae803fcf2890977def7c3d4353e22633cdea92471ba0859fc0538679c31b89577e1dd13b292d6538acff42ac4c599d5ce8',
+        weight=1
+    }
+]
 ```
 
-### 15. voteProposal
+#### 2.8. addObserverProposal
+
+发起新增观察节点Observer的提案
+
+```shell
+[group0]: /apps> addObserverProposal 6471685bb764ddd625c8855809ae23ae803fcf2890977def7c3d4353e22633cdea92471ba0859fc0538679c31b89577e1dd13b292d6538acff42ac4c599d5ce8
+Add observer proposal created, ID is: 2
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : setNodeWeight
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+# 确认观察节点已加入
+[group0]: /apps> getObserverList
+[
+ 6471685bb764ddd625c8855809ae23ae803fcf2890977def7c3d4353e22633cdea92471ba0859fc0538679c31b89577e1dd13b292d6538acff42ac4c599d5ce8
+]
+```
+
+#### 2.9. setConsensusNodeWeightProposal
+
+发起修改共识节点权重的提案
+
+```shell
+[group0]: /apps> setConsensusNodeWeightProposal 6471685bb764ddd625c8855809ae23ae803fcf2890977def7c3d4353e22633cdea92471ba0859fc0538679c31b89577e1dd13b292d6538acff42ac4c599d5ce8 2
+Set consensus weight proposal created, ID is: 6
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : setNodeWeight
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+# 确认已经更新到权重2
+[group0]: /apps> getSealerList
+[
+    Sealer{
+        nodeID='63a2e45b2d84f83b32342f0741ffc51069c74fb7c82b8eb0247b12230d50169b86545ecf84420adeec86c57dbc48db1342f4afebc6a127b481eeaaa23722fff0',
+        weight=1
+    },
+    Sealer{
+        nodeID='6471685bb764ddd625c8855809ae23ae803fcf2890977def7c3d4353e22633cdea92471ba0859fc0538679c31b89577e1dd13b292d6538acff42ac4c599d5ce8',
+        weight=2
+    }
+]
+```
+
+#### 2.10. removeNodeProposal
+
+发起删除节点的提案
+
+```shell
+[group0]: /apps> removeNodeProposal 6471685bb764ddd625c8855809ae23ae803fcf2890977def7c3d4353e22633cdea92471ba0859fc0538679c31b89577e1dd13b292d6538acff42ac4c599d5ce8
+Remove node proposal created, ID is: 7
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : removeNode
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+[group0]: /apps> getSealerList
+[
+    Sealer{
+        nodeID='63a2e45b2d84f83b32342f0741ffc51069c74fb7c82b8eb0247b12230d50169b86545ecf84420adeec86c57dbc48db1342f4afebc6a127b481eeaaa23722fff0',
+        weight=1
+    }
+]
+```
+
+#### 2.11. setSysConfigProposal
+
+发起更改系统配置的提案
+
+```shell
+# 更改tx_count_limit为2000
+[group0]: /apps> setSysConfigProposal tx_count_limit 2000
+Set system config proposal created, ID is: 9
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : setConfig
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+# 查看已经更改成功
+[group0]: /apps> getSystemConfigByKey tx_count_limit
+2000
+```
+
+
+
+#### 2.12. upgradeVoteProposal
+
+发起升级投票计算逻辑的提案。升级提案投票计算逻辑分为以下几步：
+
+1. 基于接口编写合约；
+2. 将写好的合约部署在链上，并得到合约的地址；
+3. 发起升级投票计算逻辑的提案，将合约的地址作为参数输入，并在治理委员会中进行投票表决；
+4. 投票通过后（此时投票计算逻辑还是原有逻辑），则升级投票计算逻辑；否则就不升级。
+
+投票计算逻辑合约是按照一定的接口实现方可使用。合约实现可以参考下面的接口合约`VoteComputerTemplate.sol`进行实现：
+
+```solidity
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity >=0.6.10 <0.8.20;
+
+import "./Committee.sol";
+import "./BasicAuth.sol";
+
+abstract contract VoteComputerTemplate is BasicAuth {
+    // Governors and threshold
+    Committee public _committee;
+
+    constructor(address committeeMgrAddress, address committeeAddress) {
+        setOwner(committeeMgrAddress);
+        _committee = Committee(committeeAddress);
+        // first, test committee exist; second, test committee is helthy
+        require(
+            _committee.getWeights() >= 1,
+            "committee is error, please check address!"
+        );
+    }
+    // 此为投票权重计算逻辑唯一入口，必须实现该接口，且规定：
+    // 投票数不够，返回 1；投票通过，返回 2；投票不通过，返回 3；
+    function determineVoteResult(
+        address[] memory agreeVoters,
+        address[] memory againstVoters
+    ) public view virtual returns (uint8);
+    
+    // 此为计算逻辑的检验接口，用于其他治理委员验证该合约有效性
+    function voteResultCalc(
+        uint32 agreeVotes,
+        uint32 doneVotes,
+        uint32 allVotes,
+        uint8 participatesRate,
+        uint8 winRate
+    ) public pure virtual returns (uint8);
+}
+```
+
+现已有基于上面的`VoteComputerTemplate.sol`接口实现的合约如下：
+
+```solidity
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity >=0.6.10 <0.8.20;
+
+import "./Committee.sol";
+import "./VoteComputerTemplate.sol";
+
+contract VoteComputer is VoteComputerTemplate {
+    constructor(address committeeMgrAddress, address committeeAddress)
+        public
+        VoteComputerTemplate(committeeMgrAddress, committeeAddress)
+    {}
+    // 投票权重计算逻辑实现
+    function determineVoteResult(
+        address[] memory agreeVoters,
+        address[] memory againstVoters
+    ) public view override returns (uint8) {
+        uint32 agreeVotes = _committee.getWeights(agreeVoters);
+        uint32 doneVotes = agreeVotes + _committee.getWeights(againstVoters);
+        uint32 allVotes = _committee.getWeights();
+        return
+            voteResultCalc(
+                agreeVotes,
+                doneVotes,
+                allVotes,
+                _committee._participatesRate(),
+                _committee._winRate()
+            );
+    }
+    // 计算逻辑的检验接口实现
+    function voteResultCalc(
+        uint32 agreeVotes,
+        uint32 doneVotes,
+        uint32 allVotes,
+        uint8 participatesRate,
+        uint8 winRate
+    ) public pure override returns (uint8) {
+        //1. Checks enough voters: totalVotes/totalVotesPower >= p_rate/100
+        if (doneVotes * 100 < allVotes * participatesRate) {
+            //not enough voters, need more votes
+            return 1;
+        }
+        //2. Checks whether for votes wins: agreeVotes/totalVotes >= win_rate/100
+        if (agreeVotes * 100 >= winRate * doneVotes) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+}
+```
+
+合约编写完成之后就可以将合约在链上进行部署，并更新到治理委员会中：
+
+```shell
+# 首先通过getCommitteeInfo命令 确认Committee合约的地址为0xa0974646d4462913a36c986ea260567cf471db1f
+[group0]: /apps> getCommitteeInfo
+---------------------------------------------------------------------------------------------
+Committee address   : 0xa0974646d4462913a36c986ea260567cf471db1f
+ProposalMgr address : 0x2568bd207f50455f1b933220d0aef11be8d096b2
+---------------------------------------------------------------------------------------------
+ParticipatesRate: 0% , WinRate: 0%
+---------------------------------------------------------------------------------------------
+Governor Address                                        | Weight
+index0 : 0x4a37eba43c66df4b8394abdf8b239e3381ea4221     | 2
+
+# 部署VoteComputer合约，第一个参数0x10001为固定地址，第二个参数为当前治理委员Committee的地址
+[group0]: /apps> deploy VoteComputer 0x10001 0xa0974646d4462913a36c986ea260567cf471db1f
+transaction hash: 0x429a7ceccefb3a4a1649599f18b60cac1af040cd86bb8283b9aab68f0ab35ae4
+contract address: 0x6EA6907F036Ff456d2F0f0A858Afa9807Ff4b788
+currentAccount: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+
+# 部署成功后，即可通过upgradeVoteProposal更新
+[group0]: /apps> upgradeVoteProposal 0x6EA6907F036Ff456d2F0f0A858Afa9807Ff4b788
+Upgrade vote computer proposal created, ID is: 10
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : upgradeVoteCalc
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+[group0]: /apps>
+```
+
+#### 2.13. voteProposal
 
 治理委员可向某个提案进行投票，投票时可选择同意和不同意。
 
@@ -1685,7 +2107,58 @@ index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 2
 index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
 ```
 
-### 16. setMethodAuth
+#### 2.14. revokeProposal
+
+撤销还未成功的提案，撤销提案的动作只能由发起提案的治理委员发起。
+
+```shell
+# 可以看到当前委员会的人数为2人，参与通过阈值和成功阈值均为51%
+[group0]: /apps> getCommitteeInfo 
+---------------------------------------------------------------------------------------------
+Committee address   : 0xcbc22a496c810dde3fa53c72f575ed024789b2cc
+ProposalMgr address : 0xa0974646d4462913a36c986ea260567cf471db1f
+---------------------------------------------------------------------------------------------
+ParticipatesRate: 51% , WinRate: 51%
+---------------------------------------------------------------------------------------------
+Governor Address                                        | Weight
+index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 2
+index1 : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a     | 2
+
+# 发起一个提案，此时需要另外一个委员会同意才能通过，状态为notEnoughVotes
+[group0]: /apps> setRateProposal 66 66
+Set rate proposal created, ID is: 11
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : setRate
+Proposal Status : notEnoughVotes
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+# 当前账户主动取消提案，提案的状态变为revoke
+[group0]: /apps> revokeProposal 11
+Revoke proposal success.
+---------------------------------------------------------------------------------------------
+Proposer: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+Proposal Type   : setRate
+Proposal Status : revoke
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+```
+
+
+
+### 3. 合约管理员专用命令
+
+这些命令只有对某一个合约具有管理权限的管理员账户才可以访问。在默认时，合约的部署发起账号即为合约的管理员。
+
+#### 3.1. setMethodAuth
 
  管理员设置方法的权限策略
 
@@ -1723,7 +2196,7 @@ Return values:(Hello, World!)
 
 ```
 
-### 17. openMethodAuth
+#### 3.2. openMethodAuth
 
 管理员开启用户可以访问合约的某个方法的权限
 
@@ -1763,7 +2236,7 @@ Return values:(Hello, FISCO BCOS!)
 ---------------------------------------------------------------------------------------------
 ```
 
-### 18. closeMethodAuth
+#### 3.3. closeMethodAuth
 
 管理员关闭用户可以访问合约的某个方法的权限
 
@@ -1783,6 +2256,75 @@ transaction status: 18
 ---------------------------------------------------------------------------------------------
 Receipt message: Permission denied
 Return message: Permission denied
+---------------------------------------------------------------------------------------------
+```
+
+#### 3.4. freezeContract
+
+运行freezeContract，对指定合约进行冻结操作。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```shell
+[group0]: /apps> deploy HelloWorld
+transaction hash: 0x847f89e44d79a7b7037c3d78a103c0c4d7b5fc458ac18b8aa75fd810094deade
+contract address: 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E
+currentAccount: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+
+[group0]: /apps> freezeContract 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E
+{
+    "code":0,
+    "msg":"Success"
+}
+
+[group0]: /apps> call HelloWorld 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E get
+call for HelloWorld failed, contractAddress: 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E
+{
+    "code":21,
+    "msg":"ContractFrozen"
+}
+description: ContractFrozen, please refer to https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#id73
+
+[group0]: /apps> call HelloWorld 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E set 123
+transaction hash: 0x722176a922c85fe282bf6c434edc008b51ca72f4198ff0d6ed5f7359061404fb
+---------------------------------------------------------------------------------------------
+transaction status: 21
+---------------------------------------------------------------------------------------------
+Receipt message: ContractFrozen
+Return message: ContractFrozen
+---------------------------------------------------------------------------------------------
+```
+
+#### 3.5. unfreezeContract
+
+运行unfreezeContract，对指定合约进行解冻操作。参数：
+
+- 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
+
+```shell
+[group0]: /apps> call HelloWorld 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E get
+call for HelloWorld failed, contractAddress: 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E
+{
+    "code":21,
+    "msg":"ContractFrozen"
+}
+description: ContractFrozen, please refer to https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#id73
+
+[group0]: /apps> unfreezeContract 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E
+{
+    "code":0,
+    "msg":"Success"
+}
+
+[group0]: /apps> call HelloWorld 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E get
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return value size:1
+Return types: (string)
+Return values:(Hello, World!)
 ---------------------------------------------------------------------------------------------
 ```
 
