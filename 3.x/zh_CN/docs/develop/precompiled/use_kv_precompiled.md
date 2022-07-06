@@ -23,14 +23,14 @@ Table包含分布式存储专用的智能合约接口，其接口实现在区块
 
 用于创建KV表，打开KV表，其固定合约地址为`0x1002（Solidity）`和`/sys/table_manager（Liquid）`，接口如下（只展示与KVTable相关接口）：
 
-| 接口                          | 功能   | 参数                                       | 返回值                                      |
-| ----------------------------- | ------ | ------------------------------------------ | ------------------------------------------- |
-| createKVTable(string ,string) | 创建表 | 表名，主键名（目前只支持单个主键），字段名 | 返回错误码（int32），错误码详见下表         |
-| openTable(string)             | 获取值 | 表名，该接口只用于Solidity                 | 返回表对应的真实地址，如果不存在，则返回0x0 |
+| 接口                          | 功能       | 参数                                       | 返回值                                      |
+| ----------------------------- | ---------- | ------------------------------------------ | ------------------------------------------- |
+| createKVTable(string ,string) | 创建表     | 表名，主键名（目前只支持单个主键），字段名 | 返回错误码（int32），错误码详见下表         |
+| openTable(string)             | 获取表地址 | 表名，该接口只用于Solidity                 | 返回表对应的真实地址，如果不存在，则返回0x0 |
 
 #### 1.2 KVTable合约
 
-用于创建、访问表数据，其固定合约地址为0x1009，接口如下：
+用于访问表数据，接口如下：
 
 | 接口               | 功能   | 参数         | 返回值                                                    |
 | ------------------ | ------ | ------------ | --------------------------------------------------------- |
@@ -58,7 +58,7 @@ Table包含分布式存储专用的智能合约接口，其接口实现在区块
 
 #### 2.1 引入KVTable.sol
 
-将KVTable.sol合约放入KVTableTest.sol同级目录，并在KVTableTest.sol合约文件中引入KVTable.sol，其代码如下：
+将Table.sol合约放入KVTableTest.sol同级目录，并在KVTableTest.sol合约文件中引入Table.sol，其代码如下：
 
 ```solidity
 pragma solidity >=0.6.10 <0.8.20;
@@ -72,19 +72,6 @@ import "./Table.sol";
 在KVTableTest.sol合约文件中，创建表的核心代码如下：
 
 ```solidity
-KVTable kv_table;
-constructor () public{
-  // 创建KVTable对象，其在区块链上的固定地址是0x1001
-  kv_table = KVTable(0x1009);
-  // 创建t_kv_test表，表的主键名为id，其他字段名为item_price和item_name
-  int count = kv_table.createTable("t_kv_test", "id", "item_price,item_name");
-  // 检查是否创建成功
-  if(count >= 0)
-  {
-    // success
-  }
-}
-
 TableManager tm;
 KVTable table;
 string constant tableName = "t_kv_test";
@@ -93,7 +80,7 @@ constructor () public{
   	// 创建TableManager对象，其在区块链上的固定地址是0x1002
     tm = TableManager(address(0x1002));
 
-    // 创建t_kv_test表，表的主键名为id，其他字段名为item_price和item_name
+    // 创建t_kv_test表，表的主键名为id，其他字段名为item_name
     tm.createKVTable(tableName, "id", "item_name");
 
     // 获取真实的地址，存在合约中
@@ -178,7 +165,7 @@ mod kv_table {
 
 #### 3.2 WBC-Liquid创建表
 
-可在WBC-Liquid的构造函数中实现创建表的逻辑，此处引入的KVTable的地址为BFS路径 `/sys/kv_storage` ，注意WBC-Liquid和Solidity的区别。
+可在WBC-Liquid的构造函数中实现创建表的逻辑，此处引入的TableManager的地址为BFS路径 `/sys/table_manager` ，注意WBC-Liquid和Solidity的区别。
 
 创建表的原理与Solidity的类似，再次不再赘述。
 
