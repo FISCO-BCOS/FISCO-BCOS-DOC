@@ -86,25 +86,23 @@ Processing IP:127.0.0.1 Total:4
 
 无论是使用`-A`还是`-a`选项开启权限治理，均会体现在每个节点的配置中。节点在启动初始化的时候将会读取配置，对权限合约进行初始化。
 
-我们以 `nodes/127.0.0.1/node0/config.ini` 为例：
+我们以 `nodes/127.0.0.1/node0/config.genesis` 为例：
 
 ```ini
 ...
-
 [executor]
     ; use the wasm virtual machine or not
     is_wasm=false
     is_auth_check=true
     auth_admin_account=0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
-
 ...
 ```
 
-### FISCO BCOS Pro版开启权限治理
+### FISCO BCOS Pro/Max 版开启权限治理
 
 FISCO BCOS Pro版的建链部署工具详情请参考：[搭建Pro版区块链网络](../tutorial/pro/installation.md)。在这里以BcosBuilder为例，开启权限治理设置。
 
-在开启Pro版区块链网络权限模式之前，请保证已经完成[部署Pro版本区块链节点](../tutorial/pro/installation.html#id4)之前的所有步骤。
+在开启Pro/Max版区块链网络权限模式之前，请保证已经完成[部署Pro版本区块链节点](../tutorial/pro/installation.html#id4)之前的所有步骤。
 
 在复制配置文件时，需要手动配置权限初始化配置。复制配置文件的步骤参考：[部署RPC服务](../tutorial/pro/installation.html#rpc)
 
@@ -138,61 +136,11 @@ init_auth_address="0x2690ef01645972e0940400a4bb43f62eb4e2b7f1"
 
 控制台有提供权限治理专属的命令，以及切换控制台账户的命令。用户可以通过控制台操作权限的治理，详情请参考：[权限操作命令](./console/console_commands.html#id14)。权限治理的命令只有控制台连入了开启权限治理的节点才会出现。
 
-控制台操作命令包含以下三种类型：
+控制台操作命令包含以下三种类型，详情请参考[权限操作命令](./console/console_commands.html#id14)：
 
 - 查询状态命令，该命令没有权限控制，所有账户均可访问。
 - 治理委员专用命令，这些命令只能持有治理委员的账户才可以使用。
 - 合约管理员专用命令，这些命令只有对某一个合约具有管理权限的管理员账户才可以访问。
-
-### 1. 查询状态命令
-
-该命令没有权限控制，所有账户均可访问。
-
-- [getCommitteeInfo](./console/console_commands.html#getcommitteeinfo)：获取治理委员会详细信息；
-- [getProposalInfo](./console/console_commands.html#getproposalinfo)：获取某个特定的提案信息；
-- [getDeployAuth](./console/console_commands.html#getdeployauth)：获取当前全局的部署权限策略，分为：无策略，白名单策略，黑名单策略；
-- [checkDeployAuth](./console/console_commands.html#checkdeployauth)：检查某个账户是否有部署权限；
-- [checkMethodAuth](./console/console_commands.html#checkmethodauth)：检查某个账户是否有调用某个合约接口的权限；
-- [getLatestProposal](./console/console_commands.html#getlatestproposal)：获取最新提案的ID；
-- [getContractAdmin](./console/console_commands.html#getcontractadmin)：获取某个合约的管理员账户地址；
-
-proposalType分为以下几种：
-
-- setWeight：当治理委员发起updateGovernorProposal 提案时会生成
-- setRate：setRateProposal 提案会生成
-- setDeployAuthType：setDeployAuthTypeProposal 提案会生成
-- modifyDeployAuth：openDeployAuthProposal 和closeDeployAuthProposal 提案会生成
-- resetAdmin：resetAdminProposal 提案会生成
-- unknown：这个类型出现时，有可能是有bug
-
-status分为以下几种：
-
-- notEnoughVotes：提案正常，还未收集到足够的投票
-- finish：提案执行完成
-- failed：提案失败
-- revoke：提案被撤回
-- unknown：这个类型出现时，有可能是有bug
-
-### 2. 治理委员专用命令
-
-这些命令只能持有治理委员的账户才可以使用。
-
-- [updateGovernorProposal](./console/console_commands.html#updategovernorproposal)：发起一个更新某个治理委员信息的提案；
-- [setRateProposal](./console/console_commands.html#setrateproposal)：发起一个更改治理委员会提案阈值的提案；
-- [setDeployAuthTypeProposal](./console/console_commands.html#setdeployauthtypeproposal)：发起一个设置全局部署权限策略的提案；
-- [openDeployAuthProposal](./console/console_commands.html#opendeployauthproposal)：发起一个开启某个账户部署权限的提案；
-- [closeDeployAuthProposal](./console/console_commands.html#closedeployauthproposal)：发起一个关闭某个账户部署权限的提案；
-- [resetAdminProposal](./console/console_commands.html#resetadminproposal)：发起一个重置某个合约管理员的提案；
-- [revokeProposal](./console/console_commands.html#revokeproposal)：提案发起人撤回一个提案；
-- [voteProposal](./console/console_commands.html#voteproposal)：治理委员向某一个提案进行投票；
-
-### 3. 合约管理员专用命令
-
-这些命令只有对某一个合约具有管理权限的管理员账户才可以访问。
-
-- [setMethodAuth](./console/console_commands.html#setmethodauth)：合约管理员设置某一个方法的策略；
-- [openMethodAuth](./console/console_commands.html#openmethodauth)：合约管理员开启某个账户对某个接口的权限；
-- [closeMethodAuth](./console/console_commands.html#closemethodauth)：合约管理员关闭某个账户对某个接口的权限；
 
 ## 使用举例
 
@@ -508,4 +456,145 @@ Return value size:1
 Return types: (string)
 Return values:(May the flame guide thee.)
 ---------------------------------------------------------------------------------------------
+```
+
+
+
+### 4. 升级权限投票权重计算逻辑
+
+发起升级投票计算逻辑的提案。升级提案投票计算逻辑分为以下几步：
+
+1. 基于接口编写合约；
+2. 将写好的合约部署在链上，并得到合约的地址；
+3. 发起升级投票计算逻辑的提案，将合约的地址作为参数输入，并在治理委员会中进行投票表决；
+4. 投票通过后（此时投票计算逻辑还是原有逻辑），则升级投票计算逻辑；否则就不升级。
+
+投票计算逻辑合约是按照一定的接口实现方可使用。合约实现可以参考下面的接口合约`VoteComputerTemplate.sol`进行实现：
+
+```solidity
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity >=0.6.10 <0.8.20;
+
+import "./Committee.sol";
+import "./BasicAuth.sol";
+
+abstract contract VoteComputerTemplate is BasicAuth {
+    // Governors and threshold
+    Committee public _committee;
+
+    constructor(address committeeMgrAddress, address committeeAddress) {
+        setOwner(committeeMgrAddress);
+        _committee = Committee(committeeAddress);
+        // first, test committee exist; second, test committee is helthy
+        require(
+            _committee.getWeights() >= 1,
+            "committee is error, please check address!"
+        );
+    }
+    // 此为投票权重计算逻辑唯一入口，必须实现该接口，且规定：
+    // 投票数不够，返回 1；投票通过，返回 2；投票不通过，返回 3；
+    function determineVoteResult(
+        address[] memory agreeVoters,
+        address[] memory againstVoters
+    ) public view virtual returns (uint8);
+    
+    // 此为计算逻辑的检验接口，用于其他治理委员验证该合约有效性
+    function voteResultCalc(
+        uint32 agreeVotes,
+        uint32 doneVotes,
+        uint32 allVotes,
+        uint8 participatesRate,
+        uint8 winRate
+    ) public pure virtual returns (uint8);
+}
+```
+
+现已有基于上面的`VoteComputerTemplate.sol`接口实现的合约如下：
+
+```solidity
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity >=0.6.10 <0.8.20;
+
+import "./Committee.sol";
+import "./VoteComputerTemplate.sol";
+
+contract VoteComputer is VoteComputerTemplate {
+    constructor(address committeeMgrAddress, address committeeAddress)
+        public
+        VoteComputerTemplate(committeeMgrAddress, committeeAddress)
+    {}
+    // 投票权重计算逻辑实现
+    function determineVoteResult(
+        address[] memory agreeVoters,
+        address[] memory againstVoters
+    ) public view override returns (uint8) {
+        uint32 agreeVotes = _committee.getWeights(agreeVoters);
+        uint32 doneVotes = agreeVotes + _committee.getWeights(againstVoters);
+        uint32 allVotes = _committee.getWeights();
+        return
+            voteResultCalc(
+                agreeVotes,
+                doneVotes,
+                allVotes,
+                _committee._participatesRate(),
+                _committee._winRate()
+            );
+    }
+    // 计算逻辑的检验接口实现
+    function voteResultCalc(
+        uint32 agreeVotes,
+        uint32 doneVotes,
+        uint32 allVotes,
+        uint8 participatesRate,
+        uint8 winRate
+    ) public pure override returns (uint8) {
+        //1. Checks enough voters: totalVotes/totalVotesPower >= p_rate/100
+        if (doneVotes * 100 < allVotes * participatesRate) {
+            //not enough voters, need more votes
+            return 1;
+        }
+        //2. Checks whether for votes wins: agreeVotes/totalVotes >= win_rate/100
+        if (agreeVotes * 100 >= winRate * doneVotes) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+}
+```
+
+合约编写完成之后就可以将合约在链上进行部署，并更新到治理委员会中：
+
+```shell
+# 首先通过getCommitteeInfo命令 确认Committee合约的地址为0xa0974646d4462913a36c986ea260567cf471db1f
+[group0]: /apps> getCommitteeInfo
+---------------------------------------------------------------------------------------------
+Committee address   : 0xa0974646d4462913a36c986ea260567cf471db1f
+ProposalMgr address : 0x2568bd207f50455f1b933220d0aef11be8d096b2
+---------------------------------------------------------------------------------------------
+ParticipatesRate: 0% , WinRate: 0%
+---------------------------------------------------------------------------------------------
+Governor Address                                        | Weight
+index0 : 0x4a37eba43c66df4b8394abdf8b239e3381ea4221     | 2
+
+# 部署VoteComputer合约，第一个参数0x10001为固定地址，第二个参数为当前治理委员Committee的地址
+[group0]: /apps> deploy VoteComputer 0x10001 0xa0974646d4462913a36c986ea260567cf471db1f
+transaction hash: 0x429a7ceccefb3a4a1649599f18b60cac1af040cd86bb8283b9aab68f0ab35ae4
+contract address: 0x6EA6907F036Ff456d2F0f0A858Afa9807Ff4b788
+currentAccount: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+
+# 部署成功后，即可通过upgradeVoteProposal更新
+[group0]: /apps> upgradeVoteProposal 0x6EA6907F036Ff456d2F0f0A858Afa9807Ff4b788
+Upgrade vote computer proposal created, ID is: 10
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : upgradeVoteCalc
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+[group0]: /apps>
 ```
