@@ -13,13 +13,13 @@ FISCO BCOS提供了`BcosBuilder`工具帮助用户快速部署、启停、更新
 
 ## 1. 配置介绍
 
-`BcosBuilder`在`conf`目录下提供了一些配置模板，用于帮助用户快速完成Pro版本区块链的部署、扩容。本章从tars服务配置项、区块链部署配置项、区块链扩容配置项三个角度详细介绍`BcosBuilder`的配置项。
+`BcosBuilder`在`pro/conf`目录下提供了一些配置模板，用于帮助用户快速完成Pro版本区块链的部署、扩容。本章从tars服务配置项、区块链部署配置项、区块链扩容配置项三个角度详细介绍`BcosBuilder`的配置项。
 
 ### 1.1 tars服务配置项
 
-- `tars_url`: 访问tars网页控制台的url，默认为`http://127.0.0.1:3000`。
-- `tars_token`: 访问tars服务的token，可通过tars网页控制台的【admin】->【用户中心】->【token管理】进行token申请和查询。
-- `tars_pkg_dir`: 放置Pro版本二进制包的路径，若配置了该配置项，默认会从指定的目录下获取FISCO BCOS Pro版本二进制进行服务部署、扩容等操作。
+- `[tars].tars_url`: 访问tars网页控制台的url，默认为`http://127.0.0.1:3000`。
+- `[tars].tars_token`: 访问tars服务的token，可通过tars网页控制台的【admin】->【用户中心】->【token管理】进行token申请和查询。
+- `[tars].tars_pkg_dir`: 放置Pro版本二进制包的路径，若配置了该配置项，默认会从指定的目录下获取FISCO BCOS Pro版本二进制进行服务部署、扩容等操作。
 
 下面是tars服务配置项的示例：
 
@@ -32,23 +32,31 @@ tars_pkg_dir = ""
 
 ### 1.2 区块链服务部署配置
 
-区块链服务部署相关的配置项主要包括链配置项、RPC/Gateway服务配置项以及区块链节点服务配置项，其配置模板位于`BcosBuilder`的`conf/config-deploy-example.toml`路径下。
+区块链服务部署相关的配置项主要包括链配置项、RPC/Gateway服务配置项以及区块链节点服务配置项，其配置模板位于`BcosBuilder/pro`的`pconf/config-deploy-example.toml`路径下。
 
 **链配置项**
 
 链配置项位于配置`[chain]`中，主要包括：
 
-- `chain_id`: 区块链服务所属的链的ID，默认为`chain0`，**不能包括除字母和数字之外的所有特殊字符**。
-- `rpc_sm_ssl`: RPC服务与SDK客户端之间采用的SSL连接类型，若设置为`false`，表明采用RSA加密连接；若设置为`true`，表明采用国密SSL连接，默认为`false`。
-- `gateway_sm_ssl`: Gateway服务之间的SSL连接类型，设置为`false`表明采用RSA加密连接；设置为`true`表明采用国密SSL连接，默认为`false`
+- `[chain].chain_id`: 区块链服务所属的链的ID，默认为`chain0`，**不能包括除字母和数字之外的所有特殊字符**;
+- `[chain].rpc_sm_ssl`: RPC服务与SDK客户端之间采用的SSL连接类型，若设置为`false`，表明采用RSA加密连接；若设置为`true`，表明采用国密SSL连接，默认为`false`;
+- `[chain].gateway_sm_ssl`: Gateway服务之间的SSL连接类型，设置为`false`表明采用RSA加密连接；设置为`true`表明采用国密SSL连接，默认为`false`;
+- `[chain].rpc_ca_cert_path`: RPC服务的CA证书路径，若该路径下有完整的CA证书、CA私钥，`BcosBuilder`部署工具基于该路径下的CA证书生成RPC服务SSL连接证书；否则`BcosBuilder`部署工具会生成CA证书，并基于生成的CA证书为RPC服务颁发SSL连接证书;
+- `[chain].gateway_ca_cert_path`:  Gateway服务的CA证书路径，若该路径下有完整的CA证书、CA私钥，`BcosBuilder`部署工具基于该路径下的CA证书生成Gateway服务SSL连接证书；否则`BcosBuilder`部署工具会生成CA证书，并基于生成的CA证书为Gateway服务颁发SSL连接证书;
 
 链ID为`chain0`, RPC与SDK之间、Gateway服务之间均采用RSA加密连接的配置项如下：
 
 ```shell
 [chain]
 chain_id="chain0"
+# the rpc-service enable sm-ssl or not, default disable sm-ssl
 rpc_sm_ssl=false
+# the gateway-service enable sm-ssl or not, default disable sm-ssm
 gateway_sm_ssl=false
+# the existed rpc service ca path, will generate new ca if not configurated
+#rpc_ca_cert_path=""
+# the existed gateway service ca path, will generate new ca if not configurated
+#gateway_ca_cert_path=""
 ```
 
 **RPC服务配置项**
@@ -58,13 +66,12 @@ gateway_sm_ssl=false
    - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
 ```
 
-RPC服务的配置项位于` [[agency]].[agency.rpc]`中，一个机构可部署一个RPC服务，一条链可包含多个机构，主要配置项包括：
+RPC服务的配置项位于`[[agency]].[agency.rpc]`中，一个机构可部署一个RPC服务，一条链可包含多个机构，主要配置项包括：
 
-- `deploy_ip`: RPC服务的部署IP，若配置多个，则会在多台机器上部署RPC服务，达到平行扩展的目标。
-- `listen_ip`: RPC服务的监听IP，默认为`0.0.0.0`。
-- `listen_port`: RPC服务的监听端口，默认为`20200`。
-- `thread_count`: RPC服务进程内的工作线程数目，默认为`4`。
-- `gateway_service_name`: RPC服务所连接的Gateway服务名称，一般一个机构内会部署1个RPC服务、1个Gateway和多个区块链节点服务
+- `[[agency]].[agency.rpc].deploy_ip`: RPC服务的部署IP，若配置多个，则会在多台机器上部署RPC服务，达到平行扩展的目标。
+- `[[agency]].[agency.rpc].listen_ip`: RPC服务的监听IP，默认为`0.0.0.0`。
+- `[[agency]].[agency.rpc].listen_port`: RPC服务的监听端口，默认为`20200`。
+- `[[agency]].[agency.rpc].thread_count`: RPC服务进程内的工作线程数目，默认为`4`。
 
 
 为机构`agencyA`部署RPC服务的配置如下：
@@ -87,18 +94,16 @@ enable_storage_security = false
     listen_port=20200
     # 工作线程数目
     thread_count=4
-
-
 ```
 
 **Gateway服务配置项**
 
 RPC服务的配置项位于`[[agency]].[agency.gateway]`中，一个机构可部署一个Gateway服务，一条链可部署多个Gateway服务，主要配置项包括：
 
-- `deploy_ip`: Gateway服务的部署IP，若配置多个，则会在多台机器上部署Gateway服务，达到平行扩展的目标。
-- `listen_ip`: Gateway服务的监听IP，默认为`0.0.0.0`。
-- `listen_port`: Gateway服务的监听端口，默认为`30300`。
-- `peers`: 所有Gateway服务的连接信息。
+- `[[agency]].[agency.gateway].deploy_ip`: Gateway服务的部署IP，若配置多个，则会在多台机器上部署Gateway服务，达到平行扩展的目标。
+- `[[agency]].[agency.gateway].listen_ip`: Gateway服务的监听IP，默认为`0.0.0.0`。
+- `[[agency]].[agency.gateway].listen_port`: Gateway服务的监听端口，默认为`30300`。
+- `[[agency]].[agency.gateway].peers`: 所有Gateway服务的连接信息。
 
 为机构`agencyA`部署Gateway服务的配置示例如下：
 
@@ -127,19 +132,19 @@ enable_storage_security = false
 
 FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组，因此部署区块链节点前，首先需配置群组信息，群组配置项位于`[[group]]`中，具体如下：
 
-- `group_id`: 区块链节点所属的群组ID，默认为`group`。
-- `sm_crypto`: 节点账本是否采用国密类型签名、验签、哈希、加密算法，默认为`false`。
+- `[[group]].group_id`: 区块链节点所属的群组ID，默认为`group`。
+- `[[group]].sm_crypto`: 节点账本是否采用国密类型签名、验签、哈希、加密算法，默认为`false`。
 
 
 群组配置中还包括了创世块相关的配置：
-- `leader_period`: 每个leader可以连续打包的区块数目，默认为5。
-- `block_tx_count_limit`: 每个区块中可包含的最大交易数目，默认为1000。
-- `consensus_type`: 共识算法类型，目前仅支持`pbft`共识算法。
-- `gas_limit`: 每笔交易运行时消耗的gas上限，默认为300000000。
-- `vm_type`: 区块链节点运行的虚拟机类型，目前支持`evm`和`wasm`两种类型，且一个群组仅可运行一种类型的虚拟机，不可以部分节点运行EVM虚拟机、部分节点运行WASM虚拟机。
-- `auth_check`: 是否开启权限治理模式，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
-- `init_auth_address`: 开启权限治理时，指定的初始化治理委员账号地址，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
-- `compatibility_version`: 数据兼容版本号，默认为`3.0.0-rc4`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
+- `[[group]].leader_period`: 每个leader可以连续打包的区块数目，默认为5。
+- `[[group]].block_tx_count_limit`: 每个区块中可包含的最大交易数目，默认为1000。
+- `[[group]].consensus_type`: 共识算法类型，目前仅支持`pbft`共识算法。
+- `[[group]].gas_limit`: 每笔交易运行时消耗的gas上限，默认为300000000。
+- `[[group]].vm_type`: 区块链节点运行的虚拟机类型，目前支持`evm`和`wasm`两种类型，且一个群组仅可运行一种类型的虚拟机，不可以部分节点运行EVM虚拟机、部分节点运行WASM虚拟机。
+- `[[group]].auth_check`: 是否开启权限治理模式，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
+- `[[group]].init_auth_address`: 开启权限治理时，指定的初始化治理委员账号地址，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
+- `[[group]].compatibility_version`: 数据兼容版本号，默认为`3.0.0-rc4`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
 
 ```ini
 [[group]]
@@ -173,6 +178,7 @@ compatibility_version="3.0.0-rc4"
 区块链节点服务部署配置项位于`[[agency]].[[agency.group]].[[agency.group.node]]`中，具体如下：
 - `node_name`: 节点服务名，在服务部署的场景下可不配置，**若配置了该选项，须确保不同节点服务的服务名不重复**。
 - `deploy_ip`: 节点服务部署ip
+- `key_page_size`: KeyPage的粒度，默认10KB;
 - `enable_storage_security`: 是否开启落盘加密，默认为`false`
 - `key_center_url`: 若开启了落盘加密，这里可配置key-manager的url
 - `cipher_data_key`: 若开启了落盘加密，这里配置数据加密密钥
@@ -180,7 +186,7 @@ compatibility_version="3.0.0-rc4"
 - `monitor_log_path`: 需要监控的区块链节点日志所在路径
 
 区块链节点服务配置示例如下：
-```toml
+```ini
 [[agency]]
 name = "agencyA"
    [[agency.group]]
@@ -257,7 +263,7 @@ enable_storage_security = false
 
 扩容Gateway服务`agencyABcosGatewayService`到`172.25.0.5`的配置示例如下：
 
-```toml
+```ini
 [chain]
 chain_id="chain0"
 rpc_sm_ssl=false
@@ -286,7 +292,7 @@ enable_storage_security = false
 
 **区块链节点扩容配置**
 
-`BcosBuilder`提供了区块链节点扩容功能，可为指定群组扩容新的区块链节点服务，区块链节点扩容配置模板位于`conf/config-node-expand-example.toml`路径下，主要包括**链配置**和**扩容部署配置**，具体如下：
+`BcosBuilder/pro`提供了区块链节点扩容功能，可为指定群组扩容新的区块链节点服务，区块链节点扩容配置模板位于`conf/config-node-expand-example.toml`路径下，主要包括**链配置**和**扩容部署配置**，具体如下：
 
 - `[chain].chain_id`: 扩容的区块链节点所属的链ID。
 - `[[group]].group_id`: 扩容节点所属群组ID。
@@ -332,7 +338,7 @@ name = "agencyA"
 
 ## 2. 使用介绍
 
-可使用`python3 build_chain.py -h`查看`BcosBuilder`的使用方法: 
+可使用`python3 build_chain.py -h`查看`BcosBuilder/pro`的使用方法: 
 
 ```shell
 ----------- help for subcommand 'download_binary' -----------
