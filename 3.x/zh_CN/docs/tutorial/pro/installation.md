@@ -8,7 +8,7 @@ FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 
 ```eval_rst
 .. note::
-   - Pro版本FISCO BCOS使用 ``BcosBuilder`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
+   - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
    - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
 ```
@@ -144,9 +144,9 @@ tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访
 
 Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务BcosNodeService。
 
-- RPC服务负责接收客户端请求，并将请求转发到节点进行处理， RPC服务可横向扩展，一个RPC服务可接入多个区块链节点服务
-- Gateway服务负责跨机构区块链节点之间的网络通信，Gateway服务横向可扩展，一个Gateway服务可接入多个区块链节点服务
-- 区块链节点服务BcosNodeService提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。每一个BcosNodeService表示一个群组，可以部署多个BcosNodeService扩展多群组。
+- RPC服务：负责接收客户端请求，并将请求转发到节点进行处理， RPC服务可横向扩展，一个RPC服务可接入多个区块链节点服务
+- Gateway服务：负责跨机构区块链节点之间的网络通信，Gateway服务横向可扩展，一个Gateway服务可接入多个区块链节点服务
+- 区块链节点服务`BcosNodeService`：提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。
 
 关于Pro版本FISCO BCOS的总体架构设计可参考[这里](../../design/architecture.md)。
 
@@ -303,7 +303,7 @@ RPC服务部署完成后，需要再部署Gateway服务，用于建立机构之�
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 部署并启动Gateway服务
 python3 build_chain.py chain -o deploy -t gateway
@@ -531,7 +531,7 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```shell
 # 可通过命令 find . -name sdk找到所有SDK证书路径
-cp -r BcosBuilder/generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
+cp -r BcosBuilder/pro/generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
 ```
 
 **步骤3：启动并使用控制台**
@@ -702,7 +702,7 @@ Event: {}
    - 本步骤可选
 ```
 
-FISCO BCOS提供了监控服务，在建链工具BcosBuilder目录下，执行如下命令，可部署并启动区块链节点监控服务。
+FISCO BCOS提供了监控服务，在建链工具`BcosBuilder/pro`目录下，执行如下命令，可部署并启动区块链节点监控服务。
 
 ```shell
 # 进入操作目录

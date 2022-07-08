@@ -102,7 +102,7 @@ Processing IP:127.0.0.1 Total:4
 
 ### FISCO BCOS Pro版开启权限治理
 
-FISCO BCOS Pro版的建链部署工具详情请参考：[搭建Pro版区块链网络](../tutorial/pro/installation.md)。在这里以BcosProBuilder为例，开启权限治理设置。
+FISCO BCOS Pro版的建链部署工具详情请参考：[搭建Pro版区块链网络](../tutorial/pro/installation.md)。在这里以BcosBuilder为例，开启权限治理设置。
 
 在开启Pro版区块链网络权限模式之前，请保证已经完成[部署Pro版本区块链节点](../tutorial/pro/installation.html#id4)之前的所有步骤。
 
