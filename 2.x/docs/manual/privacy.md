@@ -92,9 +92,9 @@ FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
 
 - 群/环签名服务端: 提供完整的群/环签名RPC服务。[GitHub源码](https://github.com/FISCO-BCOS/group-signature-server)、[Gitee源码](https://gitee.com/FISCO-BCOS/group-signature-server)
 
-- 群/环签名客户端: 调用RPC服务对数据进行签名，并提供签名上链以及链上验证等功能。[GitHub源码](https://github.com/FISCO-BCOS/sig-service-client)、[Gitee源码](https://gitee.com/FISCO-BCOS/sig-service-client)
+- 群/环签名客户端: 调用RPC服务对数据进行签名，并提供签名上链以及链上验证等功能。[GitHub源码](https://github.com/FISCO-BCOS/group-signature-client/tree/master-2.0)、[Gitee源码](https://gitee.com/FISCO-BCOS/group-signature-client/tree/master-2.0)
 
-示例框架如下图所示，具体操作方法请参阅[客户端指南 Github链接](https://github.com/FISCO-BCOS/sig-service-client)或[客户端指南 Gitee链接](https://gitee.com/FISCO-BCOS/sig-service-client)。
+示例框架如下图所示，具体操作方法请参阅[客户端指南 Github链接](https://github.com/FISCO-BCOS/group-signature-client/tree/master-2.0)或[客户端指南 Gitee链接](https://gitee.com/FISCO-BCOS/group-signature-client/tree/master-2.0)。
 
 ![](../../images/privacy/demo.jpg)
 
