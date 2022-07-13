@@ -65,7 +65,7 @@ function transfer(string memory from_account, string memory to_account, uint256 
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -83,10 +83,10 @@ Asset.sol的内容如下：
 
 ```solidity
 // SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.6.0;
+pragma solidity >=0.6.10 <0.8.20;
 pragma experimental ABIEncoderV2;
 
-import "./KVTable.sol";
+import "./Table.sol";
 
 contract Asset {
     // event
@@ -101,19 +101,28 @@ contract Asset {
         string indexed to_account,
         uint256 indexed amount
     );
-    KVTable tf;
+
+    KVTable kvTable;
+    TableManager tm;
+    string constant tableName = "t_asset";
 
     constructor() public {
         // 构造函数中创建t_asset表
-        tf = KVTable(0x1009);
+        tm = TableManager(address(0x1002));
+
         // 资产管理表, key : account, field : asset_value
         // |  资产账户(主键)      |     资产金额       |
         // |-------------------- |-------------------|
         // |        account      |    asset_value    |
         // |---------------------|-------------------|
         //
-        // 创建表
-        tf.createTable("t_asset", "account", "asset_value");
+
+        // create table
+        tm.createKVTable(tableName, "account", "asset_value");
+
+        // get table address
+        address t_address = tm.openTable(tableName);
+        kvTable = KVTable(t_address);
     }
 
     /*
@@ -127,14 +136,12 @@ contract Asset {
     */
     function select(string memory account) public view returns (bool, uint256) {
         // 查询
-        Entry memory entry;
         bool result;
-        (result, entry) = tf.get("t_asset", account);
+        string memory value;
+        (result, value) = kvTable.get(account);
         uint256 asset_value = 0;
-        if (entry.fields.length == 0) {
-            return (false, 0);
-        }
-        asset_value = safeParseInt(entry.fields[0].value);
+
+        asset_value = safeParseInt(value);
         return (result, asset_value);
     }
 
@@ -158,24 +165,21 @@ contract Asset {
         // 查询账号是否存在
         (ret, temp_asset_value) = select(account);
         if (ret != true) {
+            // 不存在，创建
             string memory asset_value_str = uint2str(asset_value);
-            KVField memory kv1 = KVField("asset_value", asset_value_str);
-            KVField[] memory KVFields = new KVField[](1);
-            KVFields[0] = kv1;
-            Entry memory entry = Entry(KVFields);
 
             // 插入
-            int256 count = tf.set("t_asset", account, entry);
+            int32 count = kvTable.set(account, asset_value_str);
             if (count == 1) {
                 // 成功
                 ret_code = 0;
             } else {
                 // 失败? 无权限或者其他错误
-                ret_code = -2;
+                ret_code = - 2;
             }
         } else {
             // 账户已存在
-            ret_code = -1;
+            ret_code = - 1;
         }
 
         emit RegisterEvent(ret_code, account, asset_value);
@@ -211,59 +215,50 @@ contract Asset {
         (ret, from_asset_value) = select(from_account);
         if (ret != true) {
             // 转移账户不存在
-            emit TransferEvent(-1, from_account, to_account, amount);
-            return -1;
+            emit TransferEvent(- 1, from_account, to_account, amount);
+            return - 1;
         }
 
         // 接受账户是否存在?
         (ret, to_asset_value) = select(to_account);
         if (ret != true) {
             // 接收资产的账户不存在
-            emit TransferEvent(-2, from_account, to_account, amount);
-            return -2;
+            emit TransferEvent(- 2, from_account, to_account, amount);
+            return - 2;
         }
 
         if (from_asset_value < amount) {
             // 转移资产的账户金额不足
-            emit TransferEvent(-3, from_account, to_account, amount);
-            return -3;
+            emit TransferEvent(- 3, from_account, to_account, amount);
+            return - 3;
         }
 
         if (to_asset_value + amount < to_asset_value) {
             // 接收账户金额溢出
-            emit TransferEvent(-4, from_account, to_account, amount);
-            return -4;
+            emit TransferEvent(- 4, from_account, to_account, amount);
+            return - 4;
         }
 
         string memory f_new_value_str = uint2str(from_asset_value - amount);
-        KVField memory kv1 = KVField("asset_value", f_new_value_str);
-        KVField[] memory KVFields1 = new KVField[](1);
-        KVFields1[0] = kv1;
-        Entry memory entry1 = Entry(KVFields1);
 
         // 更新转账账户
-        int256 count = tf.set("t_asset", from_account, entry1);
+        int32 count = kvTable.set(from_account, f_new_value_str);
         if (count != 1) {
             // 失败? 无权限或者其他错误?
-            emit TransferEvent(-5, from_account, to_account, amount);
-            return -5;
+            emit TransferEvent(- 5, from_account, to_account, amount);
+            return - 5;
         }
 
         string memory to_new_value_str = uint2str(to_asset_value + amount);
-        kv1 = KVField("asset_value", to_new_value_str);
-        KVFields1 = new KVField[](1);
-        KVFields1[0] = kv1;
-        entry1 = Entry(KVFields1);
 
         // 更新接收账户
-        tf.set("t_asset", to_account, entry1);
+        kvTable.set(to_account, to_new_value_str);
 
         emit TransferEvent(0, from_account, to_account, amount);
 
         return 0;
     }
 
-    // solidity 字符串和数字的转换工具
     function uint2str(uint256 _i)
     internal
     pure
@@ -272,16 +267,19 @@ contract Asset {
         if (_i == 0) {
             return "0";
         }
-        uint256 j = _i;
-        uint256 len;
+        uint j = _i;
+        uint len;
         while (j != 0) {
             len++;
             j /= 10;
         }
         bytes memory bstr = new bytes(len);
-        uint256 k = len - 1;
+        uint k = len;
         while (_i != 0) {
-            bstr[k--] = bytes1(uint8(48 + (_i % 10)));
+            k = k-1;
+            uint8 temp = (48 + uint8(_i - _i / 10 * 10));
+            bytes1 b1 = bytes1(temp);
+            bstr[k] = b1;
             _i /= 10;
         }
         return string(bstr);
@@ -325,16 +323,16 @@ contract Asset {
             }
         }
         if (_b > 0) {
-            mint *= 10**_b;
+            mint *= 10 ** _b;
         }
         return mint;
     }
 }
 ```
 
-Asset.sol所引用的KVTable.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作KV存储接口时，均需要引入该接口合约文件。KVTable.sol 合约详细接口参考[这里](../develop/precompiled/precompiled_contract_api.md)。
+Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录下。该系统合约文件中的接口由FISCO BCOS底层实现。当业务合约需要操作KV存储接口时，均需要引入该接口合约文件。Table.sol 合约详细接口参考[这里](../develop/precompiled/precompiled_contract_api.md)。
 
-运行``ls``命令，确保``Asset.sol``和``KVTable.sol``在目录``~/fisco/console/contracts/solidity``下。
+运行``ls``命令，确保``Asset.sol``和``Table.sol``在目录``~/fisco/console/contracts/solidity``下。
 
 ## 3. 编译智能合约
 
@@ -355,10 +353,10 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 # 其它无关文件省略
 |-- abi # 生成的abi目录，存放solidity合约编译生成的abi文件
 |   |-- Asset.abi
-|   |-- KVTable.abi
+|   |-- Table.abi
 |-- bin # 生成的bin目录，存放solidity合约编译生成的bin文件
 |   |-- Asset.bin
-|   |-- KVTable.bin
+|   |-- Table.bin
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
@@ -366,7 +364,7 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 |                  |--asset
 |                       |--contract
 |                             |--Asset.java  # Asset.sol合约生成的Java文件
-|                             |--KVTable.java  # KVTable.sol合约生成的Java文件
+|                             |--Table.java  # Table.sol合约生成的Java文件
 ```
 
 java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`KVTable.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
@@ -460,7 +458,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc3")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc4")
     compile spring
 }
 ```
@@ -594,6 +592,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+
 import org.fisco.bcos.asset.contract.Asset;
 import org.fisco.bcos.sdk.v3.BcosSDK;
 import org.fisco.bcos.sdk.v3.client.Client;
@@ -611,174 +610,175 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 public class AssetClient {
 
-  static Logger logger = LoggerFactory.getLogger(AssetClient.class);
+    static Logger logger = LoggerFactory.getLogger(AssetClient.class);
 
-  private BcosSDK bcosSDK;
-  private Client client;
-  private CryptoKeyPair cryptoKeyPair;
+    private BcosSDK bcosSDK;
+    private Client client;
+    private CryptoKeyPair cryptoKeyPair;
 
-  public void initialize() throws Exception {
-    @SuppressWarnings("resource")
-    ApplicationContext context =
-        new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-    bcosSDK = context.getBean(BcosSDK.class);
-    client = bcosSDK.getClient();
-    cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
-    client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
-    logger.debug("create client for group, account address is " + cryptoKeyPair.getAddress());
-  }
-
-  public void deployAssetAndRecordAddr() {
-
-    try {
-      Asset asset = Asset.deploy(client, cryptoKeyPair);
-      System.out.println(
-          " deploy Asset success, contract address is " + asset.getContractAddress());
-
-      recordAssetAddr(asset.getContractAddress());
-    } catch (Exception e) {
-      System.out.println(" deploy Asset contract failed, error message is  " + e.getMessage());
-    }
-  }
-
-  public void recordAssetAddr(String address) throws FileNotFoundException, IOException {
-    Properties prop = new Properties();
-    prop.setProperty("address", address);
-    final Resource contractResource = new ClassPathResource("contract.properties");
-    FileOutputStream fileOutputStream = new FileOutputStream(contractResource.getFile());
-    prop.store(fileOutputStream, "contract address");
-  }
-
-  public String loadAssetAddr() throws Exception {
-    // load Asset contact address from contract.properties
-    Properties prop = new Properties();
-    final Resource contractResource = new ClassPathResource("contract.properties");
-    prop.load(contractResource.getInputStream());
-
-    String contractAddress = prop.getProperty("address");
-    if (contractAddress == null || contractAddress.trim().equals("")) {
-      throw new Exception(" load Asset contract address failed, please deploy it first. ");
-    }
-    logger.info(" load Asset address from contract.properties, address is {}", contractAddress);
-    return contractAddress;
-  }
-
-  public void queryAssetAmount(String assetAccount) {
-    try {
-      String contractAddress = loadAssetAddr();
-      Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
-      Tuple2<Boolean, BigInteger> result = asset.select(assetAccount);
-      if (result.getValue1()) {
-        System.out.printf(" asset account %s, value %s \n", assetAccount, result.getValue2());
-      } else {
-        System.out.printf(" %s asset account is not exist \n", assetAccount);
-      }
-    } catch (Exception e) {
-      logger.error(" queryAssetAmount exception, error message is {}", e.getMessage());
-
-      System.out.printf(" query asset account failed, error message is %s\n", e.getMessage());
-    }
-  }
-
-  public void registerAssetAccount(String assetAccount, BigInteger amount) {
-    try {
-      String contractAddress = loadAssetAddr();
-
-      Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
-      TransactionReceipt receipt = asset.register(assetAccount, amount);
-      Tuple1<BigInteger> registerOutput = asset.getRegisterOutput(receipt);
-      if (receipt.getStatus() == 0) {
-        if (Objects.equals(registerOutput.getValue1(), BigInteger.valueOf(0))) {
-          System.out.printf(
-                  " register asset account success => asset: %s, value: %s \n", assetAccount, amount);
-        } else {
-          System.out.printf(
-                  " register asset account failed, ret code is %s \n", registerOutput.getValue1());
-        }
-      } else {
-        System.out.println(" receipt status is error, maybe transaction not exec, status is: " + receipt.getStatus());
-      }
-    } catch (Exception e) {
-      logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
-      System.out.printf(" register asset account failed, error message is %s\n", e.getMessage());
-    }
-  }
-
-  public void transferAsset(String fromAssetAccount, String toAssetAccount, BigInteger amount) {
-    try {
-      String contractAddress = loadAssetAddr();
-      Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
-      TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
-      Tuple1<BigInteger> transferOutput = asset.getTransferOutput(receipt);
-      if (receipt.getStatus() == 0) {
-        if (Objects.equals(transferOutput.getValue1(), BigInteger.valueOf(0))) {
-          System.out.printf(
-              " transfer success => from_asset: %s, to_asset: %s, amount: %s \n",
-              fromAssetAccount, toAssetAccount, amount);
-        } else {
-          System.out.printf(
-              " transfer asset account failed, ret code is %s \n", transferOutput.getValue1());
-        }
-      } else {
-        System.out.println(" receipt status is error, maybe transaction not exec. status is: " + receipt.getStatus());
-      }
-    } catch (Exception e) {
-
-      logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
-      System.out.printf(" register asset account failed, error message is %s\n", e.getMessage());
-    }
-  }
-
-  public static void Usage() {
-    System.out.println(" Usage:");
-    System.out.println(
-        "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient deploy");
-    System.out.println(
-        "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient query account");
-    System.out.println(
-        "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient register account value");
-    System.out.println(
-        "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient transfer from_account to_account amount");
-    System.exit(0);
-  }
-
-  public static void main(String[] args) throws Exception {
-    if (args.length < 1) {
-      Usage();
+    public void initialize() {
+        @SuppressWarnings("resource")
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        bcosSDK = context.getBean(BcosSDK.class);
+        client = bcosSDK.getClient();
+        cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
+        client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
+        logger.debug("create client for group, account address is {}", cryptoKeyPair.getAddress());
     }
 
-    AssetClient client = new AssetClient();
-    client.initialize();
+    public void deployAssetAndRecordAddr() {
 
-    switch (args[0]) {
-      case "deploy":
-        client.deployAssetAndRecordAddr();
-        break;
-      case "query":
-        if (args.length < 2) {
-          Usage();
-        }
-        client.queryAssetAmount(args[1]);
-        break;
-      case "register":
-        if (args.length < 3) {
-          Usage();
-        }
-        client.registerAssetAccount(args[1], new BigInteger(args[2]));
-        break;
-      case "transfer":
-        if (args.length < 4) {
-          Usage();
-        }
-        client.transferAsset(args[1], args[2], new BigInteger(args[3]));
-        break;
-      default:
-        {
-          Usage();
+        try {
+            Asset asset = Asset.deploy(client, cryptoKeyPair);
+            System.out.println(
+                    " deploy Asset success, contract address is " + asset.getContractAddress());
+            recordAssetAddr(asset.getContractAddress());
+        } catch (Exception e) {
+            System.out.println(" deploy Asset contract failed, error message is  " + e.getMessage());
         }
     }
-    System.exit(0);
-  }
+
+    public void recordAssetAddr(String address) throws IOException {
+        Properties prop = new Properties();
+        prop.setProperty("address", address);
+        final Resource contractResource = new ClassPathResource("contract.properties");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(contractResource.getFile())) {
+            prop.store(fileOutputStream, "contract address");
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public String loadAssetAddr() throws Exception {
+        // load Asset contact address from contract.properties
+        Properties prop = new Properties();
+        final Resource contractResource = new ClassPathResource("contract.properties");
+        prop.load(contractResource.getInputStream());
+
+        String contractAddress = prop.getProperty("address");
+        if (contractAddress == null || contractAddress.trim().equals("")) {
+            throw new Exception(" load Asset contract address failed, please deploy it first. ");
+        }
+        logger.info(" load Asset address from contract.properties, address is {}", contractAddress);
+        return contractAddress;
+    }
+
+    public void queryAssetAmount(String assetAccount) {
+        try {
+            String contractAddress = loadAssetAddr();
+            Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
+            Tuple2<Boolean, BigInteger> result = asset.select(assetAccount);
+            if (result.getValue1()) {
+                System.out.printf(" asset account %s, value %s %n", assetAccount, result.getValue2());
+            } else {
+                System.out.printf(" %s asset account is not exist %n", assetAccount);
+            }
+        } catch (Exception e) {
+            logger.error(" queryAssetAmount exception, error message is {}", e.getMessage());
+
+            System.out.printf(" query asset account failed, error message is %s%n", e.getMessage());
+        }
+    }
+
+    public void registerAssetAccount(String assetAccount, BigInteger amount) {
+        try {
+            String contractAddress = loadAssetAddr();
+
+            Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
+            TransactionReceipt receipt = asset.register(assetAccount, amount);
+            List<Asset.RegisterEventEventResponse> registerEventEvents = asset.getRegisterEventEvents(receipt);
+            if (!registerEventEvents.isEmpty()) {
+                if (registerEventEvents.get(0).ret.compareTo(BigInteger.ZERO) == 0) {
+                    System.out.printf(
+                            " register asset account success => asset: %s, value: %s %n", assetAccount, amount);
+                } else {
+                    System.out.printf(
+                            " register asset account failed, ret code is %s %n", registerEventEvents.get(0).ret.toString());
+                }
+            } else {
+                System.out.println(" event log not found, maybe transaction not exec, receipt status is: " + receipt.getStatus());
+            }
+        } catch (Exception e) {
+            logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
+            System.out.printf(" register asset account failed, error message is %s%n", e.getMessage());
+        }
+    }
+
+    public void transferAsset(String fromAssetAccount, String toAssetAccount, BigInteger amount) {
+        try {
+            String contractAddress = loadAssetAddr();
+            Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
+            TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
+            List<Asset.TransferEventEventResponse> transferEventEvents = asset.getTransferEventEvents(receipt);
+            if (!transferEventEvents.isEmpty()) {
+                if (transferEventEvents.get(0).ret.compareTo(BigInteger.ZERO) == 0) {
+                    System.out.printf(
+                            " transfer success => from_asset: %s, to_asset: %s, amount: %s %n",
+                            fromAssetAccount, toAssetAccount, amount);
+                } else {
+                    System.out.printf(
+                            " transfer asset account failed, ret code is %s %n", transferEventEvents.get(0).ret.toString());
+                }
+            } else {
+                System.out.println(" event log not found, maybe transaction not exec, status is: " + receipt.getStatus());
+            }
+        } catch (Exception e) {
+
+            logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
+            System.out.printf(" register asset account failed, error message is %s%n", e.getMessage());
+        }
+    }
+
+    public static void Usage() {
+        System.out.println(" Usage:");
+        System.out.println(
+                "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient deploy");
+        System.out.println(
+                "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient query account");
+        System.out.println(
+                "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient register account value");
+        System.out.println(
+                "\t java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.asset.client.AssetClient transfer from_account to_account amount");
+        System.exit(0);
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
+            Usage();
+        }
+
+        AssetClient client = new AssetClient();
+        client.initialize();
+
+        switch (args[0]) {
+            case "deploy":
+                client.deployAssetAndRecordAddr();
+                break;
+            case "query":
+                if (args.length < 2) {
+                    Usage();
+                }
+                client.queryAssetAmount(args[1]);
+                break;
+            case "register":
+                if (args.length < 3) {
+                    Usage();
+                }
+                client.registerAssetAccount(args[1], new BigInteger(args[2]));
+                break;
+            case "transfer":
+                if (args.length < 4) {
+                    Usage();
+                }
+                client.transferAsset(args[1], args[2], new BigInteger(args[3]));
+                break;
+            default: {
+                Usage();
+            }
+        }
+        System.exit(0);
+    }
 }
 ```
 
@@ -926,7 +926,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 |   |        |-- log4j.properties // 日志配置文件
 |   |        |-- contract //存放solidity约文件
 |   |                |-- Asset.sol
-|   |                |-- KVTable.sol
+|   |                |-- Table.sol
 |   |-- test
 |   |    |-- resources // 存放代码资源文件
 |   |       |-- conf
@@ -939,7 +939,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 |   |       |-- log4j.properties // 日志配置文件
 |   |       |-- contract //存放solidity约文件
 |   |               |-- Asset.sol
-|   |               |-- KVTable.sol
+|   |               |-- Table.sol
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本

@@ -12,7 +12,7 @@
 
 - v2.x和v3.x版本之间不兼容，后续会同时保持维护、迭代、更新。<br>
 - v2.x是目前的稳定版本，最新为v2.9.0，已经经过多个机构、多个应用，长时间在生产环境中的实践检验，具备金融级的高性能、高可用性及高安全性。**用户当前有生产级的使用需求，可以直接使用v2.x即可**。<br>
-- v3.x当前处于rc阶段，最新为v3.0.0-rc3，将会在八月份前后发布正式版本，届时生产环境可以使用3.0正式版本。也**欢迎用户预先体验3.0的新特性**。
+- v3.x当前处于rc阶段，最新为v3.0.0-rc4，将会在八月份前后发布正式版本，届时生产环境可以使用3.0正式版本。也**欢迎用户预先体验3.0的新特性**。
 
 ## 2. JDK版本说明
 
@@ -52,9 +52,9 @@ Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
 | spring-boot-starter | Gradle SpringBoot 应用示例 |   v2.9.0 | [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)  |  [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)  |     [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/master-2.0)     |       |
 | spring-boot-crud |  Maven SpringBoot 应用示例 | v2.9.0  | [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0) |    [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/master-2.0)  |
 | generator | 企业区块链部署工具 |   v1.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html>)   |      [github](https://github.com/FISCO-BCOS/generator)    |   [gitee](https://gitee.com/FISCO-BCOS/generator)     |
-| WeBASE | 区块链中间件平台 |   v1.5.4   | [文档](https://webasedoc.readthedocs.io/zh_CN/latest)   |   [github](https://github.com/WeBankBlockchain/WeBASE)         |  [gitee](https://gitee.com/WeBank/WeBASE)    |   
+| WeBASE | 区块链中间件平台 |   v1.5.4   | [文档](https://webasedoc.readthedocs.io/zh_CN/latest)   |   [github](https://github.com/WeBankBlockchain/WeBASE)         |  [gitee](https://gitee.com/WeBank/WeBASE)    |
 | WeCross | 跨链协作平台 |   v1.2.1  | [文档](https://wecross.readthedocs.io/zh_CN/latest)   |    [github](https://github.com/WeBankBlockchain/WeCross)      |    [gitee](https://gitee.com/WeBank/WeCross)    |
-| WeIdentity | 分布式身份解决方案 |   v1.8.4   | [文档](https://weidentity.readthedocs.io/zh_CN/latest/)   |   [github](https://github.com/WeBankBlockchain/WeIdentity)         |  [gitee](https://gitee.com/WeBank/WeIdentity)    |   
+| WeIdentity | 分布式身份解决方案 |   v1.8.4   | [文档](https://weidentity.readthedocs.io/zh_CN/latest/)   |   [github](https://github.com/WeBankBlockchain/WeIdentity)         |  [gitee](https://gitee.com/WeBank/WeIdentity)    |
 | WeBankBlockchain-Data-Export |  数据导出组件 |   v1.7.7   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Export)  |
 | WeBankBlockchain-Data-Stash |  数据仓库组件 |   v1.2.3   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Stash)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Stash)  |
 | WeBankBlockchain-Data-Reconcile |  数据对账组件 |   v1.0.0   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Reconcile)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Reconcile)  |
@@ -63,8 +63,8 @@ Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
 | WeBankBlockchain-SmartDev-Contract |  智能合约库 |   v1.0.0   |  [文档](https://toolkit-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html)  |    [github](https://github.com/WeBankBlockchain/SmartDev-Contract)      |    [gitee](https://gitee.com/WeBankBlockchain/SmartDev-Contract)  |
 | WeBankBlockchain-Governance-Cert |  证书管理组件 |   v1.0.1   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Cert/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Cert)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Cert)  |
 | WeBankBlockchain-Governance-Key |  私钥管理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Key)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Key)  |
-| WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  | 
-| WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  | 
+| WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  |
+| WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  |
 
 ### 3.2. FISCO-BCOS 3.x
 
@@ -75,6 +75,7 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 - [v3.0.0-rc1](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc1)
 - [v3.0.0-rc2](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc2)
 - [v3.0.0-rc3](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc3)
+- [v3.0.0-rc4](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc4)
 
 #### 3.2.1. FISCO-BCOS v3.0.0-rc1
 
@@ -103,7 +104,6 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | WeBankBlockchain-Governance-Key |  私钥管理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Key)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Key)  |
 | WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  | 合约部分支持，sdk部分不支持
 | WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  | 合约部分支持，sdk部分不支持
-
 
 #### 3.2.2. FISCO-BCOS v3.0.0-rc2
 
@@ -137,13 +137,13 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 
 |       项目      | 功能简介| 版本   | 文档 |    github | gitee |  备注   |
 | ---------------| -----------|-------- |----------|--------|---------|-------
-| FISCO-BCOS     |  区块链底层平台 | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc3)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc3)     |
+| FISCO-BCOS     |  区块链底层平台 | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc3/)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc3)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc3)     |
 | Solidity       |   solidity智能合约 | v0.8.11   |  [文档](https://docs.soliditylang.org/en/v0.8.11)   |          |        | **最高支持solidity v0.8.11**
-| JavaSDK |   Java语言SDK | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc3)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc3)    |
+| JavaSDK |   Java语言SDK | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc3/docs/develop/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc3)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc3)    |
 | GoSDK |   Go语言SDK| 暂不支持</br>后续版本规划  |   |       |   |
 | PythonSDK |   Python语言SDK | 暂不支持</br>后续版本规划   |    |         |       |
-| 控制台(console) | 交互式命令行工具 |   v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/console/index.html)   |      [github](https://github.com/FISCO-BCOS/console/tree/v3.0.0-rc3)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/v3.0.0-rc3)   |
-| java-sdk-demo |  Java压测工具 | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/stress_testing.html)  |    [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc3)      |     [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc3) |
+| 控制台(console) | 交互式命令行工具 |   v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc3/docs/develop/console/index.html)   |      [github](https://github.com/FISCO-BCOS/console/tree/v3.0.0-rc3)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/v3.0.0-rc3)   |
+| java-sdk-demo |  Java压测工具 | v3.0.0-rc3   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/v3.0.0-rc3/docs/develop/stress_testing.html)  |    [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc3)      |     [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc3) |
 | spring-boot-starter | Gradle SpringBoot 应用示例 |   v3.0.0-rc3   |  [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3#spring-boot-starter)  |     [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3)     |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3)    |
 | spring-boot-crud |  Maven SpringBoot 应用示例 | v3.0.0-rc3   |  [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3#spring-boot-crud) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3)    |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3)     |
 | generator |  企业区块链部署工具 | 不支持  |   |    |    |
@@ -160,3 +160,31 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | WeBankBlockchain-Governance-Key |  私钥管理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Key)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Key)  |
 | WeBankBlockchain-Governance-Authority |  权限治理组件 |   v1.0.0   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Authority)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority)  | 合约部分支持，sdk部分不支持
 | WeBankBlockchain-Governance-Account |  账户治理组件 |   v1.0.2   |  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)  |    [github](https://github.com/WeBankBlockchain/Governance-Account)      |    [gitee](https://gitee.com/WeBankBlockchain/Governance-Account)  | 合约部分支持，sdk部分不支持
+
+#### 3.2.4. FISCO-BCOS v3.0.0-rc4
+
+|       项目      | 功能简介| 版本   | 文档 |    github | gitee |  备注   |
+| ---------------| -----------|-------- |----------|--------|---------|-------
+| FISCO-BCOS     |  区块链底层平台 | v3.0.0-rc4   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/)   |    [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc4)      |   [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/v3.0.0-rc4)     |
+| Solidity       |   solidity智能合约 | v0.8.11   |  [文档](https://docs.soliditylang.org/en/v0.8.11)   |          |        | **最高支持solidity v0.8.11**
+| JavaSDK |   Java语言SDK | v3.0.0-rc4   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/sdk/java_sdk/index.html)    |    [github](https://github.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc4)      |   [gitee](https://gitee.com/FISCO-BCOS/java-sdk/tree/v3.0.0-rc4)    |
+| GoSDK |   Go语言SDK| 暂不支持</br>后续版本规划  |   |       |   |
+| PythonSDK |   Python语言SDK | 暂不支持</br>后续版本规划   |    |         |       |
+| 控制台(console) | 交互式命令行工具 |   v3.0.0-rc4   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/console/index.html)   |      [github](https://github.com/FISCO-BCOS/console/tree/v3.0.0-rc4)    |   [gitee](https://gitee.com/FISCO-BCOS/console/tree/v3.0.0-rc4)   |
+| java-sdk-demo |  Java压测工具 | v3.0.0-rc4   | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/stress_testing.html)  |    [github](https://github.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc4)      |     [gitee](https://gitee.com/FISCO-BCOS/java-sdk-demo/tree/3.0.0-rc4) |
+| spring-boot-starter | Gradle SpringBoot 应用示例 |   v3.0.0-rc4   |  [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc4#spring-boot-starter)  |     [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc4)     |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc4)    |
+| spring-boot-crud |  Maven SpringBoot 应用示例 | v3.0.0-rc4   |  [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc4#spring-boot-crud) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc4)    |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc4)     |
+| generator |  企业区块链部署工具 | 不支持  |   |    |    |
+| WeBASE | 区块链中间件平台 | **lab-rc4，适配中**  |         |      |    |
+| WeCross|  跨链协作平台 | 暂不支持</br>后续版本规划  |    |         |     |
+| WeIdentity | 分布式身份解决方案 |  不支持  |    |        |     |
+| WeBankBlockchain-Data-Export| 数据导出组件 |  暂不支持</br>后续版本规划  |   |        |     |
+| WeBankBlockchain-Data-Stash |  数据仓库组件 |   不支持    |   |          |        |
+| WeBankBlockchain-Data-Reconcile |  数据对账组件 |   暂不支持</br>后续版本规划    |   |          |        |
+| WeBankBlockchain-SmartDev-Scaffold |  应用开发脚手架 | 暂不支持</br>后续版本规划    |   |          |        |
+| WeBankBlockchain-SmartDev-SCGP |  智能合约编译插件 | **适配中**    |   |          |        |
+| WeBankBlockchain-SmartDev-Contract |  智能合约库 |   暂不支持</br>后续版本规划   |    |    |   |
+| WeBankBlockchain-Governance-Cert |  证书管理组件 |   暂不支持</br>后续版本规划   |    |    |     |
+| WeBankBlockchain-Governance-Key |  私钥管理组件 |   暂不支持</br>后续版本规划   |   |      |     |
+| WeBankBlockchain-Governance-Authority |  权限治理组件 |   暂不支持</br>后续版本规划   |   |       |   |
+| WeBankBlockchain-Governance-Account |  账户治理组件 |   暂不支持</br>后续版本规划   |   |   |     |

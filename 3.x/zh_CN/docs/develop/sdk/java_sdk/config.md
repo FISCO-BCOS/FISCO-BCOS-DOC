@@ -469,7 +469,7 @@ public class FiscoBcos {
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-    <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.config.model.ConfigProperty">
+    <bean id="defaultConfigProperty" class="org.fisco.bcos.sdk.v3.config.model.ConfigProperty">
         <property name="cryptoMaterial">
             <map>
                 <entry key="certPath" value="conf" />
@@ -503,13 +503,13 @@ public class FiscoBcos {
         </property>
     </bean>
 
-    <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.config.ConfigOption">
+    <bean id="defaultConfigOption" class="org.fisco.bcos.sdk.v3.config.ConfigOption">
         <constructor-arg name="configProperty">
             <ref bean="defaultConfigProperty"/>
         </constructor-arg>
     </bean>
 
-    <bean id="bcosSDK" class="org.fisco.bcos.sdk.BcosSDK">
+    <bean id="bcosSDK" class="org.fisco.bcos.sdk.v3.BcosSDK">
         <constructor-arg name="configOption">
             <ref bean="defaultConfigOption"/>
         </constructor-arg>

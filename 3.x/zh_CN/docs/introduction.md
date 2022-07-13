@@ -70,7 +70,7 @@ FISCO BCOS是由国内企业主导研发、对外开源、安全可控的企业�
 |SPV|提供获取SPV证明的接口|
 |跨链协议|基于[WeCross](https://github.com/WeBankBlockchain/WeCross)支持同构、异构跨链|
 | <font color=Blue>**开发支持**</font> |
-|开发建链工具|提供[Air版本区块链部署工具build_chain](./tutorial/air/build_chain.html)和[Pro版本区块链部署工具BcosProBuilder](./tutorial/pro/pro_builder.html)|
+|开发建链工具|提供[Air版本区块链部署工具build_chain](./tutorial/air/build_chain.html), [Pro版本区块链部署工具BcosBuilder/pro](./tutorial/pro/pro_builder.html)和[Maxb版本部署工具BcosBuilder/max](./tutorial/max/max_builder.html)|
 |合约部署与测试工具|交互式控制台 [基于Java SDK的控制台](./develop/console/index.html)|
 |SDK语言|[Java](./develop/sdk/java_sdk/index.html)（待适配语言：go、nodejs、Rust、Python、iOS、Android）
 |快速开发组件|提供[Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|

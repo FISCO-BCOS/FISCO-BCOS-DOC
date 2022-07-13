@@ -5,9 +5,11 @@
 ----
 在Java SDK 3.x版本使用`ABI`和`Scale`两种编解码格式，分别对**Solidity合约**和**WebankBlockchain-Liquid合约（简称WBC-Liquid）**的函数签名、参数编码、返回结果进行编解码。
 
-在Java SDK中，`org.fisco.bcos.sdk.ABICodec`类提供了编码交易的输出（`data`的字段）、解析交易返回值及解析合约事件推送内容的功能。
+**注**：为了更加区别ABI和Scale的区分，3.0.0-rc3以后org.fisco.bcos.sdk.ABICodec改名为org.fisco.bcos.sdk.v3.ContractCodec
 
-这里以`Add.sol`合约为例，给出`ABICodec`的使用参考。
+在Java SDK中，`org.fisco.bcos.sdk.v3.ContractCodec`类提供了编码交易的输出（`data`的字段）、解析交易返回值及解析合约事件推送内容的功能。
+
+这里以`Add.sol`合约为例，给出`ContractCodec`的使用参考。
 
 ```solidity
 pragma solidity^0.6.0;
@@ -51,19 +53,19 @@ contract Add {
 }
 ```
 
-## 1. 初始化ABICodec
+## 1. 初始化ContractCodec
 
-在使用`ABICodec`的方法之前，需要先对密码学环境、编解码格式进行初始设定。ABICodec构造函数如下：
+在使用`ContractCodec`的方法之前，需要先对密码学环境、编解码格式进行初始设定。ABICodec构造函数如下：
 
 ```java
-public ABICodec(CryptoSuite cryptoSuite, boolean isWasm) {
+public ContractCodec(CryptoSuite cryptoSuite, boolean isWasm) {
    // 省略
 }
 ```
 
 CryptoSuite可以从初始化的Client类中进行获取，可参考链接：[初始化SDK](./assemble_transaction.html#sdk)
 
-isWasm是决定ABICodec编码格式使用的重要参数：
+isWasm是决定ContractCodec编码格式使用的重要参数：
 
 - 如果isWasm为true，那么将使用Scale编码格式对交易输入输出进行编解码，在节点中对应的是使用WBC-Liquid合约；
 - 如果isWasm为false，那么将使用ABI编码格式对交易输入输出进行编解码，在节点中对应的是使用Solidity合约。
@@ -72,7 +74,7 @@ isWasm是决定ABICodec编码格式使用的重要参数：
 
 交易的input由两部分组成，函数选择器及调用该函数所需参数的编码。其中input的前四个字节数据（如"0x1003e2d2"）指定了要调用的函数选择器，函数选择器的计算方式为函数声明（去除空格，即`add(uint256)`）的哈希，取前4个字节。input的剩余部分为输入参数根据ABI编码之后的结果（如"000000000000000000000000000000000000000000000000000000000000003c"为参数"60"编码之后的结果）。
 
-根据函数指定方式及参数输入格式的不同，`ABICodec`分别提供了以下接口计算交易的`data`。
+根据函数指定方式及参数输入格式的不同，`ContractCodec`分别提供了以下接口计算交易的`data`。
 
 ```Java
   // 函数名 + Object格式的参数列表
@@ -98,26 +100,24 @@ BcosSDK sdk =  BcosSDK.build(configFile);
 Client client = sdk.getClient("group0");
 // 使用Solidity合约
 boolean isWasm = false;
-ABICodec abiCodec = new ABICodec(client.getCryptoSuite(), isWasm);
+ContractCodec contractCodec = new ContractCodec(client.getCryptoSuite(), isWasm);
 String abi = ""; // 合约ABI编码，省略
 
 // 构造参数列表
 List<Object> argsObjects = new ArrayList<Object>();
 argsObjects.add(new BigInteger("60"));
 try {
-  String encoded = abiCodec.encodeMethod(abi, "add", argsObjects));
+  String encoded = contractCodec.encodeMethod(abi, "add", argsObjects));
   logger.info("encode method result, " + encoded);
     // encoded = "0x1003e2d2000000000000000000000000000000000000000000000000000000000000003c"
-} catch (ABICodecException e) {
+} catch (ContractCodecException e) {
   logger.info("encode method error, " + e.getMessage());
 }
 ```
 
-
-
 ## 3. 解析交易返回值
 
-根据函数指定方式及返回值类型的不同，`ABICodec`分别提供了以下接口解析函数返回值。
+根据函数指定方式及返回值类型的不同，`ContractCodec`分别提供了以下接口解析函数返回值。
 
 ```Java
   // 函数名 + Object格式的返回列表
@@ -136,11 +136,9 @@ try {
 
 上述接口参数中的`output`为交易回执中的`output`字段（"0x00000000000000000000000000000000000000000000000000000000000000a0"）。接口的使用方法可参考构造交易input的接口用法。
 
-
-
 ## 4. 解析合约事件推送内容
 
-根据事件指定方式及解析结果类型的不同，`ABICodec`分别提供了以下接口解析事件内容。
+根据事件指定方式及解析结果类型的不同，`ContractCodec`分别提供了以下接口解析事件内容。
 
 ```Java
   // 事件名 + Object格式的解析结果列表
@@ -167,12 +165,12 @@ class SubscribeCallback implements EventCallback {
     for (EventLog log : logs) {
       // 使用Solidity
       boolean isWasm = false;
-      ABICodec abiCodec = new ABICodec(client.getCryptoSuite(), isWasm); // client初始化，省略
+      ContractCodec contractCodec = new ContractCodec(client.getCryptoSuite(), isWasm); // client初始化，省略
       try {
-        List<Object> list = abiCodec.decodeEvent(abi, "LogAdd", log.getData());
+        List<Object> list = contractCodec.decodeEvent(abi, "LogAdd", log.getData());
         logger.debug("decode event log content, " + list);
         // list.size() = 2
-      } catch (ABICodecException e) {
+      } catch (ContractCodecException e) {
         logger.error("decode event log error, " + e.getMessage());
       }
     }
