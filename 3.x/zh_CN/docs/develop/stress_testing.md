@@ -190,7 +190,7 @@ vim ～/fisco/nodes/127.0.0.1/node0/config.genesis
 
     ; 修改该数值为2000，默认1000
     ; the max number of transactions of a block
-    block_tx_count_limit=1000
+    block_tx_count_limit=2000
 
     consensus_timeout=3000
     leader_period=1
@@ -200,7 +200,7 @@ vim ～/fisco/nodes/127.0.0.1/node0/config.genesis
     node.3=027f25b1597d363babe412962b05995d56033636cb061737beeb7e9a6c811e19f1fccf763acc8271ba542eb4fe5d798e9b06ce0e28ef73285e7b86778ad879ca: 1
 ```
 
-若是已经启动过节点了，再修改创世块配置的话，需要删除掉节点原先data目录下的数据，再重启节点。（因为节点启动后，将创世块配置写入到data目录下，在data目录已经有数据的时候，就不会再重新读取config.genesis的配置）。
+若是已经启动过节点了，再修改创世块配置需删除节点data目录下的数据，再重启节点。
 
 ```shell
 # 修改node0的config.ini配置
@@ -236,7 +236,7 @@ vim ～/fisco/nodes/127.0.0.1/node0/config.ini
 ```ini
 [txpool]
     ; size of the txpool, default is 15000
-    limit=15000
+    limit=1500000
 ```
 
 配置完成之后，启动四个节点：
