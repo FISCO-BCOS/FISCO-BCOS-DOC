@@ -37,7 +37,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc3/
 **生成多机节点配置**
 
 ```bash
-bash build_chain.sh -l "196.168.0.1:1,196.168.0.2:1,196.168.0.3:1,196.168.0.4:1" -o 4nodes -e ./fisco-bcos
+bash build_chain.sh -l "196.168.0.1:1,196.168.0.2:1,196.168.0.3:1,196.168.0.4:1" -o 4nodes
 ```
 
 `-l`: 参数为要生成节点的ip地址，以及每台机器生成的节点数量；
