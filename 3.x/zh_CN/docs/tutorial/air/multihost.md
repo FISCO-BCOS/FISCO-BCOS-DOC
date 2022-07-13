@@ -31,7 +31,7 @@ mkdir -p ~/fisco && cd ~/fisco
 ./download_bin.sh -v 3.0.0
 
 # 下载开发部署工具build_chain
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc3/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc4/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成多机节点配置**
@@ -42,7 +42,6 @@ bash build_chain.sh -l "196.168.0.1:1,196.168.0.2:1,196.168.0.3:1,196.168.0.4:1"
 
 `-l`: 参数为要生成节点的ip地址，以及每台机器生成的节点数量；
 `-o`: 输出的节点文件路径；
-`-e`: 二进制文件路径。
 参数详情见[部署工具(build_chain.sh)](./build_chain.md)。
 
 命令执行成功会输出`All completed`。如果执行出错，请检查`4nodes/build.log`文件中的错误信息。
@@ -215,7 +214,7 @@ sudo yum install -y java java-devel
 # 创建操作目录
 mkdir -p ~/fisco && cd ~/fisco
 
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
 
 # 若因为网络问题导致长时间无法下载，请尝试以下命令：
 curl -#LO  https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
@@ -252,7 +251,7 @@ bash ~/fisco/console/start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+Welcome to FISCO BCOS console(3.0.0-rc4)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
