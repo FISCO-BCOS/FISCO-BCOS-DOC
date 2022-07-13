@@ -4,11 +4,16 @@
 
 ----
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 ## 组件定位
 
 数据治理通用组件的全名是WeBankBlockchain-Data数据治理通用组件，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。
 它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。
-    
+
 这三个组件分别从底层数据存储层、智能合约数据解析层和应用层三个方面，提供了区块链数据挖掘、裁剪、扩容、可信存储、抽取、分析、审计、对账、监管等数据治理方面的关键能力。
 WeBankBlockchain-Data已在金融、公益、农牧产品溯源、司法存证、零售等多个行业落地和使用。
 
@@ -43,43 +48,49 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 
 在业务层，业务对账组件支持机构内外部对链上链下业务数据进行对账。
 
-
 ## 组件简介
+
 目前，WeBankBlockchain-Data由数据仓库组件(Data-Stash)、数据导出组件(Data-Export)、数据对账组件(Data-Reconcile)三个相互独立、可插拔、可灵活组装的组件构成，后续会根据业务和场景诉求提供更多的功能和解决方案子组件。
 
 ![](../../images/governance/data/data-gov.png)
 
 ### WeBankBlockchain-Data-Stash  数据仓库组件
+
 提供FISCO BCOS节点数据扩容、备份和裁剪的能力。
 可基于binlog协议同步区块链底层节点数据，支持断点续传，数据可信验证，并提供快速同步机制。
 
 ![](../../images/governance/data/Data-Stash.png)
 
 请参考  
+
 - [Github地址](https://github.com/WeBankBlockchain/Data-Stash)
 - [Gitee地址](https://gitee.com/WeBankBlockchain/Data-Stash)
 - [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)
 - [快速开始](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/quickstart.html)
 
 ### WeBankBlockchain-Data-Export  数据导出组件
+
 支持将链上数据导出到MySQL等结构化存储中，解决区块链数据复杂查询、分析和处理的问题。
 只需简单配置、无需开发、即可实时导出个性化的业务数据，实现将裸数据转化为标准化、结构化、有序化、可视化的高价值数据。
 
 ![](../../images/governance/data/Data-Export.png)
 
 请参考  
+
 - [Github地址](https://github.com/WeBankBlockchain/Data-Export)
 - [Gitee地址](https://gitee.com/WeBankBlockchain/Data-Export)
 - [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)
 - [快速开始](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/install.html)
-    
+
 ### WeBankBlockchain-Data-Reconcile  数据对账组件
+
 提供区块链数据的对账解决方案。
 灵活配置、无需开发，支持自定义对账数据和对账格式，支持定时对账和触发对账，对账处理模块可插拔可扩展。
 
 ![](../../images/governance/data/Data-Reconcile.png)
 
 请参考  
+
 - [Github地址](https://github.com/WeBankBlockchain/Data-Reconcile)
 - [Gitee地址](https://gitee.com/WeBankBlockchain/Data-Reconcile)
 - [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/index.html)
@@ -118,4 +129,3 @@ WeBankBlockchain-Data 从底层数据存储层、智能合约数据解析层和�
 企业间对账：Data-Reconcile可以帮助开发者快速构建跨机构间的对账应用系统。例如，在结算时，A企业定期将自身业务系统交易数据导出为对账文件，发送至与文件存储中心。B企业可借助Data-Reconcile定期拉取A企业对账文件，配合Data-Export，与企业内部的链上数据进行对账处理。Data-Reconcile在保证对账结果可信的同时提升了对账的效率，可实现准实时对账。
 
 综上所述，WeBankBlockchain-Data 是一套稳定、高效、安全的立体化区块链数据治理解决方案，旨在通过提供一系列相互独立、可插拔、可灵活组装的组件，应对和处理区块链海量数据的问题，为用户带来更加便捷、简单、低成本和轻量化的用户体验，从而推动区块链数据治理的发展。
-

@@ -6,6 +6,11 @@
 
 ```eval_rst
 .. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
+```eval_rst
+.. important::
     本部署工具 build_chain.sh 脚本目标是让用户最快的使用FISCO BCOS Air版。
 ```
 
@@ -25,10 +30,11 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 $ bash build_chain.sh
 Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
-    -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc3
+    -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc4
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -o <output dir>                     [Optional] output directory, default ./nodes
     -e <fisco-bcos exec>                [Required] fisco-bcos binary exec
+    -t <mtail exec>                     [Required] mtail binary exec
     -p <Start Port>                     Default 30300,20200 means p2p_port start from 30300, rpc_port from 20200
     -s <SM model>                       [Optional] SM SSL connection or not, default is false
     -c <Config Path>                    [Required when expand node] Specify the path of the expanded node config.ini, config.genesis and p2p connection file nodes.json
@@ -42,9 +48,11 @@ Usage:
 deploy nodes e.g
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -s
+    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m (部署节点带监控功能)
 expand node e.g
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
+    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml(部署节点带监控功能)
 ```
 
 
@@ -119,7 +127,7 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 该模式下 start.sh 脚本启动节点的命令如下
 
 ```shell
-docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc3 -c config.ini -g config.genesis
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc4 -c config.ini -g config.genesis
 ```
 
 ### **`A`权限控制选项[**Optional**]**
@@ -136,7 +144,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -A
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/fisco-bcos-macOS-x86_64.tar.gz ...
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/fisco-bcos-macOS-x86_64.tar.gz ...
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
@@ -160,6 +168,49 @@ Processing IP:127.0.0.1 Total:4
 
 可选参数，当区块链节点启用权限控制时，可通过`-a`选项指定admin账号的地址，若不指定改选项，`build_chain`脚本随机会生成一个账户地址作为admin账号。
 
+### **`m`节点监控选项[**Optional**]**
+
+可选参数，当区块链节点启用节点监控时，可通过`-m`选项来部署带监控的节点，若不选择该选项则只部署不带监控的节点。
+
+部署开启监控的Air版本区块链示例如下：
+
+```shell
+[root@172 air]# bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -t ./mtail -m
+[INFO] Use binary ./fisco-bcos
+[INFO] Use binary ./mtail
+[INFO] Generate ca cert successfully!
+Processing IP:127.0.0.1 Total:4
+[INFO] Generate nodes/127.0.0.1/sdk cert successful!
+[INFO] Generate nodes/127.0.0.1/node0/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node1/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
+[INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Begin generate uuid
+[INFO] Generate uuid success: 1357cd37-6991-44c0-b14a-5ea81355c12c
+[INFO] Begin generate uuid
+[INFO] Generate uuid success: c68ebc3f-2258-4e34-93c9-ba5ab6d2f503
+[INFO] Begin generate uuid
+[INFO] Generate uuid success: 5311259c-02a5-4556-9726-daa1ee8fbefc
+[INFO] Begin generate uuid
+[INFO] Generate uuid success: d4e5701b-bbce-4dcc-a94f-21160425cdb9
+==============================================================
+[INFO] fisco-bcos Path     : ./fisco-bcos
+[INFO] Auth Mode           : false
+[INFO] Start Port          : 30300 20200
+[INFO] Server IP           : 127.0.0.1:4
+[INFO] SM Model            : false
+[INFO] output dir          : nodes
+[INFO] All completed. Files in nodes
+```
+
+### **`i`扩容节点监控选项[**Optional**]**
+
+可选参数，当区块链扩容节点需要带监控时，通过`-i`选项来指定扩容节点监控，参数格式为 `ip1:nodeNum1`，在IP为`192.168.0.1`的机器上扩容第2个节点监控，`l`选项示例如下：`192.168.0.1:2`。
+
+### **`M`节点监控配置文件选项[**Optional**]**
+
+可选参数，当区块链扩容节点需要带监控时，可通过`-M`选项来指定prometheus配置文件在nodes目录的相对路径。
+
 ### **`h`选项[**Optional**]**
 
 查看脚本使用用法。
@@ -174,14 +225,26 @@ Processing IP:127.0.0.1 Total:4
 - **SDK连接证书**: 由`build_chain.sh`生成，客户端可拷贝该证书与节点建立SSL连接。
 - **节点配置文件**: 节点目录下的`config.ini`和`config.genesis`配置，前者主要配置链信息，后者主要配置创世块信息，具体可参考[Air版本区块链节点配置介绍](./config.md)。
 - **启停脚本**: `start.sh`和`stop.sh`，用于启动和停止节点。
+- **启停监控脚本**: `monitor/start_monitor.sh`和`monitor/stop_monitor.sh`，用于启动和停止节点监控。
 
 单机四节点Air版本非国密区块链的配置文件组织示例如下:
 
 ```shell
 nodes/
+├── monitor
+│   ├── grafana # grafana配置文件
+│   ├── prometheus # prometheus配置文件
+│   ├── start_monitor.sh # 启动脚本，用于开启监控
+│   ├── stop_monitor.sh # 停止脚本，用于停止监控
+│   ├── compose.yaml # docker-compose配置文件
 ├── 127.0.0.1
 │   ├── fisco-bcos # 二进制程序
+│   ├── mtail # 二进制程序
 │   ├── node0 # 节点0文件夹
+│   │   ├── mtail # mtail配置文件夹
+│   │   │   ├── start_mtail_monitor.sh # 启动脚本，用于启动该节点mtail程序
+│   │   │   ├── stop_mtail_monitor.sh	# 停止脚本，用于停止该节点mtail程序
+│   │   │   ├── node.mtail # mtail配置文件
 │   │   ├── conf # 配置文件夹
 │   │   │   ├── ca.crt # 链根证书
 │   │   │   ├── cert.cnf

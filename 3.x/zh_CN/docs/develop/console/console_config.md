@@ -21,7 +21,7 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
     前置条件：搭建FISCO BCOS区块链，请参考 `搭建第一个区块链网络 <../../quick_start/air_installation.html>`_
     建链工具参考:
      - `Air版本FISCO BCOS建链脚本build_chain <../../tutorial/air/build_chain.html>`_
-     - `Pro版本FISCO BCOS建链工具BcosProBuilder <../../tutorial/pro/pro_builder.html>`_
+     - `Pro版本FISCO BCOS建链工具BcosBuilder <../../tutorial/pro/pro_builder.html>`_
 ```
 
 ### 1. 获取控制台
@@ -29,7 +29,7 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

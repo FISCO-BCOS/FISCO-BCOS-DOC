@@ -8,14 +8,14 @@ FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 
 ```eval_rst
 .. note::
-   - Pro版本FISCO BCOS使用 ``BcosProBuilder`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `部署工具BcosProBuilder <./pro_builder.html>`_ 
+   - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
    - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
 ```
 
 ## 1. 安装依赖
 
-部署工具`BcosProBuilder`依赖`python3, curl, docker, docker-compose`，根据您使用的操作系统，使用以下命令安装依赖。
+部署工具`BcosBuilder`依赖`python3, curl, docker, docker-compose`，根据您使用的操作系统，使用以下命令安装依赖。
 
 **安装Ubuntu依赖(版本不小于Ubuntu18.04)**
 
@@ -40,8 +40,8 @@ brew install curl docker docker-compose python3 wget
 
 ```eval_rst
 .. note::
-   - 部署工具 ``BcosProBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
-   - 若从github下载部署工具 ``BcosProBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+   - 部署工具 ``BcosBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
+   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -49,19 +49,19 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc3/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/BcosProBuilder.tgz && tar -xvf BcosProBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # 安装构建工具依赖包
-cd BcosProBuilder && pip3 install -r requirements.txt
+cd BcosBuilder && pip3 install -r requirements.txt
 ```
 ## 3. 安装、启动并配置tars服务
 
 Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服务主要包括`TarsFramework`和`TarsNode`，关于tars服务更详细的介绍请参考[这里](https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md).
 
-**`BcosProBuilder`提供了`bridge`和`host`两种网络模式的tars docker配置，单机体验版推荐使用`bridge`网络模式的tars docker配置，生产环境推荐使用`host`网络模式的tars docker配置**。
+**`BcosBuilder`提供了`bridge`和`host`两种网络模式的tars docker配置，单机体验版推荐使用`bridge`网络模式的tars docker配置，生产环境推荐使用`host`网络模式的tars docker配置**。
 
 - `bridge`网络模式的docker配置路径：`docker/bridge`，其中`docker/bridge/linux`供linux用户使用，`docker/bridge/mac`供mac用户使用
 - `host`网络模式的docker配置路径：`docker/host/linux`，目前仅提供了适用于linux系统的docker配置
@@ -77,8 +77,8 @@ Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服�
 **安装tars服务：若是首次运行tars服务，请您运行如下命令安装并启动tars服务。**
 
 ```shell
-# 进入BcosProBuilder目录
-cd ~/fisco/BcosProBuilder
+# 进入BcosBuilder目录
+cd ~/fisco/BcosBuilder/pro
 
 # Note: 这里需要保证docker服务处于启动状态
 # 若之前已经操作过，可跳过本步骤
@@ -104,8 +104,8 @@ docker-compose up -d
 **启动tars服务：若之前已经安装过tars服务，请您运行如下命令直接启动tars服务。**
 
 ```shell
-# 进入BcosProBuilder目录
-cd ~/fisco/BcosProBuilder
+# 进入BcosBuilder目录
+cd ~/fisco/BcosBuilder
 
 # Note: 这里需要保证docker服务处于启动状态
 # linux系统：进入到docker配置文件路径(macOS系统可跳过本步骤)
@@ -144,9 +144,9 @@ tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访
 
 Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务BcosNodeService。
 
-- RPC服务负责接收客户端请求，并将请求转发到节点进行处理， RPC服务可横向扩展，一个RPC服务可接入多个区块链节点服务
-- Gateway服务负责跨机构区块链节点之间的网络通信，Gateway服务横向可扩展，一个Gateway服务可接入多个区块链节点服务
-- 区块链节点服务BcosNodeService提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。每一个BcosNodeService表示一个群组，可以部署多个BcosNodeService扩展多群组。
+- RPC服务：负责接收客户端请求，并将请求转发到节点进行处理， RPC服务可横向扩展，一个RPC服务可接入多个区块链节点服务
+- Gateway服务：负责跨机构区块链节点之间的网络通信，Gateway服务横向可扩展，一个Gateway服务可接入多个区块链节点服务
+- 区块链节点服务`BcosNodeService`：提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。
 
 关于Pro版本FISCO BCOS的总体架构设计可参考[这里](../../design/architecture.md)。
 
@@ -164,7 +164,7 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
 
 ### 4.1 下载二进制
 
-构建Pro版本FISCO BCOS前，需要先下载二进制包，`BcosProBuilder`的提供了基于linux的静态二进制包下载功能，可部署到`tarsnode`中，下载最新二进制的命令如下：
+构建Pro版本FISCO BCOS前，需要先下载二进制包，`BcosBuilder`的提供了基于linux的静态二进制包下载功能，可部署到`tarsnode`中，下载最新二进制的命令如下：
 
 ```eval_rst
 .. note::
@@ -175,22 +175,19 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 运行build_chain.py脚本下载二进制，二进制包默认下载到binary目录
 python3 build_chain.py download_binary
-
-# Note: 若网速太慢，可尝试如下命令下载二进制:
-python3 build_chain.py download_binary -t cdn
 ```
 
 ### 4.2 部署RPC服务
 
-在建链工具BcosProBuilder目录，执行如下命令，可部署并启动2机构RPC服务，对应的RPC服务名分别为`agencyABcosRpcService`和`agencyBBcosRpcService`，ip均为`172.25.0.3`，占用的监听端口分别为`20200`和`20201`(进行本操作前，请确保机器的`20200`和`20201`端口没被占用)。
+在建链工具BcosBuilder目录，执行如下命令，可部署并启动2机构RPC服务，对应的RPC服务名分别为`agencyABcosRpcService`和`agencyBBcosRpcService`，ip均为`172.25.0.3`，占用的监听端口分别为`20200`和`20201`(进行本操作前，请确保机器的`20200`和`20201`端口没被占用)。
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 从conf目录拷贝配置
 cp conf/config-deploy-example.toml config.toml
@@ -302,11 +299,11 @@ RPC服务启动成功后，可在tars网页管理平台看到服务列表`agency
 
 ### 4.3 部署Gateway服务
 
-RPC服务部署完成后，需要再部署Gateway服务，用于建立机构之间的网络连接。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构Gateway服务，对应的Gateway服务名分别为`agencyABcosGatewayService`和`agencyBBcosGatewayService`，ip均为`172.25.0.3`，占用的端口分别为`30300`和`30301`(进行本操作前，请确保机器的`30300`和`30301`端口没被占用)。
+RPC服务部署完成后，需要再部署Gateway服务，用于建立机构之间的网络连接。在建链工具BcosBuilder目录下，执行如下命令，可部署并启动2机构Gateway服务，对应的Gateway服务名分别为`agencyABcosGatewayService`和`agencyBBcosGatewayService`，ip均为`172.25.0.3`，占用的端口分别为`30300`和`30301`(进行本操作前，请确保机器的`30300`和`30301`端口没被占用)。
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 部署并启动Gateway服务
 python3 build_chain.py chain -o deploy -t gateway
@@ -321,16 +318,16 @@ python3 build_chain.py chain -o deploy -t gateway
 ----------- generate service config -----------
 * generate service config for 172.25.0.3 : agencyABcosGatewayService
 * generate config for the gateway service
-* generate generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/config.ini.tmp
+* generate generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/config.ini
 * generate cert, output path: generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService
-* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/nodes.json.tmp
+* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyABcosGatewayService/nodes.json
 * generate config for the gateway service success
 gen configuration for service agencyABcosGatewayService success
 * generate service config for 172.25.0.3 : agencyBBcosGatewayService
 * generate config for the gateway service
-* generate generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/config.ini.tmp
+* generate generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/config.ini
 * generate cert, output path: generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService
-* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/nodes.json.tmp
+* generate gateway connection file: generated/gateway/chain0/172.25.0.3/agencyBBcosGatewayService/nodes.json
 * generate config for the gateway service success
 gen configuration for service agencyBBcosGatewayService success
 ----------- generate service config success -----------
@@ -362,16 +359,16 @@ $ tree generated/gateway/chain0
 generated/gateway/chain0
 ├── 172.25.0.3
 │   ├── agencyABcosGatewayService # 机构A的Gateway服务配置路径
-│   │   ├── config.ini.tmp        # 机构A的Gateway配置文件
-│   │   ├── nodes.json.tmp        # 机构A的Gateway服务连接配置
+│   │   ├── config.ini       # 机构A的Gateway配置文件
+│   │   ├── nodes.json        # 机构A的Gateway服务连接配置
 │   │   └── ssl                   # 机构A的Gateway服务证书配置
 │   │       ├── ca.crt
 │   │       ├── cert.cnf
 │   │       ├── ssl.crt
 │   │       └── ssl.key
 │   └── agencyBBcosGatewayService # 机构B的Gateway服务配置路径
-│       ├── config.ini.tmp
-│       ├── nodes.json.tmp
+│       ├── config.ini
+│       ├── nodes.json
 │       └── ssl
 │           ├── ca.crt
 │           ├── cert.cnf
@@ -396,11 +393,11 @@ Gateway服务启动成功后，可在tars网页管理平台看到服务列表`ag
 
 ### 4.4 部署区块链节点服务
 
-RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`group0node00BcosNodeService`和`group0node10BcosNodeService`，链ID均为`chain0`，群组ID均为`group0`。
+RPC服务和Gateway服务均部署完成后，可部署区块链节点服务。在建链工具BcosBuilder目录下，执行如下命令，可部署并启动2机构2节点区块链服务，对应的服务名分别为`group0node00BcosNodeService`和`group0node10BcosNodeService`，链ID均为`chain0`，群组ID均为`group0`。
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 部署并启动区块链节点服务
 python3 build_chain.py chain -o deploy -t node
@@ -409,51 +406,72 @@ python3 build_chain.py chain -o deploy -t node
 
 ```shell
 =========================================================
------------ deploy all nodes of the given group -----------
-generate config for chain = chain0, group = group0
-* generate pem file for group0node00BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService
-	- node_id_path: generated/node.nodeid
+----------- generate config for all nodes -----------
+----------- generate genesis config for group group0 -----------
+* generate pem file for agencyAgroup0node0BcosNodeService
+	- pem_path: ./generated/chain0/group0/agencyAgroup0node0BcosNodeService/node.pem
+	- node_id_path: ./generated/chain0/group0/agencyAgroup0node0BcosNodeService/node.nodeid
+	- node_id: 4715fd07b43447102e91332dc4109cb7a857d53d304880cf7fb5d9964f3c51fd5524821b4890e2de38d4f174fd0af94c49c224f51bdad1e366f1571e7ba9d92f
+
 	- sm_crypto: 0
-* generate pem file for group0node10BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService
-	- node_id_path: generated/node.nodeid
+* generate pem file for agencyBgroup0node0BcosNodeService
+	- pem_path: ./generated/chain0/group0/agencyBgroup0node0BcosNodeService/node.pem
+	- node_id_path: ./generated/chain0/group0/agencyBgroup0node0BcosNodeService/node.nodeid
+	- node_id: 16bc2875e534053d501b63015d06a3249f1f8892e42d231896da75e76c905798900b57fd362dfb4dcce736a5f45c916cfad299214651ba75273df852e5baf50f
+
 	- sm_crypto: 0
-* generate genesis config for group0node00BcosNodeService
-	 path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService/config.genesis.tmp
-* generate ini config for service group0node00BcosNodeService
-	config path: generated/chain0/group0/172.25.0.3/group0node00BcosNodeService/config.ini.tmp
-* generate genesis config for group0node10BcosNodeService
-	 path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService/config.genesis.tmp
-* generate ini config for service group0node10BcosNodeService
-	config path: generated/chain0/group0/172.25.0.3/group0node10BcosNodeService/config.ini.tmp
+* generate_genesis_config_nodeid
+* consensus_type: pbft
+* block_tx_count_limit: 1000
+* leader_period: 1
+* gas_limit: 3000000000
+* compatibility_version: 3.0.0-rc4
+* generate_genesis_config_nodeid success
+* store genesis config for chain0.group0
+	 path: generated/chain0/group0/config.genesis
+* store genesis config for chain0.group0 success
+* store genesis config for agencyAgroup0node0BcosNodeService
+	 path: ./generated/chain0/group0/agencyAgroup0node0BcosNodeService/config.genesis
+* store genesis config for agencyAgroup0node0BcosNodeService success
+* store genesis config for agencyBgroup0node0BcosNodeService
+	 path: ./generated/chain0/group0/agencyBgroup0node0BcosNodeService/config.genesis
+* store genesis config for agencyBgroup0node0BcosNodeService success
+----------- generate genesis config for group0 success -----------
+----------- generate ini config for group group0 -----------
+* store ini config for agencyAgroup0node0BcosNodeService
+	 path: ./generated/chain0/group0/agencyAgroup0node0BcosNodeService/config.ini
+* store ini config for agencyAgroup0node0BcosNodeService success
+* store ini config for agencyBgroup0node0BcosNodeService
+	 path: ./generated/chain0/group0/agencyBgroup0node0BcosNodeService/config.ini
+* store ini config for agencyBgroup0node0BcosNodeService success
+----------- generate ini config for group group0 success -----------
+----------- generate config for all nodes success -----------
 deploy services for all the group nodes
-deploy service group0node00BcosNodeService
-deploy service group0node00BcosNodeService
-upload tar package generated/./group0node00BcosNodeService.tgz success, config id: 16
-deploy service group0node10BcosNodeService
-deploy service group0node10BcosNodeService
-upload tar package generated/./group0node10BcosNodeService.tgz success, config id: 17
------------ deploy all nodes of the given group success -----------
+deploy service agencyAgroup0node0BcosNodeService
+upload tar package generated/./agencyAgroup0node0BcosNodeService.tgz success, config id: 16
+deploy service agencyBgroup0node0BcosNodeService
+upload tar package generated/./agencyBgroup0node0BcosNodeService.tgz success, config id: 17
 =========================================================
 ```
-部署过程中生成的RPC服务相关的配置位于`generated/${chainID}`(`chainID`默认为`chain`)目录，具体如下：
+
+部署过程中生成的服务相关的配置位于`generated/${chainID}`(`chainID`默认为`chain`)目录，具体如下：
 
 ```shell
 $ tree generated/chain0
+
 generated/chain0
 └── group0
-    └── 172.25.0.3
-        ├── group0node00BcosNodeService
-        │   ├── config.genesis.tmp       # 创世块配置
-        │   ├── config.ini.tmp           # 区块链节点配置
-        │   ├── node.nodeid
-        │   └── node.pem                 # 区块链节点服务签名私钥
-        └── group0node10BcosNodeService
-            ├── config.genesis.tmp
-            ├── config.ini.tmp
-            ├── node.nodeid
-            └── node.pem
+    ├── agencyAgroup0node0BcosNodeService
+    │   ├── config.genesis      # 创世块配置
+    │   ├── config.ini          # 区块链节点配置
+    │   ├── node.nodeid         # 区块链节点服务签名私钥
+    │   └── node.pem
+    ├── agencyBgroup0node0BcosNodeService
+    │   ├── config.genesis
+    │   ├── config.ini
+    │   ├── node.nodeid
+    │   └── node.pem
+    └── config.genesis
 ```
 
 ```eval_rst
@@ -462,8 +480,9 @@ generated/chain0
    - 部署Pro版本区块链节点之前，请先确保您的tars服务是启动的状态，安装/启动和配置tars服务请参考3.2节
 ```
 
-区块链节点服务启动成功后，可在tars网页管理平台看到服务列表`group0node00BcosNodeService`和`group0node10BcosNodeService`，且每个服务均是`active`的状态：
+区块链节点服务启动成功后，可在tars网页管理平台看到服务列表`agencyAgroup0node0BcosNodeService`和`agencyBgroup0node0BcosNodeService`，且每个服务均是`active`的状态：
 ![](../../../images/tutorial/chain_service.png)
+
 
 ## 5. 配置及使用控制台
 
@@ -490,7 +509,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::
@@ -512,7 +531,7 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```shell
 # 可通过命令 find . -name sdk找到所有SDK证书路径
-cp -r BcosProBuilder/generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
+cp -r BcosBuilder/pro/generated/rpc/chain0/agencyBBcosRpcService/172.25.0.3/sdk/* console/conf
 ```
 
 **步骤3：启动并使用控制台**
@@ -674,3 +693,68 @@ Event: {}
 # 退出控制台
 [group0]: /> exit
 ```
+
+## 6 部署区块链节点监控服务
+
+```eval_rst
+.. note::
+   - 建议部署RPC和Gateway和node服务之后再部署区块链节点监控服务
+   - 本步骤可选
+```
+
+FISCO BCOS提供了监控服务，在建链工具`BcosBuilder/pro`目录下，执行如下命令，可部署并启动区块链节点监控服务。
+
+```shell
+# 进入操作目录
+cd ~/fisco/BcosBuilder/pro
+
+# 部署并启动区块链节点服务
+python3 build_chain.py chain -o deploy -t monitor
+```
+
+执行上述命令后，当脚本输出`deploy all nodes monitor success`时，则说明区块链节点服务部署成功，详细日志输出如下：
+
+```shell
+========================================================= 
+----------- deploy all nodes monitor ----------- 
+-----------  generate graphna&prometheus config  ----------- 
+* store monitor config 
+	 path: /home/fisco/BcosBuilder/pro/../docker/host/linux/monitor/prometheus/prometheus.yml 
+* store monitor config success 
+----------- generate graphna&prometheus config success ----------- 
+----------- generate mtail config for group group0 ----------- 
+* store mtail config for agencyAgroup0node0BcosNodeService
+	 path: /home/fisco/app/tars/framework/app_log/chain0/agencyAgroup0node0BcosNodeService/mtail/node.mtail 
+* store mtail config for agencyAgroup0node0BcosNodeService success 
+* execute_ansible_copy_with_command pro path: 
+* store mtail config for agencyBgroup0node0BcosNodeService
+	 path: /home/fisco/app/tars/framework/app_log/chain0/agencyBgroup0node0BcosNodeService/mtail/node.mtail 
+* store mtail config for agencyBgroup0node0BcosNodeService success 
+* execute_ansible_copy_with_command pro path: 
+----------- generate mtail config for group group0 success ----------- 
+----------- deploy all nodes monitor success ----------- 
+========================================================= 
+```
+
+部署过程中生成的监控服务相关的配置位于`/home/fisco/app/tars/framework/app_log`目录，具体如下：
+
+```shell
+# tree app_log/
+app_log/
+├── chain0
+│   ├── agencyAgroup0node0BcosNodeService
+│   │   └── mtail
+│   │       ├── mtail
+│   │       ├── node.mtail
+│   │       ├── start_mtail_monitor.sh
+│   │       └── stop_mtail_monitor.sh
+│   └── agencyBgroup0node0BcosNodeService
+│       └── mtail
+│           ├── mtail
+│           ├── node.mtail
+│           ├── start_mtail_monitor.sh
+│           └── stop_mtail_monitor.sh
+
+```
+
+区块链节点服务启动成功后，可在graphna和prometheus页面查看各个指标数据。

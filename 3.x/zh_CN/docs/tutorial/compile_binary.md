@@ -5,6 +5,11 @@
 ----------
 
 ```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
+```eval_rst
 .. note::
    - FISCO BCOS支持x86_64架构的Linux和macOS编译; Linux平台编译二进制时，要求g++版本不小于7.0; macOS系统编译二进制时，要求clang版本不小于12.0
    - FISCO BCOS 3.x支持带有Apple Silicon的macOS编译，编译步骤与x86_64相同。
@@ -26,7 +31,7 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 要求使用Ubuntu 18.04及以上版本。
 
 ```shell
-sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev wget
+sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev wget libgmp-dev
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -39,7 +44,7 @@ source $HOME/.cargo/env
 
 ```shell
 sudo yum install -y epel-release centos-release-scl
-sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel wget  python-devel python3-devel git flex bison devtoolset-7
+sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel wget python-devel python3-devel git flex bison devtoolset-7 gmp-static
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -52,7 +57,7 @@ source $HOME/.cargo/env
 # 安装xcode开发工具，若已经安装可略过
 xcode-select --install
 
-brew install git zstd wget
+brew install git zstd wget gmp
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 source $HOME/.cargo/env
@@ -80,9 +85,9 @@ cd FISCO-BCOS
 
 **编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
 
-- Rpc服务：`FISCO-BCOS/build/fisco-bcos-pro/RpcService/main/BcosRpcService`
-- Gateway服务：`FISCO-BCOS/build/fisco-bcos-pro/GatewayService/main/BcosGatewayService`
-- 区块链节点服务：`FISCO-BCOS/build/fisco-bcos-pro/NodeService/main/BcosNodeService`
+- Rpc服务：`FISCO-BCOS/build/fisco-bcos-tars-service/RpcService/main/BcosRpcService`
+- Gateway服务：`FISCO-BCOS/build/fisco-bcos-tars-service/GatewayService/main/BcosGatewayService`
+- 区块链节点服务：`FISCO-BCOS/build/fisco-bcos-tars-service/NodeService/main/BcosNodeService`
 
 **若编译过程中从GitHub拉取依赖太慢，可执行以下方式加速：**
 
@@ -133,11 +138,38 @@ rm -rf *.tgz && make tar
 
 **要求版本不小于CentOS 7。**
 
+#### linux x86_64
+
 ```shell
 # 使用gcc7
 source /opt/rh/devtoolset-7/enable
 export LIBCLANG_PATH=/opt/rh/llvm-toolset-7/root/lib64/
 source /opt/rh/llvm-toolset-7/enable
+
+# 进入源码编译目录
+cd ~/fisco/FISCO-BCOS
+mkdir -p build && cd build
+cmake3 -DBUILD_STATIC=ON ..
+
+# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
+cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
+
+# 高性能机器可添加-j4使用4核加速编译
+make -j2
+# 生成tgz包
+rm -rf *.tgz && make tar
+```
+
+#### aarch64
+
+```shell
+# 安装devtoolset-9
+yum install -y devtoolset-9
+
+# 使用gcc9
+source /opt/rh/devtoolset-9/enable
+export LIBCLANG_PATH=/opt/rh/llvm-toolset-7.0/root/lib64/
+source /opt/rh/llvm-toolset-7.0/enable
 
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS

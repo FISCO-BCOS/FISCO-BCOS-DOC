@@ -6,6 +6,9 @@
 
 ----
 
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+
 .. admonition:: 合约开发
 
     - `智能合约开发 <../manual/smart_contract.html>`_

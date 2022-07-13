@@ -4,6 +4,11 @@
 
 ------------
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 命令行交互控制台是提供给开发者使用的节点查询与管理的工具。
 
 控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。

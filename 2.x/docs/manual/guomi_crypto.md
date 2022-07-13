@@ -19,7 +19,7 @@ cd ~ && mkdir -p fisco && cd fisco
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
-curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 - 搭建4节点FISCO BCOS链
@@ -94,7 +94,6 @@ FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信�
     sm_crypto_channel=true
 ```
 
-
 ```eval_rst
 .. important::
     国密环境下统一使用了国密商用密码相关算法，在solidity中使用keccak256/sha3指令，虚拟机中实际执行sm3算法！
@@ -115,15 +114,6 @@ FISCO-BCOS 2.5.0版本以后，节点与SDK之间既支持SSL连接进行通信�
 ## 国密落盘加密配置
 
 ### 国密版Key Manager
-
-国密版的Key Manager需重新编译Key Manager，不同点在于cmake时带上``` -DBUILD_GM=ON ```选项。
-
-``` shell
-# centos下
-cmake3 .. -DBUILD_GM=ON
-# ubuntu下
-cmake .. -DBUILD_GM=ON
-```
 
 其它步骤与标准版Key Manager相同，请参考：[key-manager github repository](https://github.com/FISCO-BCOS/key-manager), [key-manager gitee repository](https://gitee.com/FISCO-BCOS/key-manager)。
 
