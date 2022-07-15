@@ -112,20 +112,41 @@ topic = common.BytesToHash(crypto.Keccak256([]byte("testEventLog(address,string,
 
 ## 4. 示例
 
-这里以一个测试事件的合约`eventTest`为例说明，给出Go SDK获取合约事件推送的配置过程。
+此处以一个进行数值更改并计算更改次数的`eventDemo.sol`合约进行事件订阅举例：
 
 ```solidity
-pragma solidity >=0.4.24 <0.6.11;
-contract eventTest {
-    event testEventLog(address bidder,string message,uint value);
-    function testEvent() public { // testEvent函数仅用来触发一个事件
-        // 触发一个事件
-         emit testEventLog(msg.sender,"successfully subscribe",3);
+pragma solidity >=0.4.24;
+
+contract eventDemo {
+    
+    uint256 public count = 0;
+    uint256 public num = 0;
+
+    event setNum(address caller,uint256 cnt,uint256 value);   // Declare A Event
+
+    function setNumber(uint256 v) public { 
+        count += 1;
+        num = v;
+        emit setNum(msg.sender,count,num); 
+    }
+    
+    function getNumber()public returns (uint){
+        return num;
     }
 }
 ```
 
-在Go SDK中给出了[`subscriber.go`](https://github.com/FISCO-BCOS/go-sdk/blob/master/examples/eventLog/sub/subscriber.go)合约样例
+该合约提供了`setNumber`及`getNumber`方法，其中调用前者将获得一个抛出事件。
+
+在Fisco Go SDK中有两种事件订阅方式，分别为使用`client`直接进行事件订阅与调用Abigen工具生成的代码中函数进行订阅两种，其中后者须建立`session`。
+
+
+
+### 4.1 使用client进行事件订阅
+
+**事件推送订阅**
+
+在Go SDK中给出了[subscriber.go](https://github.com/FISCO-BCOS/go-sdk/blob/master/examples/eventLog/sub/subscriber.go)合约事件订阅样例
 
 *需要注意的是Topic及Address不可置空，置空将无法接收到相应事件。*
 
@@ -144,7 +165,7 @@ func main() {
 	eventLogParams.ToBlock = "latest" // 当前配置订阅了从创世区块至最新区块的链上所有事件
 	eventLogParams.GroupID = "1"
 	var topics = make([]string, 1)
-	topics[0] = common.BytesToHash(crypto.Keccak256([]byte("testEventLog(address,string,uint256)"))).Hex() // 事件的Topic计算，注意使用uint256及int256替代uint及int
+	topics[0] = common.BytesToHash(crypto.Keccak256([]byte("setNum(address,uint256,uint256)"))).Hex() // 事件的Topic计算，注意使用uint256及int256替代uint及int
 	eventLogParams.Topics = topics
 	var addresses = make([]string, 1)
 	addresses[0] = "0xd2cf82e18f3d2c5cae0de87d29994be622f3fdd3" // 所订阅事件对应的合约地址
@@ -161,5 +182,67 @@ func main() {
 }
 ```
 
+**Log数据解析**
 
+在使用sdk提供的客户端订阅事件的方式中，获取到的数据需要`abi`进行解析，
+
+首先需要根据事件包含的变量类型构建一个用于解析的结构体：
+
+```go
+type setNum struct {
+	Caller common.Address
+	Cnt    *big.Int
+	Value  *big.Int
+}
+```
+
+此后可采用`abi`工具进行解析：
+
+```go
+	err = c.SubscribeEventLogs(eventLogParams, func(status int, logs []types.Log) {
+		fmt.Println(logs[0].Data)
+		for k, v := range logs {
+			var tempABI abi.ABI
+			var temp setNum
+			tempABI, err := abi.JSON(strings.NewReader(EventDemoABI))
+			if err != nil {
+				logrus.Println(err.Error())
+			}
+			err = tempABI.Unpack(&temp, "setNum", v.Data)
+			if err != nil {
+				logrus.Println(err.Error())
+			}
+			fmt.Println("log number:", k, temp)
+		}
+	})
+
+```
+此处`abi.Json`所使用到的数据需要使用`abigen`工具生成对应的go文件后获得:
+
+```go
+// EventDemoABI is the input ABI used to generate the binding from.
+const EventDemoABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"count\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"v\",\"type\":\"uint256\"}],\"name\":\"setNumber\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"num\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getNumber\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"caller\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cnt\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"setNum\",\"type\":\"event\"}]"
+```
+
+
+
+### 4.2 使用Abigen工具生成后的函数进行事件订阅
+
+该方式进行事件订阅需先构建与合约的`session`连接，后直接调用`abigen`生成的go文件中函数即可进行事件的订阅与解析：
+
+```go
+// 根据配置文件构建eventDemoSession
+err := eventDemoSession.WatchAllSetNum(from, func(status int, logs []types.Log) {
+    fmt.Println("Status Code:",status)	
+	for k, v := range logs {
+			log, errs := eventDemoSession.ParseSetNum(v) // 解析数据
+			if errs != nil {
+				fmt.Println(errs)
+			}
+        fmt.Println("Log id:", k, "Log Content:",log)
+		}
+	})
+```
+
+关于Session的构建请参考[合约开发样例](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/go_sdk/contractExamples.html)部分中例程。
 
