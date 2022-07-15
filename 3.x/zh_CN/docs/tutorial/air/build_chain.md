@@ -30,7 +30,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 $ bash build_chain.sh
 Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
-    -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc3
+    -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc4
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -o <output dir>                     [Optional] output directory, default ./nodes
     -e <fisco-bcos exec>                [Required] fisco-bcos binary exec
@@ -130,7 +130,7 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 该模式下 start.sh 脚本启动节点的命令如下
 
 ```shell
-docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc3 -c config.ini -g config.genesis
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc4 -c config.ini -g config.genesis
 ```
 
 ### **`A`权限控制选项[**Optional**]**
@@ -147,7 +147,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -A
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc3/fisco-bcos-macOS-x86_64.tar.gz ...
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/fisco-bcos-macOS-x86_64.tar.gz ...
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
@@ -205,8 +205,9 @@ Processing IP:127.0.0.1 Total:4
 [INFO] output dir          : nodes
 [INFO] All completed. Files in nodes
 ```
-
 生成完区块链节点文件，启动节点（nodes/127.0.0.1/start_all.sh）和节点监控（nodes/monitor/start_monitor.sh），根据提示登录grafana（用户名密码为admin/admin）导入Dashboard（[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/Template/Dashboard)）和配置prometheus源(http://ip:9090/)查看各个指标实时展示。
+
+=======
 
 ### **`i`扩容节点监控选项[**Optional**]**
 

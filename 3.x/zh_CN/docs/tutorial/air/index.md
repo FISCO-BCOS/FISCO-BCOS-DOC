@@ -23,4 +23,5 @@
    config.md
    build_chain.md
    expand_node.md
+   storage_security.md
 ```

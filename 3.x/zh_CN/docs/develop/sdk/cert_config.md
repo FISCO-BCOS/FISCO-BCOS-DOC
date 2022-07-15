@@ -113,7 +113,7 @@ generated/rpc/chain
 tree -L 2 ~/fisco
 ~/fisco
 ├── java-sdk-demo		# Java SDK应用
-└── BcosProBuilder
+└── BcosBuilder
     ├── build_chain.py
     ├── conf
     ├── docker
@@ -132,7 +132,7 @@ bash gradlew build
 cd dist
 
 # 将节点的证书全部拷贝进SDK配置文件夹中
-cp -r ~/fisco/BcosProBuilder/generated/rpc/chain0/172.25.0.3/agencyABcosRpcService/sdk/* ~/fisco/java-sdk-demo/dist/conf
+cp -r ~/fisco/BcosBuilder/generated/rpc/chain0/172.25.0.3/agencyABcosRpcService/sdk/* ~/fisco/java-sdk-demo/dist/conf
 
 # Done, 接下来配置SDK的使用配置文件即可，Have fun :)
 ```

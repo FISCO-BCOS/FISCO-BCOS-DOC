@@ -105,15 +105,6 @@ The function of OSCCA-approved cryptography console is used in the same way as t
 
 ### OSCCA-approved cryptography Key Manager
 
-Using the OSCCA-approved cryptography Key Manager needs to be recompiled the standard Key Manager. The difference of them is ``` -DBUILD_GM=ON ``` option needs to be added when doing cmake.
-
-``` shell
-# under centos
-cmake3 .. -DBUILD_GM=ON
-# under ubuntu
-cmake .. -DBUILD_GM=ON
-```
-
 Other steps are same as the standard Key Manager. Please refer to [key-manager repository](https://github.com/FISCO-BCOS/key-manager).
 
 ### OSCCA-approved cryptography node configuration

@@ -4,7 +4,7 @@
 
 ------------
 
-当RPC/Gateway服务无法支撑业务流量时，需要扩容RPC/Gateway服务，`BcosProBuilder`提供了RPC/Gateway服务扩容功能，本章通过单机扩容Pro版本FISCO BCOS联盟链的RPC/Gateway服务为例，帮助用户掌握Pro版本FISCO BCOS区块链的服务扩容步骤。
+当RPC/Gateway服务无法支撑业务流量时，需要扩容RPC/Gateway服务，`BcosBuilder`提供了RPC/Gateway服务扩容功能，本章通过单机扩容Pro版本FISCO BCOS联盟链的RPC/Gateway服务为例，帮助用户掌握Pro版本FISCO BCOS区块链的服务扩容步骤。
 
 ```eval_rst
 .. note::
@@ -22,7 +22,7 @@
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder
 
 # linux系统: 进入到tarsnode docker-compose所在目录(macos系统可跳过)
 cd docker/bridge/linux/node
@@ -45,11 +45,11 @@ tarsnode安装成功后，可在tars网页管理平台的【运维管理】->【
    实际操作过程中，须将tars token替换为从tars网页管理平台【admin】->【用户中心】->【token管理】获取可用的token。
 ```
 
-RPC/Gateway服务的扩容配置可参考`BcosProBuilder`的扩容模板`conf/config-service-expand-example.toml`，具体配置步骤如下：
+RPC/Gateway服务的扩容配置可参考`BcosBuilder`的扩容模板`conf/config-service-expand-example.toml`，具体配置步骤如下：
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 拷贝模板配置
 cp conf/config-service-expand-example.toml config.toml
@@ -67,55 +67,46 @@ sed -i .bkp 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ
 ```ini
 [tars]
 tars_url = "http://127.0.0.1:3000"
-tars_token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"
-tars_pkg_dir = ""
+tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"
+tars_pkg_dir = "binary/"
 
 [chain]
 chain_id="chain0"
 rpc_sm_ssl=false
 gateway_sm_ssl=false
-# RPC服务的根证书、根证书私钥所在目录
+# the ca path of the expanded rpc service
+# must ensure that the path configuration is correct, otherwise the ssl verification will fail
 rpc_ca_cert_path="generated/rpc/chain0/ca"
-# Gateway服务的根证书、根证书私钥所在目录
+# the ca path of the expanded gateway service
+# must ensure that the path configuration is correct, otherwise the ssl verification will fail
 gateway_ca_cert_path="generated/gateway/chain0/ca"
 
-[[chain.rpc]]
-# 扩容的RPC服务名
-name="agencyABcosRpcService"
-# 扩容的RPC服务节点部署到的IP
-deploy_ip=["172.25.0.5"]
-# 指定被扩容的RPC服务的IP，扩容时，会从该IP对应的RPC服务拉取配置文件，若RPC服务已经部署到多台机器上，从中随机选取一个IP作为expanded_ip即可
-expanded_ip = "172.25.0.3"
-# 扩容的RPC服务监听IP
-listen_ip="0.0.0.0"
-# RPC服务监听端口
-listen_port=10200
-thread_count=4
-# RPC服务对应的Gateway服务名称
-gateway_service_name = "agencyABcosGatewayService"
+[[agency]]
+name = "agencyA"
+# enable data disk encryption for rpc/gateway or not, default is false
+enable_storage_security = false
+# url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
+# key_center_url =
+# cipher_data_key =
 
-[[chain.gateway]]
-# 扩容的Gateway服务名
-name="agencyABcosGatewayService"
-# 扩容的Gateway服务节点部署到的IP
-deploy_ip=["172.25.0.5"]
-# 指定被扩容的Gateway服务的IP，扩容时，会从该IP对应的Gateway服务拉取配置文件，若Gateway服务已经部署到多台机器上，从中随机选取一个IP作为expanded_ip即可
-expanded_ip = "172.25.0.3"
-# Gateway服务监听IP
-listen_ip="0.0.0.0"
-# Gateway服务监听端口
-listen_port=40300
-# 所有Gateway服务节点的连接信息
-peers=["172.25.0.3:30300", "172.25.0.3:30301", "172.25.0.5:40300"]
-# Gateway服务对应的RPC服务名称
-rpc_service_name = "agencyABcosRpcService"
+    [agency.rpc]
+    deploy_ip=["172.25.0.5"]
+    listen_ip="0.0.0.0"
+    listen_port=10200
+    thread_count=4
+
+    [agency.gateway]
+    deploy_ip=["172.25.0.5"]
+    listen_ip="0.0.0.0"
+    listen_port=40300
+    peers=["172.25.0.3:30300", "172.25.0.3:30301", "172.25.0.5:40300"]
 ```
 
 ## 3. 扩容RPC服务
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 扩容并部署RPC服务
 python3 build_chain.py chain -o expand -t rpc
@@ -182,7 +173,7 @@ RPC服务扩容成功后，可在tars网页管理平台看到服务`agencyABcosR
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 扩容并部署RPC服务
 python3 build_chain.py chain -o expand -t gateway
