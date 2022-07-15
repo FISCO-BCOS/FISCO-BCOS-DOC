@@ -205,9 +205,7 @@ Processing IP:127.0.0.1 Total:4
 [INFO] output dir          : nodes
 [INFO] All completed. Files in nodes
 ```
-生成完区块链节点文件，启动节点（nodes/127.0.0.1/start_all.sh）和节点监控（nodes/monitor/start_monitor.sh），根据提示登录grafana（用户名密码为admin/admin）导入Dashboard（[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/Template/Dashboard)）和配置prometheus源(http://ip:9090/)查看各个指标实时展示。
-
-=======
+生成完区块链节点文件，启动节点（nodes/127.0.0.1/start_all.sh）和节点监控（nodes/monitor/start_monitor.sh），根据提示登录grafana（用户名密码为admin/admin）导入Dashboard（[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard)）和配置prometheus源(http://ip:9090/)查看各个指标实时展示。
 
 ### **`i`扩容节点监控选项[**Optional**]**
 
