@@ -33,7 +33,7 @@ Air版本区块链扩容时，需要提前准备证书和配置文件，用于�
 
 ```shell
 # 进入操作目录(Note: 进行本操作之前，请参考【搭建第一个区块链网络节点】部署一条Air版FISCO BCOS区块链)
-$ cd ~/fisco/nodes
+$ cd ~/fisco
 
 # 创建扩容配置存放目录
 $ mkdir config
