@@ -545,8 +545,8 @@ app_log/
 .. note::
    - 建议部署RPC和Gateway和node服务之后再部署区块链节点监控服务
 ```
+区块链节点服务启动成功后，登录grafana，grafana的UI管理页面默认监听端口是3001，登录网址为（http://ip:3001/ graphna），默认户名密码为admin/admin，完成登录后导入Dashboard（[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard.json)）和配置prometheus源（http://ip:9090/）查看各个指标数据实时展示。
 
-区块链节点服务启动成功后，登录grafana，grafana的UI管理页面默认监听端口是3001，登录网址为（http://ip:3001/ graphna），默认户名密码为admin/admin，完成登录后导入Dashboard（[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard)）和配置prometheus源（http://ip:9090/）查看各个指标数据实时展示。
 
 
 ## 5. 配置及使用控制台
