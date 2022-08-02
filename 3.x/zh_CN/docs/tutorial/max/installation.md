@@ -81,7 +81,7 @@ $ curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.
 # 部署并启动tikv(这里设机器的物理ip为172.25.0.3)
 $ nohup tiup playground v5.4.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor > ~/tikv.log 2>&1 &
 # 获取tikv监听端口(tikv的默认监听端口是2379)
-$ cat ~/tikv.h
+$ cat ~/tikv.log
 tiup is checking updates for component playground ...timeout!
 Starting component `playground`: /home/fisco/.tiup/components/playground/v1.9.4/tiup-playground v5.4.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor
 Playground Bootstrapping...
