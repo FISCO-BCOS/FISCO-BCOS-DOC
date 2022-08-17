@@ -66,8 +66,8 @@ contract HelloWorld{
 # 切换到控制台所在目录
 $ cd ~/fisco/console
 
-# 调用sol2java.sh脚本，编译HelloWorld合约如下：
-$ bash contratc2java.sh solidity -p org -s HelloWorld.sol
+# 调用sol2java.sh脚本，编译contracts/solidity目录下的HelloWorld合约：
+$ bash contract2java.sh solidity -p org -s contracts/solidity/HelloWorld.sol
 
 # 生成的abi位于contracts/sdk/abi/HelloWorld.abi路径
 $ ls contracts/sdk/abi/HelloWorld.abi

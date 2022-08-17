@@ -126,8 +126,8 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 ```shell
 $ ./start.sh
 # 输出下述信息表明启动成功
-=====================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+=============================================================================================
+Welcome to FISCO BCOS console(3.0.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -139,7 +139,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
-=====================================================================================
+=============================================================================================
 ```
 
 ### 4. 启动脚本说明
@@ -148,7 +148,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```shell
 ./start.sh --version
-console version: 3.0.0-rc3
+console version: 3.0.0
 ```
 
 #### 4.2 账户使用方式
@@ -188,7 +188,7 @@ console version: 3.0.0-rc3
 - 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
 
 ```shell
-./start.sh group0 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
+./start.sh group0 -pem account/ecdsa/0x2dbb332a844e0e076f97c90ff5078ea7dd2de910.pem
 ```
 
 ##### 4.2.5 使用PKCS12格式私钥文件启动
@@ -196,7 +196,7 @@ console version: 3.0.0-rc3
 - 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
 
 ```shell
-./start.sh group0 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
+./start.sh group0 -p12 account/ecdsa/0x2dbb332a844e0e076f97c90ff5078ea7dd2de910.pem
 Enter Export Password:
 ```
 

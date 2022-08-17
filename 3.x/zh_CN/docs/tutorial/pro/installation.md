@@ -682,7 +682,7 @@ peer1: 8230e3ad1e7e929044a4ec8a5aca3c16744338a2fdd2865745aab9eef88f5a5c18b0d912a
 HelloWorld合约提供了两个接口`get()`和`set()`，用于获取/设置合约变量`name`，合约内容如下：
 
 ```c++
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 contract HelloWorld {
     string name;
 

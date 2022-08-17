@@ -70,6 +70,7 @@ $ cd dist
 # qps: 压测QPS
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceDMC [groupId] [userCount] [count] [qps]
 
+
 # 多合约-跨合约并行转账
 # groupId: 压测的群组ID
 # userCount: 创建账户的个数，建议（4～32个）
@@ -77,11 +78,13 @@ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceDMC [group
 # qps: 压测QPS
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceTransferDMC [groupId] [userCount] [count] [qps]
 
+
 # 压测串行转账合约:
 # count: 压测的交易总量
 # tps: 压测QPS
 # groupId: 压测的群组ID
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceOk [count] [tps] [groupId]
+
 
 # 压测并行转账合约
 # --------------------------
@@ -105,6 +108,46 @@ $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [par
 $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.ParallelOkPerf [precompiled] [groupID] [transfer] [count] [tps] [file]
 
 
+# 压测并行SmallBank转账合约
+# --------------------------
+# 基于Solidity并行合约SmallBank添加账户(Add):
+# groupID: 压测的群组ID
+# contractsNum: DMC并行线程数，根据测试机内核数设置
+# count: 压测的交易总量
+# tps: 压测QPS
+# file: 保存生成账户的文件名
+# parallel: true或false，是否开启DAG
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceSmallBank [groupId] [solidity] [add] [contractsNum] [count] [qps] [file] [parallel(true/false)].
+# 基于Precompiled并行合约precompiled添加账户
+# (参数含义同上)
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceSmallBank [groupId] [precompiled] [add] [contractsNum] [count] [qps] [file] [parallel(true/false)].
+# --------------------------
+# 基于Solidity并行合约SmallBank发起转账交易(Transfer):
+# groupID: 压测的群组ID
+# contractsNum: DMC并行线程数，根据测试机内核数设置
+# count: 压测的交易总量
+# tps: 压测的QPS
+# file: 转账用户文件
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceSmallBank [groupId] [solidity] [transfer] [contractsNum] [count] [qps] [file] [parallel(true、false)].
+# 基于Precompiled并行合约Precompiled发起转账压测
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceSmallBank [groupId] [precompiled] [transfer] [contractsNum] [count] [qps] [file] [parallel(true、false)].
+
+
+# 压测并行CpuHeavy合约
+# --------------------------
+# 压测基于Precompiled并行合约压测CpuHeavy:
+# groupID: 压测的群组ID
+# contractsNum: DMC并行线程数，根据测试机内核数设置
+# count: 压测的交易总量
+# tps: 压测QPS
+# parallel: true或false，是否开启DAG
+# sort array size: 快排数组长度，默认为100000
+ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceCpuHeavy [groupId] [solidity] [contractsNum] [count] [qps] [parallel(true/false)] [sort array size(default 100000)].
+# 基于Precompiled并行合约压测CpuHeavy
+# (参数含义同上)
+java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceCpuHeavy [groupId] [precompiled] [contractsNum] [count] [qps] [parallel(true/false)] [sort array size(default 100000)].
+
+
 # KVTable合约压测
 # 压测KV set
 # count: 压测的交易总量
@@ -115,7 +158,6 @@ $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable 
 # (参数解释同上)
 $ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [get] [count] [tps] [groupId]
   ```
-
 **以下是WASM环境的压力测试**
 
 ```shell
@@ -231,7 +273,7 @@ vim ～/fisco/nodes/127.0.0.1/node0/config.ini
     max_log_file_size=200
 ```
 
-若压测交易量比较大，则增加交易池数量限制。如压测的交易总量为500000，则`limit`要设置大于500000。默认为15000。否则节点会报`txpoolIsFull`错误。
+若压测交易量比较大，则增加交易池数量限制。如压测的交易总量为500000，则`limit`要设置大于500000,否则节点会报`txpoolIsFull`错误。默认为15000，下面将交易池大小设为1500000。
 
 ```ini
 [txpool]

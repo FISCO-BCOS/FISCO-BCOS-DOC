@@ -28,7 +28,7 @@ mkdir helloworld && cd helloworld
 在 go-sdk 主目录中新建 helloworld 文件夹，在该文件夹中创建 HelloWorld.sol 合约。该合约提供两个接口，分别是get()和set()，用于获取/设置合约变量name。合约内容如下
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 
 contract HelloWorld {
     string value;
@@ -215,7 +215,7 @@ cp ../.ci/Table/Table.sol ../.ci/Table/KVTableTest.sol ./
 该合约调用 Table 合约，实现创建用户表 t_kvtest，并对 t_kvtest 表进行读写。
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 
 import "./Table.sol";
 
@@ -630,7 +630,7 @@ func main() {
 在 go-sdk 主目录中新建 helloworld 文件夹，在该文件夹中创建 HelloWorld.sol 合约。该合约提供两个接口，分别是get()和set()，用于获取/设置合约变量name。合约内容如下
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 
 contract HelloWorld {
     string name;
