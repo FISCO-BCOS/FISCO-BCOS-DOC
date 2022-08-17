@@ -1,23 +1,26 @@
 # java-sdk 常见问题
 
-标签：``JAVA SDK `` ``问题排查``
+标签：``JAVA SDK`` ``问题排查``
 
 ------------
+
 ## 1. java sdk如何解析交易的input
 
 **解决方法**
-`2.8.1` 会添加如下接口支持交易input解析：将正在同步节点的信息从SDK的节点连接列表中去掉，仅连接正常共识的节点。
+`2.8.1` 添加了如下接口支持交易input解析:
 
 ```java
 public Pair<List<Object>, List<ABIObject>> decodeTransactionInput(String ABI, String input);
 public List<String> decodeTransactionInputToString(String ABI, String input);
 ```
+
 对应的PR可参考 [PR #360](https://github.com/FISCO-BCOS/java-sdk/pull/360/files)
 目前版本已经正式发布，可引入`2.8.1`以及以上的版本。
 
 ---------
 
 ## 2. maven环境 java-sdk2.7.2 引用 io.netty4.1.66 错误
+
 **问题描述**
 `gradle` 环境，`java-sdk2.7.2` 引用的 `io.netty4.1.53` 运行正常；
 `maven` 环境，`java-sdk2.7.2` 引用的 `io.netty4.1.66` 运行失败。
@@ -26,32 +29,57 @@ public List<String> decodeTransactionInputToString(String ABI, String input);
 原因：`io.netty4.1.66` 缺失 `internal` 包；
 
 **解决方法**
+
+第一种:
+升级`java-sdk`版本至`java-sdk 2.9.0+`
+
+Maven:
+
+```shell
+ <dependency>
+  <groupId>org.fisco-bcos.java-sdk</groupId>
+  <artifactId>fisco-bcos-java-sdk</artifactId>
+  <version>2.9.1</version>
+ </dependency>
 ```
-        <dependency>
-		<groupId>io.netty</groupId>
-		<artifactId>netty-all</artifactId>
-		<version>4.1.53.Final</version>
-	</dependency>
 
-	<dependency>
-		<groupId>org.fisco-bcos.java-sdk</groupId>
-		<artifactId>fisco-bcos-java-sdk</artifactId>
-		<version>2.7.2</version>
-		<exclusions>
-			<exclusion>
-				<groupId>io.netty</groupId>
-				<artifactId>netty-all</artifactId>
-			</exclusion>
-		</exclusions>
-	</dependency>
+Gradle:
 
+```shell
+implementation("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.1")
+```
+
+第二种:
+
+强制使用低版本netty
+
+```shell
+<dependency>
+  <groupId>io.netty</groupId>
+  <artifactId>netty-all</artifactId>
+  <version>4.1.53.Final</version>
+ </dependency>
+
+ <dependency>
+  <groupId>org.fisco-bcos.java-sdk</groupId>
+  <artifactId>fisco-bcos-java-sdk</artifactId>
+  <version>2.7.2</version>
+  <exclusions>
+   <exclusion>
+    <groupId>io.netty</groupId>
+    <artifactId>netty-all</artifactId>
+   </exclusion>
+  </exclusions>
+ </dependency>
 ```
 
 ---------
 
 ## 3. Java SDK没有原生支持从 jar 包中加载证书
+
 **问题描述**
 将 **Java SDK** 以及 **SDK证书** 打入到 jar 包后，通过 `java -jar` 的方式运行demo，提示报错:
+
 ```
 org.fisco.bcos.sdk.channel.ChannelImp    : init channel network error, Not providing all the certificates to connect to the node! Please provide the certificates to connect with the block-chain.
 ```
@@ -59,15 +87,21 @@ org.fisco.bcos.sdk.channel.ChannelImp    : init channel network error, Not provi
 ---------
 
 **解决办法**
-目前 `2.8.0-SNAPSHOT` 已经支持直接加载jar包中的证书，可以试用下：
+目前 `2.8.0+` 已经支持直接加载jar包中的证书，可以通过下面方式引入：
+
+Gradle:
+
+```shell
+implementation('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.1')
 ```
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT')
-```
-```
+
+Maven:
+
+```shell
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>2.8.0-SNAPSHOT</version>
+    <version>2.9.1</version>
 </dependency>
 ```
 
@@ -76,6 +110,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.8.0-SNAPSHOT')
 ---------
 
 ## 4. sdk国密版连接时所需的包重复依赖netty，导致冲突
+
 **问题描述**
 ![](../../images/java-sdk/import_package_conflict.png)
 
@@ -85,14 +120,17 @@ SDK国密SSL连接修改了tcnative，可能会导致netty冲突，若出现无�
 ---------
 
 ## 5. 创建BcosSDK时出现warning，是否有影响
+
 **问题描述**
 执行下列代码时出现警告信息 `get method for EC5Util failed, method name: convertSpec`
+
 ```java
 String configFile = Test.class.getClassLoader().getResource("config.toml").getPath();
 BcosSDK sdk = BcosSDK.build(configFile);
 ```
 
 日志如下：
+
 ```
 2021-03-29 16:39:27,703 INFO [org.fisco.bcos.sdk.BcosSDK] - create BcosSDK, configPath: /C:/Users/Wang/IdeaProjects/fisco-bcos/target/classes/config.toml
 2021-03-29 16:39:28,094 INFO [org.fisco.bcos.sdk.network.ConnectionManager] - all connections, size: 1, list: [ConnectionInfo{host='172.16.40.100', port=20200}]

@@ -26,3 +26,4 @@ Go SDK
    console.md
    contractExamples.md
    amopExamples.md
+   event_sub.md

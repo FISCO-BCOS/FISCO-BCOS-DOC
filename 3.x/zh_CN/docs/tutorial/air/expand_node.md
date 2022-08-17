@@ -4,6 +4,11 @@
 
 ------
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 `build_chain.sh`提供了扩容新节点功能，本章在[搭建第一个区块链网络](../../quick_start/air_installation.md)的基础上扩容一个新的区块链节点，帮助用户掌握Air版本FISCO BCOS区块链节点的扩容步骤。
 
 ```eval_rst
@@ -28,7 +33,7 @@ Air版本区块链扩容时，需要提前准备证书和配置文件，用于�
 
 ```shell
 # 进入操作目录(Note: 进行本操作之前，请参考【搭建第一个区块链网络节点】部署一条Air版FISCO BCOS区块链)
-$ cd ~/fisco/nodes
+$ cd ~/fisco
 
 # 创建扩容配置存放目录
 $ mkdir config

@@ -5,6 +5,11 @@
 ----
 
 ```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
+```eval_rst
 .. note::
    `generator <https://github.com/FISCO-BCOS/generator>`_ 仅支持搭建2.x链，搭建3.x链请参考 `这里 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/quick_start/air_installation.html>`_
 ```

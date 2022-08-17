@@ -4,6 +4,11 @@
 
 ---
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 本章将会介绍一个基于FISCO BCOS区块链的业务应用场景开发全过程，从业务场景分析，到合约的设计实现，然后介绍合约编译以及如何部署到区块链，最后介绍一个应用模块的实现，通过我们提供的[Java SDK](../develop/sdk/java_sdk/index.md)实现对区块链上合约的调用访问。
 
 本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉webankblockchain-liquid语法（以下简称WBC-Liquid），并且进行了[WBC-Liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
@@ -67,7 +72,7 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -112,10 +117,32 @@ Asset liquid的内容如下：
 
 use liquid::storage;
 use liquid_lang as liquid;
+use liquid_prelude::string::ToString;
+
+#[liquid::interface(name = auto)]
+mod table_manager {
+
+    extern "liquid" {
+        fn createKVTable(
+            &mut self,
+            table_name: String,
+            key: String,
+            value_fields: String,
+        ) -> i32;
+    }
+}
+#[liquid::interface(name = auto)]
+mod kv_table {
+
+    extern "liquid" {
+        fn get(&self, key: String) -> (bool, String);
+        fn set(&mut self, key: String, value: String) -> i32;
+    }
+}
 
 #[liquid::contract]
 mod asset {
-    use super::{*};
+    use super::{kv_table::*, table_manager::*, *};
 
     #[liquid(event)]
     struct RegisterEvent {
@@ -138,30 +165,49 @@ mod asset {
 
     #[liquid(storage)]
     struct Asset {
-        asset_table: storage::Mapping<String, u128>,
+        table: storage::Value<KvTable>,
+        tm: storage::Value<TableManager>,
+        table_name: storage::Value<String>,
     }
 
     #[liquid(methods)]
     impl Asset {
         pub fn new(&mut self) {
-            self.asset_table.initialize();
+            self.table_name.initialize(String::from("t_asset"));
+            self.tm
+                .initialize(TableManager::at("/sys/table_manager".parse().unwrap()));
+            self.tm.createKVTable(
+                self.table_name.clone(),
+                String::from("account"),
+                String::from("asset_value"),
+            );
+            self.table
+                .initialize(KvTable::at("/tables/t_asset".parse().unwrap()));
         }
 
-        pub fn select(&mut self, account: String) -> (bool, u128) {
-            if self.asset_table.contains_key(&account) {
-               return (true, self.asset_table[&account])
+        pub fn select(&self, account: String) -> (bool, u128) {
+            if let Some((result, value)) = (*self.table).get(account) {
+                if value.len() == 0 {
+                    return (false, Default::default());
+                }
+                return (result, u128::from_str_radix(&value, 10).ok().unwrap());
             }
-            return (false, 0)
+            return (false, Default::default());
         }
 
         pub fn register(&mut self, account: String, asset_value: u128) -> i16 {
             let ret_code: i16;
             let (ok, _) = self.select(account.clone());
             if ok == false {
-                self.asset_table.insert(
-                    account.clone(), asset_value
-                );
-                ret_code = 0;
+                let result = (*self.table)
+                    .set(account.clone(), asset_value.to_string())
+                    .unwrap();
+
+                if result == 1.into() {
+                    ret_code = 0;
+                } else {
+                    ret_code = -2;
+                }
             } else {
                 ret_code = -1;
             }
@@ -177,7 +223,7 @@ mod asset {
         pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16 {
             let mut ret_code: i16 = 0;
             let (ok, from_value) = self.select(from.clone());
-            if ok != true.into() {
+            if ok == true.into() {
                 ret_code = -1;
                 self.env().emit(TransferEvent {
                     ret_code,
@@ -222,15 +268,22 @@ mod asset {
                 return ret_code;
             }
 
+            let from_u = self.update(from.clone(), from_value - value.clone());
+            if from_u != 1 {
+                ret_code = -5;
+                self.env().emit(TransferEvent {
+                    ret_code,
+                    from,
+                    to,
+                    value,
+                });
+                return ret_code;
+            }
 
-            self.asset_table.insert(
-                from.clone(),from_value - value.clone()
-            );
-
-            self.asset_table.insert(
-                to.clone(),to_value.clone() + value.clone()
-            );
-
+            let to_u = self.update(to.clone(), to_value.clone() + value.clone());
+            if to_u != 1 {
+                ret_code = -6;
+            }
             self.env().emit(TransferEvent {
                 ret_code,
                 from,
@@ -238,6 +291,14 @@ mod asset {
                 value,
             });
             return ret_code;
+        }
+
+        pub fn update(&mut self, account: String, value: u128) -> i16 {
+            let r = (*self.table).set(account, value.to_string()).unwrap();
+            if r == 1.into() {
+                return 1;
+            }
+            return -1;
         }
     }
 }
@@ -399,7 +460,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc3")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc4")
     compile spring
 }
 ```
@@ -551,189 +612,186 @@ import org.springframework.core.io.Resource;
 
 public class AssetClient {
 
-  static Logger logger = LoggerFactory.getLogger(AssetClient.class);
+    static Logger logger = LoggerFactory.getLogger(AssetClient.class);
 
-  private BcosSDK bcosSDK;
-  private Client client;
-  private CryptoKeyPair cryptoKeyPair;
+    private BcosSDK bcosSDK;
+    private Client client;
+    private CryptoKeyPair cryptoKeyPair;
 
-  public void initialize() throws Exception {
-    @SuppressWarnings("resource")
-    ApplicationContext context =
-        new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-    bcosSDK = context.getBean(BcosSDK.class);
-    client = bcosSDK.getClient();
-    cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
-    client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
-    logger.debug("create client for group0, account address is " + cryptoKeyPair.getAddress());
-  }
-
-  public void deployAssetAndRecordAddr() {
-
-    try {
-      String assetPath = "/asset" + new Random().nextInt(1000);
-      Asset asset = Asset.deploy(client, cryptoKeyPair, assetPath);
-      System.out.println(
-          " deploy Asset success, contract address is " + asset.getContractAddress());
-
-      recordAssetAddr(asset.getContractAddress());
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      // e.printStackTrace();
-      System.out.println(" deploy Asset contract failed, error message is  " + e.getMessage());
+    public void initialize() {
+        @SuppressWarnings("resource")
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        bcosSDK = context.getBean(BcosSDK.class);
+        client = bcosSDK.getClient();
+        cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
+        client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
+        logger.debug("create client for group1, account address is {}", cryptoKeyPair.getAddress());
     }
-  }
 
-  public void recordAssetAddr(String address) throws FileNotFoundException, IOException {
-    Properties prop = new Properties();
-    prop.setProperty("address", address);
-    final Resource contractResource = new ClassPathResource("contract.properties");
-    FileOutputStream fileOutputStream = new FileOutputStream(contractResource.getFile());
-    prop.store(fileOutputStream, "contract address");
-  }
+    public void deployAssetAndRecordAddr() {
 
-  public String loadAssetAddr() throws Exception {
-    // load Asset contact address from contract.properties
-    Properties prop = new Properties();
-    final Resource contractResource = new ClassPathResource("contract.properties");
-    prop.load(contractResource.getInputStream());
+        try {
+            String assetPath = "/asset" + new Random().nextInt(10000);
+            Asset asset = Asset.deploy(client, cryptoKeyPair, assetPath);
+            System.out.println(
+                    " deploy Asset success, contract address is " + asset.getContractAddress());
 
-    String contractAddress = prop.getProperty("address");
-    if (contractAddress == null || contractAddress.trim().equals("")) {
-      throw new Exception(" load Asset contract address failed, please deploy it first. ");
-    }
-    if (!contractAddress.startsWith("/")) {
-      contractAddress = "/" + contractAddress;
-    }
-    logger.info(" load Asset address from contract.properties, address is {}", contractAddress);
-    return contractAddress;
-  }
-
-  public void queryAssetAmount(String assetAccount) {
-    try {
-      String contractAddress = loadAssetAddr();
-      Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
-      Tuple2<Boolean, BigInteger> result = asset.getSelectOutput(asset.select(assetAccount));
-      if (result.getValue1()) {
-        System.out.printf(" asset account %s, value %s \n", assetAccount, result.getValue2());
-      } else {
-        System.out.printf(" %s asset account is not exist \n", assetAccount);
-      }
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      // e.printStackTrace();
-      logger.error(" queryAssetAmount exception, error message is {}", e.getMessage());
-
-      System.out.printf(" query asset account failed, error message is %s\n", e.getMessage());
-    }
-  }
-
-  public void registerAssetAccount(String assetAccount, BigInteger amount) {
-    try {
-      String contractAddress = loadAssetAddr();
-
-      Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
-      TransactionReceipt receipt = asset.register(assetAccount, amount);
-      Tuple1<BigInteger> registerOutput = asset.getRegisterOutput(receipt);
-      if (receipt.getStatus() == 0) {
-        if (Objects.equals(registerOutput.getValue1(), BigInteger.valueOf(0))) {
-          System.out.printf(
-                  " register asset account success => asset: %s, value: %s \n", assetAccount, amount);
-        } else {
-          System.out.printf(
-                  " register asset account failed, ret code is %s \n", registerOutput.getValue1());
+            recordAssetAddr(asset.getContractAddress());
+        } catch (Exception e) {
+            System.out.println(" deploy Asset contract failed, error message is  " + e.getMessage());
         }
-      } else {
-        System.out.println(" receipt status is error, maybe transaction not exec, status is: " + receipt.getStatus());
-      }
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      // e.printStackTrace();
-
-      logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
-      System.out.println(" register asset account failed, error message is " + e.getMessage());
     }
-  }
 
-  public void transferAsset(String fromAssetAccount, String toAssetAccount, BigInteger amount) {
-    try {
-      String contractAddress = loadAssetAddr();
-      Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
-      TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
-      Tuple1<BigInteger> transferOutput = asset.getTransferOutput(receipt);
-      if (receipt.getStatus() == 0) {
-        if (Objects.equals(transferOutput.getValue1(), BigInteger.valueOf(0))) {
-          System.out.printf(
-                  " transfer success => from_asset: %s, to_asset: %s, amount: %s \n",
-                  fromAssetAccount, toAssetAccount, amount);
-        } else {
-          System.out.printf(
-                  " transfer asset account failed, ret code is %s \n", transferOutput.getValue1());
+    public void recordAssetAddr(String address) throws IOException {
+        Properties prop = new Properties();
+        prop.setProperty("address", address);
+        final Resource contractResource = new ClassPathResource("contract.properties");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(contractResource.getFile())) {
+            prop.store(fileOutputStream, "contract address");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-      } else {
-        System.out.println(" receipt status is error, maybe transaction not exec. status is: " + receipt.getStatus());
-      }
-    } catch (Exception e) {
-
-      logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
-      System.out.println(" register asset account failed, error message is " + e.getMessage());
-    }
-  }
-
-  public static void Usage() {
-    System.out.println(" Usage:");
-    System.out.println(
-        "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient deploy");
-    System.out.println(
-        "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient query account");
-    System.out.println(
-        "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient register account value");
-    System.out.println(
-        "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient transfer from_account to_account amount");
-    System.exit(0);
-  }
-
-  public static void main(String[] args) throws Exception {
-    if (args.length < 1) {
-      Usage();
     }
 
-    AssetClient client = new AssetClient();
-    client.initialize();
-    try {
+    public String loadAssetAddr() throws Exception {
+        // load Asset contact address from contract.properties
+        Properties prop = new Properties();
+        final Resource contractResource = new ClassPathResource("contract.properties");
+        prop.load(contractResource.getInputStream());
 
-      switch (args[0]) {
-        case "deploy":
-          client.deployAssetAndRecordAddr();
-          break;
-        case "query":
-          if (args.length < 2) {
-            Usage();
-          }
-          client.queryAssetAmount(args[1]);
-          break;
-        case "register":
-          if (args.length < 3) {
-            Usage();
-          }
-          client.registerAssetAccount(args[1], new BigInteger(args[2]));
-          break;
-        case "transfer":
-          if (args.length < 4) {
-            Usage();
-          }
-          client.transferAsset(args[1], args[2], new BigInteger(args[3]));
-          break;
-        default: {
-          Usage();
+        String contractAddress = prop.getProperty("address");
+        if (contractAddress == null || contractAddress.trim().equals("")) {
+            throw new Exception(" load Asset contract address failed, please deploy it first. ");
         }
-      }
+        if (!contractAddress.startsWith("/")) {
+            contractAddress = "/" + contractAddress;
+        }
+        logger.info(" load Asset address from contract.properties, address is {}", contractAddress);
+        return contractAddress;
     }
-    catch (Exception e){
-      System.out.println("Error: " + e);
+
+    public void queryAssetAmount(String assetAccount) {
+        try {
+            String contractAddress = loadAssetAddr();
+            Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
+            Tuple2<Boolean, BigInteger> result = asset.getSelectOutput(asset.select(assetAccount));
+            if (result.getValue1()) {
+                System.out.printf(" asset account %s, value %s %n", assetAccount, result.getValue2());
+            } else {
+                System.out.printf(" %s asset account is not exist %n", assetAccount);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            // e.printStackTrace();
+            logger.error(" queryAssetAmount exception, error message is {}", e.getMessage());
+
+            System.out.printf(" query asset account failed, error message is %s%n", e.getMessage());
+        }
     }
-    System.exit(0);
-  }
+
+    public void registerAssetAccount(String assetAccount, BigInteger amount) {
+        try {
+            String contractAddress = loadAssetAddr();
+
+            Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
+            TransactionReceipt receipt = asset.register(assetAccount, amount);
+            List<Asset.RegisterEventEventResponse> registerEventEvents = asset.getRegisterEventEvents(receipt);
+            if (!registerEventEvents.isEmpty()) {
+                if (registerEventEvents.get(0).ret_code.compareTo(BigInteger.ZERO) == 0) {
+                    System.out.printf(
+                            " register asset account success => asset: %s, value: %s %n", assetAccount, amount);
+                } else {
+                    System.out.printf(
+                            " register asset account failed, ret code is %s %n", registerEventEvents.get(0).ret_code.toString());
+                }
+            } else {
+                System.out.println(" event log not found, maybe transaction not exec, receipt status is: " + receipt.getStatus());
+            }
+        } catch (Exception e) {
+            logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
+            System.out.println(" register asset account failed, error message is " + e.getMessage());
+        }
+    }
+
+    public void transferAsset(String fromAssetAccount, String toAssetAccount, BigInteger amount) {
+        try {
+            String contractAddress = loadAssetAddr();
+            Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
+            TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
+            List<Asset.TransferEventEventResponse> transferEventEvents = asset.getTransferEventEvents(receipt);
+            if (!transferEventEvents.isEmpty()) {
+                if (transferEventEvents.get(0).ret_code.compareTo(BigInteger.ZERO) == 0) {
+                    System.out.printf(
+                            " transfer success => from_asset: %s, to_asset: %s, amount: %s %n",
+                            fromAssetAccount, toAssetAccount, amount);
+                } else {
+                    System.out.printf(
+                            " transfer asset account failed, ret code is %s %n", transferEventEvents.get(0).ret_code.toString());
+                }
+            } else {
+                System.out.println(" event log not found, maybe transaction not exec, status is: " + receipt.getStatus());
+            }
+        } catch (Exception e) {
+
+            logger.error(" registerAssetAccount exception, error message is {}", e.getMessage());
+            System.out.println(" register asset account failed, error message is " + e.getMessage());
+        }
+    }
+
+    public static void Usage() {
+        System.out.println(" Usage:");
+        System.out.println(
+                "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient deploy");
+        System.out.println(
+                "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient query account");
+        System.out.println(
+                "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient register account value");
+        System.out.println(
+                "\t java -cp conf/:lib/*:apps/* org.fisco.bcos.asset.liquid.client.AssetClient transfer from_account to_account amount");
+        System.exit(0);
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
+            Usage();
+        }
+
+        AssetClient client = new AssetClient();
+        client.initialize();
+        try {
+
+            switch (args[0]) {
+                case "deploy":
+                    client.deployAssetAndRecordAddr();
+                    break;
+                case "query":
+                    if (args.length < 2) {
+                        Usage();
+                    }
+                    client.queryAssetAmount(args[1]);
+                    break;
+                case "register":
+                    if (args.length < 3) {
+                        Usage();
+                    }
+                    client.registerAssetAccount(args[1], new BigInteger(args[2]));
+                    break;
+                case "transfer":
+                    if (args.length < 4) {
+                        Usage();
+                    }
+                    client.transferAsset(args[1], args[2], new BigInteger(args[3]));
+                    break;
+                default: {
+                    Usage();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        System.exit(0);
+    }
 }
 ```
 

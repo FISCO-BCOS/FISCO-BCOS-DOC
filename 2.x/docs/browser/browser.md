@@ -1,12 +1,18 @@
 # 使用介绍
 
-标签：``区块链浏览器`` ``图形化`` 
+标签：``区块链浏览器`` ``图形化``
 
 ----
+
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
 
 ## 1. 浏览器主要用途
 
 ### 1.1 基本介绍
+
 **全新适配FISCO BCOS 2.0+版本，如果使用FISCO BCOS 1.2或1.3版本请用[v1.2.1版本](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/tag/v1.2.1)。**
 
 区块链浏览器将区块链中的数据可视化，并进行实时展示。方便用户以Web页面的方式，获取当前区块链中的信息。本浏览器版本适配[FISCO BCOS 2.0+](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0)，关于2.0+版本的特性可以参考此[链接](../introduction.md)。在使用本浏览器之前需要先理解2.0+版本的群组特性，详情可以参考此[链接](../faq/what_is_new.html#id2)。
@@ -75,6 +81,7 @@
 服务搭建成功后，可使用网页浏览器访问nginx配置的前端IP和前端端口，进入到浏览器页面。未初始化群组的浏览器页面会引导大家到新建群组配置页面，新建群组需要配置群组ID，群组名称，描述。
 
 **群组ID需要和区块链群组ID保持一致。** 群组ID有多种查看方式:
+
 - [rpc接口获取](../api.html#getgrouplist)
 - 控制台命令: 2.6及其以上版本控制台使用手册请参考[这里](../console/console_of_java_sdk.md), 1.x版本控制台使用手册请参考[这里](../console/console.md)。
 
