@@ -33,7 +33,7 @@ $ bash download_console.sh
 ```bash
 $ cd ~/fisco/console
 $ cat >> HelloWorld.sol << EOF
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 contract HelloWorld {
     string name;
 
