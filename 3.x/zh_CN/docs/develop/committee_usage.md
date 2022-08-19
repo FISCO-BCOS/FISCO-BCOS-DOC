@@ -27,12 +27,14 @@ FISCO BCOS Air版的建链部署工具详情请参考：[Air版部署工具](../
 
 #### 开启权限治理举例
 
-使用`-A`选项开启权限模式，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x2690ef01645972e0940400a4bb43f62eb4e2b7f1`。
+使用`-A`选项开启权限模式，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x976fe0c250181c7ef68a17d3bc34916978da103a`。
 
 ```shell
 ## 如果使用-A选项，则开启权限设置，并且随机生成一个账户地址，作为初始化治理委员的唯一admin账户
 bash build_chain.sh -l 127.0.0.1:4 -o nodes -A
 
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/fisco-bcos-linux-x86_64.tar.gz ...
+######################################################################## 100.0%
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate nodes/127.0.0.1/sdk cert successful!
@@ -41,28 +43,34 @@ Processing IP:127.0.0.1 Total:4
 [INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
 [INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
-############################################################################################# 100.0%
+######################################################################## 100.0%
+[INFO] Generate uuid success: 4cf39d8a-9f9f-43d0-baa4-3b89d6c9e013
+[INFO] Generate uuid success: 16d14ff1-b3f0-4104-8b3e-1bb5faf0ee12
+[INFO] Generate uuid success: cc90fc61-bd2f-4029-adaa-135543ec887e
+[INFO] Generate uuid success: 12799030-e698-4edd-8719-b5aaa6f8f4c7
 ==============================================================
-[INFO] fisco-bcos Path     : bin/fisco-bcos
-[INFO] Auth Mode           : true
-[INFO] Auth init account   : 0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
-[INFO] Start Port          : 30300 20200
-[INFO] Server IP           : 127.0.0.1:4
-[INFO] SM Model            : false
-[INFO] output dir          : nodes
+[INFO] GroupID              : group0
+[INFO] ChainID              : chain0
+[INFO] fisco-bcos path      : bin/fisco-bcos
+[INFO] Auth mode            : true
+[INFO] Auth account         : 0x976fe0c250181c7ef68a17d3bc34916978da103a
+[INFO] Start port           : 30300 20200 3901
+[INFO] Server IP            : 127.0.0.1:4
+[INFO] SM model             : false
+[INFO] Output dir           : nodes
 [INFO] All completed. Files in nodes
 
 # 随机生成的账户将放置在 {节点名}/ca/accounts 目录下
 ls nodes/ca/accounts
-0x2690ef01645972e0940400a4bb43f62eb4e2b7f1.pem        0x2690ef01645972e0940400a4bb43f62eb4e2b7f1.public.pem
+0x976fe0c250181c7ef68a17d3bc34916978da103a.pem        0x976fe0c250181c7ef68a17d3bc34916978da103a.public.pem
 ```
 
-使用`-a`选项开启权限模式，指定账户地址为初始化的治理委员，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x2690ef01645972e0940400a4bb43f62eb4e2b7f1`
+使用`-a`选项开启权限模式，指定账户地址为初始化的治理委员，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x976fe0c250181c7ef68a17d3bc34916978da103a`
 
 ```shell
 
 ## 如果使用-a选项，则开启权限设置，并指定账户地址作为初始化治理委员的唯一admin账户
-bash build_chain.sh -l 127.0.0.1:4 -o nodes -a 0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
+bash build_chain.sh -l 127.0.0.1:4 -o nodes -a 0x976fe0c250181c7ef68a17d3bc34916978da103a
 
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
@@ -71,14 +79,20 @@ Processing IP:127.0.0.1 Total:4
 [INFO] Generate nodes/127.0.0.1/node1/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Generate uuid success: 1b1a3ea8-cacf-498d-9609-6185500b724f
+[INFO] Generate uuid success: e0099fb5-0a54-4073-9f67-077772187df6
+[INFO] Generate uuid success: 5a8c6f09-1984-4bbc-9c9b-627d6a125985
+[INFO] Generate uuid success: 688d7047-644b-48e3-b61b-6b4360b5ac2c
 ==============================================================
-[INFO] fisco-bcos Path     : bin/fisco-bcos
-[INFO] Auth Mode           : true
-[INFO] Auth init account   : 0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
-[INFO] Start Port          : 30300 20200
-[INFO] Server IP           : 127.0.0.1:4
-[INFO] SM Model            : false
-[INFO] output dir          : nodes
+[INFO] GroupID               : group0
+[INFO] ChainID               : chain0
+[INFO] fisco-bcos path       : bin/fisco-bcos
+[INFO] Auth mode             : true
+[INFO] Auth account          : 0x976fe0c250181c7ef68a17d3bc34916978da103a
+[INFO] Start port            : 30300 20200 3901
+[INFO] Server IP             : 127.0.0.1:4
+[INFO] SM model              : false
+[INFO] Output dir            : nodes
 [INFO] All completed. Files in nodes
 ```
 
@@ -94,7 +108,8 @@ Processing IP:127.0.0.1 Total:4
     ; use the wasm virtual machine or not
     is_wasm=false
     is_auth_check=true
-    auth_admin_account=0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
+    auth_admin_account=0x976fe0c250181c7ef68a17d3bc34916978da103a
+    is_serial_execute=false
 ...
 ```
 
@@ -111,7 +126,7 @@ FISCO BCOS Pro版的建链部署工具详情请参考：[搭建Pro版区块链�
 vim config.toml
 ```
 
-在这里我们选择开启`auth_check`配置项，并使用`0x2690ef01645972e0940400a4bb43f62eb4e2b7f1`账户地址作为初始化治理委员，请以实际情况为准。
+在这里我们选择开启`auth_check`配置项，并使用`0x976fe0c250181c7ef68a17d3bc34916978da103a`账户地址作为初始化治理委员，请以实际情况为准。
 
 如何创建、使用链上账户，请参考链接：[创建和使用账户](./account.md)。
 
@@ -125,7 +140,7 @@ group_id="group0"
 vm_type="evm"
 sm_crypto=false
 auth_check=true
-init_auth_address="0x2690ef01645972e0940400a4bb43f62eb4e2b7f1"
+init_auth_address="0x976fe0c250181c7ef68a17d3bc34916978da103a"
 
 ...
 ```

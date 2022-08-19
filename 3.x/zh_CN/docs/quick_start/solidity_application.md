@@ -993,7 +993,7 @@ asset account Bob, value 100000
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000
- transfer success => from_asset: Alice, to_asset: Bob, amount: 50000
+transfer success => from_asset: Alice, to_asset: Bob, amount: 50000
 $ bash asset_run.sh query Alice
 account Alice, value 50000
 $ bash asset_run.sh query Bob

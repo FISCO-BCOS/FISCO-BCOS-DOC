@@ -17,7 +17,7 @@ FISCO BCOS提供了`BcosBuilder`工具帮助用户快速部署、启停、更新
 
 - `[tars].tars_url`: 访问tars网页控制台的url，默认为`http://127.0.0.1:3000`。
 - `[tars].tars_token`: 访问tars服务的token，可通过tars网页控制台的【admin】->【用户中心】->【token管理】进行token申请和查询。
-- `[tars].tars_pkg_dir`: 放置Max版本二进制包的路径，若配置了该配置项，默认会从指定的目录下获取FISCO BCOS Pro版本二进制进行服务部署、扩容等操作。
+- `[tars].tars_pkg_dir`: 放置Max版本二进制包的路径，默认路径为binary/，若配置了该配置项，默认会从指定的目录下获取FISCO BCOS Pro版本二进制进行服务部署、扩容等操作。
 
 下面是tars服务配置项的示例：
 
@@ -25,7 +25,7 @@ FISCO BCOS提供了`BcosBuilder`工具帮助用户快速部署、启停、更新
 [tars]
 tars_url = "http://127.0.0.1:3000"
 tars_token = ""
-tars_pkg_dir = ""
+tars_pkg_dir = "binary/"
 ```
 
 ## 2 区块链服务部署配置
@@ -179,8 +179,8 @@ consensus_type = "pbft"
 # transaction gas limit
 gas_limit = "3000000000"
 # compatible version, can be dynamically upgraded through setSystemConfig
-# the default is 3.0.0-rc4
-compatibility_version="3.0.0-rc4"
+# the default is 3.0.0
+compatibility_version="3.0.0"
 ```
 
 ### 2.6 区块链节点服务配置项：部署配置
