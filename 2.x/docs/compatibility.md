@@ -54,7 +54,7 @@ Git Commit         : 3d113c8acba8774f4f99e6252f40eb0bded27dec
 | generator | 企业区块链部署工具 |   v1.9.0   | [文档](<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html>)   |      [github](https://github.com/FISCO-BCOS/generator)    |   [gitee](https://gitee.com/FISCO-BCOS/generator)     |
 | WeBASE | 区块链中间件平台 |   v1.5.4   | [文档](https://webasedoc.readthedocs.io/zh_CN/latest)   |   [github](https://github.com/WeBankBlockchain/WeBASE)         |  [gitee](https://gitee.com/WeBank/WeBASE)    |
 | WeCross | 跨链协作平台 |   v1.2.1  | [文档](https://wecross.readthedocs.io/zh_CN/latest)   |    [github](https://github.com/WeBankBlockchain/WeCross)      |    [gitee](https://gitee.com/WeBank/WeCross)    |
-| WeIdentity | 分布式身份解决方案 |   v1.8.4   | [文档](https://weidentity.readthedocs.io/zh_CN/latest/)   |   [github](https://github.com/WeBankBlockchain/WeIdentity)         |  [gitee](https://gitee.com/WeBank/WeIdentity)    |
+| WeIdentity | 分布式身份解决方案 |   v1.8.5-rc1   | [文档](https://weidentity.readthedocs.io/zh_CN/latest/)   |   [github](https://github.com/WeBankBlockchain/WeIdentity)         |  [gitee](https://gitee.com/WeBank/WeIdentity)    |
 | WeBankBlockchain-Data-Export |  数据导出组件 |   v1.7.7   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Export)  |
 | WeBankBlockchain-Data-Stash |  数据仓库组件 |   v1.2.3   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Stash)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Stash)  |
 | WeBankBlockchain-Data-Reconcile |  数据对账组件 |   v1.0.0   |  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Reconcile)      |    [gitee](https://gitee.com/WeBankBlockchain/Data-Reconcile)  |
@@ -147,7 +147,7 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | spring-boot-starter | Gradle SpringBoot 应用示例 |   v3.0.0-rc3   |  [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3#spring-boot-starter)  |     [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3)     |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc3)    |
 | spring-boot-crud |  Maven SpringBoot 应用示例 | v3.0.0-rc3   |  [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3#spring-boot-crud) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3)    |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc3)     |
 | generator |  企业区块链部署工具 | 不支持  |   |    |    |
-| WeBASE | 区块链中间件平台 | **lab-rc3，适配中**  |         |      |    |
+| WeBASE | 区块链中间件平台 | 不支持  |         |      |    |
 | WeCross|  跨链协作平台 | 暂不支持</br>后续版本规划  |    |         |     |
 | WeIdentity | 分布式身份解决方案 |  不支持  |    |        |     |
 | WeBankBlockchain-Data-Export| 数据导出组件 |  v3.0.0  | [文档](https://data-doc.readthedocs.io/zh_CN/data_export_3.0/docs/WeBankBlockchain-Data-Export/index.html)  |    [github](https://github.com/WeBankBlockchain/Data-Export/tree/3.0.0)       |   [gitee](https://gitee.com/WeBankBlockchain/Data-Export/tree/2.0.0/)     |
@@ -175,9 +175,9 @@ FISCO-BCOS 3.x目前处于RC版本，各个版本之间也不保证兼容性，�
 | spring-boot-starter | Gradle SpringBoot 应用示例 |   v3.0.0-rc4   |  [文档](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc4#spring-boot-starter)  |     [github](https://github.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc4)     |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-starter/tree/v3.0.0-rc4)    |
 | spring-boot-crud |  Maven SpringBoot 应用示例 | v3.0.0-rc4   |  [文档](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc4#spring-boot-crud) |  [github](https://github.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc4)    |   [gitee](https://gitee.com/FISCO-BCOS/spring-boot-crud/tree/v3.0.0-rc4)     |
 | generator |  企业区块链部署工具 | 不支持  |   |    |    |
-| WeBASE | 区块链中间件平台 | **lab-rc4，适配中**  |         |      |    |
+| WeBASE | 区块链中间件平台 | **v3.0.0，适配中**  |         |      |    |
 | WeCross|  跨链协作平台 | 暂不支持</br>后续版本规划  |    |         |     |
-| WeIdentity | 分布式身份解决方案 |  不支持  |    |        |     |
+| WeIdentity | 分布式身份解决方案 |  v1.8.5-rc1  |    |        |     |
 | WeBankBlockchain-Data-Export| 数据导出组件 |  暂不支持</br>后续版本规划  |   |        |     |
 | WeBankBlockchain-Data-Stash |  数据仓库组件 |   不支持    |   |          |        |
 | WeBankBlockchain-Data-Reconcile |  数据对账组件 |   暂不支持</br>后续版本规划    |   |          |        |
