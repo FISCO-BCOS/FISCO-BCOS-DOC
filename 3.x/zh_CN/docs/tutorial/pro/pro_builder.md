@@ -555,7 +555,7 @@ services:
     image: tarscloud/framework:v3.0.1
     network_mode: "host"
     environment:
-      MYSQL_HOST: "172.17.0.1"
+      MYSQL_HOST: "172.25.0.2"
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_PORT: 3310
       REBUILD: "false"
