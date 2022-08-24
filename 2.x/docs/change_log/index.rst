@@ -119,6 +119,7 @@ KeyManager在Github开源发布，节点与KeyManager的交互协议是开放的
 
 .. admonition:: FISCO BCOS 2.x Releases
 
+     - `FISCO BCOS v2.9.1 <./2_9_1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.9.1>`_]
      - `FISCO BCOS v2.9.0 <./2_9_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.9.0>`_]
      - `FISCO BCOS v2.8.0 <./2_8_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.8.0>`_]
      - `FISCO BCOS v2.7.0 <./2_7_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v2.7.0>`_]
