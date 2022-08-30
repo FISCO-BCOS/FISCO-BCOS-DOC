@@ -11,7 +11,7 @@ FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们
 该表中的地址只用于Solidity合约。
 
 | 地址    | 合约                    | 说明                         |
-| :------ | :---------------------- | :--------------------------- |
+|:--------|:------------------------|:-----------------------------|
 | 0x1000  | SystemConfigPrecompiled | 实现对群组系统参数配置管理   |
 | 0x1002  | TableManagerPrecompiled | Solidity中使用的TableManager |
 | 0x1003  | ConsensusPrecompiled    | 群组节点及节点身份管理       |
@@ -26,7 +26,7 @@ FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们
 下表的BFS路径只用于 webankblockchain-liquid（以下简称WBC-Liquid）合约。
 
 | BFS路径            | 合约                    | 说明                         |
-| :----------------- | :---------------------- | :--------------------------- |
+|:-------------------|:------------------------|:-----------------------------|
 | /sys/status        | SystemConfigPrecompiled | 实现对群组系统参数配置管理   |
 | /sys/table_Manager | TableManagerPrecompiled | Solidity中使用的TableManager |
 | /sys/consensus     | ConsensusPrecompiled    | 群组节点及节点身份管理       |
@@ -72,7 +72,7 @@ contract SystemConfigPrecompiled
 - setValueByKey将以错误码的形式返回
 
 | 错误码 | 说明               |
-| :----- | :----------------- |
+|:-------|:-------------------|
 | 等于0  | 成功               |
 | -51300 | 输入的系统参数有误 |
 
@@ -264,7 +264,7 @@ contract BfsPrecompiled {
 - `readlink`：获取软链接的真实地址，入参一定是**绝对路径**。
 
 | 错误码      | 说明               |
-| :---------- | :----------------- |
+|:------------|:-------------------|
 | 错误码等于0 | 创建成功           |
 | -53001      | 文件不存在         |
 | -53002      | 文件已存在         |

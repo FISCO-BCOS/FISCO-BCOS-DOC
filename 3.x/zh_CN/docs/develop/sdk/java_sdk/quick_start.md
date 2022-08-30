@@ -29,7 +29,7 @@
 在build.gradle中引入Java SDK
 
 ```gradle
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc4')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -38,7 +38,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc4')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>3.0.0-rc4</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
