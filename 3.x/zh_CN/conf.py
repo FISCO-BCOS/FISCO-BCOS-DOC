@@ -28,9 +28,10 @@ print('PROJECT_ROOT_DIR', PROJECT_ROOT_DIR)
 # If runs on ReadTheDocs environment
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 # The suffix of source filenames.
-source_parsers = {
-	'.md': 'recommonmark.parser.CommonMarkParser',
-}
+#source_parsers = {
+#	'.md': 'recommonmark.parser.CommonMarkParser',
+#}
+
 source_suffix = ['.rst', '.md']
 
 copybutton_image_svg = """
@@ -60,6 +61,7 @@ extensions = [
   'sphinxcontrib.mermaid',
   'sphinx.ext.mathjax',
   'sphinx_markdown_tables',
+  'myst_parser'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
