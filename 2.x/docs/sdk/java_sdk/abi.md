@@ -10,7 +10,7 @@ ABI（Application Binary Interface）定义了调用智能合约函数以及合�
 这里以`Add.sol`合约为例，给出`ABICodec`的使用参考。
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 
 contract Add {
 

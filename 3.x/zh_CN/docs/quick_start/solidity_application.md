@@ -458,7 +458,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc4")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0")
     compile spring
 }
 ```
@@ -555,13 +555,13 @@ applicationContext.xml的内容如下：
 ```shell
 # 假设我们将asset-app-3.0放在~/fisco目录下 进入~/fisco目录
 $ cd ~/fisco
-# 创建放置证书的文件夹
+# 创建放置证书的文件夹(默认解压项目即存在)
 $ mkdir -p asset-app-3.0/src/test/resources
 # 拷贝节点证书到项目的资源目录
-$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/test/resources
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/test/resources/conf
 # 若在IDE直接运行，拷贝证书到resources路径
 $ mkdir -p asset-app-3.0/src/main/resources
-$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources/conf
 ```
 
 ## 5. 业务逻辑开发
@@ -904,6 +904,8 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 |       |-- gradle-wrapper.properties // wrapper所使用的配置信息，比如gradle的版本等信息
 |-- gradlew // Linux或者Unix下用于执行wrapper命令的Shell脚本
 |-- gradlew.bat // Windows下用于执行wrapper命令的批处理脚本
+├── LICENSE
+├── README.md
 |-- src
 |   |-- main
 |   |   |-- java
@@ -982,20 +984,20 @@ Register account successfully => account: Bob, value: 100000
 
 ```shell
 $ bash asset_run.sh query Alice
-account Alice, value 100000
+asset account Alice, value 100000
 $ bash asset_run.sh query Bob
-account Bob, value 100000
+asset account Bob, value 100000
 ```
 
 - 资产转移
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000
-Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000
+ transfer success => from_asset: Alice, to_asset: Bob, amount: 50000
 $ bash asset_run.sh query Alice
 account Alice, value 50000
 $ bash asset_run.sh query Bob
-account Bob, value 150000
+asset account Bob, value 150000
 ```
 
 **总结：** 至此，我们通过合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的solidity应用。

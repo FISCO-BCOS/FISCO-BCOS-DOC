@@ -47,11 +47,12 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。
 
 ```shell
-Usage: ./get_account.sh
+Usage: get_account.sh
     default       generate account and store private key in PEM format file
     -p            generate account and store private key in PKCS12 format file
     -k [FILE]     calculate address of PEM format [FILE]
     -P [FILE]     calculate address of PKCS12 format [FILE]
+    -a            force script to consider the platform is aarch64
     -h Help
 ```
 
@@ -63,23 +64,24 @@ Usage: ./get_account.sh
 bash get_account.sh
 ```
 
-执行上面的命令，可以得到类似下面的输出，包括账户地址和以账户地址为文件名的私钥PEM文件。
+执行上面的命令，可以得到类似下面的输出，包括账户地址和以账户地址为文件名的私钥PEM文件与公钥PUB文件。
 
 ```shell
-[INFO] Account Address   : 0xee5fffba2da55a763198e361c7dd627795906ead
-[INFO] Private Key (pem) : accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
+[INFO] Account Address   : 0xa04beef19c812628a2aa1f0fc73e0963f84ec75e
+[INFO] Private Key (pem) : accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem
+[INFO] Public  Key (pem) : accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem.pub
 ```
 
 - 指定PEM私钥文件计算账户地址
 
 ```shell
-bash get_account.sh -k accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
+bash get_account.sh -k accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem
 ```
 
 执行上面的命令，结果如下
 
 ```shell
-[INFO] Account Address   : 0xee5fffba2da55a763198e361c7dd627795906ead
+[INFO] Account Address   : 0xa04beef19c812628a2aa1f0fc73e0963f84ec75e
 ```
 
 #### 3. 使用脚本生成PKCS12格式私钥
@@ -90,19 +92,21 @@ bash get_account.sh -k accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
 bash get_account.sh -p
 ```
 
-执行上面的命令，可以得到类似下面的输出，按照提示输入密码，生成对应的p12文件。
+执行上面的命令，可以得到类似下面的输出，按照提示输入密码，生成对应的p12文件和pub文件。
 
 ```shell
+[INFO] Note: the entered password cannot contain Chinese characters!
 Enter Export Password:
 Verifying - Enter Export Password:
-[INFO] Account Address   : 0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1
-[INFO] Private Key (p12) : accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
+[INFO] Account Address   : 0xd97a6a101d15c228a38c09d157843d2697535f7f
+[INFO] Private Key (p12) : accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.p12
+[INFO] Public  Key (pem) : accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.pem.pub
 ```
 
 - 指定p12私钥文件计算账户地址，**按提示输入p12文件密码**
 
 ```shell
-bash get_account.sh -P accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
+bash get_account.sh -P accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.p12
 ```
 
 执行上面的命令，结果如下
@@ -110,7 +114,7 @@ bash get_account.sh -P accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
 ```shell
 Enter Import Password:
 MAC verified OK
-[INFO] Account Address   : 0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1
+[INFO] Account Address   : 0xd97a6a101d15c228a38c09d157843d2697535f7f
 ```
 
 ## 账户的存储

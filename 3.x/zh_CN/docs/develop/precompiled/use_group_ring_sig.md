@@ -68,7 +68,7 @@ FISCO BCOS为用户提供了群/环签名开发示例，包括：
 
   ```cpp
   // GroupSigPrecompiled.sol
-  pragma solidity ^0.4.24;
+  pragma solidity ^0.4.25;
   contract GroupSigPrecompiled{
       /**
       * 群签名验证接口
@@ -87,7 +87,7 @@ FISCO BCOS为用户提供了群/环签名开发示例，包括：
 
   ```cpp
   // RingSigPrecompiled.sol
-  pragma solidity ^0.4.24;
+  pragma solidity ^0.4.25;
   contract RingSigPrecompiled{
         /**
         * 环签名验证接口

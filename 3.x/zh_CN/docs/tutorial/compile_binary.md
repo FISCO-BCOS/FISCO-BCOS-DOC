@@ -43,8 +43,9 @@ source $HOME/.cargo/env
 要求使用CentOS7以上版本。
 
 ```shell
-sudo yum install -y epel-release centos-release-scl
-sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel wget python-devel python3-devel git flex bison devtoolset-7 gmp-static
+sudo yum install -y epel-release centos-release-scl flex bison
+sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel wget python-devel python3-devel git flex bison devtoolset-10 gmp-static lvm-toolset-7 rh-perl530-perl
+sudo yum install -y https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -81,14 +82,14 @@ cd FISCO-BCOS
 
 ## 3. 编译
 
-**编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos-air/fisco-bcos`路径。**
+**编译完的Air版本二进制位于`FISCO-BCOS/build/fisco-bcos-air/fisco-bcos-air`路径。**
 
-**编译会产生Pro版本的Rpc服务、Gateway服务以及节点服务对应的所有二进制,路径如下：**
+**编译会产生Pro版本的Rpc服务、Gateway服务、Executor服务以及节点服务对应的所有二进制,路径如下：**
 
 - Rpc服务：`FISCO-BCOS/build/fisco-bcos-tars-service/RpcService/main/BcosRpcService`
 - Gateway服务：`FISCO-BCOS/build/fisco-bcos-tars-service/GatewayService/main/BcosGatewayService`
+- Executor服务：`FISCO-BCOS/build/fisco-bcos-tars-service/ExecutorService/main/BcosExecutorService`
 - 区块链节点服务：`FISCO-BCOS/build/fisco-bcos-tars-service/NodeService/main/BcosNodeService`
-
 **若编译过程中从GitHub拉取依赖太慢，可执行以下方式加速：**
 
 - **使用GitHub镜像（推荐）**
@@ -127,8 +128,7 @@ cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 cmake -DBUILD_STATIC=ON -DHUNTER_CONFIGURATION_TYPES=Debug ..
 
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
-make -j2
-
+make -j4
 
 # 生成tgz包
 rm -rf *.tgz && make tar
@@ -142,7 +142,8 @@ rm -rf *.tgz && make tar
 
 ```shell
 # 使用gcc7
-source /opt/rh/devtoolset-7/enable
+source /opt/rh/devtoolset-10/enable
+source /opt/rh/rh-perl530/enable
 export LIBCLANG_PATH=/opt/rh/llvm-toolset-7/root/lib64/
 source /opt/rh/llvm-toolset-7/enable
 
@@ -155,7 +156,7 @@ cmake3 -DBUILD_STATIC=ON ..
 cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 高性能机器可添加-j4使用4核加速编译
-make -j2
+make -j4
 # 生成tgz包
 rm -rf *.tgz && make tar
 ```
@@ -180,7 +181,7 @@ cmake3 -DBUILD_STATIC=ON ..
 cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
 
 # 高性能机器可添加-j4使用4核加速编译
-make -j2
+make -j4
 # 生成tgz包
 rm -rf *.tgz && make tar
 ```

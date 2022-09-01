@@ -81,7 +81,7 @@ $ curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.
 # 部署并启动tikv(这里设机器的物理ip为172.25.0.3)
 $ nohup tiup playground v5.4.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor > ~/tikv.log 2>&1 &
 # 获取tikv监听端口(tikv的默认监听端口是2379)
-$ cat ~/tikv.h
+$ cat ~/tikv.log
 tiup is checking updates for component playground ...timeout!
 Starting component `playground`: /home/fisco/.tiup/components/playground/v1.9.4/tiup-playground v5.4.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor
 Playground Bootstrapping...
@@ -145,7 +145,7 @@ python3 build_chain.py download_binary
 cd ~/fisco/BcosBuilder/max
 
 # 从conf目录拷贝配置
-cp conf/config-deploy-example.toml config.toml
+cp conf/config-deploy-example.toml conf/config.toml
 ```
 
 此时拷贝的`config.toml`为整个`BcosBuilder/max`使用的配置文件，配置详情请参考链接：[配置介绍](./max_builder.md)。
@@ -340,7 +340,7 @@ python3 build_chain.py chain -o deploy -t node
 * block_tx_count_limit: 1000
 * leader_period: 1
 * gas_limit: 3000000000
-* compatibility_version: 3.0.0-rc4
+* compatibility_version: 3.0.0
 * generate_genesis_config_nodeid success
 * store genesis config for chain0.group0
 	 path: generated/chain0/group0/config.genesis
@@ -429,7 +429,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::
@@ -451,7 +451,7 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```shell
 # 可通过命令 find . -name sdk找到所有SDK证书路径
-cp -r ~/fisco/BcosBuilder/max/generated/rpc/chain0/172.25.0.3/agencyBBcosRpcService/sdk/* console/conf
+cp -r ~/fisco/BcosBuilder/max/generated/rpc/chain0/agencyBBcosRpcService/172.25.0.3/sdk/* console/conf
 ```
 
 **步骤3：启动并使用控制台**
@@ -464,7 +464,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc4)!
+Welcome to FISCO BCOS console(3.0.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -519,7 +519,7 @@ peer0: 4af0433ac2d2afe305b88e7faae8ea4e94b14c63e78ca93c5c836ece6d0fbcb3d2a476a74
 HelloWorld合约提供了两个接口`get()`和`set()`，用于获取/设置合约变量`name`，合约内容如下：
 
 ```c++
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 contract HelloWorld {
     string name;
 
