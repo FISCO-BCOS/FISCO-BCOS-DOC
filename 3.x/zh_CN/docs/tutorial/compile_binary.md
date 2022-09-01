@@ -28,7 +28,7 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 
 - **Ubuntu**
 
-要求使用Ubuntu 18.04及以上版本。
+推荐使用Ubuntu 22.04版本。
 
 ```shell
 sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev wget libgmp-dev
@@ -40,12 +40,13 @@ source $HOME/.cargo/env
 
 - **CentOS**
 
-要求使用CentOS7以上版本。
+推荐使用CentOS7以上版本。
 
 ```shell
-sudo yum install -y epel-release centos-release-scl flex bison
-sudo yum install -y cmake3 gcc gcc-c++ glibc-static glibc-devel libzstd-devel zlib-devel wget python-devel python3-devel git flex bison devtoolset-10 gmp-static lvm-toolset-7 rh-perl530-perl
+sudo yum install -y epel-release centos-release-scl flex bison patch gmp-static
+sudo yum install -y devtoolset-10 devtoolset-11 llvm-toolset-7 rh-perl530-perl cmake3 zlib-devel ccache lcov python-devel python3-devel
 sudo yum install -y https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
+sudo yum install -y git
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -89,7 +90,8 @@ cd FISCO-BCOS
 - Rpc服务：`FISCO-BCOS/build/fisco-bcos-tars-service/RpcService/main/BcosRpcService`
 - Gateway服务：`FISCO-BCOS/build/fisco-bcos-tars-service/GatewayService/main/BcosGatewayService`
 - Executor服务：`FISCO-BCOS/build/fisco-bcos-tars-service/ExecutorService/main/BcosExecutorService`
-- 区块链节点服务：`FISCO-BCOS/build/fisco-bcos-tars-service/NodeService/main/BcosNodeService`
+- 区块链节点服务：`FISCO-BCOS/build/fisco-bcos-tars-service/NodeService/main/BcosNodeService`、`FISCO-BCOS/build/fisco-bcos-tars-service/NodeService/main/BcosMaxNodeService`
+
 **若编译过程中从GitHub拉取依赖太慢，可执行以下方式加速：**
 
 - **使用GitHub镜像（推荐）**
@@ -109,6 +111,12 @@ EOF
 
 修改DNS主机，或者在Host加上GitHub的直连IP，可以大概率改善访问速度。可以参考`SwitchHosts`等工具。
 
+- **配置vcpkg代理**
+
+``` shell
+export X_VCPKG_ASSET_SOURCES=x-azurl,http://106.15.181.5/
+```
+
 ### 3.1 Ubuntu
 
 **要求版本不小于Ubuntu 18.04。**
@@ -121,11 +129,8 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake -DBUILD_STATIC=ON ..
 
-# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
-
-# 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-cmake -DBUILD_STATIC=ON -DHUNTER_CONFIGURATION_TYPES=Debug ..
+# 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
+# 若为网络原因可按照上文提示配置vcpkg代理
 
 # 编译源码(高性能机器可添加-j4使用4核加速编译)
 make -j4
@@ -136,12 +141,12 @@ rm -rf *.tgz && make tar
 
 ### 3.2 CentOS
 
-**要求版本不小于CentOS 7。**
+**推荐版本不小于CentOS 7。**
 
 #### linux x86_64
 
 ```shell
-# 使用gcc7
+# 使用gcc11
 source /opt/rh/devtoolset-10/enable
 source /opt/rh/rh-perl530/enable
 export LIBCLANG_PATH=/opt/rh/llvm-toolset-7/root/lib64/
@@ -152,8 +157,8 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake3 -DBUILD_STATIC=ON ..
 
-# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
+# 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
+# 若为网络原因可按照上文提示配置vcpkg代理
 
 # 高性能机器可添加-j4使用4核加速编译
 make -j4
@@ -164,11 +169,11 @@ rm -rf *.tgz && make tar
 #### aarch64
 
 ```shell
-# 安装devtoolset-9
-yum install -y devtoolset-9
+# 安装devtoolset-10
+yum install -y devtoolset-10
 
-# 使用gcc9
-source /opt/rh/devtoolset-9/enable
+# 使用gcc10
+source /opt/rh/devtoolset-10/enable
 export LIBCLANG_PATH=/opt/rh/llvm-toolset-7.0/root/lib64/
 source /opt/rh/llvm-toolset-7.0/enable
 
@@ -177,8 +182,8 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake3 -DBUILD_STATIC=ON ..
 
-# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
+# 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
+# 若为网络原因可按照上文提示配置vcpkg代理
 
 # 高性能机器可添加-j4使用4核加速编译
 make -j4
@@ -196,11 +201,8 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake -DBUILD_STATIC=ON ..
 
-# 若编译依赖过程中遇到了 c++: internal compiler error: Killed (program cc1plus)的问题，说明编译时内存不够，请执行如下命令限制内存使用
-cmake -DBUILD_STATIC=ON -DHUNTER_JOBS_NUMBER=2 ..
-
-# 若不想同时编译debug和release版本的代码，加快编译时间，请执行如下命令指定Hunter的编译版本
-# cmake -DBUILD_STATIC=ON -DHUNTER_CONFIGURATION_TYPES=Debug ..
+# 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
+# 若为网络原因可按照上文提示配置vcpkg代理
 
 # 若执行以上过程报错，请尝试执行如下命令指定SDKROOT
 #rm -rf CMakeCache.txt && export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake ..

@@ -297,7 +297,7 @@ chain_id = chain0
 
 ### 3.4 落盘加密配置
 
-FISCO BCOS v3.0.0-rc4版本开始支持落盘加密功能，可对RPC/网关服务的SSL连接私钥进行加密，保障SSL连接私钥的机密性，主要通过`[storage_security]`配置:
+FISCO BCOS v3.0.0版本开始支持落盘加密功能，可对RPC/网关服务的SSL连接私钥进行加密，保障SSL连接私钥的机密性，主要通过`[storage_security]`配置:
 
 - `[storage_security].enable`: 是否开启落盘加密功能，默认关闭;
 - `[storage_security].key_center_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage_security.md)的url，用于获取数据加解密密钥;

@@ -33,7 +33,7 @@ FISCO BCOS Air版的建链部署工具详情请参考：[Air版部署工具](../
 ## 如果使用-A选项，则开启权限设置，并且随机生成一个账户地址，作为初始化治理委员的唯一admin账户
 bash build_chain.sh -l 127.0.0.1:4 -o nodes -A
 
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/fisco-bcos-linux-x86_64.tar.gz ...
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/fisco-bcos-linux-x86_64.tar.gz ...
 ######################################################################## 100.0%
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
