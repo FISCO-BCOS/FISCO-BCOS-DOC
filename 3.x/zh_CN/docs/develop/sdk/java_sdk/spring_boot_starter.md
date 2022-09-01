@@ -73,7 +73,7 @@ import org.fisco.bcos.sdk.v3.crypto.keypair.SM2KeyPair;
 import org.fisco.bcos.sdk.v3.model.TransactionReceipt;
 import org.fisco.bcos.sdk.v3.transaction.manager.AssembleTransactionProcessor;
 import org.fisco.bcos.sdk.v3.transaction.manager.TransactionProcessorFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -111,7 +111,7 @@ public class Demos {
         if (receipt.isStatusOK()) {
             System.out.println("Contract Address:" + receipt.getContractAddress());
         } else {
-            System.out.println("Status code:" + receipt.getStatus() + "-" + receipt.getStatusMsg());
+            System.out.println("Status code:" + receipt.getStatus() + "-" + receipt.getMessage());
         }
     }
 }

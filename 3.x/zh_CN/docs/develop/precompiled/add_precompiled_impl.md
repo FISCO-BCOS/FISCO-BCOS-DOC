@@ -9,7 +9,7 @@
 先来看一下我们想要实现的HelloWorld合约的Solidity版本。Solidity版本的HelloWorld，有一个成员name用于存储数据，两个接口get(),set(string)分别用于读取和设置该成员变量。
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity>=0.6.10 <0.8.20;
 
 contract HelloWorld {
     string name;

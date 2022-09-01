@@ -17,7 +17,7 @@ FISCO BCOS提供了`BcosBuilder`工具帮助用户快速部署、启停、更新
 
 - `[tars].tars_url`: 访问tars网页控制台的url，默认为`http://127.0.0.1:3000`。
 - `[tars].tars_token`: 访问tars服务的token，可通过tars网页控制台的【admin】->【用户中心】->【token管理】进行token申请和查询。
-- `[tars].tars_pkg_dir`: 放置Max版本二进制包的路径，若配置了该配置项，默认会从指定的目录下获取FISCO BCOS Pro版本二进制进行服务部署、扩容等操作。
+- `[tars].tars_pkg_dir`: 放置Max版本二进制包的路径，默认路径为binary/，若配置了该配置项，默认会从指定的目录下获取FISCO BCOS Pro版本二进制进行服务部署、扩容等操作。
 
 下面是tars服务配置项的示例：
 
@@ -25,7 +25,7 @@ FISCO BCOS提供了`BcosBuilder`工具帮助用户快速部署、启停、更新
 [tars]
 tars_url = "http://127.0.0.1:3000"
 tars_token = ""
-tars_pkg_dir = ""
+tars_pkg_dir = "binary/"
 ```
 
 ## 2 区块链服务部署配置
@@ -71,7 +71,7 @@ gateway_sm_ssl=false
 
 ```eval_rst
 .. note::
-   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
+   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
 ```
 
 RPC服务的配置项位于`[[agency]].[agency.rpc]`中，一个机构可部署一个RPC服务，一条链可包含多个机构，主要配置项包括：
@@ -154,7 +154,7 @@ FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组
 - `[[group]].vm_type`: 区块链节点运行的虚拟机类型，目前支持`evm`和`wasm`两种类型，且一个群组仅可运行一种类型的虚拟机，不可以部分节点运行EVM虚拟机、部分节点运行WASM虚拟机;
 - `[[group]].auth_check`: 是否开启权限治理模式，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md);
 - `[[group]].init_auth_address`: 开启权限治理时，指定的初始化治理委员账号地址，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md);
-- `[[group]].compatibility_version`: 数据兼容版本号，默认为`3.0.0-rc4`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
+- `[[group]].compatibility_version`: 数据兼容版本号，默认为`3.0.0`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
 
 ```ini
 [[group]]
@@ -179,8 +179,8 @@ consensus_type = "pbft"
 # transaction gas limit
 gas_limit = "3000000000"
 # compatible version, can be dynamically upgraded through setSystemConfig
-# the default is 3.0.0-rc4
-compatibility_version="3.0.0-rc4"
+# the default is 3.0.0
+compatibility_version="3.0.0"
 ```
 
 ### 2.6 区块链节点服务配置项：部署配置
@@ -341,3 +341,51 @@ name = "agencyA"
         # cipher_data_key = 
 ```
 
+### 3.4 区块链执行器扩容配置
+
+传统的区块链节点部署在一台机器上，其交易的执行速率受制于一台机器的性能。Max版本的FISCO BCOS支持将区块链节点内的交易执行器（executor）部署在多台机器上，实现**区块内交易的多机并行执行**，极大的拓展了单个区块链节点的交易处理性能。同时，多个交易执行器也提升了系统的稳定性，只需一个执行器在线即可工作。
+
+`BcosBuilder/max`提供了区块链节点扩容功能，可为指定群组扩容新的区块链节点服务，区块链节点扩容配置模板位于`conf/config-node-expand-example.toml`路径下，主要包括**链配置**和**扩容部署配置**。交易执行器的相关配置项如下，我们可以为每个节点配置多个执行器：
+
+* `[[agency]].[[agency.group.node]].executor_deploy_ip`
+
+搭建max版本时即搭建了executor的多机架构，此时通过tars管理台可看到有executor进程在跑，且与node进程不是同一个
+
+![](../../../images/tutorial/expand_executor0.png)
+
+#### 扩容操作
+
+能够扩展更多的executor
+
+``` bash
+# 在Max节点已经搭建完成后，编辑config-node-expand-example.toml，新增更多的executor
+cd tools/BcosBuilder/max/
+vim config-node-expand-example.toml
+```
+
+修改文件中的`executor_deploy_ip`，新增更多需要部署executor的机器ip
+
+> 一台机器（一个IP）只能部署一个executor
+
+``` toml
+# 如原先为
+executor_deploy_ip=["172.25.0.3"]
+# 可新增更多
+executor_deploy_ip=["172.25.0.3","172.25.0.4","172.25.0.5"]  # 每个ip下都会部署一个该node的executor
+```
+
+调用脚本进行扩容
+
+``` bash
+python3 build_chain.py chain -c config-node-expand-example.toml -o expand -t executor
+```
+
+成功后，可在tars的管理台页面看到更多executor处在Active状态
+
+![](../../../images/tutorial/expand_executor1.png)
+
+#### 管理操作
+
+在扩容后，可通过tars管理台对executor进行停止或重启的操作。executor停止或重启后，无需重启相应的区块链节点进程，节点会自动与所有在线的executor重建交易执行上下文。交易执行器的多机部署，提升了交易执行性能的同时，也提高了系统的稳定性。
+
+![](../../../images/tutorial/expand_executor2.png)
