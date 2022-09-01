@@ -28,8 +28,10 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
 
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
-# 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
+# 获取控制台下载脚本
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0/download_console.sh 
+# 执行下载脚本
+bash download_console.sh
 ```
 
 ```eval_rst
@@ -37,7 +39,31 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/dow
     - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
-目录结构如下：
+#### 1.1 获取其他Solidity版本的控制台
+
+由于目前控制台默认的Solc编译器版本是0.8.11，为了更加方便地使用其他版本的Solidity合约，可以通过以下命令下载(目前支持0.4.25，0.5.2，0.6.10，0.8.11)：
+
+```shell
+# 下载0.4.25版本的控制台
+bash download_console.sh -v 0.4 # 以此类推，支持指定版本(0.4,0.5,0.6,0.8)
+```
+
+#### 1.2 已经配置好控制台，手动切换Solidity版本
+
+当用户已经配置好控制台之后，有需求切换到其他版本的Solidity版本，可以使用 `download_console.sh` 脚本下载对应版本的SolcJ jar包，手动替换Solidity版本，可以通过以下命令下载（目前支持0.4.25，0.5.2，0.6.10），默认Solidity版本为0.8.11：
+
+```shell
+# 下载0.6.10版本的solcJ jar包
+bash download_console.sh -s 0.6 # 以此类推，支持指定版本(0.4,0.5,0.6)
+# 在执行脚本的所在目录下，会生成两个新文件，其他版本类似
+ls solcJ*
+solcJ-0.6.10.1.jar solcJ-0.6.tar.gz
+# 将 solcJ-0.6.10.1.jar 手动替换控制台所在文件夹的lib目录下的solcJ文件。这里举例控制台目录就在本目录下：
+mv ./console/lib/solcJ-0.8.11.1.jar . && cp solcJ-0.6.10.1.jar ./console/lib/
+# 至此，控制台的默认Solidity版本就切换到0.6.10版本
+```
+
+配置完毕的控制台目录结构如下：
 
 ```shell
 │── apps # 控制台jar包目录
@@ -72,7 +98,8 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/dow
 ```toml
 [cryptoMaterial]
 
-certPath = "conf"                           # The certification path  
+certPath = "conf"                           # The certification path
+disableSsl = "false"                        # Communication with nodes without SSL
 useSMCrypto = "false"                       # RPC SM crypto type
 
 # The following configurations take the certPath by default if commented
@@ -93,7 +120,6 @@ defaultGroup="group0"                            # Console default group to conn
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
 
 [account]
-authCheck = "false"
 keyStoreDir = "account"         # The directory to load/store the account file, default is "account"
 # accountFilePath = ""          # The account file path (default load from the path specified by the keyStoreDir)
 accountFileFormat = "pem"       # The storage format of account file (Default is "pem", "p12" as an option)
@@ -214,6 +240,8 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和wbc-liquid合约文件编译为Java合约文件。
 
 当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
+
+**注意：** Solidity合约生成工具与Solc版本号直接相关，对应的Solidity版本的合约请使用具有对应Solc的控制台。请参考上文中 1.1获取其他Solidity版本的控制台。
 
 ### Solidity合约使用
 

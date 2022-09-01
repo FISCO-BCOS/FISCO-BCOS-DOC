@@ -16,8 +16,6 @@ org.fisco.bcos.sdk.v3.codec.scale
 org.fisco.bcos.sdk.v3.codec.scale.reader
 org.fisco.bcos.sdk.v3.codec.scale.writer
 org.fisco.bcos.sdk.v3.codec.wrapper
-org.fisco.bcos.sdk.v3.codegen
-org.fisco.bcos.sdk.v3.codegen.exceptions
 org.fisco.bcos.sdk.v3.config
 org.fisco.bcos.sdk.v3.config.exceptions
 org.fisco.bcos.sdk.v3.config.model
@@ -38,6 +36,7 @@ org.fisco.bcos.sdk.v3.crypto.hash
 org.fisco.bcos.sdk.v3.crypto.keypair
 org.fisco.bcos.sdk.v3.crypto.keystore
 org.fisco.bcos.sdk.v3.crypto.signature
+org.fisco.bcos.sdk.v3.crypto.vrf
 org.fisco.bcos.sdk.v3.eventsub
 org.fisco.bcos.sdk.v3.model
 org.fisco.bcos.sdk.v3.model.callback

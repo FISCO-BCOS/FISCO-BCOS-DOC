@@ -458,7 +458,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc4")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0")
     compile spring
 }
 ```
@@ -993,7 +993,7 @@ asset account Bob, value 100000
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000
-transfer success => from_asset: Alice, to_asset: Bob, amount: 50000
+ transfer success => from_asset: Alice, to_asset: Bob, amount: 50000
 $ bash asset_run.sh query Alice
 account Alice, value 50000
 $ bash asset_run.sh query Bob
