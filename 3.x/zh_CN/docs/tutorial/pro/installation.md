@@ -87,9 +87,9 @@ python3 build_chain.py create-subnet -n tars-network -s 172.25.0.0/16
 
 # Note: 这里需要保证docker服务处于启动状态
 # linux系统：进入到docker配置文件路径(macOS系统可跳过本步骤)
-cd docker/bridge/linux/framework
+cd ../docker/bridge/linux/framework
 # macOS系统：进入到docker配置文件路径(linux系统可跳过本步骤)
-cd docker/bridge/mac/framework
+cd ../docker/bridge/mac/framework
 
 # 配置MYSQL密码，这里假设密码设置为FISCO
 # linux系统(macOS系统可跳过本步骤)
@@ -609,7 +609,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+Welcome to FISCO BCOS console(3.0.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -622,7 +622,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =============================================================================================
-[group0]: />
 ```
 
 - 用控制台获取信息

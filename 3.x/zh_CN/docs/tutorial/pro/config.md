@@ -111,14 +111,14 @@ FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，E
 
 ```ini
 [tx]
-gas_limit = 300000000
+gas_limit=3000000000
 ```
 
 #### 2.1.3 数据兼容性配置
 
-FISCO BCOS v3.0.0-rc4设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
+FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
 
-- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0-rc4`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
+- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
 
 #### 2.1.4 执行模块配置
 
@@ -126,6 +126,7 @@ FISCO BCOS v3.0.0-rc4设计并实现了兼容性框架，可支持数据版本�
 
 - `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选希望不可动态调整，默认为`false`;
 - `[executor].is_auth_check`: 权限控制的配置开关，`true`表明开启权限控制，`false`表明关闭权限控制，该配置选项不可动态调整，默认关闭权限控制功能;
+- `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选希望不可动态调整，默认为`false`;
 - `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中。
 
 ### 2.2 节点配置
@@ -144,9 +145,9 @@ FISCO BCOS v3.0.0-rc4设计并实现了兼容性框架，可支持数据版本�
 
 ```ini
 [chain]
-sm_crypto = false
-group_id = group0
-chain_id = chain0
+sm_crypto=false
+group_id=group0
+chain_id=chain0
 ```
 
 #### 2.2.2 服务配置选项
@@ -155,13 +156,11 @@ chain_id = chain0
 
 - `[service].rpc`: RPC服务名;
 - `[service].gateway`: Gateway服务名;
-- `[service].node_name`: 节点服务名。
 
 ```ini
 [service]
 rpc = chain0.agencyABcosRpcService
 gateway = chain0.agencyABcosGatewayService
-node_name = agencyAgroup0node0BcosNodeService
 ```
 
 #### 2.2.3 落盘加密配置选项
@@ -180,7 +179,7 @@ node_name = agencyAgroup0node0BcosNodeService
 
 ```ini
 [consensus]
-min_seal_time = 500
+min_seal_time=500
 ```
 
 #### 2.2.5 存储配置选项
@@ -188,11 +187,18 @@ min_seal_time = 500
 存储配置选项位于`[storage]`中，主要用于配置链上数据路径：
 
 - `[storage].data_path`: 账本数据存储路径;
-- `[storage].enable_cache`: 是否开启缓存，默认为`true`。
+- `[storage].enable_cache`: 是否开启缓存，默认为`true`;
+- `[storage].type`: 底层存储数据库类型，默认为RocksDB;
+- `pd_addrs`: Pro为空，max版本字段；
+- `key_page_size`: key_page存储中每个page的size，默认为10240k。
 
 ```ini
 [storage]
-data_path = data
+    data_path=data
+    enable_cache=true
+    type=RocksDB
+    pd_addrs=
+    key_page_size=10240
 ```
 
 #### 2.2.6 交易池配置选项
@@ -206,14 +212,14 @@ data_path = data
 
 ```ini
 [txpool]
-; size of the txpool, default is 15000
-limit = 15000
-; txs notification threads num, default is 2
-notify_worker_num = 2
-; txs verification threads num, default is the number of cpu cores
-;verify_worker_num = 2
-; txs expiration time, in seconds, default is 10 minutes
-txs_expiration_time = 600
+    ; size of the txpool, default is 15000
+    limit=15000
+    ; txs notification threads num, default is 2
+    notify_worker_num=2
+    ; txs verification threads num, default is the number of CPU cores
+    verify_worker_num=2
+    ; txs expiration time, in seconds, default is 10 minutes
+    txs_expiration_time = 600
 ```
 
 #### 2.2.7 日志配置选项
@@ -249,8 +255,7 @@ RPC/网关服务搭建请参考[这里](./installation.html)，其主要包括�
 - `[p2p].sm_ssl`: 节点之间、SDK与RPC服务间是否使用国密SSL连接，默认为`false`;
 - `[p2p].nodes_path`: 网关连接文件`nodes.json`所在目录，默认为当前目录;
 - `[p2p].nodes_file`: 网关连接信息文件`nodes.json`文件名，默认为`nodes.json`;
-- `[p2p].thread_count`: RPC/网关网络处理线程数，默认为4;
-- `[p2p].uuid`: 网关的uuid
+- `[p2p].thread_count`: RPC/网关网络处理线程数，默认为4.
 
 ```ini
 [p2p]
@@ -261,7 +266,6 @@ sm_ssl = false
 nodes_path = ./
 nodes_file = nodes.json
 thread_count = 4
-uuid = d25207b0-9c6a-375c-b757-3d60c2b1ad45
 ```
 
 ### 3.2 RPC/网关服务配置

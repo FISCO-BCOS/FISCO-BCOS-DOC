@@ -145,7 +145,7 @@ python3 build_chain.py download_binary
 cd ~/fisco/BcosBuilder/max
 
 # 从conf目录拷贝配置
-cp conf/config-deploy-example.toml config.toml
+cp conf/config-deploy-example.toml conf/config.toml
 ```
 
 此时拷贝的`config.toml`为整个`BcosBuilder/max`使用的配置文件，配置详情请参考链接：[配置介绍](./max_builder.md)。
@@ -340,7 +340,7 @@ python3 build_chain.py chain -o deploy -t node
 * block_tx_count_limit: 1000
 * leader_period: 1
 * gas_limit: 3000000000
-* compatibility_version: 3.0.0-rc4
+* compatibility_version: 3.0.0
 * generate_genesis_config_nodeid success
 * store genesis config for chain0.group0
 	 path: generated/chain0/group0/config.genesis
@@ -429,7 +429,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::

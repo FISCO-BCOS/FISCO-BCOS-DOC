@@ -433,14 +433,9 @@ $ unzip asset-app-3.0-liquid.zip && mv asset-app-demo-main-liquid  asset-app-liq
 ```groovy
 repositories {
     mavenCentral()
-    maven {
-        allowInsecureProtocol = true
-        url "http://maven.aliyun.com/nexus/content/groups/public/"
-    }
-    maven {
-        allowInsecureProtocol = true
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://oss.sonatype.org/service/local/staging/deploy/maven2" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 ```
 
@@ -999,20 +994,20 @@ Register account successfully => account: Bob, value: 100000
 
 ```shell
 $ bash asset_run.sh query Alice
-account Alice, value 100000
+asset account Alice, value 100000
 $ bash asset_run.sh query Bob
-account Bob, value 100000
+asset account Bob, value 100000
 ```
 
 - 资产转移
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000
-Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000
+Transfer success => from_account: Alice, to_account: Bob, amount: 50000
 $ bash asset_run.sh query Alice
 account Alice, value 50000
 $ bash asset_run.sh query Bob
-account Bob, value 150000
+asset account Bob,, value 150000
 ```
 
 **总结：** 至此，我们通过WBC-Liquid合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的WBC-Liquid应用。
