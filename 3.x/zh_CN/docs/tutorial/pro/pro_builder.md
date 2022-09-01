@@ -63,7 +63,7 @@ gateway_sm_ssl=false
 
 ```eval_rst
 .. note::
-   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
+   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
 ```
 
 RPC服务的配置项位于`[[agency]].[agency.rpc]`中，一个机构可部署一个RPC服务，一条链可包含多个机构，主要配置项包括：
@@ -169,8 +169,8 @@ consensus_type = "pbft"
 # transaction gas limit
 gas_limit = "3000000000"
 # compatible version, can be dynamically upgraded through setSystemConfig
-# the default is 3.0.0-rc4
-compatibility_version="3.0.0-rc4"
+# the default is 3.0.0
+compatibility_version="3.0.0"
 ```
 
 **区块链节点服务配置项：部署配置**
@@ -350,7 +350,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -t TYPE, --type TYPE  [Optional] Specify the source of the download, support cdn,git now, default type is git
   -v VERSION, --version VERSION
-                        [Optional] Specify the version of the binary, default is v3.0.0-rc4
+                        [Optional] Specify the version of the binary, default is v3.0.0
   -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
 
 ----------- help for subcommand 'chain' -----------
@@ -436,7 +436,7 @@ optional arguments:
 
 ## 3. tars docker-compose配置介绍
 
-FISCO BCOS Pro版本区块链基于[tars](https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md)构建和部署，为简化tars部署，`BcosBuilder`提供了tars的docker-compose配置。
+FISCO BCOS Pro版本区块链基于[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md)构建和部署，为简化tars部署，`BcosBuilder`提供了tars的docker-compose配置。
 
 ### 3.1 桥接组网的tars docker-compose配置
 

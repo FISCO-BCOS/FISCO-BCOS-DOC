@@ -71,7 +71,7 @@ gateway_sm_ssl=false
 
 ```eval_rst
 .. note::
-   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
+   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
 ```
 
 RPC服务的配置项位于`[[agency]].[agency.rpc]`中，一个机构可部署一个RPC服务，一条链可包含多个机构，主要配置项包括：
@@ -154,7 +154,7 @@ FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组
 - `[[group]].vm_type`: 区块链节点运行的虚拟机类型，目前支持`evm`和`wasm`两种类型，且一个群组仅可运行一种类型的虚拟机，不可以部分节点运行EVM虚拟机、部分节点运行WASM虚拟机;
 - `[[group]].auth_check`: 是否开启权限治理模式，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md);
 - `[[group]].init_auth_address`: 开启权限治理时，指定的初始化治理委员账号地址，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md);
-- `[[group]].compatibility_version`: 数据兼容版本号，默认为`3.0.0-rc4`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
+- `[[group]].compatibility_version`: 数据兼容版本号，默认为`3.0.0`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
 
 ```ini
 [[group]]

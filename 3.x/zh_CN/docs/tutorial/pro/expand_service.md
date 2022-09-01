@@ -17,7 +17,7 @@
 
 ```eval_rst
 .. note::
-   实际生产环境中tarsnode的安装请参考 `tars安装部署 <https://newdoc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
+   实际生产环境中tarsnode的安装请参考 `tars安装部署 <https://doc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
 ```
 
 ```shell

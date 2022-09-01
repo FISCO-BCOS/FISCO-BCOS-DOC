@@ -9,7 +9,7 @@ FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 ```eval_rst
 .. note::
    - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
-   - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
+   - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
    - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
 ```
 
@@ -41,7 +41,7 @@ brew install curl docker docker-compose python3 wget
 ```eval_rst
 .. note::
    - 部署工具 ``BcosBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
-   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -49,17 +49,17 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosBuilder && pip3 install -r requirements.txt
 ```
 ## 3. 安装、启动并配置tars服务
 
-Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服务主要包括`TarsFramework`和`TarsNode`，关于tars服务更详细的介绍请参考[这里](https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md).
+Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服务主要包括`TarsFramework`和`TarsNode`，关于tars服务更详细的介绍请参考[这里](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md).
 
 **`BcosBuilder`提供了`bridge`和`host`两种网络模式的tars docker配置，单机体验版推荐使用`bridge`网络模式的tars docker配置，生产环境推荐使用`host`网络模式的tars docker配置**。
 
@@ -425,7 +425,7 @@ python3 build_chain.py chain -o deploy -t node
 * block_tx_count_limit: 1000
 * leader_period: 1
 * gas_limit: 3000000000
-* compatibility_version: 3.0.0-rc4
+* compatibility_version: 3.0.0
 * generate_genesis_config_nodeid success
 * store genesis config for chain0.group0
 	 path: generated/chain0/group0/config.genesis
@@ -574,7 +574,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::

@@ -41,6 +41,8 @@ FISCO BCOS 3.0版本采用 **微服务模块化** 设计架构，总体上系统
 
 - **专业Pro版**：包括RPC、Gateway服务和多个区块链节点Node服务组成，多个Node服务可构成一个群组，所有Node共用接入层服务，接入层的服务可平行扩展，适用于容量可控（T级以内）的生产环境。
 
+- **大容量Max版**：由各个层的所有服务构成，每个服务都可独立扩展，存储采用分布式存储TiKV，管理采用Tars-Framwork服务。它适用于海量交易上链，需要支持大量数据落盘存储的场景。
+
 ----
 
 两阶段并行拜占庭共识
@@ -106,20 +108,71 @@ Max版本则通过接入能够支持水平扩展的分布式数据库支撑大�
 
 **存储层的设计可参考** `这里 <../design/storage.html>`_
 
-v3.0.0-rc1
+
+v3.0.0
 ------------------
 
 .. admonition:: FISCO BCOS 3.x Releases
 
-     - `FISCO BCOS v3.0.0-rc1 <./3_0_0_rc1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc1>`_]
+     - `FISCO BCOS v3.0.0 <./3_0_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0>`_]
      
-     - v3.0.0-rc1不包括 ``FISCO BCOS Max`` 版本，Max版本的FISCO BCOS会在后续版本中推出
+
+.. admonition:: 查看节点和数据版本
+
+    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
+    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
+    - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
+
 
 .. toctree::
    :hidden:
    :maxdepth: 0
 
-   3_0_0_rc1.md
+   3_0_0.md
+
+v3.0.0-rc4
+------------------
+
+.. admonition:: FISCO BCOS 3.x Releases
+
+     - `FISCO BCOS v3.0.0-rc4 <./3_0_0_rc4.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc4>`_]
+     
+
+.. admonition:: 查看节点和数据版本
+
+    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
+    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
+    - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   3_0_0_rc4.md
+
+
+v3.0.0-rc3
+------------------
+
+.. admonition:: FISCO BCOS 3.x Releases
+
+     - `FISCO BCOS v3.0.0-rc3 <./3_0_0_rc3.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc3>`_]
+     
+     - v3.0.0-rc3不包括 ``FISCO BCOS Max`` 版本，Max版本的FISCO BCOS会在后续版本中推出
+     
+
+.. admonition:: 查看节点和数据版本
+
+    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
+    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   3_0_0_rc3.md
 
 
 v3.0.0-rc2
@@ -145,45 +198,18 @@ v3.0.0-rc2
    3_0_0_rc2.md
 
 
-v3.0.0-rc3
+
+v3.0.0-rc1
 ------------------
 
 .. admonition:: FISCO BCOS 3.x Releases
 
-     - `FISCO BCOS v3.0.0-rc3 <./3_0_0_rc3.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc3>`_]
+     - `FISCO BCOS v3.0.0-rc1 <./3_0_0_rc1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc1>`_]
      
-     - v3.0.0-rc3不包括 ``FISCO BCOS Max`` 版本，Max版本的FISCO BCOS会在后续版本中推出
-     
-
-.. admonition:: 查看节点和数据版本
-
-    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
-    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
-
+     - v3.0.0-rc1不包括 ``FISCO BCOS Max`` 版本，Max版本的FISCO BCOS会在后续版本中推出
 
 .. toctree::
    :hidden:
    :maxdepth: 0
 
-   3_0_0_rc3.md
-
-v3.0.0-rc4
-------------------
-
-.. admonition:: FISCO BCOS 3.x Releases
-
-     - `FISCO BCOS v3.0.0-rc4 <./3_0_0_rc4.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.0.0-rc4>`_]
-     
-
-.. admonition:: 查看节点和数据版本
-
-    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
-    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
-    - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
-
-
-.. toctree::
-   :hidden:
-   :maxdepth: 0
-
-   3_0_0_rc4.md
+   3_0_0_rc1.md

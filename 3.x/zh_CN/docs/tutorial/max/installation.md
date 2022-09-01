@@ -4,7 +4,7 @@
 
 ------------
 
-为了能够支撑海量交易上链场景，v3.0.0-rc4推出了Max版本FISCO BCOS，Max版本FISCO BCOS旨在提供**海量存储服务、高性能可扩展的执行模块**、**高可用的故障恢复机制**。
+为了能够支撑海量交易上链场景，v3.0.0推出了Max版本FISCO BCOS，Max版本FISCO BCOS旨在提供**海量存储服务、高性能可扩展的执行模块**、**高可用的故障恢复机制**。
 Max版FISCO BCOS节点采用分布式存储TiKV，执行模块独立成服务，存储和执行均可横向扩展，且支持自动化主备恢复。
 
 本章通过单机搭建Max版本单节点FISCO BCOS联盟链，帮助用户掌握Max版本FISCO BCOS区块链的部署流程。请参考[这里](../../quick_start/hardware_requirements.md)使用支持的**硬件和平台**进行操作。
@@ -13,7 +13,7 @@ Max版FISCO BCOS节点采用分布式存储TiKV，执行模块独立成服务，
 ```eval_rst
 .. note::
    - Max版本FISCO BCOS使用 ``BcosBuilder/max`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./max_builder.html>`_ 
-   - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Max版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
+   - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Max版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
    - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
    - 搭建Max版本FISCO BCOS需先部署TiKV集群，TiKV集群的部署请参考 `这里 <https://tikv.org/docs/5.1/deploy/install/install/>`_
 ```
@@ -46,7 +46,7 @@ brew install curl docker docker-compose python3 wget
 ```eval_rst
 .. note::
    - 部署工具 ``BcosBuilder`` 配置和使用请参考 `这里 <./max_builder.html>`_
-   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -54,10 +54,10 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosBuilder && pip3 install -r requirements.txt

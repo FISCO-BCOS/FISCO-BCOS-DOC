@@ -59,9 +59,9 @@ gas_limit = 3000000000
 
 ### 1.3 数据兼容性配置
 
-FISCO BCOS v3.0.0-rc4设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
+FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
 
-- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0-rc4`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
+- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
 
 ### 1.4 执行模块配置
 
