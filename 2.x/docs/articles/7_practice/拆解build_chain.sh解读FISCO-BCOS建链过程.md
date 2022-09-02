@@ -47,7 +47,7 @@ Generating CA key...
 生成CA秘钥对应脚本1677行，在脚本内的运行流程就是找到${output_dir}下的cert目录将CA证书存放进去，${output_dir}在上面定义的是nodes目录，所以我们进入后就可以看见我们的CA证书，具体CA证书的生成会有专栏来讲解。
 
 ![prepareCA代码截图](https://user-images.githubusercontent.com/111106471/184881843-f81179d6-945f-4e2e-b64c-6b1e86a3cd50.png)
-![ouput_dir截图](https://user-images.githubusercontent.com/111106471/184881884-f3ff536b-0d61-46de-af3b-832f2982b129.png)
+![output_dir截图](https://user-images.githubusercontent.com/111106471/184881884-f3ff536b-0d61-46de-af3b-832f2982b129.png)
 ![nodes目录截图](https://user-images.githubusercontent.com/111106471/184881899-d5980b81-7f54-487b-b280-5cb435df7c36.png)
 
 
