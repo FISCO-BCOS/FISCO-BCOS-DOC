@@ -76,7 +76,7 @@ templates_path = ['../_templates']
 master_doc = 'index'
 
 # General information about the project.
-project = u'FISCO BCOS'
+project = u'FISCO BCOS v3'
 copyright = u'© 2022. All rights reserved.'
 author = u'fisco-bcos-dev'
 
