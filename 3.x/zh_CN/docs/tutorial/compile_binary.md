@@ -31,7 +31,10 @@ FSICO-BCOS使用通用`CMake`构建系统生成特定平台的构建文件，这
 推荐使用Ubuntu 22.04版本。
 
 ```shell
-sudo apt install -y cmake g++ git curl build-essential autoconf texinfo cmake flex bison libzstd-dev libpython3-dev python-dev wget libgmp-dev
+sudo apt update
+sudo apt install -y wget python3-dev git curl zip unzip tar
+sudo apt install -y --no-install-recommends clang make build-essential cmake libssl-dev zlib1g-dev ca-certificates libgmp-dev flex bison patch libzstd-dev ninja-build pkg-config
+
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -43,10 +46,10 @@ source $HOME/.cargo/env
 推荐使用CentOS7以上版本。
 
 ```shell
-sudo yum install -y epel-release centos-release-scl flex bison patch gmp-static
-sudo yum install -y devtoolset-10 devtoolset-11 llvm-toolset-7 rh-perl530-perl cmake3 zlib-devel ccache lcov python-devel python3-devel
-sudo yum install -y https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
-sudo yum install -y git
+sudo yum install -y -q epel-release centos-release-scl flex bison patch gmp-static
+sudo yum install -y -q devtoolset-10 devtoolset-11 llvm-toolset-7 rh-perl530-perl cmake3 zlib-devel ccache lcov python-devel python3-devel
+sudo yum reinstall -y -q https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
+sudo yum install -y -q git
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -96,6 +99,7 @@ cd FISCO-BCOS
 
 - **使用GitHub镜像（推荐）**
   
+
 执行如下命令使用`https://ghproxy.com/https://github.com/`替代`https://github.com/`加速依赖下载：
 
 ```shell
@@ -119,7 +123,7 @@ export X_VCPKG_ASSET_SOURCES=x-azurl,http://106.15.181.5/
 
 ### 3.1 Ubuntu
 
-**要求版本不小于Ubuntu 18.04。**
+**推荐使用Ubuntu 22.04。**
 
 ```shell
 # 进入源码目录
@@ -127,7 +131,7 @@ cd ~/fisco/FISCO-BCOS
 
 # 创建编译目录
 mkdir -p build && cd build
-cmake -DBUILD_STATIC=ON ..
+cmake -DBUILD_STATIC=ON .. || cat *.log
 
 # 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
 # 若为网络原因可按照上文提示配置vcpkg代理
@@ -136,7 +140,7 @@ cmake -DBUILD_STATIC=ON ..
 make -j4
 
 # 生成tgz包
-rm -rf *.tgz && make tar
+rm -rf fisco-bcos-tars-service/*.tgz && make tar
 ```
 
 ### 3.2 CentOS
@@ -146,7 +150,7 @@ rm -rf *.tgz && make tar
 #### linux x86_64
 
 ```shell
-# 使用gcc11
+# 使用gcc10
 source /opt/rh/devtoolset-10/enable
 source /opt/rh/rh-perl530/enable
 export LIBCLANG_PATH=/opt/rh/llvm-toolset-7/root/lib64/
@@ -155,7 +159,7 @@ source /opt/rh/llvm-toolset-7/enable
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
-cmake3 -DBUILD_STATIC=ON ..
+cmake3 -DBUILD_STATIC=ON .. || cat *.log
 
 # 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
 # 若为网络原因可按照上文提示配置vcpkg代理
@@ -163,7 +167,7 @@ cmake3 -DBUILD_STATIC=ON ..
 # 高性能机器可添加-j4使用4核加速编译
 make -j4
 # 生成tgz包
-rm -rf *.tgz && make tar
+rm -rf fisco-bcos-tars-service/*.tgz && make tar
 ```
 
 #### aarch64
@@ -180,7 +184,7 @@ source /opt/rh/llvm-toolset-7.0/enable
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
-cmake3 -DBUILD_STATIC=ON ..
+cmake3 -DBUILD_STATIC=ON .. || cat *.log
 
 # 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
 # 若为网络原因可按照上文提示配置vcpkg代理
@@ -188,7 +192,7 @@ cmake3 -DBUILD_STATIC=ON ..
 # 高性能机器可添加-j4使用4核加速编译
 make -j4
 # 生成tgz包
-rm -rf *.tgz && make tar
+rm -rf fisco-bcos-tars-service/*.tgz && make tar
 ```
 
 ### 3.3 macOS
@@ -199,7 +203,7 @@ rm -rf *.tgz && make tar
 # 进入源码编译目录
 cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
-cmake -DBUILD_STATIC=ON ..
+cmake -DBUILD_STATIC=ON ..|| cat *.log
 
 # 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
 # 若为网络原因可按照上文提示配置vcpkg代理
@@ -211,5 +215,5 @@ cmake -DBUILD_STATIC=ON ..
 make -j4
 
 # 生成tgz包
-rm -rf *.tgz && make tar
+rm -rf fisco-bcos-tars-service/*.tgz && make tar
 ```
