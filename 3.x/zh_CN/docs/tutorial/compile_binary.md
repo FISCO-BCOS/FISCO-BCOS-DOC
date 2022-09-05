@@ -46,10 +46,12 @@ source $HOME/.cargo/env
 推荐使用CentOS7以上版本。
 
 ```shell
-sudo yum install -y -q epel-release centos-release-scl flex bison patch gmp-static
-sudo yum install -y -q devtoolset-10 devtoolset-11 llvm-toolset-7 rh-perl530-perl cmake3 zlib-devel ccache lcov python-devel python3-devel
-sudo yum reinstall -y -q https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
-sudo yum install -y -q git
+sudo yum install -y epel-release centos-release-scl flex bison patch gmp-static
+sudo yum install -y devtoolset-10 devtoolset-11 llvm-toolset-7 rh-perl530-perl cmake3 zlib-devel ccache lcov python-devel python3-devel
+
+# 更新git至2.17以上
+sudo yum reinstall -y https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
+sudo yum install -y git 
 
 # 安装rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
