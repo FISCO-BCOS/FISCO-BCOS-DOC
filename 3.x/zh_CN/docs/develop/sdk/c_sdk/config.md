@@ -4,7 +4,7 @@
 
 ----------
 
-`bcos-c-sdk`支持配置对象和配置文件两种方式的初始化, 接口分别为:
+`bcos-c-sdk`支持配置对象和配置文件两种方式的初始化, 接口:
 
 - `void* bcos_sdk_create(struct bcos_sdk_c_config* config)`
 - `void* bcos_sdk_create_by_config_file(const char* config_file)`
