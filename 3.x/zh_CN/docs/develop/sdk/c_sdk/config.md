@@ -1,19 +1,24 @@
-# 配置介绍
+# 配置简介
 
 标签：``c-sdk`` ``config``
 
 ----------
 
-`bcos-c-sdk`支持配置对象和配置文件两种方式的初始化, 接口:
+`bcos-c-sdk`支持配置对象和配置文件两种方式的初始化:
 
-- `void* bcos_sdk_create(struct bcos_sdk_c_config* config)`
-- `void* bcos_sdk_create_by_config_file(const char* config_file)`
+- 配置对象初始化:
+  - `void* bcos_sdk_create(struct bcos_sdk_c_config* config)`
+- 配置文件初始化:
+  - `void* bcos_sdk_create_by_config_file(const char* config_file)`
 
-本节内容介绍`struct bcos_sdk_c_config`对象以及`config_file`配置文件的格式
+本节内容介绍配置对象`struct bcos_sdk_c_config`和配置文件`config_file`。
 
 ## 配置对象
 
-源码定义位置: [github链接](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/main/bcos-c-sdk/bcos_sdk_c_common.h#L70)、[gitee链接](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/main/bcos-c-sdk/bcos_sdk_c_common.h#L70)
+源码:
+
+- [github链接](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/bcos-c-sdk/bcos_sdk_c_common.h#L70)
+- [gitee链接](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/bcos-c-sdk/bcos_sdk_c_common.h#L70)
 
 ```shell
 struct bcos_sdk_c_config
@@ -114,7 +119,10 @@ struct bcos_sdk_c_sm_cert_config
 
 配置文件中的字段与配置对象中的字段对应
 
-[示例配置文件](https://github.com/FISCO-BCOS/bcos-c-sdk/tree/main/sample/config)
+示例配置:
+
+- [github](https://github.com/FISCO-BCOS/bcos-c-sdk/tree/v3.0.1/sample/config)
+- [gitee](https://gitee.com/FISCO-BCOS/bcos-c-sdk/tree/v3.0.1/sample/config)
 
 - `ssl`连接配置文件
 
