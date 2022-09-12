@@ -12,7 +12,8 @@
 
    env.md
    compile.md
-   api.md
+   dylibs.md
    config.md
+   api.md
    dev.md
 ```
