@@ -25,7 +25,6 @@ FISCO BCOS 3.0版本的多语言SDK设计采用**分层架构**实现，从下�
 
    java_sdk/index.md
    c_sdk/index.md
-   cpp_sdk/index.md
    cert_config.md
 ```
 
