@@ -117,14 +117,11 @@ struct bcos_sdk_c_sm_cert_config
 
 ## 配置文件
 
-配置文件中的字段与配置对象中的字段对应
-
-示例配置:
-
-- [github](https://github.com/FISCO-BCOS/bcos-c-sdk/tree/v3.0.1/sample/config)
-- [gitee](https://gitee.com/FISCO-BCOS/bcos-c-sdk/tree/v3.0.1/sample/config)
+配置文件中的字段与配置对象中的字段对应.
 
 - `ssl`连接配置文件
+
+示例配置: [github](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/config/config_sample.ini) [gitee](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/config/config_sample.ini)
 
 ```shell
 [common]
@@ -155,6 +152,8 @@ struct bcos_sdk_c_sm_cert_config
 ```
 
 - 国密`ssl`连接配置文件
+
+示例配置: [github](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/config/sm_config_sample.ini) [gitee](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/config/sm_config_sample.ini)
 
 ```shell
 [common]
