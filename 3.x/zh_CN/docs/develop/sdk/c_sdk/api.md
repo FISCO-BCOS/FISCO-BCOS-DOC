@@ -6,15 +6,15 @@
 
 本章节介绍`c-sdk`的`API`列表，模块列表:
 
-- [基础操作](id2)
-- [错误处理](id3)
-- [RPC](rpc)
-- [AMOP](amop)
-- [EventSub](eventsub)
-- [工具类](id4)
-  - [KeyPair](keypair)
-  - [ABI编解码](abi)
-  - [交易构造](id5)
+- [基础操作](../c_sdk/api.html#id2)
+- [错误处理](../c_sdk/api.html#id3)
+- [RPC](../c_sdk/api.html#rpc)
+- [AMOP](../c_sdk/api.html#amop)
+- [EventSub](../c_sdk/api.html#eventsub)
+- [工具类](../c_sdk/api.html#id4)
+  - [KeyPair](../c_sdk/api.html#keypair)
+  - [ABI编解码](../c_sdk/api.html#abi)
+  - [交易构造](../c_sdk/api.html#id5)
 
 ## 1. 基础操作
 
