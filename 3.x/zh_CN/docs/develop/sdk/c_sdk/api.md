@@ -654,10 +654,10 @@
   - 原型:
     - `void* bcos_sdk_create_keypair_by_prikey(int crypto_type, void* private_key, unsigned length)`
   - 功能:
-    - 根据私钥创建`KeyPair`对象
+    - 加载私钥创建`KeyPair`对象
   - 参数:
-    - crypto_type: 类型
-    - private_key: 二进制私钥数组
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - private_key: 私钥，字节数组格式
     - length: 数组长度
   - 返回:
     - `KeyPair`对象指针
@@ -668,10 +668,10 @@
   - 原型:
     - `void* bcos_sdk_create_keypair_by_hex_prikey(int crypto_type, const char* private_key)`
   - 功能:
-    - 根据私钥创建`KeyPair`对象
+    - 加载私钥创建`KeyPair`对象
   - 参数:
-    - crypto_type: 类型
-    - private_key: 十六进制c风格字符串私钥
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - private_key: 私钥，十六进制c风格字符串格式
   - 返回:
     - `KeyPair`对象指针
     - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
@@ -695,6 +695,8 @@
     - key_pair: `KeyPair`对象指针
   - 返回:
     - 账户地址，十六进制c风格字符串
+  - 注意:
+    - 返回的字符串不使用时使用`free`释放，以免造成内存泄露
 - `bcos_sdk_get_keypair_public_key`
   - 原型:
     - `const char* bcos_sdk_get_keypair_public_key(void* key_pair)`
@@ -704,6 +706,8 @@
     - key_pair: `KeyPair`对象指针
   - 返回:
     - 公钥，十六进制c风格字符串
+  - 注意:
+    - 返回的字符串不使用时使用`free`释放，以免造成内存泄露
 - `bcos_sdk_get_keypair_private_key`
   - 原型:
     - `const char* bcos_sdk_get_keypair_private_key(void* key_pair)`
@@ -713,6 +717,8 @@
     - key_pair: `KeyPair`对象指针
   - 返回:
     - 私钥，十六进制c风格字符串
+  - 注意:
+    - 返回的字符串不使用时使用`free`释放，以免造成内存泄露
 - `bcos_sdk_destroy_keypair`
   - 原型:
     - `void bcos_sdk_destroy_keypair(void* key_pair)`
@@ -729,11 +735,11 @@
   - 原型:
     - `const char* bcos_sdk_abi_encode_constructor(const char* abi, const char* bin, const char* params, int crypto_type)`
   - 功能:
-    - 编码构造函数的参数
+    - 编码构造函数参数
   - 参数:
-    - abi: 合约ABI
-    - bin: 合约BIN
-    - params: 构造函数的参数，JSON字符串
+    - abi: 合约ABI，JSON字符串
+    - bin: 合约BIN，十六进制c风格字符串
+    - params: 构造函数参数，JSON字符串
     - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
   - 返回:
     - 编码后的参数，十六进制c风格字符串
@@ -744,9 +750,9 @@
   - 原型:
     - `const char* bcos_sdk_abi_encode_method(const char* abi, const char* method_name, const char* params, int crypto_type)`
   - 功能:
-    - 根据接口名编码参数
+    - 编码接口参数
   - 参数:
-    - abi: 合约ABI
+    - abi: 合约ABI，JSON字符串
     - method_name: 接口名
     - params: 构造函数的参数，JSON字符串
     - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
@@ -760,7 +766,7 @@
   - 功能:
     - 根据methodID编码参数
   - 参数:
-    - abi: 合约ABI
+    - abi: 合约ABI，JSON字符串
     - method_id: methodID
     - params: 构造函数的参数，JSON字符串
     - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
@@ -787,7 +793,7 @@
   - 功能:
     - 根据接口名解析输入参数
   - 参数:
-    - abi: 合约ABI
+    - abi: 合约ABI，JSON字符串
     - method_name: 接口名
     - data: 编码的参数，十六进制c风格字符串
     - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
@@ -803,7 +809,7 @@
   - 参数:
     - abi: 合约ABI
     - method_id: methodID
-    - data: 编码的参数，十六进制c风格字符串
+    - data: ABI编码的参数，十六进制c风格字符串
     - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
   - 返回:
     - 解析后的参数，十六进制c风格JSON字符串
@@ -890,14 +896,14 @@
     - `group_id`: 群组ID
     - `chain_id`: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
     - `to`: 调用的合约地址，部署合约时设置为空字符串""
-    - `data`: ABI编码后的参数，参考【ABI编解码】小节
-    - `abi`: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认传入空字符串""
+    - `data`: ABI编码后的参数，十六进制c风格字符串，参考[ABI编解码](../c_sdk/api.html#abi)
+    - `abi`: 合约的ABI，JSON字符串，可选参数，部署合约时可以将合约的ABI传入，默认传入空字符串""
     - `block_limit`: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
   - 返回:
     - `TransactionData`对象指针
     - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
-    - 创建的`TransactionData`对象需要`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
+    - `TransactionData`对象需要调用`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
 
 - `bcos_sdk_destroy_transaction_data`
   - 原型:
@@ -920,15 +926,15 @@
     - `TransactionData`对象哈希
     - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
-    - **`TransactionData`对象哈希，也是交易的哈希**
+    - **`TransactionData`对象的哈希，也是交易的哈希**
     - 返回的字符串需要调用`free`释放，以免造成内存泄露
 - `bcos_sdk_sign_transaction_data_hash`
   - 原型:
     - `const char* bcos_sdk_sign_transaction_data_hash(void* keypair, const char* transcation_hash)`
   - 功能:
-    - 对交易哈希签名
+    - 交易哈希签名
   - 参数:
-    - keypair:`KeyPair`对象，参考【`KeyPair`签名对象】小节
+    - keypair:`KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
     - transcation_hash: 交易哈希，由`bcos_sdk_calc_transaction_data_hash`接口生成
   - 返回:
     - 交易签名，字符串类型
@@ -943,8 +949,8 @@
     - 创建签名的交易
   - 参数:
     - transaction_data: `TransactionData`对象
-    - signed_transaction_data: 对交易哈希的签名，十六进制c风格字符串，由`bcos_sdk_sign_transaction_data_hash`接口生成
-    - transaction_data_hash: 交易哈希
+    - signed_transaction_data: 交易哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
+    - transaction_data_hash: 交易哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_hash`接口生成
     - attribute: 交易额外属性，待拓展，默认填0即可
   - 返回:
     - 签名的交易，十六进制c风格字符串
@@ -958,16 +964,16 @@
   - 功能:
     - 创建签名的交易
   - 参数:
-    - key_pair: `KeyPair`对象，参考【`KeyPair`签名对象】小节
+    - key_pair: `KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
     - group_id: 群组ID
     - chain_id: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
     - to: 调用的合约地址，部署合约时设置为空字符串""
-    - data: ABI编码后的参数，参考【ABI编解码】小节
+    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
     - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
     - block_limit: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
     - attribute: 交易额外属性，待拓展，默认填0即可
-    - tx_hash: 返回，交易哈希，十六进制c风格字符串
-    - signed_tx: 返回，签名的交易，十六进制c风格字符串
+    - tx_hash: 返回值，交易哈希，十六进制c风格字符串
+    - signed_tx: 返回值，签名的交易，十六进制c风格字符串
   - 返回:
     - 调用`bcos_sdk_get_last_error`接口判断是否成功，0表示成功，其他值表示错误码
   - 注意:
@@ -983,7 +989,7 @@
   - 原型:
     - `void* bcos_sdk_create_transaction_builder_service(void* sdk, const char* group_id)`
   - 功能:
-    - 创建`TransactionBuilderService`对象，构造签名的交易，能够简化构造签名交易的使用姿势，可以对比与`bcos_sdk_create_transaction_data`接口的差异
+    - 创建`TransactionBuilderService`对象，简化构造签名交易的姿势，可以对比`bcos_sdk_create_transaction_data_with_tx_builder_service`与`bcos_sdk_create_transaction_data`接口的差异
   - 参数:
     - sdk: sdk对象指针
     - group_id: 群组ID
@@ -1009,7 +1015,7 @@
   - 参数:
     - tx_builder_service: `TransactionBuilderService`对象指针
     - to: 调用的合约地址，部署合约时设置为空字符串""
-    - data: ABI编码后的参数，参考【ABI编解码】小节
+    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
     - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
   - 返回:
     - `TransactionData`对象指针
@@ -1023,12 +1029,12 @@
     - 创建签名的交易
   - 参数:
     - tx_builder_service: `TransactionBuilderService`对象指针
-    - key_pair: `KeyPair`对象，参考【`KeyPair`签名对象】小节
+    - key_pair: `KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
     - to: 调用的合约地址，部署合约时设置为空字符串""
-    - data: ABI编码后的参数，参考【ABI编解码】小节
+    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
     - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
     - attribute: 交易额外属性，待拓展，默认填0即可
-    - tx_hash: 返回，交易哈希，十六进制c风格字符串
-    - signed_tx: 返回，签名的交易，十六进制c风格字符串
+    - tx_hash: 返回值，交易哈希，十六进制c风格字符串
+    - signed_tx: 返回值，签名的交易，十六进制c风格字符串
   - 注意:
     - 返回的`tx_hash`、`signed_tx`需要调用`free`释放，以免造成内存泄露
