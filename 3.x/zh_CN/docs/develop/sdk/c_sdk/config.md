@@ -13,7 +13,7 @@
 
 本节内容介绍配置对象`struct bcos_sdk_c_config`和配置文件`config_file`。
 
-## 配置对象
+## 配置项
 
 源码:
 
@@ -183,22 +183,15 @@ struct bcos_sdk_c_sm_cert_config
 [peers]
 # supported ipv4 and ipv6 
     node.0=127.0.0.1:20200
-    node.1=127.0.0.1:20201
+    node.1=127.0.0.1:20201 
 ```
 
-## 使用示例
+## 初始化示例
 
-`bcos-c-sdk/sample`目录提供了sdk使用的一些示例:
+- 配置对象方式: `bcos-c-sdk/sample/rpc/rpc.c`
+  - [github链接](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/rpc/rpc.c#L66)
+  - [gitee链接](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/rpc/rpc.c#L66)
 
-```shell
-bcos-c-sdk/sample/
-├── CMakeLists.txt
-├── amop        # amop示例
-├── eventsub    # 合约事件订阅示例
-└── rpc         # rpc示例
-├── config      # 配置文件示例
-```
-
-`bcos-c-sdk/sample/rpc/rpc.c` 通过配置对象方式初始化sdk. [github链接](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/main/sample/rpc/rpc.c#L66)、[gitee链接](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/main/sample/rpc/rpc.c#L66)
-
-`bcos-c-sdk/sample/eventsub/eventsub.c` 通过配置文件初始化sdk. [github链接](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/main/sample/eventsub/eventsub.c#L83)、[gitee链接](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/main/sample/eventsub/eventsub.c#L83)
+- 配置文件: `bcos-c-sdk/sample/eventsub/eventsub.c`
+  - [github链接](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/eventsub/eventsub.c#L83)
+  - [gitee链接](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/eventsub/eventsub.c#L83)
