@@ -6,20 +6,15 @@
 
 本章节介绍`c-sdk`的`API`列表，模块列表:
 
-- 基础操作
-  - 创建、停止、销毁、释放sdk对象，
-- 错误处理
-  - 接口调用状态检查，错误码、错误描述信息获取
-- RPC
-  - RPC接口列表
-- AMOP
-  - AMOP接口列表
-- EventSub
-  - EventSub接口列表
-- 工具类
-  - KeyPair
-  - ABI编解码
-  - 交易构造
+- [基础操作](id2)
+- [错误处理](id3)
+- [RPC](rpc)
+- [AMOP](amop)
+- [EventSub](eventsub)
+- [工具类](id4)
+  - [KeyPair](keypair)
+  - [ABI编解码](abi)
+  - [交易构造](id5)
 
 ## 1. 基础操作
 
@@ -88,6 +83,7 @@
 ## 2. 错误处理
 
 本小节介绍`c-sdk`的错误处理接口。
+
 **注意: 这些接口仅仅对同步调用接口有效，异步接口的错误信息在回调中返回**。
 
 ### `bcos_sdk_is_last_opr_success`
@@ -107,7 +103,7 @@
 - 原型:
   - `int bcos_sdk_get_last_error()`
 - 功能:
-  - 获取上一次同步操作的返回状态, 失败时可以使用`bcos_sdk_get_last_error_msg`获取错误描述信息
+  - 获取上一次操作的返回状态, 失败时可以调用`bcos_sdk_get_last_error_msg`获取错误描述信息
 - 参数:
   - 无
 - 返回:
@@ -125,7 +121,7 @@
 
 ## 3. RPC接口
 
-本小节介绍如何在`c-sdk`中调用FISCO-BCOS 3.0的`rpc`接口，与节点进行交互。
+本小节介绍如何在`c-sdk`中调用`FISCO-BCOS 3.0`的`rpc`接口，与节点交互。
 
 ### `bcos_rpc_call`
 
@@ -502,7 +498,7 @@
 
 ## 4. AMOP接口
 
-本小节介绍在`c-sdk`使用FISCO-BCOS 3.0的`AMOP`功能。
+本小节介绍在`c-sdk`使用FISCO-BCOS 3.0`AMOP`功能的接口。
 
 ### `bcos_amop_subscribe_topic`
 
@@ -609,6 +605,8 @@
 
 ## 5. EventSub接口
 
+本小节介绍在`c-sdk`使用FISCO-BCOS 3.0`EventSub`事件订阅功能的接口。
+
 ### `bcos_event_sub_subscribe_event`
 
 - 原型:
@@ -636,11 +634,7 @@
 
 ## 6. 工具类
 
-本小结介绍`c-sdk`的基础工具类，包括:
-
-- `KeyPair`签名对象: 如何构造`KeyPair`对象用于交易签名
-- `ABI`编解码: solidity ABI编解码功能
-- 交易构造: 如何创建交易以及交易签名
+本小结介绍`c-sdk`的基础工具类的使用，包括`KeyPair`签名对象、`ABI`编解码、构造签名交易。
 
 ### 6.1 `KeyPair`签名对象
 
@@ -885,7 +879,7 @@
   - 注意:
     - 返回的字符串需要调用`free`释放，以免造成内存泄露
 
-### 6.3 交易构造
+### 6.3 构造签名交易
 
 - `bcos_sdk_create_transaction_data`
   - 原型:
@@ -901,9 +895,9 @@
     - `block_limit`: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
   - 返回:
     - `TransactionData`对象指针
-    - 失败返回`NULL`使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
-    - 创建的`TransactionData`对象需要由`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
+    - 创建的`TransactionData`对象需要`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
 
 - `bcos_sdk_destroy_transaction_data`
   - 原型:
@@ -923,9 +917,10 @@
     - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
     - `transaction_data`: `TransactionData`对象指针
   - 返回:
-    - `TransactionData`对象哈希，也是交易的哈希
+    - `TransactionData`对象哈希
     - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
+    - **`TransactionData`对象哈希，也是交易的哈希**
     - 返回的字符串需要调用`free`释放，以免造成内存泄露
 - `bcos_sdk_sign_transaction_data_hash`
   - 原型:
@@ -948,7 +943,7 @@
     - 创建签名的交易
   - 参数:
     - transaction_data: `TransactionData`对象
-    - signed_transaction_data: 交易哈希签名字符串，由`bcos_sdk_sign_transaction_data_hash`接口生成
+    - signed_transaction_data: 对交易哈希的签名，十六进制c风格字符串，由`bcos_sdk_sign_transaction_data_hash`接口生成
     - transaction_data_hash: 交易哈希
     - attribute: 交易额外属性，待拓展，默认填0即可
   - 返回:
@@ -978,7 +973,7 @@
   - 注意:
     - 返回的`tx_hash`、`signed_tx`需要调用`free`释放，以免造成内存泄露
   - **说明**:
-    - `bcos_sdk_create_signed_transaction`相当于下面几个接口功能的组合，交易创建、哈希、签名流程需要分开处理时，使用下面几个接口:
+    - `bcos_sdk_create_signed_transaction`相当于下面几个接口功能的组合，创建交易、交易哈希、交易签名流程需要分开处理时，使用下面几个接口:
       - `bcos_sdk_create_transaction_data`: 创建`TransactionData`
       - `bcos_sdk_calc_transaction_data_hash`: 计算交易哈希
       - `bcos_sdk_sign_transaction_data_hash`: 交易哈希签名
@@ -988,7 +983,7 @@
   - 原型:
     - `void* bcos_sdk_create_transaction_builder_service(void* sdk, const char* group_id)`
   - 功能:
-    - 创建`TransactionBuilderService`对象，创建签名的交易，简化构造签名交易的方式
+    - 创建`TransactionBuilderService`对象，构造签名的交易，能够简化构造签名交易的使用姿势，可以对比与`bcos_sdk_create_transaction_data`接口的差异
   - 参数:
     - sdk: sdk对象指针
     - group_id: 群组ID
