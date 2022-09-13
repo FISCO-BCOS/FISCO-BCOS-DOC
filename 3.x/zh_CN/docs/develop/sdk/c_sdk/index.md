@@ -8,7 +8,7 @@
 
 ```eval_rst
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    env.md
    compile.md
