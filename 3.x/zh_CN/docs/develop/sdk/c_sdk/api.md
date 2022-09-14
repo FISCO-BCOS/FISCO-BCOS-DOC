@@ -644,7 +644,7 @@
   - 功能:
     - 创建`KeyPair`对象
   - 参数:
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - `KeyPair`对象指针
     - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
@@ -656,7 +656,7 @@
   - 功能:
     - 加载私钥创建`KeyPair`对象
   - 参数:
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
     - private_key: 私钥，字节数组格式
     - length: 数组长度
   - 返回:
@@ -670,7 +670,7 @@
   - 功能:
     - 加载私钥创建`KeyPair`对象
   - 参数:
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
     - private_key: 私钥，十六进制c风格字符串格式
   - 返回:
     - `KeyPair`对象指针
@@ -685,7 +685,7 @@
   - 参数:
     - key_pair: `KeyPair`对象指针
   - 返回:
-    - 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
 - `bcos_sdk_get_keypair_address`
   - 原型:
     - `const char* bcos_sdk_get_keypair_address(void* key_pair)`
@@ -740,7 +740,7 @@
     - abi: 合约ABI，JSON字符串
     - bin: 合约BIN，十六进制c风格字符串
     - params: 构造函数参数，JSON字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
@@ -755,7 +755,7 @@
     - abi: 合约ABI，JSON字符串
     - method_name: 接口名
     - params: 构造函数的参数，JSON字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
@@ -769,7 +769,7 @@
     - abi: 合约ABI，JSON字符串
     - method_id: methodID
     - params: 构造函数的参数，JSON字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
@@ -782,7 +782,7 @@
   - 参数:
     - method_sig: 接口signature
     - params: 构造函数的参数，JSON字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
@@ -796,7 +796,7 @@
     - abi: 合约ABI，JSON字符串
     - method_name: 接口名
     - data: 编码的参数，十六进制c风格字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 解析后的参数，十六进制c风格JSON字符串
   - 注意:
@@ -810,7 +810,7 @@
     - abi: 合约ABI
     - method_id: methodID
     - data: ABI编码的参数，十六进制c风格字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 解析后的参数，十六进制c风格JSON字符串
   - 注意:
@@ -823,7 +823,7 @@
   - 参数:
     - method_sig: 接口signature
     - data: 编码的参数，十六进制c风格字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 解析后的参数，十六进制c风格JSON字符串
   - 注意:
@@ -837,7 +837,7 @@
     - abi: 合约ABI
     - method_name: 接口名
     - data: 编码的返回，十六进制c风格字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 解析后的返回，十六进制c风格JSON字符串
   - 注意:
@@ -851,7 +851,7 @@
     - abi: 合约ABI
     - method_id: methodID
     - data: 编码的返回，十六进制c风格字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 解析后的返回，十六进制c风格JSON字符串
   - 注意:
@@ -865,7 +865,7 @@
     - abi: 合约ABI
     - event_name: event名
     - data: 编码的返回，十六进制c风格字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 解析后的event参数，十六进制c风格JSON字符串
   - 注意:
@@ -879,13 +879,41 @@
     - abi: 合约ABI
     - topic: event topic
     - data: 编码的返回，十六进制c风格字符串
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
   - 返回:
     - 解析后的event参数，十六进制c风格JSON字符串
   - 注意:
     - 返回的字符串需要调用`free`释放，以免造成内存泄露
 
 ### 6.3 构造签名交易
+
+- `bcos_sdk_get_group_wasm_and_crypto`
+  - 原型:
+    - `void bcos_sdk_get_group_wasm_and_crypto(void* sdk, const char* group_id, int* wasm, int* crypto_type)`
+  - 功能:
+    - 获取群组的部分基础信息 1. 群组运行`wasm`合约，还是`solidity`合约 2. 群组为国密还是非国密环境
+  - 参数:
+    - `sdk`: sdk对象，`bcos_sdk_create`或者`bcos_sdk_create_by_config_file`创建
+    - `group_id`: 群组ID
+    - `wasm`: 返回值，该群组是否运行`wasm`合约
+      - 0: 否，群组运行`solidity`合约，
+      - 1: 是，群组运行`wasm`合约
+    - `crypto_type`: 返回值，该群组是否为国密类型，0: 否，1: 是
+  - 返回:
+    - 无
+
+- `bcos_sdk_get_group_chain_id`
+  - 原型:
+    - `const char* bcos_sdk_get_group_chain_id(void* sdk, const char* group_id)`
+  - 功能:
+    - 获取群组的链ID，构造交易时需使用该参数
+  - 参数:
+    - `sdk`: sdk对象，`bcos_sdk_create`或者`bcos_sdk_create_by_config_file`创建
+    - `group_id`: 群组ID
+  - 返回:
+    - 群组的链ID
+  - 注意:
+    - 返回的字符串需要调用`free`释放，以免造成内存泄露
 
 - `bcos_sdk_create_transaction_data`
   - 原型:
@@ -920,7 +948,7 @@
   - 功能:
     - 计算`TransactionData`对象哈希
   - 参数:
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE, SM: BCOS_C_SDK_SM_TYPE
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
     - `transaction_data`: `TransactionData`对象指针
   - 返回:
     - `TransactionData`对象哈希
