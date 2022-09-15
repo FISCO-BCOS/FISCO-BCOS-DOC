@@ -86,9 +86,9 @@ FISCO BCOS 3.0版本引入区块链合约文件系统（Blockchain File System�
 
 ### 2.2 详细使用文档
 
-BFS的使用体验主要集中体现在控制台，请参考控制台中BFS相关操作命令：[链接](../develop/console/console_commands.html#bfs)。
+BFS的使用体验主要集中体现在控制台，请参考控制台中BFS相关操作命令，以及使用控制台的BFS命令时的注意事项、错误出现情况请参考：[链接](../develop/console/console_commands.html#bfs)。
 
-使用控制台的BFS命令时的注意事项、错误出现情况请参考：[链接]()
+使用合约调用的BFS接口时的注意事项、错误出现情况请参考：[链接](../develop/precompiled/precompiled_contract_api.html#bfsprecompiled) 。
 
 同时在部署合约和调用合约均支持BFS使用，请参考控制台中[deploy命令](../develop/console/console_commands.html#deploy)与[call命令](../develop/console/console_commands.html#call)。
 
@@ -202,6 +202,7 @@ BFS存储表生命周期主要包括创建、修改、读取，暂时不支持�
 #### 3.5.2 普通合约资源生命周期
 
 - 在用户发起创建合约请求时、或者合约创建合约请求时，将会在 `/apps` 目录下创建对应的合约资源表，例如：创建合约 0x123456合约时，将会创建 `/apps/123456` 的存储表。
+- **值得注意的是：** Solidity的地址由于其不可读的性质与BFS易读可见的原则相悖，因此 `/apps`的存储表内 `/apps` Solidity地址对应的存储表不会
 - 在用户发起创建Table合约请求时，将会在 `/tables` 目录下创建对应的合约资源表，例如：创建Table合约 t_test合约时，将会创建 `/tables/t_test` 的存储表。
 - 在执行合约时，将会读取合约资源对应的存储表中的状态数据。
 
@@ -217,10 +218,10 @@ BFS存储表生命周期主要包括创建、修改、读取，暂时不支持�
 
 在部署合约时，将会预先确定该级目录父目录均已经存在且可以写入信息，然后启动虚拟机执行部署创建合约操作；虚拟机执行成功后， 创建合约的表，并将虚拟机执行后的合约代码段、ABI、状态数据等写入合约表，最后在父目录的数据表中记录新部署的合约的元信息。整体流程如下图所示，流程图以创建“/apps/Hello/World”为例。
 
-<img src="../../images/design/bfs_in_deploy.png" style="zoom:50%;" />
+![](../../images/design/bfs_in_deploy.png)
 
 #### 3.6.2 创建文件夹
 
 在创建目录时，将会先预先确定该级目录父目录均已经存在且可以写入信息，之后在父目录的数据表中记录新创建路径的目录的元信息。整体流程如下图所示，流程图以创建“/apps/Hello/World”为例。
 
-<img src="../../images/design/bfs_in_mkdir.png" style="zoom:50%;" />
+![](../../images/design/bfs_in_mkdir.png)
