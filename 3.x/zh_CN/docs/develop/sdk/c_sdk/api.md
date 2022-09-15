@@ -20,6 +20,28 @@
 
 本小节介绍`c-sdk`的基础操作，包括`sdk`对象的创建、启动、停止、释放。
 
+### `bcos_sdk_version`
+
+- 原型:
+  - `const char* bcos_sdk_version()`
+- 功能:
+  - 获取c-sdk的版本以及构建信息
+- 参数:
+  - 无
+- 返回:
+  - 字符串类型，包括c-sdk的版本以及构建信息，示例:
+
+  ```shell
+  FISCO BCOS C SDK Version : 3.0.1
+  Build Time         : 20220915 11:11:11
+  Build Type         : Darwin/appleclang/Release
+  Git Branch         : main
+  Git Commit         : dbc82415510a0e59339faebcd72e540fe408d2d0
+  ```
+
+- 注意:
+  - 返回的字符串需要调用`free`释放，以免造成内存泄露
+
 ### `bcos_sdk_create`
 
 - 原型:
@@ -650,9 +672,9 @@
     - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
     - `KeyPair`对象不再使用时需要调用`bcos_sdk_destroy_keypair`接口释放，以免造成内存泄露
-- `bcos_sdk_create_keypair_by_prikey`
+- `bcos_sdk_create_keypair_by_private_key`
   - 原型:
-    - `void* bcos_sdk_create_keypair_by_prikey(int crypto_type, void* private_key, unsigned length)`
+    - `void* bcos_sdk_create_keypair_by_private_key(int crypto_type, void* private_key, unsigned length)`
   - 功能:
     - 加载私钥创建`KeyPair`对象
   - 参数:
@@ -664,9 +686,9 @@
     - 失败返回`NULL`使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
     - `KeyPair`对象不再使用时需要调用`bcos_sdk_destroy_keypair`接口释放，以免造成内存泄露
-- `bcos_sdk_create_keypair_by_hex_prikey`
+- `bcos_sdk_create_keypair_by_hex_private_key`
   - 原型:
-    - `void* bcos_sdk_create_keypair_by_hex_prikey(int crypto_type, const char* private_key)`
+    - `void* bcos_sdk_create_keypair_by_hex_private_key(int crypto_type, const char* private_key)`
   - 功能:
     - 加载私钥创建`KeyPair`对象
   - 参数:
