@@ -17,7 +17,7 @@
 
 ```eval_rst
 .. note::
-   实际生产环境中tarsnode的安装请参考 `tars安装部署 <https://newdoc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
+   实际生产环境中tarsnode的安装请参考 `tars安装部署 <https://doc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
 ```
 
 ```shell
@@ -249,7 +249,7 @@ $ cd ~/fisco/console
 # 启动控制台
 $ bash start.sh
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+Welcome to FISCO BCOS console(3.0.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \

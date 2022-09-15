@@ -18,7 +18,7 @@
 - Solidity合约只需要引入FISCO BCOS官方提供的KVTable.sol抽象接口合约文件即可。
 - webankblockchain-liquid（以下简称WBC-Liquid）合约在实现合约之前对Table的接口进行声明使用即可。
 
-Table包含分布式存储专用的智能合约接口，其接口实现在区块链节点。其中，TableManager可以创建表、新增表字段，Table可以用作表CRUDt操作。下面分别进行介绍。
+Table包含分布式存储专用的智能合约接口，其接口实现在区块链节点。其中，TableManager可以创建表、新增表字段，Table可以用作表CRUD操作。下面分别进行介绍。
 
 #### 1.1 TableManager合约接口
 

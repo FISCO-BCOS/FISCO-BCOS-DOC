@@ -54,14 +54,14 @@ FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，E
 
 ```ini
 [tx]
-gas_limit = 300000000
+gas_limit = 3000000000
 ```
 
 ### 1.3 数据兼容性配置
 
-FISCO BCOS v3.0.0-rc4设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
+FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
 
-- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0-rc4`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
+- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
 
 ### 1.4 执行模块配置
 
@@ -69,6 +69,7 @@ FISCO BCOS v3.0.0-rc4设计并实现了兼容性框架，可支持数据版本�
 
 - `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选希望不可动态调整，默认为`false`;
 - `[executor].is_auth_check`: 权限控制的配置开关，`true`表明开启权限控制，`false`表明关闭权限控制，该配置选项不可动态调整，默认关闭权限控制功能;
+- `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选希望不可动态调整，默认为`false`;
 - `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中。
 
 ## 2. 节点配置文件
@@ -215,8 +216,10 @@ RPC配置示例如下：
 
 ```ini
 [storage_security]
+    ; enable data disk encryption or not, default is false
     enable=false
-    key_manager_url=
+    ; url of the key center, in format of ip:port
+    key_center_url=
     cipher_data_key=
 ```
 

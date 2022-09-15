@@ -209,7 +209,7 @@ contract Table {
 To provide a contract case `TableTest.sol`. The code is as follows:
 
 ```js
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 pragma experimental ABIEncoderV2;
 
 import "./Table.sol";

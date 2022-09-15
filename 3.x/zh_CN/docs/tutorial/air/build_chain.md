@@ -30,19 +30,24 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 $ bash build_chain.sh
 Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
-    -v <FISCO-BCOS binary version>      Default is the latest v3.0.0-rc4
+    -g <group id>                       [Optional] set the group id, default: group0
+    -I <chain id>                       [Optional] set the chain id, default: chain0
+    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.0.0
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
+    -L <fisco bcos lightnode exec>      [Optional] fisco bcos light node executable
+    -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
+    -t <mtail exec>                     [Optional] mtail binary exec
     -o <output dir>                     [Optional] output directory, default ./nodes
-    -e <fisco-bcos exec>                [Required] fisco-bcos binary exec
-    -t <mtail exec>                     [Required] mtail binary exec
-    -p <Start Port>                     Default 30300,20200 means p2p_port start from 30300, rpc_port from 20200
+    -p <Start port>                     [Optional] Default 30300,20200 means p2p_port start from 30300, rpc_port from 20200
     -s <SM model>                       [Optional] SM SSL connection or not, default is false
     -c <Config Path>                    [Required when expand node] Specify the path of the expanded node config.ini, config.genesis and p2p connection file nodes.json
     -d <CA cert path>                   [Required when expand node] When expanding the node, specify the path where the CA certificate and private key are located
     -D <docker mode>                    Default off. If set -d, build with docker
     -A <Auth mode>                      Default off. If set -A, build chain with auth, and generate admin account.
-    -a <Auth account>                   [Optional when Auth mode] Specify the admin account address.
+    -a <Auth account>                   [Optional] when Auth mode Specify the admin account address.
     -w <WASM mode>                      [Optional] Whether to use the wasm virtual machine engine, default is false
+    -R <Serial_mode>                    [Optional] Whether to use serial execute,default is false
+    -k <key page size>                  [Optional] key page size, default size is 10240
     -m <fisco-bcos monitor>             [Optional] node monitor or not, default is false
     -i <fisco-bcos monitor ip/port>     [Optional] When expanding the node, should specify ip and port
     -M <fisco-bcos monitor>             [Optional] When expanding the node, specify the path where prometheus are located
@@ -51,21 +56,26 @@ Usage:
 deploy nodes e.g
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -s
-    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m (部署节点带监控功能)
+    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m(部署节点带监控功能)
 expand node e.g
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos
-    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
+        bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml(部署节点带监控功能)
 ```
 
 
-### **`C`选项[**Optional**]:**
+### **`C`选项[**Optional**]**
 
 脚本的命令，支持 `deploy` 与 `expand`，默认为`deploy`:
 - `deploy`: 用于部署新节点。
 - `expand` 用于节点扩容。
 
-### **`v`选项**
+### **`g`选项[**Optional**]**
+用于设置群组ID，若不设置，则默认为group0。
+
+### **`c`选项[**Optional**]**
+用于设置链ID，若未设置，则默认为chain0。
+### **`v`选项[**Optional**]**
 
 用于指定搭建FISCO BCOS时使用的二进制版本。build_chain默认下载[Release页面](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)最新版本。
 
@@ -76,13 +86,19 @@ expand node e.g
 在IP为`192.168.0.1`的机器上部署2个节点，IP为`127.0.0.1`的机器上部署4个节点的`l`选项示例如下：
 `192.168.0.1:2, 127.0.0.1:4`
 
-### **`o`选项**
-
-指定生成的节点配置所在的目录，默认目录为 `./nodes` 。
+### **`L`选项[**Optional**]**
+用于配置开启FISCO BCOS轻节点模式，默认为false，不开启。
 
 ### **`e`选项[**Optional**]**
 
 指定Air版本FISCO BCOS的二进制可执行文件路径，若不指定，则默认拉取最新版本的FISCO BCOS。
+
+### **`t`选项[**Optional**]**
+
+指定Air版本监控依赖的二进制mtail 所在路径，功能和-e类似，若不指定，则默认拉取最新版本的FISCO BCOS。
+### **`o`选项[**Optional**]**
+
+指定生成的节点配置所在的目录，默认目录为 `./nodes` 。
 
 ### **`p`选项**
 
@@ -130,7 +146,7 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 该模式下 start.sh 脚本启动节点的命令如下
 
 ```shell
-docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0-rc4 -c config.ini -g config.genesis
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.0.0 -c config.ini -g config.genesis
 ```
 
 ### **`A`权限控制选项[**Optional**]**
@@ -147,7 +163,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -A
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/fisco-bcos-macOS-x86_64.tar.gz ...
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/fisco-bcos-macOS-x86_64.tar.gz ...
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
@@ -169,8 +185,14 @@ Processing IP:127.0.0.1 Total:4
 
 ### **`a`权限控制选项[**Optional**]**
 
-可选参数，当区块链节点启用权限控制时，可通过`-a`选项指定admin账号的地址，若不指定改选项，`build_chain`脚本随机会生成一个账户地址作为admin账号。
+可选参数，当区块链节点启用权限控制时，可通过`-a`选项指定admin账号的地址，若不指定该选项，`build_chain`脚本随机会生成一个账户地址作为admin账号。
 
+### **`w`权限控制选项[**Optional**]**
+可选参数，当区块链需要启用wasm虚拟机引擎时，可通过`-w`选项开启，若不指定该选项，则默认使用EVM。
+### **`R`权限控制选项[**Optional**]**
+可选参数，当区块链启动串行执行模式时，可通过`-R`选项开启串行执行模式，若不指定该选项，区块链默认开启DMC并行模式。
+### **`k`权限控制选项[**Optional**]**
+可选参数，当需要设置key-page存储中page的大小时，可通过`-k`选项设置page的大小，若不指定，默认page大小为10240。
 ### **`m`节点监控选项[**Optional**]**
 
 可选参数，当区块链节点启用节点监控时，可通过`-m`选项来部署带监控的节点，若不选择该选项则只部署不带监控的节点。

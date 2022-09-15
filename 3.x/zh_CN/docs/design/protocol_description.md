@@ -9,7 +9,7 @@
    FISCO BCOS 3.x数据和编码协议的实现位于仓库 `bcos-tars-protocol <https://github.com/FISCO-BCOS/bcos-tars-protocol>`_
 ```
 
-FISCO BCOS 3.x默认采用[tars](https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/base/tars-protocol.md)编码协议，本章主要介绍FISCO BCOS 3.x基础数据结构的编码协议。
+FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/base/tars-protocol.md)编码协议，本章主要介绍FISCO BCOS 3.x基础数据结构的编码协议。
 ## 1. 区块头数据结构
 
 区块头的tars定义可参考[这里](https://github.com/FISCO-BCOS/bcos-tars-protocol/blob/main/bcos-tars-protocol/tars/Block.tars)。

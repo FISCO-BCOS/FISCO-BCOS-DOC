@@ -61,36 +61,28 @@
 ```shell
 [group0]: /apps> help
 * help([-h, -help, --h, --H, --help, -H, h])  Provide help information
-* addObserver                               Add an observer node
-* addSealer                                 Add a sealer node
-* call                                      Call a contract by a function and parameters
-* cd                                        Change dir to given path.
+---------------------------Basic Command----------------------------
 * clearNodeName                             Clear default node name to empty.
-* create                                    Create table by sql
-* deploy                                    Deploy a contract on blockchain
-* desc                                      Description table information
 * quit([quit, q, exit])                     Quit console
+* getNodeName                               Get default node name in this client.
+* switch([s])                               Switch to a specific group by name
+* setNodeName                               Set default node name to send request.
+---------------------------Contract Operation----------------------------
+* call                                      Call a contract by a function and parameters
+* deploy                                    Deploy a contract on blockchain
+* getCode                                   Query code at a given address
+* getDeployLog                              Query the log of deployed contracts
+* listAbi                                   List functions and events info of the contract.
+* listDeployContractAddress                 List the contractAddress for the specified contract
+---------------------------Blockchain Status Query----------------------------
 * getBlockByHash                            Query information about a block by hash
 * getBlockByNumber                          Query information about a block by number
 * getBlockHashByNumber                      Query block hash by block number.
 * getBlockHeaderByHash                      Query information about a block header by hash
 * getBlockHeaderByNumber                    Query information about a block header by block number
 * getBlockNumber                            Query the number of most recent block
-* getCode                                   Query code at a given address
-* getConsensusStatus                        Query consensus status
-* getCurrentAccount                         Get the current account info
-* getDeployLog                              Query the log of deployed contracts
-* getGroupInfo                              Query the current group information.
-* getGroupInfoList                          Get all groups info
-* getGroupList                              List all group list
-* getGroupNodeInfo                          Get group node info
-* getGroupPeers                             List all group peers
-* getNodeName                               Get default node name in this client.
-* getObserverList                           Query nodeId list for observer nodes.
-* getPbftView                               Query the pbft view of node
 * getPeers                                  Query peers currently connected to the client
 * getPendingTxSize                          Query pending transactions size
-* getSealerList                             Query nodeId list for sealer nodes
 * getSyncStatus                             Query sync status
 * getSystemConfigByKey                      Query a system config value by key
 * getTotalTransactionCount                  Query total transaction count
@@ -98,21 +90,42 @@
 * getTransactionByHashWithProof             Query the transaction and transaction proof by transaction hash
 * getTransactionReceipt                     Query the receipt of a transaction by transaction hash
 * getTransactionReceiptByHashWithProof      Query the receipt and transaction receipt proof by transaction hash
-* listAbi                                   List functions and events info of the contract.
-* listAccount                               List the current saved account list
-* listDeployContractAddress                 List the contractAddress for the specified contract
+* setSystemConfigByKey                      Set a system config value by key
+---------------------------Consensus Operation----------------------------
+* addObserver                               Add an observer node
+* addSealer                                 Add a sealer node
+* getConsensusStatus                        Query consensus status
+* getObserverList                           Query nodeId list for observer nodes.
+* getPbftView                               Query the pbft view of node
+* getSealerList                             Query nodeId list for sealer nodes
+* removeNode                                Remove a node
+* setConsensusWeight                        Set consensus weight for the specified node
+---------------------------BFS Operation----------------------------
+* cd                                        Change dir to given path.
 * ln                                        Create a link to access contract.
-* loadAccount                               Load account for the transaction signature
 * ls                                        List resources in given path.
 * mkdir                                     Create dir in given path.
-* newAccount                                Create account
 * pwd                                       Show absolute path of working directory name
-* removeNode                                Remove a node
-* switch([s])                               Switch to a specific group by name
-* setConsensusWeight                        Set consensus weight for the specified node
-* setNodeName                               Set default node name to send request.
-* setSystemConfigByKey                      Set a system config value by key
 * tree                                      List contents of directories in a tree-like format.
+---------------------------CRUD Contract Operation----------------------------
+* alter                                     Alter table columns by sql
+* create                                    Create table by sql
+* delete                                    Remove records by sql
+* desc                                      Description table information
+* insert                                    Insert records by sql
+* select                                    Select records by sql
+* update                                    Update records by sql
+---------------------------Group Info Query----------------------------
+* getGroupInfo                              Query the current group information.
+* getGroupInfoList                          Get all groups info
+* getGroupList                              List all group list
+* getGroupNodeInfo                          Get group node info
+* getGroupPeers                             List all group peers
+---------------------------Account Operation----------------------------
+* getCurrentAccount                         Get the current account info
+* listAccount                               List the current saved account list
+* loadAccount                               Load account for the transaction signature
+* newAccount                                Create account
 ---------------------------------------------------------------------------------------------
 ```
 
@@ -1244,10 +1257,11 @@ latest -> 2b5dcbae97f9d9178e8b051b08c9fb4089bae71b
 
 ```shell
 [group0]: /apps> getGroupPeers 
-peer0: 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85
-peer1: bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824
-peer2: c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c
-peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
+peer0: 07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a
+peer1: 0ba87f0f2a218c70d207d5df01f74c9b5799bc0853af27f599422a5a0e8224d0ffe12d6aa0765b90487bfcfb9562e01dd98af6693ab54976d305b372b40e460c
+peer2: 1fa15731ae79ac7a9c6affa5511b50b1d549e28906f1968db8ddce69e18601707803c032afc42a230b74d4579a1bcca04b2e848019e5b1215b7cab96d59fab5a
+peer3: bad149badf702520cdf3d0a72a4790c2cd68bc23f9e2dd9b796b46ac9da78c98b089720981d987a546d3b3355406d0b428767a18916459c2cbade04432d80627
+peer4: d177c9ce82f3ae1aa02a37544d52496afa8c102cf08c2b8b3b9822874c15188863d052cad4c3f78abff0510a6c1bc04892129c183ec53baffeff8c5a000f069a
 ```
 
 ### 2. getGroupInfo
@@ -1262,23 +1276,23 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
     "genesisConfig":{
         "consensusType":"pbft",
         "blockTxCountLimit":1000,
-        "txGasLimit":300000000,
+        "txGasLimit":3000000000,
         "consensusLeaderPeriod":1,
         "sealerList":[
             {
-                "nodeID":"44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85",
+                "nodeID":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
                 "weight":1
             },
             {
-                "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
+                "nodeID":"0ba87f0f2a218c70d207d5df01f74c9b5799bc0853af27f599422a5a0e8224d0ffe12d6aa0765b90487bfcfb9562e01dd98af6693ab54976d305b372b40e460c",
                 "weight":1
             },
             {
-                "nodeID":"c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c",
+                "nodeID":"bad149badf702520cdf3d0a72a4790c2cd68bc23f9e2dd9b796b46ac9da78c98b089720981d987a546d3b3355406d0b428767a18916459c2cbade04432d80627",
                 "weight":1
             },
             {
-                "nodeID":"bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824",
+                "nodeID":"d177c9ce82f3ae1aa02a37544d52496afa8c102cf08c2b8b3b9822874c15188863d052cad4c3f78abff0510a6c1bc04892129c183ec53baffeff8c5a000f069a",
                 "weight":1
             }
         ]
@@ -1288,22 +1302,59 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
             "type":0,
             "iniConfig":{
                 "binaryInfo":{
-                    "version":"3.0.0-rc1",
-                    "gitCommitHash":"92ac16b4d2da511cbba33031e58369cac240547a",
-                    "platform":"Darwin/appleclang",
-                    "buildTime":"20211203 10:43:32"
+                    "version":"3.0.0",
+                    "gitCommitHash":"77bcb55ed21e75b68f04e1443db27425e0e5f142",
+                    "platform":"Linux/g++",
+                    "buildTime":"20220815 17:44:59"
                 },
                 "chainID":"chain0",
                 "groupID":"group0",
                 "smCryptoType":false,
-                "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-                "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
+                "isSerialExecute":false,
+                "nodeID":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
+                "nodeName":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
                 "rpcServiceName":"",
                 "gatewayServiceName":"",
-                "isWasm":false
+                "authCheck":false,
+                "isWasm":false,
+                "isAuthCheck":false
             },
-            "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-            "serviceInfoList":null
+            "name":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
+            "serviceInfoList":null,
+            "protocol":{
+                "compatibilityVersion":50331648,
+                "minSupportedVersion":0,
+                "maxSupportedVersion":1
+            }
+        },
+        {
+            "type":0,
+            "iniConfig":{
+                "binaryInfo":{
+                    "version":"3.0.0",
+                    "gitCommitHash":"77bcb55ed21e75b68f04e1443db27425e0e5f142",
+                    "platform":"Linux/g++",
+                    "buildTime":"20220815 17:44:59"
+                },
+                "chainID":"chain0",
+                "groupID":"group0",
+                "smCryptoType":false,
+                "isSerialExecute":false,
+                "nodeID":"0ba87f0f2a218c70d207d5df01f74c9b5799bc0853af27f599422a5a0e8224d0ffe12d6aa0765b90487bfcfb9562e01dd98af6693ab54976d305b372b40e460c",
+                "nodeName":"0ba87f0f2a218c70d207d5df01f74c9b5799bc0853af27f599422a5a0e8224d0ffe12d6aa0765b90487bfcfb9562e01dd98af6693ab54976d305b372b40e460c",
+                "rpcServiceName":"",
+                "gatewayServiceName":"",
+                "authCheck":false,
+                "isWasm":false,
+                "isAuthCheck":false
+            },
+            "name":"0ba87f0f2a218c70d207d5df01f74c9b5799bc0853af27f599422a5a0e8224d0ffe12d6aa0765b90487bfcfb9562e01dd98af6693ab54976d305b372b40e460c",
+            "serviceInfoList":null,
+            "protocol":{
+                "compatibilityVersion":50331648,
+                "minSupportedVersion":0,
+                "maxSupportedVersion":1
+            }
         }
     ]
 }
@@ -1315,7 +1366,9 @@ peer3: f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e
 
 ```shell
 [group0]: /apps> getGroupList
-group0: group
+[
+    group0
+]
 ```
 
 ### 4. getGroupInfoList
@@ -1331,23 +1384,23 @@ group0: group
         "genesisConfig":{
             "consensusType":"pbft",
             "blockTxCountLimit":1000,
-            "txGasLimit":300000000,
+            "txGasLimit":3000000000,
             "consensusLeaderPeriod":1,
             "sealerList":[
                 {
-                    "nodeID":"44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85",
+                    "nodeID":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
                     "weight":1
                 },
                 {
-                    "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
+                    "nodeID":"0ba87f0f2a218c70d207d5df01f74c9b5799bc0853af27f599422a5a0e8224d0ffe12d6aa0765b90487bfcfb9562e01dd98af6693ab54976d305b372b40e460c",
                     "weight":1
                 },
                 {
-                    "nodeID":"c1de42fc9e6798142fdbeddc05018b548b848155a8527f0ffc75eb93d0ae51ebd8074c86b6bdc0f4161dcad7cab9455a4eebf146ac5b08cb23c33c8eef756b7c",
+                    "nodeID":"bad149badf702520cdf3d0a72a4790c2cd68bc23f9e2dd9b796b46ac9da78c98b089720981d987a546d3b3355406d0b428767a18916459c2cbade04432d80627",
                     "weight":1
                 },
                 {
-                    "nodeID":"bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824",
+                    "nodeID":"d177c9ce82f3ae1aa02a37544d52496afa8c102cf08c2b8b3b9822874c15188863d052cad4c3f78abff0510a6c1bc04892129c183ec53baffeff8c5a000f069a",
                     "weight":1
                 }
             ]
@@ -1357,22 +1410,30 @@ group0: group
                 "type":0,
                 "iniConfig":{
                     "binaryInfo":{
-                        "version":"3.0.0-rc1",
-                        "gitCommitHash":"92ac16b4d2da511cbba33031e58369cac240547a",
-                        "platform":"Darwin/appleclang",
-                        "buildTime":"20211203 10:43:32"
+                        "version":"3.0.0",
+                        "gitCommitHash":"77bcb55ed21e75b68f04e1443db27425e0e5f142",
+                        "platform":"Linux/g++",
+                        "buildTime":"20220815 17:44:59"
                     },
                     "chainID":"chain0",
-                    "groupID":"group",
+                    "groupID":"group0",
                     "smCryptoType":false,
-                    "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-                    "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
+                    "isSerialExecute":false,
+                    "nodeID":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
+                    "nodeName":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
                     "rpcServiceName":"",
                     "gatewayServiceName":"",
-                    "isWasm":false
+                    "authCheck":false,
+                    "isWasm":false,
+                    "isAuthCheck":false
                 },
-                "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-                "serviceInfoList":null
+                "name":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
+                "serviceInfoList":null,
+                "protocol":{
+                    "compatibilityVersion":50331648,
+                    "minSupportedVersion":0,
+                    "maxSupportedVersion":1
+                }
             }
         ]
     }
@@ -1384,27 +1445,35 @@ group0: group
 运行getGroupNodeInfo命令，获取当前群组内某一个节点的信息：
 
 ```shell
-[group0]: /apps> getGroupNodeInfo f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366
+[group0]: /apps> getGroupNodeInfo 07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a
 {
     "type":0,
     "iniConfig":{
         "binaryInfo":{
-            "version":"3.0.0-rc1",
-            "gitCommitHash":"92ac16b4d2da511cbba33031e58369cac240547a",
-            "platform":"Darwin/appleclang",
-            "buildTime":"20211203 10:43:32"
+            "version":"3.0.0",
+            "gitCommitHash":"77bcb55ed21e75b68f04e1443db27425e0e5f142",
+            "platform":"Linux/g++",
+            "buildTime":"20220815 17:44:59"
         },
         "chainID":"chain0",
         "groupID":"group0",
         "smCryptoType":false,
-        "nodeID":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-        "nodeName":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
+        "isSerialExecute":false,
+        "nodeID":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
+        "nodeName":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
         "rpcServiceName":"",
         "gatewayServiceName":"",
-        "isWasm":false
+        "authCheck":false,
+        "isWasm":false,
+        "isAuthCheck":false
     },
-    "name":"f39b21b4832976591085b73a8550442e76dc2ae657adb799ff123001a553be60293b1059e97c472e49bb02b71384f05501f149905015707a2fe08979742c1366",
-    "serviceInfoList":null
+    "name":"07844e249ca404fd54ac9f430cbc0dde9c23ca28e872f1d1bafd974aae6149bc3d0442a4b278873830c0f0642cbde3fda4884cec508b1bc64c56ad23f4256d0a",
+    "serviceInfoList":null,
+    "protocol":{
+        "compatibilityVersion":50331648,
+        "minSupportedVersion":0,
+        "maxSupportedVersion":1
+    }
 }
 ```
 
