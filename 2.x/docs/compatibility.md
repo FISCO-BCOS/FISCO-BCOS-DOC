@@ -188,7 +188,7 @@ FISCO-BCOS 3.0.0 及之后的版本之间相互兼容。FISCO-BCOS 3.0.0-rc的�
 | WeBankBlockchain-Governance-Cert |  证书管理组件 |   暂不支持</br>后续版本规划   |    |    |     |
 | WeBankBlockchain-Governance-Key |  私钥管理组件 |   暂不支持</br>后续版本规划   |   |      |     |
 | WeBankBlockchain-Governance-Authority |  权限治理组件 |   暂不支持</br>后续版本规划   |   |       |   |
-| WeBankBlockchain-Governance-Account |  账户治理组件 |   暂不支持</br>后续版本规划   |   |   |     |
+| WeBankBlockchain-Governance-Account |  账户治理组件 |   v3.0.0-rc4   |  [文档](https://governance-doc.readthedocs.io/zh_CN/v3.0.0/docs/WeBankBlockchain-Governance-Acct/index.html)  | [github](https://github.com/WeBankBlockchain/Governance-Account/tree/V3.0.0-rc4)   |  [gitee](https://gitee.com/WeBankBlockchain/Governance-Account/tree/V3.0.0-rc4)    |
 
 #### 3.2.5. FISCO-BCOS v3.0.0
 
