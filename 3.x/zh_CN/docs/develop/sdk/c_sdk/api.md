@@ -650,21 +650,36 @@
 - 参数:
   - `sdk`: `sdk`指针
   - `group`: 请求群组ID
-  - `params`: 请求参数
-  - `callback`: 回调函数
+  - `params`: 请求参数，c风格JSON字符串
+    - addresses: 字符串数组，订阅Event的合约地址列表，为空时表示所有的合约
+    - fromBlock: 整形，初始区块，-1表示从当前最高块开始
+    - toBlock: 整形，结束区块，-1表示不限制区块高度，已经是最高块时也继续等待新的区块
+    - topics: 字符串数组，订阅的topic列表，为空时表示所有的topic
+
+    示例:
+
+    ```shell
+    {
+    "addresses": ["6849F21D1E455e9f0712b1e99Fa4FCD23758E8F1"],
+    "fromBlock": -1,
+    "toBlock": -1,
+    "topics": []
+    }
+    ```
+
   - `context`: 回调上下文
 - 返回:
-  - 合约事件订阅的任务id
+  - 合约事件订阅的任务id，c风格字符串
 
 ### `bcos_event_sub_unsubscribe_event`
 
 - 原型:
   - `void bcos_event_sub_unsubscribe_event(void* sdk, const char* id)`
 - 功能:
-  - 去掉合约事件订阅
+  - 取消合约事件订阅
 - 参数:
   - `sdk`: `sdk`指针
-  - `id`: 合约事件订阅的任务id
+  - `id`: 合约事件订阅的任务id，`bcos_event_sub_subscribe_event`的返回值
 
 ## 6. 工具类
 
