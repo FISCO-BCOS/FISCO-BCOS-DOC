@@ -221,7 +221,11 @@
 ### `bcos_rpc_get_transaction_receipt`
 
 - 原型:
-  - `void bcos_rpc_get_transaction_receipt(void* sdk, const char* group, const char* node, const char* tx_hash, int proof, bcos_sdk_c_struct_response_cb callback, void* context)`
+
+  ```shell
+  void bcos_rpc_get_transaction_receipt(void* sdk, const char* group, const char* node, const char* tx_hash, int proof, bcos_sdk_c_struct_response_cb callback, void* context)
+  ```
+
 - 功能:
   - 根据交易哈希获取交易回执
 - 参数:
@@ -238,7 +242,11 @@
 ### `bcos_rpc_get_block_by_hash`
 
 - 原型:
-  - `void bcos_rpc_get_block_by_hash(void* sdk, const char* group, const char* node,const char* block_hash, int only_header, int only_tx_hash, bcos_sdk_c_struct_response_cb callback, void* context)`
+
+  ```shell
+  void bcos_rpc_get_block_by_hash(void* sdk, const char* group, const char* node,const char* block_hash, int only_header, int only_tx_hash, bcos_sdk_c_struct_response_cb callback, void* context)
+  ```
+
 - 功能:
   - 根据区块哈希获取区块
 - 参数:
@@ -256,7 +264,11 @@
 ### `bcos_rpc_get_block_by_number`
 
 - 原型:
-  - `void bcos_rpc_get_block_by_number(void* sdk, const char* group, const char* node, int64_t block_number, int only_header, int only_tx_hash, bcos_sdk_c_struct_response_cb callback, void* context)`
+
+  ```shell
+  void bcos_rpc_get_block_by_number(void* sdk, const char* group, const char* node, int64_t block_number, int only_header, int only_tx_hash, bcos_sdk_c_struct_response_cb callback, void* context)
+  ```
+
 - 功能:
   - 根据块高获取区块
 - 参数:
@@ -994,7 +1006,11 @@
 
 - `bcos_sdk_create_signed_transaction_with_signed_data`
   - 原型:
-    - `const char* bcos_sdk_create_signed_transaction_with_signed_data(void* transaction_data, const char* signed_transaction_data, const char* transaction_data_hash, int32_t attribute)`
+
+  ```shell
+  const char* bcos_sdk_create_signed_transaction_with_signed_data(void* transaction_data, const char* signed_transaction_data, const char* transaction_data_hash, int32_t attribute)
+  ```
+
   - 功能:
     - 创建签名的交易
   - 参数:
@@ -1010,7 +1026,11 @@
 
 - `bcos_sdk_create_signed_transaction`
   - 原型:
-    - `void bcos_sdk_create_signed_transaction(void* key_pair, const char* group_id, const char* chain_id, const char* to, const char* data, const char* abi, int64_t block_limit, int32_t attribute, char** tx_hash, char** signed_tx)`
+
+  ```shell
+  void bcos_sdk_create_signed_transaction(void* key_pair, const char* group_id, const char* chain_id, const char* to, const char* data, const char* abi, int64_t block_limit, int32_t attribute, char** tx_hash, char** signed_tx)
+  ```
+
   - 功能:
     - 创建签名的交易
   - 参数:
@@ -1074,7 +1094,11 @@
     - 创建的`TransactionData`对象需要由`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
 - `bcos_sdk_create_signed_transaction_with_tx_builder_service`
   - 原型:
-    - `void bcos_sdk_create_signed_transaction_with_tx_builder_service(void* tx_builder_service, void* key_pair, const char* to, const char* data, const char* abi, int32_t attribute, char** tx_hash, char** signed_tx)`
+
+  ```shell
+  void bcos_sdk_create_signed_transaction_with_tx_builder_service(void*tx_builder_service, void* key_pair, const char*to, const char* data, const char* abi, int32_t attribute, char** tx_hash, char** signed_tx)
+  ```
+
   - 功能:
     - 创建签名的交易
   - 参数:
