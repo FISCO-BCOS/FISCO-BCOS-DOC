@@ -968,7 +968,7 @@
   - 原型:
     - `void* bcos_sdk_create_transaction_data(const char* group_id, const char* chain_id, const char* to, const char* data, const char* abi, int64_t block_limit)`
   - 功能:
-    - 创建`TransactionData`对象
+    - 创建`TransactionData`对象，该对象是未签名的交易对象
   - 参数:
     - `group_id`: 群组ID
     - `chain_id`: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
