@@ -138,7 +138,7 @@ Java SDK的`org.fisco.bcos.sdk.v3.crypto.CryptoSuite`提供了账户生成功能
 // 创建非国密类型的CryptoSuite
 CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
 // 随机生成非国密公私钥对
-CryptoKeyPair cryptoKeyPair = cryptoSuite.createKeyPair();
+CryptoKeyPair cryptoKeyPair = cryptoSuite.generateRandomKeyPair();
 // 获取账户地址
 String accountAddress = cryptoKeyPair.getAddress();
 ```
@@ -149,7 +149,7 @@ String accountAddress = cryptoKeyPair.getAddress();
 // 创建国密类型的CryptoSuite
 CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
 // 随机生成国密公私钥对
-CryptoKeyPair cryptoKeyPair = cryptoSuite.createKeyPair();
+CryptoKeyPair cryptoKeyPair = cryptoSuite.generateRandomKeyPair();
 // 获取账户地址
 String accountAddress = cryptoKeyPair.getAddress();
 ```
