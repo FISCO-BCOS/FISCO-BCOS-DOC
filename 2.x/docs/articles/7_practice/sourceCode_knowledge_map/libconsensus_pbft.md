@@ -100,7 +100,7 @@ std::unordered_map<VIEWTYPE, std::unordered_map<IDXTYPE, ViewChangeReq::Ptr>>
 // only record the latest view of all the nodes
 std::shared_ptr<std::unordered_map<IDXTYPE, ViewChangeReq::Ptr>> m_latestViewChangeReqCache;
 
-/// cache for commited requests(maps between hash and commited requests)
+/// cache for committed requests(maps between hash and commited requests)
 std::unordered_map<h256, std::unordered_map<std::string, CommitReq::Ptr>> m_commitCache;
 /// cache for prepare request need to be backup and saved
 PrepareReq m_committedPrepareCache;
