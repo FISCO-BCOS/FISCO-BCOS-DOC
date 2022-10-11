@@ -78,7 +78,7 @@ expand node e.g
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /home/user/FISCO-BCOS/build/lightnode/fisco-bcos-lightnode
 ```
 
-将生成nodes目录，轻节点位于nodes目录的lightnode中。
+build_chain.sh将生成nodes目录，轻节点位于nodes目录的lightnode中。
 
 ## 3. 轻节点配置文件组织结构
 
