@@ -11,12 +11,14 @@
 
 ## ABI编解码
 
+待添加
+
 ## 构造签名交易
 
-构造签名交易有两种方式，根据是否能获取私钥进行区分:
+构造签名交易有两种方式，根据交易构造与签名是否一起区分:
 
 - 直接构造签名交易: 可以加载签名私钥，直接构造签名交易
-- 交易构造与签名分离: 这种情况下私钥因安全等因素由其他服务托管，交易构造由本地完成，交易签名需要由其他服务完成
+- 交易构造与签名分离: 这种情况下私钥因安全等因素由其他服务托管，交易构造由本地完成，交易签名需要由签名服务完成
 
 ### 直接构造签名交易
 
@@ -47,7 +49,7 @@ bcos_sdk_create_signed_transaction: 构造签名交易
 bcos_sdk_create_transaction_data
 # 计算交易哈希
 bcos_sdk_calc_transaction_data_hash
-# 交易哈希签名，该流程由签名服务实施
+# 交易哈希签名，由签名服务实施
 bcos_sdk_sign_transaction_data_hash
 # 构造签名交易
 bcos_sdk_create_signed_transaction_with_signed_data
