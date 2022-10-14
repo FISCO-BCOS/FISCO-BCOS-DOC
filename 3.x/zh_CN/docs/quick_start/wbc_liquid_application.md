@@ -72,7 +72,7 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.1/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -433,14 +433,9 @@ $ unzip asset-app-3.0-liquid.zip && mv asset-app-demo-main-liquid  asset-app-liq
 ```groovy
 repositories {
     mavenCentral()
-    maven {
-        allowInsecureProtocol = true
-        url "http://maven.aliyun.com/nexus/content/groups/public/"
-    }
-    maven {
-        allowInsecureProtocol = true
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://oss.sonatype.org/service/local/staging/deploy/maven2" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 ```
 
@@ -460,7 +455,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc4")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.1")
     compile spring
 }
 ```
@@ -999,20 +994,20 @@ Register account successfully => account: Bob, value: 100000
 
 ```shell
 $ bash asset_run.sh query Alice
-account Alice, value 100000
+asset account Alice, value 100000
 $ bash asset_run.sh query Bob
-account Bob, value 100000
+asset account Bob, value 100000
 ```
 
 - 资产转移
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000
-Transfer successfully => from_account: Alice, to_account: Bob, amount: 50000
+Transfer success => from_account: Alice, to_account: Bob, amount: 50000
 $ bash asset_run.sh query Alice
 account Alice, value 50000
 $ bash asset_run.sh query Bob
-account Bob, value 150000
+asset account Bob,, value 150000
 ```
 
 **总结：** 至此，我们通过WBC-Liquid合约开发，合约编译，SDK配置与业务开发构建了一个基于FISCO BCOS联盟区块链的WBC-Liquid应用。

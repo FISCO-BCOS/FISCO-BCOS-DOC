@@ -8,9 +8,11 @@
 .. toctree::
    :maxdepth: 1
 
-   add_precompiled_impl.md
+   use_precompiled.md
+   precompiled_contract_api.md
+   precompiled_error_code.md
    use_kv_precompiled.md
    use_crud_precompiled.md
-   precompiled_contract_api.md
    use_group_ring_sig.md
+   add_precompiled_impl.md
 ```

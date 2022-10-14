@@ -11,3 +11,6 @@ commonmarkextensions == 0.0.5
 commonmark == 0.8.1
 git-lfs
 Jinja2<3.1
+myst-parser == 0.8.2
+pyyaml
+

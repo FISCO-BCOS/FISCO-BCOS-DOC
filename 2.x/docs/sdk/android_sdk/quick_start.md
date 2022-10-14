@@ -92,7 +92,7 @@ dependencies {
 本节提供一个示例合约`HelloWorld.sol`，并描述合约的编译过程。
 
 ```text
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 
 contract HelloWorld {
     string name;

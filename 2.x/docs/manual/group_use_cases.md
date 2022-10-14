@@ -79,7 +79,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - 获取build_chain.sh脚本
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -499,7 +499,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
 $ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh

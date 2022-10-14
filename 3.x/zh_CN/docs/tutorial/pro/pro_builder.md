@@ -32,7 +32,7 @@ tars_pkg_dir = ""
 
 ### 1.2 区块链服务部署配置
 
-区块链服务部署相关的配置项主要包括链配置项、RPC/Gateway服务配置项以及区块链节点服务配置项，其配置模板位于`BcosBuilder/pro`的`pconf/config-deploy-example.toml`路径下。
+区块链服务部署相关的配置项主要包括链配置项、RPC/Gateway服务配置项以及区块链节点服务配置项，其配置模板位于`BcosBuilder/pro`的`conf/config-deploy-example.toml`路径下。
 
 **链配置项**
 
@@ -63,7 +63,7 @@ gateway_sm_ssl=false
 
 ```eval_rst
 .. note::
-   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
+   - 当部署一个RPC服务到多台机器时，请确保这些机器都安装了tarsnode服务，tarsnode部署请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/node.md>`_
 ```
 
 RPC服务的配置项位于`[[agency]].[agency.rpc]`中，一个机构可部署一个RPC服务，一条链可包含多个机构，主要配置项包括：
@@ -144,7 +144,7 @@ FISCO BCOS Pro版本区块链中每个区块链节点服务均属于一个群组
 - `[[group]].vm_type`: 区块链节点运行的虚拟机类型，目前支持`evm`和`wasm`两种类型，且一个群组仅可运行一种类型的虚拟机，不可以部分节点运行EVM虚拟机、部分节点运行WASM虚拟机。
 - `[[group]].auth_check`: 是否开启权限治理模式，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
 - `[[group]].init_auth_address`: 开启权限治理时，指定的初始化治理委员账号地址，权限使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)。
-- `[[group]].compatibility_version`: 数据兼容版本号，默认为`3.0.0-rc4`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
+- `[[group]].compatibility_version`: 数据兼容版本号，默认为`3.0.0`，可通过控制台`setSystemConfigByKey`命令运行时升级数据兼容版本。
 
 ```ini
 [[group]]
@@ -169,8 +169,8 @@ consensus_type = "pbft"
 # transaction gas limit
 gas_limit = "3000000000"
 # compatible version, can be dynamically upgraded through setSystemConfig
-# the default is 3.0.0-rc4
-compatibility_version="3.0.0-rc4"
+# the default is 3.0.0
+compatibility_version="3.0.0"
 ```
 
 **区块链节点服务配置项：部署配置**
@@ -350,7 +350,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -t TYPE, --type TYPE  [Optional] Specify the source of the download, support cdn,git now, default type is git
   -v VERSION, --version VERSION
-                        [Optional] Specify the version of the binary, default is v3.0.0-rc4
+                        [Optional] Specify the version of the binary, default is v3.0.1
   -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
 
 ----------- help for subcommand 'chain' -----------
@@ -417,12 +417,12 @@ optional arguments:
 
 ### 2.4 **`-c, --config`选项[**Optional**]:**
 
-用于指定配置文件路径，默认为`config.toml`，`BcosBuilder`提供了三类配置模板：
+用于指定配置文件路径，默认为`config.toml`，`BcosBuilder`提供了四类配置模板：
 
+- `conf/config-build-example.toml`: 去tarsRPC、Gateway和区块链节点管理服务部署建立配置模板。
 - `conf/config-deploy-example.toml`: RPC、Gateway和区块链节点管理服务部署配置模板。
 - `conf/config-service-expand-example.toml`: RPC、Gateway服务扩容配置模板。
 - `conf/config-node-expand-example.toml`: 区块链节点管理服务配置模板。
-
 
 ### 2.5 **`create-subnet`命令**
 
@@ -436,7 +436,7 @@ optional arguments:
 
 ## 3. tars docker-compose配置介绍
 
-FISCO BCOS Pro版本区块链基于[tars](https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md)构建和部署，为简化tars部署，`BcosBuilder`提供了tars的docker-compose配置。
+FISCO BCOS Pro版本区块链基于[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md)构建和部署，为简化tars部署，`BcosBuilder`提供了tars的docker-compose配置。
 
 ### 3.1 桥接组网的tars docker-compose配置
 
@@ -451,12 +451,12 @@ FISCO BCOS Pro版本区块链基于[tars](https://newdoc.tarsyun.com/#/markdown/
 **桥接模式下，tarsFramework的docker-compose配置如下**：
 
 ```yml
-version: "2"
+version: "3"
 networks:
   tars_net:
     external:
       name: tars-network
-      
+
 services:     
   tars-mysql:
     image: mysql:5.6
@@ -466,8 +466,11 @@ services:
       tars_net:
         ipv4_address: 172.25.0.2
     environment:
-      MYSQL_ROOT_PASSWORD: "FISCO"
+      MYSQL_ROOT_PASSWORD: ""
     restart: always
+    volumes:
+      - ~/app/tars/framework-mysql:/var/lib/mysql
+      - /etc/localtime:/etc/localtime 
 
   tars-framework:
     image: tarscloud/framework:v3.0.1
@@ -482,12 +485,15 @@ services:
       - "30300-30305:30300-30305"
     environment:
       MYSQL_HOST: "172.25.0.2"
-      MYSQL_ROOT_PASSWORD: "FISCO"
+      MYSQL_ROOT_PASSWORD: ""
       MYSQL_PORT: 3306
       REBUILD: "false"
       INET: eth0
       SLAVE: "false"
     restart: always
+    volumes: 
+      - ~/app/tars/framework:/data/tars
+      - /etc/localtime:/etc/localtime
     depends_on:
       - tars-mysql
 ```
@@ -495,7 +501,7 @@ services:
 **桥接模式下，tarsnode的docker-compose配置如下**：
 
 ```yml
-version: "2"
+version: "3"
 networks:
   tars_net:
     external:
@@ -515,6 +521,9 @@ services:
       INET: eth0
       WEB_HOST: "http://172.25.0.3:3000"
     restart: always
+    volumes:
+      - ~/app/tars:/data/tars
+      - /etc/localtime:/etc/localtime
 ```
 
 ### 3.2 host组网的tars docker-compose配置
@@ -558,7 +567,6 @@ services:
       - /etc/localtime:/etc/localtime
     depends_on:
       - tars-mysql
-
 ```
 
 **host模式下，tarsnode的docker-compose配置如下**：
