@@ -219,3 +219,12 @@ make -j4
 # 生成tgz包
 rm -rf fisco-bcos-tars-service/*.tgz && make tar
 ```
+### 编译选项说明
+
+- -- FULLNODE           编译全节点，默认开启
+- -- WITH_LIGHTNODE     编译轻节点，默认开启
+- -- WITH_TIKV          编译TIKV，默认开启
+- -- WITH_TARS_SERVICES 编译TARS服务，默认开启
+- -- WITH_SM2_OPTIMIZE  开启SM2性能优化，默认开启
+- -- WITH_CPPSDK        编译C++SDK，默认开启
+- -- WITH_BENCHMARK     编译性能测试程序，默认开启
