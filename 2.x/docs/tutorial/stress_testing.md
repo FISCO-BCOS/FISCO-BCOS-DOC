@@ -304,9 +304,12 @@ Options:
 其中，
 
 **--caliper-bind-sut** ：用于指定需要测试的区块链平台，即受测系统（***S***ystem ***u***nder ***T***est）；
+
 **--caliper-bind-sdk**：用于指定适配器版本；
+
 **--caliper-bind-cwd**：用于绑定`caliper-cli`的工作目录，`caliper-cli`在加载配置文件等场合时均是使用相对于工作目录的相对路径；
-**caliper-bind-args**：用于指定`caliper-cli`在安装依赖项时传递给`npm`的参数，如用于全局安装的`-g`。
+
+**--caliper-bind-args**：用于指定`caliper-cli`在安装依赖项时传递给`npm`的参数，如用于全局安装的`-g`。
 
 对于FISCO BCOS，可以采用如下方式进行绑定：
 
@@ -370,7 +373,9 @@ Options:
 其中，
 
 **--caliper-workspace**：用于指定`caliper-cli`的工作目录，如果没有绑定工作目录，可以通过该选项动态指定工作目录；
-**--caliper-benchconfig**：用于指定测试配置文件，测试配置文件中包含测试的具体参数，如交易的发送方式、发送速率控制器类型、性能监视器类型等；
+
+**--caliper-benchconfig**：用于指定测试配置文件，测试配置文件中包含测试的具体参数，如交易的发送方式、发送速率控制器类型、性能监视器类型等；
+
 **--caliper-networkconfig**：用于指定网络配置文件，网络配置文件中会指定Caliper与受测系统的连接方式及要部署测试的合约等。
 
 ## 2.3. 自定义测试用例
