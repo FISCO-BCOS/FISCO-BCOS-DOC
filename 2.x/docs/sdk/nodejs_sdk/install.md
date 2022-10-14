@@ -80,7 +80,7 @@ Node.js SDK内嵌CLI工具，供用户在命令行中方便地与区块链进行
 
 ```bash
 # 获取开发部署工具build_chain.sh脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
