@@ -40,7 +40,7 @@
   ```
 
 - 注意:
-  - 返回的字符串需要调用`free`释放，以免造成内存泄露
+  - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 ### `bcos_sdk_create`
 
@@ -100,6 +100,16 @@
   - 停止并且释放`sdk`
 - 参数:
   - sdk: `sdk`指针
+- 返回: 无
+
+### `bcos_sdk_c_free`
+
+- 原型:
+  - `void bcos_sdk_c_free(void* p)`
+- 功能:
+  - 释放内存
+- 参数:
+  - p: 指针
 - 返回: 无
 
 ## 2. 错误处理
@@ -745,7 +755,7 @@
   - 返回:
     - 账户地址，十六进制c风格字符串
   - 注意:
-    - 返回的字符串不使用时使用`free`释放，以免造成内存泄露
+    - 返回的字符串不使用时使用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_get_keypair_public_key`
   - 原型:
     - `const char* bcos_sdk_get_keypair_public_key(void* key_pair)`
@@ -756,7 +766,7 @@
   - 返回:
     - 公钥，十六进制c风格字符串
   - 注意:
-    - 返回的字符串不使用时使用`free`释放，以免造成内存泄露
+    - 返回的字符串不使用时使用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_get_keypair_private_key`
   - 原型:
     - `const char* bcos_sdk_get_keypair_private_key(void* key_pair)`
@@ -767,7 +777,7 @@
   - 返回:
     - 私钥，十六进制c风格字符串
   - 注意:
-    - 返回的字符串不使用时使用`free`释放，以免造成内存泄露
+    - 返回的字符串不使用时使用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_destroy_keypair`
   - 原型:
     - `void bcos_sdk_destroy_keypair(void* key_pair)`
@@ -793,7 +803,7 @@
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 - `bcos_sdk_abi_encode_method`
   - 原型:
@@ -808,7 +818,7 @@
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_encode_method_by_method_id`
   - 原型:
     - `const char* bcos_sdk_abi_encode_method_by_method_id(const char* abi, const char* method_id, const char* params, int crypto_type)`
@@ -822,7 +832,7 @@
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_encode_method_by_method_sig`
   - 原型:
     - `const char* bcos_sdk_abi_encode_method_by_method_sig(const char* method_sig, const char* params, int crypto_type)`
@@ -835,7 +845,7 @@
   - 返回:
     - 编码后的参数，十六进制c风格字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_decode_method_input`
   - 原型:
     - `const char* bcos_sdk_abi_decode_method_input(const char* abi, const char* method_name, const char* data, int crypto_type)`
@@ -849,7 +859,7 @@
   - 返回:
     - 解析后的参数，十六进制c风格JSON字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_decode_method_input_by_method_id`
   - 原型:
     - `const char* bcos_sdk_abi_decode_method_input_by_method_id(const char* abi, const char* method_id, const char* data, int crypto_type)`
@@ -863,7 +873,7 @@
   - 返回:
     - 解析后的参数，十六进制c风格JSON字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_decode_method_input_by_method_sig`
   - 原型:
     - `const char* bcos_sdk_abi_decode_method_input_by_method_sig(const char* method_sig, const char* data, int crypto_type)`
@@ -876,7 +886,7 @@
   - 返回:
     - 解析后的参数，十六进制c风格JSON字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_decode_method_output`
   - 原型:
     - `const char* bcos_sdk_abi_decode_method_output(const char* abi, const char* method_name, const char* data, int crypto_type)`
@@ -890,7 +900,7 @@
   - 返回:
     - 解析后的返回，十六进制c风格JSON字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_decode_method_output_by_method_id`
   - 原型:
     - `const char* bcos_sdk_abi_decode_method_output_by_method_id(const char* abi, const char* method_id, const char* data, int crypto_type)`
@@ -904,7 +914,7 @@
   - 返回:
     - 解析后的返回，十六进制c风格JSON字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_decode_event`
   - 原型:
     - `const char* bcos_sdk_abi_decode_event(const char* abi, const char* event_name, const char* data, int crypto_type)`
@@ -918,7 +928,7 @@
   - 返回:
     - 解析后的event参数，十六进制c风格JSON字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_abi_decode_event_by_topic`
   - 原型:
     - `const char* bcos_sdk_abi_decode_event_by_topic(const char* abi, const char* topic, const char* data, int crypto_type)`
@@ -932,7 +942,7 @@
   - 返回:
     - 解析后的event参数，十六进制c风格JSON字符串
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 ### 6.3 构造签名交易
 
@@ -962,7 +972,7 @@
   - 返回:
     - 群组的链ID
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 - `bcos_sdk_create_transaction_data`
   - 原型:
@@ -1004,7 +1014,7 @@
     - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
     - **`TransactionData`对象的哈希，也是交易的哈希**
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 - `bcos_sdk_sign_transaction_data_hash`
   - 原型:
     - `const char* bcos_sdk_sign_transaction_data_hash(void* keypair, const char* transcation_hash)`
@@ -1017,7 +1027,7 @@
     - 交易签名，字符串类型
     - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 - `bcos_sdk_create_signed_transaction_with_signed_data`
   - 原型:
@@ -1037,7 +1047,7 @@
     - 签名的交易，十六进制c风格字符串
     - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
   - 注意:
-    - 返回的字符串需要调用`free`释放，以免造成内存泄露
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 - `bcos_sdk_create_signed_transaction`
   - 原型:
@@ -1062,7 +1072,7 @@
   - 返回:
     - 调用`bcos_sdk_get_last_error`接口判断是否成功，0表示成功，其他值表示错误码
   - 注意:
-    - 返回的`tx_hash`、`signed_tx`需要调用`free`释放，以免造成内存泄露
+    - 返回的`tx_hash`、`signed_tx`需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
   - **说明**:
     - `bcos_sdk_create_signed_transaction`相当于下面几个接口功能的组合，创建交易、交易哈希、交易签名流程需要分开处理时，使用下面几个接口:
       - `bcos_sdk_create_transaction_data`: 创建`TransactionData`
@@ -1126,4 +1136,4 @@
     - tx_hash: 返回值，交易哈希，十六进制c风格字符串
     - signed_tx: 返回值，签名的交易，十六进制c风格字符串
   - 注意:
-    - 返回的`tx_hash`、`signed_tx`需要调用`free`释放，以免造成内存泄露
+    - 返回的`tx_hash`、`signed_tx`需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
