@@ -145,7 +145,7 @@ python3 build_chain.py download_binary
 cd ~/fisco/BcosBuilder/max
 
 # 从conf目录拷贝配置
-cp conf/config-deploy-example.toml conf/config.toml
+cp conf/config-deploy-example.toml config.toml
 ```
 
 此时拷贝的`config.toml`为整个`BcosBuilder/max`使用的配置文件，配置详情请参考链接：[配置介绍](./max_builder.md)。
