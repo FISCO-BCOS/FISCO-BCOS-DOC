@@ -9,7 +9,7 @@
     相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
-Air版本FISCO BCOS主要包括创世块配置文件`config.genesis`和j节点配置文件`config.ini`:
+Air版本FISCO BCOS主要包括创世块配置文件`config.genesis`和节点配置文件`config.ini`:
 
 - `config.ini`：节点配置文件，主要配置RPC、P2P、SSL证书、账本数据路径、落盘加密等信息;
 - `config.genesis`：创世块配置文件，**须保证群组内所有节点的创世块配置一致**, **创世块配置文件在链初始化后不可更改**, 链初始化后，即使更改了创世块配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置。
@@ -24,7 +24,25 @@ Air版本FISCO BCOS主要包括创世块配置文件`config.genesis`和j节点�
     - **创世块配置文件在链初始化后不可更改**
     - 链初始化后，即使更改了创世块配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
 ```
-### 1.1 共识配置
+### 1.1 配置链信息
+
+`[chain]`配置节点的链信息，**该配置下的字段信息，一旦确定就不应该再更改**：
+
+- `[chain].sm_crypto`: 节点是否使用国密账本，默认为`false`;
+- `[chain].group_id`：群组ID，默认为`group0`;
+- `[chain].chain_id`：链ID，默认为`chain0`.
+
+```ini
+[chain]
+    ; use SM crypto or not, should nerver be changed
+    sm_crypto=false
+    ; the group id, should nerver be changed
+    group_id=group0
+    ; the chain id, should nerver be changed
+    chain_id=chain0
+```
+
+### 1.2 共识配置
 
 `[consensus]`涉及共识相关配置，包括：
 
@@ -44,7 +62,7 @@ node.0 = 94172c95917fbf47b4b98aba0cc68f83f61a06b0bc373695590f343464b52c9b40d5f4d
 node.1 = 74034fb43f75c63bb2259a63f71d9d1c658945409889d3028d257914be1612d1f2e80c4a777cb3e7929a0f0d671eac2fb9a99fa45d39f5451b6357b00c389a84:1
 ```
 
-### 1.2 gas配置
+### 1.3 gas配置
 
 FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易，创世块的`[tx].gas_limit`可配置交易最大gas限制，默认是3000000000，链初始化完毕后，可通过[控制台指令](../../develop/console/console_commands.html#setsystemconfigbykey)动态调整gas限制。
 
@@ -57,13 +75,13 @@ FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，E
 gas_limit = 3000000000
 ```
 
-### 1.3 数据兼容性配置
+### 1.4 数据兼容性配置
 
 FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
 
 - `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
 
-### 1.4 执行模块配置
+### 1.5 执行模块配置
 
 `[executor]`配置项涉及执行相关的创世块配置，主要包括：
 
@@ -156,25 +174,8 @@ RPC配置示例如下：
     private_key_path=conf/node.pem
 ```
 
-### 2.4 配置链信息
 
-`[chain]`配置节点的链信息，**该配置下的字段信息，一旦确定就不应该再更改**：
-
-- `[chain].sm_crypto`: 节点是否使用国密账本，默认为`false`;
-- `[chain].group_id`：群组ID，默认为`group0`;
-- `[chain].chain_id`：链ID，默认为`chain0`.
-
-```ini
-[chain]
-    ; use SM crypto or not, should nerver be changed
-    sm_crypto=false
-    ; the group id, should nerver be changed
-    group_id=group0
-    ; the chain id, should nerver be changed
-    chain_id=chain0
-```
-
-### 2.5 配置共识信息
+### 2.4 配置共识信息
 
 考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS在可变配置`config.ini`的`[consensus]`下引入`min_seal_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_seal_time`且打包的交易数大于0才会开始共识流程，处理打包生成的新区块。
 
@@ -191,7 +192,7 @@ RPC配置示例如下：
     min_seal_time=500
 ```
 
-### 2.6 配置存储信息
+### 2.5 配置存储信息
 
 存储配置位于`[storage]`，具体包括:
 
@@ -206,7 +207,7 @@ RPC配置示例如下：
     key_page_size=10240
 ```
 
-### 2.7 配置落盘加密
+### 2.6 配置落盘加密
 
 落盘加密配置选项位于`[storage_security]`:
 
@@ -223,7 +224,7 @@ RPC配置示例如下：
     cipher_data_key=
 ```
 
-### 2.8 配置交易池信息
+### 2.7 配置交易池信息
 
 交易池配置选项位于`[txpool]`:
 
@@ -244,7 +245,7 @@ notify_worker_num = 2
 txs_expiration_time = 600
 ```
 
-### 2.9 配置日志信息
+### 2.8 配置日志信息
 
 FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，日志配置主要位于`config.ini`的`[log]`配置项中。
 
