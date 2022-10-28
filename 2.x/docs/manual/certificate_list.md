@@ -253,7 +253,7 @@ $ bash stop.sh && bash start.sh
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 ```
 
-可看到只与两个节点建立的连接，未与node1建立连接
+可看到只与两个节点建立的连接，未与node3建立连接
 
 ``` json
 {
