@@ -177,15 +177,15 @@ Solidity部署参数：
 
 ```shell
 # 部署HelloWorld合约，默认路径
-[group0]: /apps>  deploy HelloWorld
+[group0]: /apps> deploy HelloWorld
 contract address:0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 
 # 部署HelloWorld合约，相对路径
-[group0]: /apps>  deploy contracts/solidity/HelloWorld.sol
+[group0]: /apps> deploy contracts/solidity/HelloWorld.sol
 contract address:0x4721D1A77e0E76851D460073E64Ea06d9C104194
 
 # 部署HelloWorld合约，绝对路径
-[group0]: /apps>  deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
+[group0]: /apps> deploy ~/fisco/console/contracts/solidity/HelloWorld.sol
 contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 
 # 开启静态分析选项
@@ -201,14 +201,13 @@ contract address: 0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94
 
 **Liquid部署参数：**
 
-- wasm二进制文件路径：cargo-liquid编译过后的wasm文件，支持绝对路径、相对路径
-- ABI文件路径：编译过后的ABI文件，支持绝对路径、相对路径
+- 二进制文件所在文件夹路径：cargo-liquid编译过后的wasm文件，以及ABI文件，均需要放在同一个路径下，支持绝对路径、相对路径
 - 部署BFS路径：BFS文件系统中的路径名
 - 部署构造参数：部署时所需要的构造参数
 
 ```shell
 # 部署HelloWorld合约，相对路径
-[group0]: /apps> deploy asset/asset.wasm asset/asset.abi asset_test
+[group0]: /apps> deploy asset asset_test
 transaction hash: 0x7498487dbf79378b5b50c4e36c09ea90842a343de307ee66d560d005d3c40ccb
 contract address: /asset_test
 currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
