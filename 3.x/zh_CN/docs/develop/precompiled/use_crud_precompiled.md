@@ -162,9 +162,32 @@ function select(string memory id) public view returns (string memory,string memo
 }
 ```
 
-### 3. WBC-Liquid合约使用KVTable接口
+#### 2.4 使用Condition读写多行数据
 
-#### 3.1 声明KVTable接口
+用户可以使用Table提供的具有Condition参数的接口，进行多行数据读写。
+
+**注意：** 目前的Condition只支持主键字段的范围筛选。
+
+读多行数据的核心代码如下，写多行数据的类似：
+
+```solidity
+function selectMore(string memory gt_id)
+    public
+    view
+    returns (Entry[] memory entries)
+{
+    Condition[] memory conds = new Condition[](1);
+    Condition memory gt = Condition({op: ConditionOP.GT, value: gt_id});
+    conds[0] = gt;
+    Limit memory limit = Limit({offset: 0, count: 100});
+    entries = table.select(conds, limit);
+    return entries;
+}
+```
+
+### 3. WBC-Liquid合约使用Table接口
+
+#### 3.1 声明Table接口
 
 在WBC-Liquid合约中使用接口之前先对KVTable的接口进行声明。
 

@@ -1099,7 +1099,7 @@ Update OK, 1 row affected.
 运行delete sql语句删除记录，使用mysql语句形式。
 
 ```text
-[group:1]> delete from t_demo where name = fruit and item_id = 1
+[group:1]> delete from t_demo where name = fruit
 Remove OK, 1 row affected.
 ```
 
