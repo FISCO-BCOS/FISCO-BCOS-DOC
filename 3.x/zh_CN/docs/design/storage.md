@@ -71,6 +71,7 @@ class TransactionalStorageInterface : public virtual StorageInterface
 
 ```
 
+
 ## Ari与Pro版本数据提交
 
 Air与Pro版本的提交与Max的区别在于一方面存储服务使用RocksDB作为后端数据库，另一方面执行服务与调度服务在同一进程中，不存在分布式事务的问题，相对于Max版本其提交逻辑较为简单，如下图所示。
