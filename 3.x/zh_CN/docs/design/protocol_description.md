@@ -139,3 +139,6 @@ FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/Ta
 |  ----  | ----  | ----  |
 |data|TransactionReceiptData|交易回执中所有用于计算哈希的字段编码数据|
 |dataHash|vector<byte>|交易回执编码|
+
+区块与交易相关数据结构的设计保证FISCO BCOS具备校验数据完整性功能。区块hash、交易默克尔树根、收据默克尔树根、状态默克尔树根、父块信息等字段，可以有效的验证区块的有效性与完整性，防止数据被篡改。
+并且，用户可通过在控制台调用相关接口获取区块信息，校验数据一致性。
