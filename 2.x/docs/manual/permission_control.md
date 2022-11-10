@@ -321,9 +321,9 @@ FISCO BCOS提供控制台命令使用权限功能（针对开发者，可以调�
 
 |命令名称|命令参数|功能|
 |:----|:-----|:----|
-|grantPermissionManager                |address               |授权账户的链管理员权限              |
-|revokePermissionManager             |address               |撤销账户的链管理员权限              |
-|listPermissionManager              |                      |查询拥有链管理员权限的账户列表                |
+|grantCommitteeMember                |address               |授权账户的链管理员权限              |
+|revokeCommitteeMember             |address               |撤销账户的链管理员权限              |
+|listCommitteeMembers              |                      |查询拥有链管理员权限的账户列表                |
 |grantDeployAndCreateManager          |address               |授权账户的部署合约和创建用户表权限    |
 |revokeDeployAndCreateManager       |address               |撤销账户的部署合约和创建用户表权限    |
 |listDeployAndCreateManager        |                      |查询拥有部署合约和创建用户表权限的账户列表|
