@@ -16,6 +16,7 @@
    - FISCO BCOS 3.0的系统架构，请参考 `这里 <../design/architecture.html>`_
    - FISCO BCOS 3.0 Air版本搭建和使用教程，请参考 `这里 <../tutorial/air/index.html>`_
    - FISCO BCOS 3.0 Pro版本搭建和使用教程，请参考 `这里 <../tutorial/pro/index.html>`_
+   - FISCO BCOS 3.0 Max版本搭建和使用教程，请参考 `这里 <../tutorial/max/index.html>`_
 ```
 
 ## 1. 搭建Air版本FISCO BCOS联盟链
@@ -48,7 +49,7 @@ sudo yum install -y curl openssl openssl-devel wget
 
 ```eval_rst
 .. note::
-   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/build_chain.sh && chmod u+x build_chain.sh
+   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```shell
@@ -56,10 +57,10 @@ sudo yum install -y curl openssl openssl-devel wget
 cd ~ && mkdir -p fisco && cd fisco
 
 # 下载建链脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.0-rc4/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.1/build_chain.sh && chmod u+x build_chain.sh
 
 # Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0-rc4/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 第三步. 搭建4节点非国密联盟链
@@ -91,6 +92,10 @@ Processing IP:127.0.0.1 Total:4
 [INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!
 [INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
 [INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Generate uuid success: e273464c-827d-47ce-921f-8c16d72234b0
+[INFO] Generate uuid success: b3a54d03-dadb-4cfb-9ae9-86d8ce507110
+[INFO] Generate uuid success: 1bf757a5-6649-4d35-9514-d7de95ea7306
+[INFO] Generate uuid success: 3c90d210-a202-4d46-a04b-89fcc8c47dd9
 ==============================================================
 [INFO] fisco-bcos Path     : bin/fisco-bcos
 [INFO] Auth Mode           : false
@@ -112,13 +117,13 @@ bash nodes/127.0.0.1/start_all.sh
 
 ```shell
 try to start node0
- node0 start successfully
 try to start node1
- node1 start successfully
 try to start node2
- node2 start successfully
 try to start node3
- node3 start successfully
+ node3 start successfully pid=36430
+ node2 start successfully pid=36427
+ node1 start successfully pid=36433
+ node0 start successfully pid=36428
 ```
 
 ### 第五步. 检查节点进程
@@ -151,10 +156,10 @@ tail -f nodes/127.0.0.1/node0/log/* |grep -i "heartBeat,connected count"
 正常情况下会每间隔10秒输出连接信息，从输出日志可看出node0与另外3个节点均有连接，网络连接正常：
 
 ```shell
-info|2021-11-23 14:36:13.839347|[P2PService][Service]heartBeat,connected count=3
-info|2021-11-23 14:36:23.844032|[P2PService][Service]heartBeat,connected count=3
-info|2021-11-23 14:36:33.848776|[P2PService][Service]heartBeat,connected count=3
-info|2021-11-23 14:36:43.852888|[P2PService][Service]heartBeat,connected count=3
+info|2022-08-15 19:38:59.270112|[P2PService][Service][METRIC]heartBeat,connected count=3
+info|2022-08-15 19:39:09.270210|[P2PService][Service][METRIC]heartBeat,connected count=3
+info|2022-08-15 19:39:19.270335|[P2PService][Service][METRIC]heartBeat,connected count=3
+info|2022-08-15 19:39:29.270427|[P2PService][Service][METRIC]heartBeat,connected count=3
 ```
 
 ## 2. 配置和使用控制台
@@ -176,7 +181,7 @@ sudo yum install -y java java-devel
 ### 第二步. 下载控制台
 
 ```
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc4/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.1/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -224,7 +229,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+Welcome to FISCO BCOS console(3.0.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -278,8 +283,8 @@ peer3: f0ffa45cee35dcc1bcf1e1ef7b7c3d96590c25ba75198a28ef5ceb89dc6bec310619cb685
 
 HelloWorld合约提供了两个接口`get()`和`set()`，用于获取/设置合约变量`name`，合约内容如下：
 
-```c++
-pragma solidity>=0.4.24 <0.6.11;
+```shell
+pragma solidity >=0.6.10 <0.8.20;
 contract HelloWorld {
     string name;
 

@@ -688,7 +688,7 @@ max_request_missedTxs_waitTime=100
 
 为了降低SDK直连节点的峰值出带宽，提升区块链系统可扩展性，FISCO BCOS v2.2.0引入了交易树状广播优化策略，详细设计请参考[这里](../design/sync/sync_trans_optimize.md)。可通过`group.group_id.ini`的`[sync].send_txs_by_tree`开启或关闭交易树状广播策略，详细配置如下：
 
-- `[sync].sync_block_by_tree`：设置为`true`，打开交易树状广播策略；设置为`false`，关闭交易树状广播优化策略
+- `[sync].sync_block_by_tree`：设置为`true`，打开交易树状广播优化策略；设置为`false`，关闭交易树状广播优化策略
 
 关闭交易树状广播策略的配置如下：
 

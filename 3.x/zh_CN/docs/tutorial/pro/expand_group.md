@@ -108,8 +108,8 @@ consensus_type = "pbft"
 # transaction gas limit
 gas_limit = "3000000000"
 # compatible version, can be dynamically upgraded through setSystemConfig
-# the default is 3.0.0-rc4
-compatibility_version="3.0.0-rc4"
+# the default is 3.0.0
+compatibility_version="3.0.0"
 
 [[agency]]
 name = "agencyA"
@@ -190,7 +190,7 @@ python3 build_chain.py chain -o deploy -t node
 * block_tx_count_limit: 1000
 * leader_period: 1
 * gas_limit: 3000000000
-* compatibility_version: 3.0.0-rc4
+* compatibility_version: 3.0.0
 * generate_genesis_config_nodeid success
 * store genesis config for chain0.group2
 	 path: generated/chain0/group2/config.genesis
@@ -302,7 +302,7 @@ mod hello_world {
 ```shell
 $ bash start group2
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+Welcome to FISCO BCOS console(3.0.1)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -315,6 +315,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
 =============================================================================================
+
 # 获取当前群组列表
 [group2]: /> getGroupList
 ["group", "group2"]

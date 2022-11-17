@@ -9,7 +9,7 @@
    FISCO BCOS 3.x数据和编码协议的实现位于仓库 `bcos-tars-protocol <https://github.com/FISCO-BCOS/bcos-tars-protocol>`_
 ```
 
-FISCO BCOS 3.x默认采用[tars](https://newdoc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/base/tars-protocol.md)编码协议，本章主要介绍FISCO BCOS 3.x基础数据结构的编码协议。
+FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/base/tars-protocol.md)编码协议，本章主要介绍FISCO BCOS 3.x基础数据结构的编码协议。
 ## 1. 区块头数据结构
 
 区块头的tars定义可参考[这里](https://github.com/FISCO-BCOS/bcos-tars-protocol/blob/main/bcos-tars-protocol/tars/Block.tars)。
@@ -139,3 +139,6 @@ FISCO BCOS 3.x默认采用[tars](https://newdoc.tarsyun.com/#/markdown/TarsCloud
 |  ----  | ----  | ----  |
 |data|TransactionReceiptData|交易回执中所有用于计算哈希的字段编码数据|
 |dataHash|vector<byte>|交易回执编码|
+
+区块与交易相关数据结构的设计保证FISCO BCOS具备校验数据完整性功能。区块hash、交易默克尔树根、收据默克尔树根、状态默克尔树根、父块信息等字段，可以有效的验证区块的有效性与完整性，防止数据被篡改。
+并且，用户可通过在控制台调用相关接口获取区块信息，校验数据一致性。

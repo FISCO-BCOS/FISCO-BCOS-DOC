@@ -131,8 +131,7 @@ contract SystemConfigPrecompiled
 完整solidity请[参考这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master-2.0/libprecompiled/solidity/Table.sol)
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
-
+pragma solidity >=0.6.10 <0.8.20;
 contract TableFactory {
     function openTable(string tableName) public view returns (Table); //open table
     function createTable(string tableName, string keyField, string valueFields) public returns (int256); //create table
@@ -467,7 +466,7 @@ contract ChainGovernancePrecompiled {
 #### 接口声明
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity >=0.6.10 <0.8.20;
 //one record
 contract Entry {
     function getInt(string memory) public view returns (int256) {}
