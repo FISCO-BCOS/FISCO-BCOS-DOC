@@ -77,7 +77,9 @@ FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/Ta
 |to |string | optional，交易接收方地址 |
 |input |vector<byte> | require，与交易相关的数据，包含了交易调用的函数、参数等信息|
 
+hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
+![](../../images/design/generate_hash_process.png)
 ### 3.2 Transaction
 
 交易所有字段的定义:
@@ -142,3 +144,54 @@ FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/Ta
 
 区块与交易相关数据结构的设计保证FISCO BCOS具备校验数据完整性功能。区块hash、交易默克尔树根、收据默克尔树根、状态默克尔树根、父块信息等字段，可以有效的验证区块的有效性与完整性，防止数据被篡改。
 并且，用户可通过在控制台调用相关接口获取区块信息，校验数据一致性。
+
+### 4.4 原生交易
+基于Blockchain中的smallBank合约，FISCO BCOS实现了基于solidity合约版与预编译合约版，FISCO BCOS将smallBank此类账户间的转账交易定义为FISCOBCOS的原生交易。
+
+smallBank solidity合约代码如下：
+```
+pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
+
+import "./SafeMath.sol";
+
+contract Account
+{
+using SafeMath for uint256;
+
+    function balance() public view returns(uint256) {
+        return m_balance;
+    }
+    
+    function addBalance(uint256 num) public {
+        m_balance = m_balance.add(num);
+    }
+    
+    function subBalance(uint256 num) public {
+        m_balance = m_balance.sub(num);
+    }
+    
+    function transfer(address to, uint256 num) public
+    {
+        if (to != address(this)) {
+            uint256 _balance = m_balance;
+
+            Account toAccount = Account(to); // DMC out
+            toAccount.addBalance(num);
+
+            // To check the _balance is the same after DMC scheduling out
+            m_balance = _balance - num;
+        } else {
+            subBalance(num);
+            Account toAccount = Account(to); // DMC out
+            toAccount.addBalance(num);
+        }
+    }
+    
+    uint256 m_balance;
+}
+
+```
+节点可通过部署合约smallBank，产生原生交易。此外，smallbank也提供预编译合约方式<../../manual/precompiled_contract.md>，通过调用smallBank预编译合约地址即可实现。
+
+![blockChain](https://github.com/ooibc88/blockbench)
