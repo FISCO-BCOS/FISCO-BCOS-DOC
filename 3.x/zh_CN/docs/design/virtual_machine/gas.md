@@ -120,7 +120,7 @@ RingSigVerify | 20000 |
 
 为了支持Gas衡量标准插件化配置和FreeStorage的Gas衡量模式，FISCO BCOS v2.4.0在以太坊EVMSchedule引入`FreeStorageEVMSchedule`，在PrecopmiledGas的GasMetrics基础上引入了`FreeStorageGasMetrics`，并根据`genesis`文件的`enable_free_storage`配置项决定启用哪种Gas衡量模式，如下图所示：
 
-![](../../images/evm/free_storage.png)
+![](../../../images/evm/free_storage.png)
 
 为了提升CPU和内存在交易Gas消耗中的占比，`FreeStorageEVMSchedule`调整了创建合约、`SSTORE`、`SLOAD`等操作的Gas消耗；`FreeStorageGasMetrics`主要调整了`CreateTable`、`Insert`、`Remove`、`Update`等操作的Gas消耗。
 
