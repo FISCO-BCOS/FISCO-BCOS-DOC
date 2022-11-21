@@ -20,15 +20,16 @@
 
 **FISCO BCOS共识算法**
 
-FISCO BCOS基于多群组架构实现了插件化的共识算法，不同群组可运行不同的共识算法，组与组之间的共识过程互不影响，FISCO BCOS目前支持PBFT(Practical Byzantine Fault Tolerance),并在其基础上进行了优化
+FISCO BCOS基于多群组架构实现了插件化的共识算法，不同群组可运行不同的共识算法，组与组之间的共识过程互不影响，FISCO BCOS目前支持PBFT(Practical Byzantine Fault Tolerance)和Raft(Replication and Fault Tolerant)两种共识算法：
+
 - **PBFT共识算法**: BFT类算法，可容忍不超过三分之一的故障节点和作恶节点，可达到最终一致性；
+- **Raft共识算法**: CFT类算法, 可容忍一半故障节点，不能防止节点作恶，可达到一致性。
 
 
 
 .. toctree::
    :maxdepth: 1
-   
+
 
    pbft.md
    pbft_optimize.md
-   consensus.md

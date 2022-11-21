@@ -34,7 +34,7 @@ ___
    architecture.md
    tx_procedure.md
    protocol_description.md
-   consensus/index.rsx
+   consensus/index.rst
    sync.md
    storage.md
    DMC.md
