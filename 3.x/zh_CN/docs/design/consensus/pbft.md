@@ -237,8 +237,3 @@ PBFT共识算法中，共识节点轮流出块，每一轮共识仅有一个lead
 - **缓存有效ViewChange包**： 防止相同的ViewChange请求被处理多次，也作为判断节点是否可以切换视图的统计依据；
 
 - **收集ViewChange包**：若收到的ViewChange包中附带的view等于本节点的即将切换到的视图toView且本节点收集满`2*f+1`来自不同节点view等于toView的ViewChange包，则说明超过三分之二的节点要切换到toView视图，切换当前视图到toView。
-
-
-
-
-
