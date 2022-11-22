@@ -17,8 +17,7 @@ EVMC (Ethereum Client-VM Connector API)，是以太坊抽象出来的执行器�
 
 在节点上，共识模块会调用EVMC，将打包好的交易交由执行器执行。执行器执行时，对状态进行的读写，会通过EVMC的回调反过来操作节点上的状态数据。
 
-经过EVMC一层的抽象，FISCO BCOS能够对接今后出现的更高效、易用性更强的执行器。目前，FISCO BCOS采用的是传统的EVM根据EVMC抽象出来的执行器---Interpreter。因此能够支持基于Solidity语言的智能合约。目前其他类型的执行器发展尚未成熟，后续将持续跟进。
-
+经过EVMC一层的抽象，FISCO BCOS能够对接今后出现的更高效、易用性更强的执行器。目前，FISCO BCOS采用的evmone执行solidity合约，采用wasmtime执行wasm合约。
 
 .. toctree::
    :maxdepth: 1

@@ -47,7 +47,7 @@ FISCO BCOS 优化了PBFT消息转发机制和Prepare包的结构，尽量减少�
 
 ## Prepare包结构优化
 
-PBFT共识算法中，Leader向所有节点广播Prepare包，Prepare包内包含Leader节点从交易池打包的整个区块，由于同步模块会将交易同步到所有共识节点，因此Prepare包内区块的交易有很大概率在其他共识节点的交易池命中。基于这点，FISCO BCOS 2.2.0优化了Prepare包结构，Prepare消息包内的区块仅包含交易哈希，其他节点收到Prepare包后，优先从本地交易池内获取命中交易，缺失的交易向Leader请求。
+PBFT共识算法中，Leader向所有节点广播Prepare包，Prepare包内包含Leader节点从交易池打包的整个区块，由于同步模块会将交易同步到所有共识节点，因此Prepare包内区块的交易有很大概率在其他共识节点的交易池命中。基于这点，FISCO BCOS 优化了Prepare包结构，Prepare消息包内的区块仅包含交易哈希，其他节点收到Prepare包后，优先从本地交易池内获取命中交易，缺失的交易向Leader请求。
 
 优化后的Prepare消息包内的区块结构如下：
 
