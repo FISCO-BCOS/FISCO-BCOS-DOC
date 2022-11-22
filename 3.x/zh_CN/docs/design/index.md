@@ -34,11 +34,12 @@ ___
    architecture.md
    tx_procedure.md
    protocol_description.md
-   consensus.md
+   consensus/index.rst
    sync.md
    storage.md
    DMC.md
    contract_directory.md
+   virtual_machine/index.rst
    committee_design.md
    storage_security.md
 ```
