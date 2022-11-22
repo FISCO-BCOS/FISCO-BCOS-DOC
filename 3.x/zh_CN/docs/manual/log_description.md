@@ -4,7 +4,7 @@
 
 ----
 
-FISCO BCOS的所有群组日志都输出到log目录下`log_%YYYY%mm%dd%HH.%MM`的文件中，且定制了日志格式，方便用户通过日志查看各群组状态。日志配置说明请参考[日志配置说明](./configuration.html#id6)
+FISCO BCOS的所有群组日志都输出到log目录下`log_%YYYY%mm%dd%HH.%MM`的文件中，且定制了日志格式，方便用户通过日志查看链运行状态。
 
 ## 日志格式
 
@@ -12,10 +12,11 @@ FISCO BCOS的所有群组日志都输出到log目录下`log_%YYYY%mm%dd%HH.%MM`�
 
 ```bash
 # 日志格式：
-log_level|time|[g:group_id][module_name] content
+log_level|time|[module_name] content
 
 # 日志示例：
-info|2019-06-26 16:37:08.253147|[g:3][CONSENSUS][PBFT]^^^^^^^^Report,num=0,sealerIdx=0,hash=a4e10062...,next=1,tx=0,nodeIdx=2
+
+info|2022-11-21 20:00:35.479505|[SCHEDULER][blk-1]BlockExecutive prepare: fillBlock end,txNum=1,cost=0,fetchNum=1
 ```
 
 各字段含义如下：
@@ -23,8 +24,6 @@ info|2019-06-26 16:37:08.253147|[g:3][CONSENSUS][PBFT]^^^^^^^^Report,num=0,seale
 - `log_level`: 日志级别，目前主要包括`trace`, `debug`, `info`, `warning`, `error`和`fatal`，其中在发生极其严重错误时会输出`fatal`
 
 - `time`: 日志输出时间，精确到纳秒
-
-- `group_id`: 输出日志记录的群组ID
 
 - `module_name`：模块关键字，如同步模块关键字为`SYNC`，共识模块关键字为`CONSENSUS`
 
@@ -45,31 +44,38 @@ info|2019-06-26 16:37:08.253147|[g:3][CONSENSUS][PBFT]^^^^^^^^Report,num=0,seale
 
 下面是共识打包日志的示例：
 ```bash
-info|2019-06-26 18:00:02.551399|[g:2][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=3,hash=1f9c2b14...
+info|2022-11-21 20:00:45.530293|[CONSENSUS][PBFT]addCheckPointMsg,reqHash=c2e031c8...,reqIndex=2,reqV=9,fromIdx=3,Idx=1,weight=4,minRequiredWeight=3
 ```
+- `reqHash`：PBFT请求的哈希
+- `reqIndex`：PBFT请求对应的块高
+- `reqV`:  PBFT请求对应的视图
+- `fromIdx`: 产生该PBFT请求的节点索引编号
+- `Idx`: 当前节点索引编号
+- `weight`: 该请求对应的proposal的共识总权重
+- `minRequiredWeight`: 该请求对应的proposal达成共识所需的最小投票权重
 
-日志中各字段的含义如下：
-- `blkNum`: 打包区块的高度
-- `tx`: 打包区块中包含的交易数
-- `nodeIdx`: 当前共识节点的索引
-- `hash`: 打包区块的哈希
 
-
-**共识异常日志**
+**异常日志**
 
 网络抖动、网络断连或配置出错(如同一个群组的创世块文件不一致)均有可能导致节点共识异常，PBFT共识节点会输出`ViewChangeWarning`日志，示例如下：
 
 ```bash
-warning|2019-06-26 18:00:06.154102|[g:1][CONSENSUS][PBFT]ViewChangeWarning: not caused by omit empty block ,v=5,toV=6,curNum=715,hash=ed6e856d...,nodeIdx=3,myNode=e39000ea...
+warning|2022-11-17 00:58:03.621465|[CONSENSUS][PBFT]onCheckPointTimeout: resend the checkpoint message package,index=176432,hash=d411d77d...,committedIndex=176431,consNum=176432,committedHash=ecac3705...,view=1713,toView=1713,changeCycle=0,expectedCheckPoint=176433,Idx=0,unsealedTxs=168,sealUntil=176432,waitResealUntil=176431,nodeId=0318568d...
 ```
-该日志各字段含义如下：
-
-- v: 当前节点PBFT共识视图
-- toV: 当前节点试图切换到的视图
-- curNum: 节点最高块高
-- hash: 节点最高块哈希
-- nodeIdx: 当前共识节点索引
-- myNode: 当前节点Node ID
+- `index`：共识索引号
+- `hash`： 共识区块哈希
+- `committedIndex`: 落盘区块块高
+- `consNum`:  下一个共识区块块高
+- `committedHash`: 落盘区块哈希
+- `view`: 当前视图
+- `toview`:  下一个视图
+- `changeCycle`: 当前的超时时钟周期
+- `expectedCheckPoint`: 下一个待执行的区块块高
+- `Idx`: 当前节点的索引编号
+- `sealUntil`:  可以打包产生下一个区块的区块高度，在有系统区块的场景下，当且仅当落盘高度超过sealUntil时才可以打包产生下一个区块
+- `waitResealUntil`: 同上，可以打包产生下一个区块的区块高度，在有视图切换 + 系统区块的场景下，当且仅当落盘高度超过waitResealUntil时才可以打包产生下一个区块
+- `unsealedTxs`: 交易池里未打包的交易数目
+- `nodeId`: 当前共识节点id
 
 
 **区块落盘日志**
@@ -79,22 +85,30 @@ warning|2019-06-26 18:00:06.154102|[g:1][CONSENSUS][PBFT]ViewChangeWarning: not 
 ```eval_rst
 .. note::
 
-    向节点发交易，若交易被处理，非游离节点均会输出落盘日志(节点目录下可通过命令 ``tail -f log/* | grep "${group_id}.*Report"`` 查看节点出块情况)，若没有输出该日志，说明节点已处于异常状态，请优先检查网络连接是否正常、节点证书是否有效
+    向节点发交易，若交易被处理，非游离节点均会输出落盘日志(节点目录下可通过命令 ``tail -f log/* | grep "Report"`` 查看节点出块情况)，若没有输出该日志，说明节点已处于异常状态，请优先检查网络连接是否正常、节点证书是否有效
 
 ```
 
 下面是区块落盘日志：
 ```bash
-info|2019-06-26 18:00:07.802027|[g:1][CONSENSUS][PBFT]^^^^^^^^Report,num=716,sealerIdx=2,hash=dfd75e06...,next=717,tx=8,nodeIdx=3
+info|2022-11-21 20:00:45.531121|[CONSENSUS][PBFT][METRIC]^^^^^^^^Report,sealer=3,txs=1,committedIndex=2,consNum=3,committedHash=c2e031c8...,view=9,toView=9,changeCycle=0,expectedCheckPoint=3,Idx=1,unsealedTxs=0,sealUntil=0,waitResealUntil=0,nodeId=8f69046f...
 ```
 
 日志中各字段说明如下：
-- `num`: 落盘区块块高
-- `sealerIdx`: 打包该区块的共识节点索引
-- `hash`: 落盘区块哈希
-- `next`: 下一个区块块高
-- `tx`: 落盘区块中包含的交易数
-- `nodeIdx`: 当前共识节点索引
+- `sealer`： 产生该proposal的共识节点索引编号
+- `txs`： 块内包含的交易数
+- `committedIndex`: 落盘区块块高
+- `consNum`:  下一个共识区块块高
+- `committedHash`: 落盘区块哈希
+- `view`: 当前视图
+- `toview`:  下一个视图
+- `changeCycle`: 当前的超时时钟周期
+- `expectedCheckPoint`: 下一个待执行的区块块高
+- `Idx`: 当前节点的索引编号
+- `sealUntil`:  可以打包产生下一个区块的区块高度，在有系统区块的场景下，当且仅当落盘高度超过sealUntil时才可以打包产生下一个区块
+- `waitResealUntil`: 同上，可以打包产生下一个区块的区块高度，在有视图切换 + 系统区块的场景下，当且仅当落盘高度超过waitResealUntil时才可以打包产生下一个区块
+- `unsealedTxs`: 交易池里未打包的交易数目
+- `nodeId`: 当前共识节点id
 
 
 **网络连接日志**
@@ -107,7 +121,7 @@ info|2019-06-26 18:00:07.802027|[g:1][CONSENSUS][PBFT]^^^^^^^^Report,num=716,sea
 
 日志示例如下：
 ```bash
-info|2019-06-26 18:00:01.343480|[P2P][Service] heartBeat,connected count=3
+info|2022-08-15 19:38:59.270112|[P2PService][Service][METRIC]heartBeat,connected count=3
 ```
 
 日志中各字段含义如下：
@@ -122,19 +136,15 @@ FISCO BCOS日志中核心模块关键字如下：
 | :--- | :---- |
 | 区块链初始化模块 | INITIALIZER |
 | 网络基础模块 | NETWORK |
-| P2P网络模块 | P2P |
-| ChannelRPC模块 |  CHANNEL |
-| RPC模块| RPC |
+| P2P网络模块 | P2PService |
 | 账本模块 |LEDGER|
 | 共识区块打包模块 |CONSENSUS, SEALER|
 | PBFT共识处理模块 | CONSENSUS, PBFT|
-| RAFT共识处理模块 | CONSENSUS, RAFTENGINE|
 | 区块/交易同步模块 |SYNC|
 | 交易池 |TXPOOL|
-| 区块链模块 | BLOCKCHAIN |
-| 区块验证器模块    | BLOCKVERIFIER |
-| DAG模块 |DAG |
-| 区块执行模块 | EXECUTIVECONTEXT|
-| Precompile合约 |PRECOMPILED|
+| Amop模块 | AMOP |
+| 调度器    | SCHEDULER |
+| 执行器    | EXECUTOR |
+| 网关 |Gateway |
 | 存储中间件模块 |STORAGE|
-| MySQL存储引擎  |ZdbStorage|
+| 链工具 |TOOL|

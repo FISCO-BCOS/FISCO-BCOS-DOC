@@ -146,52 +146,6 @@ hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 并且，用户可通过在控制台调用相关接口获取区块信息，校验数据一致性。
 
 ### 4.4 原生交易
-基于Blockchain中的smallBank合约，FISCO BCOS实现了基于solidity合约版与预编译合约版，FISCO BCOS将smallBank此类账户间的转账交易定义为FISCOBCOS的原生交易。
+FISCO BCOS实现了基于solidity合约与预编译版的smallBank合约。smallBank源于blockBench，被业界与学术界公认为区块链系统基础测试之一，FISCO BCOS将smallBank实现了账户间实现转账的交易定义为原生交易。
+通过部署合约smallBank，最终与EVM中执行。smallBank也提供预编译合约方式，通过调用smallBank预编译合约地址即可实现。
 
-smallBank solidity合约代码如下：
-```
-pragma solidity ^0.6.0;
-pragma experimental ABIEncoderV2;
-
-import "./SafeMath.sol";
-
-contract Account
-{
-using SafeMath for uint256;
-
-    function balance() public view returns(uint256) {
-        return m_balance;
-    }
-    
-    function addBalance(uint256 num) public {
-        m_balance = m_balance.add(num);
-    }
-    
-    function subBalance(uint256 num) public {
-        m_balance = m_balance.sub(num);
-    }
-    
-    function transfer(address to, uint256 num) public
-    {
-        if (to != address(this)) {
-            uint256 _balance = m_balance;
-
-            Account toAccount = Account(to); // DMC out
-            toAccount.addBalance(num);
-
-            // To check the _balance is the same after DMC scheduling out
-            m_balance = _balance - num;
-        } else {
-            subBalance(num);
-            Account toAccount = Account(to); // DMC out
-            toAccount.addBalance(num);
-        }
-    }
-    
-    uint256 m_balance;
-}
-
-```
-节点可通过部署合约smallBank，产生原生交易。此外，smallbank也提供预编译合约方式<../../manual/precompiled_contract.md>，通过调用smallBank预编译合约地址即可实现。
-
-![blockChain](https://github.com/ooibc88/blockbench)

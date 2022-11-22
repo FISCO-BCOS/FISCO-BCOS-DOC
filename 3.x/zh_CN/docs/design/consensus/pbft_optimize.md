@@ -4,7 +4,7 @@
 
 ----
 
-FISCO BCOS v2.2.0优化了PBFT消息转发机制和Prepare包的结构，尽量减少网络中冗余的数据包，提升网络效率。
+FISCO BCOS 优化了PBFT消息转发机制和Prepare包的结构，尽量减少网络中冗余的数据包，提升网络效率。
 
 
 ## PBFT消息转发优化
@@ -28,22 +28,9 @@ FISCO BCOS v2.2.0优化了PBFT消息转发机制和Prepare包的结构，尽量�
 
 ![](../../../../../2.x/images/consensus/pbft_forward_demo.png)
 
-为了在网络全连的情况下，避免冗余的共识消息包；在网络断连情况下，共识消息包能尽量到达每个共识节点，FISCO BCOS v2.2.0对PBFT消息转发机制进行了优化，优化后的PBFT消息转发流程如下：
+为了在网络全连的情况下，避免冗余的共识消息包；在网络断连情况下，共识消息包能尽量到达每个共识节点，FISCO BCOS对PBFT消息转发机制进行了优化，优化后的PBFT消息转发流程如下：
 
-```eval_rst
-.. mermaid::
-
-    sequenceDiagram
-        participant ConsensusNodeA
-        participant ConsensusNodeB
-        participant Neighbors Of ConsensusNodeB
-        
-        ConsensusNodeA->>ConsensusNodeA: 获取断连共识节点列表forwardNodes
-        ConsensusNodeA->>ConsensusNodeB: 发送PBFT消息msg{id, ttl, forwardNodes}
-        ConsensusNodeB->>ConsensusNodeB: 更新forwardNodes
-        Note right of ConsensusNodeB: forwardNodes不为空，<br/>将forwardNodes中<br/>非邻居节点过滤出来，<br/>记为forwardNodes2<br/>若forwardNodes为空，<br/>不转发PBFT消息
-        ConsensusNodeB->>Neighbors Of ConsensusNodeB: 转发msg{id, ttl, forwardNodes2}
-```
+![](../../../images/design/pbft_optimize.png)
 
 
 下图展示了四节点区块链系统在节点断连情况下，PBFT消息包转发流程：
