@@ -36,9 +36,10 @@ ___
    protocol_description.md
    consensus.md
    sync.md
-   storage.md
+   storage/storage.md
    DMC.md
    contract_directory.md
    committee_design.md
-   storage_security.md
+   storage/storage_security.md
+   storage/archive.md
 ```
