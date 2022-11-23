@@ -302,7 +302,7 @@ mod hello_world {
 ```shell
 $ bash start group2
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.1)!
+Welcome to FISCO BCOS console(3.1.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
