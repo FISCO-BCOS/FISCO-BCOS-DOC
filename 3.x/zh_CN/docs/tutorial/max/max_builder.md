@@ -293,7 +293,7 @@ name = "agencyA"
 enable_storage_security = false
 # url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
 # key_center_url =
-# cipher_data_key = 
+# cipher_data_key =
 
     [agency.gateway]
     deploy_ip=["172.25.0.5"]
@@ -338,7 +338,7 @@ name = "agencyA"
         enable_storage_security = false
         # url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
         # key_center_url =
-        # cipher_data_key = 
+        # cipher_data_key =
 ```
 
 ### 3.4 区块链执行器扩容配置
@@ -389,3 +389,7 @@ python3 build_chain.py chain -c config-node-expand-example.toml -o expand -t exe
 在扩容后，可通过tars管理台对executor进行停止或重启的操作。executor停止或重启后，无需重启相应的区块链节点进程，节点会自动与所有在线的executor重建交易执行上下文。交易执行器的多机部署，提升了交易执行性能的同时，也提高了系统的稳定性。
 
 ![](../../../images/tutorial/expand_executor2.png)
+
+### TiKV扩容
+
+max节点在生产环境建议使用TIKV的集群版，TiKV集群版作为节点的后端可以轻松简单的实现扩容缩容。具体的扩容缩容操作指令[请参考官方文档](https://docs.pingcap.com/zh/tidb/dev/scale-tidb-using-tiup)。
