@@ -12,10 +12,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    FISCO BCOS 3.x版本源码位于 `master` 分支，请参考 `这里 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master>`_
    FISCO BCOS 2.x版本源码位于 `master-2.0` 分支，请参考 `这里 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_
 
-.. container:: row 
-   
+.. container:: row
+
    .. container:: card-holder
-      
+
       .. container:: card rocket
 
          .. raw:: html
@@ -23,7 +23,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <br>
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速开始</h>
             <br><br>
-         
+
          - `了解FISCO BCOS区块链 <./docs/introduction.html>`_
          - `FISCO BCOS 3.X新特性 <./docs/change_log/index.html>`_
          - `搭建第一个区块链网络 <./docs/quick_start/air_installation.html>`_
@@ -31,7 +31,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
          - `开发第一个webankblockchain-liquid区块链应用 <./docs/quick_start/wbc_liquid_application.html>`_
 
    .. container:: card-holder
-      
+
       .. container:: card manuals
 
          .. raw:: html
@@ -39,14 +39,14 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <br>
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开发教程</h>
             <br><br>
-         
+
          - `Air版本区块链网络搭建 <./docs/tutorial/air/index.html>`_
          - `Pro版本区块链网络搭建 <./docs/tutorial/pro/index.html>`_
          - `轻节点搭建 <./docs/tutorial/lightnode/build_chain.html>`_
          - `FISCO BCOS Java SDK <./docs/develop/sdk/index.html>`_
 
    .. container:: card-holder-bigger
-      
+
       .. container:: card-bigger rocket
 
          .. raw:: html
@@ -55,10 +55,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用工具</h>
             <br><br>
 
-         .. container:: tools 
-         
+         .. container:: tools
+
             .. raw:: html
-         
+
                <img src="installation/build_chain.png" class="card-holder" >
                <div class="tools-holder">
                   <br>
@@ -72,10 +72,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
             <hr>
 
-         .. container:: tools 
+         .. container:: tools
 
             .. raw:: html
-         
+
                <div class="tools-holder">
                   <br>
                   <h style="font-size: 18px;"><b><a href="./docs/develop/console/index.html">命令行交互控制台：节点查询与管理工具</a></b></h>
@@ -89,10 +89,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
             <hr>
 
-         .. container:: tools 
-         
+         .. container:: tools
+
             .. raw:: html
-         
+
                <img src="webase/webase-web.png" class="card-holder">
                <div class="tools-holder">
                   <h style="font-size: 18px;"><b><a href="./docs/components/webase.html">图形化的区块链管理工具</a></b></h>
@@ -103,10 +103,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <br><br>
 
          .. raw:: html
-            
+
             <hr>
 
-         .. container:: tools 
+         .. container:: tools
 
             .. raw:: html
 
@@ -119,10 +119,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <div style="clear:both"></div>
 
             .. raw:: html
-            
+
                <hr>
 
-         .. container:: tools 
+         .. container:: tools
 
             .. raw:: html
 
@@ -135,10 +135,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <div style="clear:both"></div>
 
             .. raw:: html
-            
+
                <hr>
 
-         .. container:: tools 
+         .. container:: tools
 
             .. raw:: html
 
@@ -149,10 +149,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                </div>
                <img src="governance/SmartDev/smartdev_overview.png" class="card-holder">
                <div style="clear:both"></div>
-               
+
 
    .. container:: card-holder
-      
+
       .. container:: card ref
 
          .. raw:: html
@@ -160,14 +160,14 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <br>
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统设计</h>
             <br><br>
-         
+
          - `系统架构 <./docs/design/architecture.html>`_
          - `两阶段并行拜占庭共识 <./docs/design/consensus.html>`_
          - `合约目录 <./docs/design/contract_directory.html>`_
          - `更多设计文档 <./docs/design/index.html>`_
 
    .. container:: card-holder
-      
+
       .. container:: card rocket
 
          .. raw:: html
@@ -175,7 +175,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <br>
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;社区资源</h>
             <br><br>
-         
+
          - `Github主页 <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
          - `贡献代码 <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
          - `反馈问题 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
@@ -184,7 +184,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
 
    .. container:: card-holder-bigger
-      
+
       .. container:: card-bigger rocket
 
          .. raw:: html
@@ -196,16 +196,16 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <img src="_static/images/products.jpeg" class="card-holder-full">
 
 
-         .. container:: tools 
+         .. container:: tools
 
             .. raw:: html
 
-            - **FISCO BCOS企业级金融联盟链底层平台**: `[GitHub] <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ `[Gitee] <https://gitee.com/FISCO-BCOS>`_ `[文档] <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html>`_ 
-            - **区块链中间件平台**：`[GitHub] <https://github.com/WeBankFinTech/WeBASE>`_ `[Gitee] <https://gitee.com/WeBank/WeBASE>`_  `[文档] <https://webasedoc.readthedocs.io/>`_ 
-            - **WeIdentity 基于区块链的实体身份标识及可信数据交换解决方案**: `[GitHub] <https://github.com/WeBankFinTech/WeIdentity>`_ `[Gitee] <https://gitee.com/WeBank/WeIdentity>`_ `[文档] <https://weidentity.readthedocs.io/>`_ 
-            - **WeDPR 即时可用，场景式隐私保护高效解决方案套件和服务**：`[GitHub] <https://github.com/WeBankBlockchain/WeDPR-Lab-Core>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto>`_ `[文档] <https://wedpr-lab.readthedocs.io/>`_ 
-            - **WeCross 区块链跨链协作平台**: `[GitHub] <https://github.com/WeBankBlockchain/WeCross>`_ `[Gitee] <https://gitee.com/WeBank/WeCross>`_ `[文档] <https://wecross.readthedocs.io/>`_ 
-            - **Truora 可信预言机服务**：`[GitHub] <https://github.com/WeBankBlockchain/Truora>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Truora>`_  `[文档] <https://truora.readthedocs.io/>`_ 
+            - **FISCO BCOS企业级金融联盟链底层平台**: `[GitHub] <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ `[Gitee] <https://gitee.com/FISCO-BCOS>`_ `[文档] <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html>`_
+            - **区块链中间件平台**：`[GitHub] <https://github.com/WeBankFinTech/WeBASE>`_ `[Gitee] <https://gitee.com/WeBank/WeBASE>`_  `[文档] <https://webasedoc.readthedocs.io/>`_
+            - **WeIdentity 基于区块链的实体身份标识及可信数据交换解决方案**: `[GitHub] <https://github.com/WeBankFinTech/WeIdentity>`_ `[Gitee] <https://gitee.com/WeBank/WeIdentity>`_ `[文档] <https://weidentity.readthedocs.io/>`_
+            - **WeDPR 即时可用，场景式隐私保护高效解决方案套件和服务**：`[GitHub] <https://github.com/WeBankBlockchain/WeDPR-Lab-Core>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto>`_ `[文档] <https://wedpr-lab.readthedocs.io/>`_
+            - **WeCross 区块链跨链协作平台**: `[GitHub] <https://github.com/WeBankBlockchain/WeCross>`_ `[Gitee] <https://gitee.com/WeBank/WeCross>`_ `[文档] <https://wecross.readthedocs.io/>`_
+            - **Truora 可信预言机服务**：`[GitHub] <https://github.com/WeBankBlockchain/Truora>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Truora>`_  `[文档] <https://truora.readthedocs.io/>`_
             - **webankblockchain-liquid（简称WBC-Liquid）智能合约编程语言软件**：`[GitHub] <https://github.com/WeBankBlockchain/liquid>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/liquid>`_  `[文档] <https://liquid-doc.readthedocs.io/>`_
             - **WeBankBlockchain-Data 数据治理通用组件**：
                - Data-Stash 数据仓库组件： `[GitHub] <https://github.com/WeBankBlockchain/Data-Stash>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Data-Stash>`_  `[文档] <https://data-doc.readthedocs.io/zh_CN/stable/docs/WeBankBlockchain-Data-Stash/index.html>`_
@@ -250,12 +250,11 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/tutorial/air/index.md
    docs/tutorial/pro/index.md
    docs/tutorial/max/index.md
-   
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链应用开发教程
+   :caption: 区块链应用开发
 
    docs/develop/sdk/index.md
    docs/develop/console/index.md
@@ -265,13 +264,14 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/develop/stress_testing.md
    docs/develop/committee_usage.md
    docs/develop/light_monitor.md
-
+   docs/develop/data_archive_tool.md
+   docs/develop/storage_tool.md
 
 .. toctree::
    :hidden:
-   :maxdepth: 1 
+   :maxdepth: 1
    :caption: 区块链开发原理
-   
+
    docs/design/index.md
    docs/components/index.md
    Java SDK JavaDoc <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/javadoc/index.html>
