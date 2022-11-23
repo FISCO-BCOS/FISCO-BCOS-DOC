@@ -19,7 +19,7 @@
 Precompiled的架构如下图所示：
 - 区块验证器在执行交易的时候会根据被调用合约的地址来判断类型。地址1-4表示以太坊预编译合约，地址0x1000-0x10000是C++预编译合约，其他地址是EVM合约。
 
-![](../../images/precompiled/architecture.png)
+![](../../../images/precompiled/architecture.png)
 
 ### 关键流程
 - 执行预编译合约时首先需要根据合约地址获取到预编译合约的对象。

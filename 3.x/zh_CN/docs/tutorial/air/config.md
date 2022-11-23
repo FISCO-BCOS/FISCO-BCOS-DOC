@@ -85,7 +85,7 @@ FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动
 
 `[executor]`配置项涉及执行相关的创世块配置，主要包括：
 
-- `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选希望不可动态调整，默认为`false`;
+- `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选项不可动态调整，默认为`false`;
 - `[executor].is_auth_check`: 权限控制的配置开关，`true`表明开启权限控制，`false`表明关闭权限控制，该配置选项不可动态调整，默认关闭权限控制功能;
 - `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选希望不可动态调整，默认为`false`;
 - `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中。
