@@ -109,7 +109,7 @@ v2.0.0-rc2扩展了**群组ID和模块ID**范围，**最多支持32767个群组*
 | ModuleID (MID)   | uint16_t | 模块ID，范围1-65535   |
 | PacketType | uint16_t     | 数据包类型，同一模块ID下的子协议标识  |
 | Seq        | uint32_t     | 数据包序列号，每个数据包自增         |
-| Data       | vector<byte> | 数据本身，长度为lenght-12           |
+| Data       | vector<byte> | 数据本身，长度为lenght-16           |
 
 **补充**
 
