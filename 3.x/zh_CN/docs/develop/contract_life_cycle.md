@@ -8,7 +8,7 @@
 
 ```eval_rst
 .. important::
-   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考【权限治理使用指南】。
+   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考`【权限治理使用指南】 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
 ```
 
 ## 1. 智能合约开发
@@ -22,9 +22,13 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 **延伸阅读**
 
 [WeBASE合约IDE](https://webasedoc.readthedocs.io/zh_CN/latest/)
+
 [Solidity官方文档](https://solidity.readthedocs.io/en/latest/)
+
 [Remix在线IDE](https://remix.ethereum.org/)
+
 [Liquid官方文档](https://liquid-doc.readthedocs.io/zh_CN/latest/)
+
 [预编译合约使用文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/precompiled/index.html)
 
 ## 2. 智能合约部署与调用
@@ -37,8 +41,11 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 **延伸阅读**
 
 [开发第一个Solidity区块链应用](../quick_start/solidity_application.md)
+
 [开发第一个Liquid区块链应用](../quick_start/wbc_liquid_application.md)
+
 [Gradle SpringBoot 应用示例](./sdk/java_sdk/spring_boot_starter.md)
+
 [Maven SpringBoot 应用示例](./sdk/java_sdk/spring_boot_crud.md)
 
 ## 3. 智能合约数据存储
@@ -53,8 +60,8 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 | Key   | Value          |
 |-------|----------------|
-| code  | 十六进制opcode |
 | abi   | ABI JSON字符串 |
+| code  | 十六进制opcode |
 | state | ...            |
 
 ## 4. 智能合约升级
@@ -71,7 +78,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 ```eval_rst
 .. important::
-   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考【权限治理使用指南】。
+   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考`【权限治理使用指南】 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
 ```
 
 在开启区块链权限模式之后，每次合约部署将在存储层创建合约存储数据表之外，会额外创建一张合约权限数据表，用于记录合约管理员地址、合约状态、合约接口ACL。默认情况下，合约的管理员地址就是发起部署合约操作的账户地址（如果存在合约创建合约，合约管理员地址为交易发起账户tx.origin）。
