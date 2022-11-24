@@ -170,7 +170,7 @@ quit
 
 **新增Liquid部署方式**：当连接节点在配置开启 “is_wasm=true”选项时，可自动启动控制台使用，具体配置项请参考：[节点配置](../../tutorial/air/config.md)
 
-Solidity部署参数：
+**Solidity部署参数：**
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：HelloWorld。
 - 开启静态分析：可选项，默认为关闭。若开启，则会开启静态分析并行字段冲突域，加速合约并行执行速度。静态分析需要耗时较久，请耐心等待一段时间。
@@ -211,6 +211,22 @@ contract address: 0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94
 transaction hash: 0x7498487dbf79378b5b50c4e36c09ea90842a343de307ee66d560d005d3c40ccb
 contract address: /asset_test
 currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
+```
+
+**deploy with BFS:**
+
+支持在部署合约时在BFS创建别名, 使用参数 `-l` 将HelloWorld部署后的地址link到/apps/hello/v1目录：
+
+```shell
+[group0]: /apps> deploy -l ./hello/v1 HelloWorld
+deploy contract with link, link path: /apps/hello/v1
+transaction hash: 0x1122b7933e3468d007eea4f49c7e5182083f59b739dc06e40ee621129fed04e8
+contract address: 0xcceef68c9b4811b32c75df284a1396c7c5509561
+currentAccount: 0x7c6bb210ac67412f38ff850330b2dcd294437498
+link path: /apps/hello/v1
+
+[group0]: /apps> ls ./hello/v1
+v1 -> cceef68c9b4811b32c75df284a1396c7c5509561
 ```
 
 ### 2. call
@@ -310,6 +326,27 @@ Event: {}
 
 ```
 
+**Call with BFS:**
+
+可以调用在BFS目录中创建的link文件，调用姿势和调用普通合约类似。
+
+```shell
+[group0]: /apps> call ./hello/v1 set "Hello, BFS."
+transaction hash: 0x0b39db7b23aebe78b50a5f45da0e94381a4f4495c7286ab3039f9a761a3cc655
+---------------------------------------------------------------------------------------------
+transaction status: 0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Receipt message: Success
+Return message: Success
+Return value size:0
+Return types: ()
+Return values:()
+---------------------------------------------------------------------------------------------
+Event logs
+Event: {}
+```
+
 ### 3. getCode
 
 运行getCode，根据合约地址查询合约二进制代码。
@@ -329,6 +366,7 @@ Event: {}
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`，比如：TableTest。
 - 合约名：(可选)合约名称，默认情况下使用合约文件名作为合约名参数
+- 合约地址：(可选)在部署后的合约地址，listAbi会向节点发起getAbi的请求
 
 ```shell
 [group0]: /apps> listAbi KVTableTest
@@ -346,6 +384,15 @@ Event list:
  update              |   0x49cc36b56a9320d20b2d9a1938a972c849191bceb97500bfd38fa8a590dac73a  |   update(string,int256,string)
  select              |   0x5b325d7821528d3b52d0cc7a83e1ecef0438f763796770201020ac8b8813ac0a  |   select(string)
  insert              |   0xe020d464e502c11b54a7e37e568c78f0fcd360213eb5f4ac0a25a17733fc19f7  |   insert(string,int256,string)
+
+# 使用地址参数
+[group0]: /apps> listAbi cceef68c9b4811b32c75df284a1396c7c5509561
+Method list:
+ name                |    constant  |    methodId    |    signature
+  --------------------------------------------------------------
+ set                 |    false     |    4ed3885e    |    set(string)
+ get                 |    true      |    6d4ce63c    |    get()
+
 ```
 
 ### 5. getDeployLog
@@ -1213,22 +1260,25 @@ latest -> 2b5dcbae97f9d9178e8b051b08c9fb4089bae71b
 [group0]: /apps> tree ..
 /
 ├─apps
-│ └─Hello
-│   └─latest
 ├─sys
+│ ├─account_manager
 │ ├─auth
 │ ├─bfs
+│ ├─cast_tools
 │ ├─consensus
 │ ├─crypto_tools
+│ ├─dag_test
+│ ├─discrete_zkp
+│ ├─group_sig
 │ ├─kv_storage
-│ ├─parallel_config
+│ ├─ring_sig
 │ ├─status
+│ ├─table_manager
 │ └─table_storage
 ├─tables
-│ └─person
 └─usr
 
-5 directory, 10 contracts.
+4 directory, 14 contracts.
 
 # 使用深度为1
 [group0]: /apps> tree .. 1
@@ -2220,7 +2270,37 @@ Against Voters:
 
 ```
 
+#### 2.15. freezeAccount/unfreezeAccount
 
+冻结、解冻账户，冻结的账户不可以发起任何**写**交易，可通过unfreezeAccount解冻。
+该命令只有治理委员才可以调用。
+
+```shell
+[group0]: /apps> call HelloWorld 0xc8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085 set test
+transaction hash: 0x8844e61177f25cfafa9974525d6b8cb71f9ff2ec86cb40244018097bce8999bd
+---------------------------------------------------------------------------------------------
+transaction status: 22
+---------------------------------------------------------------------------------------------
+Receipt message: Account is frozen.
+Return message: Account is frozen.
+---------------------------------------------------------------------------------------------
+```
+
+#### 2.16. abolishAccount
+
+废止账户，废止的账户不可以发起任何**写**交易，且不可恢复。
+该命令只有治理委员才可以调用。
+
+```shell
+[group0]: /apps> call HelloWorld 0xc8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085 set test
+transaction hash: 0xcf5a5ceda91ac198cf0cf363da8646095a8ca5f4a1b2e3fc090127f388944030
+---------------------------------------------------------------------------------------------
+transaction status: 23
+---------------------------------------------------------------------------------------------
+Receipt message: Account is abolished.
+Return message: Account is abolished.
+---------------------------------------------------------------------------------------------
+```
 
 ### 3. 合约管理员专用命令
 
