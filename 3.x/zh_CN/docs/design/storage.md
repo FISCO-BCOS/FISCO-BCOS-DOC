@@ -71,7 +71,6 @@ class TransactionalStorageInterface : public virtual StorageInterface
 
 ```
 
-
 ## Ari与Pro版本数据提交
 
 Air与Pro版本的提交与Max的区别在于一方面存储服务使用RocksDB作为后端数据库，另一方面执行服务与调度服务在同一进程中，不存在分布式事务的问题，相对于Max版本其提交逻辑较为简单，如下图所示。
@@ -80,4 +79,28 @@ Air与Pro版本的提交与Max的区别在于一方面存储服务使用RocksDB�
 
 对于调度服务和执行服务其处理逻辑与Max版本相同，只是在提交阶段，调度服务和执行服务提交数据时，其持有的存储对象为同一个，当调用`asyncPrepare`时，存储内部实现中会并不会真的将数据提交到RocksDB，而是将数据写入内存中，当调度服务调用`asyncCommit`方法时，将数据一次性提交写入RocksDB。
 
+## 系统存储表
+
+该章节叙述了在创世块就依据预先写入存储的数据表的存储结构和用途。
+
+| 表名                    | 字段                                           | 用途                                           |
+| ----------------------- | ---------------------------------------------- | ---------------------------------------------- |
+| s_tables                | value                                          | 记录创建表的表结构                             |
+| s_config                | value, enable_number                           | 记录系统配置                                   |
+| s_consensus             | value                                          | 记录共识节点和观察节点列表                     |
+| s_current_state         | value                                          | 记录当前块高、交易总数、失败交易总数           |
+| s_hash_2_number         | value                                          | 记录区块哈希到区块高度的映射                   |
+| s_number_2_hash         | value                                          | 记录区块高度到区块哈希的映射                   |
+| s_block_number_2_nonces | value                                          | 记录区块高度到nonce的映射                      |
+| s_number_2_header       | value                                          | 记录区块高度到区块头的映射                     |
+| s_number_2_txs          | value                                          | 记录区块高度到交易哈希列表的映射               |
+| s_hash_2_tx             | value                                          | 记录交易哈希到交易对象的映射                   |
+| s_hash_2_receipt        | value                                          | 记录交易哈希到交易回执对象的映射               |
+| s_code_binary           | value                                          | 记录code哈希到code的映射                       |
+| s_contract_abi          | value                                          | 记录code哈希到ABI的映射                        |
+| /                       | type,status,acl_type,acl_white,acl_black,extra | BFS根目录                                      |
+| /apps                   | type,status,acl_type,acl_white,acl_black,extra | apps目录，用户的应用均在这个目录下             |
+| /tables                 | type,status,acl_type,acl_white,acl_black,extra | tables目录，用户通过CRUD创建的表均在这个目录下 |
+| /usr                    | type,status,acl_type,acl_white,acl_black,extra | usr目录，设置过状态的账户地址均在这个目录下    |
+| /sys                    | type,status,acl_type,acl_white,acl_black,extra | sys目录，系统合约表                            |
 
