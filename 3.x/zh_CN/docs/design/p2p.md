@@ -32,6 +32,33 @@ P2P网络可动态配置，在系统运行过程中支持节点动态加入与�
 
 网络模块保证单一节点故障不影响节点的整网通信，支持节点在异常场景恢复后恢复原组网功能
 
+
+### 协议格式
+
+![](../../images/design/p2p_packet.png)
+
+P2P协议格式:
+
+| name       | type         | description                          |
+| :--------- | :----------- | :----------------------------------- |
+| Length     | uint32_t     | 数据包长度，含包头和数据             |
+| Version    | uint16_t     | 协议版本信息  |
+| PacketType   | int16_t  | 消息类型   |
+| Seq   | uint32_t | 消息序列号，自增，标记消息   |
+| Ext | uint16_t     | 拓展字段 |
+| Options        |   对象   | 选项字段         |
+| Payload       |    bytes   |   负载        |
+
+Options格式:
+| name       | type         | description                          |
+| :--------- | :----------- | :----------------------------------- |
+| GroupID Length     | uint16_t     | 群组ID长度            |
+| GroupID    | string     | 群组ID  |
+| NodeID Length   | uint16_t  | 节点ID长度   |
+| Src NodeID   | bytes | 消息源节点ID   |
+| Dst Count | uint16_t     | 消息目的数目 |
+| NodeIDs        |  数组  | 目的节点ID列表         |
+
 ## 区块链节点标识
 
 区块链节点标识由ECC算法的公钥生成，每个区块链节点必须有唯一的ECC密钥对，区块链节点标识在区块链网络中唯一标识一个区块链节点
