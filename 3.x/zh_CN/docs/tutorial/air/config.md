@@ -109,7 +109,7 @@ P2P相关配置包括：
 - `[p2p].listen_port`：节点P2P监听端口;
 - `[p2p].sm_ssl`: 节点之间的SSL连接是否使用国密SSL协议，`true`表示开启国密SSL连接; `false`表示采用非国密SSL连接，默认为`false`;
 - `[p2p].nodes_path`：节点连接信息文件`nodes.json`所在目录，默认为当前文件夹;
-- `[p2p].nodes_file`：节点连接信息文件`nodes.json`所在路径。
+- `[p2p].nodes_file`：`P2P`连接信息文件`nodes.json`所在路径。
 
 P2P配置示例如下：
 
@@ -122,6 +122,29 @@ P2P配置示例如下：
     nodes_path=./
     nodes_file=nodes.json
 ```
+
+`p2p`连接配置文件`nodes_file`格式:
+
+```shell
+{"nodes":[连接列表]}
+```
+
+示例:
+
+```shell
+{"nodes":["127.0.0.1:30300","127.0.0.1:30301","127.0.0.1:30302","127.0.0.1:30303"]}
+```
+
+`P2P`支持可配置的网络连接，并且支持服务运行期间动态新增/删减连接节点，流程如下：
+
+- 修改`[p2p].nodes_file`配置中的连接信息
+- 向服务进程发送信号`USR1`:
+
+```shell
+kill -USR1 网关节点pid
+```
+
+服务会重新加载`P2P`连接信息。
 
 ### 2.2 配置RPC
 
