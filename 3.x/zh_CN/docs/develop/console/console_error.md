@@ -87,10 +87,10 @@
     defaultGroup="group0"                            # Console default group to connect
 ```
 
-节点的群组id,查看节点配置文件`config.ini`:
+节点的群组id,查看节点配置文件`config.genesis`:
 
 ```shell
-// config.ini
+// config.genesis
 [chain]
     ; the group id, should never be changed
     group_id=group0
