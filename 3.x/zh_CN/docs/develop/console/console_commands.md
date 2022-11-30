@@ -6,7 +6,7 @@
 
 ```eval_rst
 .. important::
-    - ``控制台`` 只支持FISCO BCOS 3.0+版本，基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现。
+    - ``控制台`` 只支持FISCO BCOS 3.x版本，基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现。
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 

@@ -4,7 +4,7 @@
 
 ------------
 
-FISCO BCOS 3.0支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包含RPC服务、Gateway服务和节点服务，每个服务均可独立部署和扩容，本章通过单机搭建Pro版本2节点FISCO BCOS联盟链，帮助用户掌握Pro版本FISCO BCOS区块链的部署流程。请参考[这里](../../quick_start/hardware_requirements.md)使用支持的**硬件和平台**进行操作。
+FISCO BCOS 3.x支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包含RPC服务、Gateway服务和节点服务，每个服务均可独立部署和扩容，本章通过单机搭建Pro版本2节点FISCO BCOS联盟链，帮助用户掌握Pro版本FISCO BCOS区块链的部署流程。请参考[这里](../../quick_start/hardware_requirements.md)使用支持的**硬件和平台**进行操作。
 
 ```eval_rst
 .. note::

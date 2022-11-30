@@ -16,7 +16,7 @@ FISCO BCOS 3.0 沿用了FISCO BCOS 2.0版本的预编译合约。未来，我们
 
 **无需学习Solidity语言即可上手**：基于FISCO BCOS**预编译**合约框架，开发者可以使用C++开发自己的预编译合约，快速实现需要的业务逻辑，而不需要学习Solidity语言。
 
-## FISCO BCOS 3.0+ 预编译合约及地址
+## FISCO BCOS 3.x 预编译合约及地址
 
 由于Solidity合约目前只支持20字节的Address类型作为调用对象，而Liquid支持字符串的地址进行合约调用合约，因此预编译合约的地址分为Solidity和Liquid两种版本。
 
