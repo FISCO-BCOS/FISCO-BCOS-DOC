@@ -13,10 +13,10 @@
 
 ```eval_rst
 .. note::
-   - FISCO BCOS 3.0的系统架构，请参考 `这里 <../design/architecture.html>`_
-   - FISCO BCOS 3.0 Air版本搭建和使用教程，请参考 `这里 <../tutorial/air/index.html>`_
-   - FISCO BCOS 3.0 Pro版本搭建和使用教程，请参考 `这里 <../tutorial/pro/index.html>`_
-   - FISCO BCOS 3.0 Max版本搭建和使用教程，请参考 `这里 <../tutorial/max/index.html>`_
+   - FISCO BCOS 3.x的系统架构，请参考 `这里 <../design/architecture.html>`_
+   - FISCO BCOS 3.x Air版本搭建和使用教程，请参考 `这里 <../tutorial/air/index.html>`_
+   - FISCO BCOS 3.x Pro版本搭建和使用教程，请参考 `这里 <../tutorial/pro/index.html>`_
+   - FISCO BCOS 3.x Max版本搭建和使用教程，请参考 `这里 <../tutorial/max/index.html>`_
 ```
 
 ## 1. 搭建Air版本FISCO BCOS联盟链
