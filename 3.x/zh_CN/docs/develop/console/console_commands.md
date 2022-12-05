@@ -369,21 +369,24 @@ Event: {}
 - 合约地址：(可选)在部署后的合约地址，listAbi会向节点发起getAbi的请求
 
 ```shell
-[group0]: /apps> listAbi KVTableTest
+[group0]: /apps> listAbi TableTest
 Method list:
  name                |    constant  |    methodId    |    signature
   --------------------------------------------------------------
- createTable         |    false     |    56004b6a    |    createTable(string,string,string)
- set                 |    false     |    da465d74    |    set(string,string,string)
- get                 |    true      |    693ec85e    |    get(string)
+ createTable         |    false     |    6a5bae4e    |    createTable(string,string,string[])
+ remove              |    false     |    80599e4b    |    remove(string)
+ select              |    true      |    fcd7e3c1    |    select(string)
+ update              |    false     |    31c3e456    |    update(string,string,string)
+ insert              |    false     |    2fe99bdc    |    insert(string,string,string)
+ desc                |    true      |    55f150f1    |    desc()
 
 Event list:
  name                |   topic                                                                   signature
   --------------------------------------------------------------
- remove              |   0x0fe1160f9655e87c29e76aca1cab34fb2a644d375da7a900c7076bad17cad26b  |   remove(string,int256)
- update              |   0x49cc36b56a9320d20b2d9a1938a972c849191bceb97500bfd38fa8a590dac73a  |   update(string,int256,string)
- select              |   0x5b325d7821528d3b52d0cc7a83e1ecef0438f763796770201020ac8b8813ac0a  |   select(string)
- insert              |   0xe020d464e502c11b54a7e37e568c78f0fcd360213eb5f4ac0a25a17733fc19f7  |   insert(string,int256,string)
+ InsertResult        |   0xc57b01fa77f41df77eaab79a0e2623fab2e7ae3e9530d9b1cab225ad65f2b7ce  |   InsertResult(int256)
+ CreateResult        |   0xb5636cd912a73dcdb5b570dbe331dfa3e6435c93e029e642def2c8e40dacf210  |   CreateResult(int256)
+ RemoveResult        |   0x4b930e280fe29620bdff00c88155d46d6d82a39f45dd5c3ea114dc3157358112  |   RemoveResult(int256)
+ UpdateResult        |   0x8e5890af40fc24a059396aca2f83d6ce41fcef086876548fa4fb8ec27e9d292a  |   UpdateResult(int256)
 
 # 使用地址参数
 [group0]: /apps> listAbi cceef68c9b4811b32c75df284a1396c7c5509561
@@ -2276,6 +2279,24 @@ Against Voters:
 该命令只有治理委员才可以调用。
 
 ```shell
+# 冻结账户0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+[group0]: /apps> freezeAccount 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+{
+    "code":0,
+    "msg":"Success"
+}
+
+# 加载到已经冻结的账户 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+[group0]: /apps> loadAccount 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+Load account 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22 success!
+
+# 部署调用都被拒绝
+[group0]: /apps> deploy HelloWorld
+deploy contract for HelloWorld failed!
+return message: Account is frozen.
+return code:22
+Return values:null
+
 [group0]: /apps> call HelloWorld 0xc8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085 set test
 transaction hash: 0x8844e61177f25cfafa9974525d6b8cb71f9ff2ec86cb40244018097bce8999bd
 ---------------------------------------------------------------------------------------------
@@ -2284,6 +2305,22 @@ transaction status: 22
 Receipt message: Account is frozen.
 Return message: Account is frozen.
 ---------------------------------------------------------------------------------------------
+
+# 解冻账户0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+[group0]: /apps> unfreezeAccount 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+{
+    "code":0,
+    "msg":"Success"
+}
+
+# 加载账户0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+[group0]: /apps> loadAccount 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+Load account 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22 success!
+
+[group0]: /apps> deploy HelloWorld
+transaction hash: 0xd978585392114e2379be8c94250f5abceaf84538567d737db7dfbafcc0b7399c
+contract address: 0xd24180cc0fef2f3e545de4f9aafc09345cd08903
+currentAccount: 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
 ```
 
 #### 2.16. abolishAccount
@@ -2292,8 +2329,26 @@ Return message: Account is frozen.
 该命令只有治理委员才可以调用。
 
 ```shell
-[group0]: /apps> call HelloWorld 0xc8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085 set test
-transaction hash: 0xcf5a5ceda91ac198cf0cf363da8646095a8ca5f4a1b2e3fc090127f388944030
+# 废止账户0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+[group0]: /apps> abolishAccount 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+{
+    "code":0,
+    "msg":"Success"
+}
+
+# 加载账户0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+[group0]: /apps> loadAccount 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22
+Load account 0x3d20a4e26f41b57c2061e520c825fbfa5f321f22 success!
+
+# 部署和调用都被拒绝
+[group0]: /apps> deploy HelloWorld
+deploy contract for HelloWorld failed!
+return message: Account is abolished.
+return code:23
+Return values:null
+
+[group0]: /apps> call HelloWorld 0xd24180cc0fef2f3e545de4f9aafc09345cd08903 set test
+transaction hash: 0xccfaffed1a329fdaaee8f23906be15bc64eadc9b1f47ba1fd25faf7e3fb572c4
 ---------------------------------------------------------------------------------------------
 transaction status: 23
 ---------------------------------------------------------------------------------------------

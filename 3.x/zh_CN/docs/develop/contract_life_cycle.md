@@ -116,7 +116,7 @@ abstract contract AuthManagerPrecompiled {
 }
 ```
 
-### 5. 1智能合约冻结、解冻、废止
+### 5.1 智能合约冻结、解冻、废止
 
 合约管理员可以对固定地址0x1005的预编译合约发起交易，对合约的状态进行读写。
 
@@ -129,7 +129,7 @@ abstract contract AuthManagerPrecompiled {
 
 合约管理员也可以通过控制台对合约进行冻结等操作，详情请看：[冻结合约命令](./console/console_commands.html#freezecontract)、[解冻合约命令](./console/console_commands.html#unfreezecontract)
 
-### 5.2. 智能合约部署权限控制
+### 5.2 智能合约部署权限控制
 
 部署合约的权限控制将由治理委员会统一控制，治理委员会将以投票表决的形式控制部署权限。治理委员会对某个部署权限的提案通过后，将会主动调用固定地址0x1005预编译合约的部署权限写接口，这些写接口也限定只能治理委员会合约调用。
 
@@ -139,7 +139,7 @@ abstract contract AuthManagerPrecompiled {
 
 在检查部署权限时将会对交易发起地址tx.origin进行校验，若没有权限则会返回错误码 -5000。即，会对用户部署合约、用户通过合约部署合约都进行校验。
 
-### 5.3. 智能合约调用权限控制
+### 5.3 智能合约调用权限控制
 
 合约管理员可以对固定地址0x1005的预编译合约发起交易，对合约接口的访问ACL进行读写。
 
