@@ -30,9 +30,11 @@ FISCO BCOS 3.x版本引入区块链合约文件系统（Blockchain File System�
       "code":0,
       "msg":"Success"
   }
+
+  [group0]: /> cd /apps
   
   # 直接对路径中合约的软链接进行调用
-  [group0]: /> call /apps/hello_bfs/v2 get
+  [group0]: /apps> call ./hello_bfs/v2 get
   ---------------------------------------------------------------------------------------------
   Return code: 0
   description: transaction executed successfully
@@ -43,7 +45,7 @@ FISCO BCOS 3.x版本引入区块链合约文件系统（Blockchain File System�
   Return values:(Hello, World!)
   ---------------------------------------------------------------------------------------------
   # ls软链接可查看映射的地址
-  [group0]: /> ls /apps/hello_bfs/v2
+  [group0]: /> ls ./hello_bfs/v2
   v2 -> 6849f21d1e455e9f0712b1e99fa4fcd23758e8f1
   
   # 使用tree命令展示资源结构
@@ -149,17 +151,18 @@ BFS逻辑结构图如下所示，上部分为智能合约树形目录结构示�
 
 ### 2.4 BFS存储表的存储内容
 
-BFS中的资源类型可以简单归类为目录资源、合约资源，其中合约资源又可分为普通合约、Table合约、预编译合约、合约软链接等。
+BFS中的资源类型可以简单归类为目录资源、合约资源，其中合约资源又可分为普通合约、Table合约、预编译合约、合约软链接等。下图展示了BFS所涉及的所有存储表：
+
+![](../../images/design/bfs_data_structure.png)
 
 - 目录资源存储表中主要记录着目录路径下的子资源名、资源类型等数据，存储内容如下：
 
-  | Key       | Value                                                    |
-  |-----------|----------------------------------------------------------|
-  | file_type | directory                                                |
-  | sub_dir   | { [{ "file_name": "table1", "file_type": "contract" }] } |
-  | ext       | (预留)                                                   |
-
-  其中 `sub_dir`将用于 `list` 接口遍历该目录下的子资源
+  | name   | type      | status | acl_type    | acl_black | acl_white | extra |
+  |--------|-----------|--------|-------------|-----------|-----------|-------|
+  | apps   | directory | normal | black/white | {...}     | {...}     | ...   |
+  | tables | directory | normal | black/white | {...}     | {...}     | ...   |
+  | sys    | directory | normal | black/white | {...}     | {...}     | ...   |
+  | usr    | directory | normal | black/white | {...}     | {...}     | ...   |
 
 - 合约资源存储表中主要记录合约在执行时所需要的状态数据，下面将对合约资源的各种类型在存储表中的不同进行分别讨论
 
