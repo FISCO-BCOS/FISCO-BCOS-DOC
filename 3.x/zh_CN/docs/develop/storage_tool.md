@@ -72,7 +72,7 @@ db path : data, table : s_current_state
 
 ### 修改数据
 
-`-w`选项用于修改表中的某条数据，参数为`[表名][键][值]`，可以结合`-H`选项使用，`-H`选项将会将参数中的值使用hex解码后写入。示例如下：
+`-w`选项用于修改表中的某条数据，参数为`[表名][键][值]`，如果值为空字符串则删除此数据，可以结合`-H`选项使用，`-H`选项将会将参数中的值使用hex解码后写入。示例如下：
 
 ```bash
 # 读取
@@ -94,6 +94,19 @@ config file     : ./config.ini
 genesis file    : ./config.genesis
 read s_current_state, key is current_number
 [tableName=s_current_state] [key=current_number] [value=2000]
+
+# 删除
+$ ./storageTool -w s_current_state current_number ""
+config file     : ./config.ini
+genesis file    : ./config.genesis
+set successfully
+
+# 验证
+$ ./storageTool -r s_current_state current_number
+config file     : ./config.ini
+genesis file    : ./config.genesis
+read s_current_state, key is current_number
+get row not found,,table=s_current_state,key=current_number
 ```
 
 ### 统计功能
