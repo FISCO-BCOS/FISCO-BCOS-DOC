@@ -10,4 +10,4 @@ A:
 Q:
   Whether the node supports binary operation with version numbers inconsistent with the genesis block? <br>
 A: 
-  The minimum version currently supported by FISCO BCOS is 3.0.0-rc4, and the highest supported version is v3.1.0. Binaries not within this range will not be able to start.
+  The minimum version currently supported by FISCO BCOS is 3.0.0-rc4, and the highest supported version is v3.1.1. Binaries not within this range will not be able to start.
