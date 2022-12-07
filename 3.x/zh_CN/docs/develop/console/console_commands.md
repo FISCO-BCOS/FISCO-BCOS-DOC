@@ -641,7 +641,6 @@ PeersInfo{
 }
 ```
 
-
 ### 5. getBlockByNumber
 
 运行getBlockByNumber，根据区块高度查询区块信息。
@@ -1056,7 +1055,7 @@ Alter 't_demo' Ok.
 
 运行desc语句查询表的字段信息，使用mysql语句形式。
 
-```
+```shell
 # 查询t_demo表的字段信息，可以查看表的主键名和其他字段名
 [group0]: /apps> desc t_demo
 {
@@ -1216,6 +1215,10 @@ test
 ### 4. ln
 
 与Linux的ln命令相似，创建某个合约资源的链接，可以通过直接调用链接发起对实际合约的调用。
+
+与2.0版本的CNS服务类似，依靠BFS多层级目录，可以建立合约名与合约地址、合约版本号的映射关系。
+
+例如，合约名为Hello，合约版本号为latest，可以在`/apps`目录下建立`/apps/Hello/latest` 的软连接，软连接对应的合约地址可覆盖写。同理，用户可以在 `/apps/Hello` 下建立多个版本，例如：`/apps/Hello/newOne`、`/apps/Hello/layerTwo`等等。
 
 ```bash
 # 创建合约软链接，合约名为Hello，合约版本为latest
@@ -2037,8 +2040,6 @@ Against Voters:
 [group0]: /apps> getSystemConfigByKey tx_count_limit
 2000
 ```
-
-
 
 #### 2.12. upgradeVoteProposal
 
