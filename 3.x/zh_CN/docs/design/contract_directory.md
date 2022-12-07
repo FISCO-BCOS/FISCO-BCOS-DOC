@@ -67,22 +67,20 @@ FISCO BCOS 3.x版本引入区块链合约文件系统（Blockchain File System�
   - 在Solidity智能合约中固定地址为`0x100e`，WASM执行环境中固定地址为`/sys/bfs` 。
 
     ```solidity
-    struct BfsInfo{
-        // 文件名
+    struct BfsInfo {
         string file_name;
-        // 文件类型
         string file_type;
-        // 文件其他信息
         string[] ext;
     }
-    // 在绝对路径下创建目录，如果创建过程中出现错误，将会返回错误码
-    function mkdir(string absolutePath) public returns (int32);
-    // 获取绝对路径下的所有子项目，如果路径对应的是合约，则返回合约的元信息
-    function list(string memory absolutePath) public view returns (int32, BfsInfo[] memory);
-    // 生成软链接
-    function link(string memory name, string memory version, address _address, string memory _abi) public returns (int32);
-    // 获取软链接指向的地址
-    function readlink(string memory absolutePath) public view returns (address);
+    abstract contract BfsPrecompiled {
+        // @return return BfsInfo at most 500, if you want more, try list with paging interface
+        function list(string memory absolutePath) public view returns (int32, BfsInfo[] memory);
+
+        // for cns compatibility
+        function link(string memory name, string memory version, address _address, string memory _abi) public returns (int32);
+
+        function readlink(string memory absolutePath) public view returns (address);
+    }
     ```
 
 ### 1.2 详细使用文档
@@ -229,3 +227,99 @@ BFS存储表生命周期主要包括创建、修改、读取，暂时不支持�
 在创建目录时，将会先预先确定该级目录父目录均已经存在且可以写入信息，之后在父目录的数据表中记录新创建路径的目录的元信息。整体流程如下图所示，流程图以创建“/apps/Hello/World”为例。
 
 ![](../../images/design/bfs_in_mkdir.png)
+
+## 3. 兼容性说明
+
+### 3.1 BFS对CNS的兼容说明
+
+FISCO BCOS 3.+ BFS与2.+版本的CNS服务类似，提供链上合约路径与合约地址、合约版本的映射关系的记录及相应的查询功能，方便调用者通过记忆简单的合约名来实现对链上合约的调用。BFS相比CNS更近一步，具有多层级的概念，可以更加直观地展示路径层级关系，方便用户管理。
+
+为了适配用户在2.+版本已经使用过CNS接口的代码逻辑，BFS提供了与CNS效果一致的接口：
+
+```solidity
+struct BfsInfo {
+    string file_name;
+    string file_type;
+    string[] ext;
+}
+abstract contract BfsPrecompiled {
+    // @return return BfsInfo at most 500, if you want more, try list with paging interface
+    function list(string memory absolutePath) public view returns (int32, BfsInfo[] memory);
+    // for cns compatibility
+    function link(string memory name, string memory version, address _address, string memory _abi) public returns    (int32);
+    function readlink(string memory absolutePath) public view returns (address);
+}
+```
+
+- `link`接口与CNS的`insert`的参数一致，新增一个合约名/合约版本号到合约地址的映射关系，并记录其ABI。
+- `list`接口与CNS的`selectByName`的遍历接口效果一致，将会返回目录下所有的资源，对应的合约地址在ext[0], 合约ABI在ext[1]。同时也兼容`selectByNameAndVersion`，如果参数对应的资源时软连接资源，那么将会返回一个资源。
+- `readlink`接口与CNS的`getContractAddress`接口一致，根据合约名/合约版本号取到对应的合约地址。
+
+**使用举例：** 接下来在控制台演示如何使用BFS的接口完成合约版本的增加、升级、遍历、调用等操作。
+
+- 创建新的合约名与版本号：
+  - 用户创建合约名Hello，版本为v1的BFS软连接：
+  
+  ```shell
+  # 创建合约软链接，合约名为Hello，合约版本为v1
+  [group0]: /apps> ln Hello/v1 0x19a6434154de51c7a7406edF312F01527441B561
+  {
+      "code":0,
+      "msg":"Success"
+  }
+  # 创建的软链会在/apps/目录下创建链接文件
+  [group0]: /apps> ls ./Hello/v1 
+  v1 -> 19a6434154de51c7a7406edf312f01527441b561   
+  ```
+  
+  - 此时，用户已经创建合约名Hello，并指定合约版本号为v1，此时在BFS的目录结构下，新创建的软连接的路径为`/apps/Hello/v1`
+- 升级合约版本
+  - 用户可以指定多个合约名对应的版本，且可以覆盖之前已经存在的版本号
+  
+  ```shell
+  # 创建合约软链接，合约名为Hello，合约版本为latest
+  [group0]: /apps> ln Hello/latest 0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
+  {
+      "code":0,
+      "msg":"Success"
+  }
+  # 创建的软链会在/apps/目录下创建链接文件
+  [group0]: /apps> ls ./Hello/latest 
+  latest -> 0x2b5DCbaE97f9d9178E8b051b08c9Fb4089BAE71b
+  # 可以覆盖版本号
+  [group0]: /apps> ln Hello/latest  0x0102e8b6fc8cdf9626fddc1c3ea8c1e79b3fce94
+  {
+      "code":0,
+      "msg":"Success"
+  }
+  ```
+  
+- 遍历指定合约名的所有版本号
+  - 用户可以通过list接口遍历指定合约名的所有版本号
+  
+  ```shell
+  [group0]: /apps> ls ./Hello
+  latest  v1
+  ```
+  
+- 获取合约名/版本号对应的地址
+  
+  ```shell
+  [group0]: /apps> ls ./Hello/latest
+  latest -> 0x0102e8b6fc8cdf9626fddc1c3ea8c1e79b3fce94
+  ```
+
+- 调用软连接
+  
+  ```shell
+  [group0]: /apps> call Hello/latest get
+  ---------------------------------------------------------------------------------------------
+  Return code: 0
+  description: transaction executed successfully
+  Return message: Success
+  ---------------------------------------------------------------------------------------------
+  Return value size:1
+  Return types: (string)
+  Return values:(Hello, World!)
+  ---------------------------------------------------------------------------------------------
+  ```
