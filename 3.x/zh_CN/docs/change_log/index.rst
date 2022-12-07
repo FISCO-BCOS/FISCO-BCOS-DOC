@@ -15,6 +15,7 @@ v3.1.x
 
 .. admonition:: FISCO BCOS 3.x Releases
 
+     - `FISCO BCOS v3.1.1 <./3_1_1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.1.1>`_]
      - `FISCO BCOS v3.1.0 <./3_1_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.1.0>`_]
      
 
@@ -29,6 +30,7 @@ v3.1.x
    :hidden:
    :maxdepth: 0
 
+   3_1_1.md
    3_1_0.md
 
 v3.0.x
