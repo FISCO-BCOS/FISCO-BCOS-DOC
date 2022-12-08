@@ -34,7 +34,7 @@ Usage:
     -I <chain id>                       [Optional] set the chain id, default: chain0
     -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.1.1
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
-    -L <fisco bcos lightnode exec>      [Optional] fisco bcos light node executable
+    -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode binary exec
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
     -t <mtail exec>                     [Optional] mtail binary exec
     -o <output dir>                     [Optional] output directory, default ./nodes
@@ -87,7 +87,7 @@ expand node e.g
 `192.168.0.1:2, 127.0.0.1:4`
 
 ### **`L`选项[**Optional**]**
-用于配置开启FISCO BCOS轻节点模式，默认为false，不开启。
+用于配置开启FISCO BCOS轻节点模式，-L 后面指定Air版本轻节点的二进制可执行文件路径，若不指定，则默认拉取最新版本的轻节点二进制。
 
 ### **`e`选项[**Optional**]**
 
