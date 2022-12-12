@@ -6,7 +6,7 @@
 
 ## 设计
 
-存储层需要能够满足Air、Pro和Max三个版本的不同设计目标，为此我们使用同一套接口来屏蔽不同版本存储的具体实现。对于Air和Pro版本，存储层使用RocksDB来满足其轻便和高性能的需求，对于Max版本通过接入能够支持水平扩展的分布式数据库支撑大规模数据存储的需求。整体存储服务设计如下图所示。
+存储层需要能够满足Air、Pro和Max三个版本的不同设计目标，为此我们使用同一套接口来屏蔽不同版本存储的具体实现。对于Air和Pro版本，存储层使用RocksDB来满足其轻便和高性能的需求，对于Max版本通过接入能够支持水平扩展的分布式数据库支撑大规模数据存储的需求，我们选择了Tikv，通过Raft协议保证了多副本数据一致性以及高可用。整体存储服务设计如下图所示。
 
 ![](../../images/design/storage_design.png)
 
@@ -14,7 +14,7 @@ Air、Pro和Max版本的区别在于其使用的`Storage SDK`内部的具体实�
 
 ## Max版本数据提交
 
-在FISCO BCOS 3.0的Max版本，其计算层由多个执行服务组成，执行区块时每个执行服务接收调度层分配的智能合约执行任务，完成后将执行结果返回调度层，执行过程中产生的数据变更存储在每个执行服务自身的内存中，调度层在完成一个区块执行后，收集并计算区块头中的状态哈希、收据哈希等数据，但会区块执行结果给同步或共识，同步和共识完成其自身验证逻辑后发起区块提交。
+在FISCO BCOS 3.x的Max版本，其计算层由多个执行服务组成，执行区块时每个执行服务接收调度层分配的智能合约执行任务，完成后将执行结果返回调度层，执行过程中产生的数据变更存储在每个执行服务自身的内存中，调度层在完成一个区块执行后，收集并计算区块头中的状态哈希、收据哈希等数据，但会区块执行结果给同步或共识，同步和共识完成其自身验证逻辑后发起区块提交。
 
 ```eval_rst
 .. mermaid::
@@ -78,3 +78,29 @@ Air与Pro版本的提交与Max的区别在于一方面存储服务使用RocksDB�
 ![](../../images/design/storage_design_air.png)
 
 对于调度服务和执行服务其处理逻辑与Max版本相同，只是在提交阶段，调度服务和执行服务提交数据时，其持有的存储对象为同一个，当调用`asyncPrepare`时，存储内部实现中会并不会真的将数据提交到RocksDB，而是将数据写入内存中，当调度服务调用`asyncCommit`方法时，将数据一次性提交写入RocksDB。
+
+## 系统存储表
+
+该章节叙述了在创世块就依据预先写入存储的数据表的存储结构和用途。
+
+| 表名                    | 字段                                           | 用途                                           |
+| ----------------------- | ---------------------------------------------- | ---------------------------------------------- |
+| s_tables                | value                                          | 记录创建表的表结构                             |
+| s_config                | value, enable_number                           | 记录系统配置                                   |
+| s_consensus             | value                                          | 记录共识节点和观察节点列表                     |
+| s_current_state         | value                                          | 记录当前块高、交易总数、失败交易总数           |
+| s_hash_2_number         | value                                          | 记录区块哈希到区块高度的映射                   |
+| s_number_2_hash         | value                                          | 记录区块高度到区块哈希的映射                   |
+| s_block_number_2_nonces | value                                          | 记录区块高度到nonce的映射                      |
+| s_number_2_header       | value                                          | 记录区块高度到区块头的映射                     |
+| s_number_2_txs          | value                                          | 记录区块高度到交易哈希列表的映射               |
+| s_hash_2_tx             | value                                          | 记录交易哈希到交易对象的映射                   |
+| s_hash_2_receipt        | value                                          | 记录交易哈希到交易回执对象的映射               |
+| s_code_binary           | value                                          | 记录code哈希到code的映射                       |
+| s_contract_abi          | value                                          | 记录code哈希到ABI的映射                        |
+| /                       | type,status,acl_type,acl_white,acl_black,extra | BFS根目录                                      |
+| /apps                   | type,status,acl_type,acl_white,acl_black,extra | apps目录，用户的应用均在这个目录下             |
+| /tables                 | type,status,acl_type,acl_white,acl_black,extra | tables目录，用户通过CRUD创建的表均在这个目录下 |
+| /usr                    | type,status,acl_type,acl_white,acl_black,extra | usr目录，设置过状态的账户地址均在这个目录下    |
+| /sys                    | type,status,acl_type,acl_white,acl_black,extra | sys目录，系统合约表                            |
+

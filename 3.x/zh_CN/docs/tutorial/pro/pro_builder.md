@@ -350,7 +350,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -t TYPE, --type TYPE  [Optional] Specify the source of the download, support cdn,git now, default type is git
   -v VERSION, --version VERSION
-                        [Optional] Specify the version of the binary, default is v3.0.1
+                        [Optional] Specify the version of the binary, default is v3.1.1
   -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
 
 ----------- help for subcommand 'chain' -----------
@@ -390,7 +390,7 @@ optional arguments:
 二进制下载命令，目前包括`-t`(`--type`), `-v`(`--version`)和`-p`(`--path`)三个选项，所有选项均是可选的，默认从FISCO BCOS github release tags下载最新版本二进制到`binary`文件夹，各选项功能如下：
 
 - `-t`, `--type`: 指定下载类型，目前支持`git`和`cdn`两种下载类型，默认从FISCO BCOS github release tags下载最新版本二进制到，**若搭建和部署Pro版本区块链时访问git慢，可以使用cdn选项加速下载**。
-- `-v`, `--version`: 指定下载的二进制版本，默认下载最新二进制，**FISCO BCOS 3.0默认的二进制最低版本不小于3.0.0-rc1**。
+- `-v`, `--version`: 指定下载的二进制版本，默认下载最新二进制，**FISCO BCOS 3.x默认的二进制最低版本不小于3.0.0-rc1**。
 - `-p`, `--path`: 指定二进制下载路径，默认下载到`binary`文件夹。
 
 ### 2.2 **`-o, --op`选项**
