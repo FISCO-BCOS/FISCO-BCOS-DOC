@@ -23,9 +23,9 @@ EVMC (Ethereum Client-VM Connector API)，是以太坊抽象出来的执行器�
 .. toctree::
 :maxdepth: 1
 
-evm.md
-precompiled.md
-gas.md
+virtual_machine/evm.md
+virtual_machine/precompiled.md
+virtual_machine/gas.md
 
 .. _Executor: ./evm.html
 

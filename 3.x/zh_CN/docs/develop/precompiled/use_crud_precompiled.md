@@ -5,7 +5,7 @@
 
 ----------
 
-本文将介绍 FISCO BCOS 3.0的CRUD存储功能，帮助开发者更高效便捷地开发区块链应用。
+本文将介绍 FISCO BCOS 3.x的CRUD存储功能，帮助开发者更高效便捷地开发区块链应用。
 
 **特别注意：使用存储预编译合约的Solidity合约必须高于0.6.0版本，并且开启使用ABIEncoderV2**
 
@@ -362,4 +362,4 @@ pub fn select(&self, id: String) -> (String, String) {
 
 ### 4. SDK TableCRUDService接口
 
-FISCO BCOS 3.0 SDK提供TableCRUDService数据上链接口，这些接口实现的原理是调用区块链内置的一个预编译的KVTable合约，专门负责对用户表进行读写操作。Java SDK TableCRUDService实现在org.fisco.bcos.sdk.v3.contract.precompiled.crud.TableCRUDService 类。其中调用写接口会产生与调用Table合约接口等效的交易，需要共识节点共识一致后才会落盘存储。
+FISCO BCOS 3.x SDK提供TableCRUDService数据上链接口，这些接口实现的原理是调用区块链内置的一个预编译的KVTable合约，专门负责对用户表进行读写操作。Java SDK TableCRUDService实现在org.fisco.bcos.sdk.v3.contract.precompiled.crud.TableCRUDService 类。其中调用写接口会产生与调用Table合约接口等效的交易，需要共识节点共识一致后才会落盘存储。

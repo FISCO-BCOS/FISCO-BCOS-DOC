@@ -25,7 +25,7 @@ EVMC主要定义了两种调用的接口：
 
 EVM本身不保存状态数据，节点通过instance接口操作EVM，EVM反过来，调Callback接口，对节点的状态进行操作。
 
-![](../../images/evm/evmc.png)
+![](../../../images/evm/evmc.png)
 
 **Instance 接口**
 

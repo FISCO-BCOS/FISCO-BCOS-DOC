@@ -25,12 +25,12 @@
 
 下载`build_chain.sh`脚本
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.1.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.1/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.1.1/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 部署四个节点：
@@ -127,12 +127,15 @@ $ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/node.
 8b2eba71821a5eb15b0cbe710e96f23191419784f644389c58e823477cf33bd73a51b6f14af368d4d3ed647d9de6818938ded7b821394446279490b537d04e7a7e87308b66fc82ab3987fb9f3c7079c2477ed4edaf7060ae151f237b466e4f3f8a19be268af65d7b4ae8be37d81810c30a0f00ec7146a1125812989c2205e1e37375bc5e4654e569c21f0f59b3895b137f3ede01714e2312b74918e2501ac6568ffa3c10ae06f7ce1cbb38595b74783af5fea7a8a735309db3e30c383e4ed1abd8ca37e2aa375c913e3d049cb439f01962dd2f24b9e787008c811abd9a92cfb7b6c336ed78d604a3abe3ad859932d84f11506565f733d244f75c9687ef9334b8fabe139a82e9640db9e956b540f8b61675d04c3fb070620c7c135f3f4f6319aae8b6df2b091949a2c9938e5c1e5bb13c0f530764b7c2a884704637be953ce887
 ```
 
-```eval_rst
-.. important::
-    所有需要加密的文件列举如下，若未加密，节点无法启动。
-    - 非国密版：conf/ssl.key conf/node.pem
-    - 国密版：conf/sm_ssl.key conf/sm_enssl.key conf/node.pem
-```
+**注意：所有需要加密的文件列举如下。若未加密，节点无法启动。**
+
+    - 非国密版
+        - conf/ssl.key
+        - conf/node.pem
+   - 国密版
+        - conf/sm_ssl.key 
+        - conf/sm_enssl.key 
+        - conf/node.pem
 
 ## 6. 节点运行
 

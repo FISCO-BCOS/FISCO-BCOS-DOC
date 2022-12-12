@@ -28,10 +28,10 @@
 mkdir -p ~/fisco && cd ~/fisco
 
 # download_bin.sh, 下载fisco-bcos二进制程序, v指定FISCO-BCOS版本
-./download_bin.sh -v 3.0.1
+./download_bin.sh -v 3.1.1
 
 # 下载开发部署工具build_chain
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.0.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.1.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成多机节点配置**
@@ -214,7 +214,7 @@ sudo yum install -y java java-devel
 # 创建操作目录
 mkdir -p ~/fisco && cd ~/fisco
 
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.1/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.1.0/download_console.sh && bash download_console.sh
 
 # 若因为网络问题导致长时间无法下载，请尝试以下命令：
 curl -#LO  https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh
@@ -251,7 +251,7 @@ bash ~/fisco/console/start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.1)!
+Welcome to FISCO BCOS console(3.1.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
