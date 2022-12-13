@@ -97,6 +97,7 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L download_binary
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /bin/fisco-bcos-lightnode
 ```
 
+
 ### **`e`选项[**Optional**]**
 
 指定Air版本FISCO BCOS的二进制可执行文件路径，若不指定，则默认拉取最新版本的FISCO BCOS。
