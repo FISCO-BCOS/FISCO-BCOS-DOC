@@ -87,7 +87,15 @@ expand node e.g
 `192.168.0.1:2, 127.0.0.1:4`
 
 ### **`L`选项[**Optional**]**
-用于配置开启FISCO BCOS轻节点模式，-L 后面指定Air版本轻节点的二进制可执行文件路径，若不指定，则默认拉取最新版本的轻节点二进制。
+用于配置开启FISCO BCOS轻节点模式，-L 后面可指定Air版本轻节点的二进制可执行文件路径，也可输入"download_binary"，则默认下载最新版本的轻节点二进制，如下图所示。
+
+```shell
+# 两个节点的P2P服务分别占用30300和30301端口，RPC服务分别占用20200和20201端口
+# -L 启动轻节点模块，"download_binary" 默认拉去最新版本二进制文件
+$ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L download_binary
+# 指定轻节点二进制路径
+$ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /bin/fisco-bcos-lightnode
+```
 
 ### **`e`选项[**Optional**]**
 
