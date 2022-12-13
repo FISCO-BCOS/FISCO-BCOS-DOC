@@ -37,7 +37,7 @@ Usage:
     -I <chain id>                       [Optional] set the chain id, default: chain0
     -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.1.1
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
-    -L <fisco bcos lightnode exec>      [Optional] fisco bcos light node executable
+    -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode executable,input "download_binary" to download lightnode binary or assign correct lightnode binary path
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
     -t <mtail exec>                     [Optional] mtail binary exec
     -o <output dir>                     [Optional] output directory, default ./nodes
@@ -67,7 +67,7 @@ expand node e.g
 ```
 
 ### **`L`选项[**Optional**]**
-用于配置开启FISCO BCOS轻节点模式，需要开启轻节点时，使用L选项指定轻节点程序的路径，build_chain.sh将自动生成轻节点到o选项指定的目录中。
+用于配置开启FISCO BCOS轻节点模式，需要开启轻节点时，使用L选项指定轻节点程序的路径或输入"download_binary"自动下载最新二进制，build_chain.sh将自动生成轻节点到o选项指定的目录中。
 
 案例：
 
@@ -76,6 +76,7 @@ expand node e.g
 # RPC服务分别占用20200和20201端口
 # 轻节点将生成到nodes/lightnode中
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /home/user/FISCO-BCOS/build/lightnode/fisco-bcos-lightnode
+$ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L download_binary
 ```
 
 build_chain.sh将生成nodes目录，轻节点位于nodes目录的lightnode中。
