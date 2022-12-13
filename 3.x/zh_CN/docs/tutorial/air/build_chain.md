@@ -34,7 +34,7 @@ Usage:
     -I <chain id>                       [Optional] set the chain id, default: chain0
     -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.1.1
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
-    -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode binary exec
+    -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode executable, input "download_binary" to download lightnode binary or assign correct lightnode binary path
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
     -t <mtail exec>                     [Optional] mtail binary exec
     -o <output dir>                     [Optional] output directory, default ./nodes
