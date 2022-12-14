@@ -6,11 +6,11 @@
 
 ```eval_rst
 .. important::
-    - ``控制台`` 只支持FISCO BCOS 3.0+版本，基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现。
+    - ``控制台`` 只支持FISCO BCOS 3.x版本，基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现。
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 
-[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.0重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译后的WASM文件转换为Java合约文件。
+[控制台](https://github.com/FISCO-BCOS/console)是FISCO BCOS 3.x重要的交互式客户端工具，它通过[Java SDK](../sdk/java_sdk/index.md)与区块链节点建立连接，实现对区块链节点数据的读写访问请求。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity和webankblockchain-liquid合约文件(以下简称wbc-liquid）编译后的WASM文件转换为Java合约文件。
 
 wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
@@ -21,15 +21,17 @@ wbc-liquid编译环境搭建请参考：[wbc-liquid的环境配置](https://liqu
     前置条件：搭建FISCO BCOS区块链，请参考 `搭建第一个区块链网络 <../../quick_start/air_installation.html>`_
     建链工具参考:
      - `Air版本FISCO BCOS建链脚本build_chain <../../tutorial/air/build_chain.html>`_
-     - `Pro版本FISCO BCOS建链工具BcosProBuilder <../../tutorial/pro/pro_builder.html>`_
+     - `Pro版本FISCO BCOS建链工具BcosBuilder <../../tutorial/pro/pro_builder.html>`_
 ```
 
 ### 1. 获取控制台
 
 ```shell
 cd ~ && mkdir -p fisco && cd fisco
-# 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh && bash download_console.sh
+# 获取控制台下载脚本
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.1.0/download_console.sh 
+# 执行下载脚本
+bash download_console.sh
 ```
 
 ```eval_rst
@@ -37,7 +39,31 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/dow
     - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
-目录结构如下：
+#### 1.1 获取其他Solidity版本的控制台
+
+由于目前控制台默认的Solc编译器版本是0.8.11，为了更加方便地使用其他版本的Solidity合约，可以通过以下命令下载(目前支持0.4.25，0.5.2，0.6.10，0.8.11)：
+
+```shell
+# 下载0.4.25版本的控制台
+bash download_console.sh -v 0.4 # 以此类推，支持指定版本(0.4,0.5,0.6,0.8)
+```
+
+#### 1.2 已经配置好控制台，手动切换Solidity版本
+
+当用户已经配置好控制台之后，有需求切换到其他版本的Solidity版本，可以使用 `download_console.sh` 脚本下载对应版本的SolcJ jar包，手动替换Solidity版本，可以通过以下命令下载（目前支持0.4.25，0.5.2，0.6.10），默认Solidity版本为0.8.11：
+
+```shell
+# 下载0.6.10版本的solcJ jar包
+bash download_console.sh -s 0.6 # 以此类推，支持指定版本(0.4,0.5,0.6)
+# 在执行脚本的所在目录下，会生成两个新文件，其他版本类似
+ls solcJ*
+solcJ-0.6.10.1.jar solcJ-0.6.tar.gz
+# 将 solcJ-0.6.10.1.jar 手动替换控制台所在文件夹的lib目录下的solcJ文件。这里举例控制台目录就在本目录下：
+mv ./console/lib/solcJ-0.8.11.1.jar . && cp solcJ-0.6.10.1.jar ./console/lib/
+# 至此，控制台的默认Solidity版本就切换到0.6.10版本
+```
+
+配置完毕的控制台目录结构如下：
 
 ```shell
 │── apps # 控制台jar包目录
@@ -72,7 +98,8 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/dow
 ```toml
 [cryptoMaterial]
 
-certPath = "conf"                           # The certification path  
+certPath = "conf"                           # The certification path
+disableSsl = "false"                        # Communication with nodes without SSL
 useSMCrypto = "false"                       # RPC SM crypto type
 
 # The following configurations take the certPath by default if commented
@@ -93,7 +120,6 @@ defaultGroup="group0"                            # Console default group to conn
 peers=["127.0.0.1:20200", "127.0.0.1:20201"]    # The peer list to connect
 
 [account]
-authCheck = "false"
 keyStoreDir = "account"         # The directory to load/store the account file, default is "account"
 # accountFilePath = ""          # The account file path (default load from the path specified by the keyStoreDir)
 accountFileFormat = "pem"       # The storage format of account file (Default is "pem", "p12" as an option)
@@ -126,8 +152,8 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 ```shell
 $ ./start.sh
 # 输出下述信息表明启动成功
-=====================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+=============================================================================================
+Welcome to FISCO BCOS console(3.0.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -139,7 +165,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 | $$     |   $$ \\$$    $$\$$    $$\$$    $$    | $$    $$\$$    $$\$$    $$\$$    $$
  \$$      \$$$$$$ \$$$$$$  \$$$$$$  \$$$$$$      \$$$$$$$  \$$$$$$  \$$$$$$  \$$$$$$
 
-=====================================================================================
+=============================================================================================
 ```
 
 ### 4. 启动脚本说明
@@ -148,7 +174,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```shell
 ./start.sh --version
-console version: 3.0.0-rc3
+console version: 3.0.0
 ```
 
 #### 4.2 账户使用方式
@@ -188,7 +214,7 @@ console version: 3.0.0-rc3
 - 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
 
 ```shell
-./start.sh group0 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
+./start.sh group0 -pem account/ecdsa/0x2dbb332a844e0e076f97c90ff5078ea7dd2de910.pem
 ```
 
 ##### 4.2.5 使用PKCS12格式私钥文件启动
@@ -196,7 +222,7 @@ console version: 3.0.0-rc3
 - 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
 
 ```shell
-./start.sh group0 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
+./start.sh group0 -p12 account/ecdsa/0x2dbb332a844e0e076f97c90ff5078ea7dd2de910.pem
 Enter Export Password:
 ```
 
@@ -214,6 +240,8 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 控制台提供一个专门的生成Java合约工具，方便开发者将Solidity和wbc-liquid合约文件编译为Java合约文件。
 
 当前合约生成工具支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
+
+**注意：** Solidity合约生成工具与Solc版本号直接相关，对应的Solidity版本的合约请使用具有对应Solc的控制台。请参考上文中 1.1获取其他Solidity版本的控制台。
 
 ### Solidity合约使用
 

@@ -29,7 +29,7 @@
 在build.gradle中引入Java SDK
 
 ```gradle
-compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc3')
+compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.1.0')
 ```
 
 如果您使用maven 通过以下方法引入Java SDK
@@ -38,7 +38,7 @@ compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.0-rc3')
 <dependency>
     <groupId>org.fisco-bcos.java-sdk</groupId>
     <artifactId>fisco-bcos-java-sdk</artifactId>
-    <version>3.0.0-rc3</version>
+    <version>3.1.0</version>
 </dependency>
 ```
 
@@ -62,7 +62,7 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 ```shell
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.0-rc3/download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.1.0/download_console.sh
 
 # 若因为网络问题导致长时间无法执行以上命令，请尝试以下命令：
 $ curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh

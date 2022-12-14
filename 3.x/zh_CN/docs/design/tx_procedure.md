@@ -4,7 +4,7 @@
 
 交易的一生，贯穿下图所示的各个阶段。本文将梳理交易的整个流转过程，一窥FISCO BCOS交易完整生命周期。
 
-![](../../../../2.x/images/articles/transaction_lifetime/IMG_5188.PNG)
+<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51881.PNG" style="zoom:90%;" />
 
 ## 交易生成
 
@@ -17,13 +17,13 @@
 
 之后，区块链客户端会再向交易填充一些必要的字段，如用于防交易重放的交易ID及blockLimit。交易的具体结构和字段含义可以参考[编码协议文档](./protocol_description.md)，交易构造完成后，客户端随后便通过RPC信道将交易发送给节点。
 
-![](../../../../2.x/images/articles/transaction_lifetime/IMG_5189.PNG)
+<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51891.PNG" style="zoom:60%;" />
 
 ## 交易池
 
 区块链交易被发送到节点后，节点会通过验证交易签名的方式来验证一笔交易是否合法。若一笔交易合法，则节点会进一步检查该交易是否重复出现过，若从未出现过，则将交易加入交易池缓存起来。若交易不合法或交易重复出现，则将直接丢弃交易。
 
-![](../../../../2.x/images/articles/transaction_lifetime/IMG_5190.PNG)
+<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51901.PNG" style="zoom:60%;" />
 
 ## 交易广播
 
@@ -35,7 +35,7 @@
 
 为了提高交易处理效率，同时也为了确定交易之后的执行顺序保证事务性，当交易池中有交易时，Sealer线程负责从交易池中按照先进先出的顺序取出一定数量的交易，组装成待共识区块，随后待共识区块会被发往各个节点进行处理。
 
-![](../../../../2.x/images/articles/transaction_lifetime/IMG_5191.JPG)
+<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51911.JPG" style="zoom:60%;" />
 
 ## 交易执行
 
@@ -43,7 +43,7 @@
 
 交易可能会执行成功，也可能因为逻辑错误或Gas不足等原因执行失败。交易执行的结果和状态会封装在交易回执中返回。
 
-![](../../../../2.x/images/articles/transaction_lifetime/IMG_5192.JPG)
+<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51921.JPG" style="zoom:60%;" />
 
 ## 交易共识
 
@@ -52,3 +52,7 @@
 ## 交易落盘
 
 在共识出块后，节点需要将区块中的交易及执行结果写入硬盘永久保存，并更新区块高度与区块哈希的映射表等内容，然后节点会从交易池中剔除已落盘的交易，以开始新一轮的出块流程。用户可以通过交易哈希等信息，在链上的历史数据中查询自己感兴趣的交易数据及回执信息。
+
+## 交易原子性
+
+一笔交易在多个区块链节点上对数据状态的更新是原子性的。当出现外界影响，如断电、重启、网络波动等异常场景时，造成共识失败，各区块链节点会丢弃掉当前的执行结果，并不会将该交易对状态的修改落盘。交易在每个节点上对数据状态更新的落盘行为必须在节点达成共识之后进行，进而保证了交易的原子性。

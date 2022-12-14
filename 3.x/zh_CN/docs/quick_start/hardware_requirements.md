@@ -3,6 +3,12 @@
 标签：``硬件要求`` ``操作系统`` ``开发手册`` ``内存要求`` ``国产操作系统`` ``ARM`` ``麒麟`` ``APPLE M1``
 
 ----
+
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 ## 硬件要求
 
 ```eval_rst

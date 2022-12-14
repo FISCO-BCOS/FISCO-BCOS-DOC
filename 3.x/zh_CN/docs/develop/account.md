@@ -1,4 +1,4 @@
-# 创建和使用账户
+# 账户使用与账户管理
 
 标签：``创建账户`` ``国密账户`` ``密钥文件``
 
@@ -47,11 +47,12 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。
 
 ```shell
-Usage: ./get_account.sh
+Usage: get_account.sh
     default       generate account and store private key in PEM format file
     -p            generate account and store private key in PKCS12 format file
     -k [FILE]     calculate address of PEM format [FILE]
     -P [FILE]     calculate address of PKCS12 format [FILE]
+    -a            force script to consider the platform is aarch64
     -h Help
 ```
 
@@ -63,23 +64,24 @@ Usage: ./get_account.sh
 bash get_account.sh
 ```
 
-执行上面的命令，可以得到类似下面的输出，包括账户地址和以账户地址为文件名的私钥PEM文件。
+执行上面的命令，可以得到类似下面的输出，包括账户地址和以账户地址为文件名的私钥PEM文件与公钥PUB文件。
 
 ```shell
-[INFO] Account Address   : 0xee5fffba2da55a763198e361c7dd627795906ead
-[INFO] Private Key (pem) : accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
+[INFO] Account Address   : 0xa04beef19c812628a2aa1f0fc73e0963f84ec75e
+[INFO] Private Key (pem) : accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem
+[INFO] Public  Key (pem) : accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem.pub
 ```
 
 - 指定PEM私钥文件计算账户地址
 
 ```shell
-bash get_account.sh -k accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
+bash get_account.sh -k accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem
 ```
 
 执行上面的命令，结果如下
 
 ```shell
-[INFO] Account Address   : 0xee5fffba2da55a763198e361c7dd627795906ead
+[INFO] Account Address   : 0xa04beef19c812628a2aa1f0fc73e0963f84ec75e
 ```
 
 #### 3. 使用脚本生成PKCS12格式私钥
@@ -90,19 +92,21 @@ bash get_account.sh -k accounts/0xee5fffba2da55a763198e361c7dd627795906ead.pem
 bash get_account.sh -p
 ```
 
-执行上面的命令，可以得到类似下面的输出，按照提示输入密码，生成对应的p12文件。
+执行上面的命令，可以得到类似下面的输出，按照提示输入密码，生成对应的p12文件和pub文件。
 
 ```shell
+[INFO] Note: the entered password cannot contain Chinese characters!
 Enter Export Password:
 Verifying - Enter Export Password:
-[INFO] Account Address   : 0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1
-[INFO] Private Key (p12) : accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
+[INFO] Account Address   : 0xd97a6a101d15c228a38c09d157843d2697535f7f
+[INFO] Private Key (p12) : accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.p12
+[INFO] Public  Key (pem) : accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.pem.pub
 ```
 
 - 指定p12私钥文件计算账户地址，**按提示输入p12文件密码**
 
 ```shell
-bash get_account.sh -P accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
+bash get_account.sh -P accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.p12
 ```
 
 执行上面的命令，结果如下
@@ -110,7 +114,7 @@ bash get_account.sh -P accounts/0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1.p12
 ```shell
 Enter Import Password:
 MAC verified OK
-[INFO] Account Address   : 0x02f1b23310ac8e28cb6084763d16b25a2cc7f5e1
+[INFO] Account Address   : 0xd97a6a101d15c228a38c09d157843d2697535f7f
 ```
 
 ## 账户的存储
@@ -258,3 +262,35 @@ openssl ec -in ecprivkey.pem -text -noout 2>/dev/null| sed -n '7,11p' | tr -d ":
 ```shell
 dcc703c0e500b653ca82273b7bfad8045d85a470
 ```
+
+## 账户管理
+
+```eval_rst
+.. important::
+   账户的管理冻结、解冻、废止操作以，均需要将开启区块链权限模式，详情请参考`【权限治理使用指南】 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
+```
+
+在开启区块链权限模式之后，每次发起合约调用均会检查账户状态是否正常（tx.origin），账户的状态以存储表的形式记录在BFS `/usr/` 目录下，存储表名为 `/usr/` + 账户地址，如果查不到账户状态默认该账户为正常。BFS `/usr/` 目录底下的账户状态只有在主动设置账户状态时才会创建。**账户状态管理的接口只有治理委员才能操作。**
+
+治理委员可以通过AccountManagerPrecompiled的接口对账户进行操作，固定地址为0x10003。
+
+```solidity
+enum AccountStatus{
+    normal,
+    freeze,
+    abolish
+}
+
+abstract contract AccountManager {
+    // 设置账户状态，只有治理委员可以调用，0 - normal, others - abnormal, 如果账户不存在会先创建
+    function setAccountStatus(address addr, AccountStatus status) public virtual returns (int32);
+    // 任何用户都可以调用
+    function getAccountStatus(address addr) public view virtual returns (AccountStatus);
+}
+```
+
+### 账户的冻结、解冻、废止
+
+治理委员可以对固定地址0x10003的预编译合约发起交易、对账户的状态进行读写。在执行操作是，将会确定交易发起人msg.sender是否为治理委员会记录中的治理委员，若不是则会拒绝。值得注意的是，治理委员的账户地址不允许修改状态。
+
+治理委员也可以通过控制台对账户进行冻结、解冻、废止等操作，详情请看：[冻结/解冻账户命令](./console/console_commands.html#freezeaccount-unfreezeaccount)、[废止账户命令](./console/console_commands.html#abolishaccount)

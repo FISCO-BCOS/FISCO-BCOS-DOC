@@ -77,10 +77,10 @@
 
 ### 注册接口  
 
-Java SDK中`org.fisco.bcos.sdk.eventsub`类提供合约事件的注册接口，用户可以调用`subscribeEvent`向节点发送注册请求，并设置回调函数。
+Java SDK中`org.fisco.bcos.sdk.v3.eventsub.EventSubscribe`类提供合约事件的注册接口，用户可以调用`subscribeEvent`向节点发送注册请求，并设置回调函数。
 
 ```Java
-  public String subscribeEvent(EventLogParams params, EventCallback callback);
+  public String subscribeEvent(EventSubParams params, EventSubCallback callback);
 ```
 
 #### `params`注册参数
@@ -88,9 +88,9 @@ Java SDK中`org.fisco.bcos.sdk.eventsub`类提供合约事件的注册接口，�
 事件回调请求注册的参数：  
 
 ```Java
-public class EventLogParams {
-    private String fromBlock;   
-    private String toBlock;
+public class EventSubParams {
+    private BigInteger fromBlock;   
+    private BigInteger toBlock;
     private List<String> addresses;
     private List<List<String>> topics;
 }
@@ -99,7 +99,7 @@ public class EventLogParams {
 #### `callback`回调对象
 
 ```Java
-public interface EventCallback {
+public interface EventSubCallback {
     void onReceiveLog(int status, List<EventLog> logs);
 }
 ```
@@ -120,7 +120,7 @@ public interface EventCallback {
     42000   : 其他错误 
 ```
 
-- `logs`表示回调的`Event Log`对象列表，status为0有效。默认值`null`，可以在子类中通过`org.fisco.bcos.sdk.abi.ABICodec`解析以下EventLog对象的`data`字段。
+- `logs`表示回调的`Event Log`对象列表，status为0有效。默认值`null`，可以在子类中通过`org.fisco.bcos.sdk.v3.abi.ContractCodec`解析以下EventLog对象的`data`字段。
 
 ```Java
   // EventLog 对象
@@ -137,10 +137,10 @@ public interface EventCallback {
 
 - 实现回调对象  
 
-Java SDK对回调类`EventCallback`无默认实现，用户可以通过继承`EventCallback`类，重写`onReceiveLog`接口，实现自己的回调逻辑处理。
+Java SDK对回调类`EventSubCallback`无默认实现，用户可以通过继承`EventSubCallback`类，重写`onReceiveLog`接口，实现自己的回调逻辑处理。
 
 ```Java
-class SubscribeCallback implements EventCallback {
+class SubscribeCallback implements EventSubCallback {
     public void onReceiveLog(int status, List<EventLog> logs) {
         // ADD CODE
     }
@@ -151,7 +151,7 @@ class SubscribeCallback implements EventCallback {
 
 #### topic工具
 
-`org.fisco.bcos.sdk.abi.TopicTools`提供将各种类型参数转换为对应topic的工具，用户设置`EventLogParams`的`topics`参数可以使用。
+`org.fisco.bcos.sdk.v3.codec.abi.TopicTools`提供将各种类型参数转换为对应topic的工具，用户设置`EventSubParams`的`topics`参数可以使用。
 
 ```Java
  class TopicTools {
@@ -200,7 +200,7 @@ contract Asset {
         // 其他初始化逻辑，省略
         
         // 参数设置
-        EventLogParams params = new EventLogParams();
+        EventSubParams params = new EventSubParams();
 
         // 全部Event fromBlock设置为"1" 
         params.setFromBlock("1");
@@ -215,7 +215,7 @@ contract Asset {
         params.setTopics(new ArrayList<Object>());
    
         // 注册事件
-        EventCallback callback = new EventCallback();
+        EventSubCallback callback = new EventSubCallback();
         String registerId = eventSubscribe.subscribeEvent(params, callback);
 ```
 
@@ -225,7 +225,7 @@ contract Asset {
         // 其他初始化逻辑，省略
         
         // 设置参数
-        EventLogParams params = new EventLogParams();
+        EventSubParams params = new EventSubParams();
 
         // 从最新区块开始，fromBlock设置为"latest"
         params.setFromBlock("latest");
@@ -241,7 +241,7 @@ contract Asset {
         params.setTopics(topics);
 
         // 注册事件
-        EventCallback callback = new EventCallback();
+        EventSubCallback callback = new EventSubCallback();
         String registerId = eventSubscribe.subscribeEvent(params, callback);
 ```
 
@@ -255,7 +255,7 @@ contract Asset {
         String addr = "0x06922a844c542df030a2a2be8f835892db99f324";
         
         // 设置参数
-        EventLogParams params = new EventLogParams();
+        EventSubParams params = new EventSubParams();
 
         // 从最新区块开始，fromBlock设置为"latest"
         params.setFromBlock("latest");
@@ -273,7 +273,7 @@ contract Asset {
         params.setTopics(topics);
 
         // 注册事件
-        EventCallback callback = new EventCallback();
+        EventSubCallback callback = new EventSubCallback();
         String registerId = eventSubscribe.subscribeEvent(params, callback);
 ```
 
@@ -285,7 +285,7 @@ contract Asset {
         // 其他初始化逻辑，省略
         
         // 设置参数
-        EventLogParams params = new EventLogParams();
+        EventSubParams params = new EventSubParams();
 
         // 从最初区块开始，fromBlock设置为"1"
         params.setFromBlock("1");
@@ -303,7 +303,7 @@ contract Asset {
         params.setTopics(topics);
 
         // 注册事件
-        EventCallback callback = new EventCallback();
+        EventSubCallback callback = new EventSubCallback();
         String registerId = eventSubscribe.subscribeEvent(params, callback);
 ```
 
@@ -320,7 +320,7 @@ contract Asset {
         String fromAccount = "account";
         
         // 参数
-        EventLogParams params = new EventLogParams();
+        EventSubParams params = new EventSubParams();
 
         // 从最初区块开始，fromBlock设置为"1"
         params.setFromBlock("1");
@@ -341,7 +341,7 @@ contract Asset {
         params.setTopics(topics);
 
         // 注册事件
-        EventCallback callback = new EventCallback();
+        EventSubCallback callback = new EventSubCallback();
         String registerId = eventSubscribe.subscribeEvent(params, callback);
 ```
 
@@ -375,7 +375,7 @@ contract Asset {
         }
         
         // subscribe event
-        EventLogParams eventLogParams = new EventLogParams();
+        EventSubParams eventLogParams = new EventSubParams();
         eventLogParams.setFromBlock("latest");
         eventLogParams.setToBlock("latest");
         eventLogParams.setAddresses(new ArrayList<>());
@@ -388,7 +388,7 @@ contract Asset {
         topicIdx0.add(topicTools.stringToTopic("TransferAccountEvent(string,string)"));
         eventLogParams.setTopics(topics);
 
-        class SubscribeCallback implements EventCallback {
+        class SubscribeCallback implements EventSubCallback {
             public transient Semaphore semaphore = new Semaphore(1, true);
 
             SubscribeCallback() {

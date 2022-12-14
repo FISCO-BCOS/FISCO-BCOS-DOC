@@ -23,6 +23,6 @@
   `brew install wget openssl@1.1 git flex bison gmp`
   
 - `Windows`:
-  - [Visual Studio 2017](https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes)
+  - [Visual Studio 2017](https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes)或[Visual Studio 2019](https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes)
   - [perl](https://www.activestate.com/products/perl/)
   - [nasm](https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/)

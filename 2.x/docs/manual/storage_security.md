@@ -12,7 +12,7 @@
 
 ## 部署Key Manager
 
-每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager Github README](https://github.com/FISCO-BCOS/key-manager)或[Key Manager Gitee README](https://gitee.com/FISCO-BCOS/key-manager)
+每个机构一个Key Manager，具体的部署步骤，可参考[Key Manager Github README](https://github.com/FISCO-BCOS/key-manager/)或[Key Manager Gitee README](https://gitee.com/FISCO-BCOS/key-manager/)
 
 ```eval_rst
 .. important::
@@ -25,7 +25,7 @@
 
 下载`build_chain.sh`脚本
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst

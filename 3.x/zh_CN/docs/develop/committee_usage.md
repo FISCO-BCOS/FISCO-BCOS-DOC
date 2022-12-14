@@ -4,7 +4,7 @@
 
 ----
 
-FISCO BCOS 3.0+ 引入了合约粒度的权限治理体系。治理委员会可通过投票的方式管理合约的部署、合约的接口调用权限。
+FISCO BCOS 3.x 引入了合约粒度的权限治理体系。治理委员会可通过投票的方式管理合约的部署、合约的接口调用权限。
 
 详细设计请参考链接：[权限治理体系设计](../design/committee_design.md)
 
@@ -27,12 +27,14 @@ FISCO BCOS Air版的建链部署工具详情请参考：[Air版部署工具](../
 
 #### 开启权限治理举例
 
-使用`-A`选项开启权限模式，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x2690ef01645972e0940400a4bb43f62eb4e2b7f1`。
+使用`-A`选项开启权限模式，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x976fe0c250181c7ef68a17d3bc34916978da103a`。
 
 ```shell
 ## 如果使用-A选项，则开启权限设置，并且随机生成一个账户地址，作为初始化治理委员的唯一admin账户
 bash build_chain.sh -l 127.0.0.1:4 -o nodes -A
 
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/fisco-bcos-linux-x86_64.tar.gz ...
+######################################################################## 100.0%
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate nodes/127.0.0.1/sdk cert successful!
@@ -41,28 +43,34 @@ Processing IP:127.0.0.1 Total:4
 [INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
 [INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
-############################################################################################# 100.0%
+######################################################################## 100.0%
+[INFO] Generate uuid success: 4cf39d8a-9f9f-43d0-baa4-3b89d6c9e013
+[INFO] Generate uuid success: 16d14ff1-b3f0-4104-8b3e-1bb5faf0ee12
+[INFO] Generate uuid success: cc90fc61-bd2f-4029-adaa-135543ec887e
+[INFO] Generate uuid success: 12799030-e698-4edd-8719-b5aaa6f8f4c7
 ==============================================================
-[INFO] fisco-bcos Path     : bin/fisco-bcos
-[INFO] Auth Mode           : true
-[INFO] Auth init account   : 0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
-[INFO] Start Port          : 30300 20200
-[INFO] Server IP           : 127.0.0.1:4
-[INFO] SM Model            : false
-[INFO] output dir          : nodes
+[INFO] GroupID              : group0
+[INFO] ChainID              : chain0
+[INFO] fisco-bcos path      : bin/fisco-bcos
+[INFO] Auth mode            : true
+[INFO] Auth account         : 0x976fe0c250181c7ef68a17d3bc34916978da103a
+[INFO] Start port           : 30300 20200 3901
+[INFO] Server IP            : 127.0.0.1:4
+[INFO] SM model             : false
+[INFO] Output dir           : nodes
 [INFO] All completed. Files in nodes
 
 # 随机生成的账户将放置在 {节点名}/ca/accounts 目录下
 ls nodes/ca/accounts
-0x2690ef01645972e0940400a4bb43f62eb4e2b7f1.pem        0x2690ef01645972e0940400a4bb43f62eb4e2b7f1.public.pem
+0x976fe0c250181c7ef68a17d3bc34916978da103a.pem        0x976fe0c250181c7ef68a17d3bc34916978da103a.public.pem
 ```
 
-使用`-a`选项开启权限模式，指定账户地址为初始化的治理委员，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x2690ef01645972e0940400a4bb43f62eb4e2b7f1`
+使用`-a`选项开启权限模式，指定账户地址为初始化的治理委员，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x976fe0c250181c7ef68a17d3bc34916978da103a`
 
 ```shell
 
 ## 如果使用-a选项，则开启权限设置，并指定账户地址作为初始化治理委员的唯一admin账户
-bash build_chain.sh -l 127.0.0.1:4 -o nodes -a 0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
+bash build_chain.sh -l 127.0.0.1:4 -o nodes -a 0x976fe0c250181c7ef68a17d3bc34916978da103a
 
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
@@ -71,14 +79,20 @@ Processing IP:127.0.0.1 Total:4
 [INFO] Generate nodes/127.0.0.1/node1/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Generate uuid success: 1b1a3ea8-cacf-498d-9609-6185500b724f
+[INFO] Generate uuid success: e0099fb5-0a54-4073-9f67-077772187df6
+[INFO] Generate uuid success: 5a8c6f09-1984-4bbc-9c9b-627d6a125985
+[INFO] Generate uuid success: 688d7047-644b-48e3-b61b-6b4360b5ac2c
 ==============================================================
-[INFO] fisco-bcos Path     : bin/fisco-bcos
-[INFO] Auth Mode           : true
-[INFO] Auth init account   : 0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
-[INFO] Start Port          : 30300 20200
-[INFO] Server IP           : 127.0.0.1:4
-[INFO] SM Model            : false
-[INFO] output dir          : nodes
+[INFO] GroupID               : group0
+[INFO] ChainID               : chain0
+[INFO] fisco-bcos path       : bin/fisco-bcos
+[INFO] Auth mode             : true
+[INFO] Auth account          : 0x976fe0c250181c7ef68a17d3bc34916978da103a
+[INFO] Start port            : 30300 20200 3901
+[INFO] Server IP             : 127.0.0.1:4
+[INFO] SM model              : false
+[INFO] Output dir            : nodes
 [INFO] All completed. Files in nodes
 ```
 
@@ -86,25 +100,24 @@ Processing IP:127.0.0.1 Total:4
 
 无论是使用`-A`还是`-a`选项开启权限治理，均会体现在每个节点的配置中。节点在启动初始化的时候将会读取配置，对权限合约进行初始化。
 
-我们以 `nodes/127.0.0.1/node0/config.ini` 为例：
+我们以 `nodes/127.0.0.1/node0/config.genesis` 为例：
 
 ```ini
 ...
-
 [executor]
     ; use the wasm virtual machine or not
     is_wasm=false
     is_auth_check=true
-    auth_admin_account=0x2690ef01645972e0940400a4bb43f62eb4e2b7f1
-
+    auth_admin_account=0x976fe0c250181c7ef68a17d3bc34916978da103a
+    is_serial_execute=false
 ...
 ```
 
-### FISCO BCOS Pro版开启权限治理
+### FISCO BCOS Pro/Max 版开启权限治理
 
-FISCO BCOS Pro版的建链部署工具详情请参考：[搭建Pro版区块链网络](../tutorial/pro/installation.md)。在这里以BcosProBuilder为例，开启权限治理设置。
+FISCO BCOS Pro版的建链部署工具详情请参考：[搭建Pro版区块链网络](../tutorial/pro/installation.md)。在这里以BcosBuilder为例，开启权限治理设置。
 
-在开启Pro版区块链网络权限模式之前，请保证已经完成[部署Pro版本区块链节点](../tutorial/pro/installation.html#id4)之前的所有步骤。
+在开启Pro/Max版区块链网络权限模式之前，请保证已经完成[部署Pro版本区块链节点](../tutorial/pro/installation.html#id4)之前的所有步骤。
 
 在复制配置文件时，需要手动配置权限初始化配置。复制配置文件的步骤参考：[部署RPC服务](../tutorial/pro/installation.html#rpc)
 
@@ -113,7 +126,7 @@ FISCO BCOS Pro版的建链部署工具详情请参考：[搭建Pro版区块链�
 vim config.toml
 ```
 
-在这里我们选择开启`auth_check`配置项，并使用`0x2690ef01645972e0940400a4bb43f62eb4e2b7f1`账户地址作为初始化治理委员，请以实际情况为准。
+在这里我们选择开启`auth_check`配置项，并使用`0x976fe0c250181c7ef68a17d3bc34916978da103a`账户地址作为初始化治理委员，请以实际情况为准。
 
 如何创建、使用链上账户，请参考链接：[创建和使用账户](./account.md)。
 
@@ -127,7 +140,7 @@ group_id="group0"
 vm_type="evm"
 sm_crypto=false
 auth_check=true
-init_auth_address="0x2690ef01645972e0940400a4bb43f62eb4e2b7f1"
+init_auth_address="0x976fe0c250181c7ef68a17d3bc34916978da103a"
 
 ...
 ```
@@ -138,61 +151,11 @@ init_auth_address="0x2690ef01645972e0940400a4bb43f62eb4e2b7f1"
 
 控制台有提供权限治理专属的命令，以及切换控制台账户的命令。用户可以通过控制台操作权限的治理，详情请参考：[权限操作命令](./console/console_commands.html#id14)。权限治理的命令只有控制台连入了开启权限治理的节点才会出现。
 
-控制台操作命令包含以下三种类型：
+控制台操作命令包含以下三种类型，详情请参考[权限操作命令](./console/console_commands.html#id14)：
 
 - 查询状态命令，该命令没有权限控制，所有账户均可访问。
 - 治理委员专用命令，这些命令只能持有治理委员的账户才可以使用。
 - 合约管理员专用命令，这些命令只有对某一个合约具有管理权限的管理员账户才可以访问。
-
-### 1. 查询状态命令
-
-该命令没有权限控制，所有账户均可访问。
-
-- [getCommitteeInfo](./console/console_commands.html#getcommitteeinfo)：获取治理委员会详细信息；
-- [getProposalInfo](./console/console_commands.html#getproposalinfo)：获取某个特定的提案信息；
-- [getDeployAuth](./console/console_commands.html#getdeployauth)：获取当前全局的部署权限策略，分为：无策略，白名单策略，黑名单策略；
-- [checkDeployAuth](./console/console_commands.html#checkdeployauth)：检查某个账户是否有部署权限；
-- [checkMethodAuth](./console/console_commands.html#checkmethodauth)：检查某个账户是否有调用某个合约接口的权限；
-- [getLatestProposal](./console/console_commands.html#getlatestproposal)：获取最新提案的ID；
-- [getContractAdmin](./console/console_commands.html#getcontractadmin)：获取某个合约的管理员账户地址；
-
-proposalType分为以下几种：
-
-- setWeight：当治理委员发起updateGovernorProposal 提案时会生成
-- setRate：setRateProposal 提案会生成
-- setDeployAuthType：setDeployAuthTypeProposal 提案会生成
-- modifyDeployAuth：openDeployAuthProposal 和closeDeployAuthProposal 提案会生成
-- resetAdmin：resetAdminProposal 提案会生成
-- unknown：这个类型出现时，有可能是有bug
-
-status分为以下几种：
-
-- notEnoughVotes：提案正常，还未收集到足够的投票
-- finish：提案执行完成
-- failed：提案失败
-- revoke：提案被撤回
-- unknown：这个类型出现时，有可能是有bug
-
-### 2. 治理委员专用命令
-
-这些命令只能持有治理委员的账户才可以使用。
-
-- [updateGovernorProposal](./console/console_commands.html#updategovernorproposal)：发起一个更新某个治理委员信息的提案；
-- [setRateProposal](./console/console_commands.html#setrateproposal)：发起一个更改治理委员会提案阈值的提案；
-- [setDeployAuthTypeProposal](./console/console_commands.html#setdeployauthtypeproposal)：发起一个设置全局部署权限策略的提案；
-- [openDeployAuthProposal](./console/console_commands.html#opendeployauthproposal)：发起一个开启某个账户部署权限的提案；
-- [closeDeployAuthProposal](./console/console_commands.html#closedeployauthproposal)：发起一个关闭某个账户部署权限的提案；
-- [resetAdminProposal](./console/console_commands.html#resetadminproposal)：发起一个重置某个合约管理员的提案；
-- [revokeProposal](./console/console_commands.html#revokeproposal)：提案发起人撤回一个提案；
-- [voteProposal](./console/console_commands.html#voteproposal)：治理委员向某一个提案进行投票；
-
-### 3. 合约管理员专用命令
-
-这些命令只有对某一个合约具有管理权限的管理员账户才可以访问。
-
-- [setMethodAuth](./console/console_commands.html#setmethodauth)：合约管理员设置某一个方法的策略；
-- [openMethodAuth](./console/console_commands.html#openmethodauth)：合约管理员开启某个账户对某个接口的权限；
-- [closeMethodAuth](./console/console_commands.html#closemethodauth)：合约管理员关闭某个账户对某个接口的权限；
 
 ## 使用举例
 
@@ -508,4 +471,145 @@ Return value size:1
 Return types: (string)
 Return values:(May the flame guide thee.)
 ---------------------------------------------------------------------------------------------
+```
+
+
+
+### 4. 升级权限投票权重计算逻辑
+
+发起升级投票计算逻辑的提案。升级提案投票计算逻辑分为以下几步：
+
+1. 基于接口编写合约；
+2. 将写好的合约部署在链上，并得到合约的地址；
+3. 发起升级投票计算逻辑的提案，将合约的地址作为参数输入，并在治理委员会中进行投票表决；
+4. 投票通过后（此时投票计算逻辑还是原有逻辑），则升级投票计算逻辑；否则就不升级。
+
+投票计算逻辑合约是按照一定的接口实现方可使用。合约实现可以参考下面的接口合约`VoteComputerTemplate.sol`进行实现：
+
+```solidity
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity >=0.6.10 <0.8.20;
+
+import "./Committee.sol";
+import "./BasicAuth.sol";
+
+abstract contract VoteComputerTemplate is BasicAuth {
+    // Governors and threshold
+    Committee public _committee;
+
+    constructor(address committeeMgrAddress, address committeeAddress) {
+        setOwner(committeeMgrAddress);
+        _committee = Committee(committeeAddress);
+        // first, test committee exist; second, test committee is helthy
+        require(
+            _committee.getWeights() >= 1,
+            "committee is error, please check address!"
+        );
+    }
+    // 此为投票权重计算逻辑唯一入口，必须实现该接口，且规定：
+    // 投票数不够，返回 1；投票通过，返回 2；投票不通过，返回 3；
+    function determineVoteResult(
+        address[] memory agreeVoters,
+        address[] memory againstVoters
+    ) public view virtual returns (uint8);
+    
+    // 此为计算逻辑的检验接口，用于其他治理委员验证该合约有效性
+    function voteResultCalc(
+        uint32 agreeVotes,
+        uint32 doneVotes,
+        uint32 allVotes,
+        uint8 participatesRate,
+        uint8 winRate
+    ) public pure virtual returns (uint8);
+}
+```
+
+现已有基于上面的`VoteComputerTemplate.sol`接口实现的合约如下：
+
+```solidity
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity >=0.6.10 <0.8.20;
+
+import "./Committee.sol";
+import "./VoteComputerTemplate.sol";
+
+contract VoteComputer is VoteComputerTemplate {
+    constructor(address committeeMgrAddress, address committeeAddress)
+        public
+        VoteComputerTemplate(committeeMgrAddress, committeeAddress)
+    {}
+    // 投票权重计算逻辑实现
+    function determineVoteResult(
+        address[] memory agreeVoters,
+        address[] memory againstVoters
+    ) public view override returns (uint8) {
+        uint32 agreeVotes = _committee.getWeights(agreeVoters);
+        uint32 doneVotes = agreeVotes + _committee.getWeights(againstVoters);
+        uint32 allVotes = _committee.getWeights();
+        return
+            voteResultCalc(
+                agreeVotes,
+                doneVotes,
+                allVotes,
+                _committee._participatesRate(),
+                _committee._winRate()
+            );
+    }
+    // 计算逻辑的检验接口实现
+    function voteResultCalc(
+        uint32 agreeVotes,
+        uint32 doneVotes,
+        uint32 allVotes,
+        uint8 participatesRate,
+        uint8 winRate
+    ) public pure override returns (uint8) {
+        //1. Checks enough voters: totalVotes/totalVotesPower >= p_rate/100
+        if (doneVotes * 100 < allVotes * participatesRate) {
+            //not enough voters, need more votes
+            return 1;
+        }
+        //2. Checks whether for votes wins: agreeVotes/totalVotes >= win_rate/100
+        if (agreeVotes * 100 >= winRate * doneVotes) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+}
+```
+
+合约编写完成之后就可以将合约在链上进行部署，并更新到治理委员会中：
+
+```shell
+# 首先通过getCommitteeInfo命令 确认Committee合约的地址为0xa0974646d4462913a36c986ea260567cf471db1f
+[group0]: /apps> getCommitteeInfo
+---------------------------------------------------------------------------------------------
+Committee address   : 0xa0974646d4462913a36c986ea260567cf471db1f
+ProposalMgr address : 0x2568bd207f50455f1b933220d0aef11be8d096b2
+---------------------------------------------------------------------------------------------
+ParticipatesRate: 0% , WinRate: 0%
+---------------------------------------------------------------------------------------------
+Governor Address                                        | Weight
+index0 : 0x4a37eba43c66df4b8394abdf8b239e3381ea4221     | 2
+
+# 部署VoteComputer合约，第一个参数0x10001为固定地址，第二个参数为当前治理委员Committee的地址
+[group0]: /apps> deploy VoteComputer 0x10001 0xa0974646d4462913a36c986ea260567cf471db1f
+transaction hash: 0x429a7ceccefb3a4a1649599f18b60cac1af040cd86bb8283b9aab68f0ab35ae4
+contract address: 0x6EA6907F036Ff456d2F0f0A858Afa9807Ff4b788
+currentAccount: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+
+# 部署成功后，即可通过upgradeVoteProposal更新
+[group0]: /apps> upgradeVoteProposal 0x6EA6907F036Ff456d2F0f0A858Afa9807Ff4b788
+Upgrade vote computer proposal created, ID is: 10
+---------------------------------------------------------------------------------------------
+Proposer: 0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+Proposal Type   : upgradeVoteCalc
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0x4a37eba43c66df4b8394abdf8b239e3381ea4221
+---------------------------------------------------------------------------------------------
+Against Voters:
+
+[group0]: /apps>
 ```
