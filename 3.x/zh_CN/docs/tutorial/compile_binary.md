@@ -12,6 +12,7 @@
 ```eval_rst
 .. note::
    - FISCO BCOS支持x86_64架构的Linux和macOS编译; Linux平台编译二进制时，要求g++版本不小于7.0; macOS系统编译二进制时，要求clang版本不小于12.0
+   - FISCO BCOS支持国产银河麒麟系统V10编译，编译步骤如下。
    - FISCO BCOS 3.x支持带有Apple Silicon的macOS编译，编译步骤与x86_64相同。
    - FISCO BCOS 3.x的编译依赖rust环境，编译源码前请先安装rust环境
    - 源码编译适合于有丰富开发经验的用户，编译过程中需要下载依赖库，请保持网络畅通
@@ -70,6 +71,21 @@ curl https://sh.rustup.rs -sSf | bash -s -- -y
 source $HOME/.cargo/env
 ```
 
+- **kylinOS**
+
+```shell
+# 安装依赖
+sudo yum update
+sudo yum install -y wget curl tar 
+sudo yum install -y build-essential clang flex bison patch glibc-static glibc-devel libzstd-devel libmpc cpp 
+
+# 源码编译安装gcc，gcc版本不低于10.1.0，参考网上gcc源码安装教程
+wget https://ftp.gnu.org/gnu/gcc/gcc-10.1.0/gcc-10.1.0.tar.gz
+
+# 安装cmake，版本不低于3.14
+wget https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0.tar.gz
+```
+
 ## 2. 克隆代码
 
 ```shell
@@ -100,7 +116,7 @@ cd FISCO-BCOS
 **若编译过程中从GitHub拉取依赖太慢，可执行以下方式加速：**
 
 - **使用GitHub镜像（推荐）**
-  
+
 
 执行如下命令使用`https://ghproxy.com/https://github.com/`替代`https://github.com/`加速依赖下载：
 
@@ -219,6 +235,27 @@ make -j4
 # 生成tgz包
 rm -rf fisco-bcos-tars-service/*.tgz && make tar
 ```
+
+### 3.4 kylinOS
+```shell
+# 导入clang编译文件
+export LIBCLANG_PATH=/usr/lib64/
+
+# 进入源码编译目录
+cd ~/fisco/FISCO-BCOS
+mkdir -p build && cd build
+cmake3 -DBUILD_STATIC=ON .. || cat *.log
+
+# 若编译依赖过程中遇到了vcpkg失败的问题，请根据报错提示查看错误日志
+# 若为网络原因可按照上文提示配置vcpkg代理
+
+# 高性能机器可添加-j4使用4核加速编译
+make -j4
+# 生成tgz包
+rm -rf fisco-bcos-tars-service/*.tgz && make tar
+```
+
+
 ### 编译选项说明
 
 - -- FULLNODE           编译全节点，默认开启
