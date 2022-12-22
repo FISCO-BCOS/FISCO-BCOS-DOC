@@ -11,8 +11,7 @@
 
 ```eval_rst
 .. note::
-   - FISCO BCOS支持x86_64架构的Linux和macOS编译; Linux平台编译二进制时，要求g++版本不小于7.0; macOS系统编译二进制时，要求clang版本不小于12.0
-   - FISCO BCOS支持国产银河麒麟系统V10编译，编译步骤如下。
+   - FISCO BCOS支持在Linux，macOS和银河麒麟操作系统上编译; Linux和麒麟系统编译二进制时，要求gcc版本不小于10; macOS系统编译二进制时，要求clang版本不小于12.0
    - FISCO BCOS 3.x支持带有Apple Silicon的macOS编译，编译步骤与x86_64相同。
    - FISCO BCOS 3.x的编译依赖rust环境，编译源码前请先安装rust环境
    - 源码编译适合于有丰富开发经验的用户，编译过程中需要下载依赖库，请保持网络畅通
@@ -79,11 +78,11 @@ sudo yum update
 sudo yum install -y wget curl tar 
 sudo yum install -y build-essential clang flex bison patch glibc-static glibc-devel libzstd-devel libmpc cpp 
 
-# 源码编译安装gcc，gcc版本不低于10.1.0，参考网上gcc源码安装教程
-wget https://ftp.gnu.org/gnu/gcc/gcc-10.1.0/gcc-10.1.0.tar.gz
+# 查看gcc版本，若gcc版本低于10，安装版本高于10的gcc
+gcc -v
 
-# 安装cmake，版本不低于3.14
-wget https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0.tar.gz
+# 查看cmake版本，是否大于等于3.14，若不满足，安装符合要求的cmake版本
+cmake --version
 ```
 
 ## 2. 克隆代码
