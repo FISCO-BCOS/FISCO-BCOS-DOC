@@ -250,10 +250,10 @@ info|2019-05-28 16:26:40.498838|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 ```bash
 
 cd ~/fisco
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试下面的命令：
-https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.1/download_console.sh
+https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.2/download_console.sh
 
 bash download_console.sh
 cp -n console/conf/config-example.toml console/conf/config.toml

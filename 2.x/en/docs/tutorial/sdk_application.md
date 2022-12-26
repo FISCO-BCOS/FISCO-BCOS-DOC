@@ -253,7 +253,7 @@ The console provides a compilation tool that stores the `Asset.sol` contract fil
 ```bash
 $ mkdir -p ~/fisco
 # download console
-$ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh
+$ cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 # switch to the fisco/console/ directory
 $ cd ~/fisco/console/
 # compile the contract, specify a Java package name parameter later, you can specify the package name according to the actual project path.
