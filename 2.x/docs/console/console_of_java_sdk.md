@@ -30,7 +30,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -63,15 +63,15 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/downloa
 **注意：默认下载的控制台内置`0.4.25`版本的`solidity`编译器，用户需要编译`0.5`或者`0.6`版本的合约时，可以通过下列命令获取内置对应编译器版本的控制台**	
 ```bash	
 # 0.5	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh -v 0.5	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -v 0.5	
 # 0.6	
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh -v 0.6	
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -v 0.6	
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.1/download_console.sh && bash download_console.sh -v 0.5` 
-    0.6版本请尝试命令： `https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.1/download_console.sh && bash download_console.sh -v 0.6`
+    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.2/download_console.sh && bash download_console.sh -v 0.5` 
+    0.6版本请尝试命令： `https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.2/download_console.sh && bash download_console.sh -v 0.6`
 
 ```
 
