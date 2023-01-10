@@ -51,11 +51,11 @@ archive tool used to archive/reimport the data of FISCO BCOS v3:
 
 ### 归档数据
 
-`-a`选项表示执行数据归档操作，参数是`[起始区块] [结束区块]`，其中结束区块不会被归档。`-e`选项指定节点删除归档数据服务的IP和端口，例如`127.0.0.1:8080`。假设归档区块[1,255)到本地`./archive`的rocksdb数据库中，节点归档服务的地址为`127.0.0.1:8080`，相应的操作如下所示：
+`-a`选项表示执行数据归档操作，参数是`[起始区块] [结束区块]`，其中结束区块不会被归档。`-e`选项指定节点删除归档数据服务的IP和端口，例如`127.0.0.1:8181`。假设归档区块[1,255)到本地`./archive`的rocksdb数据库中，节点归档服务的地址为`127.0.0.1:8181`，相应的操作如下所示：
 
 ```bash
 # 归档[1,255)，其中255不会被归档，数据归档到rocksdb，rocksdb路径是./archive
-$ ./archiveTool -a 1 255 -e 127.0.0.1:8080 -p ./archive
+$ ./archiveTool -a 1 255 -e 127.0.0.1:8181 -p ./archive
 config file: ./config.ini | genesis file: ./config.genesis
 use rocksDB as archive DB, path: ./archive
 archive the blocks of range [1,255) into RocksDB
