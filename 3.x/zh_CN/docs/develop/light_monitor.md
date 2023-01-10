@@ -1,4 +1,4 @@
-# light_monitor.sh监控工具
+# 监控工具
 
 标签：``监控`` ``monitor``
 
@@ -50,11 +50,11 @@ Example:
 
 ### 状态描述
 
-**参数：**  
+**参数：**
 
-- $config_ip: rpc ip  
-- $config_port：rpc port  
-- $group: 群组id  
+- $config_ip: rpc ip
+- $config_port：rpc port
+- $group: 群组id
 - $height: 区块高度
 
 #### ```OK! $config_ip:$config_port $node:$group is working properly: height $height```
@@ -65,18 +65,18 @@ Example:
 
 调用`rpc`接口`xxxx`失败，`rpc`服务宕机, 严重错误，此时需要重启`rpc`服务
 
-#### ```ERROR! Consensus timeout $config_ip:$config_port ${group}:${node}```  
+#### ```ERROR! Consensus timeout $config_ip:$config_port ${group}:${node}```
 
-**群组共识超时，连续出现时为严重错误**。  
+**群组共识超时，连续出现时为严重错误**。
 排查网络连接是否正常。
 
-#### ```ERROR! insufficient disk capacity, monitor disk directory: ${dir}, left disk space percent: ${disk_space_left_percent}%```  
+#### ```ERROR! insufficient disk capacity, monitor disk directory: ${dir}, left disk space percent: ${disk_space_left_percent}%```
 
 磁盘空间不足，剩余`${disk_space_left_percent}%`的空间
 
-### 配置crontab任务  
+### 配置crontab任务
 
-为了能够持续监控区块链节点的状态, 将`light_monitor.sh`配置到`crontab`定期执行.  
+为了能够持续监控区块链节点的状态, 将`light_monitor.sh`配置到`crontab`定期执行.
 
 ```shell
 # 每分钟执行一次，查看节点是否正常启动, 正常共识, 有无关键错误打印
@@ -89,7 +89,7 @@ Example:
 
 ## 对接告警系统
 
-- 接口  
+- 接口
 `light_monitor.sh`对接告警系统的接口`alarm`, 默认实现如下：
 
 ```shell
@@ -109,10 +109,10 @@ alarm() {
 
 - 示例
 
- 假设用户的告警系统  
+ 假设用户的告警系统
 
 - API:
-        `http://127.0.0.1:1111/alarm/request`  
+        `http://127.0.0.1:1111/alarm/request`
     POST参数:
         ```{'title':'告警主题','alert_ip':'告警服务器IP', 'alert_info':'告警内容'}```
 
