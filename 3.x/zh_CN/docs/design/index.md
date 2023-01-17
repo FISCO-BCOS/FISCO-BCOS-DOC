@@ -36,10 +36,12 @@ ___
    protocol_description.md
    consensus/index.rst
    sync.md
-   storage.md
+   storage/storage.md
    DMC.md
    contract_directory.md
    virtual_machine/index.rst
    committee_design.md
-   storage_security.md
+   storage/storage_security.md
+   storage/archive.md
+   p2p.md
 ```

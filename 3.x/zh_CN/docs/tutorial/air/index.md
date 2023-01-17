@@ -24,4 +24,5 @@
    build_chain.md
    expand_node.md
    storage_security.md
+   use_hsm.md
 ```
