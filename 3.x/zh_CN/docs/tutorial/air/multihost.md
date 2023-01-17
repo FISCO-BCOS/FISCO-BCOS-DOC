@@ -28,10 +28,10 @@
 mkdir -p ~/fisco && cd ~/fisco
 
 # download_bin.sh, 下载fisco-bcos二进制程序, v指定FISCO-BCOS版本
-./download_bin.sh -v 3.1.1
+./download_bin.sh -v 3.2.0
 
 # 下载开发部署工具build_chain
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.1.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 **生成多机节点配置**
