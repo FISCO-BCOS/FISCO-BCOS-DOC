@@ -4,20 +4,16 @@
 
 ----
 
-## 介绍
-
-### 简介
+## light_monitor.sh
 
 `FISCO-BCOS 3.0`区块链轻量级监控工具，可以监控区块链是否正常工作，也提供简单的接入用户告警系统的方式.
-
-### 功能
 
 - 监控共识是否正常.
 - 监控区块同步是否正常.
 - 监控磁盘空间.
 - 对接告警系统，发送告警信息.
 
-## 使用
+### 使用
 
 帮助:
 `bash light_monitor.sh -h`
@@ -48,7 +44,7 @@ Example:
 - `-T`: 磁盘告警阈值，监控的磁盘剩余空间百分比小于该值时，触发告警，默认值`5%`
 - `-h`: 帮助信息
 
-### 状态描述
+#### 状态描述
 
 **参数：**
 
@@ -57,24 +53,22 @@ Example:
 - $group: 群组id
 - $height: 区块高度
 
-#### ```OK! $config_ip:$config_port $node:$group is working properly: height $height```
+**```OK! $config_ip:$config_port $node:$group is working properly: height $height```**
 
 群组`${group}`正常工作, 共识模块/区块同步正常工作
 
-#### ```ERROR! Cannot connect to $config_ip:$config_port ${group}, method: xxxx```
+**```ERROR! Cannot connect to $config_ip:$config_port ${group}, method: xxxx```**
 
 调用`rpc`接口`xxxx`失败，`rpc`服务宕机, 严重错误，此时需要重启`rpc`服务
 
-#### ```ERROR! Consensus timeout $config_ip:$config_port ${group}:${node}```
+**```ERROR! Consensus timeout $config_ip:$config_port ${group}:${node}```**
 
 **群组共识超时，连续出现时为严重错误**。
 排查网络连接是否正常。
 
-#### ```ERROR! insufficient disk capacity, monitor disk directory: ${dir}, left disk space percent: ${disk_space_left_percent}%```
+**```ERROR! insufficient disk capacity, monitor disk directory: ${dir}, left disk space percent: ${disk_space_left_percent}%```**  
 
 磁盘空间不足，剩余`${disk_space_left_percent}%`的空间
-
-### 配置crontab任务
 
 为了能够持续监控区块链节点的状态, 将`light_monitor.sh`配置到`crontab`定期执行.
 
@@ -87,7 +81,7 @@ Example:
 
 **用户需要根据实际部署修改示例中的路径.**
 
-## 对接告警系统
+### 对接告警系统
 
 - 接口
 `light_monitor.sh`对接告警系统的接口`alarm`, 默认实现如下：

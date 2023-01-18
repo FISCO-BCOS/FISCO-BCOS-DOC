@@ -32,7 +32,7 @@
   - 字符串类型，包括c-sdk的版本以及构建信息，示例:
 
   ```shell
-  FISCO BCOS C SDK Version : 3.0.1
+  FISCO BCOS C SDK Version : 3.1.0
   Build Time         : 20220915 11:11:11
   Build Type         : Darwin/appleclang/Release
   Git Branch         : main

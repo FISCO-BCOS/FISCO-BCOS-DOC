@@ -7,7 +7,7 @@ FISCO BCOS 技术文档
 FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多家机构、多个应用，长时间在生产环境运行的实际检验。
 
 .. note::
-   本技术文档适用于FISCO BCOS 3.0+版本, FISCO BCOS 2.0+稳定版技术文档请参考 `FISCO BCOS 2.x技术文档(stable) <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/>`_
+   本技术文档适用于FISCO BCOS 3.x版本, FISCO BCOS 2.x稳定版技术文档请参考 `FISCO BCOS 2.x技术文档(stable) <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/>`_
 
    FISCO BCOS 3.x版本源码位于 `master` 分支，请参考 `这里 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master>`_
    FISCO BCOS 2.x版本源码位于 `master-2.0` 分支，请参考 `这里 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_
@@ -261,11 +261,13 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/develop/api.md
    docs/develop/precompiled/index.md
    docs/develop/account.md
-   docs/develop/stress_testing.md
    docs/develop/committee_usage.md
+   docs/develop/contract_life_cycle.md
+   docs/develop/stress_testing.md
    docs/develop/light_monitor.md
    docs/develop/data_archive_tool.md
    docs/develop/storage_tool.md
+   docs/develop/system_log_audit.md
 
 .. toctree::
    :hidden:

@@ -4,7 +4,7 @@
 
 ----------
 
-本文将介绍 FISCO BCOS 3.0的KV存储功能，帮助开发者更高效便捷地开发区块链应用。
+本文将介绍 FISCO BCOS 3.x的KV存储功能，帮助开发者更高效便捷地开发区块链应用。
 
 **特别注意：使用KV存储预编译合约的Solidity合约必须高于0.6.0版本，并且开启使用ABIEncoderV2**
 
@@ -214,7 +214,7 @@ pub fn get(&self, id: String) -> (bool, String) {
 
 ### 4. SDK KVTable Service接口
 
-FISCO BCOS 3.0 SDK提供KVTable Service数据上链接口，这些接口实现的原理是调用区块链内置的一个预编译的KVTable合约，专门负责对用户表进行读写操作。Java SDK KVTable Service实现在org.fisco.bcos.sdk.v3.contract.precompiled.crud.KVTableService 类，其接口如下：
+FISCO BCOS 3.x SDK提供KVTable Service数据上链接口，这些接口实现的原理是调用区块链内置的一个预编译的KVTable合约，专门负责对用户表进行读写操作。Java SDK KVTable Service实现在org.fisco.bcos.sdk.v3.contract.precompiled.crud.KVTableService 类，其接口如下：
 
 | 接口                                | 功能         | 参数                 | 返回值                   |
 |-------------------------------------|--------------|----------------------|--------------------------|

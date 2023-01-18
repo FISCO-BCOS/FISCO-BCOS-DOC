@@ -6,7 +6,7 @@
 `download_console.sh`脚本提供获取所有版本的控制台的功能，默认获取[2.6+版本的控制台](../console/console_of_java_sdk.md)，可通过如下命令获取最新的`download_console.sh`脚本：
 
 ```bash
-mkdir -p ~/fisco && cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh
+mkdir -p ~/fisco && cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh
 ```
 
 ```eval_rst
