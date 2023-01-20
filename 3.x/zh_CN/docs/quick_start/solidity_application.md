@@ -65,7 +65,7 @@ function transfer(string memory from_account, string memory to_account, uint256 
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.1.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -458,7 +458,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.1.0")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.2.0")
     compile spring
 }
 ```

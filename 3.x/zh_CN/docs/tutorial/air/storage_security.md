@@ -25,7 +25,7 @@
 
 下载`build_chain.sh`脚本
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.1.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
