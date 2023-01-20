@@ -49,7 +49,7 @@ sudo yum install -y curl openssl openssl-devel wget
 
 ```eval_rst
 .. note::
-   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.1.1/build_chain.sh && chmod u+x build_chain.sh
+   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```shell
@@ -57,10 +57,10 @@ sudo yum install -y curl openssl openssl-devel wget
 cd ~ && mkdir -p fisco && cd fisco
 
 # 下载建链脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.1.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
 
 # Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.1.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 第三步. 搭建4节点非国密联盟链
@@ -180,8 +180,8 @@ sudo yum install -y java java-devel
 
 ### 第二步. 下载控制台
 
-```
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.1.0/download_console.sh && bash download_console.sh
+```shell
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -224,12 +224,11 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 cd ~/fisco/console && bash start.sh
 ```
 
-
 输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.1.0)!
+Welcome to FISCO BCOS console(3.2.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
@@ -243,7 +242,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 =============================================================================================
 ```
-
 
 - 用控制台获取信息
 
@@ -277,8 +275,8 @@ peer3: f0ffa45cee35dcc1bcf1e1ef7b7c3d96590c25ba75198a28ef5ceb89dc6bec310619cb685
 ]
 ```
 
-
 ## 3. 部署和调用合约
+
 ### 第一步. 编写HelloWorld合约
 
 HelloWorld合约提供了两个接口`get()`和`set()`，用于获取/设置合约变量`name`，合约内容如下：
