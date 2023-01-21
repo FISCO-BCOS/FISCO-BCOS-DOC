@@ -140,6 +140,8 @@ bash nodes/127.0.0.1/node4/start.sh
 **步骤1：检查是否所有节点均启动**
 
 ```shell
+ps aux |grep -v grep |grep fisco-bcos
+
 fisco        79637   4.5  0.1  4979692  19072 s005  S     6:22下午   0:11.49 /home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini -g config.genesis
 fisco        79695   4.4  0.1  4979692  19080 s005  S     6:22下午   0:11.56 /home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini -g config.genesis
 fisco        79671   4.3  0.1  5241836  19192 s005  S     6:22下午   0:11.59 /home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini -g config.genesis

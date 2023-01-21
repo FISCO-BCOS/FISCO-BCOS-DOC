@@ -32,7 +32,7 @@ Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
     -g <group id>                       [Optional] set the group id, default: group0
     -I <chain id>                       [Optional] set the chain id, default: chain0
-    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.1.1
+    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.2.0
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode executable, input "download_binary" to download lightnode binary or assign correct lightnode binary path
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
@@ -46,7 +46,7 @@ Usage:
     -A <Auth mode>                      Default off. If set -A, build chain with auth, and generate admin account.
     -a <Auth account>                   [Optional] when Auth mode Specify the admin account address.
     -w <WASM mode>                      [Optional] Whether to use the wasm virtual machine engine, default is false
-    -R <Serial_mode>                    [Optional] Whether to use serial execute,default is false
+    -R <Serial_mode>                    [Optional] Whether to use serial execute,default is true
     -k <key page size>                  [Optional] key page size, default size is 10240
     -m <fisco-bcos monitor>             [Optional] node monitor or not, default is false
     -i <fisco-bcos monitor ip/port>     [Optional] When expanding the node, should specify ip and port
@@ -155,7 +155,7 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 该模式下 start.sh 脚本启动节点的命令如下
 
 ```shell
-docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.1.1 -c config.ini -g config.genesis
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.2.0 -c config.ini -g config.genesis
 ```
 
 ### **`A`权限控制选项[**Optional**]**
@@ -172,7 +172,7 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -A
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.1.1/fisco-bcos-macOS-x86_64.tar.gz ...
+[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/fisco-bcos-macOS-x86_64.tar.gz ...
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
 [INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
@@ -199,7 +199,7 @@ Processing IP:127.0.0.1 Total:4
 ### **`w`权限控制选项[**Optional**]**
 可选参数，当区块链需要启用wasm虚拟机引擎时，可通过`-w`选项开启，若不指定该选项，则默认使用EVM。
 ### **`R`权限控制选项[**Optional**]**
-可选参数，当区块链启动串行执行模式时，可通过`-R`选项开启串行执行模式，若不指定该选项，区块链默认开启DMC并行模式。
+可选参数，当区块链启动串行执行模式时，可通过`-R`选项指定执行模式，默认为串行模式（true），若设置为false，则开启DMC并行模式。
 ### **`k`权限控制选项[**Optional**]**
 可选参数，当需要设置key-page存储中page的大小时，可通过`-k`选项设置page的大小，若不指定，默认page大小为10240。
 ### **`m`节点监控选项[**Optional**]**
