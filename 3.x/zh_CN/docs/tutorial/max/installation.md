@@ -12,7 +12,7 @@ Max版FISCO BCOS节点采用分布式存储TiKV，执行模块独立成服务，
 
 ```eval_rst
 .. note::
-   - Max版本FISCO BCOS使用 ``BcosBuilder/max`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./max_builder.html>`_ 
+   - Max版本FISCO BCOS使用 ``BcosBuilder/max`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./max_builder.html>`_
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Max版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
    - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
    - 搭建Max版本FISCO BCOS需先部署TiKV集群，TiKV集群的部署请参考 `这里 <https://tikv.org/docs/5.1/deploy/install/install/>`_
@@ -46,7 +46,7 @@ brew install curl docker docker-compose python3 wget
 ```eval_rst
 .. note::
    - 部署工具 ``BcosBuilder`` 配置和使用请参考 `这里 <./max_builder.html>`_
-   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.1.1/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -57,7 +57,7 @@ mkdir -p ~/fisco && cd ~/fisco
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.2.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.1.1/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosBuilder && pip3 install -r requirements.txt
@@ -75,18 +75,18 @@ cd BcosBuilder && pip3 install -r requirements.txt
 $ curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
 ```
 
-**启动tikv v5.4.0**
+**启动tikv v5.4.3**
 
 ```bash
 # 部署并启动tikv(这里设机器的物理ip为172.25.0.3)
-$ nohup tiup playground v5.4.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor > ~/tikv.log 2>&1 &
+$ nohup tiup playground v5.4.3 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor > ~/tikv.log 2>&1 &
 # 获取tikv监听端口(tikv的默认监听端口是2379)
 $ cat ~/tikv.log
 tiup is checking updates for component playground ...timeout!
-Starting component `playground`: /home/fisco/.tiup/components/playground/v1.9.4/tiup-playground v5.4.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor
+Starting component `playground`: /home/fisco/.tiup/components/playground/v1.9.4/tiup-playground v5.4.3 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor
 Playground Bootstrapping...
-Start pd instance:v5.4.0
-Start tikv instance:v5.4.0
+Start pd instance:v5.4.3
+Start tikv instance:v5.4.3
 PD client endpoints: [172.25.0.3:2379]
 ```
 
@@ -199,7 +199,7 @@ upload tar package generated/./agencyABcosRpcService.tgz success, config id: 14
 ```shell
 $ tree generated/rpc/chain0
 generated/rpc/chain0
-├── 172.25.0.3 
+├── 172.25.0.3
 │   ├── agencyABcosRpcService # 机构A的RPC服务目录
 │   │   ├── config.ini.tmp    # 机构A的RPC服务的配置文件
 │   │   ├── sdk               # SDK证书目录，SDK客户端可从本目录拷贝证书连接RPC服务
@@ -384,7 +384,7 @@ $ tree generated/chain0
 generated/chain0
 └── group0
     ├── agencyAgroup0node0BcosExecutorService
-    │   ├── config.genesis 
+    │   ├── config.genesis
     │   └── config.ini
     ├── agencyAgroup0node0BcosMaxNodeService
     │   ├── config.genesis  # 创世块配置

@@ -10,11 +10,33 @@
     相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 
 
+v3.2.x
+------------------
+
+.. admonition:: FISCO BCOS 3.x Releases
+
+     - `FISCO BCOS v3.2.0 <./3_2_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.0>`_]
+     
+
+.. admonition:: 查看节点和数据版本
+
+    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
+    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
+    - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
+    - 查看轻节点二进制版本：``../fisco-bcos-lightnode --version``
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   3_2_0.md
+
 v3.1.x
 ------------------
 
 .. admonition:: FISCO BCOS 3.x Releases
 
+     - `FISCO BCOS v3.1.2 <./3_1_2.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.1.2>`_]
      - `FISCO BCOS v3.1.1 <./3_1_1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.1.1>`_]
      - `FISCO BCOS v3.1.0 <./3_1_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.1.0>`_]
      
@@ -30,6 +52,7 @@ v3.1.x
    :hidden:
    :maxdepth: 0
 
+   3_1_2.md
    3_1_1.md
    3_1_0.md
 
