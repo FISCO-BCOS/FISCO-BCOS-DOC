@@ -138,3 +138,16 @@ lightnode/
 - getTransactionReceiptByHashWithProof
 - call
 - sendTransaction
+- listAbi
+
+## 轻节点扩容
+FISCOBCOS 3.3版本开始，支持通过build_chain.sh脚本扩容轻节点，具体操作流程如下：
+1. 新建文件夹config；
+2. 将nodes下的根证书文件夹ca拷贝至config文件夹中；
+3. 从已存在lightnode文件夹中拷贝config.genesis、config.ini以及nodes.json至config文件夹中；
+4. 修改config.ini中rpc与p2p的port字段，将端口号+1（例如原config.ini文件中rpc端口为20202，修改为20203）；
+5. 执行脚本命令，具体有执行轻节点二进制文件路径以及自动拉取最新轻节点二进制两种扩容方式，如下所示:
+    -  ```bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca(根证书路径) -o nodes/lightnode1(扩容轻节点输出路径) -L + 指定轻节点二进制下载路径```
+    - ```bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca(根证书路径) -o nodes/lightnode1(扩容轻节点输出路径)``` (自动拉取轻节点最新二进制)
+    
+6. 扩容成功后生成新的轻节点目录nodes/lightnode1，启动扩容生成的轻节点 bash start.sh
