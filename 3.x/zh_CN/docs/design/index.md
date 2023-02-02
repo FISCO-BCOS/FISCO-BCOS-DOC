@@ -44,4 +44,5 @@ ___
    storage/storage_security.md
    storage/archive.md
    p2p.md
+   compatibility.md
 ```

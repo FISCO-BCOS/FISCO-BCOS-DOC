@@ -9,6 +9,15 @@
 .. important::
     相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 
+升级指南
+------------
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   upgrade.md
+
 
 v3.2.x
 ------------------
