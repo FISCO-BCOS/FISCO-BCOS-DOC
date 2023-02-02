@@ -11,6 +11,8 @@
 
 升级指南
 ------------
+FISCO BCOS 版本迭代，支持版本之间的兼容升级，支持可灰度升级，且灰度升级过程中，系统可以正常共识、出块。详情可参考`升级指南 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/change_log/upgrade.html>`_
+
 
 .. toctree::
    :hidden:
