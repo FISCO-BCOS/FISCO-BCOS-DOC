@@ -113,7 +113,19 @@ class Protocol
    private:
    std::map<ModuleID, ProtocolInfo::Ptr> m_supportedProtocols;
 ```
-![](../../images/design/protocol_design.jpg)
+```eval_rst
+.. mermaid::
+
+    sequenceDiagram
+        participant NodeA
+        participant NodeB
+        
+        NodeA->>NodeB: 建立连接
+        NodeA->>NodeB: NodeA 协议列表
+        NodeB->>NodeB: 计算NodeA协议列表
+        NodeB->>NodeA: NodeB 协议列表
+        NodeA->>NodeA: 计算NodeB 协议列表
+```
 
 协议协商方法设计：
 ```c++
@@ -192,14 +204,13 @@ std::function<void(Error::Ptr, std::map<NodeID, ProtocolInfo>)>) = 0;
 - 交易执行：可根据 BlockContext 中的 m_blockVersion 实现执行层面兼容性
 
 ###3.1 数据协议版本定义
-FISCOBCOS 设计主版本号：1字节，次版本：3字节，例如针对FISCOBCOS 3.x，版本号设计如下：
+FISCOBCOS 设计主版本号与次版本号，例如针对FISCOBCOS 3.x，版本号设计如下：
 ```c++
-3.0.x: 0x03000000
-3.1.x: 0x0300001
-3.2.x: 0x0300002
+3.0.0: 0x03000000
+3.1.0: 0x03010000
+3.1.1: 0x03010100
+3.2.0: 0x03020000
 ...
-3.10.x: 0x030000a
-
 ```
 
 ####3.2 数据协议存储与变更
