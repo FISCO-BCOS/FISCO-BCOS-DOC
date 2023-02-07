@@ -1007,19 +1007,24 @@ ConsensusStatusInfo{
 运行create sql语句创建用户表，使用mysql语句形式。
 
 ```bash
-# 创建用户表t_demo，其主键为name，其他字段为item_id和item_name
+# 创建用户表t_demo，其主键为name，其他字段为item_id和item_name，同时设置主键的排序方式为字典序
 [group0]: /apps> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
 Create 't_demo' Ok.
 
-# 创建好的t_demo表会在绝对路径 /tables/ 底下可以观察到
+# 创建用户表t_demo1，其主键为name，其他字段为item_id和item_name，同时设置主键的排序方式为数字序
+[group0]: /apps> create table t_demo1(name integer, item_id varchar, item_name varchar, primary key(name))
+Create 't_demo1' Ok.
+
+# 创建好的t_demo, t_demo1表会在绝对路径 /tables/ 底下可以观察到
 [group0]: /apps> ls ../tables/
-t_demo
+t_demo t_demo1
 ```
 
 **注意：**
 
 - 创建的表名带上前缀的长度不能超过50，例如： /tables/t_demo 的长度不能超过50。
 - 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型，也按照字符串类型设置。
+- 可以通过指定主键的数据类型来设置主键的排序规则。当类型为varchar时，其排序规则为字典序；当类型为integer时，排序规则为数字序。
 - 必须指定主键字段。例如创建t_demo表，主键字段为name。
 - 表的主键与关系型数据库中的主键不是相同概念，这里主键取值不唯一，区块链底层处理记录时需要传入主键值。
 - 可以指定字段为主键，但设置的字段自增，非空，索引等修饰关键字不起作用。
@@ -1056,7 +1061,7 @@ Alter 't_demo' Ok.
 运行desc语句查询表的字段信息，使用mysql语句形式。
 
 ```shell
-# 查询t_demo表的字段信息，可以查看表的主键名和其他字段名
+# 查询t_demo表的字段信息，可以查看表的主键名，其他字段名以及排序规则
 [group0]: /apps> desc t_demo
 {
     "key_field":[
@@ -1065,6 +1070,24 @@ Alter 't_demo' Ok.
     "value_field":[
         "item_id",
         "item_name"
+    ],
+    "key_order":[
+        "Lexicographic"
+    ]
+}
+
+# 查询t_demo1表的字段信息，可以查看表的主键名，其他字段名以及排序规则
+[group0]: /apps> desc t_demo1
+{
+    "key_field":[
+        "name"
+    ],
+    "value_field":[
+        "item_id",
+        "item_name"
+    ],
+    "key_order":[
+        "Numerical"
     ]
 }
 ```
@@ -1088,9 +1111,8 @@ Insert OK:
 
 运行select sql语句查询记录，使用mysql语句形式。
 
-与一般的SQL不同的是，遍历接口的条件语句目前只支持key字段的条件。
-
 ```text
+# 查询包含所有字段的记录
 # 查询包含所有字段的记录
 [group0]: /apps> select * from t_demo where name = fruit
 {name=fruit, item_id=1, item_name=apple1}
@@ -1105,11 +1127,22 @@ Insert OK:
 [group0]: /apps> insert into t_demo values (fruit2, 2, apple2)
 Insert OK, 1 row affected.
 
-# 使用and关键字连接多个查询条件
+# 对key进行条件查询
 [group0]: /apps> select * from t_demo where name >= fruit
 {name=fruit, item_id=1, item_name=apple1}
 {name=fruit2, item_id=2, item_name=apple2}
 2 row(s) in set.
+
+# 对其他字段进行条件查询
+[group0]: /apps> select * from t_demo where item_id >= 1
+{name=fruit, item_id=1, item_name=apple1}
+{name=fruit2, item_id=2, item_name=apple2}
+2 row(s) in set.
+
+# 使用and关键字连接多个查询条件
+[group0]: /apps> select * from t_demo where name >= fruit && item_id >=2
+{name=fruit2, item_id=2, item_name=apple2}
+1 row(s) in set.
 
 # 使用limit字段，查询第1行记录，没有提供偏移量默认为0
 [group0]: /apps> select * from t_demo where name = fruit limit 1
@@ -1120,13 +1153,18 @@ Insert OK, 1 row affected.
 [group0]: /apps> select * from t_demo where name = fruit limit 1,1
 {item_id=1, item_name=apple1, name=fruit}
 1 rows in set.
+
+# like子句
+[group0]: /apps> select * from t_demo where name like 'fruit%'
+{name=fruit, item_id=1, item_name=apple1}
+{name=fruit2, item_id=2, item_name=apple2}
+2 row(s) in set.
 ```
 
 **注意：**
 
-- 查询记录sql语句必须在where子句中提供表的主键字段值。
 - 关系型数据库中的limit字段可以使用，提供两个参数，分别offset(偏移量)和记录数(count)。
-- where条件子句只支持and关键字，其他or、in、like、inner、join，union以及子查询、多表联合查询等均不支持。
+- where条件子句只支持and关键字，其他or、in、inner、join，union以及子查询、多表联合查询等均不支持。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### 6. [update sql]
@@ -1140,7 +1178,6 @@ Update OK, 1 row affected.
 
 **注意：**
 
-- 更新记录sql语句的where子句目前只支持表的主键字段值条件。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### 7. [delete sql]
@@ -1154,7 +1191,6 @@ Remove OK, 1 row affected.
 
 **注意：**
 
-- 删除记录sql语句的where子句目前只支持表的主键字段值条件。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ## BFS操作命令
