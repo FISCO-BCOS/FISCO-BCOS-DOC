@@ -15,7 +15,7 @@
 
 ### 1. Table合约
 
-- Solidity合约只需要引入FISCO BCOS官方提供的KVTable.sol抽象接口合约文件即可。
+- Solidity合约只需要引入FISCO Table.sol抽象接口合约文件即可。
 - webankblockchain-liquid（以下简称WBC-Liquid）合约在实现合约之前对Table的接口进行声明使用即可。
 
 Table包含分布式存储专用的智能合约接口，其接口实现在区块链节点。其中，TableManager可以创建表、新增表字段，Table可以用作表CRUD操作。下面分别进行介绍。
@@ -29,7 +29,7 @@ Table包含分布式存储专用的智能合约接口，其接口实现在区块
 | createTable(string ,TableInfo)  | 创建表           | 表名，TableInfo结构体      | 返回错误码（int32），错误码详见下表         |
 | appendColumns(string, string[]) | 增加表字段       | 表名，字段名数组           | 返回错误码（int32），错误码详见下表         |
 | openTable(string)               | 获取表地址       | 表名，该接口只用于Solidity | 返回表对应的真实地址，如果不存在，则返回0x0 |
-| desc(string)                    | 获取表信息结构体 | 表名                       | 返回TableInfo结构体                         |
+| descWithKeyOrder(string)        | 获取表信息结构体 | 表名                       | 返回TableInfo结构体                         |
 
 #### 1.2 Table合约
 
@@ -93,7 +93,8 @@ constructor () public{
     string[] memory columnNames = new string[](2);
     columnNames[0] = "name";
     columnNames[1] = "age";
-    TableInfo memory tf = TableInfo("id", columnNames);
+    // 选择主键的排序规则，目前支持数字序(Numerical)，字典序(Lexicographic)两种排序规则
+    TableInfo memory tf = TableInfo(KeyOrder.Numerical, "id", columnNames);
     tm.createTable(TABLE_NAME, tf);
     
     // 获取真实的地址，存在合约中
@@ -108,6 +109,8 @@ constructor () public{
 #### 2.3 针对表进行CRUD读写操作
 
 在TableTest.sol合约文件中，insert记录核心代码如下：
+
+**注意：**当主键的排序方式为数字序(Numerical)时，插入的主键值(id)必须是int64范围类的数字转换成的字符串形式。
 
 ``` solidity
 function insert(string memory id,string memory name,string memory age) public returns (int32){
@@ -166,19 +169,20 @@ function select(string memory id) public view returns (string memory,string memo
 
 用户可以使用Table提供的具有Condition参数的接口，进行多行数据读写。
 
-**注意：** 目前的Condition只支持主键字段的范围筛选。
-
 读多行数据的核心代码如下，写多行数据的类似：
 
 ```solidity
-function selectMore(string memory gt_id)
+// 查询 id > gt_id && age < lt_age 的记录
+function selectMore(string memory gt_id, string memory lt_age)
     public
     view
     returns (Entry[] memory entries)
 {
-    Condition[] memory conds = new Condition[](1);
+    Condition[] memory conds = new Condition[](2);
     Condition memory gt = Condition({op: ConditionOP.GT, value: gt_id});
+    Condition memory lt = Condition({op: ConditionOP.LT, value: lt_age});
     conds[0] = gt;
+    conds[1] = lt;
     Limit memory limit = Limit({offset: 0, count: 100});
     entries = table.select(conds, limit);
     return entries;
