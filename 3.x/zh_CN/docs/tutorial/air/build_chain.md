@@ -66,9 +66,10 @@ expand node e.g
 
 ### **`C`选项[**Optional**]**
 
-脚本的命令，支持 `deploy` 与 `expand`，默认为`deploy`:
+脚本的命令，支持 `deploy` 、 `expand`与`modify`，默认为`deploy`:
 - `deploy`: 用于部署新节点。
-- `expand` 用于节点扩容。
+- `expand`: 用于节点扩容。
+- `modify`: 用于改造普通节点为多CA节点。
 
 ### **`g`选项[**Optional**]**
 用于设置群组ID，若不设置，则默认为group0。
@@ -245,6 +246,14 @@ Processing IP:127.0.0.1 Total:4
 ### **`M`节点监控配置文件选项[**Optional**]**
 
 可选参数，当区块链扩容节点需要带监控时，可通过`-M`选项来指定prometheus配置文件在nodes目录的相对路径。
+
+### **`N`多CA证书节点改造选项[**Optional**]**
+
+可选参数，当区块链节点需要改造为支持多CA证书节点时，可通过`-N`选项来指定欲改造节点所在路径。
+
+### **`u`多CA节点改造选项[**Optional**]**
+
+可选参数，当区块链节点需要改造为支持多CA证书节点时，可通过`-u`选项来指定额外其他证书所在路径。
 
 ### **`h`选项[**Optional**]**
 
