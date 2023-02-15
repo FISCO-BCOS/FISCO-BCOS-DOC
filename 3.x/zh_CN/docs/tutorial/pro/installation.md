@@ -574,7 +574,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.1.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::

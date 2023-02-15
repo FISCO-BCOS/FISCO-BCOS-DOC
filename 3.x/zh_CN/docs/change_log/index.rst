@@ -9,6 +9,17 @@
 .. important::
     相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 
+升级指南
+------------
+FISCO BCOS 版本迭代，支持版本之间的兼容升级，支持可灰度升级，且灰度升级过程中，系统可以正常共识、出块。详情可参考`升级指南 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/change_log/upgrade.html>`_
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   upgrade.md
+
 
 v3.2.x
 ------------------
