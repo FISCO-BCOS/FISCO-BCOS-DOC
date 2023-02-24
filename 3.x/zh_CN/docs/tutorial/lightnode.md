@@ -179,7 +179,7 @@ lightnode start successfully pid=72369
 
 各个RPC接口具体使用方式可参考文档[控制台命令列表](../../develop/console/console_commands.md)。
 
-## 轻节点扩容
+## 6. 轻节点扩容
 FISCOBCOS 3.3版本开始，支持通过build_chain.sh脚本扩容轻节点，具体操作流程如下：
 1. 在建链脚本build_chain.sh同级目录下，新建文件夹config；
 2. 将nodes下的根证书文件夹ca拷贝至config文件夹中，```cp -r nodes/ca config ```;
