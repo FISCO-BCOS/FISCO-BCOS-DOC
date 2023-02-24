@@ -194,9 +194,8 @@ cp nodes/lightnode/nodes.json config
 bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca -o nodes/lightnode1
 bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca -o nodes/lightnode1 -L + 指定轻节点二进制下载路径
 
-``
+```
 
-    
 6. 扩容成功后生成新的轻节点目录nodes/lightnode1
 
 ```shell
