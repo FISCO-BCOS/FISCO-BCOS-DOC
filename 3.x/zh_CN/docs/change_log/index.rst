@@ -37,6 +37,7 @@ v3.2.x
     - 查看轻节点二进制版本：``../fisco-bcos-lightnode --version``
     - 查看轻节点相关文档，请参考 [`轻节点搭建工具<https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/tutorial/lightnode.html>`_]
 
+
 .. toctree::
    :hidden:
    :maxdepth: 0

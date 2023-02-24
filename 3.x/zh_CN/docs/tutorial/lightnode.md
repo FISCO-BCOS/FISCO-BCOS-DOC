@@ -219,4 +219,4 @@ writing RSA key
 bash start.sh
 
 lightnode start successfully pid=72370
-```
+
