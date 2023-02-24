@@ -35,6 +35,7 @@ v3.2.x
     - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
     - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
     - 查看轻节点二进制版本：``../fisco-bcos-lightnode --version``
+    - 查看轻节点相关文档，请参考 [`轻节点搭建工具<./docs/tutorial/lightnode.html>`_]
 
 .. toctree::
    :hidden:

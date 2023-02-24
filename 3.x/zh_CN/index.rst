@@ -42,7 +42,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
          - `Air版本区块链网络搭建 <./docs/tutorial/air/index.html>`_
          - `Pro版本区块链网络搭建 <./docs/tutorial/pro/index.html>`_
-         - `轻节点搭建 <./docs/tutorial/lightnode/build_chain.html>`_
+         - `轻节点搭建 <./docs/tutorial/lightnode.html>`_
          - `FISCO BCOS Java SDK <./docs/develop/sdk/index.html>`_
 
    .. container:: card-holder-bigger
@@ -247,6 +247,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :caption: 区块链网络搭建教程
 
    docs/tutorial/compile_binary.md
+   docs/tutorial/lightnode.md
    docs/tutorial/air/index.md
    docs/tutorial/pro/index.md
    docs/tutorial/max/index.md

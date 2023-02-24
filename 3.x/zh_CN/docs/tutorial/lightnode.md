@@ -1,6 +1,6 @@
-# 轻节点部署工具(build_chain.sh)
+# 轻节点部署工具
 
-标签：``build_chain`` ``搭建Air版区块链网络``
+标签：``轻节点`` ``搭建轻节点``
 
 ----
 
@@ -67,19 +67,54 @@ expand node e.g
 ```
 
 ### **`L`选项[**Optional**]**
-用于配置开启FISCO BCOS轻节点模式，需要开启轻节点时，使用L选项指定轻节点程序的路径或输入"download_binary"自动下载最新二进制，build_chain.sh将自动生成轻节点到o选项指定的目录中。
+用于配置开启FISCO BCOS轻节点模式，需要开启轻节点时，使用L选项指定轻节点程序的路径或输入"download_binary"自动下载最新二进制，build_chain.sh将自动生成轻节点到o选项指定的目录中。执行以下命令，在搭建air区块链的同时，生成轻节点。
 
 案例：
 
 ```shell
-# 两个节点的P2P服务分别占用30300和30301端口
-# RPC服务分别占用20200和20201端口
-# 轻节点将生成到nodes/lightnode中
-$ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /home/user/FISCO-BCOS/build/lightnode/fisco-bcos-lightnode
-$ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L download_binary
+# 四个节点的P2P服务分别占用30300-30303端口
+# RPC服务分别占用20200-20203端口
+# 轻节点将生成到nodes/lightnode中，P2P与RPC服务分别占用30304与20204端口
+$ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -e ./bin/fisco-bcos -L ./bin/fisco-bcos-lightnode
+$ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -L download_binary
 ```
 
 build_chain.sh将生成nodes目录，轻节点位于nodes目录的lightnode中。
+
+```shell
+[INFO] Use binary ./bin/fisco-bcos
+[INFO] Use lightnode binary ./bin/fisco-bcos-lightnode
+[INFO] Generate ca cert successfully!
+Processing IP:127.0.0.1 Total:4
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Generate uuid success: F3D04B9D-3DE5-47CD-9A32-F4A06B55B6C1
+[INFO] Generate uuid success: 7B886EA7-1ADD-4537-AF55-4D6E5569B03F
+[INFO] Generate uuid success: F6EAECD5-CA49-43CC-8452-4D0E273CA201
+[INFO] Generate uuid success: 42A82084-D647-4233-83F0-32F0A19D76B8
+writing RSA key
+[INFO] Generate ./nodes/lightnode/conf cert successful!
+[INFO] Generate uuid success: 60DF6258-D573-487A-9894-DFA5DEFC27EE
+==============================================================
+[INFO] GroupID               : group0
+[INFO] ChainID               : chain0
+[INFO] fisco-bcos path      : ../../build/fisco-bcos-air/fisco-bcos
+[INFO] Auth mode            : false
+[INFO] Start port           : 30300 20200
+[INFO] Server IP            : 127.0.0.1:4
+[INFO] SM model             : false
+[INFO] enable HSM           : false
+[INFO] Output dir           : ./nodes
+[INFO] All completed. Files in ./nodes
+```
 
 ## 3. 轻节点配置文件组织结构
 
@@ -115,7 +150,9 @@ lightnode/
 确保全节点已经全部启动，进入lightnode目录，执行：
 
 ```shell
-./fisco-bcos-lightnode
+bash start.sh
+
+lightnode start successfully pid=72369
 ```
 
 即可启动轻节点，随后按类似全节点的方法，使用控制台或SDK连接轻节点来进行使用，使用体验与全节点基本类似。
@@ -140,14 +177,46 @@ lightnode/
 - sendTransaction
 - listAbi
 
+各个RPC接口具体使用方式可参考文档[控制台命令列表](../../develop/console/console_commands.md)。
+
 ## 轻节点扩容
 FISCOBCOS 3.3版本开始，支持通过build_chain.sh脚本扩容轻节点，具体操作流程如下：
-1. 新建文件夹config；
-2. 将nodes下的根证书文件夹ca拷贝至config文件夹中；
+1. 在建链脚本build_chain.sh同级目录下，新建文件夹config；
+2. 将nodes下的根证书文件夹ca拷贝至config文件夹中，```cp -r nodes/ca config ```;
 3. 从已存在lightnode文件夹中拷贝config.genesis、config.ini以及nodes.json至config文件夹中；
+```shell
+cp nodes/lightnode/config.* config
+cp nodes/lightnode/nodes.json config 
+```
 4. 修改config.ini中rpc与p2p的port字段，将端口号+1（例如原config.ini文件中rpc端口为20202，修改为20203）；
 5. 执行脚本命令，具体有执行轻节点二进制文件路径以及自动拉取最新轻节点二进制两种扩容方式，如下所示:
-    -  ```bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca(根证书路径) -o nodes/lightnode1(扩容轻节点输出路径) -L + 指定轻节点二进制下载路径```
-    - ```bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca(根证书路径) -o nodes/lightnode1(扩容轻节点输出路径)``` (自动拉取轻节点最新二进制)
-    
-6. 扩容成功后生成新的轻节点目录nodes/lightnode1，启动扩容生成的轻节点 bash start.sh
+```shell
+bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca -o nodes/lightnode1
+bash build_chain.sh -C expand_lightnode -c config(config文件夹) -d config/ca -o nodes/lightnode1 -L + 指定轻节点二进制下载路径
+
+```
+
+6. 扩容成功后生成新的轻节点目录nodes/lightnode1
+
+```shell
+[INFO] generate_lightnode_scripts ...
+[INFO] generate_lightnode_scripts success...
+[INFO] generate_lightnode_cert ...
+writing RSA key
+[INFO] Generate nodes/lightnode1/conf cert successful!
+[INFO] generate_lightnode_cert success...
+[INFO] generate_lightnode_account ...
+[INFO] generate_lightnode_account success...
+[INFO] copy configurations ...
+[INFO] copy configurations success...
+==============================================================
+[INFO] SM Model         : false
+[INFO] output dir         : nodes/lightnode1
+[INFO] All completed. Files in nodes/lightnode1
+```
+7.进入扩容生成的轻节点目录lightnode1，启动扩容生成的轻节点 bash start.sh
+```shell
+bash start.sh
+
+lightnode start successfully pid=72370
+```
