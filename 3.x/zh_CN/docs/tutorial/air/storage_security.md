@@ -8,6 +8,8 @@
 
 落盘加密是对节点存储在硬盘上的内容进行加密，加密的内容包括：合约的数据、节点的私钥。
 
+FISCO BCOS 3.3.0版本增加了用密码机进行落盘加密，无需部署Key Manager，FISCO BCOS提供了工具对ssl证书进行加密。具体参考[构建使用硬件密码模块的国密链](./use_hsm.md)。
+
 具体的落盘加密介绍，可参考：[落盘加密的介绍](../../design/storage_security.md)
 
 ## 1. 部署Key Manager
