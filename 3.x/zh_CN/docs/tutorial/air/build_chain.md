@@ -32,7 +32,7 @@ Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
     -g <group id>                       [Optional] set the group id, default: group0
     -I <chain id>                       [Optional] set the chain id, default: chain0
-    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.2.0
+    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.3.0
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode executable, input "download_binary" to download lightnode binary or assign correct lightnode binary path
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
@@ -40,27 +40,37 @@ Usage:
     -o <output dir>                     [Optional] output directory, default ./nodes
     -p <Start port>                     [Optional] Default 30300,20200 means p2p_port start from 30300, rpc_port from 20200
     -s <SM model>                       [Optional] SM SSL connection or not, default is false
+    -H <HSM model>                      [Optional] Whether to use HSM(Hardware secure module), default is false
     -c <Config Path>                    [Required when expand node] Specify the path of the expanded node config.ini, config.genesis and p2p connection file nodes.json
     -d <CA cert path>                   [Required when expand node] When expanding the node, specify the path where the CA certificate and private key are located
-    -D <docker mode>                    Default off. If set -d, build with docker
+    -D <docker mode>                    Default off. If set -D, build with docker
     -A <Auth mode>                      Default off. If set -A, build chain with auth, and generate admin account.
     -a <Auth account>                   [Optional] when Auth mode Specify the admin account address.
     -w <WASM mode>                      [Optional] Whether to use the wasm virtual machine engine, default is false
     -R <Serial_mode>                    [Optional] Whether to use serial execute,default is true
-    -k <key page size>                  [Optional] key page size, default size is 10240
+    -k <key page size>                  [Optional] key page size, default is 10240
     -m <fisco-bcos monitor>             [Optional] node monitor or not, default is false
     -i <fisco-bcos monitor ip/port>     [Optional] When expanding the node, should specify ip and port
     -M <fisco-bcos monitor>             [Optional] When expanding the node, specify the path where prometheus are located
+    -z <Generate tar packet>            [Optional] Pack the data on the chain to generate tar packet
+    -n <node key path>                  [Optional] set the path of the node key file to load nodeid
+    -N <node path>                      [Optional] set the path of the node modified to multi ca mode
+    -u <multi ca path>                  [Optional] set the path of another ca for multi ca mode
     -h Help
 
 deploy nodes e.g
-    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos
-    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -s
-    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m(部署节点带监控功能)
+    bash $0 -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos
+    bash $0 -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m
+    bash $0 -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -s
 expand node e.g
-    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos
-        bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
-    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml(部署节点带监控功能)
+    bash $0 -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos
+    bash $0 -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml
+    bash $0 -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
+    bash $0 -C expand_lightnode -c config -d config/ca -o nodes/lightnode1
+    bash $0 -C expand_lightnode -c config -d config/ca -o nodes/lightnode1 -L ./fisco-bcos-lightnode
+modify node e.g
+    bash $0 -C modify -N ./node0 -u ./ca/ca.crt
+    bash $0 -C modify -N ./node0 -u ./ca/ca.crt -s
 ```
 
 
@@ -133,6 +143,18 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 ```
+
+### **`H`选项[**Optional**]**
+
+密码机选项，表示使用密码机。若开启此选项，要加上`-s`表示开启国密，且后要加`-n`选项用于加载node.pem文件生成密码机密钥的nodeid。通过加载证书文件路径开启密码机命令如下
+```shell
+./build_chain.sh -e ./fisco-bcos -p 30300,20200 -l 127.0.0.1:4 -s -H -n nodeKeyDir/
+```
+
+### **`n`选项[**Optional**]**
+
+节点证书目录选项，表示通过加载文件夹中节点证书生成nodeid，该选项可用于国密、非国密，不必指定-s。此选项其后跟证书文件夹路径。
+
 
 ### **`c`扩容选项**
 
