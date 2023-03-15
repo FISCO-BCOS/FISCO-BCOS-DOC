@@ -85,11 +85,11 @@ FISCO BCOS 3.x版本引入区块链合约文件系统（Blockchain File System�
 
 ### 1.2 详细使用文档
 
-BFS的使用体验主要集中体现在控制台，请参考控制台中BFS相关操作命令，以及使用控制台的BFS命令时的注意事项、错误出现情况请参考：[链接](../develop/console/console_commands.html#bfs)。
+BFS的使用体验主要集中体现在控制台，请参考控制台中BFS相关操作命令，以及使用控制台的BFS命令时的注意事项、错误出现情况请参考：[链接](../operation_and_maintenance/console/console_commands.html#bfs)。
 
 使用合约调用的BFS接口时的注意事项、错误出现情况请参考：[链接](../develop/precompiled/precompiled_contract_api.html#bfsprecompiled) 。
 
-同时在部署合约和调用合约均支持BFS使用，请参考控制台中[deploy命令](../develop/console/console_commands.html#deploy)与[call命令](../develop/console/console_commands.html#call)。
+同时在部署合约和调用合约均支持BFS使用，请参考控制台中[deploy命令](../operation_and_maintenance/console/console_commands.html#deploy)与[call命令](../operation_and_maintenance/console/console_commands.html#call)。
 
 ## 2. 设计文档
 

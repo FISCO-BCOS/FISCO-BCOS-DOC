@@ -35,8 +35,8 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 用户完成智能合约的开发之后，将智能合约部署上链并发起调用交易。用户可通过[SDK](./sdk/index.md)将编译好的合约打包成交易发送到FISCO BCOS区块链节点上链。社区已提供高度包装的工具，用户可快速开箱使用：
 
-- 使用控制台： [控制台](./console/index.md)，控制台包装了Java SDK，提供命令行交互功能，供给开发者使用的节点查询与管理的工具。
-- 使用Java合约生成工具：[Java合约生成工具](./console/console_config.html#java)支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
+- 使用控制台： [控制台](../operation_and_maintenance/console/index.md)，控制台包装了Java SDK，提供命令行交互功能，供给开发者使用的节点查询与管理的工具。
+- 使用Java合约生成工具：[Java合约生成工具](../operation_and_maintenance/console/console_config.html#java)支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
 
 **延伸阅读**
 
@@ -127,7 +127,7 @@ abstract contract AuthManagerPrecompiled {
    兼容性说明：合约生命周期管理废止操作只能在节点版本3.2以上进行。
 ```
 
-合约管理员也可以通过控制台对合约进行冻结等操作，详情请看：[冻结合约命令](./console/console_commands.html#freezecontract)、[解冻合约命令](./console/console_commands.html#unfreezecontract)
+合约管理员也可以通过控制台对合约进行冻结等操作，详情请看：[冻结合约命令](../operation_and_maintenance/console/console_commands.html#freezecontract)、[解冻合约命令](../operation_and_maintenance/console/console_commands.html#unfreezecontract)
 
 ### 5.2 智能合约部署权限控制
 
@@ -135,7 +135,7 @@ abstract contract AuthManagerPrecompiled {
 
 部署权限记录在BFS目录/apps下，这代表着允许在/apps目录下的写权限。
 
-治理委员可以通过控制台进行部署合约权限控制等操作，详情请看 [设置部署权限类型提案](./console/console_commands.html#setdeployauthtypeproposal) 、[开启部署权限提案](./console/console_commands.html#opendeployauthproposal) 、[关闭部署权限提案](./console/console_commands.html#closedeployauthproposal)
+治理委员可以通过控制台进行部署合约权限控制等操作，详情请看 [设置部署权限类型提案](../operation_and_maintenance/console/console_commands.html#setdeployauthtypeproposal) 、[开启部署权限提案](../operation_and_maintenance/console/console_commands.html#opendeployauthproposal) 、[关闭部署权限提案](../operation_and_maintenance/console/console_commands.html#closedeployauthproposal)
 
 在检查部署权限时将会对交易发起地址tx.origin进行校验，若没有权限则会返回错误码 -5000。即，会对用户部署合约、用户通过合约部署合约都进行校验。
 
@@ -145,6 +145,6 @@ abstract contract AuthManagerPrecompiled {
 
 在执行合约接口的访问ACL的写操作时，将会确定交易发起人msg.sender是否为合约权限表记录的合约管理员，若不是则会拒绝。
 
-合约管理员可以通过控制台对合约接口访问ACL的写操作等操作，详情请看：[合约管理员专用命令](./console/console_commands.html#setmethodauth)
+合约管理员可以通过控制台对合约接口访问ACL的写操作等操作，详情请看：[合约管理员专用命令](../operation_and_maintenance/console/console_commands.html#setmethodauth)
 
 在检查合约调用权限时将会对交易发起地址tx.origin和消息发送者msg.sender进行校验，若没有权限则会返回错误码 -5000。即，会对用户调用合约、用户通过合约调用合约、合约调用合约都进行校验。

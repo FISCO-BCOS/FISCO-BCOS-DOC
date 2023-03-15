@@ -228,8 +228,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :maxdepth: 1
    :caption: 平台介绍
 
-   docs/introduction.md
-   docs/change_log/index.rst
+   docs/introduction/introduction.md
+   docs/introduction/key_feature.md
+   docs/introduction/function_overview.md
+   docs/introduction/change_log/index.rst
 
 .. toctree::
    :hidden:
@@ -244,47 +246,119 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链网络搭建教程
+   :caption: 合约开发
 
-   docs/tutorial/compile_binary.md
-   docs/tutorial/lightnode.md
+   docs/contract_develop/solidity_develop.md
+   docs/contract_develop/c++_contract/index.md
+   docs/contract_develop/Liquid_develop.md
+   docs/contract_develop/contracts_IDE_develop.md
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: SDK教程
+
+   docs/sdk/index.md
+   docs/sdk/java_sdk/index.md
+   docs/sdk/go_sdk/index.rst
+   docs/sdk/python_sdk/index.rst
+   docs/sdk/nodejs_sdk/index.rst
+   docs/sdk/rust_sdk/index.md
+   docs/sdk/csharp_sdk/index.md
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: 搭链教程
+
    docs/tutorial/air/index.md
    docs/tutorial/pro/index.md
    docs/tutorial/max/index.md
+   docs/tutorial/lightnode.md
+   docs/tutorial/compile_binary.md
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链应用开发
+   :caption: 应用开发
 
-   docs/develop/sdk/index.md
-   docs/develop/console/index.md
    docs/develop/api.md
-   docs/develop/precompiled/index.md
    docs/develop/account.md
-   docs/develop/committee_usage.md
    docs/develop/contract_life_cycle.md
-   docs/develop/stress_testing.md
-   docs/develop/light_monitor.md
-   docs/develop/data_archive_tool.md
-   docs/develop/storage_tool.md
-   docs/develop/system_log_audit.md
+   docs/develop/console/index.md
+   docs/develop/smartdev_index.md
+   docs/develop/amop.md
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链开发原理
+   :caption: 区块链运维
 
-   docs/design/index.md
-   docs/components/index.md
-   Java SDK JavaDoc <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/javadoc/index.html>
+   docs/operation_and_maintenance/build_chain.md
+   docs/operation_and_maintenance/light_monitor.md
+   docs/operation_and_maintenance/console/index.md
+   docs/operation_and_maintenance/storage_tool.md
+   docs/operation_and_maintenance/data_archive_tool.md
+   docs/operation_and_maintenance/webase.md
+   docs/operation_and_maintenance/committee_usage.md
+   docs/operation_and_maintenance/add_new_node.md
+   docs/operation_and_maintenance/stress_testing.md
+   docs/operation_and_maintenance/upgrade.md
+   docs/operation_and_maintenance/data_index.md
+   docs/operation_and_maintenance/governance_index.md
+   docs/operation_and_maintenance/log/index.md
 
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 更多参考资料
+   :caption: 高阶功能使用
 
-   docs/community.md
-   docs/key_concepts.md
-   docs/manual/log_description.md
+   docs/advanced_function/safety.md
+   docs/advanced_function/wecross.md
+   docs/advanced_function/privacy_safety.md
+   docs/advanced_function/distributed_identity.md
+   docs/advanced_function/trusted_oracle.md
+   docs/advanced_function/distributed_event.md
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: FISCO BCOS设计原理
+
+   docs/design/architecture.md
+   docs/design/tx_procedure.mc
+   docs/design/protocol_description.md
+   docs/design/consensus/index.rst
+   docs/design/sync/index.rst
+   docs/design/storage/storage.md
+   docs/design/DMC.md
+   docs/design/virtual_machine/index.rst
+   docs/design/committee_design.md
+   docs/design/storage/storage_security.md
+   docs/design/storage/archive.md
+   docs/design/guomi.md
+   docs/design/rip.md
+   docs/design/network_compress.md
+   docs/design/transaction_deduplication.md
+   docs/design/security_control/index.rst
+   docs/design/hsm.md
+   docs/design/cns_contract_name_service.md
+   docs/design/contract_directory.md
+   docs/design/boostssl.md
+   docs/design/amop_protocol.md
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: 社区资源
+
+   docs/community/pr.md
+   docs/community/contributor_list_new.md
+   docs/community/MVP_list_new.md
+   dcos/community/partner_list_new.md
+   docs/articles/index.md
+   docs/community/join_fiscobcos.md

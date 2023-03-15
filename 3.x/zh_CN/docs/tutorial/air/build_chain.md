@@ -1,4 +1,4 @@
-# 部署工具(build_chain.sh)
+# build_chain一键建链工具
 
 标签：``build_chain`` ``搭建Air版区块链网络``
 

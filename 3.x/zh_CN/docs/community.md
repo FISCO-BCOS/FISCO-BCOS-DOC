@@ -12,10 +12,4 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 - [反馈问题](https://github.com/FISCO-BCOS/bcos-tars-services/issues)
 - [应用案例集](https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA)
 
-## 加入FISCO BCOS社区
 
-<a name="QR"></a>
-![](../../../2.x/images/community/qr_code1.png)
-![](../../../2.x/images/community/qr_code2.1.png)
-![](../../../2.x/images/community/changeable_body.png)
-![](../../../2.x/images/community/tailer.png)
