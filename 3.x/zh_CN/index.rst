@@ -249,8 +249,8 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :caption: 合约开发
 
    docs/contract_develop/solidity_develop.md
-   docs/contract_develop/c++_contract/index.md
    docs/contract_develop/Liquid_develop.md
+   docs/contract_develop/c++_contract/index.md
    docs/contract_develop/contracts_IDE_develop.md
 
 
@@ -308,6 +308,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/operation_and_maintenance/data_index.md
    docs/operation_and_maintenance/governance_index.md
    docs/operation_and_maintenance/log/index.md
+   docs/operation_and_maintenance/docs/operation_and_maintenance.md
 
 
 .. toctree::
@@ -317,7 +318,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
    docs/advanced_function/safety.md
    docs/advanced_function/wecross.md
-   docs/advanced_function/privacy_safety.md
+   docs/advanced_function/privacy_protect.md
    docs/advanced_function/distributed_identity.md
    docs/advanced_function/trusted_oracle.md
    docs/advanced_function/distributed_event.md
@@ -328,7 +329,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :caption: FISCO BCOS设计原理
 
    docs/design/architecture.md
-   docs/design/tx_procedure.mc
+   docs/design/tx_procedure.md
    docs/design/protocol_description.md
    docs/design/consensus/index.rst
    docs/design/sync/index.rst

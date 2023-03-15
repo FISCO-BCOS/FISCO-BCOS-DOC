@@ -1,4 +1,4 @@
-# WBC-Liquid合约开发
+# 2. WBC-Liquid合约开发
 
 标签：``开发第一个应用`` ``WBC-Liquid`` ``合约开发`` ``区块链应用`` ``WASM``
 
