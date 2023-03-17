@@ -277,12 +277,14 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/tutorial/max/index.md
    docs/tutorial/lightnode.md
    docs/tutorial/compile_binary.md
+   docs/tutorial/support_os.md
 
 .. toctree::
    :hidden:
    :maxdepth: 1
    :caption: 应用开发
 
+   docs/develop/index.md
    docs/develop/api.md
    docs/develop/account.md
    docs/develop/contract_life_cycle.md
