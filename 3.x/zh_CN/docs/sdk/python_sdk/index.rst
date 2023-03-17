@@ -26,7 +26,7 @@
     - 支持基于keystore的账户管理
     - 支持合约历史查询
 
-安装配置环境，使用Python SDK进行应用开发请参见[【github链接】](https://github.com/FISCO-BCOS/python-sdk)
+安装配置环境，使用Python SDK进行应用开发请参见`gitHub <https://github.com/FISCO-BCOS/python-sdk>`_ 链接
 
 .. toctree::
    :hidden:
