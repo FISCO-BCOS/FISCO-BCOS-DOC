@@ -3,74 +3,69 @@
 
 -----
 
-## 新架构
+FISCO BCOS为了支撑海量服务的需求，v3.0稳定版从系统架构、处理流程、执行、存储上进行了相应的设计，并推出3种不同形态满足不同区块链部署场景的差异化需求。功能概览如下：
 
-**Air / Pro / Max** ：满足不同的部署场景
-
-- **Air**：传统的区块链架构，所有功能在一个区块链节点中（all-in-one），满足开发者和简单场景的部署需求
-- **Pro**：网关 + RPC + 区块链节点，满足机构内外部环境隔离部署需求
-- **Max**：网关 + RPC + 区块链节点（主备） + 多个交易执行器，满足追求高可用和极致的性能的需求
-
-## 新机制
-
-**流程：流水线共识**
-
-以流水线的方式生成区块，提升性能
-
-- 将区块生成过程拆分为四个阶段：打包，共识，执行，落盘
-- 连续的区块在执行时以流水线的方式走过四个阶段（103在打包，102在共识，101在执行，100在落盘)
-- 连续出块时，性能趋近于流水线中执行时间最长阶段的性能
-
-**执行：确定性多合约并行**
-
-实现合约间交易的并行执行与调度的机制
-
-- 高效：不同合约的交易可并行执行，提高交易处理效率
-- 易用：对开发者透明，自动进行交易并行执行与冲突处理
-- 通用：支持EVM、WASM、Precompiled 或其它合约
-
-**存储：KeyPage**
-
-参考内存页的缓存机制实现高效的区块链存储
-
-* 将key-value组织成页的方式存储
-* 提升访存局部性，降低存储空间占用
-
-**继承与升级**
-
-* DAG并行执行：不再依赖基于并行编程框架，可根据solidity代码自动生成冲突参数，实现合约内交易的并行执行
-* PBFT共识算法：立即一致的共识算法，实现交易秒级确认
-* 更多请参考在线文档
-
-## 新功能
-
-**区块链文件系统**
-
-用命令行管理区块链资源，如合约，表等
-
-- 命令：pwd, cd, ls, tree, mkdir, ln
-- 功能：将合约地址与路径绑定，即可用路径调用合约
-
-**权限治理**
-
-开启后，对区块链的设置需进行多方投票允许
-
-* 角色：治理者、管理员、用户
-* 被控制的操作：部署合约、合约接口调用、系统参数设置等
-
-**WBC-Liquid：WeBankBlockchain-Liquid(简称WBC-Liquid)**
-
-不仅支持Soldity写合约，也支持用Rust写合约
-
-- Liquid是基于Rust语言的智能合约编程语言
-- 集成WASM运行环境，支持WBC-Liquid智能合约。
-- WBC-Liquid智能合约支持智能分析冲突字段，自动开启DAG。
-
-**继承与升级**
-
-* Solidity：目前已支持至0.8.11版本
-* CRUD：采用表结构存储数据，对业务开发更友好，3.0中封装了更易用的接口
-* AMOP：链上信使协议，借助区块链的P2P网络实现信息传输，实现接入区块链的应用间的数据通信
-* 落盘加密：区块链节点的私钥和数据加密存储于物理硬盘中，物理硬件丢失也无法解密
-* 密码算法：内置群环签名等密码算法，可实现各种安全多方计算场景
-* 更多请参考在线文档
+<font color=Blue>**整体架构**</font> | |
+| - | - |
+| 架构模型 | 灵活自适应的区块链框架，目前包括轻量级的Air版本FISCO BCOS和适用于复杂业务场景的Pro版本以及可扩展的Max版本|
+| 群组架构 | 支持链内动态扩展多群组|
+| 分布式存储 | 支持海量数据存储|
+| 并行计算 | 支持基于DAG(有向无环图)、DMC(确定性合约并行算法)以及Sharding交易分片块内并行执行 |
+| 节点类型 | 共识节点、观察节点 |
+| 计算模型 | 排序-执行-验证 |
+| <font color=Blue>**系统性能**</font> |
+| 峰值TPS | 10万+ TPS（PBFT）|
+| 交易确认时延 | 秒级|
+| <font color=Blue>**硬件推荐配置**</font> |
+| CPU | 2.4GHz * 8核|
+| 内存 | 8GB |
+| 存储 | 4TB |
+| 网络带宽| 10Mb |
+| <font color=Blue>**账本模型**</font> |
+| 数据结构 | 链式结构，区块通过哈希链相连|
+| 是否分叉|不分叉|
+| 记账类型 | 账户模型（非UTXO）|
+| <font color=Blue>**共识算法**</font>  |
+| 共识框架 | 可插拔设计 |
+| 共识算法 | PBFT，RAFT|
+| <font color=Blue>**存储引擎**</font>  |
+| 存储设计 | 支持KV和SQL |
+| 引擎类型 | 支持rocksdb TikvDB|
+| CRUD接口 | 提供CRUD接口访问链上数据 |
+| <font color=Blue>**网络协议**</font>  |
+| 节点间通信 | P2P协议 |
+| 客户端与节点通信 | WebSocket协议 |
+| 消息订阅服务 | AMOP协议 |
+| <font color=Blue>**智能合约**|
+|合约引擎| 支持WASM和EVM|
+|合约语言| 支持Solidity, C++和WBC-Liquid|
+|引擎特点| 图灵完备，沙盒运行 |
+|版本控制| 基于CNS支持多版本合约 |
+| <font color=Blue>**密码算法和协议**</font>  |
+| 国密算法 | 支持 |
+| 国密SSL | 支持 |
+| 哈希算法 | Keccak256、SM3 |
+| 对称加密算法 | AES、SM4 |
+| 非对称加密算法 |ECDSA、SM2|
+| 非对称加密椭圆曲线|secp256k1、sm2p256v1|
+| <font color=Blue>**安全控制**</font>  |
+|通信安全| 支持全流程SSL |
+|准入安全| 基于PKI身份认证体系 |
+|证书管理| 支持证书颁发、撤销、更新|
+|权限控制| 支持细粒度权限控制|
+| <font color=Blue>**隐私保护**</font> |
+|物理隔离| 群组间数据隔离 |
+|场景化隐私保护机制|基于[WeDPR](https://fintech.webank.com/wedpr)支持隐匿支付、匿名投票、匿名竞拍、选择性披露等场景|
+| <font color=Blue>**跨链协议**</font> |
+|SPV|提供获取SPV证明的接口|
+|跨链协议|基于[WeCross](https://github.com/WeBankBlockchain/WeCross)支持同构、异构跨链|
+| <font color=Blue>**开发支持**</font> |
+|开发建链工具|提供[Air版本区块链部署工具build_chain](./tutorial/air/build_chain.html), [Pro版本区块链部署工具BcosBuilder/pro](./tutorial/pro/pro_builder.html)和[Maxb版本部署工具BcosBuilder/max](./tutorial/max/max_builder.html)|
+|合约部署与测试工具|交互式控制台 [基于Java SDK的控制台](./develop/console/index.html)|
+|SDK语言|[Java](./develop/sdk/java_sdk/index.html)（待适配语言：go、nodejs、Rust、Python、iOS、Android）
+|快速开发组件|提供[Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
+| <font color=Blue>**运维支持**</font> |
+|动态管理节点|支持动态新增、剔除、变更节点|
+|动态更改配置|支持动态变更系统配置|
+|数据备份与恢复|提供数据导出与恢复服务组件|
+|监控统计|输出统计日志，提供监控工具|

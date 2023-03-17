@@ -17,6 +17,8 @@
     - 提供与FISCO BCOS节点通信的 `Channel协议 <../../design/protocol_description.html#channelmessage>`_，双向认证更安全
     - 提供CLI（Command-Line Interface）工具，供用户在命令行中方便快捷地与区块链交互
 
+安装配置环境，使用Go SDK进行应用开发请参见[【github链接】](https://github.com/FISCO-BCOS/go-sdk)
+
 .. toctree::
    :hidden:
    :maxdepth: 3

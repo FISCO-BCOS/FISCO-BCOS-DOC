@@ -1,4 +1,4 @@
-# SDK连接证书配置
+# 8. SDK连接证书配置
 
 标签： ``SDK``、``证书配置``
 
@@ -8,9 +8,9 @@
 
 ## 单群组区块链（Air版本）部署模式
 
-[单群组区块链（Air版本）](../../tutorial/air/index.md) 采用all-in-one的封装模式，将所有模块编译成一个二进制（进程），一个进程即为一个区块链节点。
+[单群组区块链（Air版本）](../tutorial/air/index.md) 采用all-in-one的封装模式，将所有模块编译成一个二进制（进程），一个进程即为一个区块链节点。
 
-Air版本的安装部署请参考：[链接](../../tutorial/air/build_chain.md) 。
+Air版本的安装部署请参考：[链接](../tutorial/air/build_chain.md) 。
 
 `build_chain.sh`生成的节点配置中与SDK连接相关的配置主要为：
 
@@ -76,11 +76,11 @@ cp -r ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/java-sdk-demo/dist/conf
 
 ## 多群组区块链（Pro版本）部署模式
 
-[多群组区块链（Pro版本）](../../tutorial/pro/index.md) 包括RPC、Gateway接入层的服务和多个区块链节点Node服务组成，其中一个Node服务代表一个群组，存储采用本地RocksDB，所有Node共用接入层服务。
+[多群组区块链（Pro版本）](../tutorial/pro/index.md) 包括RPC、Gateway接入层的服务和多个区块链节点Node服务组成，其中一个Node服务代表一个群组，存储采用本地RocksDB，所有Node共用接入层服务。
 
-Pro版本的安装部署请参考：[链接](../../tutorial/pro/installation.md) 。
+Pro版本的安装部署请参考：[链接](../tutorial/pro/installation.md) 。
 
-在完成[部署RPC服务](../../tutorial/pro/installation.html#rpc)之后，在`generated/rpc/chain`下将会生成所有需要用到的配置文件。其中，与SDK SSL连接的配置如下（已忽略与本文介绍无关的文件）：
+在完成[部署RPC服务](../tutorial/pro/installation.html#rpc)之后，在`generated/rpc/chain`下将会生成所有需要用到的配置文件。其中，与SDK SSL连接的配置如下（已忽略与本文介绍无关的文件）：
 
 ```shell
 tree generated/rpc/chain
@@ -152,7 +152,7 @@ cp -r ~/fisco/BcosBuilder/generated/rpc/chain0/agencyABcosRpcService/172.25.0.3/
     sm_ssl=false
 ```
 
-Air版本的RPC配置详情请参考链接：[配置RPC](../../tutorial/air/config.html#rpc)
+Air版本的RPC配置详情请参考链接：[配置RPC](../tutorial/air/config.html#rpc)
 
-Pro版本的RPC配置详情请参考链接：[rpc服务](../..//tutorial/pro/config.html#id9)
+Pro版本的RPC配置详情请参考链接：[rpc服务](../tutorial/pro/config.html#id9)
 

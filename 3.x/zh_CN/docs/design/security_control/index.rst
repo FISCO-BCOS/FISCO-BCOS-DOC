@@ -32,6 +32,5 @@
 
    node_management.md
    certificate_list.md
-   ../committee_design.md
-   chain_governance.md
    permission_control.md
+   committee_design.md

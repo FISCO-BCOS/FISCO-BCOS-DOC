@@ -1,9 +1,9 @@
-# 2. WBC-Liquid合约开发
+# 3. WBC-Liquid合约开发
 
 标签：``开发第一个应用`` ``WBC-Liquid`` ``合约开发`` ``区块链应用`` ``WASM``
 
 ---
-除支持Soldity语言与C++之外，FISCO BCOS也支持用Rust写合约。WBC-Liquid是微众区块链开发的基于Rust的智能合约编程语言，借助Rust语言特性，能够实现比Solidity语言更强大的编程功能。
+除支持Solidity语言与C++之外，FISCO BCOS也支持用Rust写合约。WBC-Liquid是微众区块链开发的基于Rust的智能合约编程语言，借助Rust语言特性，能够实现比Solidity语言更强大的编程功能。
 
 - 相关文档：[Liquid 在线文档](https://liquid-doc.readthedocs.io/zh_CN/latest/)
 - 相关文档：[Rust语言官方教程](https://doc.rust-lang.org/book/)

@@ -25,6 +25,9 @@
     - 使用 `Channel协议 <../../design/protocol_description.html#channelmessage>`_ 与FISCO BCOS节点通信，双向认证更安全
     - 提供CLI（Command-Line Interface）工具供用户在命令行中方便快捷地与区块链交互
 
+安装配置环境，使用Nodejs SDK进行应用开发请参见[【github链接】](https://github.com/FISCO-BCOS/nodejs-sdk)
+
+
 .. toctree::
    :hidden:
 

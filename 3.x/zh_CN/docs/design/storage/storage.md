@@ -8,7 +8,7 @@
 
 存储层需要能够满足Air、Pro和Max三个版本的不同设计目标，为此我们使用同一套接口来屏蔽不同版本存储的具体实现。对于Air和Pro版本，存储层使用RocksDB来满足其轻便和高性能的需求，对于Max版本通过接入能够支持水平扩展的分布式数据库支撑大规模数据存储的需求，我们选择了Tikv，通过Raft协议保证了多副本数据一致性以及高可用。整体存储服务设计如下图所示。
 
-![](../../images/design/storage_design.png)
+![](../../../images/design/storage_design.png)
 
 Air、Pro和Max版本的区别在于其使用的`Storage SDK`内部的具体实现是不同的，对于Air和Pro版本，在初始化时会创建基于RocksDB封装的实现，而对于Max版本则提供基于TiKV封装的实现，同时保留定制存储的能力，用户可以基于具体的业务需求接入其他数据库。
 
@@ -75,7 +75,7 @@ class TransactionalStorageInterface : public virtual StorageInterface
 
 Air与Pro版本的提交与Max的区别在于一方面存储服务使用RocksDB作为后端数据库，另一方面执行服务与调度服务在同一进程中，不存在分布式事务的问题，相对于Max版本其提交逻辑较为简单，如下图所示。
 
-![air](../../images/design/storage_design_air.png)
+![air](../../../images/design/storage_design_air.png)
 
 对于调度服务和执行服务其处理逻辑与Max版本相同，只是在提交阶段，调度服务和执行服务提交数据时，其持有的存储对象为同一个，当调用`asyncPrepare`时，存储内部实现中会并不会真的将数据提交到RocksDB，而是将数据写入内存中，当调度服务调用`asyncCommit`方法时，将数据一次性提交写入RocksDB。
 
