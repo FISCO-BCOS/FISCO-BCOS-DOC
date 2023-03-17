@@ -24,7 +24,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速开始</h>
             <br><br>
 
-         - `了解FISCO BCOS区块链 <./docs/introduction.html>`_
+         - `了解FISCO BCOS区块链 <./docs/introduction/introduction.html>`_
          - `FISCO BCOS 3.X新特性 <./docs/change_log/index.html>`_
          - `搭建第一个区块链网络 <./docs/quick_start/air_installation.html>`_
          - `开发第一个Solidity区块链应用 <./docs/quick_start/solidity_application.html>`_
@@ -43,7 +43,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
          - `Air版本区块链网络搭建 <./docs/tutorial/air/index.html>`_
          - `Pro版本区块链网络搭建 <./docs/tutorial/pro/index.html>`_
          - `轻节点搭建 <./docs/tutorial/lightnode.html>`_
-         - `FISCO BCOS Java SDK <./docs/develop/sdk/index.html>`_
+         - `FISCO BCOS Java SDK <./docs/sdk/index.html>`_
 
    .. container:: card-holder-bigger
 
@@ -162,7 +162,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <br><br>
 
          - `系统架构 <./docs/design/architecture.html>`_
-         - `两阶段并行拜占庭共识 <./docs/design/consensus.html>`_
+         - `两阶段并行拜占庭共识 <./docs/design/consensus/consensus.html>`_
          - `合约目录 <./docs/design/contract_directory.html>`_
          - `更多设计文档 <./docs/design/index.html>`_
 
@@ -318,7 +318,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
    docs/advanced_function/safety.md
    docs/advanced_function/wecross.md
-   docs/advanced_function/privacy_protect.md
+   docs/advanced_function/privacy/index.rst
    docs/advanced_function/distributed_identity.md
    docs/advanced_function/trusted_oracle.md
    docs/advanced_function/distributed_event.md
@@ -332,9 +332,9 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/design/tx_procedure.md
    docs/design/protocol_description.md
    docs/design/consensus/index.rst
-   docs/design/sync/index.rst
+   docs/design/sync.md
    docs/design/storage/storage.md
-   docs/design/DMC.md
+   docs/design/parallel/index.md
    docs/design/virtual_machine/index.rst
    docs/design/committee_design.md
    docs/design/storage/storage_security.md
@@ -342,13 +342,13 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    docs/design/guomi.md
    docs/design/rip.md
    docs/design/network_compress.md
-   docs/design/transaction_deduplication.md
    docs/design/security_control/index.rst
    docs/design/hsm.md
    docs/design/cns_contract_name_service.md
    docs/design/contract_directory.md
    docs/design/boostssl.md
    docs/design/amop_protocol.md
+   docs/design/compatibility.md
 
 
 

@@ -13,6 +13,7 @@
 
     **Node.js SDK目前仅处于个人开发者体验阶段，开发企业级应用请使用** `Java SDK <../java_sdk/index.html>`_
     Node.js SDK目前不支持国密SSL通信协议
+    Node.js SDK暂时支持2.0.0及以上版本，3.0.0以上版本适配中
 
 
 

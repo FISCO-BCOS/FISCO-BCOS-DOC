@@ -15,6 +15,7 @@
      - **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Java SDK <../java_sdk/index.html>`_
      - Python SDK目前支持FISCO BCOS 2.0.0及其以上版本
      - Python SDK目前不支持国密SSL通信协议
+     - Python SDK目前FISCO BCOS 3.0.0及其以上版本适配中
 
 .. admonition:: **主要特性**
 

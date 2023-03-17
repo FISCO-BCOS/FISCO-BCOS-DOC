@@ -38,11 +38,19 @@ ___
    sync.md
    storage/storage.md
    DMC.md
-   contract_directory.md
    virtual_machine/index.rst
    committee_design.md
    storage/storage_security.md
    storage/archive.md
+   guomi.md
+   rip.md
+   network_compress.md
+   security_control/index.rst
+   hsm.md
+   cns_contract_name_service.md
+   contract_directory.md
+   boostssl.md
+   amop_protocol.md
    p2p.md
    compatibility.md
 ```

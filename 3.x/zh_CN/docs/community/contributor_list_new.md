@@ -1,5 +1,6 @@
 ## 2. FISCO BCOS 2022年度贡献者
 
+-----
 **2022年度 | FISCO BCOS贡献者榜单**
 
 作者：小助手
@@ -181,8 +182,10 @@ zzibc | 冯佳乐 | 上海众恒软件技术有限公司
 核心参与者：柳贵、曹明锐
 
 项目介绍：
+
 1、从0开始开发WeCross-Go-SDK，该SDK完成后，社区开发者可通过Go-SDK实现UBI接口的快速调用；目前SDK开发进行中，已完成部分模块，欢迎更多社区开发者一起共建。
 https://github.com/WeBankBlockchain/WeCross-Go-SDK/pull/1
+
 2、贡献了完整的WeCross-Go-SDK代码和文档，该项目将进入测试阶段，在正式发布后，即可用Go语言进行跨链应用的开发。
 https://github.com/WeBankBlockchain/WeCross-Go-SDK/pull/3
 
@@ -193,22 +196,31 @@ https://github.com/WeBankBlockchain/WeCross-Go-SDK/pull/3
 核心参与者：高野、刘建起、社区开发者、符博、金伟、唐先杰、黄梓杰
 
 项目介绍：
+
 1、通过区块链技术实现石头剪刀布的游戏，提前将双方要出的结果写到合约内，以保障双方玩石头剪刀布游戏结果的公平性。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/79
+
 2、为智能合约库组件贡献匿名投票合约，实现了匿名且安全的多方投票，可以为一些业务场景带来启发。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/86
+
 3、为智能合约库组件贡献函数调用合约，可帮助开发者监听某个函数调用。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/80
+
 4、通过区块链技术实现了时间锁的功能，它可以实现时间锁的开始、计时、停止和状态判断等功能。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/94
+
 5、通过区块链技术实现了抽象层面的多方签名功能，可以应用于多方认证的场景。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/91
+
 6、通过代码实现国密算法使用相关的示例合约。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/98
+
 7、提供了链上治理的基础合约工具，如多方投票治理等。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/99
+
 8、本合约实现了许可证和最小代理功能。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/102
+
 9、通过代码实现通过块高来查询某一值任何历史状态的功能。
 https://github.com/WeBankBlockchain/SmartDev-Contract/pull/103
 
@@ -221,6 +233,7 @@ https://github.com/WeBankBlockchain/SmartDev-Contract/pull/103
 项目介绍：
 
 通过 weid-docker-compose 工具实现了 FISCO BCOS + WeBASE + WeIdentity + Sample 的快速部署。
+
 https://github.com/idefa/weid-docker-compose
 
 方案贡献

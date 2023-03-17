@@ -12,4 +12,6 @@ Rust SDK for FISCO-BCOS  ,like some  rusted  but solid gears , help to build  bl
   
 - 本项目并非唯一且官方的fisco bcos rust sdk，社区陆续会有其他优秀的rust的sdk实现，提供多种选择和参考可能性
 
+- 本项目暂时支持FISCO BCOS 2.0.0及其以上版本，目前FISCO BCOS 3.0.0及其以上版本适配中
+
 安装配置环境，使用Rust SDK进行应用开发请参见[【github链接】](https://github.com/FISCO-BCOS/rust-gears-sdk/)

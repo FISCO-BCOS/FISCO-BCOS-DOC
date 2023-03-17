@@ -1,6 +1,6 @@
 # 1. PR 代码规范
 
-
+-----
 ### 文章贡献PR操作指引
 
 如果你已经是社区贡献者，可直接按照如下操作完成文章PR提交；如果你初次尝试PR贡献，请点击了解[提PR基本操作指引](https://mp.weixin.qq.com/s/Uq5r1IaZfelWnhCThHSKXw)。

@@ -4,7 +4,7 @@
 
 ----
 
-FISCOBCOS 区块链 C# Sdk，目前是采用Json RPC API 接口和区块链底层（标准版本）进行适配。
+FISCOBCOS 区块链 C# Sdk，目前是采用Json RPC API 接口和区块链底层（标准版本）进行适配，暂时支持2.x版本，3.x版本正在适配中。
 
 作者：林宣名
 
