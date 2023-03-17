@@ -15,5 +15,6 @@
 
 **2022年度MVP**
 ![](../../images/community/img_1.png)
-![](../../images/community/img_2.png)
-
+<div align="center">
+<img src=https://mmbiz.qpic.cn/mmbiz_jpg/kI47fT8LbtIr83iap9G1B20va6ZRFNuDrw1SBntiaW4ATI7qpA0COMpj50JSIIeWiaVW3aBiapcLMhXHAFwweztK7A/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1  width=60% height=60%/>
+</div>
