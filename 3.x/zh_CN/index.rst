@@ -269,10 +269,12 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 
    docs/sdk/index.md
    docs/sdk/java_sdk/index.md
+   docs/sdk/c_sdk/index.md
    docs/sdk/go_sdk/index.rst
    docs/sdk/python_sdk/index.rst
    docs/sdk/nodejs_sdk/index.rst
    docs/sdk/rust_sdk/index.md
+   docs/sdk/cpp_sdk/index.md
    docs/sdk/csharp_sdk/index.md
    docs/sdk/cert_config.md
 
@@ -287,6 +289,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/tutorial/lightnode.md
    docs/tutorial/compile_binary.md
    docs/tutorial/support_os.md
+   docs/tutorial/docker.md
 
 .. toctree::
    :hidden:

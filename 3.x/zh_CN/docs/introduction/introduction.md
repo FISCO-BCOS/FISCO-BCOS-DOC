@@ -26,7 +26,4 @@ FISCO BCOS开源五周年至今，在应用产业、技术创新以及开源生�
 
 - [FISCO BCOS 2022年度贡献者榜单](https://mp.weixin.qq.com/s/zZgt8gOGWfvaK7cWPV3PyQ)
 
-
-<div align="center">
-<img src=https://mmbiz.qpic.cn/mmbiz_jpg/kI47fT8LbtJMVPRolHHZRWEZ25hdibpAbiaSj0tAISBUReFUuBWC9q8rwU7DYk7fURh7ib40ExqHZPryXBZp5mfQQ/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1g  width=60% height=60%/>
-</div>
+![](../../images/introduction/img.png)
