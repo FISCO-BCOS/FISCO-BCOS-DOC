@@ -3,7 +3,7 @@
 
 -----
 
-Truora是一个基于FISCO BCOS平台的预言机服务。支持FISCO BCOS2.x和3.x版本，Truora工作原理如下：
+Truora是一个基于FISCO BCOS平台的预言机服务，支持FISCO BCOS2.x和3.x版本。
 
 Truora通过在链下运行的Java服务，监听链上预言机合约事件，发起链下相关的资源访问和计算任务，并将结果返回到链上预言机合约，供链上使用。
 
@@ -19,4 +19,4 @@ Truora支持的特性：
 
 - [Truora在线文档](https://truora.readthedocs.io/zh_CN/main/)
   
-- [Truora](https://github.com/WeBankBlockchain/Truora-Service)
+- [Truora github主页](https://github.com/WeBankBlockchain/Truora-Service)

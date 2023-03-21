@@ -4,7 +4,7 @@ FISCO BCOS 技术文档
 
 .. image:: _static/images/FISCO_BCOS_Logo.svg
 
-FISCO BCOS（读作/ˈfɪskl  bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，经过超4000家企业及机构、300+产业数字化标杆应用，长时间在生产环境运行的实际检验。
+FISCO BCOS（读作/ˈfɪskl  bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，至今经过超4000家企业及机构、300+产业数字化标杆应用，长时间在生产环境运行的实际检验。
 
 FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今为止，开源社区汇聚超过90000+成员共建共治，发展成为最大最活跃的国产开源联盟链生态圈，其中涌现出诸多对社区建设、代码贡献的优秀社区成员。2022年，开源社区共认定20位MVP，这些优秀的贡献者或是将FISCO BCOS技术落地到各领域应用中，助力产业数字化，或是在多渠道布道，将开源社区精神传播到更远的地方。
 
@@ -33,7 +33,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
             <br><br>
 
          - `了解FISCO BCOS区块链 <./docs/introduction/introduction.html>`_
-         - `FISCO BCOS 3.X新特性 <./docs/change_log/index.html>`_
+         - `FISCO BCOS 3.X新特性 <./docs/introduction/change_log/index.html>`_
          - `搭建第一个区块链网络 <./docs/quick_start/air_installation.html>`_
          - `开发第一个Solidity区块链应用 <./docs/quick_start/solidity_application.html>`_
          - `开发第一个webankblockchain-liquid区块链应用 <./docs/quick_start/wbc_liquid_application.html>`_
@@ -51,7 +51,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
          - `Air版本区块链网络搭建 <./docs/tutorial/air/index.html>`_
          - `Pro版本区块链网络搭建 <./docs/tutorial/pro/index.html>`_
          - `轻节点搭建 <./docs/tutorial/lightnode.html>`_
-         - `FISCO BCOS Java SDK <./docs/sdk/index.html>`_
+         - `FISCO BCOS Java SDK <./docs/sdk/java_sdk/index.html>`_
 
    .. container:: card-holder-bigger
 
@@ -171,7 +171,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 
          - `系统架构 <./docs/design/architecture.html>`_
          - `两阶段并行拜占庭共识 <./docs/design/consensus/consensus.html>`_
-         - `合约目录 <./docs/design/contract_directory.html>`_
+         - `合约文件系统BFS <./docs/design/contract_directory.html>`_
          - `更多设计文档 <./docs/design/index.html>`_
 
    .. container:: card-holder

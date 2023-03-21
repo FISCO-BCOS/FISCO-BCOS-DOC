@@ -13,6 +13,6 @@ weEvent秉承分布式商业模式中对等合作、智能协同、价值共享�
 
 详细内容可参考
 
-- [weEvent在线文档](https://weeventdoc.readthedocs.io/zh_CN/latest/index.html)
+- [WeEvent在线文档](https://weeventdoc.readthedocs.io/zh_CN/latest/index.html)
 
-- [weEvent github主页](https://github.com/WeBankBlockchain/WeEvent)
+- [WeEvent github主页](https://github.com/WeBankBlockchain/WeEvent)
