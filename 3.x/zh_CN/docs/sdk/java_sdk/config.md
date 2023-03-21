@@ -83,7 +83,7 @@ Java sdk主要包括五个配置选项，分别是
 
 ### 证书配置
 
-基于安全考虑，Java SDK与节点间采用SSL加密通信，目前同时支持非国密SSL连接以及国密SSL连接，`[cryptoMaterial]`配置SSL连接的证书信息，具体包括如下配置项：
+基于安全考虑，Java SDK与节点间采用SSL加密通信，目前同时支持非国密SSL连接以及国密SSL连接，java-sdk 3.3.0版本增加了对密码机的支持，交易签名验签可使用密码机里的密钥。`[cryptoMaterial]`配置SSL连接的证书信息，具体包括如下配置项：
 
 * `certPath`: 证书存放路径，默认是`conf`目录；
 
@@ -96,6 +96,16 @@ Java sdk主要包括五个配置选项，分别是
 * `enSslCert`: 国密SSL加密证书路径，仅当SDK与节点间采用国密SSL连接时，需要配置该配置项，默认从`${certPath}/sm_ensdk.crt`加载国密SSL加密证书；当开启该配置项时，从配置项指定的路径加载国密SSL加密证书；
 
 * `enSslKey`: 国密SSL加密私钥路径，仅当SDK与节点间采用国密SSL连接时，需配置该配置项，默认从`${certPath}/sm_ensdk.key`加载国密SSL加密私钥；当卡其该配置项时，从配置项指定的路径加载国密SSL加密私钥。
+
+* `useSMCrypto`: 是否使用国密SSL连接，true为使用国密SSL；
+
+* `enableHsm`: 是否使用密码机，true为使用密码机；
+
+* `hsmLibPath`: 密码机动态库的文件路径；
+
+* `hsmKeyIndex`: 密码机密钥的索引；
+
+* `hsmPassword`: 密码机的密码；
 
 ```eval_rst
 .. note::
@@ -111,6 +121,11 @@ SDK证书配置示例如下：
 
 certPath = "conf"                           # The certification path
 useSMCrypto = "false"                       # RPC SM crypto type
+
+# enableHsm = "false"
+# hsmLibPath = "/usr/local/lib/libgmt0018.so"
+# hsmKeyIndex = "1"
+# hsmPassword = "12345678"
 
 # The following configurations take the certPath by default if commented
 # caCert = "conf/ca.crt"                    # CA cert file path
@@ -225,6 +240,11 @@ config-example.toml
 certPath = "conf"                           # The certification path  
 useSMCrypto = "false"                       # RPC SM crypto type
 
+# enableHsm = "false"
+# hsmLibPath = "/usr/local/lib/libgmt0018.so"
+# hsmKeyIndex = "1"
+# hsmPassword = "12345678"
+
 # The following configurations take the certPath by default if commented
 # caCert = "conf/ca.crt"                    # CA cert file path
 # sslCert = "conf/sdk.crt"                  # SSL cert file path
@@ -274,6 +294,11 @@ Java SDK还支持`properties`、`yml`以及`xml`格式的配置文件。
 ```properties
 cryptoMaterial.certPath=conf                       # The certification path
 cryptoMaterial.useSMCrypto=false
+
+# cryptoMaterial.nableHsm=false
+# cryptoMaterial.hsmLibPath=/usr/local/lib/libgmt0018.so
+# cryptoMaterial.hsmKeyIndex=1
+# cryptoMaterial.hsmPassword=12345678
 
 # The following configurations take the certPath by default if commented
 # cryptoMaterial.caCert=conf/ca.crt 
@@ -384,6 +409,11 @@ cryptoMaterial:
 #  sslKey: "conf/sdk.key"
 #  enSslCert: "conf/sm_ensdk.crt"
 #  enSslKey: "conf/sm_ensdk.key"
+
+#  enableHsm: false
+#  hsmLibPath: "/usr/local/lib/libgmt0018.so"
+#  hsmKeyIndex: "1"
+#  hsmPassword: "12345678"
 
 network:
   defaultGroup: "group0"
