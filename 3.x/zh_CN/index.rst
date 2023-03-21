@@ -300,6 +300,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/develop/api.md
    docs/develop/account.md
    docs/develop/contract_life_cycle.md
+   docs/develop/console_deploy_contract.md
    docs/develop/console/index.md
    docs/develop/smartdev_index.md
    docs/develop/amop.md
