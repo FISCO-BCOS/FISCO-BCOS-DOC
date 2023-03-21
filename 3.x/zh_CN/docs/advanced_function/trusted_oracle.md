@@ -19,4 +19,4 @@ Truora支持的特性：
 
 - [Truora在线文档](https://truora.readthedocs.io/zh_CN/main/)
   
-- [Truora](https://github.com/WeBankBlockchain/Truora-Service)
+- [Truora github主页](https://github.com/WeBankBlockchain/Truora-Service)

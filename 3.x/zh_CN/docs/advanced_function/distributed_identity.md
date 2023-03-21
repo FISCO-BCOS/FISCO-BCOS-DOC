@@ -13,4 +13,4 @@ WeIdentity详细内容介绍可参考
 
 - [WeIdentity技术文档](https://weidentity.readthedocs.io/zh_CN/latest/index.html)
 
-- [WeIdentity gitHub主页](https://github.com/WeBankBlockchain/WeIdentity)
+- [WeIdentity github主页](https://github.com/WeBankBlockchain/WeIdentity)

@@ -12,4 +12,4 @@ weCross详细内容介绍可参考
 
 - [weCross技术文档](https://wecross.readthedocs.io/zh_CN/latest/index.html)
 
-- [weCross gitHub主页](https://github.com/WeBankBlockchain/WeCross)
+- [weCross github主页](https://github.com/WeBankBlockchain/WeCross)
