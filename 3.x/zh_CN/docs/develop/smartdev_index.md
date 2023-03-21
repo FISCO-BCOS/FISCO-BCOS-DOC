@@ -1,4 +1,4 @@
-# 5. SmartDev应用开发组件
+# 6. SmartDev应用开发组件
 
 标签：``WeBankBlockchain-SmartDev`` ``应用开发`` ``通用组件`` ``智能合约库`` ``智能合约编译插件`` ``应用开发脚手架``
 
