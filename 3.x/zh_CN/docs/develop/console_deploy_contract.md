@@ -167,4 +167,5 @@ Event: {}
 [group0]: /> exit
 ```
 
-至此，我们完成了第一条FISCO-BCOS链的搭建、控制台的配置和使用，并部署和调用了第一个合约。关于**Pro版本FISCO BCOS的搭建、配置和使用请参考[这里](../tutorial/pro/index.md)。**
+至此，我们完成了控制台的配置和使用，并介绍了如何通过控制台部署和调用合约，关于更多的控制台使用教程可参考[这里](../operation_and_maintenance/console/index.md)。
+
