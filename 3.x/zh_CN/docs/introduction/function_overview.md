@@ -7,11 +7,11 @@ FISCO BCOS为了支撑海量服务的需求，v3.0稳定版从系统架构、处
 
 <font color=Blue>**整体架构**</font> | |
 | - | - |
-| 架构模型 | 灵活自适应的区块链框架，目前包括轻量级的Air版本FISCO BCOS和适用于复杂业务场景的Pro版本以及可扩展的Max版本|
+| 架构模型 | 灵活自适应的区块链框架，目前包括轻量级的Air版本、适用于复杂业务场景的Pro版本以及可扩展的Max版本|
 | 群组架构 | 支持链内动态扩展多群组|
 | 分布式存储 | 支持海量数据存储|
 | 并行计算 | 支持基于DAG(有向无环图)、DMC(确定性合约并行算法)以及Sharding交易分片块内并行执行 |
-| 节点类型 | 共识节点、观察节点 |
+| 节点类型 | 共识节点、观察节点、轻节点 |
 | 计算模型 | 排序-执行-验证 |
 | <font color=Blue>**系统性能**</font> |
 | 峰值TPS | 10万+ TPS（PBFT）|
@@ -30,7 +30,7 @@ FISCO BCOS为了支撑海量服务的需求，v3.0稳定版从系统架构、处
 | 共识算法 | PBFT，RAFT|
 | <font color=Blue>**存储引擎**</font>  |
 | 存储设计 | 支持KV和SQL |
-| 引擎类型 | 支持rocksdb TikvDB|
+| 引擎类型 | 支持rocksdb和TikvDB|
 | CRUD接口 | 提供CRUD接口访问链上数据 |
 | <font color=Blue>**网络协议**</font>  |
 | 节点间通信 | P2P协议 |
@@ -60,9 +60,9 @@ FISCO BCOS为了支撑海量服务的需求，v3.0稳定版从系统架构、处
 |SPV|提供获取SPV证明的接口|
 |跨链协议|基于[WeCross](https://github.com/WeBankBlockchain/WeCross)支持同构、异构跨链|
 | <font color=Blue>**开发支持**</font> |
-|开发建链工具|提供[Air版本区块链部署工具build_chain](../tutorial/air/build_chain.md), [Pro版本区块链部署工具BcosBuilder/pro](../tutorial/pro/pro_builder.html)和[Maxb版本部署工具BcosBuilder/max](../tutorial/max/max_builder.html)|
-|合约部署与测试工具|交互式控制台 [基于Java SDK的控制台](../operation_and_maintenance/console/index.md)|
-|SDK语言|[Java](../sdk/java_sdk/index.md)（待适配语言：go、nodejs、Rust、Python、iOS、Android）
+|开发建链工具|提供[Air版本区块链部署工具build_chain](../tutorial/air/build_chain.html), [Pro版本区块链部署工具BcosBuilder/pro](../tutorial/pro/pro_builder.html)和[Maxb版本部署工具BcosBuilder/max](../tutorial/max/max_builder.html)|
+|合约部署与测试工具|交互式控制台 [基于Java SDK的控制台](../operation_and_maintenance/console/index.html)|
+|SDK语言|[Java](../sdk/java_sdk/index.html)（待适配语言：go、nodejs、Rust、Python、iOS、Android）
 |快速开发组件|提供[Spring-boot-starter](https://github.com/FISCO-BCOS/spring-boot-starter)|
 | <font color=Blue>**运维支持**</font> |
 |动态管理节点|支持动态新增、剔除、变更节点|
