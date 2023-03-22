@@ -1,4 +1,4 @@
-# 基于ABI和BIN调用合约
+# 交易构造与调用
 
 标签：``java-sdk`` ``发送交易`` ``使用接口签名发送交易`` ``组装交易`` ``合约调用``
 
@@ -39,7 +39,7 @@
 
 ### 2.1 准备abi和binary文件
 
-控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称WBC-Liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](../../console/console_config.html#java)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称WBC-Liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](./quick_start.html#contract2java-sh)。
 
 通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
@@ -86,12 +86,12 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 基于配置文件，初始化SDK，如：
 
 ```java
-    // 初始化BcosSDK对象
-    BcosSDK sdk = new BcosSDK(configFile);
-    // 获取Client对象，此处传入的群组名 group
-    Client client = sdk.getClient("group0");
-    // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
-    CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
+// 初始化BcosSDK对象
+BcosSDK sdk = BcosSDK.build(configFile);
+// 获取Client对象，此处传入的群组名 group
+Client client = sdk.getClient("group0");
+// 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
+CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
 ```
 
 ### 2.3 初始化配置对象
@@ -109,7 +109,7 @@ AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.
 假如只交易和查询，而不部署合约，那么就不需要复制binary文件，且在构造时无需传入binary文件的路径，例如构造方法的最后一个参数可传入空字符串。
 
 ```java
-    AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
+AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
 ```
 
 ### 2.4 发送操作指令
@@ -121,7 +121,7 @@ AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.
 部署合约调用了deployByContractLoader方法，传入合约名和构造函数的参数，上链部署合约，并获得`TransactionResponse`的结果。
 
 ```java
-    // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
+// 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
 TransactionResponse response = transactionProcessor.deployByContractLoader("HelloWorld", new ArrayList<>());
 ```
 
@@ -141,32 +141,25 @@ TransactionResponse response = transactionProcessor.deployByContractLoader("Hell
 
 ```json
 {
-  "returnCode": 0,
-  "returnMessage": "Success",
-  "transactionReceipt": {
-    "transactionHash": "0xcfdfb78be52b232afdee717826f9516af98fb2d67ee743da4b78e8c22172112b",
-    "transactionIndex": "0x0",
-    "root": "0xf6503b5f1a319dbd2c938d7e371b89441c238271bbaabf3d650112017158a658",
-    "blockNumber": "0x14b",
-    "blockHash": "0x817e0aaaba5448a6ac62fc2531be793cf6de9fed70c73ed8837082b7fcf74881",
-    "from": "0xcaa405b5dd47e7f28e6b862c198c15e923000c0b",
-    "to": "0x0000000000000000000000000000000000000000",
-    "gasUsed": "0x44683",
-    "contractAddress": "0x9dbaf42da05a0148d2ca9905870a91085c23ce71",
-    "logs": [],
-    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "status": "0x0",
-    "input": "0x608060405234801561001057600080fd5b506040805190810160405280600d81526020017f48656c6c6f2c20576f726c6421000000000000000000000000000000000000008152506000908051906020019061005c929190610062565b50610107565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100a357805160ff19168380011785556100d1565b828001600101855582156100d1579182015b828111156100d05782518255916020019190600101906100b5565b5b5090506100de91906100e2565b5090565b61010491905b808211156101005760008160009055506001016100e8565b5090565b90565b6102d3806101166000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680633590b49f14610051578063b11b6883146100ba575b600080fd5b34801561005d57600080fd5b506100b8600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061014a565b005b3480156100c657600080fd5b506100cf610164565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561010f5780820151818401526020810190506100f4565b50505050905090810190601f16801561013c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b8060009080519060200190610160929190610202565b5050565b60008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156101fa5780601f106101cf576101008083540402835291602001916101fa565b820191906000526020600020905b8154815290600101906020018083116101dd57829003601f168201915b505050505081565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061024357805160ff1916838001178555610271565b82800160010185558215610271579182015b82811115610270578251825591602001919060010190610255565b5b50905061027e9190610282565b5090565b6102a491905b808211156102a0576000816000905550600101610288565b5090565b905600a165627a7a723058209072782fc019ac745aa91b6fede6c358df1b03584b1bf5193a8c66d68a6880f30029",
-    "output": "0x",
-    "txProof": null,
-    "receiptProof": null,
-    "message": null,
-    "statusOK": true
-  },
-  "contractAddress": "0x9dbaf42da05a0148d2ca9905870a91085c23ce71",
-  "values": null,
-  "events": "{}",
-  "receiptMessages": "Success"
+        "id" : 11,
+        "jsonrpc" : "2.0",
+        "result" :
+        {
+                "blockNumber" : 2,
+                "checksumContractAddress" : "0x4721D1A77e0E76851D460073E64Ea06d9C104194",
+                "contractAddress" : "0x4721d1a77e0e76851d460073e64ea06d9c104194",
+                "extraData" : "",
+                "from" : "0xa38e104bb4a92a52452b48342c935f68df20c2ce",
+                "gasUsed" : "24363",
+                "hash" : "0x2081348e1993551d29dbd848a7bb0ce320448257e6631658b237fdebc084ae92",
+                "logEntries" : [],
+                "message" : "",
+                "output" : "0x",
+                "status" : 0,
+                "to" : "",
+                "transactionHash" : "0x06988028109dc4079e92c01d86d45907a3883cbcd60b63345d4e566c9cf40863",
+                "version" : 0
+        }
 }
 ```
 
@@ -186,32 +179,25 @@ TransactionResponse response = transactionProcessor.deployByContractLoader("Hell
 
 ```json
 {
-  "returnCode": 0,
-  "returnMessage": "Success",
-  "transactionReceipt": {
-    "transactionHash": "0x46b510dfff02c327432362db76555c75211aab17b3b75221137132123773fe8f",
-    "transactionIndex": "0x0",
-    "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
-    "blockNumber": "0x156",
-    "blockHash": "0x2d1ef0246bc0484e0fecd2a0b6671c19b69c86ac9e464b162ff4a932908151a0",
-    "from": "0x77a5933b5af032a313fde655d8290c134aeeb0d5",
-    "to": "0x975810f096e8d8b2daa9ee399f5ce809c0a12f1b",
-    "gasUsed": "0x6032",
-    "contractAddress": "0x0000000000000000000000000000000000000000",
-    "logs": [],
-    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "status": "0x0",
-    "input": "0x4ed3885e000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000047465737400000000000000000000000000000000000000000000000000000000",
-    "output": "0x",
-    "txProof": null,
-    "receiptProof": null,
-    "message": null,
-    "statusOK": true
-  },
-  "contractAddress": "0x0000000000000000000000000000000000000000",
-  "values": "[]",
-  "events": "{}",
-  "receiptMessages": "Success"
+        "id" : 15,
+        "jsonrpc" : "2.0",
+        "result" :
+        {
+                "blockNumber" : 3,
+                "checksumContractAddress" : "",
+                "contractAddress" : "",
+                "extraData" : "",
+                "from" : "0xa38e104bb4a92a52452b48342c935f68df20c2ce",
+                "gasUsed" : "13088",
+                "hash" : "0xaa9f2aedfaa5714d07933b6ad286ce4bdf3d33172109efe464acf217c386afb7",
+                "logEntries" : [],
+                "message" : "",
+                "output" : "0x",
+                "status" : 0,
+                "to" : "0x4721d1a77e0e76851d460073e64ea06d9c104194",
+                "transactionHash" : "0x113b6fba39b8c52bd87a23a260321505f67ef5f04741b988357f2c1c8838d628",
+                "version" : 0
+        }
 }
 ```
 
@@ -228,30 +214,33 @@ CallResponse callResponse = transactionProcessor.sendCallByContractLoader("Hello
 
 ```json
 {
-  "returnCode": 0,
-  "returnMessage": "Success",
-  "values": "[\"test\"]"
+        "id" : 19,
+        "jsonrpc" : "2.0",
+        "result" :
+        {
+                "blockNumber" : 3,
+                "output" : "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000047465737400000000000000000000000000000000000000000000000000000000",
+                "status" : 0
+        }
 }
 ```
 
-## 3. 更多操作
-
-### 3.1 拼接签名的方式发送交易
+## 3. 拼接合约方法签名的方式发送交易
 
 此外，对于特殊的场景，可以通过接口签名的方式DIY拼装交易和发送交易。
 
 例如上述`HelloWorld`智能合约定义的set方法的签名为 `set(string)`
 
-#### 3.1.1 构造接口签名
+### 3.1 构造接口签名
 
 ```java
 // 使用WBC-Liquid合约时_isWasm 为true，Solidity合约则为false
-ABICodec abiCodec = new ABICodec(client.getCryptoSuite(), _isWasm);
+ContractCodec contractCodec = new ContractCodec(client.getCryptoSuite(), _isWasm);
 String setMethodSignature = "set(string)";
-String abiEncoded = abiCodec.encodeMethodByInterface(setMethodSignature, new Object[]{new String("Hello World")});
+byte[] txData = contractCodec.encodeMethodByInterface(setMethodSignature, new Object[]{new String("Hello World")});
 ```
 
-#### 3.1.2 构造TransactionProcessor
+### 3.2 构造TransactionProcessor
 
 由于通过构造接口签名的方式无需提供abi，故可以构造一个`TransactionProcessor`来操作。同样可使用`TransactionProcessorFactory`来构造。
 
@@ -259,17 +248,27 @@ String abiEncoded = abiCodec.encodeMethodByInterface(setMethodSignature, new Obj
 TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
 ```
 
-#### 3.1.3 发送交易
+### 3.3 发送交易
 
 发送交易到FISCO BCOS节点并接收回执。
 
 ```java
-TransactionReceipt transactionReceipt = transactionProcessor.sendTransactionAndGetReceipt(contractAddress, abiEncoded, keyPair);
+// 如果使用WBC-Liquid，第三个参数应该使用 TransactionAttribute.LIQUID_SCALE_CODEC
+TransactionReceipt transactionReceipt = transactionProcessor.sendTransactionAndGetReceipt(contractAddress, txData, TransactionAttribute.EVM_ABI_CODEC);
 ```
 
-### 3.2 采用callback的方式异步操作合约
+### 3.4 解析交易回执结果
 
-#### 3.2.1 定义回调类
+在执行成功后需要手动解析交易回执中的结果信息。更详细的使用方式可以参考：[交易回执解析](../transaction_decode.md)
+
+```java
+TransactionDecoderService txDecoder = new TransactionDecoderService(client.getCryptoSuite(), client.isWASM());
+TransactionResponse transactionResponse = txDecoder.decodeReceiptWithValues(abi,"set",transactionReceipt);
+```
+
+## 4. 采用callback的方式异步操作合约
+
+### 4.1 定义回调类
 
 异步发送交易的时候，可以自定义回调类，实现和重写回调处理函数。
 
@@ -312,20 +311,21 @@ public class TransactionCallbackMock extends TransactionCallback {
 }
 ```
 
-#### 3.2.2 采用callback的方式异步部署合约
+### 4.2 采用callback的方式异步部署合约
 
 首先，创建一个回调类的实例。然后使用`deployByContractLoaderAsync`方法，异步部署合约。
 
 ```java
 // 创建回调类的实例
 TransactionCallbackMock callbackMock = new TransactionCallbackMock();
+AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
 // 异步部署合约
 transactionProcessor.deployByContractLoaderAsync("HelloWorld", new ArrayList<>(), callbackMock);
 // 异步等待获取回执
 TransactionReceipt transactionReceipt = callbackMock.getResult();
 ```
 
-#### 3.2.3 采用callback的方式发送交易
+### 4.3 采用callback的方式发送交易
 
 参考部署合约交易，可采用异步的方式发送交易。
 
@@ -335,32 +335,31 @@ TransactionCallbackMock callbackMock = new TransactionCallbackMock();
 // 定义构造参数
 List<Object> params = Lists.newArrayList("test");
 // 异步调用合约交易
-transactionProcessor.sendTransactionAsync(to, abi, "set", params, callbackMock );
+transactionProcessor.sendTransactionAsync(to, abi, "set", params, callbackMock);
 // 异步等待获取回执
 TransactionReceipt transactionReceipt = callbackMock.getResult();
 ```
 
-### 3.3 采用CompletableFuture的方式异步操作合约
+## 5. 采用CompletableFuture的方式异步操作合约
 
 #### 3.3.1 采用CompletableFuture的方式部署合约
 
 SDK还支持使用`CompletableFuture`封装的方式异步部署合约。
 
 ```java
-    // 异步部署交易，并获得CompletableFuture<TransactionReceipt> 对象
-    CompletableFuture<TransactionReceipt> future =
-        transactionProcessor.deployAsync(abi, bin, new ArrayList<>());
-    // 定义正常返回的业务逻辑
-    future.thenAccept(
-        tr -> {
-           doSomething(tr);
-        });
-    // 定义异常返回的业务逻辑
-    future.exceptionally(
-        e -> {
-            doSomething(e);
-            return null;
-        });
+// 异步部署交易，并获得CompletableFuture<TransactionReceipt> 对象
+CompletableFuture<TransactionReceipt> future = transactionProcessor.deployAsync(abi, bin, new ArrayList<>(),"");
+// 定义正常返回的业务逻辑
+future.thenAccept(
+    tr -> {
+       doSomething(tr);
+    });
+// 定义异常返回的业务逻辑
+future.exceptionally(
+    e -> {
+        doSomething(e);
+        return null;
+    });
 ```
 
 ## 4. 详细API功能介绍
