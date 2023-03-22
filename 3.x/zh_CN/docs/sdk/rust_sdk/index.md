@@ -1,4 +1,4 @@
-# 6. Rust SDK
+# 7. Rust SDK
 
 标签：``Rust SDK`` ``区块链应用``
 
