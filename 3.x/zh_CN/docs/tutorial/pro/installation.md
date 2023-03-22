@@ -117,7 +117,7 @@ cd docker/bridge/mac/framework
 docker-compose start
 ```
 
-tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访问tars网页管理平台，跨机器环境可通过http://${ip}:3000/访问tars管理平台，其中`${ip}`是部署TarsFramework服务机器的物理IP。
+tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访问tars网页管理平台，跨机器环境可通过http://{ip}:3000/访问tars管理平台，其中`{ip}`是部署TarsFramework服务机器的物理IP。
 
 ### 3.2 配置tars服务
 
@@ -556,7 +556,7 @@ app_log/
 
 ```eval_rst
 .. note::
-   - 控制台的配置方法和命令请参考 `这里 <../../develop/console/console_config.html>`_
+   - 控制台的配置方法和命令请参考 `这里 <../../operation_and_maintenance/console/console_config.html>`_
 ```
 
 使用控制台之前，需先安装java环境：

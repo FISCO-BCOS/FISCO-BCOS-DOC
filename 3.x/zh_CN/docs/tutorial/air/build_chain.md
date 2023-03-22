@@ -11,7 +11,7 @@
 
 ```eval_rst
 .. important::
-    本部署工具 build_chain.sh 脚本目标是让用户最快的使用FISCO BCOS Air版。
+    本部署工具 build_chain.sh 脚本目标是让用户最快地使用FISCO BCOS Air版。
 ```
 
 FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联盟链。
