@@ -29,7 +29,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 [Liquid官方文档](https://liquid-doc.readthedocs.io/zh_CN/latest/)
 
-[预编译合约使用文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/precompiled/index.html)
+[预编译合约使用文档](../contract_develop/c++_contract/index.html)
 
 ## 2. 智能合约部署与调用
 
@@ -44,9 +44,9 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 [开发第一个Liquid区块链应用](../quick_start/wbc_liquid_application.md)
 
-[Gradle SpringBoot 应用示例](./sdk/java_sdk/spring_boot_starter.md)
+[Gradle SpringBoot 应用示例](../sdk/java_sdk/spring_boot_starter.md)
 
-[Maven SpringBoot 应用示例](./sdk/java_sdk/spring_boot_crud.md)
+[Maven SpringBoot 应用示例](../sdk/java_sdk/spring_boot_crud.md)
 
 ## 3. 智能合约数据存储
 
