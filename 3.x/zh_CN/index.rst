@@ -4,7 +4,12 @@ FISCO BCOS 技术文档
 
 .. image:: _static/images/FISCO_BCOS_Logo.svg
 
-FISCO BCOS（读作/ˈfɪskl  bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，至今经过超4000家企业及机构、300+产业数字化标杆应用，长时间在生产环境运行的实际检验。
+FISCO BCOS（读作/ˈfɪskl  bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，其可用性经广泛应用实践检验。至今已超过4000家企业及机构、300+产业数字化标杆应用，覆盖文化版权、司法服务、政务服务、物联网、金融、智慧社区、房产建筑、社区治理、乡村振兴等领域。
+
+.. image:: images/introduction/applications.png
+   :align: center
+   :alt: 产业应用
+
 
 FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今为止，开源社区汇聚超过90000+成员共建共治，发展成为最大最活跃的国产开源联盟链生态圈，其中涌现出诸多对社区建设、代码贡献的优秀社区成员。2022年，开源社区共认定20位MVP，这些优秀的贡献者或是将FISCO BCOS技术落地到各领域应用中，助力产业数字化，或是在多渠道布道，将开源社区精神传播到更远的地方。
 
@@ -379,3 +384,4 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    dcos/community/partner_list_new.md
    docs/articles/index.md
    docs/community/join_fiscobcos.md
+   docs/community/app_example.md
