@@ -88,7 +88,7 @@ $ ls contracts/sdk/bin/sm/HelloWorld.bin
 ```java
 // 初始化BcosSDK对象
 BcosSDK sdk = BcosSDK.build(configFile);
-// 获取Client对象，此处传入的群组名 group
+// 获取Client对象，此处传入的群组名 group0
 Client client = sdk.getClient("group0");
 // 构造AssembleTransactionProcessor对象，需要传入client对象，CryptoKeyPair对象和abi、binary文件存放的路径。abi和binary文件需要在上一步复制到定义的文件夹中。
 CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();

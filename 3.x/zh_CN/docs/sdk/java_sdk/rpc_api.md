@@ -930,11 +930,12 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 
 **迁移说明：** 由于CNS接口废弃，BFS包含了CNS的功能，也提供了对应的适配接口。用户可以将原来的CNS服务接口都改成BFS接口，接口对应如下表：
 
-| 方法名                         | CNSService                                                   | BFSService                                                   |
-| ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 方法名                         | CNSService                                                      | BFSService                                                    |
+|--------------------------------|-----------------------------------------------------------------|---------------------------------------------------------------|
 | 创建合约名与合约地址的映射关系 | insert(string name, string version, string address,string abi); | link(string name, string version, string address,string abi); |
-| 获取对应名称和版本的地址       | selectByNameAndVersion(string name,string version);          | readlink(string path);                                       |
-| 遍历合约名称的所有版本         | selectByName(string name);                                   | list(string path);                                           |
+| 获取对应名称和版本的地址       | selectByNameAndVersion(string name,string version);             | readlink(string path);                                        |
+| 遍历合约名称的所有版本         | selectByName(string name);                                      | list(string path);                                            |
+| 合约地址                       | 0x1004                                                          | 0x100e                                                        |
 
 ## 10. AuthManager权限管理接口
 
