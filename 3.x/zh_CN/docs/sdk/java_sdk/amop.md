@@ -117,6 +117,7 @@ amop.broadcastAmopMsg("MyTopic", content.getBytes());
 
 * topic: 取消订阅的话题。类型：``String``
   
+
 **例子：**
 
 ```java

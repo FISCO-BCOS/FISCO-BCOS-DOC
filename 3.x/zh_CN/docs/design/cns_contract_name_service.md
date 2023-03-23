@@ -6,7 +6,16 @@
 
 ## 注意
 
-CNS服务在 `FISCO BCOS 3.+版本` 已经弃用，使用更友好的树状合约目录进行管理，详情请查看：[合约文件系统BFS](./contract_directory.md)
+CNS服务仅在`FISCO BCOS 2.+版本`中可以使用，在 `FISCO BCOS 3.+版本` 已经弃用，使用更友好的树状合约目录的形式进行管理，详情请查看：[合约文件系统BFS](./contract_directory.md)
+
+**迁移说明：** 由于CNS接口废弃，BFS包含了CNS的功能，也提供了对应的适配接口。用户可以将原来的CNS服务接口都改成BFS接口，接口对应如下表：
+
+| 方法名                         | CNSService                                                      | BFSService                                                    |
+|--------------------------------|-----------------------------------------------------------------|---------------------------------------------------------------|
+| 创建合约名与合约地址的映射关系 | insert(string name, string version, string address,string abi); | link(string name, string version, string address,string abi); |
+| 获取对应名称和版本的地址       | selectByNameAndVersion(string name,string version);             | readlink(string path);                                        |
+| 遍历合约名称的所有版本         | selectByName(string name);                                      | list(string path);                                            |
+| 合约地址                       | 0x1004                                                          | 0x100e                                                        |
 
 ## 概述
 

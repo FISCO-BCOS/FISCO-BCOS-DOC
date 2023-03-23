@@ -37,6 +37,7 @@ abi在合约生成的java客户端文件夹下，以HelloWorld.sol为例，为He
 - **public TransactionResponse decodeReceiptWithoutValues(String abi, TransactionReceipt transactionReceipt)：** 解析不带函数返回值的交易回执。
 - **public Map\<String, List\<List\<Object\>\>\>\> decodeEvents(String abi, List\<Logs\> logs)：** 解析交易事件。
 - **public TransactionResponse decodeReceiptStatus(TransactionReceipt receipt)：** 解析回执的状态和报错信息等。
+- **public String decodeRevertMessage(String output)**：如果回执错误码是回滚，解析output中的revert信息
 
 ### 解析合约函数示例
 
@@ -66,52 +67,35 @@ TransactionResponse transactionResponse = decoder.decodeReceiptWithValues(abi, "
 
 ```json
 {
-  "returnCode": 2,
-  "returnMessage": "Success",
-  "transactionReceipt": {
-    "transactionHash": "0x433c41e0bdd5420f07186eb33d47aac9cf4bbfff040d27213f17ad739096f19b",
-    "transactionIndex": "0x0",
-    "root": "0x3094859967ad37882b450ffa97dc15ad9d1d69cab8d3ff8212f6c200185f7bae",
-    "blockNumber": "0x20a",
-    "blockHash": "0x02143583560dd1bc0c226f0d2a7bd947170c322ef5be203da3308fdd36fde87e",
-    "from": "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
-    "to": "0xa90bec2f9957eed99c6856172f0c58a5cb2a46fd",
-    "gasUsed": "0xab6a",
-    "contractAddress": "0x0000000000000000000000000000000000000000",
-    "logs": [
-      {
-        "address": "0xa90bec2f9957eed99c6856172f0c58a5cb2a46fd",
-        "topics": [
-          "0xaca9a02cfe513f3f88c54a860469369849c8fa0a2119a8d1f3f75c67ac0c9547"
-        ],
-        "data": "0x0000000000000000000000007c8000530ae01adb3f8f77e7096b335eef83172f0000000000000000000000000000000000000000000000000000000000000001",
-        "blockNumber": null
-      }
-    ],
-    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000040000000000000000000000000000000000000000000000000000000000000000000000000000400000",
-    "status": "0x0",
-    "input": "0x7c1bf3c50000000000000000000000000000000000000000000000000000000000000001",
-    "output": "0x0000000000000000000000000000000000000000000000000000000000000002",
-    "txProof": null,
-    "receiptProof": null,
-    "message": "Success",
-    "statusOK": true
-  },
-  "contractAddress": "0x0000000000000000000000000000000000000000",
-  "values": "[2]",
-  "events": "{\"LogIncrement\":[\"0x7c8000530ae01adb3f8f77e7096b335eef83172f\",1]}",
-  "receiptMessages": "Success",
-  "valuesList": [
-    2
-  ],
-  "eventResultMap": {
-    "LogIncrement": [
-      [
-        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
-        1
-      ]
-    ]
-  }
+        "id" : 2,
+        "jsonrpc" : "2.0",
+        "result" :
+        {
+                "blockNumber" : 10,
+                "checksumContractAddress" : "",
+                "contractAddress" : "",
+                "extraData" : "",
+                "from" : "0xc3e90bebf6dd43ef62e96ba622e324266f7dde1e",
+                "gasUsed" : "8880",
+                "hash" : "0x0d387a50debfe9332ba91080a0c3c7bc4ac023d08b583939048d819c33a5162e",
+                "logEntries" :
+                [
+                        {
+                                "address" : "0102e8b6fc8cdf9626fddc1c3ea8c1e79b3fce94",
+                                "data" : "0x000000000000000000000000c3e90bebf6dd43ef62e96ba622e324266f7dde1e0000000000000000000000000000000000000000000000000000000000000001",
+                                "topics" :
+                                [
+                                        "0xaca9a02cfe513f3f88c54a860469369849c8fa0a2119a8d1f3f75c67ac0c9547"
+                                ]
+                        }
+                ],
+                "message" : "",
+                "output" : "0x0000000000000000000000000000000000000000000000000000000000000002",
+                "status" : 0,
+                "to" : "0x0102e8b6fc8cdf9626fddc1c3ea8c1e79b3fce94",
+                "transactionHash" : "0xaa333f8679673d14ff641b388b00cc7a54d80e3dd6051198518a6294075b310a",
+                "version" : 0
+        }
 }
 ```
 
@@ -122,15 +106,10 @@ TransactionResponse transactionResponse = decoder.decodeReceiptWithValues(abi, "
 ```json
 {
    ……
-  "values": "[2]",
-  "events": "{\"LogIncrement\":[\"0x7c8000530ae01adb3f8f77e7096b335eef83172f\",1]}",
-  "valuesList": [
-    2
-  ],
-  "eventResultMap": {
+  "logEntries": {
     "LogIncrement": [
       [
-        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
+        "0xc3e90bebf6dd43ef62e96ba622e324266f7dde1e",
         1
       ]
     ]
@@ -154,50 +133,35 @@ TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWith
 
 ```json
 {
-  "returnCode": 2,
-  "returnMessage": "Success",
-  "transactionReceipt": {
-    "transactionHash": "0x433c41e0bdd5420f07186eb33d47aac9cf4bbfff040d27213f17ad739096f19b",
-    "transactionIndex": "0x0",
-    "root": "0x3094859967ad37882b450ffa97dc15ad9d1d69cab8d3ff8212f6c200185f7bae",
-    "blockNumber": "0x20a",
-    "blockHash": "0x02143583560dd1bc0c226f0d2a7bd947170c322ef5be203da3308fdd36fde87e",
-    "from": "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
-    "to": "0xa90bec2f9957eed99c6856172f0c58a5cb2a46fd",
-    "gasUsed": "0xab6a",
-    "contractAddress": "0x0000000000000000000000000000000000000000",
-    "logs": [
-      {
-        "address": "0xa90bec2f9957eed99c6856172f0c58a5cb2a46fd",
-        "topics": [
-          "0xaca9a02cfe513f3f88c54a860469369849c8fa0a2119a8d1f3f75c67ac0c9547"
-        ],
-        "data": "0x0000000000000000000000007c8000530ae01adb3f8f77e7096b335eef83172f0000000000000000000000000000000000000000000000000000000000000001",
-        "blockNumber": null
-      }
-    ],
-    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000040000000000000000000000000000000000000000000000000000000000000000000000000000400000",
-    "status": "0x0",
-    "input": "0x7c1bf3c50000000000000000000000000000000000000000000000000000000000000001",
-    "output": "0x0000000000000000000000000000000000000000000000000000000000000002",
-    "txProof": null,
-    "receiptProof": null,
-    "message": "Success",
-    "statusOK": true
-  },
-  "contractAddress": "0x0000000000000000000000000000000000000000",
-  "values": null,
-  "events": "{\"LogIncrement\":[\"0x7c8000530ae01adb3f8f77e7096b335eef83172f\",1]}",
-  "receiptMessages": "Success",
-  "valuesList": null,
-  "eventResultMap": {
-    "LogIncrement": [
-      [
-        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
-        1
-      ]
-    ]
-  }
+        "id" : 2,
+        "jsonrpc" : "2.0",
+        "result" :
+        {
+                "blockNumber" : 10,
+                "checksumContractAddress" : "",
+                "contractAddress" : "",
+                "extraData" : "",
+                "from" : "0xc3e90bebf6dd43ef62e96ba622e324266f7dde1e",
+                "gasUsed" : "8880",
+                "hash" : "0x0d387a50debfe9332ba91080a0c3c7bc4ac023d08b583939048d819c33a5162e",
+                "logEntries" :
+                [
+                        {
+                                "address" : "0102e8b6fc8cdf9626fddc1c3ea8c1e79b3fce94",
+                                "data" : "0x000000000000000000000000c3e90bebf6dd43ef62e96ba622e324266f7dde1e0000000000000000000000000000000000000000000000000000000000000001",
+                                "topics" :
+                                [
+                                        "0xaca9a02cfe513f3f88c54a860469369849c8fa0a2119a8d1f3f75c67ac0c9547"
+                                ]
+                        }
+                ],
+                "message" : "",
+                "output" : "0x0000000000000000000000000000000000000000000000000000000000000002",
+                "status" : 0,
+                "to" : "0x0102e8b6fc8cdf9626fddc1c3ea8c1e79b3fce94",
+                "transactionHash" : "0xaa333f8679673d14ff641b388b00cc7a54d80e3dd6051198518a6294075b310a",
+                "version" : 0
+        }
 }
 ```
 
@@ -207,12 +171,11 @@ TransactionResponse transactionResponseWithoutValues = decoder.decodeReceiptWith
 
 ```json
 {
-  ……
-  "events": "{\"LogIncrement\":[\"0x7c8000530ae01adb3f8f77e7096b335eef83172f\",1]}",
-  "eventResultMap": {
+   ……
+  "logEntries": {
     "LogIncrement": [
       [
-        "0x7c8000530ae01adb3f8f77e7096b335eef83172f",
+        "0xc3e90bebf6dd43ef62e96ba622e324266f7dde1e",
         1
       ]
     ]
@@ -267,14 +230,24 @@ function setBytesMapping(bytes[] bytesArray) public returns (bool) {
 
 ```json
 {
-  "returnCode": 16,
-  "returnMessage": "Bytes array is less than 2",
-  "transactionReceipt": null,
-  "contractAddress": null,
-  "values": null,
-  "events": null,
-  "receiptMessages": "Bytes array is less than 2",
-  "valuesList": null,
-  "eventResultMap": null
+        "id" : 16,
+        "jsonrpc" : "2.0",
+        "result" :
+        {
+                "blockNumber" : 12,
+                "checksumContractAddress" : "",
+                "contractAddress" : "",
+                "extraData" : "",
+                "from" : "0xa38e104bb4a92a52452b48342c935f68df20c2ce",
+                "gasUsed" : "1132",
+                "hash" : "0x",
+                "logEntries" : [],
+                "message" : "",
+                "output" : "0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001a4279746573206172726179206973206c657373207468616e2032000000000000",
+                "status" : 16,
+                "to" : "0x19a6434154de51c7a7406edf312f01527441b561",
+                "transactionHash" : "0x8075a4f016dec5147eb60df219529c3d504c5fad2c16691b39cff457692afeb1",
+                "version" : 0
+        }
 }
 ```
