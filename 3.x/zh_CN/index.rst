@@ -309,6 +309,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/develop/console/index.md
    docs/develop/smartdev_index.md
    docs/develop/amop.md
+   docs/develop/privacy.md
 
 .. toctree::
    :hidden:
