@@ -1,4 +1,4 @@
-# 开发第一个Solidity区块链应用
+# 3. 开发第一个Solidity区块链应用
 
 标签：``开发第一个应用`` ``Solidity`` ``合约开发`` ``区块链应用`` ``EVM``
 
@@ -447,7 +447,7 @@ repositories {
 修改``build.gradle``文件，引入Spring框架。
 
 ```groovy
-def spring_version = "4.3.27.RELEASE"
+def spring_version = "5.3.25"
 List spring = [
         "org.springframework:spring-core:$spring_version",
         "org.springframework:spring-beans:$spring_version",

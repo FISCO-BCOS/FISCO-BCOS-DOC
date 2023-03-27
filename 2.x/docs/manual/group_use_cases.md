@@ -646,12 +646,12 @@ $ cp ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
 
 # 修改控制台连接节点的端口为20100和20101
 # linux系统使用如下命令:
-$ sed -i 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
-$ sed -i 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
+$ sed -i 's/127.0.0.1:20200/127.0.0.1:20100/g' ~/fisco/console/conf/config.toml
+$ sed -i 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml  
 
 # mac系统使用如下命令:
-$ sed -i .bkp 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
-$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
+$ sed -i .bkp 's/127.0.0.1:20200/127.0.0.1:20100/g' ~/fisco/console/conf/config.toml
+$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml 
 ```
 
 **通过控制台向群组发交易**

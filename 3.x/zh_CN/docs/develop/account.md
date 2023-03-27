@@ -1,4 +1,4 @@
-# 账户使用与账户管理
+# 3. 账户使用与账户管理
 
 标签：``创建账户`` ``国密账户`` ``密钥文件``
 
@@ -291,6 +291,6 @@ abstract contract AccountManager {
 
 ### 账户的冻结、解冻、废止
 
-治理委员可以对固定地址0x10003的预编译合约发起交易、对账户的状态进行读写。在执行操作是，将会确定交易发起人msg.sender是否为治理委员会记录中的治理委员，若不是则会拒绝。值得注意的是，治理委员的账户地址不允许修改状态。
+治理委员可以对固定地址0x10003的预编译合约发起交易、对账户的状态进行读写。在执行操作时，将会确定交易发起人msg.sender是否为治理委员会记录中的治理委员，若不是则会拒绝。值得注意的是，治理委员的账户地址不允许修改状态。
 
-治理委员也可以通过控制台对账户进行冻结、解冻、废止等操作，详情请看：[冻结/解冻账户命令](./console/console_commands.html#freezeaccount-unfreezeaccount)、[废止账户命令](./console/console_commands.html#abolishaccount)
+治理委员也可以通过控制台对账户进行冻结、解冻、废止等操作，详情请看：[冻结/解冻账户命令](../operation_and_maintenance/console/console_commands.html#freezeaccount-unfreezeaccount)、[废止账户命令](../operation_and_maintenance/console/console_commands.html#abolishaccount)

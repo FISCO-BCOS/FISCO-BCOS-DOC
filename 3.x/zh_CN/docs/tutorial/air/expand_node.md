@@ -13,7 +13,7 @@
 
 ```eval_rst
 .. note::
-   进行节点扩容操作前，请先参考 `搭建第一个区块链网络 <../../quick_start/air_installation.html>`_ 部署Pro版本区块链。
+   进行节点扩容操作前，请先参考 `搭建第一个区块链网络 <../../quick_start/air_installation.html>`_ 部署Air版本区块链。
 ```
 
 ## 1. 准备扩容所需文件

@@ -8,7 +8,7 @@
 
 落盘加密是对节点存储在硬盘上的内容进行加密，加密的内容包括：合约的数据、节点的私钥。
 
-具体的落盘加密介绍，可参考：[落盘加密的介绍](../../design/storage_security.md)
+具体的落盘加密介绍，可参考：[落盘加密的介绍](../../design/storage/storage_security.md)
 
 ## 1. 部署Key Manager
 
@@ -129,7 +129,7 @@ $ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/node.
 
 **注意：所有需要加密的文件列举如下。若未加密，节点无法启动。**
 
-    - 非国密版
+   - 非国密版
         - conf/ssl.key
         - conf/node.pem
    - 国密版

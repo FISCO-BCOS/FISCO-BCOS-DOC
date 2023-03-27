@@ -1,4 +1,4 @@
-# CA黑白名单介绍
+# CA黑白名单
 
 标签：``安全控制`` ``网络安全`` ``黑白名单``
 
@@ -10,11 +10,11 @@
 
 **CA黑名单**
 
-* 别称**证书拒绝列表**（certificate blacklist，简称CRL）。CA黑名单基于`config.ini`文件中`[certificate_blacklist]`配置的SSL握手ID进行判断，拒绝此SSL握手ID节点发起的连接。
+* 别称**证书拒绝列表**（certificate blacklist，简称CBL）。CA黑名单基于`config.ini`文件中`[certificate_blacklist]`配置的NodeID进行判断，拒绝此NodeID节点发起的连接。
 
 **CA白名单**
 
-* 别称**证书接受列表**（certificate whitelist，简称CAL）。CA白名单基于`config.ini`文件中`[certificate_whitelist]`配置的SSL握手ID进行判断，拒绝除白名单外所有节点发起的连接。
+* 别称**证书接受列表**（certificate whitelist，简称CAL）。CA白名单基于`config.ini`文件中`[certificate_whitelist]`配置的NodeID进行判断，拒绝除白名单外所有节点发起的连接。
 
 **CA黑、白名单所属的配置类型**
 
@@ -26,13 +26,13 @@
 
 下图表示CA黑名单所涉及的模块及其关系。图例A->B表示B模块依赖A模块的数据，同时B模块晚于A模块初始化。白名单的架构与黑名单相同。
 
-![](../../../images/design/node_management_architecture.png)
+![](../../../images/node_management/architecture.png)
 
 <center>模块架构</center>
 
 ## 核心流程
 
-底层实现SSL双向验证。节点在handshake过程中，通过对方提供的证书获取对方节点的SSL握手ID，检查该SSL握手ID与节点配置的黑、白名单是否有关系。如果根据黑、白名单的配置，拒绝该关闭的connection，继续后续流程。
+底层实现SSL双向验证。节点在handshake过程中，通过对方提供的证书获取对方节点的nodeID，检查该nodeID与节点配置的黑、白名单是否有关系。如果根据黑、白名单的配置，拒绝该关闭的connection，继续后续流程。
 
 **拒绝逻辑**
 
@@ -51,22 +51,20 @@
 ## 配置格式
 
 **黑名单**
-
-节点`config.ini`配置中增加`[certificate_blacklist]`路径（`[certificate_blacklist]`在配置中可选）。CA黑名单内容为节点SSL握手ID列表，crl.X为本节点拒绝连接的对方节点SSL握手ID。CA黑名单的配置格式示例如下。
+节点`config.ini`配置中增加`[certificate_blacklist]`路径（`[certificate_blacklist]`在配置中可选）。CA黑名单内容为节点NodeID列表，crl.X为本节点拒绝连接的对方节点NodeID。CA黑名单的配置格式示例如下。
 
 ```ini
 [certificate_blacklist]
-    crl.0=a8cffe07a6f55e5b6f84a8a9e8cd2f8b6afddbf8d851ccce51516d978fc81aa56154c9998a0f178e91df082f2f5634ed255c2b3083651bd8552e5a2378dd9db61b17af680716f708fc8f4d7c01efd13f3903c5c34a87e0b6f4f45fd0046c2b7b129abb5b300a24f01efdaea678106622fe28abd5ff15ea848ace68f5e4d6d38d560c812fffa2d12a9b08b579981c03ff0fecd40ac6c9ef8182aa97d3bff53dc9f2f85d8aa37c58c2a1a24e0ac5f7bff626f07d89b3d540df91b597f672703203bdddd6befc7fd34da71b684c33f378300948dd8b664269eb4cdf6cabf902459e876d52d724da695017e29d504ad202ed366060bbeb5b3476c1e768ab4a93679d
-    crl.1=9eaecd6ba0de0f8cf77f58bd6179112cac3cf1e7c4fd24a6a9958daf8ea289fedb651b87d802136969d57c700ee4443dbf25da3505b90f7c9fb75c8cf514d0298b65815178f366f2c3b14186367071e3e07ccdb07b61609c5d6cbad9f991012d4e15ab71f12e160c764b67f748943586c36c7ae4d27dbd17e83c9ffacf2e7fe59af6429f506ddf2f4e9ca8b528da4ab2a340b3b549898e71b4b2b05d656f98d37b292910bc0227146bf5f8c3ff8d80a3d6938a29a03961609ef3fa07f4b3d10917e5fa93518ef9078c883c2433ae91fa49df75115855ddc5a9eeab30aea7de15e887e4e53424c898cbd8b95daf3b08d61a4b2baef048a3bd30b7cf70a1c085df
-   
+    crl.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e3787c338a4
+    crl.1=af57c506be9ae60df8a4a16823fa948a68550a9b6a5624df44afcd3f75ce3afc6bb1416bcb7018e1a22c5ecbd016a80ffa57b4a73adc1aeaff4508666c9b633a
 ```
 
 **白名单**
 
-节点`config.ini`配置中增加`[certificate_whitelist]`路径（`[certificate_whitelist]`在配置中可选）。CA白名单内容为节点SSL握手ID列表，cal.X为本节点可接受连接的对方节点SSL握手ID。CA白名单的配置格式示例如下。
+节点`config.ini`配置中增加`[certificate_whitelist]`路径（`[certificate_whitelist]`在配置中可选）。CA白名单内容为节点NodeID列表，cal.X为本节点可接受连接的对方节点NodeID。CA白名单的配置格式示例如下。
 
 ``` ini
 [certificate_whitelist]
-    cal.0=a8cffe07a6f55e5b6f84a8a9e8cd2f8b6afddbf8d851ccce51516d978fc81aa56154c9998a0f178e91df082f2f5634ed255c2b3083651bd8552e5a2378dd9db61b17af680716f708fc8f4d7c01efd13f3903c5c34a87e0b6f4f45fd0046c2b7b129abb5b300a24f01efdaea678106622fe28abd5ff15ea848ace68f5e4d6d38d560c812fffa2d12a9b08b579981c03ff0fecd40ac6c9ef8182aa97d3bff53dc9f2f85d8aa37c58c2a1a24e0ac5f7bff626f07d89b3d540df91b597f672703203bdddd6befc7fd34da71b684c33f378300948dd8b664269eb4cdf6cabf902459e876d52d724da695017e29d504ad202ed366060bbeb5b3476c1e768ab4a93679d
-    cal.1=9eaecd6ba0de0f8cf77f58bd6179112cac3cf1e7c4fd24a6a9958daf8ea289fedb651b87d802136969d57c700ee4443dbf25da3505b90f7c9fb75c8cf514d0298b65815178f366f2c3b14186367071e3e07ccdb07b61609c5d6cbad9f991012d4e15ab71f12e160c764b67f748943586c36c7ae4d27dbd17e83c9ffacf2e7fe59af6429f506ddf2f4e9ca8b528da4ab2a340b3b549898e71b4b2b05d656f98d37b292910bc0227146bf5f8c3ff8d80a3d6938a29a03961609ef3fa07f4b3d10917e5fa93518ef9078c883c2433ae91fa49df75115855ddc5a9eeab30aea7de15e887e4e53424c898cbd8b95daf3b08d61a4b2baef048a3bd30b7cf70a1c085df
+    cal.0=4d9752efbb1de1253d1d463a934d34230398e787b3112805728525ed5b9d2ba29e4ad92c6fcde5156ede8baa5aca372a209f94dc8f283c8a4fa63e3787c338a4
+    cal.1=af57c506be9ae60df8a4a16823fa948a68550a9b6a5624df44afcd3f75ce3afc6bb1416bcb7018e1a22c5ecbd016a80ffa57b4a73adc1aeaff4508666c9b633a
 ```

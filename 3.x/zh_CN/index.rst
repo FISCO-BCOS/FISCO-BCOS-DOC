@@ -4,7 +4,20 @@ FISCO BCOS 技术文档
 
 .. image:: _static/images/FISCO_BCOS_Logo.svg
 
-FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多家机构、多个应用，长时间在生产环境运行的实际检验。
+FISCO BCOS（读作/ˈfɪskl  bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，其可用性经广泛应用实践检验。至今已超过4000家企业及机构、300+产业数字化标杆应用，覆盖文化版权、司法服务、政务服务、物联网、金融、智慧社区、房产建筑、社区治理、乡村振兴等领域。
+
+.. image:: images/introduction/applications.png
+   :align: center
+   :alt: 产业应用
+
+
+FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今为止，开源社区汇聚超过90000+成员共建共治，发展成为最大最活跃的国产开源联盟链生态圈，其中涌现出诸多对社区建设、代码贡献的优秀社区成员。2022年，开源社区共认定20位MVP，这些优秀的贡献者或是将FISCO BCOS技术落地到各领域应用中，助力产业数字化，或是在多渠道布道，将开源社区精神传播到更远的地方。
+
+.. image:: _static/images/img_1.png
+   :align: center
+   :width: 7in
+   :height: 5in
+   :alt: FISCO BCOS 2022年度MVP
 
 .. note::
    本技术文档适用于FISCO BCOS 3.x版本, FISCO BCOS 2.x稳定版技术文档请参考 `FISCO BCOS 2.x技术文档(stable) <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/>`_
@@ -24,8 +37,8 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速开始</h>
             <br><br>
 
-         - `了解FISCO BCOS区块链 <./docs/introduction.html>`_
-         - `FISCO BCOS 3.X新特性 <./docs/change_log/index.html>`_
+         - `了解FISCO BCOS区块链 <./docs/introduction/introduction.html>`_
+         - `FISCO BCOS 3.X新特性 <./docs/introduction/change_log/index.html>`_
          - `搭建第一个区块链网络 <./docs/quick_start/air_installation.html>`_
          - `开发第一个Solidity区块链应用 <./docs/quick_start/solidity_application.html>`_
          - `开发第一个webankblockchain-liquid区块链应用 <./docs/quick_start/wbc_liquid_application.html>`_
@@ -42,8 +55,8 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 
          - `Air版本区块链网络搭建 <./docs/tutorial/air/index.html>`_
          - `Pro版本区块链网络搭建 <./docs/tutorial/pro/index.html>`_
-         - `轻节点搭建 <./docs/tutorial/lightnode/build_chain.html>`_
-         - `FISCO BCOS Java SDK <./docs/develop/sdk/index.html>`_
+         - `轻节点搭建 <./docs/tutorial/lightnode.html>`_
+         - `FISCO BCOS Java SDK <./docs/sdk/java_sdk/index.html>`_
 
    .. container:: card-holder-bigger
 
@@ -162,8 +175,8 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
             <br><br>
 
          - `系统架构 <./docs/design/architecture.html>`_
-         - `两阶段并行拜占庭共识 <./docs/design/consensus.html>`_
-         - `合约目录 <./docs/design/contract_directory.html>`_
+         - `两阶段并行拜占庭共识 <./docs/design/consensus/consensus.html>`_
+         - `合约文件系统BFS <./docs/design/contract_directory.html>`_
          - `更多设计文档 <./docs/design/index.html>`_
 
    .. container:: card-holder
@@ -228,8 +241,10 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
    :maxdepth: 1
    :caption: 平台介绍
 
-   docs/introduction.md
-   docs/change_log/index.rst
+   docs/introduction/introduction.md
+   docs/introduction/key_feature.md
+   docs/introduction/function_overview.md
+   docs/introduction/change_log/index.rst
 
 .. toctree::
    :hidden:
@@ -244,46 +259,129 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链网络搭建教程
+   :caption: 合约开发
 
-   docs/tutorial/compile_binary.md
+   docs/contract_develop/solidity_develop.md
+   docs/contract_develop/c++_contract/index.md
+   docs/contract_develop/Liquid_develop.md
+   docs/contract_develop/contracts_IDE_develop.md
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: SDK教程
+
+   docs/sdk/index.md
+   docs/sdk/java_sdk/index.md
+   docs/sdk/c_sdk/index.md
+   docs/sdk/go_sdk/index.rst
+   docs/sdk/python_sdk/index.rst
+   docs/sdk/nodejs_sdk/index.rst
+   docs/sdk/rust_sdk/index.md
+   docs/sdk/cpp_sdk/index.md
+   docs/sdk/csharp_sdk/index.md
+   docs/sdk/cert_config.md
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: 搭链教程
+
    docs/tutorial/air/index.md
    docs/tutorial/pro/index.md
    docs/tutorial/max/index.md
+   docs/tutorial/lightnode.md
+   docs/tutorial/compile_binary.md
+   docs/tutorial/support_os.md
+   docs/tutorial/docker.md
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链应用开发
+   :caption: 应用开发
 
-   docs/develop/sdk/index.md
-   docs/develop/console/index.md
+   docs/develop/index.md
    docs/develop/api.md
-   docs/develop/precompiled/index.md
    docs/develop/account.md
-   docs/develop/committee_usage.md
    docs/develop/contract_life_cycle.md
-   docs/develop/stress_testing.md
-   docs/develop/light_monitor.md
-   docs/develop/data_archive_tool.md
-   docs/develop/storage_tool.md
-   docs/develop/system_log_audit.md
+   docs/develop/console_deploy_contract.md
+   docs/develop/console/index.md
+   docs/develop/smartdev_index.md
+   docs/develop/amop.md
+   docs/develop/privacy.md
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链开发原理
+   :caption: 区块链运维
 
-   docs/design/index.md
-   docs/components/index.md
-   Java SDK JavaDoc <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/javadoc/index.html>
+   docs/operation_and_maintenance/build_chain.md
+   docs/operation_and_maintenance/light_monitor.md
+   docs/operation_and_maintenance/console/index.md
+   docs/operation_and_maintenance/storage_tool.md
+   docs/operation_and_maintenance/data_archive_tool.md
+   docs/operation_and_maintenance/webase.md
+   docs/operation_and_maintenance/committee_usage.md
+   docs/operation_and_maintenance/add_new_node.md
+   docs/operation_and_maintenance/stress_testing.md
+   docs/operation_and_maintenance/upgrade.md
+   docs/operation_and_maintenance/data_index.md
+   docs/operation_and_maintenance/governance_index.md
+   docs/operation_and_maintenance/log/index.md
+   docs/operation_and_maintenance/docs/operation_and_maintenance.md
 
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 更多参考资料
+   :caption: 高阶功能使用
 
-   docs/community.md
-   docs/key_concepts.md
-   docs/manual/log_description.md
+   docs/advanced_function/safety.md
+   docs/advanced_function/wecross.md
+   docs/advanced_function/distributed_identity.md
+   docs/advanced_function/distributed_event.md
+   docs/advanced_function/trusted_oracle.md
+   docs/advanced_function/privacy_protect.md
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: FISCO BCOS设计原理
+
+   docs/design/architecture.md
+   docs/design/tx_procedure.md
+   docs/design/protocol_description.md
+   docs/design/consensus/index.rst
+   docs/design/sync.md
+   docs/design/storage/storage.md
+   docs/design/parallel/index.md
+   docs/design/virtual_machine/index.rst
+   docs/design/committee_design.md
+   docs/design/storage/storage_security.md
+   docs/design/storage/archive.md
+   docs/design/guomi.md
+   docs/design/rip.md
+   docs/design/network_compress.md
+   docs/design/security_control/index.rst
+   docs/design/hsm.md
+   docs/design/compatibility.md
+   docs/design/cns_contract_name_service.md
+   docs/design/contract_directory.md
+   docs/design/boostssl.md
+   docs/design/amop_protocol.md
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: 社区资源
+
+   docs/community/pr.md
+   docs/community/contributor_list_new.md
+   docs/community/MVP_list_new.md
+   dcos/community/partner_list_new.md
+   docs/articles/index.md
+   docs/community/join_fiscobcos.md
+   docs/community/app_example.md

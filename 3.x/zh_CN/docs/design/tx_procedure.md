@@ -1,11 +1,10 @@
-# 区块链交易流程
+# 2. 交易流程
 
 交易——区块链系统的核心，负责记录区块链上发生的一切。区块链引入智能合约后，交易便超脱『价值转移』的原始定义，其更加精准的定义应该是区块链中一次事务的数字记录。无论大小事务，都需要交易的参与。
 
 交易的一生，贯穿下图所示的各个阶段。本文将梳理交易的整个流转过程，一窥FISCO BCOS交易完整生命周期。
 
-<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51881.PNG" style="zoom:90%;" />
-
+![](../../images/design/transaction_lifetime/IMG_5188.PNG)
 ## 交易生成
 
 用户的请求给到客户端后，客户端会构建出一笔有效交易，交易中包括以下关键信息：
@@ -17,13 +16,13 @@
 
 之后，区块链客户端会再向交易填充一些必要的字段，如用于防交易重放的交易ID及blockLimit。交易的具体结构和字段含义可以参考[编码协议文档](./protocol_description.md)，交易构造完成后，客户端随后便通过RPC信道将交易发送给节点。
 
-<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51891.PNG" style="zoom:60%;" />
+![](../../images/design/transaction_lifetime/IMG_5189.PNG)
 
 ## 交易池
 
 区块链交易被发送到节点后，节点会通过验证交易签名的方式来验证一笔交易是否合法。若一笔交易合法，则节点会进一步检查该交易是否重复出现过，若从未出现过，则将交易加入交易池缓存起来。若交易不合法或交易重复出现，则将直接丢弃交易。
 
-<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51901.PNG" style="zoom:60%;" />
+![](../../images/design/transaction_lifetime/IMG_5190.PNG)
 
 ## 交易广播
 
@@ -35,7 +34,7 @@
 
 为了提高交易处理效率，同时也为了确定交易之后的执行顺序保证事务性，当交易池中有交易时，Sealer线程负责从交易池中按照先进先出的顺序取出一定数量的交易，组装成待共识区块，随后待共识区块会被发往各个节点进行处理。
 
-<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51911.JPG" style="zoom:60%;" />
+![](../../images/design/transaction_lifetime/IMG_5191.PNG)
 
 ## 交易执行
 
@@ -43,7 +42,7 @@
 
 交易可能会执行成功，也可能因为逻辑错误或Gas不足等原因执行失败。交易执行的结果和状态会封装在交易回执中返回。
 
-<img src="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/_images/IMG_51921.JPG" style="zoom:60%;" />
+![](../../images/design/transaction_lifetime/IMG_5192.PNG)
 
 ## 交易共识
 

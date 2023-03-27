@@ -149,9 +149,9 @@ init_auth_address="0x976fe0c250181c7ef68a17d3bc34916978da103a"
 
 ## 控制台使用
 
-控制台有提供权限治理专属的命令，以及切换控制台账户的命令。用户可以通过控制台操作权限的治理，详情请参考：[权限操作命令](./console/console_commands.html#id14)。权限治理的命令只有控制台连入了开启权限治理的节点才会出现。
+控制台有提供权限治理专属的命令，以及切换控制台账户的命令。用户可以通过控制台操作权限的治理，详情请参考：[权限操作命令](../operation_and_maintenance/console/console_commands.html#id14)。权限治理的命令只有控制台连入了开启权限治理的节点才会出现。
 
-控制台操作命令包含以下三种类型，详情请参考[权限操作命令](./console/console_commands.html#id14)：
+控制台操作命令包含以下三种类型，详情请参考[权限操作命令](../operation_and_maintenance/console/console_commands.html#id14)：
 
 - 查询状态命令，该命令没有权限控制，所有账户均可访问。
 - 治理委员专用命令，这些命令只能持有治理委员的账户才可以使用。
