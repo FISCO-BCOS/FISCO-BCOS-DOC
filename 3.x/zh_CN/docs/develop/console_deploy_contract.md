@@ -54,7 +54,7 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 ```eval_rst
 .. note::
    - 请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
-   - 控制台的配置方法和命令请参考 `这里 <[../develop/console/console_config.html](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/console_deploy_contract.html)>`_
+   - 控制台的配置方法和命令请参考 这里 <../operation_and_maintenance/console/console_config.html>_
 ```
 
 - 启动
