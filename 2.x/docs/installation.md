@@ -4,6 +4,11 @@
 
 ----
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 本章介绍FISCO BCOS所需的必要安装和配置。本章通过在单机上部署一条4节点的FISCO BCOS联盟链，帮助用户掌握FISCO BCOS部署流程。请[根据这里](manual/hardware_requirements.md)使用支持的**硬件和平台**操作。
 
 ```eval_rst
@@ -15,7 +20,6 @@
 ## 1. 搭建单群组FISCO BCOS联盟链
 
 本节以搭建单群组FISCO BCOS链为例操作。使用`开发部署工具 build_chain.sh`脚本在本地搭建一条**4 节点**的FISCO BCOS链，以`Ubuntu 16.04 64bit`系统为例操作。
-
 
 ```eval_rst
 .. note::
@@ -60,12 +64,12 @@ sudo yum install -y openssl openssl-devel
 cd ~ && mkdir -p fisco && cd fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.0/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.1/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ![](./../images/installation/download_build_chain.gif)
@@ -172,6 +176,7 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
 ```
 
 正常情况会不停地输出连接信息，从输出可以看出node0与另外3个节点有连接。
+
 ```bash
 info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat,connected count=3
 info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat,connected count=3
@@ -180,12 +185,12 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat,connected count=3
 
 - 执行下面指令，检查是否在共识
 
-
 ```bash
 tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 ```
 
 正常情况会不停输出`++++Generating seal`，表示共识正常。
+
 ```bash
 info|2020-12-22 17:24:43.729402|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=2e133146...
 info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=eb199760...
@@ -220,7 +225,7 @@ sudo yum install -y java java-devel
 - 获取控制台并回到fisco目录
 
 ```bash
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -255,6 +260,7 @@ cp -r nodes/127.0.0.1/sdk/* console/conf/
 ### 第二步. 启动并使用控制台
 
 - 启动
+
 ```bash
 cd ~/fisco/console && bash start.sh
 ```
@@ -280,7 +286,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 若1.x控制台启动失败，参考 [Web3SDK启动失败场景](faq/connect.html)
 
-* 用控制台获取信息
+- 用控制台获取信息
 
 ```bash
 # 获取客户端版本
@@ -330,8 +336,6 @@ ClientVersion{
 ```
 
 ![](./../images/installation/console.png)
-
-
 
 ## 3. 部署及调用HelloWorld合约
 
@@ -430,5 +434,3 @@ Return values:
 ```
 
 ![](./../images/installation/hello_world.gif)
-
-

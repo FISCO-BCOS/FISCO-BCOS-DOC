@@ -4,7 +4,7 @@
 
 ------------
 
-`BcosProBuilder`提供了在已有群组基础上扩容新节点的功能，本章在[搭建Pro版区块链网络](./installation.md)的基础上扩容两个新的区块链节点，帮助用户掌握Pro版本FISCO BCOS区块链的节点扩容步骤。
+`BcosBuilder`提供了在已有群组基础上扩容新节点的功能，本章在[搭建Pro版区块链网络](./installation.md)的基础上扩容两个新的区块链节点，帮助用户掌握Pro版本FISCO BCOS区块链的节点扩容步骤。
 
 ```eval_rst
 .. note::
@@ -17,13 +17,13 @@
 
 ```eval_rst
 .. note::
-   - 实际生产环境中tarsnode的安装请参考 `tars安装部署 <https://newdoc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
+   - 实际生产环境中tarsnode的安装请参考 `tars安装部署 <https://doc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
    - 若已经安装过tarsnode，且tarsnode处于启动的状态，可忽略本步骤
 ```
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder
 
 # linux系统: 进入到tarsnode docker-compose所在目录(macos系统可跳过)
 cd docker/bridge/linux/node
@@ -42,11 +42,11 @@ docker-compose up -d
    实际操作过程中，须将tars token替换为从tars网页管理平台【admin】->【用户中心】->【token管理】获取可用的token。
 ```
 
-区块链节点服务的扩容配置可参考`BcosProBuilder`的扩容模板`conf/config-node-expand-example.toml`，具体配置步骤如下：
+区块链节点服务的扩容配置可参考`BcosBuilder`的扩容模板`conf/config-node-expand-example.toml`，具体配置步骤如下：
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 拷贝模板配置
 cp conf/config-node-expand-example.toml config.toml
@@ -72,29 +72,59 @@ tars_pkg_dir = ""
 # 链ID
 chain_id="chain0"
 
-[[group.deploy_info]]
-# 扩容区块链节点的服务名
-node_name = "node2"
-# 扩容的区块链节点服务的部署IP
-deploy_ip = "172.25.0.5"
-# 扩容的区块链节点服务模板
-expanded_service = "group0node00BcosNodeService"
-# 扩容的节点数目
-node_count=1
+[[group]]
+group_id="group0"
+# the genesis configuration path of the expanded group
+genesis_config_path = "generated/chain0/group0/config.genesis"
+# use sm-crypto or not
+sm_crypto=false
 
-[[group.deploy_info]]
-node_name = "node3"
-deploy_ip = "172.25.0.5"
-expanded_service = "group0node00BcosNodeService"
-node_count=1
+[[agency]]
+name = "agencyA"
+    [[agency.group]]
+        group_id = "group0"
+
+        [[agency.group.node]]
+        node_name = "node1"
+        deploy_ip = "172.25.0.5"
+        # enable data disk encryption for bcos node or not, default is false
+        enable_storage_security = false
+        # url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
+        # key_center_url =
+        # cipher_data_key =
+
+[[agency]]
+name = "agencyA"
+    [[agency.group]]
+        group_id = "group0"
+
+        [[agency.group.node]]
+        node_name = "node1"
+        deploy_ip = "172.25.0.5"
+        # enable data disk encryption for bcos node or not, default is false
+        enable_storage_security = false
+        # url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
+        # key_center_url =
+        # cipher_data_key =
+
+        [[agency.group.node]]
+        node_name = "node2"
+        deploy_ip = "172.25.0.5"
+        # enable data disk encryption for bcos node or not, default is false
+        enable_storage_security = false
+        # url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
+        # key_center_url =
+        # cipher_data_key =
+        monitor_listen_port = "3901"
+        # monitor log path example:"/home/fisco/tars/framework/app_log/"
+        monitor_log_path = ""
 ```
-
 
 ## 3. 扩容区块链节点服务
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 扩容并部署RPC服务
 python3 build_chain.py chain -o expand -t node
@@ -106,29 +136,29 @@ python3 build_chain.py chain -o expand -t node
 =========================================================
 ----------- expand nodes for the given group -----------
 * reload node config
-* generate ini config, service: group0node20BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node20BcosNodeService/config.ini.tmp
-* generate ini config for service: group0node20BcosNodeService success
-* generate genesis config, service: group0node20BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node20BcosNodeService/config.genesis.tmp
-* generate genesis config for service: group0node20BcosNodeService success
+* generate ini config, service: agencyAgroup0node1BcosNodeService, path: generated/chain0/group0/172.25.0.5/agencyAgroup0node1BcosNodeService/config.ini
+* generate ini config for service: agencyAgroup0node1BcosNodeService success
+* generate genesis config, service: agencyAgroup0node1BcosNodeService, path: generated/chain0/group0/172.25.0.5/agencyAgroup0node1BcosNodeService/config.genesis
+* generate genesis config for service: agencyAgroup0node1BcosNodeService success
 * reload node config
-* generate ini config, service: group0node30BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node30BcosNodeService/config.ini.tmp
-* generate ini config for service: group0node30BcosNodeService success
-* generate genesis config, service: group0node30BcosNodeService, path: generated/chain0/group0/172.25.0.5/group0node30BcosNodeService/config.genesis.tmp
-* generate genesis config for service: group0node30BcosNodeService success
-* generate pem file for group0node20BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.5/group0node20BcosNodeService
+* generate ini config, service: agencyAgroup0node2BcosNodeService, path: generated/chain0/group0/172.25.0.5/agencyAgroup0node2BcosNodeService/config.ini
+* generate ini config for service: agencyAgroup0node2BcosNodeService success
+* generate genesis config, service: agencyAgroup0node2BcosNodeService, path: generated/chain0/group0/172.25.0.5/agencyAgroup0node2BcosNodeService/config.genesis
+* generate genesis config for service: agencyAgroup0node2BcosNodeService success
+* generate pem file for agencyAgroup0node1BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/agencyAgroup0node1BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-* generate pem file for group0node30BcosNodeService
-	- pem_path: generated/chain0/group0/172.25.0.5/group0node30BcosNodeService
+* generate pem file for agencyAgroup0node2BcosNodeService
+	- pem_path: generated/chain0/group0/172.25.0.5/agencyAgroup0node2BcosNodeService
 	- node_id_path: generated/node.nodeid
 	- sm_crypto: 0
-deploy service group0node20BcosNodeService
-deploy service group0node20BcosNodeService
-upload tar package generated/./group0node20BcosNodeService.tgz success, config id: 22
-deploy service group0node30BcosNodeService
-deploy service group0node30BcosNodeService
-upload tar package generated/./group0node30BcosNodeService.tgz success, config id: 23
+deploy service agencyAgroup0node1BcosNodeService
+deploy service agencyAgroup0node1BcosNodeService
+upload tar package generated/./agencyAgroup0node1BcosNodeService.tgz success, config id: 22
+deploy service agencyAgroup0node2BcosNodeService
+deploy service agencyAgroup0node2BcosNodeService
+upload tar package generated/./agencyAgroup0node2BcosNodeService.tgz success, config id: 23
 ----------- expand nodes for the given group success -----------
 =========================================================
 ```
@@ -138,20 +168,20 @@ upload tar package generated/./group0node30BcosNodeService.tgz success, config i
 ```shell
 $ tree generated/chain0/group0/172.25.0.5
 generated/chain0/group0/172.25.0.5
-├── group0node20BcosNodeService
-│   ├── config.genesis.tmp
-│   ├── config.ini.tmp
+├── agencyAgroup0node1BcosNodeService
+│   ├── config.genesis
+│   ├── config.ini
 │   ├── node.nodeid
-│   └── node.pem
-└── group0node30BcosNodeService
-    ├── config.genesis.tmp
-    ├── config.ini.tmp
+│   └── node
+└── agencyAgroup0node2BcosNodeService
+    ├── config.genesis
+    ├── config.ini
     ├── node.nodeid
-    └── node.pem
+    └── node
 s
 ```
 
-区块链服务扩容成功后，可在tars网页管理平台看到新增的区块链服务`group0node20BcosNodeService`和`group0node30BcosNodeService`:
+区块链服务扩容成功后，可在tars网页管理平台看到新增的区块链服务`agencyAgroup0node1BcosNodeService`和`agencyAgroup0node2BcosNodeService`:
 
 ![](../../../images/tutorial/expand_node.png)
 

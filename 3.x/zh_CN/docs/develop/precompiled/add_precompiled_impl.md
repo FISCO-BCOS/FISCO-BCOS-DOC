@@ -1,15 +1,28 @@
-# 新增HelloWorld预编译合约
+# 预编译合约开发指南
 
-标签：``预编译合约`` ``HelloWorld`` ``区块链应用开发``
-
+标签：``预编译合约`` ``开发指南`` ``区块链应用开发``
 
 ----------
+本文以HelloWorld合约为例，为大家介绍如何使用预编译合约版本的HelloWorld。
 
+## 开发前提
 
-先来看一下我们想要实现的HelloWorld合约的Solidity版本。Solidity版本的HelloWorld，有一个成员name用于存储数据，两个接口get(),set(string)分别用于读取和设置该成员变量。
+预编译合约是使用C++实现的智能合约，开发者必须具有C++基础开发能力，熟悉CMake操作。
+
+在开发预编译合约之前必须遵守以下规则：
+
+1. 预编译合约内置在节点中，可操作范围比普通合约更大，所以实现必须符合安全审计要求，且必须在日志中输出关键存储写入信息，用于信息审计。
+2. 新增预编译合约的节点代码提交前，必须经过专业的同行进行代码审阅，详情请参考FISCO BCOS代码提交流程。
+3. 预编译合约对存储的写操作是需要进行共识的，因此预编译合约的执行结果必须具有强一致性，不允许使用或者间接引用随机数。
+4. 多个预编译合约不应该共用同一个存储表，否则在多次调用时有可能会出现执行不一致。
+5. 跨越版本的预编译合约具有数据兼容问题时，必须要做兼容性处理。
+
+## step1 定义HelloWorld接口
+
+先来看一下想要实现的HelloWorld合约的Solidity版本。Solidity版本的HelloWorld，有一个成员name用于存储数据，两个接口get(),set(string)分别用于读取和设置该成员变量。
 
 ```solidity
-pragma solidity>=0.4.24 <0.6.11;
+pragma solidity>=0.6.10 <0.8.20;
 
 contract HelloWorld {
     string name;
@@ -28,12 +41,10 @@ contract HelloWorld {
 }
 ```
 
-### step1 定义HelloWorld接口
-
 Solidity的接口调用都会被封装为一笔交易，其中，调用只读接口的交易不会被打包进区块，而写接口交易会被打包进区块中。由于底层需要根据交易数据中的ABI编码来判断调用的接口并解析参数，所以需要先把接口定义出来。预编译合约的ABI接口规则与Solidity完全相同，定义预编译合约接口时，通常需要定义一个有相同接口的Solidity合约，这个合约称为预编译合约的**接口合约**。接口合约在调用预编译合约时需要使用。
 
 ```solidity
-pragma solidity ^0.6.0;
+pragma solidity >=0.6.10 <0.8.20;
 
 contract HelloWorldPrecompiled{
     function get() public view returns (string memory);
@@ -41,30 +52,29 @@ contract HelloWorldPrecompiled{
 }
 ```
 
-### step2 设计存储结构
+## step2 设计存储结构
 
 预编译合约涉及存储操作时，需要确定存储的表信息(表名与表结构，存储数据在FISCO BCOS中会统一抽象为表结构)。如果合约中不涉及变量存储，可以忽略该步骤。
 
 对于HelloWorld，我们设计如下的表。该表只存储一对键值对，key字段为hello_key，value字段为hello_value 存储对应的字符串值，可以通过set(string)接口修改，通过get()接口获取。
 
 | key       | value          |
-| --------- | -------------- |
+|-----------|----------------|
 | hello_key | "Hello World!" |
 
-
-### step3 实现合约逻辑
+## step3 实现合约逻辑
 
 实现新增合约的调用逻辑，需要新实现一个C++类，该类需要继承Precompiled类， 重载call函数， 在call函数中实现各个接口的调用行为。
 
 ```c++
 std::shared_ptr<PrecompiledExecResult> call(
-        std::shared_ptr<executor::TransactionExecutive> _executive, bytesConstRef _param,
-        const std::string& _origin, const std::string& _sender) override;
+        std::shared_ptr<executor::TransactionExecutive> executive,
+        PrecompiledExecResult::Ptr callParameters) override;
 ```
 
-call函数有三个参数，\_executive保存交易执行的上下文，_ param是调用合约的参数信息，本次调用对应合约接口以及接口的参数可以从_ param解析获取，_origin是交易发送者，用于权限控制。 接下来，我们在源码**bcos-executor/src/precompiled/extension**目录下实现HelloWorldPrecompiled类，重载call函数，实现get()/set(string)两个接口。 
+call函数有两个个参数，executive保存交易执行的上下文，`callParameters`是调用合约的参数信息，本次调用对应合约接口以及接口的参数可以从`callParameters`解析获取。 接下来，我们在源码**bcos-executor/src/precompiled/extension**目录下实现HelloWorldPrecompiled类，重载call函数，实现get()/set(string)两个接口。
 
-##### 接口注册：
+### 接口注册
 
 ```c++
 // 定义类中所有的接口
@@ -79,7 +89,7 @@ HelloWorldPrecompiled::HelloWorldPrecompiled(crypto::Hash::Ptr _hashImpl) : Prec
 }
 ```
 
-##### 创建表：
+### 创建表
 
 ```c++
 // 定义表名
@@ -90,26 +100,26 @@ const std::string HELLOWORLD_KEY_FIELD = "key";
 const std::string HELLOWORLD_VALUE_FIELD = "value";
 ```
 
-##### 在call函数中添加打开表的逻辑：
+### 在call函数中添加打开表的逻辑
 
 ```c++
 // 获取存储对象
 auto storage = _executive->storage();
 // call函数中，表存在时打开，否则首先创建表
 auto table = storage.openTable(precompiled::getTableName(HELLO_WORLD_TABLE_NAME));
+if (!table)
+{
+    // 表不存在，首先创建
+    table = _executive->storage().createTable(
+        precompiled::getTableName(HELLO_WORLD_TABLE_NAME), HELLO_WORLD_VALUE_FIELD);
     if (!table)
     {
-	      // 表不存在，首先创建
-        table = _executive->storage().createTable(
-            precompiled::getTableName(HELLO_WORLD_TABLE_NAME), HELLO_WORLD_VALUE_FIELD);
-        if (!table)
-        {
-           // 创建表失败，返回错误码
-        }
+       // 创建表失败，返回错误码
     }
+}
 ```
 
-##### 区分调用接口：
+### 区分调用接口
 
 ```c++
 uint32_t func = getParamFunc(_param);
@@ -124,28 +134,26 @@ else
 }
 ```
 
-##### 参数解析与返回：
+### 参数解析与返回
 
 调用合约时的参数包含在call函数的_param参数中，如果是Solidity调用，则使用Solidity ABI编码，如果是webankblockchain-liquid（简称WBC-Liquid）则使用Scale编码。
 
 PrecompiledCodec封装了两种编码格式的接口，使用PrecompiledCodec即可。
 
-##### HelloWorldPrecompiled实现：
+### HelloWorldPrecompiled实现
 
 ```c++
 std::shared_ptr<PrecompiledExecResult> HelloWorldPrecompiled::call(
-    std::shared_ptr<executor::TransactionExecutive> _executive, bytesConstRef _param,
-    const std::string&, const std::string&)
+    std::shared_ptr<executor::TransactionExecutive> _executive, PrecompiledExecResult::Ptr _callParameters)
 {
     // 解析函数接口
     uint32_t func = getParamFunc(_param);
     bytesConstRef data = getParamData(_param);
     auto blockContext = _executive->blockContext().lock();
-  	// 创建PrecompiledCodec编解码对象
-    auto codec =
-        make_shared<PrecompiledCodec>(blockContext->hashHandler(), blockContext->isWasm());
-	  // 打开_ext_hello_world_表，省略
-........
+    // 创建CodecWrapper编解码对象
+    auto codec = CodecWrapper(blockContext->hashHandler(), blockContext->isWasm());
+     // 打开_ext_hello_world_表，省略
+    ........
 ```
 
 get()接口实现
@@ -154,7 +162,7 @@ get()接口实现
 // 区分调用接口，各个接口的具体调用逻辑
     if (func == name2Selector[HELLO_WORLD_METHOD_GET])
     {  
-      	// get() 接口调用
+        // get() 接口调用
         // 默认返回值
         std::string retValue = "Hello World!";
 
@@ -170,7 +178,7 @@ get()接口实现
 set接口实现
 
 ```c++
-		else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
+    else if (func == name2Selector[HELLO_WORLD_METHOD_SET])
     {  // set(string) function call
 
         std::string strValue;
@@ -187,13 +195,13 @@ set接口实现
     }
     else
     {  // 参数错误，未知的接口调用
-				callResult->setExecResult(codec->encode(u256((int)CODE_UNKNOW_FUNCTION_CALL)));
+        callResult->setExecResult(codec->encode(u256((int)CODE_UNKNOW_FUNCTION_CALL)));
     }
     return callResult;
 }
 ```
 
-### step4 分配并注册合约地址
+## step4 分配并注册合约地址
 
 FSICO BCOS 3.0 执行交易时，根据合约地址区分是不是预编译合约，所以开发完预编译合约后，需要在底层注册为预编译合约注册地址。
 
@@ -201,14 +209,14 @@ FSICO BCOS 3.0 执行交易时，根据合约地址区分是不是预编译合�
 
 开发者需要修改`bcos-executor/src/executor/TransactionExecutor.cpp`文件，在initPrecompiled函数中的`m_constantPrecompiled` Map中插入合约地址和合约对象实例，如下注册HelloWorldPrecompiled合约：
 
-```
+```c++
 auto helloPrecompiled = std::make_shared<HelloWorldPrecompiled>(m_hashImpl);
-m_constantPrecompiled.insert({"0000000000000000000000000000000000005001", helloPrecompiled});
+m_constantPrecompiled->insert({"0000000000000000000000000000000000005001", std::move(helloPrecompiled)});
 ```
 
-### step5 编译源码
+## step5 编译源码
 
-参考FISCO BCOS 3.0使用手册->获取可执行程序->[源码编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html)。需要注意的是，实现的HelloWorldPrecompiled.cpp和HelloWorldPrecompiled.h需要放置于FISCO-BCOS/libprecompiled/extension目录下。
+参考FISCO BCOS 3.x使用手册->获取可执行程序->[源码编译](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/get_executable.html)。需要注意的是，实现的HelloWorldPrecompiled.cpp和HelloWorldPrecompiled.h需要放置于FISCO-BCOS/libprecompiled/extension目录下。
 
 ## HelloWorld预编译合约调用
 
@@ -217,7 +225,7 @@ m_constantPrecompiled.insert({"0000000000000000000000000000000000005001", helloP
 在控制台solidity/contracts创建HelloWorldPrecompiled.sol文件，文件内容是HelloWorld预编译合约的接口声明，如下
 
 ```solidity
-pragma solidity ^0.6.0;
+pragma solidity >=0.6.10 <0.8.20;
 contract HelloWorldPrecompiled{
     function get() public constant returns(string memory);
     function set(string memory n);
@@ -236,7 +244,7 @@ Hello World!
 我们尝试在Solidity合约中创建预编译合约对象并调用其接口。在控制台solidity/contracts创建HelloWorldHelper.sol文件，文件内容如下
 
 ```solidity
-pragma solidity ^0.6.0;
+pragma solidity >=0.6.10 <0.8.20;
 import "./HelloWorldPrecompiled.sol";
 
 contract HelloWorldHelper {

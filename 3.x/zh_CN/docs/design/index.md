@@ -2,7 +2,7 @@
 
 标签：``系统设计`` ``共识`` ``分布式存储`` ``合约目录``
 
-FISCO BCOS 3.0版本采用**微服务模块化**设计架构，总体上系统包含接入层、调度层、计算层、存储层和管理层:
+FISCO BCOS 3.x版本采用**微服务模块化**设计架构，总体上系统包含接入层、调度层、计算层、存储层和管理层:
 
 - **接入层**：负责区块链 **连接的能力** ，包括提供P2P能力的“对外网关服务”和提供给SDK访问的“对内网关服务”。
 ***
@@ -12,7 +12,7 @@ FISCO BCOS 3.0版本采用**微服务模块化**设计架构，总体上系统�
 ***
 - **存储层**：负责 **落盘存储** 交易、区块、账本状态等数据。
 ***
-- **管理层**：为整个区块链系统各模块实现 **可视化管理** 的平台，包括部署、配置、日志、网络路由等管理功能。FISCO BCOS 3.0系统架构基于开源微服务框架Tars构建。
+- **管理层**：为整个区块链系统各模块实现 **可视化管理** 的平台，包括部署、配置、日志、网络路由等管理功能。FISCO BCOS 3.x系统架构基于开源微服务框架Tars构建。
 
 ***
 ------
@@ -24,6 +24,7 @@ ___
 ***
 - **专业Pro版**：包括RPC、Gateway服务和多个区块链节点Node服务组成，多个Node服务可构成一个群组，所有Node共用接入层服务，接入层的服务可平行扩展，适用于容量可控（T级以内）的生产环境。
 
+- **大容量Max版**: 由各个层的所有服务构成，每个服务都可独立扩展，存储采用分布式存储TiKV，管理采用Tars-Framwork服务。它适用于海量交易上链，需要支持大量数据落盘存储的场景。
 ----------
 
 ```eval_rst
@@ -33,10 +34,15 @@ ___
    architecture.md
    tx_procedure.md
    protocol_description.md
-   consensus.md
+   consensus/index.rst
    sync.md
-   storage.md
+   storage/storage.md
    DMC.md
    contract_directory.md
+   virtual_machine/index.rst
    committee_design.md
+   storage/storage_security.md
+   storage/archive.md
+   p2p.md
+   compatibility.md
 ```

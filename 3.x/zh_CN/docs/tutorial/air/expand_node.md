@@ -4,6 +4,11 @@
 
 ------
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
 `build_chain.sh`提供了扩容新节点功能，本章在[搭建第一个区块链网络](../../quick_start/air_installation.md)的基础上扩容一个新的区块链节点，帮助用户掌握Air版本FISCO BCOS区块链节点的扩容步骤。
 
 ```eval_rst
@@ -28,7 +33,7 @@ Air版本区块链扩容时，需要提前准备证书和配置文件，用于�
 
 ```shell
 # 进入操作目录(Note: 进行本操作之前，请参考【搭建第一个区块链网络节点】部署一条Air版FISCO BCOS区块链)
-$ cd ~/fisco/nodes
+$ cd ~/fisco
 
 # 创建扩容配置存放目录
 $ mkdir config
@@ -135,6 +140,8 @@ bash nodes/127.0.0.1/node4/start.sh
 **步骤1：检查是否所有节点均启动**
 
 ```shell
+ps aux |grep -v grep |grep fisco-bcos
+
 fisco        79637   4.5  0.1  4979692  19072 s005  S     6:22下午   0:11.49 /home/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini -g config.genesis
 fisco        79695   4.4  0.1  4979692  19080 s005  S     6:22下午   0:11.56 /home/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini -g config.genesis
 fisco        79671   4.3  0.1  5241836  19192 s005  S     6:22下午   0:11.59 /home/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini -g config.genesis
@@ -156,7 +163,7 @@ $ cat nodes/127.0.0.1/node4/conf/node.nodeid
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.0.0-rc3)!
+Welcome to FISCO BCOS console(3.0.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \

@@ -21,7 +21,7 @@ Java SDK提供账户管理接口，支持以下功能：
 
 ## 1. 账户加载
 
-Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./config.html#id6).
+Java SDK的`org.fisco.bcos.sdk.v3.crypto.CryptoSuite`提供账户加载功能，默认从配置文件的`[account]`配置项加载交易发送账户，具体请参考[这里](./config.html#id6).
 
 ### 1.1 从十六进制私钥字符串加载账户
 
@@ -130,7 +130,7 @@ public void loadP12Account(Client client, String p12AccountFilePath, String pass
 
 ## 2. 账户生成
 
-Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供了账户生成功能。
+Java SDK的`org.fisco.bcos.sdk.v3.crypto.CryptoSuite`提供了账户生成功能。
 
 随机生成非国密账户示例如下：
 
@@ -138,7 +138,7 @@ Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供了账户生成功能。
 // 创建非国密类型的CryptoSuite
 CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
 // 随机生成非国密公私钥对
-CryptoKeyPair cryptoKeyPair = cryptoSuite.createKeyPair();
+CryptoKeyPair cryptoKeyPair = cryptoSuite.generateRandomKeyPair();
 // 获取账户地址
 String accountAddress = cryptoKeyPair.getAddress();
 ```
@@ -149,14 +149,14 @@ String accountAddress = cryptoKeyPair.getAddress();
 // 创建国密类型的CryptoSuite
 CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.SM_TYPE);
 // 随机生成国密公私钥对
-CryptoKeyPair cryptoKeyPair = cryptoSuite.createKeyPair();
+CryptoKeyPair cryptoKeyPair = cryptoSuite.generateRandomKeyPair();
 // 获取账户地址
 String accountAddress = cryptoKeyPair.getAddress();
 ```
 
 ## 3. 账户保存
 
-当没有自定义加载账户，也没有通过配置文件配置账户信息时(账户配置请参考[这里](./config.html#id6))，Java SDK会随机生成账户发送交易，Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户保存功能，可将随机生成的账户保存在指定路径。
+当没有自定义加载账户，也没有通过配置文件配置账户信息时(账户配置请参考[这里](./config.html#id6))，Java SDK会随机生成账户发送交易，Java SDK的`org.fisco.bcos.sdk.v3.crypto.CryptoSuite`提供账户保存功能，可将随机生成的账户保存在指定路径。
 
 以`pem`的格式保存账户文件到指定路径的示例如下：
 
@@ -204,7 +204,7 @@ public CryptoKeyPair getCreatedCryptoKeyPair(Client client)
 
 ## 4. `p12`和`pem`文件解析接口
 
-Java SDK的`org.fisco.bcos.sdk.crypto.keystore.KeyTool`提供`p12`和`pem`文件解析接口。
+Java SDK的`org.fisco.bcos.sdk.v3.crypto.keystore.KeyTool`提供`p12`和`pem`文件解析接口。
 
 ### 4.1 `pem`账户文件解析接口
 
@@ -237,7 +237,7 @@ public KeyTool loadP12(String p12FilePath, String password)
 public KeyPair getKeyPair();
 ```
 
-此外，`org.fisco.bcos.sdk.crypto.CryptoSuite`也提供了将`java.security.KeyPair`类型的公私钥信息转换为`CryptoKeyPair`的功能，示例如下：
+此外，`org.fisco.bcos.sdk.v3.crypto.CryptoSuite`也提供了将`java.security.KeyPair`类型的公私钥信息转换为`CryptoKeyPair`的功能，示例如下：
 
 ```java
 // KeyTool中维护的是非国密公私钥信息

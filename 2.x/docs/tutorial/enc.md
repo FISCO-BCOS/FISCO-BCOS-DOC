@@ -24,7 +24,7 @@
 用[```build_chain.sh```](../tutorial/installation.md)脚本，用普通的操作方法，先生成节点。
 
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst

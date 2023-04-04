@@ -66,14 +66,14 @@ package org.example.demo;
 
 import java.util.Arrays;
 import org.example.demo.constants.ContractConstants;
-import org.fisco.bcos.sdk.client.Client;
-import org.fisco.bcos.sdk.crypto.keypair.CryptoKeyPair;
-import org.fisco.bcos.sdk.crypto.keypair.ECDSAKeyPair;
-import org.fisco.bcos.sdk.crypto.keypair.SM2KeyPair;
-import org.fisco.bcos.sdk.model.TransactionReceipt;
-import org.fisco.bcos.sdk.transaction.manager.AssembleTransactionProcessor;
-import org.fisco.bcos.sdk.transaction.manager.TransactionProcessorFactory;
-import org.junit.Test;
+import org.fisco.bcos.sdk.v3.client.Client;
+import org.fisco.bcos.sdk.v3.crypto.keypair.CryptoKeyPair;
+import org.fisco.bcos.sdk.v3.crypto.keypair.ECDSAKeyPair;
+import org.fisco.bcos.sdk.v3.crypto.keypair.SM2KeyPair;
+import org.fisco.bcos.sdk.v3.model.TransactionReceipt;
+import org.fisco.bcos.sdk.v3.transaction.manager.AssembleTransactionProcessor;
+import org.fisco.bcos.sdk.v3.transaction.manager.TransactionProcessorFactory;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -111,7 +111,7 @@ public class Demos {
         if (receipt.isStatusOK()) {
             System.out.println("Contract Address:" + receipt.getContractAddress());
         } else {
-            System.out.println("Status code:" + receipt.getStatus() + "-" + receipt.getStatusMsg());
+            System.out.println("Status code:" + receipt.getStatus() + "-" + receipt.getMessage());
         }
     }
 }

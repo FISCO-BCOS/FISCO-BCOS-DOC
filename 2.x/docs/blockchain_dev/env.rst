@@ -3,6 +3,9 @@
 ##############################################################
 
 .. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+
+.. important::
 
    如果您希望快速搭建一个区块链网络，推荐您参考“快速开始” > " `搭建第一个区块链网络 <../installation.html>`_ "。建链工具可参考 `开发部署工具 <../manual/build_chain.html>`_ 或 `运维部署工具 <../enterprise_tools/index.html>`_。
 

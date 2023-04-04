@@ -52,7 +52,7 @@
 
 **黑名单**
 
-节点`config.ini`配置中增加`[certificate_blacklist]`路径（`[certificate_blacklist]`在配置中可选）。CA黑名单内容为节点NodeID列表，node.X为本节点拒绝连接的对方节点NodeID。CA黑名单的配置格式示例如下。
+节点`config.ini`配置中增加`[certificate_blacklist]`路径（`[certificate_blacklist]`在配置中可选）。CA黑名单内容为节点NodeID列表，crl.X为本节点拒绝连接的对方节点NodeID。CA黑名单的配置格式示例如下。
 
 ```ini
 [certificate_blacklist]
@@ -63,7 +63,7 @@
 
 **白名单**
 
-节点`config.ini`配置中增加`[certificate_whitelist]`路径（`[certificate_whitelist]`在配置中可选）。CA白名单内容为节点NodeID列表，node.X为本节点可接受连接的对方节点NodeID。CA白名单的配置格式示例如下。
+节点`config.ini`配置中增加`[certificate_whitelist]`路径（`[certificate_whitelist]`在配置中可选）。CA白名单内容为节点NodeID列表，cal.X为本节点可接受连接的对方节点NodeID。CA白名单的配置格式示例如下。
 
 ``` ini
 [certificate_whitelist]

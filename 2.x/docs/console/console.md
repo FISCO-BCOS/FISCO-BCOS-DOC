@@ -3,6 +3,7 @@
 标签：``控制台1``
 
 ----
+
 ```eval_rst
 .. important::
     - ``控制台2.6+`` 基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现，``控制台1.x`` 系列基于 `Web3SDK <../sdk/java_sdk.html>`_ 实现，本教程针对 **1.x版本控制台**，2.6及其以上版本控制台使用文档请 `参考这里 <./console_of_java_sdk.html>`_ 
@@ -25,7 +26,7 @@
 ```bash
 cd ~ && mkdir -p fisco && cd fisco
 # 获取控制台
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.0/download_console.sh && bash download_console.sh -c 1.2.0
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst
@@ -34,6 +35,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.0/downloa
 ```
 
 目录结构如下：
+
 ```bash
 |-- apps # 控制台jar包目录
 |   -- console.jar
@@ -71,6 +73,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 ```
 
 ### 配置控制台
+
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
   - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
@@ -118,6 +121,7 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 
 </beans>
 ```
+
   配置项详细说明[参考这里](../sdk/java_sdk.html#spring)。
 
 ```eval_rst
@@ -134,13 +138,16 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 ```
 
 ### 配置国密版控制台
+
 国密版的控制台配置与非国密版控制台的配置流程有一些区别，流程如下：
+
 - 区块链节点和证书的配置：
   - 将节点sdk目录下的`ca.crt`、`sdk.crt`和`sdk.key`文件拷贝到`conf`目录下。
   - 将`conf`目录下的`applicationContext-sample.xml`文件重命名为`applicationContext.xml`文件。配置`applicationContext.xml`文件，其中添加注释的内容根据区块链节点配置做相应修改。**提示：如果搭链时设置的channel_listen_ip(若节点版本小于v2.3.0，查看配置项listen_ip)为127.0.0.1或者0.0.0.0，channel_port为20200， 则`applicationContext.xml`配置不用修改。**
   - FISCO-BCOS 2.5及之后的版本，添加了SDK只能连本机构节点的限制，操作时需确认拷贝证书的路径，否则建链报错。
 
 - 打开国密开关
+
 ```
 <bean id="encryptType" class="org.fisco.bcos.web3j.crypto.EncryptType">
     <!-- encryptType值设置为1，打开国密开关 -->
@@ -164,29 +171,35 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v1.1.0/downloa
 
 #### 合约编译工具
 
-**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。** 
+**控制台提供一个专门的编译合约工具，方便开发者将solidity合约文件编译为java合约文件。**
+
 ```shell
 $ bash sol2java.sh -h
 # Compile Solidity Tool
 ./sol2java.sh [packageName] [solidityFilePath] [javaCodeOutputDir]
- 	 packageName:
- 		 the package name of the generated Java class file
- 	 solidityFilePath:
- 		 (optional) the solidity file path or the directory where solidity files located, default: contracts/solidity
- 	 javaCodeOutputDir:
- 		 (optional) the directory where the generated Java files located, default: contracts/sdk/java
+   packageName:
+    the package name of the generated Java class file
+   solidityFilePath:
+    (optional) the solidity file path or the directory where solidity files located, default: contracts/solidity
+   javaCodeOutputDir:
+    (optional) the directory where the generated Java files located, default: contracts/sdk/java
 ```
+
 参数
+
 - `packageName`: 生成`Java`文件的包名
 - `solidityFilePath`: (可选)`solidity`文件的路径，支持文件路径和目录路径两种方式，参数为目录时将目录下所有的`solidity`文件进行编译转换。默认目录为`contracts/solidity`。
-- `javaCodeOutputDir`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。 
+- `javaCodeOutputDir`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。
 
 使用
+
 ```bash
-$ cd ~/fisco/console
-$ ./sol2java.sh org.com.fisco # 指定java包名
+cd ~/fisco/console
+./sol2java.sh org.com.fisco # 指定java包名
 ```
+
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
+
 ```bash
 |-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
 |   |-- HelloWorld.abi
@@ -204,6 +217,7 @@ $ ./sol2java.sh org.com.fisco # 指定java包名
 |               |-- Table.java  # 编译的CRUD接口合约 Java文件
 |               |-- TableTest.java  # 编译的TableTest Java文件
 ```
+
 java目录下生成了`org/com/fisco/`包路径目录。包路径目录下将会生成java合约文件`HelloWorld.java`、`TableTest.java`和`Table.java`。其中`HelloWorld.java`和`TableTest.java`是java应用所需要的java合约文件。
 
 ```eval_rst
@@ -238,24 +252,32 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 ### 启动脚本说明
-#### 查看当前控制台版本：
+
+#### 查看当前控制台版本
+
 ```bash
 ./start.sh --version
 console version: 1.2.0
 ```
+
 #### 账户使用方式
 
 ##### 控制台加载私钥
+
 控制台提供账户生成脚本get_account.sh(脚本用法请参考[账户管理文档](../manual/account.md)，生成的的账户文件在accounts目录下，控制台加载的账户文件必须放置在该目录下。
 控制台启动方式有如下几种：
+
 ```
 ./start.sh
 ./start.sh groupID
 ./start.sh groupID -pem pemName
 ./start.sh groupID -p12 p12Name
 ```
+
 ##### 默认启动
+
 使用控制台配置文件指定的默认群组号启动。
+
 ```bash
 ./start.sh
 ```
@@ -263,53 +285,71 @@ console version: 1.2.0
 **注意**: 控制台启动未指定私钥账户时，会尝试从`accounts`目录下加载一个可用的私钥账户用于发送交易，加载失败则会创建一个新的`PEM`格式的账户文件，将其保存在`accounts`目录下。
 
 ##### 指定群组号启动
+
 使用命令行指定的群组号启动。
+
 ```bash
 ./start.sh 2
 ```
+
 - 注意：指定的群组在控制台配置文件中需要配置bean。
 
 ##### 使用PEM格式私钥文件启动
+
 - 使用指定的pem文件的账户启动，输入参数：群组号、-pem、pem文件路径
+
 ```bash
 ./start.sh 1 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
 ```
+
 ##### 使用PKCS12格式私钥文件启动
+
 - 使用指定的p12文件的账户，需要输入密码，输入参数：群组号、-p12、p12文件路径
+
 ```bash
 ./start.sh 1 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
 Enter Export Password:
 ```
+
 **注意：**
 控制台启动时加载p12文件出现下面报错：
+
 ```shell
 exception unwrapping private key - java.security.InvalidKeyException: Illegal key size
 ```
+
 可能是Java版本的原因，参考解决方案：[https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size](https://stackoverflow.com/questions/3862800/invalidkeyexception-illegal-key-size)
 
 ### 控制台命令结构
+
 控制台命令由两部分组成，即指令和指令相关的参数：
+
 - **指令**: 指令是执行的操作命令，包括查询区块链相关信息，部署合约和调用合约的指令等，其中部分指令调用JSON-RPC接口，因此与JSON-RPC接口同名。
 **使用提示： 指令可以使用tab键补全，并且支持按上下键显示历史输入指令。**
 
 - **指令相关的参数**: 指令调用接口需要的参数，指令与参数以及参数与参数之间均用空格分隔，与JSON-RPC接口同名命令的输入参数和获取信息字段的详细解释参考[JSON-RPC API](../api.md)。
 
 ### 常用命令链接
+
 #### 合约相关命令
-  - 利用[CNS](../design/features/cns_contract_name_service.md)部署和调用合约(**推荐**)
-    - 部署合约: [deployByCNS](./console.html#deploybycns)
-    - 调用合约: [callByCNS](./console.html#callbycns)
-    - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
-  - 普通部署和调用合约
-    - 部署合约: [deploy](./console.html#deploy)
-    - 调用合约: [call](./console.html#call)
+
+- 利用[CNS](../design/features/cns_contract_name_service.md)部署和调用合约(**推荐**)
+  - 部署合约: [deployByCNS](./console.html#deploybycns)
+  - 调用合约: [callByCNS](./console.html#callbycns)
+  - 查询CNS部署合约信息: [queryCNS](./console.html#querycns)
+- 普通部署和调用合约
+  - 部署合约: [deploy](./console.html#deploy)
+  - 调用合约: [call](./console.html#call)
+
 #### 其他命令
+
 - 查询区块高度：[getBlockNumber](./console.html#getblocknumber)
 - 查询共识节点列表：[getSealerList](./console.html#getsealerlist)
 - 查询交易回执信息: [getTransactionReceipt](./console.html#gettransactionreceipt)
 - 切换群组: [switch](./console.html#switch)
 
 ### 快捷键
+
 - `Ctrl+A`：光标移动到行首
 - `Ctrl+D`：退出控制台
 - `Ctrl+E`：光标移动到行尾
@@ -317,17 +357,19 @@ exception unwrapping private key - java.security.InvalidKeyException: Illegal ke
 - &uarr;：向前浏览历史命令
 - &darr;：向后浏览历史命令
 
-
 ### 控制台响应
+
 当发起一个控制台命令时，控制台会获取命令执行的结果，并且在终端展示执行结果，执行结果分为2类：
+
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
   - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
   - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#precompiled-service-api)。
 
-
 ## 控制台命令列表
+
 ### **help**
+
 输入help或者h，查看控制台所有的命令。
 
 ```text
@@ -422,7 +464,9 @@ switch(s)                                Switch to a specific group by group ID.
 [update sql]                             Update records by sql.
 -------------------------------------------------------------------------------------
 ```
+
 **注：**
+
 - help显示每条命令的含义是：命令 命令功能描述
 - 查看具体命令的使用介绍说明，输入命令 -h或\--help查看。例如：
 
@@ -433,7 +477,9 @@ Usage: getBlockByNumber blockNumber [boolean]
 blockNumber -- Integer of a block number, from 0 to 2147483647.
 boolean -- (optional) If true it returns the full transaction objects, if false only the hashes of the transactions.
 ```
+
 ### **switch**
+
 运行switch或者s，切换到指定群组。群组号显示在命令提示符前面。
 
 ```text
@@ -442,9 +488,11 @@ Switched to group 2.
 
 [group:2]>
 ```
+
 **注：** 需要切换的群组，请确保在`console/conf`目录下的`applicationContext.xml`(该配置文件初始状态只提供群组1的配置)文件中配置了该群组的信息，并且该群组中配置的节点ip和端口正确，该节点正常运行。
 
 ### **newAccount**
+
 创建新的发送交易的账户，默认会以`PEM`格式将账户保存在`accounts`目录下。
 
 ```text
@@ -457,6 +505,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 accounts/0x4cb7d6c013d9c7fa4ec75
 ```
 
 ### **loadAccount**
+
 加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
 参数：
 
@@ -467,38 +516,45 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 accounts/0x4cb7d6c013d9c7fa4ec75
 [group:1]> loadAccount 0xa0f749a6eb735d578b81239c1661c726c4f05d0e.pem
  load 0xa0f749a6eb735d578b81239c1661c726c4f05d0e.pem successfully, account address: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e
 ```
+
 **注意：加载的私钥需要使用`switchAccount`才可以用与发送交易，也可以使用`listAccount`查看当前加载的所有私钥**
 
 ### **switchAccount**
+
 切换发送交易的私钥账户。
 参数：
 
 - 账户地址
+
 ```text
 [group:1]> switchAccount 0xa0f749a6eb735d578b81239c1661c726c4f05d0e
 switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
 ```
 
 ### **listAccount**
+
 查看当前加载的所有账户信息
 
 ```text
 [group:1]> listAccount
  account list:
-	 0xa0f749a6eb735d578b81239c1661c726c4f05d0e <=
-	 0x4cb7d6c013d9c7fa4ec75a3df3d0fddf39674c14
+  0xa0f749a6eb735d578b81239c1661c726c4f05d0e <=
+  0x4cb7d6c013d9c7fa4ec75a3df3d0fddf39674c14
 ```
 
 **注意：带有`<=`后缀标记的为当前用于发送交易的私钥账户，可以使用`switchAccount`进行切换**
 
 ### **getBlockNumber**
+
 运行getBlockNumber，查看区块高度。
 
 ```text
 [group:1]> getBlockNumber
 90
 ```
+
 ### **getSealerList**
+
 运行getSealerList，查看共识节点列表。
 
 ```text
@@ -511,6 +567,7 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
 ```
 
 ### **getObserverList**
+
 运行getObserverList，查看观察节点列表。
 
 ```text
@@ -519,8 +576,11 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
     037c255c06161711b6234b8c0960a6979ef039374ccc8b723afea2107cba3432dbbc837a714b7da20111f74d5a24e91925c773a72158fa066f586055379a1772
 ]
 ```
+
 ### **getNodeIDList**
+
 运行getNodeIDList，查看节点及连接p2p节点的nodeId列表。
+
 ```text
 [group:1]> getNodeIDList
 [
@@ -532,13 +592,16 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
 ```
 
 ### **getPbftView**
+
 运行getPbftView，查看pbft视图。
 
 ```text
 [group:1]> getPbftView
 2730
 ```
+
 ### **getConsensusStatus**
+
 运行getConsensusStatus，查看共识状态。
 
 ```text
@@ -595,6 +658,7 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
 ```
 
 ### **getSyncStatus**
+
 运行getSyncStatus，查看同步状态。
 
 ```text
@@ -631,47 +695,55 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
 ```
 
 ### **getNodeVersion**
+
 运行getNodeVersion，查看节点的版本。
+
 ```text
 [group:1]> getNodeVersion
 {
-	"Build Time":"20190107 10:15:23",
-	"Build Type":"Linux/g++/RelWithDebInfo",
-	"FISCO-BCOS Version":"2.0.0",
-	"Git Branch":"master-2.0",
-	"Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
+ "Build Time":"20190107 10:15:23",
+ "Build Type":"Linux/g++/RelWithDebInfo",
+ "FISCO-BCOS Version":"2.0.0",
+ "Git Branch":"master-2.0",
+ "Git Commit Hash":"be95a6e3e85b621860b101c3baeee8be68f5f450"
 }
 ```
+
 ### **getPeers**
+
 运行getPeers，查看节点的peers。
+
 ```text
 [group:1]> getPeers
 [
-	{
-		"IPAndPort":"127.0.0.1:50723",
-		"nodeId":"8718579e9a6fee647b3d7404d59d66749862aeddef22e6b5abaafe1af6fc128fc33ed5a9a105abddab51e12004c6bfe9083727a1c3a22b067ddbaac3fa349f7f",
-		"Topic":[
+ {
+  "IPAndPort":"127.0.0.1:50723",
+  "nodeId":"8718579e9a6fee647b3d7404d59d66749862aeddef22e6b5abaafe1af6fc128fc33ed5a9a105abddab51e12004c6bfe9083727a1c3a22b067ddbaac3fa349f7f",
+  "Topic":[
 
-		]
-	},
-	{
-		"IPAndPort":"127.0.0.1:50719",
-		"nodeId":"697e81e512cffc55fc9c506104fb888a9ecf4e29eabfef6bb334b0ebb6fc4ef8fab60eb614a0f2be178d0b5993464c7387e2b284235402887cdf640f15cb2b4a",
-		"Topic":[
+  ]
+ },
+ {
+  "IPAndPort":"127.0.0.1:50719",
+  "nodeId":"697e81e512cffc55fc9c506104fb888a9ecf4e29eabfef6bb334b0ebb6fc4ef8fab60eb614a0f2be178d0b5993464c7387e2b284235402887cdf640f15cb2b4a",
+  "Topic":[
 
-		]
-	},
-	{
-		"IPAndPort":"127.0.0.1:30304",
-		"nodeId":"8fc9661baa057034f10efacfd8be3b7984e2f2e902f83c5c4e0e8a60804341426ace51492ffae087d96c0b968bd5e92fa53ea094ace8d1ba72de6e4515249011",
-		"Topic":[
+  ]
+ },
+ {
+  "IPAndPort":"127.0.0.1:30304",
+  "nodeId":"8fc9661baa057034f10efacfd8be3b7984e2f2e902f83c5c4e0e8a60804341426ace51492ffae087d96c0b968bd5e92fa53ea094ace8d1ba72de6e4515249011",
+  "Topic":[
 
-		]
-	}
+  ]
+ }
 ]
 ```
+
 ### **getGroupPeers**
+
 运行getGroupPeers，查看节点所在group的共识节点和观察节点列表。
+
 ```text
 [group:1]> getGroupPeers
 [
@@ -681,16 +753,21 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
     2b08375e6f876241b2a1d495cd560bd8e43265f57dc9ed07254616ea88e371dfa6d40d9a702eadfd5e025180f9d966a67f861da214dd36237b58d72aaec2e108
 ]
 ```
+
 ### **getGroupList**
+
 运行getGroupList，查看群组列表:
+
 ```text
 [group:1]> getGroupList
 [1]
 ```
 
 ### **getBlockHeaderByHash**
+
 运行getBlockHeaderByHash，根据区块哈希查询区块头信息。
 参数：
+
 - 区块哈希：0x开头的区块哈希值
 - 签名列表标志：默认为false，即：区块头信息中不显示区块签名列表信息，设置为true，则显示区块签名列表。
 
@@ -722,8 +799,10 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
 ```
 
 ### **getBlockHeaderByNumber**
+
 运行getBlockHeaderByNumber，根据区块高度查询区块头信息。
 参数：
+
 - 区块高度
 - 签名列表标志：默认为false，即：区块头信息中不显示区块签名列表信息，设置为true，则显示区块签名列表。
 
@@ -769,10 +848,13 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
 ```
 
 ### **getBlockByHash**
+
 运行getBlockByHash，根据区块哈希查询区块信息。
 参数：
+
 - 区块哈希：0x开头的区块哈希值。
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
+
 ```text
 [group:1]> getBlockByHash 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 {
@@ -837,11 +919,15 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
     "transactionsRoot":"0x516787f85980a86fd04b0e9ce82a1a75950db866e8cdf543c2cae3e4a51d91b7"
 }
 ```
+
 ### **getBlockByNumber**
+
 运行getBlockByNumber，根据区块高度查询区块信息。
 参数：
+
 - 区块高度：十进制整数。
 - 交易标志：默认false，区块中的交易只显示交易哈希，设置为true，显示交易具体信息。
+
 ```text
 [group:1]> getBlockByNumber 1
 {
@@ -869,20 +955,27 @@ switch to account: 0xa0f749a6eb735d578b81239c1661c726c4f05d0e successfully.
     "transactionsRoot":"0x516787f85980a86fd04b0e9ce82a1a75950db866e8cdf543c2cae3e4a51d91b7"
 }
 ```
+
 ### **getBlockHashByNumber**
 
 运行getBlockHashByNumber，通过区块高度获得区块哈希。
 参数：
+
 - 区块高度：十进制整数。
+
 ```text
 [group:1]> getBlockHashByNumber 1
 0xf6afbcc3ec9eb4ac2c2829c2607e95ea0fa1be914ca1157436b2d3c5f1842855
 ```
+
 ### **getTransactionByHash**
+
 运行getTransactionByHash，通过交易哈希查询交易信息。
 参数：
+
 - 交易哈希：0x开头的交易哈希值。
 - 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
+
 ```text
 [group:1]> getTransactionByHash 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
 {
@@ -919,12 +1012,16 @@ function: insert(string,int256,string)
 input value: (fruit, 1, apple)
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **getTransactionByBlockHashAndIndex**
+
 运行getTransactionByBlockHashAndIndex，通过区块哈希和交易索引查询交易信息。
 参数：
+
 - 区块哈希：0x开头的区块哈希值。
 - 交易索引：十进制整数。
 - 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
+
 ```text
 [group:1]> getTransactionByBlockHashAndIndex 0xe4e1293837013f547ad7f443a8ff20a4e32a060b9cac56c41462255603548b7b 0
 {
@@ -961,12 +1058,16 @@ function: insert(string,int256,string)
 input value: (fruit, 1, apple)
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **getTransactionByBlockNumberAndIndex**
+
 运行getTransactionByBlockNumberAndIndex，通过区块高度和交易索引查询交易信息。
 参数：
+
 - 区块高度：十进制整数。
 - 交易索引：十进制整数。
 - 合约名：可选，发送交易产生该交易的合约名称，使用该参数可以将交易中的input解析并输出。如果是部署合约交易则不解析。
+
 ```text
 [group:1]> getTransactionByBlockNumberAndIndex 8 0
 {
@@ -1003,11 +1104,15 @@ function: insert(string,int256,string)
 input value: (fruit, 1, apple)
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **getTransactionReceipt**
+
 运行getTransactionReceipt，通过交易哈希查询交易回执。
 参数：
+
 - 交易哈希：0x开头的交易哈希值。
 - 合约名：可选，发送交易产生该交易回执的合约名称，使用该参数可以将交易回执中的input、output和event log解析并输出。（注：input字段在web3sdk 2.0.4版本中新增加的字段，之前版本无该字段则只解析output和event log。）
+
 ```text
 [group:1]> getTransactionReceipt 0x1dfc67c51f5cc93b033fc80e5e9feb049c575a58b863483aa4d04f530a2c87d5
 {
@@ -1074,15 +1179,20 @@ event signature: InsertResult(int256) index: 0
 event value: (1)
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **getPendingTransactions**
+
 运行getPendingTransactions，查询等待处理的交易。
+
 ```text
 [group:1]> getPendingTransactions
 []
 ```
 
 ### **getPendingTxSize**
+
 运行getPendingTxSize，查询等待处理的交易数量（交易池中的交易数量）。
+
 ```text
 [group:1]> getPendingTxSize
 0
@@ -1094,6 +1204,7 @@ event value: (1)
 参数：
 
 - 合约地址：0x的合约地址(部署合约可以获得合约地址)。
+
 ```text
 [group:1]> getCode 0x97b8c19598fd781aaeb53a1957ef9c8acc59f705
 0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806366c99139146100465780636d4ce63c14610066575bfe5b341561004e57fe5b610064600480803590602001909190505061008c565b005b341561006e57fe5b61007661028c565b6040518082815260200191505060405180910390f35b8060006001015410806100aa57506002600101548160026001015401105b156100b457610289565b806000600101540360006001018190555080600260010160008282540192505081905550600480548060010182816100ec919061029a565b916000526020600020906004020160005b608060405190810160405280604060405190810160405280600881526020017f32303137303431330000000000000000000000000000000000000000000000008152508152602001600060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600260000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200185815250909190915060008201518160000190805190602001906101ec9291906102cc565b5060208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550606082015181600301555050505b50565b600060026001015490505b90565b8154818355818115116102c7576004028160040283600052602060002091820191016102c6919061034c565b5b505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061030d57805160ff191683800117855561033b565b8280016001018555821561033b579182015b8281111561033a57825182559160200191906001019061031f565b5b50905061034891906103d2565b5090565b6103cf91905b808211156103cb57600060008201600061036c91906103f7565b6001820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556002820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff0219169055600382016000905550600401610352565b5090565b90565b6103f491905b808211156103f05760008160009055506001016103d8565b5090565b90565b50805460018160011615610100020316600290046000825580601f1061041d575061043c565b601f01602090049060005260206000209081019061043b91906103d2565b5b505600a165627a7a723058203c1f95b4a803493db0120df571d9f5155734152548a532412f2f9fa2dbe1ac730029
@@ -1102,14 +1213,16 @@ event value: (1)
 ### **getTotalTransactionCount**
 
 运行getTotalTransactionCount，查询当前块高和累计交易数（从块高为0开始）。
+
 ```text
 [group:1]> getTotalTransactionCount
 {
-	"blockNumber":1,
-	"txSum":1,
-	"failedTxSum":0
+ "blockNumber":1,
+ "txSum":1,
+ "failedTxSum":0
 }
 ```
+
 ### **deploy**
 
 部署合约。(默认提供HelloWorld合约和TableTest.sol进行示例使用)
@@ -1132,11 +1245,13 @@ contract address:0x85517d3070309a89357c829e4b9e2d23ee01d881
 ```
 
 **注：**
+
 - 部署用户编写的合约，可以将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
 - 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 
 ### **listAbi**
+
 显示合约接口和Event列表
 参数：
 
@@ -1165,6 +1280,7 @@ Event list:
 ### **getDeployLog**
 
 运行getDeployLog，查询群组内**由当前控制台**部署合约的日志信息。日志信息包括部署合约的时间，群组ID，合约名称和合约地址。参数：
+
 - 日志行数，可选，根据输入的期望值返回最新的日志信息，当实际条数少于期望值时，按照实际数量返回。当期望值未给出时，默认按照20条返回最新的日志信息。
 
 ```text
@@ -1177,16 +1293,19 @@ Event list:
 
 2019-05-26 08:37:45  [group:1]  TableTest             0xd653139b9abffc3fe07573e7bacdfd35210b5576
 ```
+
 **注：** 如果要查看所有的部署合约日志信息，请查看`console`目录下的`deploylog.txt`文件。该文件只存储最近10000条部署合约的日志记录。
 
 ### **call**
 
 运行call，调用合约。
 参数：
+
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
 - 合约地址: 部署合约获取的地址，合约地址可以省略前缀0，例如，0x000ac78可以简写成0xac78。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如[“alice”,”bob”]，注意数组参数中不要有空格；布尔类型为true或者false。**
+
 ```text
 # 调用HelloWorld的get接口获取name字符串
 [group:1]> call HelloWorld.sol 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 get
@@ -1225,6 +1344,7 @@ event value: (1)
 [group:1]> call TableTest.sol 0xd653139b9abffc3fe07573e7bacdfd35210b5576 select "fruit"
 [[fruit], [1], [apple]]
 ```
+
 **注：** TableTest.sol合约代码[参考这里](../manual/smart_contract.html#solidity)。
 
 ### **deployByCNS**
@@ -1234,6 +1354,7 @@ event value: (1)
 
 - 合约路径：合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
 - 合约版本号：部署的合约版本号(长度不能超过40)。
+
 ```text
 # 部署HelloWorld合约1.0版
 [group:1]> deployByCNS HelloWorld.sol 1.0
@@ -1263,17 +1384,21 @@ register contract to cns:
     "msg":"success"
 }
 ```
+
 **注：**
+
 - 部署用户编写的合约，可以将solidity合约文件放到控制台根目录的`contracts/solidity/`目录下，然后进行部署即可。按tab键可以搜索`contracts/solidity/`目录下的合约名称。
 - 若需要部署的合约引用了其他合约或library库，引用格式为`import "./XXX.sol";`。其相关引入的合约和library库均放在`contracts/solidity/`目录。
 - 如果合约引用了library库，library库文件的名称必须以`Lib`字符串开始，以便于区分是普通合约与library库文件。library库文件不能单独部署和调用。
 
 ### **queryCNS**
+
 运行queryCNS，根据合约名称和合约版本号（可选参数）查询CNS表记录信息（合约名和合约地址的映射）。
 参数：
 
 - 合约名称：部署的合约名称。
 - 合约版本号：(可选)部署的合约版本号。
+
 ```text
 [group:1]> queryCNS HelloWorld.sol
 ---------------------------------------------------------------------------------------------
@@ -1287,13 +1412,16 @@ register contract to cns:
 |                     1.0                     | 0x3554a56ea2905f366c345bd44fa374757fb4696a  |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **callByCNS**
+
 运行callByCNS，采用CNS调用合约，即用合约名直接调用合约。
 参数：
 
 - 合约名称与合约版本号：合约名称与版本号用英文冒号分隔，例如`HelloWorld:1.0`。当省略合约版本号时，例如`HelloWorld`，则调用最新版本的合约。
 - 合约接口名：调用的合约接口名。
 - 参数：由合约接口参数决定。**参数由空格分隔，其中字符串、字节类型参数需要加上双引号；数组参数需要加上中括号，比如[1,2,3]，数组中是字符串或字节类型，加双引号，例如["alice","bob"]；布尔类型为true或者false。**
+
 ```text
 # 调用HelloWorld合约1.0版，通过set接口设置name字符串
 [group:1]> callByCNS HelloWorld:1.0 set "Hello,CNS"
@@ -1319,9 +1447,11 @@ Hello,CNS2
 ```
 
 ### **registerCNS**
+
 注册合约至CNS。
 
 参数：
+
 - 合约路径: 合约文件的路径，支持相对路径、绝对路径和默认路径三种方式。用户输入为文件名时，从默认目录获取文件，默认目录为: `contracts/solidity`。
 - 合约地址: 注册合约地址
 - 合约版本号: 注册合约版本号(长度不能超过40)
@@ -1340,93 +1470,108 @@ Hello,CNS2
 参数：
 
 - 节点nodeId
+
 ```text
 [group:1]> addSealer ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
 
 ### **addObserver**
+
 运行addObserver，将节点添加为观察节点。
 参数：
+
 - 节点nodeId
+
 ```text
 [group:1]> addObserver ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
 
 ### **removeNode**
+
 运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。
 参数：
+
 - 节点nodeId
+
 ```text
 [group:1]> removeNode ea2ca519148cafc3e92c8d9a8572b41ea2f62d0d19e99273ee18cccd34ab50079b4ec82fe5f4ae51bd95dd788811c97153ece8c05eac7a5ae34c96454c4d3123
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **setSystemConfigByKey**
 
 运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`tx_gas_limit`, `rpbft_epoch_sealer_num`, `rpbft_epoch_block_num`和`consensus_timeout`。这些系统参数的键名可以通过tab键补全：
 
-* tx_count_limit：区块最大打包交易数
-* tx_gas_limit：交易执行允许消耗的最大gas数
-* rpbft_epoch_sealer_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
-* rpbft_epoch_block_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
-* consensus_timeout：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒
+- tx_count_limit：区块最大打包交易数
+- tx_gas_limit：交易执行允许消耗的最大gas数
+- rpbft_epoch_sealer_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期内选取的共识节点数目
+- rpbft_epoch_block_num: [rPBFT](../design/consensus/rpbft.md)系统配置，一个共识周期出块数目
+- consensus_timeout：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒
 
 参数：
 
 - key
 - value
+
 ```text
 [group:1]> setSystemConfigByKey tx_count_limit 100
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **getSystemConfigByKey**
 
 运行getSystemConfigByKey，根据键查询系统参数的值。
 参数：
 
 - key
+
 ```text
 [group:1]> getSystemConfigByKey tx_count_limit
 100
 ```
+
 ### **grantPermissionManager**
 
-```eval_rst	
-.. note::	
-    从 ``v1.0.9`` 开始，控制台不再支持 ``grantPermissionManager`` 命令，请使用 ``grantCommitteeMembers`` 和 ``grantOperator`` 等区块链委员权限管理相关的命令替代该命令。	
+```eval_rst
+.. note:: 
+    从 ``v1.0.9`` 开始，控制台不再支持 ``grantPermissionManager`` 命令，请使用 ``grantCommitteeMembers`` 和 ``grantOperator`` 等区块链委员权限管理相关的命令替代该命令。 
 ```
 
 运行grantPermissionManager，授权账户的链管理员权限。参数：
+
 - 账户地址
+
 ```text
 [group:1]> grantPermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
 
 ### **listPermissionManager**
 
-```eval_rst	
-.. note::	
-    从``v1.0.9``开始，控制台不再支持 ``listPermissionManager`` 命令，请使用 ``listCommitteeMembers`` 和 ``listOperator`` 等区块链委员权限查询相关的命令替代该命令。	
+```eval_rst
+.. note:: 
+    从``v1.0.9``开始，控制台不再支持 ``listPermissionManager`` 命令，请使用 ``listCommitteeMembers`` 和 ``listOperator`` 等区块链委员权限查询相关的命令替代该命令。 
 ```
 
 运行listPermissionManager，查询拥有链管理员权限的账户列表。
+
 ```text
 [group:1]> listPermissionManager
 ---------------------------------------------------------------------------------------------
@@ -1434,41 +1579,50 @@ Hello,CNS2
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **revokePermissionManager**
 
-```eval_rst	
-.. note::	
-    从``v1.0.9``开始，控制台不再支持 ``revokePermissionManager`` 命令，请使用 ``revokeCommitteeMembers`` 和 ``revokeOperator`` 等区块链委员权限管理相关的命令替代该命令。	
+```eval_rst
+.. note:: 
+    从``v1.0.9``开始，控制台不再支持 ``revokePermissionManager`` 命令，请使用 ``revokeCommitteeMembers`` 和 ``revokeOperator`` 等区块链委员权限管理相关的命令替代该命令。 
 ```
 
 运行revokePermissionManager，撤销账户的链管理员权限。
 参数：
+
 - 账户地址
+
 ```text
 [group:1]> revokePermissionManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **grantUserTableManager**
 
 运行grantUserTableManager，授权账户对用户表的写权限。
 参数：
+
 - 表名
 - 账户地址
+
 ```text
 [group:1]> grantUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **listUserTableManager**
 
 运行listUserTableManager，查询拥有对用户表写权限的账号列表。
 参数：
+
 - 表名
+
 ```text
 [group:1]> listUserTableManager t_test
 ---------------------------------------------------------------------------------------------
@@ -1476,6 +1630,7 @@ Hello,CNS2
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **revokeUserTableManager**
 
 运行revokeUserTableManager，撤销账户对用户表的写权限。
@@ -1483,27 +1638,35 @@ Hello,CNS2
 
 - 表名
 - 账户地址
+
 ```text
 [group:1]> revokeUserTableManager t_test 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **grantDeployAndCreateManager**
+
 运行grantDeployAndCreateManager，授权账户的部署合约和创建用户表权限。
 
 参数：
+
 - 账户地址
+
 ```text
 [group:1]> grantDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **listDeployAndCreateManager**
+
 运行listDeployAndCreateManager，查询拥有部署合约和创建用户表权限的账户列表。
+
 ```text
 [group:1]> listDeployAndCreateManager
 ---------------------------------------------------------------------------------------------
@@ -1511,29 +1674,38 @@ Hello,CNS2
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **revokeDeployAndCreateManager**
+
 运行revokeDeployAndCreateManager，撤销账户的部署合约和创建用户表权限。
 参数：
+
 - 账户地址
+
 ```text
 [group:1]> revokeDeployAndCreateManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **grantNodeManager**
 
 运行grantNodeManager，授权账户的节点管理权限。参数：
+
 - 账户地址
+
 ```text
 [group:1]> grantNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **listNodeManager**
+
 运行listNodeManager，查询拥有节点管理的账户列表。
 
 ```text
@@ -1543,29 +1715,38 @@ Hello,CNS2
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **revokeNodeManager**
 
 运行revokeNodeManager，撤销账户的节点管理权限。
 参数：
+
 - 账户地址
+
 ```text
 [group:1]> revokeNodeManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **grantCNSManager**
+
 运行grantCNSManager，授权账户的使用CNS权限。参数：
+
 - 账户地址
+
 ```text
 [group:1]> grantCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **listCNSManager**
+
 运行listCNSManager，查询拥有使用CNS的账户列表。
 
 ```text
@@ -1575,26 +1756,35 @@ Hello,CNS2
 | 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d  |                      2                      |
 ---------------------------------------------------------------------------------------------
 ```
+
 ### **revokeCNSManager**
+
 运行revokeCNSManager，撤销账户的使用CNS权限。参数：
+
 - 账户地址
+
 ```text
 [group:1]> revokeCNSManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **grantSysConfigManager**
+
 运行grantSysConfigManager，授权账户的修改系统参数权限。参数：
+
 - 账户地址
+
 ```text
 [group:1]> grantSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
+
 ### **listSysConfigManager**
 
 运行listSysConfigManager，查询拥有修改系统参数的账户列表。
@@ -1608,32 +1798,40 @@ Hello,CNS2
 ```
 
 ### **revokeSysConfigManager**
+
 运行revokeSysConfigManager，撤销账户的修改系统参数权限。参数：
+
 - 账户地址
+
 ```text
 [group:1]> revokeSysConfigManager 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
 
 ### **grantContractWritePermission**
+
 运行grantContractWritePermission，添加账户对合约写接口的调用权限。参数：
+
 - 合约地址
 - 账户地址
 
 ```bash
 [group:1]> grantContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
 
 ### **listContractWritePermission**
+
 运行listContractWritePermission，显示对某个合约的写接口有调用权限的账户。参数：
+
 - 合约地址
+
 ```bash
 [group:1]> listContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767
 ---------------------------------------------------------------------------------------------
@@ -1643,24 +1841,30 @@ Hello,CNS2
 ```
 
 ### **revokeContractWritePermission**
+
 运行revokeContractWritePermission，撤销账户对合约的写接口调用权限。参数：
+
 - 合约地址
 - 账户地址
+
 ```bash
 [group:1]> revokeContractWritePermission 0xc0ce097a5757e2b6e189aa70c7d55770ace47767 0xc0d0e6ccc0b44c12196266548bec4a3616160e7d
 {
-	"code":0,
-	"msg":"success"
+ "code":0,
+ "msg":"success"
 }
 ```
 
 ### **quit**
+
 运行quit、q或exit，退出控制台。
+
 ```text
 quit
 ```
 
 ### **[create sql]**
+
 运行create sql语句创建用户表，使用mysql语句形式。
 
 ```text
@@ -1668,13 +1872,16 @@ quit
 [group:1]> create table t_demo(name varchar, item_id varchar, item_name varchar, primary key(name))
 Create 't_demo' Ok.
 ```
+
 **注意：**
+
 - 创建表的字段类型均为字符串类型，即使提供数据库其他字段类型，也按照字符串类型设置。
 - 必须指定主键字段。例如创建t_demo表，主键字段为name。
 - 表的主键与关系型数据库中的主键不是相同概念，这里主键取值不唯一，区块链底层处理记录时需要传入主键值。
 - 可以指定字段为主键，但设置的字段自增，非空，索引等修饰关键字不起作用。
 
 ### **desc**
+
 运行desc语句查询表的字段信息，使用mysql语句形式。
 
 ```text
@@ -1685,18 +1892,23 @@ Create 't_demo' Ok.
     "valueFields":"item_id,item_name"
 }
 ```
+
 ### **[insert sql]**
+
 运行insert sql语句插入记录，使用mysql语句形式。
 
 ```text
 [group:1]> insert into t_demo (name, item_id, item_name) values (fruit, 1, apple1)
 Insert OK, 1 row affected.
 ```
+
 **注意：**
+
 - 插入记录sql语句必须插入表的主键字段值。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### **[select sql]**
+
 运行select sql语句查询记录，使用mysql语句形式。
 
 ```text
@@ -1729,31 +1941,39 @@ Insert OK, 1 row affected.
 {item_id=2, item_name=apple2, name=fruit}
 1 rows in set.
 ```
+
 **注意：**
+
 - 查询记录sql语句必须在where子句中提供表的主键字段值。
 - 关系型数据库中的limit字段可以使用，提供两个参数，分别offset(偏移量)和记录数(count)。
 - where条件子句只支持and关键字，其他or、in、like、inner、join，union以及子查询、多表联合查询等均不支持。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### **[update sql]**
+
 运行update sql语句更新记录，使用mysql语句形式。
 
 ```text
 [group:1]> update t_demo set item_name = orange where name = fruit and item_id = 1
 Update OK, 1 row affected.
 ```
+
 **注意：**
+
 - 更新记录sql语句的where子句必须提供表的主键字段值。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
 ### **[delete sql]**
+
 运行delete sql语句删除记录，使用mysql语句形式。
 
 ```text
 [group:1]> delete from t_demo where name = fruit and item_id = 1
 Remove OK, 1 row affected.
 ```
+
 **注意：**
+
 - 删除记录sql语句的where子句必须提供表的主键字段值。
 - 输入的值带标点符号、空格或者以数字开头的包含字母的字符串，需要加上双引号，双引号中不允许再用双引号。
 
@@ -1763,6 +1983,7 @@ Remove OK, 1 row affected.
 ```
 
 ### **freezeContract**
+
 运行freezeContract，对指定合约进行冻结操作。参数：
 
 - 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
@@ -1776,6 +1997,7 @@ Remove OK, 1 row affected.
 ```
 
 ### **unfreezeContract**
+
 运行unfreezeContract，对指定合约进行解冻操作。参数：
 
 - 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
@@ -1789,6 +2011,7 @@ Remove OK, 1 row affected.
 ```
 
 ### **grantContractStatusManager**
+
 运行grantContractStatusManager，用于已有权限账号给其他账号授予指定合约的合约管理权限。参数：
 
 - 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
@@ -1803,6 +2026,7 @@ Remove OK, 1 row affected.
 ```
 
 ### **getContractStatus**
+
 运行getContractStatus，查询指定合约的状态。参数：
 
 - 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
@@ -1813,6 +2037,7 @@ The contract is available.
 ```
 
 ### **listContractStatusManager**
+
 运行listContractStatusManager，查询能管理指定合约的权限账号列表。参数：
 
 - 合约地址：部署合约可以获得合约地址，其中0x前缀非必须。
@@ -1913,7 +2138,6 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 }
 ```
 
-
 ### grantOperator
 
 添加运维账号，运维角色拥有部署合约、创建用户表和管理CNS的权限，治理委员会委员可以添加运维，如果当前没有委员，则不限制。参数：
@@ -1955,6 +2179,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```
 
 ### **freezeAccount**
+
 运行freezeAccount，对指定账号进行冻结操作。对没有发送过交易的账号，冻结操作将提示该账号地址不存在。参数：
 
 - 账号地址：tx.origin，其中0x前缀必须。
@@ -1968,6 +2193,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```
 
 ### **unfreezeAccount**
+
 运行unfreezeAccount，对指定账号进行解冻操作。对没有发送过交易的账号，解冻操作将提示该账号地址不存在。参数：
 
 - 账号地址：tx.origin，其中0x前缀必须。
@@ -1981,6 +2207,7 @@ Account: 0x61d88abf7ce4a7f8479cff9cc1422bef2dac9b9a Weight: 1
 ```
 
 ### **getAccountStatus**
+
 运行getAccountStatus，查询指定账号的状态。对没有发送过交易的账号，查询操作将提示该账号地址不存在。参数：
 
 - 账号地址：tx.origin，其中0x前缀必须。
@@ -1991,6 +2218,7 @@ The account is available.
 ```
 
 ### **addPeers**
+
 新增`P2P`连接配置，增加节点`config.ini:[p2p]`的连接配置，参考(../api.html#addpeers)
 
 ```shell
@@ -2008,6 +2236,7 @@ addPeers NodeEndPoint EndPoint0 ... EndPointN
 - EndPointN: 新增连接`P2P`节点配置，可以是多个，使用空格分离
 
 ### **erasePeers**
+
 删除`P2P`连接配置，删除节点`config.ini:[p2p]`的连接配置，参考(../api.html#erasepeers)
 
 ```shell
@@ -2025,6 +2254,7 @@ erasePeers NodeEndPoint EndPoint0 ... EndPointN
 - EndPointN: 删除连接`P2P`节点配置，可以是多个，使用空格分离
 
 ### **queryPeers**
+
 查询`P2P`连接配置，查询节点`config.ini:[p2p]`的连接配置列表，参考(../api.html#querypeers)
 
 ```shell
@@ -2042,6 +2272,7 @@ queryPeers NodeEndPoint
 ## 附录：Java环境配置
 
 ### Ubuntu环境安装Java
+
 ```bash
 # 安装默认Java版本(Java 8或以上)
 sudo apt install -y default-jdk
@@ -2050,7 +2281,9 @@ java -version
 ```
 
 ### CentOS环境安装Java
+
 **注意：CentOS下OpenJDK无法正常工作，需要安装OracleJDK**[下载链接](https://www.oracle.com/technetwork/java/javase/downloads/index.html)。
+
 ```bash
 # 创建新的文件夹，安装Java 8或以上的版本，将下载的jdk放在software目录
 # 从Oracle官网(https://www.oracle.com/technetwork/java/javase/downloads/index.html)选择Java 8或以上的版本下载，例如下载jdk-8u201-linux-x64.tar.gz

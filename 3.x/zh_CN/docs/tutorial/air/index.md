@@ -5,6 +5,10 @@
 
 ------------
 
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
 
 ```eval_rst
 .. note::
@@ -19,4 +23,6 @@
    config.md
    build_chain.md
    expand_node.md
+   storage_security.md
+   use_hsm.md
 ```
