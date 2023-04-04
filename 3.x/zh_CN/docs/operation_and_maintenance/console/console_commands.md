@@ -2553,7 +2553,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dc
 
 ### 2. loadAccount
 
-加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
+加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。但是，若控制台使用密码机的公私钥，因公私钥都放在密码机内部，所以使用不了该操作命令。
 参数：
 
 - 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
@@ -2579,7 +2579,7 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 
 ### 4. getCurrentAccount
 
-获取当前账户地址。
+获取当前账户地址。若控制台使用的是密码机公私钥，则展示的是根据密码机内部公钥转换的账户地址。
 
 ```shell
 [group0]: /apps>  getCurrentAccount
