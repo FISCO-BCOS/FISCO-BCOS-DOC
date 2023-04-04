@@ -14,7 +14,7 @@
 (请先在home目录创建fisco目录，接下来都在这个目录操作）
 
 ```bash
-$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -42,7 +42,7 @@ $ bash nodes/127.0.0.1/start_all.sh
 下载控制台：
 
 ```bash
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh -c 1.2.0
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -c 1.2.0
 ```
 
 ```eval_rst

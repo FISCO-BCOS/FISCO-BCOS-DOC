@@ -16,4 +16,6 @@
    config.md
    api.md
    dev.md
+   appendix.md
+   faq.md
 ```

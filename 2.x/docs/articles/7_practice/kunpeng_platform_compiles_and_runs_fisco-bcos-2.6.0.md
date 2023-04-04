@@ -197,7 +197,7 @@ cp ${HOME}/FISCO-BCOS/build/bin/fisco-bcos bin
 ### 3. 下载 build_chain.sh 脚本
 
 ```
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 4. 运行一键搭建2群组3机构6节点底层FISCO-BCOS联盟链服务脚本
@@ -268,7 +268,7 @@ info|2020-09-04 17:34:22.459794|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 
 ```bash
 # 下载控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 $ cd console
 
 # 拷贝证书

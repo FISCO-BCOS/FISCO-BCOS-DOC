@@ -31,7 +31,7 @@
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载开发部署工具build_chain
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -247,7 +247,7 @@ sudo yum install -y java java-devel
 # 创建操作目录
 mkdir -p ~/fisco && cd ~/fisco
 
-curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh
+curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh
 
 # 若因为网络问题导致长时间无法下载，请尝试以下命令：
 curl -#LO  https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tools/download_console.sh

@@ -190,7 +190,7 @@ sudo yum install -y java java-devel
 - Get console
 
 ```bash
-cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh
+cd ~/fisco &&  curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst

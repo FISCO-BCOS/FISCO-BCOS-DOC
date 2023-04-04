@@ -26,7 +26,7 @@ The following table is a recommended configuration for single-group and single-n
 # Supported Platforms
 
 - CentOS 7.2+
-- Ubuntu 16.04
+- Ubuntu 18.04
 - macOS 10.14+
 - Kylin OS V10
 - deepin

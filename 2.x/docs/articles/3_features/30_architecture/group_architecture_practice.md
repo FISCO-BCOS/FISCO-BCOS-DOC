@@ -143,4 +143,4 @@ Switched to group 2
 
 ## 总结
 
-本文介绍了搭建仲裁链的关键过程，FISCO BCOS 2.0的操作文档step by step介绍了如何部署多群组区块链，详细流程可以参考[https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/tutorial/group_use_cases.html](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/tutorial/group_use_cases.html)
+本文介绍了搭建仲裁链的关键过程，FISCO BCOS 2.0的操作文档step by step介绍了如何部署多群组区块链，详细流程可以参考[多群组部署](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/group_use_cases.html)

@@ -91,7 +91,7 @@ wsl
 cd ~
 sudo apt install -y openssl curl
 cd ~ && mkdir -p fisco && cd fisco
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
 
@@ -187,7 +187,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted univer
 
 ```bash
 sudo apt update && sudo apt install -y default-jdk
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 cp -n console/conf/config-example.toml console/conf/config.toml
 cp -r nodes/127.0.0.1/sdk/* console/conf/
 cd ~/fisco/console && bash start.sh

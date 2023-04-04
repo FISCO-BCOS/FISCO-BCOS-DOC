@@ -79,7 +79,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - 获取build_chain.sh脚本
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -235,10 +235,10 @@ info|2019-02-11 15:39:42.922510| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 $ cd ~/fisco
 
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
-$ https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.1/download_console.sh && bash download_console.sh
+$ https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.2/download_console.sh && bash download_console.sh
 
 # 进入控制台操作目录
 $ cd console
@@ -499,7 +499,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
 $ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh
@@ -623,10 +623,10 @@ info|2019-02-11 21:14:01.657428| [g:2][p:520][CONSENSUS][SEALER]++++++++Generati
 # 若从未下载控制台，请进行下面操作下载控制台，否则将控制台拷贝到~/fisco目录：
 $ cd ~/fisco
 # 获取控制台
-$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh && bash download_console.sh
+$ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
-$ https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.1/download_console.sh && bash download_console.sh
+$ https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/console/releases/v2.9.2/download_console.sh && bash download_console.sh
 ```
 
 **配置控制台**
@@ -646,12 +646,12 @@ $ cp ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
 
 # 修改控制台连接节点的端口为20100和20101
 # linux系统使用如下命令:
-$ sed -i 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
-$ sed -i 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
+$ sed -i 's/127.0.0.1:20200/127.0.0.1:20100/g' ~/fisco/console/conf/config.toml
+$ sed -i 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml  
 
 # mac系统使用如下命令:
-$ sed -i .bkp 's/127.0.0.1:20200/127.0.0.1:21000/g' ~/fisco/console/conf/config.toml
-$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:21001/g' ~/fisco/console/conf/config.toml 
+$ sed -i .bkp 's/127.0.0.1:20200/127.0.0.1:20100/g' ~/fisco/console/conf/config.toml
+$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml 
 ```
 
 **通过控制台向群组发交易**
