@@ -126,6 +126,10 @@
 * listAccount                               List the current saved account list
 * loadAccount                               Load account for the transaction signature
 * newAccount                                Create account
+---------------------------Sharding Operation----------------------------
+* getContractShard                          Get a contract's belonging shard.
+* linkShard                                 Add a contract to a shard.
+* makeShard                                 Make a shard.
 ---------------------------------------------------------------------------------------------
 ```
 
@@ -2584,4 +2588,56 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 ```shell
 [group0]: /apps>  getCurrentAccount
 0x6fad87071f790c3234108f41b76bb99874a6d813
+```
+
+
+
+## 块内分片管理命令
+
+该操作为“块内分片”的管理操作，请参考[此处](../../design/parallel/sharding.md)了解更多技术细节。
+
+### 1. makeShard
+
+创建一个分片
+
+参数：
+
+* 分片名：需要创建的用户名，不允许重复
+
+```
+[group0]: /apps> makeShard hello_shard
+make shard hello_shard Ok. You can use 'ls' to check
+```
+
+### 2. linkShard
+
+将某个合约绑定到某个分片中
+
+参数
+
+* 合约地址：需要绑定的合约地址
+* 分片名：需要绑定至的分片名，若不存在则创建一个
+
+注意
+
+* 已经绑定的合约不允许再次绑定
+* 未绑定的合约默认分配在一个名字为”“（空）的分片中
+* 分片内合约部署的合约属于同一个分片
+
+```
+[group0]: /apps> linkShard 0xd24180cc0fef2f3e545de4f9aafc09345cd08903 hello_shard
+Add 0xd24180cc0fef2f3e545de4f9aafc09345cd08903 to hello_shard Ok. You can use 'ls' to check
+```
+
+### 3. getContractShard
+
+根据合约地址，获取其属于哪个分片
+
+参数
+
+* 合约地址：需要查询的合约地址
+
+```
+[group0]: /apps> getContractShard d24180cc0fef2f3e545de4f9aafc09345cd08903
+/shards/hello_shard
 ```
