@@ -14,7 +14,7 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 
 ## 更多开源工具
 
-![](../_static/images/products.jpeg)
+![](../../_static/images/products.jpeg)
 
 - **FISCO BCOS企业级金融联盟链底层平台**: [GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0) 、[Gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0) 、 [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html) 
 - **WeBASE 区块链中间件平台**：[GitHub](https://github.com/WeBankFinTech/WeBASE) 、 [Gitee](https://gitee.com/WeBank/WeBASE) 、  [文档](https://webasedoc.readthedocs.io/) 
