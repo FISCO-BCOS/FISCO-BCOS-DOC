@@ -361,7 +361,6 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/design/storage/storage_security.md
    docs/design/storage/archive.md
    docs/design/guomi.md
-   docs/design/rip.md
    docs/design/network_compress.md
    docs/design/security_control/index.rst
    docs/design/hsm.md
