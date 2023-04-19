@@ -11,7 +11,7 @@
 
 升级指南
 ------------
-FISCO BCOS 版本迭代，支持版本之间的兼容升级，支持可灰度升级，且灰度升级过程中，系统可以正常共识、出块。详情可参考 `升级指南 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/introduction/change_log/upgrade.html>`_
+FISCO BCOS 版本迭代，支持版本之间的兼容升级，支持可灰度升级，且灰度升级过程中，系统可以正常共识、出块。详情可参考 `升级指南 <./upgrade.html>`_
 
 
 .. toctree::
@@ -34,7 +34,7 @@ v3.3.x
     - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
     - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
     - 查看轻节点二进制版本：``../fisco-bcos-lightnode --version``
-    - 查看轻节点相关文档，请参考 [`轻节点搭建工具<https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/tutorial/lightnode.html>`_]
+    - 查看轻节点相关文档，请参考 [`轻节点搭建工具 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/tutorial/lightnode.html>`_]
 
 
 .. toctree::
@@ -59,7 +59,7 @@ v3.2.x
     - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
     - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
     - 查看轻节点二进制版本：``../fisco-bcos-lightnode --version``
-    - 查看轻节点相关文档，请参考 [`轻节点搭建工具<https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/tutorial/lightnode.html>`_]
+    - 查看轻节点相关文档，请参考 [`轻节点搭建工具 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/tutorial/lightnode.html>`_]
 
 
 .. toctree::
