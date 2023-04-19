@@ -20,7 +20,7 @@ sudo yum install -y java java-devel
 ### 第二步. 下载控制台
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.3.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
@@ -67,7 +67,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.2.0)!
+Welcome to FISCO BCOS console(3.3.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
