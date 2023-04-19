@@ -16,6 +16,11 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ```
 
 **特别注意：Client接口均有两种，一种是带有node的接口，另一种是不带node的接口。带有node的接口可以让节点RPC发送请求到指定已连接的节点。如果不指定，节点RPC则会随机发送请求到节点。**
+**curl调用说明：节点的rpc接口访问默认开启ssl认证，下面使用curl发送接口命令没有ssl证书，需要关闭节点的rpc接口ssl认证。关闭方法是修改配置文件/fisco/nodes/127.0.0.1/ node0/config.ini, 修改配置文件后重新启动节点即可**
+[rpc]
+ ; ssl connection switch, if disable the ssl connection, default: false
+ disable_ssl=true
+
 
 ## 1. 合约操作接口
 
