@@ -50,7 +50,6 @@ Usage:
     -c <Config Path>                    [Required when expand node] Specify the path of the expanded node config.ini, config.genesis and p2p connection file nodes.json
     -d <CA cert path>                   [Required when expand node] When expanding the node, specify the path where the CA certificate and private key are located
     -D <docker mode>                    Default off. If set -d, build with docker
-    -A <Auth mode>                      Default off. If set -A, build chain with auth, and generate admin account.
     -a <Auth account>                   [Optional] when Auth mode Specify the admin account address.
     -w <WASM mode>                      [Optional] Whether to use the wasm virtual machine engine, default is false
     -R <Serial_mode>                    [Optional] Whether to use serial execute,default is true
@@ -58,17 +57,20 @@ Usage:
     -m <fisco-bcos monitor>             [Optional] node monitor or not, default is false
     -i <fisco-bcos monitor ip/port>     [Optional] When expanding the node, should specify ip and port
     -M <fisco-bcos monitor>             [Optional] When expanding the node, specify the path where prometheus are located
+    -z <Generate tar packet>            [Optional] Pack the data on the chain to generate tar packet
     -n <node key path>                  [Optional] set the path of the node key file to load nodeid
     -h Help
 
 deploy nodes e.g
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos
+    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m (部署节点带监控功能)
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -s
-    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m(部署节点带监控功能)
 expand node e.g
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos
-        bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
-    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml(部署节点带监控功能)
+    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml (部署节点带监控功能)
+    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
+    bash build_chain.sh -C expand_lightnode -c config -d config/ca -o nodes/lightnode1
+    bash build_chain.sh -C expand_lightnode -c config -d config/ca -o nodes/lightnode1 -L ./fisco-bcos-lightnode
 ```
 
 
@@ -177,40 +179,6 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.3.0 -c config.ini -g config.genesis
 ```
 
-### **`A`权限控制选项[**Optional**]**
-
-表示区块链节点启用权限模式。
-
-```eval_rst
-.. note::
-   - 区块链节点默认关闭权限模式
-   - 使用权限控制时，请保证所有节点均启用了权限模式，即须保证节点目录下config.ini的 ``executor.is_auth_check`` 选项均是true.
-```
-
-部署开启权限控制的Air版本区块链示例如下：
-
-```shell
-$ bash build_chain.sh -l 127.0.0.1:4 -A
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.3.0/fisco-bcos-macOS-x86_64.tar.gz ...
-[INFO] Generate ca cert successfully!
-Processing IP:127.0.0.1 Total:4
-[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
-[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
-==============================================================
-[INFO] fisco-bcos Path     : bin/fisco-bcos
-[INFO] Auth Mode           : true
-[INFO] Auth init account   : 0x5b606554358c2c492444f071a332285aad21a78b
-[INFO] Start Port          : 30300 20200
-[INFO] Server IP           : 127.0.0.1:4
-[INFO] SM Model            : false
-[INFO] output dir          : ./nodes
-[INFO] All completed. Files in ./nodes
-```
-
 ### **`a`权限控制选项[**Optional**]**
 
 可选参数，当区块链节点启用权限控制时，可通过`-a`选项指定admin账号的地址，若不指定该选项，`build_chain`脚本随机会生成一个账户地址作为admin账号。
@@ -264,6 +232,14 @@ Processing IP:127.0.0.1 Total:4
 ### **`M`节点监控配置文件选项[**Optional**]**
 
 可选参数，当区块链扩容节点需要带监控时，可通过`-M`选项来指定prometheus配置文件在nodes目录的相对路径。
+
+### **`z`生成节点目录压缩包[**Optional**]**
+
+可选参数，生成节点目录的同时生成相应的压缩包，方便多机部署时拷贝。
+
+### **`z`生成节点目录压缩包[**Optional**]**
+
+可选参数，生成节点目录的同时生成相应的压缩包，方便多机部署时拷贝。
 
 ### **`h`选项[**Optional**]**
 
