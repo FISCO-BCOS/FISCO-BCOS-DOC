@@ -149,14 +149,14 @@ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceCpuHeavy [
 
 
 # KVTable合约压测
-# 压测KV set
 # count: 压测的交易总量
 # tps: 压测QPS
 # groupId: 压测群组
-$ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [set] [count] [tps] [groupId]
+# 压测KV set
+$ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [count] [tps] [groupId] [set] 
 # 压测KV get
 # (参数解释同上)
-$ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [get] [count] [tps] [groupId]
+$ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [count] [tps] [groupId] [get] 
   ```
 **以下是WASM环境的压力测试**
 
