@@ -183,12 +183,18 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 可选参数，当区块链节点启用权限控制时，可通过`-a`选项指定admin账号的地址，若不指定该选项，`build_chain`脚本随机会生成一个账户地址作为admin账号。
 
-### **`w`权限控制选项[**Optional**]**
+### **`w`虚拟机选项[**Optional**]**
+
 可选参数，当区块链需要启用wasm虚拟机引擎时，可通过`-w`选项开启，若不指定该选项，则默认使用EVM。
-### **`R`权限控制选项[**Optional**]**
+
+### **`R`执行模式选项[**Optional**]**
+
 可选参数，当区块链启动串行执行模式时，可通过`-R`选项指定执行模式，默认为串行模式（true），若设置为false，则开启DMC并行模式。
-### **`k`权限控制选项[**Optional**]**
+
+### **`k`存储控制选项[**Optional**]**
+
 可选参数，当需要设置key-page存储中page的大小时，可通过`-k`选项设置page的大小，若不指定，默认page大小为10240。
+
 ### **`m`节点监控选项[**Optional**]**
 
 可选参数，当区块链节点启用节点监控时，可通过`-m`选项来部署带监控的节点，若不选择该选项则只部署不带监控的节点。
@@ -272,8 +278,8 @@ nodes/
 │   ├── mtail # 二进制程序
 │   ├── node0 # 节点0文件夹
 │   │   ├── mtail # mtail配置文件夹
-│   │   │   ├── start_mtail_monitor.sh # 启动脚本，用于启动该节点mtail程序
-│   │   │   ├── stop_mtail_monitor.sh	# 停止脚本，用于停止该节点mtail程序
+│   │   │   ├── start_mtail_monitor.sh  # 启动脚本，用于启动该节点mtail程序
+│   │   │   ├── stop_mtail_monitor.sh   # 停止脚本，用于停止该节点mtail程序
 │   │   │   ├── node.mtail # mtail配置文件
 │   │   ├── conf # 配置文件夹
 │   │   │   ├── ca.crt # 链根证书

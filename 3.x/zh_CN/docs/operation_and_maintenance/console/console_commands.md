@@ -827,10 +827,13 @@ PeersInfo{
 
 运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`consensus_leader_period`。这些系统参数的键名可以通过tab键补全：
 
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `setSysConfigProposal`
+
 - `tx_count_limit`: 区块最大打包交易数
 - `consensus_leader_period`: 共识选主间隔
 - `gas_limit`: 交易执行的gas限制
 - `compatibility_version`: 数据兼容版本号，当区块链所有二进制均升级到最新版本后，可通过`setSystemConfigByKey`升级数据兼容版本号到最新
+- `auth_check_status`: （3.3.0之后有效）权限检查状态，如果为0则关闭所有权限检查，非0则为开启所有检查
 
 参数：
 
@@ -949,6 +952,9 @@ ConsensusStatusInfo{
 ### 5. addSealer
 
 运行addSealer，将节点添加为共识节点。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `addSealerProposal`
+
 参数：
 
 - 节点nodeId
@@ -965,6 +971,9 @@ ConsensusStatusInfo{
 ### 6. addObserver
 
 运行addObserver，将节点添加为观察节点。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `addObserverProposal`
+
 参数：
 
 - 节点nodeId
@@ -980,6 +989,9 @@ ConsensusStatusInfo{
 ### 7. removeNode
 
 运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `removeNodeProposal`
+
 参数：
 
 - 节点nodeId
@@ -995,6 +1007,8 @@ ConsensusStatusInfo{
 ### 8. setConsensusWeight
 
 运行setConsensusWeight，设置某一个特定节点的共识权重。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `setConsensusNodeWeightProposal`
 
 ```shell
 [group0]: /apps> setConsensusWeight 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85 2

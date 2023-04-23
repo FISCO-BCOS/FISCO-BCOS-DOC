@@ -72,7 +72,6 @@ generated/
 
 区块链节点服务搭建请参考[这里](./installation.html#id6)，其主要包括创世块配置`config.genesis`和节点配置`config.ini`。
 
-
 ### 2.1 创世块配置
 
 ```eval_rst
@@ -81,6 +80,7 @@ generated/
     - **创世块配置文件在链初始化后不可更改**
     - 链初始化后，即使更改了创世块配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
 ```
+
 #### 2.1.1 链配置选项
 
 链配置选项位于`[chain]`，主要包括：
@@ -144,7 +144,7 @@ FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动
 - `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选希望不可动态调整，默认为`false`;
 - `[executor].is_auth_check`: 权限控制的配置开关，`true`表明开启权限控制，`false`表明关闭权限控制，该配置选项不可动态调整，默认关闭权限控制功能;
 - `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选希望不可动态调整，默认为`false`;
-- `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中。
+- `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中(在链版本号大等于3.3或开启了权限，这个配置必须加上)。
 
 ### 2.2 节点配置
 
@@ -241,7 +241,6 @@ level = DEBUG
 max_log_file_size = 200
 ```
 
-
 ## 3. RPC/网关服务配置
 
 RPC/网关服务搭建请参考[这里](./installation.html)，其主要包括节点配置`config.ini`。
@@ -270,7 +269,7 @@ thread_count = 4
 
 ### 3.2 RPC/网关服务配置
 
-RPC/网关服务配置位于`service`配置中，主要包括: 
+RPC/网关服务配置位于`service`配置中，主要包括:
 
 - `[service].rpc`: 网关对应的RPC服务名;
 - `[service].gateway`: RPC对应的网关服务名;
