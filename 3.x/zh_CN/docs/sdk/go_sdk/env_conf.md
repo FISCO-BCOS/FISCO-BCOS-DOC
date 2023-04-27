@@ -23,7 +23,7 @@ go-sdk v3依赖bcos-c-sdk动态库，需要先下载bcos-c-sdk动态库，然后
 
 ### 下载bcos-c-sdk动态库
 
-从[这里](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/tag/v3.2.0)下载对应平台的动态库。我们提供了一个脚本，默认下载到`/usr/local/lib`目录下，如果需要下载到其他目录，可以使用脚本的`-o`选项
+从[这里](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/tag/v3.3.0)下载对应平台的动态库。我们提供了一个脚本，默认下载到`/usr/local/lib`目录下，如果需要下载到其他目录，可以使用脚本的`-o`选项
 
 ```bash
 ./tools/download_csdk_lib.sh -o ./lib

@@ -72,7 +72,6 @@ generated/
 
 区块链节点服务搭建请参考[这里](./installation.html#id6)，其主要包括创世块配置`config.genesis`和节点配置`config.ini`。
 
-
 ### 2.1 创世块配置
 
 ```eval_rst
@@ -81,6 +80,7 @@ generated/
     - **创世块配置文件在链初始化后不可更改**
     - 链初始化后，即使更改了创世块配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
 ```
+
 #### 2.1.1 链配置选项
 
 链配置选项位于`[chain]`，主要包括：
@@ -144,7 +144,7 @@ FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动
 - `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选希望不可动态调整，默认为`false`;
 - `[executor].is_auth_check`: 权限控制的配置开关，`true`表明开启权限控制，`false`表明关闭权限控制，该配置选项不可动态调整，默认关闭权限控制功能;
 - `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选希望不可动态调整，默认为`false`;
-- `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中。
+- `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中(在链版本号大等于3.3或开启了权限，这个配置必须加上)。
 
 ### 2.2 节点配置
 
@@ -241,7 +241,6 @@ level = DEBUG
 max_log_file_size = 200
 ```
 
-
 ## 3. RPC/网关服务配置
 
 RPC/网关服务搭建请参考[这里](./installation.html)，其主要包括节点配置`config.ini`。
@@ -270,7 +269,7 @@ thread_count = 4
 
 ### 3.2 RPC/网关服务配置
 
-RPC/网关服务配置位于`service`配置中，主要包括: 
+RPC/网关服务配置位于`service`配置中，主要包括:
 
 - `[service].rpc`: 网关对应的RPC服务名;
 - `[service].gateway`: RPC对应的网关服务名;
@@ -314,7 +313,7 @@ enable = false
 ;cipher_data_key =
 ```
 
-### 日志配置选项
+### 3.5 日志配置选项
 
 日志配置位于`[log]`选项中:
 
@@ -332,3 +331,77 @@ level = DEBUG
 ; mb
 max_log_file_size = 200
 ```
+
+### 3.6 网关模块限流
+
+网关模块支持在config.ini中配置实现流量速率限制的功能，当流量超限时，通过丢弃数据包实现限流。
+
+根据需求配置如下内容，可实现
+
+* 出带宽、入带宽限流
+* 特定IP、群组的限流
+* 排除特定模块的限流
+
+在进程依赖的config.ini中的配置如下（请根据需求反注释某些项）
+
+``` ini
+[flow_control]
+    ; rate limiter stat reporter interval, unit: ms
+    ; stat_reporter_interval=60000
+
+    ; time window for rate limiter, default: 3s
+    ; time_window_sec=3
+
+    ; enable distributed rate limiter, redis required, default: false
+    ; enable_distributed_ratelimit=false
+    ; enable local cache for distributed rate limiter, work with enable_distributed_ratelimit, default: true
+    ; enable_distributed_ratelimit_cache=true
+    ; distributed rate limiter local cache percent, work with enable_distributed_ratelimit_cache, default: 20
+    ; distributed_ratelimit_cache_percent=20
+
+    ; the module that does not limit bandwidth
+    ; list of all modules: raft,pbft,amop,block_sync,txs_sync,light_node,cons_txs_sync
+    ;
+    ; modules_without_bw_limit=raft,pbft
+
+    ; allow the msg exceed max permit pass
+    ; outgoing_allow_exceed_max_permit=false
+
+    ; restrict the outgoing bandwidth of the node
+    ; both integer and decimal is support, unit: Mb
+    ;
+    ; total_outgoing_bw_limit=10
+
+    ; restrict the outgoing bandwidth of the the connection
+    ; both integer and decimal is support, unit: Mb
+    ;
+    ; conn_outgoing_bw_limit=2
+    ;
+    ; specify IP to limit bandwidth, format: conn_outgoing_bw_limit_x.x.x.x=n
+    ;   conn_outgoing_bw_limit_192.108.0.1=3
+    ;   conn_outgoing_bw_limit_192.108.0.2=3
+    ;   conn_outgoing_bw_limit_192.108.0.3=3
+    ;
+    ; default bandwidth limit for the group
+    ; group_outgoing_bw_limit=2
+    ;
+    ; specify group to limit bandwidth, group_outgoing_bw_limit_groupName=n
+    ;   group_outgoing_bw_limit_group0=2
+    ;   group_outgoing_bw_limit_group1=2
+    ;   group_outgoing_bw_limit_group2=2
+
+    ; should not change incoming_p2p_basic_msg_type_list if you known what you would to do
+    ; incoming_p2p_basic_msg_type_list=
+    ; the qps limit for p2p basic msg type, the msg type has been config by incoming_p2p_basic_msg_type_list, default: -1
+    ; incoming_p2p_basic_msg_type_qps_limit=-1
+    ; default qps limit for all module message, default: -1
+    ; incoming_module_msg_type_qps_limit=-1
+    ; specify module to limit qps, incoming_module_qps_limit_moduleID=n
+    ;       incoming_module_qps_limit_xxxx=1000
+    ;       incoming_module_qps_limit_xxxx=2000
+    ;       incoming_module_qps_limit_xxxx=3000
+
+```
+
+
+

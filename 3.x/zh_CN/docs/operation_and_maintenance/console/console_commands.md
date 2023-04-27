@@ -126,6 +126,10 @@
 * listAccount                               List the current saved account list
 * loadAccount                               Load account for the transaction signature
 * newAccount                                Create account
+---------------------------Sharding Operation----------------------------
+* getContractShard                          Get a contract's belonging shard.
+* linkShard                                 Add a contract to a shard.
+* makeShard                                 Make a shard.
 ---------------------------------------------------------------------------------------------
 ```
 
@@ -823,10 +827,13 @@ PeersInfo{
 
 运行setSystemConfigByKey，以键值对方式设置系统参数。目前设置的系统参数支持`tx_count_limit`,`consensus_leader_period`。这些系统参数的键名可以通过tab键补全：
 
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `setSysConfigProposal`
+
 - `tx_count_limit`: 区块最大打包交易数
 - `consensus_leader_period`: 共识选主间隔
 - `gas_limit`: 交易执行的gas限制
 - `compatibility_version`: 数据兼容版本号，当区块链所有二进制均升级到最新版本后，可通过`setSystemConfigByKey`升级数据兼容版本号到最新
+- `auth_check_status`: （3.3.0之后有效）权限检查状态，如果为0则关闭所有权限检查，非0则为开启所有检查
 
 参数：
 
@@ -945,6 +952,9 @@ ConsensusStatusInfo{
 ### 5. addSealer
 
 运行addSealer，将节点添加为共识节点。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `addSealerProposal`
+
 参数：
 
 - 节点nodeId
@@ -961,6 +971,9 @@ ConsensusStatusInfo{
 ### 6. addObserver
 
 运行addObserver，将节点添加为观察节点。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `addObserverProposal`
+
 参数：
 
 - 节点nodeId
@@ -976,6 +989,9 @@ ConsensusStatusInfo{
 ### 7. removeNode
 
 运行removeNode，节点退出。通过addSealer命令可以将退出的节点添加为共识节点，通过addObserver命令将节点添加为观察节点。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `removeNodeProposal`
+
 参数：
 
 - 节点nodeId
@@ -991,6 +1007,8 @@ ConsensusStatusInfo{
 ### 8. setConsensusWeight
 
 运行setConsensusWeight，设置某一个特定节点的共识权重。
+
+**注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `setConsensusNodeWeightProposal`
 
 ```shell
 [group0]: /apps> setConsensusWeight 44c3c0d914d7a3818923f9f45927724bddeeb25df92b93f1242c32b63f726935d6742b51cd40d2c828b52ed6cde94f4d6fb4b3bfdc0689cfcddf7425eafdae85 2
@@ -2553,7 +2571,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dc
 
 ### 2. loadAccount
 
-加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。
+加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。但是，若控制台使用密码机的公私钥，因公私钥都放在密码机内部，所以使用不了该操作命令。
 参数：
 
 - 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
@@ -2579,9 +2597,61 @@ Load account 0x6fad87071f790c3234108f41b76bb99874a6d813 success!
 
 ### 4. getCurrentAccount
 
-获取当前账户地址。
+获取当前账户地址。若控制台使用的是密码机公私钥，则展示的是根据密码机内部公钥转换的账户地址。
 
 ```shell
 [group0]: /apps>  getCurrentAccount
 0x6fad87071f790c3234108f41b76bb99874a6d813
+```
+
+
+
+## 块内分片管理命令
+
+该操作为“块内分片”的管理操作，请参考[此处](../../design/parallel/sharding.md)了解更多技术细节。
+
+### 1. makeShard
+
+创建一个分片
+
+参数：
+
+* 分片名：需要创建的用户名，不允许重复
+
+```
+[group0]: /apps> makeShard hello_shard
+make shard hello_shard Ok. You can use 'ls' to check
+```
+
+### 2. linkShard
+
+将某个合约绑定到某个分片中
+
+参数
+
+* 合约地址：需要绑定的合约地址
+* 分片名：需要绑定至的分片名，若不存在则创建一个
+
+注意
+
+* 已经绑定的合约不允许再次绑定
+* 未绑定的合约默认分配在一个名字为”“（空）的分片中
+* 分片内合约部署的合约属于同一个分片
+
+```
+[group0]: /apps> linkShard 0xd24180cc0fef2f3e545de4f9aafc09345cd08903 hello_shard
+Add 0xd24180cc0fef2f3e545de4f9aafc09345cd08903 to hello_shard Ok. You can use 'ls' to check
+```
+
+### 3. getContractShard
+
+根据合约地址，获取其属于哪个分片
+
+参数
+
+* 合约地址：需要查询的合约地址
+
+```
+[group0]: /apps> getContractShard d24180cc0fef2f3e545de4f9aafc09345cd08903
+/shards/hello_shard
 ```
