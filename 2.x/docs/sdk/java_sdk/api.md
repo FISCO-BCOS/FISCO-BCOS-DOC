@@ -685,7 +685,7 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ### ChainGovernanceService
 
 #### grantCommitteeMember
-授权指定用户为链管理员
+授权指定用户为链管理员。
 
 **参数**
 - userAddress: 被授权为链管理员的账户地址。
