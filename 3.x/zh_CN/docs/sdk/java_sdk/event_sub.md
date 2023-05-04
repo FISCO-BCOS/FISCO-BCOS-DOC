@@ -417,14 +417,14 @@ contract Asset {
                                         + log.getTransactionIndex()
                                         + " data:"
                                         + log.getData());
-                        ABICodec abiCodec = new ABICodec(client.getCryptoSuite());
+                        ContractCodec abiCodec = new ContractCodec(client.getCryptoSuite(), false);
                         try {
                             List<Object> list = abiCodec.decodeEvent(abi, "TransferEvent", log);
                             logger.debug("decode event log content, " + list);
                             // list = [0, 0x81376b9868b292a46a1c486d344e427a3088657fda629b5f4a647822d329cd6a, 0x28cac318a86c8a0a6a9156c2dba2c8c2363677ba0514ef616592d81557e679b6, 0x0000000000000000000000000000000000000000000000000000000000000064]
                             // 后三个事件参数均为indexed属性
                             Assert.assertEquals(4, list.size());
-                        } catch (ABICodecException e) {
+                        } catch (ContractCodecException e) {
                             logger.error("decode event log error, " + e.getMessage());
                         }
                         try {
@@ -432,7 +432,7 @@ contract Asset {
                             logger.debug("decode event log content, " + list);
                             // list = [Alice, Bob]
                             Assert.assertEquals(2, list.size());
-                        } catch (ABICodecException e) {
+                        } catch (ContractCodecException e) {
                             logger.error("decode event log error, " + e.getMessage());
                         }
                     }
