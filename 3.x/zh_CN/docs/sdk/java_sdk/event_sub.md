@@ -100,7 +100,7 @@ public class EventSubParams {
 
 ```Java
 public interface EventSubCallback {
-    void onReceiveLog(int status, List<EventLog> logs);
+    void onReceiveLog(String eventSubId, int status, List<EventLog> logs);
 }
 ```
 
@@ -141,7 +141,7 @@ Java SDK对回调类`EventSubCallback`无默认实现，用户可以通过继承
 
 ```Java
 class SubscribeCallback implements EventSubCallback {
-    public void onReceiveLog(int status, List<EventLog> logs) {
+    public void onReceiveLog(String eventSubId, int status, List<EventLog> logs) {
         // ADD CODE
     }
 }
@@ -197,52 +197,53 @@ contract Asset {
 - 场景1：将链上所有/最新的事件回调至客户端
 
 ```Java
-        // 其他初始化逻辑，省略
+        // 初始化EventSubscribe
+        EventSubscribe eventSubscribe = EventSubscribe.build(group, configOption);
+        eventSubscribe.start();
         
         // 参数设置
         EventSubParams params = new EventSubParams();
 
-        // 全部Event fromBlock设置为"1" 
-        params.setFromBlock("1");
+        // 全部Event fromBlock设置为 -1 
+        params.setFromBlock(-1);
 
-        // toBlock设置为"latest"，处理至最新区块继续等待新的区块
-        params.setToBlock("latest");
-
-        // addresses设置为空数组，匹配所有的合约地址
-        params.setAddresses(new ArrayList<String>());
-
-        // topics设置为空数组，匹配所有的Event
-        params.setTopics(new ArrayList<Object>());
+        // toBlock设置为-1，处理至最新区块继续等待新的区块
+        params.setToBlock(-1);
    
         // 注册事件
-        EventSubCallback callback = new EventSubCallback();
-        String registerId = eventSubscribe.subscribeEvent(params, callback);
+        eventSubscribe.subscribeEvent(params, 
+                (eventSubId, status, logs) -> {
+                    System.out.println("event sub id: " + eventSubId);
+                    System.out.println(" \t status: " + status);
+                    System.out.println(" \t logs: " + logs);
+                });
 ```
 
 - 场景2: 将`Asset`合约最新的`TransferEvent`事件回调至客户端
 
 ```Java
-        // 其他初始化逻辑，省略
+        // 初始化EventSubscribe
+        EventSubscribe eventSubscribe = EventSubscribe.build(group, configOption);
+        eventSubscribe.start();
         
         // 设置参数
         EventSubParams params = new EventSubParams();
 
-        // 从最新区块开始，fromBlock设置为"latest"
-        params.setFromBlock("latest");
-        // toBlock设置为"latest"，处理至最新区块继续等待新的区块
-        params.setToBlock("latest");
-
-        // addresses设置为空数组，匹配所有的合约地址
-        params.setAddresses(new ArrayList<String>());
+        // 从订阅时的最新区块区块开始，fromBlock设置为-1
+        params.setFromBlock(-1);
+        // toBlock设置为-1，处理至最新区块继续等待新的区块
+        params.setToBlock(-1);
         
         // topic0，TransferEvent(int256,string,string,uint256)
-        ArrayList<Object> topics = new ArrayList<>();
-        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
-        params.setTopics(topics);
+        params.addTopic(0, TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)");
 
         // 注册事件
-        EventSubCallback callback = new EventSubCallback();
-        String registerId = eventSubscribe.subscribeEvent(params, callback);
+        eventSubscribe.subscribeEvent(params, 
+                (eventSubId, status, logs) -> {
+                    System.out.println("event sub id: " + eventSubId);
+                    System.out.println(" \t status: " + status);
+                    System.out.println(" \t logs: " + logs);
+                });
 ```
 
 - 场景3: 将指定地址的`Asset`合约最新的`TransferEvent`事件回调至客户端
@@ -250,31 +251,33 @@ contract Asset {
 合约地址: `String addr = "0x06922a844c542df030a2a2be8f835892db99f324";`
 
 ```Java
-        // 其他初始化逻辑，省略
+        // 初始化EventSubscribe
+        EventSubscribe eventSubscribe = EventSubscribe.build(group, configOption);
+        eventSubscribe.start();
 
         String addr = "0x06922a844c542df030a2a2be8f835892db99f324";
         
         // 设置参数
         EventSubParams params = new EventSubParams();
 
-        // 从最新区块开始，fromBlock设置为"latest"
-        params.setFromBlock("latest");
-        // toBlock设置为"latest"，处理至最新块并继续等待共识出块
-        params.setToBlock("latest");
+        // 从订阅时的最新区块区块开始，fromBlock设置为-1
+        params.setFromBlock(-1);
+        // toBlock设置为-1，处理至最新区块继续等待新的区块
+        params.setToBlock(-1);
 
-        // 合约地址
-        ArrayList<String> addresses = new ArrayList<String>();
-        addresses.add(addr);
-        params.setAddresses(addresses);
-        
-        // topic0，匹配 TransferEvent(int256,string,string,uint256) 事件
-        ArrayList<Object> topics = new ArrayList<>();
-        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,uint256)"));
-        params.setTopics(topics);
+        // addresses设置为asset地址，匹配该合约地址
+        params.addAddress("0x06922a844c542df030a2a2be8f835892db99f324");
+
+        // topic0，TransferEvent(int256,string,string,uint256)
+        params.addTopic(0, TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)");
 
         // 注册事件
-        EventSubCallback callback = new EventSubCallback();
-        String registerId = eventSubscribe.subscribeEvent(params, callback);
+        eventSubscribe.subscribeEvent(params, 
+                (eventSubId, status, logs) -> {
+                    System.out.println("event sub id: " + eventSubId);
+                    System.out.println(" \t status: " + status);
+                    System.out.println(" \t logs: " + logs);
+                });
 ```
 
 - 场景4: 将指定地址的`Asset`合约所有`TransferEvent`事件回调至客户端
@@ -287,62 +290,24 @@ contract Asset {
         // 设置参数
         EventSubParams params = new EventSubParams();
 
-        // 从最初区块开始，fromBlock设置为"1"
-        params.setFromBlock("1");
-        // toBlock设置为"latest"，处理至最新块并继续等待共识出块
-        params.setToBlock("latest");
+        // 从最初区块开始，fromBlock设置为1
+        params.setFromBlock(1);
+        // toBlock设置为-1，处理至最新区块继续等待新的区块
+        params.setToBlock(-1);
 
-        // 设置合约地址
-        ArrayList<String> addresses = new ArrayList<String>();
-        addresses.add(addr);
-        params.setAddresses(addresses);
-        
-        // TransferEvent(int256,string,string,uint256) 转换为topic
-        ArrayList<Object> topics = new ArrayList<>();
-        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
-        params.setTopics(topics);
+        // addresses设置为asset地址，匹配该合约地址
+        params.addAddress("0x06922a844c542df030a2a2be8f835892db99f324");
+
+        // topic0，TransferEvent(int256,string,string,uint256)
+        params.addTopic(0, TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)");
 
         // 注册事件
-        EventSubCallback callback = new EventSubCallback();
-        String registerId = eventSubscribe.subscribeEvent(params, callback);
-```
-
-- 场景5: 将`Asset`指定合约指定账户转账的所有事件回调至客户端
-
-合约地址: `String addr = "0x06922a844c542df030a2a2be8f835892db99f324"`  
-
-转账账户: `String fromAccount = "account"`
-
-```Java
-        // 其他初始化逻辑，省略
-
-        String addr = "0x06922a844c542df030a2a2be8f835892db99f324";
-        String fromAccount = "account";
-        
-        // 参数
-        EventSubParams params = new EventSubParams();
-
-        // 从最初区块开始，fromBlock设置为"1"
-        params.setFromBlock("1");
-        // toBlock设置为"latest"
-        params.setToBlock("latest");
-
-        // 设置合约地址
-        ArrayList<String> addresses = new ArrayList<String>();
-        addresses.add(addr);
-        params.setAddresses(addresses);
-        
-        // 设置topic
-        ArrayList<Object> topics = new ArrayList<>();
-        // TransferEvent(int256,string,string,uint256) 转换为topic
-        topics.add(TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
-        // 转账账户 fromAccount转换为topic
-        topics.add(TopicTools.stringToTopic(fromAccount));
-        params.setTopics(topics);
-
-        // 注册事件
-        EventSubCallback callback = new EventSubCallback();
-        String registerId = eventSubscribe.subscribeEvent(params, callback);
+        eventSubscribe.subscribeEvent(params, 
+                (eventSubId, status, logs) -> {
+                    System.out.println("event sub id: " + eventSubId);
+                    System.out.println(" \t status: " + status);
+                    System.out.println(" \t logs: " + logs);
+                });
 ```
 
 ## 4. 解析例子
@@ -357,7 +322,7 @@ contract Asset {
                             client, client.getCryptoSuite().createKeyPair(), abiFile, binFile);
             // deploy
             TransactionResponse response = manager.deployByContractLoader("Asset", Lists.newArrayList());
-            if (!response.getTransactionReceipt().getStatus().equals("0x0")) {
+            if (!response.getTransactionReceipt().isStatusOK()) {
                 return;
             }
             contractAddress = response.getContractAddress();
@@ -375,18 +340,20 @@ contract Asset {
         }
         
         // subscribe event
+        EventSubscribe eventSubscribe = EventSubscribe.build(group, configOption);
+        eventSubscribe.start();
+
         EventSubParams eventLogParams = new EventSubParams();
-        eventLogParams.setFromBlock("latest");
-        eventLogParams.setToBlock("latest");
-        eventLogParams.setAddresses(new ArrayList<>());
-        ArrayList<Object> topics = new ArrayList<>();
-        ArrayList<Object> topicIdx0 = new ArrayList<>();
+        eventLogParams.setFromBlock(-1);
+        eventLogParams.setToBlock(-1);
+        eventLogParams.addAddress(contractAddress);
         CryptoSuite invalidCryptoSuite =
                 new CryptoSuite(client.getCryptoSuite().getCryptoTypeConfig());
         TopicTools topicTools = new TopicTools(invalidCryptoSuite);
-        topicIdx0.add(topicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
-        topicIdx0.add(topicTools.stringToTopic("TransferAccountEvent(string,string)"));
+
         eventLogParams.setTopics(topics);
+        eventLogParams.addTopic(0,topicTools.stringToTopic("TransferEvent(int256,string,string,uint256)"));
+        eventLogParams.addTopic(0,topicTools.stringToTopic("TransferAccountEvent(string,string)"));
 
         class SubscribeCallback implements EventSubCallback {
             public transient Semaphore semaphore = new Semaphore(1, true);
@@ -401,37 +368,36 @@ contract Asset {
             }
 
             @Override
-            public void onReceiveLog(int status, List<EventLog> logs) {
-                Assert.assertEquals(status, 0);
+            public void onReceiveLog(String eventId, int status, List<EventLog> logs) {
                 String str = "status in onReceiveLog : " + status;
                 logger.debug(str);
                 semaphore.release();
-                
+
                 // decode event
                 if (logs != null) {
                     for (EventLog log : logs) {
                         logger.debug(
-                                " blockNumber:"
-                                        + log.getBlockNumber()
-                                        + ",txIndex:"
-                                        + log.getTransactionIndex()
-                                        + " data:"
-                                        + log.getData());
+                                " blockNumber: {}, txIndex:{}, data: {}",
+                                log.getBlockNumber(),
+                                log.getTransactionIndex(),
+                                log.getData());
                         ContractCodec abiCodec = new ContractCodec(client.getCryptoSuite(), false);
                         try {
                             List<Object> list = abiCodec.decodeEvent(abi, "TransferEvent", log);
                             logger.debug("decode event log content, " + list);
-                            // list = [0, 0x81376b9868b292a46a1c486d344e427a3088657fda629b5f4a647822d329cd6a, 0x28cac318a86c8a0a6a9156c2dba2c8c2363677ba0514ef616592d81557e679b6, 0x0000000000000000000000000000000000000000000000000000000000000064]
+                            // list = [0,
+                            // 0x81376b9868b292a46a1c486d344e427a3088657fda629b5f4a647822d329cd6a,
+                            // 0x28cac318a86c8a0a6a9156c2dba2c8c2363677ba0514ef616592d81557e679b6,
+                            // 0x0000000000000000000000000000000000000000000000000000000000000064]
                             // 后三个事件参数均为indexed属性
-                            Assert.assertEquals(4, list.size());
                         } catch (ContractCodecException e) {
                             logger.error("decode event log error, " + e.getMessage());
                         }
                         try {
-                            List<Object> list = abiCodec.decodeEvent(abi, "TransferAccountEvent", log);
+                            List<Object> list =
+                                    abiCodec.decodeEvent(abi, "TransferAccountEvent", log);
                             logger.debug("decode event log content, " + list);
                             // list = [Alice, Bob]
-                            Assert.assertEquals(2, list.size());
                         } catch (ContractCodecException e) {
                             logger.error("decode event log error, " + e.getMessage());
                         }
