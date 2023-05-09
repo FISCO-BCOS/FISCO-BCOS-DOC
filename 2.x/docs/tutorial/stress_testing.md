@@ -471,7 +471,7 @@ bash build_chain.sh -f ipconf -i -p 30914,20914,8914
 scp -r 192.168.1.1/node0/ app@192.168.1.1:/data/test
 scp -r 192.168.1.2/node0/ app@192.168.1.2:/data/test
 scp -r 192.168.1.3/node0/ app@192.168.1.3:/data/test
-scp -r 192.168.1.4/node0/ app@192.168.1.3:/data/test
+scp -r 192.168.1.4/node0/ app@192.168.1.4:/data/test
 ```
 
 #### 配置FISCO BCOS适配器
@@ -561,7 +561,7 @@ Caliper在退出流程的最后会执行end配置指定的命令，主要用于�
 docker -H 192.168.1.1:2375 stop $(docker -H 192.168.1.1:2375 ps -a | grep node0 | cut -d " " -f 1) 1> /dev/null && echo -e "\033[32mremote container node0 stopped\033[0m"
 docker -H 192.168.1.2:2375 stop $(docker -H 192.168.1.2:2375 ps -a | grep node1 | cut -d " " -f 1) 1> /dev/null && echo -e "\033[32mremote container node1 stopped\033[0m"
 docker -H 192.168.1.3:2375 stop $(docker -H 192.168.1.3:2375 ps -a | grep node2 | cut -d " " -f 1) 1> /dev/null && echo -e "\033[32mremote container node2 stopped\033[0m"
-docker -H 192.168.1.4:2375 stop $(docker -H 192.168.1.3:2375 ps -a | grep node3 | cut -d " " -f 1) 1> /dev/null && echo -e "\033[32mremote container node3 stopped\033[0m"
+docker -H 192.168.1.4:2375 stop $(docker -H 192.168.1.4:2375 ps -a | grep node3 | cut -d " " -f 1) 1> /dev/null && echo -e "\033[32mremote container node3 stopped\033[0m"
 ```
 
 即停止并删除有所的远程容器。如果不需要在Caliper退出时执行命令，需要将该配置项置空。
