@@ -29,6 +29,7 @@ Air版本区块链扩容时，需要提前准备证书和配置文件，用于�
 .. note::
    Air版本区块链节点根证书位于搭链时生成的目录下，可进入搭建节点时生成的文件夹(如：`搭建第一个区块链网络 <../../quick_start/air_installation.html>`_ 生成的节点配置文件夹是`nodes`)，通过 ``find . -name ca`` 查找链的根证书
 ```
+
 这里以[搭建第一个区块链网络](../quick_start.md)为基础，基于`node0`扩容一个新节点`node4`为例：
 
 ```shell
@@ -83,6 +84,7 @@ cd ~/fisco
 # -o: 指定扩容节点配置所在目录
 bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node4
 ```
+
 当节点输出`All completed. Files in nodes/127.0.0.1/node4`说明生成扩容配置成功，输出的日志如下：
 
 ```shell
@@ -150,6 +152,7 @@ fisco        78968   3.6  0.1  5110764  19116 s005  S     6:16下午   0:21.27 /
 ```
 
 **步骤2：确定节点NodeID**
+
 ```shell
 # 进入操作目录
 $ cd ~/fisco
@@ -190,7 +193,6 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 ```
 
 ## 4. 将扩容节点加入为共识节点
-
 
 ```eval_rst
 .. note::

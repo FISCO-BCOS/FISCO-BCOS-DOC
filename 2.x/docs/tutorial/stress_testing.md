@@ -119,6 +119,7 @@ Java SDK Demo是基于Java SDK的基准测试集合，能够对FISCO BCOS节点�
 ```eval_rst
 .. note::
 
+    目前通过Caliper进行压测FISCO BCOS的方式已较为陈旧，推荐用户使用Java SDK Demo进行压力测试。
     目前FISCO BCOS适配的Caliper版本为0.2.0，请在部署Caliper运行环境时确保Caliper的版本为0.2.0，如在部署或使用过程中遇到任何问题，请优先参考 `https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues/1248>`_ 中的解决方案进行排查。
     
 ```
