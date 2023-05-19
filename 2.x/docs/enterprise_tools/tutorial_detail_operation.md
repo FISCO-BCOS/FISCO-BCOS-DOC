@@ -417,7 +417,7 @@ cp ./agencyB_node_info/peers.txt ~/generator-A/meta/peersB.txt
 cd ~/generator-A
 ```
 
-机构A修改conf文件夹下的`group_genesis.ini`，配置项可参考[手册](./config.md#group-genesis-ini)。:
+机构A修改conf文件夹下的`group_genesis.ini`，配置项可参考[手册](./config.md)。:
 
 ```bash
 cat > ./conf/group_genesis.ini << EOF
