@@ -1,4 +1,4 @@
-# 开发第一个WBC-Liquid区块链应用
+# 4. 开发第一个WBC-Liquid区块链应用
 
 标签：``开发第一个应用`` ``WBC-Liquid`` ``合约开发`` ``区块链应用`` ``WASM``
 
@@ -72,7 +72,7 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.0.1/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.3.0/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -444,7 +444,7 @@ repositories {
 修改``build.gradle``文件，引入Spring框架。
 
 ```java
-def spring_version = "4.3.27.RELEASE"
+def spring_version = "5.3.25"
 List spring = [
         "org.springframework:spring-core:$spring_version",
         "org.springframework:spring-beans:$spring_version",
@@ -455,7 +455,7 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.0.1")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.3.0")
     compile spring
 }
 ```

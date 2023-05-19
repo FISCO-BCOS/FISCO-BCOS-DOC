@@ -1,4 +1,4 @@
-# 创建和使用账户
+# 3. 账户使用与账户管理
 
 标签：``创建账户`` ``国密账户`` ``密钥文件``
 
@@ -262,3 +262,35 @@ openssl ec -in ecprivkey.pem -text -noout 2>/dev/null| sed -n '7,11p' | tr -d ":
 ```shell
 dcc703c0e500b653ca82273b7bfad8045d85a470
 ```
+
+## 账户管理
+
+```eval_rst
+.. important::
+   账户的管理冻结、解冻、废止操作以，均需要将开启区块链权限模式，详情请参考`【权限治理使用指南】 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
+```
+
+在开启区块链权限模式之后，每次发起合约调用均会检查账户状态是否正常（tx.origin），账户的状态以存储表的形式记录在BFS `/usr/` 目录下，存储表名为 `/usr/` + 账户地址，如果查不到账户状态默认该账户为正常。BFS `/usr/` 目录底下的账户状态只有在主动设置账户状态时才会创建。**账户状态管理的接口只有治理委员才能操作。**
+
+治理委员可以通过AccountManagerPrecompiled的接口对账户进行操作，固定地址为0x10003。
+
+```solidity
+enum AccountStatus{
+    normal,
+    freeze,
+    abolish
+}
+
+abstract contract AccountManager {
+    // 设置账户状态，只有治理委员可以调用，0 - normal, others - abnormal, 如果账户不存在会先创建
+    function setAccountStatus(address addr, AccountStatus status) public virtual returns (int32);
+    // 任何用户都可以调用
+    function getAccountStatus(address addr) public view virtual returns (AccountStatus);
+}
+```
+
+### 账户的冻结、解冻、废止
+
+治理委员可以对固定地址0x10003的预编译合约发起交易、对账户的状态进行读写。在执行操作时，将会确定交易发起人msg.sender是否为治理委员会记录中的治理委员，若不是则会拒绝。值得注意的是，治理委员的账户地址不允许修改状态。
+
+治理委员也可以通过控制台对账户进行冻结、解冻、废止等操作，详情请看：[冻结/解冻账户命令](../operation_and_maintenance/console/console_commands.html#freezeaccount-unfreezeaccount)、[废止账户命令](../operation_and_maintenance/console/console_commands.html#abolishaccount)

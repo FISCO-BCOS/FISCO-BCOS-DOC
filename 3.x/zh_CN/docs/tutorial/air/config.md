@@ -64,7 +64,7 @@ node.1 = 74034fb43f75c63bb2259a63f71d9d1c658945409889d3028d257914be1612d1f2e80c4
 
 ### 1.3 gas配置
 
-FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易，创世块的`[tx].gas_limit`可配置交易最大gas限制，默认是3000000000，链初始化完毕后，可通过[控制台指令](../../develop/console/console_commands.html#setsystemconfigbykey)动态调整gas限制。
+FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易，创世块的`[tx].gas_limit`可配置交易最大gas限制，默认是3000000000，链初始化完毕后，可通过[控制台指令](../../operation_and_maintenance/console/console_commands.html#setsystemconfigbykey)动态调整gas限制。
 
 - `[tx].gas_limit`: 交易执行时gas限制，默认设置为3000000000
 
@@ -79,15 +79,15 @@ gas_limit = 3000000000
 
 FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
 
-- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
+- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../operation_and_maintenance/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
 
 ### 1.5 执行模块配置
 
 `[executor]`配置项涉及执行相关的创世块配置，主要包括：
 
-- `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选希望不可动态调整，默认为`false`;
+- `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选项不可动态调整，默认为`false`;
 - `[executor].is_auth_check`: 权限控制的配置开关，`true`表明开启权限控制，`false`表明关闭权限控制，该配置选项不可动态调整，默认关闭权限控制功能;
-- `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选希望不可动态调整，默认为`false`;
+- `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选项不可动态调整，默认为`false`;
 - `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中。
 
 ## 2. 节点配置文件
@@ -109,7 +109,7 @@ P2P相关配置包括：
 - `[p2p].listen_port`：节点P2P监听端口;
 - `[p2p].sm_ssl`: 节点之间的SSL连接是否使用国密SSL协议，`true`表示开启国密SSL连接; `false`表示采用非国密SSL连接，默认为`false`;
 - `[p2p].nodes_path`：节点连接信息文件`nodes.json`所在目录，默认为当前文件夹;
-- `[p2p].nodes_file`：节点连接信息文件`nodes.json`所在路径。
+- `[p2p].nodes_file`：`P2P`连接信息文件`nodes.json`所在路径。
 
 P2P配置示例如下：
 
@@ -122,6 +122,29 @@ P2P配置示例如下：
     nodes_path=./
     nodes_file=nodes.json
 ```
+
+`p2p`连接配置文件`nodes_file`格式:
+
+```shell
+{"nodes":[连接列表]}
+```
+
+示例:
+
+```shell
+{"nodes":["127.0.0.1:30300","127.0.0.1:30301","127.0.0.1:30302","127.0.0.1:30303"]}
+```
+
+`P2P`支持可配置的网络连接，并且支持服务运行期间动态新增/删减连接节点，流程如下：
+
+- 修改`[p2p].nodes_file`配置中的连接信息
+- 向服务进程发送信号`USR1`:
+
+```shell
+kill -USR1 网关节点pid
+```
+
+服务会重新加载`P2P`连接信息。
 
 ### 2.2 配置RPC
 
@@ -265,3 +288,77 @@ FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/
     ; MB
     max_log_file_size=200
 ```
+
+### 2.9 网关模块限流
+
+网关模块支持在config.ini中配置实现流量速率限制的功能，当流量超限时，通过丢弃数据包实现限流。
+
+根据需求配置如下内容，可实现
+
+* 出带宽、入带宽限流
+* 特定IP、群组的限流
+* 排除特定模块的限流
+
+在进程依赖的config.ini中的配置如下（请根据需求反注释某些项）
+
+``` ini
+[flow_control]
+    ; rate limiter stat reporter interval, unit: ms
+    ; stat_reporter_interval=60000
+
+    ; time window for rate limiter, default: 3s
+    ; time_window_sec=3
+
+    ; enable distributed rate limiter, redis required, default: false
+    ; enable_distributed_ratelimit=false
+    ; enable local cache for distributed rate limiter, work with enable_distributed_ratelimit, default: true
+    ; enable_distributed_ratelimit_cache=true
+    ; distributed rate limiter local cache percent, work with enable_distributed_ratelimit_cache, default: 20
+    ; distributed_ratelimit_cache_percent=20
+
+    ; the module that does not limit bandwidth
+    ; list of all modules: raft,pbft,amop,block_sync,txs_sync,light_node,cons_txs_sync
+    ;
+    ; modules_without_bw_limit=raft,pbft
+
+    ; allow the msg exceed max permit pass
+    ; outgoing_allow_exceed_max_permit=false
+
+    ; restrict the outgoing bandwidth of the node
+    ; both integer and decimal is support, unit: Mb
+    ;
+    ; total_outgoing_bw_limit=10
+
+    ; restrict the outgoing bandwidth of the the connection
+    ; both integer and decimal is support, unit: Mb
+    ;
+    ; conn_outgoing_bw_limit=2
+    ;
+    ; specify IP to limit bandwidth, format: conn_outgoing_bw_limit_x.x.x.x=n
+    ;   conn_outgoing_bw_limit_192.108.0.1=3
+    ;   conn_outgoing_bw_limit_192.108.0.2=3
+    ;   conn_outgoing_bw_limit_192.108.0.3=3
+    ;
+    ; default bandwidth limit for the group
+    ; group_outgoing_bw_limit=2
+    ;
+    ; specify group to limit bandwidth, group_outgoing_bw_limit_groupName=n
+    ;   group_outgoing_bw_limit_group0=2
+    ;   group_outgoing_bw_limit_group1=2
+    ;   group_outgoing_bw_limit_group2=2
+
+    ; should not change incoming_p2p_basic_msg_type_list if you known what you would to do
+    ; incoming_p2p_basic_msg_type_list=
+    ; the qps limit for p2p basic msg type, the msg type has been config by incoming_p2p_basic_msg_type_list, default: -1
+    ; incoming_p2p_basic_msg_type_qps_limit=-1
+    ; default qps limit for all module message, default: -1
+    ; incoming_module_msg_type_qps_limit=-1
+    ; specify module to limit qps, incoming_module_qps_limit_moduleID=n
+    ;       incoming_module_qps_limit_xxxx=1000
+    ;       incoming_module_qps_limit_xxxx=2000
+    ;       incoming_module_qps_limit_xxxx=3000
+
+```
+
+
+
