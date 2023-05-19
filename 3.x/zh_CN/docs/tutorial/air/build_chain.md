@@ -107,7 +107,6 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L download_binary
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /bin/fisco-bcos-lightnode
 ```
 
-
 ### **`e`选项[**Optional**]**
 
 指定Air版本FISCO BCOS的二进制可执行文件路径，若不指定，则默认拉取最新版本的FISCO BCOS。
@@ -140,6 +139,7 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2
 - **区块链节点之间采用国密SSL连接**。
 
 搭建单机四节点国密区块链节点的示例如下：
+
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 ```
@@ -158,7 +158,6 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 ### **`c`扩容选项**
 
 扩容节点选项，用于指定扩容节点的配置文件路径，此路径须包括`config.ini, config.genesis, nodes.json`。
-
 
 ### **`d`扩容选项**
 
@@ -229,6 +228,7 @@ Processing IP:127.0.0.1 Total:4
 [INFO] output dir          : nodes
 [INFO] All completed. Files in nodes
 ```
+
 生成完区块链节点文件，启动节点（nodes/127.0.0.1/start_all.sh）和节点监控（nodes/monitor/start_monitor.sh），根据提示登录grafana（用户名密码为admin/admin）导入Dashboard（[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard.json)）和配置prometheus源(http://ip:9090/)查看各个指标实时展示。
 
 ### **`i`扩容节点监控选项[**Optional**]**
@@ -238,10 +238,6 @@ Processing IP:127.0.0.1 Total:4
 ### **`M`节点监控配置文件选项[**Optional**]**
 
 可选参数，当区块链扩容节点需要带监控时，可通过`-M`选项来指定prometheus配置文件在nodes目录的相对路径。
-
-### **`z`生成节点目录压缩包[**Optional**]**
-
-可选参数，生成节点目录的同时生成相应的压缩包，方便多机部署时拷贝。
 
 ### **`z`生成节点目录压缩包[**Optional**]**
 

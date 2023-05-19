@@ -149,14 +149,12 @@ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceCpuHeavy [
 
 
 # KVTable合约压测
-# 压测KV set
 # count: 压测的交易总量
 # tps: 压测QPS
 # groupId: 压测群组
-$ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [set] [count] [tps] [groupId]
-# 压测KV get
-# (参数解释同上)
-$ java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [get] [count] [tps] [groupId]
+# useKVTable: 压测KV标志值，true为set方法，false为get方法
+# valueLength: 测试数据的长度，默认为256
+$ java -cp 'conf/:lib/:apps/' org.fisco.bcos.sdk.demo.perf.PerformanceKVTable [count] [tps] [groupId] [useKVTable] [valueLength]
   ```
 **以下是WASM环境的压力测试**
 
