@@ -20,6 +20,7 @@ Raft（Replication and Fault Tolerant）是一个允许网络分区（Partition 
 
 ### 1.4 任期
 Raft算法将时间划分为不定长度的任期Terms，Terms为连续的数字。每个Term以选举开始，如果选举成功，则由当前leader负责出块，如果选举失败，并没有选举出新的单一Leader，则会开启新的Term，重新开始选举。
+
 ![.](../../../images/consensus/raft_terms.png)
 
 ## 1.5 消息
@@ -49,7 +50,7 @@ Raft算法将时间划分为不定长度的任期Terms，Terms为连续的数字
 </thead>
 <tr>
   <td rowspan="3" align="left">VoteReq</td>
-  <td>candidate</td> 
+  <td>candidate</td>
   <td>Candidate自身的节点索引</td>
 </tr>
 <tr>
@@ -109,7 +110,7 @@ Raft共识模块中使用心跳机制来触发Leader选举。当节点启动时�
 1. Follower增加当前的Term，转换为Candidate；
 2. Candidate将票投给自己，并广播RequestVote到其他节点请求投票；
 3. Candidate节点保持在Candidate状态，直到下面三种情况中的一种发生：(1)该节点赢得选举；(2) 在等待选举期间，Candidate收到了其他节点的Heartbeat；(3) 经过*Election Timeout*后，没有Leader被选出。Raft算法采用随机定时器的方法来避免节点选票出现平均瓜分的情况以保证大多数时候只会有一个节点超时进入Candidate状态并获得大部分节点的投票成为Leader。
-    
+
 #### 3.1.2 投票
 节点在收到VoteReq消息后，会根据消息的内容选择不同的响应策略：
 1. ***VoteReq的Term小于或等于自己的Term***
@@ -118,17 +119,17 @@ Raft共识模块中使用心跳机制来触发Leader选举。当节点启动时�
     * 如果节点不是Leader：
         * 如果VoteReq的Term小于自己的Term，则拒绝该投票请求，如果Candidate收到超过半数的该种响应则表明其已经过时，此时Candidate会放弃选举转变为Follower，并增加投票超时；
         * 如果VoteReq的Term等于自己的Term，则拒绝该投票请求，对于该投票请求不作任何处理。对于每个节点而言，只能按照先到先得的原则投票给一个Candidate，从而保证每轮选举中至多只有一个Candidate被选为Leader。
-        
+
 2. ***VoteReq的lastLeaderTerm小于自己的lastLeaderTerm***
 
     每个节点中会有一个lastLeaderTerm字段表示该节点见过的最后一个Leader的Term，lastLeaderTerm仅能由Heartbeat进行更新。如果VoteReq中的lastLeaderTerm小于自己的lastLeaderTerm，表明Leader访问这个Candidate存在问题，如果此时Candidate处于网络孤岛的环境中，会不断向外提起投票请求，因此需要打断它的投票请求，所以此时节点会拒绝该投票请求。
-    
+
 3. ***VoteReq的lastBlockNumber小于自己的lastBlockNumber***
 
     每个节点中会有一个lastBlockNumber字段表示节点见到过的最新块的块高。在出块过程中，节点间会进行区块复制（详见3.2节），在区块复制的过程中，可能有部分节点收到了较新的区块数据而部分没有，从而导致不同节点的lastBlockNumber不一致。为了使系统能够达成一致，需要要求节点必须把票投给拥有较新数据的节点，因此在这种情况下节点会拒绝该投票请求。
-    
+
 4. ***节点是第一次投票***
-	
+
     为了避免出现Follower因为网络抖动导致重新发起选举，规定如果节点是第一次投票，直接拒绝该投票请求，同时会将自己的firstVote字段置为该Candidate的节点索引。
 
 5. ***1~4步骤中都没有拒绝投票请求***

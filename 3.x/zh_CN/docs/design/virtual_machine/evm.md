@@ -8,13 +8,11 @@
 
 当智能合约被编译成二进制文件后，被部署到区块链上。用户通过调用智能合约的接口，来触发智能合约的执行操作。EVM执行智能合约的代码，修改当前区块链上的数据（状态）。被修改的数据，会被共识，确保一致性。
 
-
-
 ## EVMC – Ethereum Client-VM Connector API
 
-新版本的以太坊将EVM从节点代码中剥离出来，形成一个独立的模块。EVM与节点的交互，抽象出EVMC接口标准。通过EVMC，节点可以对接多种虚拟机，而不仅限于传统的基于solidity的虚拟机。
+新版本的以太坊将EVM从节点代码中剥离出来，形成一个独立的模块。EVM与节点的交互，抽象出EVMC接口标准。通过EVMC，节点可以对接多种虚拟机。
 
-传统的solidity虚拟机，在以太坊中称为interpreter，下文主要解释interpreter的实现。
+最初的EVM虚拟机，在以太坊中称为interpreter，下文主要解释interpreter的实现。
 
 ### EVMC 接口
 
@@ -27,7 +25,7 @@ EVM本身不保存状态数据，节点通过instance接口操作EVM，EVM反过
 
 ![](../../../images/evm/evmc.png)
 
-**Instance 接口**
+**Instance接口**
 
 定义了节点对虚拟机的操作，包括创建，销毁，设置等。
 
@@ -47,7 +45,6 @@ EVM本身不保存状态数据，节点通过instance接口操作EVM，EVM反过
 
 接口定义在evmc_context_fn_table（evmc.h）中。
 
-
 * evmc_account_exists_fn account_exists
 * evmc_get_storage_fn get_storage
 * evmc_set_storage_fn set_storage
@@ -60,7 +57,6 @@ EVM本身不保存状态数据，节点通过instance接口操作EVM，EVM反过
 * evmc_get_tx_context_fn get_tx_context
 * evmc_get_block_hash_fn get_block_hash
 * evmc_emit_log_fn emit_log
-
 
 ## EVM 执行
 
@@ -198,9 +194,6 @@ void VM::caseCall()
 }
 ```
 
-
-
 ## 总结
 
-EVM是一个状态执行的机器，输入是solidity编译后的二进制指令和节点的状态数据，输出是节点状态的改变。以太坊通过EVMC实现了多种虚拟机的兼容。但截至目前，并未出现除开interpreter之外的，真正生产可用的虚拟机。也许要做到同一份代码在不同的虚拟机上跑出相同的结果，是一件很难的事情。BCOS将持续跟进此部分的发展。
-
+EVM是一个状态执行的机器，输入是solidity编译后的二进制指令和节点的状态数据，输出是节点状态的改变。以太坊通过EVMC实现了多种虚拟机的兼容。

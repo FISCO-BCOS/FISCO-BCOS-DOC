@@ -3,17 +3,9 @@
 标签：``Gas`` ``智能合约`` ``虚拟机``
 
 ----
-EVM虚拟机有一整套Gas机制来衡量每笔交易上链消耗的CPU、内存和存储资源。FISCO BCOS 2.0引入了Precompiled合约，支持内置的C++合约，为了提升Precompiled合约的安全性，FISCO BCOS v2.4.0在Precompiled合约中引入了Gas机制。
-
-此外，EVM原始的Gas机制中，交易的主要Gas消耗来源于存储，考虑到联盟链场景更关注CPU和内存消耗，FISCO BCOS v2.4.0调整了存储Gas，引入`Free Storage` Gas衡量模式，提升CPU和内存在交易Gas消耗中的占比。
-
+EVM虚拟机有一整套Gas机制来衡量每笔交易上链消耗的CPU、内存和存储资源。FISCO BCOS 引入了Precompiled合约，支持内置的C++合约，为了提升Precompiled合约的安全性，FISCO BCOS v2.4.0在Precompiled合约中引入了Gas机制。
 
 ## Precompiled合约支持Gas计算
-
-```eval_rst
-.. note::
-    Precompiled合约支持Gas计算的特性从v2.4.0开始支持，当 ``supported_version`` 小于v2.4.0，或者旧链直接替换二进制升级时，不支持该特性
-```
 
 ### 模块架构
 
@@ -28,7 +20,6 @@ FISCO BCOS v2.4.0新增了`PrecompiledGas`模块进行Gas计算，Gas开销主�
 - 虚拟机执行交易调用`Precompiled`合约的`call`接口时，基础操作占用的内存变化时，会更新`PrecompiledGas`的运行时消耗的内存
 
 - `Precompiled`合约执行完毕后，可调用接口，根据运行`Precompiled`合约过程中执行的指令集合、消耗的内存，计算出该`Precompiled`合约Gas消耗。
-
 
 ### Precompiled合约Gas衡量标准
 
@@ -75,7 +66,6 @@ PaillierAdd | 同态加接口 | 0x13 |
 GroupSigVerify | 群签名验证接口 | 0x14 |
 RingSigVerify | 环签名验证接口 | 0x15 |
 
-
 ##### Precompiled合约基础操作衡量标准
 
 `PrecompiledGas`定义了Precompiled合约每个基础操作对应的Gas消耗，具体如下：
@@ -105,48 +95,26 @@ PaillierAdd | 20000 |
 GroupSigVerify | 20000 |
 RingSigVerify | 20000 |
 
-
-## EVM Gas衡量标准插件化
-
-如前面所述，针对部分场景衡量交易资源耗用时，更加关注CPU和Gas，FISCO BCOS v2.4.0引入了`Free Storage`的Gas衡量模式，提升CPU和内存在交易Gas消耗中的占比。
-
-
-```eval_rst
-.. note::
-    EVM Gas衡量标准支持插件化配置的特性从v2.4.0开始支持，当 ``supported_version`` 小于v2.4.0，或者旧链直接替换二进制升级时，不支持该特性
-```
-
-### 模块架构
-
-为了支持Gas衡量标准插件化配置和FreeStorage的Gas衡量模式，FISCO BCOS v2.4.0在以太坊EVMSchedule引入`FreeStorageEVMSchedule`，在PrecopmiledGas的GasMetrics基础上引入了`FreeStorageGasMetrics`，并根据`genesis`文件的`enable_free_storage`配置项决定启用哪种Gas衡量模式，如下图所示：
-
-![](../../../images/evm/free_storage.png)
-
-为了提升CPU和内存在交易Gas消耗中的占比，`FreeStorageEVMSchedule`调整了创建合约、`SSTORE`、`SLOAD`等操作的Gas消耗；`FreeStorageGasMetrics`主要调整了`CreateTable`、`Insert`、`Remove`、`Update`等操作的Gas消耗。
-
 ### Gas衡量标准
 
-下面分别介绍非`FreeStorage`模式和`FreeStorage`模式下，EVM虚拟机和Precompiled合约Gas衡量标准：
+下面分别介绍EVM虚拟机和Precompiled合约Gas衡量标准：
 
 **EVM虚拟机Gas衡量标准**
 
-
-Gas | 说明 | EVMSchedule模式下Gas消耗 | FreeStorageEVMSchedule模式下Gas消耗
-|-------|--------|-------|--------|
-CreateGas | 创建合约的Gas消耗  | 32000 | 16000 |
-sloadGas| 从存储读取32字节数据消耗的Gas  | 200 |  1200|
-sstoreSetGas| 添加32字节数据到存储的Gas消耗 | 20000 | 1200 |
-sstoreResetGas| 更新32字节存储数据的Gas消耗 |5000 | 1200 |
+Gas | 说明 | Gas消耗 |
+|-------|--------|-------|
+CreateGas | 创建合约的Gas消耗  | 32000 |
+sloadGas| 从存储读取32字节数据消耗的Gas  | 200 |
+sstoreSetGas| 添加32字节数据到存储的Gas消耗 | 20000 |
+sstoreResetGas| 更新32字节存储数据的Gas消耗 |5000 |
 
 **Precompiled合约Gas衡量标准**
 
-
-Gas | 说明| GasMetrics模式下Gas消耗 | FreeStorageGasMetrics模式下Gas消耗
--------|--------|-------|--------|
-CreateTableGas| 创建表的Gas消耗 | 16000 | 500 |
-StoreGas| 向表中插入数据或更新表中数据的Gas消耗 | 10000 | 200 |
-RemoveGas| 删除表中数据的Gas消耗 | 2500 | 200 |
-
+Gas | 说明| Gas消耗 |
+-------|--------|-------|
+CreateTableGas| 创建表的Gas消耗 | 16000 |
+StoreGas| 向表中插入数据或更新表中数据的Gas消耗 | 10000 |
+RemoveGas| 删除表中数据的Gas消耗 | 2500 |
 
 ### 配置项
 
