@@ -67,9 +67,11 @@ bash get_account.sh
 执行上面的命令，可以得到类似下面的输出，包括账户地址和以账户地址为文件名的私钥PEM文件与公钥PUB文件。
 
 ```shell
-[INFO] Account Address   : 0xa04beef19c812628a2aa1f0fc73e0963f84ec75e
-[INFO] Private Key (pem) : accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem
-[INFO] Public  Key (pem) : accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem.pub
+[INFO] Account privateHex: 0x3c73c7ee2d549c7a39fddd3e0449677f3c201f0f4c6c540c93ab38f8aab03388
+[INFO] Account publicHex : 0x5309fa17ae97f81f80a1da3d6b116377ace351dffdcbfd0e91fbb3bcf0312d363c78b8aaf929b3661c1f02e8b2c318358843de6a2dcc66cc0d5260a0d6874a6e
+[INFO] Account Address   : 0x3d1771fb60963fbaf5906c6b2a574c77dae7c136
+[INFO] Private Key (pem) : accounts/0x3d1771fb60963fbaf5906c6b2a574c77dae7c136.pem
+[INFO] Public  Key (pem) : accounts/0x3d1771fb60963fbaf5906c6b2a574c77dae7c136.pem.pub
 ```
 
 - 指定PEM私钥文件计算账户地址
@@ -81,7 +83,9 @@ bash get_account.sh -k accounts/0xa04beef19c812628a2aa1f0fc73e0963f84ec75e.pem
 执行上面的命令，结果如下
 
 ```shell
-[INFO] Account Address   : 0xa04beef19c812628a2aa1f0fc73e0963f84ec75e
+[INFO] Account Address   : 0x3d1771fb60963fbaf5906c6b2a574c77dae7c136
+[INFO] Account privateHex: 0x3c73c7ee2d549c7a39fddd3e0449677f3c201f0f4c6c540c93ab38f8aab03388
+[INFO] Account publicHex : 0x5309fa17ae97f81f80a1da3d6b116377ace351dffdcbfd0e91fbb3bcf0312d363c78b8aaf929b3661c1f02e8b2c318358843de6a2dcc66cc0d5260a0d6874a6e
 ```
 
 #### 3. 使用脚本生成PKCS12格式私钥
@@ -95,26 +99,30 @@ bash get_account.sh -p
 执行上面的命令，可以得到类似下面的输出，按照提示输入密码，生成对应的p12文件和pub文件。
 
 ```shell
+[INFO] Account privateHex: 0x7fe388c7617b7b2241f0a67a789f38f29dd731ae6ce3510302ab26fd429d65ce
+[INFO] Account publicHex : 0x8d90d7e3e5b88b62941b23db10f35d13d1a06265e14993d43dff8562d23fded7466c006b74fa04b71c86c20a27ca20915e2f5e01dc466af9e080ff71229957e8
 [INFO] Note: the entered password cannot contain Chinese characters!
+Warning: -chain option ignored with -nocerts
 Enter Export Password:
 Verifying - Enter Export Password:
-[INFO] Account Address   : 0xd97a6a101d15c228a38c09d157843d2697535f7f
-[INFO] Private Key (p12) : accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.p12
-[INFO] Public  Key (pem) : accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.pem.pub
+[INFO] Account Address   : 0x6a707388d949ca429c1473e6c5ce334ad9c455be
+[INFO] Private Key (p12) : accounts/0x6a707388d949ca429c1473e6c5ce334ad9c455be.p12
+[INFO] Public  Key (pem) : accounts/0x6a707388d949ca429c1473e6c5ce334ad9c455be.pem.pub
 ```
 
 - 指定p12私钥文件计算账户地址，**按提示输入p12文件密码**
 
 ```shell
-bash get_account.sh -P accounts/0xd97a6a101d15c228a38c09d157843d2697535f7f.p12
+bash get_account.sh -P accounts/0x6a707388d949ca429c1473e6c5ce334ad9c455be.p12
 ```
 
 执行上面的命令，结果如下
 
 ```shell
 Enter Import Password:
-MAC verified OK
-[INFO] Account Address   : 0xd97a6a101d15c228a38c09d157843d2697535f7f
+[INFO] Account Address   : 0x6a707388d949ca429c1473e6c5ce334ad9c455be
+[INFO] Account privateHex: 0x7fe388c7617b7b2241f0a67a789f38f29dd731ae6ce3510302ab26fd429d65ce
+[INFO] Account publicHex : 0x8d90d7e3e5b88b62941b23db10f35d13d1a06265e14993d43dff8562d23fded7466c006b74fa04b71c86c20a27ca20915e2f5e01dc466af9e080ff71229957e8
 ```
 
 ## 账户的存储
@@ -267,7 +275,7 @@ dcc703c0e500b653ca82273b7bfad8045d85a470
 
 ```eval_rst
 .. important::
-   账户的管理冻结、解冻、废止操作以，均需要将开启区块链权限模式，详情请参考`【权限治理使用指南】 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
+   账户的管理冻结、解冻、废止操作，均需要将开启区块链权限模式，详情请参考`权限治理使用指南 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
 ```
 
 在开启区块链权限模式之后，每次发起合约调用均会检查账户状态是否正常（tx.origin），账户的状态以存储表的形式记录在BFS `/usr/` 目录下，存储表名为 `/usr/` + 账户地址，如果查不到账户状态默认该账户为正常。BFS `/usr/` 目录底下的账户状态只有在主动设置账户状态时才会创建。**账户状态管理的接口只有治理委员才能操作。**

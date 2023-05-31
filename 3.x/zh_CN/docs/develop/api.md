@@ -14,13 +14,14 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
     - Client接口声明位于 `Client.java` 文件中
 ```
 
-**特别注意：Client接口均有两种，一种是带有node的接口，另一种是不带node的接口。带有node的接口可以让节点RPC发送请求到指定已连接的节点。如果不指定，节点RPC则会随机发送请求到节点。**
-
+**特别注意：**
+**1. Client接口均有两种，一种是带有node的接口，另一种是不带node的接口。带有node的接口可以让节点RPC发送请求到指定已连接的节点。如果不指定，节点RPC则会随机发送请求到节点。**
+**2. 以下接口示例，都是关闭了节点ssl通信的前提下。若要关闭节点的ssl通信配置项，请将节点配置文件`config.ini`的 `[rpc]` 项设置为 `disable_ssl=true`。**
 ## 1. 合约操作接口
 
 ### sendTransaction
 
-发送交易到区块链RPC。
+发送交易到区块链。
 
 **参数**
 
@@ -408,7 +409,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 
 - 无
 
-### getTransactionByHash
+### getTransaction
 
 根据交易哈希获取交易信息。
 
@@ -422,9 +423,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 
 - BcosTransaction: 指定哈希对应的交易信息。
 
-### getTransactionByHashAsync
+### getTransactionAsync
 
-根据交易哈异步希获取交易信息。
+根据交易哈希异步获取交易信息。
 
 **参数**
 
@@ -484,9 +485,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
     }
 }
 ```
-### getTransactionReceiptAync
+### getTransactionReceiptAsync
 
-根据交易哈希获取交易回执信息。
+根据交易哈希异步获取交易回执信息。
 
 **参数**
 
@@ -553,7 +554,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":["gro
 
 **参数**
 
-- endpoint: 被查询的节点的`IP:Port`。
+- 无
 
 **返回值**
 
@@ -562,7 +563,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":["gro
 **示例：**
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":["127.0.0.1:20200"],"id":1}' http://127.0.0.1:20200
+curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":["group0"],"id":1}' http://127.0.0.1:20200
 
 // Result
 {
@@ -627,7 +628,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":["127.0.0.1:2
 
 **参数**
 
-- endpoint：被查询的节点的`IP:Port`。
 - callback：获取之后的回调
 
 **返回值**
@@ -740,7 +740,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[],"id
     ]
 }
 ```
-### getObserverListAsync
+### getObserverList
 
 异步获取Client对应群组的观察节点列表。
 
@@ -791,7 +791,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[],"id":
 }
 ```
 
-### getSealerListAsycn
+### getSealerListAsync
 
 异步获取Client对应群组的共识节点列表。
 
@@ -836,10 +836,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":["group0",
 **参数**
 
 - node：可让RPC发送请求到指定节点
+- callback：获取PBFT视图信息之后的回调
 
 **返回值**
 
-- PbftView: PBFT视图信息。
+- 无
 
 ### getConsensusStatus
 
@@ -850,6 +851,8 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":["group0",
 - node：可让RPC发送请求到指定节点
 
 **返回值**
+
+- ConsensusStatus: 节点共识状态。
 
 **示例：**
 ```
@@ -863,7 +866,6 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":["g
     "result": "{\"blockNumber\":7,\"changeCycle\":0,\"connectedNodeList\":4,\"consensusNodeList\":[{\"index\":0,\"nodeID\":\"0055dcaf073a332aa1ad90ff53ef028680d24f9bf2fcbc07ec4bbd4879413f75118a570bcf8001c4526fdb8c1319e51ae63444431ec8ab839465c05e178e7c49\",\"weight\":1},{\"index\":1,\"nodeID\":\"2a7aecf4acf010b0c13697e84ffd4f18544835662845621f936166d88cf073f16b1daa6883de457e6129377d21412b4c77099e8a50e8ea521752adcddeb8b331\",\"weight\":1},{\"index\":2,\"nodeID\":\"535439908979b89171283dca78520763e0a32c64631d7f34ee1d3f74c408a31aaa8565c50924ba6817cd33c13fe9dc928e36b8a1df022fc825d3687c2b273258\",\"weight\":1},{\"index\":3,\"nodeID\":\"dd99ab883677a8aef2c2a3847b9671e501bd6930792700398627eb0a1ba04fe81015745b6287be5f36786c0cc8ff12e9dd3215dc5a4210b012d77330a739a2c3\",\"weight\":1}],\"consensusNodesNum\":4,\"hash\":\"ef49fef70085ec4ae736c1e82ba74e98a860a53763f2484b8254b0d08a2c6865\",\"index\":0,\"isConsensusNode\":true,\"leaderIndex\":3,\"maxFaultyQuorum\":1,\"minRequiredQuorum\":3,\"nodeID\":\"0055dcaf073a332aa1ad90ff53ef028680d24f9bf2fcbc07ec4bbd4879413f75118a570bcf8001c4526fdb8c1319e51ae63444431ec8ab839465c05e178e7c49\",\"timeout\":false,\"view\":3}\n"
 }
 ```
-- ConsensusStatus: 节点共识状态。
 
 ### getConsensusStatusAsync
 
@@ -1201,7 +1203,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupNodeInfo","params":["gro
 
 - name：合约名
 - version：版本名
-- address：合约地址
+- contractAddress：合约地址
 - abi：合约ABI
 
 **返回值**
@@ -1301,7 +1303,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupNodeInfo","params":["gro
 
 **参数**
 
-- tableName: 需要插入记录的表名;
+- kvTablePrecompiled: 需要插入记录的表名;
 - key: 主key被设置的值;
 - fieldNameToValue: 每个field到其对应值的映射。
 
@@ -1320,7 +1322,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupNodeInfo","params":["gro
 
 **返回值**
 
-- Map<String, String>: 查询结果。     
+- String: 查询结果。     
 
 #### desc
 
