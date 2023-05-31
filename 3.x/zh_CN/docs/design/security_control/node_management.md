@@ -165,11 +165,10 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
     listen_ip=0.0.0.0
     ;p2p listen port
     listen_port=30300
-    ;nodes to connect
-    node.0=127.0.0.1:30300
-    node.1=127.0.0.1:30301
-    node.2=127.0.0.1:30302
-    node.3=127.0.0.1:30303
+    ; ssl or sm ssl
+    sm_ssl=false
+    nodes_path=./
+    nodes_file=nodes.json
     
 ;certificate blacklist
 [certificate_blacklist]
@@ -194,8 +193,8 @@ CA黑名单机制也支持**SSL单向认证**的场景，作用时机是：节�
     ;consensus algorithm type, now support PBFT(consensus_type=pbft) and Raft(consensus_type=raft)
     consensus_type=pbft
     ;the max number of transactions of a block
-    max_trans_num=1000
-    ;the node id of leaders
+    block_tx_count_limit=1000
+    ;the node id of consensusers
     node.0=79d3d4d78a747b1b9e59a3eb248281ee286d49614e3ca5b2ce3697be2da72cfa82dcd314c0f04e1f590da8db0b97de466bd08e27eaa13f85df9b60e54d6a1ec8
     node.1=da527a4b2aeae1d354102c6c3ffdfb54922a092cc9acbdd555858ef89032d7be1be499b6cf9a703e546462529ed9ea26f5dd847110ff3887137541bc651f1c32
     node.2=160ba08898e1e25b31e24c2c4e3c75eed996ec56bda96043aa8f27723889ab774b60e969d9bd25d70ea8bb8779b7070521d9bd775dc7636f4b2b800d2fc8c7dd
