@@ -10,7 +10,7 @@
 
 ## 前置条件
 
-搭建FISCO BCOS 单群组区块链（Air版本），具体步骤[参考这里](../../../tutorial/air/build_chain.md)。
+搭建FISCO BCOS 单群组区块链（Air版本），具体步骤[参考这里](../../quick_start/air_installation.md)。
 
 ## 下载spring-boot-starter、证书拷贝
 
@@ -51,7 +51,7 @@ server.port=8080
 
 其中：
 
-- Java SDK configuration配置部分与 [Java SDK](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/sdk/java_sdk/config.html)一致。就本例而言，用户需要：
+- Java SDK configuration配置部分与 [Java SDK](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/config.html)一致。就本例而言，用户需要：
   - 请将network.peers更换成实际的链节点监听地址。
   - cryptoMaterial.certPath设为conf
 

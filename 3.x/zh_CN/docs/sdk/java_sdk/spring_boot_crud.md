@@ -10,8 +10,7 @@
 
 ## 前置条件
 
-搭建FISCO BCOS 单群组区块链（Air版本），具体步骤[参考这里](../../../tutorial/air/build_chain.md)。
-**注意：** 当前版本还不支持Table的CRUD接口，只提供KV接口的功能。CRUD的功能将在下个版本支持。
+搭建FISCO BCOS 单群组区块链（Air版本），具体步骤[参考这里](../../quick_start/air_installation.md)。
 
 ### 获取源码
 
@@ -152,7 +151,7 @@ $ curl http://localhost:45000/get/fisco
 
 ## 贡献代码
 
-- 我们欢迎并非常感谢您的贡献，请参阅[代码贡献流程](https://mp.weixin.qq.com/s/hEn2rxqnqp0dF6OKH6Ua-A)和[代码规范](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/CODING_STYLE.md)。
+- 我们欢迎并非常感谢您的贡献，请参阅[代码贡献流程](../../community/pr.md)。
 - 如项目对您有帮助，欢迎star支持！
 
 ## 加入我们
@@ -163,6 +162,6 @@ $ curl http://localhost:45000/get/fisco
 
 ## 相关链接
 
-- 了解FISCO BCOS项目，请参考[FISCO BCOS文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/introduction.html)。
-- 了解Java SDK项目，请参考[Java SDK文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/index.html)。
+- 了解FISCO BCOS项目，请参考[FISCO BCOS文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/index.html)。
+- 了解Java SDK项目，请参考[Java SDK文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/index.html)。
 - 了解spring boot，请参考[Spring Boot官网](https://spring.io/guides/gs/spring-boot/)。

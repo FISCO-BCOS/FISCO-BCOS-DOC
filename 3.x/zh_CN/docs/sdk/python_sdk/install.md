@@ -21,7 +21,7 @@
 
 ### 环境要求
 - Python环境：python 3.6.3, 3.7.x
-- FISCO BCOS节点：请参考[FISCO BCOS安装](../../installation.html#fisco-bcos)搭建
+- FISCO BCOS节点：请参考[FISCO BCOS安装](../../quick_start/air_installation.md)搭建
 
 
 ### 初始化环境(若python环境符合要求，可跳过)
