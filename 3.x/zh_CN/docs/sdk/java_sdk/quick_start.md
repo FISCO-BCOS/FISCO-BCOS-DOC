@@ -16,7 +16,7 @@
 
 ## 2. 搭建一条FISCO BCOS链
 
-请参考[搭建第一个区块链网络](../../../quick_start/air_installation.html#airfisco-bcos)搭建。
+请参考[搭建第一个区块链网络](../../quick_start/air_installation.md)搭建。
 
 ## 3. 开发智能合约应用
 
@@ -168,7 +168,7 @@ $ ls contracts/sdk/java/org/com/fisco
 
 在项目中创建配置文件``config.toml``, 可参照[配置向导](./config.html)进行配置，也可以参照[``config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
 
-通过``xml``配置请参照第4章“附录三. 使用xml配置进行配置”。
+通过``xml``配置请参照本文档第4节“附录三. 使用xml配置进行配置”。
 
 ### 第六步. 使用Java SDK部署和调用智能合约
 

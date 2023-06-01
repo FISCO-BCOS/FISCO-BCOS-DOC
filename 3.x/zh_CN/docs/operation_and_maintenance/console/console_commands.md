@@ -49,8 +49,8 @@
 
 - **正确结果:** 命令返回正确的执行结果，以字符串或是json的形式返回。
 - **错误结果:** 命令返回错误的执行结果，以字符串或是json的形式返回。
-  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../api.html#rpc)。
-  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../api.html#id5)。
+  - 控制台的命令调用JSON-RPC接口时，错误码[参考这里](../../develop/api.html#rpc)。
+  - 控制台的命令调用Precompiled Service接口时，错误码[参考这里](../../develop/api.html#id5)。
 
 ## 控制台基础命令
 

@@ -145,6 +145,7 @@ FISCO BCOS日志中核心模块关键字如下：
 | Amop模块 | AMOP |
 | 调度器    | SCHEDULER |
 | 执行器    | EXECUTOR |
+| 轻节点 |LIGHTNODE |
 | 网关 |Gateway |
 | 存储中间件模块 |STORAGE|
 | 链工具 |TOOL|

@@ -110,8 +110,8 @@ Java sdk主要包括五个配置选项，分别是
 ```eval_rst
 .. note::
     - 大部分场景仅需要配置 `certPath` 配置项即可，其他配置项不需额外配置；
-    - SDK证书获取：参考 `SDK连接证书配置 <../cert_config.html>`
-    - SDK与节点RPC间SSL连接方式，可通过节点配置项 `sm_crypto` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../../tutorial/air/config.html#rpc>`_ .
+    - SDK证书获取：参考 `SDK连接证书配置 <../cert_config.html>`_ .
+    - SDK与节点RPC间SSL连接方式，可通过节点配置项 `sm_crypto` 判断，该配置项详细说明请参考 `FISCO BCOS配置文件与配置项说明 <../../tutorial/air/config.html#rpc>`_ .
 ```
 
 SDK证书配置示例如下：
@@ -150,7 +150,7 @@ SDK与FISCO BCOS节点通信，必须配置SDK连接的节点的`IP`和`Port`，
 ```eval_rst
 .. note::
     节点与网络之间的连接信息
-    SDK与节点间通过 `RPC` 进行通信，SDK需要连接 `RPC` 的监听端口，该端口可通过节点 `config.ini` 的 `rpc.listen_port` 获取，具体请参考 `这里 <../../../tutorial/air/config.html#rpc>`_
+    SDK与节点间通过 `RPC` 进行通信，SDK需要连接 `RPC` 的监听端口，该端口可通过节点 `config.ini` 的 `rpc.listen_port` 获取，具体请参考 `这里 <../../tutorial/air/config.html#rpc>`_
 ```
 
 SDK与节点间的网络配置示例如下：
