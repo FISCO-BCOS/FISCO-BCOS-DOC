@@ -330,7 +330,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/operation_and_maintenance/data_index.md
    docs/operation_and_maintenance/governance_index.md
    docs/operation_and_maintenance/log/index.md
-   docs/operation_and_maintenance/docs/operation_and_maintenance.md
+   docs/operation_and_maintenance/operation_and_maintenance.md
 
 
 .. toctree::

@@ -27,7 +27,7 @@ log_level|time|[module_name] content
 info|2022-11-21 20:00:35.479505|[SCHEDULER][blk-1]BlockExecutive prepare: fillBlock end,txNum=1,cost=0,fetchNum=1
 ```
 
-其中log_level为日志级别，从小到大包括trace、debug、info、warning、error、fatal，time表示日志打印时间，[module_name]表示模块名，包括共识、同步、交易池、存储等，content为具体日志内容。常规日志分析和问题定位，可查看[日志说明](./log_description.md)。
+其中log_level为日志级别，从小到大包括trace、debug、info、warning、error、fatal，time表示日志打印时间，[module_name]表示模块名，包括共识、同步、交易池、存储等，content为具体日志内容。常规日志分析和问题定位，可查看[日志说明](./log/index.md)。
 
 日志输出级别设定在config.ini文件配置，在测试环境中，建议设置为trace或debug级别，可以输出所有级别的日志，便于分析定位问题。在生产环境时，建议设置为info级别，减少日志输出量（trace和debug日志量较大），避免日志磁盘占用过多。
 
