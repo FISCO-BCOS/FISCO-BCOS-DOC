@@ -27,8 +27,6 @@
 
 ![](../../../images/design/diskencryption_framework.png)
 
-
-
 落盘加密是在机构内部进行的，每个机构独立管理自己硬盘数据的安全。内网中，每个节点的硬盘数据是被加密的。所有加密数据的访问权限，通过Key Manager来管理。Key Manager是部署在机构内网内，专门管理节点硬盘数据访问秘钥的服务，外网无法访问。当内网的节点启动时，从Key Manager处获取加密数据的访问秘钥，来对自身的加密数据进行访问。
 
 加密保护的对象包括：
@@ -54,7 +52,6 @@
 - Key Manager必须实时在线，响应节点的启动请求。
 - 当节点启动时，发来cipherDataKey，Key Manager用superKey对cipherDataKey进行解密，若解密成功，就将节点的dataK返回给节点。
 - Key Manager只能在内网访问，机构内的外网无法访问Key Manager.
-
 
 ![](../../../images/design/diskencryption.png)
 
@@ -100,5 +97,5 @@
 - [部署Air版落盘加密](../../tutorial/air/storage_security.md)
 
 ## 存储安全性
-Air与Pro版本存储系统采用了后端数据库RocksDB，它是一个高性能的Key-Value数据库。设计了完善的持久化机制，同时保证性能和安全性，能够良好的支持范围查询。而针对Max版本采用了TiKv数据库。两者都有具备高可靠性，能应对节点断电、重启、网络波动等异常场景，在异常场景恢复后数据能正常读写。
 
+Air与Pro版本存储系统采用了后端数据库RocksDB，它是一个高性能的Key-Value数据库。设计了完善的持久化机制，同时保证性能和安全性，能够良好的支持范围查询。而针对Max版本采用了TiKV数据库。两者都有具备高可靠性，能应对节点断电、重启、网络波动等异常场景，在异常场景恢复后数据能正常读写。

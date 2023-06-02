@@ -6,19 +6,20 @@
 
 ```eval_rst
 .. note::
-   FISCO BCOS 3.x数据和编码协议的实现位于仓库 `bcos-tars-protocol <https://github.com/FISCO-BCOS/bcos-tars-protocol>`_
+   FISCO BCOS 3.x数据和编码协议的实现位于 `bcos-tars-protocol <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/bcos-tars-protocol/bcos-tars-protocol>`_
 ```
 
 FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/base/tars-protocol.md)编码协议，本章主要介绍FISCO BCOS 3.x基础数据结构的编码协议。
+
 ## 1. 区块头数据结构
 
-区块头的tars定义可参考[这里](https://github.com/FISCO-BCOS/bcos-tars-protocol/blob/main/bcos-tars-protocol/tars/Block.tars)。
+区块头的tars定义可参考[这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/Block.tars)。
 
 ### 1.1 BlockHeaderData
 
 区块头中需要计算哈希的字段：
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 | version  | int |区块头版本号    |
 | parentInfo  | vector<ParentInfo> |父区块信息，包括父区块的块高和哈希|
@@ -37,18 +38,17 @@ FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/Ta
 
 区块头所有字段的定义:
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 |data |BlockHeaderData |区块头用于计算哈希的所有字段编码后对应的数据|
 |dataHash |<byte>|区块内所有交易状态变化对应的根哈希|
 |signatureList |vector<Signature>  |区块头共识成功后，产生的签名列表|
 
-
 ## 2. 区块数据结构
 
-区块的tars定义可参考[这里](https://github.com/FISCO-BCOS/bcos-tars-protocol/blob/main/bcos-tars-protocol/tars/Block.tars)，区块中既可以包括完整的区块头、交易、回执信息，也可以作为共识模块的Proposal仅包括交易的元数据信息，具体如下:
+区块的tars定义可参考[这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/Block.tars)，区块中既可以包括完整的区块头、交易、回执信息，也可以作为共识模块的Proposal仅包括交易的元数据信息，具体如下:
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 |version |int|可选字段，区块版本号|
 |type |int|可选字段，区块类型|
@@ -61,7 +61,7 @@ FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/Ta
 
 ## 3. 交易数据结构
 
-交易的tars定义可参考[这里](https://github.com/FISCO-BCOS/bcos-tars-protocol/blob/main/bcos-tars-protocol/tars/Transaction.tars)，类似于区块头，交易的数据协议字段也划分为用于计算哈希的字段和不参与哈希计算的字段两部分。
+交易的tars定义可参考[这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/Transaction.tars)，类似于区块头，交易的数据协议字段也划分为用于计算哈希的字段和不参与哈希计算的字段两部分。
 
 ### 3.1 TransactionData
 
@@ -80,11 +80,12 @@ FISCO BCOS 3.x默认采用[tars](https://doc.tarsyun.com/#/markdown/TarsCloud/Ta
 hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
 ![](../../images/design/generate_hash_process.png)
+
 ### 3.2 Transaction
 
 交易所有字段的定义:
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 | data | TransactionData| optional，交易用于计算哈希的字段编码后的数据|
 | dataHash | vector<byte> |optional，交易哈希|
@@ -98,7 +99,7 @@ hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
 共识打包的proposal中仅包括交易元数据信息，交易元数据信息字段定义如下：
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 |hash |vector<byte> |optional，交易哈希|
 |to |string |optional，交易接收方地址|
@@ -107,13 +108,13 @@ hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
 ## 4. 交易回执数据结构
 
-交易回执的tars定义可参考[这里](https://github.com/FISCO-BCOS/bcos-tars-protocol/blob/main/bcos-tars-protocol/tars/TransactionReceipt.tars)，类似于区块头和交易，交易回执的数据协议字段也划分为用于计算哈希的字段和不参与哈希计算的字段两部分。
+交易回执的tars定义可参考[这里](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/TransactionReceipt.tars)，类似于区块头和交易，交易回执的数据协议字段也划分为用于计算哈希的字段和不参与哈希计算的字段两部分。
 
 ### 4.1 LogEntry
 
-定义event log，具体如下: 
+定义event log，具体如下:
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 |address |string|事件对应的合约地址 |
 |topic|vector<vector<byte>>|事件topic|
@@ -123,7 +124,7 @@ hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
 交易回执中用于计算哈希的字段：
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 |version|int|require，交易回执版本号|
 |gasUsed|string|require，回执对应的交易消耗的Gas|
@@ -137,7 +138,7 @@ hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 
 交易回执的数据结构定义如下:
 
-|  字段   | 类型  |   说明 | 
+|  字段   | 类型  |   说明 |
 |  ----  | ----  | ----  |
 |data|TransactionReceiptData|交易回执中所有用于计算哈希的字段编码数据|
 |dataHash|vector<byte>|交易回执编码|
@@ -146,6 +147,6 @@ hashWith字段（也称交易hash/交易唯一标识）的生成流程如下：
 并且，用户可通过在控制台调用相关接口获取区块信息，校验数据一致性。
 
 ### 4.4 原生交易
+
 FISCO BCOS实现了基于solidity合约与预编译版的smallBank合约。smallBank源于blockBench，被业界与学术界公认为区块链系统基础测试之一，FISCO BCOS将smallBank实现了账户间实现转账的交易定义为原生交易。
 通过部署合约smallBank，最终与EVM中执行。smallBank也提供预编译合约方式，通过调用smallBank预编译合约地址即可实现。
-

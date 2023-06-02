@@ -426,7 +426,7 @@ FISCO BCOS 环境接口（FISCO BCOS Environment Interface，FBEI）规范中包
 
 ## FISCO BCOS Wasm约束
 
-FISCO BCOS Wasm 合约接口（FISCO BCOS Wasm Contract Interface，FBWCI）规范中包含关于合约文件格式及内容的约定。符合 FBWCI 规范要求合约文件能够在区块链底层平台[FISCO BCOS](https://gitee.com/FISCO-BCOS/FISCO-BCOS)内置的 Wasm 虚拟机中运行。
+FISCO BCOS Wasm 合约接口（FISCO BCOS Wasm Contract Interface，FBWCI）规范中包含关于合约文件格式及内容的约定。符合 FBWCI 规范要求合约文件能够在FISCO BCOS内置的 Wasm 虚拟机中运行。
 
 ### 传输格式
 

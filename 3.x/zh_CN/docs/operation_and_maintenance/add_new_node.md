@@ -12,12 +12,12 @@ FISCO BCOS引入了[游离节点、观察者节点和共识节点](../design/sec
 
 将指定节点分别转换成共识节点、观察者节点、游离节点，相关操作命令如下：
 
-- [addSealer：根据节点NodeID设置对应节点为共识节点](../console/console_commands.html#addsealer)
-- [addObserver：根据节点NodeID设置对应节点为观察节点](../console/console_commands.html#addobserver)
-- [removeNode：根据节点NodeID设置对应节点为游离节点](../console/console_commands.html#removenode)
-- [getSealerList：查看群组中共识节点列表](../console/console_commands.html#getsealerlist)
-- [getObserverList：查看群组中观察节点列表](../console/console_commands.html#getobserverlist)
-- [getNodeIDList：查看节点已连接的所有其他节点的NodeID](../console/console_commands.html#getnodeidlist)
+- [addSealer：根据节点NodeID设置对应节点为共识节点](./console/console_commands.html#addsealer)
+- [addObserver：根据节点NodeID设置对应节点为观察节点](./console/console_commands.html#addobserver)
+- [removeNode：根据节点NodeID设置对应节点为游离节点](./console/console_commands.html#removenode)
+- [getSealerList：查看群组中共识节点列表](./console/console_commands.html#getsealerlist)
+- [getObserverList：查看群组中观察节点列表](./console/console_commands.html#getobserverlist)
+- [getNodeIDList：查看节点已连接的所有其他节点的NodeID](./console/console_commands.html#getnodeidlist)
 
 
 下面结合具体操作案例详细阐述群组如何扩容一个新节点。扩容操作分两个阶段， 分别为**为节点生成证书并启动**、**将节点加入群组**。

@@ -133,5 +133,5 @@
 ## 权限控制工具
 
 FISCO BCOS的分布式存储权限控制有如下使用方式：
-- 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制使用手册](../../manual/distributed_storage.md)。
+- 针对普通用户，通过控制台命令使用权限功能，具体参考[权限控制使用手册](../../manual/permission_control.md)。
 - 针对开发者，SDK根据权限控制的用户表和每个系统表均实现了三个接口，分别是授权，撤销和查询权限接口。可以调用[SDK API](../../sdk/java_sdk.html#web3sdk-api)的PermissionService接口使用权限功能。

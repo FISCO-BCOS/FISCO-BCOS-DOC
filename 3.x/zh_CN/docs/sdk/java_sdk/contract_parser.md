@@ -3,7 +3,7 @@
 标签：``java-sdk`` ``abi`` `scale`  ``codec``
 
 ----
-在Java SDK 3.x版本使用`ABI`和`Scale`两种编解码格式，分别对**Solidity合约**和**WebankBlockchain-Liquid合约（简称WBC-Liquid）**的函数签名、参数编码、返回结果进行编解码。
+在Java SDK 3.x版本使用`ABI`和`Scale`两种编解码格式，分别对**Solidity合约**和**WebankBlockchain-Liquid合约（简称WBC-Liquid）** 的函数签名、参数编码、返回结果进行编解码。
 
 **注**：为了更加区别ABI和Scale的区分，3.0.0-rc3以后org.fisco.bcos.sdk.ABICodec改名为org.fisco.bcos.sdk.v3.codec.ContractCodec
 

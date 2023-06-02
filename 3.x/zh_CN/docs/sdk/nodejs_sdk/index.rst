@@ -19,13 +19,13 @@
 
 .. admonition:: **主要特性**
 
-    - 提供调用FISCO BCOS `JSON-RPC <../../api.html>`_ 的Node.js API
+    - 提供调用FISCO BCOS `JSON-RPC <../../develop/api.html>`_ 的Node.js API
     - 提供部署及调用Solidity合约（支持Solidity 0.4.x 及Solidity 0.5.x）的Node.js API
     - 提供调用预编译（Precompiled）合约的Node.js API
     - 使用 `Channel协议 <../../design/protocol_description.html#channelmessage>`_ 与FISCO BCOS节点通信，双向认证更安全
     - 提供CLI（Command-Line Interface）工具供用户在命令行中方便快捷地与区块链交互
 
-安装配置环境，使用Nodejs SDK进行应用开发请参见`gitHub <https://github.com/FISCO-BCOS/nodejs-sdk>`_ 链接
+安装配置环境，使用Nodejs SDK进行应用开发请参见 `gitHub <https://github.com/FISCO-BCOS/nodejs-sdk>`_
 
 
 .. toctree::

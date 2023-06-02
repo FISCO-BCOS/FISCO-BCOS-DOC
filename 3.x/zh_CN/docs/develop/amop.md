@@ -9,7 +9,7 @@ Java SDK支持链上信使协议AMOP（Advanced Messages Onchain Protocol），�
 
 AMOP支持任何一个订阅了某话题的订阅者都能收到该话题相关的推送消息
 
-AMOP模块的接口类可参考文件java-sdk中的``sdk-amop/src/main/org/fisco/bcos/sdk/amop/Amop.java``文件，其中主要包含以下几个接口：
+AMOP模块的接口类可参考文件java-sdk中的``src/main/java/org/fisco/bcos/sdk/v3/amop/Amop.java``文件，其中主要包含以下几个接口：
 
 ### 1.1 subscribeTopic
 
@@ -204,7 +204,11 @@ amop.subscribeTopic("MyTopic", cb);
     ```
 ## 2. 快速试用AMOP
 
-### 第一步：下载项目
+### 第一步：搭建FISCO BCOS区块链网络
+
+参考[搭建第一个区块链网络](../quick_start/air_installation.md)搭建FISCO BCOS区块链网络。
+
+### 第二步：下载项目
 
 ```shell
 mkdir -p ~/fisco && cd ~/fisco
@@ -219,41 +223,26 @@ cd java-sdk-demo
 bash gradlew build
 ```
 
-### 第二步：搭建FISCO BCOS区块链网络
-
-根据[指引](../../../quick_start/air_installation.md)搭建FISCO BCOS区块链网络。
-
 ### 第三步：配置
 
 * 复制证书：将你搭建FISCO BCOS网络节点``nodes/${ip}/sdk/`` 目录下的证书复制到``java-sdk-demo/dist/conf``目录下。
+```shell
+# 进入dist目录
+cd dist
+cp ~/fisco/nodes/127.0.0.1/sdk/* conf/
+```
 
-* 修改配置：`cp config-example.toml config.toml`
+* 修改配置
+```shell
+cp conf/config-example.toml conf/config.toml
+```
 
 ### 第四步：运行Demo
-
-#### 公有话题Demo
-
-新打开一个终端，下载java-sdk-demo的代码，并build。
-
-```shell
-cd ~/fisco
-# 获取java-sdk-demo代码
-git clone https://github.com/FISCO-BCOS/java-sdk-demo
-
-# 若因为网络问题导致长时间拉取失败，请尝试以下命令：
-git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
-
-cd java-sdk-demo
-
-# build项目
-bash gradlew build
-```
 
 **运行订阅者：**
 
 ```shell
-# 进入java-sdk-demo/dist目录
-cd dist 
+# 在java-sdk-demo/dist目录
 # 我们订阅名为”testTopic“的话题
 java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.Subscribe testTopic
 ```

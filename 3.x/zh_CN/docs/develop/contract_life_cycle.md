@@ -29,7 +29,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 [Liquid官方文档](https://liquid-doc.readthedocs.io/zh_CN/latest/)
 
-[预编译合约使用文档](../contract_develop/c++_contract/index.html)
+[预编译合约使用文档](../contract_develop/c++_contract/index.md)
 
 ## 2. 智能合约部署与调用
 
@@ -70,7 +70,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 - 保留旧合约数据升级的情况较为复杂，具体解决方案有以下几种：
   - （推荐）用户在开发智能合约时就需要主动将合约分为 **逻辑合约** 和 **数据合约**，数据合约用于存储需要在链上存储的数据，开放数据读写接口供逻辑合约使用，逻辑合约在计算时调用数据合约的读写接口。当需要升级时，只需要升级逻辑合约，新的逻辑合约调用旧的数据合约接口，旧的逻辑合约不再使用。
-  - （推荐）相当于第一种方案的扩展，需要存储的数据都使用CRUD数据接口进行存储，CRUD的数据是通过节点共识并持久存储在链上的。详情请参考[使用CRUD预编译合约开发应用](./precompiled/use_crud_precompiled.md)，[使用KV存储预编译合约开发应用](./precompiled/use_kv_precompiled.md)
+  - （推荐）相当于第一种方案的扩展，需要存储的数据都使用CRUD数据接口进行存储，CRUD的数据是通过节点共识并持久存储在链上的。详情请参考[使用CRUD预编译合约开发应用](../contract_develop/c++_contract/use_crud_precompiled.md)，[使用KV存储预编译合约开发应用](../contract_develop/c++_contract/use_kv_precompiled.md)
   - 通过使用delegate call的代理合约主动调用逻辑合约，产生的状态数据均保存在代理合约中，逻辑合约保持接口不变的情况下可以升级。
 - 不保留数据升级的情况更加简单，用户将升级的合约重新部署，将会有新的地址。应用基于新地址的合约进行操作即可，也将使用新合约的数据，旧合约记录的数据将存在链上，需要应用主动避免新业务逻辑调用旧合约数据。
 
@@ -78,7 +78,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 ```eval_rst
 .. important::
-   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考`【权限治理使用指南】 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
+   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考`权限治理使用指南 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
 ```
 
 在开启区块链权限模式之后，每次合约部署将在存储层创建合约存储数据表之外，会额外创建一张合约权限数据表，用于记录合约管理员地址、合约状态、合约接口ACL。默认情况下，合约的管理员地址就是发起部署合约操作的账户地址（如果存在合约创建合约，合约管理员地址为交易发起账户tx.origin）。

@@ -109,6 +109,7 @@ public interface EventSubCallback {
 ```Java
     0       : 正常推送，此时logs为节点推送的事件日志
     1       : 推送完成，执行区间的区块都已经处理
+    42000   : 其他错误 
     -41000  : 参数无效，客户端验证参数错误返回
     -41001  : 参数错误，节点验证参数错误返回
     -41002  : 群组不存在
@@ -117,7 +118,6 @@ public interface EventSubCallback {
     -41005  : 请求发送超时
     -41006  : 客户端无订阅权限
     -41007  : 事件尚未注册，取消订阅失败
-    42000   : 其他错误 
 ```
 
 - `logs`表示回调的`Event Log`对象列表，status为0有效。默认值`null`，可以在子类中通过`org.fisco.bcos.sdk.v3.abi.ContractCodec`解析以下EventLog对象的`data`字段。
