@@ -2,14 +2,14 @@
 标签： ``跨链``
 
 ------
-weCross区块链跨链协作平台是在跨链技术方面的自主研发并完全开源的研究成果，支持FISCO BCOS。
+WeCross区块链跨链协作平台是在跨链技术方面的自主研发并完全开源的研究成果，支持FISCO BCOS。
 
-weCross基于一揽子自主研发并开源的区块链技术方案，针对不同服务形态、不同区块链平台之间无法进行可信连接与交互的行业痛点，研发区块链跨链协作平台——WeCross，以促进跨行业、机构和地域的跨区块链信任传递和商业合作。实现了一站式跨链管理、插件式跨链介入、统一跨链身份、统一跨链资源范式、保证跨链事务资产原子交换与合约跨链调用等功能。
+WeCross基于一揽子自主研发并开源的区块链技术方案，针对不同服务形态、不同区块链平台之间无法进行可信连接与交互的行业痛点，研发区块链跨链协作平台——WeCross，以促进跨行业、机构和地域的跨区块链信任传递和商业合作。实现了一站式跨链管理、插件式跨链介入、统一跨链身份、统一跨链资源范式、保证跨链事务资产原子交换与合约跨链调用等功能。
 
 WeCross着眼应对区块链行业现存挑战，不局限于满足同构区块链平行扩展后的可信数据交换需求，还进一步探索异构区块链之间因底层架构、数据结构、接口协议、安全机制等多维异构性导致无法互联互通问题的有效解决方案。作为未来区块链互联的基础设施，WeCross 秉承多方参与、共享资源、智能协同和价值整合的理念，面向公众完全开源，欢迎广大企业及技术爱好者踊跃参与项目共建。
 
-weCross详细内容介绍可参考
+WeCross详细内容介绍可参考
 
-- [weCross技术文档](https://wecross.readthedocs.io/zh_CN/latest/index.html)
+- [WeCross技术文档](https://WeCross.readthedocs.io/zh_CN/latest/index.html)
 
-- [weCross github主页](https://github.com/WeBankBlockchain/WeCross)
+- [WeCross github主页](https://github.com/WeBankBlockchain/WeCross)

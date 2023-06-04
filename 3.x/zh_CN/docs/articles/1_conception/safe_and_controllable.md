@@ -136,8 +136,6 @@
 
 [《中华人民共和国密码法》](https://baike.baidu.com/item/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AF%86%E7%A0%81%E6%B3%95/22860972?fromtitle=%E5%AF%86%E7%A0%81%E6%B3%95&fromid=24078179)
 
-[《工信部对十三届全国人大二次会议第1394号建议的答复》](http://www.miit.gov.cn/n1146295/n1146592/n3917132/n4545264/c7503420/content.html)
-
 [《工信部隐私保护规范》](http://www.cbdforum.cn/bcweb/index/bz/1-6.html)
 
 [《WeDPR隐私保护白皮书》](https://mp.weixin.qq.com/s/fYCHWb2SwWu-9ySLibrI0w)
