@@ -132,7 +132,7 @@ cd ../docker/bridge/linux/framework
 # macOS系统：进入到docker配置文件路径(linux系统可跳过本步骤)
 cd ../docker/bridge/mac/framework
 
-# 配置MYSQL密码，这里假设密码设置为FISCO
+# 配置MYSQL密码，这里假设密码设置为FISCO（注意：docker-compose.yml文件里有两处MYSQL_ROOT_PASSWORD配置项，两处密码需要保持一致。）
 # linux系统(macOS系统可跳过本步骤)
 sed -i 's/MYSQL_ROOT_PASSWORD: ""/MYSQL_ROOT_PASSWORD: "FISCO"/g' docker-compose.yml
 # macOS系统(linux系统可跳过本步骤)
