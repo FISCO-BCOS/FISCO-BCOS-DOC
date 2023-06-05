@@ -3,7 +3,7 @@
 -----
 ### 文章贡献PR操作指引
 
-如果你已经是社区贡献者，可直接按照如下操作完成文章PR提交；如果你初次尝试PR贡献，请点击了解[提PR基本操作指引](https://mp.weixin.qq.com/s/Uq5r1IaZfelWnhCThHSKXw)。
+如果你已经是社区贡献者，可直接按照如下操作完成文章PR提交；如果你初次尝试PR贡献，请参考[文档](https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ)。
 
 
 #### 1、提PR的预置条件：Fork FISCO-BCOS-DOC到个人github仓库
@@ -13,9 +13,9 @@
 
 #### 2、分支说明
 
-PR须提到FISCO-BCOS-DOC的dev分支
+PR须提到FISCO-BCOS-DOC的release-3分支
 
-#### 3、必备工具：git  [点击参考](https://www.liaoxuefeng.com/wiki/896043488029600/896067074338496)
+#### 3、必备工具：git  [点击参考](https://gitee.com/help/articles/4106)
 
 1. mac系统：brew install git
 2. windows系统：点击[下载安装](https://git-scm.com/downloads)
@@ -34,17 +34,17 @@ PR须提到FISCO-BCOS-DOC的dev分支
 
 **每次提交PR之前，均需要执行以下命令，同步最新的官方文档：**
 
-1. 拉取官方文档dev分支的最新文档：git fetch upstream dev
+1. 拉取官方文档release-3分支的最新文档：git fetch upstream release-3
 
-2. 同步官方文档dev分支最新文档到本地：git rebase upstream/dev
+2. 同步官方文档release-3分支最新文档到本地：git rebase upstream/release-3
 
-   (注：本步骤可能会有冲突，如果有冲突，请解决冲突，点击参考[冲突解决方法](https://www.jianshu.com/p/4c30eb30323a))
+   (注：本步骤可能会有冲突，如果有冲突，请解决冲突，点击参考[冲突解决方法](https://gitee.com/help/articles/4194))
 
 3. 将同步后的文档推到个人的git仓库：git push origin -f
 
 **提交个人文档的主要命令**
 
-git add, git commit, git push等，[点击参考](https://www.jianshu.com/p/2e1d551b8261)。
+git add, git commit, git push等，[点击参考](https://gitee.com/help/articles/4114)。
 
 #### 5、文档格式说明
 
@@ -55,7 +55,7 @@ git add, git commit, git push等，[点击参考](https://www.jianshu.com/p/2e1d
 
 | **设置字段**   | **设置结果**     |
 | - | - |
-| 默认分支       | release          |
+| 默认分支       | release-3        |
 | 文档类型       | Sphinx           |
 | 所需的文件     | repuirements.txt |
 | Python解释器   | CPython          |
