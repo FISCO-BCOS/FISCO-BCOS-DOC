@@ -76,8 +76,7 @@ CiherDataKey generated: ed157f4588b86d61a2e1745efe71e6ea
 Append these into config.ini to enable disk encryption:
 [storage_security]
 enable=true
-key_manager_ip=127.0.0.1
-key_manager_port=8150
+key_manager_url=127.0.0.1:8150
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
@@ -134,11 +133,11 @@ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/node.ke
 
 ## 节点运行
 
-直接启动节点即可
+启动所有节点。注意：在此之前,请先完成对节点的加密。
 
 ```shell
-cd nodes/127.0.0.1/node0/
-./start.sh
+cd nodes
+bash start_all.sh
 ```
 
 ## 正确性判断
