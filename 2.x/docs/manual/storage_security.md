@@ -76,7 +76,7 @@ CiherDataKey generated: ed157f4588b86d61a2e1745efe71e6ea
 Append these into config.ini to enable disk encryption:
 [storage_security]
 enable=true
-key_manager_url=127.0.0.1:8150
+key_center_url=127.0.0.1:8150
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
