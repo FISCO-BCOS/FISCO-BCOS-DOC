@@ -6,6 +6,21 @@
 
  `bcos-c-sdk`已经提供了各个平台的动态库, 用户可以直接下载使用:
 
+## v3.4.0
+
+- bcos-c-sdk.dll    # windows dll
+  - [github下载](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/download/v3.4.0/bcos-c-sdk.dll)
+- bcos-c-sdk.lib    # windows dll symbol
+  - [github下载](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/download/v3.4.0/bcos-c-sdk.lib)
+- libbcos-c-sdk-aarch64.so  # linux arm64
+  - [github下载](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/download/v3.4.0/libbcos-c-sdk-aarch64.so)
+- libbcos-c-sdk.so  # linux x64
+  - [github下载](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/download/v3.4.0/libbcos-c-sdk.so)
+- libbcos-c-sdk-aarch64.dylib   # mac m1
+  - [github下载](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/download/v3.4.0/libbcos-c-sdk-aarch64.dylib)
+- libbcos-c-sdk.dylib   # mac x64
+  - [github下载](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/download/v3.4.0/libbcos-c-sdk.dylib)
+
 ## v3.3.0
 
 - bcos-c-sdk.dll    # windows dll
