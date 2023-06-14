@@ -350,7 +350,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -t TYPE, --type TYPE  [Optional] Specify the source of the download, support cdn,git now, default type is git
   -v VERSION, --version VERSION
-                        [Optional] Specify the version of the binary, default is v3.3.0
+                        [Optional] Specify the version of the binary, default is v3.4.0
   -p PATH, --path PATH  [Optional] Specify the path of the binary, default is binary
 
 ----------- help for subcommand 'chain' -----------
