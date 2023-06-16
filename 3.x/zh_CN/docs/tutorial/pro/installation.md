@@ -645,7 +645,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.1.0)!
+Welcome to FISCO BCOS console(3.4.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \
