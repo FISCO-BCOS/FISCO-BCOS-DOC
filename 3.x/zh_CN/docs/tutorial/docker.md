@@ -32,12 +32,12 @@ sudo yum install -y curl openssl openssl-devel
 cd ~ && mkdir -p fisco && cd fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.4.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.4.0/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ## 3. 搭建单群组4节点区块链
@@ -45,7 +45,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/buil
 请确保机器的`30300~30303，20200~20203`端口没有被占用，也可以通过`-p`参数指定其他端口。
 
 ```bash
-bash build_chain.sh -d -l 127.0.0.1:4 -p 30300,20200,8545
+bash build_chain.sh -D -l 127.0.0.1:4 -p 30300,20200
 ```
 
 ```eval_rst
@@ -56,25 +56,37 @@ bash build_chain.sh -d -l 127.0.0.1:4 -p 30300,20200,8545
 命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
 
 ```bash
+[INFO] Generate ca cert successfully!
+Processing IP:127.0.0.1 Total:4
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
+writing RSA key
+[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
+[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
+######################################################################## 100.0%
+[INFO] Admin account: 0x7096372ddefadc3e70057e907f6ab6cf468838ac
+[INFO] Generate uuid success: e4640f4f-89ed-47fa-9693-695e96988ec2
+[INFO] Generate uuid success: dd2c5bc8-66ab-4f2f-9949-2bb3ca465d18
+[INFO] Generate uuid success: f503a549-3dbc-47ee-a9ea-709a9e3f1f03
+[INFO] Generate uuid success: 3b46ac36-f944-49bb-ba25-d81b0a3d579b
 ==============================================================
-Generating CA key...
-==============================================================
-Generating keys and certificates ...
-Processing IP=127.0.0.1 Total=4 Agency=agency Groups=1
-==============================================================
-Generating configuration files ...
-Processing IP=127.0.0.1 Total=4 Agency=agency Groups=1
-==============================================================
-[INFO] Docker tag      : latest
-[INFO] Start Port      : 30300 20200 8545
-[INFO] Server IP       : 127.0.0.1:4
-[INFO] Output Dir      : /home/ubuntu/fisco/nodes
-[INFO] CA Path         : /home/ubuntu/fisco/nodes/cert/
-==============================================================
-[INFO] Execute the download_console.sh script in directory named by IP to get FISCO-BCOS console.
-e.g.  bash /home/ubuntu/fisco/nodes/127.0.0.1/download_console.sh -f
-==============================================================
-[INFO] All completed. Files in /home/ubuntu/fisco/nodes
+[INFO] GroupID              : group0
+[INFO] ChainID              : chain0
+[INFO] docker mode      : true
+[INFO] docker tag       : v3.4.0
+[INFO] Auth mode            : false
+[INFO] Start port           : 30300 20200
+[INFO] Server IP            : 127.0.0.1:4
+[INFO] SM model             : false
+[INFO] enable HSM           : false
+[INFO] Output dir           : ./nodes
+[INFO] All completed. Files in ./nodes
 ```
 
 ## 4. 启动区块链
@@ -89,50 +101,42 @@ try to start node0
 try to start node1
 try to start node2
 try to start node3
-Unable to find image 'fiscoorg/fiscobcos:v2.7.2' locally    # 本地镜像不存在
-Unable to find image 'fiscoorg/fiscobcos:v2.7.2' locally
-Unable to find image 'fiscoorg/fiscobcos:v2.7.2' locally
-Unable to find image 'fiscoorg/fiscobcos:v2.7.2' locally
-v2.7.2: Pulling from fiscoorg/fiscobcos                     # 下载镜像
-d519e2592276: Pulling fs layer
-d22d2dfcfa9c: Pulling fs layer
-b3afe92c540b: Pulling fs layer
-d0e4ee611225: Waiting
-af59874f6897: Waiting
-v2.7.2: Pulling from fiscoorg/fiscobcos
-d519e2592276: Pulling fs layer
-d22d2dfcfa9c: Pulling fs layer
-b3afe92c540b: Pulling fs layer
-d0e4ee611225: Waiting
-af59874f6897: Waiting
-v2.7.2: Pulling from fiscoorg/fiscobcos
-d519e2592276: Pulling fs layer
-Pull complete d519e2592276: Pull complete
-              Extracting     162B/162B
-Pull complete d22d2dfcfa9c: Pull complete
-af59874f6897: Extracting  24.48MB/26.71MB
-Pull complete b3afe92c540b: Pull complete
-d519e2592276: Pull complete
-Pull complete d0e4ee611225: Pull complete
-b3afe92c540b: Pull complete
-Pull complete af59874f6897: Pull complete
-af59874f6897: Pull complete
-Digest: sha256:7a4e4f60bafe8362b402e0f86245c9a840544845fc57007259d2e4b023da6149
-Status: Downloaded newer image for fiscoorg/fiscobcos:v2.7.2
-Digest: sha256:7a4e4f60bafe8362b402e0f86245c9a840544845fc57007259d2e4b023da6149
-Status: Image is up to date for fiscoorg/fiscobcos:v2.7.2
-Digest: sha256:7a4e4f60bafe8362b402e0f86245c9a840544845fc57007259d2e4b023da6149
-Status: Image is up to date for fiscoorg/fiscobcos:v2.7.2
-Digest: sha256:7a4e4f60bafe8362b402e0f86245c9a840544845fc57007259d2e4b023da6149
-Status: Image is up to date for fiscoorg/fiscobcos:v2.7.2
-8df0d79bf764cd5693e00bbf5c91e2ed7ec69901049e79049082d7ab0da707c8   # 启动节点的 CONTAINER ID
-c27dcaa0adfbf45820506f659913e6dacb8a148425801ea80ab078100a8d57b7   # 启动节点的 CONTAINER ID
-e66fe7c68d3a8db5d8c18fe5749eba25fd41350ebbaa7accbc8374e03bfba690   # 启动节点的 CONTAINER ID
-2bb7b89e2a46b9a4f92fbf9b48b39023540fccdae14de52e091fa17ea219905e   # 启动节点的 CONTAINER ID
- node0 start successfully                                           
- node2 start successfully                                           
- node3 start successfully                                           
- node1 start successfully                                           
+Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
+Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
+Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
+Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
+v3.4.0: Pulling from fiscoorg/fiscobcos
+v3.4.0: Pulling from fiscoorg/fiscobcos
+v3.4.0: Pulling from fiscoorg/fiscobcos
+v3.4.0: Pulling from fiscoorg/fiscobcos
+Already exists a1778b69356: Already exists 
+
+dd98998da8ef: Pulling fs layer 
+82158e46ca02: Pulling fs layer 
+
+82158e46ca02: Pulling fs layer 
+Extracting [==================================================>]   12.3MB/12.3MB 12.3MB/12.3MB
+dd98998da8ef: Pulling fs layer 
+Extracting [==================================================>]  29.51MB/29.51MB9.51MB/29.51MB
+82158e46ca02: 82158e46ca02: Pull complete 
+Pull complete 82158e46ca02: Pull complete 
+Extracting [==================================================>]  29.51MB/29.51MB27.2MB/29.51MB
+Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
+Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
+Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
+Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
+Status: Image is up to date for fiscoorg/fiscobcos:v3.4.0
+Status: Downloaded newer image for fiscoorg/fiscobcos:v3.4.0
+Status: Image is up to date for fiscoorg/fiscobcos:v3.4.0
+Status: Downloaded newer image for fiscoorg/fiscobcos:v3.4.0
+74342b325faed4cb5913cc80f18dee210ce7757f5a696e26c0a04d665f87b9ce
+a846dc34e23b32a5e5d7ee8f465f01e8d231734cf80bd6fd1ca92b2e8d3b9e9c
+efae6adb1ebe71b2b81237d51d61d9142736927a28fe91411ecc793a382e6998
+de8b704d51a23888d3a129c081bd1e32d61da4af4029415bf7379feef75c0dee
+ node0 start successfully pid=74342b325fae
+ node1 start successfully pid=a846dc34e23b
+ node2 start successfully pid=efae6adb1ebe
+ node3 start successfully pid=de8b704d51a2                           
 ```
 
 ## 5. 检查容器
@@ -141,10 +145,10 @@ e66fe7c68d3a8db5d8c18fe5749eba25fd41350ebbaa7accbc8374e03bfba690   # 启动节�
 ```shell
 $ docker ps -a | egrep fiscobcos
 
-8df0d79bf764   fiscoorg/fiscobcos:v2.7.2   "/usr/local/bin/fisc…"   5 minutes ago   Up 5 minutes             rootfisconodes127.0.0.1node2
-2bb7b89e2a46   fiscoorg/fiscobcos:v2.7.2   "/usr/local/bin/fisc…"   5 minutes ago   Up 5 minutes             rootfisconodes127.0.0.1node1
-e66fe7c68d3a   fiscoorg/fiscobcos:v2.7.2   "/usr/local/bin/fisc…"   5 minutes ago   Up 5 minutes             rootfisconodes127.0.0.1node0
-c27dcaa0adfb   fiscoorg/fiscobcos:v2.7.2   "/usr/local/bin/fisc…"   5 minutes ago   Up 5 minutes             rootfisconodes127.0.0.1node3
+74342b325fae   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node0
+efae6adb1ebe   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node2
+a846dc34e23b   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node1
+de8b704d51a2   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node3
 ```
 容器状态为`UP`时，说明节点正常启动。
 
@@ -157,28 +161,16 @@ docker的相关内容，可以参考docker文档进行了解: [https://docs.dock
 - 查看节点node0连接的节点数
 
 ```bash
-tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+tail -f nodes/127.0.0.1/node0/log/* |grep -i "heartBeat,connected count"
 ```
 
 正常情况会不停地输出连接信息，从输出可以看出node0与另外3个节点有连接。
 ```bash
-info|2021-03-10 16:20:18.316769| [P2P][Service] heartBeat,connected count=3
-info|2021-03-10 16:20:28.316922| [P2P][Service] heartBeat,connected count=3
-info|2021-03-10 16:20:38.317105| [P2P][Service] heartBeat,connected count=3
-```
-
-- 检查共识
-
-
-```bash
-tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
-```
-
-正常情况会不停输出`++++Generating seal`，表示共识正常。
-```bash
-info|2021-03-10 17:17:16.989389|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=9af45b7d...
-info|2021-03-10 17:17:21.003890|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=427aae1b...
-info|2021-03-10 17:17:25.023183|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=2,hash=a6c1a5a9...
+info|2023-06-15 12:28:47.014473|[P2PService][Service][METRIC]heartBeat,connected count=3
+info|2023-06-15 12:28:57.014577|[P2PService][Service][METRIC]heartBeat,connected count=3
+info|2023-06-15 12:29:07.014641|[P2PService][Service][METRIC]heartBeat,connected count=3
+info|2023-06-15 12:29:17.014742|[P2PService][Service][METRIC]heartBeat,connected count=3
+info|2023-06-15 12:29:27.014823|[P2PService][Service][METRIC]heartBeat,connected count=3
 ```
 
 到此docker环境已经部署完成。

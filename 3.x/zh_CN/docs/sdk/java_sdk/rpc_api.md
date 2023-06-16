@@ -16,7 +16,9 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 ```
 
 **特别注意：Client接口均有两种，一种是带有node的接口，另一种是不带node的接口。带有node的接口可以让节点RPC发送请求到指定已连接的节点。如果不指定，节点RPC则会随机发送请求到节点。**
+
 **curl调用说明：节点的rpc接口访问默认开启ssl认证，下面使用curl发送接口命令没有ssl证书，需要关闭节点的rpc接口ssl认证。关闭方法是修改配置文件/fisco/nodes/127.0.0.1/ node0/config.ini, 修改配置文件后重新启动节点即可**
+
 ```
 [rpc]
  ; ssl connection switch, if disable the ssl connection, default: false
@@ -34,18 +36,18 @@ Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java
 - node：可让RPC发送请求到指定节点
 - signedTransactionData：签名后的交易
 - withProof：返回是否带上默克尔树证明
-  
 
 **返回值**
 
 - BcosTransactionReceipt: 节点收到交易后，回复给SDK的回包，包括交易哈希信息。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"sendTransaction","params":["group0","","0x1a1c2606636861696e30360667726f7570304101fb564d36323332373833373230383636323235323233313231343039373038383134363030353536383536313037383031313639373432363032343636323131353337373138313837323836303337397d0001046b608060405234801561001057600080fd5b5060408051808201909152600d8082526c48656c6c6f2c20576f726c642160981b60209092019182526100459160009161004b565b5061011f565b828054610057906100e4565b90600052602060002090601f01602090048101928261007957600085556100bf565b82601f1061009257805160ff19168380011785556100bf565b828001600101855582156100bf579182015b828111156100bf5782518255916020019190600101906100a4565b506100cb9291506100cf565b5090565b5b808211156100cb57600081556001016100d0565b600181811c908216806100f857607f821691505b602082108114156101195763b95aa35560e01b600052602260045260246000fd5b50919050565b61033d8061012e6000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063299f7f9d1461003b5780633590b49f14610059575b600080fd5b61004361006e565b60405161005091906101b0565b60405180910390f35b61006c61006736600461021b565b610100565b005b60606000805461007d906102cc565b80601f01602080910402602001604051908101604052809291908181526020018280546100a9906102cc565b80156100f65780601f106100cb576101008083540402835291602001916100f6565b820191906000526020600020905b8154815290600101906020018083116100d957829003601f168201915b5050505050905090565b8051610113906000906020840190610117565b5050565b828054610123906102cc565b90600052602060002090601f016020900481019282610145576000855561018b565b82601f1061015e57805160ff191683800117855561018b565b8280016001018555821561018b579182015b8281111561018b578251825591602001919060010190610170565b5061019792915061019b565b5090565b5b80821115610197576000815560010161019c565b600060208083528351808285015260005b818110156101dd578581018301518582016040015282016101c1565b818111156101ef576000604083870101525b50601f01601f1916929092016040019392505050565b63b95aa35560e01b600052604160045260246000fd5b60006020828403121561022d57600080fd5b813567ffffffffffffffff8082111561024557600080fd5b818401915084601f83011261025957600080fd5b81358181111561026b5761026b610205565b604051601f8201601f19908116603f0116810190838211818310171561029357610293610205565b816040528281528760208487010111156102ac57600080fd5b826020860160208301376000928101602001929092525095945050505050565b600181811c908216806102e057607f821691505b602082108114156103015763b95aa35560e01b600052602260045260246000fd5b5091905056fea2646970667358221220ad3331f4f52a10ab9c50f2e63a46fd49fab3847ff4e17912290db8f009f89c9464736f6c634300080b003387000001565b7b22696e70757473223a5b5d2c2273746174654d75746162696c697479223a226e6f6e70617961626c65222c2274797065223a22636f6e7374727563746f72227d2c7b22696e70757473223a5b5d2c226e616d65223a22676574222c226f757470757473223a5b7b22696e7465726e616c54797065223a22737472696e67222c226e616d65223a22222c2274797065223a22737472696e67227d5d2c2273746174654d75746162696c697479223a2276696577222c2274797065223a2266756e6374696f6e227d2c7b22696e70757473223a5b7b22696e7465726e616c54797065223a22737472696e67222c226e616d65223a226e222c2274797065223a22737472696e67227d5d2c226e616d65223a22736574222c226f757470757473223a5b5d2c2273746174654d75746162696c697479223a226e6f6e70617961626c65222c2274797065223a2266756e6374696f6e227d5d0b2d000020867fc7059f04e9f172202b777673a8413c9e47990dcd09b11311a2f1f5b55a4f3d0001008015e0c4a3a51b5b5b157502aae04f3905bae8daf1389bddf12b0eb7069ead63b76d42383dcd38520df339d571d37ea85334dba126edcc323a98b91e51d32ec074b5f7430ea78c64ccc8d364bf4563dbffb33be503344b72f3384f987c38af98db3f0f00169f2a6545d0920a1a6cb7f338b8b717f03d05fded80ddbbb171a099c1"，true],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -82,11 +84,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"sendTransaction","params":["grou
 - Call: 合约常量接口的返回结果，包括当前块高、接口执行状态信息以及接口执行结果
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":["group0","","0xc0523dbdd94ba27e14b0336d799489340ca24cdf","aaaa"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -97,6 +100,25 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":["group0","","0xc
     }
 }
 ```
+
+注意：在3.4.0版本以后，支持Call with sign接口，支持在发起static call请求时使用私钥对请求体(to+data)进行签名，在节点侧将会对应恢复出签名对应的用户地址，合约中可以取到call请求时的tx.origin和msg.sender，达到用户身份认证的目的。
+
+```shell
+# Request
+curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":["group0","","0xc0523dbdd94ba27e14b0336d799489340ca24cdf","aaaa", "0x"],"id":1}' http://127.0.0.1:20200
+
+# Result
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": {
+        "blockNumber": 8,
+        "output": "0x",
+        "status": 16
+    }
+}
+```
+
 ### 1.4 callAsync
 
 合约常量接口异步调用，接收到节点返回的合约接口执行结果后，执行指定的回调函数
@@ -125,11 +147,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":["group0","","0xc
 - Code: 合约地址对应的合约代码。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":["group0","node0","0x17826374dbb2025b30ddec39ba662349d76d8fc6"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -164,11 +187,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getCode","params":["group0","nod
 - Abi: 合约地址对应的合约ABI JSON。
   
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getABI","params":["group0","node0","0x17826374dbb2025b30ddec39ba662349d76d8fc6"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -206,11 +230,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getABI","params":["group0","node
 
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -247,11 +272,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[],"id"
   - failedTxSum: 上链执行异常的交易总量
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","params":[],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -294,11 +320,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 - BcosBlock: 查询获取的区块信息
   
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":["group0","4",false,false],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -358,11 +385,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByNumber","params":["gro
 - BcosBlock: 查询获取的区块信息。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":["group0","node0","0x2fbafbf71395bb07d1d6e142a06fa3cd9436aee3e91b5b9e6ffc5c47133c3738",true,true],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -444,11 +472,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":["group
 - BlockHash: 指定区块高度对应的区块哈希
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":["group0",0],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -514,11 +543,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":[
 - BcosTransactionReceipt: 交易哈希对应的回执信息。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":["group0","node0","0xdce357d4a81bfe2c9b9cc83fde7576a8ae8dede910b70cdf9abed71a32ed10bf",true],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -575,11 +605,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTransactionReceipt","params":
 - PendingTxSize: 交易池内未处理的交易数目。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":["group0","node0"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -626,11 +657,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPendingTxSize","params":["gro
 
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":["127.0.0.1:20200"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -712,11 +744,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":["127.0.0.1:2
 - SyncStatus: 区块链节点同步状态。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":["group0"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -751,11 +784,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSyncStatus","params":["group0
 - SystemConfig: 系统配置项的值。
   
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":["group0","node0","tx_count_limit"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -795,11 +829,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSystemConfigByKey","params":[
 - ObserverList: 观察节点列表。
   
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -834,11 +869,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[],"id
 - SealerList: 共识节点列表。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -885,11 +921,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getSealerList","params":[],"id":
 - PbftView: PBFT视图信息。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":["group0","node0"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -923,11 +960,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getPbftView","params":["group0",
 
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":["group0","node0"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -963,11 +1001,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getConsensusStatus","params":["g
 
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupInfo","params":["group0","node1"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -1046,11 +1085,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupInfo","params":["group0"
 
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":["group0","node1"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -1088,11 +1128,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupList","params":["group0"
 - GroupPeers: 指定群组连接的节点列表。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":["group0","node1"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -1129,11 +1170,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupPeers","params":["group0
 - BcosGroupInfoList: 当前节点群组信息列表。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupInfoList","params":["group0","node1"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
@@ -1212,11 +1254,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupInfoList","params":["gro
 - BcosGroupNodeInfo: 查询获取的节点信息。
 
 **示例：**
-```
-// Request
+
+```shell
+# Request
 curl -X POST --data '{"jsonrpc":"2.0","method":"getGroupNodeInfo","params":["group0","node1"],"id":1}' http://127.0.0.1:20200
 
-// Result
+# Result
 {
     "id": 1,
     "jsonrpc": "2.0",
