@@ -40,7 +40,7 @@ FISCO BCOS的实验功能可能有更强的性能或更多的功能，但均未�
 FISCO BCOS 3.3和3.4版本默认启用了实验功能Sharding并行执行，如果要关闭该实验功能，可以将config.genesis中设置compatibility_version=3.2.0。
 
 实验功能列表：
-- Sharding并行执行
+- 块内分片
 - HSM硬件密码机
 - Max版本
 - TiKV存储
