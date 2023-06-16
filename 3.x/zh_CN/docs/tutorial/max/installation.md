@@ -1,4 +1,4 @@
-# 搭建Max版区块链网络
+# 搭建Max版（实验功能）区块链网络
 
 标签：``Max版区块链网络`` ``部署``
 
@@ -66,7 +66,7 @@ cd BcosBuilder && pip3 install -r requirements.txt
 
 **tars服务的安装、启动和配置请参考[这里](../pro/installation.html#id2).**
 
-## 4. 部署TiKV
+## 4. 部署TiKV（实验功能）
 
 ```eval_rst
 .. note::
