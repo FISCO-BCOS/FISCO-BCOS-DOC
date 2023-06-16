@@ -76,8 +76,11 @@ FISCO-BCOS 3.0.0 及之后的版本之间相互兼容。FISCO-BCOS 3.0.0-rc的�
 - [v3.0.0-rc2](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc2)
 - [v3.0.0-rc3](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc3)
 - [v3.0.0-rc4](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0-rc4)
-- [v3.0.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-0)
-- [v3.1.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-1-0)
+- [v3.0.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-0-x)
+- [v3.1.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-1-x)
+- [v3.2.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-2-x)
+- [v3.3.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-3-x)
+- [v3.4.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html#fisco-bcos-v3-4-x)
 
 #### 3.2.1. FISCO-BCOS v3.0.0-rc1
 
@@ -331,7 +334,7 @@ FISCO-BCOS 3.0.0 及之后的版本之间相互兼容。FISCO-BCOS 3.0.0-rc的�
 | WeBankBlockchain-Governance-Authority | 权限治理组件               | V3          | [文档](https://governance-doc.readthedocs.io/zh_CN/v3.0.0/docs/WeBankBlockchain-Governance-Acct/index.html) | [github](https://github.com/WeBankBlockchain/Governance-Account/tree/V3) | [gitee](https://gitee.com/WeBankBlockchain/Governance-Account/tree/V3/) |                              |
 | WeBankBlockchain-Governance-Account   | 账户治理组件               | V3          | [文档](https://governance-doc.readthedocs.io/zh_CN/v3.0.0/docs/WeBankBlockchain-Governance-Auth/index.html) | [github](https://github.com/WeBankBlockchain/Governance-Authority/tree/V3) | [gitee](https://gitee.com/WeBankBlockchain/Governance-Authority/tree/V3/) |                              |
 
-### 3.2.9 FISCO-BCOS v3.4.x
+#### 3.2.9. FISCO-BCOS v3.4.x
 | 项目                                  | 功能简介                   | 版本        | 文档                                                         | github                                                       | gitee                                                        | 备注                         |
 | ------------------------------------- | -------------------------- | ----------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
 | FISCO-BCOS                            | 区块链底层平台             | v3.4.x      | [文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/)  | [github](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/v3.4.0) | [gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/v3.4.0) |                              |
