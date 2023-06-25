@@ -945,6 +945,41 @@
     - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 ### 6.3 构造签名交易
+- **c-sdk `3.3.0-tx-struct` 特性分支，增加了对交易结构体的支持**。
+即返回值、入参支持交易结构体，结构体如下：
+```c
+// transaction bytes
+struct bcos_sdk_c_bytes
+{
+    uint8_t* buffer;
+    uint32_t length;
+};
+
+// transaction data
+struct bcos_sdk_c_transaction_data
+{
+    int32_t version;
+    int64_t block_limit;
+    char* chain_id;
+    char* group_id;
+    char* nonce;
+    char* to;
+    char* abi;
+    struct bcos_sdk_c_bytes* input;
+};
+
+// transaction
+struct bcos_sdk_c_transaction
+{
+    struct bcos_sdk_c_transaction_data* transaction_data;
+    struct bcos_sdk_c_bytes* data_hash;
+    struct bcos_sdk_c_bytes* signature;
+    struct bcos_sdk_c_bytes* sender;
+    int64_t import_time;
+    int32_t attribute;
+    char* extra_data;
+};
+```
 
 - `bcos_sdk_get_group_wasm_and_crypto`
   - 原型:
@@ -992,6 +1027,42 @@
   - 注意:
     - `TransactionData`对象需要调用`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
 
+- `bcos_sdk_create_transaction_data_struct_with_hex_input`
+  - 原型:
+    - `struct bcos_sdk_c_transaction_data* bcos_sdk_create_transaction_data_struct_with_hex_input(const char* group_id, const char* chain_id, const char* to, const char* input, const char* abi, int64_t block_limit)`
+  - 功能:
+    - 创建`bcos_sdk_c_transaction_data`交易结构体，该对象结构体是未签名的交易对象
+  - 参数:
+    - `group_id`: 群组ID
+    - `chain_id`: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
+    - `to`: 调用的合约地址，部署合约时设置为空字符串""
+    - `input`: ABI编码后的参数，十六进制c风格字符串，是hex字符串
+    - `abi`: 合约的ABI，JSON字符串，可选参数，部署合约时可以将合约的ABI传入，默认传入空字符串""
+    - `block_limit`: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
+  - 返回:
+    - `bcos_sdk_c_transaction_data`交易结构体指针
+    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - `bcos_sdk_c_transaction_data`交易结构体，需要调用`bcos_sdk_destroy_transaction_data_struct`接口释放，以免造成内存泄露
+
+- `bcos_sdk_create_transaction_data_struct_with_bytes`
+  - 原型:`struct bcos_sdk_c_transaction_data* bcos_sdk_create_transaction_data_struct_with_bytes(const char* group_id, const char* chain_id, const char* to, const unsigned char* bytes_input, uint32_t bytes_input_length, const char* abi, int64_t block_limit)`
+  - 功能:
+    - 创建`bcos_sdk_c_transaction_data`交易结构体，该对象结构体是未签名的交易对象
+  - 参数:
+    - `group_id`: 群组ID
+    - `chain_id`: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
+    - `to`: 调用的合约地址，部署合约时设置为空字符串""
+    - `bytes_input`: ABI编码后的参数，byte的字节数组
+    - `bytes_input_length`: byte字节数组的长度
+    - `abi`: 合约的ABI，JSON字符串，可选参数，部署合约时可以将合约的ABI传入，默认传入空字符串""
+    - `block_limit`: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
+  - 返回:
+    - `bcos_sdk_c_transaction_data`交易结构体指针
+    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - `bcos_sdk_c_transaction_data`交易结构体，需要调用`bcos_sdk_destroy_transaction_data_struct`接口释放，以免造成内存泄露
+
 - `bcos_sdk_destroy_transaction_data`
   - 原型:
     - `void bcos_sdk_destroy_transaction_data(void* transaction_data)`
@@ -1001,6 +1072,65 @@
     - `transaction_data`: `TransactionData`对象指针
   - 返回:
     - 无
+
+- `bcos_sdk_destroy_transaction_data_struct`
+  - 原型:
+    - `void bcos_sdk_destroy_transaction_data_struct(struct bcos_sdk_c_transaction_data* transaction_data)`
+  - 功能:
+    - 释放`bcos_sdk_c_transaction_data`交易结构体
+  - 参数:
+    - `transaction_data`: `bcos_sdk_c_transaction_data`交易结构体指针
+  - 返回:
+    - 无
+
+- `bcos_sdk_encode_transaction_data_struct`
+  - 原型:
+    - `const char* bcos_sdk_encode_transaction_data_struct(struct bcos_sdk_c_transaction_data* transaction_data)`
+  - 功能:
+    - 将`bcos_sdk_c_transaction_data`交易结构体编码为hex字符串
+  - 参数:
+    - `transaction_data`: `bcos_sdk_c_transaction_data`交易结构体指针
+  - 返回:
+    - `transaction_data`交易结构体编码后的hex字符串
+  - 注意:
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_encode_transaction_data_struct_to_json`
+  - 原型:
+    - `const char* bcos_sdk_encode_transaction_data_struct_to_json(struct bcos_sdk_c_transaction_data* transaction_data)`
+  - 功能:
+    - 将`bcos_sdk_c_transaction_data`交易结构体编码为json字符串
+  - 参数:
+    - `transaction_data`: `bcos_sdk_c_transaction_data`交易结构体指针
+  - 返回:
+    - `transaction_data`交易结构体编码后的json字符串
+  - 注意:
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+  
+- `bcos_sdk_decode_transaction_data_struct`
+  - 原型:
+    - `struct bcos_sdk_c_transaction_data* bcos_sdk_decode_transaction_data_struct(const char* transaction_data_hex_str)`
+  - 功能:
+    - 将编码后的hex字符串解码为`bcos_sdk_c_transaction_data`交易结构体
+  - 参数:
+    - `transaction_data_hex_str`: 编码后的hex字符串
+  - 返回:
+    - `bcos_sdk_c_transaction_data`交易结构体指针
+  - 注意:
+    - `bcos_sdk_c_transaction_data`交易结构体，需要调用`bcos_sdk_destroy_transaction_data_struct`接口释放，以免造成内存泄露
+
+- `bcos_sdk_decode_transaction_data_struct_with_json`
+  - 原型:
+    - `struct bcos_sdk_c_transaction_data* bcos_sdk_decode_transaction_data_struct_with_json(const char* transaction_data_json_str)`
+  - 功能:
+    - 将编码后的json字符串解码为`bcos_sdk_c_transaction_data`交易结构体
+  - 参数:
+    - `transaction_data_json_str`: 编码后的json字符串
+  - 返回:
+    - `bcos_sdk_c_transaction_data`交易结构体指针
+  - 注意:
+    - `bcos_sdk_c_transaction_data`交易结构体，需要调用`bcos_sdk_destroy_transaction_data_struct`接口释放，以免造成内存泄露
+
 - `bcos_sdk_calc_transaction_data_hash`
   - 原型:
     - `const char* bcos_sdk_calc_transaction_data_hash(int crypto_type, void* transaction_data)`
@@ -1015,6 +1145,22 @@
   - 注意:
     - **`TransactionData`对象的哈希，也是交易的哈希**
     - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_calc_transaction_data_struct_hash`
+  - 原型:
+    - `const char* bcos_sdk_calc_transaction_data_struct_hash(int crypto_type, struct bcos_sdk_c_transaction_data* transaction_data)`
+  - 功能:
+    - 计算`bcos_sdk_c_transaction_data`交易结构体哈希
+  - 参数:
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
+    - `transaction_data`: `bcos_sdk_c_transaction_data`交易结构体指针
+  - 返回:
+    - `bcos_sdk_c_transaction_data`交易结构体哈希
+    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - **`bcos_sdk_c_transaction_data`交易结构体的哈希，也是交易的哈希**
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
 - `bcos_sdk_sign_transaction_data_hash`
   - 原型:
     - `const char* bcos_sdk_sign_transaction_data_hash(void* keypair, const char* transcation_hash)`
@@ -1049,6 +1195,37 @@
   - 注意:
     - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
+- `bcos_sdk_create_transaction_struct`
+  - 原型:
+
+  ```shell
+  struct bcos_sdk_c_transaction* bcos_sdk_create_transaction_struct(struct bcos_sdk_c_transaction_data* transaction_data, const char* signature, const char* transaction_data_hash, int32_t attribute, const char* extra_data)
+  ```
+
+  - 功能:
+    - 创建签名的交易结构体
+  - 参数:
+    - transaction_data: `bcos_sdk_c_transaction_data`交易结构体
+    - signature: 交易结构体哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
+    - transaction_data_hash: 交易结构体哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_struct_hash`接口生成
+    - attribute: 交易额外属性，待拓展，默认填0即可
+    - extra_data: 交易额外数据，填""空字符串即可
+  - 返回:
+    - `bcos_sdk_c_transaction`签名的交易结构体指针
+    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - `bcos_sdk_c_transaction`签名的交易结构体，需要调用`bcos_sdk_destroy_transaction_struct`接口释放，以免造成内存泄露
+
+- `bcos_sdk_destroy_transaction_struct`
+  - 原型:
+    - `void bcos_sdk_destroy_transaction_struct(struct bcos_sdk_c_transaction* transaction)`
+  - 功能:
+    - 释放`bcos_sdk_c_transaction`签名的交易结构体
+  - 参数:
+    - `transaction_data`: `bcos_sdk_c_transaction`签名的交易结构体指针
+  - 返回:
+    - 无
+
 - `bcos_sdk_create_signed_transaction`
   - 原型:
 
@@ -1079,6 +1256,77 @@
       - `bcos_sdk_calc_transaction_data_hash`: 计算交易哈希
       - `bcos_sdk_sign_transaction_data_hash`: 交易哈希签名
       - `bcos_sdk_create_signed_transaction_with_signed_data`: 创建签名的交易
+
+- `bcos_sdk_create_encoded_transaction`
+  - 原型:
+
+  ```shell
+  const char* bcos_sdk_create_encoded_transaction(
+      struct bcos_sdk_c_transaction_data* transaction_data, const char* signature,
+      const char* transaction_data_hash, int32_t attribute, const char* extra_data)
+  ```
+
+  - 功能:
+    - 创建签名的交易字符串
+  - 参数:
+    - transaction_data: `bcos_sdk_c_transaction_data`交易结构体
+    - signature: 交易结构体哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
+    - transaction_data_hash: 交易结构体哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_struct_hash`接口生成
+    - attribute: 交易额外属性，待拓展，默认填0即可
+    - extra_data: 交易额外数据，填""空字符串即可
+  - 返回:
+    - 签名的交易字符串
+    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - 返回的签名交易字符串，需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_encode_transaction_struct`
+  - 原型:
+    - `const char* bcos_sdk_encode_transaction_struct(struct bcos_sdk_c_transaction* transaction)`
+  - 功能:
+    - 将`bcos_sdk_c_transaction`签名的交易结构体编码为hex字符串
+  - 参数:
+    - `transaction`: `bcos_sdk_c_transaction`签名的交易结构体指针
+  - 返回:
+    - `transaction`签名的交易结构体编码后的hex字符串
+  - 注意:
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_encode_transaction_struct_to_json`
+  - 原型:
+    - `const char* bcos_sdk_encode_transaction_struct_to_json(struct bcos_sdk_c_transaction* transaction)`
+  - 功能:
+    - 将`bcos_sdk_c_transaction`签名的交易结构体编码为json字符串
+  - 参数:
+    - `transaction`: `bcos_sdk_c_transaction`签名的交易结构体指针
+  - 返回:
+    - `transaction`签名的交易结构体编码后的json字符串
+  - 注意:
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+  
+- `bcos_sdk_decode_transaction_struct`
+  - 原型:
+    - `struct bcos_sdk_c_transaction* bcos_sdk_decode_transaction_struct(const char* transaction_hex_str)`
+  - 功能:
+    - 将编码后的hex字符串解码为`bcos_sdk_c_transaction`签名的交易结构体
+  - 参数:
+    - `transaction_hex_str`: 编码后的hex字符串
+  - 返回:
+    - `bcos_sdk_c_transaction`签名的交易结构体指针
+  - 注意:
+    - `bcos_sdk_c_transaction`签名的交易结构体，需要调用`bcos_sdk_destroy_transaction_struct`接口释放，以免造成内存泄露
+
+- `bcos_sdk_decode_transaction_struct_with_json`
+  - 原型:
+    - `struct bcos_sdk_c_transaction* bcos_sdk_decode_transaction_struct_with_json(const char* transaction_json_str)`
+  - 功能:
+    - 将编码后的json字符串解码为`bcos_sdk_c_transaction`签名的交易结构体
+  - 参数:
+    - `transaction_json_str`: 编码后的json字符串
+  - 返回:
+    - `bcos_sdk_c_transaction`签名的交易结构体指针
+  - 注意:
+    - `bcos_sdk_c_transaction`签名的交易结构体，需要调用`bcos_sdk_destroy_transaction_struct`接口释放，以免造成内存泄露
 
 - `bcos_sdk_create_transaction_builder_service`
   - 原型:
