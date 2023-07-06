@@ -68,6 +68,8 @@ v3.2.x
 
 .. admonition:: FISCO BCOS 3.x Releases
 
+     - `FISCO BCOS v3.2.2 <./3_2_2.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.2>`_]
+     - `FISCO BCOS v3.2.1 <./3_2_1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.1>`_]
      - `FISCO BCOS v3.2.0 <./3_2_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.0>`_]
      
 
