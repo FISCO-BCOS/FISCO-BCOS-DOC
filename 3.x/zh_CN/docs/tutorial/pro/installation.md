@@ -10,7 +10,7 @@ FISCO BCOS 3.x支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 .. note::
    - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
-   - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
+   - 本章基于Docker搭建tars服务，请确保系统用户拥有操作docker权限，并确保docker服务处于启动状态
 ```
 
 ## 1. 安装依赖
@@ -111,7 +111,7 @@ init_auth_address="0xd5eff0641c2f69a8deed9510e374aa3e94066a66"
 
 ```eval_rst
 .. note::
-   - 这里采用docker安装/启动tars服务，请确保拥有root权限，并确保docker服务处于启动状态
+   - 这里采用docker安装/启动tars服务，请确保系统用户拥有操作docker权限，并确保docker服务处于启动状态
    - 安装tars服务后，大概经过一分钟左右才可通过http://127.0.0.1:3000/访问tars网页管理平台
 ```
 
