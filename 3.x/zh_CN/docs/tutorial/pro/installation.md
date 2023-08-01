@@ -522,11 +522,11 @@ generated/chain0
 
 ### 4.5部署区块链节点监控服务
 
-RPC服务和Gateway服务和node服务均部署完成后，可部署区块链节点监控服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动区块链节点监控服务。
+RPC服务和Gateway服务和node服务均部署完成后，可部署区块链节点监控服务。在建链工具BcosBuilder/pro目录下，执行如下命令，可部署并启动区块链节点监控服务。
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 部署并启动区块链节点服务
 python3 build_chain.py chain -o deploy -t monitor
