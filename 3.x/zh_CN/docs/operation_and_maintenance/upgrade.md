@@ -3,7 +3,7 @@
 
 本文档主要从三个方面讨论FISCO BCOS的升级之路，以解答社区用户在FISCO BCOS实际应用过程中的升级需求。以由易至难、由近至远的思路分为以下三个部分：
 - 第一部分，如何实现FISCO BCOS 3.x版本之间的升级；
-- 第二部分，如何实现FISCO BCOS三Air、Pro和Max之间升级；
+- 第二部分，如何实现FISCO BCOS Air、Pro和Max之间升级；
 - 第三部分，如何实现从FISCO BCOS 2.0至3.0的升级。
 
 
