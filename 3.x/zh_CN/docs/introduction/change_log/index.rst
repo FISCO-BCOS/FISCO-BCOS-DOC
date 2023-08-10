@@ -86,6 +86,7 @@ v3.2.x
    :hidden:
    :maxdepth: 0
 
+   3_2_3.md
    3_2_2.md
    3_2_1.md
    3_2_0.md
