@@ -81,7 +81,24 @@ generated/
     - **创世块配置文件在链初始化后不可更改**
     - 链初始化后，即使更改了创世块配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
 ```
-#### 2.1.1 共识配置
+#### 2.1.1 链配置选项
+
+链配置选项位于`[chain]`，主要包括：
+
+- `[chain].sm_crypto`: 用于配置账本密码学类型，`true`表明账本使用国密算法，`false`表明账本使用非国密算法，默认为`false`;
+- `[chain].group_id`: 群组id;
+- `[chain].chain_id`: 链id.
+
+节点链配置选项示例如下：
+
+```ini
+[chain]
+sm_crypto=false
+group_id=group0
+chain_id=chain0
+```
+
+#### 2.1.2 共识配置
 
 `[consensus]`涉及共识相关配置，包括：
 
@@ -101,7 +118,7 @@ node.0 = 94172c95917fbf47b4b98aba0cc68f83f61a06b0bc373695590f343464b52c9b40d5f4d
 node.1 = 74034fb43f75c63bb2259a63f71d9d1c658945409889d3028d257914be1612d1f2e80c4a777cb3e7929a0f0d671eac2fb9a99fa45d39f5451b6357b00c389a84:1
 ```
 
-#### 2.1.2 gas配置
+#### 2.1.3 gas配置
 
 FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易，创世块的`[tx].gas_limit`可配置交易最大gas限制，默认是3000000000，链初始化完毕后，可通过[控制台指令](../../develop/console/console_commands.html#setsystemconfigbykey)动态调整gas限制。
 
@@ -114,13 +131,13 @@ FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，E
 gas_limit=3000000000
 ```
 
-#### 2.1.3 数据兼容性配置
+#### 2.1.4 数据兼容性配置
 
 FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
 
 - `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
 
-#### 2.1.4 执行模块配置
+#### 2.1.5 执行模块配置
 
 `[executor]`配置项涉及执行相关的创世块配置，主要包括：
 
@@ -131,26 +148,9 @@ FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动
 
 ### 2.2 节点配置
 
-节点配置`config.ini`主要用来配置节点的链ID、群组ID、账本类型(国密/非国密)等，主要包括链配置选项、服务配置选项、共识配置选项、存储配置选项、交易池配置选项、日志配置选项等。
+节点配置`config.ini`主要用来配置节点的链ID、群组ID、账本类型(国密/非国密)等，主要包括服务配置选项、共识配置选项、存储配置选项、交易池配置选项、日志配置选项等。
 
-#### 2.2.1 链配置选项
-
-链配置选项位于`[chain]`，主要包括：
-
-- `[chain].sm_crypto`: 用于配置账本密码学类型，`true`表明账本使用国密算法，`false`表明账本使用非国密算法，默认为`false`;
-- `[chain].group_id`: 群组id;
-- `[chain].chain_id`: 链id.
-
-节点链配置选项示例如下：
-
-```ini
-[chain]
-sm_crypto=false
-group_id=group0
-chain_id=chain0
-```
-
-#### 2.2.2 服务配置选项
+#### 2.2.1 服务配置选项
 
 服务配置选项位于`[service]`，主要用于配置该节点对应的RPC/Gateway服务名，具体包括: 
 
@@ -163,7 +163,7 @@ rpc = chain0.agencyABcosRpcService
 gateway = chain0.agencyABcosGatewayService
 ```
 
-#### 2.2.3 落盘加密配置选项
+#### 2.2.2 落盘加密配置选项
 
 落盘加密配置选项位于`[storage_security]`，主要包括：
 
@@ -171,7 +171,7 @@ gateway = chain0.agencyABcosGatewayService
 - `[storage_security].key_center_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage_security.md)的url，用于获取数据加解密密钥;
 - `[storage_security].cipher_data_key`: 数据落盘加密的私钥。
 
-#### 2.2.4 共识配置选项
+#### 2.2.3 共识配置选项
 
 考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS 在配置`config.ini`的`[consensus]`下引入`min_seal_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_seal_time`且打包的交易数大于0才会开始共识流程，处理打包生成的新区块。
 
@@ -182,7 +182,7 @@ gateway = chain0.agencyABcosGatewayService
 min_seal_time=500
 ```
 
-#### 2.2.5 存储配置选项
+#### 2.2.4 存储配置选项
 
 存储配置选项位于`[storage]`中，主要用于配置链上数据路径：
 
@@ -201,7 +201,7 @@ min_seal_time=500
     key_page_size=10240
 ```
 
-#### 2.2.6 交易池配置选项
+#### 2.2.5 交易池配置选项
 
 交易池配置选项位于`[txpool]`:
 
@@ -222,7 +222,7 @@ min_seal_time=500
     txs_expiration_time = 600
 ```
 
-#### 2.2.7 日志配置选项
+#### 2.2.6 日志配置选项
 
 日志配置选项位于`[log]`，具体包括：
 

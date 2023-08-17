@@ -14,7 +14,7 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 
 ## 更多开源工具
 
-![](../_static/images/products.jpeg)
+![](../../_static/images/products.jpeg)
 
 - **FISCO BCOS企业级金融联盟链底层平台**: [GitHub](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0) 、[Gitee](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0) 、 [文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html) 
 - **WeBASE 区块链中间件平台**：[GitHub](https://github.com/WeBankFinTech/WeBASE) 、 [Gitee](https://gitee.com/WeBank/WeBASE) 、  [文档](https://webasedoc.readthedocs.io/) 
@@ -22,12 +22,12 @@ FISCO BCOS是国内企业主导研发、对外开源、安全可控的企业级�
 - **WeDPR 即时可用，场景式隐私保护高效解决方案套件和服务**：[GitHub](https://github.com/WeBankBlockchain/WeDPR-Lab-Core) 、 [Gitee](https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto) 、 [文档](https://wedpr-lab.readthedocs.io/) 
 - **WeCross 区块链跨链协作平台**: [GitHub](https://github.com/WeBankBlockchain/WeCross) 、 [Gitee](https://gitee.com/WeBank/WeCross) 、 [文档](https://wecross.readthedocs.io/) 
 - **Truora 可信预言机服务**：[GitHub](https://github.com/WeBankBlockchain/Truora) 、 [Gitee](https://gitee.com/WeBankBlockchain/Truora) 、  [文档](https://truora.readthedocs.io/) 
-- **webankblockchain-liquid（简称WBC-Liquid） 智能合约编程语言软件**：[GitHub](https://github.com/WeBankBlockchain/liquid) 、 [Gitee](https://gitee.com/WeBankBlockchain/liquid) 、  [文档](https://liquid-doc.readthedocs.io/)
+- **WeBankBlockChain-Liquid（简称WBC-Liquid） 智能合约编程语言软件**：[GitHub](https://github.com/WeBankBlockchain/liquid) 、 [Gitee](https://gitee.com/WeBankBlockchain/liquid) 、  [文档](https://liquid-doc.readthedocs.io/)
 - **WeBankBlockchain-Data 数据治理通用组件**：
     - Data-Stash 数据仓库组件： [GitHub](https://github.com/WeBankBlockchain/Data-Stash) 、 [Gitee](https://gitee.com/WeBankBlockchain/Data-Stash) 、  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Stash/index.html)
     - Data-Export 数据导出组件： [GitHub](https://github.com/WeBankBlockchain/Data-Export) 、 [Gitee](https://gitee.com/WeBankBlockchain/Data-Export) 、  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Export/index.html)
     - Data-Reconcile 数据对账组件：  [GitHub](https://github.com/WeBankBlockchain/Data-Reconcile) 、 [Gitee](https://gitee.com/WeBankBlockchain/Data-Reconcile) 、  [文档](https://data-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Data-Reconcile/index.html)
-- **WeBankBlockchain-Governance 多方治理协作组件**：
+- **WeBankBlockchain-Governance 多方协作治理组件**：
     - Governance-Account 账户治理组件： [GitHub](https://github.com/WeBankBlockchain/Governance-Account) 、 [Gitee](https://gitee.com/WeBankBlockchain/Governance-Account) 、  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html)
     - Governance-Authority 权限治理组件：[GitHub](https://github.com/WeBankBlockchain/Governance-Authority) 、 [Gitee](https://gitee.com/WeBankBlockchain/Governance-Authority) 、  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html)
     - Governance-Key 私钥管理组件： [GitHub](https://github.com/WeBankBlockchain/Governance-Key) 、 [Gitee](https://gitee.com/WeBankBlockchain/Governance-Key) 、  [文档](https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html)

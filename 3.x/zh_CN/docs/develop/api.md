@@ -5,9 +5,9 @@
 ---------
 Java SDK为区块链应用开发者提供了Java API接口，按照功能，Java API可分为如下几类：
 
-- Client: 提供访问FISCO BCOS 3.0+节点JSON-RPC接口支持、提供部署及调用合约的支持；
-- Precompiled: 提供调用FISCO BCOS 3.0+ Precompiled合约(预编译合约)的接口，主要包括`ConsensusService`、`SystemConfigService`、`BFSService`、`KVTableService`。
-- AuthManager: 提供FISCO BCOS 3.0+ 权限控制预部署合约的调用。
+- Client: 提供访问FISCO BCOS 3.x节点JSON-RPC接口支持、提供部署及调用合约的支持；
+- Precompiled: 提供调用FISCO BCOS 3.x Precompiled合约(预编译合约)的接口，主要包括`ConsensusService`、`SystemConfigService`、`BFSService`、`KVTableService`。
+- AuthManager: 提供FISCO BCOS 3.x 权限控制预部署合约的调用。
 
 ```eval_rst
 .. note::

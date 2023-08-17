@@ -1,4 +1,4 @@
-docutils == 0.14
+docutils == 0.16
 sphinx == 2.2.0
 sphinx-rtd-theme == 0.5.2
 sphinx-copybutton == 0.2.6
@@ -11,6 +11,6 @@ commonmarkextensions == 0.0.5
 commonmark == 0.8.1
 git-lfs
 Jinja2<3.1
-myst-parser == 0.8.2
+myst-parser == 0.13.0
 pyyaml
 

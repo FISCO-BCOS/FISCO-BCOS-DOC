@@ -6,7 +6,7 @@
 
 ```eval_rst
 .. important::
-    - ``控制台`` 只支持FISCO BCOS 3.0+版本，基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现。
+    - ``控制台`` 只支持FISCO BCOS 3.x版本，基于 `Java SDK <../sdk/java_sdk/index.html>`_ 实现。
     - 可通过命令 ``./start.sh --version`` 查看当前控制台版本
 ```
 
@@ -16,7 +16,7 @@
 
 连接节点超时,可能原因:
 
-- **节点版本错误:** `console 3.0`只支持FISCO BCOS 3.0+，请确保部署的区块链环境为3.0+版本
+- **节点版本错误:** `console 3.0`只支持FISCO BCOS 3.x，请确保部署的区块链环境为3.0+版本
 - **网络连接失败:** 节点未启动或者配置节点连接信息错误
 - **SSL握手失败:** 证书错误或者`SSL`配置错误
 
@@ -87,10 +87,10 @@
     defaultGroup="group0"                            # Console default group to connect
 ```
 
-节点的群组id,查看节点配置文件`config.ini`:
+节点的群组id,查看节点配置文件`config.genesis`:
 
 ```shell
-// config.ini
+// config.genesis
 [chain]
     ; the group id, should never be changed
     group_id=group0
