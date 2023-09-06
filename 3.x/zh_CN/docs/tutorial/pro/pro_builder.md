@@ -98,7 +98,7 @@ enable_storage_security = false
 
 **Gateway服务配置项**
 
-RPC服务的配置项位于`[[agency]].[agency.gateway]`中，一个机构可部署一个Gateway服务，一条链可部署多个Gateway服务，主要配置项包括：
+Gateway服务的配置项位于`[[agency]].[agency.gateway]`中，一个机构可部署一个Gateway服务，一条链可部署多个Gateway服务，主要配置项包括：
 
 - `[[agency]].[agency.gateway].deploy_ip`: Gateway服务的部署IP，若配置多个，则会在多台机器上部署Gateway服务，达到平行扩展的目标。
 - `[[agency]].[agency.gateway].listen_ip`: Gateway服务的监听IP，默认为`0.0.0.0`。
