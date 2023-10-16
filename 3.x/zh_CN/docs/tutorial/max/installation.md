@@ -13,7 +13,7 @@ Max版FISCO BCOS节点采用分布式存储TiKV，执行模块独立成服务，
 .. note::
    - Max版本FISCO BCOS使用 ``BcosBuilder/max`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./max_builder.html>`_
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Max版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
-   - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
+   - 本章基于Docker搭建tars服务，请确保系统用户拥有操作docker权限
    - 搭建Max版本FISCO BCOS需先部署TiKV集群，TiKV集群的部署请参考 `这里 <https://tikv.org/docs/5.1/deploy/install/install/>`_
 ```
 
