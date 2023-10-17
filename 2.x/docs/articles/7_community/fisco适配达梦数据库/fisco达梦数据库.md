@@ -1,5 +1,7 @@
 本文档为fisco适配达梦数据库全套使用教程，实现fisco底层存储替换为国产数据库达梦数据库
-
+相关驱动和编译后程序均由百度网盘给出
+链接：https://pan.baidu.com/s/13VLvYNdrdloMZFMjzWQsrQ?pwd=dm10
+提取码：dm10
 ### 整体改造过程
 
 fisco-bcos支持的数据库有：mysql、rocksdb，不支持国产数据库达梦数据库，本次改造在fisco-bcos2.9.1版本的源代码基础上进行改造，对其中mysql的源码zdbStorage部分进行修改，相关sql语句进行改造以适配达梦数据库。所以改造后原先mysql数据将不再支持。
