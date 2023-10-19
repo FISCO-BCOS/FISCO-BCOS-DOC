@@ -32,12 +32,12 @@ sudo yum install -y curl openssl openssl-devel
 cd ~ && mkdir -p fisco && cd fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.4.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.4.0/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.5.0/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ## 3. 搭建单群组4节点区块链
@@ -79,7 +79,7 @@ writing RSA key
 [INFO] GroupID              : group0
 [INFO] ChainID              : chain0
 [INFO] docker mode      : true
-[INFO] docker tag       : v3.4.0
+[INFO] docker tag       : v3.5.0
 [INFO] Auth mode            : false
 [INFO] Start port           : 30300 20200
 [INFO] Server IP            : 127.0.0.1:4
@@ -101,14 +101,14 @@ try to start node0
 try to start node1
 try to start node2
 try to start node3
-Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
-Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
-Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
-Unable to find image 'fiscoorg/fiscobcos:v3.4.0' locally
-v3.4.0: Pulling from fiscoorg/fiscobcos
-v3.4.0: Pulling from fiscoorg/fiscobcos
-v3.4.0: Pulling from fiscoorg/fiscobcos
-v3.4.0: Pulling from fiscoorg/fiscobcos
+Unable to find image 'fiscoorg/fiscobcos:v3.5.0' locally
+Unable to find image 'fiscoorg/fiscobcos:v3.5.0' locally
+Unable to find image 'fiscoorg/fiscobcos:v3.5.0' locally
+Unable to find image 'fiscoorg/fiscobcos:v3.5.0' locally
+v3.5.0: Pulling from fiscoorg/fiscobcos
+v3.5.0: Pulling from fiscoorg/fiscobcos
+v3.5.0: Pulling from fiscoorg/fiscobcos
+v3.5.0: Pulling from fiscoorg/fiscobcos
 Already exists a1778b69356: Already exists 
 
 dd98998da8ef: Pulling fs layer 
@@ -125,10 +125,10 @@ Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
 Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
 Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
 Digest: sha256:ddd677f51458a0ae07458f02bcb4c8cdd876b9323d889dad0c92a5f44244f2f7
-Status: Image is up to date for fiscoorg/fiscobcos:v3.4.0
-Status: Downloaded newer image for fiscoorg/fiscobcos:v3.4.0
-Status: Image is up to date for fiscoorg/fiscobcos:v3.4.0
-Status: Downloaded newer image for fiscoorg/fiscobcos:v3.4.0
+Status: Image is up to date for fiscoorg/fiscobcos:v3.5.0
+Status: Downloaded newer image for fiscoorg/fiscobcos:v3.5.0
+Status: Image is up to date for fiscoorg/fiscobcos:v3.5.0
+Status: Downloaded newer image for fiscoorg/fiscobcos:v3.5.0
 74342b325faed4cb5913cc80f18dee210ce7757f5a696e26c0a04d665f87b9ce
 a846dc34e23b32a5e5d7ee8f465f01e8d231734cf80bd6fd1ca92b2e8d3b9e9c
 efae6adb1ebe71b2b81237d51d61d9142736927a28fe91411ecc793a382e6998
@@ -142,13 +142,14 @@ de8b704d51a23888d3a129c081bd1e32d61da4af4029415bf7379feef75c0dee
 ## 5. 检查容器
 
 检查容器状态是否正常，命令如下:
+
 ```shell
 $ docker ps -a | egrep fiscobcos
 
-74342b325fae   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node0
-efae6adb1ebe   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node2
-a846dc34e23b   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node1
-de8b704d51a2   fiscoorg/fiscobcos:v3.4.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node3
+74342b325fae   fiscoorg/fiscobcos:v3.5.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node0
+efae6adb1ebe   fiscoorg/fiscobcos:v3.5.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node2
+a846dc34e23b   fiscoorg/fiscobcos:v3.5.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node1
+de8b704d51a2   fiscoorg/fiscobcos:v3.5.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node3
 ```
 容器状态为`UP`时，说明节点正常启动。
 
