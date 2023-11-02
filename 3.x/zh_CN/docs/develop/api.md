@@ -385,7 +385,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockByHash","params":["group
 **示例：**
 ```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":["group0",0],"id":1}' http://127.0.0.1:20200
+curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockHashByNumber","params":["group0","",0],"id":1}' http://127.0.0.1:20200
 
 // Result
 {
