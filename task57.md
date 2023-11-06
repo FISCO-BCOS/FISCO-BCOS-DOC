@@ -1,6 +1,6 @@
 在测试下面合约时会出现问题：
 某个多参数合约方法：
-
+```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 contract Test {
@@ -30,6 +30,7 @@ contract Test {
     return param1 + param2 + param3 + param4 + param5 + param6 + param7 + param8 + param9 + param10 + param11 + param12 + param13 + param14 + param15 + param16 + param17 + param18 + param19 + param20;
   }
 }
+```
 
 填写参数后：
 ![image](https://github.com/FISCO-BCOS/FISCO-BCOS/assets/148929545/7d29fe4d-db50-41aa-9bc0-2aff1f677e27)
