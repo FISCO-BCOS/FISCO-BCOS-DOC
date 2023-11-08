@@ -1,8 +1,44 @@
+请根据需求选择FISCO BCOS的版本，并确认周边组件与其版本相匹配。
+
+.. container:: row 
+   
+   .. container:: card-holder-bigger
+
+         .. container:: card-bigger
+
+            .. image:: _static/images/FISCO_BCOS_Logo_3_0.png
+
+            .. raw:: html
+         
+               <div>
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/index.html">本文档版本 3.0：高性能、易拓展、高可用</a></b></h>
+                  <br><br><br>
+               </div>
+               <div style="clear:both"></div>
+
+            .. raw:: html
+         
+               <div >
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/#"> ====>> 切换至 2.0 版本文档</a></b></h>
+                  <br><br>
+               </div>
+               <div style="clear:both"></div>
+
+.. container:: row 
+
+   .. raw:: html
+      <br><br>
+      <hr>
+      <br>
+
+
+
 ##############################################################
-FISCO BCOS 技术文档
+FISCO BCOS 3.0 技术文档
 ##############################################################
 
-.. image:: _static/images/FISCO_BCOS_Logo_3_0.png
 
 FISCO BCOS（读作/ˈfɪskl  bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，其可用性经广泛应用实践检验。至今已超过4000家企业及机构、300+产业数字化标杆应用，覆盖文化版权、司法服务、政务服务、物联网、金融、智慧社区、房产建筑、社区治理、乡村振兴等领域。
 
