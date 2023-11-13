@@ -6,14 +6,14 @@
 
 ----
 
-`Python SDK <https://github.com/FISCO-BCOS/python-sdk>`_ 提供了访问 `FISCO BCOS <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_ 节点的Python API，支持节点状态查询、部署和调用合约等功能，基于Python SDK可快速开发区块链应用，目前支持 `FISCO BCOS 2.0+  <../../../>`_ 
+`Python SDK <https://github.com/FISCO-BCOS/python-sdk>`_ 提供了访问 `FISCO BCOS <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_ 节点的Python API，支持节点状态查询、部署和调用合约等功能，基于Python SDK可快速开发区块链应用，目前支持 FISCO BCOS 2.0+ 与 FISCO BCOS 3.0+
 
 
 .. admonition:: **注意**
     :class: red
 
      - **Python SDK当前为候选版本，可供开发测试使用，企业级应用可用** `Java SDK <../java_sdk/index.html>`_
-     - Python SDK目前支持FISCO BCOS 2.0.0及其以上版本
+     - Python SDK目前支持FISCO BCOS 2.0与3.0版本
      - Python SDK目前不支持国密SSL通信协议
      - Python SDK目前FISCO BCOS 3.0.0及其以上版本适配中
 
@@ -26,7 +26,7 @@
     - 支持基于keystore的账户管理
     - 支持合约历史查询
 
-安装配置环境，使用Python SDK进行应用开发请参见`gitHub <https://github.com/FISCO-BCOS/python-sdk>`_ 链接
+安装配置环境，使用Python SDK进行应用开发请参见 `gitHub <https://github.com/FISCO-BCOS/python-sdk>`_ 链接
 
 .. toctree::
    :hidden:
