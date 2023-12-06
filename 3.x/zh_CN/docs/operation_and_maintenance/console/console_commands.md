@@ -1760,7 +1760,7 @@ Available
 }
 
 [group0]: /apps> getContractStatus 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01
-Freeze
+Unavailable
 ```
 
 ### 2. 治理委员专用命令
