@@ -360,6 +360,7 @@ def replace_source(app, exception):
             lines = file.readlines()
 
         new_lines = [line.replace('https://unpkg.com', 'https://npm.onmicrosoft.cn') for line in lines]
+        new_lines = [line.replace('https://cdnjs.cloudflare.com', 'https://cdn.bootcdn.net') for line in new_lines] 
 
         with open(html_path, 'w') as file:
             file.writelines(new_lines)
