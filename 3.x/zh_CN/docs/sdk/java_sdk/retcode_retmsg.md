@@ -121,42 +121,42 @@
 
 **响应码**与**错误信息**对应表
 
-| 错误码 | 错误代号                                                                 | 错误信息                                                 |
-|--------|--------------------------------------------------------------------------|----------------------------------------------------------|
-| 0      | Success                                                                  | 成功                                                     |
-| -53007 | File Count Error                                                         | BFS在执行list接口时调用count接口出现错误，一般是存储错误 |
-| -53006 | Invalid file type                                                        | BFS错误的文件类型                                        |
-| -53005 | Invalid path                                                             | BFS错误的路径                                            |
-| -53003 | Make directory failed                                                    | BFS创建路径目录失败                                      |
-| -53002 | File already existed                                                     | BFS文件已经存在                                          |
-| -53001 | File not exist                                                           | BFS请求的文件不存在                                      |
-| -51900 | Account already exist                                                    | 新建的帐号已经存在                                       |
-| -51800 | verify ring sig failed                                                   | 环签名验证失败                                           |
-| -51700 | verify group sig failed                                                  | 验证群签名失败                                           |
-| -51508 | remove key not exist                                                     | CRUD删除不存在的key                                      |
-| -51507 | Key not exist in table, use insert method                                | CRUD更新不存在的key                                      |
-| -51506 | Don't insert the key already existed                                     | CRUD插入已经存在的key                                    |
-| -51202 | The version string or address is error                                   | BFS插入合约地址和合约版本有错误                          |
-| -51104 | Add sealer should exist in observer                                      | 在添加Sealer节点之前必须将节点加入观察节点               |
-| -51103 | The node is not exist                                                    | 操作的节点不存在                                         |
-| -51102 | The weight is invalid                                                    | 设置节点错误的权重                                       |
-| -51101 | The last sealer cannot be removed                                        | 最后一个sealer节点不应该被删除                           |
-| -51100 | Invalid node ID                                                          | 错误的node ID                                            |
-| -51004 | Auth map decode error                                                    | 权限的map解析错误，一般是存储错误                        |
-| -51003 | Error auth type input                                                    | 使用错误的权限ACL类型                                    |
-| -51002 | The contract method auth type not set, please set method auth type first | 权限ACL未设置                                            |
-| -51001 | The contract method auth not exist                                       | 权限表未设置                                             |
-| -50105 | Open table error                                                         | 读存储表错误                                             |
-| -50104 | Create table error                                                       | 创建存储表错误                                           |
-| -50103 | Table set row error                                                      | 设置存储表行数错误                                       |
-| -50102 | Invalid address format                                                   | 错误的地址格式                                           |
-| -50101 | Undefined function                                                       | 调用了不存在的预编译合约方法                             |
-| -50008 | Invalid table name or field name                                         | 表名或者字段名错误                                       |
-| -50007 | The table contains duplicated field                                      | 表中存在重复的字段                                       |
-| -50006 | The field value exceeds the limit                                        | 字段值超过16MB长度限制                                   |
-| -50005 | The value exceeds the limit, key max length is 255                       | 主键值超过255长度限制                                    |
-| -50004 | The length of all the fields name exceeds the limit 1024                 | 表的总字段长度超过1024限制                               |
-| -50003 | The table field name exceeds the limit 64                                | 单个字段长度超过64限制                                   |
-| -50002 | The table name length exceeds the limit 50                               | 表名超过50长度限制                                       |
-| -50001 | The table already exist                                                  | 表名不存在                                               |
-| -50000 | No authrized                                                             | 请求没有权限                                             |
+| 错误码       | 错误代号                                                                 | 错误信息                                                 |
+|--------------|--------------------------------------------------------------------------|----------------------------------------------------------|
+| 0            | Success                                                                  | 成功                                                     |
+| -53007       | File Count Error                                                         | BFS在执行list接口时调用count接口出现错误，一般是存储错误 |
+| -53006       | Invalid file type                                                        | BFS错误的文件类型                                        |
+| -53005       | Invalid path                                                             | BFS错误的路径                                            |
+| -53003       | Make directory failed                                                    | BFS创建路径目录失败                                      |
+| -53002       | File already existed                                                     | BFS文件已经存在                                          |
+| -53001       | File not exist                                                           | BFS请求的文件不存在                                      |
+| -51900       | Account already exist                                                    | 新建的帐号已经存在                                       |
+| -51800       | verify ring sig failed                                                   | 环签名验证失败                                           |
+| -51700       | verify group sig failed                                                  | 验证群签名失败                                           |
+| -51508       | remove key not exist                                                     | CRUD删除不存在的key                                      |
+| -51507       | Key not exist in table, use insert method                                | CRUD更新不存在的key                                      |
+| -51506       | Don't insert the key already existed                                     | CRUD插入已经存在的key                                    |
+| -51202       | The version string or address is error                                   | BFS插入合约地址和合约版本有错误                          |
+| -51104       | Add sealer should exist in observer                                      | 在添加Sealer节点之前必须将节点加入观察节点               |
+| -51103       | The node is not exist                                                    | 操作的节点不存在                                         |
+| -51102       | The weight is invalid                                                    | 设置节点错误的权重                                       |
+| -51101       | The last sealer cannot be removed                                        | 最后一个sealer节点不应该被删除                           |
+| -51100       | Invalid node ID                                                          | 错误的node ID                                            |
+| -51004       | Auth map decode error                                                    | 权限的map解析错误，一般是存储错误                        |
+| -51003       | Error auth type input                                                    | 使用错误的权限ACL类型                                    |
+| -51002       | The contract method auth type not set, please set method auth type first | 权限ACL未设置                                            |
+| -51001       | The contract method auth not exist                                       | 权限表未设置                                             |
+| -50105       | Open table error                                                         | 读存储表错误                                             |
+| -50104       | Create table error                                                       | 创建存储表错误                                           |
+| -50103       | Table set row error                                                      | 设置存储表行数错误                                       |
+| -50102       | Invalid address format                                                   | 错误的地址格式                                           |
+| -50101       | Undefined function                                                       | 调用了不存在的预编译合约方法                             |
+| -50008       | Invalid table name or field name                                         | 表名或者字段名错误                                       |
+| -50007       | The table contains duplicated field                                      | 表中存在重复的字段                                       |
+| -50006(或15) | The field value exceeds the limit                                        | 字段值超过16MB长度限制                                   |
+| -50005(或15) | The value exceeds the limit, key max length is 255                       | 主键值超过255长度限制                                    |
+| -50004       | The length of all the fields name exceeds the limit 1024                 | 表的总字段长度超过1024限制                               |
+| -50003(或15) | The table field name exceeds the limit 64                                | 单个字段长度超过64限制                                   |
+| -50002(或15) | The table name length exceeds the limit 50                               | 表名超过50长度限制                                       |
+| -50001       | The table already exist                                                  | 表名已经存在                                             |
+| -50000       | No authrized                                                             | 请求没有权限                                             |
