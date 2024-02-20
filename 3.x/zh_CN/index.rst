@@ -301,6 +301,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/contract_develop/c++_contract/index.md
    docs/contract_develop/Liquid_develop.md
    docs/contract_develop/contracts_IDE_develop.md
+   docs/contract_develop/opcode_diff.md
 
 
 .. toctree::
