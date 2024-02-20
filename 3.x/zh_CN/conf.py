@@ -148,7 +148,7 @@ html_context = {
     "github_repo": "FISCO-BCOS-DOC", # Repo name
     "github_user": "FISCO-BCOS",
     "github_version": "release-3", # Version
-    "conf_py_path": "/", # Path in the checkout to the docs root
+    "conf_py_path": "/3.x/zh_CN/", # Path in the checkout to the docs root
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme
