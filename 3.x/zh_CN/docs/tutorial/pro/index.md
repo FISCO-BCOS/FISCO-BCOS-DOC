@@ -25,4 +25,8 @@
    expand_service.md
    expand_node.md
    expand_group.md
+   installation_without_tars.md
+   expand_service_without_tars.md
+   expand_node_without_tars.md
+   tars_config.md
 ```
