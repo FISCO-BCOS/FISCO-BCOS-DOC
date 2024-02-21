@@ -26,5 +26,4 @@
    expand_node.md
    expand_group.md
    installation_without_tars.md
-   tars_config.md
 ```
