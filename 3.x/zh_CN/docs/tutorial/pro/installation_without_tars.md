@@ -534,7 +534,7 @@ peer1: 934ddb929c088767fcc0f3b8cf4e5469e46f6d8c33e4c732ef3af8f39940045701e2cea83
 ]
 ```
 
-### 5.3. 部署和调用合约
+### 4.3. 部署和调用合约
 
 **步骤1：编写HelloWorld合约**
 
@@ -616,4 +616,763 @@ Event: {}
 
 # 退出控制台
 [group0]: /> exit
+```
+
+## 5 扩容
+在成功搭建不依赖tars管理台的区块链网络基础上，本部分介绍如何对rpc、gateway、node进行扩容。
+
+### 5.1 扩容RPC/Gateway服务（不依赖tars管理台）
+通过单机扩容Pro版本FISCO BCOS联盟链的RPC/Gateway服务为例，帮助用户掌握不依赖tars管理台，进行Pro版本FISCO BCOS区块链的服务扩容。
+
+#### 5.1.1. 修改扩容配置
+
+区块链节点服务的扩容配置可参考`BcosBuilder`的扩容模板`conf/config-node-rpc-example.toml`，具体配置步骤如下：
+
+```shell
+# 进入操作目录
+cd ~/fisco/BcosBuilder
+# 扩容配置
+cp conf/config-build-expand-rpc.toml config-expand-rpc.toml
+```
+
+```shell
+cat config-expand-rpc.toml
+[tars]
+tars_pkg_dir = "binary/"
+
+[chain]
+chain_id="chain0"
+# the rpc-service enable sm-ssl or not, default disable sm-ssl
+rpc_sm_ssl=false
+# the gateway-service enable sm-ssl or not, default disable sm-ssm
+gateway_sm_ssl=false
+# the existed rpc service ca path, will generate new ca if not configured
+rpc_ca_cert_path=""
+# the existed gateway service ca path, will generate new ca if not configured
+#gateway_ca_cert_path="
+
+[[agency]]
+name = "agencyA"
+# enable data disk encryption for rpc/gateway or not, default is false
+enable_storage_security = false
+# url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
+# key_center_url =
+# cipher_data_key =
+
+    [agency.rpc]
+    deploy_ip=["127.0.0.1"]
+    # rpc listen ip
+    listen_ip="0.0.0.0"
+    # rpc listen port
+    listen_port=20200
+    thread_count=4
+    # rpc tars server listen ip
+    tars_listen_ip="0.0.0.0"
+    # rpc tars server listen port
+    tars_listen_port=40400
+```
+
+根据需要修改配置文件:
+
+- RPC根证书路径
+
+```shell
+rpc_ca_cert_path="generated/rpc/chain0/ca/"
+```
+
+- 部署服务器修改
+
+  ```shell
+  deploy_ip = "127.0.0.1"
+  ```
+
+- 修改rpc监听信息
+
+  ```shell
+    listen_ip="0.0.0.0"
+    listen_port=20202
+  ```
+
+- tars 监听信息修改
+
+  ```shell
+  tars_listen_ip="0.0.0.0"
+  tars_listen_port=40420
+  ```
+
+#### 5.1.2. 生成安装包
+
+配置修改完成之后，使用如下命令生成安装包
+
+```shell
+python3 build_chain.py build -c config-expand-rpc.toml -t rpc -O ./expand/rpc
+```
+
+执行上述命令后，输出`* build tars install package output dir : ./expand/rpc`并且无其他报错时，安装包构建成功
+
+```shell
+$ python3 build_chain.py build -c config-expand-rpc.toml -t rpc -O ./expand/rpc
+=========================================================
+* output dir: ./expand/rpc
+* Don't load tars token and url
+* args type: rpc
+* generate config for the rpc service, build opr: True
+----------- * generate config for the rpc service agencyABcosRpcService -----------
+* generate config.ini for the rpc service agencyABcosRpcService
+* store ./expand/rpc/127.0.0.1/rpc_20200/conf/config.ini
+* generate config.ini for the rpc service agencyABcosRpcService success
+* generate cert for the rpc service agencyABcosRpcService
+* generate cert, ip: 127.0.0.1, output path: ./expand/rpc/127.0.0.1/rpc_20200/conf
+* generate sdk cert, output path: ./expand/rpc/127.0.0.1/rpc_20200/conf
+* generate cert for the rpc service agencyABcosRpcService success
+----------- * generate config for the rpc service successagencyABcosRpcService -----------
+* generate tars install package for BcosRpcService:agencyABcosRpcService:agencyA:chain0:rpc:binary/
+* generate config for the rpc service success
+* copy tars_proxy.ini: ./expand/rpc/chain0/agencyA_tars_proxy.ini ,dir: ./expand/rpc/127.0.0.1/rpc_20200/conf
+=========================================================
+* build tars install package output dir : ./expand/rpc
+```
+
+生成的安装包`./expand/rpc/`
+
+```shell
+expand/rpc
+├── 127.0.0.1 
+│   ├── rpc_20202         # RPC服务目录
+│   │   ├── BcosRpcService      # 可执行程序
+│   │   ├── conf                # 配置目录
+│   │   │   ├── ca.crt          # RPC根证书
+│   │   │   ├── cert.cnf        # 证书配置文件
+│   │   │   ├── config.ini      # 配置文件
+│   │   │   ├── sdk             # SDK证书目录，rpc与sdk之间的ssl连接使用，sdk连接rpc服务时需要拷贝这些文件
+│   │   │   │   ├── ca.crt
+│   │   │   │   ├── cert.cnf
+│   │   │   │   ├── sdk.crt
+│   │   │   │   ├── sdk.key
+│   │   │   │   └── sdk.nodeid
+│   │   │   ├── ssl.crt         # ssl证书，用于rpc与sdk的网络连接
+│   │   │   ├── ssl.key         # ssl证书私钥
+│   │   │   ├── ssl.nodeid
+│   │   │   ├── tars.conf       # tars服务端配置，参考tars.conf配置说明
+│   │   │   └── tars_proxy.ini  # tars客户端连接配置，参考tars_proxy.ini配置说明
+│   │   ├── start.sh    # 启动脚本
+│   │   └── stop.sh     # 停止脚本
+│   ├── start_all.sh
+│   └── stop_all.sh
+└── chain0
+    └── agencyA_tars_proxy.ini # 新生成tars客户端连接配置
+```
+
+#### 5.1.3. 合并tars_proxy.ini文件
+
+使用`merge-config`命令 合并tars_proxy文件
+
+```shell
+python3 build_chain.py merge-config --help
+usage: build_chain.py merge-config [-h] -t TYPE -c CONFIG [CONFIG ...] -O OUTPUT
+
+e.g:
+python3 build_chain.py merge-config -t tars -c tars0.conf tars1.conf -O output_dir
+
+options:
+  -h, --help            show this help message and exit
+  -t TYPE, --type TYPE  [Required] specify the type:
+                        * type list: tars
+  -c CONFIG [CONFIG ...], --config CONFIG [CONFIG ...]
+                        [Required] the config files to be
+  -O OUTPUT, --output OUTPUT
+                        [Required] specify the output dir
+```
+
+-t/--type   : 合并的配置文件类型，目前只支持`tars`类型
+-c/--config : 配置列表，需要合并的配置文件列表
+-O/--output : 输出目录
+
+```shell
+python3 build_chain.py merge-config -t tars -c generated/chain0/agencyA_tars_proxy.ini expand/rpc/chain0/agencyA_tars_proxy.ini -O agencyA_tars_proxy
+```
+
+```shell
+cat agencyA_tars_proxy/tars_proxy.ini
+[gateway]
+proxy.0 = 127.0.0.1:40401
+
+[rpc]
+proxy.0 = 127.0.0.1:40400
+proxy.1 = 127.0.0.1:40420
+
+[txpool]
+proxy.0 = 127.0.0.1:40402
+proxy.1 = 127.0.0.1:40422
+
+[scheduler]
+proxy.0 = 127.0.0.1:40403
+proxy.1 = 127.0.0.1:40423
+
+[pbft]
+proxy.0 = 127.0.0.1:40404
+proxy.1 = 127.0.0.1:40424
+
+[ledger]
+proxy.0 = 127.0.0.1:40405
+proxy.1 = 127.0.0.1:40425
+
+[front]
+proxy.0 = 127.0.0.1:40406
+proxy.1 = 127.0.0.1:40426
+```
+
+操作成功之后，所有的tars连接信息会合并入同一个文件
+
+#### 5.1.4. 更新tars_proxy并重启服务
+
+更新机构A所有的服务的tars_proxy.ini文件
+
+包括已有的服务以及扩容的服务。
+
+```shell
+cp -f agencyA_tars_proxy/tars_proxy.ini generated/127.0.0.1/gateway_30300/conf/
+cp -f agencyA_tars_proxy/tars_proxy.ini generated/127.0.0.1/rpc_20200/conf
+cp -f agencyA_tars_proxy/tars_proxy.ini generated/127.0.0.1/group0_node_40402/conf
+cp -f agencyA_tars_proxy/tars_proxy.ini expand/rpc/127.0.0.1/rpc_20201/conf # 扩容的服务
+```
+
+重启服务
+
+```shell
+$ cd ~/fisco/BcosBuilder/pro/
+$ bash generated/127.0.0.1/stop_all.sh
+try to stop gateway_30300
+ stop BcosGatewayService success.
+try to stop gateway_30301
+ stop BcosGatewayService success.
+try to stop group0_node_40402
+ stop BcosNodeService success.
+try to stop group0_node_40412
+ stop BcosNodeService success.
+try to stop rpc_20200
+ stop BcosRpcService success.
+try to stop rpc_20201
+ stop BcosRpcService success.
+```
+
+```shell
+$ cd ~/fisco/BcosBuilder/pro/
+$ bash generated/127.0.0.1/start_all.sh
+try to start gateway_30300
+try to start gateway_30301
+try to start group0_node_40402
+try to start group0_node_40412
+try to start rpc_20200
+try to start rpc_20201
+ gateway_30300 start successfully pid=75226
+ group0_node_40402 start successfully pid=75235
+ rpc_20200 start successfully pid=75238
+ group0_node_40412 start successfully pid=75237
+ gateway_30301 start successfully pid=75230
+ rpc_20201 start successfully pid=75239
+```
+
+启动扩容节点
+
+```shell
+$ cd ~/fisco/BcosBuilder/pro/
+bash expand/rpc/127.0.0.1/start_all.sh
+try to start rpc_20202
+ rpc_20202 start successfully pid=75529
+```
+
+#### 5.1.5. 通过控制台连接扩容的RPC服务
+
+##### 5.1.5.1 安装依赖
+
+```eval_rst
+.. note::
+   - 控制台的配置方法和命令请参考 `这里 <../../operation_and_maintenance/console/console_config.html>`_
+```
+
+使用控制台之前，需先安装java环境：
+
+```shell
+# ubuntu系统安装java
+sudo apt install -y default-jdk
+
+#centos系统安装java
+sudo yum install -y java java-devel
+```
+
+##### 5.1.5.2 下载、配置并使用控制台
+
+**步骤1：下载控制台**
+
+```shell
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.6.0/download_console.sh && bash download_console.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+```
+
+**步骤2：配置控制台**
+
+- 拷贝控制台配置文件
+
+将端口替换为扩容的RPC服务的端口
+
+```shell
+# 最新版本控制台使用如下命令拷贝配置文件
+cp -n console/conf/config-example.toml console/conf/config.toml
+```
+
+```shell
+peers=["127.0.0.1:20202"]
+```
+
+- 配置控制台证书
+
+```shell
+# 可通过命令 find . -name sdk找到所有SDK证书路径
+cp ~/fisco/BcosBuilder/pro/expand/rpc/127.0.0.1/rpc_20202/conf/sdk/* console/conf
+```
+
+**步骤3：启动并使用控制台**
+
+```shell
+cd ~/fisco/console && bash start.sh
+```
+
+**步骤4: 调用控制台**
+
+```shell
+[group0]: /apps> deploy HelloWorld # 部署合约
+transaction hash: 0x98bd489a77f9531bc4ccade0a72c6cff6aa0ca1205d6e5fe391b2cc150443277
+contract address: 0x33e56a083e135936c1144960a708c43a661706c0
+currentAccount: 0x3e00116eaf82e440ef93da1ecc510471cb3c97de
+[group0]: /apps> call HelloWorld 0x33e56a083e135936c1144960a708c43a661706c0 set "Hello,Fisco" #调用合约
+transaction hash: 0x30ac4d27c35fd3d5ca0f009ad195ec4c98e90bf72503879e7860e6a508acd614
+---------------------------------------------------------------------------------------------
+transaction status: 0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Receipt message: Success
+Return message: Success
+Return value size:0
+Return types: ()
+Return values:()
+---------------------------------------------------------------------------------------------
+```
+
+### 5.2 扩容节点服务（不依赖tars管理台）
+
+#### 5.2.1. 修改扩容配置
+
+区块链节点服务的扩容配置可参考`BcosBuilder`的扩容模板`conf/config-node-expand-example.toml`，具体配置步骤如下：
+
+```shell
+# 进入操作目录
+cd ~/fisco/BcosBuilder
+# 扩容配置
+cp conf/config-build-expand-node-example.toml config-expand-node.toml
+cat config-expand-node.toml
+```
+
+```shell
+[tars]
+tars_pkg_dir = "binary/"
+
+[chain]
+chain_id="chain0"
+# the rpc-service enable sm-ssl or not, default disable sm-ssl
+rpc_sm_ssl=false
+# the gateway-service enable sm-ssl or not, default disable sm-ssm
+gateway_sm_ssl=false
+# the existed rpc service ca path, will generate new ca if not configured
+#rpc_ca_cert_path=""
+# the existed gateway service ca path, will generate new ca if not configured
+#gateway_ca_cert_path="
+
+[[group]]
+group_id="group0"
+# the genesis configuration path of the group, will generate new genesis configuration if not configured
+genesis_config_path = "./generated/chain0/group0/config.genesis"
+# VM type, now only support evm/wasm
+vm_type="evm"
+# use sm-crypto or not
+sm_crypto=false
+# enable auth-check or not
+auth_check=true
+init_auth_address="0x241abd724d0d03aa3323679de3ed65a358e5b121"
+
+# the genesis config
+# the number of blocks generated by each leader
+leader_period = 1
+# the max number of transactions of a block
+block_tx_count_limit = 1000
+# consensus algorithm now support PBFT(consensus_type=pbft), rPBFT(consensus_type=rpbft)
+consensus_type = "pbft"
+# transaction gas limit
+gas_limit = "3000000000"
+# compatible version, can be dynamically upgraded through setSystemConfig
+compatibility_version="3.6.0"
+
+[[agency]]
+name = "agencyA"
+# enable data disk encryption for rpc/gateway or not, default is false
+enable_storage_security = false
+# url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
+# key_center_url =
+# cipher_data_key =
+
+    [[agency.group]]
+        group_id = "group0"
+        [[agency.group.node]]
+        # node name, Notice: node_name in the same agency and group must be unique
+        node_name = "node2"
+        deploy_ip = "127.0.0.1"
+        # node tars server listen ip
+        tars_listen_ip="0.0.0.0"
+        # node tars server listen port, Notice: the tars server of the node will cost five ports, then the port tars_listen_port ~ tars_listen_port + 4 should be in free
+        tars_listen_port=40422
+        # enable data disk encryption for bcos node or not, default is false
+        enable_storage_security = false
+        # url of the key center, in format of ip:port, please refer to https://github.com/FISCO-BCOS/key-manager for details
+        # key_center_url =
+        # cipher_data_key =
+        monitor_listen_port = "3902"
+        # monitor log path example:"/home/fisco/tars/framework/app_log/"
+        monitor_log_path = ""
+```
+
+根据需要修改配置文件:
+
+- 修改节点名
+
+  节点名不要与已有的节点冲突
+
+  ```shell
+  node_name = "node2"
+  ```
+
+- 部署服务器修改
+
+  ```shell
+  deploy_ip = "127.0.0.1"
+  ```
+
+- 设置创世块文件路径
+
+  ```shell
+  genesis_config_path = "./generated/chain0/group0/config.genesis"
+  ```
+
+- tars 监听信息修改
+
+  ```shell
+  tars_listen_ip="0.0.0.0"
+  tars_listen_port=40422
+  ```
+
+#### 5.2.2. 生成安装包
+
+配置修改完成之后，使用如下命令生成安装包
+
+```shell
+python3 build_chain.py build -c config-expand-node.toml -t node -O ./expand/node
+```
+
+执行上述命令后，输出`* build tars install package output dir : ./expand/node`并且无其他报错时，安装包构建成功
+
+```shell
+$ python3 build_chain.py build -c config-expand-node.toml -t node -O ./expand/node
+=========================================================
+* output dir: ./expand/node
+* Don't load tars token and url
+* args type: node
+----------- generate genesis config for group group0 -----------
+* the genesis config file has been set, path: /Users/octopus/fisco/BcosBuilder/pro/generated/chain0/group0/config.genesis
+* generate pem file for agencyAgroup0node2BcosNodeService
+ - pem_path: ./expand/node/chain0/group0/agencyAgroup0node2BcosNodeService/node.pem
+ - node_id_path: ./expand/node/chain0/group0/agencyAgroup0node2BcosNodeService/node.nodeid
+ - node_id: 0ebd3916fa9e73736f64c6f84b4f55dfa0a714f26641eb9e171b0aa1975b99848a10805fbb12350434e81311008654d217a7aef9a854283d7868be10c3f21af9
+
+ - sm_crypto: 0
+* store genesis config for agencyAgroup0node2BcosNodeService
+  path: ./expand/node/chain0/group0/agencyAgroup0node2BcosNodeService/config.genesis
+* store genesis config for agencyAgroup0node2BcosNodeService success
+----------- generate genesis config for group0 success -----------
+----------- generate ini config for group group0 -----------
+* store ini config for agencyAgroup0node2BcosNodeService
+  path: ./expand/node/chain0/group0/agencyAgroup0node2BcosNodeService/config.ini
+* store ini config for agencyAgroup0node2BcosNodeService success
+----------- generate ini config for group group0 success -----------
+ * generate node install package for deploy_ip: 127.0.0.1:./expand/node/127.0.0.1/group0_node_40422:agencyAgroup0node2BcosNodeService
+=> base_dir: ./expand/node/127.0.0.1/group0_node_40422
+* generate tars node install package service: agencyAgroup0node2BcosNodeService, chain id: chain0, tars pkg dir: binary/
+* generate tars install package for BcosNodeService:agencyAgroup0node2BcosNodeService:agencyA:chain0:node:binary/
+* copy node tars_proxy.ini: ./expand/node/chain0/agencyA_tars_proxy.ini ,dir: ./expand/node/127.0.0.1/group0_node_40422
+=========================================================
+* build tars install package output dir : ./expand/node
+```
+
+生成的安装包`./expand/node/`
+
+```shell
+tree  expand/node/
+expand/node/
+├── 127.0.0.1
+│   ├── group0_node_40422   # 节点目录
+│   │   ├── BcosNodeService     # 可执行程序
+│   │   ├── conf                # 配置目录
+│   │   │   ├── config.genesis  # 区块链节点创世块文件
+│   │   │   ├── config.ini      # 配置文件
+│   │   │   ├── node.nodeid     # 节点nodeid
+│   │   │   ├── node.pem        # 私钥文件，共识模块用于消息签名、验签
+│   │   │   ├── tars.conf       # tars服务端配置，参考tars.conf配置说明
+│   │   │   └── tars_proxy.ini  # tars客户端连接配置，参考tars_proxy.ini配置说明
+│   │   ├── start.sh    # 启动脚本
+│   │   └── stop.sh     # 停止脚本
+│   ├── start_all.sh    # 启动脚本，启动所有服务节点
+│   └── stop_all.sh     # 停止脚本，停止所有服务节点
+└── chain0
+    ├── agencyA_tars_proxy.ini  # 新生成tars客户端连接配置
+    └── group0
+        └── agencyAgroup0node2BcosNodeService
+            ├── config.genesis  # 区块链创世块文件
+            ├── config.ini      # 扩容节点的配置寄文件
+            ├── node.nodeid     # 扩容节点的nodeid
+            └── node.pem        # 扩容节点的私钥文件
+```
+
+#### 5.2.3. 合并tars_proxy.ini文件
+
+使用`merge-config`命令 合并tars_proxy文件
+
+```shell
+python3 build_chain.py merge-config --help
+usage: build_chain.py merge-config [-h] -t TYPE -c CONFIG [CONFIG ...] -O OUTPUT
+
+e.g:
+python3 build_chain.py merge-config -t tars -c tars0.conf tars1.conf -O output_dir
+
+options:
+  -h, --help            show this help message and exit
+  -t TYPE, --type TYPE  [Required] specify the type:
+                        * type list: tars
+  -c CONFIG [CONFIG ...], --config CONFIG [CONFIG ...]
+                        [Required] the config files to be
+  -O OUTPUT, --output OUTPUT
+                        [Required] specify the output dir
+```
+
+-t/--type   : 合并的配置文件类型，目前只支持`tars`类型
+-c/--config : 配置列表，需要合并的配置文件列表
+-O/--output : 输出目录
+
+```shell
+python3 build_chain.py merge-config -t tars -c generated/chain0/agencyA_tars_proxy.ini expand/node/chain0/agencyA_tars_proxy.ini -O agencyA_tars_proxy
+```
+
+```shell
+cat agencyA_tars_proxy/tars_proxy.ini
+[gateway]
+proxy.0 = 127.0.0.1:40401
+
+[rpc]
+proxy.0 = 127.0.0.1:40400
+
+[txpool]
+proxy.0 = 127.0.0.1:40402
+proxy.1 = 127.0.0.1:40422
+
+[scheduler]
+proxy.0 = 127.0.0.1:40403
+proxy.1 = 127.0.0.1:40423
+
+[pbft]
+proxy.0 = 127.0.0.1:40404
+proxy.1 = 127.0.0.1:40424
+
+[ledger]
+proxy.0 = 127.0.0.1:40405
+proxy.1 = 127.0.0.1:40425
+
+[front]
+proxy.0 = 127.0.0.1:40406
+proxy.1 = 127.0.0.1:40426
+```
+
+操作成功之后，所有的tars连接信息会合并入同一个文件
+
+#### 5.2.4. 更新tars_proxy并重启服务
+
+更新机构A所有的服务的tars_proxy.ini文件
+
+包括已有的服务以及扩容的服务。
+
+```shell
+cp -f agencyA_tars_proxy/tars_proxy.ini generated/127.0.0.1/gateway_30300/conf/
+cp -f agencyA_tars_proxy/tars_proxy.ini generated/127.0.0.1/rpc_20200/conf
+cp -f agencyA_tars_proxy/tars_proxy.ini generated/127.0.0.1/group0_node_40402/conf
+cp -f agencyA_tars_proxy/tars_proxy.ini expand/node/127.0.0.1/group0_node_40422/conf # 扩容的服务
+```
+
+重启服务
+
+```shell
+$ cd ~/fisco/BcosBuilder/pro/
+$ bash generated/127.0.0.1/stop_all.sh
+try to stop gateway_30300
+ stop BcosGatewayService success.
+try to stop gateway_30301
+ stop BcosGatewayService success.
+try to stop group0_node_40402
+ stop BcosNodeService success.
+try to stop group0_node_40412
+ stop BcosNodeService success.
+try to stop rpc_20200
+ stop BcosRpcService success.
+try to stop rpc_20201
+ stop BcosRpcService success.
+```
+
+```shell
+$ cd ~/fisco/BcosBuilder/pro/
+$ bash generated/127.0.0.1/start_all.sh
+try to start gateway_30300
+try to start gateway_30301
+try to start group0_node_40402
+try to start group0_node_40412
+try to start rpc_20200
+try to start rpc_20201
+ gateway_30300 start successfully pid=75226
+ group0_node_40402 start successfully pid=75235
+ rpc_20200 start successfully pid=75238
+ group0_node_40412 start successfully pid=75237
+ gateway_30301 start successfully pid=75230
+ rpc_20201 start successfully pid=75239
+```
+
+启动扩容节点
+
+```shell
+$ cd ~/fisco/BcosBuilder/pro/
+bash expand/node/127.0.0.1/start_all.sh
+try to start group0_node_40422
+ group0_node_40422 start successfully pid=75529
+```
+
+#### 5.2.5. 将新扩容节点加入到群组
+
+```eval_rst
+.. note::
+   扩容新节点时，不建议直接将节点加为共识节点，当扩容节点的块高与链上已有节点最高块高一致时候，才可将其加入为共识节点。
+```
+
+**步骤1：获取扩容节点的NodeID**
+
+```shell
+$ cd ~/fisco/BcosBuilder/pro/
+$ cat expand/node/127.0.0.1/group0_node_40422/conf/node.nodeid
+0ebd3916fa9e73736f64c6f84b4f55dfa0a714f26641eb9e171b0aa1975b99848a10805fbb12350434e81311008654d217a7aef9a854283d7868be10c3f21af9
+```
+
+新节点扩容成功后，可通过控制台的`getGroupPeers`命令查看新增的节点列表：
+
+```shell
+[group0]: /> getGroupPeers
+[group0]: /apps> getGroupPeers
+peer0: 17be1d488dc961090110c445f72fd97db655db31738d2c1f63a8f3be809085dacfb4df631e2af1ed086ad3b4c5c228050983b93f5e169ef38400ec08cc88381e
+peer1: 934ddb929c088767fcc0f3b8cf4e5469e46f6d8c33e4c732ef3af8f39940045701e2cea83b0260202361f6e6cb7d5b5a6e2f7d69b5147c03fc79835f1a10ec73
+
+[group0]: /> getSealerList
+[
+    Sealer{
+        nodeID='17be1d488dc961090110c445f72fd97db655db31738d2c1f63a8f3be809085dacfb4df631e2af1ed086ad3b4c5c228050983b93f5e169ef38400ec08cc88381e',
+        weight=1
+    },
+    Sealer{
+        nodeID='934ddb929c088767fcc0f3b8cf4e5469e46f6d8c33e4c732ef3af8f39940045701e2cea83b0260202361f6e6cb7d5b5a6e2f7d69b5147c03fc79835f1a10ec73',
+        weight=1
+    }
+]
+[group0]: /> getObserverList  # 获取群组观察节点列表
+[]
+```
+
+从控制台输出可看出，nodeID为`0ebd3916fa9e73736f64c6f84b4f55dfa0a714f26641eb9e171b0aa1975b99848a10805fbb12350434e81311008654d217a7aef9a854283d7868be10c3f21af9`节点不在群组内，使用控制台`addObserver`命令将其加入到观察节点如下：
+
+**步骤2: 将扩容节点加入为观察节点**
+
+```shell
+[group0]: /> addObserver 0ebd3916fa9e73736f64c6f84b4f55dfa0a714f26641eb9e171b0aa1975b99848a10805fbb12350434e81311008654d217a7aef9a854283d7868be10c3f21af9
+{
+    "code":0,
+    "msg":"Success"
+}
+
+[group0]: /> getObserverList
+[
+    0ebd3916fa9e73736f64c6f84b4f55dfa0a714f26641eb9e171b0aa1975b99848a10805fbb12350434e81311008654d217a7aef9a854283d7868be10c3f21af9
+]
+```
+
+**步骤3：扩容节点同步到最高块后，将扩容节点加入为共识节点**
+
+```shell
+[group0]: /> addSealer 0ebd3916fa9e73736f64c6f84b4f55dfa0a714f26641eb9e171b0aa1975b99848a10805fbb12350434e81311008654d217a7aef9a854283d7868be10c3f21af9 1
+{
+    "code":0,
+    "msg":"Success"
+}
+
+[group0]: /> getSealerList
+[
+    [
+    Sealer{
+        nodeID='17be1d488dc961090110c445f72fd97db655db31738d2c1f63a8f3be809085dacfb4df631e2af1ed086ad3b4c5c228050983b93f5e169ef38400ec08cc88381e',
+        weight=1
+    },
+    Sealer{
+        nodeID='934ddb929c088767fcc0f3b8cf4e5469e46f6d8c33e4c732ef3af8f39940045701e2cea83b0260202361f6e6cb7d5b5a6e2f7d69b5147c03fc79835f1a10ec73',
+        weight=1
+    },
+    Sealer{
+        nodeID='0ebd3916fa9e73736f64c6f84b4f55dfa0a714f26641eb9e171b0aa1975b99848a10805fbb12350434e81311008654d217a7aef9a854283d7868be10c3f21af9',
+        weight=1
+    }
+]
+```
+
+**步骤4：部署和调用合约**
+
+```shell
+[group0]: /apps> deploy HelloWorld
+transaction hash: 0x2255701e51fd5d38d357a5f294c11ff550ab6cc4a5e1b40237f2130b58e8ac59
+contract address: 0x6546c3571f17858ea45575e7c6457dad03e53dbb
+currentAccount: 0x3e00116eaf82e440ef93da1ecc510471cb3c97de
+
+[group0]: /apps> call HelloWorld 0x6546c3571f17858ea45575e7c6457dad03e53dbb set "Hello,Fisco"
+transaction hash: 0x4025cb4c87ae36f5caa4b6488df5c40530f4e1cb52d1d0abb4cb4242e16a4755
+---------------------------------------------------------------------------------------------
+transaction status: 0
+description: transaction executed successfully
+---------------------------------------------------------------------------------------------
+Receipt message: Success
+Return message: Success
+Return value size:0
+Return types: ()
+Return values:()
+---------------------------------------------------------------------------------------------
+
+[group0]: /apps> call HelloWorld 0x6546c3571f17858ea45575e7c6457dad03e53dbb get
+---------------------------------------------------------------------------------------------
+Return code: 0
+description: transaction executed successfully
+Return message: Success
+---------------------------------------------------------------------------------------------
+Return value size:1
+Return types: (STRING)
+Return values:(Hello,Fisco)
+---------------------------------------------------------------------------------------------
 ```
