@@ -407,6 +407,8 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/design/contract_directory.md
    docs/design/boostssl.md
    docs/design/amop_protocol.md
+   docs/design/amop_protocol.md
+   docs/design/balance.md
 
 
 
