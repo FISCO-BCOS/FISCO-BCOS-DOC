@@ -16,7 +16,7 @@
 feature_balance -> feature_balance_precompiled
 ```
 
-### 开关操作如下
+## 开关操作
 
 用控制台进行操作（在开启权限情况下，命令略有不同，请参考[控制台文档](../operation_and_maintenance/console/console_commands.html#setsystemconfigbykey)）
 
@@ -280,7 +280,9 @@ contract BalancePrecompiled {
 ```solidity
 contract Economic
 {
-		BalancePrecompiled balancePrecompiled = BalancePrecompiled("0x0000000000000000000000000000000000001011"); // BalancePrecompiled合约地址
+		// BalancePrecompiled合约地址
+		BalancePrecompiled balancePrecompiled = BalancePrecompiled("0x0000000000000000000000000000000000001011"); 
+		
 		// 充值接口（只有charger能调用）
     function charge(address userAccount, uint256 gasValue) onlyCharger public {
         balancePrecompiled.addBalance(userAccount, gasValue);
