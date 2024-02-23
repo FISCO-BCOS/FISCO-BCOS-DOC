@@ -107,6 +107,8 @@ FISCO BCOS开源社区已沉淀120+篇技术文章，这些文章涉猎理论、
    7_practice/ansible_FISCO-BCOS_Webase-deploy.md
 ```
 
+**最新文章**可以跳转至[FISCO BCOS微信公众号](https://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247493260&idx=1&sn=b042be04819c89169b81bcee99eb2a18&chksm=9e3a71e6e1d2ad682bf8fde9f178c91160e5d7cdf187a81cedb191b8da1605f206f9bfd98ec0&from=industrynews&version=4.1.7.6018&platform=win#rd)
+
 ## 社区写作指南
 
 ### 文章贡献选题
