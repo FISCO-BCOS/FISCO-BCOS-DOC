@@ -1,23 +1,56 @@
+请根据需求选择FISCO BCOS的版本，并确认周边组件与其版本相匹配。
+
+.. container:: row 
+   
+   .. container:: card-holder-bigger
+
+         .. container:: card-bigger
+
+            .. image:: _static/images/FISCO_BCOS_Logo_3_0.png
+
+            .. raw:: html
+         
+               <div>
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/index.html">本文档版本 3.0：高性能、易拓展、高可用</a></b></h>
+                  <br><br><br>
+               </div>
+               <div style="clear:both"></div>
+
+            .. raw:: html
+         
+               <div >
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/#"> ====>> 切换至 2.0 版本文档</a></b></h>
+                  <br><br>
+               </div>
+               <div style="clear:both"></div>
+
+.. container:: row 
+
+   .. raw:: html
+      <br><br>
+      <hr>
+      <br>
+
+
+
 ##############################################################
-FISCO BCOS 技术文档
+FISCO BCOS 3.0 技术文档
 ##############################################################
 
-.. image:: _static/images/FISCO_BCOS_Logo.svg
 
-FISCO BCOS（读作/ˈfɪskl  bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，其可用性经广泛应用实践检验。至今已超过4000家企业及机构、300+产业数字化标杆应用，覆盖文化版权、司法服务、政务服务、物联网、金融、智慧社区、房产建筑、社区治理、乡村振兴等领域。
+FISCO BCOS（读作/ˈfɪskl bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，其可用性经广泛应用实践检验。开源社区至今已有5000+企业及机构、400+产业数字化标杆应用，覆盖文化版权、司法服务、政务服务、物联网、金融、智慧社区、房产建筑、社区治理、乡村振兴等领域。
 
-.. image:: images/introduction/applications.png
+.. image:: images/introduction/applications_new.png
    :align: center
    :alt: 产业应用
 
+FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今为止，开源社区汇聚超过10万名成员共建共治，发展成为最大最活跃的国产开源联盟链生态圈之一，其中涌现出诸多对社区建设、代码贡献的优秀社区成员。截止2023年，开源社区共认定63位MVP，这些优秀的贡献者或是将FISCO BCOS技术落地到各领域应用中，助力产业数字化，或是在多渠道布道，将开源社区精神传播到更远的地方。
 
-FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今为止，开源社区汇聚超过90000+成员共建共治，发展成为最大最活跃的国产开源联盟链生态圈，其中涌现出诸多对社区建设、代码贡献的优秀社区成员。2022年，开源社区共认定20位MVP，这些优秀的贡献者或是将FISCO BCOS技术落地到各领域应用中，助力产业数字化，或是在多渠道布道，将开源社区精神传播到更远的地方。
-
-.. image:: _static/images/img_1.png
+.. image:: images/community/mvp_review_2023.png
    :align: center
-   :width: 7in
-   :height: 5in
-   :alt: FISCO BCOS 2022年度MVP
+   :alt: FISCO BCOS 2023年度MVP
 
 .. note::
    本技术文档适用于FISCO BCOS 3.x版本, FISCO BCOS 2.x稳定版技术文档请参考 `FISCO BCOS 2.x技术文档(stable) <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/>`_
@@ -206,7 +239,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
                <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多开源工具</h>
                <br><br>
 
-               <img src="_static/images/products.jpeg" class="card-holder-full">
+               <img src="_static/images/products_2023.jpeg" class="card-holder-full">
 
 
          .. container:: tools
@@ -234,6 +267,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
                - SmartDev-Contract 智能合约库组件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Contract>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Contract>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html>`_
                - SmartDev-SCGP 合约编译插件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-SCGP>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-SCGP>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-SCGP/index.html>`_
                - SmartDev-Scaffold 应用开发脚手架：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Scaffold>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Scaffold>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Scaffold/index.html>`_
+            - **DDCMS分布式数据协作管理解决方案：**：`[GitHub] <https://github.com/WeBankBlockchain/DDCMS>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/DDCMS>`_  `[文档] <https://ddcms-docs.readthedocs.io/en/latest/>`_
 
 
 .. toctree::
@@ -265,6 +299,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/contract_develop/c++_contract/index.md
    docs/contract_develop/Liquid_develop.md
    docs/contract_develop/contracts_IDE_develop.md
+   docs/contract_develop/opcode_diff.md
 
 
 .. toctree::
@@ -371,6 +406,8 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/design/contract_directory.md
    docs/design/boostssl.md
    docs/design/amop_protocol.md
+   docs/design/amop_protocol.md
+   docs/design/balance.md
 
 
 
@@ -379,9 +416,9 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    :maxdepth: 1
    :caption: 社区资源
 
-   docs/community/pr.md
-   docs/community/contributor_list_new.md
    docs/community/MVP_list_new.md
+   docs/community/contributor_list_new.md
+   docs/community/pr.md
    dcos/community/partner_list_new.md
    docs/articles/index.md
    docs/community/join_fiscobcos.md

@@ -189,7 +189,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat,connected count=3
 tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 ```
 
-正常情况会不停输出`++++Generating seal`，表示共识正常。
+正常情况会不停输出带有`++++Generating seal`的日志，即表示共识正常。
 
 ```bash
 info|2020-12-22 17:24:43.729402|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=2e133146...

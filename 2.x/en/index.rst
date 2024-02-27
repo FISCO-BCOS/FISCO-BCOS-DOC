@@ -2,7 +2,7 @@
 FISCO BCOS Documentation
 ##############################################################
 
-.. image:: _static/images/FISCO_BCOS_Logo.svg
+.. image:: _static/images/FISCO_BCOS_Logo_2.0.svg
 
 FISCO BCOS is a reliable, secure, efficient and portable blockchain platform with proven success from many partners and successful financial-grade applications.
 

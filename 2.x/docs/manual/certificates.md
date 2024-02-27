@@ -264,7 +264,7 @@ bash ~/mynode/node/start.sh
 tail -f ~/mynode/log/log*  | grep +++
 ```
 
-正常情况会不停输出`++++Generating seal`，表示共识正常。
+正常情况会不停输出带有`++++Generating seal`的日志，即表示共识正常。
 
 通过上述操作，完成了证书续期的操作。
 
