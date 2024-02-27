@@ -76,7 +76,6 @@ PBFT模块主要包括**PrepareReq、SignReq、CommitReq和ViewChangeReq**四种
 
 | 字段名 | 字段含义 |
 | ------ | ------ |
-| 字段名 | 字段含义 |
 | idx | 当前节点索引|
 | packetType | 请求包类型(包括PrepareReqPacket/SignReqPacket/CommitReqPacket/ViewChangeReqPacket) |
 | height | 当前正在处理的区块高度(一般是本地区块高度加一) |
