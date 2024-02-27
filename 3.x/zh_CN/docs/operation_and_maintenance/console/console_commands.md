@@ -130,6 +130,14 @@
 * getContractShard                          Get a contract's belonging shard.
 * linkShard                                 Add a contract to a shard.
 * makeShard                                 Make a shard.
+---------------------------Balance Precompiled Operation----------------------------
+* addBalance                                Add balance to account. Only balanceGovernor can use it.
+* getBalance                                Get balance of the account
+* listBalanceGovernor                       List all registered balanceGovernor
+* registerBalanceGovernor                   Register an account as balanceGovernor. Only Governor accounts can use it.
+* subBalance                                Sub balance from account. Only balanceGovernor can use it
+* transferBalance                           Transfer balance from one account to another. Only balanceGovernor can use it
+* unregisterBalanceGovernor                 Unregister an account from balanceGovernor. Only governor account can use it
 ---------------------------------------------------------------------------------------------
 ```
 
@@ -830,8 +838,9 @@ PeersInfo{
 **注意：** 当开启权限治理模式时，该命令将只允许治理委员会使用，不允许用户直接调用，请参考命令 `setSysConfigProposal`
 
 - `tx_count_limit`: 区块最大打包交易数
+- `tx_gas_price`: 交易gas价格，默认单位为wei，支持kwei、mwei、gwei、szabo、finney、ether、kether、mether、gether
+- `tx_gas_limit`: 交易执行的gas限制
 - `consensus_leader_period`: 共识选主间隔
-- `gas_limit`: 交易执行的gas限制
 - `compatibility_version`: 数据兼容版本号，当区块链所有二进制均升级到最新版本后，可通过`setSystemConfigByKey`升级数据兼容版本号到最新
 - `auth_check_status`: （3.3.0之后有效）权限检查状态，如果为0则关闭所有权限检查，非0则为开启所有检查
 
@@ -842,6 +851,12 @@ PeersInfo{
 
 ```shell
 [group0]: /apps>  setSystemConfigByKey tx_count_limit 100
+{
+    "code":0,
+    "msg":"success"
+}
+
+[group0]: /apps>  setSystemConfigByKey tx_gas_price 1 kwei
 {
     "code":0,
     "msg":"success"
@@ -858,6 +873,9 @@ PeersInfo{
 ```shell
 [group0]: /apps>  getSystemConfigByKey tx_count_limit
 100
+
+[group0]: /apps> getSystemConfigByKey tx_gas_price 
+1000
 ```
 
 ## 共识操作命令
@@ -1760,7 +1778,7 @@ Available
 }
 
 [group0]: /apps> getContractStatus 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01
-Freeze
+Unavailable
 ```
 
 ### 2. 治理委员专用命令
@@ -2654,4 +2672,160 @@ Add 0xd24180cc0fef2f3e545de4f9aafc09345cd08903 to hello_shard Ok. You can use 'l
 ```
 [group0]: /apps> getContractShard d24180cc0fef2f3e545de4f9aafc09345cd08903
 /shards/hello_shard
+```
+
+## 资产管理预编译命令
+
+该操作为“资产管理”的管理操作，请参考[此处]()了解更多技术细节。
+
+### 1. listBalanceGovernor
+
+查看具有资产操作权限的账户，任意账户可以查看。
+
+```shell
+[group0]: /apps>  listBalanceGovernor
+listBalanceGovernor: [0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e]
+```
+
+注意
+
+* 在打开feature_balance_precompiled开关后，默认将链管理账户添加到资产管理权限账户中，可以通过`registerBalanceGovernor`
+  接口添加其他账户。
+* 最多可展示500个账户，超过500个账户时将无法再注册。
+
+### 2. registerBalanceGovernor
+
+注册账户资产管理权限，只有链管理员账户具有该权限。
+
+参数
+
+* 账户地址/合约地址：需要注册的账户地址或者合约地址
+
+```shell
+[group0]: /apps> registerBalanceGovernor 0x7ef1de472584a76dc5ff06f21ca899695ce5e730
+transaction hash:0xa200a7dc58e100d41c544b583cc74a0e6aa3b1aa82fb7b7e04c117b75b5df898
+register balanceGovernor 0x7ef1de472584a76dc5ff06f21ca899695ce5e730 success.
+
+[group0]: /apps> listBalanceGovernor 
+listBalanceGovernor: [0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e, 0x7ef1de472584a76dc5ff06f21ca899695ce5e730]
+```
+
+注意
+
+* 此接口只有链管理员账户具有权限调用
+* 最多注册500个账户为balanceGovernor，超过500个账户将无法注册
+
+### 3. unregisterBalanceGovernor
+
+注销已注册的账户资产管理权限，只有链管理员账户具有该权限。
+
+参数
+
+* 账户地址/合约地址：需要注销的账户地址或者合约地址
+
+```shell
+[group0]: /apps> unregisterBalanceGovernor 0x7ef1de472584a76dc5ff06f21ca899695ce5e730
+transaction hash:0x95bcb68caa65451785c23a0a370ec9e7cb6010c81dadf151461b4e270603dffb
+unregister balanceGovernor 0x7ef1de472584a76dc5ff06f21ca899695ce5e730 success.
+
+[group0]: /apps> listBalanceGovernor 
+listBalanceGovernor: [0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e]
+```
+
+注意
+
+* 当balanceGovernor只有一个账户时，无法再注销。
+
+### 4. getBalance
+
+查询账户的资产余额，任意账户可以查看。
+
+参数
+
+* 账户地址：需要查询的账户地址
+
+```shell
+[group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e
+balance: 0 wei
+```
+
+### 5. addBalance
+
+增加账户的资产余额，只有资产管理权限账户具有调用该接口权限。
+
+参数
+
+* 账户地址：需要增加资产的账户地址
+* 增加的资产数量：需要增加的资产数量，默认单位为wei
+* 资产数量单位：可选，资产数量的单位，默认为wei，支持wei、kwei、mwei、gwei、szabo、finney、ether、kether、mether、gether
+
+```shell
+[group0]: /apps> addBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e 100 wei
+transaction hash:0x42265ad297666f16b020d9619180716548a639d5018ed853125f7792b77d9d62
+add balance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e success. You can use 'getBalance' to check
+
+[group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e
+balance: 100 wei
+
+[group0]: /apps> addBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e 100 kwei
+transaction hash:0x7b9491466dddabedaac8aed942a1e4eb819ea5d75d1a8986a889d59bd601dd19
+add balance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e success. You can use 'getBalance' to check
+
+[group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e
+balance: 100100 wei
+```
+
+### 6. subBalance
+
+减少指定账户的资产余额，只有资产管理权限账户具有调用该接口权限。
+
+参数
+
+* 账户地址：需要减少资产的账户地址
+* 减少的资产数量：需要减少的资产数量，默认单位为wei
+* 资产数量单位：可选，资产数量的单位，默认为wei，支持wei、kwei、mwei、gwei、szabo、finney、ether、kether、mether、gether
+
+```shell
+[group0]: /apps> subBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e 100
+transaction hash:0x4b723c968e4a1d058e1fbcb7f2babe7717d11f53c63b91c395c74a4d13cabdf5
+sub balance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e success. You can use 'getBalance' to check
+
+[group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e
+balance: 100000 wei
+
+[group0]: /apps> subBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e 1 kwei
+transaction hash:0x2fc4fe40fdefee492b363f6f42d4f814194384e72c27fd46b9ffc644d63b2492
+sub balance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e success. You can use 'getBalance' to check
+
+[group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e
+balance: 99000 wei
+```
+
+### 7. transferBalance
+
+转账，从一个账户向另一个账户转账资产，只有资产管理权限账户具有调用该接口权限。
+
+参数
+
+* 转出账户地址：需要转出资产的账户地址
+* 转入账户地址：需要转入资产的账户地址
+* 转账资产数量：需要转账的资产数量，默认单位为wei
+* 资产数量单位：可选，资产数量的单位，默认为wei，支持wei、kwei、mwei、gwei、szabo、finney、ether、kether、mether、gether
+
+```shell
+[group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e
+balance: 99000 wei
+
+[group0]: /apps> getBalance 0x7ef1de472584a76dc5ff06f21ca899695ce5e730
+balance: 0 wei
+
+[group0]: /apps> transferBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e 0x7ef1de472584a76dc5ff06f21ca899695ce5e730 9 kwei
+transaction hash:0xff7c7818a573da072b673c3ba2f4f50694948c12ae439371c7b13cc50f917bc1
+transfer 9kwei from 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e to 0x7ef1de472584a76dc5ff06f21ca899695ce5e730 success. You can use 'getBalance' to check
+
+[group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e
+balance: 90000 wei
+
+[group0]: /apps> getBalance 0x7ef1de472584a76dc5ff06f21ca899695ce5e730
+balance: 9000 wei
 ```
