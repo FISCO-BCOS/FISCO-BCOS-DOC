@@ -8,7 +8,7 @@
 
 ## 1. 选择节点和Java SDK版本
 
-- 当您的节点需要使用硬件加密模块时，您需要运行硬件加密版fisco-bcos (2.8.0-hsm)节点.硬件加密版节点可以与普通版fisco-bcos 2.8.0，以及2.7.0等旧版本节点建立连接构建网络。
+- 当您的节点需要使用硬件加密模块时，您需要运行硬件加密版fisco-bcos (2.8.0-hsm)节点。硬件加密版节点可以与普通版fisco-bcos 2.8.0，以及2.7.0等旧版本节点建立连接构建网络。
 - 当您的SDK需要使用硬件加密模块时，您需要使用硬件加密版Java SDK（fisco-bcos-java-sdk-2.8.0-GMT0018.jar）。硬件加密版Java SDK可以连接2.8.0及旧版本节并使用。
 
 
@@ -156,7 +156,7 @@ info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 # ubuntu系统安装java
 sudo apt install -y default-jdk
 
-#centos系统安装java
+# centos系统安装java
 sudo yum install -y java java-devel
 ```
 
@@ -175,7 +175,7 @@ git checkout master-2.0
 ```bash
 cp dist/conf/config-example.toml dist/conf/config.toml
 # 将SDK的证书从节点复制到dist/conf/目录下
-# 假设节点目录w为～/fisco/nodes/
+# 假设节点目录为～/fisco/nodes/
 cp -r ～/fisco/nodes/127.0.0.1/sdk/* dist/conf
 ```
 
