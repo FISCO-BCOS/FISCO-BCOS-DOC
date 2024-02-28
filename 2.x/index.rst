@@ -266,7 +266,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多开源工具</h>
                <br><br>
 
-               <img src="_static/images/products.jpeg" class="card-holder-full">
+               <img src="_static/images/products_2023.jpeg" class="card-holder-full">
 
 
          .. container:: tools 
@@ -294,6 +294,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                - SmartDev-Contract 智能合约库组件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Contract>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Contract>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html>`_
                - SmartDev-SCGP 合约编译插件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-SCGP>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-SCGP>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-SCGP/index.html>`_
                - SmartDev-Scaffold 应用开发脚手架：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Scaffold>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Scaffold>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Scaffold/index.html>`_
+            - **DDCMS分布式数据协作管理解决方案：**：`[GitHub] <https://github.com/WeBankBlockchain/DDCMS>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/DDCMS>`_  `[文档] <https://ddcms-docs.readthedocs.io/en/latest/>`_
 
 
 .. toctree::
