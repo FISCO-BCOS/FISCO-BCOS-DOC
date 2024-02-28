@@ -2,7 +2,7 @@
 
 ## 介绍
 
-FISCO BCOS开源社区已沉淀120+篇技术文章，这些文章涉猎理论、开发以及应用案例等方面，有助于开发者快速上手、全面掌握FISCO BCOS，依据平台关键特性，社区对这些文章进行整理编排成《深入浅出FISCO BCOS》，供各位浏览阅读。
+新的一年已经开启，为了感谢大家的长久陪伴和倾力支持，我们将FISCO BCOS开源社区成立至今超400篇技术干货和经典篇章整理成文，作为区块链干货合辑，分享给大家! 请点击这里查阅[完整版](https://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247493260&idx=1&sn=b042be04819c89169b81bcee99eb2a18&chksm=9e3a71e6e1d2ad682bf8fde9f178c91160e5d7cdf187a81cedb191b8da1605f206f9bfd98ec0&from=industrynews&version=4.1.7.6018&platform=win#rd)
 
 《深入浅出FISCO BCOS》分为六大章节，由社区全体成员共创完成并不断优化，社区开发者可以在GitHub上提交PR贡献文章，分享FISCO BCOS开发经验与使用心得。
 
