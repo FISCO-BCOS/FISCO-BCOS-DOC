@@ -20,6 +20,8 @@ Java SDK 提供了访问 FISCO BCOS 节点的Java API，支持节点状态查询
    contracts_to_java.md
    assemble_transaction.md
    remote_sign_assemble_transaction.md
+   assemble_service.md
+   transaction_data_struct.md
    rpc_api.md
    precompiled_service_api.md
    transaction_decode.md

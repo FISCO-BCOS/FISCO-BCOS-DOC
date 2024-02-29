@@ -9,6 +9,11 @@
     Java SDK同时支持将 `solidity` 转换为 `java` 文件后，调用相应的 `java` 方法部署和调用合约，也支持构造交易的方式部署和调用合约，这里主要展示交易构造与发送，前者的使用方法请参考 `这里 <./contracts_to_java.html>`_ 
 ```
 
+```eval_rst
+.. note::
+    交易的数据结构可以参考 `这里 <./transaction_data_struct.html>`_ 
+```
+
 ## 1. 概念解析：合约的部署与调用
 
 合约的操作可分为合约部署和合约调用两大类。其中合约调用又可以被区分为『交易』和『查询』。
@@ -290,7 +295,7 @@ future.exceptionally(
     });
 ```
 
-## 4. 详细API功能介绍
+## 11. 详细API功能介绍
 
 `AssembleTransactionProcessor`支持自定义参数发送交易，支持异步的方式来发送交易，也支持返回多种封装方式的结果。
 
