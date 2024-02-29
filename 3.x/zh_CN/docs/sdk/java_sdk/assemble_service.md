@@ -180,3 +180,28 @@ TransactionRequestWithStringParams requestWithStringParams =
 // 同步发送上链，获得返回
 TransactionResponse transactionResponse = transactionService.sendTransaction(requestWithStringParams);
 ```
+
+## 3. Solidity生成Java文件使用新接口
+
+生成智能合约的Java接口文件详细文档可见：[链接](./contracts_to_java.html)
+
+在3.6.0以后版本的控制台中，contract2java.sh脚本新增 `-t` 选项，当值为1就生成使用新接口的Java文件，使用姿势与之前无异。例如：
+
+```shell
+ bash contract2java.sh solidity  -t 1 -n -s ./contracts/solidity/Incremental.sol
+```
+
+已有的Java文件改造方法：
+
+以Java-sdk-demo中 package org.fisco.bcos.sdk.demo.perf.PerformanceOk 为例：
+在deploy构造好的合约对象后，设置TransactionManager，之后发送的请求就会按照新的交易接口进行。
+
+```java
+// build the client
+Client client = sdk.getClient(groupId);
+// deploy the HelloWorld
+System.out.println("====== Deploy Ok ====== ");
+Ok ok = Ok.deploy(client, client.getCryptoSuite().getCryptoKeyPair());
+// 设置TransactionManager
+ok.setTransactionManager(new DefaultTransactionManager(client));
+```
