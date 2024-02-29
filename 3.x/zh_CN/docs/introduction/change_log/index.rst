@@ -20,6 +20,28 @@ FISCO BCOS 版本迭代，支持版本之间的兼容升级，支持可灰度升
 
    upgrade.md
 
+v3.6.x
+------------------
+
+.. admonition:: FISCO BCOS 3.x Releases
+
+     - `FISCO BCOS v3.6.0 <./3_6_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.6.0>`_]
+
+
+.. admonition:: 查看节点和数据版本
+
+    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
+    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
+    - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
+    - 查看轻节点二进制版本：``../fisco-bcos-lightnode --version``
+    - 查看轻节点相关文档，请参考 [`轻节点搭建工具 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/tutorial/lightnode.html>`_]
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   3_6_0.md
+
 v3.5.x
 ------------------
 
@@ -93,6 +115,7 @@ v3.2.x
 ------------------
 
 .. admonition:: FISCO BCOS 3.x Releases
+     - `FISCO BCOS v3.2.6 <./3_2_6.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.6>`_]
      - `FISCO BCOS v3.2.5 <./3_2_5.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.5>`_]
      - `FISCO BCOS v3.2.4 <./3_2_4.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.4>`_]
      - `FISCO BCOS v3.2.3 <./3_2_3.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.2.3>`_]
@@ -114,6 +137,7 @@ v3.2.x
    :hidden:
    :maxdepth: 0
 
+   3_2_6.md
    3_2_5.md
    3_2_4.md
    3_2_3.md

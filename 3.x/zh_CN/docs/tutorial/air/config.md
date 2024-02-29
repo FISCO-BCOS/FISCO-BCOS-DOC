@@ -24,6 +24,7 @@ Air版本FISCO BCOS主要包括创世块配置文件`config.genesis`和节点配
     - **创世块配置文件在链初始化后不可更改**
     - 链初始化后，即使更改了创世块配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
 ```
+
 ### 1.1 配置链信息
 
 `[chain]`配置节点的链信息，**该配置下的字段信息，一旦确定就不应该再更改**：
@@ -51,8 +52,8 @@ Air版本FISCO BCOS主要包括创世块配置文件`config.genesis`和节点配
 - `[consensus].leader_period`: 共识过程中每个leader连续打包的区块数目，默认为 5;
 - `[consensus].node.idx`：共识节点列表，配置了参与共识节点的NodeID。
 
-
 `[consensus]`配置示例如下：
+
 ```ini
 [consensus]
 consensus_type = pbft
@@ -171,6 +172,7 @@ RPC配置示例如下：
 ### 2.3 配置证书信息
 
 基于安全考虑，FISCO BCOS节点间采用SSL加密通信，`[cert]`配置SSL连接的证书信息：
+
 - `[cert].ca_path`: 证书路径，默认为`conf`;
 - `[cert].ca_cert`: ca证书名，默认为`ca.crt`;
 - `[cert].node_key`: 节点SSL连接私钥，默认为`ssl.key`;
@@ -196,7 +198,6 @@ RPC配置示例如下：
 [security]
     private_key_path=conf/node.pem
 ```
-
 
 ### 2.4 配置共识信息
 
@@ -254,7 +255,7 @@ RPC配置示例如下：
 - `[txpool].limit`: 交易池的容量限制, 默认为`15000`;
 - `[txpool].notify_worker_num`: 交易通知线程数量，默认为2;
 - `[txpool].verify_worker_num`: 交易验证线程数量，默认为机器CPU核数;
-- `[txpool].txs_expiration_time`: 交易过期时间，以秒为单位，默认10分钟，即：超过十分钟没有被共识模块打包的交易将会被直接丢弃。 
+- `[txpool].txs_expiration_time`: 交易过期时间，以秒为单位，默认10分钟，即：超过十分钟没有被共识模块打包的交易将会被直接丢弃。
 
 ```ini
 [txpool]
@@ -289,15 +290,27 @@ FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/
     max_log_file_size=200
 ```
 
+#### v3.6.0新增配置项
+
+- `log.format`：配置每条日志的格式，关键字用%包裹，支持关键字包括`LineID, TimeStamp, ProcessID, ThreadName, ThreadID 和Message`
+- `log.enable_rotate_by_hour`：默认为true，配置为`false`时`log.log_name_pattern,log.rotate_name_pattern,log.archive_path,log.compress_archive_file,log.max_archive_files,log.max_archive_size,log.min_free_space`才生效，否则日志为按小时或文件大小产生新的文件
+- `log.log_name_pattern`： 日志文件的文件名模式，可以配置字符串，也支持格式化字符，%前缀，Y,m,d,H,M,S代表年月日时分秒，N代表单调递增的编号，可以%5N使用定长编号
+- `log.rotate_name_pattern`： 滚动后产生的日志文件的文件名，支持的格式化字符与log.log_name_pattern 相同
+- `log.archive_path`： 历史日志文件的归档文件夹
+- `log.compress_archive_file`： 是否压缩归档的日志文件
+- `log.max_archive_files`： 归档文件夹中最大文件个数，0为不限制
+- `log.max_archive_size`： 归档文件夹最大硬盘空间限制，单位MB，0为不限制
+- `log.min_free_space`： 归档文件夹最小空间，默认为0
+
 ### 2.9 网关模块限流
 
 网关模块支持在config.ini中配置实现流量速率限制的功能，当流量超限时，通过丢弃数据包实现限流。
 
 根据需求配置如下内容，可实现
 
-* 出带宽、入带宽限流
-* 特定IP、群组的限流
-* 排除特定模块的限流
+- 出带宽、入带宽限流
+- 特定IP、群组的限流
+- 排除特定模块的限流
 
 在进程依赖的config.ini中的配置如下（请根据需求反注释某些项）
 
@@ -359,6 +372,3 @@ FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/
     ;       incoming_module_qps_limit_xxxx=3000
 
 ```
-
-
-

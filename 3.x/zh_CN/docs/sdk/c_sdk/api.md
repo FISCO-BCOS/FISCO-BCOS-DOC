@@ -14,7 +14,8 @@
 - [工具类](../c_sdk/api.html#id4)
   - [KeyPair](../c_sdk/api.html#keypair)
   - [ABI编解码](../c_sdk/api.html#abi)
-  - [交易构造](../c_sdk/api.html#id5)
+  - [交易构造（不带类型）](../c_sdk/api.html#id5)
+  - [交易构造（带类型）](../c_sdk/api.html#id6)
 
 ## 1. 基础操作
 
@@ -944,7 +945,206 @@
   - 注意:
     - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
-### 6.3 构造签名交易
+### 6.3 交易构造（不带类型）
+- `bcos_sdk_get_group_wasm_and_crypto`
+  - 原型:
+    - `void bcos_sdk_get_group_wasm_and_crypto(void* sdk, const char* group_id, int* wasm, int* crypto_type)`
+  - 功能:
+    - 获取群组的部分基础信息 1. 群组运行`wasm`合约，还是`solidity`合约 2. 群组为国密还是非国密环境
+  - 参数:
+    - `sdk`: sdk对象，`bcos_sdk_create`或者`bcos_sdk_create_by_config_file`创建
+    - `group_id`: 群组ID
+    - `wasm`: 返回值，该群组是否运行`wasm`合约
+      - 0: 否，群组运行`solidity`合约，
+      - 1: 是，群组运行`wasm`合约
+    - `crypto_type`: 返回值，该群组是否为国密类型，0: 否，1: 是
+  - 返回:
+    - 无
+
+- `bcos_sdk_get_group_chain_id`
+  - 原型:
+    - `const char* bcos_sdk_get_group_chain_id(void* sdk, const char* group_id)`
+  - 功能:
+    - 获取群组的链ID，构造交易时需使用该参数
+  - 参数:
+    - `sdk`: sdk对象，`bcos_sdk_create`或者`bcos_sdk_create_by_config_file`创建
+    - `group_id`: 群组ID
+  - 返回:
+    - 群组的链ID
+  - 注意:
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_create_transaction_data`
+  - 原型:
+    ```cpp
+    void* bcos_sdk_create_transaction_data(const char* group_id, const char* chain_id, const char* to, const char* data, const char* abi, int64_t block_limit)
+    ```
+  - 功能:
+    - 创建`TransactionData`对象，该对象是未签名的交易对象
+  - 参数:
+    - `group_id`: 群组ID
+    - `chain_id`: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
+    - `to`: 调用的合约地址，部署合约时设置为空字符串""
+    - `data`: ABI编码后的参数，十六进制c风格字符串，参考[ABI编解码](../c_sdk/api.html#abi)
+    - `abi`: 合约的ABI，JSON字符串，可选参数，部署合约时可以将合约的ABI传入，默认传入空字符串""
+    - `block_limit`: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
+  - 返回:
+    - `TransactionData`对象指针
+    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - `TransactionData`对象需要调用`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
+
+- `bcos_sdk_calc_transaction_data_hash`
+  - 原型:
+    - `const char* bcos_sdk_calc_transaction_data_hash(int crypto_type, void* transaction_data)`
+  - 功能:
+    - 计算`TransactionData`对象哈希
+  - 参数:
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
+    - `transaction_data`: `TransactionData`对象指针
+  - 返回:
+    - `TransactionData`对象哈希
+    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - **`TransactionData`对象的哈希，也是交易的哈希**
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_sign_transaction_data_hash`
+  - 原型:
+    - `const char* bcos_sdk_sign_transaction_data_hash(void* keypair, const char* transcation_hash)`
+  - 功能:
+    - 交易哈希签名
+  - 参数:
+    - keypair:`KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
+    - transcation_hash: 交易哈希，由`bcos_sdk_calc_transaction_data_hash`接口生成
+  - 返回:
+    - 交易签名，字符串类型
+    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_create_signed_transaction_with_signed_data`
+  - 原型:
+
+  ```cpp
+  const char* bcos_sdk_create_signed_transaction_with_signed_data(void* transaction_data, const char* signed_transaction_data, const char* transaction_data_hash, int32_t attribute)
+  ```
+
+  - 功能:
+    - 创建签名的交易
+  - 参数:
+    - transaction_data: `TransactionData`对象
+    - signed_transaction_data: 交易哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
+    - transaction_data_hash: 交易哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_hash`接口生成
+    - attribute: 交易额外属性，待拓展，默认填0即可
+  - 返回:
+    - 签名的交易，十六进制c风格字符串
+    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_create_signed_transaction`
+  - 原型:
+
+  ```cpp
+  void bcos_sdk_create_signed_transaction(void* key_pair, const char* group_id, const char* chain_id, const char* to, const char* data, const char* abi, int64_t block_limit, int32_t attribute, char** tx_hash, char** signed_tx)
+  ```
+
+  - 功能:
+    - 创建签名的交易
+  - 参数:
+    - key_pair: `KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
+    - group_id: 群组ID
+    - chain_id: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
+    - to: 调用的合约地址，部署合约时设置为空字符串""
+    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
+    - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
+    - block_limit: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
+    - attribute: 交易额外属性，待拓展，默认填0即可
+    - tx_hash: 返回值，交易哈希，十六进制c风格字符串
+    - signed_tx: 返回值，签名的交易，十六进制c风格字符串
+  - 返回:
+    - 调用`bcos_sdk_get_last_error`接口判断是否成功，0表示成功，其他值表示错误码
+  - 注意:
+    - 返回的`tx_hash`、`signed_tx`需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+  - **说明**:
+    - `bcos_sdk_create_signed_transaction`相当于下面几个接口功能的组合，创建交易、交易哈希、交易签名流程需要分开处理时，使用下面几个接口:
+      - `bcos_sdk_create_transaction_data`: 创建`TransactionData`
+      - `bcos_sdk_calc_transaction_data_hash`: 计算交易哈希
+      - `bcos_sdk_sign_transaction_data_hash`: 交易哈希签名
+      - `bcos_sdk_create_signed_transaction_with_signed_data`: 创建签名的交易
+
+- `bcos_sdk_destroy_transaction_data`
+  - 原型:
+    - `void bcos_sdk_destroy_transaction_data(void* transaction_data)`
+  - 功能:
+    - 释放`TransactionData`对象
+  - 参数:
+    - `transaction_data`: `TransactionData`对象指针
+  - 返回:
+    - 无
+
+- `bcos_sdk_create_transaction_builder_service`
+  - 原型:
+    - `void* bcos_sdk_create_transaction_builder_service(void* sdk, const char* group_id)`
+  - 功能:
+    - 创建`TransactionBuilderService`对象，简化构造签名交易的姿势，可以对比`bcos_sdk_create_transaction_data_with_tx_builder_service`与`bcos_sdk_create_transaction_data`接口的差异
+  - 参数:
+    - sdk: sdk对象指针
+    - group_id: 群组ID
+  - 返回:
+    - `TransactionBuilderService`对象指针
+    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - `TransactionBuilderService`对象需要使用`bcos_sdk_destroy_transaction_builder_service`销毁，以免造成内存泄露
+
+- `bcos_sdk_destroy_transaction_builder_service`
+  - 原型:
+    - `bcos_sdk_destroy_transaction_builder_service(void* service)`
+  - 功能:
+    - 销毁`TransactionBuilderService`对象
+  - 参数:
+    - `TransactionBuilderService`对象指针
+  - 返回:
+    - 无
+- `bcos_sdk_create_transaction_data_with_tx_builder_service`
+  - 原型:
+    - `void* bcos_sdk_create_transaction_data_with_tx_builder_service(void* tx_builder_service, const char* to, const char* data, const char* abi)`
+  - 功能:
+    - 创建`TransactionData`对象
+  - 参数:
+    - tx_builder_service: `TransactionBuilderService`对象指针
+    - to: 调用的合约地址，部署合约时设置为空字符串""
+    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
+    - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
+  - 返回:
+    - `TransactionData`对象指针
+    - 失败返回`NULL`使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - 创建的`TransactionData`对象需要由`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
+
+- `bcos_sdk_create_signed_transaction_with_tx_builder_service`
+  - 原型:
+
+  ```cpp
+  void bcos_sdk_create_signed_transaction_with_tx_builder_service(void*tx_builder_service, void* key_pair, const char*to, const char* data, const char* abi, int32_t attribute, char** tx_hash, char** signed_tx)
+  ```
+
+  - 功能:
+    - 创建签名的交易
+  - 参数:
+    - tx_builder_service: `TransactionBuilderService`对象指针
+    - key_pair: `KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
+    - to: 调用的合约地址，部署合约时设置为空字符串""
+    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
+    - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
+    - attribute: 交易额外属性，待拓展，默认填0即可
+    - tx_hash: 返回值，交易哈希，十六进制c风格字符串
+    - signed_tx: 返回值，签名的交易，十六进制c风格字符串
+  - 注意:
+    - 返回的`tx_hash`、`signed_tx`需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+### 6.4 交易构造（带类型）
 - **c-sdk `3.3.0-tx-struct` 特性分支，增加了对交易结构体的支持**。
 即返回值、入参支持交易结构体，结构体如下：
 ```c
@@ -981,55 +1181,11 @@ struct bcos_sdk_c_transaction
 };
 ```
 
-- `bcos_sdk_get_group_wasm_and_crypto`
-  - 原型:
-    - `void bcos_sdk_get_group_wasm_and_crypto(void* sdk, const char* group_id, int* wasm, int* crypto_type)`
-  - 功能:
-    - 获取群组的部分基础信息 1. 群组运行`wasm`合约，还是`solidity`合约 2. 群组为国密还是非国密环境
-  - 参数:
-    - `sdk`: sdk对象，`bcos_sdk_create`或者`bcos_sdk_create_by_config_file`创建
-    - `group_id`: 群组ID
-    - `wasm`: 返回值，该群组是否运行`wasm`合约
-      - 0: 否，群组运行`solidity`合约，
-      - 1: 是，群组运行`wasm`合约
-    - `crypto_type`: 返回值，该群组是否为国密类型，0: 否，1: 是
-  - 返回:
-    - 无
-
-- `bcos_sdk_get_group_chain_id`
-  - 原型:
-    - `const char* bcos_sdk_get_group_chain_id(void* sdk, const char* group_id)`
-  - 功能:
-    - 获取群组的链ID，构造交易时需使用该参数
-  - 参数:
-    - `sdk`: sdk对象，`bcos_sdk_create`或者`bcos_sdk_create_by_config_file`创建
-    - `group_id`: 群组ID
-  - 返回:
-    - 群组的链ID
-  - 注意:
-    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
-
-- `bcos_sdk_create_transaction_data`
-  - 原型:
-    - `void* bcos_sdk_create_transaction_data(const char* group_id, const char* chain_id, const char* to, const char* data, const char* abi, int64_t block_limit)`
-  - 功能:
-    - 创建`TransactionData`对象，该对象是未签名的交易对象
-  - 参数:
-    - `group_id`: 群组ID
-    - `chain_id`: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
-    - `to`: 调用的合约地址，部署合约时设置为空字符串""
-    - `data`: ABI编码后的参数，十六进制c风格字符串，参考[ABI编解码](../c_sdk/api.html#abi)
-    - `abi`: 合约的ABI，JSON字符串，可选参数，部署合约时可以将合约的ABI传入，默认传入空字符串""
-    - `block_limit`: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
-  - 返回:
-    - `TransactionData`对象指针
-    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - `TransactionData`对象需要调用`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
-
 - `bcos_sdk_create_transaction_data_struct_with_hex_input`
   - 原型:
-    - `struct bcos_sdk_c_transaction_data* bcos_sdk_create_transaction_data_struct_with_hex_input(const char* group_id, const char* chain_id, const char* to, const char* input, const char* abi, int64_t block_limit)`
+    ```cpp
+    struct bcos_sdk_c_transaction_data* bcos_sdk_create_transaction_data_struct_with_hex_input(const char* group_id, const char* chain_id, const char* to, const char* input, const char* abi, int64_t block_limit)
+    ```
   - 功能:
     - 创建`bcos_sdk_c_transaction_data`交易结构体，该对象结构体是未签名的交易对象
   - 参数:
@@ -1046,7 +1202,10 @@ struct bcos_sdk_c_transaction
     - `bcos_sdk_c_transaction_data`交易结构体，需要调用`bcos_sdk_destroy_transaction_data_struct`接口释放，以免造成内存泄露
 
 - `bcos_sdk_create_transaction_data_struct_with_bytes`
-  - 原型:`struct bcos_sdk_c_transaction_data* bcos_sdk_create_transaction_data_struct_with_bytes(const char* group_id, const char* chain_id, const char* to, const unsigned char* bytes_input, uint32_t bytes_input_length, const char* abi, int64_t block_limit)`
+  - 原型:
+    ```cpp
+    struct bcos_sdk_c_transaction_data* bcos_sdk_create_transaction_data_struct_with_bytes(const char* group_id, const char* chain_id, const char* to, const unsigned char* bytes_input, uint32_t bytes_input_length, const char* abi, int64_t block_limit)
+    ```
   - 功能:
     - 创建`bcos_sdk_c_transaction_data`交易结构体，该对象结构体是未签名的交易对象
   - 参数:
@@ -1063,25 +1222,64 @@ struct bcos_sdk_c_transaction
   - 注意:
     - `bcos_sdk_c_transaction_data`交易结构体，需要调用`bcos_sdk_destroy_transaction_data_struct`接口释放，以免造成内存泄露
 
-- `bcos_sdk_destroy_transaction_data`
+- `bcos_sdk_calc_transaction_data_struct_hash`
   - 原型:
-    - `void bcos_sdk_destroy_transaction_data(void* transaction_data)`
+    - `const char* bcos_sdk_calc_transaction_data_struct_hash(int crypto_type, struct bcos_sdk_c_transaction_data* transaction_data)`
   - 功能:
-    - 释放`TransactionData`对象
+    - 计算`bcos_sdk_c_transaction_data`交易结构体哈希
   - 参数:
-    - `transaction_data`: `TransactionData`对象指针
-  - 返回:
-    - 无
-
-- `bcos_sdk_destroy_transaction_data_struct`
-  - 原型:
-    - `void bcos_sdk_destroy_transaction_data_struct(struct bcos_sdk_c_transaction_data* transaction_data)`
-  - 功能:
-    - 释放`bcos_sdk_c_transaction_data`交易结构体
-  - 参数:
+    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
     - `transaction_data`: `bcos_sdk_c_transaction_data`交易结构体指针
   - 返回:
-    - 无
+    - `bcos_sdk_c_transaction_data`交易结构体哈希
+    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - **`bcos_sdk_c_transaction_data`交易结构体的哈希，也是交易的哈希**
+    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
+
+- `bcos_sdk_create_transaction_struct`
+  - 原型:
+
+  ```cpp
+  struct bcos_sdk_c_transaction* bcos_sdk_create_transaction_struct(struct bcos_sdk_c_transaction_data* transaction_data, const char* signature, const char* transaction_data_hash, int32_t attribute, const char* extra_data)
+  ```
+
+  - 功能:
+    - 创建签名的交易结构体
+  - 参数:
+    - transaction_data: `bcos_sdk_c_transaction_data`交易结构体
+    - signature: 交易结构体哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
+    - transaction_data_hash: 交易结构体哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_struct_hash`接口生成
+    - attribute: 交易额外属性，待拓展，默认填0即可
+    - extra_data: 交易额外数据，填""空字符串即可
+  - 返回:
+    - `bcos_sdk_c_transaction`签名的交易结构体指针
+    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - `bcos_sdk_c_transaction`签名的交易结构体，需要调用`bcos_sdk_destroy_transaction_struct`接口释放，以免造成内存泄露
+
+- `bcos_sdk_create_encoded_transaction`
+  - 原型:
+
+  ```cpp
+  const char* bcos_sdk_create_encoded_transaction(
+      struct bcos_sdk_c_transaction_data* transaction_data, const char* signature,
+      const char* transaction_data_hash, int32_t attribute, const char* extra_data)
+  ```
+
+  - 功能:
+    - 创建签名的交易字符串
+  - 参数:
+    - transaction_data: `bcos_sdk_c_transaction_data`交易结构体
+    - signature: 交易结构体哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
+    - transaction_data_hash: 交易结构体哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_struct_hash`接口生成
+    - attribute: 交易额外属性，待拓展，默认填0即可
+    - extra_data: 交易额外数据，填""空字符串即可
+  - 返回:
+    - 签名的交易字符串
+    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
+  - 注意:
+    - 返回的签名交易字符串，需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 - `bcos_sdk_encode_transaction_data_struct`
   - 原型:
@@ -1131,154 +1329,15 @@ struct bcos_sdk_c_transaction
   - 注意:
     - `bcos_sdk_c_transaction_data`交易结构体，需要调用`bcos_sdk_destroy_transaction_data_struct`接口释放，以免造成内存泄露
 
-- `bcos_sdk_calc_transaction_data_hash`
+- `bcos_sdk_destroy_transaction_data_struct`
   - 原型:
-    - `const char* bcos_sdk_calc_transaction_data_hash(int crypto_type, void* transaction_data)`
+    - `void bcos_sdk_destroy_transaction_data_struct(struct bcos_sdk_c_transaction_data* transaction_data)`
   - 功能:
-    - 计算`TransactionData`对象哈希
+    - 释放`bcos_sdk_c_transaction_data`交易结构体
   - 参数:
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
-    - `transaction_data`: `TransactionData`对象指针
-  - 返回:
-    - `TransactionData`对象哈希
-    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - **`TransactionData`对象的哈希，也是交易的哈希**
-    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
-
-- `bcos_sdk_calc_transaction_data_struct_hash`
-  - 原型:
-    - `const char* bcos_sdk_calc_transaction_data_struct_hash(int crypto_type, struct bcos_sdk_c_transaction_data* transaction_data)`
-  - 功能:
-    - 计算`bcos_sdk_c_transaction_data`交易结构体哈希
-  - 参数:
-    - crypto_type: 类型, ECDSA: BCOS_C_SDK_ECDSA_TYPE(0), SM: BCOS_C_SDK_SM_TYPE(1)
     - `transaction_data`: `bcos_sdk_c_transaction_data`交易结构体指针
   - 返回:
-    - `bcos_sdk_c_transaction_data`交易结构体哈希
-    - 失败返回`NULL`，使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - **`bcos_sdk_c_transaction_data`交易结构体的哈希，也是交易的哈希**
-    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
-
-- `bcos_sdk_sign_transaction_data_hash`
-  - 原型:
-    - `const char* bcos_sdk_sign_transaction_data_hash(void* keypair, const char* transcation_hash)`
-  - 功能:
-    - 交易哈希签名
-  - 参数:
-    - keypair:`KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
-    - transcation_hash: 交易哈希，由`bcos_sdk_calc_transaction_data_hash`接口生成
-  - 返回:
-    - 交易签名，字符串类型
-    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
-
-- `bcos_sdk_create_signed_transaction_with_signed_data`
-  - 原型:
-
-  ```shell
-  const char* bcos_sdk_create_signed_transaction_with_signed_data(void* transaction_data, const char* signed_transaction_data, const char* transaction_data_hash, int32_t attribute)
-  ```
-
-  - 功能:
-    - 创建签名的交易
-  - 参数:
-    - transaction_data: `TransactionData`对象
-    - signed_transaction_data: 交易哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
-    - transaction_data_hash: 交易哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_hash`接口生成
-    - attribute: 交易额外属性，待拓展，默认填0即可
-  - 返回:
-    - 签名的交易，十六进制c风格字符串
-    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - 返回的字符串需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
-
-- `bcos_sdk_create_transaction_struct`
-  - 原型:
-
-  ```shell
-  struct bcos_sdk_c_transaction* bcos_sdk_create_transaction_struct(struct bcos_sdk_c_transaction_data* transaction_data, const char* signature, const char* transaction_data_hash, int32_t attribute, const char* extra_data)
-  ```
-
-  - 功能:
-    - 创建签名的交易结构体
-  - 参数:
-    - transaction_data: `bcos_sdk_c_transaction_data`交易结构体
-    - signature: 交易结构体哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
-    - transaction_data_hash: 交易结构体哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_struct_hash`接口生成
-    - attribute: 交易额外属性，待拓展，默认填0即可
-    - extra_data: 交易额外数据，填""空字符串即可
-  - 返回:
-    - `bcos_sdk_c_transaction`签名的交易结构体指针
-    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - `bcos_sdk_c_transaction`签名的交易结构体，需要调用`bcos_sdk_destroy_transaction_struct`接口释放，以免造成内存泄露
-
-- `bcos_sdk_destroy_transaction_struct`
-  - 原型:
-    - `void bcos_sdk_destroy_transaction_struct(struct bcos_sdk_c_transaction* transaction)`
-  - 功能:
-    - 释放`bcos_sdk_c_transaction`签名的交易结构体
-  - 参数:
-    - `transaction_data`: `bcos_sdk_c_transaction`签名的交易结构体指针
-  - 返回:
     - 无
-
-- `bcos_sdk_create_signed_transaction`
-  - 原型:
-
-  ```shell
-  void bcos_sdk_create_signed_transaction(void* key_pair, const char* group_id, const char* chain_id, const char* to, const char* data, const char* abi, int64_t block_limit, int32_t attribute, char** tx_hash, char** signed_tx)
-  ```
-
-  - 功能:
-    - 创建签名的交易
-  - 参数:
-    - key_pair: `KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
-    - group_id: 群组ID
-    - chain_id: 链ID，可以调用`bcos_sdk_get_group_chain_id`接口获取群组的链ID
-    - to: 调用的合约地址，部署合约时设置为空字符串""
-    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
-    - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
-    - block_limit: 区块限制，可以调用`bcos_rpc_get_block_limit`接口获取
-    - attribute: 交易额外属性，待拓展，默认填0即可
-    - tx_hash: 返回值，交易哈希，十六进制c风格字符串
-    - signed_tx: 返回值，签名的交易，十六进制c风格字符串
-  - 返回:
-    - 调用`bcos_sdk_get_last_error`接口判断是否成功，0表示成功，其他值表示错误码
-  - 注意:
-    - 返回的`tx_hash`、`signed_tx`需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
-  - **说明**:
-    - `bcos_sdk_create_signed_transaction`相当于下面几个接口功能的组合，创建交易、交易哈希、交易签名流程需要分开处理时，使用下面几个接口:
-      - `bcos_sdk_create_transaction_data`: 创建`TransactionData`
-      - `bcos_sdk_calc_transaction_data_hash`: 计算交易哈希
-      - `bcos_sdk_sign_transaction_data_hash`: 交易哈希签名
-      - `bcos_sdk_create_signed_transaction_with_signed_data`: 创建签名的交易
-
-- `bcos_sdk_create_encoded_transaction`
-  - 原型:
-
-  ```shell
-  const char* bcos_sdk_create_encoded_transaction(
-      struct bcos_sdk_c_transaction_data* transaction_data, const char* signature,
-      const char* transaction_data_hash, int32_t attribute, const char* extra_data)
-  ```
-
-  - 功能:
-    - 创建签名的交易字符串
-  - 参数:
-    - transaction_data: `bcos_sdk_c_transaction_data`交易结构体
-    - signature: 交易结构体哈希的签名，十六进制c风格字符串，`bcos_sdk_sign_transaction_data_hash`接口生成
-    - transaction_data_hash: 交易结构体哈希，十六进制c风格字符串，`bcos_sdk_calc_transaction_data_struct_hash`接口生成
-    - attribute: 交易额外属性，待拓展，默认填0即可
-    - extra_data: 交易额外数据，填""空字符串即可
-  - 返回:
-    - 签名的交易字符串
-    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - 返回的签名交易字符串，需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
 
 - `bcos_sdk_encode_transaction_struct`
   - 原型:
@@ -1328,60 +1387,12 @@ struct bcos_sdk_c_transaction
   - 注意:
     - `bcos_sdk_c_transaction`签名的交易结构体，需要调用`bcos_sdk_destroy_transaction_struct`接口释放，以免造成内存泄露
 
-- `bcos_sdk_create_transaction_builder_service`
+- `bcos_sdk_destroy_transaction_struct`
   - 原型:
-    - `void* bcos_sdk_create_transaction_builder_service(void* sdk, const char* group_id)`
+    - `void bcos_sdk_destroy_transaction_struct(struct bcos_sdk_c_transaction* transaction)`
   - 功能:
-    - 创建`TransactionBuilderService`对象，简化构造签名交易的姿势，可以对比`bcos_sdk_create_transaction_data_with_tx_builder_service`与`bcos_sdk_create_transaction_data`接口的差异
+    - 释放`bcos_sdk_c_transaction`签名的交易结构体
   - 参数:
-    - sdk: sdk对象指针
-    - group_id: 群组ID
-  - 返回:
-    - `TransactionBuilderService`对象指针
-    - 失败返回`NULL`，调用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - `TransactionBuilderService`对象需要使用`bcos_sdk_destroy_transaction_builder_service`销毁，以免造成内存泄露
-- `bcos_sdk_destroy_transaction_builder_service`
-  - 原型:
-    - `bcos_sdk_destroy_transaction_builder_service(void* service)`
-  - 功能:
-    - 销毁`TransactionBuilderService`对象
-  - 参数:
-    - `TransactionBuilderService`对象指针
+    - `transaction_data`: `bcos_sdk_c_transaction`签名的交易结构体指针
   - 返回:
     - 无
-- `bcos_sdk_create_transaction_data_with_tx_builder_service`
-  - 原型:
-    - `void* bcos_sdk_create_transaction_data_with_tx_builder_service(void* tx_builder_service, const char* to, const char* data, const char* abi)`
-  - 功能:
-    - 创建`TransactionData`对象
-  - 参数:
-    - tx_builder_service: `TransactionBuilderService`对象指针
-    - to: 调用的合约地址，部署合约时设置为空字符串""
-    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
-    - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
-  - 返回:
-    - `TransactionData`对象指针
-    - 失败返回`NULL`使用`bcos_sdk_get_last_error`、 `bcos_sdk_get_last_error_msg`获取错误码和错误描述信息
-  - 注意:
-    - 创建的`TransactionData`对象需要由`bcos_sdk_destroy_transaction_data`接口释放，以免造成内存泄露
-- `bcos_sdk_create_signed_transaction_with_tx_builder_service`
-  - 原型:
-
-  ```shell
-  void bcos_sdk_create_signed_transaction_with_tx_builder_service(void*tx_builder_service, void* key_pair, const char*to, const char* data, const char* abi, int32_t attribute, char** tx_hash, char** signed_tx)
-  ```
-
-  - 功能:
-    - 创建签名的交易
-  - 参数:
-    - tx_builder_service: `TransactionBuilderService`对象指针
-    - key_pair: `KeyPair`对象，参考[`KeyPair`签名对象](../c_sdk/api.html#keypair)
-    - to: 调用的合约地址，部署合约时设置为空字符串""
-    - data: ABI编码后的参数，参考[ABI编解码](../c_sdk/api.html#abi)
-    - abi: 合约的ABI，可选参数，部署合约时可以将合约的ABI传入，默认空字符串""
-    - attribute: 交易额外属性，待拓展，默认填0即可
-    - tx_hash: 返回值，交易哈希，十六进制c风格字符串
-    - signed_tx: 返回值，签名的交易，十六进制c风格字符串
-  - 注意:
-    - 返回的`tx_hash`、`signed_tx`需要调用`bcos_sdk_c_free`释放，以免造成内存泄露
