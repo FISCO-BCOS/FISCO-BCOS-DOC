@@ -740,7 +740,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getObserverList","params":[],"id
     ]
 }
 ```
-### getObserverList
+### getObserverListAsync
 
 异步获取Client对应群组的观察节点列表。
 
