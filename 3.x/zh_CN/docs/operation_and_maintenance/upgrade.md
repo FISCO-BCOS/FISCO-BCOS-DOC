@@ -47,7 +47,38 @@ FISOC BCOS每个版本都会在原有版本的基础上添加新的特性。包�
 
 需将**所有节点**的二进制逐步替换为当前版本。为了不影响业务，替换过程能够以灰度方式进行，逐个替换并重启节点。替换过程中，当前的链仍然会以旧的数据兼容版本号的逻辑继续执行。当所有节点二进制替换完成并重启后，需用控制台修改数据兼容版本号为当前版本。
 
-#### c. 设置数据兼容版本号（compatibility_version）
+#### c. 开启新版本特性
+
+从3.2.4、3.6.0版本开始，FISCO BCOS提供按需开启新特性、问题修复的能力，问题修复和新特性列表如下：
+
+| 特性名 | 类型 | 作用 | 最低版本
+| --- | --- | --- | --- |
+| bugfix_revert | 问题修复 | 修复使用串行模式时(is_serial=true)，智能合约回滚后没有撤销已写入状态数据的问题 | 3.2.4 3.6.0 |
+| bugfix_statestorage_hash | 问题修复 | | |
+| bugfix_evm_create2_delegatecall_staticcall_codecopy | 问题修复 | | |
+| bugfix_event_log_order | 问题修复 | | |
+| bugfix_call_noaddr_return | 问题修复 | | |
+| bugfix_precompiled_codehash | 问题修复 | | |
+| bugfix_dmc_revert | 问题修复 | 修复使用DMC模式时(is_serial=false，未启用feature_sharding)，智能合约回滚后没有撤销已写入状态数据的问题 | |
+| bugfix_keypage_system_entry_hash | 问题修复 | | |
+| bugfix_internal_create_redundant_storage
+| feature_dmc2serial | 新特性 |  | 3.2.4 |
+| feature_sharding | 新特性 | | |
+| feature_rpbft | 新特性 | | |
+| feature_paillier | 新特性 | | |
+| feature_balance | 新特性 | | |
+| feature_balance_precompiled | 新特性 | | |
+| feature_balance_policy1 | 新特性 | | |
+| feature_paillier_add_raw | 新特性 | | |
+| feature_predeploy | 新特性 | | |
+
+启用问题修复或新特性，在控制台执行
+
+```
+setSystemConfigByKey <特姓名>
+```
+
+#### d. 设置数据兼容版本号（compatibility_version）
 
 用[控制台](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/operation_and_maintenance/console/console_commands.html#setsystemconfigbykey)设置数据兼容版本号，如升级版本至3.1.0。
 
@@ -69,6 +100,9 @@ FISOC BCOS每个版本都会在原有版本的基础上添加新的特性。包�
 ```
 
 当前链已经完成升级，至此，链开始以新的逻辑继续运行，并支持了新版本特性。
+
+设置链版本号后，3.6.x版本及以上的链会自动启用所有最低版本及以上的bugfix。
+
 ## 2. FISCO BCOS Air、Pro和Max之间的升级
 通过深研不同场景用户的诉求，FISCO BCOS推出Air、Pro以Max三种不同的部署型态，用户可根据需求定制选择。但在实际应用过程中，随着业务与需求的变化，用户存在Air升级Pro、Pro升级Max此类的需求。本节基于此背景，探讨三种部署型态之间的升级操作。
 

@@ -67,7 +67,7 @@ templates_path = ['../_templates']
 master_doc = 'index'
 
 # General information about the project.
-project = u'FISCO BCOS v2'
+project = u'FISCO BCOS 2.0'
 copyright = u'© 2020. All rights reserved.'
 author = u'fisco-bcos-dev'
 
@@ -139,7 +139,7 @@ html_context = {
     "github_repo": "FISCO-BCOS-DOC", # Repo name
     "github_user": "FISCO-BCOS",
     "github_version": "release-2", # Version
-    "conf_py_path": "/", # Path in the checkout to the docs root
+    "conf_py_path": "/2.x/", # Path in the checkout to the docs root
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -349,3 +349,22 @@ def setup(app):
     app.add_transform(AutoStructify)
     app.add_stylesheet('css/custom.css')
     app.add_javascript('js/readthedocs-analytics.js')
+    app.connect('build-finished', replace_source)
+
+def replace_source(app, exception):
+    if exception is None:
+        build_dir = os.environ.get('READTHEDOCS_OUTPUT', '_build')
+        
+        for root, dirs, files in os.walk(build_dir):
+            for file in files:
+                if file.endswith('.html'):
+                    html_path = os.path.join(root, file)
+                    
+                    with open(html_path, 'r') as file:
+                        lines = file.readlines()
+
+                    new_lines = [line.replace('https://unpkg.com', 'https://npm.onmicrosoft.cn') for line in lines]
+                    new_lines = [line.replace('https://cdnjs.cloudflare.com', 'https://cdn.bootcdn.net') for line in new_lines] 
+
+                    with open(html_path, 'w') as file:
+                        file.writelines(new_lines)

@@ -1,4 +1,4 @@
-# 交易构造与调用
+# 构造交易与发送
 
 标签：``java-sdk`` ``发送交易`` ``使用接口签名发送交易`` ``组装交易`` ``合约调用``
 
@@ -6,10 +6,15 @@
 
 ```eval_rst
 .. note::
-    Java SDK同时支持将 `solidity` 转换为 `java` 文件后，调用相应的 `java` 方法部署和调用合约，也支持构造交易的方式部署和调用合约，这里主要展示交易构造与发送，前者的使用方法请参考 `这里 <./quick_start.html#solidityjava>`_ 
+    Java SDK同时支持将 `solidity` 转换为 `java` 文件后，调用相应的 `java` 方法部署和调用合约，也支持构造交易的方式部署和调用合约，这里主要展示交易构造与发送，前者的使用方法请参考 `这里 <./contracts_to_java.html>`_ 
 ```
 
-## 1. 概念解析：部署和调用
+```eval_rst
+.. note::
+    交易的数据结构可以参考 `这里 <./transaction_data_struct.html>`_ 
+```
+
+## 1. 概念解析：合约的部署与调用
 
 合约的操作可分为合约部署和合约调用两大类。其中合约调用又可以被区分为『交易』和『查询』。
 
@@ -17,7 +22,7 @@
 
 **合约调用**是指调用已部署的合约的函数。合约调用又可以被区分为『交易』和『查询』。
 
-**“查询”**：被view修饰符修饰的方法一般称为“查询”，“查询”无需被同步和发送给到其他节点全网共识。
+**“查询”**：被view/pure修饰符修饰的方法一般称为“查询”，“查询”无需被同步和发送给到其他节点全网共识。
 
 **“交易”**：未被修饰的才会称为“交易”。，而“交易”需发送全网进行上链的共识。
 
@@ -29,17 +34,13 @@
 | ABI表现          | "constant":true | "constant":false |
 | 是否需要签名     | 否              | 是               |
 | rpc类型          | call            | sendTransaction  |
-| 执行节点         | 所有共识节点    | 执行层面         |
+| 执行节点         | 所有节点        | 所有共识节点     |
 | 是否消耗gas      | 否              | 是               |
 | 是否变更存储状态 | 否              | 是               |
 
-## 2. 快速上手
+## 2. 前提：准备合约的abi和binary文件
 
-在快速上手环节，使用同步方式来发送。
-
-### 2.1 准备abi和binary文件
-
-控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称WBC-Liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](./quick_start.html#contract2java-sh)。
+控制台提供一个专门的编译合约工具，方便开发者将Solidity/webankblockchain-liquid（以下简称WBC-Liquid）合约文件编译生成Java文件和abi、binary文件，具体使用方式[参考这里](./contracts_to_java.html)。
 
 通过运行contract2java 脚本，生成的abi和binary文件分别位于contracts/sdk/abi、contracts/sdk/bin目录下（其中，国密版本编译产生的文件位于contracts/sdk/abi/sm和contracts/sdk/bin/sm文件夹下）。可将文件复制到项目的目录下，例如src/main/resources/abi和src/main/resources/bin。
 
@@ -67,21 +68,23 @@ contract HelloWorld{
 $ cd ~/fisco/console
 
 # 调用sol2java.sh脚本，编译contracts/solidity目录下的HelloWorld合约：
-$ bash contract2java.sh solidity -p org -s contracts/solidity/HelloWorld.sol
+$ bash contract2java.sh solidity -p org.com.fisco -s contracts/solidity/HelloWorld.sol
 
-# 生成的abi位于contracts/sdk/abi/HelloWorld.abi路径
-$ ls contracts/sdk/abi/HelloWorld.abi
-
-# 生成的非国密版本的bin位于contracts/sdk/bin/HelloWorld.bin路径
-$ ls contracts/sdk/bin/HelloWorld.bin
-
-# 生成的国密版本bin位于contracts/sdk/bin/sm/HelloWorld.bin路径
-$ ls contracts/sdk/bin/sm/HelloWorld.bin
+$ tree . -L1
+|-- abi # 编译生成的abi目录，存放solidity合约编译的abi文件
+|   |-- HelloWorld.abi
+|-- bin # 编译生成的bin目录，存放solidity合约编译的bin文件
+|   |-- HelloWorld.bin
+|-- java  # 存放编译的包路径及Java合约文件
+|   |-- org
+|       |-- com
+|           |-- fisco
+|               |-- HelloWorld.java # Solidity编译的HelloWorld Java文件
 ```
 
 至此`HelloWorld`合约的abi和binary文件均已生成
 
-### 2.2 初始化SDK
+## 3. 初始化SDK
 
 基于配置文件，初始化SDK，如：
 
@@ -94,9 +97,7 @@ Client client = sdk.getClient("group0");
 CryptoKeyPair keyPair = client.getCryptoSuite().getCryptoKeyPair();
 ```
 
-### 2.3 初始化配置对象
-
-#### 2.3.1 部署、交易和查询
+## 4. 初始化AssembleTransactionProcessor对象
 
 Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式。本场景下适用于默认的情况，通过创建和使用`AssembleTransactionProcessor`对象来完成合约相关的部署、调用和查询等操作。
 
@@ -104,25 +105,27 @@ Java SDK提供了基于abi和binary文件来直接部署和调用合约的方式
 AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "src/main/resources/bin/");
 ```
 
-#### 2.3.2 仅交易和查询
-
-假如只交易和查询，而不部署合约，那么就不需要复制binary文件，且在构造时无需传入binary文件的路径，例如构造方法的最后一个参数可传入空字符串。
+**特别的：** 假如只交易和查询，而不部署合约，那么就不需要复制binary文件，且在构造时无需传入binary文件的路径，例如构造方法的最后一个参数可传入空字符串。
 
 ```java
 AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "src/main/resources/abi/", "");
 ```
 
-### 2.4 发送操作指令
+**特别的：** 也可以不传入任何ABI文件目录，后续操作时手动传入abi字符串也可行。
 
-完成初始化SDK和配置对象后，可以发起合约操作指令。
+```java
+AssembleTransactionProcessor transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(client, keyPair, "", "");
+```
 
-#### 2.4.1 同步方式部署合约
+## 5. 同步方式部署合约
 
 部署合约调用了deployByContractLoader方法，传入合约名和构造函数的参数，上链部署合约，并获得`TransactionResponse`的结果。
 
 ```java
 // 部署HelloWorld合约。第一个参数为合约名称，第二个参数为合约构造函数的列表，是List<Object>类型。
 TransactionResponse response = transactionProcessor.deployByContractLoader("HelloWorld", new ArrayList<>());
+// 也可以手动传入bin和abi
+TransactionResponse response = transactionProcessor.deployAndGetResponse(abi, bin, new ArrayList<>(), null);
 ```
 
 `TransactionResponse`的数据结构如下：
@@ -131,39 +134,14 @@ TransactionResponse response = transactionProcessor.deployByContractLoader("Hell
 - returnMessages: 返回的错误信息。
 - TransactionReceipt：上链返回的交易回执。
 - ContractAddress: 部署或调用的合约地址。
-- values: 如果调用的函数存在返回值，则返回解析后的交易返回值，返回Json格式的字符串。
 - events: 如果有触发日志记录，则返回解析后的日志返回值，返回Json格式的字符串。
+- returnObject: 返回值Java类型。
+- returnABIObject: 返回值ABI类型。
 - receiptMessages: 返回解析后的交易回执信息。
 
 `returnCode`与`returnMessages`对应表汇总[参考这里](./retcode_retmsg.md)
 
-例如，部署`HelloWorld`合约的返回结果：
-
-```json
-{
-        "id" : 11,
-        "jsonrpc" : "2.0",
-        "result" :
-        {
-                "blockNumber" : 2,
-                "checksumContractAddress" : "0x4721D1A77e0E76851D460073E64Ea06d9C104194",
-                "contractAddress" : "0x4721d1a77e0e76851d460073e64ea06d9c104194",
-                "extraData" : "",
-                "from" : "0xa38e104bb4a92a52452b48342c935f68df20c2ce",
-                "gasUsed" : "24363",
-                "hash" : "0x2081348e1993551d29dbd848a7bb0ce320448257e6631658b237fdebc084ae92",
-                "logEntries" : [],
-                "message" : "",
-                "output" : "0x",
-                "status" : 0,
-                "to" : "",
-                "transactionHash" : "0x06988028109dc4079e92c01d86d45907a3883cbcd60b63345d4e566c9cf40863",
-                "version" : 0
-        }
-}
-```
-
-#### 2.4.2 同步方式发送交易
+## 6. 同步方式发送交易
 
 调用合约交易使用了`sendTransactionAndGetResponseByContractLoader`来调用合约交易，此处展示了如何调用`HelloWorld`中的`set`函数。
 
@@ -173,82 +151,41 @@ TransactionResponse response = transactionProcessor.deployByContractLoader("Hell
     params.add("test");
     // 调用HelloWorld合约，合约地址为helloWorldAddress， 调用函数名为『set』，函数参数类型为params
     TransactionResponse transactionResponse = transactionProcessor.sendTransactionAndGetResponseByContractLoader("HelloWorld", helloWorldAddrss, "set", params);
+
+    // 也可以手动传入ABI文件调用
+    TransactionResponse transactionResponse = transactionProcessor.sendTransactionAndGetResponse(helloWroldAddress, abi, "set", params);
 ```
 
-例如，调用`HelloWorld`合约的返回如下：
-
-```json
-{
-        "id" : 15,
-        "jsonrpc" : "2.0",
-        "result" :
-        {
-                "blockNumber" : 3,
-                "checksumContractAddress" : "",
-                "contractAddress" : "",
-                "extraData" : "",
-                "from" : "0xa38e104bb4a92a52452b48342c935f68df20c2ce",
-                "gasUsed" : "13088",
-                "hash" : "0xaa9f2aedfaa5714d07933b6ad286ce4bdf3d33172109efe464acf217c386afb7",
-                "logEntries" : [],
-                "message" : "",
-                "output" : "0x",
-                "status" : 0,
-                "to" : "0x4721d1a77e0e76851d460073e64ea06d9c104194",
-                "transactionHash" : "0x113b6fba39b8c52bd87a23a260321505f67ef5f04741b988357f2c1c8838d628",
-                "version" : 0
-        }
-}
-```
-
-#### 2.4.3 调用合约查询接口
+## 7.调用合约查询接口
 
 查询合约直接通过调用链上的节点查询函数即可返回结果，无需共识；因此所有的查询交易都是同步方式通讯的。查询合约使用了`sendCallByContractLoader`函数来查询合约，此处展示了如何调用`HelloWorld`中的`name`函数来进行查询。
 
 ```java
 // 查询HelloWorld合约的『name』函数，合约地址为helloWorldAddress，参数为空
 CallResponse callResponse = transactionProcessor.sendCallByContractLoader("HelloWorld", helloWorldAddrss, "name", new ArrayList<>());
+
+// 也可以手动传入ABI文件调用
+CallResponse callResponse = transactionProcessor.sendCall("", helloWorldAddrss, "name", new ArrayList<>());
 ```
 
-查询函数返回如下：
-
-```json
-{
-        "id" : 19,
-        "jsonrpc" : "2.0",
-        "result" :
-        {
-                "blockNumber" : 3,
-                "output" : "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000047465737400000000000000000000000000000000000000000000000000000000",
-                "status" : 0
-        }
-}
-```
-
-## 3. 拼接合约方法签名的方式发送交易
+## 8. 拼接合约方法签名的方式发送交易
 
 此外，对于特殊的场景，可以通过接口签名的方式DIY拼装交易和发送交易。
 
 例如上述`HelloWorld`智能合约定义的set方法的签名为 `set(string)`
 
-### 3.1 构造接口签名
-
 ```java
 // 使用WBC-Liquid合约时_isWasm 为true，Solidity合约则为false
-ContractCodec contractCodec = new ContractCodec(client.getCryptoSuite(), _isWasm);
+ContractCodec contractCodec = new ContractCodec(client.getCryptoSuite(), _isWasm); 
 String setMethodSignature = "set(string)";
 byte[] txData = contractCodec.encodeMethodByInterface(setMethodSignature, new Object[]{new String("Hello World")});
 ```
-
-### 3.2 构造TransactionProcessor
 
 由于通过构造接口签名的方式无需提供abi，故可以构造一个`TransactionProcessor`来操作。同样可使用`TransactionProcessorFactory`来构造。
 
 ```java
 TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTransactionProcessor(client, keyPair);
 ```
-
-### 3.3 发送交易
 
 发送交易到FISCO BCOS节点并接收回执。
 
@@ -257,8 +194,6 @@ TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTr
 TransactionReceipt transactionReceipt = transactionProcessor.sendTransactionAndGetReceipt(contractAddress, txData, TransactionAttribute.EVM_ABI_CODEC);
 ```
 
-### 3.4 解析交易回执结果
-
 在执行成功后需要手动解析交易回执中的结果信息。更详细的使用方式可以参考：[交易回执解析](../transaction_decode.md)
 
 ```java
@@ -266,9 +201,9 @@ TransactionDecoderService txDecoder = new TransactionDecoderService(client.getCr
 TransactionResponse transactionResponse = txDecoder.decodeReceiptWithValues(abi,"set",transactionReceipt);
 ```
 
-## 4. 采用callback的方式异步操作合约
+## 9. 采用callback的方式异步操作合约
 
-### 4.1 定义回调类
+### 9.1 定义回调类
 
 异步发送交易的时候，可以自定义回调类，实现和重写回调处理函数。
 
@@ -311,7 +246,7 @@ public class TransactionCallbackMock extends TransactionCallback {
 }
 ```
 
-### 4.2 采用callback的方式异步部署合约
+### 9.2 采用callback的方式异步部署合约
 
 首先，创建一个回调类的实例。然后使用`deployByContractLoaderAsync`方法，异步部署合约。
 
@@ -325,7 +260,7 @@ transactionProcessor.deployByContractLoaderAsync("HelloWorld", new ArrayList<>()
 TransactionReceipt transactionReceipt = callbackMock.getResult();
 ```
 
-### 4.3 采用callback的方式发送交易
+### 9.3 采用callback的方式发送交易
 
 参考部署合约交易，可采用异步的方式发送交易。
 
@@ -340,9 +275,7 @@ transactionProcessor.sendTransactionAsync(to, abi, "set", params, callbackMock);
 TransactionReceipt transactionReceipt = callbackMock.getResult();
 ```
 
-## 5. 采用CompletableFuture的方式异步操作合约
-
-#### 3.3.1 采用CompletableFuture的方式部署合约
+## 10. 采用CompletableFuture的方式异步操作合约
 
 SDK还支持使用`CompletableFuture`封装的方式异步部署合约。
 
@@ -362,9 +295,11 @@ future.exceptionally(
     });
 ```
 
-## 4. 详细API功能介绍
+## 11. 详细API功能介绍
 
 `AssembleTransactionProcessor`支持自定义参数发送交易，支持异步的方式来发送交易，也支持返回多种封装方式的结果。
+
+可参考Java doc：[AssembleTransactionProcessor](./javadoc/javadoc/org/fisco/bcos/sdk/v3/transaction/manager/AssembleTransactionProcessor.html)
 
 详细的API功能如下。
 

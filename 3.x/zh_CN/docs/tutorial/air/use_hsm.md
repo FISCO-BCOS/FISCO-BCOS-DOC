@@ -45,7 +45,7 @@ cmake .. || cat *.log
 ```bash
 cd ~/fisco
 
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.4.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.5.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 在build_chain同级目录下，创建文件夹（例如nodeKeyDir），用于存放密码机密钥的node.pem文件(证书数目和搭建节点数一致)。
 ```bash

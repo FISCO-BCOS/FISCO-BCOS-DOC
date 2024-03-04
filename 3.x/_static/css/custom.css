@@ -48,6 +48,10 @@ p {
     width: 100%
 }
 
+ul.wy-breadcrumbs a.icon.icon-home::after {
+    content: " FISCO BCOS 3.0";
+}
+
 .wy-side-nav-search img {
     display: block;
     margin: auto auto .809em auto;
