@@ -35,7 +35,7 @@ Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
     -g <group id>                       [Optional] set the group id, default: group0
     -I <chain id>                       [Optional] set the chain id, default: chain0
-    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.5.0
+    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.6.0
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode executable,input "download_binary" to download lightnode binary or assign correct lightnode binary path
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
