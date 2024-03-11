@@ -21,5 +21,7 @@
    :maxdepth: 1
 
    installation.md
+   deploy_max_by_buildchain.md
    max_builder.md
+   expand_max_withoutTars.md
 ```

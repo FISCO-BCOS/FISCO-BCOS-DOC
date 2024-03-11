@@ -66,7 +66,7 @@ make -j4
 
 #### 1. 下载一键建链脚本
 ```shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.5.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### 2. 利用编译生成的二进制部署链
@@ -116,7 +116,7 @@ fisco        35307   6.6  0.2  5301996  57568 s003  S     2:25下午   0:31.93 /
 #### 3. 部署控制台
 详细可参考[配置和使用控制台](../quick_start/air_installation.md)
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.5.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.6.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
