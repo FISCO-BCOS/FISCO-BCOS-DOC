@@ -22,4 +22,6 @@
 
    installation.md
    max_builder.md
+   deploy_max_by_buildchain.md
+   expand_max_withoutTars.md
 ```
