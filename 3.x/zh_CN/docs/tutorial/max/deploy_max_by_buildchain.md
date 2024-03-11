@@ -1,4 +1,4 @@
-# build_chain一键搭建Max版本区块链网络
+# 搭建Max版本区块链网络(build_chain一键搭建方式)
 
 标签：``build_chain`` ``搭建版区块链网络``
 
