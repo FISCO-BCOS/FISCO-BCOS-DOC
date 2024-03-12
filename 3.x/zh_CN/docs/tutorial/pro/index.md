@@ -18,7 +18,8 @@
 ```eval_rst
 .. toctree::
    :maxdepth: 1
-
+   
+   deploy_pro_by_buildchain.md
    installation.md
    installation_without_tars.md
    config.md

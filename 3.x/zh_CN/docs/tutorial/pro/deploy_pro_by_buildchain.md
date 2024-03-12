@@ -1,4 +1,4 @@
-# 一键搭建Max版本区块链网络
+# 一键搭建Pro版区块链网络
 
 标签：``build_chain`` ``搭建版区块链网络``
 
@@ -88,7 +88,7 @@
 
 查看脚本使用用法。
 
-## 2.搭建Max版区块链网络
+## 2. 搭建Pro版区块链网络
 
 ### 2.1 安装依赖
 
@@ -113,40 +113,17 @@ sudo yum install -y curl docker docker-compose python3 python3-devel wget
 brew install curl docker docker-compose python3 wget
 ```
 
-### 2.2部署TiKV
-
-**下载和安装tiup**
-
-```
-$ curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
-```
-
-**启动tikv v6.5.0**
-
-```
-# 部署并启动tikv(这里设机器的物理ip为172.25.0.3)
-$ nohup tiup playground v6.5.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor > ~/tikv.log 2>&1 &
-# 获取tikv监听端口(tikv的默认监听端口是2379)
-$ cat ~/tikv.log
-tiup is checking updates for component playground ...timeout!
-Starting component `playground`: /home/fisco/.tiup/components/playground/v1.9.4/tiup-playground v6.5.0 --mode tikv-slim --host=172.25.0.3 -T tikv_demo --without-monitor
-Playground Bootstrapping...
-Start pd instance:v6.5.0
-Start tikv instance:v6.5.0
-PD client endpoints: [172.25.0.3:2379]
-```
-
-### 2.3部署Max版本区块链系统
+### 2.2部署无tars Pro版区块链网络
 
 以下为4种部署链的示例
 
 1、指定服务的ip和端口，自动生成配置文件
 
-执行如下命令，可部署4机构RPC服务、Gateway服务和节点服务，p2p、gateway
-、tars和tikv起始端口分别为30300、20200、40400、2379，4机构的ip为172.31.184.227、172.30.93.111、172.31.184.54、172.31.185.59，自动下载最新的二进制；
+执行如下命令，可部署2机构RPC服务、Gateway服务和节点服务，p2p、gateway
+和tars起始端口分别为30300、20200、40400，两机构的ip为172.31.184.227、172.30.93.111，每个机构下有两个节点，自动下载最新的二进制；
 
 ```
-bash build_chain.sh -p 30300,20200,40400,2379 -l 172.31.184.227:1,172.30.93.111:1,172.31.184.54:1,172.31.185.59:1 -C deploy -V max -o generate -t all
+bash build_chain.sh -p 30300,20200,40400 -l 172.31.184.227:2,172.30.93.111:2 -C deploy -V pro -o generate -t all
 ```
 
 2、部署国密链
@@ -154,21 +131,21 @@ bash build_chain.sh -p 30300,20200,40400,2379 -l 172.31.184.227:1,172.30.93.111:
 执行如下命令，通过-s 指定部署国密链，通过-e 指定已有二进制路径
 
 ```
-bash build_chain.sh -p 30300,20200,40400,2379 -l 172.31.184.227:1,172.30.93.111:1,172.31.184.54:1,172.31.185.59:1 -C deploy -V max -o generate -t all -e ./binary -s
+bash build_chain.sh -p 30300,20200,40400 -l 172.31.184.227:2,172.30.93.111:2 -C deploy -V pro -o generate -t all -e ./binary -s
 ```
 
 3、指定下载二进制版本
 
-执行如下命令，指定下载二进制的方式为cdn、版本v3.4.0和下载路径binaryPath
+执行如下命令，可部署2机构RPC服务、Gateway服务和节点服务，指定下载二进制的方式为cdn、版本v3.4.0和下载路径binaryPath
 
 ```
-bash build_chain.sh -p 30300,20200,40400,2379 -l 172.31.184.227:1,172.30.93.111:1,172.31.184.54:1,172.31.185.59:1 -C deploy -V max -o generate -y cdn -v v3.4.0 -r ./binaryPath 
+bash build_chain.sh -p 30300,20200 -l 172.31.184.227:2,172.30.93.111:2 -C deploy -V pro -o generate -y cdn -v v3.4.0 -r ./binaryPath 
 ```
 
 4、指定已有的配置文件
 
-执行如下命令，根据已有的配置文件进行部署max链
+执行如下命令，根据已有的配置文件进行部署pro链
 
 ```
-bash build_chain.sh -c config.toml -C deploy -V max -o generate -t all
+bash build_chain.sh -c config.toml -C deploy -V pro -o generate -t all
 ```
