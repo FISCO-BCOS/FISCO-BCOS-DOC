@@ -11,7 +11,9 @@
 
 升级指南
 ------------
-FISCO BCOS 版本迭代，支持版本之间的兼容升级，支持可灰度升级，且灰度升级过程中，系统可以正常共识、出块。详情可参考 `升级指南 <./upgrade.html>`_
+FISCO BCOS 版本迭代，支持版本之间的兼容升级，支持可灰度升级，且灰度升级过程中，系统可以正常共识、出块。详情可参考 `升级指南 <./upgrade.html>`_ 。
+
+FISCO BCOS 设计 Feature控制特性功能开启关闭，用户可以根据自己的需求，按需选择开启。通过bugfix修复一些具备兼容性问题的bug。详情可参考 `Feature and Bugfix List <./feature_bugfix_list.html>`_ 。
 
 
 .. toctree::
