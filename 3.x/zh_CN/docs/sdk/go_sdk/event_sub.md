@@ -30,7 +30,7 @@ func (c *Connection) SubscribeEventLogs(eventLogParams types.EventLogParams, han
 func (c *Connection) UnsubscribeEventLogs(taskID string)
 ```
 
-- FromBlock：起始区块
+- FromBlock：起始区块（需大于0）
 - ToBlock：-1表示最新块
 - Addresses：字符串数组，数组为多个合约地址，数组可以为空
 - Topics：数组类型，数组为多个topic，数组可以为空
