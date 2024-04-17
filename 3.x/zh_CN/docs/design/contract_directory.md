@@ -1,4 +1,4 @@
-# 区块链合约文件系统
+# 18. 合约文件系统BFS
 
 标签：``合约目录``，``区块链文件系统``，``BFS``
 
@@ -85,11 +85,11 @@ FISCO BCOS 3.x版本引入区块链合约文件系统（Blockchain File System�
 
 ### 1.2 详细使用文档
 
-BFS的使用体验主要集中体现在控制台，请参考控制台中BFS相关操作命令，以及使用控制台的BFS命令时的注意事项、错误出现情况请参考：[链接](../develop/console/console_commands.html#bfs)。
+BFS的使用体验主要集中体现在控制台，请参考控制台中BFS相关操作命令，以及使用控制台的BFS命令时的注意事项、错误出现情况请参考：[链接](../operation_and_maintenance/console/console_commands.html#bfs)。
 
-使用合约调用的BFS接口时的注意事项、错误出现情况请参考：[链接](../develop/precompiled/precompiled_contract_api.html#bfsprecompiled) 。
+使用合约调用的BFS接口时的注意事项、错误出现情况请参考：[链接](../contract_develop/c++_contract/precompiled_contract_api.html#bfsprecompiled) 。
 
-同时在部署合约和调用合约均支持BFS使用，请参考控制台中[deploy命令](../develop/console/console_commands.html#deploy)与[call命令](../develop/console/console_commands.html#call)。
+同时在部署合约和调用合约均支持BFS使用，请参考控制台中[deploy命令](../operation_and_maintenance/console/console_commands.html#deploy)与[call命令](../operation_and_maintenance/console/console_commands.html#call)。
 
 ## 2. 设计文档
 
@@ -205,7 +205,7 @@ BFS存储表生命周期主要包括创建、修改、读取，暂时不支持�
 - **值得注意的是：** Solidity的地址由于其不可读的性质与BFS易读可见的原则相悖，因此Solidity部署后的合约地址只生成合约存储表，其BFS元数据不会写入 `/apps` 表内。例如：用户部署合约后地址为 0x123456，链上将会为合约创建合约存储表`/apps/123456`，但并不会将元数据写入到 `/apps` 内，即用户调用`list(/apps)`，不会显示子目录有`123456`这个资源。用户后续可以通过link操作，将solidity合约地址与BFS进行绑定。
 - 在用户发起创建Table合约请求时，将会在 `/tables` 目录下创建对应的合约资源表，例如：创建Table合约 t_test合约时，将会创建 `/tables/t_test` 的存储表。
 - 在执行合约时，将会读取合约资源对应的存储表中的状态数据。
-- 在部署普通合约是，将会创建合约的权限数据表，详情请参考：[权限底层节点设计](./committee_design.html#id15)
+- 在部署普通合约时，将会创建合约的权限数据表，详情请参考：[权限底层节点设计](./committee_design.html#id15)
 
 #### 2.5.3 合约软链接资源生命周期
 

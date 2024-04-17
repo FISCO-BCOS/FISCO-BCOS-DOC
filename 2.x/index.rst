@@ -1,8 +1,44 @@
-##############################################################
-FISCO BCOS 技术文档
-##############################################################
+请根据需求选择FISCO BCOS的版本，并确认周边组件与其版本相匹配。
 
-.. image:: _static/images/FISCO_BCOS_Logo.svg
+.. container:: row 
+   
+   .. container:: card-holder-bigger
+
+         .. container:: card-bigger
+
+            .. image:: _static/images/FISCO_BCOS_Logo_2.0.svg
+
+            .. raw:: html
+         
+               <div>
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/#">本文档版本 2.0：简单、易用、经典、稳定</a></b></h>
+                  <br><br><br>
+               </div>
+               <div style="clear:both"></div>
+
+            .. raw:: html
+         
+               <div >
+                  <br>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/index.html"> ====>> 切换至 3.0 版本文档</a></b></h>
+                  <br><br>
+               </div>
+               <div style="clear:both"></div>
+
+         
+.. container:: row 
+
+   .. raw:: html
+      <br><br>
+      <hr>
+      <br>
+
+
+
+##############################################################
+FISCO BCOS 2.0 技术文档
+##############################################################
 
 FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多家机构、多个应用，长时间在生产环境运行的实际检验。
 
@@ -230,7 +266,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多开源工具</h>
                <br><br>
 
-               <img src="_static/images/products.jpeg" class="card-holder-full">
+               <img src="_static/images/products_2023.jpeg" class="card-holder-full">
 
 
          .. container:: tools 
@@ -258,6 +294,7 @@ FISCO BCOS 是一个稳定、高效、安全的区块链底层平台，经过多
                - SmartDev-Contract 智能合约库组件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Contract>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Contract>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html>`_
                - SmartDev-SCGP 合约编译插件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-SCGP>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-SCGP>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-SCGP/index.html>`_
                - SmartDev-Scaffold 应用开发脚手架：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Scaffold>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Scaffold>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Scaffold/index.html>`_
+            - **DDCMS分布式数据协作管理解决方案：**：`[GitHub] <https://github.com/WeBankBlockchain/DDCMS>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/DDCMS>`_  `[文档] <https://ddcms-docs.readthedocs.io/en/latest/>`_
 
 
 .. toctree::

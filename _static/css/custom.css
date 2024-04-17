@@ -37,7 +37,7 @@ p {
 /* Side navigation bar */
 
 .wy-side-nav-search {
-    background-color: #252627;
+    background-color: #184596;
 }
 
 .wy-side-nav-search a.icon-home {
@@ -46,6 +46,10 @@ p {
     background-position: center top;
     height: 20px;
     width: 100%
+}
+
+ul.wy-breadcrumbs a.icon.icon-home::after {
+    content: " FISCO BCOS 2.0";
 }
 
 .wy-side-nav-search img {
@@ -70,7 +74,7 @@ p {
 }
 
 .wy-nav-side {
-    background-color: #252627;
+    background-color: #184596;
 }
 
 

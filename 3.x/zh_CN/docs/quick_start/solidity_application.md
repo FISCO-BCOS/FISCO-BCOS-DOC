@@ -1,4 +1,4 @@
-# 开发第一个Solidity区块链应用
+# 3. 开发第一个Solidity区块链应用
 
 标签：``开发第一个应用`` ``Solidity`` ``合约开发`` ``区块链应用`` ``EVM``
 
@@ -65,7 +65,7 @@ function transfer(string memory from_account, string memory to_account, uint256 
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.6.0/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -343,8 +343,8 @@ Asset.sol所引用的Table.sol已在``~/fisco/console/contracts/solidity``目录
 # 切换到fisco/console/目录
 cd ~/fisco/console/
 
-# 可通过bash contract2java.sh -h命令查看该脚本使用方法
-bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
+# 可通过bash contract2java.sh solidity -h命令查看该脚本solidity使用方法, -s指定sol文件
+bash contract2java.sh solidity -s contracts/solidity/Asset.sol -p org.fisco.bcos.asset.contract
 ```
 
 运行成功之后，将会在`console/contracts/sdk`目录生成java、abi和bin目录，如下所示。
@@ -353,10 +353,8 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 # 其它无关文件省略
 |-- abi # 生成的abi目录，存放solidity合约编译生成的abi文件
 |   |-- Asset.abi
-|   |-- Table.abi
 |-- bin # 生成的bin目录，存放solidity合约编译生成的bin文件
 |   |-- Asset.bin
-|   |-- Table.bin
 |-- java  # 存放编译的包路径及Java合约文件
 |   |-- org
 |        |--fisco
@@ -364,10 +362,9 @@ bash contract2java.sh solidity -p org.fisco.bcos.asset.contract
 |                  |--asset
 |                       |--contract
 |                             |--Asset.java  # Asset.sol合约生成的Java文件
-|                             |--Table.java  # Table.sol合约生成的Java文件
 ```
 
-java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`和`KVTable.java`两个文件，其中`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
+java目录下生成了`org/fisco/bcos/asset/contract/`包路径目录，该目录下包含`Asset.java`文件，`Asset.java`是Java应用调用`Asset.sol`合约需要的文件。
 
 `Asset.java`的主要接口：
 
@@ -380,7 +377,7 @@ public class Asset extends Contract {
     // Asset.sol合约 register接口生成
     public TransactionReceipt register(String account, BigInteger asset_value);
     // Asset.sol合约 select接口生成
-    public Tuple2<BigInteger, BigInteger> select(String account) throws ContractException;
+    public Tuple2<Boolean, BigInteger> select(String account) throws ContractException;
 
     // 加载Asset合约地址，生成Asset对象
     public static Asset load(String contractAddress, Client client, CryptoKeyPair credential);
@@ -426,28 +423,20 @@ $ unzip asset-app-3.0-solidity.zip && mv asset-app-demo-main asset-app-3.0
 
 ### 第三步. 引入FISCO BCOS Java SDK
 
-在build.gradle文件中的``dependencies``下加入对FISCO BCOS Java SDK的引用。
+修改``build.gradle``文件中, ``repositories``设置maven源，引入Spring框架，在``dependencies``下加入对FISCO BCOS Java SDK的引用（注意java-sdk版本号）。
 
 ```groovy
 repositories {
     mavenCentral()
     maven {
-        allowInsecureProtocol = true
         url "http://maven.aliyun.com/nexus/content/groups/public/"
     }
     maven {
-        allowInsecureProtocol = true
         url "https://oss.sonatype.org/content/repositories/snapshots" 
     }
 }
-```
 
-### 第四步. 配置SDK证书
-
-修改``build.gradle``文件，引入Spring框架。
-
-```groovy
-def spring_version = "4.3.27.RELEASE"
+def spring_version = "5.3.25"
 List spring = [
         "org.springframework:spring-core:$spring_version",
         "org.springframework:spring-beans:$spring_version",
@@ -458,10 +447,12 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.2.0")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.3.0")
     compile spring
 }
 ```
+
+### 第四步. 配置SDK证书
 
 在``asset-app-3.0/src/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
 
@@ -557,10 +548,12 @@ applicationContext.xml的内容如下：
 $ cd ~/fisco
 # 创建放置证书的文件夹(默认解压项目即存在)
 $ mkdir -p asset-app-3.0/src/test/resources
+# 创建conf目录
+$ mkdir asset-app-3.0/src/test/resources/conf
 # 拷贝节点证书到项目的资源目录
 $ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/test/resources/conf
 # 若在IDE直接运行，拷贝证书到resources路径
-$ mkdir -p asset-app-3.0/src/main/resources
+$ mkdir -p asset-app-3.0/src/main/resources asset-app-3.0/src/main/resources/conf
 $ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources/conf
 ```
 
@@ -578,7 +571,7 @@ cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app
 
 ### 第二步.开发业务逻辑
 
-在路径`/src/main/java/org/fisco/bcos/asset/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
+在路径`asset-app-3.0/src/main/java/org/fisco/bcos/asset/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
 
 `AssetClient.java` 代码如下：
 
@@ -818,7 +811,7 @@ Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 
 ```java
 // select接口调用
- Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount);
+Tuple2<Boolean, BigInteger> result = asset.select(assetAccount);
 // register接口调用
 TransactionReceipt receipt = asset.register(assetAccount, amount);
 // transfer接口
@@ -923,6 +916,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 |   |               |-- cert.cnf
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
+|   |               |-- sdk.nodeid
 |   |        |-- applicationContext.xml // 项目配置文件
 |   |        |-- contract.properties // 存储部署合约地址的文件
 |   |        |-- log4j.properties // 日志配置文件
@@ -936,12 +930,13 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 |   |               |-- cert.cnf
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
+|   |               |-- sdk.nodeid
 |   |       |-- applicationContext.xml // 项目配置文件
 |   |       |-- contract.properties // 存储部署合约地址的文件
 |   |       |-- log4j.properties // 日志配置文件
 |   |       |-- contract //存放solidity约文件
 |   |               |-- Asset.sol
-|   |               |-- Table.sol
+|   |               |-- KVTable.sol
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本
@@ -968,16 +963,16 @@ $ ./gradlew build
 # 进入dist目录
 $ cd dist
 $ bash asset_run.sh deploy
-Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
+deploy Asset success, contract address is 0xc8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085
 ```
 
 - 注册资产
 
 ```shell
 $ bash asset_run.sh register Alice 100000
-Register account successfully => account: Alice, value: 100000
+register asset account success => asset: Alice, value: 100000
 $ bash asset_run.sh register Bob 100000
-Register account successfully => account: Bob, value: 100000
+register asset account success => asset: Bob, value: 100000
 ```
 
 - 查询资产

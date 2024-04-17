@@ -1,4 +1,4 @@
-# 开发第一个WBC-Liquid区块链应用
+# 4. 开发第一个WBC-Liquid区块链应用
 
 标签：``开发第一个应用`` ``WBC-Liquid`` ``合约开发`` ``区块链应用`` ``WASM``
 
@@ -13,7 +13,21 @@
 
 本教程要求用户熟悉Linux操作环境，具备Java开发的基本技能，能够使用Gradle工具，熟悉webankblockchain-liquid语法（以下简称WBC-Liquid），并且进行了[WBC-Liquid的环境配置](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
-如果您还未搭建区块链网络，或未下载控制台，请先走完教程[搭建第一个区块链网络](./air_installation.md)，再回到本教程。
+开发WBC-Liquid应用，需要搭建**WASM**配置的区块链网络。步骤如下：
+1. 如果您还未搭建区块链网络，或未下载控制台，请先走完教程[搭建第一个区块链网络](./air_installation.md)，再回到本教程。（若已搭建则忽略本步骤）；
+2. 开启节点wasm配置项：修改节点创世块的配置文件 `config.genesis` 的 `[executor]` 为`is_wasm=true`；
+3. 删除data数据、重启节点；
+```shell
+# 到节点的目录
+cd ~/fisco/nodes/127.0.0.1
+# 停掉节点
+bash stop_all.sh
+# 删除节点旧数据
+rm -rf node*/data
+# 重启节点
+bash start_all.sh
+```
+至此，区块链网络就开启了WASM配置。
 
 ## 1. 了解应用需求
 
@@ -65,14 +79,14 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 根据我们第一步的存储和接口设计，创建一个Asset的智能合约项目。
 在终端中执行以下命令创建 WBC-Liquid 智能合约项目：
 
-**特别注意：** 为了用户方便使用，控制台已经在 `console/contracts/liquid`路径下准备好了`Asset`示例，下面的流程为创建一个全新WBC-Liquid合约的流程。
+**特别注意：** 为了用户方便使用，控制台已经在 `console/contracts/liquid`路径下准备好了`asset`示例，下面的流程为创建一个全新WBC-Liquid合约的流程。
 
 ```shell
 # 创建工作目录~/fisco
 mkdir -p ~/fisco
 
 # 下载控制台
-cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v3.6.0/download_console.sh && bash download_console.sh
 
 # 切换到fisco/console/目录
 cd ~/fisco/console/
@@ -80,7 +94,7 @@ cd ~/fisco/console/
 # 进入console/contracts目录
 cd ~/fisco/console/contracts/liquid
 
-# 创建新的合约
+# 创建新的合约 (控制台已经准备好asset目录，如果是下载控制台的话可跳过该步骤)
 cargo liquid new contract asset
 ```
 
@@ -223,7 +237,7 @@ mod asset {
         pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16 {
             let mut ret_code: i16 = 0;
             let (ok, from_value) = self.select(from.clone());
-            if ok == true.into() {
+            if ok != true.into() {
                 ret_code = -1;
                 self.env().emit(TransferEvent {
                     ret_code,
@@ -341,7 +355,7 @@ cargo liquid build
 
 ``Liquid``的智能合约需要编译成ABI和WASM文件才能部署至区块链网络上，有了这两个文件即可凭借Java SDK进行合约部署和调用。Liquid项目的环境构建与编译请参考：[部署Liquid编译环境](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html) 、[Liquid开发指南](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/dev_testing/development.html)。
 
-控制台提供的Java生成工具可以将`cargo liquid build`编译出ABI和BIN文件自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。我们利用console控制台的脚本 `contract2java.sh` 生成Java 文件。
+控制台提供的Java生成工具可以将`cargo liquid build`编译出ABI和WASM文件自动生成一个与编译的智能合约同名的合约Java类。这个Java类是根据ABI生成的，帮助用户解析好了参数，提供同名的方法。当应用需要部署和调用合约时，可以调用该合约类的对应方法，传入指定参数即可。使用这个合约Java类来开发应用，可以极大简化用户的代码。我们利用console控制台的脚本 `contract2java.sh` 生成Java 文件。
 
 ```shell
 # 假设你已经完成控制台的下载操作，若还没有请查看本文第二节的开发源码步骤
@@ -350,7 +364,7 @@ cargo liquid build
 cd ~/fisco/console/
 
 # 编译合约(后面指定BINARY、abi 文件路径，可以根据实际项目路径指定路径)如下：
-bash contract2java.sh liquid -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm
+bash contract2java.sh liquid -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm -p org.fisco.bcos.asset.liquid.contract
 
 # 脚本用法：
 $ bash contract2java.sh liquid -h
@@ -367,7 +381,7 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
                       contract.
 ```
 
-运行成功之后，将会在`console/dist/contracts/sdk/java/com`目录生成Asset.java文件。
+运行成功之后，将会在`console/contracts/sdk/java/com`目录生成Asset.java文件。
 
 `Asset.java`的主要接口：
 
@@ -376,17 +390,17 @@ package org.fisco.bcos.asset.contract;
 
 public class Asset extends Contract {
     // Asset合约 transfer接口生成
-    public TransactionReceipt transfer(String from_account, String to_account, BigInteger amount);
+    public TransactionReceipt transfer(String from, String to, BigInteger value);
     // Asset合约 register接口生成
     public TransactionReceipt register(String account, BigInteger asset_value);
     // Asset合约 select接口生成
-    public Tuple2<BigInteger, BigInteger> select(String account) throws ContractException;
+    public Tuple2<Boolean, BigInteger> select(String account) throws ContractException;
 
     // 加载Asset合约地址，生成Asset对象
     public static Asset load(String contractAddress, Client client, CryptoKeyPair credential);
 
     // 部署Asset合约，生成Asset对象
-    public static Asset deploy(Client client, CryptoKeyPair credential) throws ContractException;
+    public static Asset deploy(Client client, CryptoKeyPair credential, String contractPath) throws ContractException;
 }
 ```
 
@@ -428,7 +442,7 @@ $ unzip asset-app-3.0-liquid.zip && mv asset-app-demo-main-liquid  asset-app-liq
 
 ### 第三步. 引入FISCO BCOS Java SDK
 
-在build.gradle文件中的``dependencies``下加入对FISCO BCOS Java SDK的引用。
+修改``build.gradle``文件，引入Spring框架，在的``dependencies``下加入对FISCO BCOS Java SDK的引用（注意java-sdk版本号）。
 
 ```groovy
 repositories {
@@ -437,14 +451,8 @@ repositories {
     maven { url "https://oss.sonatype.org/service/local/staging/deploy/maven2" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
-```
 
-### 第四步. 配置SDK证书
-
-修改``build.gradle``文件，引入Spring框架。
-
-```java
-def spring_version = "4.3.27.RELEASE"
+def spring_version = "5.3.25"
 List spring = [
         "org.springframework:spring-core:$spring_version",
         "org.springframework:spring-beans:$spring_version",
@@ -455,11 +463,12 @@ List spring = [
 dependencies {
     compile logger
     runtime logger
-    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.2.0")
+    compile ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:3.3.0")
     compile spring
 }
 ```
 
+### 第四步. 配置SDK证书
 在``asset-app-liquid/src/test/resources``目录下创建配置文件``applicationContext.xml``，写入配置内容。
 
 applicationContext.xml的内容如下：
@@ -545,7 +554,7 @@ applicationContext.xml的内容如下：
 </beans>
 ```
 
-**注意：** 如果搭链时设置的 rpc listen_ip 为127.0.0.1或者0.0.0.0，listen_port 为20200，则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的 `[rpc]`配置的`listen_ip:listen_port`。
+**注意：** liquid合约，节点需要开启**wasm**选项。如果搭链时设置的 rpc listen_ip 为127.0.0.1或者0.0.0.0，listen_port 为20200，则`applicationContext.xml`配置不用修改。若区块链节点配置有改动，需要同样修改配置`applicationContext.xml`的`network`属性下的`peers`配置选项，配置所连接节点的 `[rpc]`配置的`listen_ip:listen_port`。
 
 在以上配置文件中，我们指定了证书存放的位``certPath``的值为``conf``。接下来我们需要把SDK用于连接节点的证书放到指定的``conf``目录下。
 
@@ -553,12 +562,12 @@ applicationContext.xml的内容如下：
 # 假设我们将asset-app-liquid放在~/fisco目录下 进入~/fisco目录
 $ cd ~/fisco
 # 创建放置证书的文件夹
-$ mkdir -p asset-app-liquid/src/test/resources
+$ mkdir -p asset-app-liquid/src/test/resources/conf
 # 拷贝节点证书到项目的资源目录
-$ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/test/resources
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/test/resources/conf
 # 若在IDE直接运行，拷贝证书到resources路径
-$ mkdir -p asset-app-liquid/src/main/resources
-$ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources
+$ mkdir -p asset-app-liquid/src/main/resources/conf
+$ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources/conf
 ```
 
 ## 5. 业务逻辑开发
@@ -570,12 +579,12 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources
 ```shell
 cd ~/fisco
 # 将编译好的合约Java类引入项目中。
-cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-liquid/src/main/java/org/fisco/bcos/asset/contract/Asset.java
+cp console/contracts/sdk/java/org/fisco/bcos/asset/liquid/contract/Asset.java asset-app-liquid/src/main/java/org/fisco/bcos/asset/liquid/contract/Asset.java
 ```
 
 ### 第二步 开发业务逻辑
 
-在路径`/src/main/java/org/fisco/bcos/asset/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
+在路径`/src/main/java/org/fisco/bcos/asset/liquid/client`目录下，创建`AssetClient.java`类，通过调用`Asset.java`实现对合约的部署与调用
 
 `AssetClient.java` 代码如下：
 
@@ -826,7 +835,7 @@ Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 
 ```java
 // select接口调用
-Tuple2<BigInteger, BigInteger> result = asset.select(assetAccount);
+Tuple2<Boolean, BigInteger> result = asset.select(assetAccount);
 // register接口调用
 TransactionReceipt receipt = asset.register(assetAccount, amount);
 // transfer接口
@@ -919,39 +928,40 @@ log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %
 |   |   |          |-- fisco
 |   |   |                |-- bcos
 |   |   |                      |-- asset
-|   |   |                            |-- client // 放置客户端调用类
+|   |   |                           |-- liquid
+|   |   |                               |-- client // 放置客户端调用类
 |   |   |                                   |-- AssetClient.java
-|   |   |                            |-- contract // 放置Java合约类
+|   |   |                               |-- contract // 放置Java合约类
 |   |   |                                   |-- Asset.java
 |   |   |-- resources
 |   |        |-- conf
 |   |               |-- ca.crt
-|   |               |-- node.crt
-|   |               |-- node.key
+|   |               |-- cert.cnf
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
+|   |               |-- sdk.nodeid
 |   |        |-- applicationContext.xml // 项目配置文件
 |   |        |-- contract.properties // 存储部署合约地址的文件
 |   |        |-- log4j.properties // 日志配置文件
 |   |        |-- contract //存放 WBC-Liquid 合约文件
-|   |               |-- asset-test
+|   |               |-- asset
 |   |                   |-- src
 |   |                       |-- lib.rs WBC-Liquid文件
 |   |-- test
 |       |-- resources // 存放代码资源文件
 |           |-- conf
-|                  |-- ca.crt
-|                  |-- node.crt
-|                  |-- node.key
-|                  |-- sdk.crt
-|                  |-- sdk.key
-|                  |-- sdk.publickey
+|                   |-- ca.crt
+|                   |-- cert.cnf
+|                   |-- sdk.crt
+|                   |-- sdk.key
+|                   |-- sdk.nodeid
 |           |-- applicationContext.xml // 项目配置文件
 |           |-- contract.properties // 存储部署合约地址的文件
 |           |-- log4j.properties // 日志配置文件
 |           |-- contract //存放 WBC-Liquid 合约文件
-|                   |-- asset-test
-|                       |-- lib.rs WBC-Liquid文件
+|                   |-- asset
+|                       |-- src
+|                           |-- lib.rs WBC-Liquid文件
 |
 |-- tool
     |-- asset_run.sh // 项目运行脚本
@@ -978,16 +988,16 @@ $ ./gradlew build
 # 进入dist目录
 $ cd dist
 $ bash asset_run.sh deploy
-Deploy Asset successfully, contract address is 0xd09ad04220e40bb8666e885730c8c460091a4775
+deploy Asset success, contract address is /asset/liquid180
 ```
 
 - 注册资产
 
 ```shell
 $ bash asset_run.sh register Alice 100000
-Register account successfully => account: Alice, value: 100000
+register asset account success => asset: Alice, value: 100000
 $ bash asset_run.sh register Bob 100000
-Register account successfully => account: Bob, value: 100000
+register asset account success => asset: Bob, value: 100000
 ```
 
 - 查询资产

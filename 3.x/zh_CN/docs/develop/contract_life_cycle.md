@@ -1,4 +1,4 @@
-# 合约生命周期与权限管理
+# 4. 合约生命周期与权限管理
 
 标签：``合约管理`` ``合约生命周期`` ``部署合约`` ``调用合约`` ``冻结合约`` ``废止合约``
 
@@ -29,14 +29,14 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 [Liquid官方文档](https://liquid-doc.readthedocs.io/zh_CN/latest/)
 
-[预编译合约使用文档](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/precompiled/index.html)
+[预编译合约使用文档](../contract_develop/c++_contract/index.md)
 
 ## 2. 智能合约部署与调用
 
 用户完成智能合约的开发之后，将智能合约部署上链并发起调用交易。用户可通过[SDK](./sdk/index.md)将编译好的合约打包成交易发送到FISCO BCOS区块链节点上链。社区已提供高度包装的工具，用户可快速开箱使用：
 
-- 使用控制台： [控制台](./console/index.md)，控制台包装了Java SDK，提供命令行交互功能，供给开发者使用的节点查询与管理的工具。
-- 使用Java合约生成工具：[Java合约生成工具](./console/console_config.html#java)支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
+- 使用控制台： [控制台](../operation_and_maintenance/console/index.md)，控制台包装了Java SDK，提供命令行交互功能，供给开发者使用的节点查询与管理的工具。
+- 使用Java合约生成工具：[Java合约生成工具](../operation_and_maintenance/console/console_config.html#java)支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。
 
 **延伸阅读**
 
@@ -44,9 +44,9 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 [开发第一个Liquid区块链应用](../quick_start/wbc_liquid_application.md)
 
-[Gradle SpringBoot 应用示例](./sdk/java_sdk/spring_boot_starter.md)
+[Gradle SpringBoot 应用示例](../sdk/java_sdk/spring_boot_starter.md)
 
-[Maven SpringBoot 应用示例](./sdk/java_sdk/spring_boot_crud.md)
+[Maven SpringBoot 应用示例](../sdk/java_sdk/spring_boot_crud.md)
 
 ## 3. 智能合约数据存储
 
@@ -70,7 +70,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 - 保留旧合约数据升级的情况较为复杂，具体解决方案有以下几种：
   - （推荐）用户在开发智能合约时就需要主动将合约分为 **逻辑合约** 和 **数据合约**，数据合约用于存储需要在链上存储的数据，开放数据读写接口供逻辑合约使用，逻辑合约在计算时调用数据合约的读写接口。当需要升级时，只需要升级逻辑合约，新的逻辑合约调用旧的数据合约接口，旧的逻辑合约不再使用。
-  - （推荐）相当于第一种方案的扩展，需要存储的数据都使用CRUD数据接口进行存储，CRUD的数据是通过节点共识并持久存储在链上的。详情请参考[使用CRUD预编译合约开发应用](./precompiled/use_crud_precompiled.md)，[使用KV存储预编译合约开发应用](./precompiled/use_kv_precompiled.md)
+  - （推荐）相当于第一种方案的扩展，需要存储的数据都使用CRUD数据接口进行存储，CRUD的数据是通过节点共识并持久存储在链上的。详情请参考[使用CRUD预编译合约开发应用](../contract_develop/c++_contract/use_crud_precompiled.md)，[使用KV存储预编译合约开发应用](../contract_develop/c++_contract/use_kv_precompiled.md)
   - 通过使用delegate call的代理合约主动调用逻辑合约，产生的状态数据均保存在代理合约中，逻辑合约保持接口不变的情况下可以升级。
 - 不保留数据升级的情况更加简单，用户将升级的合约重新部署，将会有新的地址。应用基于新地址的合约进行操作即可，也将使用新合约的数据，旧合约记录的数据将存在链上，需要应用主动避免新业务逻辑调用旧合约数据。
 
@@ -78,7 +78,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 ```eval_rst
 .. important::
-   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考`【权限治理使用指南】 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
+   合约生命周期管理冻结、解冻、废止操作以及合约部署调用权限控制，均需要将开启区块链权限模式，详情请参考`权限治理使用指南 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
 ```
 
 在开启区块链权限模式之后，每次合约部署将在存储层创建合约存储数据表之外，会额外创建一张合约权限数据表，用于记录合约管理员地址、合约状态、合约接口ACL。默认情况下，合约的管理员地址就是发起部署合约操作的账户地址（如果存在合约创建合约，合约管理员地址为交易发起账户tx.origin）。
@@ -127,7 +127,7 @@ abstract contract AuthManagerPrecompiled {
    兼容性说明：合约生命周期管理废止操作只能在节点版本3.2以上进行。
 ```
 
-合约管理员也可以通过控制台对合约进行冻结等操作，详情请看：[冻结合约命令](./console/console_commands.html#freezecontract)、[解冻合约命令](./console/console_commands.html#unfreezecontract)
+合约管理员也可以通过控制台对合约进行冻结等操作，详情请看：[冻结合约命令](../operation_and_maintenance/console/console_commands.html#freezecontract)、[解冻合约命令](../operation_and_maintenance/console/console_commands.html#unfreezecontract)
 
 ### 5.2 智能合约部署权限控制
 
@@ -135,7 +135,7 @@ abstract contract AuthManagerPrecompiled {
 
 部署权限记录在BFS目录/apps下，这代表着允许在/apps目录下的写权限。
 
-治理委员可以通过控制台进行部署合约权限控制等操作，详情请看 [设置部署权限类型提案](./console/console_commands.html#setdeployauthtypeproposal) 、[开启部署权限提案](./console/console_commands.html#opendeployauthproposal) 、[关闭部署权限提案](./console/console_commands.html#closedeployauthproposal)
+治理委员可以通过控制台进行部署合约权限控制等操作，详情请看 [设置部署权限类型提案](../operation_and_maintenance/console/console_commands.html#setdeployauthtypeproposal) 、[开启部署权限提案](../operation_and_maintenance/console/console_commands.html#opendeployauthproposal) 、[关闭部署权限提案](../operation_and_maintenance/console/console_commands.html#closedeployauthproposal)
 
 在检查部署权限时将会对交易发起地址tx.origin进行校验，若没有权限则会返回错误码 -5000。即，会对用户部署合约、用户通过合约部署合约都进行校验。
 
@@ -145,6 +145,6 @@ abstract contract AuthManagerPrecompiled {
 
 在执行合约接口的访问ACL的写操作时，将会确定交易发起人msg.sender是否为合约权限表记录的合约管理员，若不是则会拒绝。
 
-合约管理员可以通过控制台对合约接口访问ACL的写操作等操作，详情请看：[合约管理员专用命令](./console/console_commands.html#setmethodauth)
+合约管理员可以通过控制台对合约接口访问ACL的写操作等操作，详情请看：[合约管理员专用命令](../operation_and_maintenance/console/console_commands.html#setmethodauth)
 
 在检查合约调用权限时将会对交易发起地址tx.origin和消息发送者msg.sender进行校验，若没有权限则会返回错误码 -5000。即，会对用户调用合约、用户通过合约调用合约、合约调用合约都进行校验。

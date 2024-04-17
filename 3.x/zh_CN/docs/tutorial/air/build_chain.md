@@ -1,4 +1,4 @@
-# 部署工具(build_chain.sh)
+# build_chain一键建链工具
 
 标签：``build_chain`` ``搭建Air版区块链网络``
 
@@ -11,7 +11,7 @@
 
 ```eval_rst
 .. important::
-    本部署工具 build_chain.sh 脚本目标是让用户最快的使用FISCO BCOS Air版。
+    本部署工具 build_chain.sh 脚本目标是让用户最快地使用FISCO BCOS Air版。
 ```
 
 FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联盟链。
@@ -27,10 +27,10 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 
 ```shell
 # 下载建链脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 
 # Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 
 # 键入bash build_chain.sh -h展示脚本用法及参数
 $ bash build_chain.sh
@@ -38,7 +38,7 @@ Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
     -g <group id>                       [Optional] set the group id, default: group0
     -I <chain id>                       [Optional] set the chain id, default: chain0
-    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.2.0
+    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.6.0
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode executable, input "download_binary" to download lightnode binary or assign correct lightnode binary path
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
@@ -46,10 +46,10 @@ Usage:
     -o <output dir>                     [Optional] output directory, default ./nodes
     -p <Start port>                     [Optional] Default 30300,20200 means p2p_port start from 30300, rpc_port from 20200
     -s <SM model>                       [Optional] SM SSL connection or not, default is false
+    -H <HSM model>                      [Optional] Whether to use HSM(Hardware secure module), default is false
     -c <Config Path>                    [Required when expand node] Specify the path of the expanded node config.ini, config.genesis and p2p connection file nodes.json
     -d <CA cert path>                   [Required when expand node] When expanding the node, specify the path where the CA certificate and private key are located
     -D <docker mode>                    Default off. If set -d, build with docker
-    -A <Auth mode>                      Default off. If set -A, build chain with auth, and generate admin account.
     -a <Auth account>                   [Optional] when Auth mode Specify the admin account address.
     -w <WASM mode>                      [Optional] Whether to use the wasm virtual machine engine, default is false
     -R <Serial_mode>                    [Optional] Whether to use serial execute,default is true
@@ -57,16 +57,20 @@ Usage:
     -m <fisco-bcos monitor>             [Optional] node monitor or not, default is false
     -i <fisco-bcos monitor ip/port>     [Optional] When expanding the node, should specify ip and port
     -M <fisco-bcos monitor>             [Optional] When expanding the node, specify the path where prometheus are located
+    -z <Generate tar packet>            [Optional] Pack the data on the chain to generate tar packet
+    -n <node key path>                  [Optional] set the path of the node key file to load nodeid
     -h Help
 
 deploy nodes e.g
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos
+    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m (部署节点带监控功能)
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -s
-    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m(部署节点带监控功能)
 expand node e.g
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos
-        bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
-    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml(部署节点带监控功能)
+    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml (部署节点带监控功能)
+    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
+    bash build_chain.sh -C expand_lightnode -c config -d config/ca -o nodes/lightnode1
+    bash build_chain.sh -C expand_lightnode -c config -d config/ca -o nodes/lightnode1 -L ./fisco-bcos-lightnode
 ```
 
 
@@ -103,7 +107,6 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L download_binary
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /bin/fisco-bcos-lightnode
 ```
 
-
 ### **`e`选项[**Optional**]**
 
 指定Air版本FISCO BCOS的二进制可执行文件路径，若不指定，则默认拉取最新版本的FISCO BCOS。
@@ -136,14 +139,25 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2
 - **区块链节点之间采用国密SSL连接**。
 
 搭建单机四节点国密区块链节点的示例如下：
+
 ```shell
 $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 ```
 
+### **`H`选项[**Optional**]**
+
+密码机选项，表示使用密码机。若开启此选项，要加上`-s`表示开启国密，且后要加`-n`选项用于加载node.pem文件生成密码机密钥的nodeid。通过加载证书文件路径开启密码机命令如下
+```shell
+./build_chain.sh -e ./fisco-bcos -p 30300,20200 -l 127.0.0.1:4 -s -H -n nodeKeyDir/
+```
+
+### **`n`选项[**Optional**]**
+
+节点证书目录选项，表示通过加载文件夹中节点证书生成nodeid，该选项可用于国密、非国密，不必指定-s。此选项其后跟证书文件夹路径。
+
 ### **`c`扩容选项**
 
 扩容节点选项，用于指定扩容节点的配置文件路径，此路径须包括`config.ini, config.genesis, nodes.json`。
-
 
 ### **`d`扩容选项**
 
@@ -161,53 +175,25 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 该模式下 start.sh 脚本启动节点的命令如下
 
 ```shell
-docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.2.0 -c config.ini -g config.genesis
-```
-
-### **`A`权限控制选项[**Optional**]**
-
-表示区块链节点启用权限模式。
-
-```eval_rst
-.. note::
-   - 区块链节点默认关闭权限模式
-   - 使用权限控制时，请保证所有节点均启用了权限模式，即须保证节点目录下config.ini的 ``executor.is_auth_check`` 选项均是true.
-```
-
-部署开启权限控制的Air版本区块链示例如下：
-
-```shell
-$ bash build_chain.sh -l 127.0.0.1:4 -A
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/fisco-bcos-macOS-x86_64.tar.gz ...
-[INFO] Generate ca cert successfully!
-Processing IP:127.0.0.1 Total:4
-[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
-[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
-[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
-==============================================================
-[INFO] fisco-bcos Path     : bin/fisco-bcos
-[INFO] Auth Mode           : true
-[INFO] Auth init account   : 0x5b606554358c2c492444f071a332285aad21a78b
-[INFO] Start Port          : 30300 20200
-[INFO] Server IP           : 127.0.0.1:4
-[INFO] SM Model            : false
-[INFO] output dir          : ./nodes
-[INFO] All completed. Files in ./nodes
+docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/data fiscoorg/fiscobcos:v3.6.0 -c config.ini -g config.genesis
 ```
 
 ### **`a`权限控制选项[**Optional**]**
 
 可选参数，当区块链节点启用权限控制时，可通过`-a`选项指定admin账号的地址，若不指定该选项，`build_chain`脚本随机会生成一个账户地址作为admin账号。
 
-### **`w`权限控制选项[**Optional**]**
+### **`w`虚拟机选项[**Optional**]**
+
 可选参数，当区块链需要启用wasm虚拟机引擎时，可通过`-w`选项开启，若不指定该选项，则默认使用EVM。
-### **`R`权限控制选项[**Optional**]**
+
+### **`R`执行模式选项[**Optional**]**
+
 可选参数，当区块链启动串行执行模式时，可通过`-R`选项指定执行模式，默认为串行模式（true），若设置为false，则开启DMC并行模式。
-### **`k`权限控制选项[**Optional**]**
+
+### **`k`存储控制选项[**Optional**]**
+
 可选参数，当需要设置key-page存储中page的大小时，可通过`-k`选项设置page的大小，若不指定，默认page大小为10240。
+
 ### **`m`节点监控选项[**Optional**]**
 
 可选参数，当区块链节点启用节点监控时，可通过`-m`选项来部署带监控的节点，若不选择该选项则只部署不带监控的节点。
@@ -242,6 +228,7 @@ Processing IP:127.0.0.1 Total:4
 [INFO] output dir          : nodes
 [INFO] All completed. Files in nodes
 ```
+
 生成完区块链节点文件，启动节点（nodes/127.0.0.1/start_all.sh）和节点监控（nodes/monitor/start_monitor.sh），根据提示登录grafana（用户名密码为admin/admin）导入Dashboard（[github源码](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard.json)）和配置prometheus源(http://ip:9090/)查看各个指标实时展示。
 
 ### **`i`扩容节点监控选项[**Optional**]**
@@ -251,6 +238,10 @@ Processing IP:127.0.0.1 Total:4
 ### **`M`节点监控配置文件选项[**Optional**]**
 
 可选参数，当区块链扩容节点需要带监控时，可通过`-M`选项来指定prometheus配置文件在nodes目录的相对路径。
+
+### **`z`生成节点目录压缩包[**Optional**]**
+
+可选参数，生成节点目录的同时生成相应的压缩包，方便多机部署时拷贝。
 
 ### **`h`选项[**Optional**]**
 
@@ -283,8 +274,8 @@ nodes/
 │   ├── mtail # 二进制程序
 │   ├── node0 # 节点0文件夹
 │   │   ├── mtail # mtail配置文件夹
-│   │   │   ├── start_mtail_monitor.sh # 启动脚本，用于启动该节点mtail程序
-│   │   │   ├── stop_mtail_monitor.sh	# 停止脚本，用于停止该节点mtail程序
+│   │   │   ├── start_mtail_monitor.sh  # 启动脚本，用于启动该节点mtail程序
+│   │   │   ├── stop_mtail_monitor.sh   # 停止脚本，用于停止该节点mtail程序
 │   │   │   ├── node.mtail # mtail配置文件
 │   │   ├── conf # 配置文件夹
 │   │   │   ├── ca.crt # 链根证书

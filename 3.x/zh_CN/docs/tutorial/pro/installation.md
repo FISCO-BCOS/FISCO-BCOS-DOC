@@ -1,4 +1,4 @@
-# 搭建Pro版区块链网络
+# 手动搭建Pro版区块链网络
 
 标签：``Pro版区块链网络`` ``部署``
 
@@ -10,7 +10,7 @@ FISCO BCOS 3.x支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 .. note::
    - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
-   - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
+   - 本章基于Docker搭建tars服务，请确保系统用户拥有操作docker权限，并确保docker服务处于启动状态
 ```
 
 ## 1. 安装依赖
@@ -41,7 +41,7 @@ brew install curl docker docker-compose python3 wget
 ```eval_rst
 .. note::
    - 部署工具 ``BcosBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
-   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -49,14 +49,15 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.2.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosBuilder && pip3 install -r requirements.txt
 ```
+
 ## 3. 安装、启动并配置tars服务
 
 Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服务主要包括`TarsFramework`和`TarsNode`，关于tars服务更详细的介绍请参考[这里](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md).
@@ -66,11 +67,51 @@ Pro版本的FISCO BCOS使用tars服务进行微服务构建和管理，tars服�
 - `bridge`网络模式的docker配置路径：`docker/bridge`，其中`docker/bridge/linux`供linux用户使用，`docker/bridge/mac`供mac用户使用
 - `host`网络模式的docker配置路径：`docker/host/linux`，目前仅提供了适用于linux系统的docker配置
 
+### 3.0 配置权限模式
+
+**注意：**若不需要使用权限，且链版本小于3.3，那么可以跳过本节。
+
+将配置文件的`auth_check`设置为true，且相应设置`init_auth_address`字段。此处的`init_auth_address`字段指定的地址由下面的步骤生成：
+
+```shell
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh`
+```
+
+国密版本请使用下面的指令获取脚本
+
+```shell
+curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh
+```
+
+```eval_rst
+.. note::
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh`
+```
+
+在执行之后有以下输出，使用的`init_auth_address`就是使用下面的`Account Address`
+
+```shell
+[INFO] Account Address   : 0xd5eff0641c2f69a8deed9510e374aa3e94066a66
+[INFO] Private Key (pem) : accounts/0xd5eff0641c2f69a8deed9510e374aa3e94066a66.pem
+[INFO] Public  Key (pem) : accounts/0xd5eff0641c2f69a8deed9510e374aa3e94066a66.pem.pub
+```
+
+```toml
+# enable auth-check or not
+auth_check=true
+init_auth_address="0xd5eff0641c2f69a8deed9510e374aa3e94066a66"
+```
+
 ### 3.1 安装/启动tars服务
 
 ```eval_rst
 .. note::
-   - 这里采用docker安装/启动tars服务，请确保拥有root权限，并确保docker服务处于启动状态
+   - 这里采用docker安装/启动tars服务，请确保系统用户拥有操作docker权限，并确保docker服务处于启动状态
    - 安装tars服务后，大概经过一分钟左右才可通过http://127.0.0.1:3000/访问tars网页管理平台
 ```
 
@@ -91,7 +132,7 @@ cd ../docker/bridge/linux/framework
 # macOS系统：进入到docker配置文件路径(linux系统可跳过本步骤)
 cd ../docker/bridge/mac/framework
 
-# 配置MYSQL密码，这里假设密码设置为FISCO
+# 配置MYSQL密码，这里假设密码设置为FISCO（注意：docker-compose.yml文件里有两处MYSQL_ROOT_PASSWORD配置项，两处密码需要保持一致。）
 # linux系统(macOS系统可跳过本步骤)
 sed -i 's/MYSQL_ROOT_PASSWORD: ""/MYSQL_ROOT_PASSWORD: "FISCO"/g' docker-compose.yml
 # macOS系统(linux系统可跳过本步骤)
@@ -117,7 +158,7 @@ cd docker/bridge/mac/framework
 docker-compose start
 ```
 
-tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访问tars网页管理平台，跨机器环境可通过http://${ip}:3000/访问tars管理平台，其中`${ip}`是部署TarsFramework服务机器的物理IP。
+tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访问tars网页管理平台，跨机器环境可通过http://{ip}:3000/访问tars管理平台，其中`{ip}`是部署TarsFramework服务机器的物理IP。
 
 ### 3.2 配置tars服务
 
@@ -132,13 +173,9 @@ tars服务安装启动完成后，本机环境可通过http://127.0.0.1:3000/访
 - **登录配置**：初始化管理员用户`admin`的登录密码。
 - **申请token**：登录到tars网页管理平台申请用于服务构建和管理的token。
 
-
 初次使用tars管理平台，输入网址http://127.0.0.1:3000/，参考下图初始化管理员密码，并进入到【admin】->【用户中心】->【token管理】申请token。
 
-
 ![](../../../images/tutorial/tars_config.gif)
-
-
 
 ## 4. 部署Pro版本区块链节点
 
@@ -149,7 +186,6 @@ Pro版本FISCO BCOS包括RPC服务、Gateway服务以及区块链节点服务Bco
 - 区块链节点服务`BcosNodeService`：提供区块链相关的服务，包括共识、执行、交易上链等，节点服务通过接入到RPC服务和Gateway服务获取网络通信功能。
 
 关于Pro版本FISCO BCOS的总体架构设计可参考[这里](../../design/architecture.md)。
-
 
 本章以在单机上部署2机构2节点区块链服务为例，介绍Pro版本FISCO BCOS搭建部署流程，对应的服务组网模式如下:
 
@@ -486,11 +522,11 @@ generated/chain0
 
 ### 4.5部署区块链节点监控服务
 
-RPC服务和Gateway服务和node服务均部署完成后，可部署区块链节点监控服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动区块链节点监控服务。
+RPC服务和Gateway服务和node服务均部署完成后，可部署区块链节点监控服务。在建链工具BcosBuilder/pro目录下，执行如下命令，可部署并启动区块链节点监控服务。
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 部署并启动区块链节点服务
 python3 build_chain.py chain -o deploy -t monitor
@@ -556,7 +592,7 @@ app_log/
 
 ```eval_rst
 .. note::
-   - 控制台的配置方法和命令请参考 `这里 <../../develop/console/console_config.html>`_
+   - 控制台的配置方法和命令请参考 `这里 <../../operation_and_maintenance/console/console_config.html>`_
 ```
 
 使用控制台之前，需先安装java环境：
@@ -574,7 +610,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.6.0/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::
@@ -609,7 +645,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.1.0)!
+Welcome to FISCO BCOS console(3.4.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \

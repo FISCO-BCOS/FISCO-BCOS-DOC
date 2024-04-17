@@ -24,6 +24,7 @@ Air版本FISCO BCOS主要包括创世块配置文件`config.genesis`和节点配
     - **创世块配置文件在链初始化后不可更改**
     - 链初始化后，即使更改了创世块配置，新的配置不会生效，系统仍然使用初始化链时的genesis配置
 ```
+
 ### 1.1 配置链信息
 
 `[chain]`配置节点的链信息，**该配置下的字段信息，一旦确定就不应该再更改**：
@@ -51,8 +52,8 @@ Air版本FISCO BCOS主要包括创世块配置文件`config.genesis`和节点配
 - `[consensus].leader_period`: 共识过程中每个leader连续打包的区块数目，默认为 5;
 - `[consensus].node.idx`：共识节点列表，配置了参与共识节点的NodeID。
 
-
 `[consensus]`配置示例如下：
+
 ```ini
 [consensus]
 consensus_type = pbft
@@ -64,7 +65,7 @@ node.1 = 74034fb43f75c63bb2259a63f71d9d1c658945409889d3028d257914be1612d1f2e80c4
 
 ### 1.3 gas配置
 
-FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易，创世块的`[tx].gas_limit`可配置交易最大gas限制，默认是3000000000，链初始化完毕后，可通过[控制台指令](../../develop/console/console_commands.html#setsystemconfigbykey)动态调整gas限制。
+FISCO BCOS兼容EVM和WASM虚拟机，为了防止针对EVM/WASM的DOS攻击，EVM在执行交易时，引入了gas概念，用来度量智能合约执行过程中消耗的计算和存储资源，包括交易最大gas限制，若交易或区块执行消耗的gas超过限制(gas limit)，则丢弃交易，创世块的`[tx].gas_limit`可配置交易最大gas限制，默认是3000000000，链初始化完毕后，可通过[控制台指令](../../operation_and_maintenance/console/console_commands.html#setsystemconfigbykey)动态调整gas限制。
 
 - `[tx].gas_limit`: 交易执行时gas限制，默认设置为3000000000
 
@@ -79,7 +80,7 @@ gas_limit = 3000000000
 
 FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动态升级，该配置项位于`[version]`下：
 
-- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../develop/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
+- `[version].compatibility_version`: 数据兼容版本号，默认为`v3.0.0`，新版本升级时，替换所有二进制后，可通过[控制台指令setSystemConfigByKey](../../operation_and_maintenance/console/console_commands.html#setsystemconfigbykey)动态升级数据版本。
 
 ### 1.5 执行模块配置
 
@@ -87,7 +88,7 @@ FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动
 
 - `[executor].is_wasm`: 用于配置虚拟机类型，`true`表明使用WASM虚拟机，`false`表明使用EVM虚拟机，该配置选项不可动态调整，默认为`false`;
 - `[executor].is_auth_check`: 权限控制的配置开关，`true`表明开启权限控制，`false`表明关闭权限控制，该配置选项不可动态调整，默认关闭权限控制功能;
-- `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选希望不可动态调整，默认为`false`;
+- `[executor].is_serial_execute`: 交易执行串行与并行模式的配置开关，`true`表明进入串行执行模式，`false`表明进入DMC并行执行模式，该配置选项不可动态调整，默认为`false`;
 - `[executor].auth_admin_account`: 权限管理员账户地址，仅用于权限控制场景中。
 
 ## 2. 节点配置文件
@@ -171,6 +172,7 @@ RPC配置示例如下：
 ### 2.3 配置证书信息
 
 基于安全考虑，FISCO BCOS节点间采用SSL加密通信，`[cert]`配置SSL连接的证书信息：
+
 - `[cert].ca_path`: 证书路径，默认为`conf`;
 - `[cert].ca_cert`: ca证书名，默认为`ca.crt`;
 - `[cert].node_key`: 节点SSL连接私钥，默认为`ssl.key`;
@@ -196,7 +198,6 @@ RPC配置示例如下：
 [security]
     private_key_path=conf/node.pem
 ```
-
 
 ### 2.4 配置共识信息
 
@@ -254,7 +255,7 @@ RPC配置示例如下：
 - `[txpool].limit`: 交易池的容量限制, 默认为`15000`;
 - `[txpool].notify_worker_num`: 交易通知线程数量，默认为2;
 - `[txpool].verify_worker_num`: 交易验证线程数量，默认为机器CPU核数;
-- `[txpool].txs_expiration_time`: 交易过期时间，以秒为单位，默认10分钟，即：超过十分钟没有被共识模块打包的交易将会被直接丢弃。 
+- `[txpool].txs_expiration_time`: 交易过期时间，以秒为单位，默认10分钟，即：超过十分钟没有被共识模块打包的交易将会被直接丢弃。
 
 ```ini
 [txpool]
@@ -287,4 +288,87 @@ FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/
     level=DEBUG
     ; MB
     max_log_file_size=200
+```
+
+#### v3.6.0新增配置项
+
+- `log.format`：配置每条日志的格式，关键字用%包裹，支持关键字包括`LineID, TimeStamp, ProcessID, ThreadName, ThreadID 和Message`
+- `log.enable_rotate_by_hour`：默认为true，配置为`false`时`log.log_name_pattern,log.rotate_name_pattern,log.archive_path,log.compress_archive_file,log.max_archive_files,log.max_archive_size,log.min_free_space`才生效，否则日志为按小时或文件大小产生新的文件
+- `log.log_name_pattern`： 日志文件的文件名模式，可以配置字符串，也支持格式化字符，%前缀，Y,m,d,H,M,S代表年月日时分秒，N代表单调递增的编号，可以%5N使用定长编号
+- `log.rotate_name_pattern`： 滚动后产生的日志文件的文件名，支持的格式化字符与log.log_name_pattern 相同
+- `log.archive_path`： 历史日志文件的归档文件夹
+- `log.compress_archive_file`： 是否压缩归档的日志文件
+- `log.max_archive_files`： 归档文件夹中最大文件个数，0为不限制
+- `log.max_archive_size`： 归档文件夹最大硬盘空间限制，单位MB，0为不限制
+- `log.min_free_space`： 归档文件夹最小空间，默认为0
+
+### 2.9 网关模块限流
+
+网关模块支持在config.ini中配置实现流量速率限制的功能，当流量超限时，通过丢弃数据包实现限流。
+
+根据需求配置如下内容，可实现
+
+- 出带宽、入带宽限流
+- 特定IP、群组的限流
+- 排除特定模块的限流
+
+在进程依赖的config.ini中的配置如下（请根据需求反注释某些项）
+
+``` ini
+[flow_control]
+    ; rate limiter stat reporter interval, unit: ms
+    ; stat_reporter_interval=60000
+
+    ; time window for rate limiter, default: 3s
+    ; time_window_sec=3
+
+    ; enable distributed rate limiter, redis required, default: false
+    ; enable_distributed_ratelimit=false
+    ; enable local cache for distributed rate limiter, work with enable_distributed_ratelimit, default: true
+    ; enable_distributed_ratelimit_cache=true
+    ; distributed rate limiter local cache percent, work with enable_distributed_ratelimit_cache, default: 20
+    ; distributed_ratelimit_cache_percent=20
+
+    ; the module that does not limit bandwidth
+    ; list of all modules: raft,pbft,amop,block_sync,txs_sync,light_node,cons_txs_sync
+    ;
+    ; modules_without_bw_limit=raft,pbft
+
+    ; allow the msg exceed max permit pass
+    ; outgoing_allow_exceed_max_permit=false
+
+    ; restrict the outgoing bandwidth of the node
+    ; both integer and decimal is support, unit: Mb
+    ;
+    ; total_outgoing_bw_limit=10
+
+    ; restrict the outgoing bandwidth of the the connection
+    ; both integer and decimal is support, unit: Mb
+    ;
+    ; conn_outgoing_bw_limit=2
+    ;
+    ; specify IP to limit bandwidth, format: conn_outgoing_bw_limit_x.x.x.x=n
+    ;   conn_outgoing_bw_limit_192.108.0.1=3
+    ;   conn_outgoing_bw_limit_192.108.0.2=3
+    ;   conn_outgoing_bw_limit_192.108.0.3=3
+    ;
+    ; default bandwidth limit for the group
+    ; group_outgoing_bw_limit=2
+    ;
+    ; specify group to limit bandwidth, group_outgoing_bw_limit_groupName=n
+    ;   group_outgoing_bw_limit_group0=2
+    ;   group_outgoing_bw_limit_group1=2
+    ;   group_outgoing_bw_limit_group2=2
+
+    ; should not change incoming_p2p_basic_msg_type_list if you known what you would to do
+    ; incoming_p2p_basic_msg_type_list=
+    ; the qps limit for p2p basic msg type, the msg type has been config by incoming_p2p_basic_msg_type_list, default: -1
+    ; incoming_p2p_basic_msg_type_qps_limit=-1
+    ; default qps limit for all module message, default: -1
+    ; incoming_module_msg_type_qps_limit=-1
+    ; specify module to limit qps, incoming_module_qps_limit_moduleID=n
+    ;       incoming_module_qps_limit_xxxx=1000
+    ;       incoming_module_qps_limit_xxxx=2000
+    ;       incoming_module_qps_limit_xxxx=3000
+
 ```

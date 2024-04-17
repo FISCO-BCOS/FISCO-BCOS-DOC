@@ -1,4 +1,4 @@
-# 搭建第一个区块链网络
+# 2. 搭建第一个区块链网络
 
 标签：``搭建区块链网络`` ``区块链教程`` ``HelloWorld`` ``控制台调用合约``
 
@@ -49,7 +49,7 @@ sudo yum install -y curl openssl openssl-devel wget
 
 ```eval_rst
 .. note::
-   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
+   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```shell
@@ -57,17 +57,17 @@ sudo yum install -y curl openssl openssl-devel wget
 cd ~ && mkdir -p fisco && cd fisco
 
 # 下载建链脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 
 # Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.2.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 第三步. 搭建4节点非国密联盟链
 
 ```eval_rst
 .. note::
-   请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
+   请确保机器的30300~30303，20200~20203端口没有被占用。
 ```
 
 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链:
@@ -87,22 +87,33 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
 ```shell
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
+writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/sdk cert successful!
+writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!
+writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!
+writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
+writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
-[INFO] Generate uuid success: e273464c-827d-47ce-921f-8c16d72234b0
-[INFO] Generate uuid success: b3a54d03-dadb-4cfb-9ae9-86d8ce507110
-[INFO] Generate uuid success: 1bf757a5-6649-4d35-9514-d7de95ea7306
-[INFO] Generate uuid success: 3c90d210-a202-4d46-a04b-89fcc8c47dd9
+[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
+############################################################################################################################################################### 100.0%
+[INFO] Admin account: 0x4c7239cfef6d41b7322c1567f082bfc65c69acc5
+[INFO] Generate uuid success: 167A2233-5444-4CA4-8792-C8E68130D5FC
+[INFO] Generate uuid success: CC117CAF-224C-4940-B548-6DED31D24B18
+[INFO] Generate uuid success: 16B5E4BD-51C1-416E-BF44-6D1BB05F7666
+[INFO] Generate uuid success: 60DD77F2-F3A5-49F2-8C7F-8151E8823C6D
 ==============================================================
-[INFO] fisco-bcos Path     : bin/fisco-bcos
-[INFO] Auth Mode           : false
-[INFO] Start Port          : 30300 20200
-[INFO] Server IP           : 127.0.0.1:4
-[INFO] SM Model            : false
-[INFO] output dir          : ./nodes
+[INFO] GroupID              : group0
+[INFO] ChainID              : chain0
+[INFO] fisco-bcos path      : bin/fisco-bcos
+[INFO] Auth mode            : false
+[INFO] Start port           : 30300 20200
+[INFO] Server IP            : 127.0.0.1:4
+[INFO] SM model             : false
+[INFO] enable HSM           : false
+[INFO] Output dir           : ./nodes
 [INFO] All completed. Files in ./nodes
 ```
 
@@ -181,12 +192,12 @@ sudo yum install -y java java-devel
 ### 第二步. 下载控制台
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.2.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.6.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
 .. note::
-   - 如果因为网络问题导致长时间无法下载，请尝试 cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
+   - 如果因为网络问题导致长时间无法下载，请尝试 cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh  && bash download_console.sh
 ```
 
 ### 第三步. 配置控制台
@@ -214,8 +225,8 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 
 ```eval_rst
 .. note::
-   - 请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
-   - 控制台的配置方法和命令请参考 `这里 <../develop/console/console_config.html>`_
+   - 请确保机器的30300~30303，20200~20203端口没有被占用。
+   - 控制台的配置方法和命令请参考 `这里 <../operation_and_maintenance/console/console_config.html>`_
 ```
 
 - 启动
@@ -228,7 +239,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.2.0)!
+Welcome to FISCO BCOS console(3.4.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \

@@ -1706,7 +1706,7 @@ Remove OK, 1 row affected.
 
 ```eval_rst
 .. important::
-   执行`freezeContract`、`unfreezeContract`和`grantContractStatusManager`三个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也许指定私钥启动控制台。
+   执行`freezeContract`、`unfreezeContract`和`grantContractStatusManager`三个合约管理的控制台命令，需指定私钥启动控制台，用于进行操作权限判断。该私钥为部署指定合约时所用的账号私钥，即部署合约时也是指定私钥启动控制台。
 ```
 
 ### **freezeContract**
