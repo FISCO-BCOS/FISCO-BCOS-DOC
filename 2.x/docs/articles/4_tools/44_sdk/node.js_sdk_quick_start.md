@@ -66,14 +66,15 @@ Node.js SDK依赖下列软件：
 
 ```
 const Configuration = require('./nodejs-sdk/packages/api/common/configuration').Configuration;
-Configuration.setConfig(path.join(__dirname, args.config));
+const configFilePath = path.join(__dirname, 'Path to config.json');
+const configuration = new Configuration(configFilePath);
 ```
 
 2、获取当前块高的API位于Web3jService中，构造一个该对象：
 
 ```
 const Web3jService = require('./nodejs-sdk/packages/api').Web3jService;
-let web3jService = new Web3jService();
+let web3jService = new Web3jService(configuration);
 ```
 
 3、调用Web3jService的getBlockNumber接口，获取返回值并在控制台中输出：
