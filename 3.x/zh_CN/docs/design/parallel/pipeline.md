@@ -16,11 +16,11 @@ FISCO BCOS支持两种流水线执行架构：标量流水线和超标量流水�
 ## 使用条件
 
 流水线执行器需要手工打开，加入流水线架构后，目前有5种执行模式：
-- 标量流水线（config.ini，baseline_scheduler=true）
-- 超标量流水线（config.ini，baseline_scheduler_parallel=true）
-- 普通串行（config.genesis，is_serial=true）
-- sharding模式（启用feature_sharding）
-- 纯DMC模式（config.genesis，is_serial=false）
+1. 标量流水线（config.ini，baseline_scheduler=true）
+1. 超标量流水线（config.ini，baseline_scheduler_parallel=true）
+1. 普通串行（config.genesis，is_serial=true）
+1. sharding模式（启用feature_sharding）
+1. 纯DMC模式（config.genesis，is_serial=false）
 
 其中模式1、2、3互相兼容，可以混跑，4、5与其它模式均不兼容。
 

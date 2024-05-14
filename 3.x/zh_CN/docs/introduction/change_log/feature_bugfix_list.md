@@ -31,7 +31,7 @@
 | 修复块内分片合约调用合约的问题            | bugfix_sharding_call_in_child_executive             | 开启：1 | 3.7.0 默认开启             |
 | 修复已部署空abi，部署相同的合约无abi的问题   | bugfix_empty_abi_reset                              | 开启：1 | 3.7.0 默认开启             |
 | 修复无法通过eip55类型的合约地址调用合约的问题  | bugfix_eip55_addr                                   | 开启：1 | 3.7.0 默认开启             |
-|  | bugfix_eoa_as_contract | 开启：1 | 3.8.0默认开启 |
-|  | bugfix_dmc_deploy_gas_used | 开启：1 | 3.8.0默认开启 |
+| 解决对EOA账户getCode的返回值问题 | bugfix_eoa_as_contract | 开启：1 | 3.8.0默认开启 |
+| 解决DMC模式下部署合约时gas消耗与串行模式不同的问题 | bugfix_dmc_deploy_gas_used | 开启：1 | 3.8.0默认开启 |
 | 解决EVM执行status_code非0和revert时未扣除gas的问题 | bugfix_evm_exception_gas_used | 开启：1 | 3.8.0默认开启 |
 | 解决StateStorage和KeyPageStorage的setRow接口写入未修改Entry时不计算DBHash的问题 | bugfix_set_row_with_dirty_flag | 开启：1 | 3.8.0默认开启 |
