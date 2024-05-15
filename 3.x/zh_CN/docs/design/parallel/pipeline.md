@@ -1,8 +1,8 @@
-# 读写集并行
+# 读写集并行（实验功能）
 
 ## 介绍
 
-FISCO BCOS的最新并行架构为流水线执行架构。
+FISCO BCOS的最新并行架构为流水线执行架构，该功能为实验功能，建议用于测试和体验，不建议在生产环境下使用。
 
 流水线架构的优势：
 - 流水线架构的执行结果与串行执行结果一致，便于发现问题。
@@ -16,13 +16,13 @@ FISCO BCOS支持两种流水线执行架构：标量流水线和超标量流水�
 ## 使用条件
 
 流水线执行器需要手工打开，加入流水线架构后，目前有5种执行模式：
-1. 标量流水线（config.ini，baseline_scheduler=true）
-1. 超标量流水线（config.ini，baseline_scheduler_parallel=true）
-1. 普通串行（config.genesis，is_serial=true）
-1. sharding模式（启用feature_sharding）
-1. 纯DMC模式（config.genesis，is_serial=false）
+1. 普通串行（config.genesis，is_serial=true）：默认模式。
+1. DAG并行（config.ini，enable_dag=true）：交易执行结果与普通串行一致，需要提前静态分析智能合约，适合合约逻辑简单的场景。
+1. 标量流水线（config.ini，baseline_scheduler=true）：交易执行结果与普通串行一致，性能比普通串行高20%，适合所有场景。
+1. 超标量流水线（config.ini，baseline_scheduler_parallel=true）：交易执行结果与普通串行一致，性能提升幅度视交易读写数据的冲突量而定，冲突量少时能提升300%以上的性能，冲突量多性能较低，适合交易读写数据冲突量少的场景。
+1. sharding模式（启用feature_sharding）：需要用户手工将交易分配到不同的分区，多个分区的交易可并行执行，但发生跨分区调用时交易执行结果会与普通串行不一致，适合可以手工分配交易分区的场景。
 
-其中模式1、2、3互相兼容，可以混跑，4、5与其它模式均不兼容。
+其中模式1、2、3、4互相兼容，可以混跑，5与其它模式均不兼容。
 
 流水线执行器的启用条件
 - 启用所有bugfix
