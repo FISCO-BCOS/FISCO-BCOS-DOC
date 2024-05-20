@@ -1,6 +1,6 @@
 # 存储加密
 
-标签：``存储安全`` ``存储加密`` ``落盘加密`` 
+标签：``存储安全`` ``存储加密`` ``落盘加密``
 
 ----
 
@@ -25,7 +25,7 @@
 
 下载`build_chain.sh`脚本
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
