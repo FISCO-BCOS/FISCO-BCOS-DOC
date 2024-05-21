@@ -190,7 +190,7 @@ make -j4
 
 ```shell
 #需要手动复制rt和oci驱动至deps/libs文件夹中，如下图所示，其余的依赖会在编译中自动放入。这两个依赖，#libdmoci.a在网盘提供的包里有。librt.a请在您的系统目录下寻找。也可以使用命令查找
-whereis librt.a 
+whereis librt.a
 ```
 
 ![image-20231016111815321](fisco达梦数据库.assets/image-20231016111815321.png)
@@ -210,7 +210,7 @@ whereis librt.a
 cd ~ && mkdir -p fisco && cd fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 ## 执行建链脚本
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
