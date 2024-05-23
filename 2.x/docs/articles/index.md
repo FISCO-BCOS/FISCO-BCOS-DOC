@@ -105,6 +105,7 @@ FISCO BCOS开源社区已沉淀120+篇技术文章，这些文章涉猎理论、
    7_community/suibe_blockchain_center_toolbox.md
    7_practice/build_chain_with_wsl_on_windows.md
    7_practice/ansible_FISCO-BCOS_Webase-deploy.md
+   7_practice/deploy_webase_management_platform.md 
 ```
 
 ## 社区写作指南
