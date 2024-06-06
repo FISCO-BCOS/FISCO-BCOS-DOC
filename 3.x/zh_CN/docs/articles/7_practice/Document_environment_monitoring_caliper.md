@@ -63,7 +63,7 @@ cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tool
 
 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\8X7tVqpGmNiKsPD.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![img](../../../../images/articles/Document_environment_monitoring_caliper\8X7tVqpGmNiKsPD.png)  
 
 ### 5.webase-front下载安装包（建议在fisco文件下面）
 
@@ -73,7 +73,7 @@ wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/releases/downlo
 
 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\viwoj9uOWVd67Eg.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![img](../../../../images/articles/Document_environment_monitoring_caliper\viwoj9uOWVd67Eg.png)  
 
 ### 6.一键部署环境配置
 
@@ -93,11 +93,11 @@ sudo apt-get install -y python3.6
 sudo apt-get install -y python3-pip
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
  查询出以下结果说明安装成功。
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\MQSHDV7EmWTY2FU.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![img](../../../../images/articles/Document_environment_monitoring_caliper\MQSHDV7EmWTY2FU.png)
 
  安装webase-deploy
 
@@ -105,7 +105,7 @@ sudo apt-get install -y python3-pip
 wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/releases/download/v1.5.5/webase-deploy.zip
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
 > 一键部署启动时还需要对mysql进行初始化操作，具体参考[FISCO BCOS入门（十三）Webase一键部署及其使用-CSDN博客](https://blog.csdn.net/2302_77339802/article/details/134366096)
 
@@ -119,13 +119,13 @@ wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/releases/downlo
 curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/gen_node_cert.sh
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
  一定要等到它出现100%
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\OsKj7Tcf5SZelt6.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![img](../../../../images/articles/Document_environment_monitoring_caliper\OsKj7Tcf5SZelt6.png)  
 
-### 8.安装VIM编辑器  
+### 8.安装VIM 器  
 
 ```
 sudo apt install npm
@@ -133,9 +133,9 @@ sudo apt install npm
 sudo apt install vim
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\HsJL7IO6Vo5U4uj.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![img](../../../../images/articles/Document_environment_monitoring_caliper\HsJL7IO6Vo5U4uj.png)  
 
 > 结束~希望本篇博客能帮到您，更多服务私信。
 
@@ -153,26 +153,26 @@ sudo apt install vim
 
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\AnuQMlVstqJbXKg.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\AnuQMlVstqJbXKg.png)  
 
 bash nodes/127.0.0.1/start_all.sh 
 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\Ag7buKmrvNpfe3s.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\Ag7buKmrvNpfe3s.png)  
 
  建立脚本jb1.sh和jb2.sh文件并编写相对应的脚本
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\ZUoIz8Ed5My9gBJ.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\ZUoIz8Ed5My9gBJ.png)  
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\4jDlaZkYNGAfBbc.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\4jDlaZkYNGAfBbc.png)  
 
 测试每隔 1 秒检查一次 fisco 进程数量，若为 4 则打印正常信 息，否则打印错误信息
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\Cjv7AIMYe8EOXqN.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\Cjv7AIMYe8EOXqN.png)  
 
 测试脚本 2，每隔 3 秒检查一次 fisco 进程占用的端口数量，若为 12 则打印正常信息，否则打印错误信息
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\8eOvBsqKVZQdST1.png)
+![](../../../../images/articles/Document_environment_monitoring_caliper\8eOvBsqKVZQdST1.png)
 
 
 
@@ -197,7 +197,7 @@ sudo groupadd docker
 sudo gpasswd -a ${USER} docker
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
 ```
 
@@ -207,7 +207,7 @@ sudo service docker restart
 sudo systemctl status docker
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
 
 
@@ -227,7 +227,7 @@ mkdir benchmarks && cd benchmarks
 npm init
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
 ```
 
@@ -241,9 +241,9 @@ npm init
 npm install --only=prod @hyperledger/caliper-cli@0.2.0
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\jKwJ5WO8T2HaegY.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\jKwJ5WO8T2HaegY.png)  
 
 验证
 
@@ -251,9 +251,9 @@ npm install --only=prod @hyperledger/caliper-cli@0.2.0
 npx caliper --version
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\PgVt4AdoGUkFuCW.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\PgVt4AdoGUkFuCW.png)  
 
 ## 绑定
 
@@ -261,13 +261,13 @@ npx caliper --version
 npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
 > **–caliper-bind-sut** ：用于指定需要测试的区块链平台
 >
 > **–caliper-bind-sdk**：用于指定适配器版本；
 
- ![img](../../../../images/articles/Document_environment_monitoring_caliper\H4NBSFbUrstfV1J.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+ ![](../../../../images/articles/Document_environment_monitoring_caliper\H4NBSFbUrstfV1J.png)  
 
 
 
@@ -279,7 +279,7 @@ npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 npx caliper benchmark run --caliper-workspace caliper-benchmarks --caliper-benchconfig benchmarks/samples/fisco-bcos/helloworld/config.yaml  --caliper-networkconfig networks/fisco-bcos/4nodes1group/fisco-bcos.json
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+ 
 
 > npx caliper benchmark run: 使用Caliper的benchmark插件执行基准测试。
 >
@@ -293,9 +293,9 @@ npx caliper benchmark run --caliper-workspace caliper-benchmarks --caliper-bench
 
 更改helloworld目录下的config.yaml文件
 
-![点击并拖拽以移动](../../../../images/articles/Document_environment_monitoring_caliper\EwkYoLiANftHsZn.png)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\EwkYoLiANftHsZn.png) 
 
-![image-20240523103727307](../../../../images/articles/Document_environment_monitoring_caliper\fUQ234kHMLcbJPy.png)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\fUQ234kHMLcbJPy.png) 
 
 
 
@@ -303,11 +303,11 @@ npx caliper benchmark run --caliper-workspace caliper-benchmarks --caliper-bench
 
 改之前
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\BUktKTnmlRrzhFA.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\BUktKTnmlRrzhFA.png)  
 
  改之后
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\3sTDZ8LWUrhJe2P.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\3sTDZ8LWUrhJe2P.png)  
 
 
 
@@ -315,24 +315,24 @@ npx caliper benchmark run --caliper-workspace caliper-benchmarks --caliper-bench
 
 1.fisco-bcos.json文件下
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\sobYdq6GTZgXfN9.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\sobYdq6GTZgXfN9.png)  
 
 在config.yaml文件
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\THNEjIS6bl7zrZR.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\THNEjIS6bl7zrZR.png)  
 
 在get.js文件
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\xQZmTnPsd3BI1AM.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper\xQZmTnPsd3BI1AM.png)  
 
 在set.js
 
-![img](https://img-blog.csdnimg.cn/ae5ef726c77c476b9722497dbdec8407.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+![](../../../../images/articles/Document_environment_monitoring_caliper/ae5ef726c77c476b9722497dbdec8407.png)  
 
 #### 报错1 绑定时遇到报错Error: Failed to execute "npm" with return code 1.    at ChildProcess.proc.on (/home/song/fisco/benchmarks/node_modules/@hyperledger/caliper-cli/lib/utils/cmdutils.js:56:35)    at emitTwo (events.js:126:13)    at ChildProcess.emit (events.js:214:7)
 
 > npm --registry https://registry.npm.taobao.org install express
 >  
 
- ![img](../../../../images/articles/Document_environment_monitoring_caliper\vDVjMWUq4pPtsLi.png)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)编辑
+ ![](../../../../images/articles/Document_environment_monitoring_caliper\vDVjMWUq4pPtsLi.png)  
 
