@@ -28,7 +28,8 @@
 
 ### 部分界面展示
 #### 患者端界面
-<img src="https://github.com/biiiiing/PostImage/blob/main/1.png">
+![img](https://github.com/biiiiing/FISCO-BCOS-DOC/blob/release-3/3.x/zh_CN/images/articles/EMR%20tutorial%20video%20introduction/1.png)
 
 #### 医生端界面
-<img src="https://github.com/biiiiing/PostImage/blob/main/2.png">
+![img](https://github.com/biiiiing/FISCO-BCOS-DOC/blob/release-3/3.x/zh_CN/images/articles/EMR%20tutorial%20video%20introduction/2.png)
+
