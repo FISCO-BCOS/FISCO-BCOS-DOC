@@ -63,7 +63,7 @@ cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tool
 
 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\8X7tVqpGmNiKsPD.png)  
+![](../../../../images/articles/Document_environment_monitoring_caliper\8X7tVqpGmNiKsPD.png)  
 
 ### 5.webase-front下载安装包（建议在fisco文件下面）
 
@@ -73,7 +73,7 @@ wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/releases/downlo
 
 
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\viwoj9uOWVd67Eg.png)  
+![](../../../../images/articles/Document_environment_monitoring_caliper\viwoj9uOWVd67Eg.png)  
 
 ### 6.一键部署环境配置
 
@@ -97,7 +97,7 @@ sudo apt-get install -y python3-pip
 
  查询出以下结果说明安装成功。
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\MQSHDV7EmWTY2FU.png)
+![](../../../../images/articles/Document_environment_monitoring_caliper\MQSHDV7EmWTY2FU.png)
 
  安装webase-deploy
 
@@ -123,7 +123,7 @@ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/gen_node_
 
  一定要等到它出现100%
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\OsKj7Tcf5SZelt6.png)  
+![](../../../../images/articles/Document_environment_monitoring_caliper\OsKj7Tcf5SZelt6.png)  
 
 ### 8.安装VIM 器  
 
@@ -135,7 +135,7 @@ sudo apt install vim
 
  
 
-![img](../../../../images/articles/Document_environment_monitoring_caliper\HsJL7IO6Vo5U4uj.png)  
+![](../../../../images/articles/Document_environment_monitoring_caliper\HsJL7IO6Vo5U4uj.png)  
 
 > 结束~希望本篇博客能帮到您，更多服务私信。
 
