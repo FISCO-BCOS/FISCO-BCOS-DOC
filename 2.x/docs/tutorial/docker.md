@@ -32,7 +32,7 @@ sudo yum install -y curl openssl openssl-devel
 cd ~ && mkdir -p fisco && cd fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -129,10 +129,10 @@ Status: Image is up to date for fiscoorg/fiscobcos:v2.7.2
 c27dcaa0adfbf45820506f659913e6dacb8a148425801ea80ab078100a8d57b7   # 启动节点的 CONTAINER ID
 e66fe7c68d3a8db5d8c18fe5749eba25fd41350ebbaa7accbc8374e03bfba690   # 启动节点的 CONTAINER ID
 2bb7b89e2a46b9a4f92fbf9b48b39023540fccdae14de52e091fa17ea219905e   # 启动节点的 CONTAINER ID
- node0 start successfully                                           
- node2 start successfully                                           
- node3 start successfully                                           
- node1 start successfully                                           
+ node0 start successfully
+ node2 start successfully
+ node3 start successfully
+ node1 start successfully
 ```
 
 ## 5. 检查容器

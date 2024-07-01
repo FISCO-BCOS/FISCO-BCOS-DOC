@@ -15,6 +15,8 @@
    dylibs.md
    config.md
    api.md
+   transaction_data_struct.md
+   assemble_transaction.md
    dev.md
    appendix.md
    faq.md

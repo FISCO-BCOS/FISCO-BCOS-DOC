@@ -23,13 +23,13 @@ go-sdk v3依赖bcos-c-sdk动态库，需要先下载bcos-c-sdk动态库，然后
 
 ### 下载bcos-c-sdk动态库
 
-从[这里](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/tag/v3.3.0)下载对应平台的动态库。我们提供了一个脚本，默认下载到`/usr/local/lib`目录下，如果需要下载到其他目录，可以使用脚本的`-o`选项
+从[这里](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/tag/v3.4.0)下载对应平台的动态库。我们提供了一个脚本，默认下载到`/usr/local/lib`目录下，如果需要下载到其他目录，可以使用脚本的`-o`选项
 
 ```bash
-./tools/download_csdk_lib.sh -o ./lib
+./tools/download_csdk_lib.sh
 ```
 
-如果将动态库放在`/usr/local/lib`目录下，后续无特殊操作，如果放在自定义的目录下，例如`./lib`，则`go build`需要添加`ldflags`参数，例如`go build -v -ldflags="-r ${PWD}/lib" main.go`。在其他机器使用时也需要通过`export LD_LIBRARY_PATH=${PWD}/lib`设置动态库的搜索路径。
+请将动态库放在`/usr/local/lib`目录下，后续无特殊操作。如果本机编译后在其他机器使用时，动态库放置在自定义目录，例如`./lib`，则`go build`需要添加`ldflags`参数，例如`go build -v -ldflags="-r ${PWD}/lib" main.go`。也可以通过`export LD_LIBRARY_PATH=${PWD}/lib`设置动态库的搜索路径。
 
 ## 配置
 
@@ -49,6 +49,7 @@ type Config struct {
     GroupID         string // groupID
     Host            string // 节点IP或域名
     Port            int    // 节点port
+    DisableSsl      bool // 是否禁用ssl
 }
 
 func DialContext(ctx context.Context, config *Config) (*Client, error)

@@ -20,6 +20,8 @@
 .. toctree::
    :maxdepth: 1
 
+   deploy_max_by_buildchain.md
    installation.md
    max_builder.md
+   expand_max_withoutTars.md
 ```

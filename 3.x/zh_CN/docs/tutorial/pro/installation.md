@@ -1,4 +1,4 @@
-# 搭建Pro版区块链网络
+# 手动搭建Pro版区块链网络
 
 标签：``Pro版区块链网络`` ``部署``
 
@@ -10,7 +10,7 @@ FISCO BCOS 3.x支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 .. note::
    - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
-   - 本章基于Docker搭建tars服务，请确保拥有 ``root`` 权限
+   - 本章基于Docker搭建tars服务，请确保系统用户拥有操作docker权限，并确保docker服务处于启动状态
 ```
 
 ## 1. 安装依赖
@@ -41,7 +41,7 @@ brew install curl docker docker-compose python3 wget
 ```eval_rst
 .. note::
    - 部署工具 ``BcosBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
-   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.3.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -49,10 +49,10 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.3.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.3.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosBuilder && pip3 install -r requirements.txt
@@ -111,7 +111,7 @@ init_auth_address="0xd5eff0641c2f69a8deed9510e374aa3e94066a66"
 
 ```eval_rst
 .. note::
-   - 这里采用docker安装/启动tars服务，请确保拥有root权限，并确保docker服务处于启动状态
+   - 这里采用docker安装/启动tars服务，请确保系统用户拥有操作docker权限，并确保docker服务处于启动状态
    - 安装tars服务后，大概经过一分钟左右才可通过http://127.0.0.1:3000/访问tars网页管理平台
 ```
 
@@ -132,7 +132,7 @@ cd ../docker/bridge/linux/framework
 # macOS系统：进入到docker配置文件路径(linux系统可跳过本步骤)
 cd ../docker/bridge/mac/framework
 
-# 配置MYSQL密码，这里假设密码设置为FISCO
+# 配置MYSQL密码，这里假设密码设置为FISCO（注意：docker-compose.yml文件里有两处MYSQL_ROOT_PASSWORD配置项，两处密码需要保持一致。）
 # linux系统(macOS系统可跳过本步骤)
 sed -i 's/MYSQL_ROOT_PASSWORD: ""/MYSQL_ROOT_PASSWORD: "FISCO"/g' docker-compose.yml
 # macOS系统(linux系统可跳过本步骤)
@@ -522,11 +522,11 @@ generated/chain0
 
 ### 4.5部署区块链节点监控服务
 
-RPC服务和Gateway服务和node服务均部署完成后，可部署区块链节点监控服务。在建链工具BcosProBuilder目录下，执行如下命令，可部署并启动区块链节点监控服务。
+RPC服务和Gateway服务和node服务均部署完成后，可部署区块链节点监控服务。在建链工具BcosBuilder/pro目录下，执行如下命令，可部署并启动区块链节点监控服务。
 
 ```shell
 # 进入操作目录
-cd ~/fisco/BcosProBuilder
+cd ~/fisco/BcosBuilder/pro
 
 # 部署并启动区块链节点服务
 python3 build_chain.py chain -o deploy -t monitor
@@ -610,7 +610,7 @@ sudo yum install -y java java-devel
 **步骤1：下载控制台**
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.3.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.6.0/download_console.sh && bash download_console.sh
 ```
 ```eval_rst
 .. note::
@@ -645,7 +645,7 @@ cd ~/fisco/console && bash start.sh
 
 ```shell
 =============================================================================================
-Welcome to FISCO BCOS console(3.1.0)!
+Welcome to FISCO BCOS console(3.4.0)!
 Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
  ________ ______  ______   ______   ______       _______   ______   ______   ______
 |        |      \/      \ /      \ /      \     |       \ /      \ /      \ /      \

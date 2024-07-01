@@ -179,6 +179,18 @@ boostlog示例配置如下：
     flush=true
 ```
 
+#### v2.11.0新增配置项
+
+- `log.format`：配置每条日志的格式，关键字用%包裹，支持关键字包括`LineID, TimeStamp, ProcessID, ThreadName, ThreadID, Message 和 GroupId`
+- `log.enable_rotate_by_hour`：默认为true，配置为`false`时`log.log_name_pattern,log.rotate_name_pattern,log.archive_path,log.compress_archive_file,log.max_archive_files,log.max_archive_size,log.min_free_space`才生效，否则日志为按小时或文件大小产生新的文件
+- `log.log_name_pattern`： 日志文件的文件名模式，可以配置字符串，也支持格式化字符，%前缀，Y,m,d,H,M,S代表年月日时分秒，N代表单调递增的编号，可以%5N使用定长编号
+- `log.rotate_name_pattern`： 滚动后产生的日志文件的文件名，支持的格式化字符与log.log_name_pattern 相同
+- `log.archive_path`： 历史日志文件的归档文件夹
+- `log.compress_archive_file`： 是否压缩归档的日志文件
+- `log.max_archive_files`： 归档文件夹中最大文件个数，0为不限制
+- `log.max_archive_size`： 归档文件夹最大硬盘空间限制，单位MB，0为不限制
+- `log.min_free_space`： 归档文件夹最小空间，默认为0
+
 #### 统计日志配置
 
 考虑到实时监控系统资源使用情况在实际生产系统中非常重要，FISCO BCOS v2.4.0引入了统计日志，统计日志配置项位于`config.ini`中。

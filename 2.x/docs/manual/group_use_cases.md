@@ -79,7 +79,7 @@ mkdir -p ~/fisco && cd ~/fisco
 - 获取build_chain.sh脚本
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -192,12 +192,12 @@ ubuntu16      131068  0.8  0.0 986644  7672 pts/0    Sl   15:21   0:00 /home/ubu
 
 **查看群组共识状态**
 
-不发交易时，共识正常的节点会输出`+++`日志，本例中，`node0`、`node1`同时属于`group1`、`group2`和`group3`；`node2`、`node3`属于`group1`；`node4`、`node5`属于`group2`；`node6`、`node7`属于`group3`，可通过`tail -f node*/log/* | grep "++"`查看各节点是否正常。
+不发交易时，共识正常的节点会输出带有`+++`的日志，本例中，`node0`、`node1`同时属于`group1`、`group2`和`group3`；`node2`、`node3`属于`group1`；`node4`、`node5`属于`group2`；`node6`、`node7`属于`group3`，可通过`tail -f node*/log/* | grep "++"`查看各节点是否正常。
 
 ```eval_rst
 .. important::
 
-    节点正常共识打印 ``+++`` 日志， ``+++`` 日志字段含义：
+    节点正常共识打印带有 ``+++`` 的日志， ``+++`` 日志字段含义：
      - ``g:``：群组ID
      - ``blkNum``：Leader节点产生的新区块高度；
      - ``tx``: 新区块中包含的交易数目；
@@ -499,7 +499,7 @@ $ cd ~/fisco/nodes/127.0.0.1 && bash stop_all.sh
 ```bash
 $ mkdir -p ~/fisco && cd ~/fisco
 # 获取build_chain.sh脚本
-$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+$ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 
 # 若因为网络问题导致长时间无法执行上面的命令，请尝试以下命令：
 $ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh
@@ -647,11 +647,11 @@ $ cp ~/fisco/console/conf/config-example.toml ~/fisco/console/conf/config.toml
 # 修改控制台连接节点的端口为20100和20101
 # linux系统使用如下命令:
 $ sed -i 's/127.0.0.1:20200/127.0.0.1:20100/g' ~/fisco/console/conf/config.toml
-$ sed -i 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml  
+$ sed -i 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml
 
 # mac系统使用如下命令:
 $ sed -i .bkp 's/127.0.0.1:20200/127.0.0.1:20100/g' ~/fisco/console/conf/config.toml
-$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml 
+$ sed -i .bkp 's/127.0.0.1:20201/127.0.0.1:20101/g' ~/fisco/console/conf/config.toml
 ```
 
 **通过控制台向群组发交易**

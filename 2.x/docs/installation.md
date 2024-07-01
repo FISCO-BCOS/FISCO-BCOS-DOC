@@ -64,12 +64,12 @@ sudo yum install -y openssl openssl-devel
 cd ~ && mkdir -p fisco && cd fisco
 
 ## 下载脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.1/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.11.0/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ![](./../images/installation/download_build_chain.gif)
@@ -189,7 +189,7 @@ info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat,connected count=3
 tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 ```
 
-正常情况会不停输出`++++Generating seal`，表示共识正常。
+正常情况会不停输出带有`++++Generating seal`的日志，即表示共识正常。
 
 ```bash
 info|2020-12-22 17:24:43.729402|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=2e133146...
