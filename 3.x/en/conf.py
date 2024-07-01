@@ -95,7 +95,7 @@ release = 'v3.6.0'
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
 #language = None
-language = 'zh_CN'
+language = 'en'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -148,7 +148,7 @@ html_context = {
     "github_repo": "FISCO-BCOS-DOC", # Repo name
     "github_user": "FISCO-BCOS",
     "github_version": "release-3", # Version
-    "conf_py_path": "/3.x/zh_CN/", # Path in the checkout to the docs root
+    "conf_py_path": "/3.x/en/", # Path in the checkout to the docs root
 }
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -231,8 +231,8 @@ html_show_sourcelink = True
 # Sphinx supports the following languages:
 #   'da', 'de', 'en', 'es', 'fi', 'fr', 'hu', 'it', 'ja'
 #   'nl', 'no', 'pt', 'ro', 'ru', 'sv', 'tr'
-#html_search_language = 'en'
-html_search_language = 'zh'
+html_search_language = 'en'
+#html_search_language = 'zh'
 
 # A dictionary with options for the search language support, empty by default.
 # Now only 'ja' uses this config value
