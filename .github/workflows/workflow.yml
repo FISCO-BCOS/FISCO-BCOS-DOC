@@ -34,6 +34,6 @@ jobs:
       - name: compile 2.x
         run: cd 2.x/ && make html
       - name: compile 3.x
-        run: cd 3.x/zh_CN/ && make html
+        run: cd 3.x/ && make html
       - name: run tests
         run: bash .ci/ci_check.sh
