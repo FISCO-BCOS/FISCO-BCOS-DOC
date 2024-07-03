@@ -1,4 +1,4 @@
-# Compiling and Running FISCO on Kunpeng Platform-BCOS 2.6.0
+# Compile and Run FISCO-BCOS 2.6.0 on Kunpeng Platform
 
 ## One: Apply for the Kunpeng server (there are already Kunpeng servers that have skipped this step)
 
@@ -19,12 +19,12 @@ Fill it yourself in the page that opens"Demand Request" Orders, planning hardwar
 
 ### 4. Wait for notification
 
-After the demand order is submitted, wait for official approval, and you will receive an email notification of the approval results after the approval is completed.
+After the demand order is submitted, wait for official approval, and you will receive an email notification of the approval results after the approval is completed
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/4.png)
 
 ### 5. Pass the application
 
-Log in to the Kunpeng server to view the server information, and the Kunpeng server is now ready.
+Log in to the Kunpeng server to view the server information, and the Kunpeng server is now ready
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/5.png)
 
 ## Two: install basic software in Kunpeng server
@@ -48,7 +48,7 @@ sudo yum install -y openssl-devel openssl cmake3 gcc-c++ git flex patch bison gm
 
 ### 3. Install Kunpeng version jdk-1.8
  * Install JDK
- From [Oracle](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) Download JDK-1.8
+ From [Oracle](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) Download jdk-1.8
 
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/13.png)
 
@@ -76,7 +76,7 @@ source /etc/profile
 
 ### 1. Download Compile Dependencies
 
- * FISCO compilation depends on many files, and it will be slow to download them directly from git, so here you download the corresponding dependencies from gitee first, and then copy them directly when compiling.
+ * FISCO compilation depends on many files, and it will be slow to download them directly from git, so here you download the corresponding dependencies from gitee first, and then copy them directly when compiling
 ```
 cd
 git clone https://gitee.com/FISCO-BCOS/LargeFiles.git
@@ -123,7 +123,7 @@ Scanning dependencies of target jsoncpp
      dst='/root/FISCO-BCOS/deps/src/jsoncpp'
 ```
 
-### 5. Copy the dependency package to the appropriate directory.
+### 5. Copy the dependency package to the appropriate directory
 
 ```
 / / If prompted whether to override, enter y
@@ -140,7 +140,7 @@ make
 
 ### 7 Solve the error of compiling GroupSigLib
 
- * During the compilation process, if the problem of compiling GroupSigLib fails, an error will be reported.
+ * During the compilation process, if the problem of compiling GroupSigLib fails, an error will be reported
 ```
 [ 24%] Performing configure step for 'GroupSigLib'
 -- GroupSigLib configure command succeeded.  See also /root/FISCO-BCOS/deps/src/GroupSigLib-stamp/GroupSigLib-configure-*.log
@@ -155,7 +155,7 @@ CMake Error at /root/FISCO-BCOS/deps/src/GroupSigLib-stamp/GroupSigLib-build-Rel
     /root/FISCO-BCOS/deps/src/GroupSigLib-stamp/GroupSigLib-build-*.log
 
 
-make[2]: *** [CMakeFiles/GroupSigLib.dir/build.make:115：../deps/src/GroupSigLib-stamp/GroupSigLib-build] Error 1
+make[2]: *** [CMakeFiles/GroupSigLib.dir/build.make:115:.. / deps / src / GroupSigLib-stamp / GroupSigLib-build] Error 1
 ```
 
  * Workaround:
@@ -163,7 +163,7 @@ make[2]: *** [CMakeFiles/GroupSigLib.dir/build.make:115：../deps/src/GroupSigLi
 cp /usr/share/automake-1.13/config.guess ${HOME}/FISCO-BCOS/deps/src/GroupSigLib/deps/src/pbc_sig/config.guess
 ```
 
-### 8. View the compilation results.
+### 8. View the compilation results
 
  * Compile completion effect
 ![](../../../images/articles/kunpeng_platform_compiles_and_runs_fisco-bcos-2.6.0/20.png)
@@ -188,7 +188,7 @@ cd
 mkdir bin
 ```
 
-### 2. Copy the compiled fisco.-bcos file to the created directory
+### 2. Copy the compiled fisco-bcos file to the created directory
 
 ```
 cp ${HOME}/FISCO-BCOS/build/bin/fisco-bcos bin
@@ -200,7 +200,7 @@ cp ${HOME}/FISCO-BCOS/build/bin/fisco-bcos bin
 curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-### 4. Run one key to build the bottom layer FISCO of 2 groups, 3 institutions and 6 nodes-BCOS Consortium Chain Service Script
+### 4. Run a key to build the FISCO-BCOS alliance chain service script at the bottom of 2 groups, 3 institutions and 6 nodes
 
 ```
 #  ./build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -e bin/fisco-bcos
@@ -262,9 +262,9 @@ info|2020-09-04 17:34:21.456586|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generat
 info|2020-09-04 17:34:22.459794|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=d1dd4738...
 ```
 
-## Five: Installation of FISCO on Kunpeng platform-BCOS Console
+## Five: Installation of FISCO-BCOS Console on Kunpeng Platform
 
-(The console program depends on java)-1.8 You need to install the Kunpeng version (arrch64) of java in advance.-1.8
+(The console program depends on java-1.8 need to install good Kunpeng version in advance (arrch64) java-1.8)
 
 ```bash
 # Download Console
@@ -275,7 +275,7 @@ $ cd console
 cp ~/nodes/127.0.0.1/sdk/* conf
 
 # Modify Profile
-# If there is no port conflict, copy the configuration file directly. Otherwise, modify the network.peers configuration item in config.toml to the corresponding channel port.
+# If there is no port conflict, copy the configuration file directly. Otherwise, modify the network.peers configuration item in config.toml to the corresponding channel port
 $ cp conf/config-example.toml conf/config.toml
 ```
 

@@ -5,7 +5,7 @@ Tags: "RPC"
 ---------
 The Java SDK provides Java API interfaces for blockchain application developers. By function, Java APIs can be divided into the following categories:
 
-- Client: Provides access to FISCO BCOS 3.x node JSON-RPC interface support, providing support for deployment and invocation contracts；
+- Client: Provides support for accessing the JSON-RPC interface for FISCO BCOS 3.x nodes, providing support for deploying and invoking contracts；
 - Precompiled: Provides calls to FISCO BCOS 3.x Precompiled contract(Precompiled Contracts)interfaces, including 'SensusService', 'SystemConfigService', 'BFSService', and 'KVTableService'。
 - AuthManager: Provides FISCO BCOS 3.x permissions to control invocation of pre-deployment contracts。
 
@@ -25,13 +25,13 @@ Sending transactions to the blockchain。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- signedTransactionData: transactions after signature
-- withProof: return whether to bring Merkel tree proof
+-node: allows RPC to send requests to the specified node
+-signedTransactionData: transactions after signature
+-withProof: return whether to bring Merkel tree proof
 
 **Return value**
 
-- BcosTransactionReceipt: After receiving the transaction, the node returns the packet to the SDK, including the transaction hash information.。
+- BcosTransactionReceipt: After receiving the transaction, the node returns the packet to the SDK, including the transaction hash information。
 
 **Example:**
 ```
@@ -52,10 +52,10 @@ The transaction publishing asynchronous interface, after receiving the response 
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - signedTransactionData: Transaction string after signature;
-- withProof: return whether to bring Merkel tree proof
-- callback: After the SDK receives the packet return from the node, it calls the callback function. The callback function will bring the transaction receipt.。
+-withProof: return whether to bring Merkel tree proof
+- callback: After the SDK receives the packet return from the node, it calls the callback function. The callback function will bring the transaction receipt。
 
 **Return value**
 
@@ -67,12 +67,12 @@ Send a request to the node, call the contract constant interface。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transaction: Contract invocation information, including the contract address, the contract caller, and the abi encoding of the invoked contract interface and parameters
 
 **Return value**
 
-- Call: The return result of the contract constant interface, including the current block height, interface execution status information, and interface execution results.
+- Call: The return result of the contract constant interface, including the current block height, interface execution status information, and interface execution results
 
 **Example:**
 ```
@@ -93,11 +93,11 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":["group0","","0xc
 
 ### callAsync
 
-The contract constant interface is called asynchronously. After receiving the execution result of the contract interface returned by the node, the specified callback function is executed.
+The contract constant interface is called asynchronously. After receiving the execution result of the contract interface returned by the node, the specified callback function is executed
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transaction: Contract invocation information, including contract address, contract caller, and invocation interface and parameter information；
 - callback: callback function。
 
@@ -111,7 +111,7 @@ Query contract code information corresponding to a specified contract address。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - address: Contract Address。
 
 **Return value**
@@ -138,7 +138,7 @@ Obtain the latest block height of the group corresponding to the client object�
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -163,8 +163,8 @@ Asynchronously obtains the latest block height of the group corresponding to the
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after getting block height
+-node: allows RPC to send requests to the specified node
+-callback: get callback after block high
 
 **Return value**
 
@@ -172,11 +172,11 @@ Asynchronously obtains the latest block height of the group corresponding to the
 
 ### getTotalTransactionCount
 
-Obtain the transaction statistics of the client group, including the number of transactions on the chain and the number of failed transactions on the chain.。
+Obtain the transaction statistics of the client group, including the number of transactions on the chain and the number of failed transactions on the chain。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -204,12 +204,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getTotalTransactionCount","param
 
 ### getTotalTransactionCountAsync
 
-Asynchronously obtains the transaction statistics of the client corresponding to the group, including the number of transactions on the chain and the number of failed transactions on the chain.。
+Asynchronously obtains the transaction statistics of the client corresponding to the group, including the number of transactions on the chain and the number of failed transactions on the chain。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after obtaining transaction information
+-node: allows RPC to send requests to the specified node
+-callback: callback after getting transaction information
 
 **Return value**
 
@@ -221,11 +221,11 @@ Obtain block information according to block height。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node；
+-node: allows RPC to send requests to the specified node；
 - blockNumber: Block height；
-- onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information.；
-- onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information.；
-  - false: The block returned by the node contains complete transaction information.；
+-onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information；
+-onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information；
+  - false: The block returned by the node contains complete transaction information；
   - true: The block returned by the node contains only the transaction hash。
 
 **Return value**
@@ -266,13 +266,13 @@ Obtain block information asynchronously according to block height。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - blockNumber: Block height；
-- onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information.；
+-onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information；
 - onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information；
-  - false: The block returned by the node contains complete transaction information.；
+  - false: The block returned by the node contains complete transaction information；
   - true: The block returned by the node contains only the transaction hash；
-- callback: callback after block completion。
+-callback: get the callback after the block is completed。
 
 **Return value**
 
@@ -284,12 +284,12 @@ Obtain block information based on block hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - blockHash: Block Hash
-- onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information.；
+-onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information；
 - onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information；
     - true: The block returned by the node contains only the transaction hash;
-    - false: The block returned by the node contains complete transaction information.。
+    - false: The block returned by the node contains complete transaction information。
 
 **Return value**
 
@@ -357,13 +357,13 @@ Asynchronously obtain block information based on block hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - blockHash: Block Hash
-- onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information.；
+-onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information；
 - onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information；
   - true: The block returned by the node contains only the transaction hash;
-  - false: The block returned by the node contains complete transaction information.；
-- callback: callback after block completion。
+  - false: The block returned by the node contains complete transaction information；
+-callback: get the callback after the block is completed。
 
 **Return value**
 
@@ -375,7 +375,7 @@ Obtain block hash based on block height
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - blockNumber: Block height
 
 **Return value**
@@ -401,9 +401,9 @@ Obtain block hash asynchronously based on block height
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - blockNumber: Block height
-- callback: callback after getting
+-callback: callback after getting
 
 **Return value**
 
@@ -415,9 +415,9 @@ Get transaction information based on transaction hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transactionHash: Transaction Hash
-- withProof: whether to bring Merkel tree proof
+-withProof: whether to bring Merkel Tree Proof
 
 **Return value**
 
@@ -429,10 +429,10 @@ Asynchronous acquisition of transaction information based on transaction hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transactionHash: Transaction Hash
-- withProof: whether to bring Merkel tree proof
-- callback: the callback when the transaction is obtained.
+-withProof: whether to bring Merkel Tree Proof
+-callback: Get the callback at the time of the transaction
 
 **Return value**
 
@@ -444,9 +444,9 @@ Get transaction receipt information based on transaction hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transactionHash: Transaction Hash
-- withProof: return whether to bring Merkel tree proof
+-withProof: return whether to bring Merkel tree proof
 
 **Return value**
 
@@ -491,10 +491,10 @@ Asynchronously obtain transaction receipt information based on transaction hash�
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transactionHash: Transaction Hash
-- withProof: return whether to bring Merkel tree proof
-- callback: callback when obtaining transaction receipt
+-withProof: return whether to bring Merkel tree proof
+-callback: callback when getting transaction receipt
 
 **Return value**
 
@@ -506,7 +506,7 @@ Get the number of unprocessed transactions in the transaction pool。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -530,8 +530,8 @@ Get the number of unprocessed transactions in the transaction pool。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback when obtaining transaction receipt
+-node: allows RPC to send requests to the specified node
+-callback: callback when getting transaction receipt
 
 **Return value**
 
@@ -628,7 +628,7 @@ Asynchronously obtain the network connection information of a specified node。
 
 **Parameters**
 
-- callback: callback after getting
+-callback: callback after getting
 
 **Return value**
 
@@ -640,7 +640,7 @@ Get Node Synchronization Status。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -664,8 +664,8 @@ Asynchronously get node synchronization status。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after obtaining synchronization information
+-node: allows RPC to send requests to the specified node
+-callback: callback after getting synchronization information
 
 **Return value**
 
@@ -677,8 +677,8 @@ Gets the value of the system configuration item based on the specified configura
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- key: System configuration items, including 'tx _ count _ limit' and 'consensus _ leader _ period'.
+-node: allows RPC to send requests to the specified node
+- key: System configuration items, including 'tx _ count _ limit' and 'consensus _ leader _ period'
 
 **Return value**
 
@@ -704,9 +704,9 @@ Asynchronously gets the value of the system configuration item based on the spec
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- key: System configuration items, including 'tx _ count _ limit' and 'consensus _ leader _ period'.
-- callback: callback after getting the configuration item
+-node: allows RPC to send requests to the specified node
+- key: System configuration items, including 'tx _ count _ limit' and 'consensus _ leader _ period'
+-callback: callback after getting the configuration item
 
 **Return value**
 
@@ -720,7 +720,7 @@ Obtain the observation node list of the group corresponding to the client。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -746,8 +746,8 @@ Asynchronously obtain the observation node list of the client corresponding to t
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after getting the node list
+-node: allows RPC to send requests to the specified node
+-callback: callback after getting the node list
 
 **Return value**
 
@@ -759,7 +759,7 @@ Obtain the consensus node list of the client group。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -797,8 +797,8 @@ Asynchronously obtain the consensus node list of the corresponding client group�
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after getting the node list
+-node: allows RPC to send requests to the specified node
+-callback: callback after getting the node list
 
 **Return value**
 
@@ -810,7 +810,7 @@ Obtain PBFT view information when a node uses the PBFT consensus algorithm。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -835,8 +835,8 @@ Asynchronously obtains PBFT view information when a node uses the PBFT consensus
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after obtaining PBFT view information
+-node: allows RPC to send requests to the specified node
+-callback: callback after obtaining PBFT view information
 
 **Return value**
 
@@ -848,7 +848,7 @@ Get Node Consensus Status。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 
 **Return value**
 
@@ -873,8 +873,8 @@ Asynchronously get node consensus state。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after getting the status
+-node: allows RPC to send requests to the specified node
+-callback: callback after getting status
 
 **Return value**
 
@@ -957,7 +957,7 @@ Query the status information of the current group asynchronously。
 
 **Parameters**
 
-- callback: callback after status information is queried
+-callback: callback after status information is queried
 
 **Return value**
 
@@ -1000,7 +1000,7 @@ Asynchronously obtain the group list of the current node。
 
 **Parameters**
 
-- callback: callback after getting the group list
+-callback: callback after getting group list
 
 **Return value**
 
@@ -1041,7 +1041,7 @@ Asynchronously obtains the list of nodes connected to the specified group of the
 
 **Parameters**
 
-- callback: callback after getting the node list
+-callback: callback after getting the node list
 
 **Return value**
 
@@ -1124,7 +1124,7 @@ Asynchronously obtain the current node group information list。
 
 **Parameters**
 
-- callback: callback after obtaining group information
+-callback: callback after getting group information
 
 **Return value**
 
@@ -1161,13 +1161,13 @@ Asynchronously obtain information about a specified node in a group。
 **Parameters**
 
 - node: Specify node name
-- callback: callback after obtaining information
+-callback: callback after getting information
 
 **Return value**
 
 - None
 
-## 5. Pre-compiled contract service interface.
+## 5. Pre-compiled contract service interface
 
 ### 5.1 BFSService
 
@@ -1177,23 +1177,23 @@ Creates a directory at the specified absolute path。
 
 **Parameters**
 
-- path: absolute path
+-path: absolute path
 
 **Return value**
 
-- RetCode: Create Directory Results。
+- RetCode: Create directory results。
 
 #### list
 
-View the information of the specified absolute path. If it is a directory file, the meta information of all sub-resources in the directory is returned. If it is another file, the meta information of the file is returned.。
+View the information of the specified absolute path. If it is a directory file, the meta information of all sub-resources in the directory is returned. If it is another file, the meta information of the file is returned。
 
 **Parameters**
 
-- path: absolute path
+-path: absolute path
 
 **Return value**
 
-- List\ < BFSCompiled.BfsInfo\ >: Returns a list of meta information for the file。
+- List\<BFSPrecompiled.BfsInfo\>Returns a list of meta information for a file。
 
 ### link
 
@@ -1201,14 +1201,14 @@ Create a link file for the contract, in the absolute path / apps / directory。F
 
 **Parameters**
 
-- name: contract name
-- version: Version name
-- contractAddress: contract address
-- abi: Contract ABI
+-name: contract name
+-version: Version name
+-contractAddress: contract address
+-abi: Contract ABI
 
 **Return value**
 
-- RetCode: Create Linked File Results。
+- RetCode: Create linked file results。
 
 ### readlink
 
@@ -1216,11 +1216,11 @@ Read the real contract address pointed to by the linked file
 
 **Parameters**
 
-- path: absolute path
+-path: absolute path
 
 **Return value**
 
-- String: contract address
+-String: contract address
 
 ### 5.2 ConsensusService
 
@@ -1229,8 +1229,8 @@ Read the real contract address pointed to by the linked file
 
 **Parameters**
 
-- nodeId: The ID of the node added as the consensus node.
-- weight: add the weight of the consensus node
+-nodeId: the ID of the node added as the consensus node
+-weight: Add the weight of the consensus node
 
 **Return value**
 
@@ -1238,7 +1238,7 @@ Read the real contract address pointed to by the linked file
 
 ```eval_rst
 .. note::
-    In order to ensure that the new node does not affect the consensus, the node to be added as a consensus node must establish a P2P network connection with other nodes in the group, otherwise it cannot be added as a consensus node.。
+    In order to ensure that the new node does not affect the consensus, the node to be added as a consensus node must establish a P2P network connection with other nodes in the group, otherwise it cannot be added as a consensus node。
 ```
 
 #### addObserver
@@ -1247,7 +1247,7 @@ Add the specified node as an observation node。
 
 **Parameters**
 
-- nodeId: The ID of the node added as an observation node.
+- nodeId: The ID of the node added as an observation node
 
 **Return value**
 
@@ -1259,7 +1259,7 @@ Move the specified node out of the group。
 
 **Parameters**
 
-- nodeId: The node ID of the node removed from the group.
+- nodeId: The node ID of the node removed from the group
 
 **Return value**
 
@@ -1273,7 +1273,7 @@ Sets the value of the specified system configuration item。
 
 **Parameters**
 
-- key: Configuration item. Currently, 'tx _ count _ limit' and 'consensus _ leader _ period' are supported.；
+- key: Configuration item. Currently, 'tx _ count _ limit' and 'consensus _ leader _ period' are supported；
 
 - value: The value to which the system configuration item is set。
 
@@ -1291,7 +1291,7 @@ Create User Table。
 
 - tableName: Name of the created user table;
 - keyFieldName: Primary key name of the user table;
-- valueFields: The fields of the user table.
+- valueFields: The fields of the user table
 
 **Return value**
 
@@ -1318,7 +1318,7 @@ Query specified records in the user table。
 **Parameters**
 
 - tableName: Queried user table name;
-- key: the primary key value to be queried.;
+- key: the primary key value to be queried;
 
 **Return value**
 
@@ -1334,7 +1334,7 @@ Obtain the description information of the specified user table。
 
 **Return value**
 
-- Map<String, String>: Description of the user table. The mapping between 'PrecompiledConstant.KEY _ NAME' and the mapping between 'PrecompiledConstant.FIELD _ NAME' and all fields. The fields are separated by commas.。
+- Map<String, String>: Description of the user table. The mapping between 'PrecompiledConstant.KEY _ NAME' and the mapping between 'PrecompiledConstant.FIELD _ NAME' and all fields. The fields are separated by commas。
 
 #### asyncSet
 
@@ -1353,21 +1353,21 @@ Obtain the description information of the specified user table。
 
 ### 5.5 CNSService
 
-**Note:** from 3.0.0-rc3 version started, CNS is no longer supported。Please refer to the BFSService link function for the corresponding contract alias function.。
+**Note:** Starting with version 3.0.0-rc3, CNS is no longer supported。Please refer to the BFSService link function for the corresponding contract alias function。
 
 ## 6. AuthManager Rights Management Interface
 
 Rights management interfaces include the following three interfaces:
 
 - Query interface without permission；
-- Governance Committee-specific interface: An interface that has the private key of the governance committee to initiate transactions in order to execute correctly.；
-- Administrator-specific interface: An interface where transactions initiated by an administrator's private key with administrative privileges on the corresponding contract can be executed correctly.。
+- Governance Committee-specific interface: an interface that has the private key of the governance committee to initiate transactions in order to execute correctly；
+- Administrator-specific interface: an interface where transactions initiated by an administrator's private key with administrative rights to the corresponding contract can be executed correctly。
 
 ### 6.1 Query interface without permission
 
 #### getCommitteeInfo
 
-At initialization, a governance committee is deployed whose address information is automatically generated or specified at build _ chain.sh.。Initialize only one member, and the weight of the member is 1。
+At initialization, a governance committee is deployed whose address information is automatically generated or specified at build _ chain.sh。Initialize only one member, and the weight of the member is 1。
 
 **Parameters**
 
@@ -1375,7 +1375,7 @@ At initialization, a governance committee is deployed whose address information 
 
 **Return value**
 
-- CommitteeInfo: Details of the Governance Committee
+- CommitteeInfo: governance committee details
 
 #### getProposalInfo
 
@@ -1383,7 +1383,7 @@ Get information about a specific proposal。
 
 **Parameters**
 
-- proposalID: the ID number of the proposal
+-proposalID: ID number of the proposal
 
 **Return value**
 
@@ -1399,7 +1399,7 @@ Get the permissions policy for the current global deployment
 
 **Return value**
 
-- BigInteger: policy type: 0 is no policy, 1 is whitelist mode, 2 is blacklist mode
+-BigInteger: Policy type: 0 is no policy, 1 is whitelist mode, 2 is blacklist mode
 
 #### checkDeployAuth
 
@@ -1407,25 +1407,25 @@ Check whether an account has deployment permissions
 
 **Parameters**
 
-- account: account address
+-account: account address
 
 **Return value**
 
-- Boolean: Permission
+-Boolean: Permission
 
 #### checkMethodAuth
 
-Check whether an account has the permission to call an interface of a contract.
+Check whether an account has the permission to call an interface of a contract
 
 **Parameters**
 
-- contractAddr: contract address
-- func: function selector for the interface, 4 bytes
-- account: account address
+-contractAddr: contract address
+-func: function selector for the interface, 4 bytes
+-account: account address
 
 **Return value**
 
-- Boolean: Permission
+-Boolean: Permission
 
 #### getAdmin
 
@@ -1433,11 +1433,11 @@ Get the administrator address for a specific contract
 
 **Parameters**
 
-- contractAddr: contract address
+-contractAddr: contract address
 
 **Return value**
 
-- account: account address
+-account: account address
 
 ### 6.2 Special interface for accounts of governance committee members
 
@@ -1445,16 +1445,16 @@ There must be an account in the Governance Committee's Governors to call, and if
 
 #### updateGovernor
 
-In the case of a new governance committee, add an address and weight.。If you are deleting a governance member, you can set the weight of a governance member to 0。
+In the case of a new governance committee, add an address and weight。If you are deleting a governance member, you can set the weight of a governance member to 0。
 
 **Parameters**
 
-- account: account address
-- weight: account weight
+-account: account address
+-weight: account weight
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### setRate
 
@@ -1462,24 +1462,24 @@ Set proposal threshold, which is divided into participation threshold and weight
 
 **Parameters**
 
-- participatesRate: participation threshold, in percentage units
-- winRate: by weight threshold, percentage unit
+-participatesRate: participation threshold, percentage unit
+-winRate: by weight threshold, percentage unit
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### setDeployAuthType
 
-Set the ACL policy for deployment. Only white _ list and black _ list policies are supported.
+Set the ACL policy for deployment. Only white _ list and black _ list policies are supported
 
 **Parameters**
 
-- deployAuthType: When type is 1, it is set to a whitelist. When type is 2, it is set to a blacklist.。
+-deployAuthType: When type is 1, it is set as a white list, and when type is 2, it is set as a black list。
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### modifyDeployAuth
 
@@ -1487,12 +1487,12 @@ Modify a deployment permission proposal for an administrator account
 
 **Parameters**
 
-- account: account address
-- openFlag: whether to enable or disable permissions
+-account: account address
+-openFlag: whether to turn permissions on or off
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### resetAdmin
 
@@ -1500,12 +1500,12 @@ Resetting an administrator account proposal for a contract
 
 **Parameters**
 
-- newAdmin: Account address
-- contractAddr: contract address
+-newAdmin: Account address
+-contractAddr: contract address
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### revokeProposal
 
@@ -1513,7 +1513,7 @@ Undo the initiation of a proposal, an operation that only the governance committ
 
 **Parameters**
 
-- proposalId: ID number of the proposal
+-proposalId: ID number of the proposal
 
 **Return value**
 
@@ -1525,8 +1525,8 @@ vote on a proposal
 
 **Parameters**
 
-- proposalId: ID number of the proposal
-- agree: Do you agree to this proposal?
+-proposalId: ID number of the proposal
+-agree: Do you agree to this proposal?
 
 **Return value**
 
@@ -1534,21 +1534,21 @@ vote on a proposal
 
 ### 6.3 Special interface for contract administrator account
 
-Each contract has an independent administrator. Only the administrator account of a contract can set the interface permissions of the contract.。
+Each contract has an independent administrator. Only the administrator account of a contract can set the interface permissions of the contract。
 
 #### setMethodAuthType
 
-Set the API call ACL policy of a contract. Only white _ list and black _ list policies are supported.
+Set the API call ACL policy of a contract. Only white _ list and black _ list policies are supported
 
 **Parameters**
 
-- contractAddr: contract address
-- func: function selector for the contract interface, four bytes in length。
-- authType: When type is 1, it is set to a whitelist. When type is 2, it is set to a blacklist.。
+-contractAddr: contract address
+-func: function selector for contract interface, length is four bytes。
+-authType: When type is 1, it is set as a white list, and when type is 2, it is set as a black list。
 
 **Return value**
 
-- result: If it is 0, the setting is successful。
+-result: If it is 0, the setting is successful。
 
 #### setMethodAuth
 
@@ -1556,11 +1556,11 @@ Modify the interface call ACL policy of a contract。
 
 **Parameters**
 
-- contractAddr: contract address
-- func: function selector for the contract interface, four bytes in length。
-- account: account address
-- isOpen: whether to enable or disable permissions
+-contractAddr: contract address
+-func: function selector for contract interface, length is four bytes。
+-account: account address
+-isOpen: whether the permission is enabled or disabled
 
 **Return value**
 
-- result: If it is 0, the setting is successful。
+-result: If it is 0, the setting is successful。

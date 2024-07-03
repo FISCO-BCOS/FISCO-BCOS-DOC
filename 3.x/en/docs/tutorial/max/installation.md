@@ -5,21 +5,21 @@ Tags: "Max version of the blockchain network" "deployment"
 ------------
 
 In order to be able to support a large number of transactions on the chain scene, v3.x launched the Max version FISCO BCOS, Max version FISCO BCOS is designed to provide**Mass storage services, high-performance and scalable execution modules**、**Highly available fault recovery mechanism**。
-Max version FISCO BCOS nodes use distributed storage TiKV, execution modules are independent into services, storage and execution are scalable, and support automated master and standby recovery.。
+Max version FISCO BCOS nodes use distributed storage TiKV, execution modules are independent into services, storage and execution are scalable, and support automated master and standby recovery。
 
-This chapter builds the Max version of the single-node FISCO BCOS alliance chain on a single machine to help users master the deployment process of the Max version of the FISCO BCOS blockchain.。Please refer to [here](../../quick_start/hardware_requirements.md)Use supported**Hardware and platforms**Conduct operation。
+This chapter builds the Max version of the single-node FISCO BCOS alliance chain on a single machine to help users master the deployment process of the Max version of the FISCO BCOS blockchain。Please refer to [here](../../quick_start/hardware_requirements.md)Use supported**Hardware and platforms**Conduct operation。
 
 ```eval_rst
 .. note::
-   - Max version FISCO BCOS uses the "BcosBuilder / max" tool for chain building and expansion. For more information about this tool, see 'BcosBuilder <. / max _ builder.html >' _
-   - FISCO BCOS 3.x builds and manages microservices based on tars. Before building the Max version of FISCO BCOS, you need to install the tars service. This chapter describes the process of building the docker version of tars service. For more information about deploying and building tars, please refer to 'Here < https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
-   - In this chapter, you can build the TARS service based on Docker. Make sure that the system user has the Docker permission.
-   - To build a Max version of FISCO BCOS, you must first deploy a TiKV cluster. For details about how to deploy a TiKV cluster, see 'Here < https://tikv.org/docs/5.1/deploy/install/install/>`_
+   -Max version FISCO BCOS uses the "BcosBuilder / max" tool for chain building and expansion. For details about this tool, see "BcosBuilder"<./max_builder.html>`_
+   - FISCO BCOS 3.x builds and manages microservices based on tars. Before building Max FISCO BCOS, you need to install the tars service<https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
+   - This chapter builds the tars service based on Docker. Make sure that the system user has the Docker permission
+   - To build a Max version of FISCO BCOS, you must first deploy a TiKV cluster. For details about how to deploy a TiKV cluster, see<https://tikv.org/docs/5.1/deploy/install/install/>`_
 ```
 
 ## 1. Installation Dependencies
 
-Deployment tool 'BcosBuilder' depends on 'python3, curl, docker, docker-compose ', depending on the operating system you are using, use the following command to install the dependency。
+The deployment tool 'BcosBuilder' depends on 'python3, curl, docker, docker-compose'. Depending on the operating system you are using, use the following command to install the dependency。
 
 **Install Ubuntu Dependencies(Version not less than Ubuntu18.04)**
 
@@ -44,8 +44,8 @@ brew install curl docker docker-compose python3 wget
 
 ```eval_rst
 .. note::
-   - Deployment tool "BcosBuilder" configuration and use please refer to 'here <. / max _ builder.html >' _
-   - If the network speed of "BcosBuilder" downloaded from github is too slow, try: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - Deployment tool "BcosBuilder" configuration and use please refer to 'here<./max_builder.html>`_
+   - If downloading the deployment tool "BcosBuilder" from github is too slow, please try: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -64,16 +64,16 @@ cd BcosBuilder && pip3 install -r requirements.txt
 
 ## 3. Install, start, and configure the tars service
 
-**Please refer to [here] for the installation, startup and configuration of tars service.(../pro/installation.html#id2).**
+**Please refer to [here] for the installation, startup and configuration of tars service(../pro/installation.html#id2).**
 
 ## 4. Deploy TiKV
 
 ```eval_rst
 .. note::
-   - For the convenience of demonstration, use TiUP playground to start TiKV nodes. The playground is only used in the test environment. For the production environment, please refer to the official TiKV documentation to deploy the cluster.
-   - It is recommended to modify the 'coprocessor.region of TiKV-split-size 'is 256MB, modify' coprocessor.enable-region-bucket 'to' true 'to reduce the time it takes to submit transactions and receipts
-   - It is recommended to modify 'raftstore.raft of TiKV-entry-max-size 'is 64MB to avoid possible raft entry out-of-limit issues
-   - It is recommended to turn on the compression function of TiKV to reduce disk occupation
+   - For ease of presentation, use TiUP playground to start TiKV nodes. The playground is only used in the test environment. For the production environment, please refer to the official TiKV documentation to deploy the cluster
+   - We recommend that you modify the 'coprocessor.region-split-size' of TiKV to 256MB and 'coprocessor.enable-region-bucket' to 'true' to reduce the time taken to submit transactions and receipts
+   - It is recommended to modify the 'raftstore.raft-entry-max-size' of TiKV to 64MB to avoid the problem that the raft entry may exceed the limit
+   -It is recommended to turn on the compression function of TiKV to reduce disk occupation
 ```
 
 **Download and install tiup**
@@ -101,21 +101,21 @@ PD client endpoints: [172.25.0.3:2379]
 
 Max version FISCO BCOS includes RPC service, Gateway service, blockchain node service 'BcosMaxNodeService' and blockchain execution service 'BcosExecutorService':
 
-- RPC service: It is responsible for receiving client requests and forwarding the requests to nodes for processing. RPC services can be scaled horizontally, and one RPC service can access multiple blockchain node services.;
-- Gateway service: It is responsible for network communication between blockchain nodes across institutions. Gateway services can be scaled horizontally. One Gateway service can access multiple blockchain node services.;
-- Blockchain node service 'BcosMaxNodeService': provides services related to blockchain scheduling, including block packaging, consensus, execution scheduling, and submission scheduling.;
+-RPC service: responsible for receiving client requests and forwarding the requests to nodes for processing, RPC service can be scaled horizontally, and one RPC service can access multiple blockchain node services;
+- Gateway service: responsible for network communication between blockchain nodes across institutions. The Gateway service is horizontally scalable, and one Gateway service can access multiple blockchain node services;
+- Blockchain node service 'BcosMaxNodeService': provides services related to blockchain scheduling, including blockchain packaging, consensus, execution scheduling, and submission scheduling. The node service obtains network communication functions by accessing RPC services and Gateway services;
 - Blockchain execution service 'BcosExecutorService': responsible for block execution, scalable horizontally and dynamically。
 
-This chapter takes deploying a single-node blockchain on a single machine as an example to introduce the Max version FISCO BCOS build deployment process.。
+This chapter takes deploying a single-node blockchain on a single machine as an example to introduce the Max version FISCO BCOS build deployment process。
 
 ```eval_rst
 .. note::
-   - Before deploying the Max version blockchain system, please refer to 'here <.. / pro / installation.html#id2 > '_ Set up the tars service and apply for a token
-   - If you do not apply for a token, refer to [3.2 Configuring Tars Service] to apply for a token.
-   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform.-> [user center]-> [token management] to obtain the token list
-   - Before deploying the Max version of the blockchain, make sure that your tars service is in the startup state
-   - The application token must be configured to the "tars.tars _ token" configuration option of the "config.toml" configuration file before all subsequent deployment steps can be performed.
-   - Before deploying the Max version blockchain, make sure that tikv is deployed by reference, and ensure that each Max node corresponds to a tikv service. Multiple Max nodes cannot share the tikv service.
+   -Before deploying the Max version of the blockchain system, please refer to the 'here<../pro/installation.html#id2>'_ Set up tars service and apply for token
+   - If you do not apply for a token, refer to [3.2 Configuring Tars Service] to apply for a token
+   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform ->User Center ->[token management] obtaining the token list
+   -Before deploying the Max version of the blockchain, please make sure that your tars service is in the started state
+   - The requested token must be configured to the "tars.tars _ token" configuration option of the "config.toml" configuration file before all subsequent deployment steps can be performed
+   - Before deploying the Max version blockchain, make sure that tikv is deployed by reference, and ensure that each Max node corresponds to a tikv service. Multiple Max nodes cannot share the tikv service
 ```
 
 ### 5.1 Download Binary
@@ -124,26 +124,26 @@ Before building the Max version of FISCO BCOS, you need to download the binary p
 
 ```eval_rst
 .. note::
-   - You can use the python3 build _ chain.py-h "View deployment script usage
-   - The binary is downloaded to the "binary" directory by default
-   - If downloading the binary is slow, try: ``python3 build_chain.py download_binary -t cdn``
+   - You can view the deployment script usage through "python3 build _ chain.py -h"
+   - binary is downloaded to the "binary" directory by default
+   - If downloading binary is slow, please try: ``python3 build_chain.py download_binary -t cdn``
 ```
 
 ```shell
 # Enter the operation directory
 cd ~/fisco/BcosBuilder/max
 
-# Run the build _ chain.py script to download the binary. The binary package is downloaded to the binary directory by default.
+# Run the build _ chain.py script to download the binary. The binary package is downloaded to the binary directory by default
 python3 build_chain.py download_binary
 ```
 
 ### 5.2 Deploying RPC Services
 
-Similar to the Pro version FISCO BCOS, the Max version blockchain system also includes RPC services, which can be deployed and built through the chain building script 'BcosBuilder'. The sample configuration file 'config' is provided in the 'BcosBuilder / max / conf' directory.-deploy-example.toml ', which can be deployed on the' 172.25.0.3 'machine of the organization' agencyA '. The listening port occupied by RPC is' 20200'。
+Similar to Pro version FISCO BCOS, the Max version blockchain system also includes RPC services, which can be deployed and built through the chain building script 'BcosBuilder'. The 'BcosBuilder / max / conf' directory provides a sample configuration file 'config-deploy-example.toml', which can be deployed on the '172.25.0.3' machine of the organization 'agencyA'。
 
 ```eval_rst
 .. note::
-   Make sure that the default port 20200 is not occupied. If it is occupied, manually modify the configuration "config.toml" to configure ports that are not occupied.
+   Make sure that the default port 20200 is not occupied. If it is occupied, manually modify the configuration "config.toml" to configure ports that are not occupied
 ```
 
 ```shell
@@ -208,7 +208,7 @@ generated/rpc/chain0
 ├── 172.25.0.3
 │   ├── agencyABcosRpcService # RPC Service Directory for Institution A
 │   │   ├── config.ini.tmp    # Configuration file for RPC service of institution A
-│   │   ├── sdk               # The SDK certificate directory. The SDK client can copy certificates from this directory to connect to the RPC service.
+│   │   ├── sdk               # The SDK certificate directory. The SDK client can copy certificates from this directory to connect to the RPC service
 │   │   │   ├── ca.crt
 │   │   │   ├── cert.cnf
 │   │   │   ├── sdk.crt
@@ -218,25 +218,25 @@ generated/rpc/chain0
 │   │       ├── cert.cnf
 │   │       ├── ssl.crt
 │   │       └── ssl.key
-└── ca                       # The CA certificate directory, which mainly includes the CA certificate and the CA private key. Keep the CA certificate and the CA private key properly.
+└── ca                       # The CA certificate directory, which mainly includes the CA certificate and the CA private key. Keep the CA certificate and the CA private key properly
     ├── ca.crt
     ├── ca.key
     ├── ca.srl
     └── cert.cnf
 ```
 
-After the RPC service is started successfully, you can view the service list 'agencyABcosRpcService' on the tars web management platform, and each service is in the 'active' state.
+After the RPC service is started successfully, you can view the service list 'agencyABcosRpcService' on the tars web management platform, and each service is in the 'active' state
 
 
 ```eval_rst
 .. note::
-   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform.-> [user center]-> [token management] to obtain the token list
-   - **Keep the RPC service CA certificate and CA private key generated during service deployment for SDK certificate application, RPC service expansion, and other operations.**
+   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform ->User Center ->[token management] obtaining the token list
+   - **Keep the RPC service CA certificate and CA private key generated during service deployment for SDK certificate application, RPC service expansion, and other operations**
 ```
 
 ### 5.3 Deploying Gateway Services
 
-After the RPC service is deployed, you need to deploy the Gateway service to establish network connections between organizations.。Run the following command in the 'BcosBuilder / max' directory to deploy and start the Gateway service of the two organizations. The corresponding Gateway service name is' agencyABcosGatewayService ', the ip address is' 172.25.0.3 ', and the occupied ports are' 30300'(Before performing this operation, please make sure that the '30300' port of the machine is not occupied)。
+After the RPC service is deployed, you need to deploy the Gateway service to establish network connections between organizations。Run the following command in the 'BcosBuilder / max' directory to deploy and start the Gateway service of the two organizations. The corresponding Gateway service name is' agencyABcosGatewayService ', the ip address is' 172.25.0.3 ', and the occupied ports are' 30300'(Before performing this operation, please make sure that the '30300' port of the machine is not occupied)。
 
 ```shell
 # Enter the operation directory
@@ -288,7 +288,7 @@ generated/gateway/chain0
 │   │       ├── cert.cnf
 │   │       ├── ssl.crt
 │   │       └── ssl.key
-└── ca                          # Configure the root certificate of the Gateway service. Save the root certificate and the root certificate private key.
+└── ca                          # Configure the root certificate of the Gateway service. Save the root certificate and the root certificate private key
     ├── ca.crt
     ├── ca.key
     ├── ca.srl
@@ -297,14 +297,14 @@ generated/gateway/chain0
 
 ```eval_rst
 .. note::
-   - **Keep the RPC service CA certificate and CA private key generated during service deployment for operations such as gateway service expansion.**
+   - **Keep the RPC service CA certificate and CA private key generated during service deployment for operations such as gateway service expansion**
 ```
 
-After the Gateway service is successfully started, you can view the service list 'agencyABcosGatewayService' on the tars web management platform, and each service is in the 'active' state.
+After the Gateway service is successfully started, you can view the service list 'agencyABcosGatewayService' on the tars web management platform, and each service is in the 'active' state
 
 ### 5.4 Deploying Blockchain Node Services
 
-After the RPC service and the Gateway service are deployed, you can deploy the blockchain node service.。Run the following command in the 'BcosBuilder / max' directory to deploy and start a single-node blockchain service. The corresponding service names are 'agencyAgroup0node0BcosMaxNodeService' and 'agencyAgroup0node0BcosExecutorService'. The chain ID is' chain0 'and the group ID is' group0'。
+After the RPC service and the Gateway service are deployed, you can deploy the blockchain node service。Run the following command in the 'BcosBuilder / max' directory to deploy and start a single-node blockchain service. The corresponding service names are 'agencyAgroup0node0BcosMaxNodeService' and 'agencyAgroup0node0BcosExecutorService'. The chain ID is' chain0 'and the group ID is' group0'。
 
 ```shell
 # Enter the operation directory
@@ -402,22 +402,22 @@ generated/chain0
 
 ```eval_rst
 .. note::
-   - It is recommended to deploy the blockchain node service after the RPC and Gateway services are deployed.
-   - Before deploying a Max version blockchain node, make sure that tikv is deployed and started
+   - It is recommended to deploy the blockchain node service after deploying RPC and Gateway services
+   - Before deploying a Max version blockchain node, make sure tikv is deployed and started
 ```
 
-After the blockchain node service is successfully started, you can view the service lists' agencyAgroup0node0BcosMaxNodeService 'and' agencyAgroup0node0BcosExecutorService 'on the tars web page management platform, and each service is in the' active 'status.。
+After the blockchain node service is successfully started, you can view the service lists' agencyAgroup0node0BcosMaxNodeService 'and' agencyAgroup0node0BcosExecutorService 'on the tars web page management platform, and each service is in the' active 'status。
 
 
 ## 6. Configure and use the console
 
-The console is also suitable for Air / Pro / Max versions of FISCO BCOS blockchain, and the experience is completely consistent。After the Max version blockchain experience environment is built, you can configure and use the console to send transactions to the Max version blockchain.。
+The console is also suitable for Air / Pro / Max versions of FISCO BCOS blockchain, and the experience is completely consistent。After the Max version blockchain experience environment is built, you can configure and use the console to send transactions to the Max version blockchain。
 
 ### 6.1 Installation Dependencies
 
 ```eval_rst
 .. note::
-   - For console configuration methods and commands, please refer to 'here <.. /.. / operation _ and _ maintenance / console / console _ config.html >' _
+   -For console configuration methods and commands, please refer to 'here<../../operation_and_maintenance/console/console_config.html>`_
 ```
 
 Before using the console, you need to install the java environment:
@@ -439,7 +439,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 ```
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    -If you cannot download for a long time due to network problems, please try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 **Step 2: Configure the Console**
@@ -453,10 +453,10 @@ If the RPC service does not use the default port, replace 20200 in the file with
 cp -n console/conf/config-example.toml console/conf/config.toml
 ```
 
-- Configure Console Certificates
+- Configure console certificates
 
 ```shell
-# The command find.-name sdk Find all SDK certificate paths
+# All SDK certificate paths can be found through the command find.-name sdk
 cp -r ~/fisco/BcosBuilder/max/generated/rpc/chain0/agencyBBcosRpcService/172.25.0.3/sdk/* console/conf
 ```
 

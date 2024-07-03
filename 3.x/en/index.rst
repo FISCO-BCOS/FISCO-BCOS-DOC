@@ -1,4 +1,4 @@
-请根据需求选择FISCO BCOS的版本，并确认周边组件与其版本相匹配。
+Please select the version of FISCO BCOS according to your requirements and confirm that the peripheral components match their versions。
 
 .. container:: row 
    
@@ -12,7 +12,7 @@
          
                <div>
                   <br>
-                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/index.html">本文档版本 3.0：高性能、易拓展、高可用</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/index.html">Version 3.0 of this document: High performance, easy expansion, high availability</a></b></h>
                   <br><br><br>
                </div>
                <div style="clear:both"></div>
@@ -21,7 +21,7 @@
          
                <div >
                   <br>
-                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/#"> ====>> 切换至 2.0 版本文档</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/#"> ====>> Switch to version 2.0 document</a></b></h>
                   <br><br>
                </div>
                <div style="clear:both"></div>
@@ -36,27 +36,27 @@
 
 
 ##############################################################
-FISCO BCOS 3.0 技术文档
+FISCO BCOS 3.0 Technical Documents
 ##############################################################
 
 
-FISCO BCOS（读作/ˈfɪskl bi:ˈkɒz/） 是一个稳定、高效、安全的区块链底层平台，其可用性经广泛应用实践检验。开源社区至今已有5000+企业及机构、400+产业数字化标杆应用，覆盖文化版权、司法服务、政务服务、物联网、金融、智慧社区、房产建筑、社区治理、乡村振兴等领域。
+FISCO BCOS:KZ /) is a stable, efficient and secure blockchain underlying platform, and its usability has been tested by widely used practices。The open source community is now 5,000+Enterprises and Institutions, 400+Industrial digital benchmarking applications, covering cultural copyright, judicial services, government services, Internet of Things, finance, smart communities, real estate construction, community governance, rural revitalization and other fields。
 
 .. image:: images/introduction/applications_new.png
    :align: center
-   :alt: 产业应用
+   :alt: industrial application
 
-FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今为止，开源社区汇聚超过10万名成员共建共治，发展成为最大最活跃的国产开源联盟链生态圈之一，其中涌现出诸多对社区建设、代码贡献的优秀社区成员。截止2023年，开源社区共认定63位MVP，这些优秀的贡献者或是将FISCO BCOS技术落地到各领域应用中，助力产业数字化，或是在多渠道布道，将开源社区精神传播到更远的地方。
+FISCO BCOS open source community is committed to building an open and diversified open source alliance chain ecology, so far, the open source community has gathered more than 100,000 members to build and govern together, and has developed into one of the largest and most active domestic open source alliance chain ecosystems, in which many outstanding community members who contribute to community construction and code have emerged。As of 2023, the open source community has identified 63 MVPs, and these outstanding contributors are either applying FISCO BCOS technology to various applications to help digitize the industry, or preaching in multiple channels to spread the spirit of the open source community further afield。
 
 .. image:: images/community/mvp_review_2023.png
    :align: center
-   :alt: FISCO BCOS 2023年度MVP
+   :alt: FISCO BCOS 2023 MVP of the Year
 
 .. note::
-   本技术文档适用于FISCO BCOS 3.x版本, FISCO BCOS 2.x稳定版技术文档请参考 `FISCO BCOS 2.x技术文档(stable) <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/>`_
+   This technical document is applicable to FISCO BCOS 3.x version. For FISCO BCOS 2.x stable technical document, please refer to 'FISCO BCOS 2.x technical document(stable) <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/>`_
 
-   FISCO BCOS 3.x版本源码位于 `master` 分支，请参考 `这里 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master>`_
-   FISCO BCOS 2.x版本源码位于 `master-2.0` 分支，请参考 `这里 <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_
+   FISCO BCOS 3.x version source code is located in the 'master' branch, please refer to 'here<https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master>`_
+   FISCO BCOS 2.x source code is located in the 'master-2.0' branch, please refer to 'here<https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master-2.0>`_
 
 .. container:: row
 
@@ -67,14 +67,14 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
          .. raw:: html
 
             <br>
-            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快速开始</h>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quick Start</h>
             <br><br>
 
-         - `了解FISCO BCOS区块链 <./docs/introduction/introduction.html>`_
-         - `FISCO BCOS 3.X新特性 <./docs/introduction/change_log/index.html>`_
-         - `搭建第一个区块链网络 <./docs/quick_start/air_installation.html>`_
-         - `开发第一个Solidity区块链应用 <./docs/quick_start/solidity_application.html>`_
-         - `开发第一个webankblockchain-liquid区块链应用 <./docs/quick_start/wbc_liquid_application.html>`_
+         - 'Understanding the FISCO BCOS Blockchain<./docs/introduction/introduction.html>`_
+         - 'FISCO BCOS 3.X NEW FEATURES<./docs/introduction/change_log/index.html>`_
+         - 'Building the first blockchain network<./docs/quick_start/air_installation.html>`_
+         - 'Develop the first Solidity blockchain application<./docs/quick_start/solidity_application.html>`_
+         - 'Develop the first webankblockchain-liquid blockchain application<./docs/quick_start/wbc_liquid_application.html>`_
 
    .. container:: card-holder
 
@@ -83,12 +83,12 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
          .. raw:: html
 
             <br>
-            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开发教程</h>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Development Tutorial</h>
             <br><br>
 
-         - `Air版本区块链网络搭建 <./docs/tutorial/air/index.html>`_
-         - `Pro版本区块链网络搭建 <./docs/tutorial/pro/index.html>`_
-         - `轻节点搭建 <./docs/tutorial/lightnode.html>`_
+         - 'Air version blockchain network building<./docs/tutorial/air/index.html>`_
+         - 'Pro version blockchain network building<./docs/tutorial/pro/index.html>`_
+         - 'Light Node Build<./docs/tutorial/lightnode.html>`_
          - `FISCO BCOS Java SDK <./docs/sdk/java_sdk/index.html>`_
 
    .. container:: card-holder-bigger
@@ -98,7 +98,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
          .. raw:: html
 
             <br>
-            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用工具</h>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Using Tools</h>
             <br><br>
 
          .. container:: tools
@@ -108,9 +108,9 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
                <img src="installation/build_chain.png" class="card-holder" >
                <div class="tools-holder">
                   <br>
-                  <h style="font-size: 18px;"><b><a href="./docs/tutorial/air/build_chain.html">开发部署工具：区块链网络快速部署工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/tutorial/air/build_chain.html">Development and Deployment Tool: Blockchain Network Rapid Deployment Tool</a></b></h>
                   <br><br>
-                  <p>开发部署工具是提供给开发者快速搭建FISCO BCOS区块链网络的脚本工具。</p>
+                  <p>The development and deployment tool is a scripting tool for developers to quickly build FISCO BCOS blockchain networks。</p>
                </div>
                <div style="clear:both"></div>
 
@@ -124,9 +124,9 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 
                <div class="tools-holder">
                   <br>
-                  <h style="font-size: 18px;"><b><a href="./docs/develop/console/index.html">命令行交互控制台：节点查询与管理工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/develop/console/index.html">Command Line Interactive Console: Node Query and Management Tools</a></b></h>
                   <br><br>
-                  <p>命令行交互控制台是提供给开发者使用的节点查询与管理的工具。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。</p>
+                  <p>The command line interactive console is a tool for developers to query and manage nodes。The console has a wealth of commands, including querying blockchain status, managing blockchain nodes, deploying and invoking contracts, and more。In addition, the console provides a contract compilation tool that allows users to quickly and easily compile Solidity contract files into Java contract files。</p>
                </div>
                <img src="installation/console.png" class="card-holder" >
                <div style="clear:both"></div>
@@ -141,9 +141,9 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 
                <img src="webase/webase-web.png" class="card-holder">
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/components/webase.html">图形化的区块链管理工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/components/webase.html">Graphical blockchain management tool</a></b></h>
                   <br><br>
-                  <p>WeBankBlockchain WeBASE(WeBank Blockchain Application Software Extension, 简称WBC-WeBASE) 是一套管理FISCO-BCOS联盟链的工具集。WBC-WeBASE提供了图形化的管理界面，屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。</p>
+                  <p>WeBankBlockchain WeBASE(WeBank Blockchain Application Software Extension, WBC-WeBASE) is a set of tools for managing the FISCO-BCOS alliance chain。WBC-WeBASE provides a graphical management interface, shielding the complexity of the underlying blockchain, reducing the threshold for blockchain use, and greatly improving the development efficiency of blockchain applications, including subsystems such as node front, node management, transaction links, data export, and web management platforms。</p>
                </div>
                <div style="clear:both"></div>
                <br><br>
@@ -157,9 +157,9 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
             .. raw:: html
 
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/components/data_index.html">数据治理通用组件：释放数据价值 </a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/components/data_index.html">Common Components of Data Governance: Unlocking Data Value</a></b></h>
                   <br><br>
-                  <p>数据治理通用组件的全名是“WeBankBlockchain-Data数据治理通用组件”，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。</p>
+                  <p>The full name of the data governance common component is "WeBankBlockchain-Data Data Data Governance Common Component," which is a stable, efficient and secure blockchain data governance component solution that can seamlessly adapt to the underlying platform of the FISCO BCOS blockchain。It consists of the Data Export component(Data-Export), Data Warehouse Components(Data-Stash)Data Reconciliation Component(Data-Reconcile)These three independent, pluggable, flexible assembly components, out of the box, flexible and convenient, easy to secondary development。</p>
                </div>
                <img src="governance/data/data-gov.png" class="card-holder">
                <div style="clear:both"></div>
@@ -174,9 +174,9 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 
                <img src="governance/MCGF/MCGF_overview.png" class="card-holder">
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/components/governance_index.html">区块链多方协作治理组件：开启治理实践新起点</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/components/governance_index.html">Blockchain multi-party collaborative governance component: opening a new starting point for governance practice</a></b></h>
                   <br><br>
-                  <p>WeBankBlockchain-Governance区块链多方协作治理组件是一套轻量解耦、简洁易用、通用场景和一站式的区块链治理组件解决方案。 首批开源的有账户治理组件(Governance-Account)、权限治理组件(Governance-Auth)、 私钥管理组件(Governance-Key)和证书管理组件（Governance-Cert）。上述组件都提供了可部署的智能合约代码、易于使用的SDK和可参考的落地实践Demo等交付物。</p>
+                  <p>WeBankBlockchain-Governance is a lightweight, easy-to-use, common scenario and one-stop blockchain governance component solution。 First open source account governance components(Governance-Account), Permission Governance Components(Governance-Auth)Private key management component(Governance-Key)and Certificate Management Components (Governance-Cert)。The above components all provide deliverables such as deployable smart contract code, easy-to-use SDK and reference landing practice Demo。</p>
                </div>
                <div style="clear:both"></div>
 
@@ -189,9 +189,9 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
             .. raw:: html
 
                <div class="tools-holder">
-                  <h style="font-size: 18px;"><b><a href="./docs/components/smartdev_index.html">区块链应用开发组件：助力低代码开发</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/components/smartdev_index.html">Blockchain application development components: enabling low-code development</a></b></h>
                   <br><br>
-                  <p>WeBankBlockchain-SmartDev应用开发组件包含了一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包括智能合约库（SmartDev-Contract）、智能合约编译插件（SmartDev-SCGP）和应用开发脚手架（SmartDev-Scaffold）。开发者可根据自己的情况自由选择相应的开发工具，提升开发效率。</p>
+                  <p>The WeBankBlockchain-SmartDev application development component includes an open and lightweight set of development components covering the development, debugging, and application development of smart contracts, including the SmartDev-Contract, SmartDev-SCGP, and SmartDev-Scaffold。Developers can freely choose the corresponding development tools according to their own situation to improve development efficiency。</p>
                </div>
                <img src="governance/SmartDev/smartdev_overview.png" class="card-holder">
                <div style="clear:both"></div>
@@ -204,13 +204,13 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
          .. raw:: html
 
             <br>
-            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统设计</h>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System Design</h>
             <br><br>
 
-         - `系统架构 <./docs/design/architecture.html>`_
-         - `两阶段并行拜占庭共识 <./docs/design/consensus/consensus.html>`_
-         - `合约文件系统BFS <./docs/design/contract_directory.html>`_
-         - `更多设计文档 <./docs/design/index.html>`_
+         - 'System Architecture<./docs/design/architecture.html>`_
+         - 'Two-stage parallel Byzantine consensus<./docs/design/consensus/consensus.html>`_
+         - 'Contract File System BFS<./docs/design/contract_directory.html>`_
+         - 'More design documentation<./docs/design/index.html>`_
 
    .. container:: card-holder
 
@@ -219,14 +219,14 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
          .. raw:: html
 
             <br>
-            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;社区资源</h>
+            <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Community Resources</h>
             <br><br>
 
-         - `Github主页 <https://github.com/FISCO-BCOS/FISCO-BCOS>`_
-         - `贡献代码 <https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
-         - `反馈问题 <https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
-         - `应用案例集 <https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA>`_
-         - `微信群 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/WeChatQR%2Ejpg>`_ 、`公众号 <https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/OfficialAccountsQR%2Ejpg>`_
+         - 'Github Home Page<https://github.com/FISCO-BCOS/FISCO-BCOS>`_
+         - 'Contribution Code<https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ>`_
+         - 'Feedback Questions<https://github.com/FISCO-BCOS/FISCO-BCOS/issues>`_
+         - 'Application Case Set<https://mp.weixin.qq.com/s/cUjuWf1eGMbG3AFq60CBUA>`_
+         - 'WeChat Group<https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/WeChatQR%2Ejpg>'_,' public number<https://github.com/FISCO-BCOS/FISCO-BCOS-DOC/blob/release-2/images/community/OfficialAccountsQR%2Ejpg>`_
 
 
    .. container:: card-holder-bigger
@@ -236,7 +236,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
          .. raw:: html
 
                <br>
-               <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多开源工具</h>
+               <h style="font-size: 22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;More open source tools</h>
                <br><br>
 
                <img src="_static/images/products_2023.jpeg" class="card-holder-full">
@@ -246,34 +246,34 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 
             .. raw:: html
 
-            - **FISCO BCOS企业级金融联盟链底层平台**: `[GitHub] <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ `[Gitee] <https://gitee.com/FISCO-BCOS>`_ `[文档] <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html>`_
-            - **区块链中间件平台**：`[GitHub] <https://github.com/WeBankFinTech/WeBASE>`_ `[Gitee] <https://gitee.com/WeBank/WeBASE>`_  `[文档] <https://webasedoc.readthedocs.io/>`_
-            - **WeIdentity 基于区块链的实体身份标识及可信数据交换解决方案**: `[GitHub] <https://github.com/WeBankFinTech/WeIdentity>`_ `[Gitee] <https://gitee.com/WeBank/WeIdentity>`_ `[文档] <https://weidentity.readthedocs.io/>`_
-            - **WeDPR 即时可用，场景式隐私保护高效解决方案套件和服务**：`[GitHub] <https://github.com/WeBankBlockchain/WeDPR-Lab-Core>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto>`_ `[文档] <https://wedpr-lab.readthedocs.io/>`_
-            - **WeCross 区块链跨链协作平台**: `[GitHub] <https://github.com/WeBankBlockchain/WeCross>`_ `[Gitee] <https://gitee.com/WeBank/WeCross>`_ `[文档] <https://wecross.readthedocs.io/>`_
-            - **Truora 可信预言机服务**：`[GitHub] <https://github.com/WeBankBlockchain/Truora>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Truora>`_  `[文档] <https://truora.readthedocs.io/>`_
-            - **webankblockchain-liquid（简称WBC-Liquid）智能合约编程语言软件**：`[GitHub] <https://github.com/WeBankBlockchain/liquid>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/liquid>`_  `[文档] <https://liquid-doc.readthedocs.io/>`_
-            - **WeBankBlockchain-Data 数据治理通用组件**：
-               - Data-Stash 数据仓库组件： `[GitHub] <https://github.com/WeBankBlockchain/Data-Stash>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Data-Stash>`_  `[文档] <https://data-doc.readthedocs.io/zh_CN/stable/docs/WeBankBlockchain-Data-Stash/index.html>`_
-               - Data-Export 数据导出组件： `[GitHub] <https://github.com/WeBankBlockchain/Data-Export>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Data-Export>`_  `[文档] <https://data-doc.readthedocs.io/zh_CN/stable/docs/WeBankBlockchain-Data-Export/index.html>`_
-               - Data-Reconcile 数据对账组件：  `[GitHub] <https://github.com/WeBankBlockchain/Data-Reconcile>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Data-Reconcile>`_  `[文档] <https://data-doc.readthedocs.io/zh_CN/stable/docs/WeBankBlockchain-Data-Reconcile/index.html>`_
-            - **WeBankBlockchain-Governance 多方治理协作组件**：
-               - Governance-Account 账户治理组件： `[GitHub] <https://github.com/WeBankBlockchain/Governance-Account>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Account>`_  `[文档] <https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html>`_
-               - Governance-Authority 权限治理组件：`[GitHub] <https://github.com/WeBankBlockchain/Governance-Authority>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Authority>`_  `[文档] <https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html>`_
-               - Governance-Key 私钥管理组件： `[GitHub] <https://github.com/WeBankBlockchain/Governance-Key>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Key>`_  `[文档] <https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html>`_
-               - Governance-Cert 证书管理组件：`[GitHub] <https://github.com/WeBankBlockchain/Governance-Cert>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Cert>`_  `[文档] <https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Cert/index.html>`_
-            - **WeEvent 基于区块链的分布式事件驱动架构**：`[GitHub] <https://github.com/WeBankFinTech/WeEvent>`_ `[Gitee] <https://gitee.com/WeBank/WeEvent>`_  `[文档] <https://weevent.readthedocs.io/>`_
-            - **WeBankBlockchain-SmartDev 区块链应用开发工具**：
-               - SmartDev-Contract 智能合约库组件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Contract>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Contract>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html>`_
-               - SmartDev-SCGP 合约编译插件：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-SCGP>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-SCGP>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-SCGP/index.html>`_
-               - SmartDev-Scaffold 应用开发脚手架：`[GitHub] <https://github.com/WeBankBlockchain/SmartDev-Scaffold>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Scaffold>`_  `[文档] <https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Scaffold/index.html>`_
-            - **DDCMS分布式数据协作管理解决方案：**：`[GitHub] <https://github.com/WeBankBlockchain/DDCMS>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/DDCMS>`_  `[文档] <https://ddcms-docs.readthedocs.io/en/latest/>`_
+            - **FISCO BCOS Enterprise Financial Alliance Chain Underlying Platform**: `[GitHub] <https://github.com/FISCO-BCOS/FISCO-BCOS>`_ `[Gitee] <https://gitee.com/FISCO-BCOS>'_' [Documentation]<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/index.html>`_
+            - **Blockchain Middleware Platform**：`[GitHub] <https://github.com/WeBankFinTech/WeBASE>`_ `[Gitee] <https://gitee.com/WeBank/WeBASE>'_' [Documentation]<https://webasedoc.readthedocs.io/>`_
+            - **Blockchain-based Entity Identity and Trusted Data Exchange Solution for WeIdentity**: `[GitHub] <https://github.com/WeBankFinTech/WeIdentity>`_ `[Gitee] <https://gitee.com/WeBank/WeIdentity>'_' [Documentation]<https://weidentity.readthedocs.io/>`_
+            - **WeDPR Instant and Available, Scenario-Based Privacy Protection Efficient Solution Suite and Services**：`[GitHub] <https://github.com/WeBankBlockchain/WeDPR-Lab-Core>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/WeDPR-Lab-Crypto>'_' [Documentation]<https://wedpr-lab.readthedocs.io/>`_
+            - **WeCross Blockchain Cross-Chain Collaboration Platform**: `[GitHub] <https://github.com/WeBankBlockchain/WeCross>`_ `[Gitee] <https://gitee.com/WeBank/WeCross>'_' [Documentation]<https://wecross.readthedocs.io/>`_
+            - **Truora Trusted Oracle Service**：`[GitHub] <https://github.com/WeBankBlockchain/Truora>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Truora>'_' [Documentation]<https://truora.readthedocs.io/>`_
+            - **Webankblockchain-liquid (WBC-Liquid) Smart Contract Programming Language Software**：`[GitHub] <https://github.com/WeBankBlockchain/liquid>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/liquid>'_' [Documentation]<https://liquid-doc.readthedocs.io/>`_
+            - **WeBankBlockchain-Data Data Governance Common Components**：
+               - Data-Stash Data Warehouse Component: '[GitHub]<https://github.com/WeBankBlockchain/Data-Stash>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Data-Stash>'_' [Documentation]<https://data-doc.readthedocs.io/zh_CN/stable/docs/WeBankBlockchain-Data-Stash/index.html>`_
+               -Data-Export data export component: '[GitHub]<https://github.com/WeBankBlockchain/Data-Export>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Data-Export>'_' [Documentation]<https://data-doc.readthedocs.io/zh_CN/stable/docs/WeBankBlockchain-Data-Export/index.html>`_
+               - Data-Reconcile data reconciliation component: '[GitHub]<https://github.com/WeBankBlockchain/Data-Reconcile>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Data-Reconcile>'_' [Documentation]<https://data-doc.readthedocs.io/zh_CN/stable/docs/WeBankBlockchain-Data-Reconcile/index.html>`_
+            - **WeBankBlockchain-Governance Multiparty Governance Collaboration Component**：
+               -Governance-Account Account governance component: '[GitHub]<https://github.com/WeBankBlockchain/Governance-Account>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Account>'_' [Documentation]<https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Acct/index.html>`_
+               -Governance-Authority permission governance component: '[GitHub]<https://github.com/WeBankBlockchain/Governance-Authority>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Authority>'_' [Documentation]<https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/index.html>`_
+               -Governance-Key private key management component: '[GitHub]<https://github.com/WeBankBlockchain/Governance-Key>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Key>'_' [Documentation]<https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Key/index.html>`_
+               -Governance-Cert certificate management component: '[GitHub]<https://github.com/WeBankBlockchain/Governance-Cert>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/Governance-Cert>'_' [Documentation]<https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Cert/index.html>`_
+            - **WeEvent distributed event-driven architecture based on blockchain**：`[GitHub] <https://github.com/WeBankFinTech/WeEvent>`_ `[Gitee] <https://gitee.com/WeBank/WeEvent>'_' [Documentation]<https://weevent.readthedocs.io/>`_
+            - **WeBankBlockchain - SmartDev Blockchain Application Development Tool**：
+               -SmartDev-Contract smart contract library component: '[GitHub]<https://github.com/WeBankBlockchain/SmartDev-Contract>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Contract>'_' [Documentation]<https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Contract/index.html>`_
+               - SmartDev - SCGP contract compilation plugin: '[GitHub]<https://github.com/WeBankBlockchain/SmartDev-SCGP>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-SCGP>'_' [Documentation]<https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-SCGP/index.html>`_
+               -SmartDev-Scaffold Application Development Scaffold: '[GitHub]<https://github.com/WeBankBlockchain/SmartDev-Scaffold>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/SmartDev-Scaffold>'_' [Documentation]<https://smartdev-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-SmartDev-Scaffold/index.html>`_
+            - **DDCMS Distributed Data Collaboration Management Solution:**：`[GitHub] <https://github.com/WeBankBlockchain/DDCMS>`_ `[Gitee] <https://gitee.com/WeBankBlockchain/DDCMS>'_' [Documentation]<https://ddcms-docs.readthedocs.io/en/latest/>`_
 
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 平台介绍
+   :caption: Platform Introduction
 
    docs/introduction/introduction.md
    docs/introduction/key_feature.md
@@ -283,7 +283,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 快速开始
+   :caption: Quick Start
 
    docs/quick_start/hardware_requirements.md
    docs/quick_start/air_installation.md
@@ -293,7 +293,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 合约开发
+   :caption: Contract Development
 
    docs/contract_develop/solidity_develop.md
    docs/contract_develop/c++_contract/index.md
@@ -305,7 +305,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: SDK教程
+   :caption: SDK Tutorial
 
    docs/sdk/index.md
    docs/sdk/java_sdk/index.md
@@ -321,7 +321,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 搭链教程
+   :caption: Hooking Tutorial
 
    docs/tutorial/air/index.md
    docs/tutorial/pro/index.md
@@ -334,7 +334,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 应用开发
+   :caption: application development
 
    docs/develop/index.md
    docs/develop/api.md
@@ -350,7 +350,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 区块链运维
+   :caption: Block chain operation and maintenance
 
    docs/operation_and_maintenance/build_chain.md
    docs/operation_and_maintenance/light_monitor.md
@@ -372,7 +372,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 高阶功能使用
+   :caption: Use of higher-order functions
 
    docs/advanced_function/safety.md
    docs/advanced_function/wecross.md
@@ -384,7 +384,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: FISCO BCOS设计原理
+   :caption: FISCO BCOS Design Principles
 
    docs/design/architecture.md
    docs/design/tx_procedure.md
@@ -413,7 +413,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: 社区资源
+   :caption: Community Resources
 
    docs/community/MVP_list_new.md
    docs/community/contributor_list_new.md

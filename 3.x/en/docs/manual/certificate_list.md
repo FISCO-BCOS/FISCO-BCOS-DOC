@@ -4,7 +4,7 @@ Tags: "CA black and white list" "development manual" "refused to connect"
 
 ----
 
-This document describes the practical operation of CA black and white lists. It is recommended that you understand [Introduction to CA Black and White Lists] before reading this operation document.(../design/security_control/certificate_list.md)。
+This document describes the practical operation of CA black and white lists. It is recommended that you understand [Introduction to CA Black and White Lists] before reading this operation document(../design/security_control/certificate_list.md)。
 
 ## Blacklist
 
@@ -34,7 +34,7 @@ $ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}
 
 ## Whitelist
 
-By configuring the whitelist, you can connect to only the specified nodes and deny connections to nodes outside the whitelist.。
+By configuring the whitelist, you can connect to only the specified nodes and deny connections to nodes outside the whitelist。
 
 **Configuration Method**
 
@@ -47,7 +47,7 @@ Edit 'config.ini',**No configuration means that the whitelist is closed and a co
     cal.1=f306eb1066ceb9d46e3b77d2833a1bde2a9899cfc4d0433d64b01d03e79927aa60a40507c5739591b8122ee609cf5636e71b02ce5009f3b8361930ecc3a9abb0
 ```
 
-If the node is not started, start the node directly. If the node is started, use the script 'reload _ whitelist.sh' to refresh the whitelist configuration.。
+If the node is not started, start the node directly. If the node is started, use the script 'reload _ whitelist.sh' to refresh the whitelist configuration。
 
 ```shell
 # If the node is not started
@@ -66,12 +66,12 @@ $ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}
 
 ## Usage scenario: Public CA
 
-All chains that use CFCA to issue certificates, the CA of the chain is CFCA。This CA is shared。Whitelist feature must be enabled。If you use a common CA, the two chains share the same CA. As a result, the nodes of the two unrelated chains can be connected to each other.。At this point, you need to configure a whitelist to deny connections to nodes in unrelated chains.。
+All chains that use CFCA to issue certificates, the CA of the chain is CFCA。This CA is shared。Whitelist feature must be enabled。If you use a common CA, the two chains share the same CA. As a result, the nodes of the two unrelated chains can be connected to each other。At this point, you need to configure a whitelist to deny connections to nodes in unrelated chains。
 
 **Chain operation steps**
 
 1. Use tools to link
-2. Query the NodeID of all nodes.
+2. Query the NodeID of all nodes
 3. Configure all NodeIDs in**Each**node in the whitelist
 4. Start the node or refresh the node whitelist configuration with the script 'reload _ whitelist.sh'
 
@@ -313,7 +313,7 @@ View Node Connections
 $ curl -X POST --data '{"jsonrpc":"2.0","method":"getPeers","params":[1],"id":1}' http://127.0.0.1:8545 |jq
 ```
 
-Although node1 is configured on the whitelist, node0 cannot establish a connection with node1 because node1 is also configured in the blacklist.
+Although node1 is configured on the whitelist, node0 cannot establish a connection with node1 because node1 is also configured in the blacklist
 
 ```json
 {

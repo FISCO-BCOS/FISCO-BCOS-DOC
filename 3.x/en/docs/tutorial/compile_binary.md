@@ -6,23 +6,23 @@ Tags: "executable program" "development manual" "precompiled program" "source co
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 ```eval_rst
 .. note::
    - FISCO BCOS supports compilation on Linux, macOS and Galaxy Kirin operating systems; When compiling binaries for Linux and Kirin systems, the gcc version must be no less than 10; When compiling binaries in macOS, clang version is required to be no less than 12.0
-   - FISCO BCOS 3.x supports macOS compilation with Apple Silicon, same compilation steps as x86 _ 64。
-   - FISCO BCOS 3.x compilation depends on the rust environment. Please install the rust environment before compiling the source code.
-   - Source code compilation is suitable for users with rich development experience. During the compilation process, you need to download the dependency library. Please keep the network smooth.
-   - FISCO BCOS compiles both the Air and Pro versions of the binary
+   - FISCO BCOS 3.x supports macOS compilation with Apple Silicon, the compilation steps are the same as x86 _ 64。
+   - FISCO BCOS 3.x compilation depends on the rust environment, please install the rust environment before compiling the source code
+   -Source code compilation is suitable for users with rich development experience. Dependency libraries need to be downloaded during the compilation process. Please keep the network unblocked
+   - FISCO BCOS compiles binaries for both the Air and Pro versions
 ```
 
-FSICO-BCOS uses a generic 'CMake' build system to generate platform-specific build files, which means that workflows are very similar no matter what operating system you use:
+FSICO-BCOS uses a general-purpose 'CMake' build system to generate platform-specific build files, which means that the workflow is very similar no matter what operating system you use:
 
 1. Install build tools and dependencies (platform dependent)
 2. Cloning code from FISCO BCOS
-3. Run cmake to generate the build file and compile it.
+3. Run cmake to generate the build file and compile it
 
 ## 1. Installation Dependencies
 
@@ -78,10 +78,10 @@ sudo yum update
 sudo yum install -y wget curl tar 
 sudo yum install -y build-essential clang flex bison patch glibc-static glibc-devel libzstd-devel libmpc cpp 
 
-# Check the gcc version. If the gcc version is lower than 10, install a gcc version higher than 10.
+# Check the gcc version. If the gcc version is lower than 10, install a gcc version higher than 10
 gcc -v
 
-# Check whether the cmake version is greater than or equal to 3.14. If not, install the cmake version that meets the requirements.
+# Check whether the cmake version is greater than or equal to 3.14. If not, install the cmake version that meets the requirements
 cmake --version
 ```
 
@@ -103,14 +103,14 @@ cd FISCO-BCOS
 
 ## 3. Compile
 
-**The compiled Air version binary is located in 'FISCO-BCOS/build/fisco-bcos-air/fisco-bcos-air'Path。**
+**The compiled Air version binary is located in the path 'FISCO-BCOS / build / fisco-bcos-air / fisco-bcos-air'。**
 
 **Compile all binaries corresponding to the Pro version of the Rpc service, Gateway service, Executor service, and node service. The path is as follows:**
 
-- Rpc Service: 'FISCO-BCOS/build/fisco-bcos-tars-service/RpcService/main/BcosRpcService`
-- Gateway Service: 'FISCO-BCOS/build/fisco-bcos-tars-service/GatewayService/main/BcosGatewayService`
-- Executor Service: 'FISCO-BCOS/build/fisco-bcos-tars-service/ExecutorService/main/BcosExecutorService`
-- Blockchain Node Service: 'FISCO-BCOS/build/fisco-bcos-tars-service/NodeService/main/BcosNodeService`、`FISCO-BCOS/build/fisco-bcos-tars-service/NodeService/main/BcosMaxNodeService`
+- Rpc service: 'FISCO-BCOS / build / fisco-bcos-tars-service / RpcService / main / BcosRpcService'
+- Gateway service: 'FISCO-BCOS / build / fisco-bcos-tars-service / GatewayService / main / BcosGatewayService'
+- Executor service: 'FISCO-BCOS / build / fisco-bcos-tars-service / ExecutorService / main / BcosExecutorService'
+- Blockchain node services: 'FISCO-BCOS / build / fisco-bcos-tars-service / NodeService / main / BcosNodeService', 'FISCO-BCOS / build / fisco-bcos-tars-service / NodeService / main / BcosMaxNodeService'
 
 **If it is too slow to pull dependencies from GitHub during compilation, you can do the following to speed up:**
 
@@ -130,7 +130,7 @@ EOF
 
 - **Modifying DNS and Host**
 
-Modifying the DNS host or adding the direct IP address of GitHub to the host can improve the access speed.。You can refer to tools such as' SwitchHosts'.。
+Modifying the DNS host or adding the direct IP address of GitHub to the host can improve the access speed。You can refer to tools such as' SwitchHosts'。
 
 - **Configure the vcpkg agent**
 
@@ -150,10 +150,10 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake -DBUILD_STATIC=ON .. || cat *.log
 
-# If vcpkg fails during dependency compilation, check the error log according to the error message.
+# If vcpkg fails during dependency compilation, check the error log according to the error message
 # For network reasons, configure the vcpkg agent as prompted above
 
-# Compile source code(High performance machines can be added-j4 Compile with 4-core acceleration)
+# Compile source code(High-performance machines can add -j4 using 4-core accelerated compilation)
 make -j4
 
 # generate tgz package
@@ -178,10 +178,10 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake3 -DBUILD_STATIC=ON .. || cat *.log
 
-# If vcpkg fails during dependency compilation, check the error log according to the error message.
+# If vcpkg fails during dependency compilation, check the error log according to the error message
 # For network reasons, configure the vcpkg agent as prompted above
 
-# High performance machines can be added-j4 Compile with 4-core acceleration
+# High-performance machines can add -j4 using 4-core accelerated compilation
 make -j4
 # generate tgz package
 rm -rf fisco-bcos-tars-service/*.tgz && make tar
@@ -203,10 +203,10 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake3 -DBUILD_STATIC=ON .. || cat *.log
 
-# If vcpkg fails during dependency compilation, check the error log according to the error message.
+# If vcpkg fails during dependency compilation, check the error log according to the error message
 # For network reasons, configure the vcpkg agent as prompted above
 
-# High performance machines can be added-j4 Compile with 4-core acceleration
+# High-performance machines can add -j4 using 4-core accelerated compilation
 make -j4
 # generate tgz package
 rm -rf fisco-bcos-tars-service/*.tgz && make tar
@@ -222,13 +222,13 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake -DBUILD_STATIC=ON ..|| cat *.log
 
-# If vcpkg fails during dependency compilation, check the error log according to the error message.
+# If vcpkg fails during dependency compilation, check the error log according to the error message
 # For network reasons, configure the vcpkg agent as prompted above
 
 # If an error occurs when you execute the preceding procedure, run the following command to specify SDKROOT
 #rm -rf CMakeCache.txt && export SDKROOT=$(xcrun --sdk macosx --show-sdk-path) && CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake ..
 
-# High performance machines can be added-j8 uses 8-core accelerated compilation
+# High-performance machines can be added -j8 using 8-core accelerated compilation
 make -j4
 
 # generate tgz package
@@ -245,10 +245,10 @@ cd ~/fisco/FISCO-BCOS
 mkdir -p build && cd build
 cmake3 -DBUILD_STATIC=ON .. || cat *.log
 
-# If vcpkg fails during dependency compilation, check the error log according to the error message.
+# If vcpkg fails during dependency compilation, check the error log according to the error message
 # For network reasons, configure the vcpkg agent as prompted above
 
-# High performance machines can be added-j4 Compile with 4-core acceleration
+# High-performance machines can add -j4 using 4-core accelerated compilation
 make -j4
 # generate tgz package
 rm -rf fisco-bcos-tars-service/*.tgz && make tar
@@ -257,10 +257,10 @@ rm -rf fisco-bcos-tars-service/*.tgz && make tar
 
 ### Compile Option Description
 
-- -- FULLNODE compiles all nodes, enabled by default
+--- FULLNODE compiles all nodes, enabled by default
 - -- WITH _ LIGHTNODE compiles light nodes, enabled by default
 - -- WITH _ TIKV Compile TIKV, enabled by default
 - -- WITH _ TARS _ SERVICES Compile TARS service, enabled by default
-- -- WITH _ SM2 _ OPTIMIZE enables SM2 performance optimization, which is enabled by default
+--- WITH _ SM2 _ OPTIMIZE enables SM2 performance optimization, which is enabled by default
 - -- WITH _ CPPSDK Compile C++SDK, enabled by default
-- -- WITH _ BENCHMARK compiles the performance test program, which is enabled by default
+--- WITH _ BENCHMARK compiles the performance test program, which is enabled by default

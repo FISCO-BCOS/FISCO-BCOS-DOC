@@ -6,8 +6,8 @@ Tags: "console" "Console Configuration" "Command Line Interactive Tools"
 
 ```eval_rst
 .. important::
-    - "Console" only supports FISCO BCOS 3.x version, based on 'Java SDK <.. /.. / sdk / java _ sdk / index.html >' _ implementation。
-    - You can use the command. "/ start.sh--version "View the current console version
+    - "Console" only supports FISCO BCOS 3.x version, based on 'Java SDK<../../sdk/java_sdk/index.html>'_ Implementation。
+    - You can view the current console version through the command. "/ start.sh --version"
 ```
 
 Possible errors in console startup:
@@ -45,14 +45,14 @@ Connection node timeout, possible cause:
 
 3. Check whether the network is connected
 
-   You can use tools such as' ping 'and' telnet 'to determine if the console is not connected to the server network where the node is located.
+   You can use tools such as' ping 'and' telnet 'to determine if the console is not connected to the server network where the node is located
 
 对于**SSL handshake failed**问题:
 
 1. Check whether the 'sdk' certificate is correct:
 
-    - The 'sdk' certificate location of the 'Air' installation package: `nodes/IP/sdk`
-    - The 'sdk' certificate location of the 'Pro' version installation package: `generated/rpc/chainID/IP/serviceName/sdk`(Remarks: chainID:Chain ID, IP:Node IP, serviceName:Service name, specified when setting up the environment)
+    - 'sdk' certificate location of the 'Air' installation package: `nodes/IP/sdk`
+    - 'sdk' certificate location of the 'Pro' version installation package: `generated/rpc/chainID/IP/serviceName/sdk`(Remarks: chainID:Chain ID, IP:Node IP, serviceName:Service name, specified when setting up the environment)
 
     will 'sdk /*'Copy the certificate in the directory to the console configuration directory 'console / conf'
 
@@ -73,11 +73,11 @@ Connection node timeout, possible cause:
         sm_ssl=false
    ```
 
-   The two configurations should be consistent, set to 'true' in the national secret environment and 'false' in the non-national secret environment.
+   The two configurations should be consistent, set to 'true' in the national secret environment and 'false' in the non-national secret environment
 
 ## `there has no connection available for the group, maybe all connections disconnected or the group does not exist`
 
-The group id used by the console does not exist. There are two ways to start the console.:
+The group id used by the console does not exist. There are two ways to start the console:
 
 Specify Group: `bash start.sh groupId`
 Default startup: 'bash start.sh ', the group id used at this time is the group configured in the' config.toml 'file:
@@ -87,7 +87,7 @@ Default startup: 'bash start.sh ', the group id used at this time is the group c
     defaultGroup="group0"                            # Console default group to connect
 ```
 
-The group ID of the node. Check the node configuration file 'config.genesis'.:
+The group ID of the node. Check the node configuration file 'config.genesis':
 
 ```shell
 // config.genesis

@@ -1,6 +1,6 @@
 # Signature and Verification
 
-Tag: "java-sdk`` ``Crypto``
+Tags: "java-sdk" "Crypto"
 
 ----
 
@@ -120,11 +120,11 @@ After initializing the cryptography suite 'CryptoSuite', users can directly use 
 
 ## Signature / Validation Interface
 
-After initializing the cryptography suite 'CryptoSuite', you can directly use the created 'CryptoSuite' to call the signature and signature verification interfaces. You can also create a specified signature verification object and call the signature and signature verification interfaces.。
+After initializing the cryptography suite 'CryptoSuite', you can directly use the created 'CryptoSuite' to call the signature and signature verification interfaces. You can also create a specified signature verification object and call the signature and signature verification interfaces。
 
 ```eval_rst
 .. note::
-    The plaintext data passed in by the signature / signature verification interface must be a hash. Before generating the signature of the specified plaintext, the hash must be calculated and the hash result must be passed into the interface as the original signature to generate the signature.
+    The plaintext data passed in by the signature / signature verification interface must be a hash. Before generating the signature of the specified plaintext, the hash must be calculated and the hash result must be passed into the interface as the original signature to generate the signature
 ```
 
 ### Invoking the signing / checking interface using CryptoSuite

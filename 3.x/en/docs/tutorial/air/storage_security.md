@@ -6,7 +6,7 @@ Tags: "Storage Security" "Storage Encryption" "Drop Disk Encryption"
 
 Alliance chain data, visible only to members within the alliance。Drop disk encryption ensures the security of data running the alliance chain on the hard disk。Once the hard drive is taken out of the Alliance chain's own intranet environment, the data cannot be decrypted。
 
-Disk encryption is the encryption of the contents of the node stored on the hard disk, including: contract data, the node's private key.。
+Disk encryption is the encryption of the contents of the node stored on the hard disk, including: contract data, the node's private key。
 
 For a specific introduction to falling disk encryption, please refer to: [Introduction to falling disk encryption](../../design/storage/storage_security.md)
 
@@ -16,7 +16,7 @@ Each organization has a Key Manager. For more information, see [Key Manager Gith
 
 ```eval_rst
 .. important::
-    If the node is in the state secret version, the key manager must be started in the state secret mode. Here, the non-state secret version is used as an example.。
+    If the node is in the state secret version, the key manager must be started in the state secret mode. Here, the non-state secret version is used as an example。
 ```
 
 ## 2. Generate blockchain nodes
@@ -30,7 +30,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/buil
 
 ```eval_rst
 .. note::
-    - If the build _ chain.sh script cannot be downloaded for a long time due to network problems, try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh`
+    -If the build _ chain.sh script cannot be downloaded for a long time due to network problems, please try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 Deploy four nodes:
@@ -46,7 +46,7 @@ bash build_chain.sh -l 127.0.0.1:4
 
 ## 3. Start Key Manager
 
-Start 'key by referring to the following command-manager`。If 'key' has not been deployed-manager '. For details, see Deploy Key Manager in the previous section of this document.
+Start 'key-manager' with the following command。If you have not deployed the 'key-manager', you can first deploy it by referring to the previous section of this document, 'Deploying Key Manager'
 
 ```shell
 # Parameters: port, superkey
@@ -66,7 +66,7 @@ Start successfully, print log
 
 ```eval_rst
 .. important::
-    The node on which the dataKey is configured must be a newly generated node that has not been started.。If the node that has been started to disable the disk encryption mode modifies the configuration file to enable disk encryption, the node will not start normally, please be cautious。
+    The node on which the dataKey is configured must be a newly generated node that has not been started。If the node that has been started to disable the disk encryption mode modifies the configuration file to enable disk encryption, the node will not start normally, please be cautious。
 ```
 
 Execute the script, define 'dataKey', and obtain 'cipherDataKey'
@@ -83,7 +83,7 @@ key_manager_url=127.0.0.1:8150
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
-The script automatically prints the ini configuration required for disk encryption.。
+The script automatically prints the ini configuration required for disk encryption。
 The cipherDataKey of the node is obtained: "'cipher _ data _ key = ed157f4588b86d61a2e1745efe71e6ea"'
 Write the resulting encrypted ini configuration to the node configuration file ([config.ini](../tutorial/air/config.md)) in。
 
@@ -100,9 +100,9 @@ key_manager_url=127.0.0.1:8150
 cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 ```
 
-## 5. Encrypt the node private key.
+## 5. Encrypt the node private key
 
-Execute the script to encrypt the private keys of all nodes. The node 'node0' is used as an example.。
+Execute the script to encrypt the private keys of all nodes. The node 'node0' is used as an example。
 
 ```bash
 $ cd key-manager/scripts
@@ -118,7 +118,7 @@ $ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/node.
 [INFO] "nodes/127.0.0.1/node0/conf/node.pem" encrypted!
 ```
 
-After execution, the node private key is automatically encrypted. The files before encryption are backed up to the files' ssl.key.bak.xxxxxx 'and' node.pem.bak.xxxxxx '.**Keep the backup private key safe and delete the backup private key generated on the node**
+After execution, the node private key is automatically encrypted. The files before encryption are backed up to the files' ssl.key.bak.xxxxxx 'and' node.pem.bak.xxxxxx '**Keep the backup private key safe and delete the backup private key generated on the node**
 
 
 If you view 'ssl.key', you can see that it has been encrypted as ciphertext
@@ -129,7 +129,7 @@ If you view 'ssl.key', you can see that it has been encrypted as ciphertext
 
 **Note: All files that need to be encrypted are listed below。Node cannot start without encryption。**
 
-   - non-state secret edition
+   - Non-State Secret Edition
         - conf/ssl.key
         - conf/node.pem
    - State Secret Edition

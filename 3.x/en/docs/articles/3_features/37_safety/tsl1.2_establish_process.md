@@ -8,21 +8,21 @@ As we said before, everything should be questioned on the Internet, so sending d
 
 SSL communication process is TLS1.2**[1]** Content of。The ultimate goal is to transmit packets securely。At the heart of SSL communication is authentication through a certificate, followed by"Handshake"Interactively generate an asymmetric session master key for this communication。Then in this round of communication, the data packet is encrypted and decrypted by this session master key and only the ciphertext is passed on the network。
 
-This article will take FISCO BCOS node communication two-way authentication as an example to explain how both parties to the communication load, use, verify the certificate, and how to generate the session master key.。
+This article will take FISCO BCOS node communication two-way authentication as an example to explain how both parties to the communication load, use, verify the certificate, and how to generate the session master key。
 
 ## Part 1 Master Key Settings
 
-Network compression is mainly implemented at the P2P network layer, and the system framework is as follows: the master key in TLS is a symmetric key, that is, the keys used by the client and server are the same, and the process of handshake is that the two sides interact with some random numbers to complete the setting of the master key.。 
+Network compression is mainly implemented at the P2P network layer, and the system framework is as follows: the master key in TLS is a symmetric key, that is, the keys used by the client and server are the same, and the process of handshake is that the two sides interact with some random numbers to complete the setting of the master key。 
 
 Let's take the DH key exchange algorithm x to negotiate the master key as an example. If the attacker is Eve, Eve can obtain the intermediate value of their transmission:
 
-1. Alice and Bob first negotiate fair a large prime p, and the generator g, Eve can get p and g.；
+1. Alice and Bob first negotiate fair a large prime p, and the generator g, Eve can get p and g；
 2. Alice chooses a random integer a ∈ Zp, calculates A = g ^ a modp, sends A to Bob, and Eve can get A
 3. Bob chooses a random integer b ∈ Zp, calculates B = g ^ b modp, sends B to Alice, and Eve can get B
 4. Alice calculates S = B ^ a = g ^(ab) modp
 5. Bob calculates s = a b = g(ab) modp
 
-Through the above process, Alice and Bob negotiate a key S. Although Eve obtains the intermediate values A, B, p, g, according to the discrete logarithm problem, Eve cannot obtain the specific value of S.。
+Through the above process, Alice and Bob negotiate a key S. Although Eve obtains the intermediate values A, B, p, g, according to the discrete logarithm problem, Eve cannot obtain the specific value of S。
 
 ## Part 2 Certificate Validation
 
@@ -32,11 +32,11 @@ In the previous article, we talked about [the issuance process of certificates](
 
 ▲ Thanks to Li Lianwen, the core developer of the community, for his contribution
 
-- When the program starts, the local ca.crt and node.crt are loaded first；
-- When a node verifies the certificate of the other node, it first uses the public key in the other node's node.crt to verify the attached signature. When the verification passes, it can confirm that the corresponding node has the node.key corresponding to the current node.crt.；
-- The node then uses the information in agency.crt to verify that node.crt is a legitimate agent.；
-- Finally, the node uses the information in locally loaded ca.crt to verify that agency.crt is issued by the Federation Chain Committee.；
-- When both are verified, it means that the node.crt received by the node is issued by the locally loaded ca.crt。
+-When the program starts, the local ca.crt and node.crt will be loaded first；
+- When a node verifies the certificate of the other node, it first uses the public key in the other node's node.crt to verify the attached signature. When the verification passes, it can confirm that the corresponding node has the node.key corresponding to the current node.crt；
+- the node then uses the information in agency.crt to verify that node.crt is a legitimate agent；
+- the last node uses the information in the locally loaded ca.crt to verify that the agency.crt was issued by the federation chain committee；
+-When both are verified, it means that the node.crt received by the node is issued by the locally loaded ca.crt。
 
 ## Part 3 TLS handshake process
 
@@ -52,10 +52,10 @@ The following figure shows the TLS handshake process obtained by capturing packe
 
 **In the process we see a total of 6 packets, namely:**
 
-- The client hello sent by the client to the server.
+-client client hello sent to server
 - The server hello sent by the server to the client, sending the server certificate, and negotiating parameters
-- The client certificate sent by the client to the server for parameter negotiation.
-- The end flag sent by the server to the client. The handshake is complete.
+- The client certificate sent by the client to the server for parameter negotiation
+-End flag sent by server to client, handshake complete
 
 ### (1) client hello
 
@@ -112,12 +112,12 @@ After receiving the certificate request from the server, the client sends its ow
 
 ![](../../../../images/articles/tsl1.2_establish_process/IMG_5538.PNG)
 
-In this step, the client uses the locally loaded ca.crt to verify the server certificate, and then performs parameter negotiation.
+In this step, the client uses the locally loaded ca.crt to verify the server certificate, and then performs parameter negotiation
 
 ```
 {
 client key exchange parameters
-the client 's verification result of the server - side certificate.
+the client 's verification result of the server - side certificate
 Transmission of content using ciphertext of session master key
 client to(1)(2)(3)Signature of the process
 }
@@ -127,13 +127,13 @@ client to(1)(2)(3)Signature of the process
 
 ![](../../../../images/articles/tsl1.2_establish_process/IMG_5539.PNG)
 
-After receiving the data packet, the server uses the session master key to encrypt and transmit the data packet.。
+After receiving the data packet, the server uses the session master key to encrypt and transmit the data packet。
 
 ------
 
 #### References
 
-[【1】TLS(Transport Layer Security)](https://baike.baidu.com/item/TLS/2979545?fr=aladdin)The secure transport layer protocol is used to provide confidentiality and data integrity between two communicating applications。The protocol consists of two layers: TLS Record and TLS Handshake.。
+[【1】TLS(Transport Layer Security)](https://baike.baidu.com/item/TLS/2979545?fr=aladdin)The secure transport layer protocol is used to provide confidentiality and data integrity between two communicating applications。The protocol consists of two layers: TLS Record and TLS Handshake。
 
 [【2】Discrete Logarithm Problem](https://www.doc.ic.ac.uk/~mrh/330tutor/ch06s02.html)
 

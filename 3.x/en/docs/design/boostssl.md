@@ -1,17 +1,17 @@
-# 19. Public network component BoostSSL.
+# 19. Public network component BoostSSL
 
 Tags: "network components" "boostssl"
 
 ----
 
-'boostssl 'is'fisco-Bcos' provides a public network component, built-in http, websocket two protocols, support for state-secret, non-state-secret SSL connection, in 'FISCO-BCOS 3.0 'used in multiple modules。
+'boostssl 'is a public network component provided by' fisco-bcos', built-in http, websocket two protocols, supports the state secret, non-state secret SSL connection, used in 'FISCO-BCOS 3.0' multiple modules。
 
 ## 1. 目标
 
 - Support state secret, non-state secret SSL connection
 - Support HTTP protocol
-- Support for WebSocket protocol
-- Simple, easy-to-use interface
+- Support WebSocket protocol
+- Simple, easy to use interface
 
 ## 2. 设计
 
@@ -53,17 +53,17 @@ To be added
 
 **Compile:**
 
-- 'Linux 'Compile
+- 'Linux' Compile
 
 ```shell
 # source /opt/rh/devtoolset-7/enable # centos execution
 
 cd bcos-boostssl
 mkdir build && cd build
-cmake ../ -DBUILD_SAMPLE=ON  # Centos uses cmake3, BUILD _ SAMPLE to compile the sample program of the sample directory.
+cmake ../ -DBUILD_SAMPLE=ON  # Centos uses cmake3, BUILD _ SAMPLE to compile the sample program of the sample directory
 ```
 
-- 'macOS 'Compile
+- 'macOS' Compile
 
 ```shell
 cd bcos-boostssl
@@ -83,11 +83,11 @@ MSBuild bcos-boostssl.sln /p:Configuration=Release /p:Platform=x64
 
 ## 5. Case
 
-`bcos-boostssl 'in' FISCO-Use in BCOS ':
+Use of 'bcos-boostssl' in 'FISCO-BCOS':
 
 - `bcos-cpp-sdk`: Use 'boostssl' as the client to connect to the node 'rpc', see:
   - [github](<https://github.com/FISCO-BCOS/bcos-cpp-sdk/blob/3.2.0/bcos-cpp-sdk/SdkFactory.cpp#L82>)
   - [gitee](<https://gitee.com/FISCO-BCOS/bcos-cpp-sdk/blob/3.2.0/bcos-cpp-sdk/SdkFactory.cpp#L82>)
-- `FISCO-BCOS rpc 'module: Use 'boostssl' as the server to provide 'RPC' services for both the 'http' and 'websocket' protocols. For more information, see:
+- 'FISCO-BCOS rpc' module: Use 'boostssl' as the server to provide 'RPC' services for both the 'http' and 'websocket' protocols. For more information, see:
   - [github](<https://github.com/FISCO-BCOS/FISCO-BCOS/blob/v3.2.0/bcos-rpc/bcos-rpc/RpcFactory.cpp#L310>)
   - [gitee](<https://gitee.com/FISCO-BCOS/FISCO-BCOS/blob/v3.2.0/bcos-rpc/bcos-rpc/RpcFactory.cpp#L310>)

@@ -6,12 +6,12 @@ Tags: "monitor" "monitor"
 
 ## light_monitor.sh
 
-`FISCO-BCOS 3.0 'blockchain lightweight monitoring tool can monitor whether the blockchain is working properly, and also provides a simple way to access the user alarm system.
+'FISCO-BCOS 3.0 'blockchain lightweight monitoring tool can monitor whether the blockchain is working properly, and also provides a simple way to access the user alarm system
 
-- Monitor whether the consensus is normal.
-- Monitor whether block synchronization is normal.
-- Monitor disk space.
-- Connect to the alarm system and send alarm information.
+- Monitor if consensus is normal
+- Monitor whether the block synchronization is normal
+- Monitor disk space
+- Connect to the alarm system and send alarm information
 
 ### 使用
 
@@ -41,7 +41,7 @@ Example:
 - `-p`: rpc port
 - `-t`: The threshold of the block synchronization alarm. If the block height difference between consensus nodes exceeds the threshold, consensus or block synchronization is abnormal. The default value is' 30'
 - `-d`: Directory to be monitored for disk capacity
-- `-T`: The disk alarm threshold. If the percentage of disk space is less than this value, an alarm is triggered. The default value is 5%.
+- `-T`: The disk alarm threshold. If the percentage of disk space is less than this value, an alarm is triggered. The default value is 5%
 - `-h`: Help Information
 
 #### Status Description
@@ -70,7 +70,7 @@ Check whether the network connection is normal。
 
 Insufficient disk space, remaining '${disk_space_left_percent}% 'of space
 
-To continuously monitor the status of blockchain nodes, configure 'light _ monitor.sh' to 'crontab' for periodic execution.
+To continuously monitor the status of blockchain nodes, configure 'light _ monitor.sh' to 'crontab' for periodic execution
 
 ```shell
 # Execute once per minute to check whether the node is started normally, normal consensus, and whether there is critical error printing
@@ -79,7 +79,7 @@ To continuously monitor the status of blockchain nodes, configure 'light _ monit
 
 'light _ monitor.log 'saves the output of' light _ monitor.sh'
 
-**You need to modify the path in the example based on the actual deployment.**
+**You need to modify the path in the example based on the actual deployment**
 
 ### docking alarm system
 
@@ -99,7 +99,7 @@ alarm() {
 }
 ```
 
- 'light _ monitor.sh 'The function is called at all critical errors triggered by the execution, and the error message is used as an input parameter. The user can call the API of the monitoring platform to send the error message to the alarm platform.
+ 'light _ monitor.sh 'The function is called at all critical errors triggered by the execution, and the error message is used as an input parameter. The user can call the API of the monitoring platform to send the error message to the alarm platform
 
 - Example
 
@@ -128,7 +128,7 @@ alarm() {
 
 ## **Node Monitoring**
 
-`FISCO-BCOS 3.0 'blockchain monitoring tool, you can monitor the blockchain block height and other indicators, displayed in the graphical interface.
+'FISCO-BCOS 3.0 'blockchain monitoring tool, you can monitor the blockchain block height and other indicators, displayed in the graphical interface
 
 The components involved include grafana(Used to show indicators),prometheus(Used to collect indicator information),mtail(Used to analyze blockchain log information acquisition metrics).
 
@@ -138,7 +138,7 @@ The monitoring tool can choose whether to deploy with the block chain when build
 
 ### **'m 'Node Monitoring Options [**Optional**]**
 
-Optional parameter. When the blockchain node is enabled for node monitoring, the-m 'option to deploy nodes with monitoring. If this option is not selected, only nodes without monitoring are deployed。
+Optional parameter. When node monitoring is enabled for blockchain nodes, you can use the '-m' option to deploy nodes with monitoring. If this option is not selected, only nodes without monitoring are deployed。
 
 An example of deploying an Air version blockchain with monitoring enabled is as follows:
 
@@ -170,7 +170,7 @@ Processing IP:127.0.0.1 Total:4
 [INFO] output dir          : nodes
 [INFO] All completed. Files in nodes
 ```
-Prompt All completed.Files in nodes, indicating that the block chain node file has been generated.
+Prompt All completed.Files in nodes, indicating that the block chain node file has been generated
 
 ### Use process
 
@@ -181,7 +181,7 @@ Prompt All completed.Files in nodes, indicating that the block chain node file h
 ```shell
 bash nodes/127.0.0.1/start_all.sh
 ```
-Successful startup will output the following information。Otherwise use 'netstat-an |grep tcp 'check machine' 30300 ~ 30303,20200 ~ 20203 'ports are occupied。
+Successful startup will output the following information。Otherwise use 'netstat -an|grep tcp 'check machine' 30300 ~ 30303,20200 ~ 20203 'ports are occupied。
 
 ```shell
 try to start node0
@@ -204,4 +204,4 @@ sh nodes/monitor/start_monitor.sh
 
 #### Step 3. Log in to grafana according to the prompt and view the indicators
 
-The URL startup script prints the corresponding address. The default username and password are admin / admin.([github source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard.json))and configure the prometheus source(http://ip:9090/)You can view the real-time display of each indicator.。
+The URL startup script prints the corresponding address. The default username and password are admin / admin([github source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard.json))and configure the prometheus source(http://ip:9090/)You can view the real-time display of each indicator。

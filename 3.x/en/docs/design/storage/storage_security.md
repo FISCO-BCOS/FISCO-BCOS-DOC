@@ -5,16 +5,16 @@ Tags: "Drop Disk Encryption" "Data Encryption" "Data Security" "
 ----
 ## Background Introduction
 
-In the architecture of the alliance chain, a blockchain is built between institutions, and data is visible within each institution of the alliance chain.。
+In the architecture of the alliance chain, a blockchain is built between institutions, and data is visible within each institution of the alliance chain。
 
-In some scenarios with high data security requirements, members within the alliance do not want organizations outside the alliance to have access to data on the alliance chain。At this point, you need to access the data on the federation chain.。
+In some scenarios with high data security requirements, members within the alliance do not want organizations outside the alliance to have access to data on the alliance chain。At this point, you need to access the data on the federation chain。
 
 Access control of federated chain data, which is mainly divided into two aspects
 
 * Access control of communication data on the chain
 * Access Control of Node Storage Data
 
-For access control of on-chain communication data, FISCO BCOS is done through node certificates and SSL.。The main focus here is on access control for node storage data, i.e., on-disk encryption。
+For access control of on-chain communication data, FISCO BCOS is done through node certificates and SSL。The main focus here is on access control for node storage data, i.e., on-disk encryption。
 
 ![](../../../images/design/data_secure_background.png)
 
@@ -27,7 +27,7 @@ Falling disk encryption is performed inside the institution。In the organizatio
 
 ![](../../../images/design/diskencryption_framework.png)
 
-Drop-disk encryption is performed within the organization, and each organization independently manages the security of its own hard drive data。In the intranet, the hard drive data of each node is encrypted。Access to all encrypted data, managed through Key Manager。Key Manager is a service deployed in an organization's intranet to manage node hard disk data access keys.。When a node in the intranet is started, it obtains the access key for the encrypted data from the Key Manager to access its own encrypted data.。
+Drop-disk encryption is performed within the organization, and each organization independently manages the security of its own hard drive data。In the intranet, the hard drive data of each node is encrypted。Access to all encrypted data, managed through Key Manager。Key Manager is a service deployed in an organization's intranet to manage node hard disk data access keys。When a node in the intranet is started, it obtains the access key for the encrypted data from the Key Manager to access its own encrypted data。
 
 Cryptographically protected objects include:
 
@@ -36,14 +36,14 @@ Cryptographically protected objects include:
 
 ## concrete realization
 
-The specific implementation process is accomplished through the dataKey held by the node itself and the global superKey managed by the Key Manager.。
+The specific implementation process is accomplished through the dataKey held by the node itself and the global superKey managed by the Key Manager。
 
 **Node**
 
-* The node uses its own dataKey to encrypt and decrypt the data (Encrypted Space) it manages.。
-* The node itself does not store the dataKey on the local disk, but stores the encrypted cipherDataKey of the dataKey.。
+* The node uses its own dataKey to encrypt and decrypt the data (Encrypted Space) it manages。
+* The node itself does not store the dataKey on the local disk, but stores the encrypted cipherDataKey of the dataKey。
 * When the node is started, request the cipherDataKey from the Key Manager to obtain the dataKey。
-* The dataKey is only in the node's memory. When the node is closed, the dataKey is automatically discarded.。
+* The dataKey is only in the node's memory. When the node is closed, the dataKey is automatically discarded。
 
 **Key Manager**
 
@@ -51,13 +51,13 @@ Holds the global superKey, which is responsible for responding to authorization 
 
 - Key Manager must be online in real time to respond to node startup requests。
 - When the node is started, the cipherDataKey is sent. The key manager decrypts the cipherDataKey with the superKey. If the decryption is successful, the node's dataK is returned to the node。
-- The key manager can only be accessed from the intranet. The key manager cannot be accessed from the intranet within the organization.
+- The key manager can only be accessed from the intranet. The key manager cannot be accessed from the intranet within the organization
 
 ![](../../../images/design/diskencryption.png)
 
 ## Program Process
 
-The scheme process is divided into node initial configuration and node safe operation.。
+The scheme process is divided into node initial configuration and node safe operation。
 
 ### node initial configuration
 
@@ -76,7 +76,7 @@ Before starting a node, you must configure a dataKey for the node
 
 ### node security operation
 
-When the node is started, the key manager is used to obtain the dataKey for local data access.。
+When the node is started, the key manager is used to obtain the dataKey for local data access。
 
 (1) The node starts, reads cipherDataKey from the configuration file, and sends it to the Key Manager。
 
@@ -98,4 +98,4 @@ Specific use of disk encryption, can refer to:
 
 ## Storage Security
 
-The Air and Pro versions of the storage system use the back-end database RocksDB, which is a high-performance key-Value Database。Design a perfect persistence mechanism, while ensuring performance and security, can be a good support range query。TiKV database for Max version。Both have high reliability and can cope with abnormal scenarios such as node power outages, restarts, and network fluctuations. After abnormal scenarios are restored, data can be read and written normally.。
+The Air and Pro versions of the storage system use the back-end database RocksDB, which is a high-performance Key-Value database。Design a perfect persistence mechanism, while ensuring performance and security, can be a good support range query。TiKV database for Max version。Both have high reliability and can cope with abnormal scenarios such as node power outages, restarts, and network fluctuations. After abnormal scenarios are restored, data can be read and written normally。

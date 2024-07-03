@@ -5,7 +5,7 @@ Tag: "Install Node.js" "Command Line Tools"
 ----
 ## Environmental Requirements
 
-- Node.js Development Environment
+- Node.js development environment
   - Node.js >= 8.10.0
   - npm >= 5.6.0
 
@@ -25,19 +25,19 @@ Tag: "Install Node.js" "Command Line Tools"
       nvm use 8
       ```
 
-  - If you are using Windows:
+  - If you use Windows:
 
     Please go to [Node.js official website](https://nodejs.org/en/download/)Download the installation package under Windows to install it。
 
-- Basic Development Components
-  - Python 2 (required for Windows, Linux, and MacOS)
+- Basic development components
+  - Python 2 (required for Windows, Linux and MacOS)
   - g++(Required for Linux and MacOS)
-  - Make (required for Linux and MacOS)
-  - Git (required for Windows, Linux, and MacOS)
+  -make (required for Linux and MacOS)
+  - Git (required for Windows, Linux and MacOS)
   - Git bash (required for Windows only)
-  - MSBuild Build Environment (Windows only)
+  - MSBuild build environment (required for Windows only)
 
-- FISCO BCOS Node: Refer to [FISCO BCOS Installation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)Build
+- FISCO BCOS Node: Please refer to [FISCO BCOS Installation](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html#fisco-bcos)Build
 
 ## Deploying the Node.js SDK
 
@@ -63,7 +63,7 @@ npm config set registry https://registry.npm.taobao.org
 ```
 
 ```bash
-# During the deployment process, please ensure that you can access the external network to install third-party dependency packages.
+# During the deployment process, please ensure that you can access the external network to install third-party dependency packages
 cd nodejs-sdk
 npm install
 npm run repoclean
@@ -72,7 +72,7 @@ npm run bootstrap
 
 ## Node.js CLI
 
-Node.js SDK embedded CLI tool for users to easily interact with the blockchain from the command line。The CLI tool is developed on the basis of the API provided by the Node.js SDK, and the usage and result output are script-friendly, and it is also an example of how to call the Node.js API for secondary development.。
+Node.js SDK embedded CLI tool for users to easily interact with the blockchain from the command line。The CLI tool is developed on the basis of the API provided by the Node.js SDK, and the usage and result output are script-friendly, and it is also an example of how to call the Node.js API for secondary development。
 
 **Fast chain building (optional)**
 
@@ -80,12 +80,12 @@ Node.js SDK embedded CLI tool for users to easily interact with the blockchain f
 
 ```bash
 # Get the development and deployment tool build _ chain.sh script
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - If the build _ chain.sh script cannot be downloaded for a long time due to network problems, try 'curl-#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh`
+    -If the build _ chain.sh script cannot be downloaded for a long time due to network problems, please try 'curl-#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ```bash
@@ -97,15 +97,15 @@ bash nodes/127.0.0.1/start_all.sh
 
 **Configure Certificates and Channel Ports**
 
-- Configure Certificate
+- Configure certificates
 
-    Modify the configuration file. The certificate configuration is located in the 'authentication' configuration item in the 'packages / cli / conf / config.json' file.。You need to modify the 'key', 'cert', and 'ca' configurations of the configuration item based on the path of the actual certificate file you are using, where 'key' is the path of the SDK private key file, 'cert' is the path of the SDK certificate file, and 'ca' is the path of the chain root certificate file.(https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)or [O & M Deployment Tool](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html)Automatic generation, please refer to the documentation of the above tools for the specific generation method and file location。
+    Modify the configuration file. The certificate configuration is located in the 'authentication' configuration item in the 'packages / cli / conf / config.json' file。You need to modify the 'key', 'cert', and 'ca' configurations of the configuration item based on the path of the actual certificate file you are using, where 'key' is the path of the SDK private key file, 'cert' is the path of the SDK certificate file, and 'ca' is the path of the chain root certificate file(https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/build_chain.html)or [O & M Deployment Tool](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/index.html)Automatic generation, please refer to the documentation of the above tools for the specific generation method and file location。
 
-- Configure Channel Ports
+- Configure Channel Port
 
-    Modify the configuration file. The node IP and port configurations are located in the 'nodes' configuration item in the 'packages / cli / conf / config.json' file.。You need to modify the 'ip' and 'port' configurations of the configuration item according to the actual configuration of the FISCO BCOS node you want to connect to, where 'ip' is the IP address of the connected node, and 'port' is the value of the 'channel _ listen _ port' configuration item in the config.ini file under the node directory.。You can skip this step if you are using a quick hitch。
+    Modify the configuration file. The node IP and port configurations are located in the 'nodes' configuration item in the 'packages / cli / conf / config.json' file。You need to modify the 'ip' and 'port' configurations of the configuration item according to the actual configuration of the FISCO BCOS node you want to connect to, where 'ip' is the IP address of the connected node, and 'port' is the value of the 'channel _ listen _ port' configuration item in the config.ini file under the node directory。You can skip this step if you are using a quick hitch。
 
-After the configuration is complete, you can start using the CLI tool. The CLI tool is located in 'packages / cli / cli.js'. All operations need to be performed in the 'packages / cli /' directory.
+After the configuration is complete, you can start using the CLI tool. The CLI tool is located in 'packages / cli / cli.js'. All operations need to be performed in the 'packages / cli /' directory
 
 ```
 cd packages/cli
@@ -193,7 +193,7 @@ The output is as follows:
 }
 ```
 
-**To call the set interface of the HelloWorld contract, change the contract address to the actual address.**
+**To call the set interface of the HelloWorld contract, change the contract address to the actual address**
 
 ```bash
 ./cli.js call HelloWorld 0x11b6d7495f2f04bdca45e9685ceadea4d4bd1832 set vita
@@ -208,7 +208,7 @@ The output is as follows:
 }
 ```
 
-**To call the get interface of the HelloWorld contract, change the contract address to the actual address.**
+**To call the get interface of the HelloWorld contract, change the contract address to the actual address**
 
 ```bash
 ./cli.js call HelloWorld 0xab09b29dd07e003776d22566ae5c078f2cb2279e get
@@ -233,7 +233,7 @@ If you want to know how to use a command, you can use the following command:
 ./cli.js <command> ?
 ```
 
-where command is a command name, using '?'as a parameter to get the command's usage tips, such as.
+where command is a command name, using '?'as a parameter to get the command's usage tips, such as
 
 ```bash
 ./cli.js call ?
@@ -248,12 +248,12 @@ Call a contract by a function and parameters
 
 Location:
   contractName The name of a contract [string] [required]
-  contractAddress  20 Bytes - The address of a contract [string] [required]
+  contractAddress 20 Bytes - The address of a contract [string] [required]
   function The function of a contract [string] [required]
   parameters       The parameters(splited by a space) of a function
                                                              [array] [default value]: []]
 
 Options:
-  --help Display help information [boolean]
+  --help Display Help Information [Boolean]
   --version Display Version Number [boolean]
 ```

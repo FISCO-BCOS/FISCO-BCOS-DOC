@@ -1,10 +1,10 @@
 # dynamic library download
 
-Tag: "c-sdk`` ``dynamic library``
+Tags: "c-sdk" "dynamic library"
 
 ----------
 
- `bcos-c-sdk 'has provided dynamic libraries for various platforms, and users can download and use them directly.:
+ 'bcos-c-sdk 'has provided dynamic libraries for various platforms, and users can directly download and use:
 
 ## v3.7.0
 

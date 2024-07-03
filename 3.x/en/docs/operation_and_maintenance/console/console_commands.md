@@ -6,33 +6,33 @@ Tags: "console" "console commands" "command line interactive tools"
 
 ```eval_rst
 .. important::
-    - "Console" only supports FISCO BCOS version 3.x, based on 'Java SDK <.. / sdk / java _ sdk / index.html >' _ implementation。
-    - You can use the command. "/ start.sh--version "View the current console version
+    - "Console" only supports FISCO BCOS 3.x version, based on 'Java SDK<../sdk/java_sdk/index.html>'_ Implementation。
+    - You can view the current console version through the command. "/ start.sh --version"
 ```
 
 ## Console Command Structure
 
 Console commands consist of two parts, directives and directive-related parameters:
 
-- **Directive**: Instructions are operational commands that are executed, including instructions to query blockchain-related information, deploy contracts, and invoke contracts, some of which call JSON-RPC interface, so with JSON-RPC interface with same name。
+- **Directive**: Instructions are commands that are executed, including instructions for querying blockchain-related information, deploying contracts, and invoking contracts. Some of these instructions call the JSON-RPC interface, so they have the same name as the JSON-RPC interface。
   **Tips: commands can be completed using the tab key, and support the up and down keys to display historical input commands。**
 
-- **Instruction-related parameters**: The parameters required by the instruction call interface, instructions and parameters, and parameters and parameters are separated by spaces, and JSON.-For detailed explanation of input parameters and obtaining information fields of RPC interface commands with the same name, refer to [JSON-RPC API](../../develop/api.md)。
+- **Instruction-related parameters**: The parameters required by the instruction call interface, the instructions and parameters, and the parameters and parameters are separated by spaces, and the input parameters and information acquisition fields of the command with the same name as the JSON-RPC interface are explained in detail [JSON-RPC API](../../develop/api.md)。
 
 ### Console Common Commands
 
 ### Contract Related Orders
 
-- Common deployment and invocation contracts
+- Common deployment and call contracts
   - Deployment contract: [deploy](./console_commands.html#deploy)
-  - Call Contract: [call](./console_commands.html#call)
+  - Call contract: [call](./console_commands.html#call)
 
 ### Other Commands
 
-- Query the block height: [getBlockNumber](./console_commands.html#getblocknumber)
-- Query the consensus node list: [getSealerList](./console_commands.html#getsealerlist)
+- Query block height: [getBlockNumber](./console_commands.html#getblocknumber)
+- Query consensus node list: [getSealerList](./console_commands.html#getsealerlist)
 - Query transaction receipt information: [getTransactionReceipt](./console_commands.html#gettransactionreceipt)
-- Toggle Group: [switch](./console_commands.html#switch)
+- Toggle groups: [switch](./console_commands.html#switch)
 
 ### Shortcut Keys
 
@@ -47,16 +47,16 @@ Console commands consist of two parts, directives and directive-related paramete
 
 When a console command is launched, the console obtains the command execution result and displays the execution result on the terminal. The execution result is divided into two categories:
 
-- **correct result:** The command returns the correct execution result, which is returned as a string or json.。
-- **Error result:** The command returns the execution result of the error, which is returned as a string or json.。
-  - Console command calls JSON-Error code when RPC interface [refer here](../../develop/api.html#rpc)。
-  - Error code when the command of the console calls the Precompiled Service interface [refer to here](../../develop/api.html#id5)。
+- **correct result:** The command returns the correct execution result, which is returned as a string or json。
+- **Error result:** The command returns the execution result of the error, which is returned as a string or json。
+  -Error code when the command of the console calls the JSON-RPC interface [refer here](../../develop/api.html#rpc)。
+  -Error code when the command of the console calls the Precompiled Service interface [refer here](../../develop/api.html#id5)。
 
 ## Console Basic Commands
 
 ### 1. help
 
-Run help or h to view all commands in the console.。
+Run help or h to view all commands in the console。
 
 ```shell
 [group0]: /apps> help
@@ -143,8 +143,8 @@ Run help or h to view all commands in the console.。
 
 **Note:**
 
-- Help shows the meaning of each command is: command command function description
-- View the instructions for using a specific command and enter the command-h or\--Help View。For example:
+-help shows the meaning of each command is: command command function description
+- View the instructions for the specific command, enter the command -h or\ --help to view。For example:
 
 ```shell
 [group0]: /apps> getBlockByNumber -h
@@ -184,8 +184,8 @@ Deployment contract。(HelloWorld contract and KVTableTest are provided by defau
 
 **Solidity deployment parameters:**
 
-- Contract path: the path of the contract file, which supports relative path, absolute path, and default path.。When the user enters a file name, the file is obtained from the default directory, which is: 'contracts / solidity ', for example: HelloWorld。
-- Enable static analysis: optional, the default is off。If enabled, static analysis of parallel field conflict domains is enabled to accelerate parallel contract execution。Static analysis takes a long time. Please be patient。
+- Contract path: the path of the contract file, supports relative path, absolute path and default path。When the user enters a file name, the file is obtained from the default directory, which is: 'contracts / solidity ', for example: HelloWorld。
+- Turn on static analysis: optional, the default is off。If enabled, static analysis of parallel field conflict domains is enabled to accelerate parallel contract execution。Static analysis takes a long time. Please be patient。
 
 ```shell
 # Deploy HelloWorld contract, default path
@@ -207,14 +207,14 @@ contract address: 0x0102e8B6fC8cdF9626fDdC1C3Ea8C1E79b3FCE94
 
 **Note:**
 
-- To deploy a contract written by a user, you can place the Solidity contract file in the 'contracts / solidity /' directory of the console root directory, and then deploy it.。Press tab to search for contract names in the 'contracts / consolidation /' directory。
-- If the contract to be deployed references another contract or library, the reference format is' import '."./XXX.sol";`。The relevant introduced contracts and library libraries are placed in the 'contracts / consolidation /' directory。
-- If the contract references a library, the name of the library file must start with the string 'Lib' to distinguish between a normal contract and a library file.。library library files cannot be deployed and called separately。
+- To deploy a contract written by a user, you can place the Solidity contract file in the 'contracts / solidity /' directory of the console root directory, and then deploy it。Press tab to search for contract names in the 'contracts / consolidation /' directory。
+- If the contract to be deployed references another contract or library, the reference format is' import '"./XXX.sol";`。The relevant introduced contracts and library libraries are placed in the 'contracts / consolidation /' directory。
+- If the contract references the library library, the name of the library file must start with the 'Lib' string to distinguish between a normal contract and a library file。library library files cannot be deployed and called separately。
 
 **Liquid deployment parameters:**
 
-- Binary file folder path: cargo-Both the wasm file and the ABI file compiled by liquid must be placed in the same path. Absolute paths and relative paths are supported.
-- Deploy BFS path: Path name in BFS file system
+- Binary file folder path: Wasm file and ABI file compiled by cargo-liquid must be placed in the same path. Absolute path and relative path are supported
+- Deploy BFS path: pathname in the BFS file system
 - Deployment construction parameters: Construction parameters required for deployment
 
 ```shell
@@ -227,7 +227,7 @@ currentAccount: 0x52d8001791a646d7e0d63e164731b8b7509c8bda
 
 **deploy with BFS:**
 
-Supports creating an alias in BFS when deploying a contract, using the parameter'-l 'Link the deployed address of HelloWorld to the / apps / hello / v1 directory:
+You can create an alias in BFS when deploying a contract. Use the '-l' parameter to link the deployed address of HelloWorld to the / apps / hello / v1 directory:
 
 ```shell
 [group0]: /apps> deploy -l ./hello/v1 HelloWorld
@@ -249,9 +249,9 @@ Run call, call contract。
 
 **Solidity call parameters:**
 
-- Contract path: the path of the contract file, which supports relative path, absolute path, and default path.。When the user enters a file name, the file is obtained from the default directory, which is: `contracts/solidity`。
-- Contract Address: Address obtained from the deployment contract。
-- Contract Interface Name: The name of the contract interface to call。
+- Contract path: the path of the contract file, supports relative path, absolute path and default path。When the user enters a file name, the file is obtained from the default directory, which is: `contracts/solidity`。
+- Contract address: Address obtained from the deployment contract。
+- Contract interface name: the name of the contract interface called。
 - Parameters: Determined by contract interface parameters。**Parameters are separated by spaces；Array parameters need to be bracketed, such as [1,2,3], the array is a string or byte type, double quotation marks, such as ["alice," "bob"], note that the array parameters do not have spaces；Boolean type is true or false。**
 
 ```shell
@@ -283,7 +283,7 @@ Return values:()
 Event logs
 Event: {}
 
-# Call the get interface of HelloWorld to obtain the name string and check whether the setting takes effect.
+# Call the get interface of HelloWorld to obtain the name string and check whether the setting takes effect
 [group0]: /apps> call HelloWorld 0x4721D1A77e0E76851D460073E64Ea06d9C104194 get 
 ---------------------------------------------------------------------------------------------
 Return code: 0
@@ -299,8 +299,8 @@ Return values:(Hello, FISCO BCOS 3.0)
 
 **Liquid parameter:**
 
-- Contract Path: The pathname in the BFS file system that was populated when the contract was deployed。
-- Contract Interface Name: The name of the contract interface to call。
+- Contract path: The pathname in the BFS file system that was populated when the contract was deployed。
+- Contract interface name: the name of the contract interface called。
 - Parameters: Determined by contract interface parameters。**Parameters are separated by spaces；Array parameters need to be bracketed, such as [1,2,3], the array is a string or byte type, double quotation marks, such as ["alice," "bob"], note that the array parameters do not have spaces；Boolean type is true or false。**
 
 ```shell
@@ -340,7 +340,7 @@ Event: {}
 
 **Call with BFS:**
 
-You can call a link file created in the BFS directory. The call gesture is similar to calling a normal contract.。
+You can call a link file created in the BFS directory. The call gesture is similar to calling a normal contract。
 
 ```shell
 [group0]: /apps> call ./hello/v1 set "Hello, BFS."
@@ -361,7 +361,7 @@ Event: {}
 
 ### 3. getCode
 
-Run getCode to query the contract binary code based on the contract address.。
+Run getCode to query the contract binary code based on the contract address。
 Parameters:
 
 - Contract address: 0x contract address(Deploy the contract to get the contract address)。
@@ -376,7 +376,7 @@ Parameters:
 Show contract interface and Event list
 Parameters:
 
-- Contract path: the path of the contract file, which supports relative path, absolute path, and default path.。When the user enters a file name, the file is obtained from the default directory, which is: 'contracts / solidity ', for example: TableTest。
+- Contract path: the path of the contract file, supports relative path, absolute path and default path。When the user enters a file name, the file is obtained from the default directory, which is: 'contracts / solidity ', for example: TableTest。
 - Contract Name:(Optional)Contract name, which uses the contract file name as the contract name parameter by default
 - Contract Address:(Optional)After the contract address is deployed, listAbi initiates a getAbi request to the node
 
@@ -414,7 +414,7 @@ Method list:
 
 Run getDeployLog to query the group**by the current console**Log information of the deployment contract。Log information includes when the contract was deployed, group ID, contract name, and contract address。Parameters:
 
-- Number of log lines. Optional. The latest log information is returned based on the expected value. When the actual number of log lines is less than the expected value, the actual number of log lines is returned.。When the expected value is not given, the latest log information is returned as 20 by default.。
+-Number of log lines, optional, returns the latest log information according to the input expected value, when the actual number is less than the expected value, returns according to the actual number。When the expected value is not given, the latest log information is returned as 20 by default。
 
 ```shell
 [group0]: /apps>  getDeployLog 2
@@ -431,8 +431,8 @@ Run getDeployLog to query the group**by the current console**Log information of 
 
 ### 6. listDeployContractAddress
 
-Lists all contract addresses deployed with the specified contract name.
-Lists the list of contract addresses generated by deploying a specified contract.
+Lists all contract addresses deployed with the specified contract name
+Lists the list of contract addresses generated by deploying a specified contract
 
 - contractNameOrPath: Contract name or contract absolute path, which specifies the contract;
 - recordNumber: The length of the displayed list of contract addresses, which defaults to 20
@@ -572,8 +572,8 @@ PeersInfo{
 Run getBlockByHash to query the block information based on the block hash。
 Parameters:
 
-- Block hash: the hash value of the block starting with 0x。
-- Transaction flag: false by default. Only transaction hash is displayed for transactions in the block. Set to true to display transaction details.。
+- Block hash: block hash value starting with 0x。
+- Transaction flag: False by default, only transaction hash is displayed for transactions in the block, set to true, and transaction specific information is displayed。
 
 ```shell
 [group0]: /apps> getBlockByHash 0x2cc22006edec686f116ac6b41859f7b23fa9b39f8a2baef33f17da46bfd13d42
@@ -655,11 +655,11 @@ Parameters:
 
 ### 5. getBlockByNumber
 
-Run getBlockByNumber to query the block information based on the block height.。
+Run getBlockByNumber to query the block information based on the block height。
 Parameters:
 
 - Block height: decimal integer。
-- Transaction flag: false by default. Only transaction hash is displayed for transactions in the block. Set to true to display transaction details.。
+- Transaction flag: False by default, only transaction hash is displayed for transactions in the block, set to true, and transaction specific information is displayed。
 
 ```shell
 [group0]: /apps> getBlockByNumber 1
@@ -838,10 +838,10 @@ Run setSystemConfigByKey to set system parameters as key-value pairs。Currently
 **Note:** When the permission governance mode is enabled, this command can only be used by the governance committee and cannot be directly called by the user. For details, see the command 'setSysConfigProposal'
 
 - `tx_count_limit`: Maximum number of packaged transactions in a block
-- `tx_gas_price`: Transaction gas price. The default unit is wei. Kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported.
+- `tx_gas_price`: Transaction gas price. The default unit is wei. Kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported
 - `tx_gas_limit`: Gas limits for trade execution
 - `consensus_leader_period`: Consensus Select Primary Interval
-- `compatibility_version`: Data-compatible version number. After all binaries in the blockchain are upgraded to the latest version, you can upgrade the data-compatible version number to the latest version by using setSystemConfigByKey.
+- `compatibility_version`: Data-compatible version number. After all binaries in the blockchain are upgraded to the latest version, you can upgrade the data-compatible version number to the latest version by using setSystemConfigByKey
 - `auth_check_status`: (Effective after 3.3.0) Permission check status, if it is 0, all permission checks are turned off, and if it is not 0, all checks are turned on
 
 Parameters:
@@ -976,7 +976,7 @@ Run addSealer to add the node as a consensus node。
 Parameters:
 
 - Node nodeId
-- node weight
+- Node weights
 
 ```shell
 [group0]: /apps> addSealer bb21228b0762433ea6e4cb185e1c54aeb83cd964ec0e831f8732cb2522795bb569d58215dfbeb7d3fc474fdce33dc9a793d4f0e86ce69834eddc707b48915824 2
@@ -1006,9 +1006,9 @@ Parameters:
 
 ### 7. removeNode
 
-Run removeNode and the node exits。You can use the addSealer command to add the exiting node as a consensus node and the addObserver command to add the node as an observation node.。
+Run removeNode and the node exits。You can use the addSealer command to add the exiting node as a consensus node and the addObserver command to add the node as an observation node。
 
-**Note:** When the permission governance mode is enabled, this command can only be used by the governance committee and cannot be directly called by the user. For details, see the command 'removeNodeProposal'.
+**Note:** When the permission governance mode is enabled, this command can only be used by the governance committee and cannot be directly called by the user. For details, see the command 'removeNodeProposal'
 
 Parameters:
 
@@ -1054,11 +1054,11 @@ t_demo
 
 **Note:**
 
-- The length of the prefix on the created table name cannot exceed 50. For example, the length of / tables / t _ demo cannot exceed 50.。
-- The field type of the created table is a string type, even if other field types of the database are provided, the string type is set。
-- Primary key field must be specified。For example, create a t _ demo table. The primary key field is name.。
-- The primary key of a table is not the same as the primary key in a relational database. The value of the primary key is not unique here.。
-- You can specify a field as the primary key, but the modified keywords such as field self-increment, non-null, and index do not work。
+-The length of the prefix on the created table name cannot exceed 50. For example, the length of / tables / t _ demo cannot exceed 50。
+-The field types of the created table are all string types. Even if other field types of the database are provided, they are set according to the string type。
+- Primary key field must be specified。For example, create a t _ demo table. The primary key field is name。
+-The primary key of a table is not the same as the primary key in a relational database. The value of the primary key is not unique here. The primary key value needs to be passed in when processing records at the bottom of the blockchain。
+-You can specify the field as the primary key, but the set field self-increasing, non-empty, index and other modification keywords do not work。
 
 ### 2. [alter sql]
 
@@ -1085,14 +1085,14 @@ Alter 't_demo' Ok.
 **Note:**
 
 - The modified table must exist and currently**Only new fields are supported**
-- The field type of the created table is a string type, even if other field types of the database are provided, they are also set according to the string type and cannot be repeated.
+-The field types of the created table are all string types. Even if other field types of the database are provided, they are set according to the string type and cannot be repeated
 
 ### 3. desc
 
 Run the desc statement to query the field information of the table, using the mysql statement。
 
 ```shell
-# Queries the field information of the t _ demo table. You can view the primary key name and other field names of the table.
+# Queries the field information of the t _ demo table. You can view the primary key name and other field names of the table
 [group0]: /apps> desc t_demo
 {
     "key_field":[
@@ -1118,13 +1118,13 @@ Insert OK:
 **Note:**
 
 - insert record sql statement must be inserted into the primary key field value of the table。
-- The entered value is a string containing letters with punctuation, spaces, or numbers that start with a number. Double quotation marks are required. Double quotation marks are not allowed in double quotation marks。
+- The entered value is a string containing letters with punctuation, spaces, or numbers that begin with double quotes. Double quotes are not allowed in double quotes。
 
 ### 5. [select sql]
 
 Run the select sql statement to query records, using the mysql statement。
 
-Unlike regular SQL, conditional statements that traverse interfaces currently only support the condition of the key field.。
+Unlike regular SQL, conditional statements that traverse interfaces currently only support the condition of the key field。
 
 ```text
 # Query records with all fields
@@ -1160,10 +1160,10 @@ Insert OK, 1 row affected.
 
 **Note:**
 
-- query record sql statement must provide the primary key field value of the table in the where clause。
-- The limit field in a relational database can be used, providing two parameters, respectively, offset(Offset)and number of records(count)。
-- The WHERE clause only supports the AND keyword. Other OR, IN, LIKE, INNER, JOIN, UNION, subqueries, and multi-table union queries are not supported.。
-- The entered value is a string containing letters with punctuation, spaces, or numbers that start with a number. Double quotation marks are required. Double quotation marks are not allowed in double quotation marks。
+- The query record sql statement must provide the primary key field value of the table in the where clause。
+-The limit field in the relational database can be used, providing two parameters, respectively offset(Offset)and number of records(count)。
+The -where clause only supports the and keyword. Other OR, IN, LIKE, INNER, JOIN, UNION, subqueries, and multi-table union queries are not supported。
+- The entered value is a string containing letters with punctuation, spaces, or numbers that begin with double quotes. Double quotes are not allowed in double quotes。
 
 ### 6. [update sql]
 
@@ -1176,8 +1176,8 @@ Update OK, 1 row affected.
 
 **Note:**
 
-- The where clause of the update record sql statement currently only supports the primary key field value condition of the table.。
-- The entered value is a string containing letters with punctuation, spaces, or numbers that start with a number. Double quotation marks are required. Double quotation marks are not allowed in double quotation marks。
+- The where clause of the update record sql statement currently only supports the primary key field value condition of the table。
+- The entered value is a string containing letters with punctuation, spaces, or numbers that begin with double quotes. Double quotes are not allowed in double quotes。
 
 ### 7. [delete sql]
 
@@ -1190,14 +1190,14 @@ Remove OK, 1 row affected.
 
 **Note:**
 
-- The where clause of the delete record sql statement currently only supports the primary key field value condition of the table.。
-- The entered value is a string containing letters with punctuation, spaces, or numbers that start with a number. Double quotation marks are required. Double quotation marks are not allowed in double quotation marks。
+- The where clause of the deleted record sql statement currently only supports the primary key field value condition of the table。
+- The entered value is a string containing letters with punctuation, spaces, or numbers that begin with double quotes. Double quotes are not allowed in double quotes。
 
 ## BFS Operation Commands
 
 ### 1. cd
 
-Similar to the Linux cd command, you can switch the current path and support absolute and relative paths.。
+Similar to the Linux cd command, you can switch the current path and support absolute and relative paths。
 
 ```shell
 [group0]: /apps> cd ../tables
@@ -1215,9 +1215,9 @@ Similar to the Linux cd command, you can switch the current path and support abs
 
 ### 2. ls
 
-Similar to the Linux ls command, you can view the resources in the current path. If it is a directory, all resources in the directory are displayed.；In the case of a contract, display the contract's meta information。
+Similar to the Linux ls command, you can view the resources in the current path. If it is a directory, all resources in the directory are displayed；In the case of a contract, display the contract's meta information。
 
-When the ls parameter is 0, the current folder is displayed. When the ls parameter is 1, absolute and relative paths are supported.。
+When the ls parameter is 0, the current folder is displayed. When the ls parameter is 1, absolute and relative paths are supported。
 
 ```shell
 [group0]: /> ls
@@ -1232,7 +1232,7 @@ name: Hello, type: contract
 
 ### 3. mkdir
 
-Similar to the mkdir command in Linux, a new directory is created under a folder, and absolute and relative paths are supported.。
+Similar to the mkdir command in Linux, a new directory is created under a folder, and absolute and relative paths are supported。
 
 ```shell
 [group0]: /> mkdir /apps/test
@@ -1250,11 +1250,11 @@ test
 
 ### 4. ln
 
-Similar to the Linux ln command, you can create a link to a contract resource and initiate a call to the actual contract by calling the link directly.。
+Similar to the Linux ln command, you can create a link to a contract resource and initiate a call to the actual contract by calling the link directly。
 
 Similar to version 2.0 of the CNS service, relying on the BFS multi-level directory, you can establish a mapping relationship between contract name and contract address, contract version number。
 
-For example, if the contract name is Hello and the contract version number is latest, you can create a soft connection of '/ apps / Hello / latest' in the '/ apps' directory.。Similarly, users can create multiple versions under '/ apps / Hello', for example: '/ apps / Hello / newOne', '/ apps / Hello / layerTwo', etc.。
+For example, if the contract name is Hello and the contract version number is latest, you can create a soft connection of '/ apps / Hello / latest' in the '/ apps' directory。Similarly, users can create multiple versions under '/ apps / Hello', for example: '/ apps / Hello / newOne', '/ apps / Hello / layerTwo', etc。
 
 ```bash
 # Create a contract soft link with the contract name Hello and the contract version latest
@@ -1264,7 +1264,7 @@ For example, if the contract name is Hello and the contract version number is la
     "msg":"Success"
 }
 
-# The link file is created in the / apps / directory.
+# The link file is created in the / apps / directory
 [group0]: /apps> ls ./Hello/latest 
 latest -> 19a6434154de51c7a7406edf312f01527441b561      
 
@@ -1296,7 +1296,7 @@ latest -> 2b5dcbae97f9d9178e8b051b08c9fb4089bae71b
 
 ### 5. tree
 
-Similar to the tree command in Linux, the resources under the specified BFS path are displayed in a tree structure.。The default depth is 3, you can use the parameter to set the depth to no more than 5。
+Similar to the tree command in Linux, the resources under the specified BFS path are displayed in a tree structure。The default depth is 3, you can use the parameter to set the depth to no more than 5。
 
 ```bash
 [group0]: /apps> tree ..
@@ -1344,7 +1344,7 @@ Similar to the Linux pwd command, no parameters, showing the current path。
 
 ### 1. getGroupPeers
 
-Run getGroupPeers to view the list of consensus nodes and observation nodes in the group where the node is located.。
+Run getGroupPeers to view the list of consensus nodes and observation nodes in the group where the node is located。
 
 ```shell
 [group0]: /apps> getGroupPeers 
@@ -1570,7 +1570,7 @@ Run the getGroupNodeInfo command to get information about a node in the current 
 
 ## permission operation command
 
-Permission governance operation commands are divided into: query permission governance status command, governance committee special command, contract administrator special command.。
+Permission governance operation commands are divided into: query permission governance status command, governance committee special command, contract administrator special command。
 
 ### 1. Query permission governance commands
 
@@ -1578,7 +1578,7 @@ This type of command has no permission control and is accessible to all accounts
 
 #### 1.1. getCommitteeInfo
 
-At initialization, a governance committee is deployed whose address information is automatically generated or specified at build _ chain.sh.。Initialize only one member, and the weight of the member is 1
+At initialization, a governance committee is deployed whose address information is automatically generated or specified at build _ chain.sh。Initialize only one member, and the weight of the member is 1
 
 ```shell
 [group0]: /apps> getCommitteeInfo 
@@ -1594,30 +1594,30 @@ index0 : 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6     | 1
 
 #### 1.2. getProposalInfo
 
-Obtain proposal information in a specific range in batches. If only a single ID is entered, the proposal information of a single ID is returned.。
+Obtain proposal information in a specific range in batches. If only a single ID is entered, the proposal information of a single ID is returned。
 
 'proposalType 'and' status' can see the type and status of the proposal
 
 ProposalType is divided into the following categories:
 
-- setWeight: Generated when the governance committee initiates the updateGovernorProposal
-- setRate: The setRateProposal is generated
-- setDeployAuthType: The setDeployAuthTypeProposal proposal generates
-- modifyDeployAuth: openDeployAuthProposal and closeDeployAuthProposal generate
-- resetAdmin: resetAdminProposal is generated
+-setWeight: Generated when the governance committee initiates an updateGovernorProposal
+-setRate: The setRateProposal is generated
+-setDeployAuthType: The setDeployAuthTypeProposal proposal is generated
+-modifyDeployAuth: openDeployAuthProposal and closeDeployAuthProposal are generated
+-resetAdmin: The resetAdminProposal is generated
 - setConfig: setSysConfigProposal is generated
 - setNodeWeight: addObserverProposal, addSealerProposal, setSensusNodeWeightProposal Proposal Generation
-- removeNode: removeNodeProposal generation
-- unknown: When this type appears, there may be a bug
+-removeNode: removeNodeProposal generation
+-unknown: When this type appears, there may be a bug
 
 status is divided into the following categories:
 
-- notEnoughVotes: proposal normal, not enough votes collected yet
-- finish: Proposal execution complete
-- Failed: Proposal failed
-- Revoke: Proposal withdrawn
-- outdated: Proposal exceeds voting deadline
-- unknown: When this type appears, there may be a bug
+-notEnoughVotes: The proposal is normal, not enough votes have been collected
+-finish: Proposal execution complete
+-failed: Proposal failed
+-revoke: proposal withdrawn
+-outdated: Proposal exceeds voting deadline
+-unknown: When this type appears, there may be a bug
 
 ```shell
 [group0]: /apps> getProposalInfo 1
@@ -1649,7 +1649,7 @@ Against Voters:
 
 #### 1.3. getLatestProposal
 
-In order to avoid the timeout of initiating a proposal and forgetting the proposal ID when exiting the console, the getLatestProposal command can obtain the latest proposal information of the current committee.。
+In order to avoid the timeout of initiating a proposal and forgetting the proposal ID when exiting the console, the getLatestProposal command can obtain the latest proposal information of the current committee。
 
 ```shell
 [group0]: /apps> getLatestProposal 
@@ -1670,15 +1670,15 @@ Against Voters:
 Permission policies are divided into:
 
 - No permissions, everyone can deploy
-- Blacklist. Users on the blacklist cannot be deployed
-- Whitelist, only whitelisted users can be deployed
+- Blacklist, users on the blacklist cannot be deployed
+- Whitelist, only whitelisted users can deploy
 
 ```shell
 [group0]: /apps> getDeployAuth
 There is no deploy strategy, everyone can deploy contracts.
 ```
 
-Governance Committee-specific commands, which must have an account in the Governance Committee's Governors before they can be called.
+Governance Committee-specific commands, which must have an account in the Governance Committee's Governors before they can be called
 
 If there is only one governance committee member and the proposal is initiated by that committee member, then the proposal is bound to succeed
 
@@ -1687,11 +1687,11 @@ If there is only one governance committee member and the proposal is initiated b
 Check if the account has deployment permissions
 
 ```shell
-# the current deployment permission is in whitelist mode.
+# the current deployment permission is in whitelist mode
 [group0]: /apps> getDeployAuth 
 Deploy strategy is White List Access.
 
-# If you do not select the parameter, check whether the current account has the deployment permission.
+# If you do not select the parameter, check whether the current account has the deployment permission
 [group0]: /apps> checkDeployAuth 
 Deploy : PERMISSION DENIED
 Account: 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1704,7 +1704,7 @@ Account: 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
 
 #### 1.6. getContractAdmin
 
-Use the command to obtain the administrator of a contract. Only the administrator can control the permissions of the contract.。
+Use the command to obtain the administrator of a contract. Only the administrator can control the permissions of the contract。
 
 ```shell
 # The admin account number of the contract address 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is 0x7fb008862ff69353a02ddabbc6cb7dc31683d0f6
@@ -1714,7 +1714,7 @@ Admin for contract 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 is: 0x7fb008862ff6
 
 #### 1.7. checkMethodAuth
 
-Check whether the account has permission to call a contract interface.
+Check whether the account has permission to call a contract interface
 
 ```shell
 # Set the set of the contract with address 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b(string) for whitelist mode
@@ -1724,7 +1724,7 @@ Check whether the account has permission to call a contract interface.
     "msg":"Success"
 }
 
-# If no parameter is selected, check whether the current account has the calling permission.
+# If no parameter is selected, check whether the current account has the calling permission
 [group0]: /apps> checkMethodAuth 0x600E41F494CbEEd1936D5e0a293AEe0ab1746c7b set(string)
 Method   : PERMISSION DENIED
 Account  : 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a
@@ -1765,7 +1765,7 @@ Block address :
 
 #### 1.9. getContractStatus
 
-Obtain the status of a contract. Currently, there are only two statuses: frozen and normal access.
+Obtain the status of a contract. Currently, there are only two statuses: frozen and normal access
 
 ```shell
 [group0]: /apps> getContractStatus 0x31eD5233b81c79D5adDDeeF991f531A9BBc2aD01
@@ -1783,11 +1783,11 @@ Unavailable
 
 ### 2. Special Order of Governance Committee
 
-These orders can only be used by holding the account of the governance committee.。
+These orders can only be used by holding the account of the governance committee。
 
 #### 2.1. updateGovernorProposal
 
-In the case of a new governance committee, add an address and weight.。
+In the case of a new governance committee, add an address and weight。
 
 If you are deleting a governance member, you can set the weight of a governance member to 0
 
@@ -1829,7 +1829,7 @@ Against Voters:
 
 #### 2.3. setDeployAuthTypeProposal
 
-Set the ACL policy for deployment. Only white _ list and black _ list policies are supported.
+Set the ACL policy for deployment. Only white _ list and black _ list policies are supported
 
 ```shell
 [group0]: /apps> setDeployAuthTypeProposal white_list
@@ -2081,12 +2081,12 @@ Against Voters:
 
 Initiate a proposal to upgrade the logic of voting calculations。The upgrade proposal vote calculation logic is divided into the following steps:
 
-1. Write contracts based on interfaces.；
+1. Write contracts based on interfaces；
 2. Deploy the written contract on the chain and get the address of the contract；
 3. Initiate a proposal to upgrade the voting calculation logic, enter the address of the contract as a parameter, and vote on it in the governance committee；
-4. After the vote is passed (the voting calculation logic is still the original logic at this time), the voting calculation logic is upgraded.；Otherwise do not upgrade。
+4. After the vote is passed (the voting calculation logic is still the original logic at this time), the voting calculation logic is upgraded；Otherwise do not upgrade。
 
-The voting calculation logic contract can only be used according to a certain interface implementation.。For contract implementation, see the following interface contract 'VoteComputerTemplate.sol':
+The voting calculation logic contract can only be used according to a certain interface implementation。For contract implementation, see the following interface contract 'VoteComputerTemplate.sol':
 
 ```solidity
 // SPDX-License-Identifier: Apache-2.0
@@ -2115,7 +2115,7 @@ abstract contract VoteComputerTemplate is BasicAuth {
         address[] memory againstVoters
     ) public view virtual returns (uint8);
     
-    / / This is a verification interface for computational logic for other governance members to verify the validity of the contract.
+    / / This is a verification interface for computational logic for other governance members to verify the validity of the contract
     function voteResultCalc(
         uint32 agreeVotes,
         uint32 doneVotes,
@@ -2194,7 +2194,7 @@ ParticipatesRate: 0% , WinRate: 0%
 Governor Address                                        | Weight
 index0 : 0x4a37eba43c66df4b8394abdf8b239e3381ea4221     | 2
 
-# Deploy the VoteComputer contract. The first parameter 0x10001 is a fixed address, and the second parameter is the address of the current governance committee member Committee.
+# Deploy the VoteComputer contract. The first parameter 0x10001 is a fixed address, and the second parameter is the address of the current governance committee member Committee
 [group0]: /apps> deploy VoteComputer 0x10001 0xa0974646d4462913a36c986ea260567cf471db1f
 transaction hash: 0x429a7ceccefb3a4a1649599f18b60cac1af040cd86bb8283b9aab68f0ab35ae4
 contract address: 0x6EA6907F036Ff456d2F0f0A858Afa9807Ff4b788
@@ -2234,7 +2234,7 @@ Agree Voters:
 ---------------------------------------------------------------------------------------------
 Against Voters:
 
-# At this time, another governance committee account is simulated to log in.
+# At this time, another governance committee account is simulated to log in
 [group0]: /apps> loadAccount 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a 
 Load account 0xea9b0d13812f235e4f7eaa5b6131794c9c755e9a success!
 
@@ -2402,7 +2402,7 @@ These commands are only accessible to an administrator account that has administ
 
  Permission policy for administrator setting method
 
-**Special attention: the interface permission control of the contract can only control the write method at present.。**
+**Special attention: the interface permission control of the contract can only control the write method at present。**
 
 ```shell
 # Set the set of the HelloWorld contract with the contract address 0xCcEeF68C9b4811b32c75df284a1396C7C5509561(string) Interface is in whitelist mode
@@ -2412,7 +2412,7 @@ These commands are only accessible to an administrator account that has administ
     "msg":"Success"
 }
 
-# This interface is currently in whitelist mode. Only accounts in whitelist mode can call the set interface.
+# This interface is currently in whitelist mode. Only accounts in whitelist mode can call the set interface
 [group0]: /apps> call HelloWorld 0xCcEeF68C9b4811b32c75df284a1396C7C5509561 set 123
 transaction hash: 0x51e43a93b8e6621e45357ba542112117c3dd3e089b5067e06084e36243458074
 ---------------------------------------------------------------------------------------------
@@ -2503,7 +2503,7 @@ Return message: Permission denied
 
 Run freezeContract to freeze the specified contract。Parameters:
 
-- Contract address: The contract address can be obtained for the deployment contract, where the 0x prefix is not required.。
+- Contract address: The contract address can be obtained for the deployment contract, where the 0x prefix is not required。
 
 ```shell
 [group0]: /apps> deploy HelloWorld
@@ -2539,7 +2539,7 @@ Return message: ContractFrozen
 
 Run unfreezeContract to unfreeze the specified contract。Parameters:
 
-- Contract address: The contract address can be obtained for the deployment contract, where the 0x prefix is not required.。
+- Contract address: The contract address can be obtained for the deployment contract, where the 0x prefix is not required。
 
 ```shell
 [group0]: /apps> call HelloWorld 0xA28AC30A792A59C3CD114A87a75193C6B8278D7E get
@@ -2572,11 +2572,11 @@ Return values:(Hello, World!)
 
 ### 1. newAccount
 
-Create a new account for sending transactions. By default, the account is saved in the 'account' directory in the 'PEM' format.。
+Create a new account for sending transactions. By default, the account is saved in the 'account' directory in the 'PEM' format。
 
 ```shell
-# The account file is automatically saved in the 'account / ecdsa' directory when the console is connected to the non-national secret blockchain.
-# The account file is automatically saved in the 'accout / gm' directory when the console is connected to the State Secret blockchain.
+# The account file is automatically saved in the 'account / ecdsa' directory when the console is connected to the non-national secret blockchain
+# The account file is automatically saved in the 'accout / gm' directory when the console is connected to the State Secret blockchain
 [group0]: /apps>  newAccount
 AccountPath: account/ecdsa/0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642.pem
 Note: This operation does not create an account in the blockchain, but only creates a local account, and deploying a contract through this account will create an account in the blockchain
@@ -2589,12 +2589,12 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dc
 
 ### 2. loadAccount
 
-Load a private key file in the format of 'PEM' or 'P12'. The loaded private key can be used to send transaction signatures.。However, if the console uses the public and private keys of the cipher machine, the command cannot be used because the public and private keys are placed inside the cipher machine.。
+Load a private key file in the format of 'PEM' or 'P12'. The loaded private key can be used to send transaction signatures。However, if the console uses the public and private keys of the cipher machine, the command cannot be used because the public and private keys are placed inside the cipher machine。
 Parameters:
 
 - Private key file path: Supports relative path, absolute path and default path。By default, the account is loaded from the account configuration option 'keyStoreDir' of 'config.toml'. For details about the configuration item 'keyStoreDir', see [here](./sdk/java_sdk/config.html#id9)。
 
-- Account Format: Optional. The file type of the loaded account. The file type is' pem 'and' p12 '. The default value is' pem '.。
+- Account format: Optional. The file type of the loaded account. The file type is' pem 'and' p12 '. The default value is' pem '。
 
 ```shell
 [group0]: /apps>  loadAccount 0x6fad87071f790c3234108f41b76bb99874a6d813
@@ -2611,11 +2611,11 @@ View all currently loaded account information
 0x726d9f31cf44debf80b08a7e759fa98b360b0736
 ```
 
-**Note: The private key account marked with the '< =' suffix is the private key account currently used to send the transaction, which can be switched using 'loadAccount'.**
+**Note: With '<= 'The suffix is marked with the private key account currently used to send the transaction, which can be switched using' loadAccount '**
 
 ### 4. getCurrentAccount
 
-Get current account address。If the console uses the public and private key of the cipher machine, the account address converted according to the internal public key of the cipher machine is displayed.。
+Get current account address。If the console uses the public and private key of the cipher machine, the account address converted according to the internal public key of the cipher machine is displayed。
 
 ```shell
 [group0]: /apps>  getCurrentAccount
@@ -2634,7 +2634,7 @@ Create a shard
 
 Parameters:
 
-* Split name: The username to be created. No duplicates are allowed.
+* Split name: The username to be created. No duplicates are allowed
 
 ```
 [group0]: /apps> makeShard hello_shard
@@ -2689,7 +2689,7 @@ listBalanceGovernor: [0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e]
 
 注意
 
-* After you turn on the feature _ balance _ precompiled switch, the chain management account is added to the asset management account by default.
+* After you turn on the feature _ balance _ precompiled switch, the chain management account is added to the asset management account by default
   interface to add another account。
 * Up to 500 accounts can be displayed, more than 500 accounts will not be able to register again。
 
@@ -2717,7 +2717,7 @@ listBalanceGovernor: [0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e, 0x7ef1de472584
 
 ### 3. unregisterBalanceGovernor
 
-Cancels the asset management permission of the registered account, and only the chain administrator account has this permission.。
+Cancels the asset management permission of the registered account, and only the chain administrator account has this permission。
 
 Parameters
 
@@ -2751,13 +2751,13 @@ balance: 0 wei
 
 ### 5. addBalance
 
-Increase the asset balance of the account, only the asset management permission account has the permission to call the interface.。
+Increase the asset balance of the account, only the asset management permission account has the permission to call the interface。
 
 Parameters
 
 * Account address: the address of the account where the asset needs to be added
 * Number of assets added: the number of assets to be added, the default unit is wei
-* Unit of asset quantity: optional. The unit of asset quantity. The default value is wei. Wei, kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported.
+* Unit of asset quantity: optional. The unit of asset quantity. The default value is wei. Wei, kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported
 
 ```shell
 [group0]: /apps> addBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e 100 wei
@@ -2777,13 +2777,13 @@ balance: 100100 wei
 
 ### 6. subBalance
 
-Reduce the asset balance of the specified account, only the asset management permission account has the permission to call the interface.。
+Reduce the asset balance of the specified account, only the asset management permission account has the permission to call the interface。
 
 Parameters
 
 * Account address: the address of the account where the assets need to be reduced
 * Number of assets reduced: the number of assets that need to be reduced, the default unit is wei
-* Unit of asset quantity: optional. The unit of asset quantity. The default value is wei. Wei, kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported.
+* Unit of asset quantity: optional. The unit of asset quantity. The default value is wei. Wei, kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported
 
 ```shell
 [group0]: /apps> subBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e 100
@@ -2803,14 +2803,14 @@ balance: 99000 wei
 
 ### 7. transferBalance
 
-Transfer, transfer assets from one account to another, only the asset management permission account has the permission to call the interface.。
+Transfer, transfer assets from one account to another, only the asset management permission account has the permission to call the interface。
 
 Parameters
 
 * Transfer-out account address: the address of the account where the assets need to be transferred out
-* Transfer to account address: the address of the account to which the asset needs to be transferred.
+* Transfer to account address: the address of the account to which the asset needs to be transferred
 * Number of transferred assets: the number of assets to be transferred, the default unit is wei
-* Unit of asset quantity: optional. The unit of asset quantity. The default value is wei. Wei, kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported.
+* Unit of asset quantity: optional. The unit of asset quantity. The default value is wei. Wei, kwei, mwei, gwei, szabo, finney, ether, Kether, Mether, and Gether are supported
 
 ```shell
 [group0]: /apps> getBalance 0x77ed4ea0a43fb76a88ec81a466695a4a704bb30e

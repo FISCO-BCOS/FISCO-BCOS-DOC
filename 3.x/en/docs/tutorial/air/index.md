@@ -7,12 +7,12 @@ Tags: "Air FISCO BCOS" "" Expansion "" Configuration "" Deployment Tools ""
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 ```eval_rst
 .. note::
-   Air version FISCO BCOS with all-in-The one encapsulation mode compiles all modules into a binary (process), a process is a blockchain node, including all functional modules such as network, consensus, access, etc., suitable for beginners, functional verification, POC products.。
+   Air version FISCO BCOS adopts all-in-one encapsulation mode, compiles all modules into a binary (process), a process is a blockchain node, including network, consensus, access and other functional modules, suitable for beginners, function verification, POC products。
 ```
 
 

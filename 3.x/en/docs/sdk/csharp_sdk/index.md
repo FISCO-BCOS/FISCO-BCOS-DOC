@@ -19,7 +19,7 @@ FISCO BCOS C#Transaction resolution of Sdk (middle):<https://www.bilibili.com/vi
 
 FISCO BCOS C#Transaction analysis of Sdk (below):<https://www.bilibili.com/video/BV11K4y1L7SD>
 
-State secret version using the introduction and code analysis: < https://www.bilibili.com/video/BV1tY4y137GN?vd_source=d13b0630d8f5bdd49b00820fee2bcbde#reply118116701616>
+State secret version using the introduction and code parsing:<https://www.bilibili.com/video/BV1tY4y137GN?vd_source=d13b0630d8f5bdd49b00820fee2bcbde#reply118116701616>
 
 Have good suggestions, please contact me！ My email: 2594771947 @ qq.com
 

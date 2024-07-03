@@ -4,31 +4,31 @@ Tags: "Pro version of the blockchain network" "" Expansion node ""
 
 ------------
 
-'BcosBuilder 'provides the function of expanding new nodes on the basis of existing groups. In this chapter, [Building a Pro Blockchain Network](./installation.md)On the basis of the expansion of two new blockchain nodes, to help users master the Pro version of FISCO BCOS blockchain node expansion steps.。
+'BcosBuilder 'provides the function of expanding new nodes on the basis of existing groups. In this chapter, [Building a Pro Blockchain Network](./installation.md)On the basis of the expansion of two new blockchain nodes, to help users master the Pro version of FISCO BCOS blockchain node expansion steps。
 
 ```eval_rst
 .. note::
-   Before performing node scaling, refer to 'Building a Pro Blockchain Network <. / installation.html >' _ Deploy a Pro Blockchain。
+   Before performing node scaling, refer to 'Building a Pro Blockchain Network<./installation.html>'_ Deploy Pro version blockchain。
 ```
 
 ## 1. Deploy tarsnode
 
-Before scaling the blockchain node service, you need to install tarsnode on the machine where the scaled blockchain service node is deployed. To help users quickly experience the service scaling process on a single machine, this chapter directly virtualizes the container with IP address' 172.25.0.5 'through the bridge network as the physical machine where the scaled blockchain service node is installed.。
+Before scaling the blockchain node service, you need to install tarsnode on the machine where the scaled blockchain service node is deployed. To help users quickly experience the service scaling process on a single machine, this chapter directly virtualizes the container with IP address' 172.25.0.5 'through the bridge network as the physical machine where the scaled blockchain service node is installed。
 
 ```eval_rst
 .. note::
-   - For the installation of tarsnode in the actual production environment, please refer to 'tars installation and deployment < https://doc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
-   - If the tarsnode is already installed and the tarsnode is started, you can ignore this step.
+   -For the installation of tarsnode in the actual production environment, please refer to 'tars installation and deployment<https://doc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
+   - If the tarsnode is already installed and the tarsnode is started, you can ignore this step
 ```
 
 ```shell
 # Enter the operation directory
 cd ~/fisco/BcosBuilder
 
-# Linux system: Go to tarsnode docker-Compose directory(macos system can be skipped)
+# Linux system: Go to the directory where tarsnode docker-compose is located(macos system can be skipped)
 cd docker/bridge/linux/node
 
-# macos system: Go to tarsnode docker-Compose directory(Linux system can be skipped)
+# macos system: Go to the directory where tarsnode docker-compose is located(Linux system can be skipped)
 cd docker/bridge/mac/node
 
 # Install and start tarsnode
@@ -39,10 +39,10 @@ docker-compose up -d
 
 ```eval_rst
 .. note::
-   In the actual operation, the tars token must be replaced by the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens。
+   In the actual operation, the tars token must be replaced with the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens。
 ```
 
-For more information about the capacity expansion configuration of the blockchain node service, see the capacity expansion template 'conf / config' of 'BcosBuilder'.-node-expand-example.toml ', the specific configuration steps are as follows:
+For more information about how to configure blockchain node service expansion, see the expansion template 'conf / config-node-expand-example.toml' of 'BcosBuilder'. The specific configuration steps are as follows:
 
 ```shell
 # Enter the operation directory
@@ -51,7 +51,7 @@ cd ~/fisco/BcosBuilder/pro
 # Copy Template Configuration
 cp conf/config-node-expand-example.toml config.toml
 
-# Configure tars token: Through the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens
+# Configure tars token: Through the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens
 # The token here is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430Gi
 # Linux system(macOS system Skip this step):
 sed -i 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"/g' config.toml
@@ -64,7 +64,7 @@ Configure 'config.toml' for scaling as follows:
 ```ini
 [tars]
 tars_url = "http://127.0.0.1:3000"
-# Access the token of the tars service. During deployment, replace the token from the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens
+# Access the token of the tars service. During deployment, replace the token from the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens
 tars_token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"
 tars_pkg_dir = ""
 
@@ -181,7 +181,7 @@ generated/chain0/group0/172.25.0.5
 s
 ```
 
-After the blockchain service is successfully expanded, you can see the new blockchain services' agencyAgroup0node1BcosNodeService 'and' agencyAgroup0node2BcosNodeService 'on the tars web management platform.:
+After the blockchain service is successfully expanded, you can see the new blockchain services' agencyAgroup0node1BcosNodeService 'and' agencyAgroup0node2BcosNodeService 'on the tars web management platform:
 
 ![](../../../images/tutorial/expand_node.png)
 
@@ -189,7 +189,7 @@ After the blockchain service is successfully expanded, you can see the new block
 
 ```eval_rst
 .. note::
-   When scaling a new node, we do not recommend that you add the node as a consensus node. You can add the node as a consensus node only when the block height of the scaling node is the same as the highest block height of the existing node in the chain.。
+   When scaling a new node, we do not recommend that you add the node as a consensus node. You can add the node as a consensus node only when the block height of the scaling node is the same as the highest block height of the existing node in the chain。
 ```
 
 **Step 1: Obtain the NodeID of the scaling node**

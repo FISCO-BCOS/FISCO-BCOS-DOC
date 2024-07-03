@@ -18,19 +18,19 @@ This document documents FISCO BCOS 3.0+ List of feature feature switches and bug
 
 |                            | bugfix Name| Default State| Description|
 |----------------------------|-----------------------------------------------------|------|------------------------|
-| Fix the bug that the roller contract does not roll back when rolling back in serial mode.| bugfix_revert                                       | Open: 1| 3.2.3 and 3.5.0 are turned on by default|
+| Fix the bug that the roller contract does not roll back when rolling back in serial mode| bugfix_revert                                       | Open: 1| 3.2.3 and 3.5.0 are turned on by default|
 | Fix the problem of incorrect calculation of stateStorage _ hash| bugfix_statestorage_hash                            | Open: 1| 3.2.4, 3.5.0, 3.6.0 On by Default|
 | Adapt the call behavior of Ethereum| bugfix_evm_create2_delegatecall_staticcall_codecopy | Open: 1| 3.2.4 and 3.6.0 are turned on by default|
 | Fix an issue with the order of thrown events| bugfix_event_log_order                              | Open: 1| 3.2.7 and 3.6.0 are turned on by default|
-| Fix the problem that call does not return an address.| bugfix_call_noaddr_return                           | Open: 1| 3.2.7 and 3.6.0 are turned on by default|
+| Fix the problem that call does not return an address| bugfix_call_noaddr_return                           | Open: 1| 3.2.7 and 3.6.0 are turned on by default|
 | Fix the problem that pre-compiled contract hash is different from Ethereum| bugfix_precompiled_codehash                         | Open: 1| 3.2.7 and 3.6.0 are turned on by default|
-| Fix the bug that the roller contract does not return when rolling back in dmc mode.| bugfix_dmc_revert                                   | Open: 1| 3.2.7 and 3.6.0 are turned on by default|
-| Fix the compatibility question of inconsistent keyPage hash.| bugfix_keypage_system_entry_hash                    | Open: 1| 3.6.1 On by default|
+| Fix the bug that the roller contract does not return when rolling back in dmc mode| bugfix_dmc_revert                                   | Open: 1| 3.2.7 and 3.6.0 are turned on by default|
+| Fix the compatibility question of inconsistent keyPage hash| bugfix_keypage_system_entry_hash                    | Open: 1| 3.6.1 On by default|
 | InternalCreate Reuse Existing Deployment Contract Logic| bugfix_internal_create_redundant_storage            | Open: 1| 3.6.1 On by default|
 | Fix the problem of restricted asset transfer after opening contract deployment permission| bugfix_internal_create_permission_denied            | Open: 1| 3.7.0 On by Default|
-| Fix the problem of the shard contract calling contract within the block.| bugfix_sharding_call_in_child_executive             | Open: 1| 3.7.0 On by Default|
-| Fix the problem of deploying empty abi and deploying the same contract without abi.| bugfix_empty_abi_reset                              | Open: 1| 3.7.0 On by Default|
-| Fix the problem that the contract cannot be called through the contract address of eip55 type.| bugfix_eip55_addr                                   | Open: 1| 3.7.0 On by Default|
+| Fix the problem of the shard contract calling contract within the block| bugfix_sharding_call_in_child_executive             | Open: 1| 3.7.0 On by Default|
+| Fix the problem of deploying empty abi and deploying the same contract without abi| bugfix_empty_abi_reset                              | Open: 1| 3.7.0 On by Default|
+| Fix the problem that the contract cannot be called through the contract address of eip55 type| bugfix_eip55_addr                                   | Open: 1| 3.7.0 On by Default|
 | Solve the return value problem to the EOA account getCode| bugfix_eoa_as_contract | Open: 1| 3.8.0 On by Default|
 | Solve the problem that gas consumption is different from serial mode when deploying contracts in DMC mode| bugfix_dmc_deploy_gas_used | Open: 1| 3.8.0 On by Default|
 | Solve the problem that gas is not deducted when EVM executes status _ code other than 0 and revert| bugfix_evm_exception_gas_used | Open: 1| 3.8.0 On by Default|

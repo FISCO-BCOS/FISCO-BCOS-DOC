@@ -1,15 +1,15 @@
 # 2. Java SDK
 
-Tag: "java-sdk "" blockchain application "
+Tags: "java-sdk" "blockchain application"
 
 ----
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
-The Java SDK provides the Java API for accessing FISCO BCOS nodes, and supports node status query, deployment, and contract invocation.
+The Java SDK provides the Java API for accessing FISCO BCOS nodes, and supports node status query, deployment, and contract invocation
 
 ```eval_rst
 .. toctree::

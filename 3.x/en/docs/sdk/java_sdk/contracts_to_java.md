@@ -1,10 +1,10 @@
 # Generate Java interface files for smart contracts
 
-In the console 'console' and 'java-sdk-demo "provides tools that can be generated from the 'solidity' contract to call the 'java' tool class of the contract.。In this example, use "console" to generate the Solidity contract to call the contract 'java' tool class as an example.。
+Tools are provided in the console and java-sdk-demo. You can call the java tool class of the 'solidity' contract。In this example, use "console" to generate the Solidity contract to call the contract 'java' tool class as an example。
 
-> Experience webankblockchain-liquid (hereinafter referred to as WBC-Liquid), please refer to subsection 5。
+> To experience the webankblockchain-liquid (WBC-Liquid), please refer to Section 5。
 >
-> Using "java-sdk-For an example of demo "see section 7。
+> For an example of using "java-sdk-demo," see Section 7。
 
 ## 1. Download Console
 
@@ -20,9 +20,9 @@ $ bash download_console.sh
 $ cd ~/fisco/console
 ```
 
-## 2. Place the contract in the contract directory of the console.
+## 2. Place the contract in the contract directory of the console
 
-**Then, place the Solidity smart contract you want to use in the "~ / fisco / console / contracts / solidity" directory**。This time we use HelloWorld.sol in the console as an example.。Ensure that HelloWorld.sol is in the specified directory。
+**Then, place the Solidity smart contract you want to use in the "~ / fisco / console / contracts / solidity" directory**。This time we use HelloWorld.sol in the console as an example。Ensure that HelloWorld.sol is in the specified directory。
 
 ```shell
 # Current Directory ~ / fisco / console
@@ -35,13 +35,13 @@ get back
 HelloWorld.sol  KVTableTest.sol ShaTest.sol KVTable.sol ...
 ```
 
-## 3. Generate the Java class that calls the smart contract.
+## 3. Generate the Java class that calls the smart contract
 
 ```shell
 # Current Directory ~ / fisco / console
 $ bash contract2java.sh solidity -p org.com.fisco -s ./contracts/solidity/HelloWorld.sol
 # The parameter "org.com.fisco" in the above command is the package name to which the generated java class belongs。
-# Via the command. / contract2java.sh-H can view the script usage method
+# The command. / contract2java.sh -h allows you to view how the script is used
 ```
 
 get back
@@ -52,7 +52,7 @@ INFO: Compile for solidity HelloWorld.sol success.
 *** Convert solidity to java  for HelloWorld.sol success ***
 ```
 
-The use of 'contract2java.sh' will be described in detail in Appendix 2.。
+The use of 'contract2java.sh' will be described in detail in Appendix 2。
 
 View Compilation Results
 
@@ -76,9 +76,9 @@ After running successfully, the java, abi, and bin directories will be generated
 |               |-- HelloWorld.java # Solidity Compiled HelloWorld Java File
 ```
 
-The 'org / com / fisco /' package path directory is generated in the Java directory。The Java contract file 'HelloWorld.java' will be generated in the package path directory.。where 'HelloWorld.java' is the Java contract file required by the Java application。
+The 'org / com / fisco /' package path directory is generated in the Java directory。The Java contract file 'HelloWorld.java' will be generated in the package path directory。where 'HelloWorld.java' is the Java contract file required by the Java application。
 
-## 4. The generated Java file code structure.
+## 4. The generated Java file code structure
 
 The following takes the generated interface list of 'HelloWorld.java' as an example to briefly explain the code structure。
 
@@ -86,7 +86,7 @@ The following takes the generated interface list of 'HelloWorld.java' as an exam
 public class HelloWorld extends Contract {
     / / constructor
     protected HelloWorld(String contractAddress, Client client, CryptoKeyPair credential);
-    / / Obtain the code of the contract according to the CryptoSuite. If the code is the national secret, return the code of the national secret.
+    / / Obtain the code of the contract according to the CryptoSuite. If the code is the national secret, return the code of the national secret
     public static String getBinary(CryptoSuite cryptoSuite);
     / / Get the ABI json string of the contract
     public static String getABI();
@@ -94,30 +94,30 @@ public class HelloWorld extends Contract {
     public String get() throws ContractException;
     / / The Function class of the HelloWorld contract get interface, which records the input and return types and can be used for ABI parsing
     public Function getMethodGetRawFunction() throws ContractException;
-    / / The HelloWorld contract set interface. Enter the string type and return the transaction receipt.
+    / / The HelloWorld contract set interface. Enter the string type and return the transaction receipt
     public TransactionReceipt set(String n);
     / / The Function class of the HelloWorld contract set interface, which records the input and return types and can be used for ABI parsing
     public Function getMethodSetRawFunction(String n) throws ContractException;
-    / / Obtain the signed transaction calling the set interface, which can be sent directly to the chain.
+    / / Obtain the signed transaction calling the set interface, which can be sent directly to the chain
     public String getSignedTransactionForSet(String n);
-    / / The HelloWorld contract set asynchronous interface. Enter the string type and return the transaction hash.
+    / / The HelloWorld contract set asynchronous interface. Enter the string type and return the transaction hash
     public String set(String n, TransactionCallback callback);
     / / Input parsing of the HelloWorld contract set
     public Tuple1<String> getSetInput(TransactionReceipt transactionReceipt);
-    / / If there is a known HelloWorld contract on the chain, you can directly load the Java HelloWorld class using the modified interface.。Note: ABI must be the same, otherwise the call fails
+    / / If there is a known HelloWorld contract on the chain, you can directly load the Java HelloWorld class using the modified interface。Note: ABI must be the same, otherwise the call fails
     public static HelloWorld load(String contractAddress, Client client, CryptoKeyPair credential);
     / / Initiate the deployment contract operation on the chain and return the Java HelloWorld class。
     public static HelloWorld deploy(Client client, CryptoKeyPair credential) throws ContractException;
 }
 ```
 
-## 5. Generate WBC-Java interface file for Liquid contract
+## 5. Generate the Java interface file for the WBC-Liquid contract
 
-Similar to the Solidity contract above, if you want to experience the webankblockchain-liquid (hereinafter referred to as WBC-Liquid) deployment operations, the console also provides you with examples.。
+Similar to the Solidity contract above, if you want to experience the deployment of webankblockchain-liquid (hereinafter referred to as WBC-Liquid), the console also provides you with examples。
 
 Before using it, ensure the compilation environment of the cargo liquid. For details about how to use it, see: https://liquid-doc.readthedocs.io/。
 
-### 5.1 WBC-Compilation of Liquid Contracts
+### 5.1 Compilation of the WBC-Liquid Contract
 
 You can view it under contracts / liquid in the dist directory of the console. The following is an example of hello _ world:
 
@@ -141,23 +141,23 @@ Binary: ~/fisco/contracts/liquid/hello_world/target/hello_world.wasm
 
 Generate 'hello _ world.wasm' and 'hello _ world.abi' files
 
-### 5.2 WBC-Liquid Contract Generating Java Files
+### 5.2 WBC-Liquid contract generates Java files
 
 ```shell
 # Current Directory ~ / fisco / console
 $ bash contract2java.sh liquid -b ./contracts/liquid/hello_world/hello_world.wasm -a ./contracts/liquid/hello_world/hello_world.abi -s ./contracts/liquid/hello_world/hello_world_sm.wasm -p org.com.fisco
-# Via the command. / contract2java.sh-H can view the script usage method
+# The command. / contract2java.sh -h allows you to view how the script is used
 
 $ ls contracts/sdk/java/org/com/fisco 
 # get back
 HelloWorld.java
 ```
 
-## 6. contract2java.sh script parsing.
+## 6. contract2java.sh script parsing
 
-The console provides a specialized tool for generating Java contracts that allows developers to integrate Solidity and WBC-Liquid contract files are compiled into Java contract files。
+The console provides a special tool for generating Java contracts, which allows developers to compile Solidity and WBC-Liquid contract files into Java contract files。
 
-The current contract generation tool supports Solidity's automatic compilation and generation of Java files, supports specifying WBC-Liquid compiled WASM file and ABI file to generate Java file。
+The current contract generation tool supports automatic compilation and generation of Java files by Solidity, WASM files compiled by specified WBC-Liquid, and Java files generated by ABI files。
 
 ### 6.1 Solidity Contract Use
 
@@ -195,11 +195,11 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 Detailed parameters:
 
 - `package`: Generate the package name of the 'Java' file。
-- `sol`: (Optional)The path of the 'solidity' file. Two methods are supported: file path and directory path. When the parameter is a directory, all the 'solidity' files in the directory are compiled and converted.。The default directory is' contracts / solidity'。
-- `output`: (Optional)The directory where the 'Java' file is generated. By default, it is generated in the 'contracts / sdk / java' directory.。
-- `no-analysis': (Optional) Skip static analysis of solidity compilation, which can effectively reduce compilation speed。Static analysis can analyze the parallel feasibility of the contract interface and put the results of the analysis into the abi file.。
-- `enable-async-call ': (Optional) You can generate a Java file with an asynchronous call interface.-Use when sdk version > = 3.3.0。
-- `transaction-version ': (Optional) Specifies the version number of the generated Java file for sending transactions. The default value is 0, which is compatible with all versions of the node.；When the transaction version is 1, transactions with fields such as value, gasLimit, gasPrice, and EIP1559 can only be sent to nodes of 3.6.0 and above.。
+- `sol`: (Optional)The path of the 'solidity' file. Two methods are supported: file path and directory path. When the parameter is a directory, all the 'solidity' files in the directory are compiled and converted。The default directory is' contracts / solidity'。
+- `output`: (Optional)The directory where the 'Java' file is generated. By default, it is generated in the 'contracts / sdk / java' directory。
+- 'no-analysis': (optional) Skip the static analysis of solidity compilation, which can effectively reduce the compilation speed。Static analysis can analyze the parallel feasibility of the contract interface and put the results of the analysis into the abi file。
+- 'enable-async-call': (Optional) You can generate a Java file with an asynchronous call interface>= 3.3.0 when used。
+- 'transaction-version': (Optional) Specifies the version number of the generated Java file for sending transactions. The default value is 0, which is compatible with all versions of nodes；When the transaction version is 1, transactions with fields such as value, gasLimit, gasPrice, and EIP1559 can only be sent to nodes of 3.6.0 and above。
 
 ### 6.2 WBC-Liquid Contract Use
 
@@ -219,16 +219,16 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 
 Detailed parameters:
 
-- 'abi ': (Required) WBC-Path to the 'ABI' file of the Liquid contract, which is generated in the target folder after using the 'cargo liquid build' command。
-- 'bin ': (Required) WBC-Path to the 'wasm bin' file of the Liquid contract, which is generated in the target folder after using the 'cargo liquid build' command。
-- 'package ': (Optional) Generate the package name of the' Java 'file, which is' org 'by default.。
-- `sm-bin ': (Required) WBC-The path to the 'wasm sm bin' file of the Liquid contract.-Generated in the target folder after the g 'command。
+- 'abi': (Required) The path of the WBC-Liquid contract 'ABI' file, which is generated in the target folder after using the 'cargo liquid build' command。
+- 'bin': (Required) The path of the WBC-Liquid contract 'wasm bin' file, which is generated in the target folder after using the 'cargo liquid build' command。
+- 'package': (Optional) The package name of the generated 'Java' file, which is' org 'by default。
+- 'sm-bin': (Required) The path of the WBC-Liquid contract 'wasm sm bin' file, which is generated in the target folder after using the 'cargo liquid build -g' command。
 
-## 7. Use "java-sdk-demo "Generate a Java tool class for a smart contract that calls it
+## 7. Use "java-sdk-demo" to generate the Java tool class that calls the smart contract
 
 ```shell
 $ mkdir -p ~/fisco && cd ~/fisco
-# Get Java-sdk code
+# get java-sdk code
 $ git clone https://github.com/FISCO-BCOS/java-sdk-demo
 
 # If the preceding command cannot be executed for a long time due to network problems, try the following command:
@@ -237,10 +237,10 @@ $ git clone https://gitee.com/FISCO-BCOS/java-sdk-demo
 $ cd java-sdk-demo
 # Compile
 $ ./gradlew clean build -x test
-# enter sdk-demo / dist directory, create contract storage directory
+# Enter the sdk-demo / dist directory and create a contract storage directory
 $ cd dist && mkdir -p contracts/solidity
-# Copy the sol file that needs to be converted into java code to ~ / fisco / java-under the sdk / dist / contracts / consolidation path
+# Copy the sol file that needs to be converted into java code to the path ~ / fisco / java-sdk / dist / contracts / consolidation
 # Convert sol, where ${packageName}is the generated java code package path
-# The generated java code is located at ~ / fisco / java-sdk / dist / contracts / sdk / java directory
+# The generated java code is located in the ~ / fisco / java-sdk / dist / contracts / sdk / java directory
 java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.codegen.DemoSolcToJava ${packageName}
 ```

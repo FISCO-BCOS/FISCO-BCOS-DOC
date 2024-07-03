@@ -2,7 +2,7 @@
 tags: "domestic support"
 
 ----
-FISCO BCOS is fully adapted to domestic servers and supports domestic platforms such as Kunpeng and Galaxy Kirin V10.。The following describes the steps to compile and deploy the run chain on the Galaxy Kirin V10ARM platform FISCO BCOS source code.
+FISCO BCOS is fully adapted to domestic servers and supports domestic platforms such as Kunpeng and Galaxy Kirin V10。The following describes the steps to compile and deploy the run chain on the Galaxy Kirin V10ARM platform FISCO BCOS source code
 
 ### Installation of basic software and source code compilation
 #### 1. Update Software
@@ -15,10 +15,10 @@ sudo yum update
 sudo yum install -y wget curl tar 
 sudo yum install -y build-essential clang flex bison patch glibc-static glibc-devel libzstd-devel libmpc cpp 
 
-# Check the gcc version. If the gcc version is lower than 10, install a gcc version higher than 10.
+# Check the gcc version. If the gcc version is lower than 10, install a gcc version higher than 10
 gcc -v
 
-# Check whether the cmake version is greater than or equal to 3.14. If not, install the cmake version that meets the requirements.
+# Check whether the cmake version is greater than or equal to 3.14. If not, install the cmake version that meets the requirements
 cmake --version
 ```
 #### 3. Pull code
@@ -52,10 +52,10 @@ export X_VCPKG_ASSET_SOURCES=x-azurl,http://106.15.181.5/
 # Compile
 cmake3 -DBUILD_STATIC=ON .. || cat *.log
 
-# If vcpkg fails during dependency compilation, check the error log according to the error message.
+# If vcpkg fails during dependency compilation, check the error log according to the error message
 # For network reasons, configure the vcpkg agent as prompted above
 
-# High performance machines can be added-j4 Compile with 4-core acceleration
+# High-performance machines can add -j4 using 4-core accelerated compilation
 make -j4
 ```
 ![](../../images/tutorial/img_2.png)
@@ -69,7 +69,7 @@ For detailed compilation, please refer to [node source code compilation](./compi
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
-#### 2. Use the compiled binary deployment chain.
+#### 2. Use the compiled binary deployment chain
 ```shell
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200 -e ../FISCO-BCOS/build/fisco-bcos-air/fisco-bcos
 [INFO] Generate ca cert successfully!
@@ -121,7 +121,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 ```eval_rst
 .. note::
-   - If you cannot download for a long time due to network problems, please try cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
+   -If you cannot download for a long time due to network problems, please try cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
 ```
 
 ```shell

@@ -6,13 +6,13 @@ Tags: "Air Blockchain Network" "Configuration" "config.ini" "config.genesis" "Po
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 Air version FISCO BCOS mainly includes creation block configuration file 'config.genesis' and node configuration file 'config.ini':
 
-- 'config.ini ': node configuration file, mainly configuring RPC, P2P, SSL certificate, ledger data path, disk encryption and other information;
-- 'config.genesis': Genesis block configuration file,**The Genesis block configuration must be consistent for all nodes in the group.**, **Genesis block configuration file cannot be changed after chain initialization**After the chain is initialized, even if the creation block configuration is changed, the new configuration will not take effect, and the system will still use the genesis configuration when the chain was initialized.。
+- 'config.ini': node configuration file, mainly configuring RPC, P2P, SSL certificate, ledger data path, disk encryption and other information;
+- 'config.genesis': Genesis block configuration file,**The Genesis block configuration must be consistent for all nodes in the group**, **Genesis block configuration file cannot be changed after chain initialization**After the chain is initialized, even if the creation block configuration is changed, the new configuration will not take effect, and the system will still use the genesis configuration when the chain was initialized。
 
 ## 1. Genesis block configuration
 
@@ -20,18 +20,18 @@ The node genesis block configuration is in the configuration file 'config.genesi
 
 ```eval_rst
 .. note::
-    - **The Genesis block configuration must be consistent for all nodes in the group.**
+    - **The Genesis block configuration must be consistent for all nodes in the group**
     - **Genesis block configuration file cannot be changed after chain initialization**
-    - After the chain is initialized, even if the creation block configuration is changed, the new configuration will not take effect, and the system still uses the genesis configuration when the chain is initialized
+    -After the chain is initialized, even if the creation block configuration is changed, the new configuration will not take effect, and the system still uses the genesis configuration when the chain is initialized
 ```
 
 ### 1.1 Configuration chain information
 
 '[chain]' Configure the chain information of the node,**The field information under this configuration should not be changed once it is determined**：
 
-- `[chain].sm_crypto`: Whether the node uses the national secret ledger. The default value is' false '.;
+- `[chain].sm_crypto`: Whether the node uses the national secret ledger. The default value is' false ';
 - '[chain] .group _ id': group ID, default is' group0';
-- '[chain] .chain _ id': the chain ID, which is' chain0 'by default.
+- '[chain] .chain _ id': the chain ID, which is' chain0 'by default
 
 ```ini
 [chain]
@@ -47,10 +47,10 @@ The node genesis block configuration is in the configuration file 'config.genesi
 
 '[consensus]' involves consensus-related configurations, including:
 
-- `[consensus].consensus_type`: Consensus type. The default setting is' pbft '. Currently, FISCO BCOS v3.x only supports the PBFT consensus algorithm.;
+- `[consensus].consensus_type`: Consensus type. The default setting is' pbft '. Currently, FISCO BCOS v3.x only supports the PBFT consensus algorithm;
 - `[consensus].block_tx_count_limit`: The maximum number of transactions that can be included in each block. The default setting is 1000;
 - `[consensus].leader_period`: The number of consecutive blocks packed by each leader in the consensus process. The default value is 5;
-- '[consensus] .node.idx': list of consensus nodes, configured with the NodeIDs of the participating consensus nodes。
+- '[consensus] .node.idx': the list of consensus nodes. The NodeIDs of the participating consensus nodes are configured。
 
 The configuration example of '[consensus]' is as follows:
 
@@ -87,7 +87,7 @@ FISCO BCOS v3.0.0 designs and implements a compatibility framework that supports
 '[executor]' configuration items involve the execution of related genesis block configurations, mainly including:
 
 - `[executor].is_wasm`: Used to configure the virtual machine type, 'true' indicates the use of WASM virtual machine, 'false' indicates the use of EVM virtual machine, the configuration option is not dynamically adjustable, the default is' false ';
-- `[executor].is_auth_check`: The configuration switch for permission control. 'true' indicates that permission control is enabled, and 'false' indicates that permission control is disabled. This configuration option cannot be dynamically adjusted. The permission control function is disabled by default.;
+- `[executor].is_auth_check`: The configuration switch for permission control. 'true' indicates that permission control is enabled, and 'false' indicates that permission control is disabled. This configuration option cannot be dynamically adjusted. The permission control function is disabled by default;
 - `[executor].is_serial_execute`: Transaction execution serial and parallel mode configuration switch, 'true' indicates to enter serial execution mode, 'false' indicates to enter DMC parallel execution mode, this configuration option cannot be dynamically adjusted, the default is' false ';
 - `[executor].auth_admin_account`: Permission administrator account address, only used in permission control scenarios。
 
@@ -97,20 +97,20 @@ FISCO BCOS v3.0.0 designs and implements a compatibility framework that supports
 
 ```eval_rst
 .. important::
-    - The public IP addresses of cloud hosts are all virtual IP addresses. If listen _ ip is filled in, the binding fails.
-    - RPC / P2P listening port must be at 1024-65535 range, and cannot conflict with other application listening ports on the machine
-    - To facilitate development and experience, the listen _ ip reference configuration is' 0.0.0.0 '. For security reasons, please modify it to a secure listening address according to the actual business network conditions, such as the intranet IP or a specific extranet IP
+    - The public IP addresses of cloud hosts are all virtual IP addresses. If listen _ ip is filled in, the binding fails
+    - The RPC / P2P listening port must be in the 1024-65535 range and cannot conflict with other application listening ports on the machine
+    - For the convenience of development and experience, the listen _ ip reference configuration is' 0.0.0.0 '. For security reasons, please modify it to a secure listening address according to the actual business network situation, such as: Intranet IP or specific external IP
 ```
 
 ### 2.1 Configuring P2P
 
 P2P related configurations include:
 
-- '[p2p] .listen _ ip': the P2P listening IP address. The default setting is' 0.0.0.0';
+- '[p2p] .listen _ ip': the IP address of the P2P listener. The default setting is' 0.0.0.0';
 - '[p2p] .listen _ port': Node P2P listening port;
-- `[p2p].sm_ssl`: Whether the SSL connection between nodes uses the state-secret SSL protocol, 'true' indicates that the state-secret SSL connection is enabled; 'false 'indicates that a non-state-secret SSL connection is used. The default value is' false '.;
-- '[p2p] .nodes _ path': the directory where the node connection information file 'nodes.json' is located. The default value is the current folder.;
-- '[p2p] .nodes _ file': Path to the 'P2P' connection information file 'nodes.json'。
+- `[p2p].sm_ssl`: Whether the SSL connection between nodes uses the state-secret SSL protocol, 'true' indicates that the state-secret SSL connection is enabled; 'false 'indicates that a non-state-secret SSL connection is used. The default value is' false ';
+- '[p2p] .nodes _ path': the directory where the node connection information file 'nodes.json' is located. The default value is the current folder;
+- '[p2p] .nodes _ file': the path to the 'P2P' connection information file 'nodes.json'。
 
 An example P2P configuration is as follows:
 
@@ -139,10 +139,10 @@ Example:
 'P2P 'supports configurable network connections and dynamic addition / deletion of connection nodes during service operation. The process is as follows:
 
 - Modify the connection information in the '[p2p] .nodes _ file' configuration
-- Send signal to service process' USR1':
+- Send signal 'USR1' to service process:
 
 ```shell
-kill -USR1 Gateway Node pid
+kill-USR1 gateway node pid
 ```
 
 Service reloads' P2P 'connection information。
@@ -154,7 +154,7 @@ The RPC configuration options are located at '[rpc]' and mainly include:
 - `[rpc].listen_ip`: RPC listens on the IP address, which is set to '0.0.0.0' by default to facilitate cross-machine deployment of nodes and SDKs;
 - `[rpc].listen_port`: RPC listening port, default setting is' 20200';
 - `[rpc].thread_count`: Number of RPC service threads, 4 by default;
-- `[rpc].sm_ssl`: Whether the connection between the SDK and the node uses the state-secret SSL connection. True indicates that the state-secret SSL connection is enabled.; 'false 'indicates that a non-state secret SSL connection is used. The default value is' false '.
+- `[rpc].sm_ssl`: Whether the connection between the SDK and the node uses the state-secret SSL connection. True indicates that the state-secret SSL connection is enabled; 'false 'indicates that a non-state secret SSL connection is used. The default value is' false '
 
 An example RPC configuration is as follows:
 
@@ -171,12 +171,12 @@ An example RPC configuration is as follows:
 
 ### 2.3 Configuring Certificate Information
 
-For security reasons, SSL is used to encrypt communication between FISCO BCOS nodes. Configure the certificate information of the SSL connection.
+For security reasons, SSL is used to encrypt communication between FISCO BCOS nodes. Configure the certificate information of the SSL connection
 
 - `[cert].ca_path`: Certificate path, default is' conf';
 - `[cert].ca_cert`: ca certificate name, default is' ca.crt';
 - `[cert].node_key`: The private key of the node SSL connection. The default value is' ssl.key';
-- `[cert].node_cert`: The SSL connection certificate of the node. The default value is' ssl.cert '.
+- `[cert].node_cert`: The SSL connection certificate of the node. The default value is' ssl.cert '
 
 ```ini
 [cert]
@@ -192,7 +192,7 @@ For security reasons, SSL is used to encrypt communication between FISCO BCOS no
 
 '[security]' Configure the private key path, which is mainly used for message signing of the consensus module, as follows:
 
-- '[security] .private _ key _ path': path to the private key file. The default value is' conf / node.pem'。
+- '[security] .private _ key _ path': path to the private key file. Default value: 'conf / node.pem'。
 
 ```ini
 [security]
@@ -206,7 +206,7 @@ Considering that too fast packaging of PBFT modules will result in packaging onl
 ```eval_rst
 .. important::
    - "min _ seal _ time" defaults to 500ms
-   - "min _ seal _ time" cannot exceed 1000ms. If the value exceeds 1000ms, the default min _ seal _ time is 500ms.
+   - "min _ seal _ time" cannot exceed 1000ms. If the value exceeds 1000ms, the default min _ seal _ time is 500ms
 
 ```
 
@@ -220,8 +220,8 @@ Considering that too fast packaging of PBFT modules will result in packaging onl
 
 The storage configuration is located at '[storage]' and includes:
 
-- `[storage].data_path`: The data storage path of the blockchain node. The default value is data.;
-- `[storage].enable_cache`: Whether to enable caching. The default value is true.;
+- `[storage].data_path`: The data storage path of the blockchain node. The default value is data;
+- `[storage].enable_cache`: Whether to enable caching. The default value is true;
 - `[storage].key_page_size`: In the KeyPage storage scheme, the storage page size, in bytes, is required to be no less than '4096'(4KB)default is' 10240'(10KB);
 
 ```ini
@@ -235,7 +235,7 @@ The storage configuration is located at '[storage]' and includes:
 
 The drop disk encryption configuration option is located at '[storage _ security]':
 
-- `[storage_security].enable`: Whether to enable disk encryption. Disk encryption is disabled by default.;
+- `[storage_security].enable`: Whether to enable disk encryption. Disk encryption is disabled by default;
 - `[storage_security].key_manager_url`: [Key Manager] is configured for 'key _ center _ url' when encryption is enabled(../../design/storage_security.md)url to get the data encryption and decryption key;
 - `[storage_security].cipher_data_key`: Private key for data drop encryption。
 
@@ -254,8 +254,8 @@ The trading pool configuration option is located at '[txpool]':
 
 - `[txpool].limit`: Capacity limit of trading pool, default is' 15000';
 - `[txpool].notify_worker_num`: Number of transaction notification threads, 2 by default;
-- `[txpool].verify_worker_num`: Number of transaction verification threads. The default value is the number of machine CPU cores.;
-- `[txpool].txs_expiration_time`: The transaction expiration time, in seconds. The default value is 10 minutes. That is, transactions that have not been packaged by the consensus module for more than 10 minutes will be discarded directly.。
+- `[txpool].verify_worker_num`: Number of transaction verification threads. The default value is the number of machine CPU cores;
+- `[txpool].txs_expiration_time`: The transaction expiration time, in seconds. The default value is 10 minutes. That is, transactions that have not been packaged by the consensus module for more than 10 minutes will be discarded directly。
 
 ```ini
 [txpool]
@@ -275,8 +275,8 @@ FISCO BCOS supports powerful [boostlog](https://www.boost.org/doc/libs/1_63_0/li
 
 - `[log].enable`: Enables / disables logging, set to 'true' to enable logging；Set to 'false' to disable logging,**The default setting is true, and performance tests can set this option to 'false' to reduce the impact of printing logs on test results**
 - `[log].log_path`:Log File Path。
-- `[log].level`: Log level. Currently, there are five log levels: 'trace', 'debug', 'info', 'warning', and 'error'. After a log level is set, logs greater than or equal to the log level are entered in the log file.。
-- '[log] .max _ log _ file _ size': the maximum size of each log file.**The unit of measurement is MB, the default is 200MB**。
+- `[log].level`: Log level. Currently, there are five log levels: 'trace', 'debug', 'info', 'warning', and 'error'. After a log level is set, logs greater than or equal to the log level are entered in the log file> warning > info > debug > trace`。
+- '[log] .max _ log _ file _ size': the maximum capacity of each log file**The unit of measurement is MB, the default is 200MB**。
 
 The log configuration example is as follows:
 
@@ -292,15 +292,15 @@ The log configuration example is as follows:
 
 #### v3.6.0 New Configuration Item
 
-- 'log.format ': Configure the format of each log. The keywords are wrapped in%. Supported keywords include' LineID, TimeStamp, ProcessID, ThreadName, ThreadID, and Message '.
-- 'log.enable _ rotate _ by _ hour ': The default value is true. When' false 'is set to' log.log _ name _ pattern, 'log.rotate _ name _ pattern,' log.archive _ path, 'log.compress _ archive _ file,' log.max _ archive _ files, 'log.max _ archive _ size,' or 'log.max _ archive _ size', 'log.min _
-- 'log.log _ name _ pattern ': The file name mode of the log file. You can configure a string and support formatting characters. The% prefix, Y, m, d, H, M, and S represent the year, month, day, minute, and second. N represents a monotonically increasing number. You can use a fixed-length number for% 5N.
-- 'log.rotate _ name _ pattern ': the file name of the log file generated after scrolling. The supported format characters are the same as log.log _ name _ pattern
-- 'log.archive _ path ': Archive folder for history log files
-- 'log.compress _ archive _ file ': Whether to compress archived log files
+- 'log.format': Configure the format of each log. The keywords are wrapped in%. Supported keywords include 'LineID, TimeStamp, ProcessID, ThreadName, ThreadID, and Message'
+- 'log.enable _ rotate _ by _ hour': The default value is true. If 'false' is set to 'log.log _ name _ pattern,' log.rotate _ name _ pattern, 'log.archive _ path,' log.compress _ archive _ file, 'log.max _ archive _ files,' log.max _ archive _ freeze _ size, 'or' log _ min '
+- 'log.log _ name _ pattern': the file name mode of the log file, which can be configured as a string and also supports formatting characters,% prefix, Y, m, d, H, M, S represents the year, month, day, minute and second, N represents the monotonically increasing number, you can use the fixed-length number% 5N
+- 'log.rotate _ name _ pattern': the file name of the log file generated after scrolling. The supported format characters are the same as log.log _ name _ pattern
+- 'log.archive _ path': archive folder for history log files
+- 'log.compress _ archive _ file': whether to compress archived log files
 - 'log.max _ archive _ files': the maximum number of files in the archive folder, 0 is unlimited
-- 'log.max _ archive _ size ': the maximum hard disk space limit of the archive folder, in MB, 0 is unlimited
-- 'log.min _ free _ space ': Minimum archive folder space, 0 by default
+- 'log.max _ archive _ size': the maximum hard disk space limit of the archive folder, in MB, 0 is unlimited
+- 'log.min _ free _ space': the minimum space of the archive folder, which is 0 by default
 
 ### 2.9 Gateway module current limiting
 
@@ -308,9 +308,9 @@ The gateway module supports configuring the function of traffic rate limiting in
 
 Configure the following according to your needs to achieve
 
-- Outgoing Bandwidth and Incoming Bandwidth Limiting
-- Restriction of specific IP and group
-- Excluding Current Limiting for Specific Modules
+- Outgoing bandwidth and inbound bandwidth throttling
+- Limited flow of specific IP, group
+- Exclude current limiting for specific modules
 
 The configuration in the process-dependent config.ini is as follows (please uncomment some items as required)
 

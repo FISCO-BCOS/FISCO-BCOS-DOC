@@ -1,4 +1,4 @@
-# 13. Network forwarding strategies based on dynamic routing.
+# 13. Network forwarding strategies based on dynamic routing
 Tags: "dynamic routing" "network forwarding"
 
 ----

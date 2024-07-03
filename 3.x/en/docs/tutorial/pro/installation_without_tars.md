@@ -4,11 +4,11 @@ Tags: "Pro version of the blockchain network" "" deployment "" does not rely on 
 
 ------------
 
-Pro version of FISCO BCOS 3.x can be built without relying on tars web console。This document takes the example of deploying a blockchain service with two institutions and two nodes on a single machine to introduce the process of building and deploying FISCO BCOS in the Pro version without relying on the tars web console.。
+Pro version of FISCO BCOS 3.x can be built without relying on tars web console。This document takes the example of deploying a blockchain service with two institutions and two nodes on a single machine to introduce the process of building and deploying FISCO BCOS in the Pro version without relying on the tars web console。
 
 ```eval_rst
 .. note::
-   - Pro version does not rely on the tars web console to build FISCO BCOS "" BcosBuilder / pro "" tool for chain building and expansion and other related operations, please refer to the introduction of this tool 'BcosBuilder <. / pro _ builder.html >' _
+   - Pro version does not rely on the tars web console to build FISCO BCOS "BcosBuilder / pro" tool for chain building and expansion and other related operations, please refer to the introduction of this tool 'BcosBuilder<./pro_builder.html>`_ 
 ```
 
 **注意:**
@@ -40,8 +40,8 @@ brew install curl python3 wget
 
 ```eval_rst
 .. note::
-   - Deployment tool "BcosBuilder" configuration and use please refer to 'here <. / pro _ builder.html >' _
-   - If the network speed of "BcosBuilder" downloaded from github is too slow, try: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - Deployment tool "BcosBuilder" configuration and use please refer to 'here<./pro_builder.html>`_
+   - If downloading the deployment tool "BcosBuilder" from github is too slow, please try: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -62,9 +62,9 @@ cd BcosBuilder && pip3 install -r requirements.txt
 
 Pro version FISCO BCOS includes RPC service, Gateway service and blockchain node service BcosNodeService。
 
-- RPC service: It is responsible for receiving client requests and forwarding the requests to nodes for processing. RPC services can be scaled horizontally, and one RPC service can access multiple blockchain node services.
-- Gateway service: It is responsible for network communication between blockchain nodes across institutions. Gateway services can be scaled horizontally. One Gateway service can access multiple blockchain node services.
-- Blockchain node service 'BcosNodeService': Provides blockchain-related services, including consensus, execution, and transaction blockchain. The node service accesses RPC services and Gateway services to obtain network communication functions.。
+-RPC service: responsible for receiving client requests and forwarding the requests to nodes for processing, RPC service can be scaled horizontally, and one RPC service can access multiple blockchain node services
+- Gateway service: responsible for network communication between blockchain nodes across institutions. The Gateway service is horizontally scalable, and one Gateway service can access multiple blockchain node services
+- Blockchain node service 'BcosNodeService': Provides blockchain-related services, including consensus, execution, and transaction blockchain. The node service accesses RPC services and Gateway services to obtain network communication functions。
 
 For the overall architecture design of Pro version FISCO BCOS, please refer to [here](../../design/architecture.md)。
 
@@ -78,17 +78,17 @@ Before building the Pro version of FISCO BCOS, you need to download the binary p
 
 ```eval_rst
 .. note::
-   - You can use the python3 build _ chain.py-h "View script usage
-   - You can use the python3 build _ chain.py build-h "View how to use the build installation package
-   - Use the "python3 build _ chain.py download _ binary" command to download an executable binary file. The binary file is downloaded to the "binary" directory by default.
-   - If downloading the binary is slow, try: ``python3 build_chain.py download_binary -t cdn``
+   - You can view the script usage through "python3 build _ chain.py -h"
+   - You can view the usage of the build installation package through "python3 build _ chain.py build -h"
+   - Use the "python3 build _ chain.py download _ binary" command to download the executable binary file. The binary file is downloaded to the "binary" directory by default
+   - If downloading binary is slow, please try: ``python3 build_chain.py download_binary -t cdn``
 ```
 
 ```shell
 # Enter the operation directory
 cd ~/fisco/BcosBuilder/pro
 
-# Run the build _ chain.py script to download the binary. The binary package is downloaded to the binary directory by default.
+# Run the build _ chain.py script to download the binary. The binary package is downloaded to the binary directory by default
 python3 build_chain.py download_binary
 ```
 
@@ -124,16 +124,16 @@ Parameters:
 
 ### 3.3 Build installation package
 
-In the 'BcosBuilder' directory, run the following command to build installation packages for two node services, two RPC services, and two gateway services. The IP addresses are all '127.0.0.1'.:
+In the 'BcosBuilder' directory, run the following command to build installation packages for two node services, two RPC services, and two gateway services. The IP addresses are all '127.0.0.1':
 
 - RPC Service: '20200 'and' 20201'
 - Gateway Service: '30300 'and' 30301'
-- tars port: `40401` ~ `40407`、`40411` ~ `40417`
+-tars port: `40401` ~ `40407`、`40411` ~ `40417`
 
-**注意:** When building an environment that does not rely on the tars page management console, because there is no tars page management console, the tars module in each microservice listening port and connection information needs to use the configuration file management, you can refer to the tars configuration file description.。
+**注意:** When building an environment that does not rely on the tars page management console, because there is no tars page management console, the tars module in each microservice listening port and connection information needs to use the configuration file management, you can refer to the tars configuration file description。
 
 #### 3.3.1 tars configuration file
-Build an environment that does not rely on the tars web management console. Since there is no tars management background, the tars module of each service needs to use configuration file management to monitor and connect information.。
+Build an environment that does not rely on the tars web management console. Since there is no tars management background, the tars module of each service needs to use configuration file management to monitor and connect information。
 
 Each service will have two additional configuration files' tars.conf 'and' tars _ proxy.ini'
 
@@ -159,7 +159,7 @@ $ ls -a 127.0.0.1/*/conf/tars_proxy.ini
 
 ##### 3.3.1.1. tars.conf
 
-the server - side monitoring information of the internal tars module of the service.
+the server - side monitoring information of the internal tars module of the service
 
 ###### 3.3.1.1.1 RPC Service
 
@@ -207,7 +207,7 @@ $ cat 127.0.0.1/rpc_20200/conf/tars.conf
 </tars>
 ```
 
-For more information about the configuration of tars, see < https://doc.tarsyun.com/#/base/tars-template.md>
+for details of tars configuration, refer to<https://doc.tarsyun.com/#/base/tars-template.md>
 
 As configuration example:
 
@@ -237,9 +237,9 @@ There is a tars rpc module inside the RPC service, listening on port '40400'
     listen_port=20201
     thread_count=4
     # rpc tars server listen ip
-    tars_listen_ip="0.0.0.0"   # Modify the IP address of the TARS listener.
+    tars_listen_ip="0.0.0.0"   # Modify the IP address of the TARS listener
     # rpc tars server listen port
-    tars_listen_port=40410     # modify the port on which tars listens.
+    tars_listen_port=40410     # modify the port on which tars listens
 ```
 
 ###### 3.3.1.1.2 Gateway Gateway Service
@@ -288,7 +288,7 @@ $ cat 127.0.0.1/gateway_30300/conf/tars.conf
 </tars>
 ```
 
-For more information about the configuration of tars, see < https://doc.tarsyun.com/#/base/tars-template.md>
+for details of tars configuration, refer to<https://doc.tarsyun.com/#/base/tars-template.md>
 
 As configuration example:
 
@@ -307,7 +307,7 @@ As configuration example:
 
 There is a tars gateway module inside the Gateway service, listening on port '40401'
 
-注意: Modify the 'tars' listening information inside the service. You can modify the '[agency.gateway] tars _ listen _ ip' and 'tars _ listen _ port' configurations of 'config.toml' during build.
+注意: Modify the 'tars' listening information inside the service. You can modify the '[agency.gateway] tars _ listen _ ip' and 'tars _ listen _ port' configurations of 'config.toml' during build
 
 ```shell
 [agency.gateway]
@@ -412,7 +412,7 @@ cat 127.0.0.1/group0_node_40402/conf/tars.conf
 
 As configuration example:
 
-The node service contains five tars modules.: TxPool, Scheduler, PBFT, Ledger, and Front。
+The node service contains five tars modules: TxPool, Scheduler, PBFT, Ledger, and Front。
 
 - TxPool
 
@@ -501,8 +501,8 @@ Front module listening port: 40406
 
 注意:
 
-- Modify the internal 'tars' listening port of the service. You can modify the configurations of 'config.toml', '[[agency.group]] [[agency.group.node]] tars _ listen _ ip' and 'tars _ listen _ port' during build
-- Five consecutive ports must be allocated to the node service. The range is [tars _ listen _ port, tars _ listen _ port+4], please note the port conflict
+- Modify the listening port of 'tars' inside the service. You can modify the configurations of 'config.toml', '[[agency.group]] [[agency.group.node]] tars _ listen _ ip' and 'tars _ listen _ port' during build
+- The node service needs to allocate five consecutive ports. The range is [tars _ listen _ port, tars _ listen _ port+4], please note the port conflict
 
 ```shell
 [[agency.group]]
@@ -564,8 +564,8 @@ The preceding configuration indicates that if the internal module of the service
 
 **注意:**
 
-- 'tars _ proxy.ini 'recommendations for services within the organization are consistent
-- A new file is generated for the service to be expanded during expansion. You need to merge the newly generated 'institution name _ tars _ proxy.ini' into the used 'tars _ proxy.ini' file and synchronize it to all services. The service needs to be restarted and take effect. Otherwise, the newly expanded service cannot be connected to the existing environment.
+- 'tars _ proxy.ini' recommendations for various services within the organization are consistent
+- A new file is generated for the service that is being expanded during expansion. You need to merge the newly generated 'institution name _ tars _ proxy.ini' into the used 'tars _ proxy.ini' file and synchronize it to all services. The service needs to be restarted and take effect. Otherwise, the newly expanded service cannot be connected to the existing environment
 
 Before performing this operation, please make sure that the above ports of the machine are not occupied。
 
@@ -709,7 +709,7 @@ generated
 │   │   │   ├── ssl.key         # ssl certificate private key
 │   │   │   ├── ssl.nodeid     
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh  # Startup Script
 │   │   └── stop.sh   # Stop Script
 │   ├── gateway_30301 # Gateway Service Directory
@@ -723,7 +723,7 @@ generated
 │   │   │   ├── ssl.key         # ssl certificate private key
 │   │   │   ├── ssl.nodeid     
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh  # Startup Script
 │   │   └── stop.sh   # Stop Script
 │   ├── group0_node_40402   # Node Service Directory
@@ -734,7 +734,7 @@ generated
 │   │   │   ├── node.nodeid     # node nodeid
 │   │   │   ├── node.pem        # Private key file, consensus module for message signing, verification
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh  # Startup Script
 │   │   └── stop.sh   # Stop Script
 │   ├── group0_node_40412   # Node Service Directory
@@ -745,7 +745,7 @@ generated
 │   │   │   ├── node.nodeid     # node nodeid
 │   │   │   ├── node.pem        # Private key file, consensus module for message signing, verification
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh  # Startup Script
 │   │   └── stop.sh   # Stop Script
 │   ├── rpc_20200           # RPC Service Directory
@@ -764,7 +764,7 @@ generated
 │   │   │   ├── ssl.key         # ssl certificate private key
 │   │   │   ├── ssl.nodeid
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh    # Startup Script
 │   │   └── stop.sh     # Stop Script
 │   ├── rpc_20201         # RPC Service Directory
@@ -783,27 +783,27 @@ generated
 │   │   │   ├── ssl.key         # ssl certificate private key
 │   │   │   ├── ssl.nodeid
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh    # Startup Script
 │   │   └── stop.sh     # Stop Script
 │   ├── start_all.sh        # Start script to start all service nodes
 │   └── stop_all.sh         # Stop script to stop all service nodes
 ├── chain0        
 │   ├── agencyA_tars_proxy.ini                # An additional backup of the agency A tars _ proxy.ini. The tars _ proxy.ini of each service node in the agency needs to be consistent. After the service node changes such as scaling up or scaling down, all services need to update the configuration file and restart
-│   ├── agencyB_tars_proxy.ini                # Agency B extra backup of tars _ proxy.ini, each service node within the agency tars _ proxy.ini needs to be consistent, after the expansion or contraction of service node changes, all services need to update the configuration file, and then restart.
+│   ├── agencyB_tars_proxy.ini                # Agency B extra backup of tars _ proxy.ini, each service node within the agency tars _ proxy.ini needs to be consistent, after the expansion or contraction of service node changes, all services need to update the configuration file, and then restart
 │   └── group0                      
 │       ├── agencyAgroup0node0BcosNodeService # node agencyAgroup0node0BcosNodeService
-│       │   ├── config.genesis                  # The node creation block file, which is an important file. This file is required for node expansion in a group.
+│       │   ├── config.genesis                  # The node creation block file, which is an important file. This file is required for node expansion in a group
 │       │   ├── config.ini                      # The node configuration file, which is the same file as the node service conf / config.ini
 │       │   ├── node.nodeid                     # Node nodeid, used when registering or exiting a node
-│       │   └── node.pem                        # The node private key file. The consensus module is used for message signing and signature verification.
+│       │   └── node.pem                        # The node private key file. The consensus module is used for message signing and signature verification
 │       ├── agencyBgroup0node0BcosNodeService # node agencyBgroup0node0BcosNodeService
 │       │   ├── config.genesis                  # The node creation block file, which is required when new nodes are expanded in the group
 │       │   ├── config.ini                      # The node configuration file, which is the same file as the node service conf / config.ini
 │       │   ├── node.nodeid                     # Node nodeid, used when registering or exiting a node
-│       │   └── node.pem                        # The node private key file. The consensus module is used for message signing and signature verification.
+│       │   └── node.pem                        # The node private key file. The consensus module is used for message signing and signature verification
 │       └── config.genesis
-├── gateway     # Gateway service root certificate directory, which is used to issue certificates for new gateway service nodes when they are expanded.
+├── gateway     # Gateway service root certificate directory, which is used to issue certificates for new gateway service nodes when they are expanded
 │   └── chain0
 │       └── ca
 │           ├── ca.crt
@@ -821,7 +821,7 @@ generated
 
 ### 3.4 Startup Services
 
-**注意:** This example is a stand-alone environment, in the actual environment, the service division is on different machines, then you need to first copy the installation package to the corresponding machine, and then start the service.。
+**注意:** This example is a stand-alone environment, in the actual environment, the service division is on different machines, then you need to first copy the installation package to the corresponding machine, and then start the service。
 
 ```shell
 $ cd generated/127.0.0.1
@@ -844,13 +844,13 @@ Service started successfully。
 
 ## 4. Configure and use the console
 
-The console is applicable to both the Pro version and the Air version of the FISCO BCOS blockchain, and the experience is completely consistent。After the Pro version blockchain experience environment is built, you can configure and use the console to send transactions to the Pro version blockchain.。
+The console is applicable to both the Pro version and the Air version of the FISCO BCOS blockchain, and the experience is completely consistent。After the Pro version blockchain experience environment is built, you can configure and use the console to send transactions to the Pro version blockchain。
 
 ### 4.1 Installation Dependencies
 
 ```eval_rst
 .. note::
-   - For console configuration methods and commands, please refer to 'here <.. /.. / develop / console / console _ config.html >' _
+   -For console configuration methods and commands, please refer to 'here<../../develop/console/console_config.html>`_
 ```
 
 Before using the console, you need to install the java environment:
@@ -873,7 +873,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    -If you cannot download for a long time due to network problems, please try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 **Step 2: Configure the Console**
@@ -887,10 +887,10 @@ If the RPC service does not use the default port, replace 20200 in the file with
 cp -n console/conf/config-example.toml console/conf/config.toml
 ```
 
-- Configure Console Certificates
+- Configure console certificates
 
 ```shell
-# The command find.-name sdk Find all SDK certificate paths
+# All SDK certificate paths can be found through the command find.-name sdk
 cp BcosBuilder/pro/generated/127.0.0.1/rpc_20200/conf/sdk/* console/conf/
 ```
 
@@ -996,7 +996,7 @@ contract HelloWorld {
 
 **Step 2: Deploying HelloWorld Contracts**
 
-To facilitate the user's quick experience, the HelloWorld contract is built into the console and located in the console directory 'contracts / consolidation / HelloWorld.sol'.
+To facilitate the user's quick experience, the HelloWorld contract is built into the console and located in the console directory 'contracts / consolidation / HelloWorld.sol'
 
 ```shell
 # Enter the following command in the console to return the contract address if the deployment is successful
@@ -1057,11 +1057,11 @@ Event: {}
 After successfully building a blockchain network that does not rely on the tars console, this section describes how to scale up the rpc, gateway, and node。
 
 ### 5.1 Scaling the RPC / Gateway service (without relying on the tars console)
-Take the RPC / Gateway service of the Pro version FISCO BCOS alliance chain as an example to help users master the service expansion of the Pro version FISCO BCOS blockchain without relying on the tars console.。
+Take the RPC / Gateway service of the Pro version FISCO BCOS alliance chain as an example to help users master the service expansion of the Pro version FISCO BCOS blockchain without relying on the tars console。
 
 #### 5.1.1. Modify the expansion configuration
 
-For more information about the capacity expansion configuration of the blockchain node service, see the capacity expansion template 'conf / config' of 'BcosBuilder'.-node-rpc-example.toml ', the specific configuration steps are as follows:
+For more information about how to configure blockchain node service expansion, see the expansion template 'conf / config-node-rpc-example.toml' of 'BcosBuilder'. The specific configuration steps are as follows:
 
 ```shell
 # Enter the operation directory
@@ -1109,13 +1109,13 @@ enable_storage_security = false
 
 Modify configuration files as needed:
 
-- RPC Root Certificate Path
+- RPC root certificate path
 
 ```shell
 rpc_ca_cert_path="generated/rpc/chain0/ca/"
 ```
 
-- Deploy Server Modifications
+- Deploy server modifications
 
   ```shell
   deploy_ip = "127.0.0.1"
@@ -1128,7 +1128,7 @@ rpc_ca_cert_path="generated/rpc/chain0/ca/"
     listen_port=20202
   ```
 
-- modify tars listening information
+-tars listening information modification
 
   ```shell
   tars_listen_ip="0.0.0.0"
@@ -1189,7 +1189,7 @@ expand/rpc
 │   │   │   ├── ssl.key         # ssl certificate private key
 │   │   │   ├── ssl.nodeid
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh    # Startup Script
 │   │   └── stop.sh     # Stop Script
 │   ├── start_all.sh
@@ -1200,7 +1200,7 @@ expand/rpc
 
 #### 5.1.3. Merging tars _ proxy.ini Files
 
-Use'merge-config 'command to merge tars _ proxy files
+Merge the tars _ proxy file using the 'merge-config' command
 
 ```shell
 python3 build_chain.py merge-config --help
@@ -1219,7 +1219,7 @@ options:
                         [Required] specify the output dir
 ```
 
--t/--type   : The type of the merged configuration file. Currently, only the 'tars' type is supported.
+-t/--type   : The type of the merged configuration file. Currently, only the 'tars' type is supported
 -c/--config : Configuration list, list of configuration files to be merged
 -O/--output : Output Directory
 
@@ -1323,7 +1323,7 @@ try to start rpc_20202
 
 ```eval_rst
 .. note::
-   - For console configuration methods and commands, please refer to 'here <.. /.. / operation _ and _ maintenance / console / console _ config.html >' _
+   -For console configuration methods and commands, please refer to 'here<../../operation_and_maintenance/console/console_config.html>`_
 ```
 
 Before using the console, you need to install the java environment:
@@ -1346,7 +1346,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    -If you cannot download for a long time due to network problems, please try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 **Step 2: Configure the Console**
@@ -1364,10 +1364,10 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 peers=["127.0.0.1:20202"]
 ```
 
-- Configure Console Certificates
+- Configure console certificates
 
 ```shell
-# The command find.-name sdk Find all SDK certificate paths
+# All SDK certificate paths can be found through the command find.-name sdk
 cp ~/fisco/BcosBuilder/pro/expand/rpc/127.0.0.1/rpc_20202/conf/sdk/* console/conf
 ```
 
@@ -1402,7 +1402,7 @@ Return values:()
 
 #### 5.2.1. Modify the expansion configuration
 
-For more information about the capacity expansion configuration of the blockchain node service, see the capacity expansion template 'conf / config' of 'BcosBuilder'.-node-expand-example.toml ', the specific configuration steps are as follows:
+For more information about how to configure blockchain node service expansion, see the expansion template 'conf / config-node-expand-example.toml' of 'BcosBuilder'. The specific configuration steps are as follows:
 
 ```shell
 # Enter the operation directory
@@ -1489,19 +1489,19 @@ Modify configuration files as needed:
   node_name = "node2"
   ```
 
-- Deploy Server Modifications
+- Deploy server modifications
 
   ```shell
   deploy_ip = "127.0.0.1"
   ```
 
-- Set Genesis Block File Path
+- Set Genesis block file path
 
   ```shell
   genesis_config_path = "./generated/chain0/group0/config.genesis"
   ```
 
-- modify tars listening information
+-tars listening information modification
 
   ```shell
   tars_listen_ip="0.0.0.0"
@@ -1564,7 +1564,7 @@ expand/node/
 │   │   │   ├── node.nodeid     # node nodeid
 │   │   │   ├── node.pem        # Private key file, consensus module for message signing, verification
 │   │   │   ├── tars.conf       # For more information about the configuration of the tars.conf server, see Tars.conf
-│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini.
+│   │   │   └── tars_proxy.ini  # For details about the configuration of the tars client connection, see the configuration description of tars _ proxy.ini
 │   │   ├── start.sh    # Startup Script
 │   │   └── stop.sh     # Stop Script
 │   ├── start_all.sh    # Start script to start all service nodes
@@ -1574,14 +1574,14 @@ expand/node/
     └── group0
         └── agencyAgroup0node2BcosNodeService
             ├── config.genesis  # Blockchain Genesis Block File
-            ├── config.ini      # the configuration file of the expansion node.
+            ├── config.ini      # the configuration file of the expansion node
             ├── node.nodeid     # nodeid of the scaling node
             └── node.pem        # Private key file of the scaling node
 ```
 
 #### 5.2.3. Merging tars _ proxy.ini Files
 
-Use'merge-config 'command to merge tars _ proxy files
+Merge the tars _ proxy file using the 'merge-config' command
 
 ```shell
 python3 build_chain.py merge-config --help
@@ -1600,7 +1600,7 @@ options:
                         [Required] specify the output dir
 ```
 
--t/--type   : The type of the merged configuration file. Currently, only the 'tars' type is supported.
+-t/--type   : The type of the merged configuration file. Currently, only the 'tars' type is supported
 -c/--config : Configuration list, list of configuration files to be merged
 -O/--output : Output Directory
 
@@ -1701,7 +1701,7 @@ try to start group0_node_40422
 
 ```eval_rst
 .. note::
-   When scaling a new node, we do not recommend that you add the node as a consensus node. You can add the node as a consensus node only when the block height of the scaling node is the same as the highest block height of the existing node in the chain.。
+   When scaling a new node, we do not recommend that you add the node as a consensus node. You can add the node as a consensus node only when the block height of the scaling node is the same as the highest block height of the existing node in the chain。
 ```
 
 **Step 1: Obtain the NodeID of the scaling node**

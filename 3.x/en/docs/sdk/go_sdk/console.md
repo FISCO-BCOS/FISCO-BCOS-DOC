@@ -1,6 +1,6 @@
 # Console
 
-Tag: "go-sdk "" Go SDK Console "
+Tags: "go-sdk" "Go SDK Console"
 
 ----
 
@@ -23,7 +23,7 @@ cd go-sdk
 go build cmd/console.go
 ```
 
-- Please copy the corresponding ca.crt, sdk.crt and sdk.key certificates to the console executable working directory
+- Copy the corresponding ca.crt, sdk.crt and sdk.key certificates to the console executable working directory
 
 ## getBlockByHash
 
@@ -35,8 +35,8 @@ Obtain block information based on the block hash:
 
 Parameters include:
 
-- blockhash: block hash value；
-- true / false: true returns the details of all transactions in the block. False only returns the hash values of all transactions in the block. The default value is true.。
+-blockHash: block hash value；
+-true / false: true will return the details of all transactions in the block, false will only return the hash value of all transactions in the block, the default is true。
 
 ```shell
 > ./console getBlockByHash 0xce28a18b54ee72450c403968f705253a59c87a22801a88cc642ae800bb8b4848 true
@@ -116,8 +116,8 @@ Obtain block information based on block height:
 
 Parameters include:
 
-- blockNumber: block height；
-- true / false: true returns the details of all transactions in the block. False only returns the hash values of all transactions in the block. The default value is true.。
+-blockNumber: block height；
+-true / false: true will return the details of all transactions in the block, false will only return the hash value of all transactions in the block, the default is true。
 
 ```shell
 > ./console getBlockByNumber 3 true
@@ -199,7 +199,7 @@ Obtain the block hash based on the block height:
 
 Parameters include:
 
-- blockNumber: block height。
+-blockNumber: block height。
 
 ```shell
 > ./console getBlockHashByNumber 3
@@ -230,7 +230,7 @@ Query contract data based on contract address:
 
 Parameters include:
 
-- contract address: contract address。
+-contract address: contract address。
 
 ```shell
 > ./console getCode 0x65474dbd4f08170bc2dc30f9ae32f8e2206b15a6
@@ -515,7 +515,7 @@ Get transaction information based on transaction hash:
 
 Parameters include:
 
-- transactionHash: transaction hash value。
+-transactionHash: transaction hash value。
 
 ```shell
 > ./console getTransactionByHash 0x5518df7c2063efeb6481c35c4c58f378fac5f476c023c2019b9b01d221478434
@@ -546,7 +546,7 @@ Get transaction receipt based on transaction hash:
 
 Parameters include:
 
-- transactionHash: transaction hash value。
+-transactionHash: transaction hash value。
 
 ```shell
 > ./console getTransactionReceipt 0x5518df7c2063efeb6481c35c4c58f378fac5f476c023c2019b9b01d221478434

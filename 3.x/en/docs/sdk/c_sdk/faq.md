@@ -1,10 +1,10 @@
 # FAQ
 
-Tag: "c-sdk`` ``FAQ``
+Tag: "c-sdk" "" FAQ ""
 
 ----------
 
-This summary lists some uses'c-sdk 'some common problems:
+This summary lists some common problems in using 'c-sdk':
 
 ## 1. Send transaction return exception: `transaction hash mismatching`
 
@@ -24,9 +24,9 @@ The node detects that the transaction 'hash' field carried in the 'sdk' sending 
 
 - Scene
 
-This problem does not occur in general scenarios. It may only occur when users use the 'sdk' tool to assemble (call the interface to create, calculate hash, and sign) transactions.
+This problem does not occur in general scenarios. It may only occur when users use the 'sdk' tool to assemble (call the interface to create, calculate hash, and sign) transactions
 
-- Resolve
+- Resolved
 
 Assemble the transaction with the correct interface:
 
@@ -38,6 +38,6 @@ Assemble the transaction with the correct interface:
 Example:
 [c-sdk example](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.2.0/sample/tx/hello_sample.c#L308)
 
-The 'sdk' of each language encapsulates the above interfaces.:
+The 'sdk' of each language encapsulates the above interfaces:
     - ['Java SDK' link](https://github.com/FISCO-BCOS/bcos-sdk-jni/blob/v3.2.0/src/main/java/org/fisco/bcos/sdk/jni/utilities/tx/TransactionBuilderJniObj.java#L21)
-    - other language sdk, please refer to the specific documentation, or source code
+    - Other language SDK, please refer to the specific documentation, or source code

@@ -1,11 +1,11 @@
-# Ansible for FISCO BCOS + Webase-Deploy efficiently builds enterprise-level production environment alliance chain
-Author ： Wuque ｜ Xi'an R & D Center of Shenzhen Yingxing Chain Alliance Software Engineering Co., Ltd.
+# Ansible for FISCO BCOS + Webase-deploy efficiently builds enterprise-level production environment alliance chain
+Author ： Wuque ｜ Xi'an R & D Center of Shenzhen Yingxing Chain Alliance Software Engineering Co., Ltd
 
 ## 1 Background Introduction
-If a worker wants to do a good job, he must first sharpen his tools. I have the artifact in my hand.！
+If a worker wants to do a good job, he must first sharpen his tools. I have the artifact in my hand！
 
 ### 1.1 Ansible for FISCO BCOS
-Ansible for FISCO BCOS provides ansible that automates the generation of enterprise profile-playbook。The environment of 2 groups, 3 institutions and 6 nodes can generate configurations within 30 seconds (except the download time), which greatly simplifies the difficulty of deployment and avoids errors that are prone to manual configuration。
+Ansible for FISCO BCOS provides an ansible-playbook that automates the generation of enterprise profiles。The environment of 2 groups, 3 institutions and 6 nodes can generate configurations within 30 seconds (except the download time), which greatly simplifies the difficulty of deployment and avoids errors that are prone to manual configuration。
 
 [Github Access Address](https://github.com/newtouch-cloud/ansible-for-fisco-bcos)
 
@@ -20,7 +20,7 @@ git clone https://gitee.com/hailong99/ansible-for-fisco-bcos.git
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy728.png)
 
 ### 1.2 Webase-deploy
-Deploying WeBASE with one click allows you to quickly build a WeBASE console environment on the same machine, facilitating users to quickly experience the WeBASE management platform。One-click deployment build: node (FISCO-BCOS 2.0+), management platform (WeBASE-Web), Node Management Subsystem (WeBASE-Node-Manager), Node Front Subsystem (WeBASE-Front), signing service (WeBASE-Sign）。Among them, the construction of the node is optional, you can choose to use the existing chain or build a new chain through the configuration.。
+Deploying WeBASE with one click allows you to quickly build a WeBASE console environment on the same machine, facilitating users to quickly experience the WeBASE management platform。One-click deployment and construction: Node (FISCO-BCOS 2.0+), management platform (WeBASE-Web), node management subsystem (WeBASE-Node-Manager), node front subsystem (WeBASE-Front), signature service (WeBASE-Sign)。Among them, the construction of the node is optional, you can choose to use the existing chain or build a new chain through the configuration。
 
 [Github Access Address](https://github.com/WeBankFinTech/WeBASE)
 
@@ -57,7 +57,7 @@ System Centos7.6
 Two servers in the same LAN, network access to each other is normal。
 
 ### 3.2 Software preparation
-Both servers have basic components installed such as: OpenSSL, Java8, Python3, Git, Vim, etc.。
+Both servers have basic components installed such as: OpenSSL, Java8, Python3, Git, Vim, etc。
 
 Server A:
 Database MySQL
@@ -119,11 +119,11 @@ After the field experiment path is: inventories / my _ inventory / group _ vars 
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy2293.png)
 
-Edit chain attributes according to actual business requirements, such as binary file version, whether to generate console, and whether to generate SDK。The notes in the document are clearly written, combined with business understanding.。
+Edit chain attributes according to actual business requirements, such as binary file version, whether to generate console, and whether to generate SDK。The notes in the document are clearly written, combined with business understanding。
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy2357.png)
 
-Edit the chain attributes according to the actual needs of the business, such as: organization, node, group.。The notes in the document are clearly written, combined with business understanding.。
+Edit the chain attributes according to the actual needs of the business, such as: organization, node, group。The notes in the document are clearly written, combined with business understanding。
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy2417.png)
 
@@ -158,13 +158,13 @@ ansible-playbook -i inventories/my_inventory/hosts.ini fisco_bcos.yml
 
 Generated Configuration Information
 
-Note that after the command is executed, the node _ list.yml file will show that the organization and group have not been initialized. If you need to execute the command again, the group and organization have been initialized.。
+Note that after the command is executed, the node _ list.yml file will show that the organization and group have not been initialized. If you need to execute the command again, the group and organization have been initialized。
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy2844.png)
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy2846.png)
 
-According to the configuration information, the underlying file of the alliance chain has been generated.
+According to the configuration information, the underlying file of the alliance chain has been generated
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy2869.png)
 
@@ -188,7 +188,7 @@ cp -r agency_iMeshx.tar.gz /home/
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy3179.png)
 
-192.168.9.207 The server is uploaded directly with the ssh terminal tool and moved to the planned path.。
+192.168.9.207 The server is uploaded directly with the ssh terminal tool and moved to the planned path。
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy3236.png)
 
@@ -223,8 +223,8 @@ tail -f node*/log/log* |grep ++++
 
 So far, our two servers have completed the construction of the chain using the Ansible for FISCO BCOS artifact, in which the tool automatically completes the commands for generating and copying many files, which is very simple and efficient ^ _ ^!
 
-## 5 Using Webase-Deploy tool to build Webase
-The underlying service of the alliance chain already exists and needs to be managed by Webase.
+## 5 Use the Webase-deploy tool to build Webase
+The underlying service of the alliance chain already exists and needs to be managed by Webase
 ### 5.1 Install webase-deploy
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy3768.png)
@@ -246,8 +246,8 @@ unzip webase-deploy.zip
 ### 5.2 Configure webase
 
 #### 5.2.1 Configure each subsystem version information and database information
-Edit the configuration file: / home / webase-deploy/common.properties
-Follow the official tutorial and configuration file prompts to configure the subsystem version information and database information respectively.。
+Edit the configuration file: / home / webase-deploy / common.properties
+Follow the official tutorial and configuration file prompts to configure the subsystem version information and database information respectively。
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy4090.png)
 
@@ -260,15 +260,15 @@ Follow the official tutorial and configuration file prompts to configure the sub
 
 (2) Copy / home / agency _ iMeshx / meta / sdk to the node directory / home / agency _ iMeshx / fisco _ deploy _ agency _ iMeshx
 
-(3) Copy the three certificates under meta / sdk / to webase-under front / conf(You need to execute the installation command to download webase first.-The front file can only be copied successfully later.)
+(3) Copy the three certificates under meta / sdk / to webase-front / conf(You need to execute the installation command to download the webase-front file before you can copy it successfully)
 
 #### 5.2.4 Configuring Nginx
-configure the proxy ip address and port number of nginx according to the plan.
+configure the proxy ip address and port number of nginx according to the plan
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy4419.png)
 
-#### 5.2.5 Configure webase-front (you need to execute the installation command to download webase first-front file can be configured later)
-The default IP address of SDK is 127.0.0.1, which needs to be changed to 192.168.9.11 and then saved.
+#### 5.2.5 Configure webase-front (you need to run the installation command to download the webase-front file before configuring)
+The default IP address of SDK is 127.0.0.1, which needs to be changed to 192.168.9.11 and then saved
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy4534.png)
 
@@ -284,7 +284,7 @@ python3 deploy.py installAll
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy4640.png)
 
-Note: webase-node-MGR database initialization is very important, the first run must choose y
+Note: the database initialization of webase-node-mgr is very important, the first run must choose y
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy4685.png)
 
@@ -366,22 +366,22 @@ Administrator password update required for initial login
 
 ![](../../../images/articles/ansible_FISCO-BCOS_Webase-deploy/ansible_FISCO-BCOS_Webase-deploy5106.png)
 
-So far we have finished using webase-Deploy's management and functional testing of the alliance chain is complete.！^_^ 。
+So far, we have completed the management and functional testing of the alliance chain using webase-deploy, and we are done！^_^ 。
 
 
 ## 7 Development Perception
 
-#### The way of heaven, the damage is more than enough to make up for the deficiency, is the false victory, the deficiency is more than enough to win.！
+#### The way of heaven, the damage is more than enough to make up for the deficiency, is the false victory, the deficiency is more than enough to win！
 
 #### Do not take small steps, not even a thousand miles,
 
-#### If you don't accumulate small streams, you can't become a river or a sea.！
+#### If you don't accumulate small streams, you can't become a river or a sea！
 
 #### False public opinion horse, non-profit also, but to thousands of miles,
 
-#### False boat, non-energy water also, and the river.！
+#### False boat, non-energy water also, and the river！
 
-#### A gentleman is born different, good and false in things.！
+#### A gentleman is born different, good and false in things！
 
 
 

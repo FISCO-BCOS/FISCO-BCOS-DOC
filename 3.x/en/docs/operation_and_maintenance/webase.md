@@ -6,12 +6,12 @@ Tags: "WeBASE" "Middleware Platform" "Node Management" "System Monitoring" "Syst
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
-WeBank's open source self-developed blockchain middleware platform - [WeBASE(WeBank Blockchain Application Software Extension)](https://webasedoc.readthedocs.io/zh_CN/latest/) It is a middleware platform built between blockchain applications and FISCO BCOS nodes.。WeBASE shields the complexity of the underlying blockchain, reduces the threshold for blockchain use, and greatly improves the development efficiency of blockchain applications, including subsystems such as node front, node management, transaction links, data export, and web management platforms.。Users can select subsystems for deployment according to their business needs, and can further experience the rich interactive experience, visual smart contract development environment IDE。
+WeBank's open source self-developed blockchain middleware platform - [WeBASE(WeBank Blockchain Application Software Extension)](https://webasedoc.readthedocs.io/zh_CN/latest/) It is a middleware platform built between blockchain applications and FISCO BCOS nodes。WeBASE shields the complexity of the underlying blockchain, reduces the threshold for blockchain use, and greatly improves the development efficiency of blockchain applications, including subsystems such as node front, node management, transaction links, data export, and web management platforms。Users can select subsystems for deployment according to their business needs, and can further experience the rich interactive experience, visual smart contract development environment IDE。
 
-The WeBASE Management Platform is a set of management FISCO consisting of four WeBASE subsystems-Toolset for the BCOS Alliance Chain。For more information, please refer to [WeBASE Management Platform User Manual](https://webasedoc.readthedocs.io/zh_CN/latest/) 。
+The WeBASE Management Platform is a set of four WeBASE subsystems to manage the FISCO-BCOS Alliance Chain。For more information, please refer to [WeBASE Management Platform User Manual](https://webasedoc.readthedocs.io/zh_CN/latest/) 。
 
 ## Main functions
 
@@ -34,12 +34,12 @@ For building, please refer to [WeBASE One - click Deployment Document](https://w
 
 ### [WeBASE Quick Start](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)
 
-Developers only need to build nodes and node pre-services.(WeBASE-Front)via WeBASE-Front contract editor for contract editing, compilation, deployment, debugging。Build can refer to ["WeBASE Quick Start Document"](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)。
+Developers only need to build nodes and node pre-services(WeBASE-Front)You can edit, compile, deploy, and debug contracts through WeBASE-Front's contract editor。Build can refer to ["WeBASE Quick Start Document"](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE-Install/developer.html)。
 ![](../../images/webase/webase-front.png)
 
 ### [WeBASE Console](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)
 
-Through the WeBASE one-click script, you can build a basic environment of WeBASE, which can facilitate users to experience the core functions of WeBASE, such as block browsing, node viewing, contract IDE, system management, node monitoring, transaction audit, and private key management.。For building, please refer to [WeBASE One - click Deployment Document](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)。![](../../images/webase/webase-web.png)
+Through the WeBASE one-click script, you can build a basic environment of WeBASE, which can facilitate users to experience the core functions of WeBASE, such as block browsing, node viewing, contract IDE, system management, node monitoring, transaction audit, and private key management。For building, please refer to [WeBASE One - click Deployment Document](https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/install.html)。![](../../images/webase/webase-web.png)
 
 ### [WeBASE Other](https://webasedoc.readthedocs.io/zh_CN/latest)
 

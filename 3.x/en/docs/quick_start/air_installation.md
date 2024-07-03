@@ -6,22 +6,22 @@ Tags: "Building a Blockchain Network" "Blockchain Tutorial" "HelloWorld" "Consol
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 This chapter describes the necessary installation and configuration required to use the FISCO BCOS underlying blockchain system。This chapter helps users master the FISCO BCOS deployment process by deploying a 4-node FISCO BCOS alliance chain on a single machine. Please refer to [Hardware and System Requirements](./hardware_requirements.md)Operating with supported hardware and platforms。
 
 ```eval_rst
 .. note::
-   - For the system architecture of FISCO BCOS 3.x, please refer to 'here <.. / design / architecture.html >' _
-   - FISCO BCOS 3.x Air version to build and use the tutorial, please refer to 'here <.. / tutorial / air / index.html >' _
-   - FISCO BCOS 3.x Pro version to build and use the tutorial, please refer to 'here <.. / tutorial / pro / index.html >' _
-   - FISCO BCOS 3.x Max version to build and use the tutorial, please refer to 'here <.. / tutorial / max / index.html >' _
+   - The system architecture of FISCO BCOS 3.x, please refer to 'here<../design/architecture.html>`_
+   -FISCO BCOS 3.x Air version to build and use the tutorial, please refer to the 'here<../tutorial/air/index.html>`_
+   -FISCO BCOS 3.x Pro version to build and use the tutorial, please refer to the 'here<../tutorial/pro/index.html>`_
+   -FISCO BCOS 3.x Max version to build and use the tutorial, please refer to the 'here<../tutorial/max/index.html>`_
 ```
 
 ## 1. Build Air version FISCO BCOS alliance chain
 
-This section takes building a FISCO BCOS chain of a single group as an example, and uses the 'development and deployment tool build _ chain.sh' script to build a 4-node FISCO BCOS chain of the Air version locally, taking the Ubuntu 18.04 64-bit system as an example.。
+This section takes building a FISCO BCOS chain of a single group as an example, and uses the 'development and deployment tool build _ chain.sh' script to build a 4-node FISCO BCOS chain of the Air version locally, taking the Ubuntu 18.04 64-bit system as an example。
 
 ### Step 1. Install dependencies
 
@@ -78,8 +78,8 @@ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200
 
 ```eval_rst
 .. note::
-   - 其中-The p option specifies the starting port, which is the p2p listening port and the rpc listening port respectively
-   - Air build script build _ chain.sh introduction document 'refer here <.. / tutorial / air / build _ chain.html >' _
+   - where the -p option specifies the starting port, which is the p2p listening port and the rpc listening port respectively
+   -Air version build script build _ chain.sh introduction document 'reference here<../tutorial/air/build_chain.html>`_
 ```
 
 After the command succeeds, it will output 'All completed':
@@ -124,7 +124,7 @@ writing RSA key
 ```shell
 bash nodes/127.0.0.1/start_all.sh
 ```
-Successful startup will output the following information。Otherwise use 'netstat-an |grep tcp 'check machine' 30300 ~ 30303,20200 ~ 20203 'ports are occupied。
+Successful startup will output the following information。Otherwise use 'netstat -an|grep tcp 'check machine' 30300 ~ 30303,20200 ~ 20203 'ports are occupied。
 
 ```shell
 try to start node0
@@ -175,11 +175,11 @@ info|2022-08-15 19:39:29.270427|[P2PService][Service][METRIC]heartBeat,connected
 
 ## 2. Configure and use the console
 
-The console provides functions such as deploying contracts to FISCO BCOS nodes, initiating contract calls, and querying chain status.。
+The console provides functions such as deploying contracts to FISCO BCOS nodes, initiating contract calls, and querying chain status。
 
 ### Step 1. Install the console dependencies
 
-Console running depends on Java environment(We recommend Java 14.)and the installation command is as follows:
+Console running depends on Java environment(We recommend Java 14)and the installation command is as follows:
 
 ```shell
 # Ubuntu system installation java
@@ -197,7 +197,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 ```eval_rst
 .. note::
-   - If you cannot download for a long time due to network problems, please try cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh  && bash download_console.sh
+   -If you cannot download for a long time due to network problems, please try cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh  && bash download_console.sh
 ```
 
 ### Step 3. Configure the console
@@ -210,12 +210,12 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```eval_rst
 .. note::
-   If the node does not use the default port, replace 20200 in the file with the corresponding rpc port of the node. You can use the "[rpc] .listen _ port" configuration item of the node config.ini to obtain the rpc port of the node.。
+   If the node does not use the default port, replace 20200 in the file with the corresponding rpc port of the node. You can use the "[rpc] .listen _ port" configuration item of the node config.ini to obtain the rpc port of the node。
 ```
 
-- Configure Console Certificates
+- Configure console certificates
 
-SSL connection is enabled by default between the console and the node. The console needs to configure a certificate to connect to the node.。The SDK certificate is generated at the same time as the node is generated. You can directly copy the generated certificate for the console to use:
+SSL connection is enabled by default between the console and the node. The console needs to configure a certificate to connect to the node。The SDK certificate is generated at the same time as the node is generated. You can directly copy the generated certificate for the console to use:
 
 ```shell
 cp -r nodes/127.0.0.1/sdk/* console/conf
@@ -226,7 +226,7 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 ```eval_rst
 .. note::
    - Please make sure that the 30300 ~ 30303, 20200 ~ 20203 ports of the machine are not occupied。
-   - For console configuration methods and commands, please refer to 'here <.. / operation _ and _ maintenance / console / console _ config.html >' _
+   -For console configuration methods and commands, please refer to 'here<../operation_and_maintenance/console/console_config.html>`_
 ```
 
 - Start
@@ -313,7 +313,7 @@ contract HelloWorld {
 
 ### Step 2. Deploy the HelloWorld contract
 
-To facilitate the user's quick experience, the HelloWorld contract is built into the console and located in the console directory 'contracts / consolidation / HelloWorld.sol'.
+To facilitate the user's quick experience, the HelloWorld contract is built into the console and located in the console directory 'contracts / consolidation / HelloWorld.sol'
 
 ```shell
 # Enter the following command in the console to return the contract address if the deployment is successful
@@ -370,4 +370,4 @@ Event: {}
 [group0]: /> exit
 ```
 
-At this point, we have completed the first FISCO-Building the BCOS chain, configuring and using the console, and deploying and invoking the first contract。关于**Pro version FISCO BCOS build, configuration and use please refer to [here](../tutorial/pro/index.md)。**
+At this point, we have completed the construction of the first FISCO-BCOS chain, the configuration and use of the console, and the deployment and invocation of the first contract。关于**Pro version FISCO BCOS build, configuration and use please refer to [here](../tutorial/pro/index.md)。**

@@ -1,18 +1,18 @@
-# Windows based on wsl / wsl2-10 Building the Fisco-Bcos blockchain tips
+# Experience of Building Fisco-Bcos Block Chain on Windows-10 Based on wsl / wsl2
 
 Author ： Huang Yi （ Sichuan Everything Digital Technology Co., Ltd. ） ｜ FISCO BCOS Developer
 
 ## I: Overview
 
-Recently, some friends in the FISCO community mentioned that because of certain restrictions, can only use the Windows platform for development, hope to have a Windows-based Fisco-Bcos Deployment Tutorial。Just @ power Lin Xuanming's teacher C# The SDK is also maturing, so I wrote this article in the hope of making it easier to deploy the Fisco development environment on Windows。
+Recently, some friends in the FISCO community mentioned that because of certain restrictions, only use the Windows platform for development, I hope to have a Windows-based Fisco-Bcos deployment tutorial。Just @ power Lin Xuanming's teacher C# The SDK is also maturing, so I wrote this article in the hope of making it easier to deploy the Fisco development environment on Windows。
 
-This paper describes the adoption of**Linux Subsystem for Windows(wsl/wsl2)**, in Windows-10 No dual system / virtual machine burden on platform to build Fisco-Bcos process and experience, then you can combine the development of Visual Studio and Fisco to build a more comfortable Windows development environment.。
+This paper describes the adoption of**Linux Subsystem for Windows(wsl/wsl2)**On the Windows-10 platform, there is no dual system / virtual machine burden to build the process and experience of Fisco-Bcos, then you can combine the development of Visual Studio and Fisco to build a more comfortable Windows development environment。
 
 wsl and wsl2 are completely different in the underlying implementation, see https for differences://docs.microsoft.com/zh-cn/windows/wsl/compare-versions。
 
-Based on the performance and compatibility of the first generation of WSL using Linux middleware translation, we recommend that you use lightweight Hyper-based-v wsl2, for not wanting to use hyper-v's friends, can only use wsl, at least at this stage has not been found to have compatibility problems。
+Based on the performance and compatibility of the first generation of wsl using linux middleware translation, we recommend using wsl2 based on lightweight hyper-v, for friends who do not want to use hyper-v, you can only use wsl, at least at this stage has not been found to have compatibility issues。
 
-Because the steps for building a fisco are identical, this article will first build a fisco stand-alone 4-node blockchain on the wsl, and then switch to the wsl2 installation console to show that the two can be switched at any time.。
+Because the steps for building a fisco are identical, this article will first build a fisco stand-alone 4-node blockchain on the wsl, and then switch to the wsl2 installation console to show that the two can be switched at any time。
 
 
 ## II: Configuration requirements
@@ -45,11 +45,11 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 
 After successful enablement, restart the computer, download and install the wsl2 kernel update package
 
-Link: < https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi>
+Links:<https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi>
 
 Open the Microsoft Store, download and install the Ubuntu 20.04 LTS subsystem
 
-Link: < https://www.microsoft.com/store/apps/9n6svws3rx71>
+Links:<https://www.microsoft.com/store/apps/9n6svws3rx71>
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/install_ubuntu20.png)
 
@@ -69,7 +69,7 @@ You can see that Ubuntu is now using wsl version 1. Next, you will install and c
 
 ## Four: Based on wsl in the ubuntu20.04 subsystem to build a single 4 node
 
-It is officially recommended to use Windows Termintal for operation. You can also use the shell or powershell that comes with Windows. Download link: < https://aka.ms/terminal>
+It is officially recommended to use Windows Termintal for operation. You can also use the shell or powershell that comes with Windows. Download link:<https://aka.ms/terminal>
 
 Open the terminal and type directly
 
@@ -81,9 +81,9 @@ Enter the ubuntu subsystem, as shown in the figure below
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/windows_terminal_wsl.png)
 
-Here you can see one of the features of wsl: you can directly access files in the NTFS file system.(The starting position is located at c:\Users)and can call windows applications with the .exe suffix。
+Here you can see one of the features of wsl: you can directly access files in the NTFS file system(The starting position is located at c:\Users)and can call windows applications with the .exe suffix。
 
-In the development period, for ease of management, you can put the FICO under the NTFS file system, such as "My Documents," but do not configure it in a production environment, the Linux subsystem access across file systems will reduce performance.。
+In the development period, for ease of management, you can put the FICO under the NTFS file system, such as "My Documents," but do not configure it in a production environment, the Linux subsystem access across file systems will reduce performance。
 
 Because it is a local subsystem, no network configuration is required. Refer to [Building the First Blockchain Network](../../installation.md)Quickly deploy a single-machine 4-node FICO blockchain
 
@@ -91,7 +91,7 @@ Because it is a local subsystem, no network configuration is required. Refer to 
 cd ~
 sudo apt install -y openssl curl
 cd ~ && mkdir -p fisco && cd fisco
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
 
@@ -108,11 +108,11 @@ tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/start_node_wsl.png)
 
-At the same time, since we are using wsl-1. You can view the 4-node linux process fisco in the task manager-bcos and its resource usage
+At the same time, since we are using wsl-1, we can view the 4-node linux process fisco-bcos and its resource usage in the task manager
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/taskmgr_fisco.png)
 
-By right-clicking the process, you can quickly locate the home directory of the Ubuntu subsystem.**Do not modify any files in this directory in Windows**To access the home of wsl, enter:\ wsl $in the address bar of the explorer
+By right-clicking the process, you can quickly locate the home directory of the Ubuntu subsystem**Do not modify any files in this directory in Windows**To access the home of wsl, enter:\ wsl $in the address bar of the explorer
 
 ## Five: switch between wsl and wsl2
 
@@ -153,9 +153,9 @@ wsl --set-version Ubuntu-20.04 1
 
 ## Six: Install the FICO console
 
-Please refer to [Building the First Blockchain Network] for installation tutorial.(../../installation.md)In the installation console section, this article tries to make a brief integration introduction.
+Please refer to [Building the First Blockchain Network] for installation tutorial(../../installation.md)In the installation console section, this article tries to make a brief integration introduction
 
-Since the source of the Ubuntu subsystem is abroad, the download speed of jdk will be slow for domestic users.
+Since the source of the Ubuntu subsystem is abroad, the download speed of jdk will be slow for domestic users
 
 ```bash
 sudo chmod 777 /etc/apt/sources.list
@@ -197,13 +197,13 @@ After startup, you will see the following screen and the console deployment is s
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/console_start.png)
 
-## 7: Using csharp-sdk Visual Studio development example
+## Seven: Visual Studio development examples using csharp-sdk
 
-This article uses @ power teacher's csharp-sdk and its tutorials, thanks to the hard work of power teacher。
+This article uses @ power teacher's csharp-sdk and its tutorials, thanks to power teacher's hard work。
 
-git address: < https://github.com/FISCO-BCOS/csharp-sdk>
+git address:<https://github.com/FISCO-BCOS/csharp-sdk>
 
-Tutorial address: < https://www.bilibili.com/video/BV1av41147Lo>
+Tutorial address:<https://www.bilibili.com/video/BV1av41147Lo>
 
 ### 1. Establish new project, introduce C#-SDK
 
@@ -223,7 +223,7 @@ Compile the project and create a contracts folder in the project output director
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/mkdir_contracts.png)
 
-Switch to Terminal and copy the HellowWorld.sol contract in the console you just downloaded to the contracts folder you just created.
+Switch to Terminal and copy the HellowWorld.sol contract in the console you just downloaded to the contracts folder you just created
 
 ```bash
 cp ~ / fisco / console / contracts / consolidation / HellowWorld.sol [your contracts directory]
@@ -235,7 +235,7 @@ Open HelloWorld.sol with vscode, install the solidity plugin and switch to versi
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/change_solidity_version.png)
 
-Press F5 to compile the contract. The bin folder will be generated under contracts, and the compiled HelloWorld.bin and HelloWorld.abi will be generated.
+Press F5 to compile the contract. The bin folder will be generated under contracts, and the compiled HelloWorld.bin and HelloWorld.abi will be generated
 
 ### 3. Interaction with FICO
 
@@ -359,5 +359,5 @@ The results are as follows
 
 ![](../../../images/articles/build_chain_with_wsl_on_windows/run_deployed_contract.png)
 
-At this point, using Visual Studio to federate csharp on Windows-The local development of FICO by SDK has come to an end. About charp-For more information about the SDK, see the links at the beginning of this section.
+At this point, using Visual Studio in conjunction with csharp-sdk for local development of fisco on Windows is over. For other features of charp-sdk, see the link at the beginning of this section
 

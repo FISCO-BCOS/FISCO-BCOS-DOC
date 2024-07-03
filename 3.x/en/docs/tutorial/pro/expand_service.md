@@ -4,36 +4,36 @@ Tags: "Pro version of blockchain network" "Scaling RPC service"
 
 ------------
 
-If the RPC / Gateway service cannot support business traffic, you need to scale out the RPC / Gateway service. BcosBuilder provides the function of scaling out the RPC / Gateway service. This chapter uses a stand-alone scaling out of the RPC / Gateway service of the Pro version FISCO BCOS alliance chain as an example to help users master the service scaling steps of the Pro version FISCO BCOS blockchain.。
+If the RPC / Gateway service cannot support business traffic, you need to scale out the RPC / Gateway service. BcosBuilder provides the function of scaling out the RPC / Gateway service. This chapter uses a stand-alone scaling out of the RPC / Gateway service of the Pro version FISCO BCOS alliance chain as an example to help users master the service scaling steps of the Pro version FISCO BCOS blockchain。
 
 ```eval_rst
 .. note::
-   Before scaling out RPC, refer to 'Building a Pro Blockchain Network <. / installation.html >' _ Deploy a Pro Blockchain。
+   Before scaling out RPC, refer to Building a Pro Blockchain Network<./installation.html>'_ Deploy Pro version blockchain。
 ```
 
 ## 1. Deploy tarsnode
 
-Before scaling the RPC / Gateway service, you must first install the tarsnode on the machine where the scaled-out RPC / Gateway service node is deployed. To help users quickly experience the service scaling process on a single machine, this chapter directly virtualizes the container with IP address' 172.25.0.5 'through the bridge network as the physical machine on which the scaled-out RPC / Gateway service node is installed.。
+Before scaling the RPC / Gateway service, you must first install the tarsnode on the machine where the scaled-out RPC / Gateway service node is deployed. To help users quickly experience the service scaling process on a single machine, this chapter directly virtualizes the container with IP address' 172.25.0.5 'through the bridge network as the physical machine on which the scaled-out RPC / Gateway service node is installed。
 
 ```eval_rst
 .. note::
-   For the installation of tarsnode in the actual production environment, please refer to 'tars installation and deployment < https://doc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
+   for the installation of tarsnode in the actual production environment, see 'tars installation and deployment'<https://doc.tarsyun.com/#/markdown/ TarsCloud/TarsDocs/installation/README.md>`_
 ```
 
 ```shell
 # Enter the operation directory
 cd ~/fisco/BcosBuilder
 
-# Linux system: Go to tarsnode docker-Compose directory(macos system can be skipped)
+# Linux system: Go to the directory where tarsnode docker-compose is located(macos system can be skipped)
 cd docker/bridge/linux/node
 
-# macos system: Go to tarsnode docker-Compose directory(Linux system can be skipped)
+# macos system: Go to the directory where tarsnode docker-compose is located(Linux system can be skipped)
 cd docker/bridge/mac/node
 
 # Install and start tarsnode
 docker-compose up -d
 ```
-After the tarsnode is successfully installed, you can use the [O & M Management]-> The newly installed tarsnode with IP address' 172.25.0.5 'is displayed in [Node Management]:
+After the tarsnode is successfully installed, you can use the [Operation and Maintenance Management] ->The newly installed tarsnode with IP address' 172.25.0.5 'is displayed in [Node Management]:
 
 ![](../../../images/tutorial/tars_node.png)
 
@@ -42,10 +42,10 @@ After the tarsnode is successfully installed, you can use the [O & M Management]
 
 ```eval_rst
 .. note::
-   In the actual operation, the tars token must be replaced by the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens。
+   In the actual operation, the tars token must be replaced with the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens。
 ```
 
-For details about how to configure RPC / Gateway service expansion, see the expansion template 'conf / config' of 'BcosBuilder'.-service-expand-example.toml ', the specific configuration steps are as follows:
+For more information about how to configure RPC / Gateway service expansion, see the expansion template 'conf / config-service-expand-example.toml' of 'BcosBuilder'. The specific configuration steps are as follows:
 
 ```shell
 # Enter the operation directory
@@ -54,7 +54,7 @@ cd ~/fisco/BcosBuilder/pro
 # Copy Template Configuration
 cp conf/config-service-expand-example.toml config.toml
 
-# Configure tars token: Through the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens
+# Configure tars token: Through the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens
 # The token here is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430Gi
 # Linux system(macOS system Skip this step):
 sed -i 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"/g' config.toml
@@ -237,10 +237,10 @@ After the Gateway service is successfully expanded, you can see [in the service 
 
 ```eval_rst
 .. note::
-   For console configuration and deployment, refer to 'Configuring and Using the Console <. / installation.html#id6>`_
+   For console configuration and deployment, see Configuring and Using the Console<./installation.html#id6>`_
 ```
 
-Start the console and run the 'getPeers' command. The number of Gateway service nodes displayed on the console is increased from 2 to 3.。
+Start the console and run the 'getPeers' command. The number of Gateway service nodes displayed on the console is increased from 2 to 3。
 
 ```shell
 # Enter the operation directory

@@ -4,13 +4,13 @@ Tags: "Compatibility" "Version Upgrade"
 -----
 ## 1. Design Objectives
 FISCO BCOS version 3.X iteration, in order to achieve compatibility between versions, FISCO BCOS for the network level and data level compatibility designed the corresponding compatibility program。 the objectives of the program mainly include two points, first,
-It can guarantee the network, data, execution module and common codec protocol between various versions.(scale/abi)All can be backward compatible, second, support can be gray-scale upgrade, and gray-scale upgrade process, the system can be normal consensus, out of the block.。
+It can guarantee the network, data, execution module and common codec protocol between various versions(scale/abi)All can be backward compatible, second, support can be gray-scale upgrade, and gray-scale upgrade process, the system can be normal consensus, out of the block。
 
 
 ## 2. Network Compatibility Design
 When the FISCO BCOS version is updated, the network module will exchange and negotiate version information during the establishment / disconnection of the network connection to achieve compatibility between network module versions. The specific design is as follows:
    1. After establishing connection / disconnecting reconnection, between nodes(Between or node and SDK)Exchange version information and conduct version negotiation
-   2. Each network-related functional module corresponds to a compatibility version.
+   2. Each network-related functional module corresponds to a compatibility version
 
 Specifically, ProtocolVersion is designed to identify different versions and achieve compatibility between versions:
 ```c++
@@ -29,7 +29,7 @@ V2 = 2,
    
 
 ### 2.2 Network Codec Protocol Compatibility
-   For network codec protocol compatibility, FISCO BCOS implements compatibility by adding the version field in the P2PMessage / WSMessage design, and when the node receives the message, it calls the corresponding codec method according to the version in the message.。
+   For network codec protocol compatibility, FISCO BCOS implements compatibility by adding the version field in the P2PMessage / WSMessage design, and when the node receives the message, it calls the corresponding codec method according to the version in the message。
    The specific data structure of P2PMessage / WSMessage is designed as follows:
    ```c++
 class P2PMessageFactory
@@ -39,7 +39,7 @@ P2PMessageFactory()
 {
 / / set m _ protocol2Codec
 }
-/ / The mapping between the network message package version and its corresponding codec protocol.
+/ / The mapping between the network message package version and its corresponding codec protocol
 std::shared_ptr<std::map<ProtocolVersion, P2PCodec::Ptr>> m_protocol2Codec;
 }
 
@@ -79,8 +79,8 @@ std::shared_ptr<std::map<ProtocolVersion, P2PCodec::Ptr>> m_protocol2Codec;
 
 ```
 
-In general, FISCOBCOS uses PB encoding in the network application layer (synchronization, consensus) messages, with backward compatibility.；For AMOP message packets, it uses binary encoding, and the design adds a version field to the AMOP information for easy expansion.；
-FISCO BCOS uses JSON encoding and decoding in block high push, group information, and EventLog push, with backward compatibility.。
+In general, FISCOBCOS uses PB encoding in the network application layer (synchronization, consensus) messages, with backward compatibility；For AMOP message packets, it uses binary encoding, and the design adds a version field to the AMOP information for easy expansion；
+FISCO BCOS uses JSON encoding and decoding in block high push, group information, and EventLog push, with backward compatibility。
 
 ###2.3 Network Layer Protocol Compatibility
 FISCO BCOS negotiates Peer version information through handshake: the main modules involved include Gateway, AMOP, EventSub, RPC；The version information of handshake negotiation is stored in the Session. The specific related protocol information is designed as follows:
@@ -159,12 +159,12 @@ TxsSync = 2001,
 // executorservice
 Executor = xxx,
 // rpcservice
-AMOPClient = 3001, // SDK/bcos-AMOP protocol ID in rpc
+AMOPClient = 3001, / / The AMOP protocol ID in SDK / bcos-rpc
 EventSub = 5000, / / Event Listening Protocol
-RPC = 6000, / / RPC protocol, including block high push, handshake protocol, group information push, etc.
+RPC = 6000, / / RPC protocol, including block high push, handshake protocol, group information push, etc
 // gatewayservice
-AMOPServer = 3000, // bcos-AMOP protocol ID between gateway
-Gateway = 4000, // bcos-Agreement between gateways(such as exchanging basic information)
+AMOP protocol ID between AMOPServer = 3000, / / bcos-gateway
+Gateway = 4000, / / protocol between bcos-gateway(such as exchanging basic information)
 };
 ```
 
@@ -180,7 +180,7 @@ std::map<ModuleID, ProtocolInfo::Ptr> m_negotiatedVersion;
 };
 ```
 
-consensus / synchronization can be bcos-gateway query protocol version, bcos-Gateway Pushable Protocol Version
+Consensus / synchronization can query the protocol version of bcos-gateway, and bcos-gateway can push the protocol version
 ```c++
 class FrontServiceInterface
 {
@@ -193,11 +193,11 @@ std::function<void(Error::Ptr, std::map<NodeID, ProtocolInfo>)>) = 0;
 ```
 
 ### 3. Data Compatibility Design
-Compared with the compatible line design at the network level, the data level cannot be upgraded smoothly like the network layer, and the system upgrade must be triggered through the system contract.
+Compared with the compatible line design at the network level, the data level cannot be upgraded smoothly like the network layer, and the system upgrade must be triggered through the system contract
 Specifically, FISCO BCOS data compatibility is mainly related to:
-- Basic data structures such as block, blockHeader, transaction, and receive:
+Basic data structures such as -block, blockHeader, transaction, and receive:
   
-  (1) Each of these fields has a version. You can use version to achieve codec compatibility.；
+  (1) Each of these fields has a version. You can use version to achieve codec compatibility；
   
   (2) block, blockHeader, transaction generated by the consensus packaging module sealer
   
@@ -218,11 +218,11 @@ FISCOBCOS designs major and minor version numbers. For example, for FISCOBCOS 3.
 ####3.2 Data protocol storage and change
 The sys _ config system table designed by FISCOBCOS stores information about the version number of record data. The key and value are as follows:
 - key: compatibility_version
-- value: The protocol version used by the next block, such as 3.0.x, 3.1.x, etc.
+- value: The protocol version used by the next block, such as 3.0.x, 3.1.x, etc
 
-If a version update occurs, you need to change the data protocol and modify the compatibility _ version configuration item of sys _ config.:
+If a version update occurs, you need to change the data protocol and modify the compatibility _ version configuration item of sys _ config:
 - Packaging module: Sealer, used to support data structure changes such as blocks and transactions
-- BlockContext: Used to support execution compatibility(Precompiled contracts, etc.)
+-BlockContext: Used to support execution compatibility(Precompiled contracts, etc)
 
 ## 4. 结论
 In summary, FISCOBCOS design compatibility scheme, in the upper module of the codec protocol unified use of PB encoding；For network protocol compatibility, it is divided according to the service process, according to the service process to achieve the compatibility of different services, for data compatibility, through the block, blockHeader, transaction, receipt and other basic data structures and sys _ config system table version information to achieve version compatibility。
@@ -238,12 +238,12 @@ TxsSync = 2001,
 // executorservice
 Executor = xxx,
 // rpcservice
-AMOPClient = 3001, // SDK/bcos-AMOP protocol ID in rpc
+AMOPClient = 3001, / / The AMOP protocol ID in SDK / bcos-rpc
 EventSub = 5000, / / Event Listening Protocol
-RPC = 6000, / / RPC protocol, including block high push, handshake protocol, group information push, etc.
+RPC = 6000, / / RPC protocol, including block high push, handshake protocol, group information push, etc
 // gatewayservice
-AMOPServer = 3000, // bcos-AMOP protocol ID between gateway
-Gateway = 4000, // bcos-Agreement between gateways(such as exchanging basic information)
+AMOP protocol ID between AMOPServer = 3000, / / bcos-gateway
+Gateway = 4000, / / protocol between bcos-gateway(such as exchanging basic information)
 // SDK
 };
 ```

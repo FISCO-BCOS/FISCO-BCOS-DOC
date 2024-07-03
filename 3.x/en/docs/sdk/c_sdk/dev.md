@@ -1,10 +1,10 @@
 # Development Example
 
-Tag: "c-sdk "" Example "
+Tags: "c-sdk" "Example"
 
 ----------
 
-`bcos-c-The sdk / sample 'directory provides some examples of sdk use:
+The 'bcos-c-sdk / sample' directory provides some examples of sdk usage:
 
 ```shell
 bcos-c-sdk/sample/

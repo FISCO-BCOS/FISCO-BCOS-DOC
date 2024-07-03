@@ -4,11 +4,11 @@ Tags: "Use Docker to Build a Blockchain" "Blockchain Tutorial" "" Docker ""
 
 ----
 
-[build_chain.sh](../manual/build_chain.md)The script provides'-d 'parameter, supports using docker to deploy blockchain。This chapter will demonstrate how to build a four-node blockchain in docker mode, and help users become familiar with the process of building a blockchain in docker through examples.。
+[build_chain.sh](../manual/build_chain.md)The script provides the '-d' parameter, which supports deploying the blockchain in docker mode。This chapter will demonstrate how to build a four-node blockchain in docker mode, and help users become familiar with the process of building a blockchain in docker through examples。
 
 ```eval_rst
 .. note::
-    - Currently, it only supports the deployment of blockchain environment through docker in Linux environment.
+    - Currently only supports the deployment of blockchain environment in Linux environment through docker
 ```
 
 ## 1. Installation Dependencies
@@ -37,12 +37,12 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/buil
 
 ```eval_rst
 .. note::
-    - If the build _ chain.sh script cannot be downloaded for a long time due to network problems, try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh`
+    -If the build _ chain.sh script cannot be downloaded for a long time due to network problems, please try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ## 3. Build a single group 4-node blockchain
 Run the following command in the FICO directory to generate a blockchain with a single group of 4 nodes。
-Please make sure that the '30300 ~ 30303, 20200 ~ 20203' ports of the machine are not occupied, you can also pass'-The p 'parameter specifies a different port。
+Please make sure that the '30300 ~ 30303, 20200 ~ 20203' ports of the machine are not occupied, or you can specify other ports through the '-p' parameter。
 
 ```bash
 bash build_chain.sh -D -l 127.0.0.1:4 -p 30300,20200
@@ -50,7 +50,7 @@ bash build_chain.sh -D -l 127.0.0.1:4 -p 30300,20200
 
 ```eval_rst
 .. note::
-    - Use the parameters of build _ chain.sh. For more information, see <.. / operation _ and _ maintenance / build _ chain.html >
+    Use of each parameter of -build _ chain.sh, refer to 'here<../operation_and_maintenance/build_chain.html>`_
 ```
 
 Successful command execution will output 'All completed'。If an error occurs, check the error message in the 'nodes / build.log' file。
@@ -93,7 +93,7 @@ writing RSA key
 
 Run 'nodes / 127.0.0.1 / start _ all.sh'
 
-On startup, looks to see if FISCO exists locally-The node image of the corresponding version of BCOS. If it does not exist, download it from docker hub.。
+During startup, the node image of the FISCO-BCOS version is checked to see if it exists locally. If it does not exist, the node image is downloaded from the docker hub。
 
 ```shell
 $ bash nodes/127.0.0.1/start_all.sh
@@ -151,13 +151,13 @@ efae6adb1ebe   fiscoorg/fiscobcos:v3.6.0    "/usr/local/bin/fisc…"   47 second
 a846dc34e23b   fiscoorg/fiscobcos:v3.6.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node1
 de8b704d51a2   fiscoorg/fiscobcos:v3.6.0    "/usr/local/bin/fisc…"   47 seconds ago   Up 45 seconds                        roottestnodes127.0.0.1node3
 ```
-If the container status is UP, the node starts normally.。
+If the container status is UP, the node starts normally。
 
-For more information about docker, see the docker documentation.: [https://docs.docker.com/](https://docs.docker.com/)
+For more information about docker, see the docker documentation: [https://docs.docker.com/](https://docs.docker.com/)
 
 ## 6. View Nodes
 
-You can check the log to confirm whether the number of p2p connections and consensus of the node are normal.。
+You can check the log to confirm whether the number of p2p connections and consensus of the node are normal。
 
 - View the number of nodes connected to node node0
 
@@ -165,7 +165,7 @@ You can check the log to confirm whether the number of p2p connections and conse
 tail -f nodes/127.0.0.1/node0/log/* |grep -i "heartBeat,connected count"
 ```
 
-Normally, the connection information will be output continuously. From the output, it can be seen that node0 is connected to three other nodes.。
+Normally, the connection information will be output continuously. From the output, it can be seen that node0 is connected to three other nodes。
 ```bash
 info|2023-06-15 12:28:47.014473|[P2PService][Service][METRIC]heartBeat,connected count=3
 info|2023-06-15 12:28:57.014577|[P2PService][Service][METRIC]heartBeat,connected count=3

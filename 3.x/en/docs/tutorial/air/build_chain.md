@@ -6,12 +6,12 @@ Tags: "build _ chain" "Build an Air version of the blockchain network"
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 ```eval_rst
 .. important::
-    The build _ chain.sh script goal of this deployment tool is to enable users to use FISCO BCOS Air version as quickly as possible.。
+    The build _ chain.sh script goal of this deployment tool is to enable users to use FISCO BCOS Air version as quickly as possible。
 ```
 
 FISCO BCOS provides' build _ chain.sh 'script to help users quickly build FISCO BCOS alliance chain。
@@ -32,7 +32,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/buil
 # Note: If the speed of accessing git is too slow, try the following command to download the link creation script:
 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
 
-# Type bash build _ chain.sh-h shows script usage and parameters
+# Type bash build _ chain.sh -h to show script usage and parameters
 $ bash build_chain.sh
 Usage:
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
@@ -78,30 +78,30 @@ expand node e.g
 
 Script command, which supports' deploy 'and' expand '. The default value is' deploy':
 - `deploy`: For deploying new nodes。
-- 'expand 'for node expansion。
+- 'expand' for node expansion。
 
 ### **'g 'option [**Optional**]**
-Set the group ID. If no group ID is set, the default value is group0.。
+Set the group ID. If no group ID is set, the default value is group0。
 
 ### **'c 'option [**Optional**]**
-Used to set the chain ID. If it is not set, the default value is chain0.。
+Used to set the chain ID. If it is not set, the default value is chain0。
 ### **'v 'option [**Optional**]**
 
 Used to specify the binary version used when building FISCO BCOS。build _ chain default download [Release page](https://github.com/FISCO-BCOS/FISCO-BCOS/releases)Latest Version。
 
 ### **'l 'option**
 
-The IP address of the generated node and the number of blockchain nodes deployed on the corresponding IP address. The parameter format is' ip1.:nodeNum1, ip2:nodeNum2`。
+The IP address of the generated node and the number of blockchain nodes deployed on the corresponding IP address. The parameter format is' ip1:nodeNum1, ip2:nodeNum2`。
 
 The 'l' option for deploying two nodes on a machine with IP address' 192.168.0.1 'and four nodes on a machine with IP address' 127.0.0.1 'is as follows:
 `192.168.0.1:2, 127.0.0.1:4`
 
 ### **'L 'Options [**Optional**]**
-Used to configure to turn on FISCO BCOS light node mode,-You can specify the binary executable path of the Air version light node after L, or enter"download_binary", The latest version of the light node binary is downloaded by default, as shown in the figure below。
+For configuring to enable FISCO BCOS light node mode, you can specify the binary executable path of the Air version light node after -L, or enter"download_binary", The latest version of the light node binary is downloaded by default, as shown in the figure below。
 
 ```shell
-# The P2P service of the two nodes occupies ports 30300 and 30301 respectively, and the RPC service occupies ports 20200 and 20201 respectively.
-# -l Start the light node module,"download_binary" By default, the latest version of the binary file is pulled.
+# The P2P service of the two nodes occupies ports 30300 and 30301 respectively, and the RPC service occupies ports 20200 and 20201 respectively
+# -L start light node module,"download_binary" By default, the latest version of the binary file is pulled
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L download_binary
 # Specify Light Node Binary Path
 $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /bin/fisco-bcos-lightnode
@@ -109,18 +109,18 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2 -L /bin/fisco-bcos-lightnode
 
 ### **'e 'option [**Optional**]**
 
-Specifies the binary executable path of the FISCO BCOS of the Air version. If no path is specified, the latest FISCO BCOS is pulled by default.。
+Specifies the binary executable path of the FISCO BCOS of the Air version. If no path is specified, the latest FISCO BCOS is pulled by default。
 
 ### **'t 'option [**Optional**]**
 
-Specifies the path, function, and-E is similar, if not specified, the latest version of FISCO BCOS is pulled by default。
+Specifies the path of the binary mtail on which the Air version monitoring depends. The function is similar to -e. If you do not specify the path, the latest version of FISCO BCOS is pulled by default。
 ### **'o 'option [**Optional**]**
 
 Specifies the directory where the generated node configuration is located. The default directory is'. / nodes'。
 
 ### **'p 'option**
 
-Specifies the start port for listening to P2P and RPC services on the node. By default, the start port for P2P services is 30300, and the start port for RPC services is 20200.。
+Specifies the start port for listening to P2P and RPC services on the node. By default, the start port for P2P services is 30300, and the start port for RPC services is 20200。
 
 Specify 30300 as the starting port for P2P service listening；An example of the starting port on which 20200 listens for the RPC service is as follows:
 
@@ -135,7 +135,7 @@ $ bash build_chain.sh -p 30300,20200 -l 127.0.0.1:2
 Specify whether to build a full-link state-secret blockchain. The state-secret blockchain has the following features:
 
 - **Blockchain Ledger Uses State Secret Algorithm**: Using sm2 signature verification algorithm, sm3 hash algorithm and sm4 symmetric encryption and decryption algorithm。
-- **The state-secret SSL connection is used between the SDK client and the node.**。
+- **The state-secret SSL connection is used between the SDK client and the node**。
 - **State-secret SSL connection between blockchain nodes**。
 
 An example of building a stand-alone four-node state-secret blockchain node is as follows:
@@ -146,14 +146,14 @@ $ bash build_chain.sh -l 127.0.0.1:4 -s -o gm_nodes
 
 ### **'H 'Options [**Optional**]**
 
-cipher machine option, which indicates the use of a cipher machine。To turn this option on, add '-S 'means to open the national secret, and then to add'-n 'option is used to load the node.pem file to generate the nodeid of the cipher key。The command to open the cipher machine by loading the certificate file path is as follows
+cipher machine option, which indicates the use of a cipher machine。If this option is enabled, add '-s' to enable the national password, and then add '-n' to load the node.pem file to generate the nodeid of the password machine key。The command to open the cipher machine by loading the certificate file path is as follows
 ```shell
 ./build_chain.sh -e ./fisco-bcos -p 30300,20200 -l 127.0.0.1:4 -s -H -n nodeKeyDir/
 ```
 
 ### **'n 'Options [**Optional**]**
 
-The node certificate directory option, which indicates that nodeid is generated by loading the node certificate in the folder. This option can be used for national secret and non-national secret without specifying-s。This option is followed by the certificate folder path。
+The node certificate directory option, which indicates that nodeid is generated by loading the node certificate in the folder. This option can be used for national and non-national secrets without specifying -s。This option is followed by the certificate folder path。
 
 ### **'c 'Expansion options**
 
@@ -164,7 +164,7 @@ The expansion node option, which is used to specify the configuration file path 
 Scale-out node option, which is used to specify the directory where the CA certificate and CA private key of the scale-out node are located。
 ### **'D 'Option [**Optional**]**
 
-Use docker mode to build the FISCO BCOS blockchain. When this option is used, the binary is no longer pulled, but the user is required to start the node machine to install docker and the account has docker permission.。
+Use docker mode to build the FISCO BCOS blockchain. When this option is used, the binary is no longer pulled, but the user is required to start the node machine to install docker and the account has docker permission。
 
 Run the following command in the node directory to start the docker node:
 
@@ -180,23 +180,23 @@ docker run -d --rm --name ${nodePath} -v ${nodePath}:/data --network=host -w=/da
 
 ### **'a 'Permission Control Options [**Optional**]**
 
-Optional parameter. When permission control is enabled for a blockchain node, the-The 'a' option specifies the address of the admin account. If this option is not specified, the 'build _ chain' script will generate an account address as the admin account.。
+Optional parameter. When permission control is enabled for a blockchain node, you can use the '-a' option to specify the address of the admin account. If this option is not specified, the 'build _ chain' script generates an account address as the admin account。
 
 ### **'w 'Virtual Machine Options [**Optional**]**
 
-Optional parameter, when the blockchain needs to enable the wasm virtual machine engine, you can use the '-w 'option is enabled. If this option is not specified, EVM is used by default。
+Optional parameter. When the blockchain needs to enable the wasm virtual machine engine, the '-w' option can be enabled. If this option is not specified, the EVM is used by default。
 
 ### **'R 'Execution Mode Options [**Optional**]**
 
-Optional parameter, when the blockchain starts serial execution mode, you can use the-The R 'option specifies the execution mode, which defaults to serial mode (true), and if set to false, DMC parallel mode is enabled。
+Optional parameter. When the blockchain starts the serial execution mode, you can use the '-R' option to specify the execution mode. The default value is serial mode (true). If the value is set to false, the DMC parallel mode is enabled。
 
 ### **'k 'Storage Control Options [**Optional**]**
 
-Optional parameter, when you need to set the key-The size of the page in the page store.-K 'option sets the size of the page, if not specified, the default page size is 10240。
+Optional parameter. When you need to set the size of the page in the key-page storage, you can use the '-k' option to set the size of the page. If not specified, the default page size is 10240。
 
 ### **'m 'Node Monitoring Options [**Optional**]**
 
-Optional parameter. When the blockchain node is enabled for node monitoring, the-m 'option to deploy nodes with monitoring. If this option is not selected, only nodes without monitoring are deployed。
+Optional parameter. When node monitoring is enabled for blockchain nodes, you can use the '-m' option to deploy nodes with monitoring. If this option is not selected, only nodes without monitoring are deployed。
 
 An example of deploying an Air version blockchain with monitoring enabled is as follows:
 
@@ -233,15 +233,15 @@ After generating the blockchain node file, start the node (nodes / 127.0.0.1 / s
 
 ### **'I'Expansion node monitoring options [**Optional**]**
 
-Optional parameter. When the blockchain scaling node needs to be monitored, use the-i 'option to specify expansion node monitoring, parameter format is' ip1:nodeNum1 ', scale out the monitoring of the second node on the machine with IP address' 192.168.0.1 ', the' l 'option example is as follows:' 192.168.0.1:2`。
+Optional parameter. When the blockchain expansion node needs to be monitored, the '-i' option is used to specify the expansion node monitoring. The parameter format is' ip1 ':nodeNum1 ', scale out the monitoring of the second node on the machine with IP address' 192.168.0.1 ', the' l 'option example is as follows:' 192.168.0.1:2`。
 
 ### **'M 'Node Monitoring Profile Options [**Optional**]**
 
-Optional parameter. When the blockchain expansion node needs to be monitored, you can use the-M 'option to specify the relative path of the prometheus configuration file in the nodes directory。
+Optional parameter. When the blockchain scaling node needs to be monitored, you can use the '-M' option to specify the relative path of the prometheus configuration file in the nodes directory。
 
 ### **'z 'Generate node directory package [**Optional**]**
 
-Optional parameter to generate the corresponding compressed package while generating the node directory, which is convenient to copy during multi-machine deployment.。
+Optional parameter to generate the corresponding compressed package while generating the node directory, which is convenient to copy during multi-machine deployment。
 
 ### **'h 'option [**Optional**]**
 
@@ -284,7 +284,7 @@ nodes/
 │   │   │   ├── ssl.key # ssl connection certificate private key
 │   │   │   ├── node.pem # node signature private key file
 │   │   │   ├── node.nodeid # Node id, hexadecimal representation of the public key
-│   │   ├── config.ini # Node master configuration file, configure listening IP, port, certificate, log, etc.
+│   │   ├── config.ini # Node master configuration file, configure listening IP, port, certificate, log, etc
 │   │   ├── config.genesis # Genesis profile, consensus algorithm type, consensus timeout, and trading gas limits
 │   │   ├── nodes.json # The json information of the node, showing the ip address and port of the node. Example:{"nodes": [127.0.0.1:30300]}
 │   │   ├── start.sh # Startup script to start the node

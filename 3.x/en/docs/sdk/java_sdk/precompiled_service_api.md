@@ -6,7 +6,7 @@ Tags: "Precompiled Contracts" "Interface" "Precompiled" "Service"
 
 The Java SDK provides Java API interfaces for blockchain application developers. By function, Java APIs can be divided into the following categories:
 
-- Client: Provides access to FISCO BCOS 3.x node JSON-RPC interface support, providing support for deployment and invocation contracts；
+- Client: Provides support for accessing the JSON-RPC interface for FISCO BCOS 3.x nodes, providing support for deploying and invoking contracts；
 - Precompiled: Provides calls to FISCO BCOS 3.x Precompiled contract(Precompiled Contracts)interfaces, including 'SensusService', 'SystemConfigService', 'BFSService', 'KVTableService', 'TableCRUDService', and 'AuthManager'。
 
 ## 5. BFSService
@@ -17,39 +17,39 @@ Creates a directory at the specified absolute path。
 
 **Parameters**
 
-- path: absolute path
+-path: absolute path
 
 **Return value**
 
-- RetCode: Create Directory Results。
+- RetCode: Create directory results。
 
 ### 5.2 list
 
-View the information of the specified absolute path. If it is a directory file, the meta information of all sub-resources in the directory is returned. If it is another file, the meta information of the file is returned.。(After the node version 3.1, the interface only returns up to 500)
+View the information of the specified absolute path. If it is a directory file, the meta information of all sub-resources in the directory is returned. If it is another file, the meta information of the file is returned。(After the node version 3.1, the interface only returns up to 500)
 
 **Parameters**
 
-- absolute Path: absolute path
+-absolutePath: absolute path
 
 **Return value**
 
-- List < BfsInfo >: Returns a list of meta information for a file。
+- List<BfsInfo>Returns a list of meta information for a file。
 
 ### 5.3 list
 
 Note: This interface can only be used when the node version is greater than 3.1
 
-View the information of the specified absolute path. If it is a directory file, the meta information of all sub-resources in the directory is returned. If it is another file, the meta information of the file is returned.。If there are too many directory files to traverse (greater than 500), you can traverse them using offsets and limits。
+View the information of the specified absolute path. If it is a directory file, the meta information of all sub-resources in the directory is returned. If it is another file, the meta information of the file is returned。If there are too many directory files to traverse (greater than 500), you can traverse them using offsets and limits。
 
 **Parameters**
 
-- absolute Path: absolute path
-- offset: offset
-- limit: limit value
+-absolutePath: absolute path
+-offset: offset
+-limit: limit value
 
 **Return value**
 
-- Tuple2 < BigInteger, List < BfsInfo > >: if the first value of tuple is negative, it means that the execution error occurred; if it is positive, it means how many files are left to be returned (when traversing the directory file)；The second value of tuple is a list of meta information of the returned file。
+- Tuple2<BigInteger, List<BfsInfo>>: If the first value of tuple is negative, it means that there is an error in execution, and if it is positive, it means how many files remain to be returned (when traversing directory files)；The second value of tuple is a list of meta information of the returned file。
 
 ### 5.4 isExist
 
@@ -59,24 +59,24 @@ Determine whether the file resource exists。
 
 **Parameters**
 
-- absolute Path: absolute path
+-absolutePath: absolute path
 
 **Return value**
 
-- BFSInfo: returns specific file meta information if it exists, or null if it does not exist。
+-BFSInfo: If it exists, it will return the specific file meta information, if it does not exist, it will return null。
 
 ### 5.5 link
 
-Create soft links to contracts under / apps / to facilitate contract management and version control。This method provides the same interface as before in order to adapt to the CNS function of the old node version.。
+Create soft links to contracts under / apps / to facilitate contract management and version control。This method provides the same interface as before in order to adapt to the CNS function of the old node version。
 
 After successful execution, a link file is created under / apps /. For example, if the contract name is hello and the version number is v1, the absolute path of the link file is / apps / hello / v1
 
 **Parameters**
 
-- name: contract name
-- version: contract version number
-- contractAddress: contract address
-- abi: Contract ABI
+-name: contract name
+-version: contract version number
+-contractAddress: contract address
+-abi: Contract ABI
 
 **Return value**
 
@@ -86,13 +86,13 @@ After successful execution, a link file is created under / apps /. For example, 
 
 Note: This interface can only be used when the node version is greater than 3.1
 
-Create soft links to contracts under / apps / to facilitate contract management and version control。This interface allows users to create soft links at any path in the / apps directory.
+Create soft links to contracts under / apps / to facilitate contract management and version control。This interface allows users to create soft links at any path in the / apps directory
 
 **Parameters**
 
-- absolute Path: absolute path
-- contractAddress: contract address
-- abi: Contract ABI
+-absolutePath: absolute path
+-contractAddress: contract address
+-abi: Contract ABI
 
 **Return value**
 
@@ -100,15 +100,15 @@ Create soft links to contracts under / apps / to facilitate contract management 
 
 ### 5.7 readlink
 
-Obtain the address corresponding to the link file。This method provides the same interface as before in order to adapt to the CNS function of the old node version.。
+Obtain the address corresponding to the link file。This method provides the same interface as before in order to adapt to the CNS function of the old node version。
 
 **Parameters**
 
-- absolute Path: absolute path
+-absolutePath: absolute path
 
 **Return value**
 
-- address: the address corresponding to the link file.
+-address: the address corresponding to the link file
 
 ## 6. ConsensusService
 
@@ -118,8 +118,8 @@ Obtain the address corresponding to the link file。This method provides the sam
 
 **Parameters**
 
-- nodeId: The ID of the node added as the consensus node.
-- weight: add the weight of the consensus node
+-nodeId: the ID of the node added as the consensus node
+-weight: Add the weight of the consensus node
 
 **Return value**
 
@@ -127,7 +127,7 @@ Obtain the address corresponding to the link file。This method provides the sam
 
 ```eval_rst
 .. note::
-    In order to ensure that the new node does not affect the consensus, the node to be added as a consensus node must establish a P2P network connection with other nodes in the group, and the node block height must not be lower than the current highest block.-10, otherwise it cannot be added as a consensus node。
+    In order to ensure that the new node does not affect the consensus, the node to be added as a consensus node must establish a P2P network connection with other nodes in the group, and the node block height must not be lower than the current maximum block -10, otherwise it cannot be added as a consensus node。
 ```
 
 ### 6.2 addObserver
@@ -136,7 +136,7 @@ Add the specified node as an observation node。
 
 **Parameters**
 
-- nodeId: The ID of the node added as an observation node.
+- nodeId: The ID of the node added as an observation node
 
 **Return value**
 
@@ -148,7 +148,7 @@ Move the specified node out of the group。
 
 **Parameters**
 
-- nodeId: The node ID of the node removed from the group.
+- nodeId: The node ID of the node removed from the group
 
 **Return value**
 
@@ -160,8 +160,8 @@ Set the weight of a consensus node。
 
 **Parameters**
 
-- nodeId: The node ID of the consensus node.
-- weight: weight, not less than 1
+- nodeId: The node ID of the consensus node
+-weight: weight, not less than 1
 
 **Return value**
 
@@ -175,7 +175,7 @@ Sets the value of the specified system configuration item。
 
 **Parameters**
 
-- key: Configuration item. Currently, 'tx _ count _ limit' and 'consensus _ leader _ period' are supported.；
+- key: Configuration item. Currently, 'tx _ count _ limit' and 'consensus _ leader _ period' are supported；
 
 - value: The value to which the system configuration item is set。
 
@@ -193,7 +193,7 @@ Create User Table。
 
 - tableName: Name of the created user table;
 - keyFieldName: Primary key name of the user table;
-- valueFields: The fields of the user table.
+- valueFields: The fields of the user table
 
 **Return value**
 
@@ -220,7 +220,7 @@ Query specified records in the user table。
 **Parameters**
 
 - tableName: Queried user table name。
-- key: the primary key value to be queried.。
+- key: the primary key value to be queried。
 
 **Return value**
 
@@ -236,7 +236,7 @@ Obtain the description information of the specified user table。
 
 **Return value**
 
-- Map<String, String>: Description of the user table. The mapping between 'PrecompiledConstant.KEY _ NAME' and the mapping between 'PrecompiledConstant.FIELD _ NAME' and all fields. The fields are separated by commas.。
+- Map<String, String>: Description of the user table. The mapping between 'PrecompiledConstant.KEY _ NAME' and the mapping between 'PrecompiledConstant.FIELD _ NAME' and all fields. The fields are separated by commas。
 
 
 ### 8.5 asyncSet
@@ -256,9 +256,9 @@ Obtain the description information of the specified user table。
 
 ## 9. CNSService
 
-**Note:** from 3.0.0-rc3 version started, CNS is no longer supported。For the corresponding contract alias function, please refer to the BFS link function.。
+**Note:** Starting with version 3.0.0-rc3, CNS is no longer supported。For the corresponding contract alias function, please refer to the BFS link function。
 
-**Migration Instructions:** Due to the abandonment of the CNS interface, BFS contains the functions of the CNS and also provides the corresponding adaptation interface.。You can change the original CNS service interface to the BFS interface. The interface corresponds to the following table:
+**Migration Instructions:** Due to the abandonment of the CNS interface, BFS contains the functions of the CNS and also provides the corresponding adaptation interface。You can change the original CNS service interface to the BFS interface. The interface corresponds to the following table:
 
 | Method Name| CNSService                                                   | BFSService                                                   |
 | ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -272,14 +272,14 @@ Obtain the description information of the specified user table。
 Rights management interfaces include the following three interfaces:
 
 - Query interface without permission；
-- Governance Committee-specific interface: An interface that has the private key of the governance committee to initiate transactions in order to execute correctly.；
-- Administrator-specific interface: An interface where transactions initiated by an administrator's private key with administrative privileges on the corresponding contract can be executed correctly.。
+- Governance Committee-specific interface: an interface that has the private key of the governance committee to initiate transactions in order to execute correctly；
+- Administrator-specific interface: an interface where transactions initiated by an administrator's private key with administrative rights to the corresponding contract can be executed correctly。
 
 ### 10.1 Query interface without permission
 
 #### getCommitteeInfo
 
-At initialization, a governance committee is deployed whose address information is automatically generated or specified at build _ chain.sh.。Initialize only one member, and the weight of the member is 1。
+At initialization, a governance committee is deployed whose address information is automatically generated or specified at build _ chain.sh。Initialize only one member, and the weight of the member is 1。
 
 **Parameters**
 
@@ -287,7 +287,7 @@ At initialization, a governance committee is deployed whose address information 
 
 **Return value**
 
-- CommitteeInfo: Details of the Governance Committee
+- CommitteeInfo: governance committee details
 
 #### getProposalInfo
 
@@ -295,7 +295,7 @@ Get information about a specific proposal。
 
 **Parameters**
 
-- proposalID: the ID number of the proposal
+-proposalID: ID number of the proposal
 
 **Return value**
 
@@ -311,7 +311,7 @@ Get the permissions policy for the current global deployment
 
 **Return value**
 
-- BigInteger: policy type: 0 is no policy, 1 is whitelist mode, 2 is blacklist mode
+-BigInteger: Policy type: 0 is no policy, 1 is whitelist mode, 2 is blacklist mode
 
 #### checkDeployAuth
 
@@ -319,25 +319,25 @@ Check whether an account has deployment permissions
 
 **Parameters**
 
-- account: account address
+-account: account address
 
 **Return value**
 
-- Boolean: Permission
+-Boolean: Permission
 
 #### checkMethodAuth
 
-Check whether an account has the permission to call an interface of a contract.
+Check whether an account has the permission to call an interface of a contract
 
 **Parameters**
 
-- contractAddr: contract address
-- func: function selector for the interface, 4 bytes
-- account: account address
+-contractAddr: contract address
+-func: function selector for the interface, 4 bytes
+-account: account address
 
 **Return value**
 
-- Boolean: Permission
+-Boolean: Permission
 
 #### getAdmin
 
@@ -345,11 +345,11 @@ Get the administrator address for a specific contract
 
 **Parameters**
 
-- contractAddr: contract address
+-contractAddr: contract address
 
 **Return value**
 
-- account: account address
+-account: account address
 
 ### 10.2 Special Interface for Account Number of Governance Committee
 
@@ -357,16 +357,16 @@ There must be an account in the Governance Committee's Governors to call, and if
 
 #### updateGovernor
 
-In the case of a new governance committee, add an address and weight.。If you are deleting a governance member, you can set the weight of a governance member to 0。
+In the case of a new governance committee, add an address and weight。If you are deleting a governance member, you can set the weight of a governance member to 0。
 
 **Parameters**
 
-- account: account address
-- weight: account weight
+-account: account address
+-weight: account weight
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### setRate
 
@@ -374,24 +374,24 @@ Set proposal threshold, which is divided into participation threshold and weight
 
 **Parameters**
 
-- participatesRate: participation threshold, in percentage units
-- winRate: by weight threshold, percentage unit
+-participatesRate: participation threshold, percentage unit
+-winRate: by weight threshold, percentage unit
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### setDeployAuthType
 
-Set the ACL policy for deployment. Only white _ list and black _ list policies are supported.
+Set the ACL policy for deployment. Only white _ list and black _ list policies are supported
 
 **Parameters**
 
-- deployAuthType: When type is 1, it is set to a whitelist. When type is 2, it is set to a blacklist.。
+-deployAuthType: When type is 1, it is set as a white list, and when type is 2, it is set as a black list。
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### modifyDeployAuth
 
@@ -399,12 +399,12 @@ Modify a deployment permission proposal for an administrator account
 
 **Parameters**
 
-- account: account address
-- openFlag: whether to enable or disable permissions
+-account: account address
+-openFlag: whether to turn permissions on or off
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### resetAdmin
 
@@ -412,12 +412,12 @@ Resetting an administrator account proposal for a contract
 
 **Parameters**
 
-- newAdmin: Account address
-- contractAddr: contract address
+-newAdmin: Account address
+-contractAddr: contract address
 
 **Return value**
 
-- proposalId: returns the ID number of the proposal
+-proposalId: Returns the ID number of the proposal
 
 #### revokeProposal
 
@@ -425,7 +425,7 @@ Undo the initiation of a proposal, an operation that only the governance committ
 
 **Parameters**
 
-- proposalId: ID number of the proposal
+-proposalId: ID number of the proposal
 
 **Return value**
 
@@ -437,8 +437,8 @@ vote on a proposal
 
 **Parameters**
 
-- proposalId: ID number of the proposal
-- agree: Do you agree to this proposal?
+-proposalId: ID number of the proposal
+-agree: Do you agree to this proposal?
 
 **Return value**
 
@@ -446,21 +446,21 @@ vote on a proposal
 
 ### 10.3 Special interface for contract administrator account
 
-Each contract has an independent administrator. Only the administrator account of a contract can set the interface permissions of the contract.。
+Each contract has an independent administrator. Only the administrator account of a contract can set the interface permissions of the contract。
 
 #### setMethodAuthType
 
-Set the API call ACL policy of a contract. Only white _ list and black _ list policies are supported.
+Set the API call ACL policy of a contract. Only white _ list and black _ list policies are supported
 
 **Parameters**
 
-- contractAddr: contract address
-- func: function selector for the contract interface, four bytes in length。
-- authType: When type is 1, it is set to a whitelist. When type is 2, it is set to a blacklist.。
+-contractAddr: contract address
+-func: function selector for contract interface, length is four bytes。
+-authType: When type is 1, it is set as a white list, and when type is 2, it is set as a black list。
 
 **Return value**
 
-- result: If it is 0, the setting is successful。
+-result: If it is 0, the setting is successful。
 
 #### setMethodAuth
 
@@ -468,11 +468,11 @@ Modify the interface call ACL policy of a contract。
 
 **Parameters**
 
-- contractAddr: contract address
-- func: function selector for the contract interface, four bytes in length。
-- account: account address
-- isOpen: whether to enable or disable permissions
+-contractAddr: contract address
+-func: function selector for contract interface, length is four bytes。
+-account: account address
+-isOpen: whether the permission is enabled or disabled
 
 **Return value**
 
-- result: If it is 0, the setting is successful。
+-result: If it is 0, the setting is successful。

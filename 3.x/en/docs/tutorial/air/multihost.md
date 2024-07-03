@@ -4,7 +4,7 @@ Tags: "Build a multi-machine blockchain network" "Blockchain tutorial" "HelloWor
 
 ----
 
-Building the first blockchain network(../../quick_start/air_installation.md)This chapter describes in detail how to build a stand-alone 4-node blockchain network in the Air version. This chapter takes building a multi-machine 4-node blockchain network as an example to describe in detail how to deploy FISCO BCOS on multiple machines.。
+Building the first blockchain network(../../quick_start/air_installation.md)This chapter describes in detail how to build a stand-alone 4-node blockchain network in the Air version. This chapter takes building a multi-machine 4-node blockchain network as an example to describe in detail how to deploy FISCO BCOS on multiple machines。
 
 ## 1. Build a multi-machine 4-node blockchain network
 
@@ -14,20 +14,20 @@ In this tutorial, assume that the IP addresses of the four physical machines are
 
 ```eval_rst
 .. note::
-    - Please ensure that the "30300" and "20200" ports of each machine are not occupied。
-    - Please make sure that each machine has the network access rights of "30300" and "20200" ports.
-    - Make sure that the machine that generates the blockchain node configuration can access the external network(Used to download the chain building script)
+    - Please make sure that the "30300," "20200" ports of each machine are not occupied。
+    - Make sure that each machine has network access to ports "30300" and "20200"
+    - ensure that the machine that generates the blockchain node configuration can access the external network(Used to download the chain building script)
 ```
 
 ### Step 1. Download the deployment tool and generate the multi-machine node configuration
 
-**Create an operation path and download fisco-bcos, development and deployment tool build _ chain**
+**Create an operation path, download the fisco-bcos, development and deployment tool build _ chain**
 
 ```bash
 # Create operation path ~ / fisco
 mkdir -p ~/fisco && cd ~/fisco
 
-# download _ bin.sh, download fisco-bcos binary, v specifies FISCO-BCOS Version
+# download _ bin.sh, download the fisco-bcos binary, v Specifies the FISCO-BCOS version
 ./download_bin.sh -v 3.4.0
 
 # Download the development and deployment tool build _ chain
@@ -84,7 +84,7 @@ After generating the blockchain node configuration, you need to copy each node c
 
 ```bash
 # Create an operating directory for each machine ~ / fisco
-# (Note: Use the FICO user here; In practice, you can use your own account for similar operations, and the IP needs to be replaced with your own machine IP.)
+# (Note: Use the FICO user here; In practice, you can use your own account for similar operations, and the IP needs to be replaced with your own machine IP)
 ssh fisco@196.168.0.1 "mkdir -p ~/fisco"
 ssh fisco@196.168.0.2 "mkdir -p ~/fisco"
 ssh fisco@196.168.0.3 "mkdir -p ~/fisco"
@@ -103,14 +103,14 @@ scp -r 4nodes/196.168.0.4/ fisco@196.168.0.4:~/fisco/196.168.0.4
 
 ### Step 3. Start the multi-machine 4-node blockchain system
 
-After the configuration of the blockchain node is copied successfully, you need to start all the nodes. You can start the blockchain node remotely by initiating an 'ssh' operation on a machine, or you can log on to all the physical machines and start the blockchain node on the corresponding physical machine.。
+After the configuration of the blockchain node is copied successfully, you need to start all the nodes. You can start the blockchain node remotely by initiating an 'ssh' operation on a machine, or you can log on to all the physical machines and start the blockchain node on the corresponding physical machine。
 
 **Method one: Start a blockchain node remotely**
 
 The node start command is also initiated from '196.168.0.1', as follows:
 
 ```bash
-# (Note: Use the FICO user here; In practice, you can use your own account for similar operations, and the IP needs to be replaced with your own machine IP.)
+# (Note: Use the FICO user here; In practice, you can use your own account for similar operations, and the IP needs to be replaced with your own machine IP)
 # Launch the blockchain node deployed on the 196.168.0.1 machine
 $ ssh fisco@196.168.0.1 "bash ~/fisco/196.168.0.1/start_all.sh"
 try to start node0
@@ -135,7 +135,7 @@ try to start node0
 **Method two: Log in to the machine directly to start the blockchain node**
 
 ```bash
-# (Note: Use the FICO user here; In practice, you can use your own account for similar operations, and the IP needs to be replaced with your own machine IP.)
+# (Note: Use the FICO user here; In practice, you can use your own account for similar operations, and the IP needs to be replaced with your own machine IP)
 # Log in to 196.168.0.1 and launch the blockchain node
 $ ssh fisco@196.168.0.1
 $ bash ~/fisco/196.168.0.1/start_all.sh
@@ -154,7 +154,7 @@ $ bash ~/fisco/196.168.0.4/start_all.sh
 
 ```
 
-At this point, a multi-machine 4-node blockchain system has been built. Next, you need to check whether the blockchain nodes are working properly.。
+At this point, a multi-machine 4-node blockchain system has been built. Next, you need to check whether the blockchain nodes are working properly。
 
 ### Step 4. Check the blockchain node
 
@@ -182,7 +182,7 @@ Log on to each machine and run the following command to determine whether the no
 tail -f ~/fisco/*/node0/log/* |grep -i connected
 ```
 
-Normally, the connection information will be output continuously. From the output, it can be seen that the node is connected to other machine nodes normally, and transactions can be initiated on the console.。
+Normally, the connection information will be output continuously. From the output, it can be seen that the node is connected to other machine nodes normally, and transactions can be initiated on the console。
 
 ```bash
 info|2019-01-21 17:30:58.316769| [P2PService][Service] heartBeat,connected count=3
@@ -192,11 +192,11 @@ info|2019-01-21 17:31:18.317105| [P2PService][Service] heartBeat,connected count
 
 ## 2. Configure and use the console
 
-This chapter describes how to configure a console for a multi-machine 4-node blockchain system and use the console to initiate transactions for the multi-machine blockchain system.。
+This chapter describes how to configure a console for a multi-machine 4-node blockchain system and use the console to initiate transactions for the multi-machine blockchain system。
 
 ### Step 1. Prepare to rely on
 
-- Install Java (Java 14 is recommended).
+- Install Java (Java 14 is recommended)
 
 ```bash
 # Ubuntu system installation java
@@ -347,4 +347,4 @@ Event: {}
 [group0]: /> exit
 ```
 
-At this point, we have completed the construction of the multi-machine blockchain network, the configuration and use of the console.。
+At this point, we have completed the construction of the multi-machine blockchain network, the configuration and use of the console。

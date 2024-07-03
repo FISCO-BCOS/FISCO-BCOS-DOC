@@ -1,6 +1,6 @@
 # Contract Development Sample
 
-Tag: "go-sdk "" 'Contract Development "
+tags: "go-sdk" "contract development"
 
 ----
 
@@ -8,25 +8,25 @@ Tag: "go-sdk "" 'Contract Development "
 
 This development example uses the standard single-group four-node blockchain network structure, please refer to: [Installation](https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/quick_start/air_installation.html)。
 
-When using the SDK for project development, the operation of smart contracts requires the use of go-The 'abigen' tool of the sdk converts the Solidity smart contract into the 'Go' file code, which automatically generates the interface for event listening in the contract。The whole mainly contains six processes:
+When you use the SDK to develop a project, you need to use the 'abigen' tool of go-sdk to convert the Solidity smart contract into 'Go' file code to automatically generate the interface for event listening in the contract。The whole mainly contains six processes:
 
 - Prepare smart contracts that need to be compiled
-- Configure the corresponding version of the solc compiler
-- Build Go-sdk contract compilation tool abigen
+- Configure the appropriate version of the solc compiler
+-build the contract compilation tool abigen for go-sdk
 - compile to generate go file
 - prepare the certificate required to establish an ssl connection
-- Use the generated go file for contract deployment and invocation.
+- Use the generated go file for contract deployment, invocation
 
 ### HelloWorld Sample
 
 #### Prepare the HelloWorld.sol contract file
 
 ```bash
-# The instruction is in go-Execute in the sdk directory
+# The instruction is executed in the go-sdk directory
 mkdir helloworld && cd helloworld
 ```
 
-In the go-Create a helloworld folder in the sdk home directory and create a HelloWorld.sol contract in the folder。The contract provides two interfaces, get()and set()to get / set the contract variable name。The contract is as follows
+Create a new helloworld folder in the go-sdk home directory and create the HelloWorld.sol contract in this folder。The contract provides two interfaces, get()and set()to get / set the contract variable name。The contract is as follows
 
 ```solidity
 // SPDX-License-Identifier: Apache-2.0
@@ -59,25 +59,25 @@ contract HelloWorld {
 
 #### Installing the solc compiler
 
-This compiler is used to compile sol contract files into abi and bin files. Currently, the 'solc' compiler provided by FISCO BCOS is 0.8.11 / 0.6.10.。
+This compiler is used to compile sol contract files into abi and bin files. Currently, the 'solc' compiler provided by FISCO BCOS is 0.8.11 / 0.6.10。
 
 ```bash
 # The instruction is executed in the helloworld folder
 bash ../tools/download_solc.sh -v 0.8.11
 ```
 
-#### Build Go-code generation tool for sdk abigen
+#### Build code generation tool abigen for go-sdk
 
 This tool is used to convert abi and bin files to go files
 
 ```bash
-# This instruction is executed in the helloworld folder to compile and generate the abigen tool.
+# This instruction is executed in the helloworld folder to compile and generate the abigen tool
 go build ../cmd/abigen
 ```
 
 #### compile to generate go file
 
-First, use solc to compile the contract file HelloWorld.sol to generate abi and bin files.
+First, use solc to compile the contract file HelloWorld.sol to generate abi and bin files
 
 ```bash
 # The instruction is executed in the helloworld folder
@@ -103,7 +103,7 @@ When you use the build _ chain.sh script to build a blockchain, the sdk certific
 
 #### Deployment contract
 
-Create the cmd folder in the helloworld folder and create the main.go file in the cmd folder. The content of main.go is as follows.
+Create the cmd folder in the helloworld folder and create the main.go file in the cmd folder. The content of main.go is as follows
 
 ```go
 package main
@@ -199,15 +199,15 @@ func main() {
 Build and execute。
 
 ```bash
-# The instruction is in go-Execute in the sdk directory
+# The instruction is executed in the go-sdk directory
 go run helloworld/cmd/main.go
 ```
 
 ```eval_rst
 .. note::
 
-    - The contract address needs to be saved manually, which is used when calling the contract interface.
-    - If c-The dynamic library of the sdk is placed in a custom directory and needs to be 'go run'.-ldflags="-r Path to custom directory"`
+    - The contract address needs to be saved manually, which is used when calling the contract interface
+    -If the dynamic library of c-sdk is placed in a custom directory, you need 'go run-ldflags ="-r Path to custom directory"`
 
 ```
 
@@ -288,19 +288,19 @@ func main() {
 
 ## State Secret Sample
 
-The development process for using the state secret feature is roughly the same as for non-state secrets, with the following differences.
+The development process for using the state secret feature is roughly the same as for non-state secrets, with the following differences
 
-- The FISCO BCOS blockchain network needs to open the national secret feature
-- Need to replace non-state secret private key with state secret private key
-- Need to prepare the TLS certificate and private key
-- When installing the solc compiler, you need to add**-g** option, replace with the State Secret version
-- When using the abigen tool to convert bin and abi to go files, you need to add parameters**--smcrypto=true**
+- The FISCO BCOS blockchain network needs to turn on the national secret feature
+- You need to replace the non-state secret private key with the state secret private key
+- TLS certificate and private key need to be prepared
+- need to add when installing solc compiler**-g** option, replace with the State Secret version
+-When using the abigen tool to convert bin and abi to go files, you need to add parameters**--smcrypto=true**
 
 ### HelloWorld Sample
 
 #### Prepare the HelloWorld.sol contract file
 
-In the go-Create a helloworld folder in the sdk home directory and create a HelloWorld.sol contract in the folder。The contract provides two interfaces, get()and set()to get / set the contract variable name。The contract is as follows
+Create a new helloworld folder in the go-sdk home directory and create the HelloWorld.sol contract in this folder。The contract provides two interfaces, get()and set()to get / set the contract variable name。The contract is as follows
 
 ```solidity
 pragma solidity >=0.6.10 <0.8.20;
@@ -324,25 +324,25 @@ contract HelloWorld {
 
 #### install the state secret solc compiler
 
-The compiler is used to compile the sol contract file into abi and bin files.
+The compiler is used to compile the sol contract file into abi and bin files
 
 ```bash
 # The instruction is executed in the helloworld folder
 bash ../tools/download_solc.sh -v 0.8.11 -g
 ```
 
-#### Build Go-code generation tool for sdk abigen
+#### Build code generation tool abigen for go-sdk
 
 This tool is used to convert abi and bin files to go files
 
 ```bash
-# This instruction is executed in the helloworld folder to compile and generate the abigen tool.
+# This instruction is executed in the helloworld folder to compile and generate the abigen tool
 go build ../cmd/abigen
 ```
 
 #### compile to generate go file
 
-First, use solc to compile the contract file HelloWorld.sol to generate abi and bin files.
+First, use solc to compile the contract file HelloWorld.sol to generate abi and bin files
 
 ```bash
 # The instruction is executed in the helloworld folder
@@ -356,4 +356,4 @@ HelloWorld.bin and HelloWorld.abi are generated under the helloworld directory�
 ./abigen --bin ./HelloWorld.bin --abi ./HelloWorld.abi --pkg helloworld --type HelloWorld --out ./HelloWorld.go --smcrypto=true
 ```
 
-- The next steps are the same as non-state secrets, not taking up extra space.
+-The next steps are the same as those of non-state secrets and do not take up extra space
