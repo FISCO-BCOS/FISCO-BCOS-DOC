@@ -6,11 +6,11 @@ Tags: "data archiving" "data clipping"
 
 ## 简介
 
-The data archiving tool is used to archive node data, query archive data, and re-import archive data. It supports RocksDB and TiKV modes.。
+The data archiving tool is used to archive node data, query archive data, and re-import archive data. It supports RocksDB and TiKV modes。
 
 ## Node Configuration
 
-If you need to use the archive function, you need to configure the IP address and port of the archive service in the 'config.ini' file of the node. We recommend that you only use '127.0.0.1' for the IP address. After the data archive tool archives the data of the node, it deletes the archived data in the node through this port.
+If you need to use the archive function, you need to configure the IP address and port of the archive service in the 'config.ini' file of the node. We recommend that you only use '127.0.0.1' for the IP address. After the data archive tool archives the data of the node, it deletes the archived data in the node through this port
 
 ```ini
 [storage]
@@ -23,7 +23,7 @@ If you need to use the archive function, you need to configure the IP address an
 
 ### Data Archiving Tools
 
-Data archiving tool in the source 'tools / archive-tool / archiveTool.cpp ', compile-time setting parameter' cmake-DTOOLS = ON.. ', the compiled binary is in' build / tools / archive-tool / archiveTool '. Note that the' config.ini 'and' config.genesis' files of the node are required in the running directory of the archive tool. That is, the archive tool must be executed in the node directory. The instructions for using the archive tool are as follows:
+The data archiving tool is located in the source code 'tools / archive-tool / archiveTool.cpp', the parameter 'cmake-DTOOLS = ON..' is set at compile time, and the compiled binary is located in 'build / tools / archive-tool / archiveTool'. Note that the running directory of the archiving tool needs to have the node's' config.ini 'and' config.genesis archive 'files
 
 ```bash
 $ ./tools/archive-tool/archiveTool -h
@@ -51,7 +51,7 @@ archive tool used to archive/reimport the data of FISCO BCOS v3:
 
 ### Archive Data
 
-`-a 'option indicates that the data archiving operation is performed, the parameter is' [start block] [end block] ', where the end block will not be archived。`-e 'option specifies the IP and port of the node to delete the archive data service, for example' 127.0.0.1:8181`。Suppose the archive block [1,255)To the local '. / archive' rocksdb database, the node archive service address is' 127.0.0.1:8181 ', the corresponding operation is as follows:
+The '-a' option indicates that the data archiving operation is performed. The parameter is' [start block] [end block] ', where the end block will not be archived。The '-e' option specifies the IP and port from which the node deletes the archive data service, for example, '127.0.0.1:8181`。Suppose the archive block [1,255)To the local '. / archive' rocksdb database, the node archive service address is' 127.0.0.1:8181 ', the corresponding operation is as follows:
 
 ```bash
 # Archive [1,255)255 of which will not be archived, data archived to rocksdb, rocksdb path is. / archive
@@ -93,7 +93,7 @@ Content-Length: 76
 
 ### Archive data re-import
 
-`-The r 'option indicates that the data archive operation is performed, and the parameter is' [start block] [end block] ', where the end block will not be imported。`-The 'p' option indicates to import from rocksdb. The parameter is the rocksdb path. If you need to import from TiKV, use the '--pd 'parameter。If the re-imported node is RocksDB, stop the node before re-importing.。An example operation is as follows:
+The '-r' option indicates that the data archiving operation is performed. The parameter is' [start block] [end block] ', where the end block will not be imported。The '-p' option indicates to import from rocksdb. The parameter is the rocksdb path. If you need to import from TiKV, use the '--pd' parameter。If the re-imported node is RocksDB, stop the node before re-importing。An example operation is as follows:
 
 ```bash
 # Archive [1,255)255 of which will not be archived, data archived to rocksdb, rocksdb path is. / archive
@@ -108,7 +108,7 @@ reimport from archive database success, block range [1,255)
 
 ## Archive Data Query
 
-The archive data query tool supports querying archived data. The tool is located in 'FISCO-BCOS/tools/archive-tool/archive-reader`。The tool is written using rust and compiled using the following methods to support TiKV and RocksDB。
+The archive data query tool supports querying archived data. The tool is located at 'FISCO-BCOS / tools / archive-tool / archive-reader'。The tool is written using rust and compiled using the following methods to support TiKV and RocksDB。
 
 ```bash
 cd tools/archive-tool/archive-reader

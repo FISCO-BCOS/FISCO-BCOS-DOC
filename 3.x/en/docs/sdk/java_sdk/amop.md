@@ -1,15 +1,15 @@
 # AMOP function
 
-Tag: "java-sdk "" AMOP "" On-Chain Messenger Protocol "
+tags: "java-sdk" "AMOP" "on-chain messenger protocol"
 
 ----
-The Java SDK supports the Advanced Messages Onchain Protocol (AMOP). Users can use the AMOP protocol to exchange messages with other organizations.。
+The Java SDK supports the Advanced Messages Onchain Protocol (AMOP). Users can use the AMOP protocol to exchange messages with other organizations。
 
 ## 1. Interface description
 
-AMOP enables any subscriber who subscribes to a topic to receive push messages related to that topic.
+AMOP enables any subscriber who subscribes to a topic to receive push messages related to that topic
 
-The interface class of AMOP module can refer to the file java.-"sdk" in the sdk-The file amop / src / main / org / fisco / bcos / sdk / amop / Amop.java "contains the following interfaces:
+For more information about the interface classes of AMOP modules, see the "sdk-amop / src / main / org / fisco / bcos / sdk / amop / Amop.java" file in the java-sdk file, which contains the following interfaces:
 
 ### 1.1 subscribeTopic
 
@@ -18,7 +18,7 @@ Subscribe to a topic
 **Parameters:**
 
 * topic: Subscribe to Topic Name。Type: "String"。
-* callback: The function that processes the topic message, which is called when a message related to the topic is received.。Type: "AmopRequestCallback"。
+* callback: The function that processes the topic message, which is called when a message related to the topic is received。Type: "AmopRequestCallback"。
 
 **Example:**
 
@@ -33,7 +33,7 @@ amop.start();
 AmopRequestCallback cb = new AmopRequestCallback() {
     @Override
     public void onRequest(String endpoint, String seq, byte[] data) {
-        / / You can write the processing logic after receiving the message here.。
+        / / You can write the processing logic after receiving the message here。
         System.out.println("Received msg, content:" + new String(data));
     }
 };
@@ -55,7 +55,7 @@ Send AMOP messages as unicast
 
 **注意:**
 
-For a unicast AMOP message, if there are multiple clients subscribing to the topic, a random one can receive the unicast message.。
+For a unicast AMOP message, if there are multiple clients subscribing to the topic, a random one can receive the unicast message。
 
 **Example:**
 
@@ -68,7 +68,7 @@ amop.start();
 AmopResponseCallback cb = new AmopResponseCallback() {
     @Override
     public void onResponse(Response response) {
-        / / You can write the processing logic of the received reply here.。
+        / / You can write the processing logic of the received reply here。
         System.out.println(
         "Get response, { errorCode:"
         + response.getErrorCode()
@@ -131,7 +131,7 @@ Reply Message。
 
 **Parameters:**
 
-* endpoint: The peer endpoint that receives the message. It is returned in the 'AmopRequestCallback' callback.。Type: "String"
+* endpoint: The peer endpoint that receives the message. It is returned in the 'AmopRequestCallback' callback。Type: "String"
 * seq: Message seq, returned in the 'AmopRequestCallback' callback。Type: "String"
 * content: Reply message content。Type: "byte []"
 
@@ -159,7 +159,7 @@ amop.subscribeTopic("MyTopic", cb);
 
 ### 1.6 setCallback
 
-Set the default callback. When the callback specified by the subscription topic is empty, the default callback API is called when a message is received.
+Set the default callback. When the callback specified by the subscription topic is empty, the default callback API is called when a message is received
 
 **Parameters:**
 
@@ -167,7 +167,7 @@ Set the default callback. When the callback specified by the subscription topic 
 
 ## 2. Example
 
-For more examples, see Java.-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)Project source code "java-sdk-demo / src / main / java / org / fisco / bcos / sdk / demo / amop / ". Link: [java-sdk-demo GitHub Link](https://github.com/FISCO-BCOS/java-sdk-demo)，[java-sdk-demo Gitee Link](https://gitee.com/FISCO-BCOS/java-sdk-demo)。
+More examples please see [java-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-demo)Code demonstration under "java-sdk-demo / src / main / java / org / fisco / bcos / sdk / demo / amop /" project source code, link: [java-sdk-demo GitHub link](https://github.com/FISCO-BCOS/java-sdk-demo)[java-sdk-demo Gitee link](https://gitee.com/FISCO-BCOS/java-sdk-demo)。
 
 * Example:
 
@@ -209,7 +209,7 @@ For more examples, see Java.-sdk-demo](https://github.com/FISCO-BCOS/java-sdk-de
 
 ```shell
 mkdir -p ~/fisco && cd ~/fisco
-# Get Java-sdk code
+# get java-sdk code
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
 
 # If the pull fails for a long time due to network problems, try the following command:
@@ -226,19 +226,19 @@ According to [guidelines](../../../quick_start/air_installation.md)Building the 
 
 ### Step 3: Configure
 
-* Copy the certificate: set up your FISCO BCOS network node "nodes / ${ip}Copy the certificate in the / sdk / "directory to" java-sdk-demo / dist / conf "directory。
+* Copy the certificate: set up your FISCO BCOS network node "nodes / ${ip}/ sdk / "Copy the certificate from the directory to the" java-sdk-demo / dist / conf "directory。
 
-* Modify the configuration: 'cp config-example.toml config.toml`
+* Modify the configuration: 'cp config-example.toml config.toml'
 
 ### Step 4: Run Demo
 
 #### Public topic Demo
 
-Open a new terminal and download Java-sdk-demo code and build。
+Open a new terminal, download the java-sdk-demo code, and build。
 
 ```shell
 cd ~/fisco
-# Get Java-sdk-demo code
+# Get the java-sdk-demo code
 git clone https://github.com/FISCO-BCOS/java-sdk-demo
 
 # If the pull fails for a long time due to network problems, try the following command:
@@ -253,7 +253,7 @@ bash gradlew build
 **Run Subscribers:**
 
 ```shell
-# Enter Java-sdk-demo / dist directory
+# Enter the java-sdk-demo / dist directory
 cd dist 
 # We subscribe to a topic called "testTopic"
 java -cp "apps/*:lib/*:conf/" org.fisco.bcos.sdk.demo.amop.Subscribe testTopic
@@ -329,6 +329,6 @@ At the same time, return to the topic subscriber's terminal and find the termina
 
 Note:
 
-1. The broadcast message is not returned.。
+1. The broadcast message is not returned。
 
 2. The receiver may receive multiple repeated broadcast messages。

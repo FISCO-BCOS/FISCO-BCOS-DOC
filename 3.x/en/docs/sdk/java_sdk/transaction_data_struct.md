@@ -1,27 +1,27 @@
 # Transaction and Receipt Data Structure and Assembly Process
 
-Tag: "java-sdk "" 'Assembly Transaction ""' Data Structure "" 'Transaction "' Transaction Receipt" '
+Tags: "java-sdk" "assembly transaction" "data structure" "transaction" "transaction receipt" "
 
 ---
 
 ## 1. Transaction data structure interpretation
 
-The transaction of 3.0 is defined in FISCO-BCOS warehouse in 'bcos-tars-protocol/bcos-tars-defined in protocol / tars / Transaction.tars', visible link: [Transaction.tars](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/Transaction.tars)。The data structure is as follows:
+The transaction of 3.0 is defined in 'bcos-tars-protocol / bcos-tars-protocol / tars / Transaction.tars' in the FISCO-BCOS repository. You can see the link: [Transaction.tars](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/Transaction.tars)。The data structure is as follows:
 
 ```c++
 module bcostars {
     struct TransactionData {
-        1  optional int          version;       / / Transaction version number. Currently, there are three types of transactions: v0, v1, and v2.
+        1  optional int          version;       / / Transaction version number. Currently, there are three types of transactions: v0, v1, and v2
         2  optional string       chainID;       / / Chain name
         3  optional string       groupID;       / / group name
         4  optional long         blockLimit;    / / Block height of transaction limit execution
         5  optional string       nonce;         / / Transaction uniqueness identification
-        6  optional string       to;            / / The contract address of the transaction call.
+        6  optional string       to;            / / The contract address of the transaction call
         7  optional vector<byte> input;         / / Parameters of the transaction call contract, encoded by ABI / Scale
-        8  optional string       abi;           / / The JSON string of the ABI. We recommend that you add the ABI when deploying a contract.
+        8  optional string       abi;           / / The JSON string of the ABI. We recommend that you add the ABI when deploying a contract
         9  optional string       value;         / / v1 New transaction field, original transfer amount
         10 optional string       gasPrice;      / / The new field in the v1 transaction. The unit price of gas during execution(gas/wei)
-        11 optional long         gasLimit;      / / The upper limit of the gas used when the transaction is executed.
+        11 optional long         gasLimit;      / / The upper limit of the gas used when the transaction is executed
         12 optional string       maxFeePerGas;  / / v1 new transaction field, EIP1559 reserved field
         13 optional string       maxPriorityFeePerGas; / / v1 new transaction field, EIP1559 reserved field
         14 optional vector<byte> extension;    / / v2 new fields for additional storage
@@ -40,9 +40,9 @@ module bcostars {
 };
 ```
 
-## 2. Transaction receipt data structure interpretation.
+## 2. Transaction receipt data structure interpretation
 
-Transaction receipts for 3.0 are defined in FISCO-BCOS warehouse in 'bcos-tars-protocol/bcos-tars-defined in protocol / tars / TransactionReceipt.tars', visible link: [TransactionReceipt.tars](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/TransactionReceipt.tars)。The data structure is as follows:
+The transaction receipt of 3.0 is defined in 'bcos-tars-protocol / bcos-tars-protocol / tars / TransactionReceipt.tars' in the FISCO-BCOS warehouse. You can see the link: [TransactionReceipt.tars](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/TransactionReceipt.tars)。The data structure is as follows:
 
 ```c++
 module bcostars {
@@ -60,7 +60,7 @@ module bcostars {
         5 optional vector<byte>     output;     / / Transaction execution return value
         6 optional vector<LogEntry> logEntries; / / Event list
         7 optional long             blockNumber;/ / Block height where the transaction is executed
-        8 optional string           effectiveGasPrice; / / The gas unit price (gas / wei) that takes effect when the transaction is executed.
+        8 optional string           effectiveGasPrice; / / The gas unit price (gas / wei) that takes effect when the transaction is executed
     };
 
     struct TransactionReceipt {                 / / Transaction receipt type
@@ -73,19 +73,19 @@ module bcostars {
 
 ## 3. The assembly process of the transaction
 
-As shown above, the SDK needs to assemble the 'TransactionData' first, then assemble the transaction data structure as' Transaction ', and finally send it to the blockchain node.。Specific steps are as follows:
+As shown above, the SDK needs to assemble the 'TransactionData' first, then assemble the transaction data structure as' Transaction ', and finally send it to the blockchain node。Specific steps are as follows:
 
-- The actual parameters of the transaction call contract, encoded using ABI / Scale as the 'input' field；
+- The actual parameters of the transaction call contract, using ABI / Scale encoding as the 'input' field；
 - Enter the 'blockLimit' field, which is usually the height of the current block+600；
-- The 'nonce' field, which is a random hexadecimal string.；
+- Incoming 'nonce' field, usually a random hexadecimal string；
 - Pass in other parameters to construct the 'TransactionData' structure object；
 - Hash the object of 'TransactionData', the hash calculation algorithm can be found in Section 4；
-- Use the key to perform the signature calculation on the hash value (byte array) calculated in the previous step to obtain the signature；
+-Use the key to perform signature calculation on the hash value (byte array) calculated in the previous step to obtain the signature；
 - Pass in other parameters to construct the 'Transaction' structure object；
 - Encode the 'Transaction' structure object using the 'Tars' encoding；
 - Get the final transaction raw data, send to the chain。
 
-## 4. TransactionData hash calculation algorithm and example.
+## 4. TransactionData hash calculation algorithm and example
 
 TransactionData performs a hash calculation by assembling the bytes of all the fields in the object and finally performing a hash calculation on the byte array。C++An example of an implementation is as follows:
 
@@ -151,9 +151,9 @@ if (getVersion() == TransactionVersion.V2.getValue()) {
 return byteArrayOutputStream.toByteArray();
 ```
 
-## 5. TransactionReceiptData hash calculation algorithm and example.
+## 5. TransactionReceiptData hash calculation algorithm and example
 
-As described in Section 4, TransactionReceiptData's hash is also calculated by assembling the bytes of all the fields within the object and finally hashing the byte array.。C++An example of an implementation is as follows:
+As described in Section 4, TransactionReceiptData's hash is also calculated by assembling the bytes of all the fields within the object and finally hashing the byte array。C++An example of an implementation is as follows:
 
 ```c++
 int32_t version = boost::endian::native_to_big((int32_t)hashFields.version);

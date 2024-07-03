@@ -1,14 +1,14 @@
-# 10. SDK connection certificate configuration.
+# 10. SDK connection certificate configuration
 
 Tags: "SDK," "Certificate Configuration"
 
 ----
 
-When you use the SDK to develop an application, you need to use the certificate file of the node to interact with the node.。FISCO BCOS 3.x provides three node deployment modes. The node SDK certificate files in each deployment mode are slightly different.(./java_sdk/index.md) For example, describe the correct way to configure the SDK application certificate in each of the three node modes.。
+When you use the SDK to develop an application, you need to use the certificate file of the node to interact with the node。FISCO BCOS 3.x provides three node deployment modes. The node SDK certificate files in each deployment mode are slightly different(./java_sdk/index.md) For example, describe the correct way to configure the SDK application certificate in each of the three node modes。
 
 ## Single-group blockchain (Air version) deployment mode
 
-[Single Group Blockchain (Air Version)](../tutorial/air/index.md) adopt all-in-The one encapsulation mode compiles all modules into a binary (process), and a process is a blockchain node.。
+[Single Group Blockchain (Air Version)](../tutorial/air/index.md) The all-in-one encapsulation mode is used to compile all modules into a binary (process), and a process is a blockchain node。
 
 For installation and deployment of Air version, please refer to: [link](../tutorial/air/build_chain.md) 。
 
@@ -48,10 +48,10 @@ nodes/
 
 When using the Java SDK, copy the node SSL certificate to the 'conf' directory in the compiled 'dist' directory of the project:
 
-**Note: For ease of demonstration, the SDK application path here is' ~ / fisco 'by default. Please refer to the actual path when using it.。**
+**Note: For ease of demonstration, the SDK application path here is' ~ / fisco 'by default. Please refer to the actual path when using it。**
 
 ```shell
-# For the convenience of demonstration, there is a Java SDK application in the ~ / fisco directory, and a blockchain node is built using the build _ chain.sh build script.
+# For the convenience of demonstration, there is a Java SDK application in the ~ / fisco directory, and a blockchain node is built using the build _ chain.sh build script
 tree -L 1 ~/fisco
 ~/fisco
 ├── java-sdk-demo		# Java SDK Application
@@ -76,7 +76,7 @@ cp -r ~/fisco/nodes/127.0.0.1/sdk/* ~/fisco/java-sdk-demo/dist/conf
 
 ## Multi-group blockchain (Pro version) deployment mode
 
-[Multi-Group Blockchain (Pro version)](../tutorial/pro/index.md) It consists of RPC, Gateway access layer services, and multiple blockchain node services. One node service represents a group, and the storage uses local RocksDB. All nodes share access layer services.。
+[Multi-Group Blockchain (Pro version)](../tutorial/pro/index.md) It consists of RPC, Gateway access layer services, and multiple blockchain node services. One node service represents a group, and the storage uses local RocksDB. All nodes share access layer services。
 
 For installation and deployment of Pro version, please refer to: [link](../tutorial/pro/installation.md) 。
 
@@ -87,7 +87,7 @@ tree generated/rpc/chain
 generated/rpc/chain
 ├── 172.25.0.3 # Please refer to the actual IP
 │   ├── agencyABcosRpcService # RPC Service Directory for Institution A
-│   │   ├── sdk               # The SDK certificate directory. The SDK client can copy certificates from this directory to connect to the RPC service.
+│   │   ├── sdk               # The SDK certificate directory. The SDK client can copy certificates from this directory to connect to the RPC service
 │   │   │   ├── ca.crt				# SSL Connection Root Certificate
 │   │   │   ├── cert.cnf			# SSL Certificate Configuration
 │   │   │   ├── sdk.crt				# SSL Connection Certificate
@@ -95,7 +95,7 @@ generated/rpc/chain
 │   │   └── ssl               # RPC Service Certificate Directory
 │   └── agencyBBcosRpcService # RPC Service Configuration Directory for Institution B
 │       ├── config.ini.tmp    # Configuration file for RPC service of institution B
-│       ├── sdk               # The SDK certificate directory. The SDK client copies the certificate from this directory to connect to the RPC service.
+│       ├── sdk               # The SDK certificate directory. The SDK client copies the certificate from this directory to connect to the RPC service
 │       │   ├── ca.crt
 │       │   ├── cert.cnf
 │       │   ├── sdk.crt
@@ -106,10 +106,10 @@ generated/rpc/chain
 
 When using the Java SDK, copy the node SSL certificate to the 'conf' directory in the compiled 'dist' directory of the project:
 
-**Note: For ease of demonstration, the SDK application path here is' ~ / fisco 'by default. Please refer to the actual path when using it.。**
+**Note: For ease of demonstration, the SDK application path here is' ~ / fisco 'by default. Please refer to the actual path when using it。**
 
 ```shell
-# For the convenience of demonstration, there is a Java SDK application in the ~ / fisco directory, and a blockchain node is built using the build _ chain.sh build script.
+# For the convenience of demonstration, there is a Java SDK application in the ~ / fisco directory, and a blockchain node is built using the build _ chain.sh build script
 tree -L 2 ~/fisco
 ~/fisco
 ├── java-sdk-demo		# Java SDK Application
@@ -139,7 +139,7 @@ cp -r ~/fisco/BcosBuilder/generated/rpc/chain0/agencyABcosRpcService/172.25.0.3/
 
 ## Appendix: Identifying the Cryptographic Environment Type of Blockchain (Non-State Secret / State Secret)
 
-In the Air version mode and the Pro version mode, the node configuration file 'config.ini' is generated after the blockchain node is built.。From the file 'config.ini', you can determine whether the password box environment type of the current blockchain is national secret or non-national secret.。
+In the Air version mode and the Pro version mode, the node configuration file 'config.ini' is generated after the blockchain node is built。From the file 'config.ini', you can determine whether the password box environment type of the current blockchain is national secret or non-national secret。
 
 Since the SDK is directly connected to the RPC module of the blockchain node, we only need to pay attention to the RPC configuration here:
 

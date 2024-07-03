@@ -6,14 +6,14 @@
 If you are already a community contributor, you can directly complete the PR submission as follows；If you first try PR contribution, please refer to [document](https://mp.weixin.qq.com/s/_w_auH8X4SQQWO3lhfNrbQ)。
 
 
-#### 1. Preset condition of PR: Fork FISCO-BCOS-DOC to personal github repository
+#### 1. Preset condition of PR: Fork FISCO-BCOS-DOC to personal github warehouse
 
 1. Step1: Enter [Register GitHub account](https://github.com/join)
 2. step2: Fork [FISCO-BCOS-DOC](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC) To personal warehouse
 
 #### 2. Branch Description
 
-PR Mention FISCO-BCOS-Release of DOC-3 branches
+PR must mention the release-3 branch of FISCO-BCOS-DOC
 
 #### 3. Essential tool: git [click for reference](https://gitee.com/help/articles/4106)
 
@@ -26,7 +26,7 @@ PR Mention FISCO-BCOS-Release of DOC-3 branches
 
 (The following steps only need to be performed once)
 
-- The official [FISCO-BCOS-DOC](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC)Add as upstream: git remote add upstream
+- Will the official [FISCO-BCOS-DOC](https://github.com/FISCO-BCOS/FISCO-BCOS-DOC)Add as upstream: git remote add upstream
 
 
 
@@ -34,13 +34,13 @@ PR Mention FISCO-BCOS-Release of DOC-3 branches
 
 **Before submitting a PR, run the following command to synchronize the latest official documents:**
 
-1. Pull the official document release-Latest documentation for 3 branches: git fetch upstream release-3
+1. Pull the latest document from the official document release-3 branch: git fetch upstream release-3
 
-2. Synchronize official document release-3 Branch the latest document to the local: git rebase update / release-3
+2. Synchronize the latest document of the official document release-3 branch to the local: git rebase update / release-3
 
    (Note: This step may have a conflict, if there is a conflict, please resolve the conflict, click the reference [conflict resolution](https://gitee.com/help/articles/4194))
 
-3. Push the synchronized document to your personal git repository: git push origin-f
+3. Push the synchronized document to your personal git repository: git push origin -f
 
 **Main commands for submitting personal documents**
 
@@ -49,9 +49,9 @@ git add, git commit, git push, etc. [click for reference](https://gitee.com/help
 #### 5. Document format description
 
 1. The content of the article must be edited in markdown format, [click to refer to markdown syntax](https://www.runoob.com/markdown/md-tutorial.html)。
-2. (This step is not mandatory) Before submitting a PR, it is recommended to build readthedocs based on the documents of the personal repository, check whether the built documents display as expected, and attach a link to the readthedocs that describes the personal build when submitting a PR.。
+2. (This step is not mandatory) Before submitting a PR, it is recommended to build readthedocs based on the documents of the personal repository, check whether the built documents display as expected, and attach a link to the readthedocs that describes the personal build when submitting a PR。
 
-Click on the reference [readthedocs build method](https://www.jianshu.com/p/d1d59d0cd58c)， FISCO-BCOS-Refer to the following table for the readthedocs configuration options of the DOC:
+Click on the reference [readthedocs build method](https://www.jianshu.com/p/d1d59d0cd58c)and the readthedocs configuration options of FISCO-BCOS-DOC refer to the following table:
 
 | **Setting Fields**   | **Setting Results**     |
 | - | - |
@@ -64,12 +64,12 @@ Click on the reference [readthedocs build method](https://www.jianshu.com/p/d1d5
 
 #### 6. Reviewer Feedback and Integration
 
-After submitting the PR, Reviewer will directly feedback the modification comments on GitHub, you can also add a small assistant WeChat FISCOBCOS010 for direct communication；Finally, when Reviewer joins the PR, your article is entered.！
+After submitting the PR, Reviewer will directly feedback the modification comments on GitHub, you can also add a small assistant WeChat FISCOBCOS010 for direct communication；Finally, when Reviewer joins the PR, your article is entered！
 
 ### Article PR Contribution Writing Norms
 
-- The initial signature is the name of the contributor, which can also show the company or school to which the individual belongs, for example, by Zhang San.| FISCO BCOS Core Developer；
-- The content of the article as far as possible to include the introduction introduction, paragraph and paragraph between the natural convergence and excessive, the end of the summary；
-- The article should ensure that the sentence is smooth and free of speech disorders, and that the expression will not cause misunderstanding to the reader.；
-- Practical articles need to ensure that the technical points are accurate and that the test run can be completed.；
-- If the article involves links to relevant technical documents or code repositories, please use FISCO BCOS official links to avoid link failure。
+-The initial signature is the name of the contributor, which can also show the company or school to which the individual belongs, for example, by Zhang San| FISCO BCOS Core Developer；
+- The content of the article contains the introduction as far as possible, the natural connection and transition between paragraphs, and the summary at the end of the article；
+- The article should ensure that the sentence is smooth and free of speech disorders, and that the presentation does not cause misunderstanding by the reader；
+-Practical articles need to ensure that the technical points are accurate and can complete the test run；
+-If the article involves links to relevant technical documents or code repositories, please use the FISCO BCOS official link to avoid link failure。

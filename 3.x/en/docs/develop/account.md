@@ -4,23 +4,23 @@ Tags: "Create Account" "State Secret Account" "Key File" "
 
 ----
 
-FISCO BCOS uses accounts to identify and differentiate each individual user。In a blockchain system that uses a public-private key system, each account corresponds to a pair of public and private keys.。where the address string calculated by the public key using a secure one-way algorithm such as a hash is used as the account name for the account, i.e.**Account Address**In order to distinguish it from the address of a smart contract and for some other historical reasons, the account address is also often referred to.**External Account Address**。The private key known only to the user corresponds to the password in the traditional authentication model.。Users need to prove that they know the private key of the corresponding account through a secure cryptographic protocol to claim their ownership of the account and perform sensitive account operations。
+FISCO BCOS uses accounts to identify and differentiate each individual user。In a blockchain system that uses a public-private key system, each account corresponds to a pair of public and private keys。where the address string calculated by the public key using a secure one-way algorithm such as a hash is used as the account name for the account, i.e**Account Address**In order to distinguish it from the address of a smart contract and for some other historical reasons, the account address is also often referred to**External Account Address**。The private key known only to the user corresponds to the password in the traditional authentication model。Users need to prove that they know the private key of the corresponding account through a secure cryptographic protocol to claim their ownership of the account and perform sensitive account operations。
 
 ```eval_rst
 .. important::
 
-    In other previous tutorials, to simplify the operation, the default account provided by the tool was used.。However, in the actual application deployment, users need to create their own accounts and properly save the account private key to avoid serious security issues such as account private key disclosure.。
+    In other previous tutorials, to simplify the operation, the default account provided by the tool was used。However, in the actual application deployment, users need to create their own accounts and properly save the account private key to avoid serious security issues such as account private key disclosure。
 ```
 
 This article will specifically describe how accounts are created, stored, and used, requiring readers to have a certain Linux operating base。
 
-FISCO BCOS provides scripts and Java SDK to create accounts, as well as Java SDK and console to store account private keys。Users can choose to store the account private key as a file in PEM or PKCS12 format according to their needs.。where the PEM format stores the private key in clear text, while PKCS12 stores the private key encrypted with a user-supplied password。
+FISCO BCOS provides scripts and Java SDK to create accounts, as well as Java SDK and console to store account private keys。Users can choose to store the account private key as a file in PEM or PKCS12 format according to their needs。where the PEM format stores the private key in clear text, while PKCS12 stores the private key encrypted with a user-supplied password。
 
 ## Creation of account
 
 ### Create an account using a script
 
-The 'get _ gm _ account.sh' script for generating an account is consistent with the 'get _ account.sh' script for generating an account.。
+The 'get _ gm _ account.sh' script for generating an account is consistent with the 'get _ account.sh' script for generating an account。
 
 #### 1. Get the script
 
@@ -30,7 +30,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
+    -If you cannot download for a long time due to network problems, please try'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
 ```
 
 State secret version please use the following instruction to get the script
@@ -41,7 +41,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
+    -If you cannot download for a long time due to network problems, please try'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
 ```
 
 Execute the above instructions and see the following output to download the correct script, otherwise please try again。
@@ -56,7 +56,7 @@ Usage: get_account.sh
     -h Help
 ```
 
-#### 2. Use the script to generate the PEM format private key.
+#### 2. Use the script to generate the PEM format private key
 
 - Generate private key and address
 
@@ -88,7 +88,7 @@ Execute the above command, the result is as follows
 [INFO] Account publicHex : 0x5309fa17ae97f81f80a1da3d6b116377ace351dffdcbfd0e91fbb3bcf0312d363c78b8aaf929b3661c1f02e8b2c318358843de6a2dcc66cc0d5260a0d6874a6e
 ```
 
-#### 3. Use the script to generate the PKCS12 format private key.
+#### 3. Use the script to generate the PKCS12 format private key
 
 - Generate private key and address
 
@@ -128,14 +128,14 @@ Enter Import Password:
 ## Storage of accounts
 
 - Java SDK supports private key string or file loading, so the private key of the account can be stored in the database or local file。
-- Local files support two storage formats, with PKCS12 encrypted storage and PEM plaintext storage。
-- When developing a business, you can choose the storage and management method of the private key according to the actual business scenario.。
+- Local files support two storage formats, where PKCS12 is stored encrypted and PEM is stored in clear text。
+-When developing a business, you can choose the storage and management method of the private key according to the actual business scenario。
 
 ## Use of account
 
 ### Console Load Private Key File
 
-The account generation script get _ account.sh is provided in the console. The generated account private key file is in the accounts directory. You need to specify the private key file when loading the private key in the console.。
+The account generation script get _ account.sh is provided in the console. The generated account private key file is in the accounts directory. You need to specify the private key file when loading the private key in the console。
 There are several ways to start the console:
 
 ```shell
@@ -147,7 +147,7 @@ bash start.sh group0 -p12 p12Name
 
 #### Default startup
 
-The console randomly generates an account and starts it with the group number specified in the console configuration file.。
+The console randomly generates an account and starts it with the group number specified in the console configuration file。
 
 ```shell
 bash start.sh
@@ -161,11 +161,11 @@ The console randomly generates an account and starts it with the group name spec
 bash start.sh group0
 ```
 
-- Note: The specified group requires configuration beans in the console configuration file。
+- Note: The specified group requires configuration beans in the console profile。
 
 #### Start using a private key file in PEM format
 
-- Start with the account of the specified pem file, enter the parameters: group number,-pem, pem file path
+- Use the account startup of the specified pem file, enter parameters: group number, -pem, pem file path
 
 ```shell
 bash start.sh group0 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pem
@@ -173,7 +173,7 @@ bash start.sh group0 -pem accounts/0xebb824a1122e587b17701ed2e512d8638dfb9c88.pe
 
 #### Start using PKCS12 format private key file
 
-- Use the specified p12 file account, you need to enter a password, enter parameters: group name,-p12, p12 file path
+- Use the specified p12 file account, you need to enter a password, enter parameters: group name, -p12, p12 file path
 
 ```shell
 bash start.sh group0 -p12 accounts/0x5ef4df1b156bc9f077ee992a283c2dbb0bf045c0.p12
@@ -184,7 +184,7 @@ Enter Export Password:
 
 If the account generation script get _ accounts.sh generates an account private key file in PEM or PKCS12 format, you can use the account by loading the PEM or PKCS12 account private key file。There are two classes for loading private keys: P12Manager and PEMManager, where P12Manager is used to load private key files in PKCS12 format and PEMManager is used to load private key files in PEM format。
 
-- P12Manager Usage Example:
+-P12Manager Usage Example:
 
 Load private key using code。
 
@@ -199,7 +199,7 @@ CryptoSuite cryptoSuite = client.getCryptoSuite();
 cryptoSuite.loadAccount("p12", p12AccountFilePath, password);
 ```
 
-- PEMManager Usage Example
+- PEMManager use example
 
 Load private key using code。
 
@@ -216,7 +216,7 @@ cryptoSuite.loadAccount("pem", pemAccountFilePath, null);
 
 ## Calculation of account address
 
-The FISCO BCOS account address is calculated from the ECDSA public key and keccak is calculated for the hexadecimal representation of the ECDSA public key.-256sum hash, taking the hexadecimal representation of the last 20 bytes of the calculation result as the account address, each byte requires two hexadecimal representations, so the account address length is 40。FISCO BCOS account address compatible with Ethereum。
+The account address of FISCO BCOS is calculated from the ECDSA public key. The keccak-256sum hash is calculated for the hexadecimal representation of the ECDSA public key. The hexadecimal representation of the last 20 bytes of the calculation result is taken as the account address. Each byte needs two hexadecimal representations, so the length of the account address is 40。FISCO BCOS account address compatible with Ethereum。
 Note keccak-256sum with 'SHA3'**Not the same**For more information, see [here](https://ethereum.stackexchange.com/questions/550/which-cryptographic-hash-function-does-ethereum-use)。
 
 [Ethereum Address Generation](https://kobl.one/blog/create-full-ethereum-keypair-and-address/)
@@ -257,9 +257,9 @@ You can get output similar to the following
 8d251b400667e2dcc79ec6de6a143627401e32ed2234ec69769c8fa378fd0e2ab7a9d963aefd3bc2f8f1cceccba54351709082e619d4e74d0c0fee3e67173ccd
 ```
 
-### 2. Calculate the address based on the public key.
+### 2. Calculate the address based on the public key
 
-In this section, we calculate the corresponding account address based on the public key.。We need to get keccak-256sum tool, can be downloaded from [here](https://github.com/vkobel/ethereum-generate-wallet/tree/master/lib)。
+In this section, we calculate the corresponding account address based on the public key。We need to get the keccak-256sum tool, which can be downloaded from [here](https://github.com/vkobel/ethereum-generate-wallet/tree/master/lib)。
 
 ```shell
 openssl ec -in ecprivkey.pem -text -noout 2>/dev/null| sed -n '7,11p' | tr -d ": \n" | awk '{print substr($0,3);}' | ./keccak-256sum -x -l | tr -d ' -' | tail -c 41
@@ -275,10 +275,10 @@ dcc703c0e500b653ca82273b7bfad8045d85a470
 
 ```eval_rst
 .. important::
-   To freeze, unfreeze, or revoke an account, you need to enable the blockchain permission mode. For more information, see the Permission Management User Guide < https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
+   To freeze, unfreeze, or revoke an account, you must enable the blockchain permission mode. For more information, see the Permission Governance Usage Guide<https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/develop/committee_usage.html>`_
 ```
 
-After the blockchain permission mode is enabled, each time a contract call is initiated, the account status is checked (tx.origin). The account status is recorded in the BFS '/ usr /' directory in the form of a storage table named '/ usr /'.+ The account address. If the account status is not found, the account is normal by default.。The account status under the BFS '/ usr /' directory is only created when the account status is actively set。**Only the governance committee member can operate the interface of account status management.。**
+After the blockchain permission mode is enabled, each time a contract call is initiated, the account status is checked (tx.origin). The account status is recorded in the BFS '/ usr /' directory in the form of a storage table named '/ usr /'+ The account address. If the account status is not found, the account is normal by default。The account status under the BFS '/ usr /' directory is only created when the account status is actively set。**Only the governance committee member can operate the interface of account status management。**
 
 The governance committee can operate on the account through the AccountManagerPrecompiled interface, fixed address 0x10003。
 
@@ -290,7 +290,7 @@ enum AccountStatus{
 }
 
 abstract contract AccountManager {
-    / / Set account status, only governance members can call, 0- normal, others - Abnormal, if the account does not exist, it will be created first
+    / / Set the account status, which can only be called by the governance committee, 0-normal, others-abnormal, if the account does not exist, it will be created first
     function setAccountStatus(address addr, AccountStatus status) public virtual returns (int32);
     / / Any user can call
     function getAccountStatus(address addr) public view virtual returns (AccountStatus);
@@ -299,6 +299,6 @@ abstract contract AccountManager {
 
 ### Freezing, unfreezing and abolishing of accounts
 
-The governance committee can initiate transactions on pre-compiled contracts with a fixed address of 0x10003 and read and write the status of the account.。At the time of execution, it will be determined whether the transaction sponsor msg.sender is a governance member in the governance committee record, and if not, it will be rejected。It is worth noting that the address of the account of the governance committee does not allow the status to be modified。
+The governance committee can initiate transactions on pre-compiled contracts with a fixed address of 0x10003 and read and write the status of the account。At the time of execution, it will be determined whether the transaction sponsor msg.sender is a governance member in the governance committee record, and if not, it will be rejected。It is worth noting that the address of the account of the governance committee does not allow the status to be modified。
 
 Governance members can also freeze, unfreeze, and abolish accounts through the console. For details, see: [Freeze / Unfreeze Account Order](../operation_and_maintenance/console/console_commands.html#freezeaccount-unfreezeaccount), [Order to Abolish Account](../operation_and_maintenance/console/console_commands.html#abolishaccount)

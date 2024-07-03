@@ -1,17 +1,17 @@
 # (New)Construct new version transaction
 
-Tag: "java-sdk "" Send Transaction "" Send Transaction Using Interface Signature "" Assembly Transaction "" Contract Call "" v1 ""
+Tags: "java-sdk" "send transaction" "send transaction using interface signature" "assembly transaction" "contract invocation" "v1" "
 
 ----
 
 ```eval_rst
 .. important::
-    FISCO BCOS supports V1 transactions after version 3.6.0 and V2 transactions after version 3.7.0. Please confirm the node version sent before using it.。Please refer to: 'v3.6.0 <.. / introduction / change _ log / 3 _ 6 _ 0.html >' for version 3.6.0 features
+    FISCO BCOS supports V1 transactions after version 3.6.0 and V2 transactions after version 3.7.0. Please confirm the node version sent before using it。3.6.0 version features please refer to: 'v3.6.0<../introduction/change_log/3_6_0.html>`_ 
 ```
 
 ```eval_rst
 .. note::
-    The data structure and assembly method of the transaction can refer to 'here <. / transaction _ data _ struct.html >' _
+    The data structure of the transaction and the way it is assembled can be found here<./transaction_data_struct.html>`_ 
 ```
 
 FISCO BCOS supports V1 transactions after version 3.6.0 and V2 transactions after version 3.7.0. The following five fields are added:
@@ -19,22 +19,22 @@ FISCO BCOS supports V1 transactions after version 3.6.0 and V2 transactions afte
 ```c++
 string       value;         / / v1 New transaction field, original transfer amount
 string       gasPrice;      / / The new field in the v1 transaction. The unit price of gas during execution(gas/wei)
-long         gasLimit;      / / The upper limit of the gas used when the transaction is executed.
+long         gasLimit;      / / The upper limit of the gas used when the transaction is executed
 string       maxFeePerGas;  / / v1 new transaction field, EIP1559 reserved field
 string       maxPriorityFeePerGas; / / v1 new transaction field, EIP1559 reserved field
 vector<byte> extension;    / / v2 new fields for additional storage
 ```
 
-In order to meet the requirements of adding transaction fields in the future, the Java SDK supports a new transaction service that can support flexible assembly, which is convenient for users and developers to use flexibly.。
+In order to meet the requirements of adding transaction fields in the future, the Java SDK supports a new transaction service that can support flexible assembly, which is convenient for users and developers to use flexibly。
 
 ## 1. TransactionManager
 
-Inspired by Web3J, it abstracts the interface for sending transactions / invocation requests, and provides the injection interface of GasProvider and NonceAndBlockLimitProvider for users to customize transactions.。The data passed in the TransactionManager is an ABI-encoded byte array.。
+Inspired by Web3J, it abstracts the interface for sending transactions / invocation requests, and provides the injection interface of GasProvider and NonceAndBlockLimitProvider for users to customize transactions。The data passed in the TransactionManager is an ABI-encoded byte array。
 
 TransactionManager is an abstract class with the following implementation:
 
-- 'DefaultTransactionManager ': The default TransactionManager, which uses the key generated at client initialization when signing transactions。
-- 'ProxySignTransactionManager ': A TransactionManager with an external signature. Users can implement the AsyncTransactionSignercInterface interface by themselves and set it into the ProxySignTransactionManager object.。
+- 'DefaultTransactionManager': The default TransactionManager, which uses the key generated during Client initialization when signing transactions。
+- 'ProxySignTransactionManager': A TransactionManager with an external signature. Users can implement the 'AsyncTransactionSignercInterface' interface by themselves and set it into the ProxySignTransactionManager object。
 
 ### 1.1 Interface List
 
@@ -59,16 +59,16 @@ public abstract void asyncSendCall(String to, byte[] data, RespCallback<Call> ca
 
 ### 1.2 DefaultTransactionManager
 
-- DefaultTransactionManager is the default TransactionManager, which uses the key generated at Client initialization when signing transactions。
-- Use the default ContractGasProvider. By default, the returned gaslimit is 9000000 and the gas price is 4100000000.
-- Use the default NonceAndBlockLimitProvider. The default returned block limit is the value returned by the client interface getBlockLimit. The default returned nonce is the UUID.。
+-DefaultTransactionManager is the default TransactionManager, which uses the key generated at Client initialization when signing transactions。
+- Use the default ContractGasProvider. By default, the returned gaslimit is 9000000 and the gas price is 4100000000
+- Use the default NonceAndBlockLimitProvider. The default returned block limit is the value returned by the client interface getBlockLimit. The default returned nonce is the UUID。
 
 ### 1.3 ProxySignTransactionManager
 
 - The external signature of the TransactionManager, users can implement their own 'AsyncTransactionSignercInterface' interface, set into the ProxySignTransactionManager object, in the signature are signed using the implemented AsyncTransactionSignercInterface object。
-- Use the default ContractGasProvider. By default, the returned gaslimit is 9000000 and the gas price is 4100000000.
-- Use the default NonceAndBlockLimitProvider. The default returned block limit is the value returned by the client interface getBlockLimit. The default returned nonce is the UUID.。
-- Use the default AsyncTransactionSignercInterface: TransactionJniSignerService, which still uses the key generated at client initialization by default。
+- Use the default ContractGasProvider. By default, the returned gaslimit is 9000000 and the gas price is 4100000000
+- Use the default NonceAndBlockLimitProvider. The default returned block limit is the value returned by the client interface getBlockLimit. The default returned nonce is the UUID。
+- Use the default AsyncTransactionSignercInterface: TransactionJniSignerService. By default, the key generated when the client is initialized is still used。
 
 Users can call the 'setAsyncTransactionSigner' interface to replace their own objects that implement the AsyncTransactionSignercInterface interface。
 
@@ -95,7 +95,7 @@ proxySignTransactionManager.setAsyncTransactionSigner((hash, transactionSignCall
 / / Codec contract parameters
 byte[] abiEncoded = contractCodec.encodeMethod(abi, method, params);
 
-/ / Construct the AbiEncodedRequest in a chained manner. Pass in important parameters such as contractAddress, nonce, and blockLimit. Finally, use buildAbiEncodedRequest to complete the construction.。
+/ / Construct the AbiEncodedRequest in a chained manner. Pass in important parameters such as contractAddress, nonce, and blockLimit. Finally, use buildAbiEncodedRequest to complete the construction。
 AbiEncodedRequest request =
         new TransactionRequestBuilder()
                 .setTo(contractAddress)
@@ -112,9 +112,9 @@ TransactionReceipt receipt = proxySignTransactionManager.sendTransaction(request
 
 ## 2. AssembleTransactionService
 
-AssembleTransactionService integrates TransactionManager, ContractCodec, and TransactionDecoderService, and the user only needs to pass in the parameters of the calling contract, and the returned result contains the parsed contract return value.。
+AssembleTransactionService integrates TransactionManager, ContractCodec, and TransactionDecoderService, and the user only needs to pass in the parameters of the calling contract, and the returned result contains the parsed contract return value。
 
-AssembleTransactionService can switch the dependent TransactionManager. The default value is DefaultTransactionManager and the default value is ProxySignTransactionManager.。
+AssembleTransactionService can switch the dependent TransactionManager. The default value is DefaultTransactionManager and the default value is ProxySignTransactionManager。
 
 ### 2.1 Interface List
 
@@ -169,7 +169,7 @@ TransactionResponse transactionResponse = transactionService.sendTransaction(req
 / / Parameters of type String can also be constructed
 List<String> params = new ArrayList<>();
 params.add("[[\"0xabcd\"],[\"0x1234\"]]");
-/ / Construct a request to call the setBytesArrayArray API. The parameter is a two-dimensional array of bytes. Pass in important parameters such as contractAddress, nonce, and blockLimit. Finally, use buildStringParamsRequest to end the construction.。
+/ / Construct a request to call the setBytesArrayArray API. The parameter is a two-dimensional array of bytes. Pass in important parameters such as contractAddress, nonce, and blockLimit. Finally, use buildStringParamsRequest to end the construction。
 TransactionRequestWithStringParams requestWithStringParams = 
         new TransactionRequestBuilder(abi, "setBytesArrayArray", contractAddress)
                 .setNonce(nonce)
@@ -181,11 +181,11 @@ TransactionRequestWithStringParams requestWithStringParams =
 TransactionResponse transactionResponse = transactionService.sendTransaction(requestWithStringParams);
 ```
 
-## 3. Solidity generates Java files using the new interface.
+## 3. Solidity generates Java files using the new interface
 
 The detailed documentation of the Java interface file for generating smart contracts can be seen: [link](./contracts_to_java.html)
 
-In the console after 3.6.0, the contract2java.sh script adds'-t 'option, when the value is 1, the Java file using the new interface is generated, using the same posture as before。For example:
+In the console after 3.6.0, the '-t' option is added to the contract2java.sh script. When the value is 1, the Java file using the new interface is generated。For example:
 
 ```shell
  bash contract2java.sh solidity  -t 1 -n -s ./contracts/solidity/Incremental.sol
@@ -193,8 +193,8 @@ In the console after 3.6.0, the contract2java.sh script adds'-t 'option, when th
 
 Existing Java file transformation methods:
 
-In Java-sdk-Take package org.fisco.bcos.sdk.demo.perf.PerformanceOk in demo as an example:
-After the contract object is constructed by deploy, the TransactionManager is set up, and then the request is sent according to the new transaction interface.。
+Take package org.fisco.bcos.sdk.demo.perf.PerformanceOk in Java-sdk-demo as an example:
+After the contract object is constructed by deploy, the TransactionManager is set up, and then the request is sent according to the new transaction interface。
 
 ```java
 // build the client

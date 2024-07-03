@@ -4,13 +4,13 @@ Tags: "Precompiled Contracts" "BFS" "CRUD"
 
 ---
 
-FISCO BCOS 3.0 follows the FISCO BCOS 2.0 version of the precompiled contract。In the future, we will also try to abstract the existing typical business scenarios and develop them into pre-compiled contract templates as the basic capability provided by the underlying layer to help users use FISCO BCOS in their business faster and more conveniently.。
+FISCO BCOS 3.0 follows the FISCO BCOS 2.0 version of the precompiled contract。In the future, we will also try to abstract the existing typical business scenarios and develop them into pre-compiled contract templates as the basic capability provided by the underlying layer to help users use FISCO BCOS in their business faster and more conveniently。
 
 Principles of Precompiled Contracts and FISCO BCOS 2.0+Similar to the version, users can refer to the link when studying its principles: [FISCO BCOS Precompiled Contract Architecture](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/precompiled_contract.html?highlight=%E9%A2%84%E7%BC%96%E8%AF%91#fisco-bcos)。
 
 ## Advantages of Precompiled Contracts
 
-**Access to distributed storage interfaces**Based on this framework, users can access the local DB storage state and implement any logic they need.。
+**Access to distributed storage interfaces**Based on this framework, users can access the local DB storage state and implement any logic they need。
 
 **Better performance**Since the implementation is C++The code will be compiled in the underlying layer without entering the EVM for execution, which can have better performance。
 
@@ -18,7 +18,7 @@ Principles of Precompiled Contracts and FISCO BCOS 2.0+Similar to the version, u
 
 ## FISCO BCOS 3.x Precompiled Contracts and Addresses
 
-Currently, the Solidity contract only supports the address type of 20 bytes as the calling object, while Liquid supports the address of the string to call the contract, so the address of the precompiled contract is divided into two versions: Solidity and Liquid.。
+Currently, the Solidity contract only supports the address type of 20 bytes as the calling object, while Liquid supports the address of the string to call the contract, so the address of the precompiled contract is divided into two versions: Solidity and Liquid。
 
 Addresses in this table are for Solidity contracts only。
 
@@ -36,7 +36,7 @@ Addresses in this table are for Solidity contracts only。
 | 0x5005  | RingSignPrecompield     | Ring Signature System Contract|
 | 0x5100  | ZKPPrecompiled          | ZKP System Contract|
 
-The BFS path of the following table is only used for webankblockchain-liquid (hereinafter referred to as WBC-Liquid) contract。
+The BFS paths in the following table are only used for webankblockchain-liquid (WBC-Liquid) contracts。
 
 | BFS Path| 合同| Description|
 | :----------------- | :---------------------- | :------------------------- |
@@ -53,11 +53,11 @@ The BFS path of the following table is only used for webankblockchain-liquid (he
 
 ## How to use the FISCO BCOS precompiled contract interface
 
-The steps for a smart contract to invoke a precompiled contract are similar to those for invoking a normal contract, as follows.
+The steps for a smart contract to invoke a precompiled contract are similar to those for invoking a normal contract, as follows
 
-- Introducing an interface declaration: Introducing a contract file for a precompiled contract, or declaring an interface in the same smart contract file；
-- Specify the contract address: According to the address table of the precompiled contract, the corresponding address can be used when initializing the object.；
-- Call the object interface: After initializing the object, use the object to call the method interface.；
+- Introduction of interface declarations: Introduction of pre-compiled contract contract files, or declaration of interfaces in the same smart contract file；
+- Specify the contract address: According to the address table of the precompiled contract, use the corresponding address when initializing the object；
+-Call the object interface: After initializing the object, use the object to call the method interface；
 
 The following uses the Table contract as an example to call the Table interface:
 
@@ -79,7 +79,7 @@ The following uses the Table contract as an example to call the Table interface:
    TableManager constant tm =  TableManager(address(0x1002));
    ```
 
-3. Call the object interface.
+3. Call the object interface
 
    Call the initialized 'TableManager' object interface to create a 'Table' contract object
 
@@ -87,7 +87,7 @@ The following uses the Table contract as an example to call the Table interface:
    Table table;
    string constant TABLE_NAME = "t_test";
    constructor () public{
-       / / Create the t _ test table. The primary key of the table is id, and the other fields are name and age.
+       / / Create the t _ test table. The primary key of the table is id, and the other fields are name and age
        string[] memory columnNames = new string[](2);
        columnNames[0] = "name";
        columnNames[1] = "age";

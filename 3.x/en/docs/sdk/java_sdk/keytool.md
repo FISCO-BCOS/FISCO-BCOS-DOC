@@ -1,12 +1,12 @@
 # Account Key Management Tool
 
-Tag: "java-sdk "" 'Set up account "
+Tags: "java-sdk" "set up account"
 
 ----
 
 The Java SDK provides an account management interface and supports the following functions:
 
-- **Account loading**: Loads an account from a specified path, supports loading account files in both 'pem' and 'p12' formats, and also supports loading hexadecimal private key strings.
+- **Account loading**: Loads an account from a specified path, supports loading account files in both 'pem' and 'p12' formats, and also supports loading hexadecimal private key strings
 
 - **Account Generation**: Randomly generate account public-private key pairs
 
@@ -16,7 +16,7 @@ The Java SDK provides an account management interface and supports the following
 
 ```eval_rst
 .. note::
-    The Java SDK provides interface-level account generation methods. For more information about tool-level account generation scripts, see 'get _ account.sh script <.. /.. / develop / account.html >'.
+    The Java SDK provides API-level account generation methods. For tool-level account generation scripts, see the 'get _ account.sh script<../../develop/account.html>`_ .
 ```
 
 ## 1. Account loading
@@ -100,7 +100,7 @@ public CryptoKeyPair loadGMAccountFromHexPrivateKey(BigInteger privateKey)
 
 ### 1.3 Load account from pem file
 
-An example of loading a transaction sending account from a specified 'pem' account file is as follows(Please refer to [Quick Start] for client initialization method.(./quick_start.html#id4))：
+An example of loading a transaction sending account from a specified 'pem' account file is as follows(Please refer to [Quick Start] for client initialization method(./quick_start.html#id4))：
 
 ```java
 / / Load the pem account file from the path specified by pemAccountFilePath and set it as the transaction sending account
@@ -132,7 +132,7 @@ public void loadP12Account(Client client, String p12AccountFilePath, String pass
 
 Java SDK 'org.fisco.bcos.sdk.v3.crypto.CryptoSuite' provides account generation functionality。
 
-Examples of randomly generated non-State secret accounts are as follows.
+Examples of randomly generated non-State secret accounts are as follows
 
 ```java
 / / Create a non-state secret type of CryptoSuite
@@ -143,7 +143,7 @@ CryptoKeyPair cryptoKeyPair = cryptoSuite.generateRandomKeyPair();
 String accountAddress = cryptoKeyPair.getAddress();
 ```
 
-An example of a randomly generated State Secret account is as follows.
+An example of a randomly generated State Secret account is as follows
 
 ```java
 / / Create a country secret type of CryptoSuite
@@ -156,7 +156,7 @@ String accountAddress = cryptoKeyPair.getAddress();
 
 ## 3. Account Preservation
 
-When the account is not custom loaded and the account information is not configured through the profile(Please refer to [here] for account configuration.(./config.html#id6))Java SDK randomly generates an account to send transactions. Java SDK 'org.fisco.bcos.sdk.v3.crypto.CryptoSuite' provides the account save function, which can save the randomly generated account in the specified path。
+When the account is not custom loaded and the account information is not configured through the profile(Please refer to [here] for account configuration(./config.html#id6))Java SDK randomly generates an account to send transactions. Java SDK 'org.fisco.bcos.sdk.v3.crypto.CryptoSuite' provides the account save function, which can save the randomly generated account in the specified path。
 
 An example of saving an account file to a specified path in the format 'pem' is as follows:
 

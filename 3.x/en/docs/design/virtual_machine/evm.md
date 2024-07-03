@@ -6,7 +6,7 @@ Tags: "EVM" "Smart Contract" "Virtual Machine" "
 
 On the blockchain, users complete actions that require consensus by running contracts deployed on the blockchain。Ethereum virtual machine, the executor of smart contract code。
 
-When the smart contract is compiled into a binary file, it is deployed on the blockchain。The user triggers the execution of the smart contract by calling the interface of the smart contract.。The EVM executes the code of the smart contract, modifying the data (state) on the current blockchain。The modified data will be agreed upon to ensure consistency。
+When the smart contract is compiled into a binary file, it is deployed on the blockchain。The user triggers the execution of the smart contract by calling the interface of the smart contract。The EVM executes the code of the smart contract, modifying the data (state) on the current blockchain。The modified data will be agreed upon to ensure consistency。
 
 ## EVMC – Ethereum Client-VM Connector API
 
@@ -21,13 +21,13 @@ EVMC defines two main types of invocation interfaces:
 - Instance interface: the interface through which the node invokes the EVM
 - Callback interface: interface of EVM callback node
 
-The EVM itself does not save state data. The node operates the EVM through the instance interface. The EVM, in turn, adjusts the Callback interface to operate the state of the node.。
+The EVM itself does not save state data. The node operates the EVM through the instance interface. The EVM, in turn, adjusts the Callback interface to operate the state of the node。
 
 ![](../../../images/evm/evmc.png)
 
 **Instance interface**
 
-Defines the operation of the node to the virtual machine, including creation, destruction, setup, etc.。
+Defines the operation of the node to the virtual machine, including creation, destruction, setup, etc。
 
 The interface is defined in evmc _ instance (evmc.h)
 
@@ -41,7 +41,7 @@ The interface is defined in evmc _ instance (evmc.h)
 
 **Callback Interface**
 
-Defines the operations of EVM on nodes, mainly for state reading and writing, block information reading and writing, etc.。
+Defines the operations of EVM on nodes, mainly for state reading and writing, block information reading and writing, etc。
 
 The interface is defined in evmc _ context _ fn _ table (evmc.h)。
 
@@ -62,9 +62,9 @@ The interface is defined in evmc _ context _ fn _ table (evmc.h)。
 
 ### EVM command
 
-Solidity is the execution language of the contract, which is compiled by solc and becomes an assembly-like EVM instruction.。Interpreter defines a complete set of instructions。After the solidity is compiled, the binary file is generated, the binary file is the collection of EVM instructions, the transaction is sent to the node in binary form, the node receives, through the EVMC call EVM to execute these instructions。In EVM, the logic of these instructions is implemented in code emulation。
+Solidity is the execution language of the contract, which is compiled by solc and becomes an assembly-like EVM instruction。Interpreter defines a complete set of instructions。After the solidity is compiled, the binary file is generated, the binary file is the collection of EVM instructions, the transaction is sent to the node in binary form, the node receives, through the EVMC call EVM to execute these instructions。In EVM, the logic of these instructions is implemented in code emulation。
 
-Solidity is a stack-based language, and EVM is called as a stack when executing binary.。
+Solidity is a stack-based language, and EVM is called as a stack when executing binary。
 
 **Examples of Arithmetic Instruction**
 
@@ -144,7 +144,7 @@ CASE(SSTORE)
 
 **Examples of contract call instructions**
 
-The CALL instruction can call another contract based on the address.。First, the EVM determines that it is a CALL instruction and calls "caseCall."()"', in caseCall()"', use"' caseCallSetup()"'Take the data from the stack, package it into msg, and call evmc's callback function as an argument。Eth is called back "()"'After that, start a new EVM, process the call, and then pass the execution result of the new EVM to" call()"'parameter is returned to the current EVM, the current EVM writes the result to the result stack SSP, the call ends。The logic for contract creation is similar to this logic。
+The CALL instruction can call another contract based on the address。First, the EVM determines that it is a CALL instruction and calls "caseCall."()"', in caseCall()"', use"' caseCallSetup()"'Take the data from the stack, package it into msg, and call evmc's callback function as an argument。Eth is called back "()"'After that, start a new EVM, process the call, and then pass the execution result of the new EVM to" call()"'parameter is returned to the current EVM, the current EVM writes the result to the result stack SSP, the call ends。The logic for contract creation is similar to this logic。
 
 ``` cpp
 CASE(CALL)
@@ -196,4 +196,4 @@ void VM::caseCall()
 
 ## SUMMARY
 
-EVM is a state execution machine, the input is the binary instructions compiled by solidity and the state data of the node, and the output is the change of the node state.。Ethereum achieves compatibility of multiple virtual machines through EVMC。
+EVM is a state execution machine, the input is the binary instructions compiled by solidity and the state data of the node, and the output is the change of the node state。Ethereum achieves compatibility of multiple virtual machines through EVMC。

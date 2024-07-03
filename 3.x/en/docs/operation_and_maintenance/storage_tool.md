@@ -11,17 +11,17 @@ The storage read / write tool is used to read and write storage data and support
 - Read a single key in a table
 - Read full table data
 - Modify a single KV in a table
-- Compare the data of two nodes
-- State data and chain data size in statistics node database
+- Compare data of two nodes
+- Statistics of state data and chain data in the node database
 
 ## 使用
 
-The tool needs to be set when compiling the source code.-DTOOLS = on 'Compile option, the tool needs to run under the node directory to read the node's configuration file。
+The tool needs to set the '-DTOOLS = on' compilation option when compiling the source code. The tool needs to run under the node directory to read the configuration file of the node。
 
 ```bash
 # Open TOOLS option at compile time
 cmake -DTOOLS=on ..
-# The compiled tools are located in build / tools / storage-tool/storageTool
+# The compiled tools are located in build / tools / storage-tool / storageTool
 $ ./tools/storage-tool/storageTool  -h
 storage tool used to read/write the data of storage:
   -h [ --help ]                         help of storage tool
@@ -43,7 +43,7 @@ storage tool used to read/write the data of storage:
 
 ### Read a single piece of data
 
-`-r 'option is used to read a single piece of data in the table, the parameter is' [table name] [key] '。Can be combined '-H 'option to use,'-The H 'option will decode the key in the parameter with hex and use it to read the data.。Examples are as follows:
+'-r 'option is used to read a single piece of data in the table, the parameter is' [table name] [key] '。Can be used in conjunction with the '-H' option, which will use the key in the parameter to read data after hex decoding。Examples are as follows:
 
 ```bash
 $ ./storageTool -r s_current_state current_number
@@ -55,7 +55,7 @@ read s_current_state, key is current_number
 
 ### Traverse Table
 
-`-I 'option is used to traverse the data in the table. The parameter is' [table name] '. The data in the table will be written to the file' [table name] .txt 'in the current directory. If there is' / 'in the table name, it will be replaced with an underscore.。Can be combined '-H 'option to use,'-The H 'option will hex encode the read data for easy viewing of binary data。Examples are as follows:
+The '-i' option is used to traverse the data in the table. The parameter is' [table name] '. The data in the table is written to the' [table name] .txt 'file in the current directory。Can be used in conjunction with the '-H' option, which hex encodes the read data for easy viewing of binary data。Examples are as follows:
 
 ```bash
 $ ./storageTool -i s_current_state
@@ -72,7 +72,7 @@ db path : data, table : s_current_state
 
 ### Modify data
 
-`-w 'option is used to modify a certain piece of data in the table, the parameter is' [table name] [key] [value] ', if the value is an empty string, this data is deleted, you can combine'-H 'option to use,'-The H 'option will decode the value in the parameter using hex and write。Examples are as follows:
+The '-w' option is used to modify a piece of data in the table. The parameter is' [table name] [key] [value] '. If the value is an empty string, the data is deleted. It can be used in combination with the' -H 'option. The' -H 'option will decode the value in the parameter using hex and write it。Examples are as follows:
 
 ```bash
 # Read
@@ -111,7 +111,7 @@ get row not found,,table=s_current_state,key=current_number
 
 ### statistical function
 
-`-s' option is used in statistical storage**Non-state data**Size of storage occupied, '-S 'option for statistical storage**Status Data**Size of storage occupied。The statistical result is the size of the data in memory, and the sum will be larger than the actual size of RocksDB, because RocksDB will have compression。Examples are as follows:
+'-s' option is used in statistical storage**Non-state data**The size of the storage occupied, the '-S' option is used for statistical storage**Status Data**Size of storage occupied。The statistical result is the size of the data in memory, and the sum will be larger than the actual size of RocksDB, because RocksDB will have compression。Examples are as follows:
 
 ```bash
 $ du -sh ./data/
@@ -136,7 +136,7 @@ s_hash_2_receipt               size is 16.5311GB
 
 ### Contrast function
 
-`-The C 'option is used to compare the data of two nodes, which will be compared table by table, where the difference in' importTime 'is ignored during the transaction comparison, and the difference in the signature list is ignored during the block header comparison.。Examples are as follows:
+The '-C' option is used to compare the data of two nodes, which will be compared table by table, where the difference of 'importTime' is ignored during transaction comparison, and the difference of signature list is ignored during block header comparison。Examples are as follows:
 
 ```bash
 $ ./storageTool -C rocksdb ../node1/data/

@@ -76,9 +76,9 @@ Block chain node service construction please refer to [here](./installation.html
 
 ```eval_rst
 .. note::
-    - **The Genesis block configuration must be consistent for all nodes in the group.**
+    - **The Genesis block configuration must be consistent for all nodes in the group**
     - **Genesis block configuration file cannot be changed after chain initialization**
-    - After the chain is initialized, even if the creation block configuration is changed, the new configuration will not take effect, and the system still uses the genesis configuration when the chain is initialized
+    -After the chain is initialized, even if the creation block configuration is changed, the new configuration will not take effect, and the system still uses the genesis configuration when the chain is initialized
 ```
 
 #### 2.1.1 Chain Configuration Options
@@ -87,7 +87,7 @@ Chain configuration options are located in '[chain]' and include:
 
 - `[chain].sm_crypto`: Used to configure the cryptology type of the ledger, 'true' indicates that the ledger uses the state secret algorithm, 'false' indicates that the ledger uses the non-state secret algorithm, the default is' false ';
 - `[chain].group_id`: group id;
-- `[chain].chain_id`: chain id.
+- `[chain].chain_id`: chain id
 
 An example of node chain configuration options is as follows:
 
@@ -102,10 +102,10 @@ chain_id=chain0
 
 '[consensus]' involves consensus-related configurations, including:
 
-- `[consensus].consensus_type`: Consensus type. The default setting is' pbft '. Currently, FISCO BCOS v3.x only supports the PBFT consensus algorithm.;
+- `[consensus].consensus_type`: Consensus type. The default setting is' pbft '. Currently, FISCO BCOS v3.x only supports the PBFT consensus algorithm;
 - `[consensus].block_tx_count_limit`: The maximum number of transactions that can be included in each block. The default setting is 1000;
 - `[consensus].leader_period`: The number of consecutive blocks packed by each leader in the consensus process. The default value is 5;
-- '[consensus] .node.idx': list of consensus nodes, configured with the NodeIDs of the participating consensus nodes。
+- '[consensus] .node.idx': the list of consensus nodes. The NodeIDs of the participating consensus nodes are configured。
 
 
 The configuration example of '[consensus]' is as follows:
@@ -142,13 +142,13 @@ FISCO BCOS v3.0.0 designs and implements a compatibility framework that supports
 '[executor]' configuration items involve the execution of related genesis block configurations, mainly including:
 
 - `[executor].is_wasm`: Used to configure the virtual machine type, 'true' indicates the use of WASM virtual machine, 'false' indicates the use of EVM virtual machine, the configuration option is not dynamically adjustable, the default is' false ';
-- `[executor].is_auth_check`: The configuration switch for permission control. 'true' indicates that permission control is enabled, and 'false' indicates that permission control is disabled. This configuration option cannot be dynamically adjusted. The permission control function is disabled by default.;
+- `[executor].is_auth_check`: The configuration switch for permission control. 'true' indicates that permission control is enabled, and 'false' indicates that permission control is disabled. This configuration option cannot be dynamically adjusted. The permission control function is disabled by default;
 - `[executor].is_serial_execute`: Transaction execution serial and parallel mode configuration switch, 'true' indicates to enter the serial execution mode, 'false' indicates to enter the DMC parallel execution mode, the configuration option is expected not to be dynamically adjusted, the default is' false ';
 - `[executor].auth_admin_account`: Permission administrator account address, only used in permission control scenarios(When the chain version number is greater than 3.3 or the permission is enabled, this configuration must be added)。
 
 ### 2.2 Node Configuration
 
-Node configuration 'config.ini' is mainly used to configure the node's chain ID, group ID, and ledger type(State Secret / Non-State Secret)and so on, including service configuration options, consensus configuration options, storage configuration options, transaction pool configuration options, log configuration options, and so on.。
+Node configuration 'config.ini' is mainly used to configure the node's chain ID, group ID, and ledger type(State Secret / Non-State Secret)and so on, including service configuration options, consensus configuration options, storage configuration options, transaction pool configuration options, log configuration options, and so on。
 
 #### 2.2.1 Service Configuration Options
 
@@ -187,10 +187,10 @@ min_seal_time=500
 The storage configuration option is located in '[storage]' and is primarily used to configure on-chain data paths:
 
 - `[storage].data_path`: Ledger Data Storage Path;
-- `[storage].enable_cache`: Whether to enable caching. The default value is true.;
+- `[storage].enable_cache`: Whether to enable caching. The default value is true;
 - `[storage].type`: The underlying storage database type, which is RocksDB by default;
 - `pd_addrs`: Pro empty, max version field；
-- `key_page_size`: The size of each page in the key _ page storage. The default value is 10240k.。
+- `key_page_size`: The size of each page in the key _ page storage. The default value is 10240k。
 
 ```ini
 [storage]
@@ -207,8 +207,8 @@ The trading pool configuration option is located at '[txpool]':
 
 - `[txpool].limit`: Capacity limit of trading pool, default is' 15000';
 - `[txpool].notify_worker_num`: Number of transaction notification threads, 2 by default;
-- `[txpool].verify_worker_num`: Number of transaction verification threads. The default value is the number of machine CPU cores.;
-- `[txpool].txs_expiration_time`: The transaction expiration time, in seconds. The default value is 10 minutes. That is, transactions that have not been packaged by the consensus module for more than 10 minutes will be discarded directly.。
+- `[txpool].verify_worker_num`: Number of transaction verification threads. The default value is the number of machine CPU cores;
+- `[txpool].txs_expiration_time`: The transaction expiration time, in seconds. The default value is 10 minutes. That is, transactions that have not been packaged by the consensus module for more than 10 minutes will be discarded directly。
 
 ```ini
 [txpool]
@@ -228,8 +228,8 @@ Log configuration options are located in '[log]' and include:
 
 - `[log].enable`: Enables / disables logging, set to 'true' to enable logging；Set to 'false' to disable logging,**The default setting is true, and performance tests can set this option to 'false' to reduce the impact of printing logs on test results**
 - `[log].log_path`:Log File Path。
-- `[log].level`: Log level. Currently, there are five log levels: 'trace', 'debug', 'info', 'warning', and 'error'. After a log level is set, logs greater than or equal to the log level are entered in the log file.。
-- '[log] .max _ log _ file _ size': the maximum size of each log file.**The unit of measurement is MB, the default is 200MB**。
+- `[log].level`: Log level. Currently, there are five log levels: 'trace', 'debug', 'info', 'warning', and 'error'. After a log level is set, logs greater than or equal to the log level are entered in the log file> warning > info > debug > trace`。
+- '[log] .max _ log _ file _ size': the maximum capacity of each log file**The unit of measurement is MB, the default is 200MB**。
 
 ```ini
 [log]
@@ -251,10 +251,10 @@ The network connection configuration is located at '[p2p]' and mainly includes:
 
 - `[p2p].listen_ip`: RPC / Gateway listens to the IP address. To ensure normal communication between nodes deployed across machines, the default listening IP address is' 0.0.0.0';
 - `[p2p].listen_port`:  RPC / Gateway listening port, default setting is' 30300';
-- `[p2p].sm_ssl`: Whether to use state-secret SSL connections between nodes or between SDKs and RPC services. The default value is false.;
-- `[p2p].nodes_path`: The directory where the gateway connection file 'nodes.json' is located. The default value is the current directory.;
+- `[p2p].sm_ssl`: Whether to use state-secret SSL connections between nodes or between SDKs and RPC services. The default value is false;
+- `[p2p].nodes_path`: The directory where the gateway connection file 'nodes.json' is located. The default value is the current directory;
 - `[p2p].nodes_file`: The name of the gateway connection information file 'nodes.json'. The default value is' nodes.json';
-- `[p2p].thread_count`: Number of RPC / Gateway network processing threads. The default value is 4.
+- `[p2p].thread_count`: Number of RPC / Gateway network processing threads. The default value is 4
 
 ```ini
 [p2p]
@@ -296,7 +296,7 @@ chain_id = chain0
 
 ### 3.4 Disk drop encryption configuration
 
-FISCO BCOS v3.0.0 supports disk encryption. It can encrypt the SSL connection private key of RPC / Gateway to ensure the confidentiality of the SSL connection private key.:
+FISCO BCOS v3.0.0 supports disk encryption. It can encrypt the SSL connection private key of RPC / Gateway to ensure the confidentiality of the SSL connection private key:
 
 - `[storage_security].enable`: Whether to enable the disk drop encryption function, which is turned off by default;
 - `[storage_security].key_center_url`: [Key Manager] is configured for 'key _ center _ url' when encryption is enabled(../../design/storage_security.md)url to get the data encryption and decryption key;
@@ -319,8 +319,8 @@ The log configuration is in the '[log]' option:
 
 - `[log].enable`: Enables / disables logging, set to 'true' to enable logging；Set to 'false' to disable logging,**The default setting is true, and performance tests can set this option to 'false' to reduce the impact of printing logs on test results**
 - `[log].log_path`:Log File Path。
-- `[log].level`: Log level. Currently, there are five log levels: 'trace', 'debug', 'info', 'warning', and 'error'. After a log level is set, logs greater than or equal to the log level are entered in the log file.。
-- '[log] .max _ log _ file _ size': the maximum size of each log file.**The unit of measurement is MB, the default is 200MB**。
+- `[log].level`: Log level. Currently, there are five log levels: 'trace', 'debug', 'info', 'warning', and 'error'. After a log level is set, logs greater than or equal to the log level are entered in the log file> warning > info > debug > trace`。
+- '[log] .max _ log _ file _ size': the maximum capacity of each log file**The unit of measurement is MB, the default is 200MB**。
 
 ```ini
 [log]

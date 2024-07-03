@@ -3,7 +3,7 @@
 Tags: "Gas" "Smart Contract" "Virtual Machine" "
 
 ----
-EVM virtual machines have a set of Gas mechanisms to measure the CPU, memory and storage resources consumed by the chain on each transaction.。FISCO BCOS introduces Precompiled contract, supports built-in C++In order to improve the security of precompiled contracts, FISCO BCOS v2.4.0 introduces the Gas mechanism in precompiled contracts.。
+EVM virtual machines have a set of Gas mechanisms to measure the CPU, memory and storage resources consumed by the chain on each transaction。FISCO BCOS introduces Precompiled contract, supports built-in C++In order to improve the security of precompiled contracts, FISCO BCOS v2.4.0 introduces the Gas mechanism in precompiled contracts。
 
 ## Precompiled contracts support Gas calculations
 
@@ -13,21 +13,21 @@ In FISCO BCOS v2.4.0, the 'PrecompiledGas' module is added to calculate gas. The
 
 ![](../../../images/evm/precompiled_gas.png)
 
-'PrecompiledGas' mainly records the basic operations called during the execution of the Precompiled contract for each transaction, and the Gas that consumes memory.
+'PrecompiledGas' mainly records the basic operations called during the execution of the Precompiled contract for each transaction, and the Gas that consumes memory
 
-- When the virtual machine executes a transaction and calls the 'call' interface of the 'Precompiled' contract, each time a basic operation is called, the corresponding 'OPCode' is added to the**Runtime Instruction Collection**中
+- When the virtual machine executes a transaction and calls the 'call' interface of the 'Precompiled' contract, each time a basic operation is called, the corresponding 'OPCode' is added to the 'PrecompiledGas'**Runtime Instruction Collection**中
 
-- When the virtual machine executes a transaction and calls the 'call' interface of the 'Precompiled' contract, the memory consumed by the runtime of the 'PrecompiledGas' is updated when the memory occupied by the basic operation changes
+- When the virtual machine executes a transaction and calls the 'call' interface of the 'Precompiled' contract, the memory consumed by the runtime of the 'PrecompiledGas' will be updated when the memory occupied by the basic operation changes
 
-- After the 'Precompiled' contract is executed, you can call the interface to calculate the Gas consumption of the 'Precompiled' contract based on the set of instructions executed and the memory consumed during the running of the 'Precompiled' contract.。
+- After the 'Precompiled' contract is executed, you can call the interface to calculate the Gas consumption of the 'Precompiled' contract based on the set of instructions executed and the memory consumed during the running of the 'Precompiled' contract。
 
 ### Precompiled contract Gas measure
 
-The FISCO BCOS Precompiled contract Gas measurement standard refers to EVM, which mainly includes CPU, memory and storage dimensions.。The following details the specific Gas calculation method for precompiled contracts.。
+The FISCO BCOS Precompiled contract Gas measurement standard refers to EVM, which mainly includes CPU, memory and storage dimensions。The following details the specific Gas calculation method for precompiled contracts。
 
 #### Precompiled Contract Memory Gas Calculation
 
-Precompiled contract memory consumption mainly comes from input, output and additional memory consumption at runtime。When the total memory consumed by a transaction is' txMemUsed ', the corresponding memory gas is calculated as follows。That is, add 'memoryGasUnit' gas every 32 bytes, and the value of 'memoryGasUnit' is 3.
+Precompiled contract memory consumption mainly comes from input, output and additional memory consumption at runtime。When the total memory consumed by a transaction is' txMemUsed ', the corresponding memory gas is calculated as follows。That is, add 'memoryGasUnit' gas every 32 bytes, and the value of 'memoryGasUnit' is 3
 
 ```
     MemoryGas(txMemUsed) = memoryGasUnit * txMemUsed / 32 + (txMemUsed * txMemUsed)/512
@@ -35,9 +35,9 @@ Precompiled contract memory consumption mainly comes from input, output and addi
 
 #### Precompiled Contract CPU, Storage Gas Compute
 
-In order to calculate the Gas consumed by the underlying operation of the Precompiled contract, FISCO BCOS v2.4.0 maps the Precompiled contract to a specific opcode and defines the Gas corresponding to each underlying operation.。
+In order to calculate the Gas consumed by the underlying operation of the Precompiled contract, FISCO BCOS v2.4.0 maps the Precompiled contract to a specific opcode and defines the Gas corresponding to each underlying operation。
 
-##### The opcode corresponding to the underlying operation of the precompiled contract.
+##### The opcode corresponding to the underlying operation of the precompiled contract
 
 The 'PrecompiledGas' module maps Precompiled contract base operations to opcodes as follows:
 
@@ -49,7 +49,7 @@ GT | GT call of ConditionPrecompiled to determine whether the left value is grea
 LE | The LE call of ConditionPrecompiled to determine whether the left value is less than or equal to the right value| 0x03 |
 LT | LT call of ConditionPrecompiled to determine whether the left value is less than the right value| 0x04 |
 NE | The NE call of ConditionPrecompiled to determine whether the left value is not equal to the right value| 0x05 |
-Limit | The Limit call of ConditionPrecompiled, which limits the number of pieces of data queried from the CRUD interface.| 0x06 |
+Limit | The Limit call of ConditionPrecompiled, which limits the number of pieces of data queried from the CRUD interface| 0x06 |
 GetInt | The getInt call to EntryPrecompiled converts the string to int256 / uint256 and returns| 0x07 |
 GetAddr | GetAddress call of EntryPrecompiled, converting string to Address| 0x08 |
 Set | Set call to EntryPrecompiled, setting the value of the specified Key to the specified Value| 0x09 |

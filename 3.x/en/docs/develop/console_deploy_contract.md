@@ -1,13 +1,13 @@
-# 5. Console deployment calls the contract.
+# 5. Console deployment calls the contract
 
 -----
 
-This document describes how to configure the console and describes how the console deploys contracts and invokes contracts.
+This document describes how to configure the console and describes how the console deploys contracts and invokes contracts
 
 ## 1. Download the configuration console
 ### Step 1. Install the console dependencies
 
-Console running depends on Java environment(We recommend Java 14.)and the installation command is as follows:
+Console running depends on Java environment(We recommend Java 14)and the installation command is as follows:
 
 ```shell
 # Ubuntu system installation java
@@ -25,7 +25,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 
 ```eval_rst
 .. note::
-   - If you cannot download for a long time due to network problems, please try cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
+   -If you cannot download for a long time due to network problems, please try cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh
 ```
 
 ### Step 3. Configure the console
@@ -38,12 +38,12 @@ cp -n console/conf/config-example.toml console/conf/config.toml
 
 ```eval_rst
 .. note::
-   If the node does not use the default port, replace 20200 in the file with the corresponding rpc port of the node. You can use the "[rpc] .listen _ port" configuration item of the node config.ini to obtain the rpc port of the node.。
+   If the node does not use the default port, replace 20200 in the file with the corresponding rpc port of the node. You can use the "[rpc] .listen _ port" configuration item of the node config.ini to obtain the rpc port of the node。
 ```
 
-- Configure Console Certificates
+- Configure console certificates
 
-SSL connection is enabled by default between the console and the node. The console needs to configure a certificate to connect to the node.。The SDK certificate is generated at the same time as the node is generated. You can directly copy the generated certificate for the console to use:
+SSL connection is enabled by default between the console and the node. The console needs to configure a certificate to connect to the node。The SDK certificate is generated at the same time as the node is generated. You can directly copy the generated certificate for the console to use:
 
 ```shell
 cp -r nodes/127.0.0.1/sdk/* console/conf
@@ -54,7 +54,7 @@ cp -r nodes/127.0.0.1/sdk/* console/conf
 ```eval_rst
 .. note::
    - Please make sure that the 30300 ~ 30303, 20200 ~ 20203 ports of the machine are not occupied。
-   - For console configuration methods and commands, please refer to 'here <.. / operation _ and _ maintenance / console / index.html >' _ implementation。
+   -For console configuration methods and commands, please refer to 'here<../operation_and_maintenance/console/index.html>'_ Implementation。
 ```
 
 - Start
@@ -110,7 +110,7 @@ contract HelloWorld {
 
 ### Step 2. Deploy the HelloWorld contract
 
-To facilitate the user's quick experience, the HelloWorld contract is built into the console and located in the console directory 'contracts / consolidation / HelloWorld.sol'.
+To facilitate the user's quick experience, the HelloWorld contract is built into the console and located in the console directory 'contracts / consolidation / HelloWorld.sol'
 
 ```shell
 # Enter the following command in the console to return the contract address if the deployment is successful

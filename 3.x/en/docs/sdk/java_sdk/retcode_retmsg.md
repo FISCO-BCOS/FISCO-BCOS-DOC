@@ -4,12 +4,12 @@ Tags: "TransactionResponse" "Response Code" "Error Message" "returnCode" "return
 
 ----
 
-## 1. The node returns the data structure.
+## 1. The node returns the data structure
 
 The data returned by the node through the RPC interface, including the following. The detailed reasons are explained below:
 
-- Node is not successfully linked, RPC request error
-- The chain is successful on the node, including: execution failure, transaction rollback, precompiled contract execution error.
+- The node was not successfully linked, RPC request error
+- The chain on the node is successful, including: execution failure, transaction rollback, precompiled contract execution error
 
 Examples of nodes that are not successfully linked are as follows:
 
@@ -53,25 +53,25 @@ An example of a successful link on a node is as follows:
 
 After a user initiates a transaction or RPC request, the following steps are required to analyze the JSON result returned by the node from the RPC interface:
 
-- Determine whether there is an error in the outermost layer of the JSON. If there is an error, it means that the transaction has failed before entering the consensus, and the RPC request has failed.；The user performs specific operations according to the message in the error。
-- If there is a result structure, it means that the transaction is successfully linked and the RPC request returns success.
-  - If it is a transaction, the status in the result is parsed. If it is 0, the execution is successful, and the others are execution errors.
-- If you call a precompiled contract, you need to decode the output based on the ABI.
+- Determine whether there is an error in the outermost layer of the JSON. If there is an error, it means that the transaction has failed before entering the consensus, and the RPC request has failed；The user performs specific operations according to the message in the error。
+- If there is a result structure, it means that the transaction is successfully linked and the RPC request returns success
+  - If it is a transaction, the status in the result is parsed. If it is 0, the execution is successful, and the others are execution errors
+- If you call a precompiled contract, you need to decode the output according to the ABI
 
 ## 2. The error code that the node has not been successfully linked
 
 | error code| Error reason|
 |--------|----------------------------------------------------|
 | -32700 | Node-side JSON decoding fails, usually in RPC requests|
-| -32600 | Bad request, missing fields in JSON, etc.|
+| -32600 | Bad request, missing fields in JSON, etc|
 | -32601 | The requested RPC method does not exist|
 | -32603 | Internal error, usually the node has an error|
 | -32000 | The node is not yet started, it usually appears in Pro and Max nodes|
 | -32004 | Service has not been initialized yet, generally appears on Pro and Max nodes|
 | -32005 | Request group does not exist|
-| 10000  | The Nonce check fails, and the transaction request is usually sent repeatedly.|
-| 10001  | The block limit check fails. Generally, the high state of the SDK block is too far behind the node.|
-| 10002  | The trading pool is full.|
+| 10000  | The Nonce check fails, and the transaction request is usually sent repeatedly|
+| 10001  | The block limit check fails. Generally, the high state of the SDK block is too far behind the node|
+| 10002  | The trading pool is full|
 | 10003  | Unknown error|
 | 10004  | The transaction already exists in the transaction pool|
 | 10005  | The deal is already on the chain|
@@ -79,9 +79,9 @@ After a user initiates a transaction or RPC request, the following steps are req
 | 10007  | Bad Group ID|
 | 10008  | Wrong transaction signature|
 | 10009  | Transaction request sent to wrong group|
-| 10010  | Transactions in the trading pool have not been processed for more than 10 minutes.|
+| 10010  | Transactions in the trading pool have not been processed for more than 10 minutes|
 
-## 3. RPC request error codes other than transactions.
+## 3. RPC request error codes other than transactions
 
 | error code| Error reason|
 |--------|--------------------------------------|
@@ -108,7 +108,7 @@ After a user initiates a transaction or RPC request, the following steps are req
 | 17     | ContractAddressAlreadyUsed | The deployed contract address already exists|
 | 18     | PermissionDenied           | Insufficient permissions to invoke contracts and deploy contracts|
 | 19     | CallAddressError           | Request contract address does not exist|
-| 21     | ContractFrozen             | Contracts have been frozen.|
+| 21     | ContractFrozen             | Contracts have been frozen|
 | 22     | AccountFrozen              | Account has been frozen|
 | 23     | AccountAbolished           | Account has been abolished|
 | 24     | ContractAbolished          | The contract has been annulled|
@@ -117,7 +117,7 @@ After a user initiates a transaction or RPC request, the following steps are req
 | 34     | WASMUnreachableInstruction | Error during WASM execution|
 | 35     | WASMTrap                   | WASM execution failed|
 
-## 5. Precompiled contract error code.
+## 5. Precompiled contract error code
 
 **Response code**与**Error Message**corresponding table
 

@@ -1,6 +1,6 @@
 # pro chain or max chain expansion air node
 
-The build _ chian.sh script provides the function of expanding the air node of the pro chain / max chain. This chapter expands a new air blockchain node on the basis of building the pro chain / max chain to help users master the expansion steps of the pro version chain / max version chain expansion air node.。
+The build _ chian.sh script provides the function of expanding the air node of the pro chain / max chain. This chapter expands a new air blockchain node on the basis of building the pro chain / max chain to help users master the expansion steps of the pro version chain / max version chain expansion air node。
 
 ## pro expansion air node
 
@@ -84,7 +84,7 @@ When scaling the Air version of the blockchain, you need to prepare a certificat
 - **Node configuration file 'config.ini'**: Can be copied from an existing node directory。
 - **Node Genesis block configuration file 'config.genesis'**: Can be copied from an existing node directory。
 - **Node connection configuration 'nodes.json'**: Configure the IP and port information of all node connections, which can be copied from the existing node directory and added with the IP and port of the new node。
-- **fisco-bcos binary**
+- **disco-bcos binary**
 
 ```shell
 # Create a directory to store the expansion configuration
@@ -108,11 +108,11 @@ $ cp generate/172.31.184.227/gateway_31300/conf/nodes.json config/
 ```ini
 # The command is as follows
 
-# Call build _ chain.sh to expand the node. The new node is expanded to the nodes / 127.0.0.1 / node4 directory.
+# Call build _ chain.sh to expand the node. The new node is expanded to the nodes / 127.0.0.1 / node4 directory
 # -c: Specify the paths of config.ini, config.genesis, and nodes.json
 # -d: Specify the path to the CA certificate and private key
 # -o: Specify the directory where the expansion node configuration is located
-# -e: Specify the capacity expansion node fisco-bcos binary path
+# -e: Specify the binary path of the scale-out node fisco-bcos
 bash build_chain.sh -C expand -c config -d config/ca -o expandAirNode/node0 -e fisco-bcos 
 
 ```
@@ -120,7 +120,7 @@ bash build_chain.sh -C expand -c config -d config/ca -o expandAirNode/node0 -e f
 ### 4. Modify related configuration
 
 ```shell
-# replication fisco-bcos binary to expansion node
+# Copy the disco-bcos binary to the scale-out node
 cp ./fisco-bcos ./expandAirNode
 
 # Copy the tars _ proxy.ini file to the configuration file directory of the expansion node
@@ -336,11 +336,11 @@ $ cp generate/172.30.35.60/gateway_31300/conf/nodes.json config/
 ```ini
 # The command is as follows
 
-# Call build _ chain.sh to expand the node. The new node is expanded to the nodes / 127.0.0.1 / node4 directory.
+# Call build _ chain.sh to expand the node. The new node is expanded to the nodes / 127.0.0.1 / node4 directory
 # -c: Specify the paths of config.ini, config.genesis, and nodes.json
 # -d: Specify the path to the CA certificate and private key
 # -o: Specify the directory where the expansion node configuration is located
-# -e: Specify the capacity expansion node fisco-bcos binary path
+# -e: Specify the binary path of the scale-out node fisco-bcos
 bash build_chain.sh -C expand -c config -d config/ca -o expandAirNode/node0 -e fisco-bcos 
 
 ```
@@ -348,7 +348,7 @@ bash build_chain.sh -C expand -c config -d config/ca -o expandAirNode/node0 -e f
 ### 4. Modify related configuration
 
 ```
-# replication fisco-bcos binary to expansion node
+# Copy the disco-bcos binary to the scale-out node
 cp ./fisco-bcos ./expandAirNode
 
 # Copy the tars _ proxy.ini file to the configuration file directory of the expansion node

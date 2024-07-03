@@ -1,39 +1,39 @@
 # Environment and Profiles
 
-Tag: "go-sdk "" environment configuration "
+Tags: "go-sdk" "environment configuration"
 
 ----
 
 ## Development Environment
 
-- Go Development Environment
+- Go development environment
 
   - Golang >= 1.17
-  - The project uses go module for package management. For more information, see [Using Go Modules](https://blog.golang.org/using-go-modules)
-  - If you have not deployed a Go environment, please refer to [Official Documentation](https://golang.org/doc/)
+  - The project uses go module for package management, see [Using Go Modules](https://blog.golang.org/using-go-modules)
+  -If you have not deployed a Go environment, please refer to [official documentation](https://golang.org/doc/)
 
-- Basic Development Components
+- Basic development components
 
-  - Git (required for Windows, Linux, and MacOS)
+  - Git (required for Windows, Linux and MacOS)
   - Git bash (required for Windows only)
 
 ## bcos-c-sdk dynamic library preparation
 
-go-sdk v3 depends on bcos-c-sdk dynamic library, you need to download bcos first-c-sdk dynamic library, and then put the dynamic library in the specified directory。
+Go-sdk v3 depends on the bcos-c-sdk dynamic library. You need to download the bcos-c-sdk dynamic library and place the dynamic library in the specified directory。
 
-### download bcos-c-sdk dynamic library
+### Download bcos-c-sdk dynamic library
 
-From [here](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/tag/v3.4.0)Download the dynamic library of the corresponding platform。We provide a script, the default download to the '/ usr / local / lib' directory, if you need to download to other directories, you can use the script '-o 'Options
+From [here](https://github.com/FISCO-BCOS/bcos-c-sdk/releases/tag/v3.4.0)Download the dynamic library of the corresponding platform。We provide a script, the default download to the '/ usr / local / lib' directory, if you need to download to other directories, you can use the script '-o' option
 
 ```bash
 ./tools/download_csdk_lib.sh
 ```
 
-Please place the dynamic library in the '/ usr / local / lib' directory. There is no special operation in the future.。If the dynamic library is placed in a custom directory, such as'. / lib ', when used by other machines after native compilation,' go build 'needs to add the' ldflags' parameter, such as' go build-v -ldflags="-r ${PWD}/lib" main.go`。You can also pass' export LD _ LIBRARY _ PATH = ${PWD}/ lib 'Set the search path for the dynamic library。
+Please place the dynamic library in the '/ usr / local / lib' directory. There is no special operation in the future。If the dynamic library is placed in a custom directory, such as'. / lib ', when used by other machines after native compilation,' go build 'needs to add the' ldflags' parameter, such as' go build -v -ldflags ="-r ${PWD}/lib" main.go`。You can also pass' export LD _ LIBRARY _ PATH = ${PWD}/ lib 'Set the search path for the dynamic library。
 
 ## Configuration
 
-Go SDK v3 by calling bcos-c-sdk dynamic library implementation, provides two initialization methods, a bcos-c-The configuration file of the sdk, another type of configuration information passed in by parameters。
+Go SDK v3 is implemented by calling the dynamic library of bcos-c-sdk. It provides two initialization methods, one is the configuration file of bcos-c-sdk, and the other is the configuration information passed in through parameters。
 
 ### Method 1: Incoming parameters
 
@@ -96,7 +96,7 @@ bcos-c-sdk configuration file example
 
 ### bcos-c-sdk log configuration
 
-bcos-c-The sdk requires a log configuration file, as shown in the following example:
+The bcos-c-sdk requires a log configuration file, as shown in the following example:
 
 ```ini
 [log]

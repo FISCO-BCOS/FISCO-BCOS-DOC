@@ -6,7 +6,7 @@ Tags: "data archiving" "data clipping"
 
 ## Background Introduction
 
-Blockchain node data will continue to increase over time, and some of these historical blocks and transactions are accessed very infrequently, or even will not be accessed, through data archiving can archive this cold data to cheaper storage devices.。The requirements are as follows:
+Blockchain node data will continue to increase over time, and some of these historical blocks and transactions are accessed very infrequently, or even will not be accessed, through data archiving can archive this cold data to cheaper storage devices。The requirements are as follows:
 
 1. Can specify the scope of the archive block
 2. Archiving operation does not affect the normal consensus of nodes
@@ -19,7 +19,7 @@ Archive data can be archived to RocksDB and TiKV. Data archived to RocksDB can b
 
 ### Archive Data Range
 
-Statistics of a 100w block high FISCO-In BCOS 3.0 nodes, for example, transaction data accounts for 46.5G (42.7%), receipt data accounts for 16.5G (15.2%), and status data accounts for 40.3G (37.1%). In addition, the largest 's _ number _ 2 _ txs' block transaction hash list is only 4.9G (4.5%), so the solution decides to archive only transaction and receipt data in the near-term.。The archive node just cannot obtain the transaction and receipt of the archive block, and other functions are normal.。
+Statistics show that the data in a 100w block high FISCO-BCOS 3.0 node accounts for 46.5G (42.7%) of transaction data, 16.5G (15.2%) of receipt data, and 40.3G (37.1%) of status data. In addition, the largest 's _ number _ 2 _ txs' block transaction hash list is only 4.9G (4.9%) of the data that does not affect the basic data, so the archiving。The archive node just cannot obtain the transaction and receipt of the archive block, and other functions are normal。
 
 ```bash
 s_tables                       size is 661.029MB
@@ -40,9 +40,9 @@ The data archiving process is as follows:
 
 ```mermaid
 sequenceDiagram
-    Archiving Tools-> > Node RocksDB: Check parameter, read archive block
-    Archiving Tools-> > Archive RocksDB: Write to archive block
-    Archiving Tools-> > Node: Delete Archived Blocks
+    Archiving tools ->>Node RocksDB: Check parameter, read archive block
+    Archiving tools ->>Archive RocksDB: Write to archive block
+    Archiving tools ->>Node: Delete Archived Blocks
 ```
 
 ### Archive Data Query

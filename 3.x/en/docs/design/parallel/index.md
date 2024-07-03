@@ -4,7 +4,7 @@ Tags: "Execute" "Parallel Scheduling" "DMC" "DAG"
 
 ----------
 
-FISCO BCOS has a comprehensive parallel processing design to improve transaction processing performance.。According to**parallel granularity**From fine to coarse division, its parallel mechanism can be divided into:
+FISCO BCOS has a comprehensive parallel processing design to improve transaction processing performance。According to**parallel granularity**From fine to coarse division, its parallel mechanism can be divided into:
 
 * **Transaction**The parallel: DAG transaction parallel, pipeline parallel
 

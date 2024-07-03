@@ -3,7 +3,7 @@ Tags: "Features Overview"
 
 -----
 
-In order to support the demand for massive services, FISCO BCOS v3.0 Stable Edition has designed the system architecture, processing flow, execution, and storage accordingly, and launched three different forms to meet the differentiated needs of different blockchain deployment scenarios.。The functional overview is as follows:
+In order to support the demand for massive services, FISCO BCOS v3.0 Stable Edition has designed the system architecture, processing flow, execution, and storage accordingly, and launched three different forms to meet the differentiated needs of different blockchain deployment scenarios。The functional overview is as follows:
 
 |<font color=Blue>**Overall architecture**</font> | |
 | - | - |
@@ -12,7 +12,7 @@ In order to support the demand for massive services, FISCO BCOS v3.0 Stable Edit
 | distributed storage| Support massive data storage|
 | parallel computing| DAG-based support(directed acyclic graph)、DMC(parallel deterministic contract algorithm)and intra-block sharding techniques|
 | Node Type| Consensus node, observation node, light node|
-| calculation model| Sort-Execute-Verify|
+| calculation model| Sort-Execute-Validate|
 | <font color=Blue>**System performance**</font> ||
 | Peak TPS| 100,000+ TPS（PBFT）|
 | Transaction confirmation delay| second level|
@@ -55,7 +55,7 @@ In order to support the demand for massive services, FISCO BCOS v3.0 Stable Edit
 |Permission Control| Supports fine-grained permission control|
 | <font color=Blue>**privacy protection**</font> ||
 |Physical isolation| Data isolation between groups|
-|Scenario-based privacy protection mechanism|Based on [WeDPR](https://github.com/WeBankBlockchain/WeDPR-Lab-Core)Support hidden payment, anonymous voting, anonymous bidding, selective disclosure and other scenarios.|
+|Scenario-based privacy protection mechanism|Based on [WeDPR](https://github.com/WeBankBlockchain/WeDPR-Lab-Core)Support hidden payment, anonymous voting, anonymous bidding, selective disclosure and other scenarios|
 | <font color=Blue>**cross-chain protocol**</font> ||
 |SPV|Provides an interface for obtaining SPV attestations|
 |cross-chain protocol|Based on [WeCross](https://github.com/WeBankBlockchain/WeCross)Support isomorphic, heterogeneous cross-chain|

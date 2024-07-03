@@ -1,6 +1,6 @@
 # Quick Start
 
-Tag: "java-sdk "" Introducing Java SDK "
+Tags: "java-sdk" "Introducing Java SDK"
 
 ----
 
@@ -57,12 +57,12 @@ mkdir -p conf && cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf
 
 There are two ways to use smart contracts in the SDK:
 
-- (Suitable for specific contract scenarios) Generate Java interface files for smart contracts. Java applications can directly deploy and invoke contracts based on Java interface files.。Reference: [Java interface file for generating smart contracts](./contracts_to_java.html)
-- (Suitable for general contract scenarios) Initiate a transaction request on its own according to the contract ABI assembly parameters。Reference: [Constructing Transactions and Calls](./assemble_transaction.html)
+- (Suitable for specific contract scenarios) Generate Java interface files for smart contracts. Java applications can directly deploy and invoke contracts based on Java interface files。Reference: [Java interface file for generating smart contracts](./contracts_to_java.html)
+- (Suitable for general contract scenario) Initiate transaction request according to contract ABI assembly parameters。Reference: [Constructing Transactions and Calls](./assemble_transaction.html)
 
 ### Step 5. Create a configuration file
 
-Create the configuration file "config.toml" in the project. For details, see [Configuration Wizard].(./config.html)For configuration, you can also refer to ["config-example.toml``](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
+Create the configuration file "config.toml" in the project. For details, see [Configuration Wizard](./config.html)For configuration, you can also refer to ["config-example.toml"](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)
 
 Please refer to Section 4 of this document, "Appendix III. Configuring with xml configuration" for configuration via "xml"。
 
@@ -101,11 +101,11 @@ public class BcosSDKTest
 
 ### Appendix I. Configuring with XML Configurations
 
-To adapt to more scenarios, the Java SDK supports initializing the 'BcosSDK' with 'xml'. For example, see ['applicationContext' in the Java SDK source code.-sample.xml`](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), refer to [Configuration Description] for the meaning of configuration items.(./config.md).
+To adapt to more scenarios, the Java SDK supports initializing the 'BcosSDK' with 'xml'. For example, see ['applicationContext-sample.xml'] of the Java SDK source code(https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/applicationContext-sample.xml), refer to [Configuration Description] for the meaning of configuration items(./config.md).
 
 Before initializing the 'BcosSDK' through the 'xml' configuration file, you need to introduce 'spring'。
 
-**Using the 'applicationContext-sample 'Initialize' BcosSDK 'as follows**：
+**Use 'applicationContext-sample' to initialize 'BcosSDK' as follows**：
 
 ```java
 ApplicationContext context =
@@ -137,20 +137,20 @@ public class ConfigProperty {
     / / AMOP configuration options, which currently include the following:
     // topicName: Subscribed AMOP topic
     // publicKeys: In the private AMOP topic, define the list of public keys of other clients that are allowed to receive messages from this client, which is used for topic authentication
-    // privateKey: In the private AMOP topic, define the private key of the client for topic authentication.
-    // password: If the client private key is a p12 file, this configuration item defines the password for loading the private key file.
+    // privateKey: In the private AMOP topic, define the private key of the client for topic authentication
+    // password: If the client private key is a p12 file, this configuration item defines the password for loading the private key file
     public List<AmopTopic> amop;
 
     / / Account configuration items, including the following:
-    // keyStoreDir: Save path of the account private key. The default value is account.
-    // accountFilePath: Load the account road from the profile.
+    // keyStoreDir: Save path of the account private key. The default value is account
+    // accountFilePath: Load the account road from the profile
     // accountFileFormat: Account format, currently supports pem and p12
     // accountAddress: Loaded account address
     // password: Define the password to access the account private key when loading the p12 type account private key
     public Map<String, Object> account;
 
     / / Thread pool configuration items, which mainly include the following:
-    // threadPoolSize: The number of threads that process RPC message packets. The default value is the number of CPU core threads.
+    // threadPoolSize: The number of threads that process RPC message packets. The default value is the number of CPU core threads
     public Map<String, Object> threadPool;
 }
 ```

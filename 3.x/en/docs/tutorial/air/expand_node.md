@@ -6,14 +6,14 @@ Tags: "Air version of the blockchain network" "" Expansion ""
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
-'build _ chain.sh 'provides the function of scaling new nodes. In this chapter, [Build the first blockchain network](../../quick_start/air_installation.md)A new blockchain node is expanded on the basis of FISCO BCOS to help users master the expansion steps of the Air version FISCO BCOS blockchain node.。
+'build _ chain.sh 'provides the function of scaling new nodes. In this chapter, [Build the first blockchain network](../../quick_start/air_installation.md)A new blockchain node is expanded on the basis of FISCO BCOS to help users master the expansion steps of the Air version FISCO BCOS blockchain node。
 
 ```eval_rst
 .. note::
-   Before performing node scaling, refer to 'Building the first blockchain network <.. /.. / quick _ start / air _ installation.html >' _ Deploy the Air version blockchain。
+   Before performing node scaling, refer to 'Building the first blockchain network'<../../quick_start/air_installation.html>'_ Deploy Air version blockchain。
 ```
 
 ## 1. Prepare documents required for expansion
@@ -27,13 +27,13 @@ When scaling the Air version of the blockchain, you need to prepare a certificat
 
 ```eval_rst
 .. note::
-   The root certificate of the Air version blockchain node is located in the directory generated during the connection, and you can enter the folder generated when the node is built.(For example: 'Build the first blockchain network <.. /.. / quick _ start / air _ installation.html >' _ The generated node configuration folder is' nodes'), via "find.-name ca "Find the root certificate of the chain
+   The root certificate of the Air version blockchain node is located in the directory generated during the connection, and you can enter the folder generated when the node is built(For example: 'Building the first blockchain network<../../quick_start/air_installation.html>'_ The generated node configuration folder is' nodes')Find the root certificate of the chain through "find. -name ca"
 ```
 
 Here to [build the first blockchain network](../quick_start.md)For example, scale out a new node 'node4' based on 'node0':
 
 ```shell
-# Enter the operation directory(Note: Before performing this operation, please refer to [Building the First Blockchain Network Node] to deploy an Air version FISCO BCOS blockchain.)
+# Enter the operation directory(Note: Before performing this operation, please refer to [Building the First Blockchain Network Node] to deploy an Air version FISCO BCOS blockchain)
 $ cd ~/fisco
 
 # Create a directory to store the expansion configuration
@@ -42,7 +42,7 @@ $ mkdir config
 # Copy the root certificate and root certificate private key
 $ cp -r nodes/ca config
 
-# Copy the node configuration file config.ini, the creation block configuration file config.genesis, and the node connection configuration file nodes.json from the expanded node node0.
+# Copy the node configuration file config.ini, the creation block configuration file config.genesis, and the node connection configuration file nodes.json from the expanded node node0
 $ cp nodes/127.0.0.1/node0/config.ini config/
 $ cp nodes/127.0.0.1/node0/config.genesis config/
 $ cp nodes/127.0.0.1/node0/nodes.json config/nodes.json.tmp
@@ -66,8 +66,8 @@ $ cat config/nodes.json
 
 ```eval_rst
 .. note::
-   - Please make sure that the "30304" and "20204" ports of the machine are not occupied
-   - Please refer to 'Build the first blockchain network <.. /.. / quick _ start / air _ installation.html >' _ Download the build script 'build _ chain.sh', 'build _ chain' Use can refer to 'Here <. / build _ chain.html >' _
+   -Please make sure that the "30304" and "20204" ports of the machine are not occupied
+   - Please refer to 'Building the First Blockchain Network<../../quick_start/air_installation.html>"_ Download the build _ chain.sh script," "build _ chain" can be used here<./build_chain.html>`_
 ```
 
 **Step 1: Generate the scaling node configuration**
@@ -78,7 +78,7 @@ After the configuration file is prepared, use the link creation script 'build _ 
 # Enter the operation directory
 cd ~/fisco
 
-# Call build _ chain.sh to expand the node. The new node is expanded to the nodes / 127.0.0.1 / node4 directory.
+# Call build _ chain.sh to expand the node. The new node is expanded to the nodes / 127.0.0.1 / node4 directory
 # -c: Specify the paths of config.ini, config.genesis, and nodes.json
 # -d: Specify the path to the CA certificate and private key
 # -o: Specify the directory where the expansion node configuration is located
@@ -135,8 +135,8 @@ bash nodes/127.0.0.1/node4/start.sh
 
 ```eval_rst
 .. note::
-   - Before performing this step, start all nodes, including the expansion node
-   - Please refer to '[Configuration and Use Console] for building the first blockchain network <.. /.. / quick _ start / air _ installation.html#id7 > '_ Download Console
+   -Start all nodes including the expansion node before performing this step
+   - Please refer to the [Configuration and Use Console] of 'Building the First Blockchain Network'<../../quick_start/air_installation.html#id7>'_ Download Console
 ```
 
 **Step 1: Check if all nodes are started**
@@ -196,7 +196,7 @@ Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
 
 ```eval_rst
 .. note::
-   In order to ensure that the new node does not affect the consensus, you must first add the expansion node as an observation node, and then add it to the consensus node when the expansion node is synchronized to the latest block.。
+   In order to ensure that the new node does not affect the consensus, you must first add the expansion node as an observation node, and then add it to the consensus node when the expansion node is synchronized to the latest block。
 ```
 
 ```shell

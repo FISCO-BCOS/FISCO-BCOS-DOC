@@ -4,7 +4,7 @@ Author ： WANG Zhang ｜ FISCO BCOS Core Developer
 
 Eclipse is one of the current mainstream Java IDE, this article will be hands-on, guide how to create FISCO BCOS JavaSDK applications in Eclipse。
 
-This article first describes how to create a new project in Eclipse, introduce JavaSDK dependencies into the project, interact with the blockchain through configuration, and finally get the blockchain's block high validation to create the project。At the same time, this article will also introduce a more convenient way to use it in actual development, and import the sample projects already provided into Eclipse.。
+This article first describes how to create a new project in Eclipse, introduce JavaSDK dependencies into the project, interact with the blockchain through configuration, and finally get the blockchain's block high validation to create the project。At the same time, this article will also introduce a more convenient way to use it in actual development, and import the sample projects already provided into Eclipse。
 
 **Note:**
 
@@ -23,7 +23,7 @@ Open Eclipse, right-click and select the Project option under New, as shown in t
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5632.PNG)
 
 
-In the New Project dialog box that appears, select Gradle = > Gradle Project and click Next:
+In the New Project dialog box that appears, select Gradle => Gradle Project, click Next:
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5633.PNG)
 
@@ -71,12 +71,12 @@ dependencies {
    }
 ```
 
-Then right click on the project name: Gradle = > Refresh Gradle Project Refresh Project。
+Then right click on the project name: Gradle => Refresh Gradle Project。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5636.PNG)
 
 
-**注意**: To refresh the project, you may need to download the JAR-dependent package from the remote Maven library. Please ensure that the network is unblocked. The download process will take some time.。
+**注意**: To refresh the project, you may need to download the JAR-dependent package from the remote Maven library. Please ensure that the network is unblocked. The download process will take some time。
 
 ### Certificates and Profiles
 
@@ -90,13 +90,13 @@ At this point, we have completed the creation of the new project, introduced and
 
 ### Create a class package
 
-Right-click the project name, select New = > Package, and enter the package name. Here, use org.fisco.bcos.test。
+Right-click the project name and select New => Package and enter the package name, here use org.fisco.bcos.test。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5638.JPG)
 
 ### Create a test class
 
-Right click on the package name and select 'New = > Class "。
+Right-click on the package name and select 'New => Class’。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5639.PNG)
 
@@ -136,7 +136,7 @@ public class NodeVersionTest {
 }
 ```
 
-Right-click the NodeVersionTest.java file and select Run As = > Java Application Run Test Class。
+Right-click on the NodeVersionTest.java file and select Run As => Java Application Run Test Class。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5640.JPG)
 
@@ -146,7 +146,7 @@ Run results:
 
 ## Eclipse Import Project
 
-As can be seen from the above process, the process of creating a new project requires more configuration processes, in order to facilitate the use of users, we provide the existing sample project asset-App, users can quickly import it into Eclipse, and quickly modify and develop their own applications based on the sample.。Please refer to [asset-App Project Details](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/sdk_application.html)。
+As can be seen from the above process, the process of creating a new project requires more configuration processes. In order to facilitate users' use, we provide the existing sample project asset-app, which users can quickly import into Eclipse and quickly modify and develop their own applications based on the sample。Please refer to [asset-app project details](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/tutorial/sdk_application.html)。
 
 ### Download asset-app project engineering
 
@@ -162,13 +162,13 @@ Open Eclipse Select: File => Import => Gradle => Existing Gradle Project。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5643.JPG)
 
-Click Next and select Asset-app path, click Finish and wait for the project to load。
+Click Next, select the asset-app path, click Finish and wait for the project to load。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5644.JPG)
 
-After the project is loaded, right-click the project name: Gradle = > Refresh Gradle Project Refresh Project。
+After the project is loaded, right-click the project name: Gradle => Refresh Gradle Project。
 
 ![](../../../../images/articles/use_javasdk_in_eclipse/IMG_5645.JPG)
 
-ok! asset-The app project has been loaded normally。
+ok! Asset-app project has been loaded normally。
 

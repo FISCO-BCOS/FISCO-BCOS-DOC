@@ -1,19 +1,19 @@
-# Development of the first WBC-Liquid Blockchain Applications
+# 4. Develop the first WBC-Liquid blockchain application
 
-Tags: "Develop first app" "WBC-Liquid "" Contract Development "" Blockchain Application "" WASM ""
+Tags: "Develop first app" "WBC-Liquid" "Contract development" "Blockchain app" "WASM" "
 
 ---
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
-This chapter will introduce the whole process of developing a business application scenario based on FISCO BCOS blockchain, from business scenario analysis to contract design and implementation, then contract compilation and how to deploy to the blockchain, and finally the implementation of an application module, through the [Java SDK] we provide.(../develop/sdk/java_sdk/index.md)Enables call access to contracts on the blockchain。
+This chapter will introduce the whole process of developing a business application scenario based on FISCO BCOS blockchain, from business scenario analysis to contract design and implementation, then contract compilation and how to deploy to the blockchain, and finally the implementation of an application module, through the [Java SDK] we provide(../develop/sdk/java_sdk/index.md)Enables call access to contracts on the blockchain。
 
-This tutorial requires users to be familiar with the Linux operating environment, have basic skills in Java development, be able to use Gradle tools, and be familiar with webankblockchain.-liquid syntax (hereinafter referred to as WBC-Liquid), and a [WBC-Liquid's environment configuration](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
+This tutorial requires users to be familiar with the Linux operating environment, have basic skills in Java development, be able to use the Gradle tool, be familiar with the webankblockchain-liquid syntax (hereinafter referred to as WBC-Liquid), and perform [WBC-Liquid environment configuration](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
-Developing the WBC-Liquid application, need to build**WASM**Configure the blockchain network。The steps are as follows:
+To develop WBC-Liquid applications, you need to build**WASM**Configure the blockchain network。The steps are as follows:
 1. If you have not built a blockchain network or downloaded the console, please complete the tutorial [Building the First Blockchain Network](./air_installation.md)and back to this tutorial。(Ignore this step if built)；
 2. Enable the node wasm configuration item: modify the '[executor]' of the node creation block configuration file 'config.genesis' to 'is _ wasm = true'；
 3. Delete data and restart the node；
@@ -31,15 +31,15 @@ At this point, the blockchain network has opened the WASM configuration。
 
 ## 1. Understand application requirements
 
-Blockchain naturally has tamper-proof, traceability and other characteristics, these characteristics determine that it is more likely to be favored by the financial sector.。In this example, a simple development example of asset management will be provided, and the following features will eventually be implemented:
+Blockchain naturally has tamper-proof, traceability and other characteristics, these characteristics determine that it is more likely to be favored by the financial sector。In this example, a simple development example of asset management will be provided, and the following features will eventually be implemented:
 
 - Ability to register assets on the blockchain
 - Ability to transfer different accounts
-- Can query the asset amount of the account
+- Can check the asset amount of the account
 
 ## Design and Development of Smart Contracts
 
-When developing applications on the blockchain, combined with business requirements, it is first necessary to design the corresponding smart contract, determine the data that the contract needs to store, determine the interface provided by the smart contract on this basis, and finally give the specific implementation of each interface.。
+When developing applications on the blockchain, combined with business requirements, it is first necessary to design the corresponding smart contract, determine the data that the contract needs to store, determine the interface provided by the smart contract on this basis, and finally give the specific implementation of each interface。
 
 ### Step 1: Designing Smart Contracts
 
@@ -50,7 +50,7 @@ For this application, you need to design a table for storing asset management. T
 - account: Primary Key, Asset Account(string type)
 - asset_value: Amount of assets(uint256 type)
 
-where account is the primary key, which is the field that needs to be passed in when operating the table, and the blockchain queries the matching records in the table based on the primary key field.。Storage representation for example below:
+where account is the primary key, which is the field that needs to be passed in when operating the table, and the blockchain queries the matching records in the table based on the primary key field。Storage representation for example below:
 
 | account | asset_value |
 |---------|-------------|
@@ -77,9 +77,9 @@ pub fn transfer(&mut self, from: String, to: String, value: u128) -> i16
 #### Create
 
 Create an Asset smart contract project based on our first step of storage and interface design。
-Execute the following command in the terminal to create the WBC-liquid smart contract project
+Run the following command in the terminal to create a WBC-Liquid smart contract project:
 
-**Special attention:** For the convenience of users, the console has prepared the 'asset' example under the 'console / contracts / liquid' path. The following process is to create a new WBC-Liquid Contract Process。
+**Special attention:** For the convenience of users, the console has prepared the 'asset' example under the 'console / contracts / liquid' path. The following process is the process of creating a new WBC-Liquid contract。
 
 ```shell
 # Create working directory ~ / fisco
@@ -94,7 +94,7 @@ cd ~/fisco/console/
 # Enter the console / contracts directory
 cd ~/fisco/console/contracts/liquid
 
-# Create a new contract(The console has prepared the asset directory. If you want to download the console, skip this step.)
+# Create a new contract(The console has prepared the asset directory. If you want to download the console, skip this step)
 cargo liquid new contract asset
 ```
 
@@ -114,13 +114,13 @@ asset/
 
 The function of each file is as follows:
 
-- '.gitignore ': hidden file to tell version management software [Git](https://git-scm.com/)Which files or directories do not need to be added to version management。WBC-By default, Liquid excludes some unimportant issues (such as temporary files generated during compilation) from version management. If you do not need to use Git management to manage project versions, you can ignore this file.；
+- '.gitignore': hidden file to tell version management software [Git](https://git-scm.com/)Which files or directories do not need to be added to version management。By default, WBC-Liquid excludes some unimportant issues (such as temporary files generated during compilation) from version management. If you do not need to use Git management to manage project versions, you can ignore this file；
 
-- '.liquid / ': hidden directory, used to implement WBC-The 'abi _ gen' subdirectory contains the implementation of the ABI generator. The compilation configuration and code logic in this directory are fixed.；
+- '.liquid /': hidden directory, used to implement the internal functions of WBC-Liquid intelligent combination, in which the 'abi _ gen' subdirectory contains the implementation of ABI generator, the compilation configuration and code logic in this directory are fixed, if modified may cause the ABI cannot be generated normally；
 
-- 'Cargo.toml ': project configuration list, mainly including project information, external library dependencies, compilation configuration, etc. Generally, there is no need to modify the file, unless there are special requirements (such as referencing additional third-party libraries, adjusting optimization levels, etc.)；
+- 'Cargo.toml': project configuration list, mainly including project information, external library dependencies, compilation configuration, etc. Generally, the file does not need to be modified unless there are special requirements (such as referencing additional third-party libraries, adjusting optimization levels, etc.)；
 
-- `src/lib.rs`：WBC-Liquid smart contract project root file, where the contract code is stored。After the smart contract project is created, the 'lib.rs' file is automatically populated with some template code, which we can use for further development.。
+- 'src / lib.rs': WBC-Liquid smart contract project root file, the contract code is stored in this file。After the smart contract project is created, the 'lib.rs' file is automatically populated with some template code, which we can use for further development。
 
 Once we have copied the code from Asset liquid into the 'lib.rs' file, we can proceed to the next steps。
 
@@ -323,11 +323,11 @@ mod asset {
 Run the following command in the asset project root directory to start the build:
 
 ```shell
-# Compile the secret version of the wasm binary file.
+# Compile the secret version of the wasm binary file
 cargo liquid build -g
 ```
 
-This command directs the Rust language compiler to 'wasm32-unknown-'Unknown 'compiles the smart contract code for the target, and finally generates the Wasm format bytecode and ABI.。`-g 'Build smart contracts that can run on the underlying platform of the State Secret FISCO BCOS blockchain。After the command is executed, the following content is displayed:
+This command will guide the Rust language compiler to compile the smart contract code with the 'wasm32-unknown-unknown' as the target, and finally generate the Wasm format bytecode and ABI。'-g' Build a smart contract that can run on the underlying platform of the State Secret FISCO BCOS blockchain。After the command is executed, the following content is displayed:
 
 ```shell
 [1/4] 🔍  Collecting crate metadata
@@ -340,7 +340,7 @@ Binary: ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm
    ABI: ~/fisco/console/contracts/liquid/asset/target/asset.abi
 ```
 
-Among them, "Binary:"followed by the absolute path of the generated bytecode file," ABI:after the absolute path for the generated ABI file。To simplify the adaptation of FISCO BCOS SDKs in various languages, WBC-Liquid uses an ABI format compatible with the Solidity ABI specification.
+Among them, "Binary:"followed by the absolute path of the generated bytecode file," ABI:after the absolute path for the generated ABI file。To simplify the adaptation of FISCO BCOS SDKs in various languages, WBC-Liquid uses the ABI format compatible with the Solidity ABI specification
 
 Then generate the non-secret Binary, ABI file:
 
@@ -348,22 +348,22 @@ Then generate the non-secret Binary, ABI file:
 cargo liquid build
 ```
 
-Note: Without '-g`。
+Note: Without '-g'。
 After executing the command, the generated information is the same as the above, enter 'target', see the new Binary, ABI, and just 'asset _ gm.wasm'
 
 ## 3. Compile Smart Contracts
 
-The "Liquid" smart contract needs to be compiled into ABI and WASM files before it can be deployed to the blockchain network. With these two files, you can deploy and call the contract with the Java SDK.。For details about how to build and compile the Liquid project environment, see: [Deploying the Liquid Compilation Environment](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html) [Liquid Development Guide](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/dev_testing/development.html)。
+The "Liquid" smart contract needs to be compiled into ABI and WASM files before it can be deployed to the blockchain network. With these two files, you can deploy and call the contract with the Java SDK。For details about how to build and compile the Liquid project environment, see: [Deploying the Liquid Compilation Environment](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html) [Liquid Development Guide](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/dev_testing/development.html)。
 
-The Java generation tool provided by the console can compile the ABI and WASM files from the 'cargo liquid build' and automatically generate a contract Java class with the same name as the compiled smart contract.。This Java class is generated based on the ABI to help users parse the parameters and provide methods with the same name.。When an application needs to deploy and invoke a contract, you can call the corresponding method of the contract class and pass in the specified parameters.。Using this contract Java class to develop applications can greatly simplify the user's code。We use the console console script 'contract2java.sh' to generate the Java file。
+The Java generation tool provided by the console can compile the ABI and WASM files from the 'cargo liquid build' and automatically generate a contract Java class with the same name as the compiled smart contract。This Java class is generated based on the ABI to help users parse the parameters and provide methods with the same name。When an application needs to deploy and invoke a contract, you can call the corresponding method of the contract class and pass in the specified parameters。Using this contract Java class to develop applications can greatly simplify the user's code。We use the console console script 'contract2java.sh' to generate the Java file。
 
 ```shell
-# Assuming that you have completed the download operation of the console, if not, please check the development source code steps in Section 2 of this article.
+# Assuming that you have completed the download operation of the console, if not, please check the development source code steps in Section 2 of this article
 
 # Switch to fisco / console / directory
 cd ~/fisco/console/
 
-# Compile Contract(Specify the path of the BINARY and abi files. You can specify the path based on the actual project path.)As follows:
+# Compile Contract(Specify the path of the BINARY and abi files. You can specify the path based on the actual project path)As follows:
 bash contract2java.sh liquid -a ~/fisco/console/contracts/liquid/asset/target/asset.abi -b ~/fisco/console/contracts/liquid/asset/target/asset.wasm -s ~/fisco/console/contracts/liquid/asset/target/asset_gm.wasm -p org.fisco.bcos.asset.liquid.contract
 
 # Script Usage:
@@ -404,7 +404,7 @@ public class Asset extends Contract {
 }
 ```
 
-The load and deploy functions are used to construct the Asset object, and the other interfaces are used to call the corresponding contract interfaces, respectively.。
+The load and deploy functions are used to construct the Asset object, and the other interfaces are used to call the corresponding contract interfaces, respectively。
 
 ## 4. Create a blockchain application project
 
@@ -412,7 +412,7 @@ The load and deploy functions are used to construct the Asset object, and the ot
 
 First, we need to install the JDK and the integrated development environment
 
-- Java: JDK 11 (supported from JDK 1.8 to JDK 14)
+- Java: JDK 11 (supported from JDK1.8 to JDK 14)
 
   First, download and install JDK11 on the official website, and modify the JAVA _ HOME environment variable by yourself
 
@@ -422,9 +422,9 @@ First, we need to install the JDK and the integrated development environment
 
 ### Step 2. Create a Java project
 
-Create a gradle project in the IntelliJ IDE, select Gradle and Java, and enter the project name "asset-app-liquid``。
+Create a gradle project in IntelliJ IDE, select Gradle and Java, and enter the project name "asset-app-liquid"。
 
-Note: (This step is not a required step) The source code for this project can be obtained and referenced in the following way.。
+Note: (This step is not a required step) The source code for this project can be obtained and referenced in the following way。
 
 ```shell
 $ cd ~/fisco
@@ -437,12 +437,12 @@ $ unzip asset-app-3.0-liquid.zip && mv asset-app-demo-main-liquid  asset-app-liq
 
 ```eval_rst
 .. note::
-- If you cannot download for a long time due to network problems, please try to append '185.199.108.133 raw.githubusercontent.com' to '/ etc / hosts', or try 'curl-o asset-app-3.0-liquid.zip -#LO https://gitee.com/FISCO-BCOS/asset-app-demo/repository/archive/main-liquid.zip`
+-If you cannot download for a long time due to network problems, please try to append '185.199.108.133 raw.githubusercontent.com' to '/ etc / hosts', or try 'curl -o asset-app-3.0-liquid.zip-#LO https://gitee.com/FISCO-BCOS/asset-app-demo/repository/archive/main-liquid.zip`
 ```
 
 ### Step 3. Introducing the FISCO BCOS Java SDK
 
-Modify the "build.gradle" file, introduce the Spring framework, and add a reference to the FISCO BCOS Java SDK under "dependencies" (note java-sdk version number)。
+Modify the "build.gradle" file, introduce the Spring framework, and add a reference to the FISCO BCOS Java SDK under "dependencies" (note the java-sdk version)。
 
 ```groovy
 repositories {
@@ -469,7 +469,7 @@ dependencies {
 ```
 
 ### Step 4. Configure the SDK certificate
-in the "asset-app-create a configuration file "applicationContext.xml" in the liquid / src / test / resources directory and write the configuration content。
+Create the configuration file "applicationContext.xml" in the "asset-app-liquid / src / test / resources" directory and write the configuration content。
 
 The contents of applicationContext.xml are as follows:
 
@@ -554,27 +554,27 @@ The contents of applicationContext.xml are as follows:
 </beans>
 ```
 
-**Note:** The liquid contract. The node needs to be enabled.**wasm**Options。If rpc listen _ ip is set to 127.0.0.1 or 0.0.0.0 and listen _ port is set to 20200, the 'applicationContext.xml' configuration does not need to be modified.。If the blockchain node configuration is changed, you must also modify the 'peers' configuration option under the 'network' attribute of the configuration 'applicationContext.xml' to configure the 'listen _ ip' of the '[rpc]' configuration of the connected node.:listen_port`。
+**Note:** The liquid contract. The node needs to be enabled**wasm**Options。If rpc listen _ ip is set to 127.0.0.1 or 0.0.0.0 and listen _ port is set to 20200, the 'applicationContext.xml' configuration does not need to be modified。If the blockchain node configuration is changed, you must also modify the 'peers' configuration option under the 'network' attribute of the configuration 'applicationContext.xml' to configure the 'listen _ ip' of the '[rpc]' configuration of the connected node:listen_port`。
 
-In the above configuration file, we specified the value of "certPath" for the bit where the certificate is stored as "conf"。Next, we need to put the certificate used by the SDK to connect to the node into the specified "conf" directory.。
+In the above configuration file, we specified the value of "certPath" for the bit where the certificate is stored as "conf"。Next, we need to put the certificate used by the SDK to connect to the node into the specified "conf" directory。
 
 ```shell
-# Suppose we take the asset-app-put liquid in the ~ / fisco directory to enter the ~ / fisco directory
+# Suppose we put asset-app-liquid in the ~ / fisco directory and enter the ~ / fisco directory
 $ cd ~/fisco
 # Create a folder to place the certificate
 $ mkdir -p asset-app-liquid/src/test/resources/conf
 # Copy the node certificate to the project resource directory
 $ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/test/resources/conf
-# If you run the IDE directly, copy the certificate to the resources path.
+# If you run the IDE directly, copy the certificate to the resources path
 $ mkdir -p asset-app-liquid/src/main/resources/conf
 $ cp -r nodes/127.0.0.1/sdk/* asset-app-liquid/src/main/resources/conf
 ```
 
 ## 5. Business Logic Development
 
-We've covered how to introduce and configure the Java SDK in our own projects, and this section describes how to invoke contracts through Java programs, also with example asset management instructions.。
+We've covered how to introduce and configure the Java SDK in our own projects, and this section describes how to invoke contracts through Java programs, also with example asset management instructions。
 
-### The first step is to introduce 3 compiled Java contracts into the project.
+### The first step is to introduce 3 compiled Java contracts into the project
 
 ```shell
 cd ~/fisco
@@ -582,7 +582,7 @@ cd ~/fisco
 cp console/contracts/sdk/java/org/fisco/bcos/asset/liquid/contract/Asset.java asset-app-liquid/src/main/java/org/fisco/bcos/asset/liquid/contract/Asset.java
 ```
 
-### The second step is to develop business logic.
+### The second step is to develop business logic
 
 Create the 'AssetClient.java' class in the '/ src / main / java / org / fisco / bcos / asset / liquid / client' directory to deploy and invoke the contract by calling 'Asset.java'
 
@@ -803,7 +803,7 @@ Let's look at the call to the FISCO BCOS Java SDK using the AssetClient example:
 
 - Initialization
 
-The main function of the initialization code is to construct the Client and CryptoKeyPair objects, which are created in the corresponding contract class object.(Call the deploy or load function of the contract class)need to use。
+The main function of the initialization code is to construct the Client and CryptoKeyPair objects, which are created in the corresponding contract class object(Call the deploy or load function of the contract class)need to use。
 
 ```java
 / / Initialize in the initialize function
@@ -818,9 +818,9 @@ client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
 logger.debug("create client for group, account address is " + cryptoKeyPair.getAddress());
 ```
 
-- Constructing a Contract Class Object
+- Construct contract class objects
 
-The contract object can be initialized using the deploy or load function, which is used differently, the former for the initial deployment of the contract and the latter when the contract has been deployed and the contract address is known.。
+The contract object can be initialized using the deploy or load function, which is used differently, the former for the initial deployment of the contract and the latter when the contract has been deployed and the contract address is known。
 
 ```java
 / / Deployment contract
@@ -829,7 +829,7 @@ Asset asset = Asset.deploy(client, cryptoKeyPair, assetPath);
 Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 ```
 
-- interface invocation
+- Interface calls
 
 Use the contract object to call the corresponding interface and process the returned result。
 
@@ -842,7 +842,7 @@ TransactionReceipt receipt = asset.register(assetAccount, amount);
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-in the "asset-app-liquid / tool "directory to add a script that calls AssetClient" asset _ run.sh "。
+Add a script to call AssetClient in the "asset-app-liquid / tool" directory "asset _ run.sh"。
 
 ```shell
 #!/bin/bash
@@ -887,7 +887,7 @@ function usage()
     java -Djdk.tls.namedGroups="secp256k1" -cp 'apps/*:conf/:lib/*' org.fisco.bcos.asset.liquid.client.AssetClient $@
 ```
 
-Next, configure the log。in the "asset-app-liquid / src / test / resources "Create" log4j.properties "
+Next, configure the log。Create "log4j.properties" in the "asset-app-liquid / src / test / resources" directory
 
 ```properties
 ### set log levels ###
@@ -909,18 +909,18 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %C{1}.%M(%L) | %m%n
 ```
 
-Next, specify the replication and compilation tasks by configuring the Jar command in gradle。And introduce the log library, in the "asset-app-create an empty "contract.properties" file in the "liquid / src / test / resources" directory to store the contract address at runtime.。
+Next, specify the replication and compilation tasks by configuring the Jar command in gradle。The logstore is introduced. In the "asset-app-liquid / src / test / resources" directory, an empty "contract.properties" file is created to store the contract address at runtime。
 
-So far, we have completed the development of this application。Finally, we get the asset-app-The directory structure of liquid is as follows:
+So far, we have completed the development of this application。Finally, we get the asset-app-liquid directory structure as follows:
 
 ```shell
-|-- build.gradle / / gradle Configuration File
+|--build.gradle / / gradle configuration file
 |-- gradle
 |   |-- wrapper
-|       |-- gradle-Wrapper.jar / / is used to download the relevant code implementation of Gradle.
-|       |-- gradle-The configuration information used by wrapper.properties / / wrapper, such as the version of gradle.
-|-- gradlew / / Shell script for executing the wrapper command under Linux or Unix
-|-- gradlew.bat / / Batch script for executing the wrapper command under Windows
+|       |--gradle-wrapper.jar / / Code implementation for downloading Gradle
+|       |--gradle-wrapper.properties / / Configuration information used by wrapper, such as the gradle version
+|--gradlew / / Shell script for executing the wrapper command under Linux or Unix
+|--gradlew.bat / / Batch script for executing the wrapper command under Windows
 |-- src
 |   |-- main
 |   |   |-- java
@@ -929,9 +929,9 @@ So far, we have completed the development of this application。Finally, we get 
 |   |   |                |-- bcos
 |   |   |                      |-- asset
 |   |   |                           |-- liquid
-|   |   |                               |-- client / / Place the client call class
+|   |   |                               |--client / / drop client call class
 |   |   |                                   |-- AssetClient.java
-|   |   |                               |-- contract / / Place Java contract classes
+|   |   |                               |--contract / / Place Java contract classes
 |   |   |                                   |-- Asset.java
 |   |   |-- resources
 |   |        |-- conf
@@ -940,36 +940,36 @@ So far, we have completed the development of this application。Finally, we get 
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
 |   |               |-- sdk.nodeid
-|   |        |-- applicationContext.xml / / project configuration file
-|   |        |-- contract.properties / / File that stores the deployment contract address
-|   |        |-- log4j.properties / / log configuration file
-|   |        |-- contract / / Store WBC-Liquid Contract Files
+|   |        |--applicationContext.xml / / project configuration file
+|   |        |--contract.properties / / File that stores the deployment contract address
+|   |        |--log4j.properties / / log configuration file
+|   |        |--contract / / Store WBC-Liquid contract documents
 |   |               |-- asset
 |   |                   |-- src
-|   |                       |-- lib.rs WBC-Liquid File
+|   |                       |--lib.rs WBC-Liquid file
 |   |-- test
-|       |-- resources / / stores the code resource file
+|       |--resources / / stores the code resource file
 |           |-- conf
 |                   |-- ca.crt
 |                   |-- cert.cnf
 |                   |-- sdk.crt
 |                   |-- sdk.key
 |                   |-- sdk.nodeid
-|           |-- applicationContext.xml / / project configuration file
-|           |-- contract.properties / / File that stores the deployment contract address
-|           |-- log4j.properties / / log configuration file
-|           |-- contract / / Store WBC-Liquid Contract Files
+|           |--applicationContext.xml / / project configuration file
+|           |--contract.properties / / File that stores the deployment contract address
+|           |--log4j.properties / / log configuration file
+|           |--contract / / Store WBC-Liquid contract documents
 |                   |-- asset
 |                       |-- src
-|                           |-- lib.rs WBC-Liquid File
+|                           |--lib.rs WBC-Liquid file
 |
 |-- tool
-    |-- asset _ run.sh / / project run script
+    |--asset _ run.sh / / project run script
 ```
 
 ## 6. Run the application
 
-So far, we have introduced all the processes and functions of developing asset management applications using blockchain, and then we can run the project to test whether the functions are normal.。
+So far, we have introduced all the processes and functions of developing asset management applications using blockchain, and then we can run the project to test whether the functions are normal。
 
 - Compile
 
@@ -980,7 +980,7 @@ $ cd ~/fisco/asset-app-liquid
 $ ./gradlew build
 ```
 
-After successful compilation, the 'dist' directory will be generated in the project root directory。There is an 'asset _ run.sh' script in the dist directory to simplify project running。Now start to verify the requirements set at the beginning of this article.。
+After successful compilation, the 'dist' directory will be generated in the project root directory。There is an 'asset _ run.sh' script in the dist directory to simplify project running。Now start to verify the requirements set at the beginning of this article。
 
 - Deploy the 'Asset.liquid' contract
 
@@ -991,7 +991,7 @@ $ bash asset_run.sh deploy
 deploy Asset success, contract address is /asset/liquid180
 ```
 
-- Registered Assets
+- Registered assets
 
 ```shell
 $ bash asset_run.sh register Alice 100000
@@ -1000,7 +1000,7 @@ $ bash asset_run.sh register Bob 100000
 register asset account success => asset: Bob, value: 100000
 ```
 
-- Query Assets
+- Query assets
 
 ```shell
 $ bash asset_run.sh query Alice
@@ -1009,7 +1009,7 @@ $ bash asset_run.sh query Bob
 asset account Bob, value 100000
 ```
 
-- Asset Transfer
+- Asset transfer
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000
@@ -1020,4 +1020,4 @@ $ bash asset_run.sh query Bob
 asset account Bob,, value 150000
 ```
 
-**To summarize:** At this point, we passed the WBC-Liquid contract development, contract compilation, SDK configuration and business development build a WBC based on FISCO BCOS consortium blockchain.-Liquid Applications。
+**To summarize:** So far, we have built a WBC-Liquid application based on the FISCO BCOS consortium blockchain through WBC-Liquid contract development, contract compilation, SDK configuration and business development。

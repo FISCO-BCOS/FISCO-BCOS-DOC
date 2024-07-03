@@ -4,20 +4,20 @@ Tags: "Precompiled Contracts" "CRUD" "" Blockchain Applications ""
 
 ----------
 
-This article will introduce the KV storage function of FISCO BCOS 3.x to help developers develop block chain applications more efficiently and easily.。
+This article will introduce the KV storage function of FISCO BCOS 3.x to help developers develop block chain applications more efficiently and easily。
 
-**Special note: Solidity contracts that use KV to store precompiled contracts must be higher than version 0.6.0 and use ABIEncoderV2.**
+**Special note: Solidity contracts that use KV to store precompiled contracts must be higher than version 0.6.0 and use ABIEncoderV2**
 
 ## KV storage usage
 
-Currently, you can use the KV storage function in two ways: the KVTable contract and the Java SDK KVTable Service interface.。
+Currently, you can use the KV storage function in two ways: the KVTable contract and the Java SDK KVTable Service interface。
 
 ### 1. KVTable contract
 
-- The Solidity contract only needs to introduce the Table.sol abstract interface contract file officially provided by FISCO BCOS.。
-- webankblockchain-liquid (hereinafter referred to as WBC-Liquid) The contract declares the KVTable interface before implementing the contract.。
+-The Solidity contract only needs to introduce the Table.sol abstract interface contract file provided by FISCO BCOS。
+-webankblockchain-liquid (hereinafter referred to as WBC-Liquid) contract can be used by declaring the interface of KVTable before implementing the contract。
 
-Table contains a dedicated smart contract interface for distributed storage. The interface is implemented on a blockchain node. TableManager can create a dedicated KV table, and KVTable can be used as a table for get / set operations.。The following are introduced separately。
+Table contains a dedicated smart contract interface for distributed storage. The interface is implemented on a blockchain node. TableManager can create a dedicated KV table, and KVTable can be used as a table for get / set operations。The following are introduced separately。
 
 #### 1.1 TableManager contract interface
 
@@ -25,8 +25,8 @@ Used to create a KV table and open the KV table. The fixed contract addresses ar
 
 | Interface| Function| Parameters| Return value|
 |-------------------------------|------------|--------------------------------------------|---------------------------------------------|
-| createKVTable(string ,string) | Create Table| Table name, primary key name (currently only a single primary key is supported), field name| The error code (int32) is returned. For details, see the following table.|
-| openTable(string)             | Get Table Address| Table name. This interface is only used for Solidity| Returns the real address of the table. If it does not exist, 0x0 is returned.|
+| createKVTable(string ,string) | Create Table| Table name, primary key name (currently only a single primary key is supported), field name| The error code (int32) is returned. For details, see the following table|
+| openTable(string)             | Get Table Address| Table name. This interface is only used for Solidity| Returns the real address of the table. If it does not exist, 0x0 is returned|
 
 #### 1.2 The KVTable Contract
 
@@ -35,7 +35,7 @@ Used to access table data. The interface is as follows:
 | Interface| Function| Parameters| Return value|
 |--------------------|--------|--------------|-----------------------------------------------------------|
 | get(string)        | Get Value| primary key| Return bool value and string. If the query fails, the first return value will be false|
-| set(string,string) | Set value| Primary key, field value| The error code (int32) is returned. If the error code is successful, 1 is returned. See the following table for other error codes.|
+| set(string,string) | Set value| Primary key, field value| The error code (int32) is returned. If the error code is successful, 1 is returned. See the following table for other error codes|
 
 The interface returns an error code:
 
@@ -52,7 +52,7 @@ The interface returns an error code:
 | -50008 | Illegal character in field|
 | 其他| Other errors encountered while creating|
 
-With the above understanding of the KVTable abstract interface contract, the development of the KVTable contract can now be formally carried out.。
+With the above understanding of the KVTable abstract interface contract, the development of the KVTable contract can now be formally carried out。
 
 ### 2. Solidity contract uses KVTable
 
@@ -80,7 +80,7 @@ constructor () public{
   	/ / Create a TableManager object whose fixed address on the blockchain is 0x1002
     tm = TableManager(address(0x1002));
 
-    / / Create the t _ kv _ test table. The primary key of the table is id, and other fields are item _ name.
+    / / Create the t _ kv _ test table. The primary key of the table is id, and other fields are item _ name
     tm.createKVTable(tableName, "id", "item_name");
 
     / / Get the real address, which is stored in the contract
@@ -89,7 +89,7 @@ constructor () public{
 }
 ```
 
-**Note:** This step is optional: for example, if the new contract only reads and writes the table created by the old contract, you do not need to create the table.。
+**Note:** This step is optional: for example, if the new contract only reads and writes the table created by the old contract, you do not need to create the table。
 
 #### 2.3 KV read and write operation for the table
 
@@ -117,11 +117,11 @@ function get(string memory id) public view returns (bool, string memory) {
 }
 ```
 
-### 3. WBC-The Liquid contract uses the KVTable interface
+### 3. The WBC-Liquid contract uses the KVTable interface
 
 #### 3.1 Declaring the KVTable interface
 
-at WBC-Declare the interface of the KVTable before using the interface in the Liquid contract。
+Declare the KVTable interface before using it in the WBC-Liquid contract。
 
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -165,9 +165,9 @@ mod kv_table {
 
 #### 3.2 WBC-Liquid Create Table
 
-Available at WBC-The logic for creating a table is implemented in the constructor of Liquid. The address of the TableManager introduced here is the BFS path '/ sys / table _ manager'. Note that WBC-Difference between Liquid and Solidity。
+The logic for creating a table can be implemented in the constructor of WBC-Liquid. The address of the TableManager introduced here is the BFS path '/ sys / table _ manager'. Note the difference between WBC-Liquid and Solidity。
 
-The principle of creating a table is similar to that of Solidity, so I won't repeat it again.。
+The principle of creating a table is similar to that of Solidity, so I won't repeat it again。
 
 ```rust
 pub fn new(&mut self) {
@@ -214,7 +214,7 @@ pub fn get(&self, id: String) -> (bool, String) {
 
 ### 4. SDK KVTable Service interface
 
-FISCO BCOS 3.x SDK provides KVTable Service data connection ports. These interfaces are implemented by calling a precompiled KVTable contract built into the blockchain to read and write user tables.。The Java SDK KVTable Service is implemented in the org.fisco.bcos.sdk.v3.contract.precompiled.crud.KVTableService class. Its interfaces are as follows:
+FISCO BCOS 3.x SDK provides KVTable Service data connection ports. These interfaces are implemented by calling a precompiled KVTable contract built into the blockchain to read and write user tables。The Java SDK KVTable Service is implemented in the org.fisco.bcos.sdk.v3.contract.precompiled.crud.KVTableService class. Its interfaces are as follows:
 
 | Interface| Function| Parameters| Return value|
 |-------------------------------------|--------------|----------------------|--------------------------|
@@ -223,4 +223,4 @@ FISCO BCOS 3.x SDK provides KVTable Service data connection ports. These interfa
 | get(String, String)                 | Read Data| Table name, primary key name| String                   |
 | desc(String)                        | Query table information| Table Name| KeyField and valueField for tables|
 
-The call to the write interface will generate the equivalent transaction to the call to the KV contract interface, which will not be stored until the consensus node consensus is consistent.。
+The call to the write interface will generate the equivalent transaction to the call to the KV contract interface, which will not be stored until the consensus node consensus is consistent。

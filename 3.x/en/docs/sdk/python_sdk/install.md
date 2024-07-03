@@ -20,8 +20,8 @@ Tags: "Python API" "Quick Install"
 ## Deploying the Python SDK
 
 ### Environmental Requirements
-- Python environment: Python 3.6.3, 3.7.x
-- FISCO BCOS Node: Refer to [FISCO BCOS Installation](../../quick_start/air_installation.md)Build
+- Python environment: python 3.6.3, 3.7.x
+- FISCO BCOS Node: Please refer to [FISCO BCOS Installation](../../quick_start/air_installation.md)Build
 
 
 ### Initialize environment(If the python environment meets the requirements, you can skip the)
@@ -41,21 +41,21 @@ git clone https://gitee.com/FISCO-BCOS/python-sdk
 
 ```eval_rst
 .. note::
-   - ``bash init_env.sh -p "The main function is to install pyenv, and use the pyenv installation name as" python-python for sdk "-3.7.3 Virtual environment
-   - If the Python environment meets the requirements, you can skip this step.
+   - "bash init _ env.sh-p" The main function is to install pyenv and use pyenv to install python-3.7.3 virtual environment with the name "python-sdk"
+   - If the python environment meets the requirements, you can skip this step
    - If the script is executed incorrectly, check whether the dependency is installed by referring to [Dependency Software]
-   - Install Python-3.7.3 May take a long time
-   - This step only needs to be initialized once, log in again directly using the command "pyenv activate python-sdk "activate" python-sdk "virtual environment can be
+   - Installing python-3.7.3 may take a long time
+   -This step only needs to be initialized once, log in again and directly use the command "pyenv activate python-sdk" to activate "python-sdk" virtual environment
 ```
 
 ```bash
 # Determine the python version and install the virtual environment of python 3.7.3 for the unqualified python environment, named python-sdk
-# If the Python environment meets the requirements, you can skip this step.
+# If the Python environment meets the requirements, you can skip this step
 # If the script is executed incorrectly, check whether the dependency is installed by referring to [Dependency Software]
-# Tip: Install Python-3.7.3 May take a long time
+# Note: installing python-3.7.3 may take a long time
 cd python-sdk && bash init_env.sh -p
 
-# Activate Python-sdk virtual environment
+# activate python-sdk virtual environment
 source ~/.bashrc && pyenv activate python-sdk && pip install --upgrade pip
 ```
 
@@ -70,10 +70,10 @@ To run the Python SDK on Windows, follow these steps to install the dependent so
 .. note::
     - Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools"Workaround: https:/ / visualstudio.microsoft.com / downloads (note that vs 2005 is version 14.0) or https:/ / pan.baidu.com / s / 1ZmDUGZjZNgFJ8D14zBu9og extraction code: zrby
 
-    - After the solc compiler is downloaded successfully, extract and copy the "solc.exe" file "${python-sdk}\ bin "directory, if python-sdk path is "D:\\open-source\\python-sdk ", the" solc.exe "file copy path is" D:\\open-source\\python-sdk\\bin\\solc.exe`` 
+    After the -solc compiler is downloaded successfully, extract it and copy the "solc.exe" file "${python-sdk}\ bin "directory, if the python-sdk path is" D:\\ open-source\\ python-sdk ", the" solc.exe "file copy path is" D:\\open-source\\python-sdk\\bin\\solc.exe`` 
 ```
 
-- Install directly [Python-3.7.x](https://www.python.org/downloads/release/python-373/)and [git](https://git-scm.com/download/win)Software
+- Direct install [Python-3.7.x](https://www.python.org/downloads/release/python-373/)and [git](https://git-scm.com/download/win)Software
 python environment variable configuration can refer to [here](https://jingyan.baidu.com/article/b0b63dbff271e24a4830708d.html)
 
 - [Visual C++ 14.0 Library](https://visualstudio.microsoft.com/downloads)
@@ -99,7 +99,7 @@ Modify 'client _ config.py.template' and configure the 'solc' compiler path. For
 
 ```bash
 # Modify client _ config.py.template: 
-# Configure the solc compiler path. If the storage path of solc is D:\\open-source\\python-sdk\\ bin\\ solc.exe, solc _ path is configured as follows:
+# Configure the solc compiler path. If the storage path of solc is D:\\ open-source\\ python-sdk\\ bin\\ solc.exe, configure solc _ path as follows:
 solc_path = "D:\\open-source\\python-sdk\\bin\\solc.exe"
 
 # Copy client _ config.py.template to client _ config.py
@@ -126,7 +126,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 bash init_env.sh -i
 ```
 
-If you do not perform the above initialization steps, you need to manually compile the 'sol' code in the 'contracts /' directory into 'bin' and 'abi' files and place them in the 'contracts' directory before you can deploy and call the corresponding contract.。Contract compilation can be done using [remix](https://remix.ethereum.org)
+If you do not perform the above initialization steps, you need to manually compile the 'sol' code in the 'contracts /' directory into 'bin' and 'abi' files and place them in the 'contracts' directory before you can deploy and call the corresponding contract。Contract compilation can be done using [remix](https://remix.ethereum.org)
 
 
 ## Configure Channel Communication Protocol
@@ -151,7 +151,7 @@ Get channel _ listen _ port in the config.ini file under the node directory, her
     jsonrpc_listen_port=8545
 ```
     
-Switch to Python-sdk directory. In the client _ config.py file, change 'channel _ host' to the actual IP address, and 'channel _ port' to the 'channel _ listen _ port' obtained in the previous step:
+Switch to the python-sdk directory and modify 'channel _ host' in the client _ config.py file to the actual IP address, and 'channel _ port' to the 'channel _ listen _ port' obtained in the previous step:
 
 ```bash
 channel_host = "127.0.0.1"
@@ -161,7 +161,7 @@ channel_port = 20200
 **Configure Certificate**
 
 ```bash
-# If the node and python-The sdks are located on different machines. Copy all related files in the node sdk directory to the bin directory.
+# If the node and python-sdk are located on different machines, copy all related files in the node's sdk directory to the bin directory
 # If the node and the SDK are located on the same machine, directly copy the node certificate to the SDK configuration directory
 cp ~/fisco/nodes/127.0.0.1/sdk/* bin/
 ```
@@ -171,20 +171,20 @@ cp ~/fisco/nodes/127.0.0.1/sdk/* bin/
 ```eval_rst
 .. note::
     - The "channel _ node _ cert" and "channel _ node _ key" options of "client _ config.py" are used to configure the SDK certificate and private key, respectively
-    - ``release-2.1.0 ", the SDK certificate and private key are updated to" sdk.crt "and" sdk.key. "Before configuring the certificate path, check the certificate name and private key copied in the previous step, and set" channel _ node _ cert "as the SDK certificate path and" channel _ node _ key "as the SDK private key path.
-    - FISCO-BCOS 2.5 and later versions have added the restriction that the SDK can only connect to the local node. During operation, you need to confirm the path of the copy certificate, otherwise Jianlian reports an error.
+    - "release-2.1.0", update the SDK certificate and private key to "sdk.crt" and "sdk.key." Before configuring the certificate path, check the certificate name and private key copied in the previous step, set "channel _ node _ cert" as the SDK certificate path, and set "channel _ node _ key" as the SDK private key path
+    -FISCO-BCOS 2.5 and later versions, adding the restriction that the SDK can only connect to the local node, you need to confirm the path of the copy certificate during operation, otherwise Jianlian reports an error
 ```
 
 Check the path of the sdk certificate copied from the node. If the paths of the sdk certificate and private key are 'bin / sdk.crt' and 'bin / sdk.key', the configuration items in 'client _ config.py' are as follows:
 
 ```bash
-channel_node_cert = "bin/sdk.crt"  # When using the channel protocol, you need to set the sdk certificate. If you use the rpc protocol for communication, you can leave it blank.
+channel_node_cert = "bin/sdk.crt"  # When using the channel protocol, you need to set the sdk certificate. If you use the rpc protocol for communication, you can leave it blank
 channel_node_key = "bin/sdk.key"   # When using the channel protocol, you need to set the sdk private key, such as using the rpc protocol communication, this can be left blank
 ```
 
 If the paths of the sdk certificate and private key are 'bin / node.crt' and 'bin / node.key' respectively, the relevant configuration items in 'client _ config.py' are as follows:
 ```bash
-channel_node_cert = "bin/node.crt"  # When using the channel protocol, you need to set the sdk certificate. If you use the rpc protocol for communication, you can leave it blank.
+channel_node_cert = "bin/node.crt"  # When using the channel protocol, you need to set the sdk certificate. If you use the rpc protocol for communication, you can leave it blank
 channel_node_key = "bin/node.key"   # When using the channel protocol, you need to set the sdk private key, such as using the rpc protocol communication, this can be left blank
 ```
 
@@ -192,7 +192,7 @@ channel_node_key = "bin/node.key"   # When using the channel protocol, you need 
 
 ```eval_rst
 .. note::
-    To run console.py in windows, use '.\ console.py' or 'python console.py'.
+    To run console.py in windows, use '.\ console.py' or 'python console.py'
 ```
 
 ```bash
@@ -207,7 +207,7 @@ Python SDK introduction [argcomplete](https://argcomplete.readthedocs.io/en/late
 ```eval_rst
 .. note::
 
-    - This step only needs to be set once, after setting, each login will automatically take effect
+    -This step only needs to be set once, after setting, each login will automatically take effect
     - Please in**bash environment** Perform this step under
     - Currently only supports bash, not zsh
 ```

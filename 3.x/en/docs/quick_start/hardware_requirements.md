@@ -6,18 +6,18 @@ Tags: "hardware requirements" "operating system" "development manual" "memory re
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
 ## Hardware Requirements
 
 ```eval_rst
 .. note::
-    - FISCO BCOS supports CPU for x86 _ 64 and aarch64 (ARM) architectures
-    - Because multiple groups of nodes share network bandwidth, CPU, and memory resources, it is not recommended to configure too many nodes on a machine to ensure service stability.。
+    - FISCO BCOS supports x86 _ 64 and aarch64 (ARM) architecture CPUs
+    - Because multiple groups of nodes share network bandwidth, CPU, and memory resources, it is not recommended to configure too many nodes on a machine to ensure service stability。
 ```
 
-The following table shows the recommended configurations for a single group and a single node. The resource consumption of nodes is linearly related to the number of groups. You can reasonably configure the number of nodes according to the actual business needs and machine resources.。
+The following table shows the recommended configurations for a single group and a single node. The resource consumption of nodes is linearly related to the number of groups. You can reasonably configure the number of nodes according to the actual business needs and machine resources。
 
 
 |   **Configuration**   |   **Minimum Configuration**  |   **Recommended Configuration**   |

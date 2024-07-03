@@ -4,7 +4,7 @@ Tags: "Precompiled Contracts" "Smart Contracts" "Precompiled"
 
 ----
 
-Precompiled contracts provide a way to use C.++The method of writing contracts, which separates contract logic from data, has better performance than solidity contracts, and can be upgraded by modifying the underlying code.。
+Precompiled contracts provide a way to use C++The method of writing contracts, which separates contract logic from data, has better performance than solidity contracts, and can be upgraded by modifying the underlying code。
 
 ### Precompiled Contracts vs. Solidity Contracts
 
@@ -17,21 +17,21 @@ Precompiled contracts provide a way to use C.++The method of writing contracts, 
 ### Module Architecture
 
 The architecture of Precompiled is shown in the following figure:
-- The block validator determines the type based on the address of the called contract when executing the transaction.。Address 1-4 indicates the Ethereum precompiled contract, address 0x1000-0x10000 is C++Precompiled contracts, other addresses are EVM contracts。
+- The block validator determines the type based on the address of the called contract when executing the transaction。Addresses 1-4 represent Ethereum precompiled contracts, addresses 0x1000-0x10000 are C++Precompiled contracts, other addresses are EVM contracts。
 
 ![](../../../images/precompiled/architecture.png)
 
 ### Key Processes
-- When executing a precompiled contract, you first need to get the object of the precompiled contract based on the contract address.。
+- When executing a precompiled contract, you first need to get the object of the precompiled contract based on the contract address。
 - Each precompiled contract object implements the 'call' interface, where the specific logic of the precompiled contract is implemented。
-- 'call 'obtains the' Function Selector 'and parameters according to the abi code of the transaction, and then executes the corresponding logic。
+- 'call' obtains the 'Function Selector' and parameters according to the abi code of the transaction, and then executes the corresponding logic。
 
 ```mermaid
     graph LR
         Start(Commencement) --> branch1{Precompiled Contracts}
         branch1 --> |Yes|op1 [Get contract object by address]
         branch1 --> |否|op2[EVM]
-        op1 --> op3 [parse calling function and parameters]
+        op1 --> op3 [Parse Call Function and Parameters]
         op3 --> End(Return execution result)
         op2 --> End(Return execution result)
 ```

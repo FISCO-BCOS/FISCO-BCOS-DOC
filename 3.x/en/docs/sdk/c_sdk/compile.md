@@ -1,6 +1,6 @@
 # source code compilation
 
-Tag: "c-sdk "" source code compilation "
+Tags: "c-sdk" "source code compilation"
 
 ----------
 
@@ -30,10 +30,10 @@ export CXXFLAGS="${CXXFLAGS} -fPIC"
 
 cd bcos-c-sdk
 mkdir build && cd build
-cmake ../ -DBUILD_SAMPLE=ON  # Centos uses cmake3, BUILD _ SAMPLE to compile the sample program of the sample directory.
+cmake ../ -DBUILD_SAMPLE=ON  # Centos uses cmake3, BUILD _ SAMPLE to compile the sample program of the sample directory
 ```
 
-Compile to generate 'libbcos-c-sdk.so`
+Compile to generate 'libbcos-c-sdk.so'
 
 ```shell
 -rw-r--r--   1 root  root  548896 12  9 17:27 libbcos-c-sdk.so
@@ -47,7 +47,7 @@ mkdir build && cd build
 cmake ../ -DBUILD_SAMPLE=ON # BUILD _ SAMPLE indicates the sample program for compiling the sample directory
 ```
 
-Compile to generate 'libbcos-c-sdk.dylib`
+Compile to generate 'libbcos-c-sdk.dylib'
 
 ```shell
 -rw-r--r--   1 root  root  548896 12  9 17:27 libbcos-c-sdk.dylib

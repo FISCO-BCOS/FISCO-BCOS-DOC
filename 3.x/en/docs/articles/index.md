@@ -2,9 +2,9 @@
 
 ## 介绍
 
-The new year has begun, in order to thank you for your long-term company and support, we will FISCO BCOS open source community since the establishment of more than 400 technical dry goods and classic chapters into a document, as a collection of blockchain dry goods, to share with you.! Please click here for the full version.(https://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247493260&idx=1&sn=b042be04819c89169b81bcee99eb2a18&chksm=9e3a71e6e1d2ad682bf8fde9f178c91160e5d7cdf187a81cedb191b8da1605f206f9bfd98ec0&from=industrynews&version=4.1.7.6018&platform=win#rd)
+The new year has begun, in order to thank you for your long-term company and support, we will FISCO BCOS open source community since the establishment of more than 400 technical dry goods and classic chapters into a document, as a collection of blockchain dry goods, to share with you! Please click here for the full version(https://mp.weixin.qq.com/s?__biz=MzA3MTI5Njg4Mw==&mid=2247493260&idx=1&sn=b042be04819c89169b81bcee99eb2a18&chksm=9e3a71e6e1d2ad682bf8fde9f178c91160e5d7cdf187a81cedb191b8da1605f206f9bfd98ec0&from=industrynews&version=4.1.7.6018&platform=win#rd)
 
-FISCO BCOS is divided into six chapters, which are created and optimized by all members of the community. Community developers can submit PR contribution articles on GitHub to share FISCO BCOS development experience and usage experience.。
+FISCO BCOS is divided into six chapters, which are created and optimized by all members of the community. Community developers can submit PR contribution articles on GitHub to share FISCO BCOS development experience and usage experience。
 
 ## The concept and principle of blockchain
 

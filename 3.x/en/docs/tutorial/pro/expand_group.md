@@ -11,20 +11,20 @@ BCOS blockchain system group expansion and offline steps。
 
 ```eval_rst
 .. note::
-   - Before scaling a new group, please refer to 'here <. / installation.html >' _ Building a Pro Blockchain Network
+   -Before expanding the new group, please refer to 'here<./installation.html>'_ Build a Pro version of the blockchain network
 ```
 
 ## 1. Expand the new group
 
-Here take the machine at IP '172.25.0.3'(Container)Two blockchain nodes with chain ID 'chain' and group ID 'group2' are used as examples to introduce the new group expansion.。
+Here take the machine at IP '172.25.0.3'(Container)Two blockchain nodes with chain ID 'chain' and group ID 'group2' are used as examples to introduce the new group expansion。
 ### 1.1 Setting up a new group configuration
 
 ```eval_rst
 .. note::
-   In the actual operation, the tars token must be replaced by the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens。
+   In the actual operation, the tars token must be replaced with the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens。
 ```
 
-The service deployment configuration template 'conf / config can be used directly to scale out a new group-deploy-example.toml ', set the group ID to' group2 ', as follows:
+You can directly use the service deployment configuration template 'conf / config-deploy-example.toml' to configure the group ID to 'group2', as follows:
 
 **macOS System:**
 
@@ -35,7 +35,7 @@ $ cd ~/fisco/BcosBuilder/pro
 # Copy Configuration File
 $ cp conf/config-deploy-example.toml config.toml
 
-# Configure tars token: Through the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens
+# Configure tars token: Through the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens
 # The token here is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430Gi
 $ sed -i .bkp 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"/g' config.toml
 
@@ -55,7 +55,7 @@ $ cd ~/fisco/BcosBuilder/pro
 # Copy Configuration File
 $ cp conf/config-deploy-example.toml config.toml
 
-# Configure tars token: Through the tars web management platform [admin]-> [user center]-> [token management] to obtain available tokens
+# Configure tars token: Through the tars web management platform [admin] ->User Center ->[token management] obtaining available tokens
 # The token here is: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430Gi
 $ sed -i 's/tars_token = ""/tars_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTYzODQzMTY1NSwiZXhwIjoxNjY3MjAyODU1fQ.430ni50xWPJXgJdckpOTktJB3kAMNwFdl8w_GIP_3Ls"/g' config.toml
 
@@ -225,7 +225,7 @@ generated/chain0/group2
 └── config.genesis
 ```
 
-After the new group is successfully expanded, you can see the new blockchain services' agencyAgroup2node0BcosNodeService 'and' agencyBgroup2node0BcosNodeService 'on the tars web management platform.:
+After the new group is successfully expanded, you can see the new blockchain services' agencyAgroup2node0BcosNodeService 'and' agencyBgroup2node0BcosNodeService 'on the tars web management platform:
 
 ![](../../../images/tutorial/expand_group.png)
 
@@ -325,7 +325,7 @@ The steps for the offline group 'group2' are as follows:
 # Enter the operation directory
 cd ~/fisco/BcosBuilder/pro
 
-# Offline group group2: Make sure that config.toml is the configuration file used during group group2 expansion.
+# Offline group group2: Make sure that config.toml is the configuration file used during group group2 expansion
 python3 build_chain.py chain -o undeploy -t node
 ```
 

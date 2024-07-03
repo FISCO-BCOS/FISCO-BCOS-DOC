@@ -15,11 +15,11 @@ Script command, which supports' deploy '. The default value is' deploy':
 
 **'V 'Options [Optional]**
 
-Specifies the chain version (air, pro, max). The default value is air.。
+Specifies the chain version (air, pro, max). The default value is air。
 
 **'c 'option [Optional]**
 
-Specifies the path of the service configuration file. This path must include config.toml. The default value is. / BcosBuilder / max / config.toml.。
+Specifies the path of the service configuration file. This path must include config.toml. The default value is. / BcosBuilder / max / config.toml。
 
 **'o 'option [Optional]**
 
@@ -29,7 +29,7 @@ Specifies the directory where the generated node artifacts are located. The defa
 
 ### 2.1 Setting RPC / Gateway Service Expansion Configuration
 
-Use the build _ chain script to deploy a max service. Now you need to scale up the rpc / gateway.
+Use the build _ chain script to deploy a max service. Now you need to scale up the rpc / gateway
 
 Its main modifications are as follows:
 
@@ -40,7 +40,7 @@ Its main modifications are as follows:
 4. Set the deploy _ ip, listen _ port, tars _ listen _ port service ip and corresponding port of [agency.rpc]；
 5. Set the deploy _ ip, listen _ port, tars _ listen _ port service ip and corresponding port of [agency.gateway], and modify the peers (you need to write the IP: port of the deployed gateway, and other deployed gateways do not need to modify the corresponding nodes.json；
 
-Note that the difference between tars _ listen _ port and the last deployed port must be greater than 6. For example, if the tars _ listen _ port of the last deployed node is 40402, the minimum value of tars _ listen _ port in this instance is 40408, and the minimum value of tars _ listen _ port in gateway is 40409.
+Note that the difference between tars _ listen _ port and the last deployed port must be greater than 6. For example, if the tars _ listen _ port of the last deployed node is 40402, the minimum value of tars _ listen _ port in this instance is 40408, and the minimum value of tars _ listen _ port in gateway is 40409
 ```
 
 The configuration of the new RPC / Gateway service 'config.toml' is as follows:
@@ -168,7 +168,7 @@ expand_service/172.30.93.111
 
 ### 2.3 Deploy TiKV
 
-Deploy tikv on the machine in the expansion service. For convenience of demonstration, use TiUP playground to start the TiKV node. The playground is only used for the test environment. For the production environment, please refer to the official TiKV document to deploy the cluster.；
+Deploy tikv on the machine in the expansion service. For convenience of demonstration, use TiUP playground to start the TiKV node. The playground is only used for the test environment. For the production environment, please refer to the official TiKV document to deploy the cluster；
 
 **Download and install tiup**
 
@@ -232,7 +232,7 @@ Specific steps are as follows:
 3. [group] genesis _ config _ path, which specifies the path of the genesis block configuration file of the existing node；
 4. [agency.group] option in [[agency]], modify node _ name, tars _ listen _ port；
 
-Note that the tars _ listen _ port in [[agency.group.node]] requires 6 ports. Therefore, the difference between the tars _ listen _ port port and the last deployed port must be greater than 6. For example, if the tars _ listen _ port of the last deployed node is 40402, the minimum value of the tars _ listen _ port is 40408.。
+Note that the tars _ listen _ port in [[agency.group.node]] requires 6 ports. Therefore, the difference between the tars _ listen _ port port and the last deployed port must be greater than 6. For example, if the tars _ listen _ port of the last deployed node is 40402, the minimum value of the tars _ listen _ port is 40408。
 ```
 
 Configure 'config.toml' for scaling (for example, for scaling nodes of the rpc / gateway service that has been scaled out) as follows:
@@ -368,11 +368,11 @@ expand_node/172.30.93.111/
 
 ### 3.3 Add the new expansion node to the group
 
-Place the generated product on the corresponding ip machine. Before starting the node, you need to turn on tikv as in 2.3.；
+Place the generated product on the corresponding ip machine. Before starting the node, you need to turn on tikv as in 2.3；
 
 ```eval_rst
 .. note::
-   When you scale out a new node, first add the node as an observation node, and only when the block height of the scale-out node is the same as the highest block height of the existing node on the chain, can it be added as a consensus node.。
+   When you scale out a new node, first add the node as an observation node, and only when the block height of the scale-out node is the same as the highest block height of the existing node on the chain, can it be added as a consensus node。
 ```
 
 **Step 1: Obtain the NodeID of the scaling node**

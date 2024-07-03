@@ -7,25 +7,25 @@ Tags: "rPBFT" "consensus algorithm"
 
 ### POW class algorithm
 
-The POW algorithm is not suitable for alliance chain scenarios with large transaction throughput and low transaction latency requirements due to the following characteristics.
-- Low performance: 10 minutes out of a block, transaction confirmation delay of one hour, power consumption
-- No Final Consistency Guarantee
+The POW algorithm is not suitable for alliance chain scenarios with large transaction throughput and low transaction latency requirements due to the following characteristics
+- Low performance: 10 minutes out of a block, transaction confirmation delay of an hour, power consumption
+- No final consistency guarantee
 - Low throughput
 
 ### Consensus Algorithm Based on Distributed Consistency Principle
 
-Consensus algorithms based on the principle of distributed consistency, such as BFT and CFT consensus algorithms, have the advantages of second-level transaction confirmation delay, final consistency, high throughput, and no power consumption.。
+Consensus algorithms based on the principle of distributed consistency, such as BFT and CFT consensus algorithms, have the advantages of second-level transaction confirmation delay, final consistency, high throughput, and no power consumption。
 
-However, the complexity of these algorithms is related to the size of the nodes, and the size of the network that can be supported is limited, which greatly limits the size of the alliance chain nodes.。
+However, the complexity of these algorithms is related to the size of the nodes, and the size of the network that can be supported is limited, which greatly limits the size of the alliance chain nodes。
 
-In summary, FISCO BCOS v2.3.0 proposes the rPBFT consensus algorithm, which aims to minimize the impact of node size on the consensus algorithm while preserving the high performance, high throughput, high consistency, and security of BFT-like consensus algorithms.。
+In summary, FISCO BCOS v2.3.0 proposes the rPBFT consensus algorithm, which aims to minimize the impact of node size on the consensus algorithm while preserving the high performance, high throughput, high consistency, and security of BFT-like consensus algorithms。
 
 ## rPBFT consensus algorithm
 
 ### Node Type
 
-- Consensus member: the node that executes the PBFT consensus process, with the authority to take turns out blocks
-- Validation node: does not execute the consensus process, verifies whether the consensus node is legal, block validation, after several rounds of consensus, will switch to the consensus node
+- Consensus Committee: the node that executes the PBFT consensus process, with the authority to take turns out blocks
+- Verification node: does not implement the consensus process, verifies whether the consensus node is legal, block verification, after several rounds of consensus, will switch to the consensus node
 
 ### core thought
 
@@ -33,8 +33,8 @@ In summary, FISCO BCOS v2.3.0 proposes the rPBFT consensus algorithm, which aims
 
 The rPBFT algorithm selects only a number of consensus nodes for each round of consensus process, and periodically replaces the consensus nodes according to the block height to ensure system security, including two system parameters:
 
-- 'epoch _ sealer _ num ': the number of nodes participating in the consensus process in each round of consensus. You can dynamically configure this parameter by issuing transactions on the console.
-- `epoch_block_num`: The consensus node replacement cycle. To prevent the selected consensus nodes from being associated with each other, the rPBFT replaces a consensus node for each epoch _ block _ num block. You can dynamically configure this parameter by issuing transactions on the console.
+- 'epoch _ sealer _ num': the number of nodes participating in the consensus process in each round of consensus. You can dynamically configure this parameter by sending transactions on the console
+- `epoch_block_num`: The consensus node replacement cycle. To prevent the selected consensus nodes from being associated with each other, the rPBFT replaces a consensus node for each epoch _ block _ num block. You can dynamically configure this parameter by issuing transactions on the console
 
 These two configuration items are recorded in the system configuration table. The configuration table mainly includes three fields: configuration keyword, configuration corresponding value, and effective block height. The effective block height records the latest effective block height of the latest configuration value. For example, set 'epoch _ sealer _ num' and 'epoch _ block _ num' to 4 and 10000 respectively in a 100-block transaction. The system configuration table is as follows:
 
@@ -54,19 +54,19 @@ Sort the NodeIDs of all consensus nodes, as shown in the following figure. The N
 
 #### **chain initialization**
 
-During chain initialization, rPBFT needs to select 'epoch _ sealer _ num' consensus nodes to participate in consensus among consensus members. Currently, the initial implementation is to select the index from 0 to 'epoch _ sealer _ num'.-1 'node participates in the previous' epoch _ block _ num 'block consensus。
+During chain initialization, rPBFT needs to select 'epoch _ sealer _ num' consensus nodes to participate in consensus among consensus members. Currently, the initial implementation is to select nodes with indexes from 0 to 'epoch _ sealer _ num-1' to participate in the consensus of the previous' epoch _ block _ num 'blocks。
 
 
-#### **The consensus member node runs the PBFT consensus algorithm.**
+#### **The consensus member node runs the PBFT consensus algorithm**
 
-The selected 'epoch _ sealer _ num' consensus member nodes run the PBFT consensus algorithm to verify node synchronization and verify the blocks generated by the consensus of these consensus member nodes.
+The selected 'epoch _ sealer _ num' consensus member nodes run the PBFT consensus algorithm to verify node synchronization and verify the blocks generated by the consensus of these consensus member nodes
 
-- Checked block signature list: Each block must contain at least two-thirds of the consensus members' signatures
-- Verify the execution result of the block: the execution result of the local block must be consistent with the execution result recorded by the consensus committee in the block header.
+- Checked list of block signatures: each block must contain the signatures of at least two-thirds of the consensus members
+- Check the execution result of the block: the execution result of the local block must be consistent with the execution result recorded by the consensus committee in the block header
 
 #### **Dynamic replacement of consensus committee list**
 
-To ensure system security, the rPBFT algorithm removes a node from the consensus member list as a validation node and adds a validation node to the consensus member list after each 'epoch _ block _ num' block, as shown in the following figure.
+To ensure system security, the rPBFT algorithm removes a node from the consensus member list as a validation node and adds a validation node to the consensus member list after each 'epoch _ block _ num' block, as shown in the following figure
 
 ![](../../../images/consensus/epoch_rotating.png)
 
@@ -82,14 +82,14 @@ After the node is restarted, the rPBFT algorithm needs to quickly determine the 
   If the current block height is' blockNum 'and the effective block height of' epoch _ block _ num 'is' enableNum ', the consensus period is:
   `rotatingRound = (blockNumber - enableNum) / epoch_block_num`
 
-**Determine the starting node index of the consensus member.**: 'N 'is the total number of consensus nodes, indexed from'(rotatingRound * epoch_block_num) % N 'to'(rotatingRound * epoch_block_num + epoch_sealer_num) Nodes between% N 'belong to consensus member nodes
+**Determine the starting node index of the consensus member**: 'N 'is the total number of consensus nodes, indexed from'(rotatingRound * epoch_block_num) % N 'to'(rotatingRound * epoch_block_num + epoch_sealer_num) Nodes between% N 'belong to consensus member nodes
 
 ### Analysis of rPBFT Algorithm
 
-- Network Complexity: O(epoch_sealer_num * epoch_sealer_num), regardless of node size, and is more scalable than the PBFT consensus algorithm
-- Performance: can be confirmed in seconds, and because the complexity of the algorithm is independent of the number of nodes, the performance attenuation is much less than PBFT
-- Consistency and availability requirements: at least two-thirds of the consensus member nodes need to work properly before the system can reach a normal consensus.
-- Security: The VRF algorithm will be introduced in the future to randomly and privately replace consensus members to enhance the security of consensus algorithms.
+- Network complexity: O(epoch_sealer_num * epoch_sealer_num), regardless of node size, and is more scalable than the PBFT consensus algorithm
+-Performance: It can be confirmed in seconds, and because the complexity of the algorithm has nothing to do with the number of nodes, the performance attenuation is much smaller than PBFT
+- Consistency and availability requirements: at least two-thirds of the consensus member nodes need to work properly before the system can reach a normal consensus
+- Security: The VRF algorithm will be introduced in the future to randomly and privately replace consensus members to enhance the security of consensus algorithms
 
 
 ## rPBFT Network Optimization
@@ -101,12 +101,12 @@ To further improve the broadcast efficiency of Prepare packages in bandwidth-lim
 ![](../../../images/consensus/broadcast_prepare_by_tree.png)
 
 
-- According to the consensus node index, a complete n-tree is formed.(The default is 3)
-- After the leader generates the Prepare packet, it forwards the Prepare packet to all its subordinate child nodes along the tree topology.
+- Complete n-tree based on consensus node index(The default is 3)
+- After the Leader generates the Prepare packet, it forwards the Prepare packet to all its subordinate child nodes along the tree topology
 
 **Advantage**： 
-- Faster propagation speed than gossip, no redundant message packets
-- Divide and conquer, each node out of the bandwidth is O(1), strong scalability
+- Propagation speed is faster than gossip, no redundant message packets
+- Divide and conquer, each node out bandwidth is O(1), strong scalability
 
 **Disadvantages**: The intermediate node is a single point and requires additional fault tolerance strategies
 
@@ -129,15 +129,15 @@ The main processes include:
 
 (2) After receiving the prepareStatus randomly broadcast by node A, node B determines whether the status of the Prepare package of node A is newer than the localPrepare status of the current Prepare package of node B. The main determinations include:
 
-- Is prepareStatus.blockNumber greater than the current block height
-- Is prepareStatus.blockNumber greater than localPrepare.blockNumber
-- Is prepareStatus.view greater than localPrepare.view when prepareStatus.blockNumber equals localPrepare.blockNumber
+-prepareStatus.blockNumber is higher than the current block
+-prepareStatus.blockNumber is greater than localPrepare.blockNumber
+-PrepareStatus.blockNumber equals localPrepare.blockNumber, prepareStatus.view is greater than localPrepare.view
 
-Any of the above conditions holds, indicating that the Prepare package state of node A is newer than the state of node B.
+Any of the above conditions holds, indicating that the Prepare package state of node A is newer than the state of node B
 
 (3) If the status of node B is behind that of node A and node B is disconnected from its parent node, node B sends a prepareRequest request to node A, requesting the corresponding Prepare package
 
-(4) If the state of node B is behind node A, but node B is connected to its parent node, if node B waits up to [100ms(Can be matched)](../../manual/configuration.html#rpbft)node B sends a prepareRequest request to node A, requesting the corresponding Prepare package.
+(4) If the state of node B is behind node A, but node B is connected to its parent node, if node B waits up to [100ms(Can be matched)](../../manual/configuration.html#rpbft)node B sends a prepareRequest request to node A, requesting the corresponding Prepare package
 
 (5) After receiving the prepareRequest request from node A, node B replies to the corresponding Prepare message packet
 
@@ -165,7 +165,7 @@ After rPBFT is enabled to optimize the Prepare package structure and other conse
   leader->>sealerA(parent node): Send PrepareStatus
   sealerA(parent node)->>sealerA(parent node): Update Prepare status cache{leader, PrepareStatus}
   sealerA(parent node)->>sealerB(Child Node): Forward Prepare
-  sealerA(parent node)->>sealerA(parent node): Request and obtain the missing transaction from the leader. The Prepare package is added to the cache.
+  sealerA(parent node)->>sealerA(parent node): Request and obtain the missing transaction from the leader. The Prepare package is added to the cache
   sealerA(parent node)->>sealerB(Child Node): Send PrepareStatus
   sealerB(Child Node)->>sealerB(Child Node): Update Prepare status cache{sealerA, PrepareStatus}
   sealerB(Child Node)->>sealerB(Child Node): Request missing from sealerA and get
@@ -181,18 +181,18 @@ After rPBFT is enabled to optimize the Prepare package structure and other conse
 
 (3) The child node sealerA starts processing the Prepare package:
   
-  - Get the hit transaction from the transaction pool and populate the block in the Prepare package
-  - Request missing transactions from parent leader
+  - Get hit transactions from the transaction pool and populate the blocks in the Prepare package
+  - Request the missing transaction from the parent node Leader
 
 (4) After receiving the leader's return packet, sealerA fills the transactions in the return packet into the Prepare packet and randomly selects 33% of the nodes to broadcast the status of the Prepare packet, mainly including{blockNumber, blockHash, view, idx}After other nodes receive the status package, update the latest status package of sealerA to the cache
 
 **The main processing flow of the child node sealerB of sealerA is as follows**
 
-(1) After receiving the Prepare packet forwarded by SealerA, sealerB also forwards the Prepare packet to the child nodes of sealerB.
+(1) After receiving the Prepare packet forwarded by SealerA, sealerB also forwards the Prepare packet to the child nodes of sealerB
 
-(2) sealerB starts processing the Prepare package by first obtaining the hit transactions from the transaction pool, populating the blocks in the Prepare package, and selecting nodes to obtain the missing transactions.
+(2) sealerB starts processing the Prepare package by first obtaining the hit transactions from the transaction pool, populating the blocks in the Prepare package, and selecting nodes to obtain the missing transactions
   - If sealerB caches prepareStatus.blockHash from node sealerA equal to Prepare.blockHash, it directly requests the missing transaction from the parent node sealerA
-  - If the sealerB cached sealerA status package hash is not equal to Prepare.blockHash, but there is a prepareStatus.blockHash from another node C equal to prepare.blockHash, request the missing transaction from C
+  - If the sealerB cached sealerA status package hash is not equal to Prepare.blockHash, but there is prepareStatus.blockHash from another node C equal to prepare.blockHash, request the missing transaction from C
   - If the hash of prepareStatus of any node cached by sealerB is not only equal to prepare.blockHash, wait up to [100ms(Can be matched)](../../manual/configuration.html#rpbft)After that, request the missing transaction from the Leader
 
 (3) After receiving the transaction replied by the requested node, sealerB populates the block in the Prepare package and randomly selects [33%(Can be matched)](../../manual/configuration.html#rpbft)Node Broadcast Prepare Package Status

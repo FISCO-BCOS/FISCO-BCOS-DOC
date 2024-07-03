@@ -4,13 +4,13 @@ Tags: "system transaction" "log audit"
 
 ---
 
-This article describes the log content of the key steps in the FISCO BCOS blockchain node. It is intended that users can quickly understand the status of the blockchain node and the basis of transaction execution errors.。
+This article describes the log content of the key steps in the FISCO BCOS blockchain node. It is intended that users can quickly understand the status of the blockchain node and the basis of transaction execution errors。
 
 ## 1. Block Status Log
 
 ### 1.1 Block Packing Successfully
 
-The consensus node receives the transaction and broadcasts the actively packaged consensus proposal to other nodes for publicity within the minimum packaging time. The proposal contains all the transactions that have been sorted for execution.。
+The consensus node receives the transaction and broadcasts the actively packaged consensus proposal to other nodes for publicity within the minimum packaging time. The proposal contains all the transactions that have been sorted for execution。
 
 - Log Keywords:++++++++++++++++ Generate proposal
 - Log level: INFO
@@ -30,11 +30,11 @@ info|2022-11-24 10:32:35.034810|[CONSENSUS][SEALER]++++++++++++++++ Generate pro
 
 ### 1.2 Block Start Execution
 
-When consensus receives enough Pre on a block proposal-Commit proposal, which will call the Scheduler module to request the execution of the block。
+When the consensus receives enough Pre-Commit proposals on a block proposal, the Scheduler module is called to request the execution of the block。
 
-When the synchronization module synchronizes blocks from other nodes to the local, it also calls the Scheduler module to request the execution of blocks to verify the validity of the blocks.。
+When the synchronization module synchronizes blocks from other nodes to the local, it also calls the Scheduler module to request the execution of blocks to verify the validity of the blocks。
 
-- Log Keywords: ExecuteBlock request
+- Log keyword: ExecuteBlock request
 - Log level: INFO
 - Log example:
 
@@ -45,15 +45,15 @@ info|2022-11-24 10:32:35.046634|[SCHEDULER][METRIC][blk-32]ExecuteBlock request,
 - Log interpretation:
   - blk-32: The block height executed is 32
   - gasLimit: gas limit of the current execution block
-  - verify: Whether to verify. If the current node is the leader node, no verification is required.
-  - signatureSize: Number of signatures. If the current node is the leader node, the signature does not need to be verified.
+  - verify: Whether to verify. If the current node is the leader node, no verification is required
+  - signatureSize: Number of signatures. If the current node is the leader node, the signature does not need to be verified
   - tx count: The number of intra-block transactions, which is greater than 0 if the block is synchronized from another node
-  - meta tx count: The number of transaction meta-information in the block, which is greater than 0 if the request was initiated by the consensus module.
+  - meta tx count: The number of transaction meta-information in the block, which is greater than 0 if the request was initiated by the consensus module
   - version: Version number of the currently executed block
 
 ### 1.3 Block Execution Success
 
-This log is output when the consensus module or synchronization module requests the Scheduler module to execute the block.。
+This log is output when the consensus module or synchronization module requests the Scheduler module to execute the block。
 
 - Log Keywords: asyncExecuteBlock success
 - Log level: INFO
@@ -76,7 +76,7 @@ info|2022-11-24 10:32:35.048912|[CONSENSUS][Core][METRIC]asyncExecuteBlock succe
 
 ### 1.4 Block Drop
 
-After the consensus or synchronization module passes the verification after executing the block, it will initiate a call to the Scheduler to take the initiative to drop the disk.。
+After the consensus or synchronization module passes the verification after executing the block, it will initiate a call to the Scheduler to take the initiative to drop the disk。
 
 - Log Keywords: ^ ^ ^ ^ ^ ^ ^ ^ Report
 - Log level: INFO
@@ -134,7 +134,7 @@ When the initiating node joins the consensus node, joins the observation node, m
 info|2022-11-24 12:27:04.210708|[EXECUTOR][PRECOMPILED][ConsensusPrecompiled]addSealer,nodeID=97af395f31cd52868162c790c2248e23f65c85a64cd0581d323515f6afffc0138279292a55f7bd706f8f1602f142b12a3407a45334eb0cf7daeb064dcec69369
 ```
 
-- Log Interpretation
+- Log interpretation
   - addSealer: The example above is a request to add to a consensus node, in addition to the following types:
     - addObserver: Add to Watch Node
     - setWeight: Set consensus node weights
@@ -145,7 +145,7 @@ info|2022-11-24 12:27:04.210708|[EXECUTOR][PRECOMPILED][ConsensusPrecompiled]add
 
 ### 3.1 Deployment contract permission writing
 
-The governance committee has approved the write proposal for setting the deployment contract type and deployment contract permissions, which will be output in the node log.。
+The governance committee has approved the write proposal for setting the deployment contract type and deployment contract permissions, which will be output in the node log。
 
 - Log Keywords: AuthManagerPrecompiled
 - Log level: INFO
@@ -165,13 +165,13 @@ info|2022-11-24 12:47:39.784532|[EXECUTOR][PRECOMPILED][AuthManagerPrecompiled]s
 ```
 
 - Log Interpretation 2
-  - Set the deployment permissions of an account
+  - set deployment permissions for an account
   - account: Account address
   - isClose: Whether to turn off deployment permissions
 
 ### 3.2 Contract permission writing
 
-The contract administrator sets the ACL type of a contract interface and sets an account to write the ACL of the contract interface, which will be output in the node log.。
+The contract administrator sets the ACL type of a contract interface and sets an account to write the ACL of the contract interface, which will be output in the node log。
 
 - Log Keywords: ContractAuthMgrPrecompiled
 - Log level: INFO
@@ -182,7 +182,7 @@ info|2022-11-24 12:47:04.345608|[EXECUTOR][PRECOMPILED][blk-31909][ContractAuthM
 ```
 
 - Log Interpretation 1
-  - Set the permission type of the contract interface func
+  - set the permission type of the contract interface func
   - blk: Block height
   - path: Contract Address
   - func: Contract Interface Selector
@@ -195,7 +195,7 @@ isClose=false
 ```
 
 - Log Interpretation 2
-  - set the func permission of an account on a contract.
+  - set the func permission of an account on a contract
   - blk: Block height
   - path: Contract Address
   - func: Contract Interface Selector
@@ -204,7 +204,7 @@ isClose=false
 
 ### 3.3 Contract Status Write
 
-The contract administrator sets the status type of the contract to which it belongs, which will be output in the node log.。
+The contract administrator sets the status type of the contract to which it belongs, which will be output in the node log。
 
 - Log Keywords: ContractAuthMgrPrecompiled
 - Log level: INFO

@@ -1,6 +1,6 @@
 # Environmental Requirements
 
-Tag: "c-sdk``
+Tag: "c-sdk"
 
 ----------
 

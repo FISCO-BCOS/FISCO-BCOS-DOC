@@ -1,6 +1,6 @@
 # Configuration Description
 
-Tag: "java-sdk "" 'Configuration "
+Tags: "java-sdk" "Configuration"
 
 ----
 
@@ -30,12 +30,12 @@ Examples of configuration files in 'properties', 'yml' and 'xml' formats and how
 
 2. From node 'nodes / ${ip}Copy the certificate from the / sdk / 'directory to the new' conf 'directory。
 
-3. Put the configuration file config.-example.toml, stored in the home directory of the application。
+3. Store the configuration file config-example.toml in the application's home directory。
 
-   * config-example.toml can be found in java-sdk [GitHub link](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)or [Gitee link](https://gitee.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)The source file for 'src / test / resources / config' is found in the following location:-example.toml`
-   * You can also see "config" in the "3. Configuration Example" section of this article-Contents of example.toml "。
+   * config-example.toml can be found in java-sdk [GitHub link](https://github.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)or [Gitee link](https://gitee.com/FISCO-BCOS/java-sdk/blob/master/src/test/resources/config-example.toml)The source file for 'src / test / resources / config-example.toml'
+   * You can also see the contents of "config-example.toml" in the "3. Configuration Example" section of this article。
 
-4. Modify config-IP and port of the node in example.toml, matching the node you want to connect to。
+4. Modify the IP and port of the node in config-example.toml to match the node you want to connect to。
 
    ```toml
    [network]
@@ -83,11 +83,11 @@ The Java SDK consists of five configuration options:
 
 ### Certificate Configuration
 
-For security reasons, the Java SDK uses SSL encryption to communicate with nodes. Currently, both non-state-secret SSL connections and state-secret SSL connections are supported.-sdk version 3.3.0 adds support for cipher machines. You can use the key in the cipher machine for transaction signature verification.。'[cryptoMaterial]' Configure the certificate information of the SSL connection, including the following configuration items:
+For security reasons, the Java SDK and the node use SSL encryption communication, currently supports both non-state secret SSL connection and state secret SSL connection, java-sdk version 3.3.0 adds support for cipher machine, transaction signature verification can use the key in the cipher machine。'[cryptoMaterial]' Configure the certificate information of the SSL connection, including the following configuration items:
 
-* `certPath`: The certificate storage path. The default value is the 'conf' directory.；
+* `certPath`: The certificate storage path. The default value is the 'conf' directory；
 
-* `caCert`: The path of the CA certificate. This configuration item is commented by default. When this configuration item is commented, the default path of the CA certificate is' ${certPath}/ ca.crt '. The default CA certificate path is' $'when the SDK and the node are connected by using state-secret SSL.{certPath}/sm_ca.crt`；When this configuration item is turned on, the CA certificate is loaded from the path specified by the configuration；
+* `caCert`: The path of the CA certificate. This configuration item is commented by default. When this configuration item is commented, the default path of the CA certificate is' ${certPath}/ ca.crt '. The default CA certificate path is' $'when the SDK and the node are connected by using state-secret SSL{certPath}/sm_ca.crt`；When this configuration item is turned on, the CA certificate is loaded from the path specified by the configuration；
 
 * `sslCert`: The path of the SDK certificate. This configuration item is annotated by default. When this configuration item is annotated, when a non-state-secret SSL connection is used between the SDK and the node, from '${certPath}/ sdk.crt 'Loads the SDK certificate. When the SDK and the node are connected to each other using the state-secret SSL connection, run the command from' ${certPath}/ sm _ sdk.crt 'Load SDK certificate；When this configuration option is enabled, the SDK certificate is loaded from the path specified by the configuration；
 
@@ -95,9 +95,9 @@ For security reasons, the Java SDK uses SSL encryption to communicate with nodes
 
 * `enSslCert`: The path of the state-secret SSL encryption certificate. Only when the SDK and the node use the state-secret SSL connection, you need to configure this configuration item. The default value is from '${certPath}/ sm _ ensdk.crt 'Load the SSL encryption certificate；When this configuration item is enabled, the state-secret SSL encryption certificate is loaded from the path specified by the configuration item；
 
-* `enSslKey`: The path of the private key for state-secret SSL encryption. This configuration item must be configured only when the state-secret SSL connection is used between the SDK and the node. The default value is from '${certPath}/ sm _ ensdk.key 'Load the SSL encryption private key；When the configuration item is blocked, the SSL encryption private key is loaded from the path specified by the configuration item.。
+* `enSslKey`: The path of the private key for state-secret SSL encryption. This configuration item must be configured only when the state-secret SSL connection is used between the SDK and the node. The default value is from '${certPath}/ sm _ ensdk.key 'Load the SSL encryption private key；When the configuration item is blocked, the SSL encryption private key is loaded from the path specified by the configuration item。
 
-* `useSMCrypto`: Whether to use the State Secret SSL connection. True indicates that the State Secret SSL connection is used.；
+* `useSMCrypto`: Whether to use the State Secret SSL connection. True indicates that the State Secret SSL connection is used；
 
 * `enableHsm`: Whether to use a cipher machine, true to use a cipher machine；
 
@@ -109,9 +109,9 @@ For security reasons, the Java SDK uses SSL encryption to communicate with nodes
 
 ```eval_rst
 .. note::
-    - In most scenarios, you only need to configure the 'certPath' configuration item. Other configuration items do not need additional configuration.；
-    - Obtain an SDK certificate: see 'SDK Connection Certificate Configuration <.. / cert _ config.html >'.
-    - The SSL connection mode between the SDK and the RPC node can be determined by the node configuration item 'sm _ crypto'. For more information about this configuration item, see 'FISCO BCOS Configuration File and Configuration Item Description <.. /.. / tutorial / air / config.html#rpc>`_ .
+    - Most scenarios only need to configure the 'certPath' configuration item, other configuration items do not need additional configuration；
+    - SDK certificate acquisition: see 'SDK connection certificate configuration<../cert_config.html>`_ .
+    - The SSL connection mode between the SDK and the RPC node, which can be determined by the node configuration item 'sm _ crypto'. For more information about this configuration item, see 'FISCO BCOS Configuration File and Configuration Item Description<../../tutorial/air/config.html#rpc>`_ .
 ```
 
 The SDK certificate configuration example is as follows:
@@ -150,7 +150,7 @@ When the SDK communicates with the FISCO BCOS node, you must configure the 'IP' 
 ```eval_rst
 .. note::
     Connection information between nodes and the network
-    The SDK communicates with the node through 'RPC'. The SDK needs to connect to the listening port of 'RPC'. This port can be obtained through the 'rpc.listen _ port' of the node 'config.ini'. For more information, see <.. /.. / tutorial / air / config.html#rpc>`_
+    The SDK communicates with the node through 'RPC'. The SDK needs to connect to the listening port of 'RPC'. This port can be obtained through the 'rpc.listen _ port' of the node 'config.ini'<../../tutorial/air/config.html#rpc>`_
 ```
 
 The network configuration example between the SDK and the node is as follows:
@@ -167,7 +167,7 @@ Account configuration is mainly used to set the account information for the SDK 
 
 * `keyStoreDir`: Path to load / save account files, default is' account'；
 
-* `accountFileFormat`: The default file format is' pem '. Currently, only' pem 'and' p12 'are supported. You do not need a password to load an account file in' pem 'format. You need a password to load an account file in' p12 'format.；
+* `accountFileFormat`: The default file format is' pem '. Currently, only' pem 'and' p12 'are supported. You do not need a password to load an account file in' pem 'format. You need a password to load an account file in' p12 'format；
 
 * `accountAddress`: Loaded account address, empty by default
 
@@ -177,7 +177,7 @@ Account configuration is mainly used to set the account information for the SDK 
 
 ```eval_rst
 .. note::
-    When 'accountAddress' and 'accountFilePath' are not configured, the SDK generates random account-to-node transactions, and the generated account information is stored in the directory specified by the 'keyStoreDir' configuration item: When the SDK connection node is a non-state secret node, the generated temporary account is stored in the '$' format.{keyStoreDir}/ ecdsa / 'directory；The generated temporary account is saved in the format of 'p12' in the '${keyStoreDir}/ gm 'directory
+    When 'accountAddress' and 'accountFilePath' are not configured, the SDK generates random account-to-node transactions, and the generated account information is stored in the directory specified by the 'keyStoreDir' configuration item: When the SDK connection node is a non-state secret node, the generated temporary account is stored in the '$' format{keyStoreDir}/ ecdsa / 'directory；The generated temporary account is saved in the format of 'p12' in the '${keyStoreDir}/ gm 'directory
 ```
 
 An example account profile is as follows:
@@ -199,11 +199,11 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
 
 In order to facilitate the business to adjust the processing threads of the SDK according to the actual load of the machine, the Java SDK exposes its thread configuration items in the configuration, '[threadPool]' is the thread pool-related configuration, including:
 
-* `threadPoolSize`: The number of threads that receive transactions. This configuration item is commented by default. When this configuration item is commented, the default value is the number of CPUs of the machine.；When this configuration item is enabled, the number of threads that receive transactions is created based on the configured value；
+* `threadPoolSize`: The number of threads that receive transactions. This configuration item is commented by default. When this configuration item is commented, the default value is the number of CPUs of the machine；When this configuration item is enabled, the number of threads that receive transactions is created based on the configured value；
 
 ```eval_rst
 .. note::
-    In most scenarios, you do not need to manually configure the thread pool configuration；In the pressure test scenario, you can set 'maxBlockingQueueSize' to a larger size.。
+    In most scenarios, you do not need to manually configure the thread pool configuration；In the pressure test scenario, you can set 'maxBlockingQueueSize' to a larger size。
 ```
 
 An example thread pool configuration is as follows:
@@ -216,7 +216,7 @@ An example thread pool configuration is as follows:
 
 ### Cpp SDK Log Configuration
 
-Because the Java SDK uses the interface of the Cpp SDK encapsulated by JNI to perform operations on nodes, the logs of the Cpp SDK are also output when the Java SDK is started。The Cpp SDK log exists as a separate file in the configuration file. The file name is' clog.ini '. JNI will find this file in the root directory or conf directory under' classpath 'when starting.。In general, the file does not require additional configuration, according to the default。
+Because the Java SDK uses the interface of the Cpp SDK encapsulated by JNI to perform operations on nodes, the logs of the Cpp SDK are also output when the Java SDK is started。The Cpp SDK log exists as a separate file in the configuration file. The file name is' clog.ini '. JNI will find this file in the root directory or conf directory under' classpath 'when starting。In general, the file does not require additional configuration, according to the default。
 
 An example of a log file is as follows:
 
@@ -289,7 +289,7 @@ The Java SDK also supports configuration files in 'properties', 'yml', and 'xml'
 
 The meaning and default values of the fields are consistent with the 'toml' configuration file。
 
-Create the file 'fisco' in the project's home directory-config.properties', copy the following configuration content, and modify each configuration item according to the actual situation。
+Create a file 'fisco-config.properties' in the home directory of the project, copy the following configuration content, and modify each configuration item according to the actual situation。
 
 ```properties
 cryptoMaterial.certPath=conf                       # The certification path
@@ -398,7 +398,7 @@ public class FiscoBcos {
 
 The meaning and default values of the fields are consistent with the 'toml' configuration file。
 
-Create the file 'fisco' in the project's home directory-config.yml ', copy the following configuration content, and modify each configuration item according to the actual situation。
+Create a file 'fisco-config.yml' in the home directory of the project, copy the following configuration content, and modify each configuration item according to the actual situation。
 
 ```yml
 cryptoMaterial:
@@ -490,7 +490,7 @@ public class FiscoBcos {
 
 The meaning of each property is consistent with the 'toml' configuration file。
 
-Create the file 'fisco' in the project's home directory-config.xml ', copy the following configuration content, and modify each configuration item according to the actual situation。
+Create a file 'fisco-config.xml' in the home directory of the project, copy the following configuration content, and modify each configuration item according to the actual situation。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>

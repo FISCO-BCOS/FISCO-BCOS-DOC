@@ -4,7 +4,7 @@ Tags: "Python API" "Quick Install"
 
 ----
 
-The source code of Python SDK provides a complete Demo for developers to learn.
+The source code of Python SDK provides a complete Demo for developers to learn
 
 * [Call Node API](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_get.py)
 * [Deploy contract, send transaction, process receipt, query contract data](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_transaction.py)
@@ -33,7 +33,7 @@ except BcosError as e:
 
 ## Operating Contract
 
-Correct [node information configured for SDK connection](./configuration.md)Rear。Can deploy contracts, send transactions, process receipts, and query contract data。For example, call functions such as' deploy ',' sendRawTransactionGetReceipt ',' call ', and' parse _ event _ logs'.。
+Correct [node information configured for SDK connection](./configuration.md)Rear。Can deploy contracts, send transactions, process receipts, and query contract data。For example, call functions such as' deploy ',' sendRawTransactionGetReceipt ',' call ', and' parse _ event _ logs'。
 
 Full Demo: [demo_transaction.py](https://github.com/FISCO-BCOS/python-sdk/blob/master/demo_transaction.py)
 
@@ -87,12 +87,12 @@ inputresult = data_parser.parse_transaction_input(txresponse['input'])
 print("transaction input parse:",txhash)
 print(inputresult)
 
-#Parse the output output of the transaction in receipt, that is, the return value of the method called by the transaction.
+#Parse the output output of the transaction in receipt, that is, the return value of the method called by the transaction
 outputresult  = data_parser.parse_receipt_output(inputresult['name'], receipt['output'])
 print("receipt output :",outputresult)
 
 
-#Call to get the data.
+#Call to get the data
 print("\n>>Call:------------------------------------------------------------------------")
 res = client.call(to_address,contract_abi,"getbalance")
 print("call getbalance result:",res)

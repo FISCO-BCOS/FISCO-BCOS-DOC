@@ -6,11 +6,11 @@ Tags: "Stress Test" "Java SDK Demo"
 
 ## Stress testing via Java SDK demo
 
-Java SDK Demo is based on [Java SDK](./sdk/java_sdk/index.md)Benchmark test collection for stress testing FISCO BCOS nodes。Java SDK Demo provides contract compilation, which can convert Solidity contract files into Java contract files, and also provides sample stress test programs for transfer contracts, CRUD contracts, and AMOP functions.。
+Java SDK Demo is based on [Java SDK](./sdk/java_sdk/index.md)Benchmark test collection for stress testing FISCO BCOS nodes。Java SDK Demo provides contract compilation, which can convert Solidity contract files into Java contract files, and also provides sample stress test programs for transfer contracts, CRUD contracts, and AMOP functions。
 
 ### Step 1. Install the JDK
 
-The test program in the Java SDK demo can be run in an environment where JDK 1.8 ~ JDK 14 is deployed. Before executing the test program, make sure that the required JDK version is installed.。Take the example of installing OpenJDK 11 on an Ubuntu system:
+The test program in the Java SDK demo can be run in an environment where JDK 1.8 ~ JDK 14 is deployed. Before executing the test program, make sure that the required JDK version is installed。Take the example of installing OpenJDK 11 on an Ubuntu system:
 
   ```shell
 # Install open JDK 11
@@ -36,12 +36,12 @@ $ bash gradlew build
   ```eval_rst
   .. note::
 
-      When the network cannot access GitHub, call the://gitee.com/FISCO-BCOS/java-sdk-Download the source code at demo。
+      When the network cannot access GitHub, call the:/ / download the source code at gitee.com / FISCO-BCOS / java-sdk-demo。
   ```
 
 ### Step 3. Configure Demo
 
-Before using the Java SDK demo, you must first configure the Java SDK, including certificate copy and port configuration. For more information, see [here](./sdk/java_sdk/quick_start.md)For more information, see [SDK Connection Certificate Configuration].(../cert_config.md)。Take FISCO BCOS 3.x Air as an example:
+Before using the Java SDK demo, you must first configure the Java SDK, including certificate copy and port configuration. For more information, see [here](./sdk/java_sdk/quick_start.md)For more information, see [SDK Connection Certificate Configuration](../cert_config.md)。Take FISCO BCOS 3.x Air as an example:
 
   ```shell
   # Copy Certificate(Assuming that the SDK certificate is located in the ~ / fisco / nodes / 127.0.0.1 / sdk directory, change the path according to the actual situation)
@@ -49,13 +49,13 @@ Before using the Java SDK demo, you must first configure the Java SDK, including
 
   # Copy Configuration File
   # Note:
-  #   The default RPC port of the FISCO BCOS blockchain system is 20200. If you modify this port, modify the [network.peers] configuration option in config.toml.
+  #   The default RPC port of the FISCO BCOS blockchain system is 20200. If you modify this port, modify the [network.peers] configuration option in config.toml
   $ cp conf/config-example.toml conf/config.toml
   ```
 
 ### Step 4. Perform the sample stress test procedure
 
-Java SDK Demo provides a series of stress testing programs, including serial transfer contract stress testing and parallel transfer contract stress testing.
+Java SDK Demo provides a series of stress testing programs, including serial transfer contract stress testing and parallel transfer contract stress testing
 
 **Note: The following stress test programs are all EVM node execution environments. For more information about node configuration, see [Node Configuration](../tutorial/air/config.md)**
 
@@ -63,7 +63,7 @@ Java SDK Demo provides a series of stress testing programs, including serial tra
 # Enter dist directory
 $ cd dist
 
-# multi-contract-Intra-Contract Parallel Transfer Contract:
+# Multiple Contracts - Parallel Transfer Contracts Within Contracts:
 # groupId: Group ID of pressure test
 # userCount: Number of accounts created, recommended (4 to 32)
 # count: Total transaction volume of pressure measurement
@@ -71,7 +71,7 @@ $ cd dist
 java -cp 'conf/:lib/*:apps/*' org.fisco.bcos.sdk.demo.perf.PerformanceDMC [groupId] [userCount] [count] [qps]
 
 
-# multi-contract-Cross-Contract Parallel Transfer
+# Multi-Contract - Cross-Contract Parallel Transfer
 # groupId: Group ID of pressure test
 # userCount: Number of accounts created, recommended (4 to 32)
 # count: Total transaction volume of pressure measurement
@@ -182,14 +182,14 @@ Example test environment:
 
 - Hardware Condition: Apple M1 Max(10 cores CPU)，32GB LPDDR5 RAM，1T SSD
 - System version: macOS 12.0.1
-- Compilation environment: clang-1300.0.29.3，cmake 3.22.1
+- Compile environment: clang-1300.0.29.3, cmake 3.22.1
 - FISCO BCOS version: master branch, Git Commit: c0e9dadb6e7ad1bbaf3128a27803226fb7ba6a9a, build type: Darwin / appleclang / release
 
 #### Pressure Test Material Preparation
 
 Build the four-node environment of FISCO BCOS Air version. Refer to the link: [Build the FISCO BCOS Alliance Chain of Air Version](../quick_start/air_installation.md)
 
-If the source code is compiled to generate fisco-bcos binary, add '-DCMAKE _ BUILD _ TYPE = Release ', compile**Release**Binary version for higher performance and better pressure test performance。
+Add '-DCMAKE _ BUILD _ TYPE = Release' and compile**Release**Binary version for higher performance and better pressure test performance。
 
 ```shell
 # linux
@@ -240,7 +240,7 @@ vim ～/fisco/nodes/127.0.0.1/node0/config.genesis
     node.3=027f25b1597d363babe412962b05995d56033636cb061737beeb7e9a6c811e19f1fccf763acc8271ba542eb4fe5d798e9b06ce0e28ef73285e7b86778ad879ca: 1
 ```
 
-If the node has already been started, you need to delete the data in the data directory of the node and restart the node to modify the creation block configuration.。
+If the node has already been started, you need to delete the data in the data directory of the node and restart the node to modify the creation block configuration。
 
 ```shell
 # Modify the config.ini configuration of node0
@@ -294,12 +294,12 @@ try to start node3
  node3 start successfully
 ```
 
-Continue to prepare the pressure measurement program, this example uses' java-sdk-demo 'for stress testing, please refer to the first section of this article for details: [link](./stress_testing.html#jdk)I will not repeat it here.。
+Continue to prepare the pressure test program, this example uses' java-sdk-demo 'for stress testing, please refer to the first section of this article for details: [link](./stress_testing.html#jdk)I will not repeat it here。
 
 Configure the Java SDK demo to send transactions to four nodes:
 
 ```shell
-# Enter Java-sdk-Configuration item of demo
+# Enter the java-sdk-demo configuration item
 vim ~/fiso/java-sdk-demo/dist/conf/config.toml
 ```
 
@@ -313,7 +313,7 @@ peers=["127.0.0.1:20200", "127.0.0.1:20201", "127.0.0.1:20202", "127.0.0.1:20203
 After configuring the Java SDK demo, change the log level of the Java SDK to ERROR:
 
 ```shell
-# Enter Java-sdk-log configuration entry of demo
+# Enter the log configuration items of java-sdk-demo
 vim ~/fiso/java-sdk-demo/dist/conf/log4j2.xml
 vim ~/fiso/java-sdk-demo/dist/conf/clog.ini
 ```
@@ -345,7 +345,7 @@ Modify the log level:
 
 #### Start Stress Test
 
-Back to Java-sdk-demo 'After compiling the environment, run the following command to start the pressure test:
+Return to the 'java-sdk-demo' compiled environment and run the following command to start the stress test:
 
 The stress test here is to deploy 32 Account Solidity contracts to the group group and send 500,000 transactions with a QPS of 20,000。
 
@@ -360,5 +360,5 @@ Stress test results:
 
 ![](../../images/develop/stress_test.png)
 
-- A total of 500,000 transactions were initiated, the time to send to the node was 32 seconds, and the time to collect all transaction receipts was 51 seconds。
+-A total of 500,000 transactions were initiated, the time to send to the node was 32 seconds, and the time to collect all transaction receipts was 51 seconds。
 - TPS is 9712.321050484645 (transactions / sec)

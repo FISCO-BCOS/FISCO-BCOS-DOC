@@ -6,10 +6,10 @@ Tags: "Develop First Application" "Solidity" "Contract Development" "Blockchain 
 
 ```eval_rst
 .. important::
-    Related Software and Environment Release Notes！'Please check < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+    Related Software and Environment Release Notes！'Please check<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
 
-This chapter will introduce the whole process of developing a business application scenario based on FISCO BCOS blockchain, from business scenario analysis to contract design and implementation, then contract compilation and how to deploy to the blockchain, and finally the implementation of an application module, through the [Java SDK] we provide.(../develop/sdk/java_sdk/index.md)Enables call access to contracts on the blockchain。
+This chapter will introduce the whole process of developing a business application scenario based on FISCO BCOS blockchain, from business scenario analysis to contract design and implementation, then contract compilation and how to deploy to the blockchain, and finally the implementation of an application module, through the [Java SDK] we provide(../develop/sdk/java_sdk/index.md)Enables call access to contracts on the blockchain。
 
 This tutorial requires users to be familiar with the Linux operating environment, have basic skills in Java development, be able to use the Gradle tool, and be familiar with [Solidity syntax](https://solidity.readthedocs.io/en/latest/)。
 
@@ -17,15 +17,15 @@ If you have not built a blockchain network or downloaded the console, please com
 
 ## 1. Understand application requirements
 
-Blockchain naturally has tamper-proof, traceability and other characteristics, these characteristics determine that it is more likely to be favored by the financial sector.。In this example, a simple development example of asset management will be provided, and the following features will eventually be implemented:
+Blockchain naturally has tamper-proof, traceability and other characteristics, these characteristics determine that it is more likely to be favored by the financial sector。In this example, a simple development example of asset management will be provided, and the following features will eventually be implemented:
 
 - Ability to register assets on the blockchain
 - Ability to transfer different accounts
-- Can query the asset amount of the account
+- Can check the asset amount of the account
 
 ## Design and Development of Smart Contracts
 
-When developing applications on the blockchain, combined with business requirements, it is first necessary to design the corresponding smart contract, determine the data that the contract needs to store, determine the interface provided by the smart contract on this basis, and finally give the specific implementation of each interface.。
+When developing applications on the blockchain, combined with business requirements, it is first necessary to design the corresponding smart contract, determine the data that the contract needs to store, determine the interface provided by the smart contract on this basis, and finally give the specific implementation of each interface。
 
 ### Step 1: Designing Smart Contracts
 
@@ -36,7 +36,7 @@ FISCO BCOS provides [contract KV storage interface](../develop/precompiled/use_k
 - account: Primary Key, Asset Account(string type)
 - asset_value: Amount of assets(uint256 type)
 
-where account is the primary key, which is the field that needs to be passed in when operating the 't _ asset' table, and the blockchain queries the matching records in the table based on the primary key field.。't _ asset 'means for example the following:
+where account is the primary key, which is the field that needs to be passed in when operating the 't _ asset' table, and the blockchain queries the matching records in the table based on the primary key field。't _ asset 'means for example the following:
 
 | account | asset_value |
 |---------|-------------|
@@ -131,7 +131,7 @@ contract Asset {
             account : Asset Account
 
     Return value:
-            Parameter 1: successful return 0, account does not exist return-1
+            Parameter 1: 0 returned successfully, -1 returned if the account does not exist
             Parameter 2: Valid when the first parameter is 0, asset amount
     */
     function select(string memory account) public view returns (bool, uint256) {
@@ -153,7 +153,7 @@ contract Asset {
     Return value:
             0 Asset registration successful
             -1 Asset account already exists
-            -2 Other errors
+            - 2 other errors
     */
     function register(string memory account, uint256 asset_value)
     public
@@ -195,11 +195,11 @@ contract Asset {
             amount: transfer amount
     Return value:
             0 Asset transfer successful
-            -1 Transfer asset account does not exist
+            - 1 Transfer asset account does not exist
             -2 Receiving asset account does not exist
-            -3 Insufficient amount
-            -4 Amount overflow
-            -5 Other errors
+            - 3 Insufficient amount
+            - 4 Amount overflow
+            - 5 other errors
     */
     function transfer(
         string memory from_account,
@@ -330,20 +330,20 @@ contract Asset {
 }
 ```
 
-The Table.sol referenced by Asset.sol is already in the "~ / fisco / console / contracts / consolidation" directory。The interface in the system contract file is implemented by the FISCO BCOS underlying layer.。When a business contract needs to operate a KV storage interface, the interface contract file needs to be introduced.。Table.sol contract detailed interface reference [here](../develop/precompiled/precompiled_contract_api.md)。
+The Table.sol referenced by Asset.sol is already in the "~ / fisco / console / contracts / consolidation" directory。The interface in the system contract file is implemented by the FISCO BCOS underlying layer。When a business contract needs to operate a KV storage interface, the interface contract file needs to be introduced。Table.sol contract detailed interface reference [here](../develop/precompiled/precompiled_contract_api.md)。
 
 Run the "ls" command and make sure that "Asset.sol" and "Table.sol" are in the directory "~ / fisco / console / contracts / consolidation"。
 
 ## 3. Compile Smart Contracts
 
-Smart contracts for '.sol' need to be compiled into ABI and BIN files to be deployed on the blockchain network。With these two files, you can deploy and invoke contracts with the Java SDK.。However, this call is relatively cumbersome and requires the user to pass parameters and parse the results based on the contract ABI.。To this end, the console provides a compilation tool that not only compiles ABI and BIN files, but also automatically generates a contract Java class with the same name as the compiled smart contract.。This Java class is generated based on the ABI to help users parse the parameters and provide methods with the same name.。When an application needs to deploy and invoke a contract, you can call the corresponding method of the contract class and pass in the specified parameters.。Using this contract Java class to develop applications can greatly simplify the user's code。
+Smart contracts for '.sol' need to be compiled into ABI and BIN files to be deployed on the blockchain network。With these two files, you can deploy and invoke contracts with the Java SDK。However, this call is relatively cumbersome and requires the user to pass parameters and parse the results based on the contract ABI。To this end, the console provides a compilation tool that not only compiles ABI and BIN files, but also automatically generates a contract Java class with the same name as the compiled smart contract。This Java class is generated based on the ABI to help users parse the parameters and provide methods with the same name。When an application needs to deploy and invoke a contract, you can call the corresponding method of the contract class and pass in the specified parameters。Using this contract Java class to develop applications can greatly simplify the user's code。
 
 ```shell
-# Assuming that you have completed the download operation of the console, if not, please check the development source code steps in Section 2 of this article.
+# Assuming that you have completed the download operation of the console, if not, please check the development source code steps in Section 2 of this article
 # Switch to fisco / console / directory
 cd ~/fisco/console/
 
-# Available via bash contract2java.sh solidity-H command to view the script solidity usage,-s specify sol file
+# You can view the usage method of the script solidity through the bash contract2java.sh solidity -h command, and -s specifies the sol file
 bash contract2java.sh solidity -s contracts/solidity/Asset.sol -p org.fisco.bcos.asset.contract
 ```
 
@@ -351,9 +351,9 @@ After running successfully, the java, abi, and bin directories will be generated
 
 ```shell
 # Omission of other irrelevant documents
-|-- abi # The generated abi directory, which stores the abi files generated by the compilation of the solidity contract.
+|-- abi # The generated abi directory, which stores the abi files generated by the compilation of the solidity contract
 |   |-- Asset.abi
-|-- bin # The generated bin directory, which stores the bin file generated by compiling the Solidity contract.
+|-- bin # The generated bin directory, which stores the bin file generated by compiling the Solidity contract
 |   |-- Asset.bin
 |-- java  # Store the compiled package path and Java contract file
 |   |-- org
@@ -364,7 +364,7 @@ After running successfully, the java, abi, and bin directories will be generated
 |                             |--Asset.java  # Java files generated by the Asset.sol contract
 ```
 
-The 'org / fisco / bcos / asset / contract /' package path directory is generated in the java directory, which contains the 'Asset.java' file, which is the file required by the Java application to call the 'Asset.sol' contract.。
+The 'org / fisco / bcos / asset / contract /' package path directory is generated in the java directory, which contains the 'Asset.java' file, which is the file required by the Java application to call the 'Asset.sol' contract。
 
 'Asset.java 'main interface:
 
@@ -387,7 +387,7 @@ public class Asset extends Contract {
 }
 ```
 
-The load and deploy functions are used to construct the Asset object, and the other interfaces are used to call the corresponding solidity contract interfaces.。
+The load and deploy functions are used to construct the Asset object, and the other interfaces are used to call the corresponding solidity contract interfaces。
 
 ## 4. Create a blockchain application project
 
@@ -404,9 +404,9 @@ First, we need to install the JDK and the integrated development environment
 
 ### Step 2. Create a Java project
 
-Create a gradle project in the IntelliJ IDE, select Gradle and Java, and enter the project name "asset-app-3.0``。
+Create a gradle project in IntelliJ IDE, select Gradle and Java, and enter the project name "asset-app-3.0"。
 
-Note: (This step is not a required step) The source code for this project can be obtained and referenced in the following way.。
+Note: (This step is not a required step) The source code for this project can be obtained and referenced in the following way。
 
 ```bash
 $ cd ~/fisco
@@ -418,12 +418,12 @@ $ unzip asset-app-3.0-solidity.zip && mv asset-app-demo-main asset-app-3.0
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, please try to append '185.199.108.133 raw.githubusercontent.com' to '/ etc / hosts', or try 'curl-o asset-app-3.0-solidity.zip -#LO https://gitee.com/FISCO-BCOS/asset-app-demo/repository/archive/main.zip`
+    - If you cannot download for a long time due to network problems, please try to append '185.199.108.133 raw.githubusercontent.com' to '/ etc / hosts', or try 'curl -o asset-app-3.0-solidity.zip-#LO https://gitee.com/FISCO-BCOS/asset-app-demo/repository/archive/main.zip`
 ```
 
 ### Step 3. Introducing the FISCO BCOS Java SDK
 
-Modify the "build.gradle" file, "repositories" to set the maven source, introduce the Spring framework, and add a reference to the FISCO BCOS Java SDK under "dependencies" (note java-sdk version number)。
+Modify the "build.gradle" file, "repositories" to set the maven source, introduce the Spring framework, and add a reference to the FISCO BCOS Java SDK under "dependencies" (note the java-sdk version)。
 
 ```groovy
 repositories {
@@ -454,7 +454,7 @@ dependencies {
 
 ### Step 4. Configure the SDK certificate
 
-in the "asset-app-3.0 / src / test / resources "Create the configuration file" applicationContext.xml "in the directory and write the configuration content。
+Create the configuration file "applicationContext.xml" in the "asset-app-3.0 / src / test / resources" directory and write the configuration content。
 
 The contents of applicationContext.xml are as follows:
 
@@ -539,12 +539,12 @@ The contents of applicationContext.xml are as follows:
 </beans>
 ```
 
-**Note:** If rpc listen _ ip is set to 127.0.0.1 or 0.0.0.0 and listen _ port is set to 20200, the 'applicationContext.xml' configuration does not need to be modified.。If the blockchain node configuration is changed, you must also modify the 'peers' configuration option under the 'network' attribute of the configuration 'applicationContext.xml' to configure the 'listen _ ip' of the '[rpc]' configuration of the connected node.:listen_port`。
+**Note:** If rpc listen _ ip is set to 127.0.0.1 or 0.0.0.0 and listen _ port is set to 20200, the 'applicationContext.xml' configuration does not need to be modified。If the blockchain node configuration is changed, you must also modify the 'peers' configuration option under the 'network' attribute of the configuration 'applicationContext.xml' to configure the 'listen _ ip' of the '[rpc]' configuration of the connected node:listen_port`。
 
-In the above configuration file, we specified the value of "certPath" for the bit where the certificate is stored as "conf"。Next, we need to put the certificate used by the SDK to connect to the node into the specified "conf" directory.。
+In the above configuration file, we specified the value of "certPath" for the bit where the certificate is stored as "conf"。Next, we need to put the certificate used by the SDK to connect to the node into the specified "conf" directory。
 
 ```shell
-# Suppose we take the asset-app-3.0 Put it in the ~ / fisco directory to enter the ~ / fisco directory
+# Suppose we put asset-app-3.0 in the ~ / fisco directory and enter the ~ / fisco directory
 $ cd ~/fisco
 # Create a folder to place the certificate(The default unzipped project exists)
 $ mkdir -p asset-app-3.0/src/test/resources
@@ -552,16 +552,16 @@ $ mkdir -p asset-app-3.0/src/test/resources
 $ mkdir asset-app-3.0/src/test/resources/conf
 # Copy the node certificate to the project resource directory
 $ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/test/resources/conf
-# If you run the IDE directly, copy the certificate to the resources path.
+# If you run the IDE directly, copy the certificate to the resources path
 $ mkdir -p asset-app-3.0/src/main/resources asset-app-3.0/src/main/resources/conf
 $ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources/conf
 ```
 
 ## 5. Business Logic Development
 
-We've covered how to introduce and configure the Java SDK in our own projects, and this section describes how to invoke contracts through Java programs, also with example asset management instructions.。
+We've covered how to introduce and configure the Java SDK in our own projects, and this section describes how to invoke contracts through Java programs, also with example asset management instructions。
 
-### Step 1. Introduce 3 compiled Java contracts into the project.
+### Step 1. Introduce 3 compiled Java contracts into the project
 
 ```shell
 cd ~/fisco  
@@ -571,7 +571,7 @@ cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app
 
 ### Step 2. Develop business logic
 
-in path 'asset-app-3.0 / src / main / java / org / fisco / bcos / asset / client 'directory, create the' AssetClient.java 'class, and deploy and invoke the contract by calling' Asset.java '
+Create the 'AssetClient.java' class in the 'asset-app-3.0 / src / main / java / org / fisco / bcos / asset / client' directory to deploy and invoke the contract by calling 'Asset.java'
 
 The 'AssetClient.java' code is as follows:
 
@@ -779,7 +779,7 @@ Let's look at the call to the FISCO BCOS Java SDK using the AssetClient example:
 
 - Initialization
 
-The main function of the initialization code is to construct the Client and CryptoKeyPair objects, which are created in the corresponding contract class object.(Call the deploy or load function of the contract class)need to use。
+The main function of the initialization code is to construct the Client and CryptoKeyPair objects, which are created in the corresponding contract class object(Call the deploy or load function of the contract class)need to use。
 
 ```java
 / / Initialize in the initialize function
@@ -794,9 +794,9 @@ client.getCryptoSuite().setCryptoKeyPair(cryptoKeyPair);
 logger.debug("create client for group, account address is " + cryptoKeyPair.getAddress());
 ```
 
-- Constructing a Contract Class Object
+- Construct contract class objects
 
-The contract object can be initialized using the deploy or load function, which is used differently, the former for the initial deployment of the contract and the latter when the contract has been deployed and the contract address is known.。
+The contract object can be initialized using the deploy or load function, which is used differently, the former for the initial deployment of the contract and the latter when the contract has been deployed and the contract address is known。
 
 ```java
 / / Deployment contract
@@ -805,7 +805,7 @@ Asset asset = Asset.deploy(client, cryptoKeyPair);
 Asset asset = Asset.load(contractAddress, client, cryptoKeyPair);
 ```
 
-- interface invocation
+- Interface calls
 
 Use the contract object to call the corresponding interface and process the returned result。
 
@@ -818,7 +818,7 @@ TransactionReceipt receipt = asset.register(assetAccount, amount);
 TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, amount);
 ```
 
-in the "asset-app-3.0 / tool "Add a script to call AssetClient" asset _ run.sh "。
+Add a script to call AssetClient in the "asset-app-3.0 / tool" directory "asset _ run.sh"。
 
 ```shell
 #!/bin/bash 
@@ -863,7 +863,7 @@ function usage()
     java -Djdk.tls.namedGroups="secp256k1" -cp 'apps/*:conf/:lib/*' org.fisco.bcos.asset.client.AssetClient $@
 ```
 
-Next, configure the log。in the "asset-app-3.0 / src / test / resources "directory to create" log4j.properties "
+Next, configure the log。Create "log4j.properties" in the "asset-app-3.0 / src / test / resources" directory
 
 ```properties
 ### set log levels ###
@@ -885,18 +885,18 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=[%p] [%-d{yyyy-MM-dd HH:mm:ss}] %C{1}.%M(%L) | %m%n
 ```
 
-Next, specify the replication and compilation tasks by configuring the Jar command in gradle。And introduce the log library, in the "asset-app-3.0 / src / test / resources "directory, create an empty" contract.properties "file for the application to store the contract address at runtime。
+Next, specify the replication and compilation tasks by configuring the Jar command in gradle。The logstore is introduced. In the "asset-app-3.0 / src / test / resources" directory, an empty "contract.properties" file is created to store the contract address at runtime。
 
-So far, we have completed the development of this application。Finally, we get the asset-app-The directory structure for 3.0 is as follows:
+So far, we have completed the development of this application。Finally, we get the asset-app-3.0 directory structure as follows:
 
 ```shell
-|-- build.gradle / / gradle Configuration File
+|--build.gradle / / gradle configuration file
 |-- gradle
 |   |-- wrapper
-|       |-- gradle-Wrapper.jar / / is used to download the relevant code implementation of Gradle.
-|       |-- gradle-The configuration information used by wrapper.properties / / wrapper, such as the version of gradle.
-|-- gradlew / / Shell script for executing the wrapper command under Linux or Unix
-|-- gradlew.bat / / Batch script for executing the wrapper command under Windows
+|       |--gradle-wrapper.jar / / Code implementation for downloading Gradle
+|       |--gradle-wrapper.properties / / Configuration information used by wrapper, such as the gradle version
+|--gradlew / / Shell script for executing the wrapper command under Linux or Unix
+|--gradlew.bat / / Batch script for executing the wrapper command under Windows
 ├── LICENSE
 ├── README.md
 |-- src
@@ -906,9 +906,9 @@ So far, we have completed the development of this application。Finally, we get 
 |   |   |          |-- fisco
 |   |   |                |-- bcos
 |   |   |                      |-- asset
-|   |   |                            |-- client / / Place the client call class
+|   |   |                            |--client / / drop client call class
 |   |   |                                   |-- AssetClient.java
-|   |   |                            |-- contract / / Place Java contract classes
+|   |   |                            |--contract / / Place Java contract classes
 |   |   |                                   |-- Asset.java
 |   |   |-- resources
 |   |        |-- conf
@@ -917,34 +917,34 @@ So far, we have completed the development of this application。Finally, we get 
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
 |   |               |-- sdk.nodeid
-|   |        |-- applicationContext.xml / / project configuration file
-|   |        |-- contract.properties / / File that stores the deployment contract address
-|   |        |-- log4j.properties / / log configuration file
-|   |        |-- contract / / Store the solidity contract file
+|   |        |--applicationContext.xml / / project configuration file
+|   |        |--contract.properties / / File that stores the deployment contract address
+|   |        |--log4j.properties / / log configuration file
+|   |        |--contract / / Store the solidity agreement file
 |   |                |-- Asset.sol
 |   |                |-- Table.sol
 |   |-- test
-|   |    |-- resources / / stores the code resource file
+|   |    |--resources / / stores the code resource file
 |   |       |-- conf
 |   |               |-- ca.crt
 |   |               |-- cert.cnf
 |   |               |-- sdk.crt
 |   |               |-- sdk.key
 |   |               |-- sdk.nodeid
-|   |       |-- applicationContext.xml / / project configuration file
-|   |       |-- contract.properties / / File that stores the deployment contract address
-|   |       |-- log4j.properties / / log configuration file
-|   |       |-- contract / / Store the solidity contract file
+|   |       |--applicationContext.xml / / project configuration file
+|   |       |--contract.properties / / File that stores the deployment contract address
+|   |       |--log4j.properties / / log configuration file
+|   |       |--contract / / Store the solidity agreement file
 |   |               |-- Asset.sol
 |   |               |-- KVTable.sol
 |
 |-- tool
-    |-- asset _ run.sh / / project run script
+    |--asset _ run.sh / / project run script
 ```
 
 ## 6. Run the application
 
-So far, we have introduced all the processes and functions of developing asset management applications using blockchain, and then we can run the project to test whether the functions are normal.。
+So far, we have introduced all the processes and functions of developing asset management applications using blockchain, and then we can run the project to test whether the functions are normal。
 
 - Compile
 
@@ -955,9 +955,9 @@ $ cd ~/fisco/asset-app-3.0
 $ ./gradlew build
 ```
 
-After successful compilation, the 'dist' directory will be generated in the project root directory。There is an 'asset _ run.sh' script in the dist directory to simplify project running。Now start to verify the requirements set at the beginning of this article.。
+After successful compilation, the 'dist' directory will be generated in the project root directory。There is an 'asset _ run.sh' script in the dist directory to simplify project running。Now start to verify the requirements set at the beginning of this article。
 
-- Deploying the 'Asset.sol' Contract
+- Deploy the 'Asset.sol' contract
 
 ```shell
 # Enter dist directory
@@ -966,7 +966,7 @@ $ bash asset_run.sh deploy
 deploy Asset success, contract address is 0xc8ead4b26b2c6ac14c9fd90d9684c9bc2cc40085
 ```
 
-- Registered Assets
+- Registered assets
 
 ```shell
 $ bash asset_run.sh register Alice 100000
@@ -975,7 +975,7 @@ $ bash asset_run.sh register Bob 100000
 register asset account success => asset: Bob, value: 100000
 ```
 
-- Query Assets
+- Query assets
 
 ```shell
 $ bash asset_run.sh query Alice
@@ -984,7 +984,7 @@ $ bash asset_run.sh query Bob
 asset account Bob, value 100000
 ```
 
-- Asset Transfer
+- Asset transfer
 
 ```shell
 $ bash asset_run.sh transfer Alice Bob  50000
@@ -995,4 +995,4 @@ $ bash asset_run.sh query Bob
 asset account Bob, value 150000
 ```
 
-**To summarize:** So far, we have built a solid application based on FISCO BCOS consortium blockchain through contract development, contract compilation, SDK configuration and business development.。
+**To summarize:** So far, we have built a solid application based on FISCO BCOS consortium blockchain through contract development, contract compilation, SDK configuration and business development。

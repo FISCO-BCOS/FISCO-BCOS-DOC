@@ -7,35 +7,35 @@ Author ： CHEN Yu ｜ FISCO BCOS Core Developer
 The original FISCO BCOS call smart contract process is:
 
 1. Preparation of contracts；
-2. Compile the contract to get the contract interface abi description.；
-3. Deploy the contract to get the contract address.；
-4. Encapsulate the abi and address of the contract and call the contract through the SDK.。
+2. Compile the contract to get the contract interface abi description；
+3. Deploy the contract to get the contract address；
+4. Encapsulate the abi and address of the contract and call the contract through the SDK。
 
-As can be seen from the above contract call process, the business party must obtain the contract abi and the contract address before calling the contract, which is a common method for calling contracts in the industry.。
+As can be seen from the above contract call process, the business party must obtain the contract abi and the contract address before calling the contract, which is a common method for calling contracts in the industry。
 
 However, through follow-up user research, we have collected the following suggestions from the business side:
 
-1. For longer contract abi strings, a location needs to be provided for storage instead of the business party's own storage.；
-2. For a 20-byte contract address magic number, its loss will result in inaccessibility of the contract, reducing the cost of memory for the business side.；
-3. After the contract is redeployed, the relevant multiple businesses can quickly and imperceptibly update the contract address.；
+1. For longer contract abi strings, a location needs to be provided for storage instead of the business party's own storage；
+2. For a 20-byte contract address magic number, its loss will result in inaccessibility of the contract, reducing the cost of memory for the business side；
+3. After the contract is redeployed, the relevant multiple businesses can quickly and imperceptibly update the contract address；
 4. Easy version management of contracts。
 
-In order to provide a better experience for business parties to invoke smart contracts, FISCO BCOS proposes a CNS contract naming service solution.。
+In order to provide a better experience for business parties to invoke smart contracts, FISCO BCOS proposes a CNS contract naming service solution。
 
 ## How the CNS is implemented？
 
-CNS provides a record of the mapping between the contract name and the contract address on the chain and the corresponding query function, which facilitates the business party to call the contract on the chain by memorizing the simple contract name.。In order to facilitate the business party to call the contract, the SDK encapsulates the CNS way to call the contract interface, the interface internal implementation of the contract address to find, the business party is not aware of this.。
+CNS provides a record of the mapping between the contract name and the contract address on the chain and the corresponding query function, which facilitates the business party to call the contract on the chain by memorizing the simple contract name。In order to facilitate the business party to call the contract, the SDK encapsulates the CNS way to call the contract interface, the interface internal implementation of the contract address to find, the business party is not aware of this。
 
 ### Information record
 
-CNS records include: contract name, contract version, contract address, and contract abi。where contract abi refers to the interface description of the contract, describing the contract field name, field type, method name, parameter name, parameter type, method return value type。The above CNS information is stored as a system table, and the nodes in the ledger are consistent, but each ledger is independent.。The CNS table is defined as follows:
+CNS records include: contract name, contract version, contract address, and contract abi。where contract abi refers to the interface description of the contract, describing the contract field name, field type, method name, parameter name, parameter type, method return value type。The above CNS information is stored as a system table, and the nodes in the ledger are consistent, but each ledger is independent。The CNS table is defined as follows:
 
 ![](../../../../images/articles/contract_name_service/IMG_5496.PNG)
 
 
 ### Interface Description
 
-The interface between the SDK and the blockchain node is provided in the form of a contract.。The CNS contract is logically implemented as a precompiled contract, declaring the following interfaces.
+The interface between the SDK and the blockchain node is provided in the form of a contract。The CNS contract is logically implemented as a precompiled contract, declaring the following interfaces
 
 ```
 pragma solidity ^0.4.2;
@@ -43,17 +43,17 @@ contract CNS
 {
     / / CNS information on the chain
     function insert(string name, string version, string addr, string abi) public returns(uint256);
-    / / The query returns all the records of different versions of the contract in the table, in JSON format.
+    / / The query returns all the records of different versions of the contract in the table, in JSON format
     function selectByName(string name) public constant returns(string);
-    / / The query returns the unique address of the contract version in the table.
+    / / The query returns the unique address of the contract version in the table
     function selectByNameAndVersion(string name, string version) public constant returns(string);
 }
 ```
 
-The SDK provides the CnsService class corresponding to the precompiled contract to support the CNS.。CnsService can be called by business parties to configure and query CNS information. Its API is as follows:
+The SDK provides the CnsService class corresponding to the precompiled contract to support the CNS。CnsService can be called by business parties to configure and query CNS information. Its API is as follows:
 
 - `String registerCns(String name, String version, String address, String abi)': Registration of CNS information according to contract name, contract version, contract address and contract abi。
-- `String getAddressByContractNameAndVersion(String contractNameAndVersion)': Query the contract address based on the contract name and contract version (the contract name and contract version are connected by a colon)。If the contract version is missing, the latest contract version is used by default.。
+- `String getAddressByContractNameAndVersion(String contractNameAndVersion)': Query the contract address based on the contract name and contract version (the contract name and contract version are connected by a colon)。If the contract version is missing, the latest contract version is used by default。
 - `List<CnsInfo> queryCnsByName(String name)': Query CNS information based on contract name。
 
 - `List<CnsInfo> queryCnsByNameAndVersion(String name, String version)': Query CNS information based on contract name and contract version。
@@ -64,21 +64,21 @@ The SDK provides the CnsService class corresponding to the precompiled contract 
 
 #### Deployment contract
 
-The process for a business party to deploy a contract through the CNS consists of two steps, both of which are performed by the SDK。The first is to send the deployment contract on the transaction chain.；The second is to associate the contract name with the contract address by sending an on-chain transaction。
+The process for a business party to deploy a contract through the CNS consists of two steps, both of which are performed by the SDK。The first is to send the deployment contract on the transaction chain；The second is to associate the contract name with the contract address by sending an on-chain transaction。
 
 ![](../../../../images/articles/contract_name_service/IMG_5497.PNG)
 
 
 #### Call Contract
 
-When the SDK receives a request from a business party to invoke a contract based on the CNS, it first queries for the contract address corresponding to the contract name, and then invokes the contract based on the contract address.。
+When the SDK receives a request from a business party to invoke a contract based on the CNS, it first queries for the contract address corresponding to the contract name, and then invokes the contract based on the contract address。
 
 ![](../../../../images/articles/contract_name_service/IMG_5498.PNG)
 
 
 ## CNS use demonstration
 
-Let's take the console that calls CnsService as an example to describe the CNS-related registration, invocation, and query functions.。
+Let's take the console that calls CnsService as an example to describe the CNS-related registration, invocation, and query functions。
 
 #### deployByCNS
 
@@ -128,7 +128,7 @@ Run callByCNS to invoke the contract with CNS, that is, invoke the contract dire
 
   When a contract version is omitted, such as HelloWorld or HelloWorld.sol, the latest version of the contract is invoked。
 
-- Contract Interface Name: The name of the contract interface to call。
+- Contract interface name: the name of the contract interface called。
 
 - Parameters: Determined by contract interface parameters。
 
@@ -154,4 +154,4 @@ Hello,CNS2
 
 ## SUMMARY
 
-FISCO BCOS simplifies the way business parties invoke contracts through CNS, and facilitates business parties to manage and upgrade contracts.。At the same time, CNS focuses on implementing address mapping functions。The address type mapped by CNS can be mapped to an account address in addition to a contract address.。When CNS maps the account address, the contract abi content is empty。
+FISCO BCOS simplifies the way business parties invoke contracts through CNS, and facilitates business parties to manage and upgrade contracts。At the same time, CNS focuses on implementing address mapping functions。The address type mapped by CNS can be mapped to an account address in addition to a contract address。When CNS maps the account address, the contract abi content is empty。

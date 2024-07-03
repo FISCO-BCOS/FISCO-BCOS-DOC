@@ -6,10 +6,10 @@ Tags: "data structure" "encoding"
 
 ```eval_rst
 .. note::
-   The implementation of the FISCO BCOS 3.x data and encoding protocol is located in 'bcos-tars-protocol <https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/bcos-tars-protocol/bcos-tars-protocol>`_
+   The implementation of the FISCO BCOS 3.x data and encoding protocol is located in 'bcos-tars-protocol<https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/bcos-tars-protocol/bcos-tars-protocol>`_
 ```
 
-FISCO BCOS 3.x defaults to [tars](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/base/tars-protocol.md)Encoding protocol, this chapter mainly introduces the encoding protocol of FISCO BCOS 3.x basic data structure.。
+FISCO BCOS 3.x defaults to [tars](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/base/tars-protocol.md)Encoding protocol, this chapter mainly introduces the encoding protocol of FISCO BCOS 3.x basic data structure。
 
 ## 1. Block header data structure
 
@@ -25,9 +25,9 @@ The fields in the block header that need to be hashed:
 | parentInfo  | vector<ParentInfo> |Parent block information, including the block height and hash of the parent block|
 | txsRoot  | vector<byte> |Hash of all MerkleRoot transactions in the block|
 | receiptRoot  | vector<byte> |Hash of all receipts within the block MerkleRoot|
-| stateRoot  | vector<byte> |The root hash of all transaction state changes in the block.|
+| stateRoot  | vector<byte> |The root hash of all transaction state changes in the block|
 | blockNumber  | long |Block height|
-| gasUsed  | string |the sum of gas consumed by all transactions in the block.|
+| gasUsed  | string |the sum of gas consumed by all transactions in the block|
 | timestamp  | long |Block Header Timestamp|
 | sealer  |  long|ID of the consensus node that generated the block header|
 | sealerList  | vector<vector<byte>>  |List of all consensus nodes in the system when generating the block header|
@@ -40,8 +40,8 @@ Definition of all fields in the block header:
 
 |  Field| Type|   Description|
 |  ----  | ----  | ----  |
-|data |BlockHeaderData |The block header is used to calculate the data corresponding to the encoding of all fields of the hash.|
-|dataHash |<byte>|The root hash of all transaction state changes in the block.|
+|data |BlockHeaderData |The block header is used to calculate the data corresponding to the encoding of all fields of the hash|
+|dataHash |<byte>|The root hash of all transaction state changes in the block|
 |signatureList |vector<Signature>  |Signature list generated after block header consensus is successful|
 
 ## 2. Block data structure
@@ -61,7 +61,7 @@ The definition of tars for blocks can be found in [here](https://github.com/FISC
 
 ## 3. Transaction data structure
 
-The definition of tars for transactions can be found [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/Transaction.tars)Similar to the block header, the data protocol field of the transaction is also divided into two parts: the field used to calculate the hash and the field that does not participate in the hash calculation.。
+The definition of tars for transactions can be found [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/Transaction.tars)Similar to the block header, the data protocol field of the transaction is also divided into two parts: the field used to calculate the hash and the field that does not participate in the hash calculation。
 
 ### 3.1 TransactionData
 
@@ -75,9 +75,9 @@ defines all the fields in the transaction that are used to calculate the hash, a
 |blockLimit |long |require, the blockLimit of the transaction, to prevent duplication of transactions|
 |nonce |string |require, a random number provided by the sender of the message to uniquely identify the transaction and also to prevent duplication of transactions|
 |to |string | optional, the address of the transaction receiver|
-|input |vector<byte> | require, the data related to the transaction, including the functions and parameters called by the transaction.|
+|input |vector<byte> | require, the data related to the transaction, including the functions and parameters called by the transaction|
 
-The hashWith field (also known as the transaction hash / transaction unique identifier) is generated as follows.
+The hashWith field (also known as the transaction hash / transaction unique identifier) is generated as follows
 
 ![](../../images/design/generate_hash_process.png)
 
@@ -92,7 +92,7 @@ Definition of Exchanged Fields:
 | signature|vector<byte> |optional, the signature of the transaction|
 | sender |vector<byte> |optional, the address of the account where the transaction was sent|
 | importTime |long | optional, the timestamp when the transaction was sent to the node|
-| attribute |int | optional, the attributes of the transaction, used to mark the type of transaction, the parallel conflict domain of the transaction, etc.|
+| attribute |int | optional, the attributes of the transaction, used to mark the type of transaction, the parallel conflict domain of the transaction, etc|
 | source |string |optional, the address of the transaction receiver, for DMC scheduling|
 
 ### 3.3 TransactionMetaData
@@ -104,11 +104,11 @@ Only the transaction metadata information is included in the proposal of the con
 |hash |vector<byte> |optional, transaction hash|
 |to |string |optional, the address of the transaction receiver|
 |source |string |optional, the address of the transaction receiver, for DMC scheduling|
-|attribute |unsigned int |optional, the attributes of the transaction, used to mark the type of transaction, the parallel conflict domain of the transaction, etc.|
+|attribute |unsigned int |optional, the attributes of the transaction, used to mark the type of transaction, the parallel conflict domain of the transaction, etc|
 
-## 4. Transaction receipt data structure.
+## 4. Transaction receipt data structure
 
-The definition of tars for transaction receipts can be found [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/TransactionReceipt.tars)Similar to block headers and transactions, the data protocol field of the transaction receipt is also divided into two parts: the field used to calculate the hash and the field that does not participate in the hash calculation.。
+The definition of tars for transaction receipts can be found [here](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/bcos-tars-protocol/bcos-tars-protocol/tars/TransactionReceipt.tars)Similar to block headers and transactions, the data protocol field of the transaction receipt is also divided into two parts: the field used to calculate the hash and the field that does not participate in the hash calculation。
 
 ### 4.1 LogEntry
 
@@ -143,10 +143,10 @@ The data structure of the transaction receipt is defined as follows:
 |data|TransactionReceiptData|Encoded data for all fields used to calculate the hash in the transaction receipt|
 |dataHash|vector<byte>|Transaction Receipt Code|
 
-The design of block and transaction related data structure ensures that FISCO BCOS has the function of checking data integrity.。Block hash, transaction Merkel tree root, receipt Merkel tree root, status Merkel tree root, parent block information and other fields, can effectively verify the validity and integrity of the block, to prevent data tampering。
-In addition, users can obtain block information by calling the relevant interface on the console to verify data consistency.。
+The design of block and transaction related data structure ensures that FISCO BCOS has the function of checking data integrity。Block hash, transaction Merkel tree root, receipt Merkel tree root, status Merkel tree root, parent block information and other fields, can effectively verify the validity and integrity of the block, to prevent data tampering。
+In addition, users can obtain block information by calling the relevant interface on the console to verify data consistency。
 
 ### 4.4 Native transactions
 
-FISCO BCOS implements the smallBank contract based on the solidity contract and the pre-compiled version.。Small Bank originated from blockBench and is recognized by the industry and academia as one of the basic tests of blockchain systems. FISCO BCOS defines small Bank's transactions that enable inter-account transfers as native transactions.。
-Through the deployment contract smallBank, the final execution with EVM。smallBank also provides a precompiled contract method, which can be implemented by calling the smallBank precompiled contract address.。
+FISCO BCOS implements the smallBank contract based on the solidity contract and the pre-compiled version。Small Bank originated from blockBench and is recognized by the industry and academia as one of the basic tests of blockchain systems. FISCO BCOS defines small Bank's transactions that enable inter-account transfers as native transactions。
+Through the deployment contract smallBank, the final execution with EVM。smallBank also provides a precompiled contract method, which can be implemented by calling the smallBank precompiled contract address。

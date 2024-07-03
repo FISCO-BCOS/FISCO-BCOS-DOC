@@ -1,6 +1,6 @@
 # Community Resources
 
-FISCO BCOS is a domestic enterprise-led R & D, open source, safe and controllable enterprise-level financial alliance chain underlying platform.。An open source working group set up by the Financial Blockchain Cooperation Alliance (Shenzhen) (referred to as "Golden Chain Alliance") is collaboratively built, with members including Boyan Technology, Huawei, SZSE, Shenzhou Information, Sifang Jingchuang, Tencent, WeBank, Yepi Technology and Yuexiu Jinke.。
+FISCO BCOS is a domestic enterprise-led R & D, open source, safe and controllable enterprise-level financial alliance chain underlying platform。An open source working group set up by the Financial Blockchain Cooperation Alliance (Shenzhen) (referred to as "Golden Chain Alliance") is collaboratively built, with members including Boyan Technology, Huawei, SZSE, Shenzhou Information, Sifang Jingchuang, Tencent, WeBank, Yepi Technology and Yuexiu Jinke。
 
 ## FISCO BCOS Community Resources
 

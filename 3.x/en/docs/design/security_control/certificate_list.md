@@ -18,41 +18,41 @@ This document provides an introductory description of black and white lists. For
 
 **Configuration type of CA black and white list**
 
-- 基于**Scope of action**(Network Configuration / Ledger Configuration) dimensions can be divided into**Network Configuration**, which affects the node connection establishment process of the entire network；
-- 基于**Whether it can be changed**(reconfigurable / fixed configuration) dimensions can be divided into**Configurable**, content can be changed, effective after restart；
-- 基于**Storage position**(local storage / on-chain storage) dimensions can be divided into**Local Storage**The content is recorded locally, not on the chain.。
+- Based on**Scope of action**(Network Configuration / Ledger Configuration) dimensions can be divided into**Network Configuration**, which affects the node connection establishment process of the entire network；
+- Based on**Whether it can be changed**(reconfigurable / fixed configuration) dimensions can be divided into**Configurable**, content can be changed, effective after restart；
+- Based on**Storage position**(local storage / on-chain storage) dimensions can be divided into**Local Storage**The content is recorded locally, not on the chain。
 
 ## Module Architecture
 
-The following figure shows the modules involved in the CA blacklist and their relationships。Legend A-> B indicates that the B module depends on the data of the A module, and the B module is initialized later than the A module。The whitelist has the same architecture as the blacklist。
+The following figure shows the modules involved in the CA blacklist and their relationships。Legend A->B indicates that the B module depends on the data of the A module, and the B module is initialized later than the A module。The whitelist has the same architecture as the blacklist。
 
 ![](../../../images/node_management/architecture.png)
 
-< center > Module architecture < / center >
+<center>Module Architecture</center>
 
 ## Core Process
 
-Underlying implementation of SSL two-way authentication。During the handshake process, the node obtains the nodeID of the other node through the certificate provided by the other node, and checks whether the nodeID is related to the black and white list of the node configuration.。If the connection is rejected based on the configuration of the black and white lists, continue the subsequent process。
+Underlying implementation of SSL two-way authentication。During the handshake process, the node obtains the nodeID of the other node through the certificate provided by the other node, and checks whether the nodeID is related to the black and white list of the node configuration。If the connection is rejected based on the configuration of the black and white lists, continue the subsequent process。
 
 **Rejection logic**
 
 * Blacklist: Deny connections to nodes written in the blacklist
-* Whitelist: Deny connections to all nodes that are not configured in the whitelist。The whitelist is empty, indicating that it is not open. Any connection is accepted.。
+* Whitelist: Deny connections to all nodes that are not configured in the whitelist。The whitelist is empty, indicating that it is not open. Any connection is accepted。
 
 **Priority**
 
-Blacklist takes precedence over whitelist。For example, if A, B, and C are configured in the whitelist, D's connection will be rejected. If A is also configured in the blacklist, A will also be rejected.。
+Blacklist takes precedence over whitelist。For example, if A, B, and C are configured in the whitelist, D's connection will be rejected. If A is also configured in the blacklist, A will also be rejected。
 
 ## Scope of influence
 
-- CA black and white lists have a significant impact on P2P node connectivity and AMOP functionality at the network layer.**invalidate**；
+- CA black and white lists have a significant impact on P2P node connections and AMOP functions at the network layer**invalidate**；
 - potential impact on the consensus and synchronization capabilities of the ledger layer,**Affects consensus and synchronization message / data forwarding**。
 
 ## Configuration Format
 
 **Blacklist**
 
-Add the '[certificate _ blacklist]' path to the node 'config.ini' configuration ('[certificate _ blacklist]' is optional in the configuration)。The content of the CA blacklist is the Node ID list of the node, and crl.X is the Node ID of the opposite node that this node refuses to connect to.。An example of the configuration format of the CA blacklist is as follows。
+Add the '[certificate _ blacklist]' path to the node 'config.ini' configuration ('[certificate _ blacklist]' is optional in the configuration)。The content of the CA blacklist is the Node ID list of the node, and crl.X is the Node ID of the opposite node that this node refuses to connect to。An example of the configuration format of the CA blacklist is as follows。
 
 ```ini
 [certificate_blacklist]
@@ -63,7 +63,7 @@ Add the '[certificate _ blacklist]' path to the node 'config.ini' configuration 
 
 **Whitelist**
 
-Add the '[certificate _ whitelist]' path to the node 'config.ini' configuration ('[certificate _ whitelist]' is optional in the configuration)。The content of the CA whitelist is the Node ID list of the node. Cal.X is the Node ID of the opposite node to which the node can accept connections.。An example of the configuration format of the CA whitelist is as follows。
+Add the '[certificate _ whitelist]' path to the node 'config.ini' configuration ('[certificate _ whitelist]' is optional in the configuration)。The content of the CA whitelist is the Node ID list of the node. Cal.X is the Node ID of the opposite node to which the node can accept connections。An example of the configuration format of the CA whitelist is as follows。
 
 ``` ini
 [certificate_whitelist]

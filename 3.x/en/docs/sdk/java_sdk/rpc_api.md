@@ -4,17 +4,17 @@ Tags: "RPC" "Interface"
 
 ---------
 
-The Java SDK provides a Java API interface for blockchain application developers, where JSON-The RPC interface is encapsulated in the Client class, providing access to the FISCO BCOS 3.x node JSON-RPC interface support, providing support for deployment and invocation contracts。
+The Java SDK provides a Java API interface for blockchain application developers. The JSON-RPC interface is encapsulated in the Client class, providing support for accessing the JSON-RPC interface of FISCO BCOS 3.x nodes, providing support for deploying and invoking contracts。
 
 ```eval_rst
 .. note::
     - Client interface declarations are in the 'Client.java' file
-    - The client is an object of the group dimension. For more information, see Quick Start < quick _ start.html > _ Initialize the client. When you initialize the client, you must pass in the group name
+    -Client is the object of the group dimension. For more information, see Quick Start<quick_start.html>'_ Initialize the client. When initializing the client, the group name must be passed in
 ```
 
 **Special note: There are two types of Client interfaces, one is an interface with node, and the other is an interface without node。Interface with node allows node RPC to send requests to specified connected nodes。If not specified, the node RPC randomly sends requests to the node。**
 
-**In addition, Client provides synchronous and asynchronous interfaces for each interface, and developers can identify whether the method name ends with Asyn or has a Callback callback parameter.。The following interface distances are all asynchronous and the interface of the specified node is taken as an example。**
+**In addition, Client provides synchronous and asynchronous interfaces for each interface, and developers can identify whether the method name ends with Asyn or has a Callback callback parameter。The following interface distances are all asynchronous and the interface of the specified node is taken as an example。**
 
 **Curl call description: SSL authentication is enabled by default for the rpc interface of the node. The following command uses curl to send the interface without an SSL certificate. You need to disable the rpc interface SSL authentication of the node。The shutdown method is to modify the configuration file / fisco / nodes / 127.0.0.1 / node0 / config.ini, and restart the node after modifying the configuration file**
 
@@ -34,10 +34,10 @@ The transaction publishing asynchronous interface, after receiving the response 
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- signedTransactionData: transactions after signature
-- withProof: return whether to bring Merkel tree proof
-- callback: After the SDK receives the packet return from the node, it calls the callback function. The callback function will bring the transaction receipt.。
+-node: allows RPC to send requests to the specified node
+-signedTransactionData: transactions after signature
+-withProof: return whether to bring Merkel tree proof
+- callback: After the SDK receives the packet return from the node, it calls the callback function. The callback function will bring the transaction receipt。
 
 **Return value**
 
@@ -63,10 +63,10 @@ Send a request to the node, call the contract constant interface。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transaction: Contract invocation information, including the contract address, the contract caller, and the abi encoding of the invoked contract interface and parameters
-- sign: Yes(Contract address, call parameters)The user address corresponding to the signature can be recovered on the chain. The interface of this parameter is only available after the 3.4.0 version of the node.。
-- callback: The callback function returns the return result of the contract constant interface, including the current block height, interface execution status information, and interface execution result.
+-sign: Yes(Contract address, call parameters)The user address corresponding to the signature can be recovered on the chain. The interface of this parameter is only available after the 3.4.0 version of the node。
+- callback: The callback function returns the return result of the contract constant interface, including the current block height, interface execution status information, and interface execution result
 
 **Return value**
 
@@ -90,7 +90,7 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"call","params":["group0","","0xc
 }
 ```
 
-Note: After version 3.4.0, the Call with sign interface is supported, and the private key is used when initiating a static call request to the request body.(to+data)After signing, the user address corresponding to the signature will be restored on the node side, and the tx.origin and msg.sender of the call request can be obtained from the contract to achieve the purpose of user identity authentication.。
+Note: After version 3.4.0, the Call with sign interface is supported, and the private key is used when initiating a static call request to the request body(to+data)After signing, the user address corresponding to the signature will be restored on the node side, and the tx.origin and msg.sender of the call request can be obtained from the contract to achieve the purpose of user identity authentication。
 
 ```shell
 # Request
@@ -114,9 +114,9 @@ Query contract code information corresponding to a specified contract address as
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - address: Contract Address
-- callback: callback function, containing the contract code corresponding to the contract address。
+-callback: callback function, containing the contract code corresponding to the contract address。
 
 **Return value**
 
@@ -141,9 +141,9 @@ Query contract ABI information corresponding to a specified contract address asy
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - address: Contract Address
-- callback: callback function, contract address corresponding to the contract ABI JSON。
+-callback: callback function, contract address corresponding to the contract ABI JSON。
 
 **Return value**
 
@@ -174,8 +174,8 @@ Obtain the latest block height of the group corresponding to the client object�
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after obtaining the block height, the latest block height of the group corresponding to the client object。
+-node: allows RPC to send requests to the specified node
+-callback: callback after obtaining the block height, the latest block height of the group corresponding to the client object。
 
 **Return value**
 
@@ -198,12 +198,12 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"getBlockNumber","params":[],"id"
 
 ### 2.2 getTotalTransactionCountAsync
 
-Obtain the transaction statistics of the client group, including the number of transactions on the chain and the number of failed transactions on the chain.。
+Obtain the transaction statistics of the client group, including the number of transactions on the chain and the number of failed transactions on the chain。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after obtaining transaction information, TotalTransactionCount: Transaction statistics, including:
+-node: allows RPC to send requests to the specified node
+-callback: callback after obtaining transaction information, TotalTransactionCount: Transaction statistics, including:
   - txSum: Total amount of transactions on the chain
   - blockNumber: Current block height of the group
   - failedTxSum: Total amount of abnormal transactions executed on the chain
@@ -236,13 +236,13 @@ Obtain block information according to block height。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node；
+-node: allows RPC to send requests to the specified node；
 - blockNumber: Block height；
-- onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information.；
-- onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information.；
-  - false: The block returned by the node contains complete transaction information.；
+-onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information；
+-onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information；
+  - false: The block returned by the node contains complete transaction information；
   - true: The block returned by the node contains only the transaction hash。
-- callback: callback after the block is completed, query the obtained block information
+-callback: obtain the callback after the block is completed, query the obtained block information
 
 **Return value**
 
@@ -285,13 +285,13 @@ Obtain block information based on block hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - blockHash: Block Hash
-- onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information.；
+-onlyHeader: true / false, indicating whether only the block header data is obtained in the obtained block information；
 - onlyTxHash: true / false, indicating whether the obtained block information contains complete transaction information；
   - true: The block returned by the node contains only the transaction hash;
-  - false: The block returned by the node contains complete transaction information.。
-- callback: callback after the block is completed, query the obtained block information
+  - false: The block returned by the node contains complete transaction information。
+-callback: obtain the callback after the block is completed, query the obtained block information
 
 **Return value**
 
@@ -359,9 +359,9 @@ Obtain block hash based on block height
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - blockNumber: Block height
-- callback: the callback after the callback is obtained, specifying the block hash corresponding to the block height
+-callback: the callback after obtaining, specifying the block hash corresponding to the block height
 
 **Return value**
 
@@ -387,10 +387,10 @@ Get transaction information based on transaction hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transactionHash: Transaction Hash
-- withProof: whether to bring Merkel tree proof
-- callback: the callback when the transaction is obtained, specifying the transaction information corresponding to the hash。
+-withProof: whether to bring Merkel Tree Proof
+-callback: the callback when the transaction is obtained, specifying the transaction information corresponding to the hash。
 
 **Return value**
 
@@ -437,10 +437,10 @@ Get transaction receipt information based on transaction hash。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - transactionHash: Transaction Hash
-- withProof: return whether to bring Merkel tree proof
-- callback: callback when obtaining transaction receipt, BcosTransactionReceipt: Receipt information corresponding to the transaction hash。
+-withProof: return whether to bring Merkel tree proof
+-callback: callback when getting transaction receipt, BcosTransactionReceipt: Receipt information corresponding to the transaction hash。
 
 **Return value**
 
@@ -489,8 +489,8 @@ Get the number of unprocessed transactions in the transaction pool。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback when obtaining transaction receipt, PendingTxSize: Number of unprocessed transactions in the trading pool。
+-node: allows RPC to send requests to the specified node
+-callback: callback when obtaining transaction receipt, PendingTxSize: Number of unprocessed transactions in the trading pool。
 
 **Return value**
 
@@ -528,7 +528,7 @@ Obtain the network connection information of the specified node。
 
 **Parameters**
 
-- callback: callback after getting, Peers: Network connection information for the specified node。
+-callback: callback after getting, Peers: Network connection information for the specified node。
 
 **Return value**
 
@@ -602,8 +602,8 @@ Get Node Synchronization Status。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after obtaining synchronization information, SyncStatus: Blockchain node synchronization status。
+-node: allows RPC to send requests to the specified node
+-callback: callback after obtaining synchronization information, SyncStatus: Blockchain node synchronization status。
 
 **Return value**
 
@@ -629,9 +629,9 @@ Gets the value of the system configuration item based on the specified configura
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - key: System Configuration Item
-- callback: callback after obtaining the configuration item, SystemConfig: Value of System Configuration Item。
+-callback: callback after obtaining the configuration item, SystemConfig: Value of System Configuration Item。
 
 **Return value**
 
@@ -661,7 +661,7 @@ Obtain the data version number of the current blockchain。
 
 **Parameters**
 
-- callback: EnumNodeVersion.Version, the data version number of the blockchain
+-callback: EnumNodeVersion.Version, the data version number of the blockchain
 
 **Return value**
 
@@ -675,8 +675,8 @@ Obtain the observation node list of the group corresponding to the client。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after getting the node list, ObserverList: Watch Node List。
+-node: allows RPC to send requests to the specified node
+-callback: callback after getting the node list, ObserverList: Watch Node List。
 
 **Return value**
 
@@ -704,8 +704,8 @@ Obtain the consensus node list of the client group。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: callback after getting the node list
+-node: allows RPC to send requests to the specified node
+-callback: callback after getting the node list
 
 **Return value**
 
@@ -744,7 +744,7 @@ Obtain PBFT view information when a node uses the PBFT consensus algorithm。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
+-node: allows RPC to send requests to the specified node
 - callback：PbftView: PBFT View Information。
 
 **Return value**
@@ -771,8 +771,8 @@ Get Node Consensus Status。
 
 **Parameters**
 
-- node: allows RPC to send requests to the specified node
-- callback: the callback after obtaining the status.: Node consensus state。
+-node: allows RPC to send requests to the specified node
+-callback: the callback after obtaining the status: Node consensus state。
 
 **Return value**
 
@@ -800,7 +800,7 @@ Query the status information of the current group。
 
 **Parameters**
 
-- callback: callback after status information is queried, BcosGroupInfo: Queried group status information。
+-callback: callback after status information is queried, BcosGroupInfo: Queried group status information。
 
 **Return value**
 
@@ -870,7 +870,7 @@ Get the list of groups for the current node。
 
 **Parameters**
 
-- callback: callback after obtaining the group list, BcosGroupList: List of groups for the current node。
+-callback: callback after getting the group list, BcosGroupList: List of groups for the current node。
   
 
 **Return value**
@@ -902,7 +902,7 @@ Gets the list of nodes connected to the specified group of the current node。
 
 **Parameters**
 
-- callback: callback after getting the node list, GroupPeers: Specify the list of nodes to which the group is connected。
+-callback: callback after getting the node list, GroupPeers: Specify the list of nodes to which the group is connected。
 
 **Return value**
 
@@ -932,7 +932,7 @@ Obtain the current node group information list。
 
 **Parameters**
 
-- callback: callback after obtaining group information, BcosGroupInfoList: Current node group information list。
+-callback: callback after obtaining group information, BcosGroupInfoList: Current node group information list。
 
 **Return value**
 
@@ -1005,7 +1005,7 @@ Obtain information about a specified node in a group。
 **Parameters**
 
 - node: Specify node name
-- callback: callback after obtaining information, BcosGroupNodeInfo: Query the obtained node information。
+-callback: callback after getting information, BcosGroupNodeInfo: Query the obtained node information。
 
 **Return value**
 
@@ -1103,4 +1103,4 @@ Determine whether serial execution is on the chain
 
 ### 5.6 getNegotiatedProtocol
 
-Obtain the maximum and minimum value of the protocol number after the SDK and the node handshake. The first 16 bytes of the obtained int are the maximum value, and the last 16 bytes are the minimum value.
+Obtain the maximum and minimum value of the protocol number after the SDK and the node handshake. The first 16 bytes of the obtained int are the maximum value, and the last 16 bytes are the minimum value

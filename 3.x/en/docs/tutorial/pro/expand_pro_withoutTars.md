@@ -15,11 +15,11 @@ Script command, which supports' deploy '. The default value is' deploy':
 
 **'V 'Options [Optional]**
 
-Specifies the chain version (air, pro, max). The default value is air.。
+Specifies the chain version (air, pro, max). The default value is air。
 
 **'c 'option [Optional]**
 
-Specifies the path of the service configuration file. This path must include config.toml. The default value is. / BcosBuilder / pro / config.toml.。
+Specifies the path of the service configuration file. This path must include config.toml. The default value is. / BcosBuilder / pro / config.toml。
 
 **'o 'option [Optional]**
 
@@ -36,7 +36,7 @@ Specific steps are as follows:
 2. tars _ pkg _ dir in [tars] specifies the binary location of the service；
 3. [group] genesis _ config _ path, which specifies the path of the genesis block configuration file of the existing node；
 4. [agency.group] option in [[agency]], modify node _ name, tars _ listen _ port；
-Note that the difference between the last deployed port and the tars _ listen _ port must be greater than 5. For example, if the tars _ listen _ port of the last deployed node is 40423, the minimum value of the tars _ listen _ port is 40428.。
+Note that the difference between the last deployed port and the tars _ listen _ port must be greater than 5. For example, if the tars _ listen _ port of the last deployed node is 40423, the minimum value of the tars _ listen _ port is 40428。
 ```
 
 The capacity expansion configuration 'config.toml' is as follows (for example, node1 of node A of the capacity expansion organization):
@@ -159,7 +159,7 @@ expand_node/172.31.184.227/
 
 ```eval_rst
 .. note::
-   When you scale out a new node, first add the node as an observation node, and only when the block height of the scale-out node is the same as the highest block height of the existing node on the chain, can it be added as a consensus node.。
+   When you scale out a new node, first add the node as an observation node, and only when the block height of the scale-out node is the same as the highest block height of the existing node on the chain, can it be added as a consensus node。
 ```
 
 **Step 1: Obtain the NodeID of the scaling node**
@@ -260,7 +260,7 @@ Major modifications:
 3. Set the institution name in [[agency]]
 4. Set the deploy _ ip, listen _ port, tars _ listen _ port service ip and corresponding port of [agency.rpc]；
 5. Set the deploy _ ip, listen _ port, tars _ listen _ port service ip and corresponding port of [agency.gateway], and modify the peers (you need to write the IP: port of the deployed gateway, and other deployed gateways do not need to modify the corresponding nodes.json；
-Note that the difference between tars _ listen _ port and the last deployed port must be greater than 5. For example, if the tars _ listen _ port of the last deployed node is 40423, the minimum value of tars _ listen _ port in this instance is 40428, and the minimum value of tars _ listen _ port in gateway is 44429.
+Note that the difference between tars _ listen _ port and the last deployed port must be greater than 5. For example, if the tars _ listen _ port of the last deployed node is 40423, the minimum value of tars _ listen _ port in this instance is 40428, and the minimum value of tars _ listen _ port in gateway is 44429
 ```
 
 The configuration of the new RPC / Gateway service 'config.toml' is as follows:

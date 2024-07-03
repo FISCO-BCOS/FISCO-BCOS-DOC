@@ -4,18 +4,18 @@ Tags: "Pro version of the blockchain network" "deployment"
 
 ------------
 
-FISCO BCOS 3.x supports the Pro version of the microservice blockchain architecture. The Pro version of FISCO BCOS includes RPC services, Gateway services, and node services. Each service can be deployed and expanded independently.。Please refer to [here](../../quick_start/hardware_requirements.md)Use supported**Hardware and platforms**Conduct operation。
+FISCO BCOS 3.x supports the Pro version of the microservice blockchain architecture. The Pro version of FISCO BCOS includes RPC services, Gateway services, and node services. Each service can be deployed and expanded independently。Please refer to [here](../../quick_start/hardware_requirements.md)Use supported**Hardware and platforms**Conduct operation。
 
 ```eval_rst
 .. note::
-   - Pro FISCO BCOS uses the "BcosBuilder / pro" tool for chain building and capacity expansion. For more information about this tool, see 'BcosBuilder <. / pro _ builder.html >' _
-   - FISCO BCOS 3.x builds and manages microservices based on tars. Before building the Pro version of FISCO BCOS, you need to install the tars service. This chapter describes the process of building the docker version of tars service. For more information about deploying and building tars, please refer to 'Here < https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
-   - In this chapter, build the tars service based on Docker. Make sure that the system user has the permission to operate docker and that the docker service is started.
+   - Pro version FISCO BCOS uses the "BcosBuilder / pro" tool for chain building and expansion and other related operations, please refer to the introduction of this tool 'BcosBuilder<./pro_builder.html>`_ 
+   - FISCO BCOS 3.x builds and manages microservices based on tars. Before building the Pro version of FISCO BCOS, you need to install the tars service<https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
+   - This chapter builds the tars service based on Docker. Make sure that the system user has the permission to operate docker and that the docker service is started
 ```
 
 ## 1. Installation Dependencies
 
-Deployment tool 'BcosBuilder' depends on 'python3, curl, docker, docker-compose ', depending on the operating system you are using, use the following command to install the dependency。
+The deployment tool 'BcosBuilder' depends on 'python3, curl, docker, docker-compose'. Depending on the operating system you are using, use the following command to install the dependency。
 
 **Install Ubuntu Dependencies(Version not less than Ubuntu18.04)**
 
@@ -40,8 +40,8 @@ brew install curl docker docker-compose python3 wget
 
 ```eval_rst
 .. note::
-   - Deployment tool "BcosBuilder" configuration and use please refer to 'here <. / pro _ builder.html >' _
-   - If the network speed of "BcosBuilder" downloaded from github is too slow, try: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - Deployment tool "BcosBuilder" configuration and use please refer to 'here<./pro_builder.html>`_
+   - If downloading the deployment tool "BcosBuilder" from github is too slow, please try: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -62,14 +62,14 @@ cd BcosBuilder && pip3 install -r requirements.txt
 
 The Pro version of FISCO BCOS uses the tars service to build and manage microservices. The tars service mainly includes' TarsFramework 'and' TarsNode '. For more information about the tars service, please refer to [here](https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md).
 
-**'BcosBuilder 'provides the configuration of tars docker in' bridge 'and' host 'network modes. We recommend that you use the configuration of tars docker in' bridge 'network mode in the stand-alone version. We recommend that you use the configuration of tars docker in' host 'network mode in the production environment.**。
+**'BcosBuilder 'provides the configuration of tars docker in' bridge 'and' host 'network modes. We recommend that you use the configuration of tars docker in' bridge 'network mode in the stand-alone version. We recommend that you use the configuration of tars docker in' host 'network mode in the production environment**。
 
 - Docker configuration path of 'bridge' network mode: 'docker / bridge', where 'docker / bridge / linux' is used by linux users and 'docker / bridge / mac' is used by mac users
-- The docker configuration path of the 'host' network mode: 'docker / host / linux'. Currently, only docker configurations for linux systems are provided.
+- The docker configuration path of the 'host' network mode: 'docker / host / linux'. Currently, only docker configurations for linux systems are provided
 
 ### 3.0 Configure Permission Mode
 
-**Note:**If you do not need permission and the chain version is less than 3.3, you can skip this section.。
+**Note:**If you do not need permission and the chain version is less than 3.3, you can skip this section。
 
 Set 'auth _ check' of the configuration file to true and set the 'init _ auth _ address' field accordingly。The address specified by the 'init _ auth _ address' field here is generated by the following steps:
 
@@ -79,7 +79,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh`
+    -If you cannot download for a long time due to network problems, please try'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh`
 ```
 
 State secret version please use the following instruction to get the script
@@ -90,7 +90,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh`
+    -If you cannot download for a long time due to network problems, please try'curl-#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh`
 ```
 
 After the execution, there is the following output, using 'init _ auth _ address' is to use the following 'Account Address'
@@ -111,8 +111,8 @@ init_auth_address="0xd5eff0641c2f69a8deed9510e374aa3e94066a66"
 
 ```eval_rst
 .. note::
-   - Use docker to install and start the tars service. Make sure that the system user has the docker permission and that the docker service is started.
-   - After installing the tars service, it takes about a minute or so to pass the http://127.0.0.1:3000 / Visit tars Web Management Platform
+   -Here, docker is used to install / start the tars service. Please make sure that the system user has the permission to operate docker and make sure that the docker service is in the startup state
+   -After installing the tars service, it will take about a minute to pass the http://127.0.0.1:3000 / Visit tars Web Management Platform
 ```
 
 **Install the tars service: If you run the tars service for the first time, run the following command to install and start the tars service。**
@@ -121,18 +121,18 @@ init_auth_address="0xd5eff0641c2f69a8deed9510e374aa3e94066a66"
 # Enter the BcosBuilder directory
 cd ~/fisco/BcosBuilder/pro
 
-# Note: It is necessary to ensure that the docker service is started.
+# Note: It is necessary to ensure that the docker service is started
 # Skip this step if you have done it before
-# Create bridge type network tars with network segment 172.25.0.0 / 16-network
+# Create a bridge-type network tars-network with a network segment of 172.25.0.0 / 16
 python3 build_chain.py create-subnet -n tars-network -s 172.25.0.0/16
 
-# Note: It is necessary to ensure that the docker service is started.
+# Note: It is necessary to ensure that the docker service is started
 # Linux system: Enter the path to the docker configuration file(macOS system can skip this step)
 cd ../docker/bridge/linux/framework
 # macOS system: Go to docker profile path(Linux system can skip this step)
 cd ../docker/bridge/mac/framework
 
-# Configure the MYSQL password, assuming that the password is set to FISCO (Note: docker-There are two MYSQL _ ROOT _ PASSWORD configuration items in the compose.yml file. The passwords must be the same。）
+# Configure the MYSQL password. It is assumed that the password is set to FISCO (Note: There are two MYSQL _ ROOT _ PASSWORD configuration items in the docker-compose.yml file。）
 # Linux system(macOS system can skip this step)
 sed -i 's/MYSQL_ROOT_PASSWORD: ""/MYSQL_ROOT_PASSWORD: "FISCO"/g' docker-compose.yml
 # macOS System(Linux system can skip this step)
@@ -148,7 +148,7 @@ docker-compose up -d
 # Enter the BcosBuilder directory
 cd ~/fisco/BcosBuilder
 
-# Note: It is necessary to ensure that the docker service is started.
+# Note: It is necessary to ensure that the docker service is started
 # Linux system: Enter the path to the docker configuration file(macOS system can skip this step)
 cd docker/bridge/linux/framework
 # macOS system: Go to docker profile path(Linux system can skip this step)
@@ -164,8 +164,8 @@ After the tars service is installed and started, the local environment can use h
 
 ```eval_rst
 .. note::
-   - The tars service only needs to be configured once. If it has been configured before, it does not need to be reconfigured.
-   - In this step, you must apply for a token to obtain the operation permission of the blockchain service based on the tars service.
+   -tars service only needs to be configured once. If it has been configured before, it does not need to be reconfigured
+   - In this step, you must apply for a token to obtain the operation permission of the blockchain service based on the tars service
 ```
 
 After the initial installation of the tars management service, you need to configure the following:
@@ -173,7 +173,7 @@ After the initial installation of the tars management service, you need to confi
 - **Login Configuration**Initialize login password for administrator user 'admin'。
 - **Apply for token**Log on to the tars web management platform to apply for a token for service construction and management。
 
-For the first time using the tars management platform, enter the URL http://127.0.0.1:3000 /, refer to the figure below to initialize the administrator password and enter [admin]-> [user center]-> [token management] apply for token。
+For the first time using the tars management platform, enter the URL http://127.0.0.1:3000 /, refer to the following figure to initialize the administrator password and enter [admin] ->User Center ->[token management] apply for token。
 
 ![](../../../images/tutorial/tars_config.gif)
 
@@ -181,9 +181,9 @@ For the first time using the tars management platform, enter the URL http://127.
 
 Pro version FISCO BCOS includes RPC service, Gateway service and blockchain node service BcosNodeService。
 
-- RPC service: It is responsible for receiving client requests and forwarding the requests to nodes for processing. RPC services can be scaled horizontally, and one RPC service can access multiple blockchain node services.
-- Gateway service: It is responsible for network communication between blockchain nodes across institutions. Gateway services can be scaled horizontally. One Gateway service can access multiple blockchain node services.
-- Blockchain node service 'BcosNodeService': Provides blockchain-related services, including consensus, execution, and transaction blockchain. The node service accesses RPC services and Gateway services to obtain network communication functions.。
+-RPC service: responsible for receiving client requests and forwarding the requests to nodes for processing, RPC service can be scaled horizontally, and one RPC service can access multiple blockchain node services
+- Gateway service: responsible for network communication between blockchain nodes across institutions. The Gateway service is horizontally scalable, and one Gateway service can access multiple blockchain node services
+- Blockchain node service 'BcosNodeService': Provides blockchain-related services, including consensus, execution, and transaction blockchain. The node service accesses RPC services and Gateway services to obtain network communication functions。
 
 For the overall architecture design of Pro version FISCO BCOS, please refer to [here](../../design/architecture.md)。
 
@@ -193,9 +193,9 @@ This chapter introduces the Pro version FISCO BCOS deployment process by taking 
 
 ```eval_rst
 .. note::
-   - If you do not apply for a token, refer to [3.2 Configuring Tars Service] to apply for a token.
-   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform.-> [user center]-> [token management] to obtain the token list
-   - Before deploying the Pro version of the blockchain node, please make sure that your tars service is in the startup state. For installation / startup and configuration of the tars service, please refer to Section 3.2
+   - If you do not apply for a token, refer to [3.2 Configuring Tars Service] to apply for a token
+   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform ->User Center ->[token management] obtaining the token list
+   -Before deploying the Pro version blockchain node, please make sure that your tars service is in the started state. Please refer to Section 3.2 for installing / starting and configuring the tars service
 ```
 
 ### 4.1 Download Binary
@@ -204,16 +204,16 @@ Before building the Pro version of FISCO BCOS, you need to download the binary p
 
 ```eval_rst
 .. note::
-   - You can use the python3 build _ chain.py-h "View deployment script usage
-   - The binary is downloaded to the "binary" directory by default
-   - If downloading the binary is slow, try: ``python3 build_chain.py download_binary -t cdn``
+   - You can view the deployment script usage through "python3 build _ chain.py -h"
+   - binary is downloaded to the "binary" directory by default
+   - If downloading binary is slow, please try: ``python3 build_chain.py download_binary -t cdn``
 ```
 
 ```shell
 # Enter the operation directory
 cd ~/fisco/BcosBuilder/pro
 
-# Run the build _ chain.py script to download the binary. The binary package is downloaded to the binary directory by default.
+# Run the build _ chain.py script to download the binary. The binary package is downloaded to the binary directory by default
 python3 build_chain.py download_binary
 ```
 
@@ -293,7 +293,7 @@ generated/rpc/chain0
 ├── 172.25.0.3 
 │   ├── agencyABcosRpcService # RPC Service Directory for Institution A
 │   │   ├── config.ini.tmp    # Configuration file for RPC service of institution A
-│   │   ├── sdk               # The SDK certificate directory. The SDK client can copy certificates from this directory to connect to the RPC service.
+│   │   ├── sdk               # The SDK certificate directory. The SDK client can copy certificates from this directory to connect to the RPC service
 │   │   │   ├── ca.crt
 │   │   │   ├── cert.cnf
 │   │   │   ├── sdk.crt
@@ -305,7 +305,7 @@ generated/rpc/chain0
 │   │       └── ssl.key
 │   └── agencyBBcosRpcService # RPC Service Configuration Directory for Institution B
 │       ├── config.ini.tmp    # Configuration file for RPC service of institution B
-│       ├── sdk               # The SDK certificate directory. The SDK client copies the certificate from this directory to connect to the RPC service.
+│       ├── sdk               # The SDK certificate directory. The SDK client copies the certificate from this directory to connect to the RPC service
 │       │   ├── ca.crt
 │       │   ├── cert.cnf
 │       │   ├── sdk.crt
@@ -315,7 +315,7 @@ generated/rpc/chain0
 │           ├── cert.cnf
 │           ├── ssl.crt
 │           └── ssl.key
-└── ca                       # The CA certificate directory, which mainly includes the CA certificate and the CA private key. Keep the CA certificate and the CA private key properly.
+└── ca                       # The CA certificate directory, which mainly includes the CA certificate and the CA private key. Keep the CA certificate and the CA private key properly
     ├── ca.crt
     ├── ca.key
     ├── ca.srl
@@ -328,14 +328,14 @@ After the RPC service is started successfully, you can view the service lists' a
 
 ```eval_rst
 .. note::
-   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform.-> [user center]-> [token management] to obtain the token list
-   - Before deploying the Pro version of the blockchain node, please make sure that your tars service is in the startup state. For installation / startup and configuration of the tars service, please refer to Section 3.2
-   - **Keep the RPC service CA certificate and CA private key generated during service deployment for SDK certificate application, RPC service expansion, and other operations.**
+   - If you forget to access the token of the tars service, you can use the [admin] of the tars web management platform ->User Center ->[token management] obtaining the token list
+   -Before deploying the Pro version blockchain node, please make sure that your tars service is in the started state. Please refer to Section 3.2 for installing / starting and configuring the tars service
+   - **Keep the RPC service CA certificate and CA private key generated during service deployment for SDK certificate application, RPC service expansion, and other operations**
 ```
 
 ### 4.3 Deploying Gateway Services
 
-After the RPC service is deployed, you need to deploy the Gateway service to establish network connections between organizations.。Run the following command in the BcosBuilder directory to deploy and start the gateway service of the two organizations. The corresponding gateway service names are 'agencyABcosGatewayService' and 'agencyBBcosGatewayService', the ip address is' 172.25.0.3 ', and the occupied ports are' 30300 'and' 30301 'respectively(Before performing this operation, please make sure that the '30300' and '30301' ports of the machine are not occupied)。
+After the RPC service is deployed, you need to deploy the Gateway service to establish network connections between organizations。Run the following command in the BcosBuilder directory to deploy and start the gateway service of the two organizations. The corresponding gateway service names are 'agencyABcosGatewayService' and 'agencyBBcosGatewayService', the ip address is' 172.25.0.3 ', and the occupied ports are' 30300 'and' 30301 'respectively(Before performing this operation, please make sure that the '30300' and '30301' ports of the machine are not occupied)。
 
 ```shell
 # Enter the operation directory
@@ -410,7 +410,7 @@ generated/gateway/chain0
 │           ├── cert.cnf
 │           ├── ssl.crt
 │           └── ssl.key
-└── ca                          # Configure the root certificate of the Gateway service. Save the root certificate and the root certificate private key.
+└── ca                          # Configure the root certificate of the Gateway service. Save the root certificate and the root certificate private key
     ├── ca.crt
     ├── ca.key
     ├── ca.srl
@@ -420,8 +420,8 @@ generated/gateway/chain0
 ```eval_rst
 .. note::
    - This step is performed on the basis of step 4.2
-   - Before deploying the Pro version of the blockchain node, please make sure that your tars service is in the startup state. For installation / startup and configuration of the tars service, please refer to Section 3.2
-   - **Keep the RPC service CA certificate and CA private key generated during service deployment for operations such as gateway service expansion.**
+   -Before deploying the Pro version blockchain node, please make sure that your tars service is in the started state. Please refer to Section 3.2 for installing / starting and configuring the tars service
+   - **Keep the RPC service CA certificate and CA private key generated during service deployment for operations such as gateway service expansion**
 ```
 
 After the Gateway service is successfully started, you can view the service lists' agencyABcosGatewayService 'and' agencyBBcosGatewayService 'on the tars web management platform, and each service is in the' active 'state:
@@ -429,7 +429,7 @@ After the Gateway service is successfully started, you can view the service list
 
 ### 4.4 Deploying Blockchain Node Services
 
-After the RPC service and the Gateway service are deployed, you can deploy the blockchain node service.。Run the following command in the BcosBuilder directory to deploy and start the blockchain service of two institutions and two nodes. The corresponding service names are 'group0node00BcosNodeService' and 'group0node10BcosNodeService', and the chain ID is' chain0 'and the group ID is' group0'。
+After the RPC service and the Gateway service are deployed, you can deploy the blockchain node service。Run the following command in the BcosBuilder directory to deploy and start the blockchain service of two institutions and two nodes. The corresponding service names are 'group0node00BcosNodeService' and 'group0node10BcosNodeService', and the chain ID is' chain0 'and the group ID is' group0'。
 
 ```shell
 # Enter the operation directory
@@ -512,8 +512,8 @@ generated/chain0
 
 ```eval_rst
 .. note::
-   - It is recommended to deploy the blockchain node service after the RPC and Gateway services are deployed.
-   - Before deploying the Pro version of the blockchain node, please make sure that your tars service is in the startup state. For installation / startup and configuration of the tars service, please refer to Section 3.2
+   - It is recommended to deploy the blockchain node service after deploying RPC and Gateway services
+   -Before deploying the Pro version blockchain node, please make sure that your tars service is in the started state. Please refer to Section 3.2 for installing / starting and configuring the tars service
 ```
 
 After the blockchain node service is successfully started, you can view the service lists' agencyAgroup0node0BcosNodeService 'and' agencyBgroup0node0BcosNodeService 'on the tars web page management platform, and each service is in the' active 'status:
@@ -522,7 +522,7 @@ After the blockchain node service is successfully started, you can view the serv
 
 ### 4.5 Deploy the blockchain node monitoring service
 
-After the RPC service, Gateway service, and node service are deployed, you can deploy the blockchain node monitoring service.。Run the following command in the BcosBuilder / pro directory to deploy and start the blockchain node monitoring service。
+After the RPC service, Gateway service, and node service are deployed, you can deploy the blockchain node monitoring service。Run the following command in the BcosBuilder / pro directory to deploy and start the blockchain node monitoring service。
 
 ```shell
 # Enter the operation directory
@@ -579,7 +579,7 @@ app_log/
 
 ```eval_rst
 .. note::
-   - It is recommended to deploy the blockchain node monitoring service after deploying RPC and Gateway and node services
+   - It is recommended to deploy the blockchain node monitoring service after deploying RPC, Gateway and node services
 ```
 After the blockchain node service is successfully started, log in to grafana. The default listening port on the grafana UI management page is 3001, and the login URL is (http://ip:3001 / graphna). The default account name and password are admin / admin. Import the Dashboard after logging in ([github source code](https://github.com/FISCO-BCOS/FISCO-BCOS/blob/master/tools/template/Dashboard.json)) and configure the prometheus source (http://ip:9090 /) View real-time display of each indicator data。
 
@@ -587,12 +587,12 @@ After the blockchain node service is successfully started, log in to grafana. Th
 
 ## 5. Configure and use the console
 
-The console is applicable to both the Pro version and the Air version of the FISCO BCOS blockchain, and the experience is completely consistent。After the Pro version blockchain experience environment is built, you can configure and use the console to send transactions to the Pro version blockchain.。
+The console is applicable to both the Pro version and the Air version of the FISCO BCOS blockchain, and the experience is completely consistent。After the Pro version blockchain experience environment is built, you can configure and use the console to send transactions to the Pro version blockchain。
 ### 5.1 Installation Dependencies
 
 ```eval_rst
 .. note::
-   - For console configuration methods and commands, please refer to 'here <.. /.. / operation _ and _ maintenance / console / console _ config.html >' _
+   -For console configuration methods and commands, please refer to 'here<../../operation_and_maintenance/console/console_config.html>`_
 ```
 
 Before using the console, you need to install the java environment:
@@ -614,7 +614,7 @@ cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v
 ```
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
+    -If you cannot download for a long time due to network problems, please try 'cd ~ / fisco & & curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh`
 ```
 
 **Step 2: Configure the Console**
@@ -628,10 +628,10 @@ If the RPC service does not use the default port, replace 20200 in the file with
 cp -n console/conf/config-example.toml console/conf/config.toml
 ```
 
-- Configure Console Certificates
+- Configure console certificates
 
 ```shell
-# The command find.-name sdk Find all SDK certificate paths
+# All SDK certificate paths can be found through the command find.-name sdk
 cp -r BcosBuilder/pro/generated/rpc/chain0/agencyBBcosRpcService/172.25.0.3/sdk/* console/conf
 ```
 
@@ -798,7 +798,7 @@ Event: {}
 
 ```eval_rst
 .. note::
-   - It is recommended to deploy the blockchain node monitoring service after deploying RPC and Gateway and node services
+   - It is recommended to deploy the blockchain node monitoring service after deploying RPC, Gateway and node services
    - This step is optional
 ```
 
@@ -857,4 +857,4 @@ app_log/
 
 ```
 
-After the blockchain node service is successfully started, you can view the data of each metric on the graphna and prometheus pages.。
+After the blockchain node service is successfully started, you can view the data of each metric on the graphna and prometheus pages。

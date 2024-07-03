@@ -6,22 +6,22 @@ Tags: "console" "Console Configuration" "Command Line Interactive Tools"
 
 ```eval_rst
 .. important::
-    - "Console" only supports FISCO BCOS version 3.x, based on 'Java SDK <.. / sdk / java _ sdk / index.html >' _ implementation。
-    - You can use the command. "/ start.sh--version "View the current console version
+    - "Console" only supports FISCO BCOS 3.x version, based on 'Java SDK<../sdk/java_sdk/index.html>'_ Implementation。
+    - You can view the current console version through the command. "/ start.sh --version"
 ```
 
-[CONSOLE](https://github.com/FISCO-BCOS/console)is an important interactive client tool for FISCO BCOS 3.x, which is available through the [Java SDK](../../sdk/java_sdk/index.md)Establish a connection with a blockchain node to implement read and write access requests for blockchain node data。The console has a wealth of commands, including querying blockchain status, managing blockchain nodes, deploying and invoking contracts, and more.。In addition, the console provides a contract compilation tool that allows users to quickly and easily integrate Solidity and webankblockchain-liquid contract file(Hereinafter referred to as WBC-liquid) the compiled WASM file is converted to a Java contract file.。
+[CONSOLE](https://github.com/FISCO-BCOS/console)is an important interactive client tool for FISCO BCOS 3.x, which is available through the [Java SDK](../../sdk/java_sdk/index.md)Establish a connection with a blockchain node to implement read and write access requests for blockchain node data。The console has a wealth of commands, including querying blockchain status, managing blockchain nodes, deploying and invoking contracts, and more。In addition, the console provides a contract compilation tool that allows users to quickly and easily integrate Solidity and webankblockchain-liquid contract files(Hereinafter referred to as wbc-liquid) the compiled WASM file is converted to a Java contract file。
 
-wbc-Please refer to [wbc] for building the liquid compilation environment.-environment configuration of liquid](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
+For details about how to set up the wbc-liquid compilation environment, see [wbc-liquid environment configuration](https://liquid-doc.readthedocs.io/zh_CN/latest/docs/quickstart/prerequisite.html)。
 
 ## Console Configuration and Operation
 
 ```eval_rst
 .. important::
-    Precondition: To build the FISCO BCOS blockchain, see 'Building the first blockchain network <.. /.. / quick _ start / air _ installation.html >' _
+    Precondition: To build the FISCO BCOS blockchain, see Building the first blockchain network<../../quick_start/air_installation.html>`_
     Chain Building Tool Reference:
-     - 'Air version FISCO BCOS build chain script build _ chain <.. /.. / tutorial / air / build _ chain.html > '_
-     - 'Pro version FISCO BCOS chain building tool BcosBuilder <.. /.. / tutorial / pro / pro _ builder.html > '_
+     - 'Air version FISCO BCOS build chain script build _ chain<../../tutorial/air/build_chain.html>`_
+     - 'Pro version FISCO BCOS chain building tool BcosBuilder<../../tutorial/pro/pro_builder.html>`_
 ```
 
 ### 1. Get the console
@@ -36,12 +36,12 @@ bash download_console.sh
 
 ```eval_rst
 .. note::
-    - If you cannot download for a long time due to network problems, try 'curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
+    -If you cannot download for a long time due to network problems, please try'curl-#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/download_console.sh && bash download_console.sh`
 ```
 
 #### 1.1 Getting consoles for other Solidity versions
 
-Since the default Solc compiler version in the console is 0.8.11, you can use the following command to download the Solidity contract.(Currently supports 0.4.25, 0.5.2, 0.6.10, 0.8.11)：
+Since the default Solc compiler version in the console is 0.8.11, you can use the following command to download the Solidity contract(Currently supports 0.4.25, 0.5.2, 0.6.10, 0.8.11)：
 
 ```shell
 # Download version 0.4.25 of the console
@@ -58,7 +58,7 @@ bash download_console.sh -s 0.6 # And so on, support specified version(0.4,0.5,0
 # In the directory where the script is executed, two new files are generated, similar to the other versions
 ls solcJ*
 solcJ-0.6.10.1.jar solcJ-0.6.tar.gz
-# will solcJ-0.6.10.1.jar Manually replace the solcJ file in the lib directory of the folder where the console is located.。For example, the console directory is in this directory:
+# Replace solcJ-0.6.10.1.jar manually with the solcJ file in the lib directory of the folder where the console is located。For example, the console directory is in this directory:
 mv ./console/lib/solcJ-0.8.11.1.jar . && cp solcJ-0.6.10.1.jar ./console/lib/
 # At this point, the default Solidity version of the console is switched to version 0.6.10
 ```
@@ -76,7 +76,7 @@ The configured console directory structure is as follows:
 ├── contracts # Contract Directory
 │   ├── console # Contract abi, bin, java file directory compiled during contract deployment in the console
 │   ├── sdk     # contract abi, bin, java file directory compiled by sol2java.sh script
-│   ├── liquid  # WBC-Liquid contract storage directory
+│   ├── liquid  # WBC-Liquid Contract Storage Directory
 │   └── solidity    # Solidity contract storage directory
 │       └── HelloWorld.sol # Common contract: HelloWorld contract, deployable and callable
 │       └── KVTableTest.sol # Contracts using the KV storage interface: KVTableTest contract, which can be deployed and invoked
@@ -84,14 +84,14 @@ The configured console directory structure is as follows:
 │-- start.sh # Console Startup Script
 │-- get_account.sh # Account Generation Script
 │-- get_gm_account.sh # Account Generation Script, State Secret Edition
-│-- contract2java.sh # Solidity/WBC-Liquid contract files are compiled into development tool scripts for java contract files.
+│-- contract2java.sh # Solidity / WBC-Liquid contract files are compiled into development tool scripts for java contract files
 ```
 
 ### 2. Configure Console
 
 - Configuration of blockchain nodes and certificates:
-  - Copy all files in the node sdk directory to the 'conf' directory。
-  - Put the 'config' in the 'conf' directory-example.toml 'file renamed to' config.toml 'file。Configure the 'config.toml' file, where the content of the added comment is modified according to the blockchain node configuration。
+  - copy all files in the node sdk directory to the 'conf' directory。
+  - Rename the 'config-example.toml' file in the 'conf' directory to the 'config.toml' file。Configure the 'config.toml' file, where the content of the added comment is modified according to the blockchain node configuration。
 
 The sample configuration file is as follows:
 
@@ -142,7 +142,7 @@ Configuration item detailed description [refer here](../sdk/java_sdk/config.md)�
 
     Console Description
     
-    - When the console configuration file configures multiple node connections in a group, some nodes in the group may exit the group during operation, so the information returned by the console polling node query may be inconsistent, which is a normal phenomenon.。We recommend that you use the console to configure a node or ensure that the configured node is always in the group, so that the information in the group queried during the synchronization time is consistent.。
+    -When the console configuration file configures multiple node connections in a group, because some nodes in the group may exit the group during the operation, the information returned by the console polling node query may be inconsistent, which is normal。We recommend that you use the console to configure a node or ensure that the configured node is always in the group, so that the information in the group queried during the synchronization time is consistent。
 ```
 
 ### 3. Start the console
@@ -181,7 +181,7 @@ console version: 3.0.0
 
 ##### 4.2.1 Console Load Private Key
 
-The console provides the account generation script get _ account.sh(Please refer to [Account Management Document] for script usage.(../../develop/account.md)The generated account file is in the accounts directory, and the account file loaded by the console must be placed in that directory。
+The console provides the account generation script get _ account.sh(Please refer to [Account Management Document] for script usage(../../develop/account.md)The generated account file is in the accounts directory, and the account file loaded by the console must be placed in that directory。
 There are several ways to start the console:
 
 ```shell
@@ -199,7 +199,7 @@ Starts with the default group number specified by the console profile。
 ./start.sh
 ```
 
-**注意**: When the console starts without specifying a private key account, it will try to load an available private key account from the 'account' directory for sending transactions. If the load fails, a new 'PEM' account file will be created and saved in the 'account' directory.。
+**注意**: When the console starts without specifying a private key account, it will try to load an available private key account from the 'account' directory for sending transactions. If the load fails, a new 'PEM' account file will be created and saved in the 'account' directory。
 
 ##### 4.2.3 Start by specifying the group name
 
@@ -211,7 +211,7 @@ Start with the group name specified on the command line。
 
 ##### 4.2.4 Start using PEM format private key file
 
-- Start with the account of the specified pem file, enter the parameters: group number,-pem, pem file path
+- Use the account startup of the specified pem file, enter parameters: group number, -pem, pem file path
 
 ```shell
 ./start.sh group0 -pem account/ecdsa/0x2dbb332a844e0e076f97c90ff5078ea7dd2de910.pem
@@ -219,7 +219,7 @@ Start with the group name specified on the command line。
 
 ##### 4.2.5 Start using PKCS12 format private key file
 
-- Use the specified p12 file account, you need to enter a password, enter parameters: group number,-p12, p12 file path
+- Use the specified p12 file account, you need to enter a password, enter parameters: group number, -p12, p12 file path
 
 ```shell
 ./start.sh group0 -p12 account/ecdsa/0x2dbb332a844e0e076f97c90ff5078ea7dd2de910.pem
@@ -237,11 +237,11 @@ It may be the Java version. Refer to the solution: [https://stackoverflow.com/qu
 
 ## Java Contract Generation Tool
 
-The console provides a specialized tool for generating Java contracts, making it easy for developers to integrate Solidity and WBC.-The liquid contract file is compiled into a Java contract file.。
+The console provides a special tool for generating Java contracts, which allows developers to compile Solidity and wbc-liquid contract files into Java contract files。
 
-The current contract generation tool supports automatic compilation of Solidity and generation of Java files, support for specifying wbc-Liquid compiles the WASM file and the ABI file to generate the Java file.。
+The current contract generation tool supports automatic compilation of Solidity and generation of Java files, WASM files compiled by specified wbc-liquid, and ABI files to generate Java files。
 
-**Note:** The Solidity contract generation tool is directly related to the Solc version number. For the corresponding Solidity contract, use the console with the corresponding Solc。Please refer to 1.1 above for consoles of other Solidity versions.。
+**Note:** The Solidity contract generation tool is directly related to the Solc version number. For the corresponding Solidity contract, use the console with the corresponding Solc。Please refer to 1.1 above for consoles of other Solidity versions。
 
 ### Solidity Contract Use
 
@@ -264,10 +264,10 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 Detailed parameters:
 
 - `package`: Generate the package name of the 'Java' file。
-- `sol`: (Optional)The path of the 'solidity' file. Two methods are supported: file path and directory path. When the parameter is a directory, all the 'solidity' files in the directory are compiled and converted.。The default directory is' contracts / solidity'。
-- `output`: (Optional)The directory where the 'Java' file is generated. By default, it is generated in the 'contracts / sdk / java' directory.。 
+- `sol`: (Optional)The path of the 'solidity' file. Two methods are supported: file path and directory path. When the parameter is a directory, all the 'solidity' files in the directory are compiled and converted。The default directory is' contracts / solidity'。
+- `output`: (Optional)The directory where the 'Java' file is generated. By default, it is generated in the 'contracts / sdk / java' directory。 
 
-### wbc-The liquid contract uses
+### wbc-liquid contract using
 
 ```shell
 $ bash contract2java.sh liquid -h
@@ -285,10 +285,10 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 
 Detailed parameters:
 
-- 'abi ': (Required) WBC-Path to the 'ABI' file of the Liquid contract, which is generated in the target folder after using the 'cargo liquid build' command。
-- 'bin ': (Required) WBC-Path to the 'wasm bin' file of the Liquid contract, which is generated in the target folder after using the 'cargo liquid build' command。
-- 'package ': (Optional) Generate the package name of the' Java 'file, which is' org 'by default.。
-- `sm-bin ': (Required) WBC-The path to the 'wasm sm bin' file of the Liquid contract.-Generated in the target folder after the g 'command。
+- 'abi': (Required) The path of the WBC-Liquid contract 'ABI' file, which is generated in the target folder after using the 'cargo liquid build' command。
+- 'bin': (Required) The path of the WBC-Liquid contract 'wasm bin' file, which is generated in the target folder after using the 'cargo liquid build' command。
+- 'package': (Optional) The package name of the generated 'Java' file, which is' org 'by default。
+- 'sm-bin': (Required) The path of the WBC-Liquid contract 'wasm sm bin' file, which is generated in the target folder after using the 'cargo liquid build -g' command。
 
 #### 使用
 
@@ -298,7 +298,7 @@ $ cd ~/fisco/console
 # Java code for generating Solidity contracts
 $ bash contract2java.sh solidity -p org.com.fisco
 
-# Generate WBC-Java code for the Liquid contract
+# Generate Java code for the WBC-Liquid contract
 $ bash contract2java.sh liquid -p org.com.fisco -b ./contracts/liquid/asset/asset.wasm -a ./contracts/liquid/asset/asset.abi -s ./contracts/liquid/asset/asset_gm.wasm 
 ```
 
@@ -320,7 +320,7 @@ After running successfully, the java, abi, and bin directories will be generated
 |               |-- HelloWorld.java # Solidity Compiled HelloWorld Java File
 |               |-- KVTable.java    # Solidity Compiled KV Storage Interface Contract Java File
 |               |-- KVTableTest.java  # Solidity compiled KVTableTest Java file
-|               |-- Asset.java  # wbc-The asset file generated by liquid
+|               |-- Asset.java  # Asset files generated by wbc-liquid
 ```
 
-The 'org / com / fisco /' package path directory is generated in the Java directory。The Java contract files' HelloWorld.java ',' KVTableTest.java ',' KVTable.java 'and' Asset.java 'will be generated in the package path directory.。where 'HelloWorld.java', 'KVTableTest.java' and 'Asset.java' are the Java contract files required by the Java application。
+The 'org / com / fisco /' package path directory is generated in the Java directory。The Java contract files' HelloWorld.java ',' KVTableTest.java ',' KVTable.java 'and' Asset.java 'will be generated in the package path directory。where 'HelloWorld.java', 'KVTableTest.java' and 'Asset.java' are the Java contract files required by the Java application。

@@ -4,14 +4,14 @@ Tags: "Python SDK" "PythonSDK Console"
 
 ----
 
-[Python SDK](https://github.com/FISCO-BCOS/python-sdk)A simple console is implemented through 'console.py' to support contract operations, account management operations, etc.。
+[Python SDK](https://github.com/FISCO-BCOS/python-sdk)A simple console is implemented through 'console.py' to support contract operations, account management operations, etc。
 
 ```eval_rst
 .. note::
 
     - **Python SDK is currently a candidate version, available for development and testing, available for enterprise applications** `Java SDK <../java_sdk/index.html>`_
-    - To install the Java version console, refer to 'here <.. /.. / installation.html >' _
-    - To run console.py in windows, use '.\ console.py' or 'python console.py'.
+    - Install Java version console can refer to 'here<../../installation.html>`_
+    -To run console.py in windows, use '.\ console.py' or 'python console.py'
 
 ```
 
@@ -26,7 +26,7 @@ Deploy the contract:
 ```
 Parameters include:
 - contract_name: The contract name, which needs to be placed in the 'contracts' directory first
-- save: If the save parameter is set, the contract address will be written to the history file.
+-save: If the save parameter is set, the contract address will be written to the history file
 
 ```bash
 $ ./console.py deploy HelloWorld save
@@ -64,10 +64,10 @@ Call the contract interface and parse the returned result:
 ```
 
 Parameters include:
-- contract _ name: contract name
-- contract _ address: the address of the contract called
-- function: the contract interface called
-- args: call parameter
+-contract _ name: contract name
+-contract _ address: the address of the contract called
+-function: the contract interface called
+-args: call parameter
 
 ```bash
 # Contract address: 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce
@@ -87,10 +87,10 @@ Sending a transaction invokes the interface of the specified contract, and the t
 ```
 
 Parameters include:
-- contract _ name: contract name
-- contract _ address: contract address
-- function: function interface
-- args: parameter list
+-contract _ name: contract name
+-contract _ address: contract address
+-function: function interface
+-args: parameter list
 
 ```bash
 # Contract Name: HelloWorld
@@ -120,13 +120,13 @@ Create a new account and save the results in encrypted form with 'bin / accounts
 
 Parameters include:
 
-- account _ name: Account name
-- account _ password: Password to encrypt the keystore file
+-account _ name: account name
+-account _ password: Password to encrypt the keystore file
 
 ```eval_rst
 .. note::
 
-    - After creating an account using the account creation command, if you want to use it as the default account, modify the "account _ keyfile" and "account _ password" configurations of client _ config.py.
+    - After creating an account using the account creation command, if you want to use it as the default account, modify the "account _ keyfile" and "account _ password" configurations of client _ config.py
     - Account name cannot exceed 240 characters
     - If "account _ password" contains special characters, add single quotation marks around "account _ password," otherwise it cannot be parsed
 ```
@@ -164,7 +164,7 @@ Based on the account name and the password of the account 'keystore' file, outpu
 
 Parameters include:
 
-- name: Account name
+-name: Account name
 - password: Account 'keystore' file password
 
 ```bash
@@ -203,7 +203,7 @@ newaccount [name] [password] [save]
         if "save" arg follows,then backup file and write new without ask
         the account len should be limitted to 240
 
-    ... omit lines...
+    ... omit lines..
     [getTransactionByBlockHashAndIndex] [blockHash] [transactionIndex]
     [getTransactionByBlockNumberAndIndex] [blockNumber] [transactionIndex]
     [getSystemConfigByKey] [tx_count_limit/tx_gas_limit]
@@ -220,7 +220,7 @@ INFO >> user input : ['list']
  >> RPC commands
     [getNodeVersion]
     [getBlockNumber]
-    ... omit lines...
+    ... omit lines..
     [getTransactionByBlockHashAndIndex] [blockHash] [transactionIndex]
     [getTransactionByBlockNumberAndIndex] [blockNumber] [transactionIndex]
     [getSystemConfigByKey] [tx_count_limit/tx_gas_limit]
@@ -262,7 +262,7 @@ Query CNS information based on contract name:
 ./console.py queryCNSByName [contract_name]
 ```
 Parameters include:
-- contract _ name: contract name
+-contract _ name: contract name
 
 ```bash
 Query the CNS information corresponding to the HelloWorld contract name
@@ -313,7 +313,7 @@ Removes the specified node from the group:
 ./console.py removeNode [nodeId]
 ```
 Parameters include:
-- nodeId: nodeID of the deleted node
+-nodeId: nodeID of the deleted node
 
 ```bash
 # Set the node to be located in the ~ / fisco / nodes directory and query the nodeID of node1
@@ -389,7 +389,7 @@ Python SDK provides system configuration modification commands, FISCO BCOS curre
 ./console.py setSystemConfigByKey [key(tx_count_limit/tx_gas_limit)] [value]
 ```
 Parameters include:
-- key: configuration keyword, which mainly includes' tx _ count _ limit 'and' tx _ gas _ limit'
+-key: the configuration keyword, which mainly includes' tx _ count _ limit 'and' tx _ gas _ limit'
 - value: Configure the value of the keyword
 
 ```bash
@@ -426,7 +426,7 @@ Authorize the functions that control permissions to the specified account:
 ./console.py grantPermissionManager [account_adddress]
 ```
 Parameters include:
-- account _ address: the address of the account to which the permission is granted. The account can be generated by using the 'newaccount' command.
+-account _ address: the address of the account to which the permission is granted. The account can be generated by using the 'newaccount' command
 
 ```bash
 # Get Default Account Address
@@ -471,11 +471,11 @@ Grant the given user table permissions to the specified user:
 
 ```eval_rst
 .. note::
-    Before granting user table permissions to a user, ensure that the user table exists. You can use the "createTable" command to create the user table.
+    Before granting user table permissions to a user, ensure that the user table exists. You can use the "createTable" command to create the user table
 ```
 Parameters include:
-- tableName: User table name
-- account _ address: Authorized user account address
+-tableName: User table name
+-account _ address: Authorized user account address
 
 ```bash
 # Create user table t _ test
@@ -523,7 +523,7 @@ Grant node management permissions to the specified account:
 ./console.py grantNodeManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Authorized user account address
+-account _ address: Authorized user account address
 
 ```bash
 # Add node management for account 0x95198B93705e394a916579e048c8A32DdFB900f7
@@ -555,7 +555,7 @@ Grant CNS administrative privileges to the specified account:
 ./console.py grantCNSManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Authorized user account address
+-account _ address: Authorized user account address
 
 ```bash
 # Add CNS administrative rights for account 0x95198B93705e394a916579e048c8A32DdFB900f7
@@ -589,7 +589,7 @@ Grant the system configuration modification permission to the specified account:
 ./console.py grantSysConfigManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Authorized user account address
+-account _ address: Authorized user account address
 
 ```bash
 # Add system configuration permissions for account 0x95198B93705e394a916579e048c8A32DdFB900f7
@@ -621,7 +621,7 @@ Grant permissions to deploy and create tables to the specified account:
 ./console.py grantDeployAndCreateManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Authorized user account address
+-account _ address: Authorized user account address
 
 ```bash
 # Add create table and deploy contract permissions for account 0x95198B93705e394a916579e048c8A32DdFB900f7
@@ -653,8 +653,8 @@ Revoke the write permission of the specified user on the specified user table:
 ./console.py revokeUserTableManager [tableName] [account_adddress]
 ```
 Parameters include:
-- tableName: the name of the table that the specified user is prohibited from writing to
-- account _ address: Address of the account whose permission has been revoked
+-tableName: the name of the table that the specified user is prohibited from writing to
+-account _ address: the address of the account whose permission has been revoked
 
 ```bash
 # Revoke the control permission of account 0x95198B93705e394a916579e048c8A32DdFB900f7 on user table t _ test
@@ -673,7 +673,7 @@ Revoke the permission of the specified account to create tables and deploy contr
 ./console.py revokeDeployAndCreateManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Address of the account whose permission has been revoked
+-account _ address: the address of the account whose permission has been revoked
 
 ```bash
 # Revoke account 0x95198B93705e394a916579e048c8A32DdFB900f7 Deploy and create table permissions
@@ -692,7 +692,7 @@ Revoke the node management permission of the specified account:
 ./console.py revokeNodeManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Address of the account whose permission has been revoked
+-account _ address: the address of the account whose permission has been revoked
 
 ```bash
 # Revoke the account 0x95198B93705e394a916579e048c8A32DdFB900f7 node management permission
@@ -711,7 +711,7 @@ Revoke the CNS management authority of the specified account:
 ./console.py revokeCNSManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Address of the account whose permission has been revoked
+-account _ address: the address of the account whose permission has been revoked
 
 ```bash
 # Revoke account 0x95198B93705e394a916579e048c8A32DdFB900f7 CNS administrative privileges
@@ -730,7 +730,7 @@ Revoke the permission of the specified account to modify the system configuratio
 ./console.py revokeSysConfigManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Address of the account whose permission has been revoked
+-account _ address: the address of the account whose permission has been revoked
 
 ```bash
 # Revoke account 0x95198B93705e394a916579e048c8A32DdFB900f7 system table management permissions
@@ -749,7 +749,7 @@ Revoke the permission of the specified account management permission:
 ./console.py revokePermissionManager [account_adddress]
 ```
 Parameters include:
-- account _ address: Address of the account whose permission has been revoked
+-account _ address: the address of the account whose permission has been revoked
 
 ```bash
 # Revoke account 0x95198B93705e394a916579e048c8A32DdFB900f7 permission management permission
@@ -856,7 +856,7 @@ INFO >> getConsensusStatus
     "node_index": 2,
     "omitEmptyBlock": true,
     "protocolId": 65544,
-    ... omit lines...
+    ... omit lines..
 }
 ```
 ### getSyncStatus
@@ -1007,8 +1007,8 @@ Query blocks based on block height:
 $ ./console.py getBlockByNumber [block_number] [True/False]
 ```
 Parameters include:
-- block _ number: block height
-- True/False: Optional. True indicates that the returned block information contains specific transaction information.；False indicates that the returned block contains only the transaction hash
+-block _ number: block height
+- True/False: Optional. True indicates that the returned block information contains specific transaction information；False indicates that the returned block contains only the transaction hash
 
 
 ```bash
@@ -1021,7 +1021,7 @@ INFO >> getBlockByNumber
     "dbHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": [
         "0x312d62383738336366653363303733613533326539636263343739373864
-        ... omit lines...
+        ... omit lines..
         7652d313030302d333030303030303030"
     ],
     "gasLimit": "0x0",
@@ -1058,8 +1058,8 @@ Obtain block information based on the block hash:
 $ ./console.py getBlockByHash [block_hash] [True/False]
 ```
 Parameters include:
-- block _ hash: block hash
-- True/False: Optional. True indicates that the returned block contains transaction specific information.；False indicates that the block returned contains only the transaction hash
+-block _ hash: block hash
+- True/False: Optional. True indicates that the returned block contains transaction specific information；False indicates that the block returned contains only the transaction hash
 
 ```bash
 $ ./console.py getBlockByHash 0xff1404962c6c063a98cc9e6a20b408e6a612052dc4267836bb1dc378acc6ce04
@@ -1092,7 +1092,7 @@ Get the binary encoding of the specified contract:
 $ ./console.py getCode 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce
 INFO >> user input : ['getCode', '0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce']
 INFO >> getCode
-     > > 0x60806040526... some omitted... a40029
+     >> 0x60806040526... some omitted... a40029
 ```
 ### getTransactionByHash
 
@@ -1103,7 +1103,7 @@ Get transaction information based on transaction hash:
 
 Parameters include:
 - hash: Transaction Hash
-- contract _ name: optional. The name of the contract related to the transaction. If this parameter is entered, the specific content of the transaction will be parsed and returned.
+-contract _ name: optional. The name of the contract related to the transaction. If this parameter is entered, the specific content of the transaction will be parsed and returned
 
 
 ```bash
@@ -1131,8 +1131,8 @@ Get transaction receipt information based on transaction hash:
 ./console.py getTransactionReceipt [hash] [contract_name]
 ```
 Parameters include:
-- hash: transaction hash
-- contract _ name: optional. The contract name related to the transaction. If this parameter is entered, the specific content of the transaction and receipt will be parsed.
+-hash: transaction hash
+-contract _ name: optional. The contract name related to the transaction. If this parameter is entered, the specific content of the transaction and receipt will be parsed
 
 ```bash
 $ ./console.py getTransactionReceipt 0xb291e9ca38b53c897340256b851764fa68a86f2a53cb14b2ecdcc332e850bb91
@@ -1163,8 +1163,8 @@ Query transaction information based on block hash and transaction index:
 ```
 Parameters include:
 - blockHash: Block hash of the transaction in
-- transactionIndex: transaction index
-- contract _ name: optional. The name of the contract related to the transaction. If this parameter is entered, the specific content of the transaction will be parsed and returned.
+-transactionIndex: transaction index
+-contract _ name: optional. The name of the contract related to the transaction. If this parameter is entered, the specific content of the transaction will be parsed and returned
 
 ```bash
 $  ./console.py getTransactionByBlockHashAndIndex 0x3912605dde5f7358fee40a85a8b97ba6493848eae7766a8c317beecafb2e279d 0
@@ -1194,9 +1194,9 @@ Query transaction information based on block height and transaction index:
 $ ./console.py getTransactionByBlockNumberAndIndex [blockNumber] [transactionIndex] [contract_name]
 ```
 Parameters include:
-- blockNumber: Exchange in block high
-- transactionIndex: transaction index
-- contract _ name: optional. The name of the contract related to the transaction. If this parameter is entered, the specific content of the transaction will be parsed and returned.
+-blockNumber: exchanges in blocks high
+-transactionIndex: transaction index
+-contract _ name: optional. The name of the contract related to the transaction. If this parameter is entered, the specific content of the transaction will be parsed and returned
 
  ```bash
 $ ./console.py getTransactionByBlockNumberAndIndex 1 0

@@ -25,25 +25,25 @@ Implemented in 'client / bcosclient.py', encapsulating access to FISCO BCOS 2.0+
 | getConsensusStatus | Get blockchain node consensus status| None| 
 | getSyncStatus |  Obtain the synchronization status of a blockchain node| None| 
 | getPeers |  Obtain the connection information of a blockchain node| None| 
-| getGroupPeers | Obtain the consensus node < br > and watch node list of the specified group| None|
+| getGroupPeers | Gets the consensus node of the specified group<br>and watch node list| None|
 | getNodeIDList |  Get a list of nodes and their connected nodes| None| 
 | getGroupList |  Obtain the group ID list of the group to which the node belongs|  None|
 | getBlockByHash |  Obtain block information based on block hash| Block Hash|
 | getBlockByNumber |  Obtain block information according to block height| Block height|
 | getBlockHashByNumber | Obtain block hash based on block height| Block height|
 | getTransactionByHash | Get transaction information based on transaction hash| Transaction Hash|
-| getTransactionByBlockHashAndIndex |Obtain transaction information based on the transaction's block hash and < br > transaction index.| Transaction-owned block hash < br > transaction index|
-| getTransactionByBlockNumberAndIndex | Get trading information based on the block height of the exchange, < br > trading index| Exchange-owned block height < br > Trading index|
+| getTransactionByBlockHashAndIndex |According to the block hash of the transaction,<br>Transaction index Get transaction information| Transaction-owned block hash<br>Transaction Index|
+| getTransactionByBlockNumberAndIndex | According to the exchange belongs to the block height,<br>Transaction index Get transaction information| Exchange-owned block height<br>Transaction Index|
 | getTransactionReceipt | Get transaction receipt based on transaction hash| Transaction Hash|
-| getPendingTransactions | Get all unchained transactions in the transaction pool.| None|
+| getPendingTransactions | Get all unchained transactions in the transaction pool| None|
 | getPendingTxSize |  Get the number of unchained transactions in the transaction pool| None|
 | getCode |  Contract data queried by contract address| Contract Address| 
-| getTotalTransactionCount | Obtains the number of transactions on the chain of a specified group.| None|
-| getSystemConfigByKey |  Get System Configuration| System configuration keywords < br > such as: < br >- tx_count_limit <br> - tx_gas_limit|
+| getTotalTransactionCount | Obtains the number of transactions on the chain of a specified group| None|
+| getSystemConfigByKey |  Get System Configuration| System Configuration Keywords<br>如：<br> - tx_count_limit <br> - tx_gas_limit|
 | deploy |  Deployment contract| Contract binary code|
-| call | Call Contract| contract address < br > contract abi < br > call interface name < br > parameter list|
-| sendRawTransaction | Send transaction| contract address < br > contract abi < br > interface name < br > parameter list < br > contract binary code|
-| sendRawTransactionGetReceipt |  Send transaction < br > and get transaction execution result| contract address < br > contract abi interface name < br > parameter list < br > contract binary code|
+| call | Call Contract| Contract Address<br>Contract abi<br>Call Interface Name<br>Parameter List|
+| sendRawTransaction | Send transaction| Contract Address<br>Contract abi<br>Interface Name<br>Parameter List<br>Contract binary code|
+| sendRawTransactionGetReceipt |  Send transaction<br>and get the results of the trade execution| Contract Address<br>contract abi interface name<br>Parameter List<br>Contract binary code|
 
 
 ## Precompile Service
@@ -56,9 +56,9 @@ client.precompile.cns.cns_service.CnsService
 ```
 
 **Function Interface**
-- register _ cns: Register the contract name to(Contract Address, Contract Version)maps to the CNS system table
-- query _ cns _ by _ name: Query CNS information based on contract name
-- query _ cns _ by _ nameAndVersion: Query CNS information based on contract name and contract name
+-register _ cns: Register the contract name to(Contract Address, Contract Version)maps to the CNS system table
+-query _ cns _ by _ name: Query CNS information based on contract name
+-query _ cns _ by _ nameAndVersion: Query CNS information based on contract name and contract name
 
 ### Consensus
 
@@ -69,9 +69,9 @@ client.precompile.consensus.consensus_precompile.ConsensusPrecompile
 
 **Function Interface**
 
-- addSealer: Add consensus node
-- addObserver: Add an observer node
-- removeNode: Remove the node from the group
+-addSealer: Add consensus node
+-addObserver: add observer node
+-removeNode: remove node from group
 
 ### Permission Control
 
@@ -82,7 +82,7 @@ client.precompile.permission.permission_service.PermissionService
 **Function Interface**
 
 - grant: Authorize permissions for the specified table to the user
-- revoke: revokes the write permission of the specified user on the specified table.
+-revoke: reclaims the write permission of the specified user on the specified table
 - list_permission: Displays account information that has write permission to the specified table
 
 ### CRUD
@@ -92,11 +92,11 @@ client.precompile.permission.permission_service.PermissionService
 client.precompile.crud.crud_service.Entry
 ```
 **Function Interface**
-- create _ table: Create a user table
-- insert: Inserts a record into the user table
-- update: updates user table records
-- remove: Deletes the specified record in the user table.
-- select: Queries a specified record in the user table
+-create _ table: Create a user table
+-insert: Inserts a record into the user table
+-update: Update user table records
+-remove: Deletes the specified record in the user table
+-select: Query the specified record in the user table
 - desc: Querying User Table Information
 
 ### System Configuration
@@ -116,9 +116,9 @@ Implemented in 'client / bcostransaction.py', which defines FISCO BCOS 2.0+The t
 | :--   | :--   |
 | randomid | Random number, used for transaction weight protection|
 | gasPrice | The default is 30000000|
-| gasLimit | The upper limit of gas consumed by transactions, which is 30000000 by default.|
+| gasLimit | The upper limit of gas consumed by transactions, which is 30000000 by default|
 | blockLimit | Transaction weight limit, default is 500|
-| to | Usually the contract address.|
+| to | Usually the contract address|
 | value | Default is 0|
 | data | Transaction Data|
 | fiscoChainId | Chain ID, which is loaded by configuring 'client _ config.py'|
@@ -132,10 +132,10 @@ Provides ABI, Event Log, and transaction input and output parsing functions, imp
 
 | Interface| Parameters| 描述| 
 | :--   | :--  |  :-- |
-| load_abi_file | abi file path| Load and parse the ABI file from the specified path < br > to build the function name, selector to function abi mapping list|
+| load_abi_file | abi file path| Load and parse ABI file from specified path<br>Create function name, selector to function abi mapping list|
 | parse_event_logs | event log| Parsing event log|  
-| parse_transaction_input | Transaction input| Parsing transaction input < br > returns the interface name and transaction parameters of the transaction call.|
-| parse_receipt_output | The interface name of the transaction call < br > transaction output.| Parsing Transaction Output| 
+| parse_transaction_input | Transaction input| Parsing Transaction Input<br>Returns the interface name and transaction parameters of the transaction call|
+| parse_receipt_output | Interface name of the transaction call<br>Transaction output| Parsing Transaction Output| 
 
 
 ## ChannelHandler
@@ -146,9 +146,9 @@ FISCO BCOS channel protocol implementation class, supports SSL encrypted communi
 ## Contract History Query
 
 
-- **client/contratnote.py：** Use the ini configuration file format to save the latest and historical addresses of the contract for loading (as can be used in the console command.(Contract name last)Refers to the address of the latest deployment of a contract)
+- **client/contratnote.py：** Use the ini configuration file format to save the latest and historical addresses of the contract for loading (as can be used in the console command(Contract name last)Refers to the address of the latest deployment of a contract)
 
 ## Log Module
 
-- **client/clientlogger.py：** Logger definition, which currently includes client logs and statistics logs.
+- **client/clientlogger.py：** Logger definition, which currently includes client logs and statistics logs
 - **client/stattool.py** A simple tool class for collecting statistics and printing logs

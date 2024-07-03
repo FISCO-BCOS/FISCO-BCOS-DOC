@@ -1,15 +1,15 @@
 # Contract Codec
 
-Tag: "java-sdk`` ``abi`` `scale`  ``codec``
+Tags: "java-sdk" "abi" "scale" "codec" "
 
 ----
-Java SDK 3.x uses two codec formats, 'ABI' and 'Scale', respectively.**Solidity Contract**和**WebankBlockchain-The Liquid Contract (WBC)-Liquid）** The function signature, parameter encoding, and return results are encoded and decoded.。
+Java SDK 3.x uses two codec formats, 'ABI' and 'Scale', respectively**Solidity Contract**和**WebankBlockchain-Liquid contract (WBC-Liquid)** The function signature, parameter encoding, and return results are encoded and decoded。
 
-**Note**In order to distinguish between ABI and Scale, 3.0.0-After rc3, org.fisco.bcos.sdk.ABICodec changed its name to org.fisco.bcos.sdk.v3.codec.ContractCodec
+**Note**To distinguish between ABI and Scale, after 3.0.0-rc3, the name of org.fisco.bcos.sdk.ABICodec is changed to org.fisco.bcos.sdk.v3.codec.ContractCodec
 
-In the Java SDK, the 'org.fisco.bcos.sdk.v3.codec.ContractCodec' class provides the functions of encoding the output of the transaction (the field of the 'data'), parsing the return value of the transaction, and parsing the content pushed by the contract event.。
+In the Java SDK, the 'org.fisco.bcos.sdk.v3.codec.ContractCodec' class provides the functions of encoding the output of the transaction (the field of the 'data'), parsing the return value of the transaction, and parsing the content pushed by the contract event。
 
-Here, we take the 'Add.sol' contract as an example to provide a reference for the use of 'ContractCodec'.。
+Here, we take the 'Add.sol' contract as an example to provide a reference for the use of 'ContractCodec'。
 
 ```solidity
 pragma solidity^0.6.0;
@@ -39,17 +39,17 @@ Call'add(uint256)The transaction receipt of the interface is as follows, focusin
 
 ```Java
 {
-  / / Omit...
+  / / Omit..
   "input":"0x1003e2d2000000000000000000000000000000000000000000000000000000000000003c",
   "output":"0x00000000000000000000000000000000000000000000000000000000000000a0",
   "logs":[
       {
-        / / Omit...
+        / / Omit..
         "data":"0x0000000000000000000000000000000000000000000000000000000000000064000000000000000000000000000000000000000000000000000000000000003c",
-        / / Omit...
+        / / Omit..
       }
   ],
-  / / Omit...
+  / / Omit..
 }
 ```
 
@@ -67,27 +67,27 @@ CryptoSuite can be obtained from the initialized Client class, please refer to t
 
 isWasm is an important parameter that determines the ContractCodec encoding format to use:
 
-- If isWasm is true, the transaction input and output will be coded and decoded using the Scale encoding format, which corresponds to the use of WBC in the node.-The Liquid Contract；
-- If isWasm is false, the transaction input and output will be coded and decoded using the ABI encoding format, which corresponds to the Solidity contract in the node.。
+-If isWasm is true, the transaction input and output will be encoded and decoded using the Scale encoding format, which corresponds to the WBC-Liquid contract in the node；
+- If isWasm is false, the transaction input and output will be encoded and decoded using the ABI encoding format, which corresponds to the Solidity contract in the node。
 
-## 2. Construct the deployment contract constructor input.
+## 2. Construct the deployment contract constructor input
 
-The input of the deployment transaction consists of two parts, the binary code of the contract deployment and the encoding of the parameters required by the constructor.。where the binary code is the contract compiled binary code。
+The input of the deployment transaction consists of two parts, the binary code of the contract deployment and the encoding of the parameters required by the constructor。where the binary code is the contract compiled binary code。
 
 ```java
-// bin + The parameter list in Object format, which is inserted into the transaction during deployment.
+// bin + The parameter list in Object format, which is inserted into the transaction during deployment
 byte[] encodeConstructor(String abi, String bin, List<Object> params);
-// bin + List of parameters in String format, abi is used to insert into the transaction at deployment time.
+// bin + List of parameters in String format, abi is used to insert into the transaction at deployment time
 byte[] encodeConstructorFromString(String abi, String bin, List<String> params);
-// bin + List of parameters in String format, abi needs to be inserted into the transaction additionally.
+// bin + List of parameters in String format, abi needs to be inserted into the transaction additionally
 byte[] encodeConstructorFromBytes(String bin, byte[] params);
 ```
 
-## 3. Construct the transaction input.
+## 3. Construct the transaction input
 
-The input of the transaction consists of two parts, the function selector and the encoding of the parameters required to call the function.。where the first four bytes of input data (such as"0x1003e2d2") Specifies the function selector to be called, and the calculation method of the function selector is the function declaration (remove spaces, that is,'add(uint256)') hash, take the first 4 bytes。The rest of the input is the result of the input parameters encoded according to the ABI (e.g."000000000000000000000000000000000000000000000000000000000000003c"as parameter"60"result after encoding)。
+The input of the transaction consists of two parts, the function selector and the encoding of the parameters required to call the function。where the first four bytes of input data (such as"0x1003e2d2") Specifies the function selector to be called, and the calculation method of the function selector is the function declaration (remove spaces, that is,'add(uint256)') hash, take the first 4 bytes。The rest of the input is the result of the input parameters encoded according to the ABI (e.g"000000000000000000000000000000000000000000000000000000000000003c"as parameter"60"result after encoding)。
 
-Depending on how the function is specified and the parameter input format, 'ContractCodec' provides the following interfaces to calculate the 'data' of the transaction.。
+Depending on how the function is specified and the parameter input format, 'ContractCodec' provides the following interfaces to calculate the 'data' of the transaction。
 
 ```Java
 / / function name+ Parameter list in Object format
@@ -106,7 +106,7 @@ byte[] encodeMethodByInterfaceFromString(String methodInterface, List<String> pa
 byte[] encodeMethodByIdFromString(String ABI, byte[] methodId, List<String> params);
 ```
 
-The following takes' encodeMethod 'as an example to illustrate the use of methods, other interfaces use similar methods.。
+The following takes' encodeMethod 'as an example to illustrate the use of methods, other interfaces use similar methods。
 
 ```Java
 / / Initialize the SDK
@@ -130,7 +130,7 @@ try {
 }
 ```
 
-## 4. Resolve the transaction return value.
+## 4. Resolve the transaction return value
 
 Depending on how the function is specified and the type of return value, 'ContractCodec' provides the following interfaces to parse the function return value。
 
@@ -155,9 +155,9 @@ List<String> decodeMethodByInterfaceToString(String abi, String methodInterface,
 List<String> decodeMethodByIdToString(String abi, byte[] methodId, byte[] output)
 ```
 
-The 'output' in the above interface parameters is the 'output' field in the transaction receipt ("0x00000000000000000000000000000000000000000000000000000000000000a0"）。The method of using the interface can refer to the interface usage of constructing transaction input.。
+The 'output' in the above interface parameters is the 'output' field in the transaction receipt ("0x00000000000000000000000000000000000000000000000000000000000000a0"）。The method of using the interface can refer to the interface usage of constructing transaction input。
 
-## 5. Parse the contract event push content.
+## 5. Parse the contract event push content
 
 Depending on how the event is specified and the type of parsing result, 'ContractCodec' provides the following interfaces to parse the event content。
 
@@ -176,7 +176,7 @@ List<String> decodeEventByInterfaceToString(String abi, String eventSignature, E
 List<String> decodeEventByTopicToString(String abi, String eventTopic, EventLog log)
 ```
 
-For event push, the Java SDK requires users to inherit the 'EventCallback' class and rewrite the 'onReceiveLog' interface to implement their own callback processing logic.。The following example uses' decodeEvent 'to parse the pushed event content。Other interfaces are used similarly。
+For event push, the Java SDK requires users to inherit the 'EventCallback' class and rewrite the 'onReceiveLog' interface to implement their own callback processing logic。The following example uses' decodeEvent 'to parse the pushed event content。Other interfaces are used similarly。
 
 ```Java
 class SubscribeCallback implements EventSubCallback {
@@ -200,9 +200,9 @@ class SubscribeCallback implements EventSubCallback {
 }
 ```
 
-## 6. Resolve the transaction input value.
+## 6. Resolve the transaction input value
 
-Compared with constructing transaction input, parsing transaction input is the reverse operation, and input parameters can be parsed according to ABI.。The transaction is divided into the transaction of the deployment contract and the transaction of the call contract, as can be seen from the above, the transaction input of the deployment contract is composed of binary code and encoded constructor parameters.；The transaction input of the call contract is spliced by the function selector with the encoded function parameters.。
+Compared with constructing transaction input, parsing transaction input is the reverse operation, and input parameters can be parsed according to ABI。The transaction is divided into the transaction of the deployment contract and the transaction of the call contract, as can be seen from the above, the transaction input of the deployment contract is composed of binary code and encoded constructor parameters；The transaction input of the call contract is spliced by the function selector with the encoded function parameters。
 
 ```java
 / / ABI Definition+ Encoded parameters after removing the function selector+ Object, ABIObject returns a list

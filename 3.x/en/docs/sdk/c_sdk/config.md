@@ -1,14 +1,14 @@
 # Configuration Introduction
 
-Tag: "c-sdk`` ``config``
+Tag: "c-sdk" "config"
 
 ----------
 
-`bcos-c-sdk 'supports the initialization of configuration objects and configuration files.:
+'bcos-c-sdk 'supports both configuration object and configuration file initialization:
 
-- Configuration Object Initialization:
+- Configure object initialization:
   - `void* bcos_sdk_create(struct bcos_sdk_c_config* config)`
-- Configuration file initialization:
+- Profile initialization:
   - `void* bcos_sdk_create_by_config_file(const char* config_file)`
 
 This section describes the configuration object 'struct bcos _ sdk _ c _ config' and the configuration file 'config _ file'。
@@ -74,7 +74,7 @@ struct bcos_sdk_c_sm_cert_config
 ### `bcos_sdk_c_endpoint`
 
 - Function
-  - connection 'ip:port`
+  - Connect'ip:port`
 
 - Field
   - `host`: node 'rpc' connection, supports' ipv4 'and' ipv6 'formats**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
@@ -83,29 +83,29 @@ struct bcos_sdk_c_sm_cert_config
 ### `bcos_sdk_c_cert_config`
 
 - Function:
-  - 'ssl 'connection certificate configuration, valid when' ssl _ type 'is' ssl'
+  - 'ssl' connection certificate configuration, valid when 'ssl _ type' is' ssl'
 
 - Field:
-  - `ca_cert`: The root certificate can be configured in two ways: file path and file content. For more information, see the 'is _ cert _ path' field.**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
-  - `node_cert`: The 'sdk' certificate supports both file path and file content. For more information, see the 'is _ cert _ path' field.**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
-  - `node_key`: The 'sdk' private key, which supports both file path and file content. For details, see the 'is _ cert _ path' field.**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
+  - `ca_cert`: The root certificate can be configured in two ways: file path and file content. For more information, see the 'is _ cert _ path' field**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
+  - `node_cert`: The 'sdk' certificate supports both file path and file content. For more information, see the 'is _ cert _ path' field**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
+  - `node_key`: The 'sdk' private key, which supports both file path and file content. For details, see the 'is _ cert _ path' field**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
 
 ### `bcos_sdk_c_sm_cert_config`
 
 - Function:
-  - Configuration of 'ssl' connection certificate, valid when 'ssl _ type' is' sm _ ssl'
+  - Configuration of the 'ssl' connection certificate. Valid when 'ssl _ type' is' sm _ ssl'
 
 - Field:
-  - `ca_cert`: The national secret root certificate supports two methods: file path and file content.**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
+  - `ca_cert`: The national secret root certificate supports two methods: file path and file content**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
   - `node_cert`: 'sdk 'national secret signature certificate, supports two methods of file path and file content, refer to the' is _ cert _ path 'field**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
   - `node_key`: 'sdk 'state-secret signature private key, supports two methods of file path and file content, see' is _ cert _ path 'field**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
-  - `en_node_key`: The 'sdk' encryption certificate supports both file path and file content. For more information, see the 'is _ cert _ path' field.**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
-  - `en_node_crt`: The 'sdk' encryption private key supports both file path and file content. For more information, see the 'is _ cert _ path' field.**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
+  - `en_node_key`: The 'sdk' encryption certificate supports both file path and file content. For more information, see the 'is _ cert _ path' field**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
+  - `en_node_crt`: The 'sdk' encryption private key supports both file path and file content. For more information, see the 'is _ cert _ path' field**注意: Use 'strdup' or 'malloc' initialization to ensure that you can use 'free' release**
 
 ### `bcos_sdk_c_config`
 
 - Field:
-  - `thread_pool_size`: Thread pool size, which is used to process network messages.
+  - `thread_pool_size`: Thread pool size, which is used to process network messages
   - `message_timeout_ms`: Message timeout
   - `peers`: connection list,**注意: Use 'malloc' initialization to ensure that you can use 'free' release**
   - `peers_count`: Connection list size
@@ -117,9 +117,9 @@ struct bcos_sdk_c_sm_cert_config
 
 ## Profile
 
-The fields in the configuration file correspond to the fields in the configuration object.
+The fields in the configuration file correspond to the fields in the configuration object
 
-- 'ssl 'connection profile
+- 'ssl' connection profile
 
 Sample Configuration: [github](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/config/config_sample.ini) [gitee](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/config/config_sample.ini)
 
@@ -188,7 +188,7 @@ Sample Configuration: [github](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.
 
 ## Initialization example
 
-- How to configure objects: `bcos-c-sdk/sample/rpc/rpc.c`
+- Configure object mode: `bcos-c-sdk/sample/rpc/rpc.c`
   - [github link](https://github.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/rpc/rpc.c#L66)
   - [gitee link](https://gitee.com/FISCO-BCOS/bcos-c-sdk/blob/v3.0.1/sample/rpc/rpc.c#L66)
 

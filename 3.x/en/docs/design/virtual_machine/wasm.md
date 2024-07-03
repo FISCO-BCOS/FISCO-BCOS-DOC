@@ -2,7 +2,7 @@
 
 ## FISCO BCOS Environment Interface Specification
 
-The FISCO BCOS Environment Interface (FBEI) specification includes the blockchain underlying platform [FISCO BCOS](https://gitee.com/FISCO-BCOS/FISCO-BCOS)Application Programming Interface (API) exposed to the Wasm virtual machine。All APIs in the FBEI specification are implemented by FISCO BCOS, and programs running in the Wasm virtual machine can directly access these APIs to obtain the environment and state of the blockchain.。
+The FISCO BCOS Environment Interface (FBEI) specification includes the blockchain underlying platform [FISCO BCOS](https://gitee.com/FISCO-BCOS/FISCO-BCOS)Application Programming Interface (API) exposed to the Wasm virtual machine。All APIs in the FBEI specification are implemented by FISCO BCOS, and programs running in the Wasm virtual machine can directly access these APIs to obtain the environment and state of the blockchain。
 
 ### Data Type
 
@@ -12,14 +12,14 @@ In the FBEI specification, the data types of API parameters and return values ar
 .. list-table::
    :header-rows: 1
 
-   * - Type Mark
-     - 定义
+   * - Type marking
+     - Definition
    * - i32
-     - 32-bit integer, consistent with the definition of the i32 type in Wasm
+     -32-bit integer, consistent with the definition of the i32 type in Wasm
    * - i32ptr
-     - 32-bit integer, which is stored in the same way as the i32 type in Wasm, but is used to represent the memory offset in the virtual machine
+     -32-bit integer, which is stored in the same way as the i32 type in Wasm, but is used to represent the memory offset in the virtual machine
    * - i64
-     - 64-bit integer, consistent with the definition of the i64 type in Wasm
+     -64-bit integer, consistent with the definition of the i64 type in Wasm
 ```
 
 ### API List
@@ -28,7 +28,7 @@ In the FBEI specification, the data types of API parameters and return values ar
 
 **_ Description _**
 
-Write key-value pair data to blockchain underlying storage for persistent storage。The byte sequence representing the key and value needs to be stored in the virtual machine memory first.。
+Write key-value pair data to blockchain underlying storage for persistent storage。The byte sequence representing the key and value needs to be stored in the virtual machine memory first。
 
 **_ Parameters _**
 
@@ -36,12 +36,12 @@ Write key-value pair data to blockchain underlying storage for persistent storag
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - keyOffset
      - i32ptr
-     - Start address of the storage location of the key in the virtual machine memory
+     - The starting address of the storage location of the key in the virtual machine memory
    * - keyLength
      - i32
      - Length of key
@@ -50,7 +50,7 @@ Write key-value pair data to blockchain underlying storage for persistent storag
      - The starting address of the location where the value is stored in the virtual machine memory
    * - valueLength
      - i32
-     - Length of value
+     - Length of the value
 ```
 
 **_ Return Value _**
@@ -60,14 +60,14 @@ None。
 ```eval_rst
 .. note::
 
-   When setStorage is called, if the provided valueLength parameter is 0, the data corresponding to the key is deleted from the underlying storage of the blockchain.。In this case, the API implementation will directly skip the reading of the value, so the valueOffset parameter does not need to be given a valid value, and is generally set directly to 0.。
+   When setStorage is called, if the provided valueLength parameter is 0, the data corresponding to the key is deleted from the underlying storage of the blockchain。In this case, the API implementation will directly skip the reading of the value, so the valueOffset parameter does not need to be given a valid value, and is generally set directly to 0。
 ```
 
 #### getStorage
 
 **_ Description _**
 
-According to the key provided, the corresponding value in the underlying storage of the blockchain is read into the memory of the virtual machine.。The byte sequence representing the key needs to be stored in the virtual machine memory and the memory area where the value is stored needs to be allocated in advance.。
+According to the key provided, the corresponding value in the underlying storage of the blockchain is read into the memory of the virtual machine。The byte sequence representing the key needs to be stored in the virtual machine memory and the memory area where the value is stored needs to be allocated in advance。
 
 **_ Parameters _**
 
@@ -75,18 +75,18 @@ According to the key provided, the corresponding value in the underlying storage
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - keyOffset
      - i32ptr
-     - Start address of the storage location of the key in the virtual machine memory
+     - The starting address of the storage location of the key in the virtual machine memory
    * - keyLength
      - i32
      - Length of key
    * - valueOffset
      - i32ptr
-     - Virtual machine memory start address for storing values
+     - VM memory start address for holding values
 ```
 
 **_ Return Value _**
@@ -96,16 +96,16 @@ According to the key provided, the corresponding value in the underlying storage
    :header-rows: 1
 
    * - Type
-     - 描述
+     - Description
    * - i32
-     - Length of value
+     - Length of the value
 ```
 
 #### getCallData
 
 **_ Description _**
 
-Copy the input data of the current transaction to the virtual machine memory, which needs to be allocated in advance to store the transaction input data.。
+Copy the input data of the current transaction to the virtual machine memory, which needs to be allocated in advance to store the transaction input data。
 
 **_ Parameters _**
 
@@ -113,12 +113,12 @@ Copy the input data of the current transaction to the virtual machine memory, wh
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - resultOffset
      - i32ptr
-     - Start address of the VM memory used to store the current transaction input data
+     - VM memory start address for storing current transaction input data
 ```
 
 **_ Return Value _**
@@ -142,16 +142,16 @@ None。
    :header-rows: 1
 
    * - Type
-     - 描述
+     - Description
    * - i32
-     - Length of the current transaction input data
+     - Length of current transaction input data
 ```
 
 #### getCaller
 
 **_ Description _**
 
-Obtain the address of the caller who initiated the contract call, and allocate the memory area to store the caller's address in advance.。
+Obtain the address of the caller who initiated the contract call, and allocate the memory area to store the caller's address in advance。
 
 **_ Parameters _**
 
@@ -159,9 +159,9 @@ Obtain the address of the caller who initiated the contract call, and allocate t
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - resultOffset
      - i32ptr
      - Virtual machine memory start address used to store the caller's address
@@ -183,15 +183,15 @@ Pass a sequence of bytes representing the return value to the host environment a
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - dataOffset
      - i32ptr
-     - The starting address of the virtual machine memory used to store the return value.
+     - The virtual machine memory start address used to store the return value
    * - dataLength
      - i32
-     - Length of return value
+     - Length of the return value
 ```
 
 **_ Return Value _**
@@ -210,12 +210,12 @@ Throws a sequence of bytes representing exception information to the host enviro
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - dataOffset
      - i32ptr
-     - The start address of the storage location of the exception information in the virtual machine memory.
+     - The starting address of the storage location of the exception information in the virtual machine memory
    * - dataLength
      - i32
      - Length of exception information
@@ -235,7 +235,7 @@ None。
 
 **_ Description _**
 
-Create a transaction log。Up to 4 log indexes can be created for this log。The byte sequence representing the log data and its index needs to be stored in the virtual machine memory first.。
+Create a transaction log。Up to 4 log indexes can be created for this log。The byte sequence representing the log data and its index needs to be stored in the virtual machine memory first。
 
 **_ Parameters _**
 
@@ -243,27 +243,27 @@ Create a transaction log。Up to 4 log indexes can be created for this log。The
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - dataOffset
      - i32ptr
-     - Start address of the storage location of log data in the virtual machine memory
+     - The starting address of the storage location of the log data in the virtual machine memory
    * - dataLength
      - i32
      - Length of log data
    * - topic1
      - i32ptr
-     - Virtual machine memory start address for 1st log index, no time 0
+     - Virtual machine memory start address of the first log index, no time 0
    * - topic2
      - i32ptr
-     - Virtual machine memory start address for 2nd log index, no time 0
+     - VM memory start address of the 2nd log index, no time 0
    * - topic3
      - i32ptr
-     - Virtual machine memory start address for 3rd log index, no time 0
+     - The memory start address of the third log index, which is not set to 0
    * - topic4
      - i32ptr
-     - Virtual machine memory start address for 4th log index, no time 0
+     - VM memory start address of the 4th log index, no time 0
 ```
 
 **_ Return Value _**
@@ -280,7 +280,7 @@ None。
 
 **_ Description _**
 
-Obtain the address of the caller who initiates the contract call at the beginning of the call chain, and allocate the memory area for storing the caller's address in advance.。Unlike the 'getCaller' interface, the caller address obtained by this interface must be an external account address.。
+Obtain the address of the caller who initiates the contract call at the beginning of the call chain, and allocate the memory area for storing the caller's address in advance。Unlike the 'getCaller' interface, the caller address obtained by this interface must be an external account address。
 
 **_ Parameters _**
 
@@ -288,9 +288,9 @@ Obtain the address of the caller who initiates the contract call at the beginnin
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - resultOffset
      - i32ptr
      - Virtual machine memory start address used to store the caller's address
@@ -317,7 +317,7 @@ None。
    :header-rows: 1
 
    * - Type
-     - 描述
+     - Description
    * - i64
      - Current block height
 ```
@@ -339,16 +339,16 @@ None。
    :header-rows: 1
 
    * - Type
-     - 描述
+     - Description
    * - i64
-     - Timestamp of the current block
+     - Timestamp of current block
 ```
 
 #### call
 
 **_ Description _**
 
-To initiate an external contract call, the byte sequence representing the call parameters needs to be stored in the virtual machine memory.。After calling this interface, the execution process is blocked until the external contract call ends or an exception occurs.。
+To initiate an external contract call, the byte sequence representing the call parameters needs to be stored in the virtual machine memory。After calling this interface, the execution process is blocked until the external contract call ends or an exception occurs。
 
 **_ Parameters _**
 
@@ -356,18 +356,18 @@ To initiate an external contract call, the byte sequence representing the call p
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - addressOffset
      - i32ptr
-     - The starting address of the storage location of the called contract address in the virtual machine memory.
+     - The starting address of the storage location of the called contract address in the virtual machine memory
    * - dataOffset
      - i32ptr
-     - Start address of the storage location of the call parameter in the virtual machine memory
+     - The starting address of the storage location of the call parameter in the virtual machine memory
    * - dataLength
      - i32
-     - Length of call parameter
+     - the length of the call parameter
 ```
 
 **_ Return Value _**
@@ -377,16 +377,16 @@ To initiate an external contract call, the byte sequence representing the call p
    :header-rows: 1
 
    * - Type
-     - 描述
+     - Description
    * - i32
-     - Call status, 0 indicates success, otherwise it indicates failure
+     -Call status, 0 means success, otherwise it means failure
 ```
 
 #### getReturnDataSize
 
 **_ Description _**
 
-Gets the length of the return value of the external contract call, which can only be called after the external contract call is successful.。
+Gets the length of the return value of the external contract call, which can only be called after the external contract call is successful。
 
 **_ Parameters _**
 
@@ -397,14 +397,14 @@ None。
    :header-rows: 1
 
    * - Type
-     - 描述
+     - Description
    * - i32
      - Return value length of external contract call
 ```
 
 #### getReturnData
 
-Obtain the return value of an external contract call. When using the call, allocate the memory area for storing the return value in advance according to the return result of getReturnDataSize.。
+Obtain the return value of an external contract call. When using the call, allocate the memory area for storing the return value in advance according to the return result of getReturnDataSize。
 
 **_ Parameters _**
 
@@ -412,12 +412,12 @@ Obtain the return value of an external contract call. When using the call, alloc
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - resultOffset
      - i32ptr
-     - The starting address of the virtual machine memory used to store the return value.
+     - The virtual machine memory start address used to store the return value
 ```
 
 **_ Return Value _**
@@ -434,7 +434,7 @@ All contracts must be encoded in [WebAssembly binary](https://webassembly.github
 
 ### Symbol Import
 
-The contract file can only import the interfaces specified in the FBEI. All interfaces need to be imported from the namespace named 'bcos', and the signature must be consistent with the interface signature declared in the BCOS environment interface specification.。In addition to the 'bcos' command space, there is a special namespace called 'debug'。The function declared in the 'debug' namespace is mainly used in the debugging mode of the virtual machine. This namespace will not be enabled in the formal production environment. For more information, see Debugging mode.。
+The contract file can only import the interfaces specified in the FBEI. All interfaces need to be imported from the namespace named 'bcos', and the signature must be consistent with the interface signature declared in the BCOS environment interface specification。In addition to the 'bcos' command space, there is a special namespace called 'debug'。The function declared in the 'debug' namespace is mainly used in the debugging mode of the virtual machine. This namespace will not be enabled in the formal production environment. For more information, see Debugging mode。
 
 ### Symbol export
 
@@ -462,12 +462,12 @@ Output a 32-bit integer value in the log at the bottom of the blockchain。
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - value
      - i32
-     - 32-bit integer value
+     -32-bit integer value
 ```
 
 #### print64
@@ -482,12 +482,12 @@ Output a 64-bit integer value in the log at the bottom of the blockchain。
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - value
      - i64
-     - 64-bit integer value
+     -64-bit integer value
 ```
 
 #### printMem
@@ -502,12 +502,12 @@ Output a piece of virtual machine memory in the form of printable characters in 
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - offset
      - i32
-     - Start address of memory region
+     - Start address of the memory region
    * - len
      - i32
      - Length of memory area
@@ -515,7 +515,7 @@ Output a piece of virtual machine memory in the form of printable characters in 
 
 #### printMemHex
 
-Output a piece of virtual machine memory in the log at the bottom of the blockchain as a hexadecimal string.。
+Output a piece of virtual machine memory in the log at the bottom of the blockchain as a hexadecimal string。
 
 **_ Parameters _**
 
@@ -523,12 +523,12 @@ Output a piece of virtual machine memory in the log at the bottom of the blockch
 .. list-table::
    :header-rows: 1
 
-   * - Parameter Name
+   * - Parameter name
      - Type
-     - 描述
+     - Description
    * - offset
      - i32
-     - Start address of memory region
+     - Start address of the memory region
    * - len
      - i32
      - Length of memory area

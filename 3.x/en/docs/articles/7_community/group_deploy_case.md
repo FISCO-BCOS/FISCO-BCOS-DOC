@@ -1,14 +1,14 @@
-# Multi-machine deployment-Single Group Dual Mechanism Dual Node Networking Mode Actual Combat
+# Multi-machine deployment-single group, double mechanism and double node networking mode actual combat
 
 Author ： Pu Canglong(Xiao Yue)Member of the Center for Blockchain and Applied Research, Shanghai University of International Business and Economics
 
 ## 0. Needs Analysis
 
-There are two servers, then the next organization of each machine generates a node, two connected to one, that is: dual-organization dual-node single group.。
+There are two servers, then the next organization of each machine generates a node, two connected to one, that is: dual-organization dual-node single group。
 
 ## 1. Download and install the operation and maintenance deployment tool
 
-> *It is assumed that there is nothing on the machine, because the user who compiles the client using the source code does not have to take the last step.*
+> *It is assumed that there is nothing on the machine, because the user who compiles the client using the source code does not have to take the last step*
 
 Download
 
@@ -28,7 +28,7 @@ Check whether the installation is successful. If the installation is successful,
 ```
 
 Get Node Binary
-pull the latest fisco-bcos binary to meta
+pull the latest disco-bcos binary to meta
 
 ```bash
 ./generator --download_fisco ./meta
@@ -36,7 +36,7 @@ pull the latest fisco-bcos binary to meta
 
 Check Binary Version
 
-If successful, output FISCO-BCOS Version : x.x.x-x
+If successful, output FISCO-BCOS Version: x.x.x-x
 
 ```bash
 ./meta/fisco-bcos -v
@@ -47,7 +47,7 @@ Then I cloned the generator locally and found it was:
 
 ![](../../../images/articles/group_deploy_case/3.png)
 
-The download _ fisco function of the tool class is the main card here.。No cdn friend can vim modify this url as follows:
+The download _ fisco function of the tool class is the main card here。No cdn friend can vim modify this url as follows:
 
 ```bash
 fisco official cdn
@@ -58,7 +58,7 @@ https://xiaoyue-blog.oss-cn-hangzhou.aliyuncs.com/fisco-bcos.tar.gz
 
 This is my OSS, open to use the master tap ah。
 
-It will be over in less than a second.。Then this is installed:
+It will be over in less than a second。Then this is installed:
 
 ![](../../../images/articles/group_deploy_case/4.png)
 
@@ -70,7 +70,7 @@ come to kangkang topology
 
 ![](../../../images/articles/group_deploy_case/1.png)
 
-Because the official tutorial is on a machine with nodes 1,2。If it is divided, there is actually no difference between 1,2。Because it is on two machines, there will be no port conflict。If the port is not opened, an error may be reported. We recommend that you whitelist the two computers.。For more information, please refer to: [Port opening for FSICO BCOS multi-machine deployment](https://blog.csdn.net/xiaoyue2019/article/details/107401334)
+Because the official tutorial is on a machine with nodes 1,2。If it is divided, there is actually no difference between 1,2。Because it is on two machines, there will be no port conflict。If the port is not opened, an error may be reported. We recommend that you whitelist the two computers。For more information, please refer to: [Port opening for FSICO BCOS multi-machine deployment](https://blog.csdn.net/xiaoyue2019/article/details/107401334)
 
 |机构|Node|rpc port|channel port|p2p port|
 |---|---|---|---|---|
@@ -109,7 +109,7 @@ Generate Certificate for Authority A
 ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyA
 ```
 
-The certificate authority sends the certificate to the institution, which is placed in the meta directory.
+The certificate authority sends the certificate to the institution, which is placed in the meta directory
 
 ```bash
 cp ./dir_agency_ca/agencyA/* ~/generator-A/meta/
@@ -123,7 +123,7 @@ Generate Certificate for Authority B
 ./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca agencyB
 ```
 
-The certificate authority sends the certificate to the institution, which is placed in the meta directory.
+The certificate authority sends the certificate to the institution, which is placed in the meta directory
 
 ```bash
 cp ./dir_agency_ca/agencyB/* ~/generator-B/meta/
@@ -185,14 +185,14 @@ EOF
 
 ### 3.5 Organization A generates and sends node information
 
-Generate the certificate and P2P connection address file of the institution node A, and generate the certificate based on the modified node _ depostion.ini.
+Generate the certificate and P2P connection address file of the institution node A, and generate the certificate based on the modified node _ depostion.ini
 
 ```bash
 cd ~/generator-A
 ./generator --generate_all_certificates ./agencyA_node_info
 ```
 
-When the organization generates a node, it needs to specify the P2P connection address of other nodes, where Organization A sends the P2P connection organization to Organization B.
+When the organization generates a node, it needs to specify the P2P connection address of other nodes, where Organization A sends the P2P connection organization to Organization B
 
 ```bash
 cp ./agencyA_node_info/peers.txt ~/generator-B/meta/peersA.txt
@@ -200,14 +200,14 @@ cp ./agencyA_node_info/peers.txt ~/generator-B/meta/peersA.txt
 
 ### 3.6 Organization B generates and sends node information
 
-Generate the certificate and P2P connection address file of the institution node A, and generate the certificate based on the modified node _ depostion.ini.
+Generate the certificate and P2P connection address file of the institution node A, and generate the certificate based on the modified node _ depostion.ini
 
 ```bash
 cd ~/generator-B
 ./generator --generate_all_certificates ./agencyB_node_info
 ```
 
-Because the creation block needs to be generated, this institution must require a node certificate.。In addition to sending the P2P connection address, the B organization also sends the node certificate.。
+Because the creation block needs to be generated, this institution must require a node certificate。In addition to sending the P2P connection address, the B organization also sends the node certificate。
 
 ```bash
 cp ./agencyB_node_info/cert*.crt ~/generator-A/meta/
@@ -216,7 +216,7 @@ cp ./agencyB_node_info/peers.txt ~/generator-A/meta/peersB.txt
 
 ### 3.7 Institution A Generates Group 1 Genesis Block
 
-to generate the Genesis block。Here can actually be generated by that agency through negotiation, not necessarily A.。
+to generate the Genesis block。Here can actually be generated by that agency through negotiation, not necessarily A。
 
 ```bash
 cd ~/generator-A
@@ -239,7 +239,7 @@ Send the creation block of group1 to institution b
 cp ./group/group.1.genesis ~/generator-B/meta
 ```
 
-## 3.8 Organization A generates the node to which it belongs.
+## 3.8 Organization A generates the node to which it belongs
 
 Generate Node for Agency A
 
@@ -255,18 +255,18 @@ bash ./nodeA/start_all.sh
 ```
 
 There are two points to note:
-1. It is no problem that the ports are consistent between the production node configuration file and the Genesis block configuration file, because I do not test on one machine and there will be no port conflicts。However, it is embarrassing that when copying mechanism B to machine B, it cannot run.。
+1. It is no problem that the ports are consistent between the production node configuration file and the Genesis block configuration file, because I do not test on one machine and there will be no port conflicts。However, it is embarrassing that when copying mechanism B to machine B, it cannot run。
 2. The default IP address of the rpc is 127.0.0.1. If the rpc is turned on, a warning will be issued:
 
 ![](../../../images/articles/group_deploy_case/6.png)
 
-If you must enable the rpc test, you can also refer to the preceding statement to enable the firewall ip whitelist.。
+If you must enable the rpc test, you can also refer to the preceding statement to enable the firewall ip whitelist。
 
 ---
 
-## 4. Mechanism B transfers and generates nodes.
+## 4. Mechanism B transfers and generates nodes
 
-Compression: 'tar cvf B.tar generator-B`
+Compression: 'tar cvf B.tar generator-B'
 Unzip: 'tar xvf B.tar'
 Then upload download operation
 
@@ -294,7 +294,7 @@ The correct echo is as follows:
 
 ![](../../../images/articles/group_deploy_case/5.png)
 
-Here's another question。It is the above-mentioned self-confidence is not tested, resulting in the wrong ip loss leading to consensus failure, this time is not echoed.。Just delete the following regular。Can see the log error, through the error to find the reason can not be consensus。
+Here's another question。It is the above-mentioned self-confidence is not tested, resulting in the wrong ip loss leading to consensus failure, this time is not echoed。Just delete the following regular。Can see the log error, through the error to find the reason can not be consensus。
 
 ---
 
@@ -310,4 +310,4 @@ welcome to our community to blow water duck
 
 ![](../../../images/articles/group_deploy_case/7.bmp)
 
-*Reference: < https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/tutorial_detail_operation.html>*
+*Reference:<https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/enterprise_tools/tutorial_detail_operation.html>*

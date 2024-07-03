@@ -1,11 +1,11 @@
-# Disassemble build _ chain.sh Interpretation of FISCO-BCOS chain building process
+# Disassembling build _ chain.sh Interpreting FISCO-BCOS Chain Building Process
 Author ： Chongqing Electronic Engineering Vocational College| to the key male
 
 Here is the tutorial: [companion video](https://space.bilibili.com/335373077)
 
 # lifting chain
-We're not going to talk about the chain here in a complete way, pick the point if you're interested in or unfamiliar with the chain, you can go to another article of mine.
-[[Tutorial] Perfect FISCO-How to start the BCOS blockchain network, stand-alone four-node, alliance chain](https://blog.csdn.net/qq_57309855/article/details/126180787?spm=1001.2014.3001.5501)
+We're not going to talk about the chain here in a complete way, pick the point if you're interested in or unfamiliar with the chain, you can go to another article of mine
+[[Tutorial] How to start the perfect FISCO-BCOS blockchain network, stand-alone four-node, alliance chain](https://blog.csdn.net/qq_57309855/article/details/126180787?spm=1001.2014.3001.5501)
 
 First I will download the build _ chain.sh script
 
@@ -31,7 +31,7 @@ curl: (7) Failed to connect to github.com port 443: Connection refused `
  
 [INFO] Download speed is too low, try https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.0/fisco-bcos.tar.gz 
 
-Here we go to GitHub to download FISCO-BCOS compressed package, found that the link failed, so jump to the domestic code cloud to download
+Here, we went to GitHub to download the FISCO-BCOS compression package, and found that the link failed, so we jumped to the domestic code cloud to download it
 
 ```
 
@@ -45,7 +45,7 @@ This corresponds to line 1633 in our build _ chain.sh
 
 
 
- There are many judgments below to prevent GitHub from being inaccessible in China.
+ There are many judgments below to prevent GitHub from being inaccessible in China
 
 ## Second paragraph
 
@@ -57,7 +57,7 @@ Generating CA key...
 
 ```
  
-Generate the CA key corresponding to the script 1677 lines, the running process in the script is to find ${output_dir}The CA certificate is stored in the cert directory under ${output_dir}The nodes directory is defined above, so we can see our CA certificate after we enter, and there will be a column to explain the generation of the specific CA certificate.。
+Generate the CA key corresponding to the script 1677 lines, the running process in the script is to find ${output_dir}The CA certificate is stored in the cert directory under ${output_dir}The nodes directory is defined above, so we can see our CA certificate after we enter, and there will be a column to explain the generation of the specific CA certificate。
 
 ![prepareCA code screenshot](https://user-images.githubusercontent.com/111106471/184881843-f81179d6-945f-4e2e-b64c-6b1e86a3cd50.png)
 ![output _ dir screenshot](https://user-images.githubusercontent.com/111106471/184881884-f3ff536b-0d61-46de-af3b-832f2982b129.png)
@@ -77,7 +77,7 @@ Processing IP=127.0.0.1 Total=1 Agency=agency Groups=1
 
 ```
 
-The generated secret key and certificate correspond to line 1793 of the script. The running process in the script is to assign them to the variable $OPTARG after entering the chain command, determine the chain mode, the number of nodes, determine the parameters such as IP, group, etc., and start creating the node directory. The node directory is determined by node _ count.
+The generated secret key and certificate correspond to line 1793 of the script. The running process in the script is to assign them to the variable $OPTARG after entering the chain command, determine the chain mode, the number of nodes, determine the parameters such as IP, group, etc., and start creating the node directory. The node directory is determined by node _ count
 
 ​
 ![Key certificate code screenshot](https://user-images.githubusercontent.com/111106471/184882272-d8c63950-9576-42c8-bff5-5b11349f6b9c.png)
@@ -100,7 +100,7 @@ Processing IP=127.0.0.1 Total=1 Agency=agency Groups=1
 
 ```
 
-The generated configuration file corresponds to line 1925 of the script. The running process in the script is to first determine the location of the output directory of the certificate, and then send the generated certificate to the directory after receiving it with node _ count and node _ dir. The generated certificate includes group certificates, group.X.genesis, group.x.ini, config.ini, and agency directories.
+The generated configuration file corresponds to line 1925 of the script. The running process in the script is to first determine the location of the output directory of the certificate, and then send the generated certificate to the directory after receiving it with node _ count and node _ dir. The generated certificate includes group certificates, group.X.genesis, group.x.ini, config.ini, and agency directories
 
 
 
@@ -118,7 +118,7 @@ The generated configuration file corresponds to line 1925 of the script. The run
 
 ```
 
-Here is the feedback of all ports and services and the final working directory to the user, for their own determination of whether to meet expectations and to prevent excessive work after the configuration file, etc. can not be found, corresponding to script 226 lines.
+Here is the feedback of all ports and services and the final working directory to the user, for their own determination of whether to meet expectations and to prevent excessive work after the configuration file, etc. can not be found, corresponding to script 226 lines
 ![Generate Profile Code Screenshot](https://user-images.githubusercontent.com/111106471/184882563-01bbca48-4460-408d-878e-4214e5563777.png)
 
 
@@ -135,7 +135,7 @@ e.g.  bash /home/fisco223/fisco/nodes/127.0.0.1/download_console.sh -f
  
  ```
  
-This is to remind users to use sh script to obtain FISCO in the directory named by IP.-BCOS Console。And gave an example of e.g. to explain the usage, and finally prompted the user that all the processes have been completed, set up the completion of the work directory in ${output_dir}Lower。
+This is to remind the user to use sh script to obtain FISCO-BCOS console in the directory named by IP。And gave an example of e.g. to explain the usage, and finally prompted the user that all the processes have been completed, set up the completion of the work directory in ${output_dir}Lower。
 ![Feedback screenshot](https://user-images.githubusercontent.com/111106471/184882668-3f673308-042c-419d-9bc0-2b1fc49c3500.png)
 
 
