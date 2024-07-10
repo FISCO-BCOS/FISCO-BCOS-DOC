@@ -63,10 +63,10 @@ get_gm_account.sh脚本用于生成sm2私钥，依赖于TASSL。如果从GitHub�
 ### 下载开发部署工具
 
 ```bash
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh
 ```
 
-如果下载失败请尝试`curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.1/build_chain.sh`
+如果下载失败请尝试`curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.11.0/build_chain.sh`
 
 ### 下载二进制程序
 
@@ -110,7 +110,7 @@ FISCO BCOS在编译时会自动下载依赖包，每个依赖包有多个源。�
 1. 创建编译目录
 
 ```bash
-cd FISCO-BCOS 
+cd FISCO-BCOS
 # 切换到2.0版本
 git checkout master-2.0
 mkdir build && cd build

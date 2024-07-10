@@ -6,7 +6,7 @@
 
 FISCO BCOS为提升交易处理性能，进行了全方位的并行处理设计。按照**并行粒度**从细到粗的划分，其并行机制可分为：
 
-* **交易**的并行：DAG交易并行、读写集并行
+* **交易**的并行：DAG交易并行、流水线并行
 
 * **合约**的并行：DMC、块内分片
 
@@ -25,7 +25,7 @@ FISCO BCOS为提升交易处理性能，进行了全方位的并行处理设计�
    :maxdepth: 1
    
    dag.md
-   rwset.md
+   pipeline.md
    DMC.md
    sharding.md
    group.md

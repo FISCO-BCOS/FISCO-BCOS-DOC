@@ -31,7 +31,7 @@
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载开发部署工具build_chain
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
@@ -45,9 +45,9 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/buil
 # 这里所有区块链节点均属于agencyA，并仅启动了群组1
 # (注: 下面的ip信息需要根据真实的机器IP填写)
 cat >> ipconf << EOF
-196.168.0.1 agencyA 1 
-196.168.0.3 agencyA 1 
-196.168.0.4 agencyA 1 
+196.168.0.1 agencyA 1
+196.168.0.3 agencyA 1
+196.168.0.4 agencyA 1
 196.168.0.2 agencyA 1
 EOF
 ```
