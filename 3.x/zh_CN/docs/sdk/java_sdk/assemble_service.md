@@ -183,7 +183,7 @@ TransactionResponse transactionResponse = transactionService.sendTransaction(req
 
 ## 3. Solidity生成Java文件使用新接口
 
-生成智能合约的Java接口文件详细文档可见：[链接](./contracts_to_java.html)
+生成智能合约的Java接口文件详细文档可见：[链接](./contracts_to_java.md)
 
 在3.6.0以后版本的控制台中，contract2java.sh脚本新增 `-t` 选项，当值为1就生成使用新接口的Java文件，使用姿势与之前无异。例如：
 
@@ -205,3 +205,8 @@ Ok ok = Ok.deploy(client, client.getCryptoSuite().getCryptoKeyPair());
 // 设置TransactionManager
 ok.setTransactionManager(new DefaultTransactionManager(client));
 ```
+
+### 3.1 通过修改TransactionManager的Provider更改交易字段
+
+### 3.2 使用V2版本交易的接口
+

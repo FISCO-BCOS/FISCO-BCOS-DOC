@@ -199,7 +199,11 @@ usage: contract2java.sh <solidity|liquid> [OPTIONS...]
 - `output`: (可选)生成`Java`文件的目录，默认生成在`contracts/sdk/java`目录。
 - `no-analysis`：（可选）跳过solidity编译的静态分析，可以有效缩减编译速度。静态分析可以分析合约的接口并行可行性，并将分析结果放到abi文件中。
 - `enable-async-call` ：（可选）可生成具有异步call接口的Java文件，异步接口只有在Java-sdk版本>=3.3.0时使用。
-- `transaction-version`：（可选）指定生成Java文件发交易的版本号，默认是0，可以兼容所有版本的节点；当使用交易版本为1时，可以支持交易带有value、gasLimit、gasPrice、EIP1559等字段，只能发给3.6.0及以上的节点中。
+- `transaction-version`：（可选）指定生成Java文件发交易的版本号，默认是0；
+  - 当使用交易版本为0时，或者不使用该选项，可以兼容所有版本的节点。
+  - 当使用交易版本为1时，可以支持交易带有value、gasLimit、gasPrice、EIP1559等字段，只能发给3.6.0及以上的节点中；
+  - 当使用交易版本为2时，可以支持交易带有extension字段，只能发给3.7.0及以上的节点中。
+
 
 ### 6.2 WBC-Liquid合约使用
 
