@@ -1,4 +1,4 @@
-# 8. 使用同态加密与群环签名
+# 9. 使用同态加密与群环签名
 
 标签：``隐私合约`` ``隐私保护`` ``合约开发`` ``同态加密`` ``环签名`` ``群签名``
 
@@ -115,7 +115,7 @@ FISCO BCOS隐私保护模块是通过预编译合约实现的，默认被启用�
 
 源码可参考链接：[GitHub链接](https://github.com/FISCO-BCOS/FISCO-BCOS/tree/master/bcos-executor/src/precompiled/extension)、[Gitee链接](https://gitee.com/FISCO-BCOS/FISCO-BCOS/tree/master/bcos-executor/src/precompiled/extension)
 
-   | 地址   | 功能       | 源码 |
-   | ------ | ---------- | ------------------------------------------------------------ |
-   | 0x5004 | 群签名     | GroupSigPrecompiled.cpp                                      |
-   | 0x5005 | 环签名     | RingSigPrecompiled.cpp                                       |
+   | 地址   | 功能   | 源码                    |
+   |--------|--------|-------------------------|
+   | 0x5004 | 群签名 | GroupSigPrecompiled.cpp |
+   | 0x5005 | 环签名 | RingSigPrecompiled.cpp  |
