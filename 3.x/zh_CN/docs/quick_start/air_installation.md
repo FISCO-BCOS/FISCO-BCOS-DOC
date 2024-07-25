@@ -192,7 +192,7 @@ sudo yum install -y java java-devel
 ### 第二步. 下载控制台
 
 ```shell
-cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.9.0/download_console.sh && bash download_console.sh
+cd ~/fisco && curl -LO https://github.com/FISCO-BCOS/console/releases/download/v3.7.0/download_console.sh && bash download_console.sh
 ```
 
 ```eval_rst
