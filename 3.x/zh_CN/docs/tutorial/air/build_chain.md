@@ -27,7 +27,7 @@ FISCO BCOS提供了`build_chain.sh`脚本帮助用户快速搭建FISCO BCOS联�
 
 ```shell
 # 下载建链脚本
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.10.0/build_chain.sh && chmod u+x build_chain.sh
 
 # Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
@@ -35,10 +35,11 @@ curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-
 # 键入bash build_chain.sh -h展示脚本用法及参数
 $ bash build_chain.sh
 Usage:
+air
     -C <Command>                        [Optional] the command, support 'deploy' and 'expand' now, default is deploy
     -g <group id>                       [Optional] set the group id, default: group0
     -I <chain id>                       [Optional] set the chain id, default: chain0
-    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.6.0
+    -v <FISCO-BCOS binary version>      [Optional] Default is the latest v3.10.0
     -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
     -L <fisco bcos lightnode exec>      [Optional] fisco bcos lightnode executable, input "download_binary" to download lightnode binary or assign correct lightnode binary path
     -e <fisco-bcos exec>                [Optional] fisco-bcos binary exec
@@ -49,28 +50,73 @@ Usage:
     -H <HSM model>                      [Optional] Whether to use HSM(Hardware secure module), default is false
     -c <Config Path>                    [Required when expand node] Specify the path of the expanded node config.ini, config.genesis and p2p connection file nodes.json
     -d <CA cert path>                   [Required when expand node] When expanding the node, specify the path where the CA certificate and private key are located
-    -D <docker mode>                    Default off. If set -d, build with docker
+    -D <docker mode>                    Default off. If set -D, build with docker
+    -E <Enable debug log>               Default off. If set -E, enable debug log
     -a <Auth account>                   [Optional] when Auth mode Specify the admin account address.
     -w <WASM mode>                      [Optional] Whether to use the wasm virtual machine engine, default is false
     -R <Serial_mode>                    [Optional] Whether to use serial execute,default is true
-    -k <key page size>                  [Optional] key page size, default size is 10240
+    -k <key page size>                  [Optional] key page size, default is 10240
     -m <fisco-bcos monitor>             [Optional] node monitor or not, default is false
     -i <fisco-bcos monitor ip/port>     [Optional] When expanding the node, should specify ip and port
     -M <fisco-bcos monitor>             [Optional] When expanding the node, specify the path where prometheus are located
     -z <Generate tar packet>            [Optional] Pack the data on the chain to generate tar packet
     -n <node key path>                  [Optional] set the path of the node key file to load nodeid
+    -N <node path>                      [Optional] set the path of the node modified to multi ca mode
+    -u <multi ca path>                  [Optional] set the path of another ca for multi ca mode
+    -6 <ipv6 mode>                      [Optional] IPv6 mode use :: as default listen ip, default is false
+    -T <Consensus Algorithm>            [Optional] Default PBFT. Options can be pbft / rpbft, pbft is recommended
+    -h Help
+pro or max
+    -C <Command>                        [Optional] the command, support 'deploy' now, default is deploy
+    -g <group id>                       [Optional] set the group id, default: group0
+    -I <chain id>                       [Optional] set the chain id, default: chain0
+    -V <chain version>                  [Optional] support 'air'、'pro'、'max', default is 'air'
+    -l <IP list>                        [Required] "ip1:nodeNum1,ip2:nodeNum2" e.g:"192.168.0.1:2,192.168.0.2:3"
+    -p <Start port>                     [Optional] Default 30300、20200、40400、2379 means p2p_port start from 30300, rpc_port from 20200, tars_port from 40400, tikv_port default 2379
+    -e <service binary path>            [Optional] rpc gateway node service binary path
+    -y <service binary download type>   [Optional] rpc gateway node service binary download type, default type is cdn
+    -v <service binary version>         [Optional] Default is the latest v3.10.0
+    -r <service binary download path>   [Optional] service binary download path, default is binary
+    -c <Config Path>                    [Optional] Specify the path of the deploy node config.toml
+    -t <deploy type>                    [Optional] support 'rpc'、'gateway'、'node'、'all', default is 'all'
+    -o <output dir>                     [Optional] output directory, default genearted
+    -s <SM model>                       [Optional] SM SSL connection or not, default is false
     -h Help
 
 deploy nodes e.g
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos
-    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m (部署节点带监控功能)
+    bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -m
     bash build_chain.sh -p 30300,20200 -l 127.0.0.1:4 -o nodes -e ./fisco-bcos -s
 expand node e.g
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos
-    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml (部署节点带监控功能)
+    bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -m -i 127.0.0.1:5 -M monitor/prometheus/prometheus.yml
     bash build_chain.sh -C expand -c config -d config/ca -o nodes/127.0.0.1/node5 -e ./fisco-bcos -s
     bash build_chain.sh -C expand_lightnode -c config -d config/ca -o nodes/lightnode1
     bash build_chain.sh -C expand_lightnode -c config -d config/ca -o nodes/lightnode1 -L ./fisco-bcos-lightnode
+modify node e.g
+    bash build_chain.sh -C modify -N ./node0 -u ./ca/ca.crt
+    bash build_chain.sh -C modify -N ./node0 -u ./ca/ca.crt -s
+deploy pro service e.g
+    bash build_chain.sh -p 30300,20200 -l 172.31.184.227:2,172.30.93.111:2 -C deploy -V pro -o generate -t all
+    bash build_chain.sh -p 30300,20200 -l 172.31.184.227:2,172.30.93.111:2 -C deploy -V pro -o generate -t all -s
+    bash build_chain.sh -p 30300,20200 -l 172.31.184.227:2,172.30.93.111:2 -C deploy -V pro -o generate -e ./binary
+    bash build_chain.sh -p 30300,20200,40400 -l 172.31.184.227:2,172.30.93.111:2 -C deploy -V pro -o generate -y cdn -v v3.10.0 -r ./binaryPath
+deploy max service e.g
+    bash build_chain.sh -p 30300,20200,40400,2379 -l 172.31.184.227:1,172.30.93.111:1,172.31.184.54:1,172.31.185.59:1 -C deploy -V max -o generate -t all
+    bash build_chain.sh -p 30300,20200,40400,2379 -l 172.31.184.227:1,172.30.93.111:1,172.31.184.54:1,172.31.185.59:1 -C deploy -V max -o generate -t all -e ./binary -s
+    bash build_chain.sh -p 30300,20200,40400,2379 -l 172.31.184.227:1,172.30.93.111:1,172.31.184.54:1,172.31.185.59:1 -C deploy -V max -o generate -y cdn -v v3.10.0 -r ./binaryPath
+    bash build_chain.sh -c config.toml -C deploy -V max -o generate -t all
+expand pro node e.g
+    bash build_chain.sh -C expand_node -V pro -o expand_node -c ./config.toml
+expand pro rpc/gateway e.g
+    bash build_chain.sh -C expand_service -V pro -o expand_service -c ./config.toml
+expand pro group e.g
+    bash build_chain.sh -C expand_group -V pro -o expand_group -c ./config.toml
+expand max node e.g
+    bash build_chain.sh -C expand_node -V max -o expand_node -c ./config.toml
+expand max rpc/gateway e.g
+    bash build_chain.sh -C expand_service -V max -o expand_service -c ./config.toml
+
 ```
 
 
@@ -247,15 +293,21 @@ Processing IP:127.0.0.1 Total:4
 
 查看脚本使用用法。
 
+### **`E`选项[**Optional**]**
+
+可选参数，当需要开启debug日志时，可通过`-E`选项设置开启debug日志。
+
 ## 2. 节点配置文件组织结构
 
 `build_chain`生成的节点配置主要如下：
 
 - **根证书和根证书私钥**: 位于指定的配置生成目录的`ca`文件夹。
-- **节点连接证书**: 每个节点`conf`目录下均存放节点的网络连接证书，非国密节点证书和私钥主要包括`ca.crt, ssl.crt, sslkey`，国密节点证书和私钥主要包括`sm_ca.crt, sm_ssl.crt, sm_enssl.crt, sm_enssl.key, sm_ssl.key`。
+- **节点连接证书**: 每个节点`conf`目录下均存放节点的网络连接证书，非国密节点证书和私钥主要包括`ca.crt, ssl.crt, sslkey`
+  ，国密节点证书和私钥主要包括`sm_ca.crt, sm_ssl.crt, sm_enssl.crt, sm_enssl.key, sm_ssl.key`。
 - **节点签名私钥**: 节点`conf`目录下的`node.pem`，主要位于共识模块的签名。
 - **SDK连接证书**: 由`build_chain.sh`生成，客户端可拷贝该证书与节点建立SSL连接。
-- **节点配置文件**: 节点目录下的`config.ini`和`config.genesis`配置，前者主要配置链信息，后者主要配置创世块信息，具体可参考[Air版本区块链节点配置介绍](./config.md)。
+- **节点配置文件**: 节点目录下的`config.ini`和`config.genesis`
+  配置，前者主要配置链信息，后者主要配置创世块信息，具体可参考[Air版本区块链节点配置介绍](./config.md)。
 - **启停脚本**: `start.sh`和`stop.sh`，用于启动和停止节点。
 - **启停监控脚本**: `monitor/start_monitor.sh`和`monitor/stop_monitor.sh`，用于启动和停止节点监控。
 
