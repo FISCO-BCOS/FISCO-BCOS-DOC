@@ -14,5 +14,5 @@ WeDPR-Lab具备以下特色和优势：
 WeDPR-Lab全面拥抱开放，将陆续开源一系列核心算法组件，进一步提升系统安全性的透明度，提供更透明、更可信的隐私保护效果。WeDPR-Lab就是这一系列开源的核心算法组件的集合。
    
 
-- [WdDPR-Lab 用户文档](https://wedpr-lab.readthedocs.io/zh_CN/latest/index.html)
-- [WdDPR-Lab github](https://github.com/WeBankBlockchain/WeDPR-Lab-Core)
+- [WeDPR-Lab 用户文档](https://wedpr-lab.readthedocs.io/zh_CN/latest/index.html)
+- [WeDPR-Lab github](https://github.com/WeBankBlockchain/WeDPR-Lab-Core)
