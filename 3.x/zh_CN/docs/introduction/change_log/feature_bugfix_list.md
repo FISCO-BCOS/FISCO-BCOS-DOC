@@ -4,15 +4,16 @@
 
 ## 1. feature功能开关
 
-|                    | Feature 名                 | 默认状态 | 说明                                                           |
-|--------------------|----------------------------|----------|----------------------------------------------------------------|
-| 资产管理           | feature_balance            | 关：0    | 默认关闭                                                       |
-| 资产操作预编译合约 | feature_balance_precompile | 关：0    | 默认关闭                                                       |
-| 计费模式           | feature_policy1            | 关：0    | 默认关闭                                                       |
-| 块内分片           | feature_sharding           | 关：0    | 默认关闭，仅在从3.3、3.4升级至当前版本时，feature_sharding打开 |
-| 同态加密           | feature_paillier           | 关：0    | 默认关闭                                                       |
-| rpbft共识          | feature_rpbft              | 关：0    | 默认关闭                                                       |
-| dmc切换至串行      | feature_dmc2serial         | 关：0    | 默认关闭                                                       |
+|              | Feature 名                  | 默认状态 | 说明                                         |
+|--------------|----------------------------|------|--------------------------------------------|
+| 资产管理         | feature_balance            | 关：0  | 默认关闭                                       |
+| 资产操作预编译合约    | feature_balance_precompile | 关：0  | 默认关闭                                       |
+| 计费模式         | feature_policy1            | 关：0  | 默认关闭                                       |
+| 块内分片         | feature_sharding           | 关：0  | 默认关闭，仅在从3.3、3.4升级至当前版本时，feature_sharding打开 |
+| 同态加密         | feature_paillier           | 关：0  | 默认关闭                                       |
+| rpbft共识      | feature_rpbft              | 关：0  | 默认关闭                                       |
+| dmc切换至串行     | feature_dmc2serial         | 关：0  | 默认关闭                                       |
+| EVM升级至CANCUN | feature_evm_cancun         | 关：0  | 默认关闭                                       |
 
 ## 2. bugfix列表
 
