@@ -53,7 +53,7 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.10.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz

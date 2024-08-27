@@ -220,15 +220,37 @@ RPC配置示例如下：
 
 存储配置位于`[storage]`，具体包括:
 
+- `[storage].typs`: 区块链节点数据库类型，默认为RocksDB，支持TiKV，当配置TiKV时，需要对应配置`pd_addrs`,`pd_ssl_ca_path`,`pd_ssl_cert_path`,`pd_ssl_key_path`等参数;
 - `[storage].data_path`: 区块链节点数据存储路径，默认为data;
 - `[storage].enable_cache`: 是否开启缓存，默认为`true`;
-- `[storage].key_page_size`: KeyPage存储方案中，存储页大小，单位是字节，要求不小于`4096`(4KB)，默认为`10240`(10KB);
+- `[storage].key_page_size`: KeyPage存储方案中，存储页大小，单位是字节，要求不小于`4096`(4KB)，默认为`10240`(10KB);此配置项可修改为0，表示关闭keypage以获得更好的写入性能，如果已有节点修改此配置项为0，则需要清理数据重新同步区块链数据;
+- `[storage].pd_addrs`: TiKV存储时，PD地址，多个地址用逗号分隔;
+- `[storage].pd_ssl_ca_path`: TiKV存储时，PD SSL CA证书路径;
+- `[storage].pd_ssl_cert_path`: TiKV存储时，PD SSL证书路径;
+- `[storage].pd_ssl_key_path`: TiKV存储时，PD SSL私钥路径;
+- `[storage].enable_archive`: 是否开启归档服务，默认为`false`;
+- `[storage].archive_ip`: 归档服务监听的IP;
+- `[storage].archive_port`: 归档服务监听的端口;
+- `[storage].enable_separate_block_state`: 当使用RocksDB时是否开启区块状态分离，开启后交易收据会存放在另一个单独的数据库中以获得更好的性能，默认为`false`;
+- `[storage].sync_archived_blocks`: 是否同步归档区块，默认为`false`，开启后会通过p2p同步已经归档的历史区块的交易和收据。
 
 ```ini
 [storage]
+    ; type can be tikv or rocksdb
+    type=rocksdb
     data_path=data
     enable_cache=true
+    ; The granularity of the storage page, in bytes, must not be less than 4096 Bytes, the default is 10240 Bytes (10KB)
     key_page_size=10240
+    pd_addrs=127.0.0.1:2379
+    pd_ssl_ca_path=
+    pd_ssl_cert_path=
+    pd_ssl_key_path=
+    enable_archive=false
+    archive_ip=
+    archive_port=
+    ;enable_separate_block_state=false
+    ;sync_archived_blocks=false
 ```
 
 ### 2.6 配置落盘加密
@@ -277,6 +299,7 @@ FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/
 - `[log].log_path`:日志文件路径。
 - `[log].level`: 日志级别，当前主要包括`trace`、`debug`、`info`、`warning`、`error`五种日志级别，设置某种日志级别后，日志文件中会输大于等于该级别的日志，日志级别从大到小排序`error > warning > info > debug > trace`。
 - `[log].max_log_file_size`：每个日志文件最大容量，**计量单位为MB，默认为200MB**。
+- `[log].rotate_time_point`：日志滚动时间点，**默认为00:00:00**。
 
 日志配置示例如下：
 

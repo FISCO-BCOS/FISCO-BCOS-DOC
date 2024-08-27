@@ -1,7 +1,7 @@
 请根据需求选择FISCO BCOS的版本，并确认周边组件与其版本相匹配。
 
-.. container:: row 
-   
+.. container:: row
+
    .. container:: card-holder-bigger
 
          .. container:: card-bigger
@@ -9,7 +9,7 @@
             .. image:: _static/images/FISCO_BCOS_Logo_3_0.png
 
             .. raw:: html
-         
+
                <div>
                   <br>
                   <h style="font-size: 18px;"><b><a href="https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/index.html">本文档版本 3.0：高性能、易拓展、高可用</a></b></h>
@@ -18,7 +18,7 @@
                <div style="clear:both"></div>
 
             .. raw:: html
-         
+
                <div >
                   <br>
                   <h style="font-size: 18px;"><b><a href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/#"> ====>> 切换至 2.0 版本文档</a></b></h>
@@ -26,7 +26,7 @@
                </div>
                <div style="clear:both"></div>
 
-.. container:: row 
+.. container:: row
 
    .. raw:: html
       <br><br>
@@ -368,6 +368,7 @@ FISCO BCOS开源社区致力打造开放多元的开源联盟链生态，至今�
    docs/operation_and_maintenance/governance_index.md
    docs/operation_and_maintenance/log/index.md
    docs/operation_and_maintenance/operation_and_maintenance.md
+   docs/operation_and_maintenance/snapshot.md
 
 
 .. toctree::

@@ -1,6 +1,6 @@
 # 部署落盘加密节点
 
-标签：``存储安全`` ``存储加密`` ``落盘加密`` 
+标签：``存储安全`` ``存储加密`` ``落盘加密``
 
 ----
 
@@ -25,12 +25,12 @@
 
 下载`build_chain.sh`脚本
 ``` shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.10.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.11.0/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 部署四个节点：
@@ -133,8 +133,8 @@ $ bash encrypt_node_key.sh 127.0.0.1 8150 ../../nodes/127.0.0.1/node0/conf/node.
         - conf/ssl.key
         - conf/node.pem
    - 国密版
-        - conf/sm_ssl.key 
-        - conf/sm_enssl.key 
+        - conf/sm_ssl.key
+        - conf/sm_enssl.key
         - conf/node.pem
 
 ## 6. 节点运行
