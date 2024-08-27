@@ -45,7 +45,7 @@ cmake .. || cat *.log
 ```bash
 cd ~/fisco
 
-curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.10.0/build_chain.sh && chmod u+x build_chain.sh
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 在build_chain同级目录下，创建文件夹（例如nodeKeyDir），用于存放密码机密钥的node.pem文件(证书数目和搭建节点数一致)。
 ```bash
@@ -73,7 +73,7 @@ curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.10.0/buil
 
 ### 第四步. 启动节点
 ```shell
-./nodes/127.0.0.1/start_all.sh 
+./nodes/127.0.0.1/start_all.sh
 ```
 启动成功
 ```shell

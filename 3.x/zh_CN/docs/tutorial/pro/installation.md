@@ -8,7 +8,7 @@ FISCO BCOS 3.x支持Pro版本微服务区块链架构，Pro版本FISCO BCOS包�
 
 ```eval_rst
 .. note::
-   - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_ 
+   - Pro版本FISCO BCOS使用 ``BcosBuilder/pro`` 工具进行建链和扩容等相关操作，该工具的介绍请参考 `BcosBuilder <./pro_builder.html>`_
    - FISCO BCOS 3.x基于tars进行微服务构建和管理，搭建Pro版本FISCO BCOS之前，需先安装tars服务，本章介绍了docker版本tars服务的搭建流程，若需要了解更多tars部署、构建相关的信息，请参考 `这里 <https://doc.tarsyun.com/#/markdown/TarsCloud/TarsDocs/installation/README.md>`_
    - 本章基于Docker搭建tars服务，请确保系统用户拥有操作docker权限，并确保docker服务处于启动状态
 ```
@@ -49,7 +49,7 @@ brew install curl docker docker-compose python3 wget
 mkdir -p ~/fisco && cd ~/fisco
 
 # 下载Pro版区块链构建工具BcosBuilder
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.10.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
@@ -290,7 +290,7 @@ upload tar package generated/./agencyBBcosRpcService.tgz success, config id: 15
 ```shell
 $ tree generated/rpc/chain0
 generated/rpc/chain0
-├── 172.25.0.3 
+├── 172.25.0.3
 │   ├── agencyABcosRpcService # 机构A的RPC服务目录
 │   │   ├── config.ini.tmp    # 机构A的RPC服务的配置文件
 │   │   ├── sdk               # SDK证书目录，SDK客户端可从本目录拷贝证书连接RPC服务
@@ -535,25 +535,25 @@ python3 build_chain.py chain -o deploy -t monitor
 执行上述命令后，当脚本输出`deploy all nodes monitor success`时，则说明区块链节点服务部署成功，详细日志输出如下：
 
 ```shell
-========================================================= 
------------ deploy all nodes monitor ----------- 
------------  generate graphna&prometheus config  ----------- 
-* store monitor config 
-	 path: /root/xiao/pro/BcosBuilder/pro/../docker/host/linux/monitor/prometheus/prometheus.yml 
-* store monitor config success 
------------ generate graphna&prometheus config success ----------- 
------------ generate mtail config for group group0 ----------- 
+=========================================================
+----------- deploy all nodes monitor -----------
+-----------  generate graphna&prometheus config  -----------
+* store monitor config
+	 path: /root/xiao/pro/BcosBuilder/pro/../docker/host/linux/monitor/prometheus/prometheus.yml
+* store monitor config success
+----------- generate graphna&prometheus config success -----------
+----------- generate mtail config for group group0 -----------
 * store mtail config for agencyAgroup0node0BcosNodeService
-	 path: /root/app/tars/framework/app_log/chain0/agencyAgroup0node0BcosNodeService/mtail/node.mtail 
-* store mtail config for agencyAgroup0node0BcosNodeService success 
-* execute_ansible_copy_with_command pro path: 
+	 path: /root/app/tars/framework/app_log/chain0/agencyAgroup0node0BcosNodeService/mtail/node.mtail
+* store mtail config for agencyAgroup0node0BcosNodeService success
+* execute_ansible_copy_with_command pro path:
 * store mtail config for agencyBgroup0node0BcosNodeService
-	 path: /root/app/tars/framework/app_log/chain0/agencyBgroup0node0BcosNodeService/mtail/node.mtail 
-* store mtail config for agencyBgroup0node0BcosNodeService success 
-* execute_ansible_copy_with_command pro path: 
------------ generate mtail config for group group0 success ----------- 
------------ deploy all nodes monitor success ----------- 
-========================================================= 
+	 path: /root/app/tars/framework/app_log/chain0/agencyBgroup0node0BcosNodeService/mtail/node.mtail
+* store mtail config for agencyBgroup0node0BcosNodeService success
+* execute_ansible_copy_with_command pro path:
+----------- generate mtail config for group group0 success -----------
+----------- deploy all nodes monitor success -----------
+=========================================================
 ```
 
 部署过程中生成的监控服务相关的配置位于`/root/app/tars/framework/app_log`目录，具体如下：
@@ -815,25 +815,25 @@ python3 build_chain.py chain -o deploy -t monitor
 执行上述命令后，当脚本输出`deploy all nodes monitor success`时，则说明区块链节点服务部署成功，详细日志输出如下：
 
 ```shell
-========================================================= 
------------ deploy all nodes monitor ----------- 
------------  generate graphna&prometheus config  ----------- 
-* store monitor config 
-	 path: /home/fisco/BcosBuilder/pro/../docker/host/linux/monitor/prometheus/prometheus.yml 
-* store monitor config success 
------------ generate graphna&prometheus config success ----------- 
------------ generate mtail config for group group0 ----------- 
+=========================================================
+----------- deploy all nodes monitor -----------
+-----------  generate graphna&prometheus config  -----------
+* store monitor config
+	 path: /home/fisco/BcosBuilder/pro/../docker/host/linux/monitor/prometheus/prometheus.yml
+* store monitor config success
+----------- generate graphna&prometheus config success -----------
+----------- generate mtail config for group group0 -----------
 * store mtail config for agencyAgroup0node0BcosNodeService
-	 path: /home/fisco/app/tars/framework/app_log/chain0/agencyAgroup0node0BcosNodeService/mtail/node.mtail 
-* store mtail config for agencyAgroup0node0BcosNodeService success 
-* execute_ansible_copy_with_command pro path: 
+	 path: /home/fisco/app/tars/framework/app_log/chain0/agencyAgroup0node0BcosNodeService/mtail/node.mtail
+* store mtail config for agencyAgroup0node0BcosNodeService success
+* execute_ansible_copy_with_command pro path:
 * store mtail config for agencyBgroup0node0BcosNodeService
-	 path: /home/fisco/app/tars/framework/app_log/chain0/agencyBgroup0node0BcosNodeService/mtail/node.mtail 
-* store mtail config for agencyBgroup0node0BcosNodeService success 
-* execute_ansible_copy_with_command pro path: 
------------ generate mtail config for group group0 success ----------- 
------------ deploy all nodes monitor success ----------- 
-========================================================= 
+	 path: /home/fisco/app/tars/framework/app_log/chain0/agencyBgroup0node0BcosNodeService/mtail/node.mtail
+* store mtail config for agencyBgroup0node0BcosNodeService success
+* execute_ansible_copy_with_command pro path:
+----------- generate mtail config for group group0 success -----------
+----------- deploy all nodes monitor success -----------
+=========================================================
 ```
 
 部署过程中生成的监控服务相关的配置位于`/home/fisco/app/tars/framework/app_log`目录，具体如下：

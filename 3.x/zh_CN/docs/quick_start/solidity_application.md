@@ -432,7 +432,7 @@ repositories {
         url "http://maven.aliyun.com/nexus/content/groups/public/"
     }
     maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots" 
+        url "https://oss.sonatype.org/content/repositories/snapshots"
     }
 }
 
@@ -564,7 +564,7 @@ $ cp -r nodes/127.0.0.1/sdk/* asset-app-3.0/src/main/resources/conf
 ### 第一步.将3编译好的Java合约引入项目中
 
 ```shell
-cd ~/fisco  
+cd ~/fisco
 # 将编译好的合约Java类引入项目中。
 cp console/contracts/sdk/java/org/fisco/bcos/asset/contract/Asset.java asset-app-3.0/src/main/java/org/fisco/bcos/asset/contract/Asset.java
 ```
@@ -782,7 +782,7 @@ public class AssetClient {
 初始化代码的主要功能为构造Client与CryptoKeyPair对象，这两个对象在创建对应的合约类对象(调用合约类的deploy或者load函数)时需要使用。
 
 ```java
-// 函数initialize中进行初始化 
+// 函数initialize中进行初始化
 // 初始化BcosSDK
 @SuppressWarnings("resource")
 ApplicationContext context =
@@ -821,9 +821,9 @@ TransactionReceipt receipt = asset.transfer(fromAssetAccount, toAssetAccount, am
 在``asset-app-3.0/tool``目录下添加一个调用AssetClient的脚本``asset_run.sh``。
 
 ```shell
-#!/bin/bash 
+#!/bin/bash
 
-function usage() 
+function usage()
 {
     echo " Usage : "
     echo "   bash asset_run.sh deploy"
