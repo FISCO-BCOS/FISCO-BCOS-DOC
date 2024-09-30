@@ -41,7 +41,7 @@ brew install curl docker docker-compose python3 wget
 ```eval_rst
 .. note::
    - 部署工具 ``BcosBuilder`` 配置和使用请参考 `这里 <./pro_builder.html>`_
-   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+   - 若从github下载部署工具 ``BcosBuilder`` 网速太慢，请尝试: curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 ```
 
 ```shell
@@ -52,7 +52,7 @@ mkdir -p ~/fisco && cd ~/fisco
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # Note: 若网速太慢，可尝试如下命令下载部署脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/BcosBuilder.tgz && tar -xvf BcosBuilder.tgz
 
 # 安装构建工具依赖包
 cd BcosBuilder && pip3 install -r requirements.txt
@@ -79,7 +79,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh`
 ```
 
 国密版本请使用下面的指令获取脚本
@@ -90,7 +90,7 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master/tools/get_
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh`
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh`
 ```
 
 在执行之后有以下输出，使用的`init_auth_address`就是使用下面的`Account Address`
