@@ -28,10 +28,11 @@ FISCO BCOS提供了脚本和Java SDK用以创建账户，同时也提供了Java 
 curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master-2.0/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h
 ```
 
-```eval_rst
+<!-- ```eval_rst
+TODO: 目前gitee限流，gitee也无法下载 先注释
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
-```
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh && chmod u+x get_account.sh && bash get_account.sh -h`
+``` -->
 
 国密版本请使用下面的指令获取脚本
 
@@ -39,11 +40,12 @@ curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master-2.0/tools/
 curl -#LO https://raw.githubusercontent.com/FISCO-BCOS/console/master-2.0/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h
 ```
 
-```eval_rst
+<!-- ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
-    - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/tassl-1.0.2/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
-```
+TODO: 目前gitee限流，gitee也无法下载 先注释
+    - 如果因为网络问题导致长时间无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_gm_account.sh && chmod u+x get_gm_account.sh && bash get_gm_account.sh -h`
+    - get_gm_account需要下载tassl，如果无法下载，请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master/tools/tassl-1.0.2/tassl.tar.gz` ，解压放在~/.fisco/tassl，1.0.9及以下版本放在~/.tassl
+``` -->
 
 执行上面的指令，看到如下输出则下载到了正确的脚本，否则请重试。
 ```bash
