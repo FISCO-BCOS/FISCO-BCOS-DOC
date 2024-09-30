@@ -68,13 +68,12 @@ curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/downloa
 curl -#LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -v 0.6	
 ```
 
-<!-- ```eval_rst
-TODO: 目前gitee限流，gitee也无法下载 先注释
+```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -v 0.5` 
-    0.6版本请尝试命令： `https://github.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -v 0.6`
+    - 如果因为网络问题导致长时间无法下载，0.5版本请尝试命令： `https://gitee.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -v 0.5` 
+    0.6版本请尝试命令： `https://gitee.com/FISCO-BCOS/console/releases/download/v2.9.2/download_console.sh && bash download_console.sh -v 0.6`
 
-``` -->
+```
 
 ### 配置控制台
 - 区块链节点和证书的配置：
