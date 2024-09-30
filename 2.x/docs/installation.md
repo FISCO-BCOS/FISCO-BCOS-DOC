@@ -69,7 +69,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/bui
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.11.0/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0//build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ![](./../images/installation/download_build_chain.gif)
