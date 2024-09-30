@@ -33,7 +33,7 @@ FISCO BCOS Air版的建链部署工具详情请参考：[Air版部署工具](../
 ## 如果使用-A选项，则开启权限设置，并且随机生成一个账户地址，作为初始化治理委员的唯一admin账户
 bash build_chain.sh -l 127.0.0.1:4 -o nodes -A
 
-[INFO] Downloading fisco-bcos binary from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/fisco-bcos-linux-x86_64.tar.gz ...
+[INFO] Downloading fisco-bcos binary from https://github.com/FISCO-BCOS/FISCO-BCOS/releases/v3.0.0/fisco-bcos-linux-x86_64.tar.gz ...
 ######################################################################## 100.0%
 [INFO] Generate ca cert successfully!
 Processing IP:127.0.0.1 Total:4
@@ -42,7 +42,7 @@ Processing IP:127.0.0.1 Total:4
 [INFO] Generate nodes/127.0.0.1/node1/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node2/conf cert successful!
 [INFO] Generate nodes/127.0.0.1/node3/conf cert successful!
-[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
+[INFO] Downloading get_account.sh from https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh...
 ######################################################################## 100.0%
 [INFO] Generate uuid success: 4cf39d8a-9f9f-43d0-baa4-3b89d6c9e013
 [INFO] Generate uuid success: 16d14ff1-b3f0-4104-8b3e-1bb5faf0ee12

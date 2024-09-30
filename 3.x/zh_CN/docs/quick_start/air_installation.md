@@ -49,7 +49,7 @@ sudo yum install -y curl openssl openssl-devel wget
 
 ```eval_rst
 .. note::
-   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.11.0/build_chain.sh && chmod u+x build_chain.sh
+   如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ```shell
@@ -60,7 +60,7 @@ cd ~ && mkdir -p fisco && cd fisco
 curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/build_chain.sh && chmod u+x build_chain.sh
 
 # Note: 若访问git网速太慢，可尝试如下命令下载建链脚本:
-curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.11.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.11.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 ### 第三步. 搭建4节点非国密联盟链
@@ -97,7 +97,7 @@ writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
 writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
-[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
+[INFO] Downloading get_account.sh from https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh...
 ############################################################################################################################################################### 100.0%
 [INFO] Admin account: 0x4c7239cfef6d41b7322c1567f082bfc65c69acc5
 [INFO] Generate uuid success: 167A2233-5444-4CA4-8792-C8E68130D5FC
