@@ -66,6 +66,7 @@ cd fisco-bcos-browser
 `注意：当且仅当get_solc_js.sh脚本执行失败才需要执行下面的命令`
 
 ```shell
+    #TODO: 
     curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.4.25.js -o ./dist/static/js/v0.4.25.js
     curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.4.25-gm.js -o ./dist/static/js/v0.4.25-gm.js
     curl -#L https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/download/solidity/wasm/v0.5.2.js -o ./dist/static/js/v0.5.2.js

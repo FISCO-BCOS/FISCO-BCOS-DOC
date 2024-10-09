@@ -29,7 +29,7 @@ bash build_chain.sh -l  127.0.0.1 -p 30300,20200,8545
 [INFO] Downloading fisco-bcos binary from https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/fisco-bcos.tar.gz ... 
 curl: (7) Failed to connect to github.com port 443: Connection refused ` 
  
-[INFO] Download speed is too low, try https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v2.9.0/fisco-bcos.tar.gz 
+[INFO] Download speed is too low, try https://gitee.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.0/fisco-bcos.tar.gz 
 
 这里讲了我们去访问GitHub中下载FISCO-BCOS的压缩包，结果发现链接失败所以跳转到国内的码云中去下载
 
