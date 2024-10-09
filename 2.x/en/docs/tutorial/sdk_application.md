@@ -324,7 +324,7 @@ $ tar -zxf asset-app.tar.gz
 
 ```eval_rst
 .. note::
-    - If the asset-app.tar.gz cannot be downloaded for a long time due to network problems, try `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
+    - If the asset-app.tar.gz cannot be downloaded for a long time due to network problems, try `curl -#LO https://gitee.com/FISCO-BCOS/asset-app-demo/releases/download/v0.0.1/asset-app.tar.gz`
 ```
 
 The directory structure of the asset-app project is as follows:

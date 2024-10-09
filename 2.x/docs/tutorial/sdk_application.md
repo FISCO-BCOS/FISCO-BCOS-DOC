@@ -387,7 +387,7 @@ $ tar -zxf asset-app.tar.gz
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载，请尝试将`199.232.28.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/asset-app.tar.gz`
+    - 如果因为网络问题导致长时间无法下载，请尝试将`199.232.28.133 raw.githubusercontent.com`追加到`/etc/hosts`中，或者请尝试 `curl -#LO https://gitee.com/FISCO-BCOS/asset-app-demo/releases/download/v0.0.1/asset-app.tar.gz`
 ```
 
 ![](../../images/tutorial/download_asset.png)

@@ -37,7 +37,7 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/buil
 
 ```eval_rst
 .. note::
-    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/releases/v3.6.0/build_chain.sh && chmod u+x build_chain.sh`
+    - 如果因为网络问题导致长时间无法下载build_chain.sh脚本，请尝试 `curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/build_chain.sh && chmod u+x build_chain.sh`
 ```
 
 ## 3. 搭建单群组4节点区块链
@@ -68,7 +68,7 @@ writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!
 writing RSA key
 [INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!
-[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...
+[INFO] Downloading get_account.sh from https://gitee.com/FISCO-BCOS/console/raw/master/tools/get_account.sh...
 ######################################################################## 100.0%
 [INFO] Admin account: 0x7096372ddefadc3e70057e907f6ab6cf468838ac
 [INFO] Generate uuid success: e4640f4f-89ed-47fa-9693-695e96988ec2
