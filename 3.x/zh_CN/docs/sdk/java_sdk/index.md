@@ -33,5 +33,5 @@ Java SDK 提供了访问 FISCO BCOS 节点的Java API，支持节点状态查询
    event_sub.md
    spring_boot_starter.md
    spring_boot_crud.md
-   Java SDK JavaDoc <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/javadoc/index.html>
+   Java SDK JavaDoc <https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/javadoc/index.html>
 ```
