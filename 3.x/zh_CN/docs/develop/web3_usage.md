@@ -93,7 +93,7 @@ setSystemConfigByKey feature_balance_precompiled 1
 
 ![](../../images/develop/metamask_manual_add_network.png)
 
-手动填写FISCO BCOS的信息内容。**特别注意：** RPC URL与Chain ID必须要和真是场景保持一致。
+手动填写FISCO BCOS的信息内容。**特别注意：** RPC URL与Chain ID必须要和真实场景保持一致。
 
 ![metamask_add_fb_info](../../images/develop/metamask_add_fb_info.png)
 
