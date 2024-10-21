@@ -85,6 +85,11 @@ curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.11.0/bui
     - 其中-g表示生成国密配置，-G表示使用国密SSL连接
 ```
 
+```eval_rst
+.. note::
+    - 若下载fisco-bcos二进制或get_account.sh脚本失败，建议手动访问github release页面获取最新二进制，并使用-e命令指定节点
+```
+
 ```bash
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 ```
