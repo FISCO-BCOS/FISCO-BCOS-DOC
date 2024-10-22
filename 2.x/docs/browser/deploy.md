@@ -4,7 +4,7 @@
 
 ----
 
-本文档试用于v2.1.0及之后版本一键部署。v2.1.0之前版本一键部署可参考[文档](./deployOld.md)。
+本文档试用于FISCO-BCOS v2版本一键部署。暂不支持FISCO-BCOS v3版本。
 
 ## 1.前提条件
 
@@ -85,11 +85,9 @@ Python3.6及以上版本，需安装PyMysql依赖包：
 
 ## 2.拉取安装脚本
 
-获取部署安装包：
+通过GIT获取部署安装包（在服务器上因网络问题下载不了的话，建议通过浏览器下载，再上传服务器）：
 ```shell
-wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.5/browser-deploy.zip
-# wget https:///FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.5/browser-deploy.zip
-
+wget https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.5/browser-deploy.zip
 ```
 解压安装包：
 ```shell
@@ -484,4 +482,8 @@ OperationalError: (1045, "Access denied for user 'root'@'localhost' (using passw
 ### 8.6 server启动成功，但提示启动失败
 
 答：将openjdk换成oracle jdk，因为openjdk中缺少一些组件。
+
+### 8.6 部署脚本下载安装包失败
+
+答：通过浏览器下载[**安装包**](https://github.com/FISCO-BCOS/fisco-bcos-browser/releases/download/v2.2.5/fisco-bcos-browser.zip)，上传服务器后再重新执行部署脚本。也可以通过手动编译搭建，具体参考[**说明文档**](./browser.md)。
 
