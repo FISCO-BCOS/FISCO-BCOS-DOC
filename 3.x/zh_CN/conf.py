@@ -14,11 +14,12 @@
 
 import sys
 import os
+import jieba
 
 #sys.path.insert(0, os.path.abspath('..'))
 import sphinx_rtd_theme
 from recommonmark.transform import AutoStructify
-
+from sphinx.search import SearchEnglish
 
 DOC_SOURCES_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(DOC_SOURCES_DIR))
@@ -62,6 +63,15 @@ extensions = [
   'sphinx.ext.mathjax',
   'sphinx_markdown_tables',
   'myst_parser'
+]
+
+myst_enable_extensions = [
+    "linkify",         # 自动转换 URL 为链接
+    # "replacements",    # 支持文本替换
+    # "smartquotes",     # 美化引号
+    # "strikethrough",   # 支持删除线
+    # "substitution",    # 支持替换变量
+    # "attrs_block",     # 支持 Markdown 块级属性
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -233,6 +243,11 @@ html_show_sourcelink = True
 #   'nl', 'no', 'pt', 'ro', 'ru', 'sv', 'tr'
 #html_search_language = 'en'
 html_search_language = 'zh'
+
+html_search_options = {
+    'search_language': 'zh',  # 指定中文
+    'search_mode': 'full_text',  # 全文搜索
+}
 
 # A dictionary with options for the search language support, empty by default.
 # Now only 'ja' uses this config value

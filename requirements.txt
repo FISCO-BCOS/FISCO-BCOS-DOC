@@ -13,4 +13,6 @@ git-lfs
 Jinja2<3.1
 myst-parser == 0.13.0
 pyyaml
-
+jieba
+linkify-it-py
+# markdown-it-py
