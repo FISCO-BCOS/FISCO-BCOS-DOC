@@ -75,7 +75,7 @@ FISCO BCOS持续攻关核心关键技术，单链性能突破10万TPS。首创DM
 | <font color=Blue>**隐私保护**</font> |
 |物理隔离| 群组间数据隔离 |
 |隐私保护协议| 支持群签名、环签名、同态加密 |
-|场景化隐私保护机制|基于[WeDPR](https://fintech.webank.com/wedpr)支持隐匿支付、匿名投票、匿名竞拍、选择性披露等场景|
+|场景化隐私保护机制|基于[星隐WeDPR](https://fintech.webank.com/wedpr)支持安全多方计算、隐私求交集、匿踪查询、联合建模、联合分析等隐私计算场景; 基于场景式隐私保护方案，支持隐匿支付、匿名投票、匿名竞拍、选择性披露等场景|
 | <font color=Blue>**跨链协议**</font> |
 |SPV|提供获取SPV证明的接口|
 |跨链协议|基于[WeCross](https://github.com/WeBankBlockchain/WeCross)支持同构、异构跨链|
@@ -188,6 +188,8 @@ FISCO BCOS引入开发部署工具、交互式控制台、区块链浏览器等�
 - <font color=blue>**[跨链协作方案WeCross](https://github.com/WeBankFinTech/WeCross)**</font>：支持跨链事务交易，满足跨链交易的原子性，对跨链进行治理，可支持多方协作管理，避免单点风险。
 
 - <font color=blue>**[场景式隐私保护解决方案WeDPR](https://fintech.webank.com/wedpr)**</font>：针对隐匿支付、匿名投票、匿名竞拍和选择性披露等应用方案，提供即时可用场景式隐私保护高效解决方案，助力各行业合法合规地探索数据相关业务。
+
+- <font color=blue>**[隐私计算平台星隐(WeDPR)](https://wedpr-document.readthedocs.io/zh-cn/latest/index.html)**</font>：基于区块链、安全多方计算、联合建模等技术构建一个密态隐私计算系统，可实现“原始数据不出域，数据可用不可见、可控可计量”，服务公共数据授权运营、金融联合风控营销、跨行业数据合作等场景。
 
 - <font color=blue>**[区块链数据治理组件解决方案](https://data-doc.readthedocs.io/zh_CN/latest/)**</font>：稳定、高效、安全的区块链数据治理组件解决方案，分别从底层数据存储层、智能合约数据解析层和应用层三个方面，提供了区块链数据挖掘、裁剪、扩容、可信存储、抽取、分析、审计、对账、监管等数据治理方面的关键能力。
 

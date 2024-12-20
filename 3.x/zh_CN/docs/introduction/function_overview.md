@@ -56,6 +56,7 @@ FISCO BCOS为了支撑海量服务的需求，v3.0稳定版从系统架构、处
 | <font color=Blue>**隐私保护**</font> ||
 |物理隔离| 群组间数据隔离 |
 |场景化隐私保护机制|基于[WeDPR](https://github.com/WeBankBlockchain/WeDPR-Lab-Core)支持隐匿支付、匿名投票、匿名竞拍、选择性披露等场景|
+|隐私计算平台星隐(WeDPR)|基于[星隐](https://wedpr-document.readthedocs.io/zh-cn/latest/index.html)构建一个密态隐私计算系统，可实现“原始数据不出域，数据可用不可见、可控可计量”，服务公共数据授权运营、金融联合风控营销、跨行业数据合作等场景|
 | <font color=Blue>**跨链协议**</font> ||
 |SPV|提供获取SPV证明的接口|
 |跨链协议|基于[WeCross](https://github.com/WeBankBlockchain/WeCross)支持同构、异构跨链|
