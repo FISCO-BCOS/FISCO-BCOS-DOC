@@ -2,7 +2,7 @@
 
 基于给定的虚拟机环境以及链环境（地址“/root/tools”），搭建如下图所示的单机、双机构、二群组、四节点的星形组网拓扑区块链系统。
 
-![image-20250302214059881](E:\Users\HONOR\OneDrive\桌面\MD\AgencyPictures)
+![星形组网拓扑](./AgencyPictures.png)
 
 其中，二群组名称分别为 `group1`、`group2`，两个机构名称为 `agencyA`、`agencyB`。
 `p2p_port`、`channel_port`、`jsonrpc_port` 起始端口分别为 `30330`、`20230`、`8545`，确保搭建的区块链系统能正常运行。
@@ -18,42 +18,9 @@
 bash build_chain.sh -f ipconf -p 30330,20230,8545 -e bin/fisco-bcos
 ```
 
-命令执行成功会输出`All completed`。如果执行出错，请检查`nodes/build.log`文件中的错误信息。
-
-```
-Checking fisco-bcos binary...
-Binary check passed.
-==============================================================
-Generating CA key...
-==============================================================
-Generating keys and certificates ...
-Processing IP=127.0.0.1 Total=2 Agency=agencyA Groups=1
-Processing IP=127.0.0.1 Total=2 Agency=agencyB Groups=2
-==============================================================
-Generating configuration files ...
-Processing IP=127.0.0.1 Total=2 Agency=agencyA Groups=1
-Processing IP=127.0.0.1 Total=2 Agency=agencyB Groups=2
-==============================================================
-Group:1 has 2 nodes
-Group:2 has 2 nodes
-==============================================================
-[INFO] FISCO-BCOS Path : bin/fisco-bcos
-[INFO] IP List File    : ipconf
-[INFO] Start Port      : 30330 20230 8545
-[INFO] Server IP       : 127.0.0.1:2 127.0.0.1:2
-[INFO] Output Dir      : /root/tools/nodes
-[INFO] CA Path         : /root/tools/nodes/cert/
-==============================================================
-[INFO] Execute the download_console.sh script in directory named by IP to get FISCO-BCOS console.
-e.g.  bash /root/tools/nodes/127.0.0.1/download_console.sh -f
-==============================================================
-[INFO] All completed. Files in /root/tools/nodes
-```
-
-
+命令执行成功会输出 `All completed`。如果执行出错，请检查 `nodes/build.log` 文件中的错误信息。
 
 ## 启动节点
-
 ```bash
 bash nodes/127.0.0.1/start_all.sh
 ```
@@ -82,16 +49,15 @@ cp -r nodes/127.0.0.1/sdk/* console/conf/
 vim console/conf/config.toml
 ```
 
-![image-20250302214740244](E:\Users\HONOR\OneDrive\桌面\MD\ConsoleAgencyA.png)
+![Console 配置 agencyA](./ConsoleAgencyA.png)
 
 ### 启动控制台
-
 ```bash
 bash console/start.sh
 ```
 可以看到控制台成功连接到 `agencyA`
 
-![image-20250302214910232](E:\Users\HONOR\OneDrive\桌面\MD\ConsoleGroup1.png)
+![Console 连接 group1](./ConsoleGroup1.png)
 
 ## Console 连接 `agencyB` 中节点
 
@@ -101,7 +67,7 @@ bash console/start.sh
 ### 问题复现
 修改控制台配置文件，连接节点的端口为 `agencyB` 的节点。
 
-![image-20250302215005716](E:\Users\HONOR\OneDrive\桌面\MD\ConsoleAgencyB.png)
+![Console 配置 agencyB](./ConsoleAgencyB.png)
 
 ```bash
 root@admin:~/tools# bash console/start.sh 2
@@ -132,8 +98,6 @@ currentPath: /root/tools/console
 * FISCO BCOS Java SDK Version: 2.9.1
 * Support secp256k1 : true
 * Java Version : 1.8.0_442
-* JDK Disabled NamedCurves : null
-* JDK DisableNative Option : false
 * OS Name : Linux
 * OS Arch : amd64
 * OS Version : 5.15.0-131-generic
@@ -142,17 +106,16 @@ currentPath: /root/tools/console
 * JVM Vendor URL : http://java.oracle.com/
 ```
 
-![image-20250302215104735](E:\Users\HONOR\OneDrive\桌面\MD\bug)
+![错误截图](./bug.png)
 
 ## 问题解决
 
 需要将 `agencyB` 的 `agency.crt`、`agency.key` 复制到控制台的 `conf` 目录下。
-
 ```bash
 cp -r agency.crt agency.key /root/tools/console/conf/
 ```
 
-![image-20250302215205179](E:\Users\HONOR\OneDrive\桌面\MD\cert.png)
+![拷贝证书](./cert.png)
 
 `ca.crt` 可以用一开始搭链生成的 `sdk` 中 `ca.crt`，也可以使用 `nodes/cert/` 目录下的 `ca.crt`，或者是 `nodes/cert/机构名/` 目录下的 `ca.crt`。
 它们的 `ca.crt` 都是一样的。
@@ -162,13 +125,12 @@ cp -r agency.crt agency.key /root/tools/console/conf/
 vim console/conf/config.toml
 ```
 
-![image-20250302215227816](E:\Users\HONOR\OneDrive\桌面\MD\ConsoleAgencyBConfig.png)
+![Console 配置 agencyB](./ConsoleAgencyBConfig.png)
 
 ### 启动控制台
-
 ```bash
 bash console/start.sh 2
 ```
 可以看到控制台成功连接到 `agencyB`。
 
-![image-20250302215333031](E:\Users\HONOR\OneDrive\桌面\MD\agenyGroup2)
+![Console 连接 group2](./agenyGroup2.png)
