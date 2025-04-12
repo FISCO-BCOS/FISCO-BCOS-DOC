@@ -74,7 +74,6 @@ ls nodes/ca/accounts
 使用`-a`选项开启权限模式，指定账户地址为初始化的治理委员，可以看到`Auth Mode`已经开启，`Auth init account`初始账户为`0x976fe0c250181c7ef68a17d3bc34916978da103a`
 
 ```shell
-
 ## 如果使用-a选项，则开启权限设置，并指定账户地址作为初始化治理委员的唯一admin账户
 bash build_chain.sh -l 127.0.0.1:4 -o nodes -a 0x976fe0c250181c7ef68a17d3bc34916978da103a
 
@@ -199,15 +198,21 @@ index0 : 0xf4a3d4177ce2bad732a63702a751a8e41ea6bce4     | 1
 ### 1.4 动态关闭权限检查
 
 **注意：** 本小节仅仅适用于3.3.0及以后的二进制版本与链版本。
-本小节描述的是关闭权限的检查，治理委员会仍然可用。
+本小节描述的是通过治理委员会关闭权限检查，若当前只有一个治理委员，则立即成功；若有多个治理委员，需要根据权重和阈值进行投票方可修改成功。
 
 ```shell
-# 使用setSystemConfigByKey命令将auth_check_status配置设置为0即可
-[group0]: /apps> setSystemConfigByKey auth_check_status 0
-{
-    "code":0,
-    "msg":"Success"
-}
+# 使用setSysConfigProposal 提案命令将auth_check_status配置设置为0
+[group0]: /apps> setSysConfigProposal auth_check_status 0
+Set system config proposal created, ID is: 1
+---------------------------------------------------------------------------------------------
+Proposer: 0xf4a3d4177ce2bad732a63702a751a8e41ea6bce4
+Proposal Type   : setConfig
+Proposal Status : finished
+---------------------------------------------------------------------------------------------
+Agree Voters:
+0xf4a3d4177ce2bad732a63702a751a8e41ea6bce4
+---------------------------------------------------------------------------------------------
+Against Voters:
 ```
 
 ## 2. 控制台使用
@@ -273,7 +278,6 @@ Agree Voters:
 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 ---------------------------------------------------------------------------------------------
 Against Voters:
-
 ```
 
 也可以使用`updateGovernorProposal`添加新的治理委员：
@@ -573,7 +577,7 @@ abstract contract VoteComputerTemplate is BasicAuth {
         address[] memory agreeVoters,
         address[] memory againstVoters
     ) public view virtual returns (uint8);
-    
+
     // 此为计算逻辑的检验接口，用于其他治理委员验证该合约有效性
     function voteResultCalc(
         uint32 agreeVotes,
