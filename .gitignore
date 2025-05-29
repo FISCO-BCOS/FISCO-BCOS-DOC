@@ -6,3 +6,4 @@ _build
 .DS_Store
 .vscode/
 *.bak
+3.x/zh_CN/venv/

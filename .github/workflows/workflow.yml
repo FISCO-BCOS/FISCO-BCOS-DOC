@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04]
+        os: [ubuntu-20.04]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -31,7 +31,9 @@ jobs:
         run: sudo apt install -y git curl openssl python3-setuptools
       - name: configure
         run: python --version && pip3 install -r requirements.txt
-      # - name: compile
-      #   run: make html
+      - name: compile 2.x
+        run: cd 2.x/ && make html
+      - name: compile 3.x
+        run: cd 3.x/zh_CN/ && make html
       - name: run tests
         run: bash .ci/ci_check.sh

@@ -1,0 +1,21 @@
+# 1. 多语言SDK
+
+标签： ``SDK``
+
+----
+
+```eval_rst
+.. important::
+    相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
+```
+
+FISCO BCOS 3.x版本的多语言SDK设计采用**分层架构**实现，从下到上依次分为通用基础组件层、CPP- SDK层、C-SDK层、多语言、多终端接入层。核心功能由底层CPP-SDK实现，上层多语言简单适配接入，这种方式可快速适配接入多语言SDK。
+
+- **通用基础组件**：封装加密算法、通信协议、网络协议、加密机协议；
+- **CPP-SDK层**：基于通用基础组件，实现区块链连接相关的网络管理、群组管理、AMOP通信、事件机制、账本与RPC接口，采用C++方式封装实现CPP-SDK；
+- **C-SDK层**：基于CPP-SDK再包装一层C接口调用方式的C-SDK；
+- **多语言、多终端接入层**：通过C-SDK的接口可以快速适配到Java、golang、nodejs、python、rust以及 iOS、Android等多语言SDK，并且兼容适配Windows、Linux、macOS、KyLin多中操作系统以及X86、ARM（包括M1）等不同平台。
+
+SDK分层架构图如下所示：
+
+![](../../images/sdk/sdk_layered_architecture.png)
