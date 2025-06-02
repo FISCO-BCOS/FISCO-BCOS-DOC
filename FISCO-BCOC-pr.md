@@ -2,17 +2,14 @@
 
 ## 一、准备工作
 
-###众所周知，GitHub在国内浏览器进入比较困难，总是出现网络问题，可通过win+R打开命令板，输入以入内容解决:
+## 众所周知，GitHub在国内浏览器进入比较困难，总是出现网络问题，可通过win+R打开命令板，输入以入内容解决:
 
-微软edge浏览器使用命令（注意文件路径是否一致）：
-
-&"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --host-rules="MAP github.com octocaptcha.com, MAP github.githubassets.com yelp.com, MAP *.githubusercontent.com githubusercontent.com" --host-resolver-rules="MAP octocaptcha.com 20.27.177.113, MAP yelp.com 199.232.240.116, MAP githubusercontent.com 199.232.176.133"
-
+## 微软edge浏览器使用命令（注意文件路径是否一致）：
+"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --host-rules="MAP github.com octocaptcha.com, MAP github.githubassets.com yelp.com, MAP *.githubusercontent.com githubusercontent.com" --host-resolver-rules="MAP octocaptcha.com 20.27.177.113, MAP yelp.com 199.232.240.116, MAP githubusercontent.com 199.232.176.133"
 
 
-谷歌浏览器使用命令（注意文件路径是否一致）：
-
-&"C:\Program Files\Google\Chrome\Application\chrome.exe" --host-rules="MAP github.com octocaptcha.com, MAP github.githubassets.com yelp.com, MAP *.githubusercontent.com githubusercontent.com" --host-resolver-rules="MAP octocaptcha.com 20.27.177.113, MAP yelp.com 199.232.240.116, MAP githubusercontent.com 199.232.176.133"
+## 谷歌浏览器使用命令（注意文件路径是否一致）：
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --host-rules="MAP github.com octocaptcha.com, MAP github.githubassets.com yelp.com, MAP *.githubusercontent.com githubusercontent.com" --host-resolver-rules="MAP octocaptcha.com 20.27.177.113, MAP yelp.com 199.232.240.116, MAP githubusercontent.com 199.232.176.133"
 
 ### 1. 注册GitHub账号
 
