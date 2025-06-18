@@ -1,0 +1,56 @@
+# 系统设计
+
+标签：``系统设计`` ``共识`` ``分布式存储`` ``合约目录``
+
+FISCO BCOS 3.x版本采用**微服务模块化**设计架构，总体上系统包含接入层、调度层、计算层、存储层和管理层:
+
+- **接入层**：负责区块链 **连接的能力** ，包括提供P2P能力的“对外网关服务”和提供给SDK访问的“对内网关服务”。
+***
+- **调度层**：区块链内核运转调度的“大脑中枢”系统，负责整个区块链系统 **运行调度**，包括网络分发调度、交易池管理、共识机制、计算调度等模块。
+***
+- **计算层**：负责 **交易验证**，将交易解码放入合约虚拟机中执行，得到交易执行结果，是区块链的核心。
+***
+- **存储层**：负责 **落盘存储** 交易、区块、账本状态等数据。
+***
+- **管理层**：为整个区块链系统各模块实现 **可视化管理** 的平台，包括部署、配置、日志、网络路由等管理功能。FISCO BCOS 3.x系统架构基于开源微服务框架Tars构建。
+
+***
+------
+___
+
+支持 **灵活拆分组合** 微服务模块，可以构建不同形态的服务模式，目前包括:
+***
+- **轻便Air版**：采用all-in-one的封装模式，将所有模块编译成一个二进制（进程），一个进程即为一个区块链节点，包括网络、共识、接入等所有功能模块，采用本地RocksDB存储，适用于初学者入门、功能验证、POC产品等。
+***
+- **专业Pro版**：包括RPC、Gateway服务和多个区块链节点Node服务组成，多个Node服务可构成一个群组，所有Node共用接入层服务，接入层的服务可平行扩展，适用于容量可控（T级以内）的生产环境。
+
+- **大容量Max版**: 由各个层的所有服务构成，每个服务都可独立扩展，存储采用分布式存储TiKV，管理采用Tars-Framwork服务。它适用于海量交易上链，需要支持大量数据落盘存储的场景。
+----------
+
+```eval_rst
+.. toctree::
+   :maxdepth: 1
+
+   architecture.md
+   tx_procedure.md
+   protocol_description.md
+   consensus/index.rst
+   sync.md
+   storage/storage.md
+   DMC.md
+   virtual_machine/index.rst
+   committee_design.md
+   storage/storage_security.md
+   storage/archive.md
+   guomi.md
+   rip.md
+   network_compress.md
+   security_control/index.rst
+   hsm.md
+   cns_contract_name_service.md
+   contract_directory.md
+   boostssl.md
+   amop_protocol.md
+   p2p.md
+   compatibility.md
+```
