@@ -35,7 +35,7 @@ Key Manager部署在机构内网里，是专门管理节点硬盘数据访问秘
 加密保护的对象包括：
 
 - 节点本地存储的数据库：rocksdb或leveldb
-- 节点私钥：node.key，gmnode.key（国密）
+- 节点私钥：origin_cert/node.key和gmnode.key（国密）
 
 ## 实现原理
 
