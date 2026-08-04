@@ -22,6 +22,34 @@ FISCO BCOS 设计 Feature控制特性功能开启关闭，用户可以根据自�
 
    upgrade.md
 
+v3.17.x
+------------------
+
+.. admonition:: FISCO BCOS 3.x Releases
+
+     - `FISCO BCOS v3.17.0 <./3_17_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.17.0>`_]
+
+.. admonition:: 查看节点和数据版本
+
+    - 查看Air版本FISCO BCOS节点二进制版本：``./fisco-bcos --version``
+    - 查看Pro版本FISCO BCOS节点二进制版本：``./BcosNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``
+    - 查看Max版本FISCO BCOS节点二进制版本：``./BcosMaxNodeService --version``, ``./BcosRpcService --version``, ``./BcosGatewayService --version``, ``./BcosExecutorService --version``
+    - 查看轻节点二进制版本：``../fisco-bcos-lightnode --version``
+    - 查看轻节点相关文档，请参考 [`轻节点搭建工具 <https://fisco-bcos-doc.readthedocs.io/zh_CN/latest/docs/tutorial/lightnode.html>`_]
+
+.. toctree::
+   :hidden:
+   :maxdepth: 0
+
+   3_17_0.md
+
+v3.12.x ~ v3.16.x
+------------------
+
+.. admonition:: FISCO BCOS 3.x Releases
+
+     - v3.12.x ~ v3.16.x 各版本的更新内容请见 `GitHub Releases <https://github.com/FISCO-BCOS/FISCO-BCOS/releases>`_
+
 v3.11.x
 ------------------
 
