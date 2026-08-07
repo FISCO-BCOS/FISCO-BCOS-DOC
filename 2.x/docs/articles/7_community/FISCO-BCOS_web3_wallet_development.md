@@ -44,6 +44,7 @@ FISCO BCOS 原生 RPC 协议在传统项目中，原生交易构造、TARS 编�
 
 ## 代码仓库
 
+- 钱包插件：[lbio-cc/fisco-bcos-wallet](https://github.com/lbio-cc/fisco-bcos-wallet)
 - 配套RPC代理模板：[lbio-cc/fisco-bcos-wallet-proxy](https://github.com/lbio-cc/fisco-bcos-wallet-proxy)
 
 ## 我们要解决什么问题
