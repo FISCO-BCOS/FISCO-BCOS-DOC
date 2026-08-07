@@ -105,6 +105,7 @@
    7_community/suibe_blockchain_center_toolbox.md
    7_practice/build_chain_with_wsl_on_windows.md
    7_practice/ansible_FISCO-BCOS_Webase-deploy.md
+   7_community/FISCO-BCOS_web3_wallet_development.md
 ```
 
 ## 社区写作指南
