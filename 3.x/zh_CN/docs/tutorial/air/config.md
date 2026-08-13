@@ -93,7 +93,7 @@ FISCO BCOS v3.0.0设计并实现了兼容性框架，可支持数据版本的动
 
 ## 2. 节点配置文件
 
-`config.ini`采用`ini`格式，主要包括 **p2p、rpc、cert、chain、security、consensus、storage、txpool和log** 配置项。
+`config.ini`采用`ini`格式，主要包括 **p2p、rpc、web3_rpc、cert、chain、security、consensus、storage、txpool、sync和log** 配置项。
 
 ```eval_rst
 .. important::
@@ -154,7 +154,10 @@ RPC配置选项位于`[rpc]`，主要包括:
 - `[rpc].listen_ip`: RPC监听IP，为方便节点和SDK跨机器部署，默认设置为`0.0.0.0`;
 - `[rpc].listen_port`: RPC监听端口，默认设置为`20200`;
 - `[rpc].thread_count`: RPC服务线程数，默认为 4;
-- `[rpc].sm_ssl`: SDK与节点之间的连接是否使用国密SSL连接，`true`表示开启国密SSL连接; `false`表示采用非国密SSL连接，默认为`false`.
+- `[rpc].sm_ssl`: SDK与节点之间的连接是否使用国密SSL连接，`true`表示开启国密SSL连接; `false`表示采用非国密SSL连接，默认为`false`;
+- `[rpc].enable_ssl`: SDK与节点之间的连接是否使用SSL连接，`true`表示开启SSL连接，`false`表示关闭SSL连接，默认为`true`；v3.12.0起新增，用于替代旧版的`[rpc].disable_ssl`，两者同时配置时以`enable_ssl`为准;
+- `[rpc].disable_ssl`（已废弃，被`enable_ssl`取代）: SSL连接开关，`true`表示关闭SSL连接，默认为`false`；仅为兼容v3.12.0之前的旧配置保留，新部署请使用`enable_ssl`;
+- `[rpc].return_input_params`: 调用`sendTransaction`时，返回结果中是否携带交易的输入参数(`input`)，默认为`true`；如需减小返回数据体积，可配置为`false`关闭该功能。
 
 RPC配置示例如下：
 
@@ -165,11 +168,45 @@ RPC配置示例如下：
     thread_count=4
     ; ssl or sm ssl
     sm_ssl=false
-    ; ssl connection switch, if disable the ssl connection, default: false
-    ;disable_ssl=true
+    ; ssl connection switch, if you wan to disable the ssl connection, turn it to false, default: true
+    enable_ssl=true
+    ; deprecated, superseded by enable_ssl since v3.12.0, kept here for compatibility with older configs
+    ; disable_ssl=false
+    ; return input params in sendTransaction() return, default: true
+    ;return_input_params=false
 ```
 
-### 2.3 配置证书信息
+### 2.3 配置Web3 RPC
+
+`[web3_rpc]`配置节点对外提供的以太坊兼容Web3 JSON-RPC接口，`enable`、`listen_ip`、`listen_port`、`thread_count`等基础配置项与`[rpc]`节含义相同，此外还包括请求体大小限制以及跨域资源共享(CORS)相关配置：
+
+- `[web3_rpc].request_body_size_limit`: Web3 RPC请求体大小限制，单位为字节，默认为`10240000`(约10MB);
+- `[web3_rpc].enable_cors`: 是否启用跨域资源共享(CORS)，默认为`true`;
+- `[web3_rpc].cors_allow_credentials`: CORS请求是否允许携带凭证信息(如Cookie)，默认为`true`;
+- `[web3_rpc].cors_allowed_origins`: CORS允许的来源(Origin)，默认为`*`，表示允许所有来源;
+- `[web3_rpc].cors_allowed_methods`: CORS允许的HTTP方法，默认为`GET, POST, OPTIONS`;
+- `[web3_rpc].cors_allowed_headers`: CORS允许的请求头，默认为`Content-Type, Authorization, X-Requested-With`;
+- `[web3_rpc].cors_max_age`: CORS预检请求(preflight request)结果的缓存时间，单位为秒，默认为`86400`(即24小时)。
+
+Web3 RPC配置示例如下：
+
+```ini
+[web3_rpc]
+    enable=true
+    listen_ip=0.0.0.0
+    listen_port=8545
+    thread_count=8
+    request_body_size_limit=10240000
+    ; cors config for web3 rpc
+    enable_cors=true
+    cors_allow_credentials=true
+    cors_allowed_origins=*
+    cors_allowed_methods=GET, POST, OPTIONS
+    cors_allowed_headers=Content-Type, Authorization, X-Requested-With
+    cors_max_age=86400
+```
+
+### 2.4 配置证书信息
 
 基于安全考虑，FISCO BCOS节点间采用SSL加密通信，`[cert]`配置SSL连接的证书信息：
 
@@ -199,7 +236,7 @@ RPC配置示例如下：
     private_key_path=conf/node.pem
 ```
 
-### 2.4 配置共识信息
+### 2.5 配置共识信息
 
 考虑到PBFT模块打包太快会导致某些区块中仅打包1到2个很少的交易，浪费存储空间，FISCO BCOS在可变配置`config.ini`的`[consensus]`下引入`min_seal_time`配置项来控制PBFT共识打包的最短时间，即：共识节点打包时间超过`min_seal_time`且打包的交易数大于0才会开始共识流程，处理打包生成的新区块。
 
@@ -216,11 +253,11 @@ RPC配置示例如下：
     min_seal_time=500
 ```
 
-### 2.5 配置存储信息
+### 2.6 配置存储信息
 
 存储配置位于`[storage]`，具体包括:
 
-- `[storage].typs`: 区块链节点数据库类型，默认为RocksDB，支持TiKV，当配置TiKV时，需要对应配置`pd_addrs`,`pd_ssl_ca_path`,`pd_ssl_cert_path`,`pd_ssl_key_path`等参数;
+- `[storage].type`: 区块链节点数据库类型，默认为RocksDB，支持TiKV，当配置TiKV时，需要对应配置`pd_addrs`,`pd_ssl_ca_path`,`pd_ssl_cert_path`,`pd_ssl_key_path`等参数;
 - `[storage].data_path`: 区块链节点数据存储路径，默认为data;
 - `[storage].enable_cache`: 是否开启缓存，默认为`true`;
 - `[storage].key_page_size`: KeyPage存储方案中，存储页大小，单位是字节，要求不小于`4096`(4KB)，默认为`10240`(10KB);此配置项可修改为0，表示关闭keypage以获得更好的写入性能，如果已有节点修改此配置项为0，则需要清理数据重新同步区块链数据;
@@ -253,12 +290,12 @@ RPC配置示例如下：
     ;sync_archived_blocks=false
 ```
 
-### 2.6 配置落盘加密
+### 2.7 配置落盘加密
 
 落盘加密配置选项位于`[storage_security]`:
 
 - `[storage_security].enable`: 是否启用落盘加密，默认关闭落盘加密;
-- `[storage_security].key_manager_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage_security.md)的url，用于获取数据加解密密钥;
+- `[storage_security].key_manager_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage/storage_security.md)的url，用于获取数据加解密密钥;
 - `[storage_security].cipher_data_key`: 数据落盘加密的私钥。
 
 ```ini
@@ -270,14 +307,15 @@ RPC配置示例如下：
     cipher_data_key=
 ```
 
-### 2.7 配置交易池信息
+### 2.8 配置交易池信息
 
 交易池配置选项位于`[txpool]`:
 
 - `[txpool].limit`: 交易池的容量限制, 默认为`15000`;
 - `[txpool].notify_worker_num`: 交易通知线程数量，默认为2;
 - `[txpool].verify_worker_num`: 交易验证线程数量，默认为机器CPU核数;
-- `[txpool].txs_expiration_time`: 交易过期时间，以秒为单位，默认10分钟，即：超过十分钟没有被共识模块打包的交易将会被直接丢弃。
+- `[txpool].txs_expiration_time`: 交易过期时间，以秒为单位，默认10分钟，即：超过十分钟没有被共识模块打包的交易将会被直接丢弃;
+- `[txpool].enable_txs_from_free_node`: 是否允许接受来自自由节点(Free Node)的交易，默认为`false`(不允许)。
 
 ```ini
 [txpool]
@@ -289,9 +327,30 @@ notify_worker_num = 2
 ;verify_worker_num = 2
 ; txs expiration time, in seconds, default is 10 minutes
 txs_expiration_time = 600
+; permit txs from free node or not, default is false
+enable_txs_from_free_node = false
 ```
 
-### 2.8 配置日志信息
+### 2.9 配置区块同步
+
+区块同步的树形广播配置位于`[sync]`，用于通过树形网络拓扑广播交易和区块状态，建议在部署较多共识节点时使用：
+
+- `[sync].send_txs_by_tree`: 是否通过树形网络拓扑广播交易，建议在部署较多共识节点时开启，默认为`false`;
+- `[sync].sync_block_by_tree`: 是否通过树形网络拓扑广播区块状态，建议在部署较多共识节点时开启，默认为`false`;
+- `[sync].tree_width`: 树形网络拓扑的宽度(每个节点向下转发的子节点数量)，取值范围为`1`~`65535`，默认为`3`。
+
+```ini
+[sync]
+    ; send transaction by tree-topology
+    ; recommend to use when deploy many consensus nodes
+    send_txs_by_tree=false
+    ; send block status by tree-topology
+    ; recommend to use when deploy many consensus nodes
+    sync_block_by_tree=false
+    tree_width=3
+```
+
+### 2.10 配置日志信息
 
 FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/libs/log/doc/html/index.html)，日志配置主要位于`config.ini`的`[log]`配置项中。
 
@@ -325,7 +384,7 @@ FISCO BCOS支持功能强大的[boostlog](https://www.boost.org/doc/libs/1_63_0/
 - `log.max_archive_size`： 归档文件夹最大硬盘空间限制，单位MB，0为不限制
 - `log.min_free_space`： 归档文件夹最小空间，默认为0
 
-### 2.9 网关模块限流
+### 2.11 网关模块限流
 
 网关模块支持在config.ini中配置实现流量速率限制的功能，当流量超限时，通过丢弃数据包实现限流。
 

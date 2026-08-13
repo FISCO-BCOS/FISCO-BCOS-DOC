@@ -133,7 +133,7 @@ vim config.toml
 
 在这里我们选择开启`auth_check`配置项，并使用`0x976fe0c250181c7ef68a17d3bc34916978da103a`账户地址作为初始化治理委员，请以实际情况为准。
 
-如何创建、使用链上账户，请参考链接：[创建和使用账户](./account.md)。
+如何创建、使用链上账户，请参考链接：[创建和使用账户](../develop/account.md)。
 
 配置详情请参考：[tars服务配置](../tutorial/pro/pro_builder.html#tars)
 
@@ -229,7 +229,7 @@ Against Voters:
 
 首先使用build_chain.sh脚本搭建权限模式的区块链：
 
-这里参考[创建和使用账户](./account.md)链接创建新的账户，指定初始化治理委员的账户地址为 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
+这里参考[创建和使用账户](../develop/account.md)链接创建新的账户，指定初始化治理委员的账户地址为 0x1cc06388cd8a12dcf7fb8967378c0aea4e6cf642
 
 可以使用`-A`选项自动生成一个账户。账户是有国密和非国密区分的，会根据链的类型自动生成。
 

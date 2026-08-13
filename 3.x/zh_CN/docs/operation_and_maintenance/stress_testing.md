@@ -6,7 +6,7 @@
 
 ## 通过Java SDK demo进行压力测试
 
-Java SDK Demo是基于[Java SDK](./sdk/java_sdk/index.md)的基准测试集合，能够对FISCO BCOS节点进行压力测试。Java SDK Demo提供有合约编译功能，能够将Solidity合约文件转换成Java合约文件，此外还提供了针对转账合约、CRUD合约以及AMOP功能的压力测试示例程序。
+Java SDK Demo是基于[Java SDK](../sdk/java_sdk/index.md)的基准测试集合，能够对FISCO BCOS节点进行压力测试。Java SDK Demo提供有合约编译功能，能够将Solidity合约文件转换成Java合约文件，此外还提供了针对转账合约、CRUD合约以及AMOP功能的压力测试示例程序。
 
 ### 第一步. 安装JDK
 
@@ -41,7 +41,7 @@ $ bash gradlew build
 
 ### 第三步. 配置Demo
 
-使用Java SDK Demo之前，需要首先配置Java SDK，包括证书拷贝以及端口配置，详细请参考[这里](./sdk/java_sdk/quick_start.md)，SDK连接证书参考这里：[SDK连接证书配置](../cert_config.md)。下面以FISCO BCOS 3.x Air版为例：
+使用Java SDK Demo之前，需要首先配置Java SDK，包括证书拷贝以及端口配置，详细请参考[这里](../sdk/java_sdk/quick_start.md)，SDK连接证书参考这里：[SDK连接证书配置](../sdk/cert_config.md)。下面以FISCO BCOS 3.x Air版为例：
 
   ```shell
   # 拷贝证书(假设SDK证书位于~/fisco/nodes/127.0.0.1/sdk目录，请根据实际情况更改路径)

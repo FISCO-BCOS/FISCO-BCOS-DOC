@@ -6,6 +6,11 @@
 ------------
 
 ```eval_rst
+.. warning::
+    自 v3.17.0 起，Max 版本部署形态（``BcosMaxNodeService``、``BcosExecutorService`` 等微服务部署形态）计划在 v3.18.0 中不再维护；Air / Pro 版本保持不变，新部署建议使用 Air 版本。详见 `版本功能变更说明 <../../introduction/change_log/3_17_0.html>`_ 。
+```
+
+```eval_rst
 .. important::
     相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```

@@ -81,7 +81,7 @@ sudo yum install -y build-essential clang flex bison patch glibc-static glibc-de
 # 查看gcc版本，若gcc版本低于10，安装版本高于10的gcc
 gcc -v
 
-# 查看cmake版本，是否大于等于3.14，若不满足，安装符合要求的cmake版本
+# 查看cmake版本，是否大于等于3.28，若不满足，安装符合要求的cmake版本
 cmake --version
 ```
 

@@ -6,7 +6,7 @@
 
 FISCO BCOS 3.x 引入了合约粒度的权限治理体系。治理委员会可通过投票的方式管理合约的部署、合约的接口调用权限。
 
-详细权限治理使用文档请参考链接：[权限治理使用指南](../develop/committee_usage.md)
+详细权限治理使用文档请参考链接：[权限治理使用指南](../../develop/committee_usage.md)
 
 ## 整体设计
 
@@ -126,11 +126,11 @@ uint8 public _winRate;
 8. CommitteeManager确认提案的状态，达到可执行状态后，发起对`SystemConfigPrecompiled`或 `ConsensusPrecompiled`的调用
 9. 系统预编译合约会先确认调用的sender是否以/sys/开头，确认则执行。(CommitteeManager是内置在链上的合约，具有固定地址/sys/10001)
 
-![](../../images/design/committee_contract.png)
+![](../../../images/design/committee_contract.png)
 
 ### 4. 底层节点设计
 
-![权限底层设计](../../images/design/committee_adapt_chain.png)
+![权限底层设计](../../../images/design/committee_adapt_chain.png)
 
 在每一次部署合约时，都将会在同目录创建以合约名+“_accessAuth”的存储表，用于存储接口到用户的黑白名单数据。
 

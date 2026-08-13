@@ -33,7 +33,7 @@ FISCO BCOS平台支持Solidity、Liquid、Precompiled三种智能合约使用形
 
 ## 2. 智能合约部署与调用
 
-用户完成智能合约的开发之后，将智能合约部署上链并发起调用交易。用户可通过[SDK](./sdk/index.md)将编译好的合约打包成交易发送到FISCO BCOS区块链节点上链。社区已提供高度包装的工具，用户可快速开箱使用：
+用户完成智能合约的开发之后，将智能合约部署上链并发起调用交易。用户可通过[SDK](../sdk/index.md)将编译好的合约打包成交易发送到FISCO BCOS区块链节点上链。社区已提供高度包装的工具，用户可快速开箱使用：
 
 - 使用控制台： [控制台](../operation_and_maintenance/console/index.md)，控制台包装了Java SDK，提供命令行交互功能，供给开发者使用的节点查询与管理的工具。
 - 使用Java合约生成工具：[Java合约生成工具](../operation_and_maintenance/console/console_config.html#java)支持Solidity的自动编译并生成Java文件、支持指定wbc-liquid编译后的WASM文件以及ABI文件生成Java文件。

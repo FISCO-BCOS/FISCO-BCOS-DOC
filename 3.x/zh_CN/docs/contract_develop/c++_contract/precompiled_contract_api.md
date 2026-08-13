@@ -55,7 +55,7 @@ contract SystemConfigPrecompiled
 
 ### SDK支持
 
-- [Java SDK](../sdk/java_sdk/index.md)
+- [Java SDK](../../sdk/java_sdk/index.md)
 
 ## 2. ConsensusPrecompiled
 
@@ -102,7 +102,7 @@ contract ConsensusPrecompiled {
 
 ### SDK支持
 
-- [Java SDK](../sdk/java_sdk/api.html#consensusservice)
+- [Java SDK](../../sdk/java_sdk/index.md)
 
 ## 3. TableManagerPrecompiled
 

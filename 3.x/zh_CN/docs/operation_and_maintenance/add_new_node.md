@@ -175,4 +175,4 @@ cat node4/conf/node.nodeid
 ]
 ```
 
-更多操作请参考[节点管理](../manual/node_management.md)
+更多操作请参考[节点管理](./node_management.md)

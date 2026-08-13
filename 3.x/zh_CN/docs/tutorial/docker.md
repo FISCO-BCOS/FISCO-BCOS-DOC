@@ -4,7 +4,7 @@
 
 ----
 
-[build_chain.sh](../manual/build_chain.md)脚本提供`-d`参数，支持使用docker方式部署区块链。本章将演示如何以docker方式搭建四节点的区块链，通过示例帮助用户熟悉docker搭建区块链的流程。
+[build_chain.sh](./air/build_chain.md)脚本提供`-d`参数，支持使用docker方式部署区块链。本章将演示如何以docker方式搭建四节点的区块链，通过示例帮助用户熟悉docker搭建区块链的流程。
 
 ```eval_rst
 .. note::

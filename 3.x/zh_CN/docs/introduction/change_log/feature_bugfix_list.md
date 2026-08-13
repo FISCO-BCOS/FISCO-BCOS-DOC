@@ -4,16 +4,25 @@
 
 ## 1. feature功能开关
 
-|              | Feature 名                  | 默认状态 | 说明                                         |
-|--------------|----------------------------|------|--------------------------------------------|
-| 资产管理         | feature_balance            | 关：0  | 默认关闭                                       |
-| 资产操作预编译合约    | feature_balance_precompile | 关：0  | 默认关闭                                       |
-| 计费模式         | feature_policy1            | 关：0  | 默认关闭                                       |
-| 块内分片         | feature_sharding           | 关：0  | 默认关闭，仅在从3.3、3.4升级至当前版本时，feature_sharding打开 |
-| 同态加密         | feature_paillier           | 关：0  | 默认关闭                                       |
-| rpbft共识      | feature_rpbft              | 关：0  | 默认关闭                                       |
-| dmc切换至串行     | feature_dmc2serial         | 关：0  | 默认关闭                                       |
-| EVM升级至CANCUN | feature_evm_cancun         | 关：0  | 默认关闭                                       |
+|                  | Feature 名                          | 默认状态 | 说明                                                             |
+|------------------|--------------------------------------|------|------------------------------------------------------------------|
+| 资产管理         | feature_balance                      | 关：0  | 默认关闭                                                          |
+| 资产操作预编译合约 | feature_balance_precompiled          | 关：0  | 默认关闭                                                          |
+| 计费模式         | feature_balance_policy1              | 关：0  | 默认关闭                                                          |
+| 转账白名单       | feature_balance_policy2              | 关：0  | 默认关闭；开启后按转账白名单校验，sender与receiver均不在白名单时拒绝转账 |
+| 块内分片         | feature_sharding                     | 关：0  | 默认关闭，仅在从3.3、3.4升级至当前版本时，feature_sharding打开        |
+| 同态加密         | feature_paillier                     | 关：0  | 默认关闭                                                          |
+| 同态加法原始接口 | feature_paillier_add_raw             | 关：0  | 默认关闭；开启后同态加密Paillier预编译合约支持原始字节(bytes)入参的加法接口 |
+| rpbft共识        | feature_rpbft                        | 关：0  | 默认关闭                                                          |
+| rPBFT轮换选举权重 | feature_rpbft_term_weight            | 关：0  | 默认关闭；开启后rPBFT轮换选主时按节点任期加权                        |
+| rPBFT VRF曲线类型 | feature_rpbft_vrf_type_secp256k1     | 关：0  | 默认关闭；开启后rPBFT VRF选主曲线由curve25519切换为secp256k1        |
+| dmc切换至串行     | feature_dmc2serial                   | 关：0  | 默认关闭                                                          |
+| EVM升级至CANCUN  | feature_evm_cancun                   | 关：0  | 默认关闭                                                          |
+| EVM时间戳单位适配 | feature_evm_timestamp                | 关：0  | 默认关闭；开启后Solidity合约内获取的区块时间戳单位由毫秒改为秒         |
+| EVM合约地址生成适配 | feature_evm_address                | 关：0  | 默认关闭；开启后合约创建合约(CREATE)时使用以太坊兼容的地址生成算法      |
+| 账户存储原始地址编码 | feature_raw_address               | 关：0  | 默认关闭；开启后账户存储表名使用二进制原始地址编码，而非十六进制字符串编码 |
+
+说明：`feature_balance_precompiled` 依赖 `feature_balance`，`feature_balance_policy1` 依赖 `feature_balance_precompiled`（依据 `Features.cpp` 中 `validate()` 函数的校验逻辑），必须按依赖顺序依次开启，否则调用 `setSystemConfigByKey` 开启时会报错。
 
 ## 2. bugfix列表
 
@@ -26,7 +35,7 @@
 | 修复call没有地址返回的问题                                                      | bugfix_call_noaddr_return                           | 开启：1  | 3.2.7、3.6.0 默认开启        |
 | 修复预编译合约算哈希与以太坊不同的问题                                          | bugfix_precompiled_codehash                         | 开启：1  | 3.2.7、3.6.0 默认开启        |
 | 修复dmc模式下回滚时不回滚子合约的bug                                            | bugfix_dmc_revert                                   | 开启：1  | 3.2.7、3.6.0 默认开启        |
-| 修复keyPage哈希不一致的兼容问                                                   | bugfix_keypage_system_entry_hash                    | 开启：1  | 3.6.1 默认开启               |
+| 修复keyPage哈希不一致的兼容问题                                                 | bugfix_keypage_system_entry_hash                    | 开启：1  | 3.6.1 默认开启               |
 | InternalCreate复用现有部署合约逻辑                                              | bugfix_internal_create_redundant_storage            | 开启：1  | 3.6.1 默认开启               |
 | 修复开启合约部署权限后资产转移受限问题                                          | bugfix_internal_create_permission_denied            | 开启：1  | 3.7.0 默认开启               |
 | 修复块内分片合约调用合约的问题                                                  | bugfix_sharding_call_in_child_executive             | 开启：1  | 3.7.0 默认开启               |
@@ -39,3 +48,23 @@
 | 修复Solidity合约使用staticcall的opcode时当出现错误时没有正确返回的问题          | bugfix_staticcall_noaddr_return                     | 开启：1  | 3.9.0默认开启                |
 | 修复在Solidity合约中receive函数没有正确处理的问题                               | bugfix_support_transfer_receive_fallback            | 开启：1  | 3.9.0默认开启                |
 | 修复在合约中获取EOA code时可能出现错误结果的问题                                | bugfix_eoa_match_failed                             | 开启：1  | 3.9.0默认开启                |
+| 修复rPBFT流水线共识场景下轮换失败的问题：VRF输入由prev block hash改为区块高度(block number) | bugfix_rpbft_vrf_blocknumber_input                  | 开启：1  | 3.12.0默认开启               |
+| 修复资产账户(feature_balance)场景下部署合约时错误删除账户代码(ACCOUNT_CODE)存储项的问题 | bugfix_delete_account_code                          | 开启：1  | 3.13.0默认开启               |
+| 修复计费模式1(feature_balance_policy1)下调用空代码(无合约代码)地址时返回结果与以太坊不一致的问题 | bugfix_policy1_empty_code_address                   | 开启：1  | 3.13.0默认开启               |
+| 修复EOA直接调用系统预编译合约时未正确核算交易实际消耗gas的问题                  | bugfix_precompiled_gasused                          | 开启：1  | 3.13.0默认开启               |
+| 修复交易revert时sender nonce未按预期自增/重复自增的问题                        | bugfix_nonce_not_increase_when_revert               | 开启：1  | 3.14.0默认开启               |
+| 修复部署合约时未将新合约账户nonce初始化为1的问题                                | bugfix_set_contract_nonce_when_create               | 开启：1  | 3.14.0默认开启               |
+| 修复EOA直接调用系统预编译合约时初始可用gas计算不正确的问题                      | bugfix_precompiled_gascalc                          | 开启：1  | 3.15.1默认开启               |
+| 修复方法级权限校验(checkMethodAuth)逻辑，统一按交易sender地址校验，去除对origin地址的重复校验 | bugfix_method_auth_sender                           | 开启：1  | 3.15.2默认开启               |
+| 修复预编译合约调用或内部转账失败时未同步设置EVM状态为REVERT，导致上层判断不一致的问题 | bugfix_precompiled_evm_status                       | 开启：1  | 3.15.2默认开启               |
+| 修复启用资产转账时delegatecall场景下value未在合约执行前完成转账的问题           | bugfix_delegatecall_transfer                        | 开启：1  | 3.16.0默认开启               |
+| 修复系统内置合约地址(c_systemTxsAddress)在部署合约时被错误自增nonce的问题       | bugfix_nonce_initialize                             | 开启：1  | 3.16.0默认开启               |
+| 修复v1执行器(transaction-executor)时间戳未按feature_evm_timestamp语义适配的问题 | bugfix_v1_timestamp                                 | 开启：1  | 3.16.0默认开启               |
+| 修复交易revert场景下事件日志(logs)未清理的问题                                 | bugfix_revert_logs                                  | 开启：1  | 3.16.4默认开启               |
+| 修复权限治理(auth)检查缺陷：CREATE2部署绕过鉴权、鉴权失败回滚状态、权限表名抢占等问题（FIB-77/81/82/83） | bugfix_auth_check                                   | 开启：1  | 3.17.0默认开启               |
+| 修复v1执行器错误处理链路问题：fatal EVM错误时gas_left未归零、预编译gas校验与退款缺陷、HostContext错误处理加固等（FIB-76/78/79/80/85~92） | bugfix_v1_error_handling                            | 开启：1  | 3.17.0默认开启               |
+| 修复余额不足回滚场景下仍可绕过gas支付前置校验的问题（FIB-75）                   | bugfix_gas_payment_balance_precheck                 | 开启：1  | 3.17.0默认开启               |
+| 预编译合约查找按feature开关状态门控，避免未开启对应feature时仍可调用相关预编译合约（FIB-84） | bugfix_precompiled_feature_gate                     | 开启：1  | 3.17.0默认开启               |
+| 修复EVM setStorage接口未返回正确存储状态码的问题（FIB-94）                      | bugfix_evm_storage_status                           | 开启：1  | 3.17.0默认开启               |
+| 修复3.17.0版本新发现的stateStorage哈希计算问题（FIB-99/105）                    | bugfix_statestorage_hash_v3_17                      | 开启：1  | 3.17.0默认开启               |
+| 使web3 EOA nonce的提交与区块内交易顺序解耦，避免并发场景下nonce错乱             | bugfix_nonce_ordering                               | 开启：1  | 3.17.0默认开启               |

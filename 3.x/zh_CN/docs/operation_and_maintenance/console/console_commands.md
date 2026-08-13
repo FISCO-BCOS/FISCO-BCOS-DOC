@@ -2592,7 +2592,7 @@ $ -rw-r--r--  1 octopus  staff  258  9 30 16:34 account/ecdsa/0x1cc06388cd8a12dc
 加载`PEM`或者`P12`格式的私钥文件，加载的私钥可以用于发送交易签名。但是，若控制台使用密码机的公私钥，因公私钥都放在密码机内部，所以使用不了该操作命令。
 参数：
 
-- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](./sdk/java_sdk/config.html#id9)。
+- 私钥文件路径: 支持相对路径、绝对路径和默认路径三种方式。用户账户地址时，默认从`config.toml`的账户配置选项`keyStoreDir`加载账户，`keyStoreDir`配置项请参考[这里](../../sdk/java_sdk/config.html#id9)。
 
 - 账户格式: 可选，加载的账户文件类型，支持`pem`与`p12`，默认为`pem`。
 

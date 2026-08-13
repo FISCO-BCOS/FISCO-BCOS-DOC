@@ -25,7 +25,7 @@
 - 同态加密支持密文计算，即由相同公钥加密生成的密文可以计算​f( )操作，生成的新密文解密后恰好等于两个原始明文计算f( )的结果；
 - 同态加密公式描述如下：
 
-![](../../images/privacy/formula.jpg)
+![](../../../images/privacy/formula.jpg)
 
 FISCO BCOS采用的是paillier加密算法，支持加法同态。paillier的公私钥兼容主流的RSA加密算法，接入门槛低。同时paillier作为一种轻量级的同态加密算法，计算开销小易被业务系统接受。因此经过功能性和可用性的权衡，最终选定了paillier算法。
 
@@ -42,7 +42,7 @@ FISCO BCOS同态加密模块提供的功能组件包括：
 
 对于有隐私保护需求的业务，如果涉及简单密文计算，可借助本模块实现相关功能。凡是上链的数据可通过调用paillier库完成加密，链上的密文数据可通过调用paillier预编译合约实现密文的同态加运算，密文返还回业务层后，可通过调用paillier库完成解密，得到执行结果。具体流程如下图所示：
 
-![](../../images/privacy/paillier.jpg)
+![](../../../images/privacy/paillier.jpg)
 
 ### 应用场景
 
@@ -80,7 +80,7 @@ FISCO BCOS群/环签名模块提供的功能组件包括：
 
 有签名者身份隐匿需求的业务可借助本模块实现相关功能。签名者通过调用群/环签名库完成对数据的签名，然后将签名上链，业务合约通过调用群/环签名预编译合约完成签名的验证，并将验证结果返还回业务层。如果是群签名，那么监管方还能打开指定签名数据，获得签名者身份。具体流程如下图所示：
 
-![](../../images/privacy/group_sig.jpg)
+![](../../../images/privacy/group_sig.jpg)
 
 ### 应用场景
 
@@ -96,7 +96,7 @@ FISCO BCOS专门为用户提供了群/环签名开发示例，包括：
 
 示例框架如下图所示，具体操作方法请参阅[客户端指南 Github链接](https://github.com/FISCO-BCOS/group-signature-client/tree/master-2.0)或[客户端指南 Gitee链接](https://gitee.com/FISCO-BCOS/group-signature-client/tree/master-2.0)。
 
-![](../../images/privacy/demo.jpg)
+![](../../../images/privacy/demo.jpg)
 
 ## 启用方法
 

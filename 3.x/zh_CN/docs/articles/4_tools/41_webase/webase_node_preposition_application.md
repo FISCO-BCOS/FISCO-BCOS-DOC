@@ -10,13 +10,13 @@
 
 ### 1.启动区块链节点	
 
-![](../../../../images/articles/webase_node_preposition_application\1.PNG)
+![](../../../../images/articles/webase_node_preposition_application/1.PNG)
 
 ### 2.启动节点前置服务
 
-![img](../../../../images/articles/webase_node_preposition_application\2.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/2.PNG)
 
-![img](../../../../images/articles/webase_node_preposition_application\3.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/3.PNG)
 
 ## 二、准备测试合约
 
@@ -48,19 +48,19 @@ contract HelloWorld {
 
 在合约管理 > 合约IDE中新建合约HelloWorld，选择合适的编译版本进行编译。
 
-![img](../../../../images/articles/webase_node_preposition_application\4.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/4.PNG)
 
 ### 2.添加测试账户
 
 在合约管理 > 测试用户中新建测试用户test。
 
-![img](../../../../images/articles/webase_node_preposition_application\5.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/5.PNG)
 
 ### 3.部署合约
 
 在合约管理 > 合约IDE中部署合约HelloWorld，选择test账户部署，将得到的合约地址和abi信息进行保存。
 
-![img](../../../../images/articles/webase_node_preposition_application\6.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/6.PNG)
 
 ## 三、引入后端项目
 
@@ -68,7 +68,7 @@ contract HelloWorld {
 
 我们直接新建一个springboot项目，然后创建一个controller层，我们直接在这里测试节点前置的API接口。
 
-![img](../../../../images/articles/webase_node_preposition_application\7.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/7.PNG)
 
 ### 2.引入依赖
 
@@ -93,13 +93,13 @@ WeBASE的子系统节点前置提供了许多与区块链进行交互的接口�
 
 > 官方文档地址：[接口说明 — WeBASE v1.5.5 文档 (webasedoc.readthedocs.io)](https://webasedoc.readthedocs.io/zh-cn/latest/docs/WeBASE-Front/interface.html)
 
-![img](../../../../images/articles/webase_node_preposition_application\8.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/8.PNG)
 
 ### 1.合约交易接口调用
 
 我们调用API最重要的目的是通过FISCO BCOS与合约交互，可以使用交易处理接口接口与合约进行交互。
 
-![img](../../../../images/articles/webase_node_preposition_application\9.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/9.PNG)
 
 官方文档中已经对合约的一些参数做了规范与定义 ，看起来很麻烦，需要很多参数，但其实多数参数是固定的，like this，注意替换你自己的合约地址等信息！
 
@@ -149,9 +149,9 @@ public static String commonReq(String userAddress,
 
 之后我们启动后端springboot项目，就可以在postman中进行接口测试，交易返回的result即为在节点前置中调用合约方法的返回结果。
 
-![img](../../../../images/articles/webase_node_preposition_application\10.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/10.PNG)
 
-![img](../../../../images/articles/webase_node_preposition_application\11.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/11.PNG)
 
 测试结果正常，此时可以去节点前置验证。
 
@@ -159,9 +159,9 @@ public static String commonReq(String userAddress,
 
 可以看到，区块高度和交易数量都增加了，且合约内信息与刚才测试调用的信息相同，真正实现了通过java与webase节点前置的交互。
 
-![img](../../../../images/articles/webase_node_preposition_application\12.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/12.PNG)
 
-![img](../../../../images/articles/webase_node_preposition_application\13.PNG)
+![img](../../../../images/articles/webase_node_preposition_application/13.PNG)
 
 ------
 

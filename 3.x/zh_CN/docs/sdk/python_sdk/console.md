@@ -228,7 +228,7 @@ INFO >> user input : ['list']
 
 ## CNS
 
-Python SDK控制台提供了CNS命令，主要包括注册CNS、查询CNS信息，CNS设计使用方法请参考[这里](../../design/features/cns_contract_name_service.md)。
+Python SDK控制台提供了CNS命令，主要包括注册CNS、查询CNS信息，CNS设计使用方法请参考[这里](../../design/cns_contract_name_service.md)。
 
 ### registerCNS
 

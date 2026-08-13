@@ -85,7 +85,7 @@ cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea
 
 脚本自动打印出落盘加密需要的ini配置。
 此时得到节点的cipherDataKey：``` cipher_data_key=ed157f4588b86d61a2e1745efe71e6ea ```
-将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](../tutorial/air/config.md)）中。
+将得到的落盘加密的ini配置，写入节点配置文件（[config.ini](./config.md)）中。
 
 ```shell
 vim nodes/127.0.0.1/node0/config.ini

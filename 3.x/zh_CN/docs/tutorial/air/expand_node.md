@@ -30,7 +30,7 @@ Air版本区块链扩容时，需要提前准备证书和配置文件，用于�
    Air版本区块链节点根证书位于搭链时生成的目录下，可进入搭建节点时生成的文件夹(如：`搭建第一个区块链网络 <../../quick_start/air_installation.html>`_ 生成的节点配置文件夹是`nodes`)，通过 ``find . -name ca`` 查找链的根证书
 ```
 
-这里以[搭建第一个区块链网络](../quick_start.md)为基础，基于`node0`扩容一个新节点`node4`为例：
+这里以[搭建第一个区块链网络](../../quick_start/air_installation.md)为基础，基于`node0`扩容一个新节点`node4`为例：
 
 ```shell
 # 进入操作目录(Note: 进行本操作之前，请参考【搭建第一个区块链网络节点】部署一条Air版FISCO BCOS区块链)

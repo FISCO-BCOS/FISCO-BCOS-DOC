@@ -5,6 +5,11 @@
 ----
 
 ```eval_rst
+.. warning::
+    自 v3.17.0 起，轻节点（Light Node）功能计划在 v3.18.0 中移除，``WITH_LIGHTNODE`` 编译选项将一并移除，暂无替代方案，建议评估迁移至普通节点（Air / Pro）。详见 `版本功能变更说明 <../introduction/change_log/3_17_0.html>`_ 。
+```
+
+```eval_rst
 .. important::
     相关软件和环境版本说明！`请查看 <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/compatibility.html>`_
 ```
@@ -124,7 +129,7 @@ writing RSA key
 - **节点连接证书**: 每个节点`conf`目录下均存放节点的网络连接证书，非国密节点证书和私钥主要包括`ca.crt, ssl.crt, sslkey`，国密节点证书和私钥主要包括`sm_ca.crt, sm_ssl.crt, sm_enssl.crt, sm_enssl.key, sm_ssl.key`。
 - **节点签名私钥**: 节点`conf`目录下的`node.pem`，主要位于共识模块的签名。
 - **SDK连接证书**: 由`build_chain.sh`生成，客户端可拷贝该证书与节点建立SSL连接。
-- **节点配置文件**: 节点目录下的`config.ini`和`config.genesis`配置，前者主要配置链信息，后者主要配置创世块信息，轻节点的信息要与全节点保持一致，具体可参考[Air版本区块链节点配置介绍](./config.md)。
+- **节点配置文件**: 节点目录下的`config.ini`和`config.genesis`配置，前者主要配置链信息，后者主要配置创世块信息，轻节点的信息要与全节点保持一致，具体可参考[Air版本区块链节点配置介绍](./air/config.md)。
 - **启停脚本**: `start.sh`和`stop.sh`，用于启动和停止节点。
 
 轻的配置文件组织示例如下:
@@ -177,7 +182,7 @@ lightnode start successfully pid=72369
 - sendTransaction
 - listAbi
 
-各个RPC接口具体使用方式可参考文档[控制台命令列表](../../develop/console/console_commands.md)。
+各个RPC接口具体使用方式可参考文档[控制台命令列表](../operation_and_maintenance/console/console_commands.md)。
 
 ## 6. 轻节点扩容
 FISCOBCOS 3.3版本开始，支持通过build_chain.sh脚本扩容轻节点，具体操作流程如下：

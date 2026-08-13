@@ -222,7 +222,7 @@ bash gradlew build
 
 ### 第二步：搭建FISCO BCOS区块链网络
 
-根据[指引](../../../quick_start/air_installation.md)搭建FISCO BCOS区块链网络。
+根据[指引](../../quick_start/air_installation.md)搭建FISCO BCOS区块链网络。
 
 ### 第三步：配置
 

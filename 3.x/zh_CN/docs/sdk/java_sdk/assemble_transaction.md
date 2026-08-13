@@ -194,7 +194,7 @@ TransactionProcessor transactionProcessor = TransactionProcessorFactory.createTr
 TransactionReceipt transactionReceipt = transactionProcessor.sendTransactionAndGetReceipt(contractAddress, txData, TransactionAttribute.EVM_ABI_CODEC);
 ```
 
-在执行成功后需要手动解析交易回执中的结果信息。更详细的使用方式可以参考：[交易回执解析](../transaction_decode.md)
+在执行成功后需要手动解析交易回执中的结果信息。更详细的使用方式可以参考：[交易回执解析](./transaction_decode.md)
 
 ```java
 TransactionDecoderService txDecoder = new TransactionDecoderService(client.getCryptoSuite(), client.isWASM());

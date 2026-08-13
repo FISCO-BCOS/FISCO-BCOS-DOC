@@ -70,7 +70,7 @@
 
 #### 相关阅读
 
-- [卓别林演绎共识与同步流程优化](./articles/3_features/31_performance/consensus_and_sync_process_optimization.md)
+- [卓别林演绎共识与同步流程优化](./consensus_and_sync_process_optimization.md)
 
 - [同步模块文档](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/sync/sync.html)
 

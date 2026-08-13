@@ -12,7 +12,7 @@ FISCO BCOS开启rPBFT有两种方式，为节点部署时指定rPBFT共识，以
 
 - `max_trans_num`：一个区块可打包的最大交易数，默认是1000，链初始化后，可通过[控制台](../operation_and_maintenance/console/console_commands.md#setsystemconfigbykey)动态调整该参数；
 
-- `consensus_timeout`：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒，可通过[控制台](.../operation_and_maintenance/console/console_commands.md#setsystemconfigbykey)动态调整该参数；
+- `consensus_timeout`：PBFT共识过程中，每个区块执行的超时时间，默认为3s，单位为秒，可通过[控制台](../operation_and_maintenance/console/console_commands.md#setsystemconfigbykey)动态调整该参数；
 
 - `node.idx`：共识节点列表，配置了参与共识节点的[Node ID](../design/consensus/pbft.html#id1)，节点的Node ID可通过`${data_path}/node.nodeid`文件获取(其中`${data_path}`可通过主配置`config.ini`的`[network_security].data_path`配置项获取)
 

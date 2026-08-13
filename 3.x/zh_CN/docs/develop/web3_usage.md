@@ -23,21 +23,29 @@
 ```toml
 [web3_rpc]
     enable=false
-    listen_ip=127.0.0.1
+    listen_ip=0.0.0.0
     listen_port=8545
-    thread_count=16
+    thread_count=8
+    request_body_size_limit=10240000
+    ; cors config for web3 rpc
+    enable_cors=true
+    cors_allow_credentials=true
+    cors_allowed_origins=*
+    cors_allowed_methods=GET, POST, OPTIONS
+    cors_allowed_headers=Content-Type, Authorization, X-Requested-With
+    cors_max_age=86400
 ```
 
 ### 1.1 旧节点升级并开启Web3配置
 
 由于旧节点未存储关于Web3 Chain ID的信息，所以需要使用增加配置项的形式更新字段信息。按以下步骤执行即可：
 
-1. 升级区块链二进制至3.9.0版本，灰度操作可参考：[版本升级指南](https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/docs/introduction/change_log/upgrade.html)
+1. 升级区块链二进制至最新版本v3.17.0，灰度操作可参考：[版本升级指南](https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/docs/introduction/change_log/upgrade.html)
 
-2. 更新数据版本号到最新版本3.9.0：
+2. 更新数据版本号到最新版本v3.17.0：
 
    ```shell
-   setSystemConfigByKey compatibility_version 3.9.0
+   setSystemConfigByKey compatibility_version 3.17.0
    ```
 
 3. 配置系统配置项`web3_chain_id`
@@ -56,7 +64,7 @@
        enable=true
        listen_ip=0.0.0.0
        listen_port=8545
-       thread_count=16
+       thread_count=8
    ```
 
 ### 1.2 开启Balance功能
@@ -150,7 +158,7 @@ setSystemConfigByKey feature_balance_precompiled 1
 
 在test文件夹中实现了基础token的测试代码。
 
-![hardhat_test](/Users/kyonguo/workdir/code/FISCO-BCOS-DOC/3.x/zh_CN/images/develop/hardhat_test.png)
+![hardhat_test](../../images/develop/hardhat_test.png)
 
 在终端执行以下命令就可以跑所有测试：
 
@@ -179,12 +187,75 @@ async function deployFBContract(name, args, opts = undefined) {
 module.exports = { deployFBContract };
 ```
 
-## 4. 遗留工作
+## 4. 兼容性说明
 
-FISCO BCOS目前已经支持使用绝大多数Web3工具连接，拓展了FISCO BCOS的生态圈。由于工程时间、优先级不高的原因，还剩一些遗留工作，后续将逐步补全。
+FISCO BCOS目前已经支持使用绝大多数Web3工具连接，拓展了FISCO BCOS的生态圈。早期版本中与Web3生态存在的一些兼容性差异，已在后续版本中逐一解决：
 
-1. 合约地址符合Web3合约地址规则 —— 3.12版本解决
-2. 暂不支持cancun的opcode —— 3.10版本解决
-3. gaslimit等EIP1559字段在计算gas时没用使用 —— 3.12版本解决
-4. EVM中时间从毫秒对齐到秒 —— 3.12版本解决
-5. 读取合约历史状态 —— 3.12版本解决
+1. 合约地址符合Web3合约地址规则 —— 已于3.12版本解决
+2. 支持cancun的opcode —— 已于3.10版本解决
+3. gaslimit等EIP1559字段在计算gas时已被使用 —— 已于3.12版本解决
+4. EVM中时间已从毫秒对齐到秒 —— 已于3.12版本解决
+5. 支持读取合约历史状态 —— 已于3.12版本解决
+
+## 5. 支持的JSON-RPC方法
+
+FISCO BCOS v3.17.0的Web3 JSON RPC共支持44个方法，覆盖`web3_*`、`net_*`、`eth_*`三类命名空间，具体如下。
+
+### 5.1 web3命名空间（2个）
+
+| 方法名 | 说明 |
+| --- | --- |
+| web3_clientVersion | 返回当前节点的客户端版本信息 |
+| web3_sha3 | 对输入数据进行Keccak-256哈希计算 |
+
+### 5.2 net命名空间（3个）
+
+| 方法名 | 说明 |
+| --- | --- |
+| net_version | 返回当前网络ID（即web3 chain_id） |
+| net_listening | 返回节点是否正在监听网络连接 |
+| net_peerCount | 返回当前连接的对等节点数量 |
+
+### 5.3 eth命名空间（39个）
+
+| 方法名 | 说明 |
+| --- | --- |
+| eth_protocolVersion | 返回当前以太坊协议版本号 |
+| eth_syncing | 返回节点同步状态信息 |
+| eth_coinbase | 返回当前节点的coinbase地址 |
+| eth_chainId | 返回当前链的Chain ID |
+| eth_mining | 返回节点是否正在挖矿（FISCO BCOS恒定返回false） |
+| eth_hashrate | 返回节点算力（FISCO BCOS恒定返回0） |
+| eth_gasPrice | 返回当前Gas价格 |
+| eth_accounts | 返回节点管理的账户地址列表 |
+| eth_blockNumber | 返回当前最新区块号 |
+| eth_getBalance | 查询指定账户的余额 |
+| eth_getStorageAt | 查询指定合约存储槽的值 |
+| eth_getTransactionCount | 查询指定账户的交易数量（nonce） |
+| eth_getBlockTransactionCountByHash | 按区块哈希查询该区块内的交易数量 |
+| eth_getBlockTransactionCountByNumber | 按区块号查询该区块内的交易数量 |
+| eth_getUncleCountByBlockHash | 按区块哈希查询叔块数量（FISCO BCOS恒定返回0） |
+| eth_getUncleCountByBlockNumber | 按区块号查询叔块数量（FISCO BCOS恒定返回0） |
+| eth_getCode | 查询指定地址的合约代码 |
+| eth_sign | 对指定数据进行签名 |
+| eth_sendTransaction | 发送一笔交易（需节点管理账户私钥） |
+| eth_signTransaction | 对交易进行签名并返回签名结果 |
+| eth_sendRawTransaction | 发送已签名的原始交易 |
+| eth_call | 在不上链的情况下调用合约方法 |
+| eth_estimateGas | 估算交易所需的Gas |
+| eth_getBlockByHash | 按区块哈希查询区块信息 |
+| eth_getBlockByNumber | 按区块号查询区块信息 |
+| eth_getTransactionByHash | 按交易哈希查询交易信息 |
+| eth_getTransactionByBlockHashAndIndex | 按区块哈希和交易索引查询交易信息 |
+| eth_getTransactionByBlockNumberAndIndex | 按区块号和交易索引查询交易信息 |
+| eth_getTransactionReceipt | 查询交易回执 |
+| eth_getUncleByBlockHashAndIndex | 按区块哈希和索引查询叔块信息（FISCO BCOS恒定返回空） |
+| eth_getUncleByBlockNumberAndIndex | 按区块号和索引查询叔块信息（FISCO BCOS恒定返回空） |
+| eth_newFilter | 创建一个日志过滤器 |
+| eth_newBlockFilter | 创建一个新区块过滤器 |
+| eth_newPendingTransactionFilter | 创建一个待处理交易过滤器 |
+| eth_uninstallFilter | 卸载指定的过滤器 |
+| eth_getFilterChanges | 查询过滤器自上次轮询以来的变更 |
+| eth_getFilterLogs | 查询指定过滤器匹配的全部日志 |
+| eth_getLogs | 按条件查询链上日志 |
+| eth_maxPriorityFeePerGas | 返回建议的最大优先费（EIP-1559相关） |

@@ -63,7 +63,7 @@ cd ~/fisco && curl -#LO https://gitee.com/FISCO-BCOS/console/raw/master-2.0/tool
 
 
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\8X7tVqpGmNiKsPD.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/8X7tVqpGmNiKsPD.png)  
 
 ### 5.webase-front下载安装包（建议在fisco文件下面）
 
@@ -73,7 +73,7 @@ wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/releases/downlo
 
 
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\viwoj9uOWVd67Eg.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/viwoj9uOWVd67Eg.png)  
 
 ### 6.一键部署环境配置
 
@@ -97,7 +97,7 @@ sudo apt-get install -y python3-pip
 
  查询出以下结果说明安装成功。
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\MQSHDV7EmWTY2FU.png)
+![](../../../images/articles/Document_environment_monitoring_caliper/MQSHDV7EmWTY2FU.png)
 
  安装webase-deploy
 
@@ -123,7 +123,7 @@ curl -#LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/master-2.0/tools/gen_node_
 
  一定要等到它出现100%
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\OsKj7Tcf5SZelt6.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/OsKj7Tcf5SZelt6.png)  
 
 ### 8.安装VIM 器  
 
@@ -135,7 +135,7 @@ sudo apt install vim
 
  
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\HsJL7IO6Vo5U4uj.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/HsJL7IO6Vo5U4uj.png)  
 
 > 结束~希望本篇博客能帮到您，更多服务私信。
 
@@ -153,26 +153,26 @@ sudo apt install vim
 
 bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\AnuQMlVstqJbXKg.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/AnuQMlVstqJbXKg.png)  
 
 bash nodes/127.0.0.1/start_all.sh 
 
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\Ag7buKmrvNpfe3s.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/Ag7buKmrvNpfe3s.png)  
 
  建立脚本jb1.sh和jb2.sh文件并编写相对应的脚本
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\ZUoIz8Ed5My9gBJ.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/ZUoIz8Ed5My9gBJ.png)  
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\4jDlaZkYNGAfBbc.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/4jDlaZkYNGAfBbc.png)  
 
 测试每隔 1 秒检查一次 fisco 进程数量，若为 4 则打印正常信 息，否则打印错误信息
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\Cjv7AIMYe8EOXqN.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/Cjv7AIMYe8EOXqN.png)  
 
 测试脚本 2，每隔 3 秒检查一次 fisco 进程占用的端口数量，若为 12 则打印正常信息，否则打印错误信息
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\8eOvBsqKVZQdST1.png)
+![](../../../images/articles/Document_environment_monitoring_caliper/8eOvBsqKVZQdST1.png)
 
 
 
@@ -243,7 +243,7 @@ npm install --only=prod @hyperledger/caliper-cli@0.2.0
 
  
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\jKwJ5WO8T2HaegY.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/jKwJ5WO8T2HaegY.png)  
 
 验证
 
@@ -253,7 +253,7 @@ npx caliper --version
 
  
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\PgVt4AdoGUkFuCW.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/PgVt4AdoGUkFuCW.png)  
 
 ## 绑定
 
@@ -267,7 +267,7 @@ npx caliper bind --caliper-bind-sut fisco-bcos --caliper-bind-sdk latest
 >
 > **–caliper-bind-sdk**：用于指定适配器版本；
 
- ![](../../../../images/articles/Document_environment_monitoring_caliper\H4NBSFbUrstfV1J.png)  
+ ![](../../../images/articles/Document_environment_monitoring_caliper/H4NBSFbUrstfV1J.png)  
 
 
 
@@ -293,9 +293,9 @@ npx caliper benchmark run --caliper-workspace caliper-benchmarks --caliper-bench
 
 更改helloworld目录下的config.yaml文件
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\EwkYoLiANftHsZn.png) 
+![](../../../images/articles/Document_environment_monitoring_caliper/EwkYoLiANftHsZn.png) 
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\fUQ234kHMLcbJPy.png) 
+![](../../../images/articles/Document_environment_monitoring_caliper/fUQ234kHMLcbJPy.png) 
 
 
 
@@ -303,11 +303,11 @@ npx caliper benchmark run --caliper-workspace caliper-benchmarks --caliper-bench
 
 改之前
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\BUktKTnmlRrzhFA.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/BUktKTnmlRrzhFA.png)  
 
  改之后
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\3sTDZ8LWUrhJe2P.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/3sTDZ8LWUrhJe2P.png)  
 
 
 
@@ -315,24 +315,24 @@ npx caliper benchmark run --caliper-workspace caliper-benchmarks --caliper-bench
 
 1.fisco-bcos.json文件下
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\sobYdq6GTZgXfN9.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/sobYdq6GTZgXfN9.png)  
 
 在config.yaml文件
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\THNEjIS6bl7zrZR.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/THNEjIS6bl7zrZR.png)  
 
 在get.js文件
 
-![](../../../../images/articles/Document_environment_monitoring_caliper\xQZmTnPsd3BI1AM.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/xQZmTnPsd3BI1AM.png)  
 
 在set.js
 
-![](../../../../images/articles/Document_environment_monitoring_caliper/ae5ef726c77c476b9722497dbdec8407.png)  
+![](../../../images/articles/Document_environment_monitoring_caliper/ae5ef726c77c476b9722497dbdec8407.png)  
 
 #### 报错1 绑定时遇到报错Error: Failed to execute "npm" with return code 1.    at ChildProcess.proc.on (/home/song/fisco/benchmarks/node_modules/@hyperledger/caliper-cli/lib/utils/cmdutils.js:56:35)    at emitTwo (events.js:126:13)    at ChildProcess.emit (events.js:214:7)
 
 > npm --registry https://registry.npm.taobao.org install express
 >  
 
- ![](../../../../images/articles/Document_environment_monitoring_caliper\vDVjMWUq4pPtsLi.png)  
+ ![](../../../images/articles/Document_environment_monitoring_caliper/vDVjMWUq4pPtsLi.png)  
 

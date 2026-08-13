@@ -135,7 +135,7 @@ accountFileFormat = "pem"       # The storage format of account file (Default is
                                             # Default is the number of cpu cores
 ```
 
-配置项详细说明[参考这里](../sdk/java_sdk/config.md)。
+配置项详细说明[参考这里](../../sdk/java_sdk/config.md)。
 
 ```eval_rst
 .. important::

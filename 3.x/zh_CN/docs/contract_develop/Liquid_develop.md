@@ -3,6 +3,12 @@
 标签：``开发第一个应用`` ``WBC-Liquid`` ``合约开发`` ``区块链应用`` ``WASM``
 
 ---
+
+```eval_rst
+.. warning::
+    自 v3.17.0 起，WASM / WBC-Liquid 合约执行（``WITH_WASM`` 编译选项及 WBC-Liquid 合约的部署与执行支持）计划在 v3.18.0 中移除；Solidity / EVM 合约不受影响，建议迁移至 Solidity 合约开发。详见 `版本功能变更说明 <../introduction/change_log/3_17_0.html>`_ 。
+```
+
 FISCO BCOS 支持用以下几种方式实现智能合约
 
 * [Solidity](https://solidity.readthedocs.io/en/latest/)：以太坊生态中采用的合约编程语言，FISCO BCOS为其拓展了面向联盟链的一系列功能，是FISCO BCOS上智能合约开发最常用的方式。

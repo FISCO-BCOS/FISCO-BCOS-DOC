@@ -168,7 +168,7 @@ gateway = chain0.agencyABcosGatewayService
 落盘加密配置选项位于`[storage_security]`，主要包括：
 
 - `[storage_security].enable`: 落盘加密开关，`true`表明开启落盘加密，`false`表明关闭落盘加密，默认为`false`;
-- `[storage_security].key_center_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage_security.md)的url，用于获取数据加解密密钥;
+- `[storage_security].key_center_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage/storage_security.md)的url，用于获取数据加解密密钥;
 - `[storage_security].cipher_data_key`: 数据落盘加密的私钥。
 
 #### 2.2.3 共识配置选项
@@ -299,7 +299,7 @@ chain_id = chain0
 FISCO BCOS v3.0.0版本开始支持落盘加密功能，可对RPC/网关服务的SSL连接私钥进行加密，保障SSL连接私钥的机密性，主要通过`[storage_security]`配置:
 
 - `[storage_security].enable`: 是否开启落盘加密功能，默认关闭;
-- `[storage_security].key_center_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage_security.md)的url，用于获取数据加解密密钥;
+- `[storage_security].key_center_url`: 开启落盘加密时，`key_center_url`配置了[Key Manager](../../design/storage/storage_security.md)的url，用于获取数据加解密密钥;
 - `[storage_security].cipher_data_key`: 数据落盘加密的私钥。
 
 落盘加密配置示例如下：
