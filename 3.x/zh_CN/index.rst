@@ -48,10 +48,6 @@ FISCO BCOS（读作/ˈfɪskl bi:ˈkɒz/）是金链盟开源工作组于2017年�
 
 FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底，开源社区已汇聚超5000家企业及机构、10万余名个人成员共建共治，发展为中国最具活力的区块链技术开源社区之一，其中涌现出诸多对社区建设、代码贡献的优秀社区成员。开源社区每年评选认定年度MVP（`2025年度MVP名单 <https://mp.weixin.qq.com/s/g1ZJZ8LXxgk9rexUg2a0Uw>`_），这些优秀的贡献者或是将FISCO BCOS技术落地到各领域应用中，助力产业数字化，或是在多渠道布道，将开源社区精神传播到更远的地方。
 
-.. image:: images/community/mvp_review_2023.png
-   :align: center
-   :alt: FISCO BCOS 2023年度MVP
-
 .. note::
    本技术文档适用于FISCO BCOS 3.x版本, FISCO BCOS 2.x稳定版技术文档请参考 `FISCO BCOS 2.x技术文档(stable) <https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/>`_
 

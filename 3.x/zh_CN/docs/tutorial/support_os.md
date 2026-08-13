@@ -66,7 +66,7 @@ make -j4
 
 #### 1. 下载一键建链脚本
 ```shell
-curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.6.0/build_chain.sh && chmod u+x build_chain.sh
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.17.0/build_chain.sh && chmod u+x build_chain.sh
 ```
 
 #### 2. 利用编译生成的二进制部署链
