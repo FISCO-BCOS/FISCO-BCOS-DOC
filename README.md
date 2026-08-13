@@ -9,14 +9,14 @@
 
 ## 落地应用案例
 
-FISCO BCOS已落地应用达数百个，场景覆盖政务、金融、公益、医疗、教育、交通、版权、商品溯源、供应链、招聘、农业、社交、游戏等多个领域，如：
+FISCO BCOS已落地标杆应用超600个，场景覆盖政务、金融、公益、医疗、教育、交通、版权、商品溯源、供应链、招聘、农业、社交、游戏等多个领域，如：
 
 - 金融业：机构间对账、供应链金融、旅游金融等。
 - 司法服务：仲裁链、电子借据等。
 - 文化版权：版权存证与交易等。
 - 社会管理：不动产登记等。
 
-此处可查看[2021FISCO BCOS产业应用白皮书](https://mp.weixin.qq.com/s/PD-PUBp-cKHkn7DuE9YlqQ)，获取一些具有代表性的落地应用案例。
+更多具有代表性的落地应用案例，可参考[《2025飞梭链（FISCO BCOS）产业应用发展报告》](https://mp.weixin.qq.com/s/A2vdLtJhhyg9_BBkIwByNA)，或查看[2021FISCO BCOS产业应用白皮书](https://mp.weixin.qq.com/s/PD-PUBp-cKHkn7DuE9YlqQ)。
 
 ## 贡献代码
 
@@ -26,6 +26,6 @@ FISCO BCOS已落地应用达数百个，场景覆盖政务、金融、公益、�
 
 ## 加入我们的社区
 
-**FISCO BCOS开源社区**是国内活跃的开源社区，社区长期为机构和个人开发者提供各类支持与帮助。已有来自各行业的数千名技术爱好者在研究和使用FISCO BCOS。如您对FISCO BCOS开源技术及应用感兴趣，欢迎加入社区获得更多支持与帮助。
+**FISCO BCOS开源社区**已汇聚超5000家企业及机构、10万余名个人成员共建共治，是中国最具活力的区块链技术开源社区之一，社区长期为机构和个人开发者提供各类支持与帮助。如您对FISCO BCOS开源技术及应用感兴趣，欢迎加入社区获得更多支持与帮助。
 
 ![](https://raw.githubusercontent.com/FISCO-BCOS/LargeFiles/master/images/QR_image.png)
