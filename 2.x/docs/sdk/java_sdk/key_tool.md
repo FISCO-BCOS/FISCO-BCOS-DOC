@@ -36,8 +36,8 @@ Java SDK的`org.fisco.bcos.sdk.crypto.CryptoSuite`提供账户加载功能，默
 public CryptoKeyPair loadAccountFromHexPrivateKey(int cryptoType, String hexPrivateKey)
 {
     // 根据cryptoType创建cryptoSuite，cryptoType目前支持：
-    // 1. CryptoType.ECDSA_TYPE: 用于创建非国密类型的CryptoSuite
-    // 2. CryptoType.SM_TYPE:    用于创建国密类型的CryptoSuite
+    // 1. CryptoType.ECDSA_TYPE（cryptoType为0）: 用于创建非国密类型的CryptoSuite
+    // 2. CryptoType.SM_TYPE（cryptoType为1）:    用于创建国密类型的CryptoSuite
     CryptoSuite cryptoSuite = new CryptoSuite(cryptoType);
     // 从十六进制私钥字符串hexPrivateKey加载私钥对象
     return cryptoSuite.getKeyPairFactory().createKeyPair(hexPrivateKey);
