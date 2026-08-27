@@ -167,7 +167,7 @@ get()接口实现
         std::string retValue = "Hello World!";
 
         auto entry = table->getRow(HELLO_WORLD_KEY_FIELD_NAME);
-        if (!entry)
+        if (entry)
         {
             retValue = entry->getField(HELLO_WORLD_VALUE_FIELD);
         }
