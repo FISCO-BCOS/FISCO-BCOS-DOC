@@ -205,10 +205,10 @@ contract Asset {
         EventSubParams params = new EventSubParams();
 
         // 全部Event fromBlock设置为 -1 
-        params.setFromBlock(-1);
+        params.setFromBlock(new BigInteger("-1"));
 
         // toBlock设置为-1，处理至最新区块继续等待新的区块
-        params.setToBlock(-1);
+        params.setToBlock(new BigInteger("-1"));
    
         // 注册事件
         eventSubscribe.subscribeEvent(params, 
@@ -230,9 +230,9 @@ contract Asset {
         EventSubParams params = new EventSubParams();
 
         // 从订阅时的最新区块区块开始，fromBlock设置为-1
-        params.setFromBlock(-1);
+        params.setFromBlock(new BigInteger("-1"));
         // toBlock设置为-1，处理至最新区块继续等待新的区块
-        params.setToBlock(-1);
+        params.setToBlock(new BigInteger("-1"));
         
         // topic0，TransferEvent(int256,string,string,uint256)
         params.addTopic(0, TopicTools.stringToTopic("TransferEvent(int256,string,string,uint256)");
@@ -261,9 +261,9 @@ contract Asset {
         EventSubParams params = new EventSubParams();
 
         // 从订阅时的最新区块区块开始，fromBlock设置为-1
-        params.setFromBlock(-1);
+        params.setFromBlock(new BigInteger("-1"));
         // toBlock设置为-1，处理至最新区块继续等待新的区块
-        params.setToBlock(-1);
+        params.setToBlock(new BigInteger("-1"));
 
         // addresses设置为asset地址，匹配该合约地址
         params.addAddress("0x06922a844c542df030a2a2be8f835892db99f324");
@@ -291,9 +291,9 @@ contract Asset {
         EventSubParams params = new EventSubParams();
 
         // 从最初区块开始，fromBlock设置为1
-        params.setFromBlock(1);
+        params.setFromBlock(new BigInteger("1"));
         // toBlock设置为-1，处理至最新区块继续等待新的区块
-        params.setToBlock(-1);
+        params.setToBlock(new BigInteger("-1"));
 
         // addresses设置为asset地址，匹配该合约地址
         params.addAddress("0x06922a844c542df030a2a2be8f835892db99f324");
@@ -344,8 +344,8 @@ contract Asset {
         eventSubscribe.start();
 
         EventSubParams eventLogParams = new EventSubParams();
-        eventLogParams.setFromBlock(-1);
-        eventLogParams.setToBlock(-1);
+        eventLogParams.setFromBlock(new BigInteger("-1"));
+        eventLogParams.setToBlock(new BigInteger("-1"));
         eventLogParams.addAddress(contractAddress);
         CryptoSuite invalidCryptoSuite =
                 new CryptoSuite(client.getCryptoSuite().getCryptoTypeConfig());
