@@ -1,0 +1,133 @@
+# 如何完成 FISCO BCOS 的第一个 PR —— 实战教程
+
+> 任务：结合一个真实小改动，输出一篇《如何完成 FISCO BCOS 的第一个 PR》实战教程。  
+
+## 发现问题：找到合适的改动点
+
+### 阅读源码
+
+在 `bcos-sdk/sample/tx/tx_sign_perf.cpp` 中，`usage()` 函数明确描述了程序的用法：
+
+```cpp
+void usage()
+{
+    printf("Usage: tx_sign_perf isSM txCount\n");
+    // ...
+}
+
+##定位 Bug
+查看 main 函数的参数校验逻辑：
+int main(int argc, char** argv)
+{
+    if (argc < 2)    // ← 只检查了 argv[1] 是否存在
+    {
+        usage();
+        return -1;
+    }
+    
+    bool smCrypto = (std::string(argv[1]) == "true");
+    uint32_t txCount = std::stoul(argv[2]);    // ← 但这里访问了 argv[2]！
+    // ...
+}
+
+##修复方案
+将参数校验条件从 argc < 2 改为 argc < 3：
+if (argc < 3)    // argv[0]=程序名, argv[1]=isSM, argv[2]=txCount，至少需要 3 个
+{
+    usage();
+    return -1;
+}
+
+##Fork 仓库
+由于我们没有 FISCO BCOS 主仓库的直接写入权限，第一步需要先 Fork。
+打开 FISCO BCOS 的 GitHub 仓库：https://github.com/FISCO-BCOS/FISCO-BCOS
+点击页面右上角的 Fork 按钮
+在弹出的页面中选择你的 GitHub 账号作为 Fork 目标
+等待 Fork 完成
+完成后，你会拥有一个 https://github.com/<你的用户名>/FISCO-BCOS 仓库。
+
+##Clone 到本地
+Fork 完成后，将自己的仓库克隆到本地：
+git clone https://github.com/<你的用户名>/FISCO-BCOS.git
+cd FISCO-BCOS
+
+##创建特性分支并修复
+创建分支：git checkout -b fix/tx-sign-perf-argc-check
+
+##创建 Pull Request
+打开 PR 页面
+在浏览器中打开你的 Fork 仓库：https://github.com/<你的用户名>/FISCO-BCOS
+点击页面上的 Contribute 按钮（或 Pull requests 标签页）
+点击 Open pull request
+
+##PR 提交后的流程
+         等待 Review
+提交 PR 后，社区维护者（Reviewer）会对代码进行审核。审核过程中可能会：
+直接通过：代码没问题，会被合并
+提出修改建议：在 PR 评论区给出修改意见
+要求补充信息：询问更多上下文或测试情况
+          处理 Review 意见
+如果 Reviewer 提出了修改意见：
+在本地修改代码
+提交修改：git add . && git commit -m "fix: address review comments"
+推送到同一分支：git push origin fix/tx-sign-perf-argc-check
+PR 会自动更新，无需重新创建
+            合并
+审核通过后，维护者会将你的 PR 合并到主仓库。恭喜你，完成了第一次开源贡献！
+
+##完整流程总结
+┌─────────────────────────────────────────────────────────────────┐
+│                    FISCO BCOS 第一个 PR 完整流程                │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. 发现改动点                                                   │
+│     → 阅读源码，发现 Bug 或改进点                                │
+│                                                                 │
+│  2. Fork 仓库                                                    │
+│     → GitHub 页面点击 Fork 按钮                                 │
+│                                                                 │
+│  3. Clone 到本地                                                 │
+│     → git clone https://github.com/<用户名>/FISCO-BCOS.git     │
+│     → git remote add upstream https://github.com/FISCO-BCOS/   │
+│                                                                 │
+│  4. 创建分支                                                     │
+│     → git checkout -b fix/xxx                                   │
+│                                                                 │
+│  5. 修改代码                                                     │
+│     → 编辑文件，修复问题                                         │
+│                                                                 │
+│  6. 提交并推送                                                   │
+│     → git add .                                                 │
+│     → git commit -m "fix: xxx"                                 │
+│     → git push origin fix/xxx                                  │
+│                                                                 │
+│  7. 创建 PR                                                      │
+│     → GitHub 页面点击 Contribute → Open pull request           │
+│     → 确认 base 分支和 compare 分支                             │
+│     → 填写标题和描述                                             │
+│     → 点击 Create pull request                                  │
+│                                                                 │
+│  8. 等待审核与合并                                               │
+│     → 根据 Reviewer 意见修改（如有）                             │
+│     → PR 被合并 → 贡献完成！🎉                                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##常见问题与注意事项
+每次提交 PR 之前，建议执行以下命令同步最新的官方代码：git fetch upstream dev          
+git rebase upstream/dev        
+git push origin -f    
+
+#总结
+完成第一个 PR 是参与开源社区的重要里程碑。通过本教程，我自己就应该已经掌握了：
+如何发现合适的改动点（从命令行参数校验这类小问题入手）
+如何 Fork 和 Clone 仓库
+如何创建分支、修改代码并提交
+如何发起 Pull Request
+PR 提交后的审核流程
+FISCO BCOS 社区非常欢迎新人的贡献。无论是代码 Bug 修复、文档优化，还是新功能开发，每一个 PR 都是对社区的有力支持。
+
+##附：相关链接
+FISCO BCOS 主仓库：https://github.com/FISCO-BCOS/FISCO-BCOS
+FISCO BCOS 文档仓库：https://github.com/FISCO-BCOS/FISCO-BCOS-DOC
+官方 PR 规范：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3.3.0/docs/community/pr.html

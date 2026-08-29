@@ -1,0 +1,253 @@
+# HelloWorld 合约部署源码走读
+
+> 基于 `bcos-sdk/sample/tx/deploy_hello.cpp` 源码  
+> 任务：阅读源码，输出一篇教程，讲清配置读取、group 获取、账户生成、部署流程。  
+
+## 一、概述
+`deploy_hello.cpp` 是 **bcos-cpp-sdk**（FISCO BCOS C++ SDK）提供的一个示例程序，位于 `sample/tx/` 目录下。它的作用是**演示如何通过 C++ SDK 将 HelloWorld 智能合约部署到 FISCO BCOS 区块链上**。
+通过阅读这份源码，我们可以清晰地理解一个完整的合约部署流程：
+> **读取配置文件 → 获取群组信息 → 生成账户密钥对 → 构造并签名交易 → 发送交易上链 → 解析回执获取合约地址**
+下面逐段进行走读。
+
+## 二、头文件引入与命名空间
+```cpp
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-cpp-sdk/utilities/crypto/KeyPairBuilder.h>
+#include <bcos-cpp-sdk/utilities/tx/TransactionBuilder.h>
+#include <bcos-cpp-sdk/utilities/tx/TransactionBuilderService.h>
+#include <bcos-utilities/Common.h>
+#include <boost/algorithm/string/compare.hpp>
+#include <cstdlib>
+#include <memory>
+这段代码引入了程序所需的核心依赖：
+头文件	                          作用
+SdkFactory.h	                  SDK 工厂类，用于创建 SDK 实例
+KeyPairBuilder.h	              密钥对生成器，用于创建账户的公私钥对
+TransactionBuilder.h	           交易构造器，用于构建交易
+TransactionBuilderService.h	    交易构造服务，封装了创建签名交易的逻辑
+Common.h	                      通用工具（如日志宏 LOG_DESC、LOG_KV）
+
+##HelloWorld 合约源码与编译产物
+/**
+ pragma solidity>=0.4.24 <0.6.11;
+ contract HelloWorld {
+     string name;
+     constructor() public {
+         name = "Hello, World!";
+     }
+     function get() public view returns (string memory) {
+         return name;
+     }
+     function set(string memory n) public {
+         name = n;
+     }
+ }
+ */
+这段注释给出了 HelloWorld 合约的 Solidity 源码。该合约非常简单：
+有一个状态变量 name（字符串类型）
+构造函数：将 name 初始化为 "Hello, World!"
+get()：读取 name 的值（view 函数，不消耗 gas）
+set(string n)：修改 name 的值（会发起交易）
+const char* hwBIN = "608060405234801561001057600080fd5b506040518060400160405280600d81526020017f48656c6c6f2c20576f72"
+                    "6c6421000000000000000000000000000000000000008152506000908051906020019061005c929190610062565b50"
+                    // ... 后续字节码 ...
+这里定义了合约的 二进制字节码（bytecode） 。Solidity 合约编译后会产生 EVM 字节码，部署时就是将这段字节码作为交易的 data 字段发送到链上。
+hwBIN 对应的是非国密版本的字节码，hwSmBIN 对应的是国密版本（SM2/SM3 加密套件）。
+std::string getBinary(bool _sm) {
+    return _sm ? hwSmBIN : hwBIN;
+}
+
+###主函数入口与参数解析
+int main(int argc, char** argv) {
+    if (argc < 3) {
+        usage();
+    }
+    std::string config = argv[1];
+    std::string group = argv[2];
+程序启动后首先检查命令行参数。usage() 函数输出使用说明：
+void usage() {
+    std::cerr << "Desc: deploy HelloWorld contract\n";
+    std::cerr << "Usage: deploy_hello <config> <groupID>\n"
+              << "Example:\n"
+              << " ./deploy_hello ./config_sample.ini group0\n";
+    std::exit(0);
+}
+
+###初始化 SDK
+首先，创建 SdkFactory 工厂对象
+再调用 buildSdk(config)，传入配置文件路径，构建 SDK 实例
+最后调用 sdk->start() 启动 SDK，建立与 FISCO BCOS 节点的连接
+
+
+##获取群组信息
+bcos::group::GroupInfo::Ptr groupInfo = sdk->service()->getGroupInfo(group);
+if (!groupInfo) {
+    std::cout << LOG_DESC(" [DeployHello] group not exist")
+              << LOG_KV("group", group) << std::endl;
+    exit(-1);
+}
+
+##生成账户密钥对
+auto transactionBuilder = std::make_shared<bcos::cppsdk::utilities::TransactionBuilder>();
+auto keyPairBuilder = std::make_shared<KeyPairBuilder>();
+auto keyPair = keyPairBuilder->genKeyPair(
+    groupInfo->smCryptoType() ? CryptoType::SM2 : CryptoType::Secp256K1
+);
+关键点在于 根据群组的加密类型选择算法：
+如果群组启用国密 → 使用 SM2 算法
+否则 → 使用 Secp256K1 算法（以太坊同款）
+bcos::crypto::CryptoSuite* cryptoSuite = 
+    groupInfo->smCryptoType() ? &*transactionBuilder->smCryptoSuite() : 
+                                &*transactionBuilder->ecdsaCryptoSuite();
+
+std::cout << LOG_DESC(" [DeployHello] new account ")
+          << LOG_KV("address", cryptoSuite->calculateAddress(keyPair->publicKey()).hexPrefixed())
+          << std::endl;
+随后根据加密类型获取对应的 CryptoSuite（密码学套件），并通过 calculateAddress() 从公钥计算出 账户地址，输出到控制台供用户查看。
+
+##获取区块限制
+int64_t blockLimit = -1;
+sdk->service()->getBlockLimit(group, blockLimit);
+std::cout << LOG_DESC(" [DeployHello] block limit ")
+          << LOG_KV("blockLimit", blockLimit) << std::endl;
+blockLimit 是交易的有效期，表示该交易在多少个区块内有效。如果交易在 blockLimit 个区块内没有被打包上链，就会被丢弃。这是一个重要的安全机制，防止交易在链上无限期等待。
+
+###构造并签名交易
+auto hexBin = getBinary(groupInfo->smCryptoType());
+auto binBytes = fromHexString(hexBin);
+
+auto transactionBuilderService = std::make_shared<TransactionBuilderService>(
+    sdk->service(), group, transactionBuilder
+);
+
+auto r = transactionBuilderService->createSignedTransaction(
+    *keyPair,          // 密钥对（用于签名）
+    "",                // to（空表示部署合约）
+    *binBytes.get(),   // data（合约字节码）
+    "",                // abi（部署时可为空）
+    0                  // 交易值（部署合约时为0）
+);
+这是整个流程中最核心的一步：
+
+获取合约字节码：根据是否国密，从 hwBIN 或 hwSmBIN 中选取对应的字节码，并从十六进制字符串转换为字节数组。
+创建交易构造服务：TransactionBuilderService 封装了构造签名交易的完整逻辑。
+创建签名交易：createSignedTransaction() 方法完成了以下工作：
+使用 keyPair 中的私钥对交易进行签名
+将交易数据（to 为空表示合约部署）、字节码（data）、blockLimit 等组装成完整的交易
+返回签名后的交易（r.second）及其哈希（r.first）
+std::cout << LOG_DESC(" [DeployHello] create signed transaction success")
+          << LOG_KV("tx hash", r.first) << std::endl;
+
+###发送交易上链
+std::promise<bool> p;
+auto f = p.get_future();
+
+sdk->jsonRpc()->sendTransaction(
+    group,           // 群组ID
+    "",              // 可选参数
+    r.second,        // 签名后的交易
+    false,           // 是否需要回执
+    [&p](bcos::Error::Ptr _error, std::shared_ptr<bcos::bytes> _resp) {
+        // 回调函数处理响应...
+    }
+);
+f.get();
+
+##解析交易回执
+if (_error && _error->errorCode() != 0) {
+    std::cout << LOG_DESC(" [DeployHello] send transaction response error")
+              << LOG_KV("errorCode", _error->errorCode())
+              << LOG_KV("errorMessage", _error->errorMessage()) << std::endl;
+} else {
+    std::string receipt = std::string(_resp->begin(), _resp->end());
+    std::cout << LOG_DESC(" [DeployHello] recv response success ")
+              << LOG_KV("transaction receipt", receipt) << std::endl;
+    
+    Json::Value root;
+    Json::Reader jsonReader;
+    if (!jsonReader.parse(receipt, root)) {
+        // 解析失败处理...
+        return;
+    }
+    std::cout << LOG_DESC(" [DeployHello] contract address ==> " 
+              + root["result"]["contractAddress"].asString()) << std::endl;
+}
+p.set_value(true);
+回调函数首先检查是否有错误：
+有错误：输出错误码和错误信息
+无错误：解析响应 JSON，从中提取 contractAddress（合约地址）
+
+##完整流程图
+┌─────────────────────────────────────────────────────────────────┐
+│                        程序启动                                 │
+│               ./deploy_hello config.ini group0                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. 解析命令行参数                                               │
+│    → config = argv[1]（配置文件路径）                           │
+│    → group = argv[2]（目标群组ID）                              │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. 初始化 SDK                                                   │
+│    → SdkFactory → buildSdk(config) → sdk->start()              │
+│    → 建立与 FISCO BCOS 节点的连接                                │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. 获取群组信息                                                 │
+│    → sdk->service()->getGroupInfo(group)                       │
+│    → 获取加密类型（国密/非国密）                                 │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 4. 生成账户密钥对                                               │
+│    → KeyPairBuilder→genKeyPair(加密类型)                       │
+│    → 计算账户地址                                               │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 5. 获取区块限制（blockLimit）                                   │
+│    → sdk->service()->getBlockLimit(group, blockLimit)          │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 6. 构造并签名交易                                               │
+│    → 获取合约字节码（getBinary）                                 │
+│    → TransactionBuilderService→createSignedTransaction()       │
+│    → 使用私钥签名，生成签名交易                                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 7. 发送交易上链（异步）                                         │
+│    → sdk->jsonRpc()->sendTransaction(group, signedTx, 回调)    │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 8. 解析回执，获取合约地址                                       │
+│    → 解析 JSON 响应                                            │
+│    → 提取 contractAddress                                      │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        部署完成！                                │
+│             合约地址: 0x2d1c577e41809453c50e7e5c3f57d06f3cdd90ce │
+└─────────────────────────────────────────────────────────────────┘
+
+##总结
+通过走读 deploy_hello.cpp 源码，我们可以清晰地看到 FISCO BCOS C++ SDK 部署合约的完整流程，
+这个示例虽然只有约 70 行代码，但麻雀虽小五脏俱全，涵盖了从 SDK 初始化到合约部署上线的全部关键环节，是学习 FISCO BCOS C++ 应用开发的绝佳入门材料。
+
+附：相关链接
+bcos-cpp-sdk 仓库：https://github.com/FISCO-BCOS/bcos-cpp-sdk
+官方文档（C-SDK 开发示例）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/sdk/c_sdk/dev.html

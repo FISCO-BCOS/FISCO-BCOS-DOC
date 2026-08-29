@@ -1,0 +1,125 @@
+# FISCO BCOS 样例代码总览
+
+> 任务：基于 `bcos-sdk/sample`、`fisco-bcos-demo`、`tools` 目录，整理一篇教程，帮助新同学快速找到适合自己的入口。  
+> 报告人：刘钰倩
+> 日期：2026-08-27
+
+
+## 一、概述
+FISCO BCOS 提供了丰富的样例代码和工具，分布在不同的代码仓库中。对于刚接触的新同学来说，面对多个目录和仓库，往往不知道从何入手。
+本文从 **三个核心入口** 出发：
+- **bcos-sdk/sample** —— SDK 使用示例
+- **fisco-bcos-demo** —— 压力测试与基准测试
+- **tools** —— 辅助工具与运维脚本
+帮助新同学根据自己的需求快速找到对应的代码。
+
+## 二、bcos-sdk/sample —— SDK 使用示例
+
+### 2.1 这是什么？
+`bcos-sdk/sample` 目录位于 **bcos-c-sdk** 仓库中，提供了 C SDK 的基础使用示例[reference:1]。如果你需要使用 **C/C++** 语言与 FISCO BCOS 区块链进行交互，这里是你的第一站。
+
+### 2.2 目录结构
+bcos-c-sdk/sample/
+├── CMakeLists.txt # CMake 构建文件
+├── amop/ # AMOP 消息推送示例
+├── eventsub/ # 合约事件订阅示例
+├── rpc/ # RPC 接口调用示例
+├── tx/ # 发送交易示例
+└── config/ # 配置文件示例
+
+
+### 2.3 各子目录说明
+| 目录 | 功能 | 适合谁 |
+|------|------|--------|
+| `amop/` | AMOP（链上消息推送）的发布与订阅示例 | 需要使用 AMOP 进行链上消息通信的开发者 |
+| `eventsub/` | 监听和订阅合约事件的示例 | 需要监听链上合约事件的应用开发者 |
+| `rpc/` | 调用节点的 RPC 接口（如 getBlockNumber、getTransaction 等） | 需要查询链上数据的开发者 |
+| `tx/` | 构造、签名和发送交易的完整示例 | 需要向链上发送交易的应用开发者 |
+
+### 2.4 快速上手
+1. 克隆仓库：
+   ```bash
+   git clone https://github.com/FISCO-BCOS/bcos-c-sdk.git
+2.进入 sample 目录，参考各子目录中的示例代码。
+根据示例中的 config/ 配置文件模板，配置节点连接信息（IP、端口、证书路径等）
+
+###fisco-bcos-demo（java-sdk-demo）—— 压力测试与基准测试
+java-sdk-demo（通常被称为 fisco-bcos-demo）是基于 Java SDK 的基准测试集合，能够对 FISCO BCOS 节点进行压力测试。它不仅能测试节点性能，还提供了合约编译功能，可以将 Solidity 合约文件转换成 Java 合约文件。
+##功能
+功能	                   说明
+合约编译	                 将 Solidity 合约生成对应的 Java 调用类
+串行转账压测	             测试串行转账场景下的 TPS
+并行转账压测	             测试并行转账场景下的 TPS
+CRUD 合约压测	           测试合约 CRUD 操作的性能
+AMOP 压测	               测试 AMOP 消息推送的性能
+
+##目录结构
+java-sdk-demo/
+├── src/
+│   └── main/
+│       ├── java/org/fisco/bcos/sdk/demo/
+│       │   ├── amop/          # AMOP 压测
+│       │   ├── contract/      # 合约编译与调用
+│       │   ├── parallel/      # 并行转账压测
+│       │   └── serial/        # 串行转账压测
+│       └── resources/
+├── conf/                      # SDK 配置文件
+├── build.gradle               # Gradle 构建文件
+└── gradlew                    # Gradle 构建脚本
+
+###快速上手的方法
+# 1. 下载源码
+git clone https://github.com/FISCO-BCOS/java-sdk-demo
+cd java-sdk-demo
+# 2. 编译
+bash gradlew build
+# 3. 拷贝 SDK 证书（假设节点证书在 ~/fisco/nodes/127.0.0.1/sdk/）
+cp -r ~/fisco/nodes/127.0.0.1/sdk/* conf/
+# 4. 拷贝配置文件
+cp conf/config-example.toml conf/config.toml
+# 5. 执行压测（示例：串行转账压测）
+bash gradlew run -PmainClass=org.fisco.bcos.sdk.demo.serial.SerialTransferDemo
+
+##tools —— 辅助工具与运维脚本
+tools 目录位于 FISCO-BCOS 核心源码仓库中，包含了多种辅助工具和运维脚本。这些工具主要用于链的运维、证书管理、系统合约操作等场景。
+工具/目录	                功能	                                              适用场景
+tools/scripts/	          证书生成脚本（如 generate_chain_cert.sh）	            生成国密或非国密证书
+tools/systemcontract/	    系统合约操作脚本	                                    管理链上系统合约（如共识配置、权限管理等）
+build_chain.sh	          一键建链工具	                                        快速搭建 FISCO BCOS 区块链网络
+控制台（Console）	        命令行交互工具	                                      部署合约、调用合约、查询链上数据
+压测工具	                  节点压力测试	                                        测试节点性能
+
+###要选择适合自己的入口
+开始
+  │
+  ├─ 你是 C/C++ 开发者？
+  │    └─ 是 → bcos-sdk/sample
+  │
+  ├─ 你需要压测或使用 Java？
+  │    └─ 是 → java-sdk-demo
+  │
+  ├─ 你需要搭链、管证书、配系统合约？
+  │    └─ 是 → tools/
+  │
+  └─ 你只是想快速体验合约开发？
+       └─ → 控制台（Console）或 WeBASE 平台
+
+###总结
+FISCO BCOS 的样例代码和工具分布在多个仓库中，初看可能有些分散，但实则各有分工、定位清晰：
+
+bcos-sdk/sample 面向 C/C++ SDK 学习者，教你如何调用链的 RPC 接口、发送交易、订阅事件。
+
+java-sdk-demo 面向 Java 开发者 和 性能测试需求，提供合约编译和压测能力。
+
+tools 面向 链的运维和管理者，提供建链、证书管理、系统合约操作等工具。
+
+新同学可以根据自己的开发语言、使用场景和任务目标，对照本文的指引快速找到合适的代码入口，避免在多个仓库之间迷茫徘徊。
+
+##附相关仓库链接
+bcos-c-sdk: https://github.com/FISCO-BCOS/bcos-c-sdk
+
+java-sdk-demo: https://github.com/FISCO-BCOS/java-sdk-demo
+
+FISCO-BCOS 核心源码: https://github.com/FISCO-BCOS/FISCO-BCOS
+
+官方文档: https://fisco-bcos-doc.readthedocs.io/

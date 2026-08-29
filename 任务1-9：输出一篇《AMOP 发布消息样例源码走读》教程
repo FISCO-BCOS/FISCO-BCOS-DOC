@@ -1,0 +1,166 @@
+# AMOP 发布消息样例源码走读
+
+> 基于 `bcos-sdk/sample/amop/publish.cpp` 源码  
+> 任务：阅读源码，输出一篇教程，讲清配置读取、topic/message 参数和发布回调流程。  
+
+## 概述
+`publish.cpp` 是 **bcos-cpp-sdk**（FISCO BCOS C++ SDK）提供的一个示例程序，位于 `sample/amop/` 目录下。它的作用是**演示如何通过 C++ SDK 使用 AMOP（Advanced Messages Onchain Protocol，链上信使协议）发布消息**[reference:0]。
+**AMOP** 是 FISCO BCOS 提供的一个安全高效的消息信道[reference:1]。联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用 AMOP 进行通讯[reference:2]。AMOP 基于 **Topic（话题）机制**进行消息路由[reference:3]，支持在同一区块链网络中使用多个 Topic 进行消息传递[reference:4]。
+通过走读这份源码，我们可以清晰地理解 AMOP 消息发布的完整流程：
+> **解析命令行参数 → 读取配置文件 → 初始化 SDK → 获取 AMOP 实例 → 发布消息 → 处理回调**
+
+## 头文件引入与命名空间
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-utilities/Common.h>
+#include <boost/core/ignore_unused.hpp>
+#include <chrono>
+#include <iostream>
+#include <memory>
+#include <thread>
+
+##usage() 函数：命令行参数说明
+void usage()
+{
+    std::cerr << "Desc: publish amop message by command params\n";
+    std::cerr << "Usage: publish <config> <topic> <message>\n"
+              << "Example:\n"
+              << " ./publish ./config_sample.ini topic HelloWorld\n";
+    std::exit(0);
+}
+
+usage() 函数在程序启动时被调用，向用户说明程序的使用方式。
+
+程序需要 三个命令行参数：
+
+参数	       位置	     说明	                        示例
+<config>	   argv[1]	 SDK 配置文件路径	            ./config_sample.ini
+<topic>	     argv[2]	 消息发布的目标话题名称	         topic
+<message>	   argv[3]	 要发布的消息内容	            HelloWorld
+
+##主函数入口与参数解析
+int main(int argc, char** argv)
+{
+    if (argc < 4)
+    {
+        usage();
+    }
+    std::string config = argv[1];
+    std::string topic = argv[2];
+    std::string msg = argv[3];
+程序启动后首先检查命令行参数数量：
+如果参数少于 4 个（程序名 + 3 个参数），调用 usage() 显示帮助信息并退出
+否则，将三个参数分别存入 config、topic、msg 变量
+
+##配置读取与 SDK 初始化
+auto factory = std::make_shared<SdkFactory>();
+auto sdk = factory->buildSdk(config);
+sdk->start();
+这是 配置读取和 SDK 初始化 的核心步骤：
+创建 SDK 工厂：std::make_shared<SdkFactory>() 创建工厂对象
+构建 SDK 实例：factory->buildSdk(config) 传入配置文件路径，构建 SDK 实例
+内部会读取配置文件（如 config_sample.ini）
+配置文件中包含节点 IP、端口、证书路径等连接信息
+建立与 FISCO BCOS 节点的连接
+启动 SDK：sdk->start() 启动 SDK 的内部线程和网络服务
+std::cout << LOG_DESC(" [AMOP][Publish] start sdk ... ") << std::endl;
+
+##发布消息与回调处理
+无限循环发布；while (true)
+{
+    std::cout << LOG_DESC(" publish message ===>>>> ")
+              << LOG_KV("topic", topic)
+              << LOG_KV("message", msg) << std::endl;
+程序进入 无限循环，持续发布消息。每次循环：
+输出即将发布的消息日志（包含 topic 和 message）
+调用 sdk->amop()->publish() 发布消息
+等待 5 秒后继续下一次循环
+逻辑：
+┌─────────────────────────────────────────────────────────────────┐
+│                    回调函数执行流程                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. 检查 _error 是否为空                                         │
+│     ├─ 非空 → 输出错误码和错误信息 → 返回                       │
+│     └─ 为空 → 继续                                              │
+│                                                                 │
+│  2. 检查 _msg->status() 是否为 0                                 │
+│     ├─ 非 0 → 输出状态码和错误信息 → 返回                       │
+│     └─ 为 0 → 继续                                              │
+│                                                                 │
+│  3. 解析响应消息                                                 │
+│     → 从 _msg->payload() 中提取订阅者的回复内容                  │
+│     → 输出 "recv response message"                              │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##完整流程图
+┌─────────────────────────────────────────────────────────────────┐
+│                        程序启动                                 │
+│              ./publish config.ini topic HelloWorld              │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. 解析命令行参数                                               │
+│    → config = argv[1]（配置文件路径）                           │
+│    → topic = argv[2]（目标话题名称）                            │
+│    → msg = argv[3]（消息内容）                                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. 初始化 SDK                                                   │
+│    → SdkFactory → buildSdk(config) → sdk->start()              │
+│    → 读取配置文件，建立与 FISCO BCOS 节点的连接                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. 进入无限发布循环                                             │
+│    → while (true) { ... }                                      │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 4. 调用 publish() 发布消息                                      │
+│    → sdk->amop()->publish(topic, data, -1, callback)           │
+│    → 参数说明：                                                 │
+│      - topic: 目标话题名称                                      │
+│      - data: 消息内容（字节数组）                               │
+│      - timeout: -1（永不超时）                                  │
+│      - callback: 发布完成后的回调函数                           │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 5. 回调函数执行（异步）                                         │
+│    → 检查是否有错误 (_error)                                    │
+│    → 检查响应状态 (_msg->status())                              │
+│    → 提取并输出订阅者的回复内容                                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 6. 休眠 5 秒                                                    │
+│    → std::this_thread::sleep_for(5000ms)                       │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+                        回到步骤 3，继续发布
+
+
+##总结
+通过走读 publish.cpp 源码，我们可以清晰地理解 FISCO BCOS C++ SDK 使用 AMOP 发布消息的完整流程，
+三个命令行参数的作用：
+config：告诉 SDK 如何连接到 FISCO BCOS 节点
+topic：指定消息发往哪个话题，订阅者必须监听相同话题才能接收
+message：实际发送的消息内容
+发布回调机制：
+SDK 在消息发布完成后（收到节点响应或超时）异步调用回调函数
+回调函数中通过 _error 判断是否出错，通过 _msg->status() 判断响应状态
+成功时从 _msg->payload() 中提取订阅者的回复内容
+AMOP 是 FISCO BCOS 实现链上消息通信的核心机制，这个示例虽然代码简洁，但完整展示了从 SDK 初始化到消息发布、回调处理的全流程，是学习 AMOP 开发的绝佳入门材料。
+
+##附：相关链接
+bcos-cpp-sdk 仓库：https://github.com/FISCO-BCOS/bcos-cpp-sdk
+官方文档（AMOP）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/design/amop/index.html

@@ -1,0 +1,96 @@
+AMOP 广播消息样例源码走读
+基于 bcos-sdk/sample/amop/broadcast.cpp 源码
+任务：阅读源码，输出一篇教程，讲清广播模式与 publish 模式的区别。
+
+##概述
+broadcast.cpp 是 bcos-cpp-sdk（FISCO BCOS C++ SDK）提供的一个示例程序，位于 sample/amop/ 目录下。它的作用是演示如何通过 C++ SDK 使用 AMOP 进行广播消息发送。
+在之前的教程中，我们已经走读了 publish.cpp（发布消息）和 subscribe.cpp（订阅消息）。broadcast.cpp 与 publish.cpp 看起来非常相似，但底层行为有本质区别——这正是本教程要重点讲清的内容。
+AMOP（Advanced Messages Onchain Protocol，链上信使协议） 是 FISCO BCOS 提供的一个安全高效的消息信道。AMOP 的消息收发基于 Topic（话题）订阅机制，支持两种传播方式：
+传播方式	说明
+单播（Unicast）	仅随机发送给一个指定话题的订阅者
+多播（Multicast / Broadcast）	发送给所有指定话题的订阅者
+说明：在 AMOP 语境中，“广播”（Broadcast）通常指多播——即向订阅了同一 Topic 的所有订阅者发送消息。这与 P2P 网络层的“广播”（向所有节点发送）含义略有不同。
+
+##broadcast.cpp 源码走读
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-utilities/Common.h>
+#include <boost/core/ignore_unused.hpp>
+#include <chrono>
+#include <iostream>
+#include <memory>
+#include <thread>
+
+usage() 函数
+void usage()
+{
+    std::cerr << "Desc: broadcast amop message by command params\n";
+    std::cerr << "Usage: broadcast <config> <topic> <message>\n"
+              << "Example:\n"
+              << " ./broadcast ./config_sample.ini topic HelloWorld\n";
+    std::exit(0);
+}
+
+##广播模式 vs publish 模式：核心区别
+【单播模式 — publish】
+
+    发布者                         订阅者A
+       │                              │
+       │  publish(topic, "Hello")     │
+       ├─────────────────────────────►│  ← 只有 A 收到
+       │                              │
+       │                              │ 订阅者B
+       │                              │    （未收到）
+       │                              │
+       │                              │ 订阅者C
+       │                              │    （未收到）
+
+
+【广播模式 — broadcast】
+
+    发布者                         订阅者A
+       │                              │
+       │  broadcast(topic, "Hello")   │
+       ├─────────────────────────────►│  ← A 收到
+       │                              │
+       │                              │ 订阅者B
+       ├─────────────────────────────►│  ← B 也收到
+       │                              │
+       │                              │ 订阅者C
+       ├─────────────────────────────►│  ← C 也收到
+
+##源码结构对比总览
+┌─────────────────────────────────────────────────────────────────┐
+│              publish.cpp vs broadcast.cpp 对比                  │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  publish.cpp                    broadcast.cpp                   │
+│  ───────────                    ────────────                    │
+│                                                                 │
+│  #include ...                   #include ...                    │
+│       │                              │                          │
+│       ▼                              ▼                          │
+│  usage()                         usage()                        │
+│  (相同)                          (相同)                         │
+│       │                              │                          │
+│       ▼                              ▼                          │
+│  main()                          main()                         │
+│  ├─ 参数解析                     ├─ 参数解析                    │
+│  ├─ SDK 初始化                   ├─ SDK 初始化                  │
+│  ├─ while(true)                  ├─ while(true)                 │
+│  │  ├─ publish()    ←───────────│  │  ├─ broadcast()           │
+│  │  │  (单播)                    │  │  │  (广播)                │
+│  │  └─ sleep(5s)                │  │  └─ sleep(5s)              │
+│  └─ ...                         └─ ...                          │
+│                                                                 │
+│  唯一的区别：publish() vs broadcast()                           │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##总结
+通过走读 broadcast.cpp 源码并与 publish.cpp 对比，我们可以清晰地理解 AMOP 广播模式与单播模式的核心区别，
+publish() 把消息发给 一个 订阅者（随机选择），broadcast() 把消息发给 所有 订阅了该 Topic 的订阅者。
+两者在代码层面的差异仅有一行——publish 还是 broadcast，但这行代码决定了消息是“点到点”还是“点到多点”，这是 AMOP 开发中需要根据业务场景慎重选择的。
+
+##附：相关链接
+bcos-cpp-sdk 仓库：https://github.com/FISCO-BCOS/bcos-cpp-sdk
+官方文档（AMOP）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/design/amop/index.html
