@@ -27,6 +27,7 @@ v3.17.x
 
 .. admonition:: FISCO BCOS 3.x Releases
 
+     - `FISCO BCOS v3.17.1 <./3_17_1.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.17.1>`_]
      - `FISCO BCOS v3.17.0 <./3_17_0.html>`_ [`release <https://github.com/FISCO-BCOS/FISCO-BCOS/releases/tag/v3.17.0>`_]
 
 .. admonition:: 查看节点和数据版本
@@ -41,6 +42,7 @@ v3.17.x
    :hidden:
    :maxdepth: 0
 
+   3_17_1.md
    3_17_0.md
 
 v3.16.x

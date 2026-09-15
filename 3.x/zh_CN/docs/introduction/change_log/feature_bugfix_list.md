@@ -68,3 +68,4 @@
 | 修复EVM setStorage接口未返回正确存储状态码的问题（FIB-94）                      | bugfix_evm_storage_status                           | 开启：1  | 3.17.0默认开启               |
 | 修复3.17.0版本新发现的stateStorage哈希计算问题（FIB-99/105）                    | bugfix_statestorage_hash_v3_17                      | 开启：1  | 3.17.0默认开启               |
 | 使web3 EOA nonce的提交与区块内交易顺序解耦，避免并发场景下nonce错乱             | bugfix_nonce_ordering                               | 开启：1  | 3.17.0默认开启               |
+| 合约字节码分析缓存按代码哈希（而非合约地址）作key，修复投机执行泄露「地址存在代码」导致的节点状态分叉 | bugfix_v1_eoa_as_contract                           | 开启：1  | 3.17.1默认开启               |
