@@ -1,0 +1,162 @@
+区块高度通知样例源码走读
+基于 bcos-sdk/sample/rpc/blocknotifier.cpp 源码
+任务：阅读源码，输出一篇教程，讲清 notifier 注册和回调执行流程。
+
+
+一、概述
+blocknotifier.cpp 是 bcos-cpp-sdk（FISCO BCOS C++ SDK）提供的一个示例程序，位于 sample/rpc/ 目录下。它的作用是演示如何通过 C++ SDK 注册区块高度通知器（BlockNotifier），当区块链产生新区块时，SDK 会自动回调用户注册的 callback 函数，通知应用程序最新的区块高度。
+这个功能对于需要实时监听链上状态变化的应用场景非常关键，例如：
+监听交易是否被链上打包确认
+同步链上数据到本地数据库
+触发基于区块高度的业务逻辑
+
+###头文件引入
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-utilities/Common.h>
+#include <bcos-utilities/ThreadPool.h>
+#include <boost/core/ignore_unused.hpp>
+#include <iostream>
+#include <memory>
+
+##回调函数定义
+void blockNotifierCallback(int64_t groupID, int64_t blockNumber)
+{
+    std::cout << LOG_DESC(" [blockNotifierCallback] receive block number notify")
+              << LOG_KV("group", groupID) << LOG_KV("blockNumber", blockNumber)
+              << std::endl;
+}
+这是整个示例的核心回调函数。它的签名由 SDK 规定：
+groupID：产生新区块的群组 ID
+blockNumber：最新的区块高度
+当链上产生新区块时，SDK 会调用这个函数，传入对应的群组 ID 和区块高度。函数内部通过 LOG_DESC 和 LOG_KV 宏输出日志信息。
+
+##主函数入口与参数解析
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+    {
+        std::cout << "Usage: ./blocknotifier <config> " << std::endl;
+        return -1;
+    }
+    std::string config = argv[1];
+程序启动后首先检查命令行参数，需要 一个参数：
+<config>：SDK 配置文件路径（如 ./config_sample.ini），包含节点 IP、端口、证书等连接信息
+如果参数不足，程序输出使用说明并退出。
+
+##初始化 SDK
+auto factory = std::make_shared<SdkFactory>();
+auto sdk = factory->buildSdk(config);
+sdk->start();
+这是 SDK 初始化 的核心步骤：
+创建 SdkFactory 工厂对象
+调用 buildSdk(config)，传入配置文件路径，构建 SDK 实例
+调用 sdk->start() 启动 SDK，建立与 FISCO BCOS 节点的连接
+
+##注册区块通知器
+auto blockNotifier = sdk->blockNotifier();
+blockNotifier->registerBlockNotifier(blockNotifierCallback);
+获取 BlockNotifier 对象：通过 sdk->blockNotifier() 获取区块通知器实例。
+注册回调函数：调用 registerBlockNotifier()，将前面定义的 blockNotifierCallback 函数注册到 SDK 中。
+注册完成后，每当链上产生新区块，SDK 就会自动调用 blockNotifierCallback 函数。
+
+##主线程等待
+std::cout << LOG_DESC(" [blockNotifier] register block notifier success, waiting for notify...")
+          << std::endl;
+
+while (true)
+{
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+注册完成后，程序进入无限循环等待状态：
+每秒 sleep 一次，让出 CPU
+回调函数在独立的线程中被 SDK 异步调用
+主线程不退出，确保程序持续运行以接收通知
+
+##编译与运行
+编译：
+# 进入 SDK 的 build 目录
+cd /path/to/bcos-cpp-sdk/build
+
+# 编译所有示例
+make
+
+# 或单独编译 blocknotifier
+make blocknotifier
+运行：
+./blocknotifier ./config_sample.ini
+ 预期输出；
+当节点产生新区块时，控制台会输出类似以下日志：
+[blockNotifier] register block notifier success, waiting for notify...
+[blockNotifierCallback] receive block number notify | group: 0 | blockNumber: 100
+[blockNotifierCallback] receive block number notify | group: 0 | blockNumber: 101
+[blockNotifierCallback] receive block number notify | group: 0 | blockNumber: 102
+
+###完整流程图
+┌─────────────────────────────────────────────────────────────────┐
+│                        程序启动                                 │
+│                  ./blocknotifier config.ini                     │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. 解析命令行参数                                               │
+│    → config = argv[1]（配置文件路径）                           │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. 初始化 SDK                                                   │
+│    → SdkFactory → buildSdk(config) → sdk->start()              │
+│    → 建立与 FISCO BCOS 节点的连接                                │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. 获取 BlockNotifier 对象                                      │
+│    → sdk->blockNotifier()                                       │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 4. 注册回调函数（核心步骤）                                     │
+│    → blockNotifier->registerBlockNotifier(callback)            │
+│    → SDK 内部记录回调函数指针                                    │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 5. 主线程进入等待循环                                           │
+│    → while(true) { sleep(1); }                                 │
+│    → 等待区块通知事件                                           │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 6. 链上产生新区块（异步事件）                                   │
+│    → FISCO BCOS 节点产生新区块                                  │
+│    → SDK 检测到新区块                                           │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 7. SDK 触发回调（异步）                                         │
+│    → SDK 内部线程调用 blockNotifierCallback()                   │
+│    → 传入 groupID 和 blockNumber                                │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 8. 回调函数执行                                                 │
+│    → 输出日志：群组 ID + 最新区块高度                           │
+│    → （用户可在此处添加自己的业务逻辑）                          │
+└─────────────────────────────────────────────────────────────────┘
+
+##总结
+通过走读 blocknotifier.cpp 源码，我们可以清晰地理解 FISCO BCOS C++ SDK 区块高度通知机制的完整流程，
+这个示例代码简洁清晰，是理解 FISCO BCOS 事件驱动编程模型的绝佳入口。核心思想可以概括为：
+注册 → 等待 → 回调
+开发者只需定义一个符合签名的回调函数，并通过 registerBlockNotifier() 注册到 SDK，剩下的工作（监听区块变化、触发回调）全部由 SDK 在后台自动完成。
+
+##附：相关链接
+bcos-cpp-sdk 仓库：https://github.com/FISCO-BCOS/bcos-cpp-sdk
+官方文档（CPP SDK）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/sdk/cpp_sdk/index.html

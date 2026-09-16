@@ -1,0 +1,58 @@
+# FISCO BCOS 部署体验报告
+
+> 任务 1-2：根据官方文档部署 FISCO BCOS 及生态组件（WeBASE、WeCross），提交体验报告。
+
+## 环境准备
+根据官方文档 `air_installation.md` 的指引，安装基础依赖：
+```bash
+sudo apt update
+sudo apt install -y curl openssl wget git default-jdk python3
+
+##部署 FISCO BCOS 节点
+下载构建脚本并生成 4 节点 Air 模式链：
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v3.17.0/build_chain.sh
+chmod +x build_chain.sh
+bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
+bash nodes/127.0.0.1/start_all.sh
+
+##部署 WeBASE
+我按照文档指引，使用了一键部署脚本：
+cd ~
+wget https://github.com/WeBankFinTech/WeBASE/releases/download/v1.5.5/webase-deploy.zip
+unzip webase-deploy.zip && cd webase-deploy
+python3 deploy.py installAll
+
+##体验感受
+
+##好的方面
+FISCO BCOS 节点部署非常流畅，build_chain.sh 脚本自动化程度高，一条命令即可拉起一条链。
+方文档结构完整，从入门到进阶覆盖全面。
+
+##遇到的痛点
+
+痛点 1：环境配置耗时过长
+官方文档对基础环境的描述较为简略，实际操作中需要自行安装多个依赖包，且部分依赖存在版本要求（如 Python 3.6+、OpenSSL 1.1.1 等）。对于不熟悉 Linux 的新手来说，光是配环境就花了很长时间，且没有现成的检查脚本可以验证环境是否就绪。
+
+痛点 2：WeBASE 因网络不稳定反复下载失败
+服务器位于境外，访问 GitHub 下载 WeBASE 安装包时多次超时中断，反复重试才勉强成功。整个过程非常消磨耐心，但文档中没有提供国内镜像加速方案或 MD5/SHA256 校验指引。
+
+痛点 3：本地已有服务导致端口冲突，启动失败
+WeBASE 默认使用 5000、8080、6379（Redis）等端口，机器上原有的服务占用了这些端口，导致 WeBASE 启动后立即报错退出。但文档中没有列出 WeBASE 各子系统分别占用哪些端口，也没有提供端口冲突的排查指引。
+
+痛点 4：日志路径不明确，排查问题全靠翻
+WeBASE 启动失败后，控制台没有任何错误提示告诉用户去哪里查看详细日志。文档中也没有明确说明日志文件存放在何处。我翻遍了多个目录才最终找到：
+
+webase-deploy/logs/（部署日志）
+
+webase-node-manager/log/（节点管理服务日志）
+
+webase-web/log/（前端服务日志）
+
+日志分散在多个子目录中，对于首次接触的用户来说，这个查找过程非常令人沮丧。
+
+##总结
+FISCO BCOS 3.x 节点本身的部署体验很好，但周边生态组件 WeBASE 的部署对新用户来说仍存在不少「隐形门槛」。最大的痛点不是技术本身，而是出问题后不知道去哪里找线索。 日志路径不透明、端口信息缺失、网络问题无备选方案，这些问题叠加起来会让初次体验的用户产生较强的挫败感。
+建议官方在文档中补充一个 「部署排错指南」 章节，把端口冲突、依赖缺失、日志查看方法、网络加速方案等问题集中整理，能显著提升新用户的体验满意度。
+
+
+

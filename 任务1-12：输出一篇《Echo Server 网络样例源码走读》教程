@@ -1,0 +1,164 @@
+Echo Server 网络样例源码走读
+基于 fisco-bcos-demo/echo_server_sample.cpp 源码
+任务：阅读源码，输出一篇教程，讲清消息处理、响应发送和循环监听逻辑。
+
+##概述
+echo_server_sample.cpp 是 FISCO BCOS 网络层（Gateway） 提供的一个服务端示例程序，位于 fisco-bcos-demo/ 目录下。它的核心功能是启动一个 P2P 网络服务，接收客户端发来的消息，并将收到的消息原样返回（即“回显”Echo）。
+这个示例虽然简单，但完整展示了 FISCO BCOS 底层 P2P 网络通信的 三个核心机制：
+配置加载 → 消息处理器注册 → 循环监听等待
+通过走读这份源码，我们可以清晰地理解 FISCO BCOS 节点之间如何进行网络通信，以及如何基于 Gateway 模块开发自定义的网络服务。
+
+###include <bcos-crypto/signature/key/KeyFactoryImpl.h>
+#include <bcos-framework/protocol/GlobalConfig.h>
+#include <bcos-gateway/GatewayFactory.h>
+#include <bcos-tars-protocol/protocol/ProtocolInfoCodecImpl.h>
+#include <bcos-tool/NodeConfig.h>
+#include <bcos-utilities/BoostLogInitializer.h>
+#include <bcos-utilities/ThreadPool.h>
+usage() 函数：命令行参数说明：
+void usage()
+{
+    std::cerr << "Usage: echo-server-sample <listenIP> <listenPort> <ssl>\n"
+              << "Example:\n"
+              << "./echo-server-sample\n";
+    std::exit(0);
+}
+
+##主函数：配置加载与初始化
+设置全局编解码器：g_BCOSConfig.setCodec(std::make_shared<bcostars::protocol::ProtocolInfoCodecImpl>());
+
+##创建并启动 Gateway
+GatewayFactory gatewayFactory(nodeConfig->chainId(), "localClient", nullptr);
+
+##构建 Gateway 实例
+auto gateway = gatewayFactory.buildGateway(configFilePath, true, nullptr, "localClient");
+
+##消息处理器注册（核心）
+service->registerHandlerByMsgType(
+    999,
+    [](NetworkException _e, std::shared_ptr<P2PSession> _session, P2PMessage::Ptr _msg) {
+        if (_e.errorCode()) {
+            return;
+        }
+        auto startT = utcTime();
+        _msg->setRespPacket();
+        _session->session()->asyncSendMessage(_msg);
+        BCOS_LOG(INFO) << LOG_DESC("sendResponse")
+                       << LOG_KV("timeCost", (utcTime() - startT))
+                       << LOG_KV("msgSize", (_msg->payload()->size()));
+    }
+);
+
+##回调执行流程
+┌─────────────────────────────────────────────────────────────────┐
+│                      消息处理回调流程                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. 检查网络异常                                                 │
+│     → if (_e.errorCode()) { return; }                          │
+│     → 如果有错误，直接返回，不处理消息                           │
+│                                                                 │
+│  2. 记录开始时间                                                 │
+│     → auto startT = utcTime();                                 │
+│                                                                 │
+│  3. 将消息标记为响应包                                           │
+│     → _msg->setRespPacket();                                   │
+│     → 告诉框架：这条消息是作为响应返回的                         │
+│                                                                 │
+│  4. 发送响应消息                                                 │
+│     → _session->session()->asyncSendMessage(_msg);             │
+│     → 通过会话将原消息异步发送回客户端                           │
+│     → 实现了 "Echo"（回显）功能：收到什么就返回什么              │
+│                                                                 │
+│  5. 记录日志                                                     │
+│     → BCOS_LOG(INFO) << "sendResponse"                         │
+│     → 输出耗时和消息大小                                         │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##主循环监听
+while (true) {
+    // TEST_SERVER_LOG(INFO, MODULE_NAME) << LOG_BADGE(" [Main] ===>>>> ");
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+}
+
+##完整流程图
+┌─────────────────────────────────────────────────────────────────┐
+│                        程序启动                                 │
+│                   ./echo-server-sample                          │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. 设置全局编解码器                                             │
+│    → g_BCOSConfig.setCodec(ProtocolInfoCodecImpl)              │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. 创建密钥工厂                                                 │
+│    → KeyFactoryImpl                                            │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. 加载节点配置                                                 │
+│    → NodeConfig::loadConfig("config.ini")                      │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 4. 初始化日志系统                                               │
+│    → BoostLogInitializer::initLog()                            │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 5. 创建并启动 Gateway                                           │
+│    → GatewayFactory::buildGateway() → gateway->start()         │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 6. 注册消息处理器（核心）                                       │
+│    → service->registerHandlerByMsgType(999, callback)          │
+│    → 回调函数：收到消息 → 原样返回                               │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 7. 主线程循环等待                                               │
+│    → while(true) { sleep(1ms); }                               │
+│    → Gateway 工作线程异步处理消息                                │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 8. 收到客户端消息（异步）                                       │
+│    → Gateway 匹配消息类型 999                                   │
+│    → 执行回调函数                                               │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 9. 回调处理                                                     │
+│    → 检查网络异常                                               │
+│    → _msg->setRespPacket()                                     │
+│    → _session->session()->asyncSendMessage(_msg)               │
+│    → 输出日志                                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+##总结
+通过走读 echo_server_sample.cpp 源码，我们可以清晰地理解 FISCO BCOS Gateway 网络层的消息处理机制，
+消息处理的三要素：
+消息类型（MsgType = 999）：告诉 Gateway 这个处理器负责哪类消息
+处理逻辑（回调函数）：收到消息后执行的具体操作（回显）
+响应发送（asyncSendMessage）：通过会话将响应发送回客户端
+与 AMOP 的本质区别：
+AMOP（publish.cpp / subscribe.cpp）基于 Topic 路由，面向应用层
+Gateway（echo_server_sample.cpp）基于 MsgType 路由，面向网络层
+这个示例虽然只有约 40 行核心代码，但麻雀虽小五脏俱全，完整展示了 FISCO BCOS 底层网络通信的配置加载、处理器注册、消息回显和循环监听的完整链路，是理解 FISCO BCOS 网络层的绝佳入门材料。
+
+##附：相关链接
+FISCO BCOS 主仓库：https://github.com/FISCO-BCOS/FISCO-BCOS
+官方文档（Gateway 模块）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/design/gateway/index.html

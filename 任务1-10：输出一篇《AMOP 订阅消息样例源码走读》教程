@@ -1,0 +1,224 @@
+# AMOP 订阅消息样例源码走读
+> 基于 `bcos-sdk/sample/amop/subscribe.cpp` 源码  
+> 任务：阅读源码，输出一篇教程，讲清 topic 订阅、消息回调和响应发送逻辑。  
+
+##概述
+`subscribe.cpp` 是 **bcos-cpp-sdk**（FISCO BCOS C++ SDK）提供的一个示例程序，位于 `sample/amop/` 目录下。它的作用是**演示如何通过 C++ SDK 使用 AMOP（Advanced Messages Onchain Protocol，链上信使协议）订阅消息**。
+**AMOP** 是 FISCO BCOS 提供的一个安全高效的消息信道。联盟链中的各个机构，只要部署了区块链节点，无论是共识节点还是观察节点，均可使用 AMOP 进行通讯。AMOP 基于 **Topic（话题）机制**进行消息路由，支持在同一区块链网络中使用多个 Topic 进行消息传递。
+如果说 `publish.cpp` 是 **发送端**，那么 `subscribe.cpp` 就是 **接收端**。两者配合使用，构成完整的 AMOP 通信链路。
+通过走读这份源码，我们可以清晰地理解 AMOP 消息订阅的完整流程：
+> **解析命令行参数 → 读取配置文件 → 初始化 SDK → 订阅 Topic → 接收消息回调 → 发送响应**
+
+##头文件引入与命名空间
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-utilities/Common.h>
+#include <boost/core/ignore_unused.hpp>
+#include <chrono>
+#include <iostream>
+#include <memory>
+#include <thread>
+
+##usage() 函数：命令行参数说明
+void usage()
+{
+    std::cerr << "Desc: subscribe amop message\n";
+    std::cerr << "Usage: subscribe <config> <topic>\n"
+              << "Example:\n"
+              << " ./subscribe ./config_sample.ini topic\n";
+    std::exit(0);
+}
+usage() 函数在程序启动时被调用，向用户说明程序的使用方式。
+程序需要 两个命令行参数：
+
+参数	               位置	              说明	                        示例
+<config>	           argv[1]	          SDK 配置文件路径	             ./config_sample.ini
+<topic>	             argv[2]	          要订阅的话题名称	             topic
+
+##主函数入口与参数解析
+int main(int argc, char** argv)
+{
+    if (argc < 3)
+    {
+        usage();
+    }
+    std::string config = argv[1];
+    std::string topic = argv[2];
+
+##订阅 Topic
+调用 subscribe() 方法：
+sdk->amop()->subscribe(topic,
+    [topic](std::string const& _topic, bytesConstRef _data,
+            std::shared_ptr<bcos::amop::ResponseFace> _response) {
+        // 消息回调函数体...
+    },
+    [topic](bcos::Error::Ptr _error) {
+        // 订阅结果回调函数体...
+    });
+ 订阅结果回调：
+[topic](bcos::Error::Ptr _error) {
+    if (_error)
+    {
+        std::cout << " \t subscribe failed "
+                  << LOG_KV("topic", topic)
+                  << LOG_KV("code", _error->errorCode())
+                  << LOG_KV("message", _error->errorMessage()) << std::endl;
+    }
+    else
+    {
+        std::cout << " \t subscribe success "
+                  << LOG_KV("topic", topic) << std::endl;
+    }
+}
+消息回调：
+[topic](std::string const& _topic, bytesConstRef _data,
+        std::shared_ptr<bcos::amop::ResponseFace> _response) {
+    boost::ignore_unused(topic);
+    std::cout << " [AMOP][Subscribe] ====>>>> "
+              << LOG_KV("topic", _topic)
+              << LOG_KV("data", std::string(_data.begin(), _data.end()))
+              << std::endl;
+
+    // 构造响应消息
+    std::string respMsg = "Response from [" + topic + "]";
+    _response->sendResponse(bytesConstRef((byte*)respMsg.data(), respMsg.size()));
+
+    std::cout << " [AMOP][Subscribe] send response ====>>>> "
+              << LOG_KV("respMsg", respMsg) << std::endl;
+}
+流程：┌─────────────────────────────────────────────────────────────────┐
+│                     消息回调执行流程                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. 收到发布者消息                                               │
+│     → 输出日志：topic + data                                    │
+│                                                                 │
+│  2. 构造响应消息                                                 │
+│     → std::string respMsg = "Response from [" + topic + "]"    │
+│     → 示例：若订阅 topic 为 "Hello"，则响应 "Response from Hello" │
+│                                                                 │
+│  3. 发送响应                                                     │
+│     → _response->sendResponse(bytesConstRef(...))              │
+│     → 将响应消息发送回发布者                                     │
+│                                                                 │
+│  4. 输出发送成功日志                                             │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##主线程等待
+std::cout << LOG_DESC(" [AMOP][Subscribe] subscribe success, waiting for message...")
+          << std::endl;
+
+while (true)
+{
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+订阅成功后，程序进入无限循环等待状态：
+每秒 sleep 一次，让出 CPU
+消息回调在 SDK 内部线程 中被异步调用
+主线程不退出，确保程序持续运行以接收消息
+这是一个典型的事件驱动模型：主线程负责注册订阅和保持运行，SDK 内部线程负责在收到消息时触发回调。
+
+##完整流程图
+┌─────────────────────────────────────────────────────────────────┐
+│                        程序启动                                 │
+│                   ./subscribe config.ini topic                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. 解析命令行参数                                               │
+│    → config = argv[1]（配置文件路径）                           │
+│    → topic = argv[2]（要订阅的话题名称）                        │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. 初始化 SDK                                                   │
+│    → SdkFactory → buildSdk(config) → sdk->start()              │
+│    → 读取配置文件，建立与 FISCO BCOS 节点的连接                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. 调用 subscribe() 订阅 Topic                                  │
+│    → sdk->amop()->subscribe(topic, messageCb, resultCb)        │
+│    → 向节点发送订阅请求                                          │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 4. 订阅结果回调（异步，立即执行）                                │
+│    → 判断 _error 是否为空                                       │
+│    → 输出 "subscribe success" 或 "subscribe failed"            │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 5. 主线程进入等待循环                                           │
+│    → while(true) { sleep(1); }                                 │
+│    → 等待发布者消息到来                                          │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 6. 收到发布者消息（异步事件）                                    │
+│    → 发布者调用 publish() 发送消息到该 Topic                     │
+│    → AMOP 将消息路由到所有订阅该 Topic 的订阅者                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 7. 消息回调执行                                                 │
+│    → 输出：收到的 topic 和 data                                 │
+│    → 构造响应消息： "Response from [topic]"                     │
+│    → _response->sendResponse() 发送响应给发布者                  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 8. 回到步骤 5，继续等待下一条消息                                │
+└─────────────────────────────────────────────────────────────────┘
+Topic 订阅机制：
+┌─────────────────────────────────────────────────────────────────┐
+│                        AMOP Topic 机制                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   发布者 (publish.cpp)              订阅者 (subscribe.cpp)      │
+│   ──────────────────               ────────────────────         │
+│         │                                   │                   │
+│         │  publish(topic, "Hello")          │                   │
+│         ├──────────────────────────────────►│                   │
+│         │                                   │                   │
+│         │                                   │ 收到消息回调       │
+│         │                                   │ 输出: "Hello"     │
+│         │                                   │                   │
+│         │                                   │ sendResponse()    │
+│         │◄──────────────────────────────────┤                   │
+│         │  "Response from topic"            │                   │
+│         │                                   │                   │
+│         │  发布者收到响应回调                 │                   │
+│         │  输出: "Response from topic"      │                   │
+│                                                                 │
+│   Topic 是消息路由的 key：                                      │
+│   - 发布者指定 Topic 发布消息                                    │
+│   - 订阅者指定 Topic 接收消息                                    │
+│   - 只有 Topic 匹配的订阅者能收到消息                            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##总结
+通过走读 subscribe.cpp 源码，我们可以清晰地理解 FISCO BCOS C++ SDK 使用 AMOP 订阅消息的完整流程，
+订阅者通过 subscribe(topic, ...) 注册对某个 Topic 的关注
+发布者通过 publish(topic, data, ...) 向该 Topic 发送消息
+AMOP 自动将消息路由给所有订阅了该 Topic 的节点
+消息回调与响应发送：
+消息回调在收到消息时被异步调用
+回调函数中的 _response 对象专门用于向该消息的发布者发送响应
+每个消息独立对应一个 ResponseFace，确保响应精准送达
+AMOP 是 FISCO BCOS 实现链上消息通信的核心机制，subscribe.cpp 与 publish.cpp 配合，完整展示了 AMOP 的 发布-订阅模式，是学习 AMOP 开发的必备入门材料。
+
+##附：相关链接
+bcos-cpp-sdk 仓库：https://github.com/FISCO-BCOS/bcos-cpp-sdk
+官方文档（AMOP）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/design/amop/index.html
+
+

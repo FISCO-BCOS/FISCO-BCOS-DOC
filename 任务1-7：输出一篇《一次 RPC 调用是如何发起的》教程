@@ -1,0 +1,216 @@
+一次 RPC 调用是如何发起的
+基于 bcos-sdk/sample/rpc/rpc_test.cpp 源码
+任务：阅读源码，输出一篇教程，讲清命令行参数、WsConfig 初始化和 getBlockNumber 调用。
+
+##概述
+rpc_test.cpp 是 bcos-cpp-sdk（FISCO BCOS C++ SDK）提供的一个 RPC 测试示例程序，位于 sample/rpc/ 目录下。它的作用是演示如何通过 C++ SDK 向 FISCO BCOS 节点发起 JSON-RPC 调用。
+RPC（Remote Procedure Call，远程过程调用） 是应用程序与区块链节点交互的基本方式。通过 RPC 接口，应用可以：
+查询链上信息（如区块高度、交易详情）
+部署和调用合约
+发送交易
+获取系统配置
+
+##头文件引入
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-utilities/Common.h>
+#include <iostream>
+#include <memory>
+
+##命令行参数解析
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+    {
+        std::cout << "Usage: ./rpc_test <config> [groupID]" << std::endl;
+        return -1;
+    }
+    std::string configFile = argv[1];
+    std::string groupID = (argc >= 3) ? argv[2] : "group0";
+
+[rpc]
+    ; 节点 IP 地址
+    host = "127.0.0.1"
+    ; 节点 RPC 端口
+    port = 8545
+    ; 是否禁用 SSL
+    disableSsl = false
+    ; 证书路径
+    caPath = "./ca.crt"
+    nodeCertPath = "./sdk.crt"
+    nodeKeyPath = "./sdk.key"
+
+###WsConfig 初始化
+// 创建配置对象
+bcos::cppsdk::config::WsConfig::Ptr config = 
+    std::make_shared<bcos::cppsdk::config::WsConfig>();
+config->load(configFile);
+
+##SDK 初始化
+// 创建 SDK 工厂
+auto factory = std::make_shared<bcos::cppsdk::SdkFactory>();
+// 使用配置构建 SDK 实例
+auto sdk = factory->buildSdk(configFile);
+// 启动 SDK
+sdk->start();
+初始化流程图：
+┌─────────────────────────────────────────────────────────────────┐
+│                      SDK 初始化流程                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   SdkFactory::buildSdk(configFile)                             │
+│         │                                                       │
+│         ▼                                                       │
+│   ┌─────────────────────────────────────────────────┐          │
+│   │  1. 加载配置文件                                 │          │
+│   │     → 解析 config.ini                           │          │
+│   │     → 提取 host、port、证书路径等                │          │
+│   └─────────────────────────────────────────────────┘          │
+│         │                                                       │
+│         ▼                                                       │
+│   ┌─────────────────────────────────────────────────┐          │
+│   │  2. 创建 WsConfig 对象                          │          │
+│   │     → 存储连接配置                              │          │
+│   └─────────────────────────────────────────────────┘          │
+│         │                                                       │
+│         ▼                                                       │
+│   ┌─────────────────────────────────────────────────┐          │
+│   │  3. 建立 WebSocket 连接                         │          │
+│   │     → 连接到 host:port                          │          │
+│   │     → SSL 握手（如启用）                        │          │
+│   │     → 证书验证                                  │          │
+│   └─────────────────────────────────────────────────┘          │
+│         │                                                       │
+│         ▼                                                       │
+│   ┌─────────────────────────────────────────────────┐          │
+│   │  4. 初始化各功能模块                            │          │
+│   │     → JSON-RPC 客户端                           │          │
+│   │     → AMOP 模块                                 │          │
+│   │     → 事件订阅模块                              │          │
+│   └─────────────────────────────────────────────────┘          │
+│         │                                                       │
+│         ▼                                                       │
+│   sdk->start() → SDK 进入就绪状态                              │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##完整调用流程图
+┌─────────────────────────────────────────────────────────────────┐
+│              一次 getBlockNumber RPC 调用的完整流程             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  应用程序                                                        │
+│     │                                                           │
+│     ▼                                                           │
+│  jsonRpc->getBlockNumber("group0")                             │
+│     │                                                           │
+│     ▼                                                           │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │ 1. 构造 JSON-RPC 请求                                   │    │
+│  │    {                                                    │    │
+│  │      "jsonrpc": "2.0",                                  │    │
+│  │      "method": "getBlockNumber",                        │    │
+│  │      "params": ["group0"],                              │    │
+│  │      "id": 1                                            │    │
+│  │    }                                                    │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│     │                                                           │
+│     ▼                                                           │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │ 2. 通过 WebSocket 发送请求到节点                         │    │
+│  │    → 目标: 127.0.0.1:8545                               │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│     │                                                           │
+│     ▼                                                           │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │ 3. FISCO BCOS 节点处理请求                               │    │
+│  │    → 验证请求格式                                        │    │
+│  │    → 查询最新区块高度                                    │    │
+│  │    → 构造响应 JSON                                       │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│     │                                                           │
+│     ▼                                                           │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │ 4. 节点返回响应                                          │    │
+│  │    {                                                    │    │
+│  │      "id": 1,                                           │    │
+│  │      "jsonrpc": "2.0",                                  │    │
+│  │      "result": 12345                                    │    │
+│  │    }                                                    │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│     │                                                           │
+│     ▼                                                           │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │ 5. SDK 解析响应，返回 result 值                          │    │
+│  │    → response["result"].asInt64() = 12345              │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│     │                                                           │
+│     ▼                                                           │
+│  应用程序收到区块高度：12345                                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+##完整代码示例
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-utilities/Common.h>
+#include <iostream>
+#include <memory>
+
+using namespace bcos;
+using namespace bcos::cppsdk;
+
+int main(int argc, char** argv)
+{
+    // 1. 解析命令行参数
+    if (argc < 2)
+    {
+        std::cout << "Usage: ./rpc_test <config> [groupID]" << std::endl;
+        return -1;
+    }
+    std::string configFile = argv[1];
+    std::string groupID = (argc >= 3) ? argv[2] : "group0";
+
+    // 2. 初始化 SDK
+    auto factory = std::make_shared<SdkFactory>();
+    auto sdk = factory->buildSdk(configFile);
+    sdk->start();
+
+    // 3. 获取 JSON-RPC 客户端
+    auto jsonRpc = sdk->jsonRpc();
+
+    // 4. 调用 getBlockNumber
+    try
+    {
+        auto response = jsonRpc->getBlockNumber(groupID);
+        std::cout << LOG_DESC(" [rpc_test] getBlockNumber success")
+                  << LOG_KV("group", groupID)
+                  << LOG_KV("blockNumber", response["result"].asInt64())
+                  << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << LOG_DESC(" [rpc_test] getBlockNumber failed")
+                  << LOG_KV("error", e.what()) << std::endl;
+    }
+
+    // 5. 释放资源
+    sdk->stop();
+    return 0;
+}
+
+##编译与运行
+# 进入 SDK 的 build 目录
+cd /path/to/bcos-cpp-sdk/build
+
+# 编译所有示例
+make
+
+# 或单独编译 rpc_test
+make rpc_test
+
+##总结
+通过走读 rpc_test.cpp 源码，我们可以清晰地理解 FISCO BCOS C++ SDK 发起 RPC 调用的完整流程，
+、开发者只需提供配置文件路径和目标群组 ID，SDK 会自动处理连接建立、请求构造、响应解析等底层细节，让开发者专注于业务逻辑。
+
+##附：相关链接
+bcos-cpp-sdk 仓库：https://github.com/FISCO-BCOS/bcos-cpp-sdk
+官方文档（CPP SDK RPC 接口）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/sdk/cpp_sdk/index.html

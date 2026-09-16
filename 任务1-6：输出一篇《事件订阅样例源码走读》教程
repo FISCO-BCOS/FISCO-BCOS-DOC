@@ -1,0 +1,201 @@
+事件订阅样例源码走读
+基于 bcos-sdk/sample/eventsub/eventsub.cpp 源码
+任务：阅读源码，输出一篇教程，讲清 from/to/address 参数和事件回调逻辑。
+
+一、概述
+eventsub.cpp 是 bcos-cpp-sdk（FISCO BCOS C++ SDK）提供的一个示例程序，位于 sample/eventsub/ 目录下。它的作用是演示如何通过 C++ SDK 订阅合约事件，当链上目标合约触发指定事件时，SDK 会自动回调用户注册的函数，将事件日志传递给应用程序。
+事件订阅是区块链开发中非常重要的功能，它让应用能够实时响应链上发生的变化，典型场景包括：
+监听合约中某个业务操作完成（如转账成功、审批通过）
+实时同步链上数据到本地数据库
+触发链下业务逻辑（如发送通知、调用外部 API）
+
+##头文件引入与命名空间
+#include <bcos-cpp-sdk/SdkFactory.h>
+#include <bcos-utilities/Common.h>
+#include <bcos-utilities/ThreadPool.h>
+#include <boost/core/ignore_unused.hpp>
+#include <chrono>
+#include <iostream>
+#include <memory>
+#include <thread>
+这段代码引入了程序所需的核心依赖：
+头文件	作用
+SdkFactory.h	SDK 工厂类，用于创建 SDK 实例
+Common.h	通用工具（日志宏 LOG_DESC、LOG_KV）
+ThreadPool.h	线程池，用于异步处理回调任务
+boost/core/ignore_unused.hpp	消除未使用变量的编译警告
+chrono	时间相关操作
+iostream	标准输入输出
+memory	智能指针（std::shared_ptr）
+thread	线程操作（std::this_thread::sleep_for）
+随后声明使用 bcos、bcos::cppsdk 等命名空间。
+
+##事件回调函数定义
+void eventCallback(bcos::protocol::EventLog::Ptr const& eventLog,
+    bcos::cppsdk::event::EventSubscribeParams const& params)
+{
+    std::cout << LOG_DESC(" [eventCallback] receive event log")
+              << LOG_KV("address", eventLog->address())
+              << LOG_KV("data", eventLog->data().asString()) << std::endl;
+
+    std::cout << LOG_DESC(" [eventCallback] from")
+              << LOG_KV("from", params.fromBlock) << std::endl;
+    std::cout << LOG_DESC(" [eventCallback] to")
+              << LOG_KV("to", params.toBlock) << std::endl;
+}
+
+##主函数入口与参数解析
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+    {
+        std::cout << "Usage: ./eventsub <config>" << std::endl;
+        return -1;
+    }
+    std::string config = argv[1];
+程序启动后首先检查命令行参数，需要 一个参数：
+<config>：SDK 配置文件路径（如 ./config_sample.ini），包含节点 IP、端口、证书等连接信息
+如果参数不足，程序输出使用说明并退出。
+
+##初始化 SDK
+auto factory = std::make_shared<SdkFactory>();
+auto sdk = factory->buildSdk(config);
+sdk->start();
+
+##配置订阅参数（核心部分）
+std::string address = "0xd35fbbea94b418f5d9b09900838b005e6a0d2691";
+bcos::cppsdk::event::EventSubscribeParams params;
+params.fromBlock = 0;
+params.toBlock = 100;
+params.address = address;
+参数详解：
+  address 参数
+指定要监听事件的合约地址
+必须是链上已部署的有效合约地址
+只有该合约触发的事件才会被回调
+如果为空字符串，表示监听所有合约的事件
+  fromBlock 参数
+指定订阅的起始区块高度
+从该区块开始（含）的所有事件都会被扫描
+设置为 0 表示从创世区块开始
+可以设置一个较大的值来缩小扫描范围，提高性能
+  toBlock 参数
+指定订阅的结束区块高度
+该区块之后产生的事件不会被回调
+设置为 "latest" 表示监听直到最新区块
+示例代码中使用 100 表示只监听前 100 个区块内的事件
+
+##订阅机制说明
+┌─────────────────────────────────────────────────────────────────┐
+│                        SDK 内部机制                            │
+├─────────────────────────────────────────────────────────────────┤
+│  1. 从 fromBlock 开始扫描区块                                  │
+│  2. 遍历每个区块的所有交易回执                                  │
+│  3. 检查回执中的事件日志                                        │
+│  4. 匹配事件日志的合约地址 → 是否等于 address？                 │
+│  5. 如果匹配，调用回调函数 eventCallback                        │
+│  6. 继续扫描直到 toBlock                                       │
+└─────────────────────────────────────────────────────────────────┘
+
+##主线程等待与关闭
+std::cout << LOG_DESC(" [eventSub] subscribe event, waiting for event...")
+          << std::endl;
+
+std::this_thread::sleep_for(std::chrono::seconds(10));
+
+// 退出时释放资源
+sdk->stop();
+
+##回调执行时机
+时间轴：
+──────────────────────────────────────────────────────────►
+│                                                         │
+│ 0s    注册成功，开始扫描区块                             │
+│ 2s    扫描到区块 50，发现合约事件 → 触发 eventCallback  │
+│ 5s    扫描到区块 80，发现合约事件 → 触发 eventCallback  │
+│ 10s   主线程唤醒，调用 sdk->stop()，程序退出             │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+
+##完整流程图
+┌─────────────────────────────────────────────────────────────────┐
+│                        程序启动                                 │
+│                   ./eventsub config.ini                        │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. 解析命令行参数                                               │
+│    → config = argv[1]（配置文件路径）                           │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. 初始化 SDK                                                   │
+│    → SdkFactory → buildSdk(config) → sdk->start()              │
+│    → 建立与 FISCO BCOS 节点的连接                                │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. 配置订阅参数（核心参数）                                     │
+│    ┌─────────────────────────────────────────────────┐          │
+│    │  address  = "0xd35fbbea94b418f5d9b09900838b..." │          │
+│    │  fromBlock = 0   ← 起始区块                     │          │
+│    │  toBlock   = 100 ← 结束区块                     │          │
+│    └─────────────────────────────────────────────────┘          │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 4. 注册事件订阅器                                               │
+│    → sdk->eventSub()->subscribeEvent(address, params, callback) │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 5. 主线程等待（10秒）                                           │
+│    → while 循环或 sleep 等待                                   │
+│    → SDK 后台线程扫描事件                                       │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 6. SDK 扫描到匹配事件（异步）                                   │
+│    → 检查区块范围内的交易回执                                   │
+│    → 找到匹配 address 的事件日志                                │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 7. SDK 触发回调函数                                             │
+│    → eventCallback(eventLog, params)                           │
+│    → 输出 eventLog.address()                                   │
+│    → 输出 eventLog.data().asString()                           │
+│    → 输出 params.fromBlock                                     │
+│    → 输出 params.toBlock                                       │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 8. 10秒后程序退出                                               │
+│    → sdk->stop() 释放资源                                      │
+│    → 程序结束                                                   │
+└─────────────────────────────────────────────────────────────────┘
+##总结
+通过走读 eventsub.cpp 源码，我们可以清晰地理解 FISCO BCOS C++ SDK 事件订阅机制的完整流程，
+核心理解
+三个参数的含义：
+address：告诉 SDK 监听哪个合约，只有该合约触发的事件才会被回调
+fromBlock：告诉 SDK 从哪个区块开始扫描，控制监听的历史范围
+toBlock：告诉 SDK 扫描到哪个区块结束，控制监听的上限
+回调机制：
+SDK 在后台线程中扫描区块
+匹配到符合条件的合约事件时，异步调用 eventCallback
+回调函数中可以解析 eventLog 获取事件详情
+这个示例是理解 FISCO BCOS 合约事件驱动开发的入门首选，核心思想可以概括为：
+配置监听范围（address + from + to）→ 注册回调 → 等待事件 → 处理业务逻辑
+
+##附：相关链接
+bcos-cpp-sdk 仓库：https://github.com/FISCO-BCOS/bcos-cpp-sdk
+官方文档（CPP SDK 事件订阅）：https://fisco-bcos-doc.readthedocs.io/zh-cn/release-3/docs/sdk/cpp_sdk/index.html
