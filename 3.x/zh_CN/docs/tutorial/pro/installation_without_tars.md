@@ -850,7 +850,7 @@ try to start rpc_20201
 
 ```eval_rst
 .. note::
-   - 控制台的配置方法和命令请参考 `这里 <../../develop/console/console_config.html>`_
+   - 控制台的配置方法和命令请参考 `这里 <../../operation_and_maintenance/console/console_config.html>`_
 ```
 
 使用控制台之前，需先安装java环境：
