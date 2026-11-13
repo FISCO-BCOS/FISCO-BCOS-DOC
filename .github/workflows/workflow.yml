@@ -37,3 +37,17 @@ jobs:
         run: cd 3.x/zh_CN/ && make html
       - name: run tests
         run: bash .ci/ci_check.sh
+
+  link-check:
+    name: link-check
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # 需要完整的提交历史，才能与 PR 的 base 提交做 diff
+          fetch-depth: 0
+      - name: check relative links in changed docs
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: python3 scripts/check_broken_links.py
