@@ -101,7 +101,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
 
             .. raw:: html
 
-               <img src="installation/build_chain.png" class="card-holder" >
+               <img src="images/installation/build_chain.png" class="card-holder" >
                <div class="tools-holder">
                   <br>
                   <h style="font-size: 18px;"><b><a href="./docs/tutorial/air/build_chain.html">开发部署工具：区块链网络快速部署工具</a></b></h>
@@ -120,11 +120,11 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
 
                <div class="tools-holder">
                   <br>
-                  <h style="font-size: 18px;"><b><a href="./docs/develop/console/index.html">命令行交互控制台：节点查询与管理工具</a></b></h>
+                  <h style="font-size: 18px;"><b><a href="./docs/operation_and_maintenance/console/index.html">命令行交互控制台：节点查询与管理工具</a></b></h>
                   <br><br>
                   <p>命令行交互控制台是提供给开发者使用的节点查询与管理的工具。控制台拥有丰富的命令，包括查询区块链状态、管理区块链节点、部署并调用合约等。此外，控制台提供一个合约编译工具，用户可以方便快捷的将Solidity合约文件编译为Java合约文件。</p>
                </div>
-               <img src="installation/console.png" class="card-holder" >
+               <img src="images/installation/console.png" class="card-holder" >
                <div style="clear:both"></div>
 
          .. raw:: html
@@ -135,7 +135,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
 
             .. raw:: html
 
-               <img src="webase/webase-web.png" class="card-holder">
+               <img src="images/webase/webase-web.png" class="card-holder">
                <div class="tools-holder">
                   <h style="font-size: 18px;"><b><a href="./docs/components/webase.html">图形化的区块链管理工具</a></b></h>
                   <br><br>
@@ -157,7 +157,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
                   <br><br>
                   <p>数据治理通用组件的全名是“WeBankBlockchain-Data数据治理通用组件”，它是一套稳定、高效、安全的区块链数据治理组件解决方案，可无缝适配FISCO BCOS区块链底层平台。它由数据导出组件(Data-Export)、数据仓库组件(Data-Stash)、数据对账组件(Data-Reconcile)这三款相互独立、可插拔、可灵活组装的组件所组成，开箱即用，灵活便捷，易于二次开发。</p>
                </div>
-               <img src="governance/data/data-gov.png" class="card-holder">
+               <img src="images/governance/data/data-gov.png" class="card-holder">
                <div style="clear:both"></div>
 
             .. raw:: html
@@ -168,7 +168,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
 
             .. raw:: html
 
-               <img src="governance/MCGF/MCGF_overview.png" class="card-holder">
+               <img src="images/governance/MCGF/MCGF_overview.png" class="card-holder">
                <div class="tools-holder">
                   <h style="font-size: 18px;"><b><a href="./docs/components/governance_index.html">区块链多方协作治理组件：开启治理实践新起点</a></b></h>
                   <br><br>
@@ -189,7 +189,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
                   <br><br>
                   <p>WeBankBlockchain-SmartDev应用开发组件包含了一套开放、轻量的开发组件集，覆盖智能合约的开发、调试、应用开发等环节，包括智能合约库（SmartDev-Contract）、智能合约编译插件（SmartDev-SCGP）和应用开发脚手架（SmartDev-Scaffold）。开发者可根据自己的情况自由选择相应的开发工具，提升开发效率。</p>
                </div>
-               <img src="governance/SmartDev/smartdev_overview.png" class="card-holder">
+               <img src="images/governance/SmartDev/smartdev_overview.png" class="card-holder">
                <div style="clear:both"></div>
 
 
@@ -339,7 +339,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
    docs/develop/contract_life_cycle.md
    docs/develop/console_deploy_contract.md
    docs/develop/web3_usage.md
-   docs/develop/console/index.md
+   docs/operation_and_maintenance/console/index.md
    docs/develop/smartdev_index.md
    docs/develop/amop.md
    docs/develop/privacy.md
@@ -360,7 +360,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
    docs/operation_and_maintenance/add_new_node.md
    docs/operation_and_maintenance/stress_testing.md
    docs/operation_and_maintenance/upgrade.md
-   docs/operation_and_maintenance/upgrade_guide.md
+   docs/operation_and_maintenance/upgrade.md
    docs/operation_and_maintenance/data_index.md
    docs/operation_and_maintenance/governance_index.md
    docs/operation_and_maintenance/log/index.md
@@ -417,7 +417,7 @@ FISCO BCOS开源社区致力打造开放多元的开源生态。截至2025年底
    docs/community/MVP_list_new.md
    docs/community/contributor_list_new.md
    docs/community/pr.md
-   dcos/community/partner_list_new.md
+   docs/community/partner_list_new.md
    docs/articles/index.md
    docs/community/join_fiscobcos.md
    docs/community/app_example.md
