@@ -9,6 +9,7 @@
 .. toctree::
    :hidden:
 
+   blockchain-setup.md
    multihost.md
    add_new_node.md
    compile.md
@@ -20,6 +21,7 @@
 
 **高阶教程**
 
+- `搭建单机区块链网络并接入控制台 <./blockchain-setup.html>`_
 - `搭建多机区块链网络 <./multihost.html>`_
 - `扩容一个新节点 <./add_new_node.html>`_
 - `FISCO BCOS源码编译 <./compile.html>`_
